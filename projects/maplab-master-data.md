@@ -1,6 +1,6 @@
 # Master Data Agent — MAPLAB Kitchen ERP 技術文件
 
-版本：v1.0 | 建立：2026-03-13 | 狀態：框架建立（資料填入進行中）
+版本：v1.1 | 建立：2026-03-13 | 更新：2026-03-13 | 狀態：框架建立（報價系統分析完成）
 
 ---
 
@@ -160,6 +160,74 @@
 5. **完成後更新本文件** SECTION 6 的任務狀態
 
 ---
+
+## SECTION 8 — 報價系統改進分析（A5 研究，2026-03-13）
+
+> 來源：Gemini 對話 https://gemini.google.com/share/e579c8655cd4 + 現有系統 v0.2 分析
+>
+> ### 現有系統（MAPLAB_外燴系統_v0.1 / v0.2）現況
+>
+> - Dashboard：Order Summary（88筆）、7天預警、Overdue/Unpaid（#REF! 待修正）
+> - - Orders：訂單主表含客戶資訊、活動資訊（未含「客戶類型」欄位）
+- OrderLines：品項明細，含 normalized_item_name、category、qty、unit_price、line_total
+- - OrderCharges：加項/折扣/服務費（service_fee / extra / rental / discount / note）
+  - - Items：品項主表（item_id、category、standard_name、default_price、cost、unit、batch_size、active）
+    - - Specials：特殊品項追蹤（空白，待填入）
+      - 
+      ### 發現的問題與缺口
+      
+      1. **缺乏雙模式報價引擎**：目前 Orders 只記錄已確認訂單，無「報價草稿」與「正式訂單」分流
+      2. 2. **無業務決策緩衝區**：沒有「建議售價 vs 最終報價」的 diff 欄位，業務調整無法追蹤
+      3. **缺少客戶類型分類**：無法區分「行銷公司/一般家庭/外帶客人/企業全包」等客群，無法套用不同成本建議值
+      4. **無逆向報價模式**：企業客戶給固定預算（如 NT$30,000 全包）時，系統無法從總預算回推可用食材預算
+      5. **無難度係數（Pain Surcharge）**：搬運環境惡劣、溝通成本高等場地條件無法量化加成
+      6. **Items 與 ITEM_MASTER 分離**：目前 v0.2 的 Items sheet 命名規則（如 DST001）與 MasterData 的 {TYPE}-{SUBTYPE}-{SEQ3} 不一致，需對齊
+      7. 7. **無 Google Slides 串接**：尚未實現「選品項→自動替換簡報圖片→一鍵匯出 PDF」的完整流程
+      8. **Dashboard 有 #REF! 錯誤**：Overdue/Unpaid 區塊公式斷連，需修復
+      9.
+      10. ### 報價系統改進方案（v0.3 目標）
+      
+      #### 模組 A：雙模式報價引擎
+      - 新增 `QUOTE_DRAFT` sheet：報價草稿，選品後自動計算
+      - 欄位：quote_id / order_id（空=草稿）/ client_type（行銷公司/一般家庭/外帶/企業全包）/ pricing_mode（standard=正向 / reverse=逆向）
+      - - 正向模式：選品項 → 系統算建議售價 → 業務填最終金額 → 生成 PDF
+      - 逆向模式：填客戶預算 → 扣固定成本 → 顯示可用食材預算
+      
+      #### 模組 B：業務決策緩衝區
+      - `suggested_price`（系統計算）vs `final_price`（業務調整，必填才能生成 PDF）
+      - 若 final_price < 成本底線 → 儲存格變紅色警告
+      - 難度係數勾選框：搬運惡劣 +5%、高溝通成本 +5%、急單/特殊時段 +10%
+      -
+      #### 模組 C：Google Slides 整合
+      - Slides 模板使用 `{{client_name}}`、`{{event_date}}`、`{{total_price}}` 佔位符
+      - 圖片框用 Alt Text 命名對應品項 ID
+      - - GAS 腳本：複製模板 → 替換文字 → 替換圖片 URL → 匯出 PDF → 存入 Drive → 回填 PDF 連結到 Orders
+        - 
+        #### 模組 D：客戶類型參考成本佔比表
+        | 客戶類型 | 建議成本佔比 | 說明 |
+        |---------|------------|------|
+        | 行銷公司 | 25-30% | 溝通成本高，修改次數多 |
+        | 一般家庭 | 35-40% | 價格較敏感 |
+        | 外帶客人 | 45% | 服務/搬運成本極低 |
+        | 企業全包 | 視固定成本扣除後決定 | 逆向報價模式 |
+
+        ### 優先執行順序
+        
+        1. 🔴 修復 Dashboard #REF! 錯誤
+        2. 🔴 對齊 Items 命名規則至 ITEM_MASTER 格式（需等其他 agent 完成 ITEM_MASTER 填入）
+        3. 🟡 新增 QUOTE_DRAFT sheet + 業務決策欄位
+        4. 4. 🟡 新增客戶類型 + 難度係數欄位到 Orders
+        5. 🟠 GAS 腳本 MVP：至少達成「替換一個文字 + 匯出 PDF」
+        6. 6. 🟢 逆向報價模式（企業全包案型）
+        
+        ---
+
+        ## SECTION 9 — 版本紀錄
+        
+        | 版本 | 日期 | 說明 | 更新者 |
+        |------|------|------|--------|
+        | v1.0 | 2026-03-13 | 初始框架建立（來自 Gemini 對話 + Drive 結構分析）| Claude (Sonnet 4.6) |
+        | v1.1 | 2026-03-13 | 新增 SECTION 8 報價系統分析：現況盤點、缺口識別、改進方案 v0.3 目標 | Claude (Sonnet 4.6) A5 |---
 
 ## SECTION 8 — 版本紀錄
 

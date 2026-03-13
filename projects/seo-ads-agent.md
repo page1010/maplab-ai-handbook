@@ -88,3 +88,81 @@
 > > - [ ] - Notion 三策略補充計畫：MAPLAB Meta 廣告三策略補充計畫 v1.0
 > > - [ ] - Meta 事件管理工具：https://eventsmanager.facebook.com/events_manager2/list/dataset/228166994905799/
 > > - [ ] - GTM 容器：https://tagmanager.google.com/#/container/accounts/6000782046/containers/30897681
+
+
+---
+
+## B 類整合 — Gemini 分工與支線任務（原 B1/B2/B3，整合至本文件）
+
+> 更新：2026-03-13｜以下任務原本是「無技術文件的支線任務」，現整合到本文件統一管理。
+
+### B1 — Gemini 廣告數據分析
+
+**執行者：Gemini**（Google 生態系原生整合優勢）
+
+| 任務 | 說明 | 工具 |
+|------|------|------|
+| Google Ads API 數據抓取 | 定期抓取廣告成效數據 | ads_agent.py（maplab-Detasys）|
+| Google Sheets 廣告儀表板 | 建立廣告數據可視化表格 | Google Sheets + Gemini =AI()|
+| 廣告優化建議 | 分析 CTR / CPC / ROAS，給出調整建議 | Gemini 分析 |
+
+**進度看板：** AI 自動工作團隊控制台 → 工作流類型「廣告監控」區塊
+
+**當前狀態：** 待開始 🔲（前置：OAuth 修復完成後）
+
+---
+
+### B2 — Gemini SEO 關鍵字收集
+
+**執行者：Gemini**（搭配 Google Search Console 原生整合）
+
+| 任務 | 說明 | 工具 |
+|------|------|------|
+| GSC 關鍵字抓取 | 定期抓取 Search Console 有機搜尋數據 | Python gspread + GSC API |
+| 關鍵字競爭分析 | 辨識 SEO vs Ads 關鍵字互搶問題 | Gemini 分析 |
+| 關鍵字分類與優先排序 | 依 CTR、曝光、意圖分類 | Gemini + Sheets |
+
+**進度看板：** AI 自動工作團隊控制台 → 工作流類型「SEO自動發文」區塊
+
+**當前狀態：** 待開始 🔲
+
+---
+
+### B3 — WordPress SEO 自動發文腳本（圖片命名 + API 串接）
+
+**執行者：Python 腳本（Claude 撰寫，Gemini 格式驗證）**
+
+| 任務 | 說明 | 狀態 |
+|------|------|------|
+| 設計圖片處理命名規則 | 格式：{category}-{item}-{seq}.webp | 待設計 🔲 |
+| 建立圖片自動化腳本 | 批次重命名 + 壓縮 + 上傳到 Drive | 待開發 🔲 |
+| WordPress API 串接腳本 | REST API 自動發文 + 圖片嵌入 | 待開發 🔲 |
+| 整合 SEO Agent 發表首篇文章 | 全流程測試：關鍵字 → 草稿 → 發布 | 待測試 🔲 |
+
+**代碼位置：** maplab-Detasys repo（腳本與主 SEO 專案同 repo）
+
+**進度看板：** AI 自動工作團隊控制台 → 工作流類型「SEO自動發文」區塊
+
+---
+
+## 多 AI 分工總覽（Claude + Gemini 協作）
+
+| 任務類型 | 執行 AI | 原因 |
+|----------|---------|------|
+| 規則/文件/Prompt 撰寫 | Claude | 長文件處理、邏輯推理強 |
+| Google API 串接（Ads/GSC/Sheets）| Gemini | Google 生態系原生、API quota 共享 |
+| 流程拆解/廣告數據分析 | Gemini | 數據分析與報表生成能力強 |
+| WordPress API/Python 腳本 | Claude | 程式碼生成、debug 能力 |
+| 圖片格式驗證/批次處理 | Gemini 側邊欄 + Apps Script | 即時驗證、零成本部署 |
+
+> ⚠️ 重要守則：Claude 不主動接手 Google Ads 數據分析任務（那是 Gemini 的範疇）；Gemini 不主動修改 GitHub 文件（那是 Claude 的範疇）。
+
+---
+
+## 版本紀錄（更新）
+
+| 版本 | 日期 | 說明 | 更新者 |
+|------|------|------|--------|
+| v1.0 | 2026-03-11 | 初始版本（Notion 文件）| Human |
+| v1.1 | 2026-03-13 | 策略一廣告組合審查 + GTM Pixel 串接確認 | Claude (Sonnet 4.6) |
+| v1.2 | 2026-03-13 | 整合 B1/B2/B3 支線任務 + 多 AI 分工表 | Claude (Sonnet 4.6) |

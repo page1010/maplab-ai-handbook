@@ -2,6 +2,8 @@
 
 **每次接手前，請先讀這份文件。讀完你就知道系統在哪、你要做什麼。**
 
+> 想快速看懂整個系統架構？直接看 **[SYSTEM_MAP.md](./SYSTEM_MAP.md)** — 5 張視覺化地圖，1分鐘掌握全局。
+
 ---
 
 ## 1. Mission
@@ -61,6 +63,7 @@ MAPLAB AI Multi-Agent System 是一套用於支援 MAPLAB Kitchen（台南高階
 ```
 maplab-ai-handbook/
 ├── README.md                    ← 你在這裡（系統大局觀）
+├── SYSTEM_MAP.md                ← 視覺化系統全圖（推薦第一個看）
 ├── PROJECT_CONTEXT.md           ← 各專案詳細地圖
 ├── AI_WORKFLOW_MAP.md           ← Agent 協作流程圖
 ├── AGENT_RULES.md               ← 所有 Agent 共用行為準則 v1.5
@@ -84,25 +87,27 @@ maplab-ai-handbook/
 
 接手前必讀順序（Step 1 → 8）：
 
-**Step 1.** 閱讀本 README.md（你在這裡）
+**Step 1.** 閱讀 [SYSTEM_MAP.md](./SYSTEM_MAP.md)（視覺化全圖，1分鐘掌握全局）
 
-**Step 2.** 閱讀 PROJECT_CONTEXT.md（專案地圖）
+**Step 2.** 閱讀本 README.md（系統使命與成功定義）
 
-**Step 3.** 閱讀 AI_WORKFLOW_MAP.md（協作流程）
+**Step 3.** 閱讀 [PROJECT_CONTEXT.md](./PROJECT_CONTEXT.md)（各專案現況）
 
-**Step 4.** 閱讀 AGENT_RULES.md（行為準則）
+**Step 4.** 閱讀 [AI_WORKFLOW_MAP.md](./AI_WORKFLOW_MAP.md)（協作流程）
 
-**Step 5.** 閱讀 AGENT_STARTUP_PROTOCOL.md（接手 SOP）
+**Step 5.** 閱讀 [AGENT_RULES.md](./AGENT_RULES.md)（角色與禁止事項）
 
-**Step 6.** 閱讀對應 projects/ 專案文件
+**Step 6.** 閱讀 [AGENT_STARTUP_PROTOCOL.md](./AGENT_STARTUP_PROTOCOL.md)（接手 SOP）
 
-**Step 7.** 閱讀 skills/superpowers-guide.md（技能工具箱）
+**Step 7.** 閱讀對應 [projects/](./projects/) 專案文件
 
-**Step 8.** 閱讀最新 handoff/ 或 CHANGELOG.md
+**Step 8.** 閱讀最新 handoff/ 或 [CHANGELOG.md](./CHANGELOG.md)
 
 ---
 
-## 8. Repo Map（四個 Repo 分工）
+## 8. Repo Map → 詳見 SYSTEM_MAP.md
+
+[點這裡看完整視覺化地圖 →](./SYSTEM_MAP.md)
 
 | Repo | 性質 | 用途 |
 |------|------|------|
@@ -113,4 +118,4 @@ maplab-ai-handbook/
 
 ---
 
-*系統版本：v2.0 | 最後更新：2026-03-14 | 維護者：A1 Handbook Agent*
+*系統版本：v2.1 | 最後更新：2026-03-14 | 維護者：A1 Handbook Agent*

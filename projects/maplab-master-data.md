@@ -232,3 +232,53 @@
         | v1.1 | 2026-03-13 | 新增 SECTION 8 報價系統分析：現況盤點、缺口識別、改進方案 v0.3 目標 | Claude (Sonnet 4.6) A5 |
 | v1.2 | 2026-03-13 | QUOTE_DRAFT v0.3 建立完成：雙模式報價系統（正向/逆向）、15品項參考表、2組Demo資料 | Claude (Sonnet 4.6) A5 |
 | v1.3 | 2026-03-14 | Dashboard #REF! 修復（QUERY LIMIT 10）+ QUOTE_DRAFT 品項分類中文化（甜點/餐食小點/主食/飲品）| Claude (Opus 4.6) A5 |
+
+
+---
+
+## SECTION 3 — Schema v0.1 任務書（A5 啟動任務）
+
+**任務狀態：⚡ 待啟動**
+
+**任務目標：** 建立 MAPLAB Kitchen ERP 最小可用 schema v0.1，讓 A4 Pipeline Agent 可以接手規劃資料流程。
+
+**負責 Agent：** A5 Master Data Agent
+
+**完成期限：** 啟動後第一個工作週期
+
+### 必須產出的 4 個文件
+
+**產出 1：`schema-v0.1.md`**
+包含以下 4 張表的基本欄位定義：
+- Orders（訂單表）：訂單編號、客戶ID、活動日期、活動類型、地點、總金額、狀態
+- Customers（客戶表）：客戶ID、姓名、聯絡電話、Email、歷史訂單數
+- Events（活動表）：活動ID、活動名稱、日期、地點、人數、關聯訂單ID
+- Items（品項表）：品項ID、品項名稱、類別、單價、單位、是否有庫存
+
+**產出 2：`table-relationship-map.md`**
+說明 4 張表之間的主鍵/外鍵關係，以及資料流向。
+
+**產出 3：`field-naming-rules.md`**
+統一命名規則（例如：ID欄位格式、日期格式、狀態欄位的允許值清單）。
+
+**產出 4：`handoff-to-A4.md`**
+交接文件，說明 A4 需要知道的：schema 的使用方式、pipeline 需要對接的欄位、命名規則。
+
+### 成功條件
+
+- [ ] 4 張表的基本欄位均已定義
+- [ ] 主鍵邏輯清楚（每張表都有唯一識別欄位）
+- [ ] 命名規則有明確規範
+- [ ] A4 可以根據 handoff 文件獨立開始工作
+- [ ] A1 已回寫 PROJECT_CONTEXT 與 CHANGELOG
+
+### 啟動方式
+
+任何 Agent（或 Gemini）接到 A5 任務時，先讀：
+1. 本文件 SECTION 0–3
+2. CURRENT_EXECUTION_BOARD.md 的 A5 區塊
+3. AGENT_STARTUP_PROTOCOL.md
+
+---
+
+*版本：v1.4 | 更新：2026-03-14 | 新增 SECTION 3 Schema v0.1 任務書*

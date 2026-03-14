@@ -1,6 +1,6 @@
 # Master Data Agent — MAPLAB Kitchen ERP 技術文件
 
-版本：v1.2 | 建立：2026-03-13 | 更新：2026-03-13 | 狀態：QUOTE_DRAFT v0.3 建立完成
+版本：v1.3 | 建立：2026-03-13 | 更新：2026-03-14 | 狀態：Dashboard 修復 + QUOTE_DRAFT 收尾
 
 ---
 
@@ -144,7 +144,8 @@
 | ASSET_MASTER 與 Drive 圖片對應 | 🔲 待開始 | 🟡 高 |
 | MENU_MASTER 套餐組合建立 | 🔲 待開始 | 🟠 中 |
 | Python 讀取 Sheets API 腳本 | 🔲 待開始 | 🟠 中（等資料填完） |
-| QUOTE_DRAFT v0.3 建立 | ✅ 完成 | 🟡 高 |
+| Dashboard #REF! 修復 | ✅ 完成 | 🔴 最高 |
+| QUOTE_DRAFT v0.3 建立 + 收尾 | ✅ 完成（分類中文化）| 🟡 高 |
 | 自動報價系統整合 | 🔲 待開始 | 🟢 低（依賴上方完成）|
 
 > ⚠️ 重要：目前 Sheets 的「資料輸入區」欄位為空白，正在用截圖 + 手動方式逐條新增。  
@@ -230,3 +231,4 @@
         | v1.0 | 2026-03-13 | 初始框架建立（來自 Gemini 對話 + Drive 結構分析）| Claude (Sonnet 4.6) |
         | v1.1 | 2026-03-13 | 新增 SECTION 8 報價系統分析：現況盤點、缺口識別、改進方案 v0.3 目標 | Claude (Sonnet 4.6) A5 |
 | v1.2 | 2026-03-13 | QUOTE_DRAFT v0.3 建立完成：雙模式報價系統（正向/逆向）、15品項參考表、2組Demo資料 | Claude (Sonnet 4.6) A5 |
+| v1.3 | 2026-03-14 | Dashboard #REF! 修復（QUERY LIMIT 10）+ QUOTE_DRAFT 品項分類中文化（甜點/餐食小點/主食/飲品）| Claude (Opus 4.6) A5 |

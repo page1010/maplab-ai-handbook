@@ -1,5 +1,57 @@
 # Pipeline Agent — 角色定位與技術文件
 
+版本：v1.2 | 建立：2026-03-12 | 更新：2026-03-15
+
+---
+
+## ❗ SECTION 0 — 接手前必讀：戰略警示（A5 診斷，2026-03-15）
+
+> **這個專案卡在 Phase 1 超過 4 天，進度 0。根因不是程式問題，是戰略入口選錯了。**
+
+### 問題根因
+
+Google Photos Library API 在 2025 年後持續收縮開放度：
+- rclone 從 2025-03-31 起只能下載自己上傳的照片，無法存取舊有照片庫
+- Photos API 不提供原始品質下載
+- Sensitive scope `photoslibrary.readonly` 審查嚰難， OAuth token refresh 會静默跳過 scope
+- **不要再花時間在 Photos API token 問題上。這是 Google 的政策方向，不是你的設定問題。**
+
+### 戰場重定義
+
+將問題從「我要怎麼串接 Google Photos API」改成：
+
+> **「我要怎麼把相片弄到 Google Drive，讓 pipeline 可以跑起來」**
+
+### 3 條路線評估
+
+**路線 A — Google Takeout 直接送 Drive 🥇 最推薦**
+
+- 前往 `takeout.google.com`，選 Google Photos，交付方式選「**Add to Drive**」（每個封存檔最大 50GB）
+- 完全不需要 API、不需要 OAuth、不需要程式碼
+- **唯一能拿到原始品質照片的方式**
+- 輸出為 .zip 中的 JPEG + JSON metadata，解壓後 pipeline 可直接讀取
+- 需人工觸發一次，等待幾小時到天
+
+**路線 B — 手動下載到本機 + 本機跑 pipeline 🥈 最快看到成果**
+
+- Google Photos 網頁介面 → 選相簿 → 「下載全部」→ 存本機資料夾
+- Python 直接讀本機路徑，比 API 簡單 10 倍
+- Phase 2–5（Gemini 分類 / WebP 轉換 / Drive 歸檔 / ASSET_MASTER）全部可立刻測試
+- **pipeline 主體邏輯可以先跑通，API 問題最後才解決**
+
+**路線 C — 確認 Drive 是否已自動同步 🥉 先檢查**
+
+- Google Photos 設定 → 確認備份已開啟，確認 Drive 裡是否有「Google 相簿」資料夾
+- 若有，直接用 Drive API 讀取（比 Photos API 穩定得多）
+
+### 核心結論
+
+**這個 pipeline 的真正價値（Gemini 分類 + SEO 命名 + Drive 歸檔 + ASSET_MASTER 串接）完全不依賴 Google Photos API。入口換掉，其他 4 個 Phase 可以立刻推進。**
+
+**接手第一件事：** 先確認路線 C 是否已有同步。若沒有，請用戶執行路線 A（Takeout）或路線 B（手動下載），再通知 A4 接手。
+
+---
+
 版本：v1.1 | 建立：2026-03-12 | 更新：2026-03-14
 
 ---

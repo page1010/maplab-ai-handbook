@@ -4,7 +4,23 @@
 格式：版本號 | 日期 | 變更摘要 | 執行 Agent
 
 ---
-## v2.3 — 2026-03-15（最新）
+
+## v2.4 — 2026-03-15（最新）
+
+**合併 A3+A6 為 Ads Team + 新增 AI 特性技能書**
+
+執行 Agent：A1 Handbook Agent（Claude Sonnet 4.6）
+
+**更新：**
+- `AGENT_RULES.md` v1.6 — 合併 A3+A6 為 Ads Team，新增 SECTION 1.1 任務分工表，新增 skills/ai-model-guide.md 引用，錯誤 004 記錄
+- `skills/ai-model-guide.md` v1.0 — 新建：Claude / Gemini / GPT 特性說明 + 選 AI 速查表 + Ads Team 跨 AI 協作流程範例
+
+**設計原則：** 以技能書取代固定角色召喚，任何 AI 接手時依任務性質查 ai-model-guide.md 選用最合適工具，不需重複說明背景
+
+---
+
+
+## v2.3 — 2026-03-15
 
 **A1 系統巡查 + CURRENT_EXECUTION_BOARD 修正**
 

@@ -18,6 +18,23 @@
 - `handoff/field-naming-rules.md` — ID格式 / 日期格式 / Enum允許値 / 禁止事項
 - `handoff/handoff-to-A4.md` — A5 → A4 交接文件，含任務范圍 + 限制說明
 
+**代理：** A5 Master Data Agent（診斷）/ A1 Handbook Agent（回寫）  
+**重點：** A4 Pipeline 戰略重定向——繞開滹 Phase 1 卡點
+
+**更新：**
+- `projects/maplab-pipeline.md` v1.2 — 新增 SECTION 0 戰略警示（接手前必讀）
+  - 根因診斷：Google Photos API 在 2025 年後持續限制，繼續卡在 OAuth token 問題沒有意義
+  - 战場重定義：從「我要怎麼串接 Photos API」→「我要怎麼把相片弄到 Drive」
+  - 路線 A：Google Takeout 直接送 Drive（不需任何 API，可拿到原始品質）
+  - 路線 B：手動下載到本機，Python 直接讀本機路徑
+  - 路線 C：先確認 Drive 是否已自動同步（用 Drive API 替代）
+
+**下一步：** 用戶先確認路線 C → 若否則執行路線 A 或 B → 再通知 A4 接手
+
+---
+
+
+
 **更新：**
 - `CURRENT_EXECUTION_BOARD.md` v1.1 — A5 狀態標記 ✅ 完成，A4 標記 ⭐ 等待中
 

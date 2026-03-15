@@ -1,6 +1,6 @@
 # Master Data Agent — MAPLAB Kitchen ERP 技術文件
 
-版本：v1.3 | 建立：2026-03-13 | 更新：2026-03-14 | 狀態：Dashboard 修復 + QUOTE_DRAFT 收尾
+版本：v1.4 | 建立：2026-03-13 | 更新：2026-03-15 | 狀態：Dashboard 修復 + QUOTE_DRAFT 收尾 + 版本號修正
 
 ---
 

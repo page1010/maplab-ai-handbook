@@ -9,6 +9,24 @@
 
 **進入執行階段：補齊同步機制 + 建立執行看板 + 啟動 A5 任務**
 
+**代理：** A5 Master Data Agent  
+**重點：** Schema v0.1 完成，第一條閉環開始運作
+
+**新增：**
+- `handoff/schema-v0.1.md` — 4 張核心表欄位規格（Orders / Customers / Events / Items）
+- `handoff/table-relationship-map.md` — PK/FK 關係圖 + 資料流向 ASCII 圖
+- `handoff/field-naming-rules.md` — ID格式 / 日期格式 / Enum允許値 / 禁止事項
+- `handoff/handoff-to-A4.md` — A5 → A4 交接文件，含任務范圍 + 限制說明
+
+**更新：**
+- `CURRENT_EXECUTION_BOARD.md` v1.1 — A5 狀態標記 ✅ 完成，A4 標記 ⭐ 等待中
+
+**下一步：** A4 Pipeline Agent 接手，依據 schema 設計 pipeline mapping
+
+---
+
+
+
 執行 Agent：A1 Handbook Agent（Claude）
 
 新增文件：

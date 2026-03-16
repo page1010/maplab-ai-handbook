@@ -5,6 +5,31 @@
 
 ---
 
+
+## v2.5 — 2026-03-16（最新）
+
+**A3 廣告策略一執行 + 困難回報 + TA 建議文件化**
+
+執行 Agent：A3 Ads Monitor Agent（Claude Sonnet 4.6）
+
+**更新：**
+- `projects/seo-ads-agent.md` v1.4 — 補充現有策略觀察、策略一冷受眾 TA 設定建議（完整描述文字）、素材計畫（C-1/C-2/C-3）、目前困難與暫時解決方案
+- `CURRENT_EXECUTION_BOARD.md` v1.3 — A3 狀態更新為進行中，Canva C款素材 WIP 狀態記錄
+
+**執行進度：**
+- ✅ Notion 策略文件閱讀完成
+- ✅ Meta 廣告組合受眾描述欄位填寫（策略一冷受眾 52608263444730）
+- ✅ @maplabkitchen IG 圖片研究，選定婚禮風桌景照片
+- ✅ Canva 1080x1080 C款背景圖建置完成
+- 🔄 Canva 文字層（C-1/C-2/C-3）尚未完成
+- ⏳ PR #1 + PR #2 awaiting user merge
+
+**已知限制：**
+- Meta 廣告操作需使用者明確確認，Claude 不自行 acting
+- Canva 素材需繼續完成文字層
+
+---
+
 ## v2.5 — 2026-03-15（最新）
 
 **ai-model-guide v1.1 — GPT特殊地位補充 + 防prompt過長技能**

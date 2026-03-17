@@ -7,7 +7,7 @@
 ## 系統整體狀態
 
 當前階段：A3 廣告系統文件化完成，等待使用者執行 Meta 素材上線
-
+最新系統版本：v2.7（2026-03-17）
 最新系統版本：v2.6（2026-03-17）
 
 當前最高優先任務：使用者完成 Canva C款素材 → 上傳 Meta 策略一冷受眾廣告
@@ -39,7 +39,7 @@
 阻塞點：需要補足廣告對應關鍵字頁（見 seo-ads-agent.md 第七節）
 建議下一步：台南外燴總頁、週歲派對外燴頁、婚禮外燴頁、企業外燴頁、價格/FAQ 頁
 
-### A3 — Ads Monitor Agent
+狀態：文件化 + GTM SOP 完成，等待使用者執行（Canva 素材 + GTM 轉換事件設定 + PMax 標題新增）
 狀態：文件化完成，等待使用者動作
 
 今日完成（2026-03-17）：
@@ -48,6 +48,9 @@
 - CHANGELOG v2.6 更新
 - CURRENT_EXECUTION_BOARD v1.4 更新（本次）
 - Google Ads 成效查看（PMax 30天花費 NT$2,257，轉換 7 次，CPA NT$322）
+- - seo-ads-agent.md v2.1：PMax 問句型標題建議 2 個（小幅測試，追蹤 CTR）
+  - - gtm-conversion-setup.md v1.0：GTM 轉換事件設定 SOP 新建（LINE/表單/電話）
+    - - CHANGELOG v2.7 更新
 
 等待使用者：
 - Canva C款素材完成並上傳

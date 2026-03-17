@@ -98,6 +98,13 @@
 
 - 標題必須包含：地區（台南）、場景（週歲/派對）
 - 圖片：真實場景，不能太商業感
+
+**問句型標題建議（2026-03-17 A3 新增，小幅測試用）：**
+目的：提升 PMax 搜尋廣告的 CTR（目前 0.63%，偏低）。不大改現有素材，僅新增 2 個問句型標題至素材資源群組，觀察 2 週後比較 CTR 變化。
+- 新增標題 1：`辦週歲派對，餐點怎麼準備才不手忙腳亂？`
+- - 新增標題 2：`台南外燴推薦｜質感派對餐桌，不用自己張羅`
+  - - 追蹤方式：新增後 14 天，比較素材資源報表中問句型標題 vs 原有標題的 CTR 差異
+    預期效果：CTR 從 0.63% 提升至 1.0–1.5%，帶動預算使用率從 25% 上升。
 - Landing Page：對應關鍵字的 SEO 頁
 
 ### Google Ads KPI 追蹤目標
@@ -289,8 +296,6 @@ Landing Page 對應優先順序：
 
 ## 十二、版本紀錄
 
-| 版本 | 日期 | 說明 | 執行者 |
-|------|------|------|--------|
 | v1.0 | 2026-03-11 | 初始版本（Notion 文件）| Human |
 | v1.1 | 2026-03-13 | 策略一廣告組合審查 + GTM Pixel 串接確認 | Claude |
 | v1.2 | 2026-03-13 | B 類整合（Gemini 分工）| Claude |
@@ -298,10 +303,11 @@ Landing Page 對應優先順序：
 | v1.4 | 2026-03-16 | 完整 TA 建議 + 困難與解法 | Claude |
 | v1.5 | 2026-03-16 | 廣告布局快照 + Google診斷 + 代辦清單 | Claude |
 | v2.0 | 2026-03-17 | 完整重寫：系統框架 + 全部廣告清單 + SEO/素材對接 + 接手協議 | Claude |
+| v2.1 | 2026-03-17 | 新增 PMax 問句型標題建議（2個）+ GTM 轉換事件 SOP | Claude |
 
 ---
 
-## 十三、相關連結
+## 十三、相關連結h
 
 - Meta 廣告管理員：https://adsmanager.facebook.com/adsmanager/manage/campaigns?act=318634712
 - Meta 事件管理工具：https://eventsmanager.facebook.com/events_manager2/list/dataset/228166994905799/
@@ -309,3 +315,4 @@ Landing Page 對應優先順序：
 - GTM 容器：https://tagmanager.google.com/#/container/accounts/6000782046/containers/30897681
 - Canva 素材（策略一 C款）：https://www.canva.com/design/DAHD4wpehE4/bRsNDBSCLqJz7bB9SGmNPw/edit
 - Notion 廣告策略主文件：MAPLAB 廣告投放策略 TA 與預算紀錄 v1.0
+- - GTM 轉換事件設定 SOP：projects/gtm-conversion-setup.md

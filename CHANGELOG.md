@@ -18,6 +18,7 @@
 - SYSTEM_MAP.md v2.0 — 7 張地圖全面重寫：Repo 分工（A6→Ads Team）、Agent 分工、資料流、閱讀順序（移除 PROJECT_CONTEXT）、新增技能書速查地圖、新增唯一資料來源規則
 - AI_WORKFLOW_MAP.md v2.0 — A6 合併入 A3 Ads Team、移除 PROJECT_CONTEXT 引用、新增 Stuck Protocol 區段（troubleshooting-hub 路由）、Handoff 增加 CURRENT_EXECUTION_BOARD 步驟、新增協作規則 5（用技能書）
 - AGENT_RULES.md v1.7 — Notion 欄位加刪除線（5 個 Agent 的 Notion 進度欄），欄位標題改為「僅人類參考，非 Agent 依據」，新增 ⚠️ 警告標語
+- CURRENT_EXECUTION_BOARD.md v1.8 — Phase 3 多 Agent 團隊協作強化規劃寫入：4 項待辦任務（簽到/簽退機制、協作規則升級、STARTUP_PROTOCOL 串接、技能書主動路由）、新增已知問題 009、A1 狀態更新為 Phase 3 已規劃待執行
 
 **設計原則：**
 - GitHub 是所有 Agent 的唯一資料來源，Notion 僅供人類使用

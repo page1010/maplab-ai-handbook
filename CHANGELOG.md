@@ -15,6 +15,7 @@
 - CURRENT_EXECUTION_BOARD.md v1.7 — 刪除重複版本行（v2.9/v2.6 並存→僅 v2.9），整理 A3 區塊，已知問題全部標記 ✅ 已解決
 - projects/maplab-ads-monitor.md v1.1 — A6→A3 Ads Team 對齊，移除 Notion 引用，更新協作邊界表
 - handoff/HANDOFF_TEMPLATE.md v1.1 — 移除 Notion 引用，任務來源改為 GitHub，更新歷史交接表
+- SYSTEM_MAP.md v2.0 — 7 張地圖全面重寫：Repo 分工（A6→Ads Team）、Agent 分工、資料流、閱讀順序（移除 PROJECT_CONTEXT）、新增技能書速查地圖、新增唯一資料來源規則
 
 **設計原則：**
 - GitHub 是所有 Agent 的唯一資料來源，Notion 僅供人類使用

@@ -1,6 +1,5 @@
 # Superpowers Skills 導覽手冊 — MAPLAB AI Agent 版
-
-版本：v1.0 | 建立：2026-03-14 | 來源：Notion「Superpowers Skills 導覽手冊」同步
+版本：v1.1 | 建立：2026-03-14 | 來源：Notion「Superpowers Skills 導覽手冊」同步
 
 > 本文件是 Notion Superpowers Skills 導覽手冊的 GitHub 版本，供 AI Agent 接手時快速查閱。
 > 完整互動版請見：https://www.notion.so/Superpowers-Skills-320ab0806d5c807c95c7d8d633a7e5c5
@@ -25,6 +24,7 @@
 | 批次執行 | `executing-plans` | 分批執行，保留人工確認點 |
 | 寫新 Skill | `writing-skills` | TDD 方式寫文件，先跑失敗場景 |
 | 第一次用 | `using-superpowers` | 系統入門介紹 |
+| **Colab 防死機** | **`colab-resilience-guide`** | **checkpoint + timeout + retry，防 Colab 斷線造成重工** |
 
 ---
 
@@ -97,6 +97,12 @@
 - **核心：** 先設計壓力測試場景 → 跑失敗 → 寫 Skill → 跑通過
 - GitHub: https://github.com/obra/superpowers/blob/main/skills/writing-skills/SKILL.md
 
+### colab-resilience-guide — Colab 防死機 (MAPLAB 自建)
+- **何時用：** 任何在 Colab 執行的長時間任務（>30 分鐘）
+- **核心原則：** checkpoint 寫入 Drive + 每個 API 呼叫加 timeout + retry with backoff + 每批印進度
+- **6 條規則：** checkpoint | timeout | 進度輸出 | unzip -n | session 開頭 SOP | 斷線重連 SOP
+- 本 Handbook: skills/colab-resilience-guide.md
+
 ---
 
 ## 安裝快速指令
@@ -124,6 +130,7 @@ gemini extensions install https://github.com/obra/superpowers
 | 實驗性工具 | https://github.com/obra/superpowers-lab |
 | Notion 導覽（互動版）| https://www.notion.so/Superpowers-Skills-320ab0806d5c807c95c7d8d633a7e5c5 |
 | Multi-agent 架構參考 | https://github.com/Ibrahim-3d/conductor-orchestrator-superpowers |
+| Colab 防死機（MAPLAB）| skills/colab-resilience-guide.md |
 
 ---
 
@@ -132,3 +139,4 @@ gemini extensions install https://github.com/obra/superpowers
 | 版本 | 日期 | 說明 | 更新者 |
 |---|---|---|---|
 | v1.0 | 2026-03-14 | 從 Notion Superpowers Skills 導覽手冊同步建立 GitHub 版本 | A1 Handbook Agent |
+| v1.1 | 2026-03-17 | 加入 colab-resilience-guide（Colab 防死機技能包）| A4 Pipeline Agent |

@@ -5,6 +5,37 @@
 
 ---
 
+
+## v2.6 — 2026-03-17（最新）
+
+**seo-ads-agent.md v2.0 完整重寫 — 修正亂碼 + 廣告系統框架建立**
+
+執行 Agent：A3 Ads Monitor Agent（Claude Sonnet 4.6）
+
+**更新：**
+- `projects/seo-ads-agent.md` v2.0 — 直接 commit 到 main，修正舊版 `> > - [ ]` 亂碼格式，完整重寫為 13 個章節的廣告系統技術文件
+  - 一、核心目標（短期現金流 + 中長期品牌/SEO）
+  - 二、整體漏斗設計（Top/Mid/Bottom Funnel）
+  - 三、帳號資訊
+  - 四、總預算配置（Google NT$300/天 + Meta NT$300/天 = NT$600/天）
+  - 五、Google Ads 廣告系統（PMax 詳細設定 + 近期成效）
+  - 六、Meta 廣告系統（目前 2 則進行中 + 1 則草稿）
+  - 七、SEO 對接（給 SEO Agent 的關鍵字清單）
+  - 八、素材對接（給素材 Agent 的規格 + 現況）
+  - 九、待辦事項
+  - 十、下次 Agent 接手必問清單
+  - 十一、Pixel 串接確認
+  - 十二、版本紀錄
+  - 十三、相關連結
+
+**廣告現況紀錄（截至 2026-03-17）：**
+- Google PMax：NT$300/天，進行中，30天花費 NT$2,257，轉換 7 次，CPA NT$322
+- Meta B組公關窗口：進行中，CPA NT$5/互動
+- Meta B組企業窗口：進行中，CPA NT$13/互動
+- Meta 策略一冷受眾：草稿，素材製作中，待上線
+
+---
+
 ## v2.5 — 2026-03-15（最新）
 
 **ai-model-guide v1.1 — GPT特殊地位補充 + 防prompt過長技能**

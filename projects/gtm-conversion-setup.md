@@ -248,6 +248,7 @@
 轉換事件觸發後的資料會出現在：
 - Google Ads 轉換報表
 - Meta 事件管理工具
+- | v1.2 | 2026-03-17 | 問題診斷：LINE Click Contact 事件未觸發 — 根因確認 + 修正方案 | A2 Claude Opus 4.6 |
 - GA4（若有連結 GTM）
 
 請注意事件命名規則：Meta 用 Contact / Lead，Google 用自訂名稱（LINE詢問點擊 / 表單送出詢問 / 電話點擊）。
@@ -264,3 +265,42 @@
 | 版本 | 日期 | 說明 | 執行者 |
 |------|------|------|--------|
 | v1.0 | 2026-03-17 | 初始版本：三個轉換事件完整 SOP + 驗證方法 + Agent 備註 | A3 Claude Sonnet 4.6 |
+
+
+---
+
+## 問題診斷紀錄：LINE Click Contact 事件未觸發（2026-03-17）
+
+### 現象
+- Meta Pixel Helper 顯示 4 個 SubscribedButtonClick（Meta 自動偵測）+ 1 個 PageView
+- - **沒有看到 Contact 事件**
+  - - 表示 GTM 設定的 `fbq('track', 'Contact')` 完全沒有觸發
+   
+    - ### 根因分析（A2 Claude Opus 4.6 實際檢測）
+   
+    - **GTM 觸發條件「僅連結」設定：`Click URL 包含 lihi2.com`**
+   
+    - 但網站實際 LINE 按鈕 URL 不匹配：
+   
+    - | 頁面 | LINE 按鈕 URL | 匹配 lihi2.com |
+    - |------|-------------|---------------|
+    - | 首頁 | `lin.ee/IP8nt4n` | ❌ |
+    - | 浮動按鈕 | `lin.ee/BlVku2U` | ❌ |
+    - | footer | `lin.ee/tiFKTRy` | ❌ |
+    - | SEO文章頁 | `lihi2.com/jQ6Lq` | ✅ |
+    - 
+    **結論：首頁 LINE 按鈕用 `lin.ee`，不是 `lihi2.com`，觸發條件不匹配。**
+
+      ### 修正方案（推薦方案 A）
+      - 觸發條件改為「與規則運算式相符」
+      - - 正則：`(lihi2\.com|lin\.ee|line\.me)`
+       
+        - ### 修正狀態
+       
+        - | 步驟 | 狀態 |
+        - |------|------|
+        - | 根因確認 | ✅ 已確認 |
+        - | GTM 觸發條件修正 | ⬜ 待執行 |
+        - | GTM 預覽驗證 | ⬜ 待執行 |
+        - | 發布新版本 | ⬜ 待執行 |
+        - | Pixel Helper 驗證 | ⬜ 待執行 |

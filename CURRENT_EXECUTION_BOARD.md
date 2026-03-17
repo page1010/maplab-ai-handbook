@@ -1,13 +1,13 @@
 # CURRENT_EXECUTION_BOARD.md
 
-**最後更新：2026-03-17 | A3 Ads Monitor Agent（Claude Sonnet 4.6）**
+**最後更新：2026-03-17 | A3 Ads Monitor Agent（Claude Opus 4.6）**
 
 ---
 
 ## 系統整體狀態
 
-當前階段：A3 廣告系統文件化完成，等待使用者執行 Meta 素材上線
-最新系統版本：v2.7（2026-03-17）
+當前階段：A3 GTM v15 已發布（LINE Click + Phone Click Meta Pixel 事件上線），等待使用者驗證 + 執行 Meta 素材上線
+最新系統版本：v2.9（2026-03-17）
 最新系統版本：v2.6（2026-03-17）
 
 當前最高優先任務：使用者完成 Canva C款素材 → 上傳 Meta 策略一冷受眾廣告

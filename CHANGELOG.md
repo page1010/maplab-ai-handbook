@@ -4,7 +4,25 @@
 格式：版本號 | 日期 | 變更摘要 | 執行 Agent
 
 ---
-## v2.7 — 2026-03-17（最新）
+
+## v2.8 — 2026-03-17（最新）
+
+**troubleshooting-hub v1.0 + AGENT_STARTUP_PROTOCOL v1.1 + superpowers-guide v1.3**
+
+執行 Agent：A1 Handbook Agent（Claude Opus 4.6）
+
+更新：
+- skills/troubleshooting-hub.md v1.0 — 新建：Agent 卡住急救手冊，13 個常見症狀診斷表 + 回報流程 + 使用規則
+- - AGENT_STARTUP_PROTOCOL.md v1.1 — 新增「執行中卡住怎麼辦」區段，引導 Agent 查 troubleshooting-hub
+  - - skills/superpowers-guide.md v1.3 — MAPLAB 自建技能包表格新增 troubleshooting-hub 行 + 詳細區段
+   
+    - 設計原則：
+    - - troubleshooting-hub 只做路由（症狀 → 技能書），不重複寫解法
+      - - 找不到解法 → 回報 A1 → A1 補充到 hub → 全員受益
+        - - 解決核心問題：Agent 卡住時浪費 context 亂試，改為查表找解法
+         
+          - ---
+## v2.7 — 2026-03-17
 
 **seo-ads-agent.md v2.1 + gtm-conversion-setup.md v1.0**
 

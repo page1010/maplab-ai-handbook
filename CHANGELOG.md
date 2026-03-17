@@ -4,9 +4,36 @@
 格式：版本號 | 日期 | 變更摘要 | 執行 Agent
 
 ---
+## v2.7 — 2026-03-17（最新）
+
+**seo-ads-agent.md v2.1 + gtm-conversion-setup.md v1.0**
+
+執行 Agent：A3 Ads Monitor Agent（Claude Sonnet 4.6）
+
+**更新：**
+- `projects/seo-ads-agent.md` v2.1 — 素材要求區段新增 PMax 問句型標題建議（2 個，小幅測試用，追蹤 CTR 變化）
+- - `projects/gtm-conversion-setup.md` v1.0 — 新建 GTM 轉換事件設定 SOP（LINE 點擊 / 表單送出 / 電話點擊）
+  - - 版本紀錄表格修正（v1.1/v1.2 遺失修復 + v2.1 新增）
+    - - 相關連結新增 GTM SOP 路徑
+     
+      - **調整 1 — PMax 問句型標題（小幅測試）：**
+      - - 新增標題 1：辦週歲派對，餐點怎麼準備才不手忙腳亂？
+        - - 新增標題 2：台南外燴推薦｜質感派對餐桌，不用自己張羅
+          - - 追蹤方式：14 天後比較問句型 vs 原有標題 CTR 差異
+            - - 目標：CTR 從 0.63% 提升至 1.0–1.5%
+             
+              - **調整 3 — GTM 轉換事件 SOP：**
+              - - 三個事件完整設定步驟：GTM 觸發條件 + Meta Pixel 標籤 + Google Ads 轉換標籤
+                - - 包含驗證方法（Meta Pixel Helper + Google Ads 轉換報表）
+                  - - 包含重複 Pixel 處理步驟
+                    - - 包含給 A2 SEO Agent / A4 Pipeline Agent / A5 Data Agent 的備註
+                      - - 目標：PMax CPA 從 NT$322 降至 NT$200 以下
+                       
+                        - ---
 
 
-## v2.6 — 2026-03-17（最新）
+
+## v2.6 — 2026-03-17
 
 **seo-ads-agent.md v2.0 完整重寫 — 修正亂碼 + 廣告系統框架建立**
 

@@ -7,21 +7,23 @@
 ## 一、Repo 分工地圖
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│              maplab-ai-handbook  （公開）                │
-│              ← 治理層 / 所有 Agent 的入口               │
-│  README → PROJECT_CONTEXT → AI_WORKFLOW_MAP             │
-│  AGENT_RULES → AGENT_STARTUP_PROTOCOL → CHANGELOG       │
-└──────────────────────┬──────────────────────────────────┘
-                       │ 指揮 & 文件連結
-          ┌────────────┼────────────────┐
-          ↓            ↓                ↓
+┌──────────────────────────────────────────────────────────┐
+│  maplab-ai-handbook （公開）                               │
+│  ← 治理層 / 所有 Agent 的入口                               │
+│                                                          │
+│  README ─→ AI_WORKFLOW_MAP ─→ AGENT_RULES                │
+│  AGENT_STARTUP_PROTOCOL ─→ CURRENT_EXECUTION_BOARD       │
+│  CHANGELOG ─→ skills/(11) ─→ projects/(6) ─→ handoff/(5) │
+└──────────────────────┬───────────────────────────────────┘
+                       │  指揮 & 文件連結
+         ┌─────────────┼────────────────┐
+         ↓             ↓                ↓
 ┌─────────────┐ ┌─────────────┐ ┌─────────────────┐
 │  maplab-    │ │  maplab-    │ │  maplab-        │
 │  pipeline   │ │  Detasys    │ │  master-data    │
-│  （私有）   │ │  （私有）   │ │  （私有，待建） │
-│  執行層     │ │  執行層     │ │  資料層         │
-│  A4 負責    │ │A2/A3/A6負責 │ │  A5 負責        │
+│ （公開）     │ │ （私有）     │ │ （公開）         │
+│  執行層      │ │  執行層      │ │  資料層          │
+│  A4 負責     │ │ A3 Ads Team │ │  A5 負責         │
 └─────────────┘ └─────────────┘ └─────────────────┘
 ```
 
@@ -31,30 +33,30 @@
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│                    MAPLAB AI Team                       │
+│                    MAPLAB AI Team                        │
 ├──────────┬──────────────────────────────────────────────┤
-│  Agent   │  角色 + 負責模型                             │
+│  Agent   │  角色 + 建議模型                               │
 ├──────────┼──────────────────────────────────────────────┤
-│  A1      │  Handbook Agent（Claude）                    │
-│          │  → 文件治理、規則維護、交接管理              │
+│  A1      │  Handbook Agent（Claude）                     │
+│          │  → 文件治理、規則維護、交接管理、系統巡查        │
 ├──────────┼──────────────────────────────────────────────┤
-│  A2      │  SEO Content Agent（GPT）                    │
-│          │  → SEO 文章生成、WordPress 發文              │
+│  A2      │  SEO Content Agent（GPT）                     │
+│          │  → SEO 文章生成、WordPress 發文                │
 ├──────────┼──────────────────────────────────────────────┤
-│  A3      │  Ads Monitor Agent（GPT / Claude）           │
-│          │  → 廣告成效分析、異常偵測                    │
+│  A3      │  Ads Monitor Agent — Ads Team（GPT / Claude） │
+│          │  → 廣告監控、成效分析、GTM 設定、腳本維護       │
+│          │  （v2.4 起合併原 A6 所有職責）                  │
 ├──────────┼──────────────────────────────────────────────┤
-│  A4      │  Pipeline Agent（Claude）                    │
-│          │  → 相簿自動化、Google Photos → Drive         │
+│  A4      │  Pipeline Agent（Claude）                     │
+│          │  → 相簿自動化、Google Photos → Drive           │
 ├──────────┼──────────────────────────────────────────────┤
-│  A5      │  Master Data Agent（Gemini / Claude）        │
-│          │  → 廚房 ERP、Sheets 主資料結構               │
+│  A5      │  Master Data Agent（Gemini / Claude）         │
+│          │  → 廚房 ERP、Sheets 主資料結構                 │
 ├──────────┼──────────────────────────────────────────────┤
-│  A6      │  Ads Tech Agent（Claude）                    │
-│          │  → 廣告腳本維護、OAuth 修復                  │
+│  A7      │  AI Reply System Agent（GPT）                 │
+│          │  → 對話整理、Line OA 回覆模組                  │
 ├──────────┼──────────────────────────────────────────────┤
-│  A7      │  AI Reply System Agent（GPT）                │
-│          │  → 對話整理、Line OA 回覆模組                │
+│  ~~A6~~  │  已合併入 A3 Ads Team（v2.4）                  │
 └──────────┴──────────────────────────────────────────────┘
 ```
 
@@ -68,22 +70,22 @@
   Line OA（客戶對話）
   Meta Ads（廣告數據）
   Google Search Console（SEO 數據）
-         │
-         ▼
+          │
+          ▼
 【A4 Pipeline Agent】
   相簿整理 / WebP 轉檔 / Drive 歸檔
-         │
-         ▼
+          │
+          ▼
 【A5 Master Data Agent】
   廚房 ERP / 活動訂單 / 客戶資料
-         │
-    ┌────┴────┐
-    ▼         ▼
-【A2/A3/A6】  【A7】
-  SEO & 廣告   回覆知識庫
-  監控分析     Line OA 模組
-         │
-         ▼
+          │
+    ┌─────┴─────┐
+    ▼           ▼
+【A3 Ads Team】 【A7】
+  SEO & 廣告     回覆知識庫
+  監控分析        Line OA 模組
+    │
+    ▼
 【A1 Handbook Agent】（治理層，橫跨所有環節）
   文件更新 / 版本紀錄 / Agent 交接
 ```
@@ -95,48 +97,80 @@
 ```
 你是新接手的 Agent？請按這個順序讀：
 
-  [1] README.md          → 系統使命 & 大局觀
-         │
-  [2] PROJECT_CONTEXT.md → 各專案現況 & 依賴
-         │
-  [3] AI_WORKFLOW_MAP.md → 模型分工 & 協作流程
-         │
-  [4] AGENT_RULES.md     → 你的角色 & 禁止事項
-         │
-  [5] AGENT_STARTUP_PROTOCOL.md → 接手 SOP
-         │
-  [6] projects/你的專案.md → 目前任務狀態
-         │
-  [7] skills/superpowers-guide.md → 工具箱
-         │
-  [8] handoff/ + CHANGELOG.md → 上一個人做了什麼
-         │
-         ▼
-    ✅ 開始執行任務
+[1] SYSTEM_MAP.md          → 你在這裡（系統全圖）
+     │
+[2] README.md              → 系統使命 + 商業目標 + 專案地圖
+     │
+[3] AI_WORKFLOW_MAP.md     → 模型分工 & 協作流程
+     │
+[4] AGENT_RULES.md         → 你的角色 & 禁止事項
+     │
+[5] AGENT_STARTUP_PROTOCOL → 接手 SOP + 卡住急救
+     │
+[6] CURRENT_EXECUTION_BOARD → 現在誰在做什麼
+     │
+[7] projects/你的專案.md    → 目前任務狀態
+     │                        + skills/superpowers-guide.md → 工具箱
+     │                        + CHANGELOG.md → 版本紀錄
+     ▼
+✅ 開始執行任務
+     │
+     ├── 卡住？→ skills/troubleshooting-hub.md
+     └── 完成？→ handoff/HANDOFF_TEMPLATE.md
 ```
 
 ---
 
-## 五、模型選擇速查
+## 五、技能書速查地圖
 
 ```
-任務類型                    建議使用模型
-─────────────────────────────────────────
-長文整理 / 系統文件          → Claude
-架構收斂 / 代碼閱讀          → Claude
-handoff 撰寫 / 規格梳理      → Claude
-─────────────────────────────────────────
-策略整合 / 商業邏輯          → GPT
-行銷文案 / 文字優化          → GPT
-跨專案框架 / 決策輔助        → GPT
-─────────────────────────────────────────
-Google Sheets 結構規劃       → Gemini
-Drive / Gmail 整合           → Gemini
-資料表格設計                 → Gemini
-─────────────────────────────────────────
+skills/（共 11 個檔案）
+├── superpowers-guide.md          ← 入口：技能導覽
+├── troubleshooting-hub.md        ← 卡住急救（13 症狀路由表）
+├── context-compression-guide.md  ← Prompt 太長防線
+├── ai-model-guide.md             ← Claude/Gemini/GPT 選用
+├── github-api-workflow-guide.md  ← GitHub API 開發流程
+├── colab-resilience-guide.md     ← Colab 防死機
+├── sheets-tracking-guide.md      ← Google Sheets 追蹤
+├── strategic-review-guide.md     ← 大局觀分析
+├── systematic-debugging-cloud-guide.md ← 雲端除錯
+├── verification-checklist-guide.md     ← 完成驗證
+└── lessons-learned.md            ← 事故紀錄（INCIDENT-001）
 ```
 
 ---
 
-*版本：v1.0 | 建立：2026-03-14 | 維護者：A1 Handbook Agent*
+## 六、模型選擇速查
+
+```
+任務類型                          建議使用模型
+─────────────────────────────────────────
+長文整理 / 系統文件            → Claude
+架構收斂 / 代碼閱讀            → Claude
+handoff 撰寫 / 規格梳理       → Claude
+─────────────────────────────────────────
+策略整合 / 商業邏輯            → GPT
+行銷文案 / 文字優化            → GPT
+跨專案框架 / 決策輔助          → GPT
+─────────────────────────────────────────
+Google Sheets 結構規劃         → Gemini
+Drive / Gmail 整合             → Gemini
+資料表格設計                   → Gemini
+─────────────────────────────────────────
+不確定？→ 查 skills/ai-model-guide.md
+```
+
+---
+
+## 七、唯一資料來源規則
+
+```
+✅ Agent 讀 GitHub（maplab-ai-handbook = 唯一真相來源）
+❌ Agent 不讀 Notion（僅供人類使用）
+✅ 所有進度、版本、技術文件以 GitHub commit 為準
+```
+
+---
+
+*版本：v2.0 | 更新：2026-03-17 | 維護者：A1 Handbook Agent*
 *讀完這頁 + README.md，你就掌握了整個系統的全貌。*

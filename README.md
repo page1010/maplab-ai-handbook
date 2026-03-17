@@ -21,7 +21,6 @@ MAPLAB AI 系統的商業主軸是：
 **降低重工、提升內容生產效率、把知識沉澱成可複用資產，最終支援 MAPLAB Kitchen 的品牌成長、廣告優化、ERP 效率與自動回覆能力。**
 
 具體來說：
-
 - 相簿整理與命名自動化 → 減少活動後手動作業時間
 - SEO 文章與廣告監控 → 降低行銷人力成本，提升投放精準度
 - 廚房 ERP 主資料 → 讓訂單、品項、客戶資料可被追蹤與重用
@@ -48,27 +47,42 @@ MAPLAB AI 系統的商業主軸是：
 
 | 專案 | 負責 Agent | 主要 Repo | 當前狀態 |
 |------|-----------|----------|---------|
-| MAPLAB Pipeline（相簿自動化） | A4 | maplab-pipeline | Phase 1 進行中 |
-| SEO & Ads Agent | A2/A3 | maplab-Detasys | SEO Python v1.4，廣告修復中 |
-| MAPLAB Master Data（廚房 ERP） | A5 | maplab-master-data | Schema v0.1 設計中 |
-| AI Reply System（自動回覆） | A7 | maplab-ai-handbook | 規則建立中 |
-| Handbook & 系統治理 | A1 | maplab-ai-handbook（本 repo） | 持續維護 |
+| MAPLAB Pipeline（相簿自動化） | A4 | maplab-pipeline | Phase 2/3 完成，cloud-only，等待用戶確認相片來源 |
+| SEO & Ads（Ads Team） | A3 | maplab-Detasys | seo-ads-agent v2.1 + GTM v15 已發布 |
+| MAPLAB Master Data（廚房 ERP） | A5 | maplab-master-data | Schema v0.1 + QUOTE_DRAFT 完成 |
+| AI Reply System（自動回覆） | A7 | maplab-ai-handbook | v1.0 框架建立完成 |
+| Handbook & 系統治理 | A1 | maplab-ai-handbook（本 repo） | v2.9 持續維護 |
 
-**Notion 控制台**（任務看板、最新交辦）：請向 owner 索取連結，或搜尋「AI 自動工作團隊控制台」
+### 5.1 各專案詳細脈絡
+
+**Pipeline（相簿自動化）：** Google Photos（唯讀）→ WebP 轉檔 → Google Drive 歸檔。關鍵約束：絕對不得刪除原始照片。詳見 [projects/maplab-pipeline.md](./projects/maplab-pipeline.md)
+
+**SEO & Ads（Ads Team）：** 廣告監控 + SEO 內容 + GTM 轉換事件。A3 負責所有廣告任務（v2.4 起合併原 A6）。詳見 [projects/seo-ads-agent.md](./projects/seo-ads-agent.md)
+
+**Master Data（廚房 ERP）：** 客戶、訂單、食材、報價單。Google Sheets 為主。詳見 [projects/maplab-master-data.md](./projects/maplab-master-data.md)
+
+**AI Reply System：** 對話紀錄整理 + 回覆規則 + Line OA。詳見 [projects/ai-reply-system.md](./projects/ai-reply-system.md)
+
+**Handbook：** 本 repo，所有 Agent 知識基礎與治理中樞。
+
+### 5.2 系統依賴關係
+
+Handbook（治理層）連結所有專案。執行鏈：Master Data（資料底座）→ Pipeline（資料流動）→ SEO/Ads（分析監控）→ AI Reply（知識應用）。
 
 ---
 
 ## 6. Agent Roster（快速查詢）
 
-| Agent | 名稱 | 主要職責 | 建議使用模型 |
-|-------|------|---------|------------|
+| Agent | 名稱 | 主要職責 | 建議模型 |
+|-------|------|---------|--------|
 | A1 | Handbook Agent | 系統文件、規則治理、交接維護 | Claude |
 | A2 | SEO Content Agent | SEO 文章生成與優化 | GPT |
-| A3 | Ads Monitor Agent | 廣告監控、成效分析 | GPT / Claude |
+| A3 | Ads Monitor Agent（Ads Team） | 廣告監控、成效分析、技術文件 | GPT / Claude |
 | A4 | Pipeline Agent | 資料流程、相簿整理自動化 | Claude |
 | A5 | Master Data Agent | 廚房 ERP、主資料結構 | Gemini / Claude |
-| A6 | Ads Tech Agent | 廣告技術文件、腳本維護 | Claude |
 | A7 | AI Reply System Agent | 對話紀錄整理、自動回覆模組 | GPT |
+
+> A6 已於 v2.4 合併入 A3 Ads Team，不再單獨使用。
 
 詳細角色規則請見 [AGENT_RULES.md](./AGENT_RULES.md)
 
@@ -76,66 +90,52 @@ MAPLAB AI 系統的商業主軸是：
 
 ## 7. Document Structure（本 Repo 結構）
 
-```
-maplab-ai-handbook/
-├── README.md                      ← 你在這裡（系統大局觀）
-├── SYSTEM_MAP.md                  ← 視覺化系統全圖（推薦第一個看）
-├── PROJECT_CONTEXT.md             ← 各專案詳細地圖
-├── AI_WORKFLOW_MAP.md             ← Agent 協作流程圖
-├── AGENT_RULES.md                 ← 所有 Agent 共用行為準則 v1.5
-├── AGENT_STARTUP_PROTOCOL.md     ← 接手前必讀 SOP
-├── REPO_SYNC_RULES.md             ← Repo 間同步規則
-├── CURRENT_EXECUTION_BOARD.md    ← 即時執行看板
-├── CHANGELOG.md                   ← 系統版本演進紀錄
-├── projects/
-│   ├── ai-reply-system.md         ← A7 專案文件
-│   ├── maplab-ads-monitor.md      ← A6 技術文件
-│   ├── maplab-master-data.md      ← A5 專案文件
-│   ├── maplab-pipeline.md         ← A4 專案文件
-│   └── seo-ads-agent.md           ← A2/A3 專案文件
-├── skills/
-│   └── superpowers-guide.md       ← 13 項核心技能導覽
-└── handoff/
-    └── HANDOFF_TEMPLATE.md        ← 標準交接格式
-```
+    maplab-ai-handbook/
+    ├── README.md                    ← 你在這裡
+    ├── SYSTEM_MAP.md                ← 視覺化系統全圖
+    ├── AI_WORKFLOW_MAP.md           ← Agent 協作流程圖
+    ├── AGENT_RULES.md               ← Agent 行為準則 v1.6
+    ├── AGENT_STARTUP_PROTOCOL.md    ← 接手 SOP v1.1
+    ├── REPO_SYNC_RULES.md           ← Repo 間同步規則
+    ├── CURRENT_EXECUTION_BOARD.md   ← 即時看板
+    ├── CHANGELOG.md                 ← 版本紀錄
+    ├── projects/（6 個專案文件）
+    ├── skills/（11 個技能書）
+    └── handoff/（5 個交接文件）
 
 ---
 
 ## 8. Quick Start（接手時讀這個）
 
-接手前必讀順序（Step 1 → 8）：
-
-**Step 1.** 閱讀 [SYSTEM_MAP.md](./SYSTEM_MAP.md)（視覺化全圖，1分鐘掌握全局）
-
-**Step 2.** 閱讀本 README.md（系統使命與商業目標）
-
-**Step 3.** 閱讀 [PROJECT_CONTEXT.md](./PROJECT_CONTEXT.md)（各專案現況）
-
-**Step 4.** 閱讀 [AI_WORKFLOW_MAP.md](./AI_WORKFLOW_MAP.md)（協作流程）
-
-**Step 5.** 閱讀 [AGENT_RULES.md](./AGENT_RULES.md)（角色與禁止事項）
-
-**Step 6.** 閱讀 [AGENT_STARTUP_PROTOCOL.md](./AGENT_STARTUP_PROTOCOL.md)（接手 SOP）
-
-**Step 7.** 閱讀 [CURRENT_EXECUTION_BOARD.md](./CURRENT_EXECUTION_BOARD.md)（現在誰在做什麼）
-
-**Step 8.** 閱讀對應 [projects/](./projects/) + [CHANGELOG.md](./CHANGELOG.md)
+**Step 1.** [SYSTEM_MAP.md](./SYSTEM_MAP.md)（視覺化全圖）
+**Step 2.** 本 README.md（系統使命 + 專案地圖）
+**Step 3.** [AI_WORKFLOW_MAP.md](./AI_WORKFLOW_MAP.md)（協作流程）
+**Step 4.** [AGENT_RULES.md](./AGENT_RULES.md)（角色與禁止事項）
+**Step 5.** [AGENT_STARTUP_PROTOCOL.md](./AGENT_STARTUP_PROTOCOL.md)（接手 SOP + 卡住急救）
+**Step 6.** [CURRENT_EXECUTION_BOARD.md](./CURRENT_EXECUTION_BOARD.md)（現在誰在做什麼）
+**Step 7.** 對應 [projects/](./projects/) + [skills/superpowers-guide.md](./skills/superpowers-guide.md) + [CHANGELOG.md](./CHANGELOG.md)
 
 ---
 
-## 9. Repo Map → 詳見 SYSTEM_MAP.md
+## 9. Repo Map
 
-[點這裡看完整視覺化地圖 →](./SYSTEM_MAP.md)
+[完整視覺化地圖 →](./SYSTEM_MAP.md)
 
 | Repo | 性質 | 用途 |
 |------|------|------|
 | maplab-ai-handbook（本 repo） | 公開・治理層 | Agent 規則、文件、handoff 中樞 |
-| maplab-pipeline | 私有・執行層 | 相簿自動化、Google Photos → WebP → Drive |
+| maplab-pipeline | 公開・執行層 | 相簿自動化 |
 | maplab-Detasys | 私有・執行層 | SEO/廣告 Python 腳本 |
-| maplab-master-data | 私有・資料層 | 廚房 ERP、主資料 Sheets |
+| maplab-master-data | 公開・資料層 | 廚房 ERP、主資料 Sheets |
 
 同步規則詳見 [REPO_SYNC_RULES.md](./REPO_SYNC_RULES.md)
 
 ---
 
-*系統版本：v2.2 | 最後更新：2026-03-14 | 維護者：A1 Handbook Agent*
+## 10. 唯一資料來源規則
+
+**GitHub 是所有 Agent 的唯一資料來源。** Notion 僅供人類使用（控制台/看板），Agent 不讀 Notion。所有進度、版本、技術文件一律以 GitHub commit 為準。
+
+---
+
+*系統版本：v2.9 | 最後更新：2026-03-17 | 維護者：A1 Handbook Agent | README v2.3*

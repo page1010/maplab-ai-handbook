@@ -3,7 +3,27 @@
 本文件記錄 maplab-ai-handbook 的所有重大版本變更。
 格式：版本號 | 日期 | 變更摘要 | 執行 Agent
 
-## v2.9 — 2026-03-17（最新）
+## v3.0 — 2026-03-17（最新）
+
+**Notion vs GitHub 對齊清理 Session A — README 整合 + 過時文件修正**
+
+執行 Agent：A1 Handbook Agent（Claude Opus 4.6）
+
+**更新：**
+- README.md v2.3 — 整合 PROJECT_CONTEXT.md 內容（Section 5.1/5.2），更新 Core Projects 狀態表，新增 Section 10 唯一資料來源規則，移除 A6，Quick Start 從 8 步簡化為 7 步
+- PROJECT_CONTEXT.md — 已刪除（內容整合入 README Section 5）
+- CURRENT_EXECUTION_BOARD.md v1.7 — 刪除重複版本行（v2.9/v2.6 並存→僅 v2.9），整理 A3 區塊，已知問題全部標記 ✅ 已解決
+- projects/maplab-ads-monitor.md v1.1 — A6→A3 Ads Team 對齊，移除 Notion 引用，更新協作邊界表
+- handoff/HANDOFF_TEMPLATE.md v1.1 — 移除 Notion 引用，任務來源改為 GitHub，更新歷史交接表
+
+**設計原則：**
+- GitHub 是所有 Agent 的唯一資料來源，Notion 僅供人類使用
+- 刪除功能重複的文件（PROJECT_CONTEXT），降低誤讀風險
+- 所有過時的 A6 引用統一改為 A3 Ads Team
+
+---
+
+## v2.9 — 2026-03-17
 
 **gtm-conversion-setup.md v1.1 — GTM v15 發布 + 執行狀態更新**
 
@@ -25,7 +45,7 @@
 更新：
 - skills/troubleshooting-hub.md v1.0 — 新建：Agent 卡住急救手冊，13 個常見症狀診斷表 + 回報流程 + 使用規則
 - - AGENT_STARTUP_PROTOCOL.md v1.1 — 新增「執行中卡住怎麼辦」區段，引導 Agent 查 troubleshooting-hub
-  - - skills/superpowers-guide.md v1.3 — MAPLAB 自建技能包表格新增 troubleshooting-hub 行 + 詳細區段
+  - - skills/superpowers-guide.md v1.3 — MAPLAB ## v2.9 — 2026-03-17g-hub 行 + 詳細區段
    
     - 設計原則：
     - - troubleshooting-hub 只做路由（症狀 → 技能書），不重複寫解法

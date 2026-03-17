@@ -1,5 +1,5 @@
 # Superpowers Skills 導覽手冊 — MAPLAB AI Agent 版
-版本：v1.2 | 建立：2026-03-14 | 更新：2026-03-17
+版本：v1.3 | 建立：2026-03-14 | 更新：2026-03-17
 
 > 完整互動版：https://www.notion.so/Superpowers-Skills-320ab0806d5c807c95c7d8d633a7e5c5
 > 原始 Repo：https://github.com/obra/superpowers
@@ -36,6 +36,7 @@
 | 完成驗證 | verification-checklist-guide | 5步驗證關卡 + MAPLAB 場景表 |
 | 雲端除錯 | systematic-debugging-cloud-guide | 四階段 + Colab/API/Drive 場景 |
 | 選 AI | ai-model-guide | Claude/Gemini/GPT 分工 |
+| 卡住急救 | troubleshooting-hub | 症狀→解法→技能書路由表 |
 
 ---
 
@@ -71,6 +72,12 @@
 - 對照表 + 跨 AI 協作範例 + GPT 幻覺校正 SOP
 - 路徑：skills/ai-model-guide.md
 
+- ### troubleshooting-hub — 卡住急救手冊
+- - 何時用：執行中卡住，嘗試 1-2 次修不好
+  - - 13 個常見症狀 → 解法 → 技能書路由表
+    - - 找不到解法 → 回報格式 → A1 補充 → 全員受益
+      - - 路徑：skills/troubleshooting-hub.md
+
 ---
 
 ## 版本紀錄
@@ -80,3 +87,4 @@
 | v1.0 | 2026-03-14 | 從 Notion 同步 | A1 |
 | v1.1 | 2026-03-17 | 加入 colab-resilience-guide | A4 |
 | v1.2 | 2026-03-17 | 加入 github-api-workflow / verification-checklist / systematic-debugging-cloud | A4 |
+| v1.3 | 2026-03-17 | 加入 troubleshooting-hub | A1 |

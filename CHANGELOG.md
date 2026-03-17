@@ -3,9 +3,20 @@
 本文件記錄 maplab-ai-handbook 的所有重大版本變更。
 格式：版本號 | 日期 | 變更摘要 | 執行 Agent
 
+## v2.9 — 2026-03-17（最新）
+
+**gtm-conversion-setup.md v1.1 — GTM v15 發布 + 執行狀態更新**
+
+執行 Agent：A3 Ads Monitor Agent（Claude Opus 4.6）
+
+**更新：**
+- GTM 版本 15 已發布至 Live 環境：Meta Pixel Contact 事件（LINE Click + Phone Click）
+- - `projects/gtm-conversion-setup.md` v1.1 — 執行狀態表格更新，重複 Pixel 已確認
+  - - 容器品質警告確認為誤判（該頁面實際已安裝 GTM 代碼）
+
 ---
 
-## v2.8 — 2026-03-17（最新）
+## v2.8 — 2026-03-17
 
 **troubleshooting-hub v1.0 + AGENT_STARTUP_PROTOCOL v1.1 + superpowers-guide v1.3**
 

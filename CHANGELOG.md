@@ -3,7 +3,26 @@
 本文件記錄 maplab-ai-handbook 的所有重大版本變更。
 格式：版本號 | 日期 | 變更摘要 | 執行 Agent
 
-## v3.0 — 2026-03-17（最新）
+## v3.1 — 2026-03-18（最新）
+
+**Phase 3：多 Agent 團隊協作強化 — 簽到/簽退 + 檔案衝突檢查 + 技能書路由**
+
+執行 Agent：A1 Handbook Agent（Claude Opus 4.6）
+
+**更新：**
+- CURRENT_EXECUTION_BOARD.md v2.0 — 新增 Active Session 即時簽到區（Agent/時間/檔案/預計完成）、新增 Session Log 歷史紀錄表、簽到規則說明、系統狀態更新為 Phase 3
+- AI_WORKFLOW_MAP.md v2.1 — 新增 Rule 6 簽到/簽退、新增 Rule 7 檔案衝突檢查、Handoff Protocol 升級為 5 步（新增 Step 0 清除 Active Session）
+- AGENT_STARTUP_PROTOCOL.md v1.1 — Step 2 移除已刪除的 PROJECT_CONTEXT.md 改為讀 BOARD Active Session、新增 Step 9 簽到、啟動步驟 8→9 步、收尾 SOP 新增清除簽到 + 寫 Session Log（修復 Issue #009）
+- skills/superpowers-guide.md v1.4 — 新增「任務類型 → 建議預讀技能書」路由表（10 種任務對照）、修正 troubleshooting-hub 格式
+
+**設計原則：**
+- 簽到/簽退解決多 Agent 並行時的檔案衝突問題
+- Session Log 讓每次 session 的工作有跡可查
+- 技能書路由表讓 Agent 開工前就知道該讀什麼，而非卡住才查
+
+---
+
+## v3.0 — 2026-03-17
 
 **Notion vs GitHub 對齊清理 Session A — README 整合 + 過時文件修正**
 

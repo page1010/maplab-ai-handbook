@@ -1,5 +1,5 @@
 # Superpowers Skills 導覽手冊 — MAPLAB AI Agent 版
-版本：v1.4 | 建立：2026-03-14 | 更新：2026-03-18
+版本：v1.5 | 建立：2026-03-14 | 更新：2026-03-18
 
 > 完整互動版：https://www.notion.so/Superpowers-Skills-320ab0806d5c807c95c7d8d633a7e5c5
 > 原始 Repo：https://github.com/obra/superpowers
@@ -16,11 +16,12 @@
 | 寫長文件 / 大量修改 | context-compression-guide + verification-checklist-guide | 防 prompt 過長 + 完成驗證 |
 | 廣告相關任務 | ai-model-guide | 選 Claude 或 Gemini 執行 |
 | Colab 長時間任務（>30 min） | colab-resilience-guide + systematic-debugging-cloud-guide | 防死機 + 雲端除錯 |
-| Google Sheets 資料操作 | sheets-tracking-guide + ai-model-guide | Sheets 追蹤 + Gemini 整合 |
+| Google Sheets 資料操作 | sheets-tracking-guide + sheets-data-cleaning-guide + ai-model-guide | Sheets 追蹤 + 清洗工具 + Gemini 整合 |
+| Sheets 資料清洗（去重/格式修正/批次）| sheets-data-cleaning-guide | 公式 + Apps Script + SOP |
 | 遇到 Bug / 執行卡住 | troubleshooting-hub → 對應技能書 | 先查急救表再行動 |
 | 新 Agent 首次接手 | 全部讀 AGENT_STARTUP_PROTOCOL.md 9 步驟 | 建立大局觀 |
 | 系統文件維護 / 治理 | context-compression-guide + verification-checklist-guide + strategic-review-guide | 長文 + 驗證 + 大局觀 |
-| Pipeline 相簿整理 | colab-resilience-guide + media-limit-workaround | 防死機 + 媒體限制 |
+| Pipeline 相簿整理 | photo-pipeline-toolkit-guide + colab-resilience-guide + media-limit-workaround | 全流程工具鏈 + 防死機 + 媒體限制 |
 | 跨專案策略規劃 | strategic-review-guide + ai-model-guide | 大局觀 + AI 分工 |
 
 ---
@@ -55,6 +56,8 @@
 | 完成驗證 | verification-checklist-guide | 5步驗證關卡 + MAPLAB 場景表 |
 | 雲端除錯 | systematic-debugging-cloud-guide | 四階段 + Colab/API/Drive 場景 |
 | 選 AI | ai-model-guide | Claude/Gemini/GPT 分工 |
+| Sheets 清洗 | sheets-data-cleaning-guide | 公式+腳本+SOP 工具箱 |
+| 相簿 Pipeline | photo-pipeline-toolkit-guide | Takeout→分類→去重→WebP |
 | 卡住急救 | troubleshooting-hub | 症狀→解法→技能書路由表 |
 
 ---
@@ -91,6 +94,18 @@
 - 對照表 + 跨 AI 協作範例 + GPT 幻覺校正 SOP
 - 路徑：skills/ai-model-guide.md
 
+### sheets-data-cleaning-guide — Sheets 資料清洗工具箱
+- 何時用：品項去重、品名清洗、欄位格式驗證、批次操作
+- 公式工具箱（TRIM/REGEXREPLACE/COUNTIF）+ Apps Script 自動化 + 清洗 SOP
+- MAPLAB 特定解法：OrderLines R6 重建、QUOTE_DRAFT 增強、DST 去重
+- 路徑：skills/sheets-data-cleaning-guide.md
+
+### photo-pipeline-toolkit-guide — 相簿整理全流程工具鏈
+- 何時用：Google Photos Takeout 解壓→分類→去重→WebP→歸檔
+- Takeout JSON metadata 合併、EXIF 讀寫、HEIC 支援
+- 重複偵測（MD5 + perceptual hash）、Gemini Vision 分類、Colab checkpoint
+- 路徑：skills/photo-pipeline-toolkit-guide.md
+
 ### troubleshooting-hub — 卡住急救手冊
 - 何時用：執行中卡住，嘗試 1-2 次修不好
 - 13 個常見症狀 → 解法 → 技能書路由表
@@ -108,3 +123,4 @@
 | v1.2 | 2026-03-17 | 加入 github-api-workflow / verification-checklist / systematic-debugging-cloud | A4 |
 | v1.3 | 2026-03-17 | 加入 troubleshooting-hub | A1 |
 | v1.4 | 2026-03-18 | 新增「任務類型 → 建議預讀技能書」路由表；修正 troubleshooting-hub 格式 | A1 |
+| v1.5 | 2026-03-18 | 新增 sheets-data-cleaning-guide + photo-pipeline-toolkit-guide 兩本技能書路由 | A1 |

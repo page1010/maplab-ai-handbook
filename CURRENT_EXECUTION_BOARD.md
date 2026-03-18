@@ -6,9 +6,37 @@
 
 ## 系統整體狀態
 
-當前階段：Phase 2 Notion vs GitHub 對齊清理已完成 → Phase 3 多 Agent 團隊協作強化（已規劃，待執行）
-最新系統版本：v3.0（2026-03-17）
-當前最高優先任務：執行 Phase 3 四項任務（見下方「下次接手待辦」）
+當前階段：Phase 3 多 Agent 團隊協作強化（執行中）
+最新系統版本：v3.1（2026-03-18）
+當前最高優先任務：Phase 3 任務 1-4 執行中
+
+---
+
+## 🟢 Active Session（即時簽到區）
+
+> 所有 Agent 開工前必須在此登記，收工前必須清除。
+> 其他 Agent 開工前先查此區 — 若目標檔案已被佔用，等待或換任務。
+
+| Agent | 開始時間 | 正在修改的檔案 | 預計完成項目 |
+|-------|---------|---------------|-------------|
+| A1 | 2026-03-18 11:00 | CURRENT_EXECUTION_BOARD.md, AI_WORKFLOW_MAP.md, AGENT_STARTUP_PROTOCOL.md, superpowers-guide.md, CHANGELOG.md | Phase 3 任務 1-4 + CHANGELOG |
+
+> ⚠️ 簽到規則：
+> - 開工 → 在此表格新增一行（你的 Agent 編號 / 時間 / 檔案 / 預計完成）
+> - 收工 → 刪除你的簽到行 + 在下方 Session Log 新增一條記錄
+> - 看到有人佔住你要改的檔案 → 等待或換其他任務，不要同時編輯
+
+---
+
+## 📋 Session Log（歷史紀錄）
+
+> 每次 session 結束必須留一條記錄。格式：誰 / 何時 / 做了什麼 / 改了哪些檔案 / 未完成什麼。
+
+| # | Agent | 時間 | 完成事項 | 修改檔案 | 未完成 / 備註 |
+|---|-------|------|---------|---------|--------------|
+| S-B | A1 | 2026-03-17 | Session B：SYSTEM_MAP v2.0、AI_WORKFLOW_MAP v2.0、AGENT_RULES v1.7 Notion 刪除線、CHANGELOG 更新（4 commits） | SYSTEM_MAP.md, AI_WORKFLOW_MAP.md, AGENT_RULES.md, CHANGELOG.md | Phase 3 待執行 |
+| S-A | A1 | 2026-03-17 | Session A：README v2.3 整合 PROJECT_CONTEXT、刪除 PROJECT_CONTEXT、BOARD v1.7、ads-monitor v1.1、HANDOFF_TEMPLATE v1.1、CHANGELOG v3.0（6 commits） | README.md, PROJECT_CONTEXT.md, CURRENT_EXECUTION_BOARD.md, seo-ads-agent.md, HANDOFF_TEMPLATE.md, CHANGELOG.md | — |
+| S-Ads | A3 | 2026-03-17 | seo-ads-agent.md v2.0→v2.1、gtm-conversion-setup.md v1.0→v1.1、CHANGELOG v2.6→v2.9 | seo-ads-agent.md, gtm-conversion-setup.md, CHANGELOG.md | 等使用者：Canva C款素材 / 暫停空殼活動 / 確認 A組 |
 
 ---
 
@@ -29,12 +57,12 @@
 ## 各 Agent 即時狀態
 
 ### A1 — Handbook Agent
-狀態：Phase 2 完成，Phase 3 已規劃待執行
-本次完成（2026-03-17～03-18）：
-- Session A（6 commits）：README v2.3 整合 PROJECT_CONTEXT、刪除 PROJECT_CONTEXT、BOARD v1.7、ads-monitor v1.1、HANDOFF_TEMPLATE v1.1、CHANGELOG v3.0
-- Session B（4 commits）：SYSTEM_MAP v2.0、AI_WORKFLOW_MAP v2.0、AGENT_RULES v1.7 Notion 刪除線、CHANGELOG 更新
-- 總計 12 commits，所有檔案 Notion vs GitHub 對齊完畢
-下一步：執行 Phase 3 多 Agent 團隊協作強化（見下方）
+狀態：Phase 3 執行中
+本次完成（2026-03-18）：
+- Phase 3 任務 1：CURRENT_EXECUTION_BOARD.md v2.0（簽到/簽退 + Session Log）
+- Phase 3 任務 2-4：執行中
+歷史完成（2026-03-17）：
+- Session A + B 共 12 commits，Phase 2 全部完成
 
 ### A2 — SEO Content Agent
 狀態：待機中
@@ -51,20 +79,7 @@
 - Canva C款素材完成並上傳
 - 暫停「開發潛在客戶2026」空殼活動
 - 確認「品牌知名度 A組」未發佈編輯內容
-
-- **GTM Contact Event Debug（A2 Session 2026-03-18）：**
-- 已完成：
-- - 根因診斷：首頁 LINE 按鈕用 lin.ee URL，但 GTM 觸發條件只比對 lihi2.com → Contact 事件不觸發
-  - - GTM 觸發器「僅連結」已修改：Click URL 改為 regex `(lihi2\.com|lin\.ee|line\.me)`
-    - - 觸發器已儲存（Workspace 16），但尚未發布
-      - - gtm-conversion-setup.md 已更新至 v1.2（含診斷與修正計畫）
-        - - skills/media-limit-workaround.md 已建立（Too much media 解決方案）
-         
-          - ⚠️ 發現次要問題：LINE 按鈕使用 target="_blank"，GTM「僅連結」觸發器可能無法捕捉點擊事件（Tag Assistant 測試時無 Link Click 事件）
-         
-          - 📋 **待辦清單（等 Owner 有空回來處理）：**
-          - - [ ] 修復 target="_blank" 問題（二擇一）：
-            - [ ]   - 方案 A：在「僅連結」觸發器啟用「等待代碼」(Wait for Tags) 選項
+GTM LINE 按鈕追蹤修復待辦：
             - [ ]     - 方案 B：改用「所有元素」(All Elements) 觸發器 + Click URL regex 條件
             - [ ] - [ ] GTM Preview 重新測試 → 確認 Link Click / Click 事件出現
             - [ ] - [ ] 確認 Meta - LINE Click Event 代碼觸發（Contact 事件）
@@ -86,48 +101,6 @@
 
 ---
 
-## 🔜 下次接手待辦 — Phase 3：多 Agent 團隊協作強化
-
-**背景：** 6-10 個 Agent 並行運作，現有規則解決了「我是誰」和「我能碰什麼」，但缺少三層機制：簽到/簽退、檔案鎖定意識、技能書主動路由。以下四項任務已經 owner 確認規劃，待執行。
-
-**接手前先讀：** skills/context-compression-guide.md（防 prompt 過長）、skills/github-api-workflow-guide.md（GitHub 編輯流程）
-
-### 任務 1：CURRENT_EXECUTION_BOARD.md v2.0 — 簽到/簽退機制
-- 新增「Active Session」區塊：Agent 編號 / 開始時間 / 正在改的檔案 / 預計完成項目
-- 新增「Session Log」標準格式：每次 session 結束必須留一條記錄（誰 / 何時 / 做了什麼 / 改了哪些檔案 / 未完成什麼）
-- Active Session 同時解決檔案鎖定 — 其他 Agent 開工前先看有沒有人佔住同個檔案
-- 預估：1 commit
-
-### 任務 2：AI_WORKFLOW_MAP.md v2.1 — 協作規則升級
-- 現有 Rule 1-5 保留
-- 新增 Rule 6：簽到/簽退 — 開工前在 BOARD 的 Active Session 登記，收工前清除並寫 Session Log
-- 新增 Rule 7：檔案衝突檢查 — 開工前查 Active Session，若目標檔案已被佔用，等待或換任務
-- Handoff Protocol 從 4 步變 5 步：Step 0 = 清除 Active Session 簽到
-- 預估：1 commit
-
-### 任務 3：AGENT_STARTUP_PROTOCOL.md v1.1 — 串接新機制
-- Step 2 移除已刪除的 PROJECT_CONTEXT.md 引用（目前還在引用已刪除的檔案）
-- 啟動前必讀清單加入：讀 BOARD 的 Active Session 確認沒有檔案衝突
-- 完成任務收尾 SOP 加入：清除自己的 Active Session + 寫 Session Log
-- 預估：1 commit
-
-### 任務 4：superpowers-guide.md v1.4 — 技能書主動路由表
-- 新增「任務類型 → 建議預讀技能書」對照表（不是卡住才查，是開工前就知道該讀什麼）
-- 路由範例：碰 API → github-api-workflow-guide + systematic-debugging-cloud-guide
-- 路由範例：寫長文件 → context-compression-guide + verification-checklist-guide
-- 路由範例：廣告相關 → ai-model-guide（選 Claude 或 Gemini）
-- 預估：1 commit
-
-### 最後：CHANGELOG.md 統一更新
-- 預估：1 commit
-- 總計：5 commits
-
-**執行順序：** 任務 1 → 2 → 3 → 4 → CHANGELOG（一次一個，每個任務先確認資源再動手）
-
-**技術提醒：** GitHub CodeMirror 6 編輯器用 `document.querySelector('.cm-content').cmTile.view.dispatch()` 替換內容，不要用 clipboard paste（會 append 而非 replace）。
-
----
-
 ## 已知問題
 
 | 問題 | 狀態 |
@@ -137,7 +110,7 @@
 | 006 CURRENT_EXECUTION_BOARD.md 重複區塊 | ✅ 已修正（v1.2） |
 | 007 seo-ads-agent.md 舊版亂碼 | ✅ 已修正（v2.0） |
 | 008 CURRENT_EXECUTION_BOARD 重複版本行 | ✅ 已修正（v1.7） |
-| 009 AGENT_STARTUP_PROTOCOL Step 2 引用已刪除的 PROJECT_CONTEXT.md | ⏳ 待修（Phase 3 任務 3） |
+| 009 AGENT_STARTUP_PROTOCOL Step 2 引用已刪除的 PROJECT_CONTEXT.md | ⏳ Phase 3 任務 3 修復中 |
 
 ---
 
@@ -150,4 +123,4 @@
 
 ---
 
-*版本：v1.8 | 系統版本：v3.0 | 維護者：A1 Handbook Agent*
+*版本：v2.0 | 系統版本：v3.1 | 維護者：A1 Handbook Agent*

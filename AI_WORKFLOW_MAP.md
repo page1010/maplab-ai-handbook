@@ -60,10 +60,11 @@ Google Photos（活動照片）、Line OA（客戶對話）、Meta Ads（廣告�
 
 任何 Agent 完成任務後，必須依序：
 
+**Step 0.** 清除 CURRENT_EXECUTION_BOARD.md 的 Active Session 簽到（刪除你的簽到行）
 **Step 1.** 更新對應 projects/ 文件的狀態欄位
 **Step 2.** 填寫 handoff/HANDOFF_TEMPLATE.md（記錄完成了什麼、下一步是什麼、阻塞點）
 **Step 3.** 更新 CHANGELOG.md（版本號 + 變更摘要）
-**Step 4.** 更新 CURRENT_EXECUTION_BOARD.md（你的 Agent 狀態 + 下一步）
+**Step 4.** 更新 CURRENT_EXECUTION_BOARD.md（你的 Agent 狀態 + 下一步 + 寫 Session Log）
 
 ---
 
@@ -87,7 +88,9 @@ Google Photos（活動照片）、Line OA（客戶對話）、Meta Ads（廣告�
 **規則 3：先確認再執行** — 不確定任務範圍時，回報給 owner 確認，不自行推斷
 **規則 4：GitHub 唯一** — GitHub commit 是唯一狀態真相。Agent 不讀 Notion，所有進度以 GitHub 為準
 **規則 5：用技能書** — 遇到已知問題先查 skills/，不要重新發明輪子
+**規則 6：簽到/簽退** — 開工前在 CURRENT_EXECUTION_BOARD.md 的 Active Session 登記（Agent 編號 / 時間 / 檔案 / 預計完成），收工前清除簽到行並寫 Session Log
+**規則 7：檔案衝突檢查** — 開工前查 Active Session，若目標檔案已被其他 Agent 佔用，等待或換任務，不要同時編輯同一檔案
 
 ---
 
-*版本：v2.0 | 更新：2026-03-17 | 維護者：A1 Handbook Agent*
+*版本：v2.1 | 更新：2026-03-18 | 維護者：A1 Handbook Agent*

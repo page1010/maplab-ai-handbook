@@ -3,7 +3,36 @@
 本文件記錄 maplab-ai-handbook 的所有重大版本變更。
 格式：版本號 | 日期 | 變更摘要 | 執行 Agent
 
-## v3.3 — 2026-03-18（最新）
+## v3.4 — 2026-03-18（最新）
+
+**Phase 4：系統治理重構 — 單一入口 + 任務池 + 強制 Startup/Handoff**
+
+執行 Agent：A1 Handbook Agent（Claude Opus 4.6）
+觸發來源：ChatGPT 對話「Agent協作與版本管理」v0.1–v0.3 問題診斷
+
+**診斷的問題：**
+- Agent 被 GitHub 歷史紀錄混淆，分不清已完成和進行中
+- 簽到簽退機制無人遵守（沒有強制卡點）
+- 分頁當掉 = 記憶歸零（進度只存在聊天上下文）
+- 沒有唯一真相入口，Agent 自己猜要讀哪個檔案
+
+**新增：**
+- CURRENT_STATUS.md v1.0 — 唯一最新狀態入口（極簡控制塔），所有 Agent 開工前第一讀，優先於所有其他文件
+- TASK_QUEUE.md v1.0 — 任務池，統一管理全部待辦，含認領規則和 Task Claim 格式
+- handoff/tasks/TASK_CARD_TEMPLATE.md v1.0 — 標準化任務卡模板（Goal/Confirmed/Done/Next/Blocker/Checkpoint）
+
+**更新：**
+- AGENT_STARTUP_PROTOCOL.md v1.1 → v1.2 — Step 1 改為 CURRENT_STATUS.md、9 步精簡為 6 步、新增強制 Startup Check 輸出格式、新增強制 Handoff Checkpoint 格式
+
+**設計原則（來自 ChatGPT 診斷）：**
+- 不靠 Agent 自律，靠系統強制（沒輸出 Startup Check = 不算啟動）
+- 記憶外部化（Task Card + Checkpoint），分頁可死但任務不失憶
+- 治理層（A1/Owner）維護全局 + 執行層（其他 Agent）只讀任務卡
+- 大局觀分層：人人看得到全局入口，但不需人人完整載入全局
+
+---
+
+## v3.3 — 2026-03-18
 
 **新增 A4/A5 專用技能書：資料清洗工具箱 + 相簿整理 Pipeline 工具鏈**
 

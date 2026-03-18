@@ -3,7 +3,27 @@
 本文件記錄 maplab-ai-handbook 的所有重大版本變更。
 格式：版本號 | 日期 | 變更摘要 | 執行 Agent
 
-## v3.2 — 2026-03-18（最新）
+## v3.3 — 2026-03-18（最新）
+
+**新增 A4/A5 專用技能書：資料清洗工具箱 + 相簿整理 Pipeline 工具鏈**
+
+執行 Agent：A1 Handbook Agent（Claude Opus 4.6）
+
+**新增：**
+- skills/sheets-data-cleaning-guide.md v1.0 — A5 資料清洗公式工具箱（TRIM/REGEXREPLACE/COUNTIF）、Apps Script 自動化（批次清洗/重複偵測/防重複匯入/超時保護）、資料清洗 SOP、MAPLAB 特定情境解法（OrderLines R6/QUOTE_DRAFT/DST去重）
+- skills/photo-pipeline-toolkit-guide.md v1.0 — A4 相簿整理全流程工具鏈：Takeout JSON metadata 合併、EXIF 讀寫（Pillow/piexif/HEIC）、重複偵測（MD5+perceptual hash）、Gemini Vision AI 分類、WebP 轉換+SEO 重命名、Colab checkpoint 機制、ASSET_LOG Sheets 追蹤整合
+
+**更新：**
+- skills/superpowers-guide.md v1.5 — 路由表新增 sheets-data-cleaning-guide + photo-pipeline-toolkit-guide，快速大綱新增兩本技能書
+
+**設計原則：**
+- 從 A4/A5 實戰痛點出發（品名後綴不統一、Apps Script 重複匯入、Takeout metadata 遺失、122K files 規模處理）
+- 提供可直接複製使用的公式和 Python 程式碼片段
+- 兼顧安全機制（預覽模式、備份、超時保護、checkpoint）
+
+---
+
+## v3.2 — 2026-03-18
 
 **合併 A2+A3 為 SEO & Ads Team + 全 Agent 狀態巡查**
 

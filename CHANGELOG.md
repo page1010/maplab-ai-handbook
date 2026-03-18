@@ -3,7 +3,24 @@
 本文件記錄 maplab-ai-handbook 的所有重大版本變更。
 格式：版本號 | 日期 | 變更摘要 | 執行 Agent
 
-## v3.1 — 2026-03-18（最新）
+## v3.2 — 2026-03-18（最新）
+
+**合併 A2+A3 為 SEO & Ads Team + 全 Agent 狀態巡查**
+
+執行 Agent：A1 Handbook Agent（Claude Opus 4.6）
+
+**更新：**
+- AGENT_RULES.md v1.8 — A2（SEO）+ A3（Ads）合併為 SEO & Ads Team，新增 SECTION 1.2 SEO↔Ads 協作協議（雙向資料流 + 共享文件 + 交接觸發點 + 協作原則），錯誤 005 記錄
+- CURRENT_EXECUTION_BOARD.md v2.1 — A1 簽退 + Session Log S-C + 全 Agent 狀態巡查更新（A2 Detasys 動態、A5 Items 清洗進度、Issue #009 修復確認）
+
+**設計原則：**
+- A2 和 A3 共享同一條行銷漏斗（關鍵字→內容→廣告→轉換），分開執行會導致資訊斷層
+- 新增 5 個交接觸發點，確保 SEO 和 Ads 任何變更都能即時通知對方
+- 不是取消角色差異，而是讓資訊流動更平滑
+
+---
+
+## v3.1 — 2026-03-18
 
 **Phase 3：多 Agent 團隊協作強化 — 簽到/簽退 + 檔案衝突檢查 + 技能書路由**
 

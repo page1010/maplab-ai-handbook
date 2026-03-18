@@ -51,6 +51,26 @@
 - Canva C款素材完成並上傳
 - 暫停「開發潛在客戶2026」空殼活動
 - 確認「品牌知名度 A組」未發佈編輯內容
+
+- **GTM Contact Event Debug（A2 Session 2026-03-18）：**
+- 已完成：
+- - 根因診斷：首頁 LINE 按鈕用 lin.ee URL，但 GTM 觸發條件只比對 lihi2.com → Contact 事件不觸發
+  - - GTM 觸發器「僅連結」已修改：Click URL 改為 regex `(lihi2\.com|lin\.ee|line\.me)`
+    - - 觸發器已儲存（Workspace 16），但尚未發布
+      - - gtm-conversion-setup.md 已更新至 v1.2（含診斷與修正計畫）
+        - - skills/media-limit-workaround.md 已建立（Too much media 解決方案）
+         
+          - ⚠️ 發現次要問題：LINE 按鈕使用 target="_blank"，GTM「僅連結」觸發器可能無法捕捉點擊事件（Tag Assistant 測試時無 Link Click 事件）
+         
+          - 📋 **待辦清單（等 Owner 有空回來處理）：**
+          - - [ ] 修復 target="_blank" 問題（二擇一）：
+            - [ ]   - 方案 A：在「僅連結」觸發器啟用「等待代碼」(Wait for Tags) 選項
+            - [ ]     - 方案 B：改用「所有元素」(All Elements) 觸發器 + Click URL regex 條件
+            - [ ] - [ ] GTM Preview 重新測試 → 確認 Link Click / Click 事件出現
+            - [ ] - [ ] 確認 Meta - LINE Click Event 代碼觸發（Contact 事件）
+            - [ ] - [ ] GTM 發布新版本（提交）
+            - [ ] - [ ] Meta Pixel Helper 驗證 Contact 事件
+            - [ ] - [ ] 更新 gtm-conversion-setup.md 至 v1.3（最終修正狀態）
 下次接手時必看：seo-ads-agent.md 第十節「下次 Agent 接手必問清單」
 
 ### A4 — Pipeline Agent

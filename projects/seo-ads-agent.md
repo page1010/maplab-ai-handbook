@@ -307,7 +307,7 @@ Landing Page 對應優先順序：
 
 ---
 
-## 十三、相關連結h
+## 十三、相關連結
 
 - Meta 廣告管理員：https://adsmanager.facebook.com/adsmanager/manage/campaigns?act=318634712
 - Meta 事件管理工具：https://eventsmanager.facebook.com/events_manager2/list/dataset/228166994905799/

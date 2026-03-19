@@ -1,8 +1,10 @@
 # MAPLAB AI Multi-Agent System
 
+> **⚡ 開工第一步：先讀 [CURRENT_STATUS.md](./CURRENT_STATUS.md) — 唯一最新狀態入口，優先於本文件。**
+
 **每次接手前，請先讀這份文件。讀完你就知道系統在哪、你要做什麼。**
 
-> 想快速看懂整個系統架構？直接看 **[SYSTEM_MAP.md](./SYSTEM_MAP.md)** — 5 張視覺化地圖，1分鐘掌握全局。
+> 想快速看懂整個系統架構？直接看 **[SYSTEM_MAP.md](./SYSTEM_MAP.md)** — 視覺化地圖，1分鐘掌握全局。
 
 ---
 
@@ -17,7 +19,6 @@ MAPLAB AI Multi-Agent System 是一套用於支援 MAPLAB Kitchen（台南高階
 ## 2. Business Objective
 
 MAPLAB AI 系統的商業主軸是：
-
 **降低重工、提升內容生產效率、把知識沉澱成可複用資產，最終支援 MAPLAB Kitchen 的品牌成長、廣告優化、ERP 效率與自動回覆能力。**
 
 具體來說：
@@ -48,16 +49,16 @@ MAPLAB AI 系統的商業主軸是：
 | 專案 | 負責 Agent | 主要 Repo | 當前狀態 |
 |------|-----------|----------|---------|
 | MAPLAB Pipeline（相簿自動化） | A4 | maplab-pipeline | Phase 2/3 完成，cloud-only，等待用戶確認相片來源 |
-| SEO & Ads（Ads Team） | A3 | maplab-Detasys | seo-ads-agent v2.1 + GTM v15 已發布 |
+| SEO & Ads（SEO & Ads Team） | A2/A3 | maplab-Detasys | seo-ads-agent v2.1 + GTM v15 已發布 |
 | MAPLAB Master Data（廚房 ERP） | A5 | maplab-master-data | Schema v0.1 + QUOTE_DRAFT 完成 |
 | AI Reply System（自動回覆） | A7 | maplab-ai-handbook | v1.0 框架建立完成 |
-| Handbook & 系統治理 | A1 | maplab-ai-handbook（本 repo） | v2.9 持續維護 |
+| Handbook & 系統治理 | A1 | maplab-ai-handbook（本 repo） | v3.4 持續維護 |
 
 ### 5.1 各專案詳細脈絡
 
 **Pipeline（相簿自動化）：** Google Photos（唯讀）→ WebP 轉檔 → Google Drive 歸檔。關鍵約束：絕對不得刪除原始照片。詳見 [projects/maplab-pipeline.md](./projects/maplab-pipeline.md)
 
-**SEO & Ads（Ads Team）：** 廣告監控 + SEO 內容 + GTM 轉換事件。A3 負責所有廣告任務（v2.4 起合併原 A6）。詳見 [projects/seo-ads-agent.md](./projects/seo-ads-agent.md)
+**SEO & Ads（SEO & Ads Team）：** 廣告監控 + SEO 內容 + GTM 轉換事件。A2（SEO）+A3（Ads）合併為 SEO & Ads Team（v3.2 起），共享行銷漏斗。詳見 [projects/seo-ads-agent.md](./projects/seo-ads-agent.md)
 
 **Master Data（廚房 ERP）：** 客戶、訂單、食材、報價單。Google Sheets 為主。詳見 [projects/maplab-master-data.md](./projects/maplab-master-data.md)
 
@@ -76,12 +77,12 @@ Handbook（治理層）連結所有專案。執行鏈：Master Data（資料底�
 | Agent | 名稱 | 主要職責 | 建議模型 |
 |-------|------|---------|--------|
 | A1 | Handbook Agent | 系統文件、規則治理、交接維護 | Claude |
-| A2 | SEO Content Agent | SEO 文章生成與優化 | GPT |
-| A3 | Ads Monitor Agent（Ads Team） | 廣告監控、成效分析、技術文件 | GPT / Claude |
+| A2/A3 | SEO & Ads Team | SEO 文章生成 + 廣告監控、成效分析、GTM 設定 | GPT / Claude |
 | A4 | Pipeline Agent | 資料流程、相簿整理自動化 | Claude |
 | A5 | Master Data Agent | 廚房 ERP、主資料結構 | Gemini / Claude |
 | A7 | AI Reply System Agent | 對話紀錄整理、自動回覆模組 | GPT |
 
+> A2+A3 於 v3.2 合併為 SEO & Ads Team，共享行銷漏斗（關鍵字→內容→廣告→轉換）。
 > A6 已於 v2.4 合併入 A3 Ads Team，不再單獨使用。
 
 詳細角色規則請見 [AGENT_RULES.md](./AGENT_RULES.md)
@@ -90,30 +91,35 @@ Handbook（治理層）連結所有專案。執行鏈：Master Data（資料底�
 
 ## 7. Document Structure（本 Repo 結構）
 
-    maplab-ai-handbook/
-    ├── README.md                    ← 你在這裡
-    ├── SYSTEM_MAP.md                ← 視覺化系統全圖
-    ├── AI_WORKFLOW_MAP.md           ← Agent 協作流程圖
-    ├── AGENT_RULES.md               ← Agent 行為準則 v1.6
-    ├── AGENT_STARTUP_PROTOCOL.md    ← 接手 SOP v1.1
-    ├── REPO_SYNC_RULES.md           ← Repo 間同步規則
-    ├── CURRENT_EXECUTION_BOARD.md   ← 即時看板
-    ├── CHANGELOG.md                 ← 版本紀錄
-    ├── projects/（6 個專案文件）
-    ├── skills/（11 個技能書）
-    └── handoff/（5 個交接文件）
+```
+maplab-ai-handbook/
+├── CURRENT_STATUS.md        ← ⚡ 唯一最新狀態入口（開工第一讀）
+├── TASK_QUEUE.md             ← 任務池（認領任務）
+├── README.md                 ← 你在這裡
+├── SYSTEM_MAP.md             ← 視覺化系統全圖
+├── AI_WORKFLOW_MAP.md        ← Agent 協作流程圖
+├── AGENT_RULES.md            ← Agent 行為準則 v1.8
+├── AGENT_STARTUP_PROTOCOL.md ← 接手 SOP v1.2
+├── REPO_SYNC_RULES.md        ← Repo 間同步規則
+├── CURRENT_EXECUTION_BOARD.md ← 詳細看板（參考）
+├── CHANGELOG.md              ← 版本紀錄
+├── projects/（6 個專案文件）
+├── skills/（14 個技能書）
+└── handoff/（5 個交接文件 + tasks/ 任務卡）
+```
 
 ---
 
 ## 8. Quick Start（接手時讀這個）
 
-**Step 1.** [SYSTEM_MAP.md](./SYSTEM_MAP.md)（視覺化全圖）
-**Step 2.** 本 README.md（系統使命 + 專案地圖）
-**Step 3.** [AI_WORKFLOW_MAP.md](./AI_WORKFLOW_MAP.md)（協作流程）
-**Step 4.** [AGENT_RULES.md](./AGENT_RULES.md)（角色與禁止事項）
-**Step 5.** [AGENT_STARTUP_PROTOCOL.md](./AGENT_STARTUP_PROTOCOL.md)（接手 SOP + 卡住急救）
-**Step 6.** [CURRENT_EXECUTION_BOARD.md](./CURRENT_EXECUTION_BOARD.md)（現在誰在做什麼）
-**Step 7.** 對應 [projects/](./projects/) + [skills/superpowers-guide.md](./skills/superpowers-guide.md) + [CHANGELOG.md](./CHANGELOG.md)
+**Step 1.** [CURRENT_STATUS.md](./CURRENT_STATUS.md)（⚡ 唯一最新狀態入口，最高優先）
+**Step 2.** [AGENT_RULES.md](./AGENT_RULES.md)（你的角色 & 禁止事項）
+**Step 3.** [AGENT_STARTUP_PROTOCOL.md](./AGENT_STARTUP_PROTOCOL.md)（接手 SOP + Startup Check 格式）
+**Step 4.** [TASK_QUEUE.md](./TASK_QUEUE.md)（找任務、認領任務）
+**Step 5.** 對應 [projects/](./projects/) + [skills/superpowers-guide.md](./skills/superpowers-guide.md)
+**Step 6.** 輸出 Startup Check → 開始執行
+
+> 注意：CURRENT_STATUS.md 的資訊優先於所有其他文件。若衝突，以 CURRENT_STATUS 為準。
 
 ---
 
@@ -138,4 +144,4 @@ Handbook（治理層）連結所有專案。執行鏈：Master Data（資料底�
 
 ---
 
-*系統版本：v2.9 | 最後更新：2026-03-17 | 維護者：A1 Handbook Agent | README v2.3*
+*系統版本：v3.4 | 最後更新：2026-03-19 | 維護者：A1 Handbook Agent | README v2.4*

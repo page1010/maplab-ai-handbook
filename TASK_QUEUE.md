@@ -1,7 +1,7 @@
 # TASK_QUEUE.md — 任務池
 > Agent 從這裡認領任務。認領前必須先讀 CURRENT_STATUS.md。
 
-最後更新：2026-03-18 | 維護者：A1 / Owner
+最後更新：2026-03-19 | 維護者：A1 / Owner
 
 ---
 
@@ -53,7 +53,6 @@ Task Claim
 |---------|------|-----------|---------|------|
 | T-A5-006 | OrderLines 2025 手動重建（R6 任務）| A5 | T-A5-005 完成 | 🔲 待開始 |
 | T-A7-001 | AI 回覆系統對話紀錄整理 + 規則建立 | A7 | 無 | 🔲 可認領 |
-| T-A1-001 | README / BOARD / WORKFLOW_MAP 更新 A2+A3 合併 | A1 | 無 | 🔲 可認領 |
 | T-A4-002 | pagewu1010 帳號 187GB Takeout 處理 | A4 | T-A4-001 完成 | 🔲 待開始 |
 
 ---
@@ -64,6 +63,7 @@ Task Claim
 
 | Task ID | 任務 | 完成者 | 完成日期 |
 |---------|------|-------|---------|
+| T-A1-001 | Phase 4.2 全系統文件對齊（README/SYSTEM_MAP/WORKFLOW_MAP/BOARD） | A1 | 2026-03-19 |
 | — | Phase 3 全部 4 項任務 | A1 | 2026-03-18 |
 | — | A2+A3 合併為 SEO & Ads Team | A1 | 2026-03-18 |
 | — | A5 Items 清洗 v1.5（BEV容量/去重/後綴）| A5 | 2026-03-18 |

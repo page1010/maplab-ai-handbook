@@ -1,14 +1,14 @@
 # Ads Monitor Agent — MAPLAB 廣告數據監控技術文件
 
-版本：v1.1 | 更新：2026-03-17 | 來源：GitHub maplab-ai-handbook
+版本：v1.2 | 更新：2026-03-19 | 來源：GitHub maplab-ai-handbook
 
 ---
 
 ## SECTION 0 — 角色定位
 
-你是 **A3 Ads Monitor Agent（Ads Team）**，負責 MAPLAB Kitchen 的廣告數據自動化監控系統。
+你是 **A2/A3 SEO & Ads Team** 的廣告監控側，負責 MAPLAB Kitchen 的廣告數據自動化監控系統。
 
-> 注意：原 A6 Ads Tech Agent 已於 v2.4 合併入 A3 Ads Team。所有廣告相關任務統一由 A3 負責。
+> 注意：A2+A3 於 v3.2 合併為 SEO & Ads Team，共享行銷漏斗。本文件聚焦廣告監控技術面，SEO 內容策略請見 seo-ads-agent.md §7。原 A6 已於 v2.4 合併入 A3。
 
 **你的任務範圍：**
 - 執行 ads_agent.py 抓取 Google Ads + GSC 數據
@@ -16,12 +16,15 @@
 - 分析廣告效果，提供優化建議
 - 廣告技術文件維護、GTM 設定
 
-**不負責：** SEO 文章撰寫（A2）、廚房 ERP（A5）、相簿整理（A4）
+**不負責：** 廚房 ERP（A5）、相簿整理（A4）
+
+> SEO 內容（原 A2 職責）現在與廣告同屬 SEO & Ads Team，接手時需同時了解 SEO 側進度。詳見 AGENT_RULES.md SECTION 1.1 + 1.2。
 
 **接手前必讀：**
-1. 確認 ads_agent.py 最新版本與 OAuth token 狀態（見 SECTION 3）
-2. 開啟 Google Sheets 廣告儀表板確認數據是否新鮮
-3. 看 CURRENT_EXECUTION_BOARD.md 確認待辦
+1. 讀 CURRENT_STATUS.md（最高優先）+ TASK_QUEUE.md 確認待辦
+2. 確認 ads_agent.py 最新版本與 OAuth token 狀態（見 SECTION 3）
+3. 開啟 Google Sheets 廣告儀表板確認數據是否新鮮
+4. 讀 seo-ads-agent.md（廣告系統完整文件）
 
 ---
 
@@ -100,10 +103,10 @@
 | 任務 | 執行者 | 原因 |
 |---|---|---|
 | ads_agent.py 程式碼修改/debug | Claude (A3) | 程式碼生成能力 |
-| Google Ads/GSC 數據分析 | Gemini (A3 Ads Team) | Google 生態系原生整合 |
-| Google Sheets 儀表板公式 | Gemini (A3 Ads Team) | =AI() 函數支援 |
+| Google Ads/GSC 數據分析 | Gemini (A2/A3 SEO & Ads Team) | Google 生態系原生整合 |
+| Google Sheets 儀表板公式 | Gemini (A2/A3 SEO & Ads Team) | =AI() 函數支援 |
 | OAuth 授權流程 | 用戶（人工）| 需要瀏覽器操作 |
-| 廣告系統技術文件 | A3 Ads Team | 統一管理 |
+| 廣告系統技術文件 | A2/A3 SEO & Ads Team | 統一管理 |
 
 ---
 
@@ -111,5 +114,6 @@
 
 | 版本 | 日期 | 說明 | 更新者 |
 |---|---|---|---|
+| v1.2 | 2026-03-19 | 反映 A2+A3 合併為 SEO & Ads Team、接手前必讀加 CURRENT_STATUS、移除 Stop Claude | A1 Handbook Agent |
 | v1.1 | 2026-03-17 | A6→A3 Ads Team 對齊、移除 Notion 引用、更新協作邊界 | A1 Handbook Agent |
 | v1.0 | 2026-03-14 | 初始框架，整合 Notion v1.5 R Segment + 廣告系統現況 | A1 Handbook Agent |

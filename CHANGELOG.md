@@ -3,7 +3,32 @@
 本文件記錄 maplab-ai-handbook 的所有重大版本變更。
 格式：版本號 | 日期 | 變更摘要 | 執行 Agent
 
-## v3.4 — 2026-03-18（最新）
+## v3.5 — 2026-03-19（最新）
+
+**Phase 4.2：全系統文件對齊 — 治理重構後的文件同步更新**
+
+執行 Agent：A1 Handbook Agent（Claude Opus 4.6）
+
+**問題：Phase 4 第一階段建立了新治理架構（CURRENT_STATUS / TASK_QUEUE / Task Card / PROTOCOL v1.2），但以下文件仍停留在舊版結構：**
+- README：版本 v2.9、Quick Start 沒導向 CURRENT_STATUS、Agent Roster A2/A3 分開
+- SYSTEM_MAP：skills 寫 11 個（實際 14）、閱讀順序沒提 CURRENT_STATUS、Repo 地圖缺新文件
+- AI_WORKFLOW_MAP：A2/A3 分開列、Handoff Protocol 沒提 Task Card、Collaboration Rules 缺 CURRENT_STATUS 優先
+- BOARD：系統版本寫 v3.1、Phase 寫 Phase 3、Session Log 缺 4 個 session 記錄
+
+**更新：**
+- README.md v2.3 → v2.4 — 頂部新增 CURRENT_STATUS 優先入口指引、Quick Start 第一步改為 CURRENT_STATUS、Agent Roster A2+A3 合併為 SEO & Ads Team、skills 11→14、Document Structure 新增 CURRENT_STATUS / TASK_QUEUE / handoff/tasks/、系統版本 v3.4
+- SYSTEM_MAP.md v2.0 → v2.1 — Repo 地圖新增 CURRENT_STATUS + TASK_QUEUE、Agent 分工地圖 A2+A3 合併、skills 11→14（新增 3 本）、閱讀順序第一步改為 CURRENT_STATUS、七唯一資料來源新增 CURRENT_STATUS 優先規則
+- AI_WORKFLOW_MAP.md v2.1 → v2.2 — A2+A3 合為 SEO & Ads Team、Handoff Protocol 新增 Task Card + Handoff Checkpoint 步驟、Collaboration Rules 新增 Rule 8 CURRENT_STATUS 優先 + Rule 9 Task Card 記憶
+- CURRENT_EXECUTION_BOARD.md v2.1 → v2.2 — 頂部新增 CURRENT_STATUS 指引、系統版本 v3.1→v3.5、Phase 更新為 Phase 4、Session Log 補齊 S-D/E/F/G（4 個 session）、A2+A3 合併顯示、重要連結新增 CURRENT_STATUS + TASK_QUEUE
+
+**設計原則：**
+- Phase 4 第一階段建了新架構，第二階段確保所有舊文件指向新架構
+- 所有入口文件頂部都有 CURRENT_STATUS 指引，避免 Agent 走錯路
+- Session Log 補齊確保歷史可追溯
+
+---
+
+## v3.4 — 2026-03-18
 
 **Phase 4：系統治理重構 — 單一入口 + 任務池 + 強制 Startup/Handoff**
 

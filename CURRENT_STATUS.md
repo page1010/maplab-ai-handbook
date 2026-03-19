@@ -1,20 +1,22 @@
 # CURRENT_STATUS.md — 唯一最新狀態入口
+
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-03-18 | 更新者：A1
+最後更新：2026-03-19 | 更新者：A1
 
 ---
 
 ## 系統版本
-- **Version**: v3.4
-- **Phase**: Phase 4 系統治理重構 ✅ 第一階段完成
+
+- **Version**: v3.5
+- **Phase**: Phase 4.2 全系統文件對齊 ✅ 完成
 - **Status**: Active
 
 ## 當前進行中任務
 
 | Task ID | 任務 | 負責 Agent | 狀態 | Task Card |
-|---------|------|-----------|------|-----------|
+|---------|------|-----------|------|-----------| 
 | T-A5-001 | Items 甜點去重 + 全品項重新編碼 | A5 | ⏸️ 等使用者手動去重 | handoff/tasks/T-A5-001.md |
 | T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔲 待開始 | handoff/tasks/T-A5-002.md |
 | T-A5-003 | 熱客招待品項定義 | A5 | 🔲 待開始 | — |
@@ -23,17 +25,21 @@
 | T-A3-001 | GTM LINE 按鈕追蹤修復 | A3 | ⏸️ 等使用者執行 | — |
 
 ## Blockers（阻塞事項）
+
 - A5：甜點去重需使用者手動完成後才能重新編碼
 - A5：使用者需填 Items.D 欄 default_price
 - A4：等用戶確認 Google Photos 來源路線（owner + spouse 雙帳號）
 - A3：等使用者完成 Canva C款素材 / 暫停空殼活動 / 確認 A組
 
 ## 最新決策
+
+- 2026-03-19：Phase 4.2 全系統文件對齊完成（README v2.4 / SYSTEM_MAP v2.1 / WORKFLOW_MAP v2.2 / BOARD v2.2 / CHANGELOG v3.5）
 - 2026-03-18：A2+A3 合併為 SEO & Ads Team（AGENT_RULES v1.8）
 - 2026-03-18：新增 sheets-data-cleaning-guide + photo-pipeline-toolkit-guide
 - 2026-03-18：Phase 4 第一階段完成 — CURRENT_STATUS + TASK_QUEUE + Task Card 模板 + PROTOCOL v1.2
 
 ## Source of Truth（有效文件清單）
+
 > Agent 只需讀以下文件。其他文件僅供參考，不作為執行依據。
 
 | 用途 | 檔案 | 說明 |
@@ -47,6 +53,7 @@
 | 📊 詳細狀態（參考）| CURRENT_EXECUTION_BOARD.md | 各 Agent 詳細狀態，非強制讀取 |
 
 ## 已完成（不要再做）
+
 - ✅ Phase 1-3 全部完成
 - ✅ SYSTEM_MAP / WORKFLOW_MAP / PROTOCOL / BOARD 治理文件
 - ✅ 14 本技能書
@@ -56,6 +63,7 @@
 - ✅ A5 QUOTE_DRAFT 極簡版 MVP
 - ✅ A5 TimeTree 2025 全年密集日清單
 - ✅ Phase 4 第一階段：治理重構（CURRENT_STATUS + TASK_QUEUE + Task Card + PROTOCOL v1.2）
+- ✅ Phase 4.2：全系統文件對齊（README v2.4 + SYSTEM_MAP v2.1 + WORKFLOW_MAP v2.2 + BOARD v2.2 + CHANGELOG v3.5）
 
 ---
 

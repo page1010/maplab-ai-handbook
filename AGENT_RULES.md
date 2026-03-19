@@ -1,6 +1,6 @@
 # AGENT_RULES.md — MAPLAB AI 全域行為準則
 
-版本：v1.8 | 建立：2026-03-12 | 更新：2026-03-18
+版本：v1.9 | 建立：2026-03-12 | 更新：2026-03-19
 
 ---
 
@@ -112,18 +112,18 @@ GSC 關鍵字排名    ──→  文章選題依據
 
 ## SECTION 2 — GitHub 多 Agent 協作規則（防版本互蓋）
 
-**Branch 規則：**
-- main：唯一正式版，禁止直接 push，必須走 PR
-- 每次任務開短命 branch，命名：work/project/agent/task（例：work/seo/claude/fix-gsc-query-window）
-- 不要用長期共用 branch，任務做完即刪
+**Commit 規則（目前實務）：**
+- 直接 commit 到 main branch（本系統目前無 CI/CD pipeline，不走 PR 流程）
+- Commit 前必須先在 CURRENT_EXECUTION_BOARD.md Active Session 簽到，確認沒有其他 Agent 正在編輯同一檔案
+- Commit message 格式：`type(scope): description`（例：`feat(governance): CURRENT_STATUS v1.0`）
+- 遇到 commit conflict → 取消 → 重新導航到 edit 頁面 → 重新讀取最新內容 → 再次編輯提交
 
-**PR 規則：**
-- 禁止直接 commit 到 main
-- 必須開 PR → GitHub Actions 測試通過 → merge → 刪除工作 branch
+**版本真相：**
+- CURRENT_STATUS.md 記錄當前系統版本，優先於所有其他文件
+- CHANGELOG.md 記錄完整版本演進歷史
+- GitHub commit history 是唯一可信的變更記錄
 
-**雲端版本真相：**
-- 不問「現在是哪個版本」，看 production environment 最新 deployment 對應的 commit SHA
-- 每次 deploy 生成 runtime_version.json（含 commit + branch + deployed_at）
+> ⚠️ 未來若系統規模成長需要 CI/CD，再啟用 PR + branch 流程。目前以「簽到 + 衝突檢查」取代。
 
 ---
 
@@ -163,4 +163,5 @@ GSC 關鍵字排名    ──→  文章選題依據
 | v1.5 | 2026-03-14 | 新增 A7 AI Reply System Agent；新增錯誤 003 | A1 Handbook Agent |
 | v1.6 | 2026-03-15 | 合併 A3+A6 為 Ads Team；新增 SECTION 1.1；新增 skills/ai-model-guide.md 引用；錯誤 004 記錄 | A1 Handbook Agent |
 | v1.7 | 2026-03-17 | Notion 欄位加刪除線 + 警告標語；欄位標題改為「僅人類參考，非 Agent 依據」| A1 Handbook Agent |
+| v1.9 | 2026-03-19 | SECTION 0 召喚 Prompt 加入 CURRENT_STATUS 優先 + TASK_QUEUE + Startup Check；SECTION 2 Git 規則改為直接 commit（對齊實務）；移除殘留 Stop Claude | A1 Handbook Agent |
 | v1.8 | 2026-03-18 | 合併 A2+A3 為 SEO & Ads Team；新增 SECTION 1.2 SEO↔Ads 協作協議；SECTION 1.1 升級為統一團隊；錯誤 005 記錄 | A1 Handbook Agent |

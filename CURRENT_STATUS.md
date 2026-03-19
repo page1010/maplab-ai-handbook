@@ -9,8 +9,8 @@
 
 ## 系統版本
 
-- **Version**: v3.5
-- **Phase**: Phase 4.2 全系統文件對齊 ✅ 完成
+- **Version**: v3.6
+- **Phase**: 系統巡查完成 ✅ 關鍵問題已修復
 - **Status**: Active
 
 ## 當前進行中任務
@@ -33,6 +33,7 @@
 
 ## 最新決策
 
+- 2026-03-19：系統巡查修復 — AGENT_RULES v1.9（召喚 Prompt + Git 規則）+ REPO_SYNC_RULES v1.0 + master-data v1.5 + ads-monitor v1.2
 - 2026-03-19：Phase 4.2 全系統文件對齊完成（README v2.4 / SYSTEM_MAP v2.1 / WORKFLOW_MAP v2.2 / BOARD v2.2 / CHANGELOG v3.5）
 - 2026-03-18：A2+A3 合併為 SEO & Ads Team（AGENT_RULES v1.8）
 - 2026-03-18：新增 sheets-data-cleaning-guide + photo-pipeline-toolkit-guide
@@ -63,7 +64,8 @@
 - ✅ A5 QUOTE_DRAFT 極簡版 MVP
 - ✅ A5 TimeTree 2025 全年密集日清單
 - ✅ Phase 4 第一階段：治理重構（CURRENT_STATUS + TASK_QUEUE + Task Card + PROTOCOL v1.2）
-- ✅ Phase 4.2：全系統文件對齊（README v2.4 + SYSTEM_MAP v2.1 + WORKFLOW_MAP v2.2 + BOARD v2.2 + CHANGELOG v3.5）
+- ✅ Phase 4.2：全系統文件對齊
+- ✅ 系統巡查：關鍵 20% 問題修復（AGENT_RULES 召喚/Git 規則、REPO_SYNC_RULES 重寫、master-data/ads-monitor 過時修正）（README v2.4 + SYSTEM_MAP v2.1 + WORKFLOW_MAP v2.2 + BOARD v2.2 + CHANGELOG v3.5）
 
 ---
 

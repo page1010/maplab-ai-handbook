@@ -3,7 +3,36 @@
 本文件記錄 maplab-ai-handbook 的所有重大版本變更。
 格式：版本號 | 日期 | 變更摘要 | 執行 Agent
 
-## v3.5 — 2026-03-19（最新）
+## v3.6 — 2026-03-19（最新）
+
+**系統巡查：關鍵 20% 問題修復 — 召喚 Prompt + Git 規則 + 過時文件**
+
+執行 Agent：A1 Handbook Agent（Claude Opus 4.6）
+
+**巡查發現的 7 個問題（按衝擊排序）：**
+1. 🔴 AGENT_RULES 召喚 Prompt 不導向 CURRENT_STATUS（每個 Agent 走錯起點）
+2. 🔴 AGENT_RULES SECTION 2 Git 規則要求 PR+branch 但實際直接 commit（矛盾）
+3. 🔴 REPO_SYNC_RULES 引用已刪除的 PROJECT_CONTEXT + 標示錯誤
+4. 🔴 maplab-master-data.md 重複 SECTION 3 + 任務狀態停在 v1.4 + Notion 引用
+5. 🟡 maplab-ads-monitor.md 未反映 A2+A3 合併
+6. 🟡 三個檔案末尾殘留 Stop Claude（確認為讀取 artifact，非實際檔案內容）
+7. 🟢 seo-ads-agent.md 十三節標題 typo
+
+**修復（5 commits）：**
+- AGENT_RULES.md v1.8 → v1.9 — SECTION 0 召喚 Prompt 加入 CURRENT_STATUS 第一步 + TASK_QUEUE + Startup Check；SECTION 2 Git 規則改為直接 commit 對齊實務
+- REPO_SYNC_RULES.md v0.1 → v1.0 — 全面重寫：移除 PROJECT_CONTEXT 引用（3處）、修正 repo 公私標示、對齊 CURRENT_STATUS/TASK_QUEUE、A6→A2/A3 SEO & Ads Team
+- projects/maplab-master-data.md v1.4 → v1.5 — 修正重複 SECTION 3（改為 SECTION 10）、更新任務狀態（Items 139筆/QUOTE_DRAFT MVP/TimeTree）、接手前必讀移除 Notion
+- projects/maplab-ads-monitor.md v1.1 → v1.2 — 反映 A2+A3 合併、接手前必讀加 CURRENT_STATUS
+- projects/seo-ads-agent.md — 修正十三節「相關連結h」typo
+
+**設計原則：**
+- 20/80 法則：修 4 個高衝擊問題就消除 80% 的 Agent 誤導風險
+- 召喚 Prompt 是全系統入口，修一處影響所有 Agent
+- Git 規則必須反映實際操作，否則新 Agent 會猶豫要不要開 PR
+
+---
+
+## v3.5 — 2026-03-19
 
 **Phase 4.2：全系統文件對齊 — 治理重構後的文件同步更新**
 

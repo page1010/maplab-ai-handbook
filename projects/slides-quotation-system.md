@@ -1,10 +1,9 @@
 # Slides Quotation System — MAPLAB Kitchen 簡報報價系統規劃
-
-版本：v0.1 | 建立：2026-03-19 | 負責：跨專案業務協調（A4 Pipeline + A5 Master Data + Slides）  
+版本：v0.2 | 建立：2026-03-19 | 更新：2026-03-19 | 負責：跨專案業務協調（A4 Pipeline + A5 Master Data + Slides）
 狀態：📋 規劃完成，待實作
 
 ---
-
+狀態：Phase 1 進行h中（美化 Master Template）
 ## SECTION 0 — 專案目標與角色定位
 
 ### 目標
@@ -274,4 +273,116 @@ Hero（封面）→ Pain Point（客戶的需求）→ Solution（我們的服�
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | 版本 | 日期 | 說明 | 更新者 |
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |------|------|------|--------|
+| v0.1 | 2026-03-19 | Slides structure + data flow + design logic + Gemini prompts | Claude |
+| v0.2 | 2026-03-19 | User requirements update + template-based architecture + phased plan | Claude |
+
+---
+
+## SECTION 8 — User Requirements Update (v0.2)
+
+### 8.1 User Requirements Summary
+
+> Source: PM conversation confirmed (2026-03-19)
+
+1. **Style Enhancement**: Reference premium PPT templates (color, font, whitespace, image ratio)
+2. **Structure Changes**:
+   - Page 6 (How It Works) -> **DELETE**, not needed
+   - Page 7 (Menu Selection) -> **Showcase only**: item name + photo, NO price/qty/DESC for clients
+3. **Template-Based Architecture**:
+   - Current: each run creates a brand new deck -> user-added photos lost
+   - Correct: maintain a **Master Template** (fixed pages with photos), button only copies template + inserts dynamic menu showcase pages
+4. **Output Workflow**:
+   - Export PDF for client -> does NOT affect original settings
+   - Master Template never modified
+   - Each client gets independent presentation file
+
+### 8.2 Architecture: Template-Based
+
+Master Template Slides (manually styled, never modified)
+- P1: Cover (fixed + photo)
+- P2: About Us (fixed + photo)
+- P3: Services (fixed + photo)
+- P4: Portfolio (fixed + photo)
+- P5: Why Choose Us (fixed)
+- P6: CTA Contact (fixed)
+
+Button triggers GAS:
+1. Copy Master Template
+2. Read selected items from Sheet
+3. Insert Menu Showcase pages between P5 and P6
+4. Each item: name + photo (from Drive)
+5. Output: client-specific presentation
+6. Export PDF -> send to client
+7. Master untouched
+
+### 8.3 Updated Slides Page Structure
+
+| Page | Name | Type | v0.1 Ref | Change |
+|------|------|------|----------|--------|
+| 1 | Cover | Fixed | P1 | No change |
+| 2 | About Us | Fixed | P2 | Add photos manually |
+| 3 | Services | Fixed | P3 | Add photos manually |
+| 4 | Portfolio | Fixed | P4 | Add photos manually |
+| 5 | Why Choose Us | Fixed | P5 | No change |
+| 6~N | Menu Showcase | Dynamic | P7 revised | Name+photo only, NO price/qty/DESC |
+| N+1 | CTA Contact | Fixed | P8->P6 | Moved to last |
+| ~~X~~ | ~~Process~~ | ~~Deleted~~ | ~~P6~~ | ~~User confirmed not needed~~ |
+
+### 8.4 Menu Showcase Page Specs
+
+- **Per page**: 4-6 items (depends on layout)
+- **Per item**: Item name (Chinese) + Photo
+- **NOT shown**: Price, quantity, description (this is a showcase for clients, not a quote)
+- **Photo source**: Drive MAPLAB_ASSETS (item_id -> drive_file_id via ASSET_MASTER)
+- **Category logic**: Group by Items sheet category (Dessert/Savory/Beverage)
+
+---
+
+## SECTION 9 — Phased Work Plan
+
+### Phase 1: Style Master Template (CURRENT)
+- [ ] Research premium PPT template styles (color, font, whitespace, image ratio)
+- [ ] Redesign existing Slides P1-P5 + CTA page
+- [ ] Delete P6 (Process)
+- [ ] Revise P7 to Menu Showcase template (name+photo only)
+- [ ] Confirm Master Template save location (Drive root or specific folder)
+- **Output**: One polished Master Template Slides
+
+### Phase 2: Rewrite GAS to Template-Based
+- [ ] New function generateClientProposal()
+- [ ] Logic: Copy Master -> Read selected items from Sheet -> Insert menu showcase pages -> Return new Slides URL
+- [ ] Menu showcase inserts item names only (no photos yet, wait for ASSET_MASTER)
+- [ ] Test: Select items in Sheet -> One-click generate client proposal
+- **Output**: Working one-click generation script
+
+### Phase 3: Photo Integration
+- [ ] Prerequisite: A4 Pipeline Phase 4 photo classification done
+- [ ] Prerequisite: A5 builds ASSET_MASTER (item_id -> drive_file_id)
+- [ ] GAS script adds photo insertion logic
+- [ ] Test: Menu showcase pages auto-populate with photos
+- **Output**: Menu showcase with name + photo
+
+### Phase 4: Quote Integration (ON HOLD)
+- [ ] Prerequisite: T-A5-002 QUOTE_DRAFT enhancement done
+- [ ] QUOTE_DRAFT -> item selection -> trigger Slides generation
+- [ ] PDF auto-export + Drive archiving
+- **Output**: Complete automated quote-presentation workflow
+
+### Dependency Map
+
+Phase 1 -> Phase 2 -> Phase 4 (on hold)
+Phase 2 -> Phase 3 -> Phase 4
+Phase 3 depends on: A4 Phase 4 + A5 ASSET_MASTER
+
+---
+
+## SECTION 10 — Completed Items Log
+
+| Item | Status | Date | Note |
+|------|--------|------|------|
+| v0.1 Planning Doc | Done | 2026-03-19 | This doc initial version with Slides structure + data flow + design logic |
+| Slides v0.1 Skeleton | Done | 2026-03-19 | Generated 8-page deck via GAS createMAPLABSlides() |
+| GAS createSlides.gs | Done | 2026-03-19 | Saved in MAPLAB_v0.1 Apps Script project |
+| Slides File | Created | 2026-03-19 | "MAPLAB Kitchen - Catering Proposal" in Google Drive |
+| v0.2 Requirements Update | Done | 2026-03-19 | Template-based architecture confirmed + phased plan |
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | v0.1 | 2026-03-19 | 初始規劃：Slides 結構設計 + 資料流架構 + 設計邏輯參考 + Gemini 協作指令 | 跨專案業務協調 (Claude Opus 4.6) |

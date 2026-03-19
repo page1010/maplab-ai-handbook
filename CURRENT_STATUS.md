@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-03-19 | 更新者：A1
+最後更新：2026-03-20 | 更新者：A4
 
 ---
 
@@ -20,7 +20,7 @@
 | T-A5-001 | Items 甜點去重 + 全品項重新編碼 | A5 | ⏸️ 等使用者手動去重 | handoff/tasks/T-A5-001.md |
 | T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔲 待開始 | handoff/tasks/T-A5-002.md |
 | T-A5-003 | 熱客招待品項定義 | A5 | 🔲 待開始 | — |
-| T-A4-001 | Phase 4 vision.py Gemini 分析 | A4 | ⏸️ 等用戶確認相片來源 | — |
+| T-A4-001 | Phase 4 vision.py Gemini 分析 | A4 | 🔶 TimeTree done, 需 Gemini API Key | — |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2/A3 | 🔲 待開始 | — |
 | T-A3-001 | GTM LINE 按鈕追蹤修復 | A3 | ⏸️ 等使用者執行 | — |
 
@@ -28,7 +28,7 @@
 
 - A5：甜點去重需使用者手動完成後才能重新編碼
 - A5：使用者需填 Items.D 欄 default_price
-- A4：等用戶確認 Google Photos 來源路線（owner + spouse 雙帳號）
+- A4：需 Gemini API Key（Phase 3.5 done, TimeTree lookup committed, Vertex AI 404）→ 請到 aistudio.google.com/apikey 建立
 - A3：等使用者完成 Canva C款素材 / 暫停空殼活動 / 確認 A組
 
 ## 最新決策

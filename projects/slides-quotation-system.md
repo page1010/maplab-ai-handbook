@@ -1,9 +1,8 @@
 # Slides Quotation System — MAPLAB Kitchen 簡報報價系統規劃
-版本：v0.4 | 建立：2026-03-19 | 更新：2026-03-20 | 負責：跨專案業務協調（A4 Pipeline + A5 Master Data + Slides）
-狀態：📋 規劃完成，待實作
+版本：v0.5 | 建立：2026-03-19 | 更新：2026-03-20 | 負責：跨專案業務協調（A4 Pipeline + A5 Master Data + Slides）
+狀態：Phase 1 ✅ | Phase 2 ✅ | Phase 3 等待 A4 相片分類
 
 ---
-狀態：Phase 1 DONE | Phase 2 進行中（GAS template-based rewrite）
 ## SECTION 0 — 專案目標與角色定位
 
 ### 目標
@@ -340,7 +339,7 @@ Button triggers GAS:
 
 ## SECTION 9 — Phased Work Plan
 
-### Phase 1: Style Master Template (CURRENT)
+### Phase 1: Style Master Template ✅ DONE
 - [x] Research premium PPT template styles (color, font, whitespace, image ratio)
 - [x] Redesign existing Slides P1-P5 + CTA page (V2 created with premium design)
 - [x] Delete P6 (Process) — removed in V2
@@ -349,12 +348,13 @@ Button triggers GAS:
 - [ ] User adds real photos to Master Template (user action)
 - **Output**: One polished Master Template Slides
 
-### Phase 2: Rewrite GAS to Template-Based (CURRENT)
-- [ ] New function generateClientProposal()
-- [ ] Logic: Copy Master -> Read selected items from Sheet -> Insert menu showcase pages -> Return new Slides URL
-- [ ] Menu showcase inserts item names only (no photos yet, wait for ASSET_MASTER)
-- [ ] Test: Select items in Sheet -> One-click generate client proposal
-- **Output**: Working one-click generation script
+### Phase 2: Rewrite GAS to Template-Based ✅ DONE
+- [x] New function generateClientProposal()
+- [x] Logic: Copy Master -> Read selected items from Sheet -> Delete template menu page -> Insert dynamic menu showcase pages -> Return new Slides URL
+- [x] Menu showcase inserts item names only (no photos yet, wait for ASSET_MASTER)
+- [x] Test: Generated 28-page proposal (5 fixed + 22 dynamic menu + 1 CTA)
+- [x] onOpen() menu: MAPLAB Slides -> Generate Client Proposal
+- **Output**: generateProposal.gs — working one-click generation from Sheet menu bar
 
 ### Phase 3: Photo Integration
 - [ ] Prerequisite: A4 Pipeline Phase 4 photo classification done
@@ -392,8 +392,199 @@ Phase 3 depends on: A4 Phase 4 + A5 ASSET_MASTER
 | V2 Design Verified | Done | 2026-03-20 | 7pg: Cover/About/Services/Portfolio/WhyUs/MenuShowcase/CTA |
 | beautifyV2.gs | Done | 2026-03-20 | Font/color/line beautification applied to V2 slides |
 | Phase 1 Complete | Done | 2026-03-20 | All checklist items done, V2 Master Template ready |
-| Phase 2 Started | In Progress | 2026-03-20 | GAS template-based architecture rewrite |
+| Phase 2 Started | Done | 2026-03-20 | GAS template-based architecture rewrite |
+| generateProposal.gs | Done | 2026-03-20 | Template-based generator: copy Master + insert dynamic menu pages |
+| Phase 2 Test Run | Verified | 2026-03-20 | 28-page output: 5 fixed + 22 menu + 1 CTA, categories grouped correctly |
+| onOpen() Menu | Done | 2026-03-20 | Sheet menu bar: MAPLAB Slides -> Generate Client Proposal |
+| Phase 2 Complete | Done | 2026-03-20 | Template-based architecture working, Master never modified |
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | v0.2 | 2026-03-19 | User requirements + template-based architecture + phased plan | Claude Opus 4.6 |
 | v0.3 | 2026-03-20 | V2 skeleton created + Phase 1 checklist updated | Claude Opus 4.6 |
 | v0.4 | 2026-03-20 | Phase 1 complete + beautification + Phase 2 start | Claude Opus 4.6 |
 | v0.1 | 2026-03-19 | 初始規劃：Slides 結構設計 + 資料流架構 + 設計邏輯參考 + Gemini 協作指令 | 跨專案業務協調 (Claude Opus 4.6) |
+| v0.5 | 2026-03-20 | Phase 2 complete + cross-agent photo requirements for A4 Pipeline | Claude Opus 4.6 |
+
+
+---
+
+## SECTION 11 — 跨 Agent 相片需求規格（Slides → A4 Pipeline）
+
+> 本節定義 Slides 報價簡報系統對 A4 Pipeline Agent 相片分類產出的具體需求。
+> A4 在 Phase 4 vision.py 執行相片分類時，請參照本節規格，確保產出可被 Slides GAS 腳本直接使用。
+
+### 11.1 全局架構：相片如何流入 Slides
+
+```
+A4 Pipeline (Phase 4)          A5 Master Data              Slides System (Phase 3)
+─────────────────────          ──────────────              ────────────────────────
+Google Photos Takeout           ITEM_MASTER                 generateClientProposal()
+    │                           item_id (PK)                    │
+    ▼                               │                          │
+Gemini Vision 分類              ASSET_MASTER                    │
+    │                           asset_id                       │
+    ▼                           item_id (FK) ◄─── 關鍵橋接 ──► │
+Drive MAPLAB_ASSETS/            drive_file_id                   │
+  └── catering/                 photo_type                     │
+       └── {category}/          is_primary                     │
+            └── {item_id}/      quality_score                  │
+                 └── photos     alt_text_zh                    │
+                                    │                          │
+                                    ▼                          ▼
+                              GAS: 查 ASSET_MASTER → 取 drive_file_id → 插入 Slides
+```
+
+### 11.2 Slides 系統需要的相片類型
+
+| 用途 | 頁面 | 需求數量 | 相片特徵 | 優先級 |
+|------|------|----------|----------|--------|
+| 封面背景 | P1 Cover | 1 張 | 全景外燴場景，高解析，橫向 16:9 | 🔴 最高 |
+| 品牌介紹 | P2 About | 1 張 | 團隊工作照或精選場佈 | 🔴 最高 |
+| 服務展示 | P3 Services | 2-3 張 | 週歲/婚禮/企業活動各一 | 🔴 最高 |
+| 案例精選 | P4 Portfolio | 4 張 | 代表性活動場景（AMD/週歲/品酒/特展） | 🔴 最高 |
+| 品項展示 | P6-N Menu | 每品項 1 張 | 餐點特寫、擺盤照，正方形或 4:3 | 🟡 高 |
+
+### 11.3 對 A4 的具體需求：Drive 資料夾結構
+
+**期望的資料夾層級：**
+
+```
+MAPLAB_ASSETS/
+├── catering/                    ← 外燴專用素材（Slides 主要讀取來源）
+│   ├── hero/                    ← 封面/全景照（高品質 16:9）
+│   ├── team/                    ← 團隊/場佈照
+│   ├── events/                  ← 按活動類型分
+│   │   ├── birthday/            ← 週歲/彌月/生日
+│   │   ├── wedding/             ← 婚禮外燴
+│   │   ├── corporate/           ← 企業活動
+│   │   └── other/               ← 品酒會/展覽等
+│   └── items/                   ← ⭐ 品項照片（Slides Menu Showcase 核心）
+│       ├── DES-MAC-001/         ← 對應 ITEM_MASTER item_id
+│       │   ├── primary.webp     ← 主圖（Slides 優先使用）
+│       │   └── alt_01.webp      ← 備選圖
+│       ├── DES-MAC-002/
+│       └── SAV-APZ-001/
+├── daily/                       ← 日常照片（不進 Slides）
+└── travel/                      ← 旅遊照片（不進 Slides）
+```
+
+**關鍵設計要求：**
+
+1. **items/ 子資料夾必須用 item_id 命名**（如 `DES-MAC-001`），與 ITEM_MASTER 嚴格對應
+2. **每個 item_id 資料夾必須有一張 primary 圖**（Slides 腳本預設取 primary）
+3. **圖片格式統一為 WebP**（網頁載入快，Slides API 支援）
+4. **外燴類照片（category=food/event）優先處理**，日常/旅遊可延後
+
+### 11.4 對 A4 的具體需求：檔案命名規則
+
+**品項照片命名格式：**
+```
+{item_id}_primary.webp          ← 主圖（必須）
+{item_id}_alt_{seq2}.webp       ← 備選（選填）
+{item_id}_detail_{seq2}.webp    ← 細節特寫（選填）
+```
+
+**範例：**
+```
+DES-MAC-001_primary.webp        ← 法式玫瑰馬卡龍主圖
+DES-MAC-001_alt_01.webp         ← 備選角度
+SAV-APZ-001_primary.webp        ← 義式香腸獵鳥盤主圖
+```
+
+**活動場景照命名格式（SEO 友善，A4 已有規則）：**
+```
+{event_type}-{keywords}-{YYYYMMDD}.webp
+```
+
+**範例：**
+```
+event-amd-corporate-catering-20250315.webp
+event-wedding-candybar-outdoor-20240901.webp
+```
+
+### 11.5 對 A5 的具體需求：ASSET_MASTER Schema
+
+A5 Master Data Agent 需建立 ASSET_MASTER sheet，作為 Slides GAS 腳本查詢圖片的唯一介面。
+
+**ASSET_MASTER 必要欄位：**
+
+| 欄位 | 型態 | 必填 | 說明 | 範例 |
+|------|------|------|------|------|
+| asset_id | string | ✅ | 唯一識別 AST-{SEQ4} | AST-0001 |
+| item_id | string | ✅ | FK → ITEM_MASTER | DES-MAC-001 |
+| drive_file_id | string | ✅ | Google Drive 檔案 ID | 1abc2def3ghi |
+| drive_url | string | ✅ | 完整 Drive URL | https://drive.google.com/... |
+| photo_type | enum | ✅ | primary / alt / detail | primary |
+| is_primary | boolean | ✅ | 是否為主圖（GAS 查詢用） | TRUE |
+| category | string | | 分類：food/event/team/hero | food |
+| alt_text_zh | string | | 中文 ALT（SEO + 無障礙） | 法式玫瑰馬卡龍特寫 |
+| quality_score | integer | | Gemini 評分 1-5 | 4 |
+| source_event | string | | 來源活動（如有） | AMD 企業活動 |
+| width | integer | | 圖片寬度 px | 1200 |
+| height | integer | | 圖片高度 px | 800 |
+| file_size_kb | integer | | 檔案大小 KB | 150 |
+| processed_at | date | ✅ | 處理日期 | 2026-03-20 |
+
+**GAS 查詢邏輯（Phase 3 將實作）：**
+```javascript
+// Slides GAS 腳本查詢品項主圖
+function getItemPhoto(itemId) {
+  var sheet = SpreadsheetApp.getActive().getSheetByName('ASSET_MASTER');
+  var data = sheet.getDataRange().getValues();
+  for (var i = 1; i < data.length; i++) {
+    if (data[i][1] === itemId && data[i][5] === true) { // item_id + is_primary
+      return data[i][2]; // drive_file_id
+    }
+  }
+  return null; // 無主圖，使用 placeholder
+}
+```
+
+### 11.6 A4 Phase 4 分類時的額外標記需求
+
+A4 目前的 Gemini Vision 分類 Prompt 產出：category / keywords / alt_text / is_food_photo / food_items / event_type / quality_score
+
+**Slides 系統額外需要 A4 在分類時標記：**
+
+| 新增欄位 | 說明 | 為什麼需要 |
+|----------|------|-----------|
+| matched_item_id | 比對到的 ITEM_MASTER item_id（如有） | Slides 靠 item_id 找圖，必須建立對應 |
+| photo_orientation | landscape / portrait / square | Slides 封面需要 landscape，品項可接受 square |
+| is_catering_usable | TRUE/FALSE | 快速過濾可用於外燴簡報的照片 |
+| suggested_slide_usage | hero / about / portfolio / item / none | A4 可根據照片內容建議用途 |
+
+**Gemini Prompt 擴充建議（給 A4）：**
+```
+在原有分類基礎上，額外判斷：
+1. 這張照片是否適合用於外燴客戶簡報？(is_catering_usable: true/false)
+2. 建議用於簡報的哪個位置？(suggested_slide_usage: hero/about/portfolio/item/none)
+3. 如果是餐點照片，最接近 ITEM_MASTER 中的哪個品項？(matched_item_id 或 null)
+4. 照片方向？(photo_orientation: landscape/portrait/square)
+```
+
+### 11.7 跨 Agent 交接觸發點
+
+| 事件 | 觸發方 | 通知對象 | 記錄位置 |
+|------|--------|----------|----------|
+| A4 Phase 4 外燴分類完成 | A4 | Slides + A5 | CURRENT_STATUS + pipeline.md |
+| A4 items/ 資料夾照片就緒 | A4 | Slides | CURRENT_STATUS Session Log |
+| A5 ASSET_MASTER 建立完成 | A5 | Slides | master-data.md SECTION 6 |
+| Slides Phase 3 開始 | Slides | A4 + A5 | slides-quotation-system.md |
+| ITEM_MASTER 新增/修改品項 | A5 | A4（重新分類） | master-data.md + BOARD |
+| 新照片入庫需更新 ASSET_MASTER | A4 | A5 | pipeline.md Session Log |
+
+### 11.8 分階段對接時程
+
+| 階段 | 時間點 | A4 需完成 | A5 需完成 | Slides 需完成 |
+|------|--------|-----------|-----------|---------------|
+| 階段 A | A4 Phase 4 啟動後 | 外燴照片分類 + quality_score | — | — |
+| 階段 B | 分類結果出爐後 | items/ 資料夾建立 + primary 標記 | ASSET_MASTER sheet 建立 + 填入 | — |
+| 階段 C | ASSET_MASTER 就緒後 | 持續補充照片 | 持續維護索引 | Phase 3 啟動：GAS 插入照片邏輯 |
+| 階段 D | Phase 3 完成後 | — | — | 完整測試：一鍵生成含照片的提案簡報 |
+
+### 11.9 重要約束提醒
+
+1. **Slides Menu Showcase 只顯示品項名稱 + 照片**，不顯示價格/數量/說明
+2. **Master Template 永遠不被腳本修改**，每次生成都是副本操作
+3. **item_id 是唯一橋接鍵**（ITEM_MASTER ↔ ASSET_MASTER ↔ Drive 資料夾 ↔ Slides）
+4. **優先處理有照片的品項**，沒照片的品項在 Slides 中顯示 placeholder
+5. **WebP 格式優先**，如 A4 處理前是 JPG/HEIC，轉換後再入庫
+6. **照片品質閾值**：quality_score >= 3 才進入 ASSET_MASTER（避免低品質照片出現在客戶簡報）

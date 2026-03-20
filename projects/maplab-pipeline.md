@@ -1,5 +1,5 @@
 # Pipeline Agent — 角色定位與技術文件
-版本：v1.5 | 建立：2026-03-12 | 更新：2026-03-20
+版本：v1.6 | 建立：2026-03-12 | 更新：2026-03-20
 
 ---
 
@@ -7,7 +7,7 @@
 
 **本專案全部在雲端執行，不在本機跑任何東西。**
 
-- 本機的 git clone 只用來讀程式碼，不執行任何 Python
+- 本機的 git clone 只用來讀程式碼，不執行任何 Phython
 - 所有 Python 執行環境 = Google Colab（帳號：lb99104@gmail.com，authuser=1）
 - 程式碼管理 = GitHub API（純雲端，不需要 push / pull / clone）
 - 如果本機 git pull 出現 IndentationError，忽略它，GitHub 上的版本是乾淨的
@@ -104,7 +104,7 @@
 |------|------|----------|
 | **外燴** | 外燴現場、擺盤、活動佈置、客人互動 | TimeTree 「飛寶一家」行事曆外燴事件 + Gemini Vision |
 | **旅遊** | 旅行/出遊照片、飯店、風景 | TimeTree 行事曆旅遊事件（agoda 訂房等）+ Gemini Vision |
-| **日常** | 不屬於外燴或旅遊的所有照片 | 預設分類，排除以上兩類後的剩餘 |
+| **日常** | 不屬於外燴或旅遊的所有照片（分 home/shop 子類） | 預設分類 + GPS/地址判斷：home=安中路、shop=和緯路450號 |
 
 ### 日期驗證來源
 - **TimeTree 行事曆：「飛寶一家」**
@@ -168,6 +168,7 @@
 | v1.4 | 2026-03-19 | Phase 3.5 Overlap Check 完成 + 相片分類規則（2022+，外燴/旅遊/日常）+ Colab 指令更新 | A4 |
 
 | v1.5 | 2026-03-20 | Photo scan 60K done + Gemini API OK + Slides SECTION 11 整合 + Phase 4 v3.0 計畫 | A4 |
+| v1.6 | 2026-03-20 | 使用者決策：日常分 home/shop + 旅遊用目的地命名 + A5 去重晚點 | A4 |
 
 ---
 
@@ -197,3 +198,26 @@ S7 拿品項清單 → S8 matched_item_id比對 → S9 items/primary+WebP → S1
 - 2026-03-20：收到 Slides Agent SECTION 11（commit f8c4bb2），已整合進 v3.0 計畫
 - - 第二波依賴 A5 甜點去重完成 → ⚠️ 提醒使用者確認進度
   - - 旅遊/日常照：Slides 不需要，但保持 SEO 命名供網站使用
+
+### 使用者決策（2026-03-20 確認）
+
+| 問題 | 決策 |
+|------|------|
+| A5 甜點去重 | 晚點處理（Wave 2 繼續等） |
+| 旅遊資料夾命名 | 用目的地（小琉球/東京/薄荷島）✅ |
+| 日常照分類 | 分 home/shop：home=台南安中路、shop=台南和緯路450號 |
+
+### MAPLAB_ASSETS 資料夾結構
+
+```
+MAPLAB_ASSETS/
+  catering/
+    hero/
+    team/
+    events/{type}/
+    items/{item_id}/
+  travel/{destination}/
+  daily/
+    home/
+    shop/
+```

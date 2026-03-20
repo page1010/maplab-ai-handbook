@@ -1,6 +1,6 @@
 # AGENT_RULES.md — MAPLAB AI 全域行為準則
 
-版本：v1.9 | 建立：2026-03-12 | 更新：2026-03-19
+版本：v2.0 | 建立：2026-03-12 | 更新：2026-03-20
 
 ---
 
@@ -13,10 +13,15 @@ Step 2. Do NOT assume the project you are working on.
 Step 3. Ask the user ONE question: "What project should I activate?"
 Step 4. After the user answers —
    Go to https://github.com/page1010/maplab-ai-handbook,
+   read **CURRENT_STATUS.md** FIRST（唯一最新狀態入口，最高優先）,
+   read **TASK_QUEUE.md** to see available tasks,
    read AGENT_RULES.md to find your role and allowed tasks,
    read projects/{project-name}.md for technical details,
    then confirm your role out loud before starting any work.
-Step 5. If the project is unclear or not in AGENT_RULES.md, ask the user. Never invent a role.
+Step 5. Output a **Startup Check** before starting（格式見 AGENT_STARTUP_PROTOCOL.md）.
+Step 6. If the project is unclear or not in AGENT_RULES.md, ask the user. Never invent a role.
+
+> ⚠️ CURRENT_STATUS.md 的資訊優先於所有其他文件。若衝突，以 CURRENT_STATUS 為準。
 
 ---
 
@@ -151,6 +156,22 @@ GSC 關鍵字排名    ──→  文章選題依據
 
 ---
 
+## SECTION 5 — Repo 管控規則 + Notion 禁令
+
+**Repo 管控（全 Agent 適用）：**
+- 目前共 4 個 repo（handbook / pipeline / master-data / Detasys）+ 1 個獨立 repo（kitchen-web-optimization）
+- **禁止新開 repo**，除非 Owner 明確同意。所有新功能在現有 repo 內建 branch 開發
+- stockpick-telegram 與 MAPLAB 系統無關，不納入治理
+- 所有 repo 應設為 **Private**，避免 API key / credentials 外洩
+
+**Notion 禁令（全 Agent 適用）：**
+- Agent **禁止讀取或引用 Notion** 作為任何決策、狀態、進度的依據
+- Notion 僅供人類使用（控制台/看板），Agent 不開 Notion、不讀 Notion、不引用 Notion
+- 所有進度、版本、技術文件一律以 **GitHub commit** 為準
+- 若發現任何文件仍引用 Notion 作為 Agent 工作來源，立即回報 A1 修正
+
+---
+
 ## SECTION 4 — 版本紀錄
 
 | 版本 | 日期 | 說明 | 更新者 |
@@ -163,5 +184,6 @@ GSC 關鍵字排名    ──→  文章選題依據
 | v1.5 | 2026-03-14 | 新增 A7 AI Reply System Agent；新增錯誤 003 | A1 Handbook Agent |
 | v1.6 | 2026-03-15 | 合併 A3+A6 為 Ads Team；新增 SECTION 1.1；新增 skills/ai-model-guide.md 引用；錯誤 004 記錄 | A1 Handbook Agent |
 | v1.7 | 2026-03-17 | Notion 欄位加刪除線 + 警告標語；欄位標題改為「僅人類參考，非 Agent 依據」| A1 Handbook Agent |
-| v1.9 | 2026-03-19 | SECTION 0 召喚 Prompt 加入 CURRENT_STATUS 優先 + TASK_QUEUE + Startup Check；SECTION 2 Git 規則改為直接 commit（對齊實務）；移除殘留 Stop Claude | A1 Handbook Agent |
 | v1.8 | 2026-03-18 | 合併 A2+A3 為 SEO & Ads Team；新增 SECTION 1.2 SEO↔Ads 協作協議；SECTION 1.1 升級為統一團隊；錯誤 005 記錄 | A1 Handbook Agent |
+| v1.9 | 2026-03-19 | SECTION 2 Git 規則改為直接 commit（對齊實務）；移除殘留 Stop Claude | A1 Handbook Agent |
+| v2.0 | 2026-03-20 | SECTION 0 召喚 Prompt 真正修復（加入 CURRENT_STATUS 第一步 + TASK_QUEUE + Startup Check）；新增 SECTION 5 Repo 管控 + Notion 禁令；版本表順序修正 | A1 Handbook Agent |

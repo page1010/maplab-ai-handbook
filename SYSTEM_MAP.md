@@ -16,7 +16,7 @@
 │  CURRENT_STATUS ─→ TASK_QUEUE ─→ AGENT_RULES             │
 │  AGENT_STARTUP_PROTOCOL ─→ CURRENT_EXECUTION_BOARD       │
 │  README ─→ SYSTEM_MAP ─→ AI_WORKFLOW_MAP                 │
-│  CHANGELOG ─→ skills/(14) ─→ projects/(6) ─→ handoff/   │
+│  CHANGELOG ─→ skills/(14) ─→ projects/(8) ─→ handoff/   │
 └──────────────────────┬───────────────────────────────────┘
                        │ 指揮 & 文件連結
          ┌─────────────┼────────────────┐
@@ -28,6 +28,14 @@
 │  執行層      │ │  執行層      │ │  資料層          │
 │  A4 負責     │ │ A2/A3 Team  │ │  A5 負責         │
 └─────────────┘ └─────────────┘ └─────────────────┘
+
+         ┌──────────────────────────┐
+         │  maplab-kitchen-         │
+         │  web-optimization        │
+         │ （私有）                  │
+         │  執行層                   │
+         │  A2/A3 SEO & Ads Team    │
+         └──────────────────────────┘
 ```
 
 ---
@@ -174,5 +182,5 @@ Drive / Gmail 整合             → Gemini
 
 ---
 
-*版本：v2.1 | 更新：2026-03-19 | 維護者：A1 Handbook Agent*
+*版本：v2.2 | 更新：2026-03-20 | 維護者：A1 Handbook Agent*
 *讀完這頁 + CURRENT_STATUS.md，你就掌握了整個系統的全貌。*

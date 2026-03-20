@@ -3,7 +3,26 @@
 本文件記錄 maplab-ai-handbook 的所有重大版本變更。
 格式：版本號 | 日期 | 變更摘要 | 執行 Agent
 
-## v3.6 — 2026-03-19（最新）
+
+## v3.7 — 2026-03-20（最新）
+
+**T-A1-002 子任務①⑥：AGENT_RULES v2.0 + CURRENT_STATUS/TASK_QUEUE 更新**
+
+執行 Agent：A1 Handbook Agent（Claude Opus 4.6）
+
+問題：v3.6 巡查的 CHANGELOG 宣稱 SECTION 0 已修復，但實際內容未變更。缺乏 Repo 管控規則和 Notion 禁令。
+
+修復（3 commits）：
+
+T_RULES.md v1.9 → v2.0** — SECTION 0 真正修復（Step 4 加 CURRENT_STATUS FIRST + TASK_QUEUE；新增 Step 5 Startup Check）；新增 SECTION 5 Repo 管控 + Notion 禁令；版本表 v1.8/v1.9 順序修正
+2. **CURRENT_STATUS.md v3.6 → v3.7** — 版本升至 v3.7；Phase 改為 4.1 進行中；T-A1-002 登錄；AGENT_RULES v2.0 決策紀錄
+   3. **TASK_QUEUE.md** — T-A1-002 登錄高優先；日期更新
+     
+      4. 設計原則：
+      5. - 召喚 Prompt 必須言行一致（CHANGELOG 說改了就真的要改）
+         - - Repo 管控 + Notion 禁令寫入 AGENT_RULES 確保所有 Agent 開工就讀到
+           - - 狀態文件即時反映進行中任務，避免其他 Agent 做衝突修改
+## v3.6 — 2026-03-19
 
 **系統巡查：關鍵 20% 問題修復 — 召喚 Prompt + Git 規則 + 過時文件**
 

@@ -1,6 +1,6 @@
 # REPO_SYNC_RULES.md — Repo 間同步規則
 
-**版本：v1.0 | 建立：2026-03-14 | 更新：2026-03-19 | 維護者：A1 Handbook Agent**
+**版本：v1.1 | 建立：2026-03-14 | 更新：2026-03-20 | 維護者：A1 Handbook Agent**
 
 本文件定義 maplab-ai-handbook（公開治理層）與各執行層 repo 之間的同步規則，避免規則、進度與實作三方脫節。
 
@@ -27,6 +27,7 @@ RESULT：下一個 Agent 接手時讀到錯誤資訊，從頭重做。
 | maplab-pipeline | 公開・執行層 | 相簿自動化實作、資料流程腳本 | A4 |
 | maplab-Detasys | 私有・執行層 | SEO / Ads / Monitor 腳本與分析工具 | A2/A3 SEO & Ads Team |
 | maplab-master-data | 公開・資料層 | ERP schema / Sheets 主資料設計 | A5 |
+| maplab-kitchen-web-optimization | 私有・執行層 | 官網 SEO / RWD / Landing Page / PageSpeed 優化 | A2/A3 SEO & Ads Team |
 
 **原則：handbook 定義「是什麼、為什麼、怎麼協作」，執行層 repo 定義「怎麼做到」。**
 
@@ -103,5 +104,6 @@ RESULT：下一個 Agent 接手時讀到錯誤資訊，從頭重做。
 
 | 版本 | 日期 | 說明 | 更新者 |
 |------|------|------|--------|
+| v1.1 | 2026-03-20 | 新增 maplab-kitchen-web-optimization repo（私有・執行層）+ Owner 同步職責 | A1 Handbook Agent |
 | v1.0 | 2026-03-19 | 全面重寫：移除 PROJECT_CONTEXT 引用、對齊 CURRENT_STATUS/TASK_QUEUE、修正 repo 公私標示、A6→A2/A3 SEO & Ads Team | A1 Handbook Agent |
 | v0.1 | 2026-03-14 | 初版建立，定義 4 個 repo 的同步規則基礎框架 | A1 Handbook Agent |

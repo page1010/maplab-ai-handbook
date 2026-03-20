@@ -1,6 +1,6 @@
 # Master Data Agent — MAPLAB Kitchen ERP 技術文件
 
-版本：v1.3 | 建立：2026-03-13 | 更新：2026-03-14 | 狀態：Dashboard 修復 + QUOTE_DRAFT 收尾
+版本：v1.5 | 建立：2026-03-13 | 更新：2026-03-19 | 狀態：Items 清洗完成 + QUOTE_DRAFT MVP + TimeTree 密集日
 
 ---
 
@@ -18,7 +18,7 @@
 1. 讀本文件 SECTION 1 確認你的角色
 2. 開啟 [MAPLAB_MasterData_Sheets](https://docs.google.com/spreadsheets/d/1d2_SiEXh5JT4lzjkgHDI5JU9UWBY9TiPlC8DaxkQnKs) 看目前資料狀態
 3. 看 Drive 資料夾 [MAPLAB_DATA](https://drive.google.com/drive/u/0/folders/19RKLsBfNKuoCHVPFzT9D7tJrAdkTSmpt) 了解訂單結構
-4. 確認進度：Notion「MAPLAB Kitchen Master Data Dashboard」
+4. 確認進度：CURRENT_STATUS.md + TASK_QUEUE.md（GitHub 唯一真相）
 
 ---
 
@@ -139,13 +139,17 @@
 
 | 任務 | 狀態 | 優先度 |
 |------|------|--------|
-| ITEM_MASTER 資料填入 | 🔄 進行中（截圖 + 逐條新增）| 🔴 最高 |
+| ITEM_MASTER Items 品項清洗 | ✅ 完成（300→139 筆，BEV 容量分離+去重+後綴清除）| 🔴 最高 |
+| 甜點（DST）去重 + 全品項重新編碼 | ⏸️ 等使用者手動去重（T-A5-001） | 🔴 最高 |
+| QUOTE_DRAFT 極簡報價單 MVP | ✅ 完成（下拉選品項→VLOOKUP 帶出成本）| 🟡 高 |
+| QUOTE_DRAFT 增強（飲料容量/保冰桶/招待）| 🔲 待開始（T-A5-002，需 T-A5-001 完成）| 🟡 高 |
+| TimeTree 2025 全年外燴密集日清單 | ✅ 完成 | 🟡 高 |
+| 熱客招待品項定義 | 🔲 待開始（T-A5-003）| 🟠 中 |
+| 使用者填 Items.D 欄 default_price | ⏸️ 等使用者（T-A5-004）| 🔴 最高 |
 | PRICE_MASTER 資料填入 | 🔲 待開始 | 🟡 高 |
 | ASSET_MASTER 與 Drive 圖片對應 | 🔲 待開始 | 🟡 高 |
 | MENU_MASTER 套餐組合建立 | 🔲 待開始 | 🟠 中 |
-| Python 讀取 Sheets API 腳本 | 🔲 待開始 | 🟠 中（等資料填完） |
-| Dashboard #REF! 修復 | ✅ 完成 | 🔴 最高 |
-| QUOTE_DRAFT v0.3 建立 + 收尾 | ✅ 完成（分類中文化）| 🟡 高 |
+| Dashboard #REF! 修復 | ✅ 完成 | — |
 | 自動報價系統整合 | 🔲 待開始 | 🟢 低（依賴上方完成）|
 
 > ⚠️ 重要：目前 Sheets 的「資料輸入區」欄位為空白，正在用截圖 + 手動方式逐條新增。  
@@ -236,9 +240,9 @@
 
 ---
 
-## SECTION 3 — Schema v0.1 任務書（A5 啟動任務）
+## SECTION 10 — Schema v0.1 任務書（A5 啟動任務，已完成）
 
-**任務狀態：⚡ 待啟動**
+**任務狀態：✅ 已完成（Schema v0.1 framework 在 SECTION 1-3 定義，Items 品項已清洗至 139 筆）**
 
 **任務目標：** 建立 MAPLAB Kitchen ERP 最小可用 schema v0.1，讓 A4 Pipeline Agent 可以接手規劃資料流程。
 
@@ -281,4 +285,6 @@
 
 ---
 
-*版本：v1.4 | 更新：2026-03-14 | 新增 SECTION 3 Schema v0.1 任務書*
+*版本：v1.5 | 更新：2026-03-19 | A1 巡查修正：任務狀態更新 + SECTION 編號修正 + 移除 Notion 引用*
+
+> 新技能書：skills/sheets-data-cleaning-guide.md — A5 資料清洗公式+腳本工具箱

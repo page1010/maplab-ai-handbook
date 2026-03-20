@@ -1,5 +1,5 @@
 # Pipeline Agent — 角色定位與技術文件
-版本：v1.4 | 建立：2026-03-12 | 更新：2026-03-19
+版本：v1.5 | 建立：2026-03-12 | 更新：2026-03-20
 
 ---
 
@@ -151,7 +151,7 @@
 
 | 問題 | 狀態 | 解決方向 |
 |------|------|----------|
-| Vertex AI API 403/404 | 未解決 | 需在 GCP Console 啟用，或改用 Gemini API key |
+| Vertex AI API 403/404 | ✅ 已解決 | 改用 Gemini API key (google.genai + gemini-2.5-flash) |
 | drive.mount ValueError | 已繞過 | 改用 google.colab.auth + Drive API v3 |
 | pagewu1010 187GB 待處理 | 待排程 | 等 mina pipeline 跑通後再處理 |
 
@@ -166,3 +166,34 @@
 | v1.2 | 2026-03-15 | 戰略重定義 | A5 |
 | v1.3 | 2026-03-17 | 全雲端執行聲明 + Phase 2/3 完成 + 不走本機說明 | A4 |
 | v1.4 | 2026-03-19 | Phase 3.5 Overlap Check 完成 + 相片分類規則（2022+，外燴/旅遊/日常）+ Colab 指令更新 | A4 |
+
+| v1.5 | 2026-03-20 | Photo scan 60K done + Gemini API OK + Slides SECTION 11 整合 + Phase 4 v3.0 計畫 | A4 |
+
+---
+
+## Phase 4 v3.0 執行計畫（2026-03-20）
+
+整合來源：使用者（SEO + TimeTree 事件名分類）+ Slides Agent SECTION 11（MAPLAB_ASSETS 結構 + items/{item_id} + 4 新欄位）
+
+### Photo Scan 結果
+
+60,584 files（C=4,593 T=254 D=55,737），TimeTree lookup 361 dates（C=322 T=39）
+
+### Gemini Prompt 擴充
+
+原有：category / keywords / alt_text / is_food_photo / food_items / event_type / quality_score
+新增：matched_item_id / photo_orientation / is_catering_usable / suggested_slide_usage
+
+### 第一波（不依賴 A5）
+
+S1 enriched_lookup → S2 先鋒10張 → S3 定版prompt → S4 建MAPLAB_ASSETS資料夾 → S5 2022外燴batch → S6 2023外燴+旅遊batch
+
+### 第二波（等 A5 ITEM_MASTER）
+
+S7 拿品項清單 → S8 matched_item_id比對 → S9 items/primary+WebP → S10 ASSET_MASTER+通知Slides
+
+### 跨 Agent 溝通
+
+- 2026-03-20：收到 Slides Agent SECTION 11（commit f8c4bb2），已整合進 v3.0 計畫
+- - 第二波依賴 A5 甜點去重完成 → ⚠️ 提醒使用者確認進度
+  - - 旅遊/日常照：Slides 不需要，但保持 SEO 命名供網站使用

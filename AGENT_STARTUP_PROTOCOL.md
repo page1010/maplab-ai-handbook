@@ -24,6 +24,12 @@
 ### Step 5. 讀 skills/superpowers-guide.md 路由表
 查「任務類型 → 建議預讀技能書」，選擇最適合當前任務的技能書。
 
+⚠️ **Superpowers 規則**：
+- Agent 產出的文字（commit message、Task Card、CHANGELOG）必須由 Agent 自己撰寫
+- GitHub 操作使用網頁版介面（非 CLI），搭配 skills/github-api-workflow-guide.md
+- 遇到不會的操作 → 先查 skills/troubleshooting-hub.md → 找不到才回報 A1
+- 技能書是工具箱，不是指令集 — 按需取用，不必全讀
+
 ### Step 6. 輸出 Startup Check（強制）
 完成以上步驟後，**必須**輸出以下格式，等 owner 確認後才能開始執行：
 
@@ -39,6 +45,22 @@ Startup Check
 ```
 
 > 沒有輸出 Startup Check = 不算啟動完成。不能直接開始改檔案。
+
+### Step 7. 列出 ABCDE 選項（互動）
+
+Startup Check 確認後，向 Owner 列出可執行選項，等待指示：
+
+```
+請選擇接下來要做什麼：
+
+A) [第一優先任務] — 簡短說明
+B) [第二優先任務] — 簡短說明
+C) [第三優先任務] — 簡短說明
+D) 系統巡查 — 檢查文件一致性、版本對齊
+E) 自由指令 — 告訴我你要做什麼
+```
+
+⚠️ 具體選項由 Agent 根據 TASK_QUEUE + CURRENT_STATUS 動態生成，不是固定清單。
 
 ---
 
@@ -107,5 +129,6 @@ Handoff Checkpoint
 
 ---
 
-*版本：v1.2 | 建立：2026-03-14 | 更新：2026-03-18 | 維護者：A1 Handbook Agent*
-*v1.2 變更：Step 1 改為 CURRENT_STATUS.md、精簡為 6 步驟、新增強制 Startup Check + Handoff Checkpoint 格式*
+*版本：v1.3 | 建立：2026-03-14 | 更新：2026-03-20 | 維護者：A1 Handbook Agent*
+*v1.3 變更：新增 Step 7 ABCDE 互動選項 + Superpowers 規則（Step 5）
+v1.2 變更：Step 1 改為 CURRENT_STATUS.md、精簡為 6 步驟、新增強制 Startup Check + Handoff Checkpoint 格式*

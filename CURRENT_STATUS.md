@@ -3,20 +3,21 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-03-20 | 更新者：A4
+最後更新：2026-03-20 | 更新者：A1
 
 ---
 
 ## 系統版本
 
-- **Version**: v3.6
-- **Phase**: 系統巡查完成 ✅ 關鍵問題已修復
+- **Version**: v3.7
+- **Phase**: Phase 4.1 系統治理升級進行中
 - **Status**: Active
 
 ## 當前進行中任務
 
 | Task ID | 任務 | 負責 Agent | 狀態 | Task Card |
 |---------|------|-----------|------|-----------| 
+| T-A1-002 | Phase 4.1 系統治理升級（Repo 管控 + Notion 禁令 + 文件整理）| A1 | 🔄 進行中（子任務①⑥完成）| handoff/tasks/T-A1-002.md |
 | T-A5-001 | Items 甜點去重 + 全品項重新編碼 | A5 | ⏸️ 等使用者手動去重 | handoff/tasks/T-A5-001.md |
 | T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔲 待開始 | handoff/tasks/T-A5-002.md |
 | T-A5-003 | 熱客招待品項定義 | A5 | 🔲 待開始 | — |
@@ -34,6 +35,7 @@
 ## 最新決策
 
 - 2026-03-20：A4 Photo scan 完成（60,584 files, C=4,593 T=254 D=55,737）+ Gemini API Key 設定完成（google.genai + gemini-2.5-flash 驗證 OK）
+- 2026-03-20：AGENT_RULES v2.0 — SECTION 0 召喚 Prompt 修復 + 新增 SECTION 5 Repo 管控/Notion 禁令
 - 2026-03-19：系統巡查修復 — AGENT_RULES v1.9（召喚 Prompt + Git 規則）+ REPO_SYNC_RULES v1.0 + master-data v1.5 + ads-monitor v1.2
 - 2026-03-19：Phase 4.2 全系統文件對齊完成（README v2.4 / SYSTEM_MAP v2.1 / WORKFLOW_MAP v2.2 / BOARD v2.2 / CHANGELOG v3.5）
 - 2026-03-18：A2+A3 合併為 SEO & Ads Team（AGENT_RULES v1.8）
@@ -66,6 +68,7 @@
 - ✅ A5 TimeTree 2025 全年密集日清單
 - ✅ Phase 4 第一階段：治理重構（CURRENT_STATUS + TASK_QUEUE + Task Card + PROTOCOL v1.2）
 - ✅ Phase 4.2：全系統文件對齊
+- ✅ AGENT_RULES v2.0（SECTION 0 修復 + SECTION 5 Repo 管控/Notion 禁令）
 - ✅ 系統巡查：關鍵 20% 問題修復（AGENT_RULES 召喚/Git 規則、REPO_SYNC_RULES 重寫、master-data/ads-monitor 過時修正）（README
 - - ✅ A4 TimeTree lookup committed（PR #9, 361 dates）
   - - ✅ A4 Photo scan 60,584 files（C=4,593 T=254 D=55,737）+ Gemini API Key 設定驗證完成v2.4 + SYSTEM_MAP v2.1 + WORKFLOW_MAP v2.2 + BOARD v2.2 + CHANGELOG v3.5）

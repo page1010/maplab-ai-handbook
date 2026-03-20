@@ -35,7 +35,8 @@
 ## 最新決策
 
 - 2026-03-20：A4 Photo scan 完成（60,584 files, C=4,593 T=254 D=55,737）+ Gemini API Key 設定完成（google.genai + gemini-2.5-flash 驗證 OK）
-- 2026-03-20：AGENT_RULES v2.0 — SECTION 0 召喚 Prompt 修復 + 新增 SECTION 5 Repo 管控/Notion 禁令
+- 2026-03-20：T-A1-002 結案 — 全部 7 子任務完成（AGENT_RULES v2.0 + web-opt v1.0 + archive/ + PROTOCOL v1.3 + SYSTEM_MAP v2.2 + SYNC_RULES v1.1 + CHANGELOG v3.7 + CURRENT_STATUS v3.7→v3.8）
+2026-03-20：AGENT_RULES v2.0 — SECTION 0 召喚 Prompt 修復 + 新增 SECTION 5 Repo 管控/Notion 禁令
 - 2026-03-19：系統巡查修復 — AGENT_RULES v1.9（召喚 Prompt + Git 規則）+ REPO_SYNC_RULES v1.0 + master-data v1.5 + ads-monitor v1.2
 - 2026-03-19：Phase 4.2 全系統文件對齊完成（README v2.4 / SYSTEM_MAP v2.1 / WORKFLOW_MAP v2.2 / BOARD v2.2 / CHANGELOG v3.5）
 - 2026-03-18：A2+A3 合併為 SEO & Ads Team（AGENT_RULES v1.8）
@@ -68,7 +69,8 @@
 - ✅ A5 TimeTree 2025 全年密集日清單
 - ✅ Phase 4 第一階段：治理重構（CURRENT_STATUS + TASK_QUEUE + Task Card + PROTOCOL v1.2）
 - ✅ Phase 4.2：全系統文件對齊
-- ✅ AGENT_RULES v2.0（SECTION 0 修復 + SECTION 5 Repo 管控/Notion 禁令）
+- ✅ T-A1-002 Phase 4.1 系統治理升級全部完成（7 子任務 + 8 commits）
+✅ AGENT_RULES v2.0（SECTION 0 修復 + SECTION 5 Repo 管控/Notion 禁令）
 - ✅ 系統巡查：關鍵 20% 問題修復（AGENT_RULES 召喚/Git 規則、REPO_SYNC_RULES 重寫、master-data/ads-monitor 過時修正）（README
 - - ✅ A4 TimeTree lookup committed（PR #9, 361 dates）
   - - ✅ A4 Photo scan 60,584 files（C=4,593 T=254 D=55,737）+ Gemini API Key 設定驗證完成v2.4 + SYSTEM_MAP v2.1 + WORKFLOW_MAP v2.2 + BOARD v2.2 + CHANGELOG v3.5）

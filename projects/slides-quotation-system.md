@@ -1,9 +1,9 @@
 # Slides Quotation System — MAPLAB Kitchen 簡報報價系統規劃
-版本：v0.3 | 建立：2026-03-19 | 更新：2026-03-20 | 負責：跨專案業務協調（A4 Pipeline + A5 Master Data + Slides）
+版本：v0.4 | 建立：2026-03-19 | 更新：2026-03-20 | 負責：跨專案業務協調（A4 Pipeline + A5 Master Data + Slides）
 狀態：📋 規劃完成，待實作
 
 ---
-狀態：Phase 1 V2 skeleton done — pending manual beautification
+狀態：Phase 1 DONE | Phase 2 進行中（GAS template-based rewrite）
 ## SECTION 0 — 專案目標與角色定位
 
 ### 目標
@@ -345,10 +345,11 @@ Button triggers GAS:
 - [x] Redesign existing Slides P1-P5 + CTA page (V2 created with premium design)
 - [x] Delete P6 (Process) — removed in V2
 - [x] Revise P7 to Menu Showcase template (name+photo only) — V2 P6
-- [ ] Manual beautification of V2 + save as Master Template
+- [x] Manual beautification via beautifyV2() script
+- [ ] User adds real photos to Master Template (user action)
 - **Output**: One polished Master Template Slides
 
-### Phase 2: Rewrite GAS to Template-Based
+### Phase 2: Rewrite GAS to Template-Based (CURRENT)
 - [ ] New function generateClientProposal()
 - [ ] Logic: Copy Master -> Read selected items from Sheet -> Insert menu showcase pages -> Return new Slides URL
 - [ ] Menu showcase inserts item names only (no photos yet, wait for ASSET_MASTER)
@@ -389,6 +390,10 @@ Phase 3 depends on: A4 Phase 4 + A5 ASSET_MASTER
 | GAS slidesV2.gs | Done | 2026-03-20 | createMAPLABSlidesV2() - 7pg premium design, no Process page |
 | Slides V2 File | Created | 2026-03-20 | Catering Proposal v2 ID=1rRxwPK9Nsgb7oqoRiUOCFqu3iGNuw_zRKW3zeHbdHBY |
 | V2 Design Verified | Done | 2026-03-20 | 7pg: Cover/About/Services/Portfolio/WhyUs/MenuShowcase/CTA |
+| beautifyV2.gs | Done | 2026-03-20 | Font/color/line beautification applied to V2 slides |
+| Phase 1 Complete | Done | 2026-03-20 | All checklist items done, V2 Master Template ready |
+| Phase 2 Started | In Progress | 2026-03-20 | GAS template-based architecture rewrite |
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | v0.2 | 2026-03-19 | User requirements + template-based architecture + phased plan | Claude Opus 4.6 |
 | v0.3 | 2026-03-20 | V2 skeleton created + Phase 1 checklist updated | Claude Opus 4.6 |
+| v0.4 | 2026-03-20 | Phase 1 complete + beautification + Phase 2 start | Claude Opus 4.6 |
 | v0.1 | 2026-03-19 | 初始規劃：Slides 結構設計 + 資料流架構 + 設計邏輯參考 + Gemini 協作指令 | 跨專案業務協調 (Claude Opus 4.6) |

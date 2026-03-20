@@ -4,7 +4,33 @@
 格式：版本號 | 日期 | 變更摘要 | 執行 Agent
 
 
-## v3.7 — 2026-03-20（最新）
+## v3.8 — 2026-03-20（最新）
+
+**T-A1-002 Phase 4.1 系統治理升級 — 全部完成**
+
+執行 Agent：A1 Handbook Agent（Claude Opus 4.6）
+
+T-A1-002 全部 7 個子任務完成，Phase 4.1 結案。
+
+更新（8 commits）：
+1. **projects/maplab-kitchen-web-optimization.md v1.0** — 新增官網 SEO/RWD/PageSpeed 專案文件，從 web-optimization repo 彙整 23 項優化紀錄
+2. **SYSTEM_MAP.md v2.1 → v2.2** — Repo 分工地圖新增 web-optimization（私有・執行層）、projects 6→8
+3. **REPO_SYNC_RULES.md v1.0 → v1.1** — Repo Roles 新增 web-optimization、Owner 同步職責更新
+4. **AGENT_STARTUP_PROTOCOL.md v1.2 → v1.3** — Step 5 新增 Superpowers 規則、新增 Step 7 ABCDE 互動選項
+5. **handoff/archive/ 建立** — 歸檔區 README 索引（5 個舊 handoff 檔案待 Owner 手動移入）
+6. **T-A1-002 Task Card 結案** — 全部子任務標記完成 + Checkpoint 3
+7. **CURRENT_STATUS.md v3.7 → v3.8** — T-A1-002 結案 + Phase 4.1 完成
+8. **TASK_QUEUE.md** — T-A1-002 標記完成
+
+設計原則：
+- web-optimization 收編進治理，所有 5 個 repo 都有對應的 projects/ 文件
+- PROTOCOL 新增 Superpowers 規則確保 Agent 知道怎麼使用技能書
+- ABCDE 互動選項讓 Agent 啟動後主動提供選擇，減少 Owner 決策負擔
+- archive/ 建立歸檔機制，handoff/ 不再堆積過時文件
+
+---
+
+## v3.7 — 2026-03-20
 
 **T-A1-002 子任務①⑥：AGENT_RULES v2.0 + CURRENT_STATUS/TASK_QUEUE 更新**
 

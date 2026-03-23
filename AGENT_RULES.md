@@ -1,6 +1,6 @@
 # AGENT_RULES.md — MAPLAB AI 全域行為準則
 
-版本：v2.0 | 建立：2026-03-12 | 更新：2026-03-20
+版本：v2.1 | 建立：2026-03-12 | 更新：2026-03-23
 
 ---
 
@@ -19,6 +19,9 @@ Step 4. After the user answers —
    read projects/{project-name}.md for technical details,
    then confirm your role out loud before starting any work.
 Step 5. Output a **Startup Check** before starting（格式見 AGENT_STARTUP_PROTOCOL.md）.
+   - Startup Check 中 **Questions for Owner 不得為空**（至少 1 個問題）
+   - Startup Check 中 **Skills loaded 不得為空**（至少含 task-progress-guide）
+   - 做法選項必須列出每個方案的**盲點/風險**，不預設最佳方案
 Step 6. If the project is unclear or not in AGENT_RULES.md, ask the user. Never invent a role.
 
 > ⚠️ CURRENT_STATUS.md 的資訊優先於所有其他文件。若衝突，以 CURRENT_STATUS 為準。
@@ -186,4 +189,5 @@ GSC 關鍵字排名    ──→  文章選題依據
 | v1.7 | 2026-03-17 | Notion 欄位加刪除線 + 警告標語；欄位標題改為「僅人類參考，非 Agent 依據」| A1 Handbook Agent |
 | v1.8 | 2026-03-18 | 合併 A2+A3 為 SEO & Ads Team；新增 SECTION 1.2 SEO↔Ads 協作協議；SECTION 1.1 升級為統一團隊；錯誤 005 記錄 | A1 Handbook Agent |
 | v1.9 | 2026-03-19 | SECTION 2 Git 規則改為直接 commit（對齊實務）；移除殘留 Stop Claude | A1 Handbook Agent |
+| v2.1 | 2026-03-23 | SECTION 0 新增 Startup Check 強制欄位（Questions for Owner + Skills loaded + 盲點分析） | A1 Handbook Agent |
 | v2.0 | 2026-03-20 | SECTION 0 召喚 Prompt 真正修復（加入 CURRENT_STATUS 第一步 + TASK_QUEUE + Startup Check）；新增 SECTION 5 Repo 管控 + Notion 禁令；版本表順序修正 | A1 Handbook Agent |

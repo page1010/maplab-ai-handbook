@@ -4,6 +4,15 @@
 
 > **核心原則：先讀外部記憶，再開始工作。不准依賴聊天上下文判斷專案狀態。**
 
+
+### 規則 6：經驗回寫
+任務結束（或子任務結束）時，檢查是否有值得記錄的經驗：
+- 成功路徑 → 更新 projects/maplab-playbook.md 對應 SECTION 的「最短路徑」
+- 工具選擇 → 更新對應 skills/ 技能書的工具比較表
+- 新踩的坑 → 新增 skills/experience-log.md 條目
+- 什麼都沒有 → 在 Handoff Checkpoint 寫「同現有流程，無新發現」
+
+> 不回寫 = 經驗只存在對話裡 = 對話結束就消失 = 下一個 Agent 重新摸索。
 ---
 
 ## 啟動流程（7 步驟）
@@ -81,7 +90,7 @@ B) [做法名稱]
 
 ## 執行中規則（強制）
 
-以下 5 條規則在執行期間持續生效。詳細格式、範例、原則見 skills/task-progress-guide.md。
+以下 6 條規則在執行期間持續生效。詳細格式、範例、原則見 skills/task-progress-guide.md。
 
 ### 規則 1：每步紀錄
 每完成一個可獨立描述的步驟，立即輸出 Progress Log。
@@ -136,6 +145,8 @@ Handoff Checkpoint
 - Next: [下一個接手者該做什麼]
 - Blockers: [未解決的阻塞]
 - Files to review: [建議下次先看哪些檔案]
+- Shortest Path: [如果重做這件事，最少步驟是？列出步驟 + 工具]
+- Tool Choices: [用了什麼工具？試過什麼被淘汰？為什麼選最終方案？]
 ```
 
 ### Step B. 更新 Task Card
@@ -149,6 +160,14 @@ Handoff Checkpoint
 
 ### Step E. 回報 owner
 完成摘要 + 需要 owner 決策的事項。
+
+### Step F. 經驗回寫（必填）
+任務結束時回答：
+1. **如果重做，最短路徑是什麼？**（寫進 Handoff Checkpoint 的 Shortest Path）
+2. **發現了更好的工具/做法嗎？** → 更新對應的 skills/ 技能書或 projects/ playbook
+3. **踩了新坑嗎？** → 寫進 skills/experience-log.md（格式見該檔案）
+
+> 沒回寫經驗 = 下一個 Agent 會重新踩坑。Step F 和 Handoff Checkpoint 一樣是必填。
 
 > 沒有輸出 Handoff Checkpoint = 不算完成。分頁可以關，但記憶不能丟。
 
@@ -174,7 +193,7 @@ Handoff Checkpoint
 
 ---
 
-*版本：v1.5 | 建立：2026-03-14 | 更新：2026-03-23 | 維護者：A1 Handbook Agent*
+*版本：v1.6 | 建立：2026-03-14 | 更新：2026-03-23 | 維護者：A1 Handbook Agent*
 *v1.5 變更：執行中規則精簡化（詳細內容指向 task-progress-guide）；新增規則 4 自動讀取下階段；「為什麼這樣設計」精簡為 4 列；移除與技能書重複的解釋文字*
 *v1.4 變更：Startup Check 新增 Skills loaded + Questions for Owner 強制欄位；Step 7 盲點分析；執行中規則；臨時任務規則*
 *v1.3 變更：新增 Step 7 ABCDE 互動選項 + Superpowers 規則（Step 5）*

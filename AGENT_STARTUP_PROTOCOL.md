@@ -2,7 +2,7 @@
 **所有 Agent 開始任務前，必須依序完成以下步驟。**
 這份文件的目的是解決「每個 Agent 一開始沒有大局觀」和「分頁斷線後記憶歸零」的問題。
 
-> ⚠️ **核心原則：先讀外部記憶，再開始工作。不准依賴聊天上下文判斷專案狀態。**
+> **核心原則：先讀外部記憶，再開始工作。不准依賴聊天上下文判斷專案狀態。**
 
 ---
 
@@ -10,7 +10,7 @@
 
 ### Step 1. 讀 CURRENT_STATUS.md（最高優先）
 這是唯一最新狀態入口。確認：系統版本、當前 Phase、進行中任務、Blockers、Source of Truth 文件清單。
-> ⚠️ 若其他文件與 CURRENT_STATUS.md 衝突，以 CURRENT_STATUS.md 為準。
+> 若其他文件與 CURRENT_STATUS.md 衝突，以 CURRENT_STATUS.md 為準。
 
 ### Step 2. 讀 TASK_QUEUE.md
 確認：有哪些待認領任務、你的角色可以做什麼、前置條件是否滿足。
@@ -24,7 +24,7 @@
 ### Step 5. 讀 skills/superpowers-guide.md 路由表 + 必拿技能
 查「任務類型 → 建議預讀技能書」，選擇最適合當前任務的技能書。
 
-⚠️ **Superpowers 規則**：
+**Superpowers 規則**：
 - **必拿**：skills/task-progress-guide.md — 所有任務都必須讀，不可跳過
 - Agent 產出的文字（commit message、Task Card、CHANGELOG）必須由 Agent 自己撰寫
 - GitHub 操作使用網頁版介面（非 CLI），搭配 skills/github-api-workflow-guide.md
@@ -46,7 +46,7 @@ Startup Check
 - Proposed scope: [你這輪只做什麼、不做什麼]
 ```
 
-⚠️ **阻擋規則**：
+**阻擋規則**（不通過 = 不能開始）：
 - Skills loaded 為空 = 不算啟動完成
 - Questions for Owner 為空 = 不算啟動完成
 - 沒有輸出 Startup Check = 不能直接開始改檔案
@@ -68,62 +68,49 @@ B) [做法名稱]
    - 優點：[為什麼可能有效]
    - 盲點/風險：[可能失敗的原因、沒考慮到的面向]
 
-C) [做法名稱]
-   ...
-
 你的方向比較偏向哪一種？或者你有想到我沒列的做法？
 ```
 
-⚠️ **禁止行為**：
+**禁止行為**：
 - 不要預設 A 是最佳方案 — 排序不代表推薦
 - 不要隱藏某個做法的缺點來引導 Owner 選特定選項
-- 每個做法的盲點/風險必須誠實寫，不能只寫「可能比較慢」這種空話
-- 如果只有一種做法，也要列出該做法的風險，並問 Owner 是否有其他想法
+- 盲點/風險必須誠實寫，不能只寫「可能比較慢」這種空話
+- 只有一種做法也要列風險，並問 Owner 是否有其他想法
 
 ---
 
 ## 執行中規則（強制）
 
-### 規則 1：每步紀錄（不可跳過）
-每完成一個子步驟，立即用以下格式紀錄。不要等全部做完才寫。
+以下 5 條規則在執行期間持續生效。詳細格式、範例、原則見 skills/task-progress-guide.md。
+
+### 規則 1：每步紀錄
+每完成一個可獨立描述的步驟，立即輸出 Progress Log。
 
 ```
 Progress Log #[序號]
-- Done: [剛完成什麼]
-- Result: [結果是什麼，成功/失敗/部分完成]
-- Next: [下一步要做什麼]
-- Blocker: [卡住什麼，沒有就寫「無」]
+- Done: [做了什麼]
+- Result: [成功/失敗/部分完成 — 附證據]
+- Next: [下一步]
+- Blocker: [卡住什麼，沒有寫「無」]
 ```
 
 ### 規則 2：子任務切割
-如果任務預估超過 5 個步驟，必須先拆成子任務清單，每個子任務有明確的完成條件。
-拆完列給 Owner 看，確認順序後才開始執行。
+任務超過 5 步 → 先拆子任務清單 → 列給 Owner 確認順序 → 才開始執行。
 
-### 規則 3：接續 Prompt 生成
-每完成一個子任務（或 session 即將結束時），生成一段接續 prompt，格式：
+### 規則 3：接續 Prompt
+每完成一個子任務（或 session 即將結束），生成 Resume Prompt，讓新 session 能無縫接手。
 
-```
-Resume Prompt（貼入新 session 即可接續）
----
-角色：[Agent 編號 + 名稱]
-任務：[Task ID + 名稱]
-已完成：[完成的子任務清單]
-下一步：[接下來要做什麼]
-必讀檔案：[新 session 需要先讀的檔案]
-注意事項：[上個 session 發現的坑或決策]
----
-```
+### 規則 4：自動讀取下階段
+完成一個子任務後，**不需要等 Owner 指示**，直接讀取下一個子任務的相關檔案並繼續執行。流程：
+1. 輸出當前子任務的 Progress Log
+2. 檢查子任務清單，找到下一個未完成的子任務
+3. 讀取該子任務需要的檔案（如果不確定讀哪些，問 Owner）
+4. 繼續執行
 
-### 規則 4：方向偏移檢查
-執行中如果發現實際情況跟原本選的做法不同（例如：選了寫程式解決但程式跑不通），必須**立即停下來回報 Owner**，不要自己換方案繼續做。回報格式：
+> 例外：遇到 Blocker、方向偏移、或需要 Owner 決策時，停下來回報。
 
-```
-方向偏移通知
-- 原本做法：[A/B/C + 簡述]
-- 遇到的問題：[為什麼行不通]
-- 可能的替代方案：[列出選項 + 盲點]
-- 需要 Owner 決定：[具體問題]
-```
+### 規則 5：方向偏移必須停下回報
+做法行不通時，**禁止自己默默換方案**。必須停下來輸出方向偏移通知，等 Owner 決定。
 
 ---
 
@@ -169,17 +156,12 @@ Handoff Checkpoint
 
 ## 為什麼這樣設計
 
-| 問題 | 舊做法 | 新做法 |
-|------|--------|--------|
-| Agent 不知道最新狀態 | 讀 README + BOARD + 很多文件 | 只讀 CURRENT_STATUS.md 一份 |
-| 分頁當掉記憶歸零 | 進度只在聊天裡 | 進度在 Task Card + Checkpoint + Resume Prompt |
-| 簽到簽退沒人做 | 靠自律 | 強制 Startup Check + Handoff 格式 |
-| Agent 讀到舊規則做錯事 | 歷史和當前混在一起 | CURRENT_STATUS 明列已完成事項 |
-| 任務無人認領或重複做 | 散落在各處 | TASK_QUEUE 統一管理 |
-| Agent 不問問題直接衝 | Startup Check 無阻擋 | Questions for Owner 必填，0 個 = 不能開始 |
-| Agent 不拿技能書 | 建議讀但無人驗證 | Skills loaded 必填 + task-progress-guide 必拿 |
-| 做法選錯不回報 | 自己換方案繼續做 | 方向偏移必須停下回報 |
-| 臨時任務無流程 | 做完不知登記哪裡 | CURRENT_STATUS 最新決策 + 簡化 Startup Check |
+| 問題 | 解法 |
+|------|------|
+| Agent 不問問題直接衝 | Questions for Owner 必填，0 個 = 不能開始 |
+| Agent 不拿技能書 | Skills loaded 必填 + task-progress-guide 必拿 |
+| 做法選錯不回報 | 方向偏移必須停下回報（規則 5） |
+| 做完子任務就停住等指示 | 自動讀取下階段（規則 4） |
 
 ---
 
@@ -192,7 +174,8 @@ Handoff Checkpoint
 
 ---
 
-*版本：v1.4 | 建立：2026-03-14 | 更新：2026-03-23 | 維護者：A1 Handbook Agent*
-*v1.4 變更：Startup Check 新增 Skills loaded + Questions for Owner 強制欄位；Step 7 改為盲點分析格式（禁止預設最佳方案）；新增執行中規則（每步紀錄 + 子任務切割 + 接續 Prompt + 方向偏移檢查）；新增臨時任務處理規則*
+*版本：v1.5 | 建立：2026-03-14 | 更新：2026-03-23 | 維護者：A1 Handbook Agent*
+*v1.5 變更：執行中規則精簡化（詳細內容指向 task-progress-guide）；新增規則 4 自動讀取下階段；「為什麼這樣設計」精簡為 4 列；移除與技能書重複的解釋文字*
+*v1.4 變更：Startup Check 新增 Skills loaded + Questions for Owner 強制欄位；Step 7 盲點分析；執行中規則；臨時任務規則*
 *v1.3 變更：新增 Step 7 ABCDE 互動選項 + Superpowers 規則（Step 5）*
 *v1.2 變更：Step 1 改為 CURRENT_STATUS.md、精簡為 6 步驟、新增強制 Startup Check + Handoff Checkpoint 格式*

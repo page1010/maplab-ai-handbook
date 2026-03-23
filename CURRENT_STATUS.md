@@ -10,31 +10,32 @@
 ## 系統版本
 
 - **Version**: v3.9
-- **Phase**: Phase 4.1 系統治理升級進行中
+- **Phase**: Phase 5 — 營運執行 + 廣告優化
 - **Status**: Active
 
 ## 當前進行中任務
 
 | Task ID | 任務 | 負責 Agent | 狀態 | Task Card |
 |---------|------|-----------|------|-----------| 
-| T-A1-002 | Phase 4.1 系統治理升級（Repo 管控 + Notion 禁令 + 文件整理）| A1 | 🔄 進行中（子任務①⑥完成）| handoff/tasks/T-A1-002.md |
+| T-A1-002 | Phase 4.1 系統治理升級 | A1 | ✅ 完成 | handoff/tasks/T-A1-002.md |
 | T-A5-001 | Items 甜點去重 + 全品項重新編碼 | A5 | ⏸️ 等使用者手動去重 | handoff/tasks/T-A5-001.md |
 | T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔲 待開始 | handoff/tasks/T-A5-002.md |
 | T-A5-003 | 熱客招待品項定義 | A5 | 🔲 待開始 | — |
 | T-A4-001 | Phase 4 vision.py Gemini 分析 | A4 | 🔶 Photo scan done (60K files), Gemini API OK, 待 vision.py | — |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2/A3 | 🔲 待開始 | — |
-| T-A3-001 | GTM LINE 按鈕追蹤修復 | A3 | ⏸️ 等使用者執行 | — |
+| T-A3-001 | GTM LINE 按鈕追蹤修復（方案 B 已確認） | A3 | 🔲 可認領（待測試） | — |
 
 ## Blockers（阻塞事項）
 
 - A5：甜點去重需使用者手動完成後才能重新編碼
 - A5：使用者需填 Items.D 欄 default_price
 - A4：~~需 Gemini API Key~~ ✅ resolved — Photo scan 60,584 files, pre-classified C=4,593 T=254 D=55,737
-- A3：等使用者完成 Canva C款素材 / 暫停空殼活動 / 確認 A組
+- A3：「慶生周歲派對」已上線（現有貼文），需確認受眾設定；GTM 方案 B 可認領
 
 ## 最新決策
 
-- 2026-03-23：A1 收尾 — CHANGELOG v3.9 登記 + handoff-to-A5.md 跨部門通知建立 + PROTOCOL/task-progress-guide/AGENT_RULES 優化打磨完成
+- 2026-03-23：Owner 狀態更新 — T-A3-001 方案 B 確認可執行（待測試）、T-A4-001 照片清洗中不急、T-A3-002 已用現有貼文上線 Meta 廣告
+2026-03-23：A1 收尾 — CHANGELOG v3.9 登記 + handoff-to-A5.md 跨部門通知建立 + PROTOCOL/task-progress-guide/AGENT_RULES 優化打磨完成
 - 2026-03-23：A1 系統治理 — PROTOCOL v1.5 + AGENT_RULES v2.2 + task-progress-guide v1.1 + superpowers v1.6（Startup Check 強制問問題/拿技能、做法選項盲點分析、執行中紀錄/子任務切割/接續 Prompt/方向偏移檢查、臨時任務規則）
 - 2026-03-23：A1 跨部門溝通 — TimeTree 事件資料增強 v2.0（746 筆外燴事件含客戶名，2022-2025，排除抓週），已 commit 至 data/timetree_events_2022_2026.json，供 A5 比對 Google Drive 訂單用
 - 2026-03-20：A4 Photo scan 完成（60,584 files, C=4,593 T=254 D=55,737）+ Gemini API Key 設定完成（google.genai + gemini-2.5-flash 驗證 OK）

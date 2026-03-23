@@ -212,4 +212,126 @@ A3 GTM  ──→ A3 廣告（轉換追蹤優化）
 
 ---
 
-*（SECTION 4-9 下一批 commit）*
+## SECTION 4 — 廣告系統（A3 SEO & Ads Team）
+
+### 時間線
+
+| 日期 | 做了什麼 | 產出 |
+|------|---------|------|
+| 3/11 | 廣告系統初始文件（從 Notion 遷移） | seo-ads-agent.md v1.0 |
+| 3/13 | 策略一廣告組合審查 + Pixel 確認 | v1.1 |
+| 3/16 | 策略一受眾描述填寫 + Canva C款 WIP | v1.3~v1.5（受眾/TA/廣告布局快照） |
+| 3/17 | 完整重寫：13 章節廣告技術文件 | seo-ads-agent.md v2.0 |
+| 3/17 | PMax 問句型標題 + GTM SOP | v2.1 + gtm-conversion-setup.md v1.0 |
+| 3/23 | 慶生周歲派對 Meta 廣告上線 | 使用現有貼文上線，受眾記錄完成 |
+
+### 最短路徑（給第二個網站）
+
+1. **帳號建立**：Meta 企業管理平台 + Google Ads + GTM 容器 + Meta Pixel
+2. **漏斗設計**：Top（品牌認知/冷受眾）→ Mid（互動）→ Bottom（轉換/Google PMax）
+3. **先跑 Google PMax**：設定預算 NT$300/天 + 最高成效廣告 + 至少 19 張圖 + 5 部影片
+4. **再跑 Meta 互動**：B 組互動廣告（公關窗口 + 企業窗口）各一則
+5. **最後上品牌認知**：冷受眾素材完成後才上線
+6. **受眾設定**記錄在 Task Card（handoff/tasks/T-A3-002.md）
+
+### 關鍵決策
+
+- **Google 收割 + Meta 建品牌**：Google PMax 抓搜尋意圖（已想找外燴的人），Meta 做曝光（還不知道你的人）
+- **不在 Meta 推銷/講價格**：冷受眾只講畫面感，不放方案/金額
+- **PMax 單一活動先跑**：不急著拆 Campaign 1/2，先驗證轉換
+- **素材用現有貼文先上**：不等 Canva C款完成，先用現有貼文測試受眾
+
+### 廣告成本參考（MAPLAB 第一個月）
+
+| 平台 | 每日預算 | 30 天花費 | 轉換 | CPA |
+|------|---------|----------|------|-----|
+| Google PMax | NT$300 | NT$2,257（使用率 25%） | 7 次 | NT$322 |
+| Meta B組 公關窗口 | — | — | — | NT$5/互動 |
+| Meta B組 企業窗口 | — | — | — | NT$13/互動 |
+
+### 踩過的坑
+
+- Meta Pixel 重複觸發（GTM 有兩個 FB 標籤）→ 刪除重複 Pixel
+- PMax 預算使用率僅 25%（受眾量或關鍵字覆蓋不足）
+- 「開發潛在客戶2026」空殼行銷活動每天白燒 NT$100 → 需暫停
+- 品牌知名度 A組 有「未發佈的編輯內容」→ 需確認發佈或還原
+- seo-ads-agent.md v1.x 格式亂碼（> > - [ ] 格式）→ v2.0 完整重寫解決
+
+### 受眾設定紀錄
+
+地區：台南、高雄  
+對象：25-45 歲媽媽（週歲/家庭冷受眾）  
+興趣條件：奢侈品、國際旅行、日本料理、中式料理、新光三越台南西門店、甜點、巧克力、無印良品、肖像攝影、Photo shoot、Smart Parents 親子王、生日蛋糕、女性雜誌、攝影網站等  
+完整清單見：handoff/tasks/T-A3-002.md
+
+---
+
+## SECTION 5 — SEO + 內容（A2/A3 SEO & Ads Team）
+
+### 時間線
+
+| 日期 | 做了什麼 | 產出 |
+|------|---------|------|
+| 3/12 | 官網 SEO 初始盤點 | web-optimization repo 建立 |
+| 3/16 | PR #1：策略一廣告素材 + 受眾 | work/seo-ads/claude/strategy1-ad-creative |
+| 3/16 | PR #2：TA 建議 + 困難回報 | work/seo-ads/claude/strategy1-ta-docs-v1.4 |
+| 3/16 | PR #3：CHANGELOG v2.5 | work/seo-ads/claude/changelog-v2.5-board-v1.3 |
+| 3/20 | 官網 SEO 優化紀錄彙整 | maplab-kitchen-web-optimization.md v1.0（23 項優化） |
+
+### 最短路徑（給第二個網站）
+
+1. **關鍵字策略**：先定 5 個核心頁面（總頁/週歲/婚禮/企業/價格FAQ）
+2. **Landing Page 必備**：LINE 連結 + 詢問表單（GTM 才能追蹤轉換）
+3. **內容方向**：對應 PMax 關鍵字群（台南外燴、週歲派對外燴、台南外燴推薦）
+4. **SEO 與廣告聯動**：SEO 頁面 = Google PMax 的 Landing Page
+5. **WordPress 基礎優化**：RWD + PageSpeed + meta 標題 + 結構化資料
+
+### 關鍵決策
+
+- **A2 + A3 合併**：SEO 和 Ads 共享行銷漏斗，分開執行會資訊斷層（v3.2 決定）
+- **5 個交接觸發點**：SEO 和 Ads 任何變更都即時通知對方
+- **PR 流程後來取消**：初期 A3 用 branch + PR，後來改為直接 commit（更快）
+
+### 待建 SEO 頁面（優先順序）
+
+1. 台南外燴總頁
+2. 週歲/家庭派對頁
+3. 婚禮外燴頁
+4. 企業外燴頁
+5. 價格/FAQ 頁
+
+---
+
+## SECTION 6 — GTM 追蹤（A3）
+
+### 時間線
+
+| 日期 | 做了什麼 | 產出 |
+|------|---------|------|
+| 3/17 | GTM 轉換事件 SOP 建立 | gtm-conversion-setup.md v1.0 |
+| 3/17 | GTM v15 發布：LINE Click + Phone Click | Meta Pixel 事件上線 |
+| 3/17 | LINE Click 未觸發 — 根因診斷 | v1.2 問題紀錄 |
+| 3/23 | 方案 B 確認可執行 | 等待 A3 測試 |
+
+### 最短路徑（給第二個網站）
+
+1. **GTM 容器建立** → 網站安裝 GTM 代碼
+2. **Meta Pixel 標籤**（自訂 HTML）→ All Pages 觸發
+3. **三個轉換事件**依序設定：
+   - LINE 點擊：Click URL 匹配 `(lihi2\.com|lin\.ee|line\.me)`
+   - 表單送出：Form Submit + 勾選「等待標籤」
+   - 電話點擊：Click URL 包含 `tel:`
+4. 每個事件設定 Meta Pixel 標籤（fbq track）+ Google Ads 轉換標籤
+5. **驗證**：Meta Pixel Helper + GTM 預覽模式
+
+### 關鍵教訓
+
+- **LINE 按鈕 URL 不統一**：首頁用 lin.ee、SEO 文章用 lihi2.com → 觸發條件必須用正則 `(lihi2\.com|lin\.ee|line\.me)`
+- **重複 Pixel 問題**：GTM 裡可能有多個 FB 標籤，只保留一個
+- **先設轉換再優化廣告**：沒有正確的轉換事件 = PMax 對錯誤目標優化
+
+---
+
+*(SECTION 7-9 下一批 commit)*
+
+*(SECTION 7-9 下一批 commit)*

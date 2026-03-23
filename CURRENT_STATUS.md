@@ -9,7 +9,7 @@
 
 ## 系統版本
 
-- **Version**: v3.7
+- **Version**: v3.9
 - **Phase**: Phase 4.1 系統治理升級進行中
 - **Status**: Active
 
@@ -34,7 +34,8 @@
 
 ## 最新決策
 
-- 2026-03-23：A1 系統治理 — PROTOCOL v1.4 + AGENT_RULES v2.1 + task-progress-guide v1.0 + superpowers v1.6（Startup Check 強制問問題/拿技能、做法選項盲點分析、執行中紀錄/子任務切割/接續 Prompt/方向偏移檢查、臨時任務規則）
+- 2026-03-23：A1 收尾 — CHANGELOG v3.9 登記 + handoff-to-A5.md 跨部門通知建立 + PROTOCOL/task-progress-guide/AGENT_RULES 優化打磨完成
+- 2026-03-23：A1 系統治理 — PROTOCOL v1.5 + AGENT_RULES v2.2 + task-progress-guide v1.1 + superpowers v1.6（Startup Check 強制問問題/拿技能、做法選項盲點分析、執行中紀錄/子任務切割/接續 Prompt/方向偏移檢查、臨時任務規則）
 - 2026-03-23：A1 跨部門溝通 — TimeTree 事件資料增強 v2.0（746 筆外燴事件含客戶名，2022-2025，排除抓週），已 commit 至 data/timetree_events_2022_2026.json，供 A5 比對 Google Drive 訂單用
 - 2026-03-20：A4 Photo scan 完成（60,584 files, C=4,593 T=254 D=55,737）+ Gemini API Key 設定完成（google.genai + gemini-2.5-flash 驗證 OK）
 - 2026-03-20：T-A1-002 結案 — 全部 7 子任務完成（AGENT_RULES v2.0 + web-opt v1.0 + archive/ + PROTOCOL v1.3 + SYSTEM_MAP v2.2 + SYNC_RULES v1.1 + CHANGELOG v3.7 + CURRENT_STATUS v3.7→v3.8）

@@ -1,9 +1,9 @@
-# CURRENT_STATUS.md — 唯一最新狀態入口
+h# CURRENT_STATUS.md — 唯一最新狀態入口
 
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-03-23 | 更新者：A1
+最後更新：2026-03-23 | 更新者：A4
 
 ---
 
@@ -21,7 +21,7 @@
 | T-A5-001 | Items 甜點去重 + 全品項重新編碼 | A5 | ⏸️ 等使用者手動去重 | handoff/tasks/T-A5-001.md |
 | T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔲 待開始 | handoff/tasks/T-A5-002.md |
 | T-A5-003 | 熱客招待品項定義 | A5 | 🔲 待開始 | — |
-| T-A4-001 | Phase 4 vision.py Gemini 分析 | A4 | 🔶 Photo scan done (60K files), Gemini API OK, 待 vision.py | — |
+| T-A4-001 | Phase 4 Gemini 照片分類 | A4 | 🔄 S5 running (2955/8559, 35%) — S1-S4 done, REST API batch | projects/maplab-pipeline.md |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2/A3 | 🔲 待開始 | — |
 | T-A3-001 | GTM LINE 按鈕追蹤修復（方案 B 已確認） | A3 | 🔲 可認領（待測試） | — |
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | 🔄 確認中（已上線，受眾已記錄） | handoff/tasks/T-A3-002.md |
@@ -35,6 +35,7 @@
 
 ## 最新決策
 
+- 2026-03-23：A4 Phase 4 v4.0 — S1-S4 done, S5 2022 batch 35% (2955/8559) via REST API, Colab reconnected + resumed. Plan updated to maplab-pipeline.md v1.7 (45b166c). New S5.5 GPS daily subdivision planned.
 - 2026-03-23：Owner 狀態更新 — T-A3-001 方案 B 確認可執行（待測試）、T-A4-001 照片清洗中不急、T-A3-002 已用現有貼文上線 Meta 廣告
 2026-03-23：A1 收尾 — CHANGELOG v3.9 登記 + handoff-to-A5.md 跨部門通知建立 + PROTOCOL/task-progress-guide/AGENT_RULES 優化打磨完成
 - 2026-03-23：A1 系統治理 — PROTOCOL v1.5 + AGENT_RULES v2.2 + task-progress-guide v1.1 + superpowers v1.6（Startup Check 強制問問題/拿技能、做法選項盲點分析、執行中紀錄/子任務切割/接續 Prompt/方向偏移檢查、臨時任務規則）

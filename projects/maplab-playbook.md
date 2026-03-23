@@ -332,6 +332,147 @@ A3 GTM  ──→ A3 廣告（轉換追蹤優化）
 
 ---
 
-*(SECTION 7-9 下一批 commit)*
+## SECTION 7 — 客戶回覆系統（A7 AI Reply System Agent）
+
+### 時間線
+
+| 日期 | 做了什麼 | 產出 |
+|------|---------|------|
+| 3/13 | 系統框架建立（Gemini 對話） | ai-reply-system.md v1.0 |
+
+### 最短路徑（給第二個網站）
+
+1. 定義詢問分類規則（外燴詢問/報價請求/一般諮詢/未成交跟進）
+2. 定義必填欄位（活動類型/日期/人數/場地/預算/聯絡方式）
+3. 建立品牌語氣規範（專業溫暖、不空泛承諾、具體說明服務範圍）
+4. Drive 資料夾工作流程：ai_reply_system → Active Orders → Lost Quotes → Completed
+5. 串接 ITEM_MASTER（品項是否提供、價格區間、過敏原）
+6. 中期目標：LINE Messaging API 自動回覆
+
+### 核心設計原則
+
+- **80/20 輸入過濾**：先抓 20% 關鍵變量（日期/人數/預算），不急著報價
+- **框架提升**：先確認客戶真實需求（背後的「為什麼」），再給建議
+- **情緒平衡**：不過度承諾，維持客戶在理性決策區
+
+### 目前狀態
+
+- 框架已建立，分類規則已定義
+- 尚未串接 ITEM_MASTER（等品項填入完成）
+- LINE 自動回覆尚未開始
+
+---
+
+## SECTION 8 — 失敗經驗總整理
+
+### 致命級（資料遺失/不可逆）
+
+| # | 事件 | 根因 | 防範 |
+|---|------|------|------|
+| 001 | Takeout ZIP 被刪，122K 張照片 EXIF metadata 永久遺失 | 建議清垃圾桶前沒確認依賴 | 不可逆操作前，列出所有未提取資料並確認 |
+
+### 技術選擇錯誤（浪費時間）
+
+| # | 事件 | 試了什麼 | 正確做法 |
+|---|------|---------|---------|
+| 002 | Vertex AI 404 | Vertex AI SDK + gemini-2.0-flash/1.5-flash | 用 google.genai + API key（模型名稱格式不同） |
+| 005 | google.generativeai PIL 400 | google.generativeai + PIL Image | 用 REST API requests.post（library 已棄用） |
+| — | drive.mount ValueError | drive.mount('/content/drive') | 用 google.colab.auth + Drive API v3 |
+| — | Gemini 判斷日常照地點 | Gemini Vision（無法判斷） | GPS 座標距離計算（零成本、更準） |
+
+### 流程/治理錯誤（影響所有 Agent）
+
+| # | 事件 | 根因 | 修正 |
+|---|------|------|------|
+| — | Agent 不問問題就開始做 | 沒有強制 Startup Check | PROTOCOL v1.4 加必填欄位 |
+| — | Agent 不拿技能書 | 技能書是「可選」 | superpowers-guide 路由表 + task-progress-guide 必拿 |
+| — | Agent 每次都選方案 A | 沒有盲點分析 | PROTOCOL Step 7 改為盲點分析格式 |
+| — | CHANGELOG 說改了但沒改 | 沒有驗證 | 先確認實際文件再寫 CHANGELOG |
+| — | Notion + GitHub 並存 | Agent 不知道讀哪個 | GitHub only（v3.0 決定） |
+| — | 直接 commit vs PR 矛盾 | 規則寫要 PR 但實際不用 | AGENT_RULES 改為直接 commit（v3.6 修正） |
+| — | ⚠️ icon 用在「無問題」場景 | 語意不一致 | icon 必須匹配實際狀態 |
+
+### 環境/快取問題
+
+| # | 事件 | 根因 | 修正 |
+|---|------|------|------|
+| 003 | GitHub raw 快取拿到舊版 | CDN 快取 | curl 加 ?t={timestamp} |
+| 004 | PHOTO_ROOT 路徑錯 | 假設資料夾結構 | 先 os.listdir 逐層驗證 |
+
+---
+
+## SECTION 9 — 第二個網站複製清單
+
+### Phase 1：治理（Day 1）
+
+- [ ] Fork/複製 maplab-ai-handbook repo 結構
+- [ ] 改 AGENT_RULES（角色/專案名稱）
+- [ ] 改 CURRENT_STATUS + TASK_QUEUE（清空任務）
+- [ ] 確認規則：GitHub 唯一、直接 commit main、不用 Notion
+
+### Phase 2：資料（Day 1-3）
+
+- [ ] 建 Google Sheets（ITEM_MASTER + PRICE_MASTER + ASSET_MASTER）
+- [ ] 定義 item_id 命名規則
+- [ ] 品項清洗（去重 + 標準化）
+- [ ] QUOTE_DRAFT MVP（下拉選品項 → VLOOKUP）
+
+### Phase 3：照片（Day 2-5）
+
+- [ ] Google Photos Takeout → Drive
+- [ ] Colab 解壓（Drive API v3，不用 drive.mount）
+- [ ] Photo scan 建立清單
+- [ ] Gemini REST API 分類（gemini-2.5-flash，不用 python library）
+- [ ] GPS 細分（home/shop）
+- [ ] SEO 命名 + WebP 轉檔
+
+### Phase 4：廣告（Day 3-5）
+
+- [ ] Meta 企業管理平台 + Pixel 設定
+- [ ] Google Ads 帳號 + PMax 廣告
+- [ ] GTM 容器 + 三個轉換事件（LINE/表單/電話）
+- [ ] 受眾設定 + 記錄到 Task Card
+
+### Phase 5：SEO（Day 5-8）
+
+- [ ] 5 個核心 Landing Page
+- [ ] 每頁必備：LINE 連結 + 詢問表單
+- [ ] 對應 PMax 關鍵字群
+- [ ] WordPress 基礎優化
+
+### Phase 6：上線（Day 7+）
+
+- [ ] Meta 廣告素材上線（可先用現有貼文）
+- [ ] PMax 開始跑
+- [ ] 驗證轉換事件觸發
+- [ ] 監控 CPM / CTR / CPA
+
+### Phase 7：回覆系統（Day 10+）
+
+- [ ] 詢問分類規則
+- [ ] 品牌語氣規範
+- [ ] 串接品項資料
+- [ ] LINE OA 自動回覆（中期）
+
+### 預計時間
+
+| 階段 | 天數 | 說明 |
+|------|------|------|
+| 治理 | 1 天 | 複製 + 改名 |
+| 資料 | 2-3 天 | 品項少的話更快 |
+| 照片 | 3-5 天 | 取決於照片量 |
+| 廣告 | 2-3 天 | 帳號設定 + GTM |
+| SEO | 3-5 天 | 5 頁內容 |
+| 上線 | 1 天 | 素材 + 發布 |
+| 回覆 | 持續 | 可後期再做 |
+| **總計** | **~2 週** | 第一個網站花了 12 天（3/12~3/23），第二個應更快 |
+
+---
+
+## 版本紀錄
+
+| 版本 | 日期 | 說明 | 更新者 |
+|------|------|------|--------|
+| v1.0 | 2026-03-23 | 完整 9 個 SECTION，從 GitHub 紀錄重建 | A1 Handbook Agent |
 
 *(SECTION 7-9 下一批 commit)*

@@ -24,6 +24,7 @@
 | T-A4-001 | Phase 4 vision.py Gemini 分析 | A4 | 🔶 Photo scan done (60K files), Gemini API OK, 待 vision.py | — |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2/A3 | 🔲 待開始 | — |
 | T-A3-001 | GTM LINE 按鈕追蹤修復（方案 B 已確認） | A3 | 🔲 可認領（待測試） | — |
+| T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | 🔄 確認中（已上線，受眾已記錄） | handoff/tasks/T-A3-002.md |
 
 ## Blockers（阻塞事項）
 

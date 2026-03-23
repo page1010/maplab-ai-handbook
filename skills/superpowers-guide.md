@@ -1,5 +1,5 @@
 # Superpowers Skills 導覽手冊 — MAPLAB AI Agent 版
-版本：v1.5 | 建立：2026-03-14 | 更新：2026-03-18
+版本：v1.7 | 建立：2026-03-14 | 更新：2026-03-18
 
 > 完整互動版：https://www.notion.so/Superpowers-Skills-320ab0806d5c807c95c7d8d633a7e5c5
 > 原始 Repo：https://github.com/obra/superpowers
@@ -12,7 +12,8 @@
 
 | 任務類型 | 建議預讀技能書 | 原因 |
 |---------|-------------|------|
-| **所有任務（必拿）** | **task-progress-guide** | **每步紀錄 + 子任務切割 + 接續 Prompt + 方向偏移檢查** |
+| **所有任務（必拿）** | **task-progress-guide** | **每步紀錄 + 子任務切割 + 接續 Prompt + 方向偏移 + 經驗回寫** |
+| 任務結束時 | experience-log | 記錄成功路徑 + 失敗教訓（取代 lessons-learned） |
 | 碰 GitHub API / 建 branch / PR | github-api-workflow-guide + systematic-debugging-cloud-guide | API 流程 + 雲端除錯 |
 | 寫長文件 / 大量修改 | context-compression-guide + verification-checklist-guide | 防 prompt 過長 + 完成驗證 |
 | 廣告相關任務 | ai-model-guide | 選 Claude 或 Gemini 執行 |

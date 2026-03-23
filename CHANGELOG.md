@@ -4,7 +4,29 @@
 格式：版本號 | 日期 | 變更摘要 | 執行 Agent
 
 
-## v3.8 — 2026-03-20（最新）
+## v3.9 — 2026-03-23（最新）
+
+**A1 跨部門溝通 + 系統治理升級**
+
+執行 Agent：A1 Handbook Agent（Claude Opus 4.6）
+
+跨部門溝通 — TimeTree 事件資料增強：
+1. **data/timetree_events_2022_2026.json v2.0** — 從 TimeTree IndexedDB 提取 746 筆外燴事件（含客戶名，2022-2025，排除抓週），供 A5 比對 Google Drive 訂單
+2. **CURRENT_STATUS.md v3.9 → v3.10** — 登記 TimeTree v2.0 + 治理升級
+
+系統治理升級 — 解決 Agent 不問問題/不拿技能/做法選錯不回報：
+3. **AGENT_STARTUP_PROTOCOL.md v1.3 → v1.5** — Startup Check 新增 Questions for Owner + Skills loaded 強制欄位；Step 7 改為盲點分析格式；新增執行中 5 條規則（每步紀錄、子任務切割、接續 Prompt、自動讀取下階段、方向偏移回報）；臨時任務規則；精簡去重
+4. **AGENT_RULES.md v2.0 → v2.2** — SECTION 0 新增 2 條啟動阻擋規則
+5. **skills/task-progress-guide.md v1.0 → v1.1** — 新建必拿技能書（Progress Log + 子任務切割 + 自動讀取下階段 + Resume Prompt + 方向偏移），每章補真實範例
+6. **skills/superpowers-guide.md v1.5 → v1.6** — 路由表新增「所有任務（必拿）→ task-progress-guide」
+
+設計原則：
+- SECTION 0 只管啟動阻擋（2 條規則）
+- PROTOCOL 管流程骨架（規則寫「做什麼」）
+- task-progress-guide 管方法論（範例 + 原則寫「怎麼做好」）
+- 即使 Agent 沒讀技能書，PROTOCOL 裡的精簡版規則已能擋住核心行為
+
+## v3.8 — 2026-03-20
 
 **T-A1-002 Phase 4.1 系統治理升級 — 全部完成**
 

@@ -1,3 +1,48 @@
+## §5 任務結束回寫（Experience Writeback）
+
+### 為什麼需要
+
+任務結束時是經驗最完整的時刻。如果不在這個時候記下「最短路徑」和「工具選擇」，這些經驗會隨著對話結束永遠消失。下一個 Agent 接到類似任務時，會從零開始摸索，重複踩坑。
+
+### 必做清單（任務結束前）
+
+1. **Handoff Checkpoint 的 Shortest Path 欄位**：寫下「如果重做，最少幾步？用什麼工具？」
+2. **Handoff Checkpoint 的 Tool Choices 欄位**：寫下試過什麼、最終選什麼、為什麼
+3. **檢查是否需要更新現有文件**：
+   - 發現更好的做法 → 更新 projects/maplab-playbook.md 對應 SECTION
+   - 發現新工具/新 API → 更新對應 skills/ 技能書
+   - 踩了新坑 → 新增 skills/experience-log.md 條目
+
+### 好的回寫範例
+
+```
+Shortest Path: 
+1. Colab 用 google.colab.auth + Drive API v3（不要用 drive.mount）
+2. Gemini 用 REST API requests.post（不要用 google.generativeai library）
+3. Model 用 gemini-2.5-flash（2.0-flash 已下架）
+4. 每 50 張寫 Sheet + 每 200 張存 checkpoint
+→ 已更新 projects/maplab-playbook.md SECTION 3
+
+Tool Choices:
+- Vertex AI SDK → 404（模型名稱格式不同）
+- google.generativeai → 400 + proxy 斷線問題
+- ✅ REST API（requests.post）：更快（310/h vs 160/h）、更穩、不依賴 proxy
+→ 已更新 skills/photo-pipeline-toolkit-guide.md 技術筆記
+```
+
+### 壞的回寫範例（不可接受）
+
+```
+Shortest Path: 按照文件做就好
+Tool Choices: 用了 Gemini API
+```
+
+→ 這種寫法等於沒寫。下一個 Agent 看到還是不知道該用哪個 SDK、哪個 model、怎麼避免已知問題。
+
+### 什麼時候可以跳過
+
+只有一種情況：任務是純文件更新（如改 CHANGELOG、更新狀態），沒有技術選擇也沒有踩坑。此時 Shortest Path 寫「同現有流程，無新發現」即可。
+
 # task-progress-guide.md — 任務紀錄與接續技能書（必拿）
 
 **這是所有 Agent、所有任務都必須讀的技能書。不可跳過。**
@@ -255,6 +300,6 @@ Resume Prompt（貼入新 session 即可接續）
 
 ---
 
-*版本：v1.1 | 建立：2026-03-23 | 維護者：A1 Handbook Agent*
+*版本：v1.2 | 建立：2026-03-23 | 維護者：A1 Handbook Agent*
 *v1.1 變更：每個章節補真實範例（TimeTree 任務）；新增 §4 自動讀取下階段；Progress Log 補失敗情況範例；速查表更新*
 *v1.0：初始版本 — 從 AGENT_STARTUP_PROTOCOL v1.4 的執行中規則獨立成技能書*

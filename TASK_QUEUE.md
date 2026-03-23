@@ -1,7 +1,7 @@
 # TASK_QUEUE.md — 任務池
 > Agent 從這裡認領任務。認領前必須先讀 CURRENT_STATUS.md。
 
-最後更新：2026-03-20 | 維護者：A1 / Owner
+最後更新：2026-03-23 | 維護者：A1 / Owner
 
 ---
 
@@ -64,6 +64,7 @@ Task Claim
 
 | Task ID | 任務 | 完成者 | 完成日期 |
 |---------|------|-------|---------|
+| — | A1 系統治理升級 v3.9（PROTOCOL v1.5 + AGENT_RULES v2.2 + task-progress-guide + TimeTree v2.0 + handoff-to-A5） | A1 | 2026-03-23 |
 | T-A1-001 | Phase 4.2 全系統文件對齊（README/SYSTEM_MAP/WORKFLOW_MAP/BOARD） | A1 | 2026-03-19 |
 | — | Phase 3 全部 4 項任務 | A1 | 2026-03-18 |
 | — | A2+A3 合併為 SEO & Ads Team | A1 | 2026-03-18 |

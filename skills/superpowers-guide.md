@@ -12,6 +12,7 @@
 
 | 任務類型 | 建議預讀技能書 | 原因 |
 |---------|-------------|------|
+| **所有任務（必拿）** | **task-progress-guide** | **每步紀錄 + 子任務切割 + 接續 Prompt + 方向偏移檢查** |
 | 碰 GitHub API / 建 branch / PR | github-api-workflow-guide + systematic-debugging-cloud-guide | API 流程 + 雲端除錯 |
 | 寫長文件 / 大量修改 | context-compression-guide + verification-checklist-guide | 防 prompt 過長 + 完成驗證 |
 | 廣告相關任務 | ai-model-guide | 選 Claude 或 Gemini 執行 |
@@ -50,6 +51,7 @@
 
 | 需求 | Skill | 核心原則 |
 |------|-------|---------|
+| **任務紀錄（必拿）** | **task-progress-guide** | **每步紀錄 + 接續 Prompt + 方向偏移** |
 | Colab 防死機 | colab-resilience-guide | checkpoint + timeout + retry |
 | Prompt 太長 | context-compression-guide | 三層防線：預防→監測→應急 |
 | GitHub 雲端開發 | github-api-workflow-guide | 7步 API 工作流 + fetch 範本 |
@@ -63,6 +65,11 @@
 ---
 
 ## MAPLAB 自建 Skill 詳細
+
+### task-progress-guide — 任務紀錄與接續（必拿）
+- **何時用**：所有任務，不可跳過
+- **核心**：Progress Log 每步紀錄 + 子任務切割 + Resume Prompt 接續 + 方向偏移回報
+- **路徑**：skills/task-progress-guide.md
 
 ### colab-resilience-guide — Colab 防死機
 - 何時用：Colab 長時間任務（>30 分鐘）
@@ -123,4 +130,5 @@
 | v1.2 | 2026-03-17 | 加入 github-api-workflow / verification-checklist / systematic-debugging-cloud | A4 |
 | v1.3 | 2026-03-17 | 加入 troubleshooting-hub | A1 |
 | v1.4 | 2026-03-18 | 新增「任務類型 → 建議預讀技能書」路由表；修正 troubleshooting-hub 格式 | A1 |
+| v1.6 | 2026-03-23 | 新增 task-progress-guide（必拿）路由 + 路由表新增「所有任務」必拿列 | A1 |
 | v1.5 | 2026-03-18 | 新增 sheets-data-cleaning-guide + photo-pipeline-toolkit-guide 兩本技能書路由 | A1 |

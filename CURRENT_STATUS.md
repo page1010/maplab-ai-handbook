@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-03-23 | 更新者：A4
+最後更新 : 2026-03-23 ｜ 更新者 : A5
 
 ---
 
@@ -18,7 +18,7 @@
 | Task ID | 任務 | 負責 Agent | 狀態 | Task Card |
 |---------|------|-----------|------|-----------| 
 | T-A1-002 | Phase 4.1 系統治理升級 | A1 | ✅ 完成 | handoff/tasks/T-A1-002.md |
-| T-A5-001 | Items 甜點去重 + 全品項重新編碼 | A5 | ⏸️ 等使用者手動去重 | handoff/tasks/T-A5-001.md |
+| T-A5-001 | Items 甜點去重 + 全品項重新編碼 | A5 | 🔵 進行中（Top50品項頻率分析完成，已commit data/item-frequency-top50.md） | handoff/tasks/T-A5-001.md |
 | T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔲 待開始 | handoff/tasks/T-A5-002.md |
 | T-A5-003 | 熱客招待品項定義 | A5 | 🔲 待開始 | — |
 | T-A4-001 | Phase 4 Gemini 照片分類 | A4 | 🔄 S5 running (2955/8559, 35%) — S1-S4 done, REST API batch | projects/maplab-pipeline.md |

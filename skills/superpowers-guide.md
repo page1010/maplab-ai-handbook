@@ -1,5 +1,5 @@
 # Superpowers Skills 導覽手冊 — MAPLAB AI Agent 版
-版本：v1.7 | 建立：2026-03-14 | 更新：2026-03-18
+版本：v1.8 | 建立：2026-03-14 | 更新：2026-03-24
 
 > 完整互動版：https://www.notion.so/Superpowers-Skills-320ab0806d5c807c95c7d8d633a7e5c5
 > 原始 Repo：https://github.com/obra/superpowers
@@ -25,6 +25,8 @@
 | 系統文件維護 / 治理 | context-compression-guide + verification-checklist-guide + strategic-review-guide | 長文 + 驗證 + 大局觀 |
 | Pipeline 相簿整理 | photo-pipeline-toolkit-guide + colab-resilience-guide + media-limit-workaround | 全流程工具鏈 + 防死機 + 媒體限制 |
 | 跨專案策略規劃 | strategic-review-guide + ai-model-guide | 大局觀 + AI 分工 |
+| SEO 檢查 / 排名分析 / 內容優化 | seo-session-checklist + seo-ranking-evaluation-guide | 每次開工標準流程 + 排名判讀 + 優化決策 |
+| GTM / 廣告追蹤 / 轉換驗證 | seo-session-checklist（Phase 2）+ gtm-conversion-setup | 追蹤狀態紀錄 + GTM 操作 SOP |
 
 ---
 
@@ -120,6 +122,24 @@
 - 找不到解法 → 回報格式 → A1 補充 → 全員受益
 - 路徑：skills/troubleshooting-hub.md
 
+- ### seo-session-checklist — A2/A3 每次 Session 標準檢查流程
+- - 何時用：每次 A2/A3 agent 開工時必須執行
+  - - Phase 1：SEO 健康檢查（Rank Math 六大指標 + 關鍵字排名 + 索引 + SEO 分數 + 內容盤點）
+    - - Phase 2：廣告追蹤檢查（GTM + Meta Pixel + Google Ads + GA4 + 商家檔案）
+      - - Phase 3：紀錄歸檔（更新 seo-ads-agent.md + 與上次對比 + Session Summary）
+        - - 含 2026-03-24 基準線數據
+          - - 路徑：skills/seo-session-checklist.md
+           
+            - ### seo-ranking-evaluation-guide — SEO 排名判讀與優化決策指南
+            - - 何時用：評估 SEO 成效、決定優化方向、判斷排名好不好
+              - - 排名區間定義（Top 3 / 4-10 / 11-20 / 21-50 / 51-100 / 100+）
+                - - MAPLAB 目標參考值（短期 3 個月 / 中期 6 個月）
+                  - - 指標判讀（Traffic / Impressions / CTR / Position）
+                    - - SEO 分數解讀 + 索引健康度判讀
+                      - - 優化優先順序決策框架（技術 > 快速見效 > 內容補強 > 長期經營）
+                        - - MAPLAB 關鍵字策略地圖（核心 / 場景 / 長尾 / 防禦）
+                          - - 路徑：skills/seo-ranking-evaluation-guide.md
+
 ---
 
 ## 版本紀錄
@@ -131,5 +151,6 @@
 | v1.2 | 2026-03-17 | 加入 github-api-workflow / verification-checklist / systematic-debugging-cloud | A4 |
 | v1.3 | 2026-03-17 | 加入 troubleshooting-hub | A1 |
 | v1.4 | 2026-03-18 | 新增「任務類型 → 建議預讀技能書」路由表；修正 troubleshooting-hub 格式 | A1 |
+| v1.8 | 2026-03-24 | 新增 seo-session-checklist + seo-ranking-evaluation-guide 路由 + 技能描述 | A2 |
 | v1.6 | 2026-03-23 | 新增 task-progress-guide（必拿）路由 + 路由表新增「所有任務」必拿列 | A1 |
 | v1.5 | 2026-03-18 | 新增 sheets-data-cleaning-guide + photo-pipeline-toolkit-guide 兩本技能書路由 | A1 |

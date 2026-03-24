@@ -1,5 +1,5 @@
 h# Superpowers Skills 導覽手冊 — MAPLAB AI Agent 版
-版本：v1.9 | 建立：2026-03-14 | 更新：2026-03-24
+版本：v2.0 | 建立：2026-03-14 | 更新：2026-03-24
 
 > 完整互動版：https://www.notion.so/Superpowers-Skills-320ab0806d5c807c95c7d8d633a7e5c5
 > 原始 Repo：https://github.com/obra/superpowers
@@ -21,6 +21,7 @@ h# Superpowers Skills 導覽手冊 — MAPLAB AI Agent 版
 | Google Sheets 資料操作 | sheets-tracking-guide + sheets-data-cleaning-guide + ai-model-guide | Sheets 追蹤 + 清洗工具 + Gemini 整合 |
 | Sheets 資料清洗（去重/格式修正/批次）| sheets-data-cleaning-guide | 公式 + Apps Script + SOP |
 | 遇到 Bug / 執行卡住 | troubleshooting-hub → 對應技能書 | 先查急救表再行動 |
+| Session 斷線接手 / 進度對不上 | crash-recovery-guide + task-progress-guide | 進度驗證 + checkpoint 補齊 + Resume Prompt |
 | 新 Agent 首次接手 | 全部讀 AGENT_STARTUP_PROTOCOL.md 9 步驟 | 建立大局觀 |
 | 系統文件維護 / 治理 | context-compression-guide + verification-checklist-guide + strategic-review-guide | 長文 + 驗證 + 大局觀 |
 | Pipeline 相簿整理 | photo-pipeline-toolkit-guide + colab-resilience-guide + media-limit-workaround | 全流程工具鏈 + 防死機 + 媒體限制 |
@@ -150,6 +151,13 @@ gdrive-to-wordpress-upload-guide — Google Drive → WordPress 雲端圖片上�
 含 SEO 檔名/alt text 命名規範 + 圖片選擇規範 + 踩坑紀錄
 路徑：skills/gdrive-to-wordpress-upload-guide.md
 
+crash-recovery-guide — 當機復原與進度驗證
+
+何時用：Session 中斷接手、GitHub 記錄與實際狀態不符、Summary 壓縮後可能遺漏
+核心：進度驗證 4 步驟（Git commits → 外部系統驗證 → 比對 CURRENT_STATUS → 補齊落差）
+checkpoint 機制：每完成外部系統操作立即 commit，防止進度丟失
+路徑：skills/crash-recovery-guide.md
+
 ## 版本紀錄
 
 | 版本 | 日期 | 說明 | 更新者 |
@@ -159,6 +167,7 @@ gdrive-to-wordpress-upload-guide — Google Drive → WordPress 雲端圖片上�
 | v1.2 | 2026-03-17 | 加入 github-api-workflow / verification-checklist / systematic-debugging-cloud | A4 |
 | v1.3 | 2026-03-17 | 加入 troubleshooting-hub | A1 |
 | v1.4 | 2026-03-18 | 新增「任務類型 → 建議預讀技能書」路由表；修正 troubleshooting-hub 格式 | A1 |
+| v2.0 | 2026-03-24 | 新增 crash-recovery-guide 路由 + 技能描述 | A2 |
 | v1.9 | 2026-03-24 | 新增 gdrive-to-wordpress-upload-guide 路由 + 技能描述 | A2 |
 | v1.8 | 2026-03-24 | 新增 seo-session-checklist + seo-ranking-evaluation-guide 路由 + 技能描述 | A2 |
 | v1.6 | 2026-03-23 | 新增 task-progress-guide（必拿）路由 + 路由表新增「所有任務」必拿列 | A1 |

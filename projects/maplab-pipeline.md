@@ -1,5 +1,5 @@
 # Pipeline Agent — 角色定位與技術文件
-版本：v1.7 | 建立：2026-03-12 | 更新：2026-03-23
+  版本：v1.8 | 建立：2026-03-12 | 更新：2026-03-24
 
 ---
 
@@ -219,8 +219,8 @@ seo_name格式：{category}-{description}-{detail}，例：catering-birthday-buf
 2. 2. 用 file_id 找到對應 Takeout 資料夾中的 `.json` metadata 檔
    3. 3. 提取 `geoData.latitude` / `geoData.longitude`
       4. 4. 計算距離：
-         5.    - home（安中路）：lat=23.0xxx, lng=120.2xxx（需確認精確座標）
-               -    - shop（和緯路450號）：lat=23.0xxx, lng=120.2xxx（需確認精確座標）
+         5.    - home（台南市安中路2段336巷11號）：lat=23.0xxx, lng=120.2xxx（需確認精確座標）
+               -    - shop（台南市北區和緯路2段450號）：lat=23.0xxx, lng=120.2xxx（需確認精確座標）
                     - 5. 分類規則：距離 home < 500m → `home`，距離 shop < 500m → `shop`，其他 → `other`
                       6. 6. 寫入 ASSET_LOG 新欄位 `daily_sub`（home / shop / other / no_gps）
                          7. 7. 無 GPS 資料的照片標記為 `no_gps`，後續可人工檢查

@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新 : 2026-03-24 ｜ 更新者 : A5
+最後更新 : 2026-03-24 ｜ 更新者 : A2
 
 ---
 
@@ -35,7 +35,8 @@
 
 ## 最新決策
 
-- 2026-03-24：A5 T-A5-001 完成 — Items 去重 + 全品項重新編碼。108品項分4類別排序（APP050/DST041/MAIN009/BEV008），連續編號無間隔。Apps Script reorganizeItems.gs + fixOrphanItem()。Items_backup 已建立。T-A5-002 前置條件已滿足，可認領。
+- 2026-03-24：[crash-recovery 補登] A2 Session — SEO 基礎建設 + Google Drive→WordPress 雲端圖片上傳突破。(1) SEO 技能書：seo-session-checklist v1.0 + seo-ranking-evaluation-guide v1.0 建立，含 2026-03-24 基準線數據（Traffic 333, Impressions 3.27K, Keywords 297, Avg Position 11.87）。(2) 雲端圖片上傳：發現 Clipboard API 跨 Tab 傳圖法，建立 gdrive-to-wordpress-upload-guide v1.0。已上傳 3 張圖至 WordPress（media ID 1510-1512），配對 3 篇文章精選圖片（post 1243/1238/1217）。(3) 技能書更新：media-limit-workaround v2.0 + crash-recovery-guide v1.0 + superpowers-guide v1.9。(4) T-GBP-001 已建立至 TASK_QUEUE（商家圖片更換）。剩餘 44 篇文章缺精選圖片待處理。
+2026-03-24：A5 T-A5-001 完成 — Items 去重 + 全品項重新編碼。108品項分4類別排序（APP050/DST041/MAIN009/BEV008），連續編號無間隔。Apps Script reorganizeItems.gs + fixOrphanItem()。Items_backup 已建立。T-A5-002 前置條件已滿足，可認領。
 - 2026-03-23：A4 Phase 4 v4.0 — S1-S4 done, S5 2022 batch 35% (2955/8559) via REST API, Colab reconnected + resumed. Plan updated to maplab-pipeline.md v1.7 (45b166c). New S5.5 GPS daily subdivision planned.
 - 2026-03-23：Owner 狀態更新 — T-A3-001 方案 B 確認可執行（待測試）、T-A4-001 照片清洗中不急、T-A3-002 已用現有貼文上線 Meta 廣告
 2026-03-23：A1 收尾 — CHANGELOG v3.9 登記 + handoff-to-A5.md 跨部門通知建立 + PROTOCOL/task-progress-guide/AGENT_RULES 優化打磨完成

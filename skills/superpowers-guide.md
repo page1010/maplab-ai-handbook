@@ -1,5 +1,5 @@
-# Superpowers Skills 導覽手冊 — MAPLAB AI Agent 版
-版本：v1.8 | 建立：2026-03-14 | 更新：2026-03-24
+h# Superpowers Skills 導覽手冊 — MAPLAB AI Agent 版
+版本：v1.9 | 建立：2026-03-14 | 更新：2026-03-24
 
 > 完整互動版：https://www.notion.so/Superpowers-Skills-320ab0806d5c807c95c7d8d633a7e5c5
 > 原始 Repo：https://github.com/obra/superpowers
@@ -27,6 +27,7 @@
 | 跨專案策略規劃 | strategic-review-guide + ai-model-guide | 大局觀 + AI 分工 |
 | SEO 檢查 / 排名分析 / 內容優化 | seo-session-checklist + seo-ranking-evaluation-guide | 每次開工標準流程 + 排名判讀 + 優化決策 |
 | GTM / 廣告追蹤 / 轉換驗證 | seo-session-checklist（Phase 2）+ gtm-conversion-setup | 追蹤狀態紀錄 + GTM 操作 SOP |
+| Google Drive → WordPress 圖片上傳 | gdrive-to-wordpress-upload-guide | 雲端圖片跨 Tab 傳送 + REST API 上傳 + SEO 命名 |
 
 ---
 
@@ -142,6 +143,13 @@
 
 ---
 
+gdrive-to-wordpress-upload-guide — Google Drive → WordPress 雲端圖片上傳
+
+何時用：從 Google Drive 挑選照片上傳至 WordPress 媒體庫（不經手動下載/上傳）
+核心：Drive viewer fetch → Canvas → Clipboard API → WordPress REST API upload
+含 SEO 檔名/alt text 命名規範 + 圖片選擇規範 + 踩坑紀錄
+路徑：skills/gdrive-to-wordpress-upload-guide.md
+
 ## 版本紀錄
 
 | 版本 | 日期 | 說明 | 更新者 |
@@ -151,6 +159,7 @@
 | v1.2 | 2026-03-17 | 加入 github-api-workflow / verification-checklist / systematic-debugging-cloud | A4 |
 | v1.3 | 2026-03-17 | 加入 troubleshooting-hub | A1 |
 | v1.4 | 2026-03-18 | 新增「任務類型 → 建議預讀技能書」路由表；修正 troubleshooting-hub 格式 | A1 |
+| v1.9 | 2026-03-24 | 新增 gdrive-to-wordpress-upload-guide 路由 + 技能描述 | A2 |
 | v1.8 | 2026-03-24 | 新增 seo-session-checklist + seo-ranking-evaluation-guide 路由 + 技能描述 | A2 |
 | v1.6 | 2026-03-23 | 新增 task-progress-guide（必拿）路由 + 路由表新增「所有任務」必拿列 | A1 |
 | v1.5 | 2026-03-18 | 新增 sheets-data-cleaning-guide + photo-pipeline-toolkit-guide 兩本技能書路由 | A1 |

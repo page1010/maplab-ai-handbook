@@ -1,6 +1,5 @@
 # gtm-conversion-setup.md — MAPLAB GTM 轉換事件設定 SOP
 **版本：v1.3 | 建立：2026-03-17 | 更新：2026-03-24 | 維護：A2/A3 SEO & Ads Team**
-**版本：v1.1 建立：2026-03-17 | 維護：A3 Ads Monitor Agent（Claude Sonnet 4.6）**
 
 > 本文件由 A3 全權負責維護。設定完成後請更新「執行狀態」欄位並推送至 main。
 > 執行者：使用者或具備 GTM 操作權限的任何 Agent / 工程師。
@@ -302,7 +301,7 @@
           - | GTM 觸發條件修正 | ✅ 已完成（v19，regex `(lihi2\.com|lin\.ee|line\.me)` 已套用） |
           - | GTM 預覽驗證 | ⬜ 待驗證（需用 GTM Preview Mode 實測） |
           - | 發布新版本 | ✅ 已發布（GTM 版本 19，5天前由 pagewu1010 發布） |
-          - | Pixel Helper 驗證 | ⬜ 待驗證（需 Meta Pixel Helper Chrome 擴充套件） |
+            - | Pixel Helper 驗證 | ✅ 已驗證（Owner 確認 Contact 事件 Active + SubscribedButtonClick + PageView） |
          
           - ### A2 實地檢查結果（2026-03-24）
          
@@ -311,7 +310,7 @@
             2. 2. **Meta - LINE Click Event 代碼內容正確**：`fbq('track', 'Contact', {content_name: 'LINE Click'})`
                3. 3. **Google Ads 轉換追蹤+么=line點整url** 也連接到同一觸發條件
                   4. 4. **另有「line」觸發器**（CSS 選取器 `a[href*="lin.ee"]`）額外追蹤左下角 LINE 按鈕 → Google Ads 轉換
-                     5. 5. **尚需驗證**：使用 GTM Preview Mode + Meta Pixel Helper 確認 Contact 事件在首頁 lin.ee 按鈕點擊時實際觸發
+                     5. **✅ 已驗證**：Owner 用 Meta Pixel Helper 確認 Contact 事件觸發（Active），同時有 SubscribedButtonClick + PageView在首頁 lin.ee 按鈕點擊時實際觸發
                        
                         6. **GTM 完整代碼清單（v19，共 15 個代碼）：**
                         7. - Facebook Pixel ID 228166994905799（All Pages）

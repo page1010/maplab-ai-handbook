@@ -1,7 +1,7 @@
 # TASK_QUEUE.md — 任務池
 > Agent 從這裡認領任務。認領前必須先讀 CURRENT_STATUS.md。
 
-最後更新：2026-03-23 | 維護者：A1 / Owner
+最後更新：2026-03-24 | 維護者：A1 / Owner / A2
 
 ---
 
@@ -40,7 +40,7 @@ Task Claim
 
 ## 🟡 中優先
 
-| Task ID | 任務 | 適合 Agent | 前置條件 | 狀態 |
+| T-A3-001 | GTM LINE 按鈕追蹤修復（方案 B 執行 + 測試驗證） | A3 | ✅ 使用者已確認 | ✅ 完成（GTM v19 regex 已套用 + Pixel Helper Contact Active） |
 |---------|------|-----------|---------|------|
 | T-A5-003 | 熱客招待品項定義（小西點+隨機禮品）| A5 | 無 | 🔲 可認領 |
 | T-A5-005 | 2025 訂單品項抽樣（TimeTree 密集週 → Sheet 本週訂單）| A5 | 無 | 🔲 可認領 |
@@ -65,6 +65,7 @@ Task Claim
 | Task ID | 任務 | 完成者 | 完成日期 |
 |---------|------|-------|---------|
 | — | A1 系統治理升級 v3.9（PROTOCOL v1.5 + AGENT_RULES v2.2 + task-progress-guide + TimeTree v2.0 + handoff-to-A5） | A1 | 2026-03-23 |
+| T-A3-001 | GTM LINE 按鈕追蹤修復（方案 B regex + Pixel Helper 驗證） | A2/A3 | 2026-03-24 |
 | T-A1-001 | Phase 4.2 全系統文件對齊（README/SYSTEM_MAP/WORKFLOW_MAP/BOARD） | A1 | 2026-03-19 |
 | — | Phase 3 全部 4 項任務 | A1 | 2026-03-18 |
 | — | A2+A3 合併為 SEO & Ads Team | A1 | 2026-03-18 |

@@ -1,6 +1,6 @@
 # Master Data Agent — MAPLAB Kitchen ERP 技術文件
 
-版本：v1.5 | 建立：2026-03-13 | 更新：2026-03-19 | 狀態：Items 清洗完成 + QUOTE_DRAFT MVP + TimeTree 密集日
+版本：v1.6 | 建立：2026-03-13 | 更新：2026-03-24 | 狀態：Items 清洗完成 + T-A5-001 完成 + QUOTE_DRAFT 框架規劃 + Slides 整合設計
 
 ---
 
@@ -265,7 +265,7 @@
 **產出 3：`field-naming-rules.md`**
 統一命名規則（例如：ID欄位格式、日期格式、狀態欄位的允許值清單）。
 
-**產出 4：`handoff-to-A4.md`**
+**產出 4：`handoff-to-A4.md`**h
 交接文件，說明 A4 需要知道的：schema 的使用方式、pipeline 需要對接的欄位、命名規則。
 
 ### 成功條件
@@ -288,3 +288,233 @@
 *版本：v1.5 | 更新：2026-03-19 | A1 巡查修正：任務狀態更新 + SECTION 編號修正 + 移除 Notion 引用*
 
 > 新技能書：skills/sheets-data-cleaning-guide.md — A5 資料清洗公式+腳本工具箱
+
+
+## SECTION 11 — QUOTE_DRAFT 完善框架設計（A5 研究，2026-03-24）
+
+### 11.1 現狀盤點
+
+**現有 QUOTE_DRAFT（v0.1 — 目前線上使用中）**
+
+QUOTE_DRAFT 是目前實際使用的報價表格，結構為「類報價單」格式，直接面向客戶輸出：
+
+| 區域 | 列範圍 | 內容 | 說明 |
+|------|--------|------|------|
+| 表頭 | Row 1 | MAP LAB KITCHEN 私廚/外燴 訂單 | 品牌標題 |
+| 客戶資訊 | Row 2-4 | 客戶名、日期、活動類型、電話、時間 | 手動填入 |
+| 品項區段 | Row 6-19 | 分三類：鹹食小點(APP)/甜點(DST)/8L壺裝飲品(BEV) | D欄下拉選品項，G欄VLOOKUP帶出單位成本 |
+| 招待區 | Row 20-21 | 熱客招待 Complimentary | 精選小西點等 |
+| 費用加項 | Row 23-30 | 餐點/10%服務費/加購餐點/租借長桌/一次性餐具/車馬費/2F搬運費 | 項目+金額+備註 |
+| 成本匯總 | Row 31-33 | 額外成本/總金額/訂單成本/毛利率 | 公式自動計算 |
+| 條款 | Row 35+ | 簽約使用條款及細則（訂金/付款/取消/不可抗力） | 固定文字 |
+
+核心公式：`=IF(D9="","",IFERROR(VLOOKUP(D9,Items!C:E,3,0),"N/A"))` — 品項名稱 → Items!default_cost
+
+**現有 QUOTE_V2_FUTURE（v0.3 — 框架已建但未上線）**
+
+QUOTE_V2_FUTURE 是 v0.3 版「雙模式報價引擎」的原型框架，由 quoteDraft_v03.gs 建立：
+
+| 區段 | 欄位 | 說明 |
+|------|------|------|
+| [A] CLIENT INFO | client_name, pax, client_type, pain_% | 客戶類型下拉（general_family/enterprise_all_in等）+ 難度係數 |
+| [B] ITEM SELECTION | item_id, item_name(auto), unit_price(auto) | 從 Items 表帶出品名+價格 |
+| [C] FORWARD QUOTE | qty, food_cost, suggested_price, final_price | 正向報價：選品→算成本→建議售價→業務決定最終價 |
+| [D] REVERSE QUOTE | total_budget, fixed_cost, avail_food_budget | 逆向報價：填總預算→扣固定成本→顯示可用食材額度 |
+| [TOTAL] Row 24 | 各欄合計 | food_cost/suggested_price/final_price 加總 |
+
+### 11.2 發現的關鍵問題與缺口
+
+1. **v0.1 與 v0.3 斷裂**：QUOTE_DRAFT(v0.1) 是實際在用的報價單，但 QUOTE_V2_FUTURE(v0.3) 的結構設計完全不同，兩者之間缺乏遷移路徑
+2. 2. **Items 資料連結不完整**：v0.1 用 VLOOKUP(D9,Items!C:E,3,0) 查 default_cost（E欄），但 Items 的 default_cost 全部是 0（T-A5-004 等使用者填入），導致成本欄顯示為 0 或 N/A
+   3. 3. **缺少 default_price**：Items.D 欄 default_price 是對外報價的基礎，目前等使用者手動填入（T-A5-004 Blocker）
+      4. 4. **品項分類不夠靈活**：v0.1 只有 APP/DST/BEV 三類固定區段，缺少主食(MAIN)類別，無法動態增減品項行數
+         5. 5. **無客戶類型區分**：v0.1 無法根據客群（行銷公司/一般家庭/企業全包）套用不同成本建議值
+            6. 6. **無業務決策記錄**：suggested_price vs final_price 的差異無法追蹤，業務調價沒有留痕
+               7. 7. **Slides 串接斷裂**：已有 generateProposal.gs 和 slidesV2.gs 腳本，但與 QUOTE_DRAFT 的資料流尚未打通
+                  8. 8. **報價單→訂單流程缺失**：草稿確認後無法一鍵轉為正式 Orders 記錄
+                    
+                     9. ### 11.3 完善後的 QUOTE_DRAFT 框架設計（v1.0 目標）
+                    
+                     10. 設計原則：保留 v0.1 的「對外報價單」外觀（客戶可看），內嵌 v0.3 的「業務決策引擎」（內部用）
+                    
+                     11. **區段 A：客戶資訊區（Row 1-5）**
+                    
+                     12. | 欄位 | 位置 | 來源 | 說明 |
+                     13. |------|------|------|------|
+                     14. | 品牌標題 | A1:F1 | 固定 | MAP LAB KITCHEN 私廚/外燴 |
+                     15. | quote_id | A2 | 自動生成 | 格式：QD-YYYYMMDD-SEQ（如 QD-20260527-001）|
+                     16. | client_name | C2 | 手動填入 | 客戶名稱 |
+                     17. | event_date | C3 | 手動填入 | 活動日期 YYYY/MM/DD |
+                     18. | event_type | E3 | 下拉選單 | 尾牙/婚宴/企業活動/家庭聚餐/生日派對/其他 |
+                     19. | event_time | F2 | 手動填入 | 活動時間 |
+                     20. | contact_phone | E4 | 手動填入 | 聯絡電話 |
+                     21. | pax | G2 | 手動填入 | 用餐人數 |
+                     22. | client_type | G3 | 下拉選單 | general_family / marketing_agency / enterprise_all_in / takeaway |
+                     23. | pain_surcharge | G4 | 下拉選單 | normal(+0%) / heavy_transport(+5%) / high_communication(+5%) / combined(+15%) |
+                    
+                     24. **區段 B：品項選擇區（Row 7-22）— 動態連結 Items 資料庫**
+                    
+                     25. | 欄 | 欄位名 | 公式/來源 | 說明 |
+                     26. |----|--------|----------|------|
+                     27. | A | 序號 | 自動 | 1,2,3... |
+                     28. | B | 類別標籤 | 合併儲存格 | 創意異國鹹食小點 / 手作精緻甜點 / 8L壺裝飲品 / 主食 |
+                     29. | C | 品項分類 | 自動 | 根據 item_id 前綴判斷 APP/DST/BEV/MAIN |
+                     30. | D | 品項名稱 | **下拉選單** | 資料驗證來源：DropdownHelper 依類別分組（LIST_APP/LIST_DST/LIST_BEV/LIST_MAIN）|
+                     31. | E | item_id | 自動 | `=IFERROR(VLOOKUP(D_,Items!C:A,-2,0),"")` 反查 item_id |
+                     32. | F | 數量 | **手動填入** | 業務填入訂購數量 |
+                     33. | G | 單位成本 | 自動 | `=IFERROR(VLOOKUP(D_,Items!C:E,3,0),"N/A")` 查 Items.default_cost |
+                     34. | H | 小計(成本) | 自動 | `=IF(F_="","",F_*G_)` |
+                     35. | I | 單價(報價) | 自動 | `=IFERROR(VLOOKUP(D_,Items!C:D,2,0),"N/A")` 查 Items.default_price |
+                     36. | J | 小計(報價) | 自動 | `=IF(F_="","",F_*I_)` |
+                     37. | K | 單位 | 自動 | `=IFERROR(VLOOKUP(D_,Items!C:F,4,0),"")` 查 Items.unit |
+                    
+                     38. 品項下拉選單機制（DropdownHelper sheet 提供）：
+                     39. - LIST_APP：餐食小點品項（APP001-APP050）的 standard_name 清單
+                         - - LIST_DST：甜點品項（DST001-DST041）的 standard_name 清單
+                           - - LIST_BEV：飲品品項（BEV001-BEV008）的 standard_name 清單
+                             - - LIST_MAIN：主食品項（MAIN001-MAIN009）的 standard_name 清單
+                               - - 由 reorganizeItems.gs 的 buildDropdownHelper() 函式維護
+                                
+                                 - **區段 C：費用加項區（Row 23-31）**
+                                
+                                 - | 列 | 項目 | 金額 | 備註 |
+                                 - |----|------|------|------|
+                                 - | 23 | 餐點小計 | =SUM(J品項區) | 品項報價合計 |
+                                 - | 24 | 10%服務費 | =Row23*10% | 自動計算 |
+                                 - | 25 | 加購餐點 | 手動 | 額外品項 |
+                                 - | 26 | 租借長桌 | 手動 | 設備租借 |
+                                 - | 27 | 加購一次性餐具 | 手動 | 耗材 |
+                                 - | 28 | 車馬費 | 手動 | 交通運輸 |
+                                 - | 29 | 2F搬運費 | 手動 | 樓層搬運 |
+                                 - | 30 | 難度加成 | =小計*pain_surcharge% | 自動計算，依 pain_surcharge 選項 |
+                                 - | 31 | **總金額** | =SUM(23:30) | 最終報價 |
+                                
+                                 - **區段 D：業務決策區（Row 32-35，內部用，列印時隱藏）**
+                                
+                                 - | 列 | 欄位 | 公式 | 說明 |
+                                 - |----|------|------|------|
+                                 - | 32 | 訂單成本 | =SUM(H品項成本區) | 食材成本合計 |
+                                 - | 33 | 毛利率 | =(總金額-訂單成本)/總金額 | 自動計算，<30% 變紅色警告 |
+                                 - | 34 | 建議售價參考 | 依 client_type 成本佔比反推 | 行銷公司25-30%/一般家庭35-40%/外帶45% |
+                                 - | 35 | 價格檢查 | =IF(總金額<訂單成本,"⚠️ 低於成本!","✓ OK") | 底線警告 |
+                                
+                                 - ### 11.4 Google Slides 整合設計
+                                
+                                 - **實際應用場景（參考：WenXueGuan_20260527_23000 簡報）**
+                                
+                                 - 現有 Slides 模板為 6 頁企業提案簡報：
+                                 - 1. **封面** — MAPLAB Kitchen / CATERING SERVICE / Premium Event Catering SINCE 2016
+                                   2. 2. **About Us** — 公司介紹 + 數據亮點（200+ Events / 50+ Clients / 98% Satisfaction / 10yr）
+                                      3. 3. **Our Services** — 三大服務：Birthday Party / Wedding Catering / Corporate Events
+                                         4. 4. **Selected Works** — 四格作品集：AMD Corporate Event / Garden Wedding / Brand Launch Party / Year-End Gala
+                                            5. 5. **Our Advantages** — 五大優勢：Local Roots / Custom Flexibility / Aesthetic Focus / Expert Team / Food Safety
+                                               6. 6. **Trusted By** — 合作夥伴（與 Advantages 相同版面，替換圖片）
+                                                 
+                                                  7. **報價單→Slides 自動生成流程**
+                                                 
+                                                  8. 當報價草稿完成時，一鍵觸發 generateClientProposal() 函式：
+                                                 
+                                                  9. 1. **STEP 1 複製模板**：DriveApp.getFileById(MASTER_ID).makeCopy(newName)
+                                                     2. 2. **STEP 2 讀取 Items**：從 Items sheet 取得品項資料（category/standard_name/active/item_id）
+                                                        3. 3. **STEP 3 文字替換**：在模板 Slides 中替換佔位符
+                                                           4.    - `{{client_name}}` → 客戶名稱
+                                                                 -    - `{{event_date}}` → 活動日期
+                                                                      -    - `{{event_type}}` → 活動類型
+                                                                           -    - `{{total_price}}` → 總金額
+                                                                                -    - `{{pax}}` → 用餐人數
+                                                                                     - 4. **STEP 4 品項列表生成**：讀取 QUOTE_DRAFT 已選品項，按類別分組插入 Slides
+                                                                                       5. 5. **STEP 5 圖片替換**：根據品項的 item_id 查找 ASSET_MASTER 對應圖片 URL，替換 Slides 中的 placeholder 圖片
+                                                                                          6. 6. **STEP 6 匯出**：匯出為 PDF → 存入 Drive 對應訂單資料夾 → 回填 PDF 連結到 QUOTE_DRAFT
+                                                                                            
+                                                                                             7. **已有的 Apps Script 腳本盤點**
+                                                                                            
+                                                                                             8. | 腳本 | 函式 | 功能 | 狀態 |
+                                                                                             9. |------|------|------|------|
+                                                                                             10. | createSlides.gs | createMAPLABSlides() | 從零建立 6 頁品牌簡報（硬編碼版） | ✅ 可執行 |
+                                                                                             11. | slidesV2.gs | createMAPLABSlidesV2() | V2 版品牌簡報（改良色彩/字型） | ✅ 可執行 |
+                                                                                             12. | beautifyV2.gs | — | V2 美化輔助 | ✅ |
+                                                                                             13. | generateProposal.gs | generateClientProposal() | 複製 Master 模板 → 讀 Items → 動態生成品項頁 | 🔲 框架完成，需與 QUOTE_DRAFT 串接 |
+                                                                                             14. | quoteDraft_v03.gs | buildQuoteDraftSheet() | 建立 QUOTE_V2_FUTURE 表格框架 | ✅ 已建立框架 |
+                                                                                            
+                                                                                             15. ### 11.5 資料流全圖
+                                                                                            
+                                                                                             16. ```
+                                                                                                 [使用者操作]                    [自動化]                     [輸出]
+                                                                                                      |                            |                           |
+                                                                                                   填客戶資訊 ──→ QUOTE_DRAFT ──→ 自動帶出品項資料    ──→ 報價單 PDF
+                                                                                                      |              ↕                  ↕                      |
+                                                                                                   選品項(下拉) ──→ Items sheet ──→ VLOOKUP 帶出          Slides 提案
+                                                                                                      |              ↕           price/cost/unit              PDF
+                                                                                                   填數量 ────→ 自動計算 ──→ 成本/毛利/建議售價      ──→ 業務決策
+                                                                                                      |                            |                           |
+                                                                                                   確認報價 ──→ 轉入 Orders ──→ 正式訂單               Drive 歸檔
+                                                                                                 ```
+
+                                                                                                 ### 11.6 現在的困難
+
+                                                                                                 | 困難 | 嚴重度 | 依賴 | 說明 |
+                                                                                                 |------|--------|------|------|
+                                                                                                 | Items.default_price 全空 | 🔴 最高 | T-A5-004 等使用者 | 沒有報價基礎價格，VLOOKUP 無法帶出對外售價 |
+                                                                                                 | Items.default_cost 全為 0 | 🔴 最高 | T-A5-004 等使用者 | 成本數據缺失，毛利率計算無意義 |
+                                                                                                 | ASSET_MASTER 未建立 | 🟡 中 | 需建立 | Slides 圖片替換需要品項 → 圖片 URL 的對應表 |
+                                                                                                 | PRICE_MASTER 未填入 | 🟡 中 | 需 Items 完成 | 多層級定價（外帶/外燴/企業）無法實現 |
+                                                                                                 | v0.1 → v1.0 遷移風險 | 🟠 中高 | 需謹慎 | 現有 QUOTE_DRAFT 正在使用中（如 WenXueGuan 案），不能直接覆蓋 |
+                                                                                                 | Slides Master 模板需更新 | 🟡 中 | 設計決策 | 現有模板是品牌形象簡報，需新增「報價明細」頁面模板 |
+
+                                                                                                 ### 11.7 接下來的計畫（執行順序）
+
+                                                                                                 **Phase 1：資料基底補齊（🔴 最高優先，依賴使用者）**
+                                                                                                 1. T-A5-004：使用者填入 Items.D 欄 default_price — 所有後續功能的基礎
+                                                                                                 2. 2. T-A5-004b：使用者填入 Items.E 欄 default_cost — 成本計算的基礎
+                                                                                                    3. 3. 驗證：填入後跑一次 VLOOKUP 測試，確認 QUOTE_DRAFT 品項選擇能正確帶出 price/cost
+                                                                                                      
+                                                                                                       4. **Phase 2：QUOTE_DRAFT v1.0 升級（🟡 高優先）**
+                                                                                                       5. 1. 在現有 QUOTE_DRAFT 旁邊新建 QUOTE_V1 sheet（不動現有表格）
+                                                                                                          2. 2. 套用 11.3 框架設計：客戶資訊區 + 品項選擇區 + 費用加項區 + 業務決策區
+                                                                                                             3. 3. 品項欄動態連結：D欄下拉 → VLOOKUP 帶出 item_id / cost / price / unit
+                                                                                                                4. 4. 新增 client_type + pain_surcharge 下拉選單
+                                                                                                                   5. 5. 新增條件式格式：毛利率 < 30% 變紅、final_price < cost 變紅
+                                                                                                                      6. 6. 測試完成後，將 QUOTE_DRAFT 重命名為 QUOTE_DRAFT_legacy，新表改名為 QUOTE_DRAFT
+                                                                                                                        
+                                                                                                                         7. **Phase 3：Slides 整合（🟠 中優先）**
+                                                                                                                         8. 1. 更新 Slides Master 模板：新增「報價明細」頁（品項表格 + 價格）
+                                                                                                                            2. 2. 修改 generateProposal.gs：從 QUOTE_DRAFT 讀取客戶資訊 + 已選品項
+                                                                                                                               3. 3. 佔位符替換：{{client_name}}/{{event_date}}/{{total_price}}/{{pax}} 等
+                                                                                                                                  4. 4. 品項列表動態生成：按類別分頁或分區塊排列
+                                                                                                                                     5. 5. PDF 匯出 + Drive 歸檔 + 連結回填
+                                                                                                                                       
+                                                                                                                                        6. **Phase 4：報價→訂單流程（🟢 低優先）**
+                                                                                                                                        7. 1. 新增「確認報價」按鈕（Apps Script + UI 按鈕）
+                                                                                                                                           2. 2. 一鍵將 QUOTE_DRAFT 轉為 Orders + OrderLines 記錄
+                                                                                                                                              3. 3. 自動更新 Dashboard 統計
+                                                                                                                                                
+                                                                                                                                                 4. ### 11.8 Slides 提案簡報規格（與報價單同步輸出）
+                                                                                                                                                
+                                                                                                                                                 5. **目標**：報價確認後自動產出一份 Slides 提案簡報 PDF，內含：
+                                                                                                                                                
+                                                                                                                                                 6. | 頁次 | 內容 | 資料來源 |
+                                                                                                                                                 7. |------|------|----------|
+                                                                                                                                                 8. | 1 | 封面：MAPLAB Kitchen + 客戶名 + 活動日期 | QUOTE_DRAFT 客戶資訊區 |
+                                                                                                                                                 9. | 2 | About Us：公司介紹 + 數據亮點 | 固定（Master 模板） |
+                                                                                                                                                 10. | 3 | Our Services：三大服務項目 | 固定（Master 模板） |
+                                                                                                                                                 11. | 4 | Selected Works：過往作品展示 | 固定/可選（ASSET_MASTER） |
+                                                                                                                                                 12. | 5 | **Menu Proposal**：本次報價品項列表 + 價格 | QUOTE_DRAFT 品項選擇區 |
+                                                                                                                                                 13. | 6 | **Menu Photos**：已選品項的實際照片拼圖 | ASSET_MASTER 圖片 URL |
+                                                                                                                                                 14. | 7 | Our Advantages：五大優勢 | 固定（Master 模板） |
+                                                                                                                                                 15. | 8 | Trusted By / Contact：合作夥伴 + 聯繫方式 | 固定（Master 模板） |
+                                                                                                                                                
+                                                                                                                                                 16. 第 5-6 頁是「動態頁」，根據 QUOTE_DRAFT 選擇的品項自動生成。
+                                                                                                                                                
+                                                                                                                                                 17. ---
+                                                                                                                                                
+                                                                                                                                                 18. ## SECTION 9 版本紀錄（更新）
+                                                                                                                                                
+                                                                                                                                                 19. | 版本 | 日期 | 說明 | 更新者 |
+                                                                                                                                                 20. |------|------|------|--------|
+                                                                                                                                                 21. | v1.6 | 2026-03-24 | 新增 SECTION 11：QUOTE_DRAFT 完善框架設計（現狀盤點 + v1.0 框架 + Slides 整合 + 困難 + 計畫） | Claude (Opus 4.6) A5 |
+                                                                                                                                                 22. | v1.5 | 2026-03-19 | A1 巡查修正：任務狀態更新 + SECTION 編號修正 | A1 |
+                                                                                                                                                 23. | v1.3 | 2026-03-14 | Dashboard #REF! 修復 + QUOTE_DRAFT 品項分類中文化 | Claude (Opus 4.6) A5 |
+                                                                                                                                                 24. | v1.2 | 2026-03-13 | QUOTE_DRAFT v0.3 建立完成：雙模式報價系統 | Claude (Sonnet 4.6) A5 |
+                                                                                                                                                 25. | v1.1 | 2026-03-13 | 新增 SECTION 8 報價系統分析 | Claude (Sonnet 4.6) A5 |
+                                                                                                                                                 26. | v1.0 | 2026-03-13 | 初始框架建立 | Claude (Sonnet 4.6) |
+                                                                                                                                                 27. 

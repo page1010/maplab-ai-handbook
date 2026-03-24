@@ -7,7 +7,7 @@
 
 ## 認領規則
 
-1. 先讀 CURRENT_STATUS.md 確認系統狀態
+1. 先讀 CURRENT_STATUS.md 確認系統狀態h
 2. 從下方任務池選一個你角色範圍內的任務
 3. 確認前置條件已滿足（未滿足 = 不能認領）
 4. 輸出認領格式後，等 owner 確認才開始
@@ -33,8 +33,8 @@ Task Claim
 | Task ID | 任務 | 適合 Agent | 前置條件 | 狀態 |
 |---------|------|-----------|---------|------|
 | T-A1-002 | Phase 4.1 系統治理升級 — 全部完成 | A1 | 無 | ✅ 完成 |
-| T-A5-001 | Items 甜點(DST)去重 + 全品項重新編碼 | A5 | 使用者手動完成甜點去重 | ⏸️ 等使用者 |
-| T-A5-002 | QUOTE_DRAFT 報價單增強（飲料容量/保冰桶/招待欄位）| A5 | T-A5-001 完成 | 🔲 待開始 |
+| T-A5-001 | Items 去重 + 全品項重新編碼（108品項4類別排序+連號） | A5 | 使用者手動完成甜點去重 | ✅ 完成 |
+| T-A5-002 | QUOTE_DRAFT 報價單增強（飲料容量/保冰桶/招待欄位） | A5 | ✅ T-A5-001 完成 | 🔲 可認領 |
 | T-A5-004 | 使用者填 Items.D 欄 default_price | Owner | — | ⏸️ 等使用者 |
 | T-A3-001 | GTM LINE 按鈕追蹤修復（方案 B 執行 + 測試驗證） | A3 | ✅ 使用者已確認 | 🔲 可認領 |
 
@@ -64,6 +64,7 @@ Task Claim
 
 | Task ID | 任務 | 完成者 | 完成日期 |
 |---------|------|-------|---------|
+| T-A5-001 | Items 去重 + 全品項重新編碼（4類別排序+連號 APP050/DST041/MAIN009/BEV008=108） | A5 | 2026-03-24 |
 | — | A1 系統治理升級 v3.9（PROTOCOL v1.5 + AGENT_RULES v2.2 + task-progress-guide + TimeTree v2.0 + handoff-to-A5） | A1 | 2026-03-23 |
 | T-A3-001 | GTM LINE 按鈕追蹤修復（方案 B regex + Pixel Helper 驗證） | A2/A3 | 2026-03-24 |
 | T-A1-001 | Phase 4.2 全系統文件對齊（README/SYSTEM_MAP/WORKFLOW_MAP/BOARD） | A1 | 2026-03-19 |

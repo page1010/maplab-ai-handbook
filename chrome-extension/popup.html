@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>MAPLAB Agent Commander</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { width:340px; background:#0d0f14; color:#c8d0e0; font-family:'JetBrains Mono','Fira Code',monospace; font-size:12px; }
+.header { background:#111520; border-bottom:1px solid #1e2535; padding:14px 16px; }
+.logo { font-size:13px; font-weight:700; color:#e8a838; letter-spacing:0.1em; }
+.subtitle { font-size:10px; color:#4a5568; }
+.body { padding:16px; display:flex; flex-direction:column; gap:14px; }
+.field label { display:block; font-size:9px; letter-spacing:0.1em; color:#4a5568; text-transform:uppercase; margin-bottom:5px; }
+.hint { font-size:9px; color:#3a4558; margin-top:4px; line-height:1.5; }
+.truth-badge { display:inline-block; font-size:8px; background:#1a2535; border:1px solid #e8a838; color:#e8a838; padding:2px 6px; border-radius:3px; margin-left:6px; }
+.field input { width:100%; padding:8px 10px; background:#141820; border:1px solid #1e2535; border-radius:5px; color:#c8d0e0; font-family:inherit; font-size:11px; outline:none; }
+.field input:focus { border-color:#e8a838; }
+.field input::placeholder { color:#3a4558; }
+.btn-save { width:100%; padding:10px; background:#e8a838; border:none; border-radius:5px; color:#0d0f14; font-family:inherit; font-size:12px; font-weight:700; cursor:pointer; }
+.btn-save:hover { background:#f0b848; }
+.status { font-size:10px; text-align:center; color:#38e87a; min-height:16px; opacity:0; transition:opacity 0.3s; }
+.status.show { opacity:1; }
+.divider { border:none; border-top:1px solid #141820; }
+.section-title { font-size:9px; letter-spacing:0.12em; color:#3a4558; text-transform:uppercase; }
+.state-preview { background:#141820; border:1px solid #1e2535; border-radius:5px; padding:10px; font-size:10px; color:#6b7a96; line-height:1.8; min-height:60px; }
+.state-preview .label { color:#4a5568; }
+.state-preview .value { color:#c8d0e0; }
+.state-preview .version { color:#e8a838; font-weight:700; }
+.links { display:flex; gap:10px; }
+.links a { font-size:10px; color:#4a8ae8; text-decoration:none; }
+.links a:hover { color:#e8a838; }
+.agent-info { background:#0a0d12; border:1px solid #1a2030; border-radius:5px; padding:8px 10px; font-size:9px; color:#3a4558; line-height:1.9; }
+.agent-id { color:#e8a838; display:inline-block; min-width:44px; }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">MAPLAB Agent Commander</div>
+  <div class="subtitle">v2.0 \u2014 A1-A7 Role System</div>
+</div>
+<div class="body">
+  <div class="field">
+    <label>GitHub Raw Base URL</label>
+    <input type="text" id="githubRawBase" placeholder="https://raw.githubusercontent.com/page1010/maplab-ai-handbook/main" />
+  </div>
+  <div class="field">
+    <label>\u72c0\u614b\u6587\u4ef6\u8def\u5f91 <span class="truth-badge">\u26a1 \u552f\u4e00\u771f\u76f8</span></label>
+    <input type="text" id="projectStatePath" placeholder="CURRENT_STATUS.md" />
+    <div class="hint">\u586bCURRENT_STATUS.md\uff0c\u9019\u662f\u7cfb\u7d71\u552f\u4e00\u771f\u76f8\u4f86\u6e90</div>
+  </div>
+  <button class="btn-save" id="saveBtn">\ud83d\udcbe Save Settings</button>
+  <div class="status" id="status"></div>
+  <hr class="divider" />
+  <div class="section-title">State Preview</div>
+  <div class="state-preview" id="statePreview">Loading...</div>
+  <div class="links">
+    <a href="https://github.com/page1010/maplab-ai-handbook" target="_blank">\ud83d\udcc2 GitHub Repo</a>
+    <a href="https://github.com/page1010/maplab-ai-handbook/blob/main/CURRENT_STATUS.md" target="_blank">\ud83d\udccb CURRENT_STATUS</a>
+  </div>
+  <hr class="divider" />
+  <div class="section-title">Agent Roster (A1-A7)</div>
+  <div class="agent-info">
+    <div><span class="agent-id">A1</span> Handbook Agent</div>
+    <div><span class="agent-id">A2/A3</span> SEO &amp; Ads Team</div>
+    <div><span class="agent-id">A4</span> Pipeline Agent</div>
+    <div><span class="agent-id">A5</span> Master Data Agent</div>
+    <div><span class="agent-id">A7</span> AI Reply System</div>
+  </div>
+</div>
+<script src="popup.js"></script>
+</body>
+  </html>

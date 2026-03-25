@@ -43,7 +43,7 @@
 
 ---
 
-## Checkpoints（每階段更新）
+## Checkpoints（每 30 分鐘至少更新一次）
 
 ### Checkpoint 1 — [日期 時間]
 ```
@@ -56,4 +56,24 @@
 
 ---
 
-*模板版本：v1.0 | 建立：2026-03-18 | 使用方式：複製此檔 → 改名為 T-Ax-xxx.md → 填入內容*
+## 接續 Prompt（結束 session 前必填）
+
+> ⚠️ **強制規則**：Agent 結束工作前必須更新此區塊。見 AGENT_RULES.md SECTION 2.1。
+> 下一個接手的 agent 直接複製此段貼到 Claude tab 即可開工。
+
+```
+你是 MAPLAB [角色編號] [部門名稱]。
+repo: https://github.com/page1010/maplab-ai-handbook
+先讀 CURRENT_STATUS.md，再讀 handoff/tasks/[Task ID].md。
+
+上次做到：[具體進度，數字化]
+下一步：[明確的下一個動作]
+Blocker：[如果有的話]
+踩過的坑：[這次 session 學到的經驗]
+
+讀完文件後輸出 Startup Check。必拿：skills/task-progress-guide.md
+```
+
+---
+
+*模板版本：v1.1 | 建立：2026-03-18 | 更新：2026-03-25 | 使用方式：複製此檔 → 改名為 T-Ax-xxx.md → 填入內容*

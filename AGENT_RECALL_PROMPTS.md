@@ -65,6 +65,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 
 【協作】對 A2-A8 下指令、產出召喚 prompt、接收 Telegram 指令、管理 GitHub repo
 
+存檔規則：每 30 分鐘至少 commit 一次 checkpoint。結束前必須更新 Task Card + 寫接續 Prompt。見 AGENT_RULES.md SECTION 2.1。
 讀完文件後輸出 Startup Check。必拿：skills/task-progress-guide.md
 ```
 
@@ -99,6 +100,7 @@ handoff/tasks/T-A2-001.md → projects/seo-ads-agent.md → skills/superpowers-g
 
 【協作】給 A3 社群內容方向、跟 A4 要圖片素材、跟 A5 串接報價 CTA
 
+存檔規則：每 30 分鐘至少 commit 一次 checkpoint。結束前必須更新 Task Card + 寫接續 Prompt。見 AGENT_RULES.md SECTION 2.1。
 讀完文件後輸出 Startup Check，確認斷點再開工。必拿：skills/task-progress-guide.md
 ```
 
@@ -130,6 +132,7 @@ handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-
 
 【協作】吃 A2 的關鍵字與搜尋意圖、吃 A4 的素材、導流到 A5 報價、常見問題回饋 A7
 
+存檔規則：每 30 分鐘至少 commit 一次 checkpoint。結束前必須更新 Task Card + 寫接續 Prompt。見 AGENT_RULES.md SECTION 2.1。
 讀完文件後輸出 Startup Check，確認斷點再開工。必拿：skills/task-progress-guide.md
 ```
 
@@ -161,6 +164,7 @@ projects/maplab-pipeline.md → handoff/handoff-to-A4.md → skills/superpowers-
 
 【協作】供應 A2 SEO 圖片、供應 A3 社群素材、供應 A6 提案簡報素材
 
+存檔規則：每 30 分鐘至少 commit 一次 checkpoint。結束前必須更新 Task Card + 寫接續 Prompt。見 AGENT_RULES.md SECTION 2.1。
 讀完文件後輸出 Startup Check，確認斷點再開工。必拿：skills/task-progress-guide.md
 ```
 
@@ -194,6 +198,7 @@ projects/maplab-master-data.md → handoff/handoff-to-A5.md → handoff/field-na
 
 【協作】A6 直接拿 A5 資料做急件報價、A7 用 A5 規則回答客戶、A2/A3 導流最後落到 A5 轉單
 
+存檔規則：每 30 分鐘至少 commit 一次 checkpoint。結束前必須更新 Task Card + 寫接續 Prompt。見 AGENT_RULES.md SECTION 2.1。
 讀完文件後輸出 Startup Check，確認斷點再開工。必拿：skills/task-progress-guide.md
 ```
 

@@ -1,0 +1,27 @@
+name: MAPLAB System Patrol
+on:
+  schedule:
+    - cron: '0 1 * * *'
+  workflow_dispatch:
+jobs:
+  patrol:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check CURRENT_STATUS age
+        run: |
+          python3 << 'EOF'
+          import re
+          from datetime import datetime, timezone, timedelta
+          with open('CURRENT_STATUS.md','r',encoding='utf-8') as f:
+              content = f.read()
+          decisions = re.findall(r'- (\d{4}-\d{2}-\d{2})：', content)
+          if decisions:
+              last = datetime.strptime(decisions[0],'%Y-%m-%d').replace(tzinfo=timezone.utc)
+              delta = datetime.now(timezone.utc) - last
+              if delta > timedelta(hours=48):
+                  print(f"WARNING: CURRENT_STATUS last updated {delta.days} days ago")
+          EOF
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore(patrol): daily system check"

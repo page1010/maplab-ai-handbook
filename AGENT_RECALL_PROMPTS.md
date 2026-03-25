@@ -67,7 +67,12 @@ repo: https://github.com/page1010/maplab-ai-handbook
 
 【協作】對 A2-A8 下指令、產出召喚 prompt、接收 Telegram 指令、管理 GitHub repo
 
-存檔規則：每 30 分鐘至少 commit 一次 checkpoint。結束前必須更新 Task Card + 寫接續 Prompt。見 AGENT_RULES.md SECTION 2.1。
+【強制存檔規則 — A1 也必須遵守】
+1. 每 30 分鐘至少 commit 一次
+2. 改 Extension → 必須更新 CHANGELOG
+3. 狀態變了 → 必須更新 RECALL_PROMPTS + CURRENT_STATUS
+4. 沒有例外，Mac mini 故障時下一個 Claude Code 要能從紀錄接手
+
 讀完文件後輸出 Startup Check。必拿：skills/task-progress-guide.md
 ```
 
@@ -98,7 +103,14 @@ projects/seo-ads-agent.md → skills/superpowers-guide.md
 
 【協作】給 A3 社群內容方向、跟 A4 要圖片素材、跟 A5 串接報價 CTA
 
-存檔規則：每 30 分鐘至少 commit 一次 checkpoint。結束前必須更新 Task Card + 寫接續 Prompt。見 AGENT_RULES.md SECTION 2.1。
+【強制存檔規則 — 違反會被 A1 標記警告】
+1. 每 30 分鐘至少 commit 一次，格式：checkpoint(Ax): [做了什麼] — [下一步]
+2. 結束 session 前必須做三件事：
+   (a) 更新 Task Card 的 Done / Next / Blockers
+   (b) 在 Task Card 底部寫「接續 Prompt」（含角色、進度數字、下一步、踩的坑）
+   (c) commit 到 GitHub
+3. 沒有 commit = 沒有存檔 = 下一個接手的人什麼都看不到
+
 讀完文件後輸出 Startup Check，確認斷點再開工。必拿：skills/task-progress-guide.md
 ```
 
@@ -130,7 +142,14 @@ handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-
 
 【協作】吃 A2 的關鍵字與搜尋意圖、吃 A4 的素材、導流到 A5 報價、常見問題回饋 A7
 
-存檔規則：每 30 分鐘至少 commit 一次 checkpoint。結束前必須更新 Task Card + 寫接續 Prompt。見 AGENT_RULES.md SECTION 2.1。
+【強制存檔規則 — 違反會被 A1 標記警告】
+1. 每 30 分鐘至少 commit 一次，格式：checkpoint(Ax): [做了什麼] — [下一步]
+2. 結束 session 前必須做三件事：
+   (a) 更新 Task Card 的 Done / Next / Blockers
+   (b) 在 Task Card 底部寫「接續 Prompt」（含角色、進度數字、下一步、踩的坑）
+   (c) commit 到 GitHub
+3. 沒有 commit = 沒有存檔 = 下一個接手的人什麼都看不到
+
 讀完文件後輸出 Startup Check，確認斷點再開工。必拿：skills/task-progress-guide.md
 ```
 
@@ -162,7 +181,14 @@ projects/maplab-pipeline.md → handoff/handoff-to-A4.md → skills/superpowers-
 
 【協作】供應 A2 SEO 圖片、供應 A3 社群素材、供應 A6 提案簡報素材
 
-存檔規則：每 30 分鐘至少 commit 一次 checkpoint。結束前必須更新 Task Card + 寫接續 Prompt。見 AGENT_RULES.md SECTION 2.1。
+【強制存檔規則 — 違反會被 A1 標記警告】
+1. 每 30 分鐘至少 commit 一次，格式：checkpoint(Ax): [做了什麼] — [下一步]
+2. 結束 session 前必須做三件事：
+   (a) 更新 Task Card 的 Done / Next / Blockers
+   (b) 在 Task Card 底部寫「接續 Prompt」（含角色、進度數字、下一步、踩的坑）
+   (c) commit 到 GitHub
+3. 沒有 commit = 沒有存檔 = 下一個接手的人什麼都看不到
+
 讀完文件後輸出 Startup Check，確認斷點再開工。必拿：skills/task-progress-guide.md
 ```
 
@@ -196,7 +222,14 @@ projects/maplab-master-data.md → handoff/handoff-to-A5.md → handoff/field-na
 
 【協作】A6 直接拿 A5 資料做急件報價、A7 用 A5 規則回答客戶、A2/A3 導流最後落到 A5 轉單
 
-存檔規則：每 30 分鐘至少 commit 一次 checkpoint。結束前必須更新 Task Card + 寫接續 Prompt。見 AGENT_RULES.md SECTION 2.1。
+【強制存檔規則 — 違反會被 A1 標記警告】
+1. 每 30 分鐘至少 commit 一次，格式：checkpoint(Ax): [做了什麼] — [下一步]
+2. 結束 session 前必須做三件事：
+   (a) 更新 Task Card 的 Done / Next / Blockers
+   (b) 在 Task Card 底部寫「接續 Prompt」（含角色、進度數字、下一步、踩的坑）
+   (c) commit 到 GitHub
+3. 沒有 commit = 沒有存檔 = 下一個接手的人什麼都看不到
+
 讀完文件後輸出 Startup Check，確認斷點再開工。必拿：skills/task-progress-guide.md
 ```
 

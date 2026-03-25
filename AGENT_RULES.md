@@ -137,6 +137,64 @@ A8 影音 ←── A4 素材
 
 ---
 
+## SECTION 2.1 — 強制存檔規則（Checkpoint Policy）
+
+> **所有 agent（含 A1 Claude Code）適用，沒有例外。**
+> commit = 存檔 = 斷點。沒有 commit 的工作等於不存在。
+
+### 定時存檔頻率
+
+| 工作時長 | 必須動作 |
+|---------|---------|
+| 每 30 分鐘 | 至少 1 次 checkpoint commit（即使只是進度更新） |
+| 每次任務階段完成 | 更新 Task Card + commit |
+| 結束 session 前 | 必須寫接續 Prompt（見下方） |
+
+### Checkpoint Commit 內容
+commit message 格式：`checkpoint(Ax): [做了什麼] — [下一步是什麼]`
+例：`checkpoint(A2): uploaded 5 images to WordPress — 30/57 done, next batch from Drive 2024`
+
+### 結束 Session 強制規則
+
+Agent 結束工作（關閉 tab、對話結束、即將斷線）前，**必須完成以下 3 件事**：
+
+1. **更新 Task Card** — handoff/tasks/T-xxx.md 的「Done」「Next」「Blockers」區塊
+2. **寫接續 Prompt** — Task Card 底部的「接續 Prompt」區塊，下一個接手的 agent 直接複製即可開工
+3. **Commit** — 把以上修改 commit 到 GitHub
+
+接續 Prompt 必須包含：
+```
+## 接續 Prompt
+[直接複製此段貼到 Claude tab 即可接手]
+
+你是 MAPLAB [角色編號] [部門名稱]。
+repo: https://github.com/page1010/maplab-ai-handbook
+先讀 CURRENT_STATUS.md，再讀 handoff/tasks/[Task ID].md。
+
+上次做到：[具體進度，數字化]
+下一步：[明確的下一個動作]
+Blocker：[如果有的話]
+踩過的坑：[這次 session 學到的經驗]
+
+讀完文件後輸出 Startup Check。必拿：skills/task-progress-guide.md
+```
+
+### A1 Claude Code 額外規則
+
+A1 每次 commit 前必須檢查：
+- 改了 Extension？→ 更新 chrome-extension/CHANGELOG.md
+- 角色/任務狀態變了？→ 更新 AGENT_RECALL_PROMPTS.md
+- 系統狀態變了？→ 更新 CURRENT_STATUS.md
+
+### 違規處理
+
+A1 巡查時發現 agent 未寫接續 Prompt 或超過 30 分鐘無 checkpoint：
+1. 在 CURRENT_STATUS.md Blockers 區塊標記警告
+2. 透過 Telegram 通知 Owner
+3. AGENT_RECALL_PROMPTS.md 該角色標記「⚠️ 上次未正常交接」
+
+---
+
 ## SECTION 3 — 錯誤記錄（防坑區）
 
 **錯誤 001 — 被 Notion 內容拉走、忘記角色（2026-03-12）**
@@ -158,6 +216,10 @@ A8 影音 ←── A4 素材
 **錯誤 005 — A2 與 A3 各自為政、缺乏資訊同步（2026-03-18）**
 根因：A2（SEO 內容）和 A3（廣告監控）共享同一條行銷漏斗，但各自執行時不知道對方的進度和數據。A2 選題不看廣告數據，A3 設定 Landing Page 不知道 SEO 頁面狀態。
 解法：合併為 SEO & Ads Team，新增 SECTION 1.2 協作協議，定義共享文件、資料流方向、交接觸發點。
+
+**錯誤 006 — A1 自己不守規則，Extension 改版未寫 CHANGELOG（2026-03-25）**
+根因：A1 Claude Code 從 v2.0 改到 v4.2 共 4 次版本變更，全部沒寫 CHANGELOG。系統管理員自己不遵守紀錄規則，等於告訴其他 agent 規則可以不守。Mac mini 重啟後，下一個 Claude Code 會從 v2.0 的認知開始，中間所有決策和失敗經驗全部丟失。
+解法：(1) 補齊全部 CHANGELOG (2) 新增 SECTION 2.1 強制存檔規則，A1 也必須遵守 (3) 每次 commit 前強制檢查 CHANGELOG/RECALL_PROMPTS/CURRENT_STATUS 是否需要同步更新。沒有例外。
 
 ---
 

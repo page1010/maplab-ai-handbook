@@ -29,6 +29,11 @@ h# Superpowers Skills 導覽手冊 — MAPLAB AI Agent 版
 | SEO 檢查 / 排名分析 / 內容優化 | seo-session-checklist + seo-ranking-evaluation-guide | 每次開工標準流程 + 排名判讀 + 優化決策 |
 | GTM / 廣告追蹤 / 轉換驗證 | seo-session-checklist（Phase 2）+ gtm-conversion-setup | 追蹤狀態紀錄 + GTM 操作 SOP |
 | Google Drive → WordPress 圖片上傳 | gdrive-to-wordpress-upload-guide | 雲端圖片跨 Tab 傳送 + REST API 上傳 + SEO 命名 |
+| 報價 / 菜單搭配 / 提案（A5） | a5-quotation-engine-skills | 菜單自動搭配 + 報價單生成 + 週活動簡報 |
+| 業務急件 / 提案簡報 / 客戶速查（A6） | a6-sales-rapid-response-skills | 一鍵提案 + 客戶背景 + 需求表單 |
+| 社群貼文 / 廣告成效（A3） | a3-social-ads-skills | 多平台貼文 + Meta 廣告追蹤優化 |
+| 品牌素材 / 菜單卡（A4） | a4-photo-asset-skills | 風格統一規範 + 數位菜單卡 |
+| 客服回覆 / LINE 對話（A7） | a7-customer-service-skills | FAQ 模板庫 + 意圖分類 |
 
 ---
 

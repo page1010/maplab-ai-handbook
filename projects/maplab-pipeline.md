@@ -1,5 +1,5 @@
 # Pipeline Agent — 角色定位與技術文件
-  版本：v1.8 | 建立：2026-03-12 | 更新：2026-03-24
+  版本：v1.9 | 建立：2026-03-12 | 更新：2026-03-25
 
 ---
 
@@ -203,7 +203,7 @@ seo_name格式：{category}-{description}-{detail}，例：catering-birthday-buf
 | S2 | 先鋒 10 張（驗證 prompt + API 流程） | ✅ DONE | 2026-03-23 | ASSET_LOG rows 2-11 |
 | S3 | 定版 Gemini prompt | ✅ DONE | 2026-03-23 | 見上方 prompt |
 | S4 | 建 MAPLAB_ASSETS 資料夾結構 | ✅ DONE | 2026-03-23 | 2022-2026 × catering/travel/daily |
-| S5 | 2022 全年 batch（8,559 images） | 🔄 進行中 | — | REST API ~310/h，預估 ~28h |
+| S5 | 2022 全年 batch（8,559 images） | 🔄 93.5% (8005/8559) | 2026-03-25 | REST API ~277/h，第6次重啟中，剩餘554張 |
 | S5.5 | 日常 home/shop GPS 細分 | 🔲 待 S5 完成 | — | 新增步驟，見下方說明 |
 | S6 | 2023 batch | 🔲 待開始 | — | 19,459 files |
 | S6.5 | 2023 日常 GPS 細分 | 🔲 待 S6 完成 | — | 同 S5.5 邏輯 |
@@ -219,8 +219,8 @@ seo_name格式：{category}-{description}-{detail}，例：catering-birthday-buf
 2. 2. 用 file_id 找到對應 Takeout 資料夾中的 `.json` metadata 檔
    3. 3. 提取 `geoData.latitude` / `geoData.longitude`
       4. 4. 計算距離：
-         5.    - home（台南市安中路2段336巷11號）：lat=23.0xxx, lng=120.2xxx（需確認精確座標）
-               -    - shop（台南市北區和緯路2段450號）：lat=23.0xxx, lng=120.2xxx（需確認精確座標）
+         5.    - home（台南市安中路2段336巷11號）：lat=23.0475324, lng=120.1841133 ✅ 已確認
+               -    - shop（台南市北區和緯路2段450號）：lat=23.0125038, lng=120.2025030 ✅ 已確認
                     - 5. 分類規則：距離 home < 500m → `home`，距離 shop < 500m → `shop`，其他 → `other`
                       6. 6. 寫入 ASSET_LOG 新欄位 `daily_sub`（home / shop / other / no_gps）
                          7. 7. 無 GPS 資料的照片標記為 `no_gps`，後續可人工檢查
@@ -328,3 +328,78 @@ seo_name格式：{category}-{description}-{detail}，例：catering-birthday-buf
                                                                - | J | file_type | timestamp | |
                                                               
                                                                - S14 步驟將統一為：`year | filename | file_id | category | daily_sub | keywords | alt_text | seo_name | tokens | status | timestamp`
+
+
+## 加速方案（2026-03-25 發現）
+
+### 現狀
+- API Key（maplab-pipeline project）已是 **Paid tier 1 · Postpay**
+- Gemini 2.5 Flash RPM 限制：**1,000 RPM**（目前只用 7/1,000）
+- 本月已產生費用：NT$707（含其他 Agent 使用）
+- 目前 S5-RESUME 實際速率只有 ~277/h（因為 DELAY_SEC=4）
+
+### 加速計畫
+1. **降低 DELAY_SEC**：4s → 0.5s，速率從 ~277/h → ~1,800/h（6.5x 加速）
+2. **並行年份**：用不同 Google 帳號的 Colab 同時跑不同年份（需第二把 API key）
+3. **或單線加速**：單 Colab 加速後，~60K 張 ÷ 1,800/h ≈ 33h ≈ 5天（含斷線重啟）
+
+### 預估費用
+- Gemini 2.5 Flash：$0.15/1M input tokens, $0.60/1M output tokens
+- 每張照片約 1,300 tokens input + 100 tokens output
+- 60,000 張 × 1,300 = 78M input tokens → ~$11.7
+- 60,000 張 × 100 = 6M output tokens → ~$3.6
+- **預估總費用：~$15 USD（~NT$480）**
+
+### API 管理連結
+- Google AI Studio：https://aistudio.google.com/apikey
+- Rate Limit：https://aistudio.google.com/rate-limit
+- Spend：https://aistudio.google.com/spend
+- Billing：https://aistudio.google.com/billing
+
+### 全年份執行排程（加速後）
+
+| 年份 | 照片數 | Step | 預估時間（加速後） | 狀態 |
+|------|--------|------|------------------|------|
+| 2022 | 8,559 | S5 | ~5h | 🔄 93.5%，即將完成 |
+| 2022 GPS | — | S5.5 | ~5min | 🔲 等 S5 |
+| 2023 | 19,459 | S6 | ~11h | 🔲 |
+| 2023 GPS | — | S6.5 | ~10min | 🔲 |
+| 2024 | 17,834 | S11 | ~10h | 🔲 |
+| 2025 | 9,883 | S12 | ~6h | 🔲 |
+| 2026 | 4,424 | S13 | ~3h | 🔲 |
+| 統一欄位 | — | S14 | ~1h | 🔲 |
+| 旅遊命名 | — | S15 | ~2h | 🔲 |
+| **合計** | **~60,159** | | **~35h ≈ 5天** | |
+
+### 執行 SOP（每個年份重複）
+1. Auth cell ▶（如需允許 Google 憑證彈窗，手動點允許）
+2. S5-RESUME cell 修改年份參數（`'2022'` → `'2023'` 等）
+3. S5-RESUME cell ▶
+4. 斷線後：重新連線 → Auth ▶ → S5-RESUME ▶（自動跳過已完成）
+5. 看到 `== S5-RESUME DONE ==` → 年份完成
+6. 跑對應的 GPS 細分 cell（S5.5/S6.5 等）
+7. 下一個年份
+
+### 已知問題與對策
+| 問題 | 對策 |
+|------|------|
+| Sheets API 429 (Write quota) | 已內建 retry，加大 BATCH_SIZE 可降低寫入頻率 |
+| Colab Free 6-7h 斷線 | Auth ▶ → S5-RESUME ▶ 重啟，自動跳過已完成 |
+| Auth cell 卡住 | 中斷 → 重新執行 → 手動完成 Google 登入流程 |
+| Gemini 503 暫時錯誤 | 已內建 MAX_RETRIES=3 + exponential backoff |
+| API key 外洩警告 | AI Studio 已偵測到，建議 rotate key |
+
+## 版本紀錄
+
+| 版本 | 日期 | 說明 | 更新者 |
+|------|------|------|--------|
+| v1.0 | 2026-03-12 | 初始版本 | Handbook Agent |
+| v1.1 | 2026-03-14 | 更新 OAuth 狀態 | A1 Handbook Agent |
+| v1.2 | 2026-03-15 | 戰略重定義 | A5 |
+| v1.3 | 2026-03-17 | 全雲端執行聲明 + Phase 2/3 完成 | A4 |
+| v1.4 | 2026-03-19 | Phase 3.5 Overlap Check + 分類規則 | A4 |
+| v1.5 | 2026-03-20 | Photo scan 60K + Gemini API OK + Phase 4 v3.0 | A4 |
+| v1.6 | 2026-03-20 | 日常分 home/shop + 旅遊目的地命名 | A4 |
+| v1.7 | 2026-03-23 | Phase 4 v4.0：S1-S4 完成 + S5 進行中 + S5.5 GPS + REST API | A4 |
+| v1.8 | 2026-03-24 | 版本更新 + GPS 座標查詢中 | A4 |
+| v1.9 | 2026-03-25 | S5 93.5% + GPS 座標確認 + 付費 tier 發現 + 加速方案 + 全年份排程 + 執行 SOP + A2 素材指南 | A4 |

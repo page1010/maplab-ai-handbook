@@ -176,20 +176,9 @@ function buildOverviewPrompt(parsed, commits, cpInfo, overdueWarnings) {
   return lines.join('\n');
 }
 
-function buildRolePrompt(role, recallPrompt, commits) {
-  // 角色專屬 prompt + 即時 commit history 注入
-  const lines = [];
-  lines.push(recallPrompt);
-  lines.push('');
-  if (commits.length > 0) {
-    lines.push('【即時 commit history】');
-    commits.slice(0,6).forEach(c => {
-      const d = new Date(c.date);
-      const tag = `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
-      lines.push(`${tag} ${c.sha} — ${c.message.substring(0,60)}`);
-    });
-  }
-  return lines.join('\n');
+function buildRolePrompt(role, recallPrompt) {
+  // 角色專屬 prompt，不注入 commit history（commit history 在 Extension 面板已可見）
+  return recallPrompt;
 }
 
 // === Render ===
@@ -234,7 +223,7 @@ function updatePromptDisplay() {
     el('promptLabel').textContent = `⚡ ${role} Startup Prompt`;
 
     if (cachedRecallPrompts[role]) {
-      const prompt = buildRolePrompt(role, cachedRecallPrompts[role], cachedCommits);
+      const prompt = buildRolePrompt(role, cachedRecallPrompts[role]);
       el('promptText').value = prompt;
       updateCharCount(prompt);
     } else {

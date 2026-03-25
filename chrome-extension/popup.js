@@ -1,5 +1,5 @@
-// MAPLAB Agent Commander v4.3 — popup.js
-// 角色選擇 + 專屬召喚 prompt + commit history
+// MAPLAB Agent Commander v4.6 — popup.js
+// 角色選擇 + 專屬召喚 prompt（精簡版，無 commit history 面板）
 const DEFAULT_BASE = 'https://raw.githubusercontent.com/page1010/maplab-ai-handbook/main';
 const GITHUB_API   = 'https://api.github.com/repos/page1010/maplab-ai-handbook';
 const COMMIT_COUNT = 8;
@@ -13,9 +13,8 @@ if (chrome.sidePanel) {
 // === 全域狀態 ===
 let cachedParsed = null;
 let cachedCommits = [];
-let cachedCpInfo = null;
 let cachedOverdue = [];
-let cachedRecallPrompts = {};  // { 'A2': '...prompt...', 'A3': '...' }
+let cachedRecallPrompts = {};
 
 // === UI helpers ===
 function setStatus(state, text) {
@@ -96,19 +95,7 @@ function parseRecallPrompts(md) {
   return prompts;
 }
 
-// === Checkpoint / Overdue detection ===
-function detectCheckpoints(commits) {
-  const keywords = ['checkpoint','progress','handoff','done:','feat:','fix:','data(','chore('];
-  const lastCheckpoint = commits.find(c =>
-    keywords.some(k => c.message.toLowerCase().includes(k))
-  );
-  let hoursSince = null;
-  if (lastCheckpoint) {
-    const ms = Date.now() - new Date(lastCheckpoint.date).getTime();
-    hoursSince = Math.round(ms / 3600000);
-  }
-  return { lastCheckpoint, hoursSince };
-}
+// === Overdue detection (uses commits internally, no UI) ===
 function detectOverdueTasks(commits, activeTasks) {
   const warnings = [];
   const OVERDUE_HOURS = 48;
@@ -133,24 +120,9 @@ function detectOverdueTasks(commits, activeTasks) {
 }
 
 // === Prompt builders ===
-function buildOverviewPrompt(parsed, commits, cpInfo, overdueWarnings) {
+function buildOverviewPrompt(parsed, overdueWarnings) {
   const lines = [];
   lines.push(`系統 ${parsed.version} ｜ ${parsed.phase}`);
-  lines.push('');
-  if (commits.length > 0) {
-    lines.push('【最近動態】');
-    commits.slice(0,4).forEach(c => {
-      const d = new Date(c.date);
-      const tag = `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
-      lines.push(`${tag} ${c.sha} — ${c.message.substring(0,60)}`);
-    });
-    lines.push('');
-  }
-  if (cpInfo.lastCheckpoint) {
-    lines.push(`【上次 checkpoint】${cpInfo.hoursSince}h 前 ｜ ${cpInfo.lastCheckpoint.message.substring(0,60)}`);
-  } else {
-    lines.push('【上次 checkpoint】最近 commit 無 checkpoint 紀錄 ⚠️');
-  }
   lines.push('');
   const inProgress = parsed.activeTasks.filter(t => t.status.includes('🔄'));
   const available  = parsed.activeTasks.filter(t => t.status.includes('🔲'));
@@ -176,67 +148,35 @@ function buildOverviewPrompt(parsed, commits, cpInfo, overdueWarnings) {
   return lines.join('\n');
 }
 
-function buildRolePrompt(role, recallPrompt) {
-  // 角色專屬 prompt，不注入 commit history（commit history 在 Extension 面板已可見）
-  return recallPrompt;
-}
-
-// === Render ===
-function renderCommits(commits, cpInfo) {
-  const container = el('commitList');
-  if (!commits.length) {
-    container.innerHTML = '<div class="commit-placeholder">無法抓取 commit</div>';
-    return;
-  }
-  container.innerHTML = commits.map(c => {
-    const isCP = cpInfo.lastCheckpoint && cpInfo.lastCheckpoint.sha === c.sha;
-    const d = new Date(c.date);
-    const timeStr = `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
-    return `<div class="commit-row ${isCP ? 'is-checkpoint' : ''}">
-      <span class="commit-sha">${c.sha}</span>
-      <span class="commit-time">${timeStr}</span>
-      <span class="commit-msg">${c.message.substring(0,55).replace(/&/g,'&amp;').replace(/</g,'&lt;')}</span>
-      ${isCP ? '<span class="cp-badge">CP</span>' : ''}
-    </div>`;
-  }).join('');
-}
-
+// === Display ===
 function updatePromptDisplay() {
   const role = el('roleSelect').value;
   if (!role) {
-    // 總覽模式
     el('promptBoxLabel').textContent = '總覽模式';
     el('promptLabel').textContent = '⚡ 系統總覽';
     if (cachedParsed) {
-      const prompt = buildOverviewPrompt(cachedParsed, cachedCommits, cachedCpInfo, cachedOverdue);
+      const prompt = buildOverviewPrompt(cachedParsed, cachedOverdue);
       el('promptText').value = prompt;
       updateCharCount(prompt);
     }
     el('roleStatus').innerHTML = '';
   } else {
-    // 角色模式
-    const roleNames = {
-      A2:'搜尋流量作戰部', A3:'社群與廣告成長部', A4:'影像資產整理部',
-      A5:'報價與提案引擎部', A6:'業務快反應部隊', A7:'客服與對話轉單部', A8:'多媒體影音製作部'
-    };
     el('promptBoxLabel').textContent = `${role} 召喚 prompt`;
     el('promptLabel').textContent = `⚡ ${role} Startup Prompt`;
 
     if (cachedRecallPrompts[role]) {
-      const prompt = buildRolePrompt(role, cachedRecallPrompts[role]);
-      el('promptText').value = prompt;
-      updateCharCount(prompt);
+      el('promptText').value = cachedRecallPrompts[role];
+      updateCharCount(cachedRecallPrompts[role]);
     } else {
       el('promptText').value = `// ${role} 的召喚 prompt 尚未載入或不存在`;
       updateCharCount('');
     }
 
-    // 顯示該角色的相關任務
     if (cachedParsed) {
       const tasks = cachedParsed.activeTasks.filter(t => t.agent.includes(role.replace('A','')));
       if (tasks.length > 0) {
         el('roleStatus').innerHTML = tasks.map(t =>
-          `<span class="${t.status.includes('🔄') ? 'active' : 'pending'}">${t.status.substring(0,2)}</span> ${t.id} ${t.name.substring(0,30)}`
+          `<span class="${t.status.includes('🔄') ? 'active' : 'pending'}">${t.status.substring(0,2)}</span> ${t.id} ${t.name.substring(0,35)}`
         ).join('<br>');
       } else {
         el('roleStatus').innerHTML = '<span class="new">無進行中任務</span>';
@@ -261,27 +201,24 @@ function copyPrompt() {
   }).catch(() => el('promptText').select());
 }
 
-// === Save & Reload ===
-async function saveAndReload() {
+// === Auto-save ===
+async function autoSave() {
   const base  = el('githubRawBase').value.trim() || DEFAULT_BASE;
   const token = el('githubToken').value.trim();
   await chrome.storage.local.set({ githubRawBase: base, githubToken: token });
   const s = el('saveStatus');
-  s.textContent = '已儲存'; s.classList.add('show');
-  setTimeout(() => s.classList.remove('show'), 1500);
-  await loadAll();
+  s.textContent = '✓ 已記住'; s.classList.add('show');
+  setTimeout(() => s.classList.remove('show'), 2000);
 }
 
 // === Main loader ===
 async function loadAll() {
   setStatus('loading', '讀取中...');
   el('promptText').value = '';
-  el('commitList').innerHTML = '<div class="commit-placeholder">載入中...</div>';
   const data  = await chrome.storage.local.get(['githubRawBase','githubToken','lastRole']);
   const base  = data.githubRawBase || DEFAULT_BASE;
   const token = data.githubToken  || '';
 
-  // 恢復上次選的角色
   if (data.lastRole) el('roleSelect').value = data.lastRole;
 
   try {
@@ -293,31 +230,17 @@ async function loadAll() {
 
     cachedParsed  = parseStatus(md);
     cachedCommits = commits;
-    cachedCpInfo  = detectCheckpoints(commits);
     cachedOverdue = detectOverdueTasks(commits, cachedParsed.activeTasks);
     cachedRecallPrompts = recallMd ? parseRecallPrompts(recallMd) : {};
 
-    renderCommits(commits, cachedCpInfo);
     updatePromptDisplay();
 
     el('overdueCount').textContent = cachedOverdue.length > 0 ? `⏰ ${cachedOverdue.length}` : '';
-    const cpMsg = cachedCpInfo.hoursSince !== null ? `最後 CP ${cachedCpInfo.hoursSince}h 前` : '無 CP';
-    setStatus(cachedCpInfo.hoursSince === null || cachedCpInfo.hoursSince > 24 ? 'loading' : 'ok',
-      `v${cachedParsed.version} ｜ ${cpMsg} ｜ ${Object.keys(cachedRecallPrompts).length} 角色已載入`);
+    setStatus('ok', `v${cachedParsed.version} ｜ ${Object.keys(cachedRecallPrompts).length} 角色已載入`);
   } catch(e) {
     setStatus('err', '載入失敗：' + e.message);
     el('promptText').value = '// 錯誤：' + e.message;
   }
-}
-
-// === Auto-save token/URL on blur ===
-async function autoSave() {
-  const base  = el('githubRawBase').value.trim() || DEFAULT_BASE;
-  const token = el('githubToken').value.trim();
-  await chrome.storage.local.set({ githubRawBase: base, githubToken: token });
-  const s = el('saveStatus');
-  s.textContent = '✓ 已記住'; s.classList.add('show');
-  setTimeout(() => s.classList.remove('show'), 2000);
 }
 
 // === Init ===
@@ -326,21 +249,17 @@ document.addEventListener('DOMContentLoaded', async () => {
   el('githubRawBase').value = data.githubRawBase || DEFAULT_BASE;
   el('githubToken').value   = data.githubToken   || '';
 
-  // 顯示 token 已記住狀態
   if (data.githubToken) {
     el('saveStatus').textContent = '✓ Token 已記住';
     el('saveStatus').classList.add('show');
     setTimeout(() => el('saveStatus').classList.remove('show'), 3000);
   }
 
-  // 自動儲存：失焦就存，不需要按按鈕
   el('githubRawBase').addEventListener('blur', autoSave);
   el('githubToken').addEventListener('blur', autoSave);
-  // Enter 也可以觸發重新抓取
   el('githubRawBase').addEventListener('keydown', e => { if(e.key==='Enter') { autoSave(); loadAll(); } });
   el('githubToken').addEventListener('keydown',   e => { if(e.key==='Enter') { autoSave(); loadAll(); } });
 
-  // 角色切換事件
   el('roleSelect').addEventListener('change', () => {
     updatePromptDisplay();
     chrome.storage.local.set({ lastRole: el('roleSelect').value });

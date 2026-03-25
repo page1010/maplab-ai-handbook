@@ -1,5 +1,17 @@
 # Chrome Extension Changelog
 
+## v4.6 — 2026-03-25
+變更者：A1 Claude Code
+- **移除 commit history 面板**：使用者不需要看系統管理的 commit 紀錄，釋放空間給 prompt
+- **UI 全面優化**：
+  - 寬度 380px → 400px
+  - 字體放大（body 13px，prompt 12px，標籤 10-11px）
+  - 文字顏色提高對比度：主文字 #e8ecf4、次要 #9baab8、標籤 #7a8a9d（原本 #4a5568 太暗）
+  - prompt 區域放大（min-height 220px，max-height 300px）
+  - 連結顏色改為 #6a9ae8 更易辨識
+- 精簡 popup.js：移除 renderCommits、detectCheckpoints、commit 面板相關 DOM 操作
+- overdue 偵測保留（用於狀態列警示），但不再顯示 commit 面板
+
 ## v4.5 — 2026-03-25
 變更者：A1 Claude Code
 - 移除角色 prompt 底部的 commit history 注入

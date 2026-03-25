@@ -5,58 +5,49 @@
 <title>MAPLAB Agent Commander</title>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
-body { width:380px; background:#0d0f14; color:#c8d0e0; font-family:'JetBrains Mono','Fira Code',monospace; font-size:12px; }
-.header { background:#111520; border-bottom:1px solid #1e2535; padding:11px 14px; display:flex; align-items:center; justify-content:space-between; }
-.logo { font-size:12px; font-weight:700; color:#e8a838; }
+body { width:400px; background:#0d0f14; color:#e8ecf4; font-family:'JetBrains Mono','Fira Code',monospace; font-size:13px; }
+.header { background:#111520; border-bottom:1px solid #1e2535; padding:12px 16px; display:flex; align-items:center; justify-content:space-between; }
+.logo { font-size:13px; font-weight:700; color:#e8a838; }
 .header-right { display:flex; align-items:center; gap:8px; }
-.overdue-badge { font-size:9px; color:#e85538; }
-.version { font-size:9px; color:#3a4558; }
-.body { padding:12px; display:flex; flex-direction:column; gap:10px; }
-.status-bar { background:#141820; border:1px solid #1e2535; border-radius:5px; padding:7px 10px; display:flex; align-items:center; gap:7px; }
-.status-dot { width:6px; height:6px; border-radius:50%; background:#3a4558; flex-shrink:0; }
+.overdue-badge { font-size:10px; color:#e85538; }
+.version { font-size:10px; color:#5a6a80; }
+.body { padding:14px; display:flex; flex-direction:column; gap:12px; }
+.status-bar { background:#141820; border:1px solid #1e2535; border-radius:5px; padding:8px 12px; display:flex; align-items:center; gap:8px; }
+.status-dot { width:7px; height:7px; border-radius:50%; background:#5a6a80; flex-shrink:0; }
 .status-dot.ok { background:#38e87a; }
 .status-dot.loading { background:#e8a838; animation:pulse 1s infinite; }
 .status-dot.err { background:#e85538; }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
-.status-text { font-size:10px; color:#6b7a96; flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.section-label { font-size:9px; color:#3a4558; text-transform:uppercase; margin-bottom:4px; }
-.role-selector { display:flex; align-items:center; gap:8px; }
-.role-selector label { font-size:9px; color:#4a5568; text-transform:uppercase; flex-shrink:0; }
-.role-select { flex:1; padding:6px 9px; background:#141820; border:1px solid #1e2535; border-radius:4px; color:#e8a838; font-family:inherit; font-size:11px; font-weight:700; outline:none; cursor:pointer; }
+.status-text { font-size:11px; color:#9baab8; flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.section-label { font-size:10px; color:#5a6a80; text-transform:uppercase; margin-bottom:5px; letter-spacing:0.05em; }
+.role-selector { display:flex; align-items:center; gap:10px; }
+.role-selector label { font-size:10px; color:#7a8a9d; text-transform:uppercase; flex-shrink:0; }
+.role-select { flex:1; padding:8px 10px; background:#141820; border:1px solid #1e2535; border-radius:5px; color:#e8a838; font-family:inherit; font-size:12px; font-weight:700; outline:none; cursor:pointer; }
 .role-select:focus { border-color:#e8a838; }
-.role-select option { background:#141820; color:#c8d0e0; }
-.role-status { font-size:9px; color:#6b7a96; padding:4px 0; }
+.role-select option { background:#141820; color:#e8ecf4; }
+.role-status { font-size:10px; color:#9baab8; padding:4px 0; line-height:1.6; }
 .role-status .active { color:#38e87a; }
 .role-status .pending { color:#e8a838; }
-.role-status .new { color:#4a8ae8; }
-.commit-panel { background:#0a0d12; border:1px solid #1a2030; border-radius:5px; overflow:hidden; }
-.commit-panel-header { padding:6px 10px; background:#111520; border-bottom:1px solid #1a2030; font-size:9px; color:#4a5568; }
-#commitList { max-height:110px; overflow-y:auto; }
-.commit-row { display:flex; align-items:center; gap:6px; padding:5px 10px; border-bottom:1px solid #0f1318; font-size:9px; }
-.commit-row.is-checkpoint { background:#0d1a0e; border-left:2px solid #38e87a; }
-.commit-sha { color:#4a8ae8; flex-shrink:0; width:42px; }
-.commit-time { color:#3a4558; flex-shrink:0; width:52px; }
-.commit-msg { color:#7a8a9d; flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.cp-badge { font-size:8px; color:#38e87a; border:1px solid #38e87a44; border-radius:3px; padding:1px 4px; }
-.commit-placeholder { padding:10px; color:#2a3348; font-size:9px; }
+.role-status .new { color:#6a9ae8; }
 .prompt-box { background:#0a0d12; border:1px solid #1e2535; border-radius:5px; overflow:hidden; }
-.prompt-box-header { display:flex; align-items:center; justify-content:space-between; padding:6px 10px; background:#111520; border-bottom:1px solid #1a2030; }
-.prompt-box-label { font-size:9px; color:#4a5568; }
-.token-count { font-size:9px; color:#3a4558; }
+.prompt-box-header { display:flex; align-items:center; justify-content:space-between; padding:8px 12px; background:#111520; border-bottom:1px solid #1a2030; }
+.prompt-box-label { font-size:10px; color:#7a8a9d; }
+.token-count { font-size:10px; color:#5a6a80; }
 .token-count.warn { color:#e8a838; }
-#promptText { width:100%; min-height:150px; max-height:200px; padding:9px 10px; background:transparent; border:none; color:#9ba8bd; font-family:inherit; font-size:10px; line-height:1.75; resize:none; outline:none; overflow-y:auto; }
-.btn-copy { width:100%; padding:9px; background:#e8a838; border:none; border-radius:5px; color:#0d0f14; font-family:inherit; font-size:11px; font-weight:700; cursor:pointer; }
+#promptText { width:100%; min-height:220px; max-height:300px; padding:12px; background:transparent; border:none; color:#d0d8e8; font-family:inherit; font-size:12px; line-height:1.8; resize:none; outline:none; overflow-y:auto; }
+.btn-copy { width:100%; padding:11px; background:#e8a838; border:none; border-radius:5px; color:#0d0f14; font-family:inherit; font-size:12px; font-weight:700; cursor:pointer; }
 .btn-copy.copied { background:#38e87a; color:#0a1a10; }
-.btn-refresh { width:100%; padding:7px; background:transparent; border:1px solid #1e2535; border-radius:4px; color:#4a5568; font-family:inherit; font-size:10px; cursor:pointer; }
+.btn-refresh { width:100%; padding:8px; background:transparent; border:1px solid #1e2535; border-radius:4px; color:#7a8a9d; font-family:inherit; font-size:11px; cursor:pointer; }
 .btn-refresh:hover { border-color:#e8a838; color:#e8a838; }
-hr { border:none; border-top:1px solid #141820; }
-.field label { display:block; font-size:9px; color:#4a5568; text-transform:uppercase; margin-bottom:4px; }
-.field input { width:100%; padding:6px 9px; background:#141820; border:1px solid #1e2535; border-radius:4px; color:#c8d0e0; font-family:inherit; font-size:10px; outline:none; }
+hr { border:none; border-top:1px solid #1a2030; }
+.field label { display:block; font-size:10px; color:#7a8a9d; text-transform:uppercase; margin-bottom:5px; }
+.field input { width:100%; padding:8px 10px; background:#141820; border:1px solid #1e2535; border-radius:5px; color:#e8ecf4; font-family:inherit; font-size:11px; outline:none; }
 .field input:focus { border-color:#e8a838; }
-.save-status { font-size:10px; text-align:center; color:#38e87a; min-height:14px; opacity:0; transition:opacity .3s; }
+.save-status { font-size:11px; text-align:center; color:#38e87a; min-height:16px; opacity:0; transition:opacity .3s; }
 .save-status.show { opacity:1; }
-.links { display:flex; gap:10px; }
-.links a { font-size:10px; color:#4a8ae8; text-decoration:none; }
+.links { display:flex; gap:12px; }
+.links a { font-size:11px; color:#6a9ae8; text-decoration:none; }
+.links a:hover { color:#e8a838; }
 </style>
 </head>
 <body>
@@ -64,7 +55,7 @@ hr { border:none; border-top:1px solid #141820; }
   <div class="logo">⬡ MAPLAB COMMANDER</div>
   <div class="header-right">
     <span class="overdue-badge" id="overdueCount"></span>
-    <span class="version">v4.5</span>
+    <span class="version">v4.6</span>
   </div>
 </div>
 <div class="body">
@@ -87,13 +78,6 @@ hr { border:none; border-top:1px solid #141820; }
       </select>
     </div>
     <div class="role-status" id="roleStatus"></div>
-  </div>
-  <div>
-    <div class="section-label">最近 commit（CP = checkpoint）</div>
-    <div class="commit-panel">
-      <div class="commit-panel-header">GitHub commit history</div>
-      <div id="commitList"><div class="commit-placeholder">載入中...</div></div>
-    </div>
   </div>
   <div>
     <div class="section-label" id="promptLabel">⚡ Startup Prompt</div>

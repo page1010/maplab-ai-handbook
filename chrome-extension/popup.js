@@ -321,13 +321,35 @@ async function loadAll() {
   }
 }
 
+// === Auto-save token/URL on blur ===
+async function autoSave() {
+  const base  = el('githubRawBase').value.trim() || DEFAULT_BASE;
+  const token = el('githubToken').value.trim();
+  await chrome.storage.local.set({ githubRawBase: base, githubToken: token });
+  const s = el('saveStatus');
+  s.textContent = '✓ 已記住'; s.classList.add('show');
+  setTimeout(() => s.classList.remove('show'), 2000);
+}
+
 // === Init ===
 document.addEventListener('DOMContentLoaded', async () => {
   const data = await chrome.storage.local.get(['githubRawBase','githubToken']);
   el('githubRawBase').value = data.githubRawBase || DEFAULT_BASE;
   el('githubToken').value   = data.githubToken   || '';
-  el('githubRawBase').addEventListener('keydown', e => { if(e.key==='Enter') saveAndReload(); });
-  el('githubToken').addEventListener('keydown',   e => { if(e.key==='Enter') saveAndReload(); });
+
+  // 顯示 token 已記住狀態
+  if (data.githubToken) {
+    el('saveStatus').textContent = '✓ Token 已記住';
+    el('saveStatus').classList.add('show');
+    setTimeout(() => el('saveStatus').classList.remove('show'), 3000);
+  }
+
+  // 自動儲存：失焦就存，不需要按按鈕
+  el('githubRawBase').addEventListener('blur', autoSave);
+  el('githubToken').addEventListener('blur', autoSave);
+  // Enter 也可以觸發重新抓取
+  el('githubRawBase').addEventListener('keydown', e => { if(e.key==='Enter') { autoSave(); loadAll(); } });
+  el('githubToken').addEventListener('keydown',   e => { if(e.key==='Enter') { autoSave(); loadAll(); } });
 
   // 角色切換事件
   el('roleSelect').addEventListener('change', () => {

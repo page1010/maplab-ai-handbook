@@ -1,5 +1,12 @@
 # Chrome Extension Changelog
 
+## v4.4 — 2026-03-25
+變更者：A1 Claude Code
+- Token 和 URL 自動儲存（失焦即存，不需要按按鈕）
+- 打開 Extension 時顯示「✓ Token 已記住」狀態提示
+- 填一次 token 永久記住，不需要重複輸入
+- 「重新抓取」按鈕改為只重新載入資料（不再綁定儲存）
+
 ## v4.3 — 2026-03-25
 變更者：A1 Claude Code
 - **新增角色選擇下拉選單**（A2-A8），選角色後顯示該角色專屬召喚 prompt

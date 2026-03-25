@@ -507,7 +507,52 @@ QUOTE_V2_FUTURE 是 v0.3 版「雙模式報價引擎」的原型框架，由 quo
                                                                                                                                                 
                                                                                                                                                  17. ---
                                                                                                                                                 
-                                                                                                                                                 18. ## SECTION 9 版本紀錄（更新）
+
+                                                                                                             ### 11.9 使用條款資料庫化（TERMS_MASTER）
+                                                                                                         
+                                                                                                             目前 QUOTE_DRAFT 的『簽約使用條款及細則』是直接寫死在 Row 35+ 的儲存格中，共 4 條：
+                                                                                                             - 第一條：訂單與付款（訂金/尾款/取消退費/不可抗力/改期）
+                                                                                                             - - 第二條：現場服務（搬運規範/電梯限制/搬運費/餐具置放/器材責任）
+                                                                                                               - - 第三條：產品責任與保證（產品責任保險/餐點製備時限/食安/外帶打包）
+                                                                                                                 - - 第四條：合約效力（合約雙方確認/活動拍攝/爭議處理）
+                                                                                                                  
+                                                                                                                   - **問題**：條款硬編碼在報價單中，無法版本控制、無法快速切換語言版本、修改一次要改所有報價單。
+                                                                                                                  
+                                                                                                                   - **設計方案：新增 TERMS_MASTER sheet**
+                                                                                                                  
+                                                                                                                   - > 💡 slides-quotation-system.md 的跨專案 Agent 已完成英文版簡報內容（SECTION 2-8），
+                                                                                                                     > > 包含完整的英文服務說明、優勢、流程等文案。可作為英文條款的參考來源。
+                                                                                                                     > >
+                                                                                                                     > > | 欄位 | 型態 | 必填 | 說明 | 範例 |
+                                                                                                                     > > |------|------|------|------|------|
+                                                                                                                     > > | term_id | string | ✅ | 唯一識別 TRM-{SEQ3} | TRM-001 |
+                                                                                                                     > > | section_no | integer | ✅ | 條款編號 | 1 |
+                                                                                                                     > > | section_title_zh | string | ✅ | 中文條標題 | 訂單與付款 |
+                                                                                                                     > > | section_title_en | string | ✅ | 英文條標題 | Order & Payment |
+                                                                                                                     > > | clause_no | integer | ✅ | 子條款編號 | 1 |
+                                                                                                                     > > | clause_text_zh | string | ✅ | 中文條款內容 | 訂金繳付後，若客戶自行取消服務，訂金不予退還。 |
+                                                                                                                     > > | clause_text_en | string | ✅ | 英文條款內容 | Once the deposit is paid, cancellation... |
+                                                                                                                     > > | is_highlight | boolean | | 是否為紅色警告條款 | TRUE |
+                                                                                                                     > > | applies_to | enum | | 適用類型：all / catering / takeaway | all |
+                                                                                                                     > > | version | string | ✅ | 版本號 | v1.0 |
+                                                                                                                     > > | effective_date | date | ✅ | 生效日期 | 2026-01-01 |
+                                                                                                                     > > | is_active | boolean | ✅ | 是否啟用 | TRUE |
+                                                                                                                     > >
+                                                                                                                     > > **資料流整合**：
+                                                                                                                     > > - QUOTE_DRAFT 條款區改為 `=QUERY(TERMS_MASTER!A:L, "SELECT ... WHERE is_active=TRUE AND version='v1.0'")` 動態帶出
+                                                                                                                     > > - - Slides 提案簡報可根據語言設定帶入對應語言版本
+                                                                                                                     > >   - - generateProposal.gs 可讀取 TERMS_MASTER 生成合約頁
+                                                                                                                     > >     - - 條款修改只需更新 TERMS_MASTER，所有新報價單自動套用
+                                                                                                                     > >       - - 歷史報價單保留當時版本號，可追溯
+                                                                                                                     > >        
+                                                                                                                     > >         - **與 slides-quotation-system.md 的對接**：
+                                                                                                                     > >         - - slides-quotation-system.md SECTION 2 已定義完整簡報頁面結構（含中英文案）
+                                                                                                                     > >           - - SECTION 8 User Requirements 確認了「Menu Showcase 只顯示品名+照片，不含價格」
+                                                                                                                     > >             - - SECTION 11 跨 Agent 相片需求已定義 A4→A5→Slides 的資料流
+                                                                                                                     > >               - - TERMS_MASTER 的英文版可直接參考該文件中的品牌文案作為基底
+                                                                                                                     > >                
+                                                                                                                     > >                 - 
+                                                                                                                                                  18. ## SECTION 9 版本紀錄（更新）
                                                                                                                                                 
                                                                                                                                                  19. | 版本 | 日期 | 說明 | 更新者 |
                                                                                                                                                  20. |------|------|------|--------|

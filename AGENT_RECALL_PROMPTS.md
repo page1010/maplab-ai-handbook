@@ -13,9 +13,9 @@
 | 編號 | 部門名稱 | 狀態 | 備註 |
 |------|---------|------|------|
 | A1 | 系統總管中心 | ✅ Claude Code 常駐 | 不需召喚，直接下指令 |
-| A2 | 搜尋流量作戰部 | 🔄 有進行中任務 | SEO / GA / 關鍵字 |
+| A2 | 搜尋流量作戰部 | ✅ T-A2-001 完成，待新任務 | SEO / GA / 關鍵字 |
 | A3 | 社群與廣告成長部 | 🔄 有進行中任務 | Meta Ads / Social |
-| A4 | 影像資產整理部 | 🔄 S5 進行中 35% | Photo Archive |
+| A4 | 影像資產整理部 | 🔄 S5 進行中 93.5% | Photo Archive |
 | A5 | 報價與提案引擎部 | 🔲 有可認領任務 | Quotation Engine |
 | A6 | 業務快反應部隊 | 🔲 新建，待啟動 | Sales Rapid Response |
 | A7 | 客服與對話轉單部 | 🔲 待啟動 | Smart Reply |
@@ -38,12 +38,14 @@ repo: https://github.com/page1010/maplab-ai-handbook
 1. 角色重組已完成：A2/A3 拆開、A1=Claude Code、新增 A6 業務急件 + A8 影音製作
 2. AGENT_RULES.md 升級至 v3.0（SECTION 1 全面改寫 + 跨部門協作圖）
 3. AGENT_RECALL_PROMPTS.md 已建立（8 角色完整召喚 prompt）
-4. Chrome Extension v4.2（本地執行版，Side Panel 模式）
-   - v4.0 嘗試遠端 JS 載入失敗（Chrome MV3 CSP 擋）
-   - v4.2 回歸本地，穩定版
-   - CHANGELOG 已補齊 v2.0→v4.2 完整紀錄
+4. Chrome Extension v4.6（本地執行版，Side Panel + 角色選擇器 + 高對比 UI）
+   - v4.0 嘗試遠端 JS 載入失敗（Chrome MV3 CSP 擋）→ v4.2 回歸本地
+   - v4.3 角色選擇器 + v4.4 auto-save token + v4.5 移除 commit history 注入 + v4.6 UI 優化
+   - CHANGELOG 已補齊 v2.0→v4.6 完整紀錄
 5. GitHub Actions system-patrol.yml 已部署（每日 UTC 01:00 巡查）
-6. repo 已從 private 改為 public（解決 raw.githubusercontent.com 404）
+6. repo 改回 private（含客戶姓名等機密資料）
+7. SECTION 2.1 強制存檔規則已建立（30min checkpoint + 接續 prompt）
+8. A2 T-A2-001 已完成（57/57）、A4 S5 進度 93.5%
 
 【維護中的檔案】
 - CURRENT_STATUS.md — 每次狀態變更必更新
@@ -82,21 +84,17 @@ repo: https://github.com/page1010/maplab-ai-handbook
 先讀 CURRENT_STATUS.md，再讀你的 Task Card。
 
 【斷點】
-T-A2-001 文章精選圖片補齊：Phase 2 進行中，22/57 篇有獨立配圖，35 篇待替換
-已上傳 WordPress media 1510-1533，有 5 張未指派（1525, 1528, 1531, 1532, 1533）
-技術流程：Google Drive → Canvas → Clipboard API → WordPress REST API
+T-A2-001 文章精選圖片補齊：✅ 完成（57/57 獨立配圖，0 重複）
 T-A2A3-001 SEO 關鍵字頁面補足：🔲 待開始
 
-【Blocker】
-Google Drive 2025 相簿可用圖約 20 張，不足 57 篇，需 Owner 確認是否開放其他相簿
-
-【踩過的坑】
-- 圖片篩選：食物特寫/場景佈置/無人場景優先，禁人臉/外部logo/酒類
+【已完成經驗】
+- 圖片篩選標準：食物特寫/場景佈置/無人場景優先，禁人臉/外部logo/酒類
 - SEO 命名：maplab-{場景關鍵字}-{描述}.png
-- 上傳用 Clipboard API 跨 Tab（見 skills/gdrive-to-wordpress-upload-guide.md）
+- 上傳技術：Google Drive → Canvas → Clipboard API → WordPress REST API
+- 技能書：skills/gdrive-to-wordpress-upload-guide.md
 
 【必讀】
-handoff/tasks/T-A2-001.md → projects/seo-ads-agent.md → skills/superpowers-guide.md
+projects/seo-ads-agent.md → skills/superpowers-guide.md
 
 【協作】給 A3 社群內容方向、跟 A4 要圖片素材、跟 A5 串接報價 CTA
 
@@ -149,7 +147,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 先讀 CURRENT_STATUS.md，再讀你的 Task Card。
 
 【斷點】
-T-A4-001 Gemini 照片分類：S1-S4 ✅ 完成，S5 🔄 2955/8559（35%）2022 batch REST API
+T-A4-001 Gemini 照片分類：S1-S4 ✅ 完成，S5 🔄 93.5% — GPS confirmed, paid tier
 Photo scan 總量：60,584 files
 Pre-classified：C=4,593 / T=254 / D=55,737
 Gemini API Key 已驗證

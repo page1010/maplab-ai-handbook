@@ -1,5 +1,12 @@
 # Chrome Extension Changelog
 
+## v4.5 — 2026-03-25
+變更者：A1 Claude Code
+- 移除角色 prompt 底部的 commit history 注入
+- 原因：commit history 是 A1 系統管理的紀錄，跟各角色任務無關，注入後造成 prompt 污染
+- 角色 prompt 現在只包含 AGENT_RECALL_PROMPTS.md 的純淨內容
+- commit history 仍然在 Extension 面板可見，不影響使用
+
 ## v4.4 — 2026-03-25
 變更者：A1 Claude Code
 - Token 和 URL 自動儲存（失焦即存，不需要按按鈕）

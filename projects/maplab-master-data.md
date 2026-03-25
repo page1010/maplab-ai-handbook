@@ -1,6 +1,6 @@
 # Master Data Agent — MAPLAB Kitchen ERP 技術文件
 
-版本：v1.6 | 建立：2026-03-13 | 更新：2026-03-24 | 狀態：Items 清洗完成 + T-A5-001 完成 + QUOTE_DRAFT 框架規劃 + Slides 整合設計
+版本：v1.7 | 建立：2026-03-13 | 更新：2026-03-25 | 狀態：Items 清洗完成 + T-A5-001 完成 + QUOTE_DRAFT 框架規劃 + Slides 整合設計
 
 ---
 
@@ -230,13 +230,7 @@
 
         ## SECTION 9 — 版本紀錄
         
-        | 版本 | 日期 | 說明 | 更新者 |
-        |------|------|------|--------|
-        | v1.0 | 2026-03-13 | 初始框架建立（來自 Gemini 對話 + Drive 結構分析）| Claude (Sonnet 4.6) |
-        | v1.1 | 2026-03-13 | 新增 SECTION 8 報價系統分析：現況盤點、缺口識別、改進方案 v0.3 目標 | Claude (Sonnet 4.6) A5 |
-| v1.2 | 2026-03-13 | QUOTE_DRAFT v0.3 建立完成：雙模式報價系統（正向/逆向）、15品項參考表、2組Demo資料 | Claude (Sonnet 4.6) A5 |
-| v1.3 | 2026-03-14 | Dashboard #REF! 修復（QUERY LIMIT 10）+ QUOTE_DRAFT 品項分類中文化（甜點/餐食小點/主食/飲品）| Claude (Opus 4.6) A5 |
-
+        > ⚠️ 版本紀錄已移至文件末尾「SECTION 9 版本紀錄（統整更新）」，含完整歷史記錄 v1.0 → v1.7。
 
 ---
 
@@ -285,9 +279,6 @@
 
 ---
 
-*版本：v1.5 | 更新：2026-03-19 | A1 巡查修正：任務狀態更新 + SECTION 編號修正 + 移除 Notion 引用*
-
-> 新技能書：skills/sheets-data-cleaning-guide.md — A5 資料清洗公式+腳本工具箱
 
 
 ## SECTION 11 — QUOTE_DRAFT 完善框架設計（A5 研究，2026-03-24）
@@ -525,7 +516,7 @@ QUOTE_V2_FUTURE 是 v0.3 版「雙模式報價引擎」的原型框架，由 quo
                                                                                                                      > >
                                                                                                                      > > | 欄位 | 型態 | 必填 | 說明 | 範例 |
                                                                                                                      > > |------|------|------|------|------|
-                                                                                                                     > > | term_id | string | ✅ | 唯一識別 TRM-{SEQ3} | TRM-001 |
+                                                                                                                     > > | term_id | string | ✅ | 唯一識別 TRM-{SUBTYPE}-{SEQ3} | TRM-ORD-001 |
                                                                                                                      > > | section_no | integer | ✅ | 條款編號 | 1 |
                                                                                                                      > > | section_title_zh | string | ✅ | 中文條標題 | 訂單與付款 |
                                                                                                                      > > | section_title_en | string | ✅ | 英文條標題 | Order & Payment |
@@ -550,16 +541,17 @@ QUOTE_V2_FUTURE 是 v0.3 版「雙模式報價引擎」的原型框架，由 quo
                                                                                                                      > >           - - SECTION 8 User Requirements 確認了「Menu Showcase 只顯示品名+照片，不含價格」
                                                                                                                      > >             - - SECTION 11 跨 Agent 相片需求已定義 A4→A5→Slides 的資料流
                                                                                                                      > >               - - TERMS_MASTER 的英文版可直接參考該文件中的品牌文案作為基底
-                                                                                                                     > >                
-                                                                                                                     > >                 - 
-                                                                                                                                                  18. ## SECTION 9 版本紀錄（更新）
-                                                                                                                                                
-                                                                                                                                                 19. | 版本 | 日期 | 說明 | 更新者 |
-                                                                                                                                                 20. |------|------|------|--------|
-                                                                                                                                                 21. | v1.6 | 2026-03-24 | 新增 SECTION 11：QUOTE_DRAFT 完善框架設計（現狀盤點 + v1.0 框架 + Slides 整合 + 困難 + 計畫） | Claude (Opus 4.6) A5 |
-                                                                                                                                                 22. | v1.5 | 2026-03-19 | A1 巡查修正：任務狀態更新 + SECTION 編號修正 | A1 |
-                                                                                                                                                 23. | v1.3 | 2026-03-14 | Dashboard #REF! 修復 + QUOTE_DRAFT 品項分類中文化 | Claude (Opus 4.6) A5 |
-                                                                                                                                                 24. | v1.2 | 2026-03-13 | QUOTE_DRAFT v0.3 建立完成：雙模式報價系統 | Claude (Sonnet 4.6) A5 |
-                                                                                                                                                 25. | v1.1 | 2026-03-13 | 新增 SECTION 8 報價系統分析 | Claude (Sonnet 4.6) A5 |
-                                                                                                                                                 26. | v1.0 | 2026-03-13 | 初始框架建立 | Claude (Sonnet 4.6) |
-                                                                                                                                                 27. 
+                                                                                                    
+                                                                                                                     ---
+                                                                                                                     
+                                                                                                                     ## SECTION 9 版本紀錄（統整更新）
+                                                                                                                     
+                                                                                                                     | 版本 | 日期 | 說明 | 更新者 |
+                                                                                                                     |------|------|------|--------|
+                                                                                                                     | v1.7 | 2026-03-25 | 格式優化 + TERMS_MASTER sheet 建立（17條款4大類×中英雙語）+ Section 11.9 term_id 對齊實作 + 移除重複版本紀錄 | Claude (Opus 4.6) A5 |
+                                                                                                                     | v1.6 | 2026-03-24 | 新增 SECTION 11：QUOTE_DRAFT 完善框架設計（現狀盤點 + v1.0 框架 + Slides 整合 + 困難 + 計畫）+ 11.9 TERMS_MASTER 規劃 | Claude (Opus 4.6) A5 |
+                                                                                                                     | v1.5 | 2026-03-19 | A1 巡查修正：任務狀態更新 + SECTION 編號修正 + 移除 Notion 引用 | A1 |
+                                                                                                                     | v1.3 | 2026-03-14 | Dashboard #REF! 修復 + QUOTE_DRAFT 品項分類中文化 | Claude (Opus 4.6) A5 |
+                                                                                                                     | v1.2 | 2026-03-13 | QUOTE_DRAFT v0.3 建立完成：雙模式報價系統 | Claude (Sonnet 4.6) A5 |
+                                                                                                                     | v1.1 | 2026-03-13 | 新增 SECTION 8 報價系統分析 | Claude (Sonnet 4.6) A5 |
+                                                                                                                     | v1.0 | 2026-03-13 | 初始框架建立 | Claude (Sonnet 4.6) |h

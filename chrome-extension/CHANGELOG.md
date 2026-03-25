@@ -1,5 +1,16 @@
 # Chrome Extension Changelog
 
+## v4.3 — 2026-03-25
+變更者：A1 Claude Code
+- **新增角色選擇下拉選單**（A2-A8），選角色後顯示該角色專屬召喚 prompt
+- 從 GitHub 即時讀取 AGENT_RECALL_PROMPTS.md 並解析各角色 prompt
+- 角色 prompt 自動注入即時 commit history
+- 總覽模式保留（不選角色時顯示系統摘要）
+- 記住上次選的角色（chrome.storage.local）
+- popup.html 新增角色選擇器 UI + 角色狀態顯示
+- 底部新增 AGENT_RECALL_PROMPTS.md 連結
+- prompt textarea 高度增加（150-200px）
+
 ## v4.2 — 2026-03-25
 變更者：A1 Claude Code
 commit: 143e8e1

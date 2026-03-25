@@ -20,6 +20,15 @@ body { width:380px; background:#0d0f14; color:#c8d0e0; font-family:'JetBrains Mo
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
 .status-text { font-size:10px; color:#6b7a96; flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .section-label { font-size:9px; color:#3a4558; text-transform:uppercase; margin-bottom:4px; }
+.role-selector { display:flex; align-items:center; gap:8px; }
+.role-selector label { font-size:9px; color:#4a5568; text-transform:uppercase; flex-shrink:0; }
+.role-select { flex:1; padding:6px 9px; background:#141820; border:1px solid #1e2535; border-radius:4px; color:#e8a838; font-family:inherit; font-size:11px; font-weight:700; outline:none; cursor:pointer; }
+.role-select:focus { border-color:#e8a838; }
+.role-select option { background:#141820; color:#c8d0e0; }
+.role-status { font-size:9px; color:#6b7a96; padding:4px 0; }
+.role-status .active { color:#38e87a; }
+.role-status .pending { color:#e8a838; }
+.role-status .new { color:#4a8ae8; }
 .commit-panel { background:#0a0d12; border:1px solid #1a2030; border-radius:5px; overflow:hidden; }
 .commit-panel-header { padding:6px 10px; background:#111520; border-bottom:1px solid #1a2030; font-size:9px; color:#4a5568; }
 #commitList { max-height:110px; overflow-y:auto; }
@@ -35,7 +44,7 @@ body { width:380px; background:#0d0f14; color:#c8d0e0; font-family:'JetBrains Mo
 .prompt-box-label { font-size:9px; color:#4a5568; }
 .token-count { font-size:9px; color:#3a4558; }
 .token-count.warn { color:#e8a838; }
-#promptText { width:100%; min-height:130px; max-height:170px; padding:9px 10px; background:transparent; border:none; color:#9ba8bd; font-family:inherit; font-size:10px; line-height:1.75; resize:none; outline:none; overflow-y:auto; }
+#promptText { width:100%; min-height:150px; max-height:200px; padding:9px 10px; background:transparent; border:none; color:#9ba8bd; font-family:inherit; font-size:10px; line-height:1.75; resize:none; outline:none; overflow-y:auto; }
 .btn-copy { width:100%; padding:9px; background:#e8a838; border:none; border-radius:5px; color:#0d0f14; font-family:inherit; font-size:11px; font-weight:700; cursor:pointer; }
 .btn-copy.copied { background:#38e87a; color:#0a1a10; }
 .btn-refresh { width:100%; padding:7px; background:transparent; border:1px solid #1e2535; border-radius:4px; color:#4a5568; font-family:inherit; font-size:10px; cursor:pointer; }
@@ -55,13 +64,29 @@ hr { border:none; border-top:1px solid #141820; }
   <div class="logo">⬡ MAPLAB COMMANDER</div>
   <div class="header-right">
     <span class="overdue-badge" id="overdueCount"></span>
-    <span class="version">v4.2</span>
+    <span class="version">v4.3</span>
   </div>
 </div>
 <div class="body">
   <div class="status-bar">
     <div class="status-dot" id="statusDot"></div>
     <div class="status-text" id="statusText">讀取中...</div>
+  </div>
+  <div>
+    <div class="role-selector">
+      <label>召喚角色</label>
+      <select class="role-select" id="roleSelect">
+        <option value="">-- 總覽模式 --</option>
+        <option value="A2">A2｜搜尋流量作戰部</option>
+        <option value="A3">A3｜社群與廣告成長部</option>
+        <option value="A4">A4｜影像資產整理部</option>
+        <option value="A5">A5｜報價與提案引擎部</option>
+        <option value="A6">A6｜業務快反應部隊</option>
+        <option value="A7">A7｜客服與對話轉單部</option>
+        <option value="A8">A8｜多媒體影音製作部</option>
+      </select>
+    </div>
+    <div class="role-status" id="roleStatus"></div>
   </div>
   <div>
     <div class="section-label">最近 commit（CP = checkpoint）</div>
@@ -71,13 +96,13 @@ hr { border:none; border-top:1px solid #141820; }
     </div>
   </div>
   <div>
-    <div class="section-label">⚡ Startup Prompt</div>
+    <div class="section-label" id="promptLabel">⚡ Startup Prompt</div>
     <div class="prompt-box">
       <div class="prompt-box-header">
-        <span class="prompt-box-label">壓縮狀態注入</span>
+        <span class="prompt-box-label" id="promptBoxLabel">總覽模式</span>
         <span class="token-count" id="tokenCount">— chars</span>
       </div>
-      <textarea id="promptText" readonly placeholder="自動從 CURRENT_STATUS + commit history 合成..."></textarea>
+      <textarea id="promptText" readonly placeholder="選擇角色後顯示專屬召喚 prompt..."></textarea>
     </div>
   </div>
   <button class="btn-copy" id="copyBtn" onclick="copyPrompt()">📋 複製 Startup Prompt</button>
@@ -94,7 +119,8 @@ hr { border:none; border-top:1px solid #141820; }
   <div class="save-status" id="saveStatus"></div>
   <div class="links">
     <a href="https://github.com/page1010/maplab-ai-handbook" target="_blank">📂 Repo</a>
-    <a href="https://github.com/page1010/maplab-ai-handbook/blob/main/CURRENT_STATUS.md" target="_blank">📋 CURRENT_STATUS</a>
+    <a href="https://github.com/page1010/maplab-ai-handbook/blob/main/CURRENT_STATUS.md" target="_blank">📋 STATUS</a>
+    <a href="https://github.com/page1010/maplab-ai-handbook/blob/main/AGENT_RECALL_PROMPTS.md" target="_blank">📝 PROMPTS</a>
   </div>
 </div>
 <script src="popup.js"></script>

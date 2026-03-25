@@ -1,14 +1,48 @@
 # Chrome Extension Changelog
 
+## v4.2 — 2026-03-25
+變更者：A1 Claude Code
+commit: 143e8e1
+- **架構回歸本地執行**：放棄 remote-logic.js，所有邏輯回到 popup.js
+- 原因：Chrome Manifest V3 的 CSP 禁止動態執行遠端 JS（script.textContent 被擋）
+- 刪除 remote-logic.js
+- popup.html 版本顯示更新為 v4.2
+- **教訓：外部平台有安全限制時，選穩定本地方案，不要用聰明但脆弱的遠端架構**
+
+## v4.1 — 2026-03-25
+變更者：A1 Claude Code
+commit: 859a1b5
+- 加入 Side Panel 支援（sidePanel permission + setPanelBehavior）
+- 解決 popup 點外面就關閉的問題，改為側邊欄模式
+- popup.html 版本顯示從 v3.0 修正為 v4.1
+- manifest.json version 4.1.0
+- 確認 chrome.storage.local 讀寫邏輯正確（saveAndReload + DOMContentLoaded）
+
+## v4.0 — 2026-03-25
+變更者：A1 Claude Code
+commit: 5aca2f8
+- **嘗試遠端邏輯架構（失敗）**：popup.js 改為極簡 loader，從 GitHub 載入 remote-logic.js
+- 新增 remote-logic.js（包含所有 v3.0 邏輯）
+- manifest.json version 4.0.0
+- 目標：讓使用者永遠不需要重新下載 Extension
+- **結果：因 Chrome MV3 CSP 限制，遠端 JS 無法執行，v4.2 回滾此設計**
+
 ## v3.0 — 2026-03-25
-變更者：A1 + Claude.ai
-- 新增 commit history 面板（最近 8 筆）
-- checkpoint commit 綠色高亮
+變更者：A1 Claude Code
+commit: ee232de
+- 新增 commit history 面板（最近 8 筆，GitHub API）
+- checkpoint commit 綠色高亮 + CP badge
 - 進行中任務超過 48h 無 commit 自動警示
-- Startup Prompt 自動合成（有無 checkpoint 都能接手）
-- 重構 popup.js 分離 fetch/parse/render 邏輯
+- Startup Prompt 自動合成（從 CURRENT_STATUS + commit history）
+- 重構 popup.js：fetch/parse/render 分離
+- 新增 GitHub Token 認證欄位（private repo 支援）
+- popup.html 全新 UI（深色主題、commit panel、prompt textarea）
+- manifest.json 新增 clipboardWrite permission + GitHub API host
 
 ## v2.0 — 2026-03-12
 變更者：Owner
 - 初始版本，顯示 CURRENT_STATUS 版本號
 - GitHub repo 快速連結
+- 基本設定存取（githubRawBase + projectStatePath）
+- State Preview 面板
+- Agent Roster 顯示

@@ -1,20 +1,22 @@
 # MAPLAB Project State
 
 ## Current Task
-Telegram Bot Daemon 建立 — 獨立 Python long-polling daemon
+Python pipeline collector.py 測試跑通
 
 ## Last Completed
-Telegram bot daemon 建立完成（bot/ 目錄，launchd 自啟，auto-reconnect）
+Telegram bot daemon 上線 — launchd PID 32542，polling 200 OK (2026-03-26 22:11)
 
 ## Next Task
-1. 填入 bot/.env（TELEGRAM_BOT_TOKEN）
-2. 跑 `bash bot/start_bot.sh` 驗證連線
-3. 安裝 launchd plist 讓 bot 開機自啟
-4. Python pipeline collector.py 測試跑通（原有任務）
+1. Python pipeline collector.py 測試跑通
+2. Google Cloud credentials.json 建立（Pipeline Phase 1 解鎖）
 
 ## Blockers
-- TELEGRAM_BOT_TOKEN 尚未填入 bot/.env（需要手動 cp .env.example → .env）
 - Google Cloud credentials.json 待建立（pipeline 任務）
+
+## Warning — 舊 MCP Plugin 衝突
+- Desktop/start-telegram-bot.sh 已停用（會啟動 tmux claude-tg 造成 409 Conflict）
+- **不要再執行 `~/Desktop/start-telegram-bot.sh`**
+- Bot 現在由 launchd 管理，開機自動啟動，無需手動操作
 
 ## Notes
 Mac Mini M4 尚未到貨，n8n 等到貨後安裝

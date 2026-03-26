@@ -65,9 +65,31 @@
 | 📖 角色與規則 | AGENT_RULES.md v3.0 | 8 角色定義 + 協作規則 + 存檔規則 |
 | 🚀 開工 SOP | AGENT_STARTUP_PROTOCOL.md | 啟動流程 + Startup Check 輸出格式 |
 | 📂 任務卡 | handoff/tasks/T-xxx.md | 你認領的任務的詳細狀態 |
-| 🔧 技能書 | skills/superpowers-guide.md | 開工前查路由表（26 本技能書）|
+| 🔧 技能路由 | skills/superpowers-guide.md | 開工前查路由表（27 本技能書）|
 | 🎯 角色召喚 | AGENT_RECALL_PROMPTS.md | 各角色專屬 prompt + 斷點 + 可用工具 |
+| 🗣️ 品牌語氣 | skills/brand-voice-guide.md | 對外文字必讀：禁用語、平台微調、受眾語氣 |
 | 📊 詳細狀態（參考） | CURRENT_EXECUTION_BOARD.md | 各 Agent 詳細狀態，非強制讀取 |
+
+## 知識地圖（資料在哪裡）
+
+> 找不到資料？查這張表。
+
+| 類別 | 路徑 | 內容 |
+|------|------|------|
+| 客戶/活動資料 | data/timetree_events_2022_2026.json | 746 筆外燴事件（含客戶名、日期、活動類型）|
+| 品項資料 | data/item-master-cross-reference.md | 108 品項對照表（APP/DST/MAIN/BEV）|
+| 品項頻率 | data/item-frequency-top50.md | 399 筆歷史訂單品項分析 |
+| 報價系統 | projects/maplab-master-data.md | A5 報價邏輯 + Sheets 結構 |
+| SEO/廣告 | projects/seo-ads-agent.md | A2/A3 核心文件 + 轉換動作快照 |
+| 照片管線 | projects/maplab-pipeline.md | A4 照片分類流程 + Gemini API |
+| 客服系統 | projects/ai-reply-system.md | A7 回覆系統架構 |
+| 廣告監控 | projects/maplab-ads-monitor.md | A3 ads_agent.py 技術文件 |
+| 報價簡報 | projects/slides-quotation-system.md | A6 Google Slides 報價 |
+| 網站優化 | projects/maplab-kitchen-web-optimization.md | WordPress 技術 |
+| 交接紀錄 | handoff/tasks/T-xxx.md | 各任務斷點 + 接續 prompt |
+| 交接模板 | handoff/tasks/TASK_CARD_TEMPLATE.md | 新任務卡模板 |
+| 經驗紀錄 | skills/experience-log.md | 12 條成功/失敗經驗 |
+| 錯誤紀錄 | AGENT_RULES.md SECTION 3 | 6 條系統錯誤 + 解法 |
 
 ## 可用 MCP 工具（2026-03-26 接通）
 

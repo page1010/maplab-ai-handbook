@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新 : 2026-03-25 ｜ 更新者 : A1 Claude Code
+最後更新 : 2026-03-26 ｜ 更新者 : A2 SEO & Ads
 
 ---
 
@@ -33,10 +33,11 @@
 - A5：使用者需填 Items.D 欄 default_price
 - ~~A4：需 Gemini API Key~~ ✅ resolved — Photo scan 60,584 files, pre-classified C=4,593 T=254 D=55,737
 - A3：「慶生周歲派對」已上線（現有貼文），需確認受眾設定；GTM 方案 B 可認領
-- A2：T-A2-001 Google Drive 2025相簿僅約20張可用照片（扣除人臉/外部logo），57篇文章需更多圖源
+- ~~A2：T-A2-001 Google Drive 2025相簿僅約20張可用照片~~ ✅ resolved — 跨相簿找圖完成（2024/2023/2019/素材開幕），57篇全部獨立配圖
 
 ## 最新決策
 
+- 2026-03-26：A2 T-A2-001 完成 — 文章精選圖片補齊 57/57（0 重複）。跨 5 個 Google Drive 相簿（2025/2024/2023/map2019/素材開幕）上傳 47 張獨立圖片至 WordPress，全部含 SEO 命名 + alt text。已標記 5 篇圖文相符待抽查文章（Post 1027/1168/1244/253/1231）。
 - 2026-03-25：A1 系統重組 — 角色拆分（A2/A3獨立、新增A6/A8）、AGENT_RULES v3.0、AGENT_RECALL_PROMPTS.md 建立、Extension v4.3（角色選擇器）、SECTION 2.1 強制存檔規則（30min checkpoint + 接續 prompt）、錯誤 006 記錄
 - 2026-03-25：Extension v3.0 設計完成 — commit history 面板 + checkpoint 偵測 + 48h overdue 警示 + GitHub Actions 每日巡查 workflow 待部署
 - 2026-03-24：A2 T-A2-001 文章精選圖片補齊 — Phase 2 進度報告。(1) 全 57 篇文章已有 featured_media（Phase 1 完成）。(2) 目前 22 篇擁有獨立唯一圖片，35 篇仍共用 8 張重複圖片待替換。(3) 已從 Google Drive「2025 年的相片」上傳 13 張獨立圖片至 WordPress（media 1510-1512, 1515-1520, 1523-1525, 1528, 1531-1533），均含 SEO 命名 + 中文 alt text。(4) 圖片篩選標準：食物特寫/場景佈置/無人場景優先，排除人臉與非MAPLAB品牌logo與酒類廣告。(5) 已發現 Google Drive 2025相簿可用圖源有限（約20張合格），需討論是否開放其他相簿或圖源。(6) 下一步：繼續瀏覽 Google Drive 找剩餘獨立圖片，逐篇替換 35 篇重複配圖。
@@ -78,6 +79,7 @@
 - ✅ A5 TimeTree 2025 全年密集日清單
 - ✅ A1 PROTOCOL v1.4 + AGENT_RULES v2.1 + task-progress-guide + 系統行為強化
 - ✅ A1 TimeTree 事件 v2.0（746 events, 2022-2025）
+- ✅ T-A2-001 文章精選圖片補齊（57/57 獨立配圖，Google Drive 跨相簿 → WordPress，SEO 命名 + alt text）
 - ✅ Phase 4 第一階段：治理重構
 - ✅ Phase 4.2：全系統文件對齊
 - ✅ T-A1-002 Phase 4.1 系統治理升級全部完成

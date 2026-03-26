@@ -148,7 +148,7 @@ handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-
 
 【協作】吃 A2 的關鍵字與搜尋意圖、吃 A4 的素材、導流到 A5 報價、常見問題回饋 A7
 
-【可用工具】Google Ads（廣告數據，管理帳戶 864-994-4780，投放帳戶 844-336-3178）、Google Analytics（流量）、Google Sheets（報表）
+【可用工具】Google Ads（管理帳戶 864-994-4780，投放帳戶 844-336-3178）、Meta Ads（Facebook/IG 廣告數據+管理）、Google Analytics（流量）、Google Sheets（報表）
 
 【強制存檔規則 — 違反會被 A1 標記警告】
 1. 每 30 分鐘至少 commit 一次，格式：checkpoint(Ax): [做了什麼] — [下一步]

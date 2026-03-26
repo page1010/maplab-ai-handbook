@@ -37,6 +37,7 @@
 
 ## 最新決策
 
+- 2026-03-26：A2 Google Ads 轉換動作設定確認 — Owner 完成 PMax 轉換目標設定（廣告活動專屬：外連點擊），22 個轉換動作已記錄至 seo-ads-agent.md §16。主要轉換：LINE 事件(21次) + LINE 領取菜單(33次)。「網站左下角 fb massage」按鈕已從網站移除，建議停用該轉換動作。下一步：T-A2A3-001 SEO 關鍵字頁面補足。
 - 2026-03-26：A2 T-A2-001 完成 — 文章精選圖片補齊 57/57（0 重複）。跨 5 個 Google Drive 相簿（2025/2024/2023/map2019/素材開幕）上傳 47 張獨立圖片至 WordPress，全部含 SEO 命名 + alt text。已標記 5 篇圖文相符待抽查文章（Post 1027/1168/1244/253/1231）。
 - 2026-03-25：A1 系統重組 — 角色拆分（A2/A3獨立、新增A6/A8）、AGENT_RULES v3.0、AGENT_RECALL_PROMPTS.md 建立、Extension v4.3（角色選擇器）、SECTION 2.1 強制存檔規則（30min checkpoint + 接續 prompt）、錯誤 006 記錄
 - 2026-03-25：Extension v3.0 設計完成 — commit history 面板 + checkpoint 偵測 + 48h overdue 警示 + GitHub Actions 每日巡查 workflow 待部署

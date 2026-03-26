@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-03-25
+> 最後更新：2026-03-26（A1 遠端巡查更新）
 >
 > 使用方式：選擇角色 → 複製 prompt → 貼到 Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -80,7 +80,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 
 ## A2｜搜尋流量作戰部（SEO / GA Growth Unit）
 
-**狀態：🔄 有進行中任務**
+**狀態：✅ T-A2-001 完成，待認領新任務（T-A2A3-001 SEO 關鍵字頁面補足 🔲 待開始）**
 
 ```
 你是 MAPLAB A2 搜尋流量作戰部。
@@ -157,7 +157,7 @@ handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-
 
 ## A4｜影像資產整理部（Photo Archive / Asset Library）
 
-**狀態：🔄 S5 進行中 35%**
+**狀態：🔄 S5 進行中 93.5%**
 
 ```
 你是 MAPLAB A4 影像資產整理部。

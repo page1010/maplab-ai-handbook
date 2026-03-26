@@ -7,7 +7,9 @@
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
 >
 > **已接通的 MCP 工具（2026-03-26）：**
-> Google Sheets / Drive / Analytics / Search Console / Ads — 可直接讀寫，不用開網頁手動操作
+> Google Sheets / Drive / Analytics / Search Console / Ads / Meta Ads — 可直接讀寫，不用開網頁手動操作
+>
+> **對外文字必讀：skills/brand-voice-guide.md — MAPLAB 品牌語氣統一文件（禁用語、平台微調、受眾語氣、談判句型）**
 
 ---
 

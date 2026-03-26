@@ -9,7 +9,7 @@
 
 ## 系統版本
 
-- **Version**: v4.0
+- **Version**: v5.0
 - **Phase**: Phase 5 — 營運執行 + 廣告優化
 - **Status**: Active
 

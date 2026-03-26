@@ -4,7 +4,78 @@
 格式：版本號 | 日期 | 變更摘要 | 執行 Agent
 
 
-## v3.9 — 2026-03-23（最新）
+## v5.0 — 2026-03-26（最新）
+
+**A1 系統總管建立 + 角色重組 + MCP 工具接通 + 技能書大更新**
+
+執行 Agent：A1 Claude Code（Mac mini 常駐）
+
+### 系統架構重組
+1. **AGENT_RULES.md v2.2 → v3.0** — A2/A3 拆為獨立部門、A1=Claude Code、新增 A6 業務快反應 + A8 影音製作、跨部門協作關係圖、SECTION 2.1 強制存檔規則（30min checkpoint + 接續 Prompt）
+2. **AGENT_RECALL_PROMPTS.md v1.0** — 8 角色完整召喚 prompt（身份+斷點+踩過的坑+可用工具+強制存檔規則）
+3. **CURRENT_STATUS.md** — 新增知識地圖（14 資料來源路徑）+ MCP 工具表 + 完成項目補齊
+
+### Chrome Extension v2.0 → v4.6
+4. v3.0 commit history + checkpoint 偵測
+5. v4.0 遠端 JS 載入（失敗，Chrome MV3 CSP 擋）→ v4.2 回歸本地
+6. v4.3 角色選擇器（從 RECALL_PROMPTS 即時讀取）
+7. v4.4 auto-save token
+8. v4.5 移除 commit history 注入
+9. v4.6 高對比 UI + 大字體 + 移除 commit 面板
+10. **CHANGELOG 完整補齊** v2.0→v4.6（含失敗經驗紀錄）
+
+### MCP 工具接通（6 個已啟用 + 4 個待啟用）
+11. **Google Sheets MCP** — A5 報價系統直接讀寫
+12. **Google Drive MCP** — A4 素材管理
+13. **Google Analytics MCP** — A2/A3 流量分析
+14. **Google Search Console MCP** — A2 SEO 排名
+15. **Google Ads MCP** — A3 廣告數據（管理 864-994-4780 / 投放 844-336-3178）
+16. **Meta Ads MCP** — A3 Facebook/IG 廣告
+17. GCP 專案 MAPLAB-AI 建立 + 18 個 API 啟用 + OAuth credentials
+
+### 技能書（21 → 27 本）
+18. **skills/a3-social-ads-skills.md** — 多平台貼文 + 廣告成效追蹤
+19. **skills/a4-photo-asset-skills.md** — 品牌素材規範 + 數位菜單卡
+20. **skills/a5-quotation-engine-skills.md** — 菜單搭配 + 報價生成 + 週活動簡報
+21. **skills/a6-sales-rapid-response-skills.md** — 一鍵提案 + 客戶速查 + 需求表單
+22. **skills/a7-customer-service-skills.md** — FAQ Top 10 模板 + 品牌語氣
+23. **skills/brand-voice-guide.md** — MAPLAB 品牌語氣統一文件（禁用語、平台微調、受眾語氣、談判句型、檢查表）
+24. **skills/superpowers-guide.md** — 路由表改為關鍵字自動觸發（23 組觸發詞）
+
+### 基礎設施
+25. Mac mini Telegram bot 連線
+26. 3 個遠端定時巡查（08:00/16:00/22:00 Taipei）
+27. 每小時自動 git pull（LaunchAgent）
+28. GitHub Actions system-patrol.yml
+29. 自動允許權限設定（Telegram/Bash/Read/Edit/Write/Glob/Grep/WebSearch/Skill）
+30. Anthropic Skills 市場加入
+
+### 錯誤紀錄
+31. **ERR-006** — A1 自己不守規則，Extension 改版未寫 CHANGELOG
+
+設計原則：
+- A1 也是 agent，也會斷線，必須寫完整紀錄
+- 穩定優先於聰明（v4.0 遠端架構失敗 → v4.2 回歸本地）
+- 所有規則 A1 先遵守，才有資格要求 A2-A8
+- 工具接通後更新 RECALL_PROMPTS，確保 agent 知道可以用什麼
+- 品牌語氣文件是對外文字的基礎建設，不是可選附件
+
+---
+
+## v4.0 — 2026-03-25
+
+**A2 T-A2-001 完成 + A4 GPS 技能書 + A5 master-data 更新**
+
+執行 Agent：A2 + A4 + A5
+
+1. **A2 T-A2-001 完成** — 57/57 篇文章獨立配圖（0 重複），跨 5 個 Google Drive 相簿上傳 47 張圖片至 WordPress
+2. **A4 gps-daily-subdivision-guide.md** — GPS 日常照片細分（Haversine + Takeout JSON）
+3. **A4 superpowers-guide v2.1** — 新增 GPS 技能路由
+4. **A5 maplab-master-data v1.7** — 格式優化 + TERMS_MASTER 使用條款資料庫化
+
+---
+
+## v3.9 — 2026-03-23
 
 **A1 跨部門溝通 + 系統治理升級**
 

@@ -23,7 +23,7 @@
 | T-A5-003 | 熱客招待品項定義 | A5 | 🔲 待開始 | — |
 | T-A4-001 | Phase 4 Gemini 照片分類 | A4 | 🔄 S5 running (93.5%) — S1-S4 done, GPS confirmed | projects/maplab-pipeline.md |
 | T-A2-001 | 文章精選圖片補齊（57篇→每篇獨立配圖） | A2 | ✅ 完成（57/57 獨立配圖，0 重複） | handoff/tasks/T-A2-001.md |
-| T-A2A3-001 | SEO 關鍵字頁面補足 | A2 | 🔄 進行中（Task Card 建立，5 子任務拆解完成）| handoff/tasks/T-A2A3-001.md |
+| T-A2A3-001 | SEO 關鍵字頁面補足 | A2 | 🔄 進行中（子任務1+2完成，子任務3+4+5分拆至T-A2A3-001-B） | handoff/tasks/T-A2A3-001.md |001.md |
 | T-A3-001 | GTM LINE 按鈕追蹤修復（方案 B 已確認） | A3 | 🔲 可認領（待測試） | — |
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | 🔄 確認中（已上線，受眾已記錄） | handoff/tasks/T-A3-002.md |
 
@@ -36,6 +36,7 @@
 - ~~A2：T-A2-001 Google Drive 2025相簿僅約20張可用照片~~ ✅ resolved — 跨相簿找圖完成（2024/2023/2019/素材開幕），57篇全部獨立配圖
 
 ## 最新決策
+- 2026-03-26：A2 T-A2A3-001 子任務1+2完成 — (1) FK修正11篇(57/57全匹配) (2) SEO Title 27篇+Meta Desc 35篇+Alt Text 51篇修正(分數~54-76) (3) 任務分拆：子任務3+4+5→T-A2A3-001-B由同事接手 (4) seo-ads-agent v2.4(§17執行紀錄+SEO Performance更新) (5) Elementor限制文件化：RM無法讀取Elementor內容，分數天花板約54-76
 
 - 2026-03-26：A2 Google Ads 轉換動作設定確認 — Owner 完成 PMax 轉換目標設定（廣告活動專屬：外連點擊），22 個轉換動作已記錄至 seo-ads-agent.md §16。主要轉換：LINE 事件(21次) + LINE 領取菜單(33次)。「網站左下角 fb massage」按鈕已從網站移除，建議停用該轉換動作。下一步：T-A2A3-001 SEO 關鍵字頁面補足。
 - 2026-03-26：A2 T-A2-001 完成 — 文章精選圖片補齊 57/57（0 重複）。跨 5 個 Google Drive 相簿（2025/2024/2023/map2019/素材開幕）上傳 47 張獨立圖片至 WordPress，全部含 SEO 命名 + alt text。已標記 5 篇圖文相符待抽查文章（Post 1027/1168/1244/253/1231）。

@@ -1,5 +1,5 @@
 # seo-ads-agent.md — MAPLAB 廣告系統技術文件
-**版本：v2.3 | 更新：2026-03-26 | 維護：A2/A3 SEO & Ads Team（Claude Opus 4.6）**
+**版本：v2.4 | 更新：2026-03-26 | 維護：A2/A3 SEO & Ads Team（Claude Opus 4.6）**
 
 > 本文件是廣告系統的唯一真相來源（Single Source of Truth）。
 > 所有 Agent 接手時請先讀這份文件，不需要再去開廣告管理員確認基礎設定。
@@ -495,3 +495,71 @@ Landing Page 對應優先順序：
                                                                     
                                                                      7. | v2.2 | 2026-03-24 | 新增 §14 WordPress 網站現況盤點：頁面/文章/分類完整清單 + Rank Math SEO Performance 30天數據 + Index Status + Landing Page 對應修正 | A2 Claude Opus 4.6 |
 | v2.3 | 2026-03-26 | 新增 §16 轉換動作快照（22個）+ §9 待辦更新 + §11 Pixel 狀態更新 + fb massage 按鈕已移除標記 | A2 Claude Opus 4.6 |
+
+
+| v2.4 | 2026-03-26 | §14 SEO Performance 數據更新 + 新增 §17 SEO 優化執行紀錄（T-A2A3-001 子任務2成果） | A2 Claude Opus 4.6 |
+
+## 十七、SEO 優化執行紀錄（2026-03-26 T-A2A3-001 子任務 1+2）
+
+### 子任務 1：Focus Keyword 修正（完成）
+
+- 57 篇文章全部盤點，發現 11 篇 FK 與文章不匹配
+- - 使用 Rank Math REST API (`/wp-json/rankmath/v1/updateMeta`) 批次修正
+  - - 修正後 57/57 篇 FK 全匹配
+   
+    - ### 子任務 2：Rank Math SEO 分數優化（完成）
+   
+    - **執行項目與數量：**
+   
+    - | 項目 | 修正數量 | 方法 |
+    - |------|---------|------|
+    - | SEO Title（rank_math_title） | 27 篇 | Rank Math updateMeta API |
+    - | Meta Description（rank_math_description） | 35 篇 | Rank Math updateMeta API |
+    - | Featured Image Alt Text | 51 篇 | WP REST API `/wp-json/wp/v2/media/{id}` |
+   
+    - **分數變化：**
+    - - 修正前：多數 11-20/100（FK 不匹配導致大量扣分）
+      - - 修正後：約 54-76/100（依個別文章而異）
+        - - 平均 SEO 分數（Rank Math Dashboard）：55
+         
+          - **已解決的 Rank Math 項目（每篇都修正）：**
+          - - ✅ Focus Keyword in SEO Title
+            - - ✅ Focus Keyword in Meta Description
+              - - ✅ Focus Keyword in Image Alt Attribute
+               
+                - **無法修正的項目（Elementor 頁面構建器限制）：**
+                - - ❌ Focus Keyword not in content — Rank Math 只讀 Gutenberg blocks，看不到 Elementor 內容
+                  - - ❌ Focus Keyword not in URL — 不可改 URL（會導致 404）
+                    - - ❌ Focus Keyword not at beginning of content — 同 Elementor 限制
+                      - - ❌ Content too short (< 600 words) — RM 只統計 Gutenberg 內的字數
+                        - - ❌ Keyword Density = 0 — RM 統計不到 Elementor 文字
+                          - - ❌ Focus Keyword not in subheadings — RM 讀不到 Elementor H2/H3
+                           
+                            - **Elementor 限制說明：**
+                            - 網站 57 篇文章全部使用 Elementor 頁面構建器。Rank Math 的 SEO 分析引擎主要讀取 Gutenberg 區塊內容，無法解析 Elementor 的 widget 結構。因此即使文章實際字數超過 600 字、內容中有使用 FK、H2/H3 也包含 FK，Rank Math 仍會報錯。這是已知的 Rank Math + Elementor 相容性問題。
+                           
+                            - **突破方案（未來可考慮）：**
+                            - 1. 確認 Rank Math PRO 的 Elementor Integration 模組是否已啟用
+                              2. 2. 在 Gutenberg 編輯器中加入一段摘要段落（包含 FK + 主要內容摘要），讓 RM 能讀到
+                                 3. 3. 長期：評估是否遷移部分內容從 Elementor 到 Gutenberg 原生區塊
+                                   
+                                    4. ### SEO Performance 數據更新（2026-03-26 抓取）
+                                   
+                                    5. | 指標 | 前次（03-24） | 本次（03-26） | 變化 |
+                                    6. |------|------------|------------|------|
+                                    7. | Search Traffic | 333 | 342 | ▲ +9 |
+                                    8. | Total Impressions | 3.27K | 3.40K | ▲ +130 |
+                                    9. | Total Keywords | 297 | 308 | ▲ +11 |
+                                    10. | Total Clicks | 76 | 76 | — |
+                                    11. | CTR | 2.32% | 2.23% | ▼ -0.09 |
+                                    12. | Average Position | 11.87 | 11.64 | ▲ +0.23（改善）|
+                                    | Top 3 Positions | 21 | 18 | ▼ -3 |
+                                
+| 4-10 Positions | 16 | 22 | ▲ +6 |
+**SEO 分數分布（67 篇含頁面）：**
+- Good（綠）：2 篇（不變，因 RM 分數需開編輯器才重新計算）
+- - Fair（橙）：54 篇
+  - - Poor（紅）：6 篇
+    - - No Data：5 篇
+     
+      - 注意：子任務 2 的 SEO Title / Meta Description / Alt Text 修改已透過 API 生效（Google 可以抓到），但 Rank Math 後台顯示的分數需逐篇開啟編輯器才會重新計算並儲存。預計 7-14 天後 Google 重新爬取可觀察到搜尋排名變化。

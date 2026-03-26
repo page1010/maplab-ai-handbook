@@ -33,6 +33,7 @@ h# Superpowers Skills 導覽手冊 — MAPLAB AI Agent 版
 | 報價 / 菜單搭配 / 提案（A5） | a5-quotation-engine-skills | 菜單自動搭配 + 報價單生成 + 週活動簡報 |
 | 業務急件 / 提案簡報 / 客戶速查（A6） | a6-sales-rapid-response-skills | 一鍵提案 + 客戶背景 + 需求表單 |
 | 社群貼文 / 廣告成效（A3） | a3-social-ads-skills | 多平台貼文 + Meta 廣告追蹤優化 |
+| **任何對外文字（全員必讀）** | **brand-voice-guide** | **品牌語氣統一：禁用語、平台微調、受眾語氣、談判句型** |
 | 品牌素材 / 菜單卡（A4） | a4-photo-asset-skills | 風格統一規範 + 數位菜單卡 |
 | 客服回覆 / LINE 對話（A7） | a7-customer-service-skills | FAQ 模板庫 + 意圖分類 |
 

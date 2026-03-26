@@ -8,34 +8,34 @@ h# Superpowers Skills 導覽手冊 — MAPLAB AI Agent 版
 
 ## 🗺️ 任務類型 → 建議預讀技能書（開工前路由表）
 
-> 不是卡住才查，是開工前就知道該讀什麼。啟動任務時，先對照此表預讀相關技能書。
+> **自動判斷規則**：看到觸發關鍵字 → 自動載入對應技能書，不用手動查表。
 
-| 任務類型 | 建議預讀技能書 | 原因 |
-|---------|-------------|------|
-| **所有任務（必拿）** | **task-progress-guide** | **每步紀錄 + 子任務切割 + 接續 Prompt + 方向偏移 + 經驗回寫** |
-| 任務結束時 | experience-log | 記錄成功路徑 + 失敗教訓（取代 lessons-learned） |
-| 碰 GitHub API / 建 branch / PR | github-api-workflow-guide + systematic-debugging-cloud-guide | API 流程 + 雲端除錯 |
-| 寫長文件 / 大量修改 | context-compression-guide + verification-checklist-guide | 防 prompt 過長 + 完成驗證 |
-| 廣告相關任務 | ai-model-guide | 選 Claude 或 Gemini 執行 |
-| Colab 長時間任務（>30 min） | colab-resilience-guide + systematic-debugging-cloud-guide | 防死機 + 雲端除錯 |
-| Google Sheets 資料操作 | sheets-tracking-guide + sheets-data-cleaning-guide + ai-model-guide | Sheets 追蹤 + 清洗工具 + Gemini 整合 |
-| Sheets 資料清洗（去重/格式修正/批次）| sheets-data-cleaning-guide | 公式 + Apps Script + SOP |
-| 遇到 Bug / 執行卡住 | troubleshooting-hub → 對應技能書 | 先查急救表再行動 |
-| Session 斷線接手 / 進度對不上 | crash-recovery-guide + task-progress-guide | 進度驗證 + checkpoint 補齊 + Resume Prompt |
-| 新 Agent 首次接手 | 全部讀 AGENT_STARTUP_PROTOCOL.md 9 步驟 | 建立大局觀 |
-| 系統文件維護 / 治理 | context-compression-guide + verification-checklist-guide + strategic-review-guide | 長文 + 驗證 + 大局觀 |
-| Pipeline 相簿整理 | photo-pipeline-toolkit-guide + colab-resilience-guide + media-limit-workaround | 全流程工具鏈 + 防死機 + 媒體限制 |
-| GPS 日常照片細分（S5.5/S6.5 等） | gps-daily-subdivision-guide | Haversine + Takeout JSON GPS + home/shop 分類 |
-| 跨專案策略規劃 | strategic-review-guide + ai-model-guide | 大局觀 + AI 分工 |
-| SEO 檢查 / 排名分析 / 內容優化 | seo-session-checklist + seo-ranking-evaluation-guide | 每次開工標準流程 + 排名判讀 + 優化決策 |
-| GTM / 廣告追蹤 / 轉換驗證 | seo-session-checklist（Phase 2）+ gtm-conversion-setup | 追蹤狀態紀錄 + GTM 操作 SOP |
-| Google Drive → WordPress 圖片上傳 | gdrive-to-wordpress-upload-guide | 雲端圖片跨 Tab 傳送 + REST API 上傳 + SEO 命名 |
-| 報價 / 菜單搭配 / 提案（A5） | a5-quotation-engine-skills | 菜單自動搭配 + 報價單生成 + 週活動簡報 |
-| 業務急件 / 提案簡報 / 客戶速查（A6） | a6-sales-rapid-response-skills | 一鍵提案 + 客戶背景 + 需求表單 |
-| 社群貼文 / 廣告成效（A3） | a3-social-ads-skills | 多平台貼文 + Meta 廣告追蹤優化 |
-| **任何對外文字（全員必讀）** | **brand-voice-guide** | **品牌語氣統一：禁用語、平台微調、受眾語氣、談判句型** |
-| 品牌素材 / 菜單卡（A4） | a4-photo-asset-skills | 風格統一規範 + 數位菜單卡 |
-| 客服回覆 / LINE 對話（A7） | a7-customer-service-skills | FAQ 模板庫 + 意圖分類 |
+| 觸發關鍵字 | 自動載入技能書 | 說明 |
+|-----------|-------------|------|
+| （所有任務自動載入） | **task-progress-guide** | 每步紀錄 + 子任務切割 + 接續 Prompt |
+| 寫文章、發貼文、回客戶、報價、提案 | **brand-voice-guide** | 品牌語氣統一：禁用語、平台微調、受眾語氣 |
+| 結束、收工、交接、下線 | experience-log | 記錄成功路徑 + 失敗教訓 |
+| GitHub、commit、branch、PR、API | github-api-workflow-guide | API 流程 |
+| 長文件、大量修改、token 快滿 | context-compression-guide | 防 prompt 過長 |
+| 廣告、Google Ads、Meta、投放 | ai-model-guide + a3-social-ads-skills | AI 分工 + 廣告操作 |
+| Colab、Python、batch、長時間 | colab-resilience-guide | 防死機 + checkpoint |
+| Sheets、試算表、品項、資料 | sheets-data-cleaning-guide + sheets-tracking-guide | 清洗 + 追蹤 |
+| 卡住、錯誤、失敗、bug | troubleshooting-hub | 先查急救表再行動 |
+| 斷線、接手、上次做到哪 | crash-recovery-guide | 進度驗證 + 補齊 |
+| 第一次、新 agent、不知道從哪開始 | AGENT_STARTUP_PROTOCOL.md | 完整 9 步驟 |
+| 照片、相簿、圖片分類、素材 | photo-pipeline-toolkit-guide + a4-photo-asset-skills | 全流程 + 品牌規範 |
+| GPS、座標、home、shop | gps-daily-subdivision-guide | Haversine 分類 |
+| SEO、排名、關鍵字、GSC、GA | seo-session-checklist + seo-ranking-evaluation-guide | 排名判讀 + 優化 |
+| GTM、Pixel、轉換、追蹤碼 | seo-session-checklist Phase 2 + gtm-conversion-setup | 追蹤設定 |
+| WordPress、上傳圖片、featured image | gdrive-to-wordpress-upload-guide | 雲端圖片上傳 SOP |
+| 報價、菜單、人數、預算 | a5-quotation-engine-skills | 菜單搭配 + 報價生成 |
+| 急件、提案、簡報、客戶背景 | a6-sales-rapid-response-skills | 一鍵提案 + 客戶速查 |
+| IG、FB、Threads、社群、貼文 | a3-social-ads-skills + brand-voice-guide | 多平台貼文 + 語氣 |
+| 菜單卡、品牌素材、圖片規範 | a4-photo-asset-skills | 風格統一 + 數位菜單 |
+| 客服、LINE、回覆、詢問 | a7-customer-service-skills + brand-voice-guide | FAQ + 語氣 |
+| 策略、規劃、方向、大局 | strategic-review-guide | 5 問框架 |
+| 驗證、確認、完成檢查 | verification-checklist-guide | 5 步驗證 |
+| 媒體限制、100張、圖太多 | media-limit-workaround | 繞過限制策略 |
 
 ---
 

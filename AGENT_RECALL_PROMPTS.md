@@ -23,7 +23,7 @@
 | A4 | 影像資產整理部 | 🔄 S5 進行中 93.5% | Photo Archive |
 | A5 | 報價與提案引擎部 | 🔲 有可認領任務 | Quotation Engine |
 | A6 | 業務快反應部隊 | 🔲 新建，待啟動 | Sales Rapid Response |
-| A7 | 客服與對話轉單部 | 🔲 待啟動 | Smart Reply |
+| A7 | 客服與對話轉單部 | 🔄 Phase 1 完成，Phase 2 待啟動 | Smart Reply |
 | A8 | 多媒體影音製作部 | 🔲 新建，待啟動 | Video Production |
 
 ---
@@ -96,11 +96,12 @@ repo: https://github.com/page1010/maplab-ai-handbook
 【斷點】
 T-A2-001 文章精選圖片補齊：✅ 完成（57/57 獨立配圖，0 重複）
 T-A2A3-001 SEO 關鍵字頁面補足：🔄 進行中
-  子任務1 FK修正：✅ 完成（17/57→57/57全匹配）
-  子任務2 SEO優化：✅ 完成（SEO Title 27篇+Meta Desc 35篇+Alt Text 51篇，Elementor限制已記錄）
-  子任務3+4+5：→ 分拆至 T-A2A3-001-B（場景頁+內連結，同事接手）
-  next: T-A2A3-001 自身工作完成，等 T-A2A3-001-B 進展或認領新任務
-seo-ads-agent v2.3 更新：轉換動作快照 22 個，fb message 已移除
+  - 子任務1 FK修正：✅ 完成（11篇修正，57/57 全匹配）
+  - 子任務2 Rank Math 優化：✅ 完成（SEO Title 27篇 + Meta Desc 35篇 + Alt Text 51篇）
+  - 子任務3+4+5：已分拆至 T-A2A3-001-B，由同事接手（場景頁 + 內連結）
+  - Elementor 限制：RM 無法讀取 Elementor 內容，分數天花板約 54-76，已文件化
+T-A2A3-001-B：🔲 可認領（子任務3 場景關鍵字頁 + 子任務4 FAQ + 子任務5 內連結）
+seo-ads-agent v2.4 更新：轉換動作快照 22 個，fb message 已移除，§17 SEO執行紀錄 + Performance更新
 
 【已完成經驗】
 - 圖片篩選標準：食物特寫/場景佈置/無人場景優先，禁人臉/外部logo/酒類
@@ -289,7 +290,7 @@ projects/maplab-master-data.md（了解報價資料結構）→ skills/superpowe
 
 ## A7｜客服與對話轉單部（Smart Reply / Service Desk）
 
-**狀態：🔲 待啟動**
+**狀態：🔄 Phase 1 完成，Phase 2 待啟動**
 
 ```
 你是 MAPLAB A7 客服與對話轉單部。
@@ -305,7 +306,11 @@ repo: https://github.com/page1010/maplab-ai-handbook
 - 應對情境：詢價、日期確認、活動形式建議、菜單推薦、場地份量、包材客製、急件判斷
 
 【斷點】
-無活躍任務
+T-A7-001 Phase 1：✅ 完成（2026-03-26）
+  - FAQ模板庫建立完成
+  - 補問流程建立完成
+  - 客戶分類標籤建立完成
+Phase 2 待認領：對話轉單流程 + 報價前需求收集表
 
 【必讀】
 projects/ai-reply-system.md → skills/superpowers-guide.md

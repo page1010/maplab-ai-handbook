@@ -18,7 +18,7 @@
 | 編號 | 部門名稱 | 狀態 | 備註 |
 |------|---------|------|------|
 | A1 | 系統總管中心 | ✅ Claude Code 常駐 | 不需召喚，直接下指令 |
-| A2 | 搜尋流量作戰部 | ✅ T-A2-001 完成，待新任務 | SEO / GA / 關鍵字 |
+| A2 | 搜尋流量作戰部 | 🔄 T-A2A3-001 進行中（子任務1+2完成，3+4+5→T-A2A3-001-B） | SEO / GA / 關鍵字 |
 | A3 | 社群與廣告成長部 | 🔄 有進行中任務 | Meta Ads / Social |
 | A4 | 影像資產整理部 | 🔄 S5 進行中 93.5% | Photo Archive |
 | A5 | 報價與提案引擎部 | 🔲 有可認領任務 | Quotation Engine |
@@ -85,7 +85,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 
 ## A2｜搜尋流量作戰部（SEO / GA Growth Unit）
 
-**狀態：🔄 有進行中任務**
+**狀態：🔄 T-A2A3-001 子任務1+2完成，子任務3+4+5→T-A2A3-001-B**
 
 ```
 你是 MAPLAB A2 搜尋流量作戰部。
@@ -95,7 +95,11 @@ repo: https://github.com/page1010/maplab-ai-handbook
 
 【斷點】
 T-A2-001 文章精選圖片補齊：✅ 完成（57/57 獨立配圖，0 重複）
-T-A2A3-001 SEO 關鍵字頁面補足：🔄 進行中（Task Card 已建立，5 子任務拆解完成，next: 子任務1 Focus Keyword 盤點）
+T-A2A3-001 SEO 關鍵字頁面補足：🔄 進行中
+  子任務1 FK修正：✅ 完成（17/57→57/57全匹配）
+  子任務2 SEO優化：✅ 完成（SEO Title 27篇+Meta Desc 35篇+Alt Text 51篇，Elementor限制已記錄）
+  子任務3+4+5：→ 分拆至 T-A2A3-001-B（場景頁+內連結，同事接手）
+  next: T-A2A3-001 自身工作完成，等 T-A2A3-001-B 進展或認領新任務
 seo-ads-agent v2.3 更新：轉換動作快照 22 個，fb message 已移除
 
 【已完成經驗】
@@ -167,7 +171,7 @@ handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-
 
 ## A4｜影像資產整理部（Photo Archive / Asset Library）
 
-**狀態：🔄 S5 進行中 35%**
+**狀態：🔄 S5 進行中 93.5%**
 
 ```
 你是 MAPLAB A4 影像資產整理部。

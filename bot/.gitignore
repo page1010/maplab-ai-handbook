@@ -1,0 +1,9 @@
+# Never commit secrets or generated files
+.env
+venv/
+__pycache__/
+*.pyc
+*.log
+launchd_stdout.log
+launchd_stderr.log
+bot.log

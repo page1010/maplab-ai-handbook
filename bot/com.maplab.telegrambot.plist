@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  MAPLAB Telegram Bot — launchd plist (macOS 開機自啟)
+
+  安裝步驟:
+    1. 確認 bot/.env 已填好 TELEGRAM_BOT_TOKEN
+    2. 確認 bot/ 目錄內有 venv（先跑一次 start_bot.sh）
+    3. 複製到 LaunchAgents:
+         cp bot/com.maplab.telegrambot.plist ~/Library/LaunchAgents/
+    4. 載入:
+         launchctl load ~/Library/LaunchAgents/com.maplab.telegrambot.plist
+    5. 驗證:
+         launchctl list | grep maplab
+    6. 停止:
+         launchctl unload ~/Library/LaunchAgents/com.maplab.telegrambot.plist
+
+  Log files:
+    ~/maplab-ai-handbook/bot/launchd_stdout.log
+    ~/maplab-ai-handbook/bot/launchd_stderr.log
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.maplab.telegrambot</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/pagemacmini/maplab-ai-handbook/bot/run_daemon.sh</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/pagemacmini/maplab-ai-handbook/bot</string>
+
+    <!-- Auto-restart on crash -->
+    <key>KeepAlive</key>
+    <true/>
+
+    <!-- Start after login -->
+    <key>RunAtLoad</key>
+    <true/>
+
+    <!-- Throttle restarts (30s delay between crashes) -->
+    <key>ThrottleInterval</key>
+    <integer>30</integer>
+
+    <key>StandardOutPath</key>
+    <string>/Users/pagemacmini/maplab-ai-handbook/bot/launchd_stdout.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/pagemacmini/maplab-ai-handbook/bot/launchd_stderr.log</string>
+
+    <!-- Environment variables (mirrors .env for launchd context) -->
+    <key>EnvironmentVariables</key>
+    <dict>
+        <!-- NOTE: launchd does NOT read .env files automatically.
+             Either fill in the token here (not recommended for git-tracked files)
+             or use the EnvironmentFile workaround below via envdir/wrapper. -->
+        <key>PYTHONUNBUFFERED</key>
+        <string>1</string>
+    </dict>
+</dict>
+</plist>

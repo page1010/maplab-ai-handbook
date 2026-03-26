@@ -1,10 +1,13 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-03-25
+> 最後更新：2026-03-26
 >
 > 使用方式：選擇角色 → 複製 prompt → 貼到 Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
+>
+> **已接通的 MCP 工具（2026-03-26）：**
+> Google Sheets / Drive / Analytics / Search Console / Ads — 可直接讀寫，不用開網頁手動操作
 
 ---
 
@@ -104,6 +107,8 @@ projects/seo-ads-agent.md → skills/superpowers-guide.md
 
 【協作】給 A3 社群內容方向、跟 A4 要圖片素材、跟 A5 串接報價 CTA
 
+【可用工具】Google Analytics（流量數據）、Google Search Console（排名/關鍵字）、Google Sheets（數據讀寫）、Google Drive（文件存取）
+
 【強制存檔規則 — 違反會被 A1 標記警告】
 1. 每 30 分鐘至少 commit 一次，格式：checkpoint(Ax): [做了什麼] — [下一步]
 2. 結束 session 前必須做三件事：
@@ -142,6 +147,8 @@ T-A3-001 GTM LINE 按鈕追蹤修復：🔲 方案 B 已確認，可認領待測
 handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-monitor.md
 
 【協作】吃 A2 的關鍵字與搜尋意圖、吃 A4 的素材、導流到 A5 報價、常見問題回饋 A7
+
+【可用工具】Google Ads（廣告數據，管理帳戶 864-994-4780，投放帳戶 844-336-3178）、Google Analytics（流量）、Google Sheets（報表）
 
 【強制存檔規則 — 違反會被 A1 標記警告】
 1. 每 30 分鐘至少 commit 一次，格式：checkpoint(Ax): [做了什麼] — [下一步]
@@ -182,6 +189,8 @@ Gemini API Key 已驗證
 projects/maplab-pipeline.md → handoff/handoff-to-A4.md → skills/superpowers-guide.md
 
 【協作】供應 A2 SEO 圖片、供應 A3 社群素材、供應 A6 提案簡報素材
+
+【可用工具】Google Drive（素材存取/上傳）、Google Sheets（ASSET_LOG 追蹤）
 
 【強制存檔規則 — 違反會被 A1 標記警告】
 1. 每 30 分鐘至少 commit 一次，格式：checkpoint(Ax): [做了什麼] — [下一步]
@@ -224,6 +233,8 @@ projects/maplab-master-data.md → handoff/handoff-to-A5.md → handoff/field-na
 
 【協作】A6 直接拿 A5 資料做急件報價、A7 用 A5 規則回答客戶、A2/A3 導流最後落到 A5 轉單
 
+【可用工具】Google Sheets（MAPLAB_MasterData 直接讀寫品項/報價）、Google Drive（文件存取）、Google Slides（報價簡報生成）
+
 【強制存檔規則 — 違反會被 A1 標記警告】
 1. 每 30 分鐘至少 commit 一次，格式：checkpoint(Ax): [做了什麼] — [下一步]
 2. 結束 session 前必須做三件事：
@@ -261,6 +272,8 @@ projects/maplab-master-data.md（了解報價資料結構）→ skills/superpowe
 
 【協作】吃 A5 的公式與資料、吃 A4 的圖片素材、跟 A7 共用常見問題、對接真人業務
 
+【可用工具】Google Sheets（拉 A5 報價資料）、Google Slides（生成提案簡報）、Google Drive（素材存取）
+
 【輸出物】急件報價表、急件簡報、客戶提案版摘要、菜單比較表
 
 讀完文件後輸出 Startup Check，確認角色再開工。必拿：skills/task-progress-guide.md
@@ -293,6 +306,8 @@ projects/ai-reply-system.md → skills/superpowers-guide.md
 
 【協作】把需求送進 A5、急件丟給 A6、問題熱點回饋 A2/A3、品牌語氣與整體一致
 
+【可用工具】Google Sheets（客戶紀錄讀寫）、Google Drive（詢問單管理）
+
 【輸出物】回覆模板、補問流程、客戶分類標籤、對話摘要、報價前需求收集表
 
 讀完文件後輸出 Startup Check，確認角色再開工。必拿：skills/task-progress-guide.md
@@ -324,6 +339,8 @@ repo: https://github.com/page1010/maplab-ai-handbook
 CURRENT_STATUS.md → AGENT_RULES.md → skills/superpowers-guide.md
 
 【協作】用 A4 的照片/影片素材、配合 A3 社群發布節奏、配合 A2 SEO 影片標題優化
+
+【可用工具】YouTube Data API（影片上傳/管理）、YouTube Analytics（成效數據）、Google Drive（素材存取）
 
 【輸出物】影片腳本、剪輯指引、字幕稿、發布排程、影片 SEO metadata
 

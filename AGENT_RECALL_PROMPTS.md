@@ -90,7 +90,8 @@ repo: https://github.com/page1010/maplab-ai-handbook
 
 【斷點】
 T-A2-001 文章精選圖片補齊：✅ 完成（57/57 獨立配圖，0 重複）
-T-A2A3-001 SEO 關鍵字頁面補足：🔲 待開始
+T-A2A3-001 SEO 關鍵字頁面補足：🔄 進行中（Task Card 已建立，5 子任務拆解完成，next: 子任務1 Focus Keyword 盤點）
+seo-ads-agent v2.3 更新：轉換動作快照 22 個，fb message 已移除
 
 【已完成經驗】
 - 圖片篩選標準：食物特寫/場景佈置/無人場景優先，禁人臉/外部logo/酒類
@@ -167,6 +168,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 
 【斷點】
 T-A4-001 Gemini 照片分類：S1-S4 ✅ 完成，S5 🔄 93.5% — GPS confirmed, paid tier
+新增技能書：gps-daily-subdivision-guide（Haversine GPS 分類 home/shop/other）
 Photo scan 總量：60,584 files
 Pre-classified：C=4,593 / T=254 / D=55,737
 Gemini API Key 已驗證

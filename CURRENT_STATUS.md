@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新 : 2026-03-26 ｜ 更新者 : A2 SEO & Ads
+最後更新 : 2026-03-26 ｜ 更新者 : A1 Claude Code
 
 ---
 
@@ -62,18 +62,32 @@
 |------|------|------|
 | 🎯 最新狀態（你在這裡） | CURRENT_STATUS.md | 唯一入口，最高優先 |
 | 📋 任務池 | TASK_QUEUE.md | 所有待辦任務清單 |
-| 📖 角色與規則 | AGENT_RULES.md | 你是誰、能做什麼、不能做什麼 |
+| 📖 角色與規則 | AGENT_RULES.md v3.0 | 8 角色定義 + 協作規則 + 存檔規則 |
 | 🚀 開工 SOP | AGENT_STARTUP_PROTOCOL.md | 啟動流程 + Startup Check 輸出格式 |
 | 📂 任務卡 | handoff/tasks/T-xxx.md | 你認領的任務的詳細狀態 |
-| 🔧 技能書 | skills/superpowers-guide.md | 開工前查路由表 |
+| 🔧 技能書 | skills/superpowers-guide.md | 開工前查路由表（26 本技能書）|
+| 🎯 角色召喚 | AGENT_RECALL_PROMPTS.md | 各角色專屬 prompt + 斷點 + 可用工具 |
 | 📊 詳細狀態（參考） | CURRENT_EXECUTION_BOARD.md | 各 Agent 詳細狀態，非強制讀取 |
+
+## 可用 MCP 工具（2026-03-26 接通）
+
+> Agent 可直接使用以下工具讀寫外部服務，不需要開網頁手動操作。
+
+| 工具 | 用途 | 給哪些角色 |
+|------|------|-----------|
+| Google Sheets | 讀寫試算表（品項/報價/追蹤表）| A5, A2, A3, 全員 |
+| Google Drive | 檔案存取/上傳/管理 | A4, A6, 全員 |
+| Google Analytics | 流量數據/報表 | A2, A3 |
+| Google Search Console | 搜尋排名/關鍵字 | A2 |
+| Google Ads | 廣告數據（唯讀）| A3 |
+| Meta Ads | Facebook/IG 廣告數據+管理 | A3 |
 
 ## 已完成（不要再做）
 
 - ✅ Phase 1-3 全部完成
 - ✅ SYSTEM_MAP / WORKFLOW_MAP / PROTOCOL / BOARD 治理文件
-- ✅ 14 本技能書
-- ✅ A2+A3 合併
+- ✅ 26 本技能書（含 5 本新角色技能書 A3/A4/A5/A6/A7 + GPS 細分指南）
+- ✅ A2+A3 合併（後於 03-25 拆回獨立部門，A1-A8 八角色架構）
 - ✅ 所有已知 Issues #004-#009 已修復
 - ✅ A5 Items 品項從 300 筆精簡至 ~139 筆
 - ✅ A5 QUOTE_DRAFT 極簡版 MVP
@@ -89,5 +103,15 @@
 - ✅ A4 TimeTree lookup committed（PR #9, 361 dates）
 - ✅ A4 Photo scan 60,584 files + Gemini API Key 設定驗證完成
 - ✅ T-A5-001 Items 去重 + 全品項重新編碼完成（108品項）
+
+- ✅ AGENT_RULES v3.0 角色重組（A1=Claude Code, A2/A3 拆開, 新增 A6/A8）
+- ✅ AGENT_RECALL_PROMPTS.md 建立（8 角色完整召喚 prompt + 斷點 + 可用工具）
+- ✅ Chrome Extension v4.6（角色選擇器 + 高對比 UI + auto-save token）
+- ✅ SECTION 2.1 強制存檔規則（30min checkpoint + 接續 prompt）
+- ✅ 3 個定時巡查排程（08:00/16:00/22:00）
+- ✅ Mac mini 每小時自動 git pull
+- ✅ MCP 工具接通：Google Sheets/Drive/Analytics/Search Console/Ads + Meta Ads
+- ✅ GCP 專案 MAPLAB-AI 建立 + 18 個 API 啟用
+- ✅ Anthropic Skills 市場加入
 
 > 這份文件必須保持簡短。詳細資訊請查對應的 Task Card 或 BOARD。

@@ -142,6 +142,60 @@
 - **嚴重性**: MEDIUM
 - **下次怎麼做最快**: 先確認實際文件內容，再寫 CHANGELOG
 
+### EXP-F007 — bot.py 記憶斷裂（2026-03-27）
+
+- **日期**: 2026-03-27
+- **Agent**: A0 Telegram Bot
+- **類型**: FAILURE — 架構設計錯誤
+- **問題**: bot.py 用 `claude -p` one-shot 呼叫 Claude Code CLI，每條 Telegram 訊息都是全新 session，沒有對話記憶
+- **為什麼做這件事**: A0 想讓 Telegram bot 接上 Claude AI 回覆，但不想用付費 API
+- **失敗原因**: `-p` flag 是 one-shot prompt，用完就關 session。之前的版本用 Anthropic SDK + conversation_history deque 有記憶，改成 CLI 呼叫後記憶機制斷了
+- **更好的方向**: 用 Anthropic SDK + OAuth token（sk-ant-oat01-）直接呼叫，保留 conversation_history，走 Max 訂閱不花錢。OAuth token 可以當 api_key 用
+- **修復**: bot.py 改回 Anthropic SDK + OAuth token + conversation_history，加 `--dangerously-skip-permissions` 給 CLI fallback
+- **下次怎麼做最快**: 用 Anthropic SDK + OAuth token + deque conversation_history，不要用 `claude -p`
+
+### EXP-F008 — A0 開 Code task 不帶 recall prompt（2026-03-27）
+
+- **日期**: 2026-03-27
+- **Agent**: A0 Cowork
+- **類型**: FAILURE — 治理缺陷
+- **問題**: A0 開了 30+ 個 Code task，每個都沒有貼 A1 recall prompt，導致每個 session 都是失憶狀態
+- **為什麼做這件事**: A0 要委派 A1 做各種任務（git commit、讀文件、改程式碼）
+- **失敗原因**: Cowork 的 start_code_task 工具沒有強制檢查 prompt 裡是否包含 recall prompt。A0 的 user preferences 裡也沒有這條規則
+- **更好的方向**: 1. auto-memory 裡存 A1 recall prompt（已做）2. user preferences 加強制規則（已做，等 Owner 貼入）3. CLAUDE.md 放在 repo 根目錄讓 Claude Code 自動讀取（已做）4. 理想方案：Cowork 的 start_code_task 工具內建 recall prompt 注入（需 Anthropic 改產品）
+- **下次怎麼做最快**: 開 Code task 時，確認 prompt 含 CLAUDE.md 或 A1 recall prompt；CLAUDE.md 已在根目錄自動注入
+
+### EXP-F009 — CLAUDE.md 跟 AGENT_RECALL_PROMPTS.md 內容不同步（2026-03-27）
+
+- **日期**: 2026-03-27
+- **Agent**: A0/A1
+- **類型**: FAILURE — 文件不一致
+- **問題**: A0 建了 CLAUDE.md 但內容是自己寫的簡化版，跟 Extension 裡 A1 的 recall prompt 不一樣。tmux 裡的 Claude Code 讀 CLAUDE.md 後以為自己是 A0
+- **為什麼做這件事**: 想讓 Claude Code 啟動時自動知道自己是 A1
+- **失敗原因**: 兩套不同的身份描述 = 身份混亂
+- **修復**: CLAUDE.md 改為 AGENT_RECALL_PROMPTS.md A1 code block 的完整拷貝，加同步提醒
+- **下次怎麼做最快**: CLAUDE.md 頂部加「本文件內容與 RECALL_PROMPTS A1 區塊同步」提醒，每次改一個就改另一個
+
+### EXP-S007 — CRD「傳送文字」+ JavaScript dispatchEvent 成功啟動 Windows Agent（2026-03-27）
+
+- **日期**: 2026-03-27
+- **Agent**: A0 Cowork
+- **類型**: SUCCESS — 跨機器操作
+- **場景**: A0 需要遠端啟動 Windows 上的 A2 和 A7
+- **成功方法**: 1. form_input 把指令寫入 CRD「傳送文字」textarea（aria-label="傳送文字"）2. JavaScript: `document.querySelector('[aria-label="傳送"]').dispatchEvent(new MouseEvent('click', {bubbles: true}))` 3. 不用 left_click 點按鈕（會觸發 Windows Task View）
+- **結果**: A2 完成 SEO Title 優化 36 篇，A7 完成客戶對話流程圖
+- **下次怎麼做最快**: CRD 遠端打字用 form_input + JavaScript dispatchEvent，不用 left_click（會誤觸 Windows）
+
+### EXP-S008 — A0/A1 並列架構確立（2026-03-27）
+
+- **日期**: 2026-03-27
+- **Agent**: A0/A1
+- **類型**: SUCCESS — 系統架構
+- **場景**: 需要定義 A0（Cowork）在系統中的角色
+- **成功設計**: A0 和 A1 是並列關係（各自直屬 Owner），不是上下級
+- **結果**: A0 = 跨系統橋接（repo 外），A1 = 技術執行（repo 內）。溝通協議寫入 AGENT_RULES v3.2
+- **下次怎麼做最快**: 明確定義每個 Agent 的「邊界」（repo 內/外），避免職責重疊或互相等待
+
 ---
 
 ## 格式模板（新增時複製）

@@ -10,6 +10,7 @@ Usage:
 """
 
 import asyncio
+import json
 import logging
 import os
 import subprocess
@@ -38,6 +39,7 @@ REPO_PATH = Path(os.getenv("REPO_PATH", "/Users/pagemacmini/maplab-ai-handbook")
 CLAUDE_OAUTH_TOKEN = os.getenv("CLAUDE_CODE_OAUTH_TOKEN", "")
 
 TELEGRAM_LOG_DIR = REPO_PATH / "data" / "telegram-logs"
+CONV_HISTORY_FILE = BOT_DIR / "conv_history.json"
 
 # ── Logging ────────────────────────────────────────────────────────────────────
 LOG_FILE = BOT_DIR / "bot.log"
@@ -66,6 +68,32 @@ ANTHROPIC_SYSTEM_PROMPT = (
     "A4=照片分類、A5=報價、A7=客服 FAQ。\n"
     "請用繁體中文簡潔回答。"
 )
+
+
+def _load_conv_history() -> None:
+    """Load persisted conversation history from disk on startup."""
+    if not CONV_HISTORY_FILE.exists():
+        return
+    try:
+        data = json.loads(CONV_HISTORY_FILE.read_text(encoding="utf-8"))
+        for chat_id_str, msgs in data.items():
+            d = deque(maxlen=20)
+            d.extend(msgs[-20:])
+            _conv_history[int(chat_id_str)] = d
+        logger.info(f"Loaded conv history for {len(_conv_history)} chat(s)")
+    except Exception as e:
+        logger.warning(f"Failed to load conv history: {e}")
+
+
+def _save_conv_history() -> None:
+    """Persist conversation history to disk after each exchange."""
+    try:
+        data = {str(k): list(v) for k, v in _conv_history.items()}
+        CONV_HISTORY_FILE.write_text(
+            json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
+    except Exception as e:
+        logger.warning(f"Failed to save conv history: {e}")
 
 
 def _get_history(chat_id: int) -> deque:
@@ -203,7 +231,7 @@ async def claude_ask(chat_id: int, user_message: str, system_extra: str = "", ti
 
     try:
         proc = await asyncio.create_subprocess_exec(
-            "claude", "-p", "--dangerously-skip-permissions", full_prompt,
+            "claude", "-p", "-c", "--dangerously-skip-permissions", full_prompt,
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE,
             env=env,
@@ -220,6 +248,7 @@ async def claude_ask(chat_id: int, user_message: str, system_extra: str = "", ti
         # Save to history on success
         history.append({"role": "user", "content": user_message})
         history.append({"role": "assistant", "content": answer})
+        _save_conv_history()
         return answer
     except FileNotFoundError:
         return "⚠️ 找不到 claude 命令，請確認已安裝 Claude Code"
@@ -524,6 +553,7 @@ def main() -> None:
         logger.error("TELEGRAM_BOT_TOKEN not set. Copy bot/.env.example → bot/.env and fill it in.")
         sys.exit(1)
 
+    _load_conv_history()
     logger.info(f"Starting MAPLAB A1 遠端終端 (repo={REPO_PATH})…")
 
     app = (

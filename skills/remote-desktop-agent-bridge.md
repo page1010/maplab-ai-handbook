@@ -199,6 +199,30 @@ Windows 有雙螢幕，Chrome Remote Desktop 預設顯示全部。
 - **結論：遠端桌面無法打字到 Claude 側邊欄**
 - **替代方案：A0 準備好指令文字 → Owner 手動貼到 Windows 的 Claude 側邊欄**
 
+### 2026-03-27 遠端打字深度研究結論
+
+**測試了所有方法，全部失敗：**
+
+| 方法 | 結果 | 原因 |
+|------|------|------|
+| Chrome MCP type 命令 | ❌ 注音亂碼 | Windows 注音 IME 把英文字母當注音鍵處理 |
+| Chrome MCP key 逐字輸入 | ❌ 注音亂碼 | 同上 |
+| Shift 切換輸入法 | ❌ 沒反應 | CRD 沒有正確傳遞 Shift 到 Windows |
+| CapsLock 切換 | ❌ 沒反應 | 同上 |
+| Win+Space 切語言 | ❌ 觸發 Task View | Meta 鍵被 Windows 解讀為 Win 鍵打開開始菜單 |
+| CRD 「傳送文字」+ 按鈕 | ❌ 觸發 Task View | 按鈕 click 可能送出了 Meta/Win 鍵 |
+| CRD 「傳送文字」+ Enter | ❌ 觸發 Task View | 同上 |
+| Clipboard sync + Ctrl+V | ❌ 只貼進注音 | CRD 剪貼簿同步延遲或被 IME 攔截 |
+
+**根因確認：** Windows 端注音輸入法處於中文模式，所有通過 CRD 傳來的鍵盤輸入都被注音攔截。而 CRD 無法正確傳遞輸入法切換快捷鍵（Shift/CapsLock/Win+Space）。
+
+**解法（需要 Owner 手動）：** 在 Windows 端把注音輸入法切到英文模式，或把預設輸入法改成英文。
+
+**未來研究方向：**
+1. CRD 有「設定按鍵對應」(Configure Key Mappings) 功能，可以重新映射按鍵，可能能解決 Shift 傳遞問題
+2. 在 Windows 端安裝一個純英文輸入法作為第二選項
+3. 研究 CRD 的 Unicode 輸入模式是否能繞過 IME
+
 ### 單螢幕模式操作結論
 - 切到單螢幕後辨識能力大幅提升（可以看清 tab 標題、按鈕文字、SEO 數據）
 - 但小彈窗按鈕（~50px 寬）仍然點不中，遠端桌面座標偏移約 5-15px

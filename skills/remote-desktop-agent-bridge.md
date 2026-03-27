@@ -171,6 +171,49 @@ Windows 有雙螢幕，Chrome Remote Desktop 預設顯示全部。
 - 或使用 Cmd+Option+M 快捷鍵切換螢幕
 - 大面積元素（如 tab 切換、大按鈕）在雙螢幕模式下可以正常點擊
 
+### 2026-03-27 「Claude Desktop wants to connect」彈窗真相
+- 這個彈窗**不是 A0 遠端連線觸發的**
+- 真相：這是 **Claude Desktop 應用程式**（裝在 Windows 上）偵測到 Chrome 瀏覽器有 Claude 側邊欄擴充套件，問要不要把瀏覽器命名並連接到 Claude Desktop
+- 在螢幕 1 看到**兩個**這樣的彈窗：左邊 Chrome 窗口（A2 SEO Agent）和右邊 Chrome 窗口（A7 客服 Agent）都各有一個
+- 這跟 Google OAuth 授權是完全不同的事
+- 點 Connect 後效果：讓 Claude Desktop 能管理該 Chrome 瀏覽器的 Claude 側邊欄 session
+- 點 Ignore 後效果：只是暫時關閉彈窗，下次還會出現
+
+### 2026-03-27 Windows 螢幕 1 完整辨識結果
+左半 Chrome 窗口：
+- Tab: Google Ads multi... | Commits page1010/mapla... | Analytics MAPLABKITCHEN
+- WordPress 後台 maplabkitchen.com RankMath SEO 面板
+- Claude 側邊欄 Opus 1.6 → **A2 SEO Agent**（讀 CURRENT_STATUS.md、AGENT_RULES.md）
+- 書籤列: MAPLAB A1、A7、Check A2 team GitHub...
+
+右半 Chrome 窗口：
+- Tab: MAPLAB A7 custo... | line問答... | 各種客戶 tab
+- Google Drive 資料夾（客戶報價 CSV 文件）
+- Claude 側邊欄 Opus 4.6 → **A7 客服 Agent**
+- 右下角有 Canva 圖示
+
+### 單螢幕模式操作結論
+- 切到單螢幕後辨識能力大幅提升（可以看清 tab 標題、按鈕文字、SEO 數據）
+- 但小彈窗按鈕（~50px 寬）仍然點不中，遠端桌面座標偏移約 5-15px
+- 鍵盤 Tab+Enter 會被 Chrome 側邊欄攔截，不是送到彈窗
+- **結論：遠端操作適合「看」（監控、辨識、截圖報告），「點小按鈕」仍有困難**
+- 大面積操作（切 tab、點 Google Drive 文件、在輸入框打字）應該可行
+
+---
+
+## 適用角色
+
+| 角色 | 使用場景 | 能力等級 |
+|------|---------|---------|
+| A0 Cowork | 監控全部 Agent 狀態、跨機器橋接 | 完整使用（必拿技能） |
+| A1 Claude Code | 透過 Telegram bot 推送 Windows 上的 Agent 狀態 | 間接使用（A0 監控後透過 bot 通知） |
+| A2 SEO Agent | 如果在 Mac mini 的 Claude tab 被召喚，可以查看 Windows 上自己的 SEO 工作狀態 | 不適用（A2 自己跑在 Windows 上） |
+| A4 Pipeline Agent | 確認 Colab 是否在跑 | A0 代為監控 |
+| A5 Master Data | 確認 Sheets 是否有更新 | A0 代為監控 |
+
+注意：目前只有 A0 有實際能力操作遠端桌面（透過 Cowork 的 Chrome MCP）。
+其他 Agent 如果需要知道 Windows 上的狀態，應該透過 A0 查詢後回報。
+
 ---
 
 *建立者：A0 Cowork Dispatch Secretary | 2026-03-27 | 基於實際操作經驗撰寫*

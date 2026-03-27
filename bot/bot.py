@@ -232,7 +232,7 @@ async def claude_ask(chat_id: int, user_message: str, system_extra: str = "", ti
     try:
         proc = await asyncio.create_subprocess_exec(
             "claude", "-p", "--dangerously-skip-permissions",
-            "--session-id", "telegram-bot", full_prompt,
+            full_prompt,
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE,
             env=env,

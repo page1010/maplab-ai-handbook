@@ -4,7 +4,30 @@
 格式：版本號 | 日期 | 變更摘要 | 執行 Agent
 
 
-## v5.1 — 2026-03-27（最新）
+## v5.2 — 2026-03-27（深夜更新）
+
+**bot.py 記憶修復 + A0/A1 並列架構 + 經驗總結**
+
+執行 Agent：A1 Claude Code（Mac mini 常駐）
+
+### bot.py
+1. `--dangerously-skip-permissions` 加入 claude CLI 呼叫
+2. 根因確認：`claude -p` one-shot 無記憶，需回到 SDK + conversation_history
+3. 對話 log 功能確認完整（log_conversation + git_commit_log_sync）
+
+### 系統架構
+4. AGENT_RULES v3.2：A0/A1 並列定位 + 溝通協議（A1 自主建立）
+5. CLAUDE.md 同步 AGENT_RECALL_PROMPTS A1 code block
+6. A0_USER_PREFERENCES.md 完整版（等 Owner 貼入）
+7. start-a1.sh 升級（自動注入 recall prompt + /mcp refresh）
+
+### 經驗紀錄
+8. EXP-F007 bot.py 記憶斷裂 + EXP-F008 空白 Code task + EXP-F009 CLAUDE.md 不同步
+9. EXP-S007 CRD 遠端打字成功 + EXP-S008 並列架構
+
+---
+
+## v5.1 — 2026-03-27
 
 **A0 總調度秘書建立 + Telegram bot daemon 上線 + Notion 定位降級**
 

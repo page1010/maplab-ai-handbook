@@ -3,13 +3,13 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新 : 2026-03-27 ｜ 更新者 : A2 checkpoint (seo-ads-agent v2.5 + 搜尋字詞分析)
+最後更新 : 2026-03-27 深夜 ｜ 更新者 : A1 session 收尾（bot 記憶修復 + 並列架構 v3.2）
 
 ---
 
 ## 系統版本
 
-- **Version**: v5.1
+- **Version**: v5.2
 - **Phase**: Phase 5 — 營運執行 + 廣告優化
 - **Status**: Active
 
@@ -52,6 +52,8 @@
 | A2/A7 指令貼入 | 在 Windows Chrome 側邊欄貼入 A2 SEO 和 A7 對話流程圖指令（或等 A0 遠端打字修復）| 中 |
 
 ## 最新決策
+
+- 2026-03-27 深夜：bot.py 記憶斷裂根因確認（claude -p one-shot = 無記憶），修復方向：回到 Anthropic SDK + OAuth token + conversation_history；A0/A1 並列架構 v3.2 由 A1 自主建立；CLAUDE.md 已同步 RECALL_PROMPTS；experience-log 新增 F007-F009 + S007-S008
 
 - 2026-03-27：T-A0-002 完成（Agent 角色表、GitHub 進度報告、Pipeline 專案頁面加了 GitHub 引導）；A0 每小時 GitHub 同步巡查排程已設定
 - 2026-03-27：A2 T-A2A3-001 子任務2 Phase 2完成 — SEO Title 數字優化 36篇（Title Readability 全綠），分數抽檢 Post 253(50→51) Post 564(81→84 Good) Post 1246(54→55) Post 1227(69)。API 可修正項目已全部完成（FK in Title/Desc/Alt + Number in Title），剩餘分數需 Elementor 編輯或 ToC 插件。

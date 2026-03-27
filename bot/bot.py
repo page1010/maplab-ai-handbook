@@ -14,6 +14,7 @@ import logging
 import os
 import subprocess
 import sys
+from collections import deque
 from pathlib import Path
 from datetime import datetime
 
@@ -52,8 +53,25 @@ logger = logging.getLogger("maplab_bot")
 
 START_TIME = datetime.now()
 
-# Semaphore: only one Claude call at a time to avoid concurrent claude -p conflicts
+# Semaphore: only one Claude call at a time
 _claude_semaphore = asyncio.Semaphore(1)
+
+# Conversation history per chat_id (deque maxlen=20 messages)
+_conv_history: dict[int, deque] = {}
+
+ANTHROPIC_SYSTEM_PROMPT = (
+    "你是 MAPLAB AI 計畫的 A0 智能助理，常駐於 Mac mini。\n"
+    "MAPLAB 是一個婚禮/活動攝影工作室的 AI 自動化管理系統（v5.1，Phase 5）。\n"
+    "Agents A0-A8 各司其職：A0=Telegram bot、A1=系統總管、A2=SEO、A3=廣告、"
+    "A4=照片分類、A5=報價、A7=客服 FAQ。\n"
+    "請用繁體中文簡潔回答。"
+)
+
+
+def _get_history(chat_id: int) -> deque:
+    if chat_id not in _conv_history:
+        _conv_history[chat_id] = deque(maxlen=20)
+    return _conv_history[chat_id]
 
 
 # ── Conversation Logger ─────────────────────────────────────────────────────────
@@ -157,16 +175,35 @@ async def send_long(update: Update, text: str) -> None:
         await update.message.reply_text(text[i:i + MAX])
 
 
-async def claude_ask(prompt: str, timeout: int = 90) -> str:
-    """Call `claude -p` in non-interactive mode via OAuth (Max 訂閱，不計 API 費用)."""
+async def claude_ask(chat_id: int, user_message: str, system_extra: str = "", timeout: int = 90) -> str:
+    """Call claude -p with conversation history injected into prompt (OAuth, Max 訂閱，不計 API 費用).
+
+    Since OAuth tokens can't be used directly with Anthropic SDK, we use claude CLI
+    and simulate memory by including conversation history in the prompt.
+    """
+    history = _get_history(chat_id)
+
+    # Build prompt with history + current message
+    parts = [ANTHROPIC_SYSTEM_PROMPT]
+    if system_extra:
+        parts.append(system_extra)
+    if history:
+        parts.append("\n【對話記錄】")
+        for msg in history:
+            role_label = "Owner" if msg["role"] == "user" else "助理"
+            parts.append(f"{role_label}：{msg['content']}")
+        parts.append("【對話記錄結束】")
+    parts.append(f"\nOwner（本次）：{user_message}\n請用繁體中文簡潔回答。")
+    full_prompt = "\n".join(parts)
+
     env = os.environ.copy()
     if CLAUDE_OAUTH_TOKEN:
         env["CLAUDE_CODE_OAUTH_TOKEN"] = CLAUDE_OAUTH_TOKEN
-    # Ensure homebrew bin is in PATH for launchd context
     env["PATH"] = "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:" + env.get("PATH", "")
+
     try:
         proc = await asyncio.create_subprocess_exec(
-            "claude", "-p", "--dangerously-skip-permissions", prompt,
+            "claude", "-p", "--dangerously-skip-permissions", full_prompt,
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE,
             env=env,
@@ -179,7 +216,11 @@ async def claude_ask(prompt: str, timeout: int = 90) -> str:
         if proc.returncode != 0:
             err = stderr.decode(errors="replace")[:300].strip()
             return f"⚠️ Claude 錯誤: {err or '未知錯誤'}"
-        return stdout.decode(errors="replace").strip() or "（Claude 無回應）"
+        answer = stdout.decode(errors="replace").strip() or "（Claude 無回應）"
+        # Save to history on success
+        history.append({"role": "user", "content": user_message})
+        history.append({"role": "assistant", "content": answer})
+        return answer
     except FileNotFoundError:
         return "⚠️ 找不到 claude 命令，請確認已安裝 Claude Code"
     except Exception as e:
@@ -424,13 +465,20 @@ async def refresh(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         await update.message.reply_text(f"⚠️ 失敗：{e}")
 
 
-async def _run_claude_guarded(update: Update, prompt: str, log_label: str, log_user_msg: str) -> None:
+async def _run_claude_guarded(
+    update: Update,
+    chat_id: int,
+    user_message: str,
+    system_extra: str,
+    log_label: str,
+    log_user_msg: str,
+) -> None:
     """Acquire semaphore then call Claude. Reports busy if semaphore is taken."""
     if _claude_semaphore.locked():
         await update.message.reply_text("⏳ Bot 正在處理上一則訊息，請稍候再試。")
         return
     async with _claude_semaphore:
-        answer = await claude_ask(prompt)
+        answer = await claude_ask(chat_id, user_message, system_extra)
         await send_long(update, answer)
         log_and_commit(log_user_msg, answer, log_label)
 
@@ -443,7 +491,8 @@ async def ask_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         await update.message.reply_text("用法：/ask [問題]，例如 /ask A2 現在在做什麼？")
         return
     prompt = " ".join(context.args)
-    await _run_claude_guarded(update, prompt, "/ask", prompt)
+    chat_id = update.effective_chat.id
+    await _run_claude_guarded(update, chat_id, prompt, "", "/ask", prompt)
 
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -456,13 +505,12 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         status_snippet = read_file("CURRENT_STATUS.md")[:1500]
     except Exception:
         status_snippet = ""
-    prompt = (
-        "你是 MAPLAB AI 計畫的助理。以下是目前專案狀態摘要：\n\n"
-        f"{status_snippet}\n\n"
-        f"Owner 說：{text}\n\n"
-        "請用繁體中文簡潔回答。"
+    system_extra = (
+        "以下是目前 MAPLAB 專案狀態摘要（供參考）：\n\n"
+        f"{status_snippet}"
     )
-    await _run_claude_guarded(update, prompt, "", text)
+    chat_id = update.effective_chat.id
+    await _run_claude_guarded(update, chat_id, text, system_extra, "", text)
 
 
 async def on_error(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:

@@ -1,7 +1,7 @@
 # TASK_QUEUE.md — 任務池
 > Agent 從這裡認領任務。認領前必須先讀 CURRENT_STATUS.md。
 
-最後更新：2026-03-26 | 維護者：A1 / Owner / A2
+最後更新：2026-03-27 | 維護者：A1 / Owner / A2
 
 ---
 
@@ -67,7 +67,8 @@ Task Claim
 > 完成的任務從上方移到這裡。只保留最近 10 筆。
 
 | Task ID | 任務 | 完成者 | 完成日期 |
-|---------|------|-------|---------| 
+|---------|------|-------|---------|
+| T-A0-002 | Notion 舊資料清理（Agent 角色表/進度報告/Pipeline 頁面加 GitHub 引導警告） | A0 | 2026-03-27 |
 | T-A2-001 | 文章精選圖片補齊（57篇每篇獨立配圖，0重複） | A2 | 2026-03-25 |
 | — | A1 系統治理升級 v3.9（PROTOCOL v1.5 + AGENT_RULES v2.2 + task-progress-guide + TimeTree v2.0 + handoff-to-A5） | A1 | 2026-03-23 |
 | T-A3-001 | GTM LINE 按鈕追蹤修復（方案 B regex + Pixel Helper 驗證） | A2/A3 | 2026-03-24 |

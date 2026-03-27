@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新 : 2026-03-27 16:06 ｜ 更新者 : A1 巡查 (午後)
+最後更新 : 2026-03-27 17:00 ｜ 更新者 : A1 checkpoint (T-A0-002 完成)
 
 ---
 
@@ -28,7 +28,7 @@
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | 🔄 確認中（已上線，受眾已記錄） | handoff/tasks/T-A3-002.md |
 | T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | ✅ Phase 1 完成（v1.0，含 SECTION 8 對話流程圖）| handoff/tasks/T-A7-001.md |
 | T-A0-001 | Telegram bot 指令模式上線 | A0 | ✅ 完成 | — |
-| T-A0-002 | Notion 舊資料清理（保留架構，引導到 GitHub）| A0/A1 | 🔲 可認領 | — |
+| T-A0-002 | Notion 舊資料清理（保留架構，引導到 GitHub）| A0/A1 | ✅ 完成（3 個主要頁面加了 GitHub 引導警告） | — |
 
 ## Blockers（阻塞事項）
 
@@ -53,6 +53,7 @@
 
 ## 最新決策
 
+- 2026-03-27：T-A0-002 完成（Agent 角色表、GitHub 進度報告、Pipeline 專案頁面加了 GitHub 引導）；A0 每小時 GitHub 同步巡查排程已設定
 - 2026-03-27：A2 T-A2A3-001 子任務2 Phase 2完成 — SEO Title 數字優化 36篇（Title Readability 全綠），分數抽檢 Post 253(50→51) Post 564(81→84 Good) Post 1246(54→55) Post 1227(69)。API 可修正項目已全部完成（FK in Title/Desc/Alt + Number in Title），剩餘分數需 Elementor 編輯或 ToC 插件。
 - 2026-03-27：A0 總調度秘書角色建立（Cowork Dispatch Secretary），定位為跨系統橋接層；Telegram bot daemon 上線（launchd 自啟，免費指令讀檔模式，9 個指令）；Notion 定位降級為可視化報告介面，不再作為 Agent 狀態來源
 

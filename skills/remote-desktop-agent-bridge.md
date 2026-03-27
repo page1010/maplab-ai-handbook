@@ -86,10 +86,9 @@ Windows 有雙螢幕，Chrome Remote Desktop 預設顯示全部。
 ## 操作能力與限制
 
 ### 可以做的事
-- 透過 Chrome MCP 在遠端桌面裡點擊、打字（因為是在 Chrome tab 內操作）
+- 透過 Chrome MCP 在遠端桌面裡點擊（大面積元素）
 - 截圖查看 Windows 上所有視窗的狀態
 - 切換螢幕查看不同 Agent 的工作
-- 在 Claude 側邊欄裡打字（等於跟 Windows 上的 Agent 對話）
 - 查看 Google Colab 的執行狀態（A4 是否還在跑）
 
 ### 不能做的事
@@ -97,6 +96,8 @@ Windows 有雙螢幕，Chrome Remote Desktop 預設顯示全部。
 - 遠端操作有延遲（每個動作 1-3 秒）
 - 如果 Windows Chrome 彈出新窗口（不是 tab），可能需要 Owner 手動處理
 - 不能直接存取 Windows 檔案系統（需要透過 Chrome 或 Google Drive）
+- **不能透過遠端桌面在 Claude 側邊欄輸入文字**（IME 衝突 + 鍵盤映射問題，字元丟失或亂碼）
+  - 替代方案：A0 準備好指令文字 → Owner 手動貼到 Windows 的 Claude 側邊欄
 
 ---
 
@@ -191,6 +192,12 @@ Windows 有雙螢幕，Chrome Remote Desktop 預設顯示全部。
 - Google Drive 資料夾（客戶報價 CSV 文件）
 - Claude 側邊欄 Opus 4.6 → **A7 客服 Agent**
 - 右下角有 Canva 圖示
+
+### 2026-03-27 遠端打字失敗（Chrome 側邊欄輸入框）
+- 透過 Chrome Remote Desktop（Mac → Windows）在 Claude 側邊欄的「Reply to Claude」輸入框打字，無論用 type、clipboard paste (ctrl+v)、短英文，都只進去幾個字或亂碼
+- 根因：(1) Mac IME 與 Windows IME 衝突 (2) Chrome Remote Desktop 鍵盤映射在富文字輸入框有問題 (3) 剪貼簿同步有延遲且字元可能丟失
+- **結論：遠端桌面無法打字到 Claude 側邊欄**
+- **替代方案：A0 準備好指令文字 → Owner 手動貼到 Windows 的 Claude 側邊欄**
 
 ### 單螢幕模式操作結論
 - 切到單螢幕後辨識能力大幅提升（可以看清 tab 標題、按鈕文字、SEO 數據）

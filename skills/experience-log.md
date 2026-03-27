@@ -196,6 +196,22 @@
 - **結果**: A0 = 跨系統橋接（repo 外），A1 = 技術執行（repo 內）。溝通協議寫入 AGENT_RULES v3.2
 - **下次怎麼做最快**: 明確定義每個 Agent 的「邊界」（repo 內/外），避免職責重疊或互相等待
 
+### EXP-S009 — bot.py session resume 修復成功（2026-03-28）
+
+- **日期**: 2026-03-28
+- **Agent**: A0 Telegram Bot
+- **類型**: SUCCESS — 架構修復
+- **問題**: bot.py 用 `claude -p` one-shot 呼叫 Claude Code CLI，每條 Telegram 訊息都是新 session，無記憶、無 MCP、無 bash
+- **為什麼做這件事**: Owner 要 Telegram bot 有 AI 對話能力 + 記憶 + MCP 工具 + bash 指令，跟昨天一樣
+- **嘗試過的錯誤方向**:
+  1. 用 Anthropic SDK 替代 CLI → 有記憶但沒有 MCP 和 bash
+  2. 用 ccbot tmux bridge → 過度複雜，需要話題群組
+  3. 用 `--dangerously-skip-permissions` → 解決了授權問題但沒解決記憶問題
+- **成功方法**: 加 `-c` flag（`claude -p -c --dangerously-skip-permissions`），讓每次呼叫 continue 最近的 session。同一個 session = 有記憶 + 有 MCP + 有 bash + Max 免費
+- **根因分析**: Claude Code CLI 有完整的 session 管理（-c continue / -r resume / --session-id / --name），一開始沒查就亂改。正確做法是先查 `claude --help` 看有什麼 flag 可用
+- **更好的方向**: 如果 `-c` 不夠穩定（resume 到錯誤的 session），可以用 `--session-id telegram-bot` 固定 session ID
+- **下次怎麼做最快**: 加 `-c` flag 就好，先查 `claude --help` 再動手
+
 ---
 
 ## 格式模板（新增時複製）

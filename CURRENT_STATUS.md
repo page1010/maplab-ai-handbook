@@ -53,6 +53,7 @@
 
 ## 最新決策
 
+- 2026-03-28：bot.py session resume 修復成功（claude -p -c flag），有記憶+MCP+bash+Max免費
 - 2026-03-27 深夜：bot.py 記憶斷裂根因確認（claude -p one-shot = 無記憶），修復方向：回到 Anthropic SDK + OAuth token + conversation_history；A0/A1 並列架構 v3.2 由 A1 自主建立；CLAUDE.md 已同步 RECALL_PROMPTS；experience-log 新增 F007-F009 + S007-S008
 
 - 2026-03-27：T-A0-002 完成（Agent 角色表、GitHub 進度報告、Pipeline 專案頁面加了 GitHub 引導）；A0 每小時 GitHub 同步巡查排程已設定

@@ -1,6 +1,6 @@
 # AGENT_RULES.md — MAPLAB AI 全域行為準則
 
-版本：v3.1 | 建立：2026-03-12 | 更新：2026-03-27
+版本：v3.2 | 建立：2026-03-12 | 更新：2026-03-27
 
 ---
 
@@ -88,12 +88,13 @@ GSC 關鍵字排名    ──→  文章選題依據
 ## SECTION 1.2 — 跨部門協作關係圖
 
 ```
-A0 Cowork（總調度秘書）
-  ├── 跨系統橋接（Notion/Gmail/Drive/Chrome）
-  ├── 委派 Code task → A1
-  └── 管理 Telegram Bot
-        │
-        A1 Claude Code（系統總管）
+Owner（你）
+  ├── A0 Cowork（總調度秘書）
+  │     ├── 跨系統橋接（Notion/Gmail/Drive/Chrome）
+  │     ├── 管理 Telegram Bot
+  │     └── 開 Code task → 委派給 A1
+  │
+  └── A1 Claude Code（系統總管）
         ├── 對 A2–A8 下指令、巡查、產 prompt
         │
 A2 SEO ←──→ A3 Social/Ads（共享漏斗）
@@ -129,7 +130,7 @@ A8 影音 ←── A4 素材
 ## SECTION 1.3 — A0 總調度秘書（Cowork Dispatch Secretary）
 
 **平台：** Claude Desktop Cowork 模式（非 Claude Code，非 Claude tab）
-**定位：** 在 A1 之上的調度層。A1 是技術執行者（repo 內），A0 是跨系統橋接者（repo 外）。
+**定位：** 與 A1 並行的橋接層。A0 是跨系統橋接者（repo 外），A1 是技術執行者（repo 內）。兩者皆直屬 Owner，非上下級關係。
 
 ### A0 職責
 
@@ -142,6 +143,13 @@ A8 影音 ←── A4 素材
 | 記憶取回 | 新 session 開始時讀 auto-memory + git pull 恢復上下文 |
 | Telegram 管理 | 管理 bot daemon 狀態、更新指令、推送通知 |
 | 遠端 Agent 監控 | 透過 Chrome Remote Desktop 連接 Windows，監控 A4/A5 等跨機器 Agent |
+| Chrome Extension | 透過 Side Panel 快速切換角色、傳遞指令給對應 Agent |
+
+### A0 可用工具
+- **Telegram bot**：接收/發送 Owner 指令
+- **Chrome Extension**（Side Panel）：快速切換 Agent 角色、傳遞指令
+- **MCP**：Notion / Gmail / Google Drive / Google Sheets / Analytics / Ads
+- **Chrome Remote Desktop**：監控 Windows 上的 A4/A5
 
 ### A0 不做的事
 - 不直接改 GitHub 文件（委派 Code task / A1 執行）
@@ -176,7 +184,15 @@ Owner（你）
         └── 維護 AGENT_RULES / CURRENT_STATUS
 ```
 
-> ⚠️ A0 不是 A1 的上級。A0 是橋接層，A1 是執行層。Owner 是唯一決策者。
+### A0↔A1 溝通協議
+| 情境 | A0 動作 | A1 動作 |
+|------|---------|---------|
+| Owner 下技術指令 | 判斷後開 Code task，貼 A1 recall prompt | 讀 recall prompt 後執行，commit 後回報 |
+| A1 需要跨系統資料 | A0 透過 MCP 取得後回寫 GitHub | A1 讀 GitHub 取用，不直接呼叫 MCP |
+| A1 完成任務 | A0 確認 commit 已 push，同步更新 Notion | A1 更新 CURRENT_STATUS + RECALL_PROMPTS |
+| 緊急通知 | A0 透過 Telegram bot 推送給 Owner | — |
+
+> A0 委派任務必須附 recall prompt；A1 接任務前必須確認 prompt 已貼入。
 
 ---
 
@@ -322,6 +338,7 @@ A1 巡查時發現 agent 未寫接續 Prompt 或超過 30 分鐘無 checkpoint�
 | v1.9 | 2026-03-19 | SECTION 2 Git 規則改為直接 commit（對齊實務）；移除殘留 Stop Claude | A1 Handbook Agent |
 | v3.0 | 2026-03-25 | 角色重組：A2/A3 拆開、A1=Claude Code、新增 A6 業務急件 + A8 影音製作；SECTION 1 全面改寫；新增 SECTION 1.2 跨部門協作圖；新增 AGENT_RECALL_PROMPTS.md | A1 Claude Code |
 | v3.1 | 2026-03-27 | 新增 A0 總調度秘書（SECTION 1 角色表 + SECTION 1.3 定義 + SECTION 1.2 協作圖）；Notion 定位降級補充 | A0 Cowork |
+| v3.2 | 2026-03-27 | P0-1 定位句修正（A0/A1 並列）；P0-2 協作圖 Owner 頂層；P1 新增 Extension 職責 + A0 可用工具；P2-7 新增 A0↔A1 溝通協議表 | A1 Claude Code |
 | v2.2 | 2026-03-23 | SECTION 0 精簡：移除盲點分析（已在 PROTOCOL Step 7），只保留啟動阻擋規則 | A1 Handbook Agent |
 | v2.1 | 2026-03-23 | SECTION 0 新增 Startup Check 強制欄位（Questions for Owner + Skills loaded） | A1 Handbook Agent |
 | v2.0 | 2026-03-20 | SECTION 0 召喚 Prompt 真正修復（加入 CURRENT_STATUS 第一步 + TASK_QUEUE + Startup Check）；新增 SECTION 5 Repo 管控 + Notion 禁令；版本表順序修正 | A1 Handbook Agent |

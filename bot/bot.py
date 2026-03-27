@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-MAPLAB Claude Bot — Telegram daemon (long polling) + Claude AI
+MAPLAB A1 遠端讀檔終端 — Telegram daemon (long polling)
 24/7 persistent listener on Mac mini
+直接讀取 repo markdown 文件回傳，無 Claude API 呼叫
 
 Usage:
     python3 bot.py
@@ -10,16 +11,13 @@ Usage:
 
 import logging
 import os
+import subprocess
 import sys
-from collections import defaultdict, deque
 from pathlib import Path
 from datetime import datetime
 
-from typing import Optional
-import anthropic
 from dotenv import load_dotenv
 from telegram import Update
-from telegram.constants import ChatAction
 from telegram.ext import (
     Application,
     CommandHandler,
@@ -33,15 +31,8 @@ BOT_DIR = Path(__file__).parent
 load_dotenv(BOT_DIR / ".env")
 
 BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
-ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
 OWNER_CHAT_ID = int(os.getenv("OWNER_CHAT_ID", "1077768811"))
-CLAUDE_MODEL = "claude-sonnet-4-6"
-HISTORY_LIMIT = 20  # messages per chat_id
-
-SYSTEM_PROMPT = """你是 MAPLAB 的 AI 助手，由 Claude 驅動，常駐在 Page 的 Mac mini 上。
-你協助 Page 管理專案、回答問題、追蹤任務、分析數據。
-MAPLAB 是一間台灣廚藝學校，主要業務包含廚藝課程、餐飲活動、外燴服務。
-回覆請簡潔直接，優先用繁體中文，技術詞彙可用英文。"""
+REPO_PATH = Path(os.getenv("REPO_PATH", "/Users/pagemacmini/maplab-ai-handbook"))
 
 # ── Logging ────────────────────────────────────────────────────────────────────
 LOG_FILE = BOT_DIR / "bot.log"
@@ -55,130 +46,270 @@ logging.basicConfig(
 )
 logger = logging.getLogger("maplab_bot")
 
-# ── Conversation history (in-memory, per chat_id) ──────────────────────────────
-# deque(maxlen=HISTORY_LIMIT) stores dicts: {"role": "user"|"assistant", "content": str}
-chat_history: dict[int, deque] = defaultdict(lambda: deque(maxlen=HISTORY_LIMIT))
-
-# ── Anthropic client (lazy — None if key missing) ──────────────────────────────
-_claude: Optional[anthropic.Anthropic] = None
-
-def get_claude() -> Optional[anthropic.Anthropic]:
-    global _claude
-    if _claude is None and ANTHROPIC_API_KEY:
-        _claude = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
-    return _claude
+START_TIME = datetime.now()
 
 
-# ── Claude API call ─────────────────────────────────────────────────────────────
+# ── Auth guard ─────────────────────────────────────────────────────────────────
 
-async def ask_claude(chat_id: int, user_text: str) -> str:
-    """Append user message to history, call Claude, return reply."""
-    client = get_claude()
-    if client is None:
-        return "⚠️ ANTHROPIC_API_KEY 未設定，無法呼叫 Claude API。\n請在 bot/.env 加入 ANTHROPIC_API_KEY=sk-ant-..."
+def is_owner(update: Update) -> bool:
+    return update.effective_user.id == OWNER_CHAT_ID
 
-    history = chat_history[chat_id]
-    history.append({"role": "user", "content": user_text})
 
+async def deny(update: Update) -> None:
+    logger.warning(f"Unauthorized access from {update.effective_user.id}")
+    await update.message.reply_text("⛔ 未授權")
+
+
+# ── Helpers ────────────────────────────────────────────────────────────────────
+
+def git_pull_silent() -> None:
+    """Silent git pull --rebase. Fail gracefully."""
     try:
-        response = client.messages.create(
-            model=CLAUDE_MODEL,
-            max_tokens=1024,
-            system=SYSTEM_PROMPT,
-            messages=list(history),
+        subprocess.run(
+            ["git", "pull", "--rebase", "origin", "main"],
+            cwd=REPO_PATH,
+            capture_output=True,
+            timeout=15,
         )
-        reply = response.content[0].text
-        history.append({"role": "assistant", "content": reply})
-        return reply
-    except anthropic.AuthenticationError:
-        return "⚠️ API key 無效，請確認 bot/.env 裡的 ANTHROPIC_API_KEY 正確。"
-    except anthropic.RateLimitError:
-        return "⚠️ Claude API 速率限制，請稍後再試。"
-    except Exception as e:
-        logger.error(f"Claude API error: {e}", exc_info=True)
-        return f"⚠️ Claude API 錯誤：{type(e).__name__}，請稍後再試。"
+    except Exception:
+        pass
 
 
-# ── Telegram Handlers ───────────────────────────────────────────────────────────
+def read_file(rel_path: str) -> str:
+    """Read a file relative to REPO_PATH. Return content or error string."""
+    p = REPO_PATH / rel_path
+    if not p.exists():
+        return f"⚠️ 找不到檔案：{rel_path}"
+    return p.read_text(encoding="utf-8")
+
+
+async def send_long(update: Update, text: str) -> None:
+    """Send text, splitting at 4096 chars if needed."""
+    MAX = 4096
+    for i in range(0, len(text), MAX):
+        await update.message.reply_text(text[i:i + MAX])
+
+
+# ── Command Handlers ───────────────────────────────────────────────────────────
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    user = update.effective_user
-    has_key = bool(ANTHROPIC_API_KEY)
-    ai_status = "✅ Claude AI 已連線" if has_key else "⚠️ ANTHROPIC_API_KEY 未設定（echo 模式）"
+    if not is_owner(update):
+        await deny(update)
+        return
     await update.message.reply_text(
-        f"👋 MAPLAB Claude Bot online\n"
+        f"🟢 MAPLAB A1 遠端終端 online\n"
         f"時間: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n"
-        f"User: {user.first_name} (id={user.id})\n"
-        f"AI: {ai_status}\n\n"
+        f"Repo: {REPO_PATH}\n\n"
         f"/help — 查看指令列表"
     )
 
 
 async def help_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not is_owner(update):
+        await deny(update)
+        return
     await update.message.reply_text(
-        "📋 可用指令:\n"
-        "/start   — 確認 bot 在線\n"
-        "/help    — 本說明\n"
-        "/ping    — 延遲測試\n"
-        "/status  — 系統狀態\n"
-        "/echo <text> — 回音測試\n"
-        "/reset   — 清除對話歷史\n\n"
-        "其他文字訊息 → 直接傳給 Claude AI 回覆"
+        "📋 *MAPLAB A1 終端指令*\n\n"
+        "/status — 系統總覽（CURRENT\\_STATUS.md）\n"
+        "/task \\[ID\\] — 查特定任務，例如 /task T\\-A2\\-001\n"
+        "/patrol — 最近巡查報告（git log patrol commits）\n"
+        "/queue — 待認領任務（TASK\\_QUEUE.md）\n"
+        "/agent \\[A1\\-A8\\] — 特定 Agent 狀態\n"
+        "/commit — 最近 5 條 git log\n"
+        "/blocker — 所有 blocker\n"
+        "/refresh — 手動 git pull\n"
+        "/ping — 心跳檢查\n"
+        "/help — 本說明",
+        parse_mode="MarkdownV2",
     )
 
 
 async def ping(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    await update.message.reply_text(f"🏓 pong — {datetime.now().strftime('%H:%M:%S')}")
-
-
-async def status(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    import platform
-    try:
-        import psutil
-        cpu = psutil.cpu_percent(interval=0.5)
-        mem = psutil.virtual_memory()
-        mem_used = mem.used // (1024 ** 3)
-        mem_total = mem.total // (1024 ** 3)
-        hw = f"CPU: {cpu}%\nRAM: {mem_used}GB / {mem_total}GB ({mem.percent}%)"
-    except ImportError:
-        hw = "(psutil 未安裝)"
-
-    has_key = bool(ANTHROPIC_API_KEY)
-    hist_len = len(chat_history.get(update.effective_chat.id, []))
+    if not is_owner(update):
+        await deny(update)
+        return
+    uptime = datetime.now() - START_TIME
+    h, rem = divmod(int(uptime.total_seconds()), 3600)
+    m, s = divmod(rem, 60)
     await update.message.reply_text(
-        f"🖥️ MAPLAB Mac Mini\n"
-        f"時間: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n"
-        f"OS: {platform.system()} {platform.release()}\n"
-        f"{hw}\n"
-        f"Claude AI: {'✅ ' + CLAUDE_MODEL if has_key else '❌ 未設定 key'}\n"
-        f"對話歷史: {hist_len} 條"
+        f"🏓 pong — {datetime.now().strftime('%H:%M:%S')}\n"
+        f"Uptime: {h}h {m}m {s}s"
     )
 
 
-async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    text = " ".join(context.args) if context.args else "(empty)"
-    await update.message.reply_text(f"🔁 {text}")
+async def status(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not is_owner(update):
+        await deny(update)
+        return
+    git_pull_silent()
+    content = read_file("CURRENT_STATUS.md")
+    # Trim to first 3000 chars if huge
+    if len(content) > 3000:
+        content = content[:3000] + "\n…（截斷，完整版請開 CURRENT_STATUS.md）"
+    await send_long(update, f"📊 *CURRENT_STATUS.md*\n\n{content}")
 
 
-async def reset(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Clear conversation history for this chat."""
-    chat_id = update.effective_chat.id
-    chat_history[chat_id].clear()
-    await update.message.reply_text("🗑️ 對話歷史已清除。")
+async def task_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not is_owner(update):
+        await deny(update)
+        return
+    if not context.args:
+        await update.message.reply_text("用法：/task [任務ID]，例如 /task T-A2-001")
+        return
+    task_id = context.args[0].upper()
+    git_pull_silent()
+
+    # Search in handoff/tasks/
+    task_file = REPO_PATH / "handoff" / "tasks" / f"{task_id}.md"
+    if task_file.exists():
+        content = task_file.read_text(encoding="utf-8")
+    else:
+        # Try searching subdirectories
+        matches = list((REPO_PATH / "handoff").rglob(f"{task_id}*.md"))
+        if matches:
+            content = matches[0].read_text(encoding="utf-8")
+        else:
+            content = f"⚠️ 找不到任務：{task_id}\n\n可用任務：\n"
+            for f in sorted((REPO_PATH / "handoff" / "tasks").glob("*.md")):
+                if f.name != "TASK_CARD_TEMPLATE.md":
+                    content += f"• {f.stem}\n"
+
+    if len(content) > 3500:
+        content = content[:3500] + "\n…（截斷）"
+    await send_long(update, f"📋 *{task_id}*\n\n{content}")
+
+
+async def patrol(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not is_owner(update):
+        await deny(update)
+        return
+    try:
+        result = subprocess.run(
+            ["git", "log", "--oneline", "--grep=patrol", "-10"],
+            cwd=REPO_PATH,
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        output = result.stdout.strip() or "（無 patrol 相關 commit）"
+    except Exception as e:
+        output = f"⚠️ git log 失敗：{e}"
+    await update.message.reply_text(f"🔍 最近 patrol commits:\n\n{output}")
+
+
+async def queue(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not is_owner(update):
+        await deny(update)
+        return
+    git_pull_silent()
+    content = read_file("TASK_QUEUE.md")
+    # Filter lines with 🔲 (pending)
+    lines = content.splitlines()
+    pending = [l for l in lines if "🔲" in l or "TASK_QUEUE" in l or l.startswith("#")]
+    if pending:
+        output = "\n".join(pending)
+    else:
+        output = content
+    if len(output) > 3500:
+        output = output[:3500] + "\n…（截斷）"
+    await send_long(update, f"📥 *TASK_QUEUE — 待認領*\n\n{output}")
+
+
+async def agent_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not is_owner(update):
+        await deny(update)
+        return
+    if not context.args:
+        await update.message.reply_text("用法：/agent [A1-A8]，例如 /agent A2")
+        return
+    agent = context.args[0].upper()
+    git_pull_silent()
+    content = read_file("CURRENT_STATUS.md")
+    lines = content.splitlines()
+    # Extract section for this agent
+    section_lines = []
+    in_section = False
+    for line in lines:
+        if agent in line and line.startswith("#"):
+            in_section = True
+        elif in_section and line.startswith("#") and agent not in line:
+            in_section = False
+        if in_section or agent in line:
+            section_lines.append(line)
+
+    output = "\n".join(section_lines[:80]) if section_lines else f"找不到 {agent} 的相關資訊"
+    await send_long(update, f"🤖 *{agent} 狀態*\n\n{output}")
+
+
+async def commit_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not is_owner(update):
+        await deny(update)
+        return
+    try:
+        result = subprocess.run(
+            ["git", "log", "--oneline", "-5"],
+            cwd=REPO_PATH,
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        output = result.stdout.strip() or "（無 commit）"
+    except Exception as e:
+        output = f"⚠️ git log 失敗：{e}"
+    await update.message.reply_text(f"📝 最近 5 commits:\n\n{output}")
+
+
+async def blocker(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not is_owner(update):
+        await deny(update)
+        return
+    git_pull_silent()
+    content = read_file("CURRENT_STATUS.md")
+    lines = content.splitlines()
+    # Find blocker sections
+    blocker_lines = []
+    in_block = False
+    for line in lines:
+        low = line.lower()
+        if "blocker" in low or "blocked" in low or "🚫" in line or "❌" in line:
+            in_block = True
+            blocker_lines.append(line)
+        elif in_block and line.strip() == "":
+            blocker_lines.append("")
+            in_block = False
+        elif in_block:
+            blocker_lines.append(line)
+
+    output = "\n".join(blocker_lines).strip() if blocker_lines else "✅ 目前無 blocker"
+    await send_long(update, f"🚫 *Blockers*\n\n{output}")
+
+
+async def refresh(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not is_owner(update):
+        await deny(update)
+        return
+    await update.message.reply_text("🔄 執行 git pull --rebase…")
+    try:
+        result = subprocess.run(
+            ["git", "pull", "--rebase", "origin", "main"],
+            cwd=REPO_PATH,
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+        out = result.stdout.strip() + "\n" + result.stderr.strip()
+        await update.message.reply_text(f"✅ 完成:\n{out[:500]}")
+    except Exception as e:
+        await update.message.reply_text(f"⚠️ 失敗：{e}")
 
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Route plain text to Claude AI."""
-    user = update.effective_user
-    text = update.message.text
-    chat_id = update.effective_chat.id
-    logger.info(f"MSG from {user.first_name}({user.id}): {text!r}")
-
-    # Show typing indicator
-    await context.bot.send_chat_action(chat_id=chat_id, action=ChatAction.TYPING)
-
-    reply = await ask_claude(chat_id, text)
-    await update.message.reply_text(reply)
+    if not is_owner(update):
+        await deny(update)
+        return
+    await update.message.reply_text(
+        "ℹ️ 此終端為讀檔模式，不支援自由對話。\n請使用 /help 查看可用指令。"
+    )
 
 
 async def on_error(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -192,10 +323,7 @@ def main() -> None:
         logger.error("TELEGRAM_BOT_TOKEN not set. Copy bot/.env.example → bot/.env and fill it in.")
         sys.exit(1)
 
-    if not ANTHROPIC_API_KEY:
-        logger.warning("ANTHROPIC_API_KEY not set — bot will run in echo/fallback mode")
-
-    logger.info(f"Starting MAPLAB Claude Bot (model={CLAUDE_MODEL})…")
+    logger.info(f"Starting MAPLAB A1 遠端終端 (repo={REPO_PATH})…")
 
     app = (
         Application.builder()
@@ -211,12 +339,17 @@ def main() -> None:
     app.add_handler(CommandHandler("help", help_cmd))
     app.add_handler(CommandHandler("ping", ping))
     app.add_handler(CommandHandler("status", status))
-    app.add_handler(CommandHandler("echo", echo))
-    app.add_handler(CommandHandler("reset", reset))
+    app.add_handler(CommandHandler("task", task_cmd))
+    app.add_handler(CommandHandler("patrol", patrol))
+    app.add_handler(CommandHandler("queue", queue))
+    app.add_handler(CommandHandler("agent", agent_cmd))
+    app.add_handler(CommandHandler("commit", commit_cmd))
+    app.add_handler(CommandHandler("blocker", blocker))
+    app.add_handler(CommandHandler("refresh", refresh))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     app.add_error_handler(on_error)
 
-    logger.info(f"Bot running — owner={OWNER_CHAT_ID}, AI={'on' if ANTHROPIC_API_KEY else 'OFF (no key)'}")
+    logger.info(f"Bot running — owner={OWNER_CHAT_ID}")
     app.run_polling(allowed_updates=Update.ALL_TYPES, drop_pending_updates=True)
 
 

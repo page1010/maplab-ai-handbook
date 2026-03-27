@@ -116,14 +116,25 @@ Windows 有雙螢幕，Chrome Remote Desktop 預設顯示全部。
 3. zoom 截圖讀取對話內容 / 任務狀態
 4. 回報給 Owner
 
-### 場景 3：跟 Windows 上的 Agent 對話
-1. 連上 DESKTOP-PAGEHOME
-2. 切到目標 Chrome 窗口（點螢幕 tab）
-3. 按 Shift+Space 切換 Windows 輸入法到英文
-4. 點 Claude 側邊欄「Reply to Claude」輸入框
-5. 用 CRD「傳送文字」功能（ref_174 textbox）輸入指令
-6. 點「傳送」或按 Enter 送出（注意：可能觸發 Task View，改用 Enter）
-7. 或者用 Extension 的 Startup Prompt 機制——在 AGENT_RECALL_PROMPTS.md 更新目標角色的 prompt，Extension 自動讀取
+### 場景 3：跟 Windows 上的 Agent 對話（已驗證 SOP — 2026-03-27）
+
+**必用方法：CRD「傳送文字」textbox + JavaScript dispatchEvent**
+
+1. 確保 CRD 連線中（DESKTOP-PAGEHOME）
+2. 在遠端點目標輸入框（Claude 側邊欄的 Reply to Claude）讓它有 focus
+3. 清空殘留：`key Escape` → `key ctrl+a` → `key Backspace`
+4. 用 Chrome MCP `form_input` 把文字寫入 CRD 的「傳送文字」textbox（`aria-label="傳送文字"` 的 textarea）
+5. 用 JavaScript dispatch 點「傳送」按鈕：
+   ```javascript
+   document.querySelector('[aria-label="傳送"]').dispatchEvent(new MouseEvent('click', {bubbles: true}));
+   ```
+6. 等 3 秒
+7. zoom 確認輸入框內容 → 如有注音殘留則先清空重送
+8. 點送出按鈕或再次 JavaScript dispatch
+
+**⚠️ 關鍵：絕對不能用 Chrome MCP 的 `left_click` 點「傳送」按鈕——那會觸發 Windows Task View。必須用 JavaScript dispatchEvent。**
+
+備用：Extension 的 Startup Prompt 機制——在 AGENT_RECALL_PROMPTS.md 更新目標角色的 prompt，Extension 自動讀取
 
 ### 場景 4：處理 OAuth / 權限彈窗
 1. 如果是 Chrome tab 內的彈窗 → 可以直接點
@@ -244,6 +255,21 @@ Windows 有雙螢幕，Chrome Remote Desktop 預設顯示全部。
 - 之前所有嘗試用錯了快捷鍵（見「遠端打字深度研究結論」表格）
 - 正確流程：在 CRD 裡按 Shift+Space → Windows 注音切到英文 → 再打字或用「傳送文字」
 - 待下次連線驗證
+
+### 2026-03-27 ✅ 遠端打字成功！CRD「傳送文字」+ JavaScript dispatchEvent
+
+**成功的方法：**
+1. 用 Chrome MCP `form_input` 把文字寫入 CRD 的「傳送文字」textbox（`ref_174` 或同等 `aria-label="傳送文字"` 的 textarea）
+2. 用 JavaScript dispatchEvent 觸發「傳送」按鈕的 click：
+   ```javascript
+   document.querySelector('[aria-label="傳送"]').dispatchEvent(new MouseEvent('click', {bubbles: true}));
+   ```
+3. 文字被 CRD 以鍵盤模擬方式逐字送到 Windows 遠端 focus 的輸入框
+4. 注意：Windows 注音 IME 會攔截英文字母，但 CRD「傳送文字」功能會繞過 IME 直接輸入
+
+**關鍵：不要用 Chrome MCP 的 `left_click` 點「傳送」按鈕——那會觸發 Windows Task View。必須用 JavaScript dispatchEvent。**
+
+**已成功啟動 A2 和 A7 兩個 Windows Agent。**
 
 ---
 

@@ -37,6 +37,7 @@ h# Superpowers Skills 導覽手冊 — MAPLAB AI Agent 版
 | 驗證、確認、完成檢查 | verification-checklist-guide | 5 步驗證 |
 | 媒體限制、100張、圖太多 | media-limit-workaround | 繞過限制策略 |
 | 遠端桌面、Windows、跨機器、Colab、DESKTOP-PAGEHOME、Agent 監控 | remote-desktop-agent-bridge | 適用 A0：Chrome Remote Desktop 連接 Windows，監控 A4/A5 等跨機器 Agent |
+| A0 行為、被動、回報、提醒、Owner Action | a0-proactive-dispatch-guide | 適用 A0（每次 session 必拿）：禁止被動回報，行動優先，驗證 Owner Action 狀態 |
 
 ---
 
@@ -183,6 +184,7 @@ checkpoint 機制：每完成外部系統操作立即 commit，防止進度丟�
 | v1.2 | 2026-03-17 | 加入 github-api-workflow / verification-checklist / systematic-debugging-cloud | A4 |
 | v1.3 | 2026-03-17 | 加入 troubleshooting-hub | A1 |
 | v1.4 | 2026-03-18 | 新增「任務類型 → 建議預讀技能書」路由表；修正 troubleshooting-hub 格式 | A1 |
+| v2.2 | 2026-03-27 | 新增 a0-proactive-dispatch-guide 路由 | A0 |
 | v2.1 | 2026-03-26 | 新增 gps-daily-subdivision-guide 路由 + 技能描述 | A4 |
 | v2.0 | 2026-03-24 | 新增 crash-recovery-guide 路由 + 技能描述 | A2 |
 | v1.9 | 2026-03-24 | 新增 gdrive-to-wordpress-upload-guide 路由 + 技能描述 | A2 |

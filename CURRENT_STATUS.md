@@ -3,13 +3,13 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新 : 2026-03-27 ｜ 更新者 : A1 Claude Code（遠端巡查）
+最後更新 : 2026-03-27 ｜ 更新者 : A0 Cowork Dispatch Secretary
 
 ---
 
 ## 系統版本
 
-- **Version**: v5.0
+- **Version**: v5.1
 - **Phase**: Phase 5 — 營運執行 + 廣告優化
 - **Status**: Active
 
@@ -26,6 +26,8 @@
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2 | 🔄 進行中（子任務1+2完成，子任務3+4+5分拆至T-A2A3-001-B） | handoff/tasks/T-A2A3-001.md |001.md |
 | T-A3-001 | GTM LINE 按鈕追蹤修復（方案 B 已確認） | A3 | 🔲 可認領（待測試） | — |
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | 🔄 確認中（已上線，受眾已記錄） | handoff/tasks/T-A3-002.md |
+| T-A0-001 | Telegram bot 指令模式上線 | A0 | ✅ 完成 | — |
+| T-A0-002 | Notion 舊資料清理（保留架構，引導到 GitHub）| A0/A1 | 🔲 可認領 | — |
 
 ## Blockers（阻塞事項）
 
@@ -39,6 +41,8 @@
 ⚠️ A1巡查 2026-03-27 00:00：A4 T-A4-001 超 48h 無實質進度 commit — 最後 S5 進展 commit 為 2026-03-25 12:24（已逾 48h）。任務狀態仍為 🔄 S5 93.5%。請 A4 確認 S5 是否仍在執行中，或已完成待結案。
 
 ## 最新決策
+- 2026-03-27：A0 總調度秘書角色建立（Cowork Dispatch Secretary），定位為跨系統橋接層；Telegram bot daemon 上線（launchd 自啟，免費指令讀檔模式，9 個指令）；Notion 定位降級為可視化報告介面，不再作為 Agent 狀態來源
+
 - 2026-03-26：A2 T-A2A3-001 子任務1+2完成 — (1) FK修正11篇(57/57全匹配) (2) SEO Title 27篇+Meta Desc 35篇+Alt Text 51篇修正(分數~54-76) (3) 任務分拆：子任務3+4+5→T-A2A3-001-B由同事接手 (4) seo-ads-agent v2.4(§17執行紀錄+SEO Performance更新) (5) Elementor限制文件化：RM無法讀取Elementor內容，分數天花板約54-76
 
 - 2026-03-26：A2 Google Ads 轉換動作設定確認 — Owner 完成 PMax 轉換目標設定（廣告活動專屬：外連點擊），22 個轉換動作已記錄至 seo-ads-agent.md §16。主要轉換：LINE 事件(21次) + LINE 領取菜單(33次)。「網站左下角 fb massage」按鈕已從網站移除，建議停用該轉換動作。下一步：T-A2A3-001 SEO 關鍵字頁面補足。
@@ -66,7 +70,7 @@
 |------|------|------|
 | 🎯 最新狀態（你在這裡） | CURRENT_STATUS.md | 唯一入口，最高優先 |
 | 📋 任務池 | TASK_QUEUE.md | 所有待辦任務清單 |
-| 📖 角色與規則 | AGENT_RULES.md v3.0 | 8 角色定義 + 協作規則 + 存檔規則 |
+| 📖 角色與規則 | AGENT_RULES.md v3.1 | 9 角色定義（含 A0）+ 協作規則 + 存檔規則 |
 | 🚀 開工 SOP | AGENT_STARTUP_PROTOCOL.md | 啟動流程 + Startup Check 輸出格式 |
 | 📂 任務卡 | handoff/tasks/T-xxx.md | 你認領的任務的詳細狀態 |
 | 🔧 技能路由 | skills/superpowers-guide.md | 開工前查路由表（27 本技能書）|

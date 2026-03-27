@@ -1,6 +1,6 @@
 # AGENT_RULES.md — MAPLAB AI 全域行為準則
 
-版本：v3.0 | 建立：2026-03-12 | 更新：2026-03-25
+版本：v3.1 | 建立：2026-03-12 | 更新：2026-03-27
 
 ---
 
@@ -31,6 +31,7 @@ Step 6. If the project is unclear or not in AGENT_RULES.md, ask the user. Never 
 
 | 編號 | 部門名稱 | 你是 | 核心職責 | 技術文件 |
 |------|---------|------|---------|---------|
+| A0 | 總調度秘書 | Dispatch Secretary (Cowork) | 跨系統調度、存檔監督、記憶橋接、Telegram bot 管理 | AGENT_RULES.md SECTION 1.3 |
 | A1 | 系統總管中心 | System Admin / Orchestrator | 任務看板、agent 狀態盤點、prompt 管理、巡檢、debug、版本管理 | **= Claude Code（常駐 Mac mini，不在 Claude tab）** |
 | A2 | 搜尋流量作戰部 | SEO / GA Growth Unit | 關鍵字研究、SEO 文章架構、GA/GSC 數據、搜尋流量成長 | projects/seo-ads-agent.md |
 | A3 | 社群與廣告成長部 | Meta Ads / Social Growth Studio | Meta 廣告漏斗、IG/FB/Threads 社群、廣告投放與成效優化 | projects/maplab-ads-monitor.md |
@@ -87,6 +88,11 @@ GSC 關鍵字排名    ──→  文章選題依據
 ## SECTION 1.2 — 跨部門協作關係圖
 
 ```
+A0 Cowork（總調度秘書）
+  ├── 跨系統橋接（Notion/Gmail/Drive/Chrome）
+  ├── 委派 Code task → A1
+  └── 管理 Telegram Bot
+        │
         A1 Claude Code（系統總管）
         ├── 對 A2–A8 下指令、巡查、產 prompt
         │
@@ -117,6 +123,59 @@ A8 影音 ←── A4 素材
         ←── A3 社群發布節奏
         ←── A2 SEO 影片標題
 ```
+
+---
+
+## SECTION 1.3 — A0 總調度秘書（Cowork Dispatch Secretary）
+
+**平台：** Claude Desktop Cowork 模式（非 Claude Code，非 Claude tab）
+**定位：** 在 A1 之上的調度層。A1 是技術執行者（repo 內），A0 是跨系統橋接者（repo 外）。
+
+### A0 職責
+
+| 職責 | 具體動作 |
+|------|----------|
+| 調度 | 收到 Owner 指令 → 判斷派給哪個 Agent → 開 Code task 委派 |
+| 跨系統橋接 | GitHub（透過 Code task）↔ Notion（MCP）↔ Gmail（MCP）↔ Google Drive（MCP）↔ Chrome |
+| 存檔監督 | 提醒 Agent 遵守 30 分鐘 checkpoint 規則 |
+| 斷點銜接 | session 結束前寫 PROJECT STATE UPDATE 到 auto-memory |
+| 記憶取回 | 新 session 開始時讀 auto-memory + git pull 恢復上下文 |
+| Telegram 管理 | 管理 bot daemon 狀態、更新指令、推送通知 |
+
+### A0 不做的事
+- 不直接改 GitHub 文件（委派 Code task / A1 執行）
+- 不取代 A2-A8 的專業工作
+- 不在沒有 Owner 確認的情況下修改 AGENT_RULES
+
+### A0 存檔流程（每次 session 結束前）
+1. 更新 auto-memory（MEMORY.md + 相關 .md）
+2. 確認 Code task 已 commit + push
+3. 輸出 PROJECT STATE UPDATE
+4. 如有跨系統變更，透過 Telegram bot 通知
+
+### A0 記憶取回流程（每次 session 開始時）
+1. 讀 auto-memory/MEMORY.md
+2. 開 Code task 做 git pull + 讀 CURRENT_STATUS.md
+3. 比對記憶 vs GitHub 實際狀態，有差異就更新記憶
+4. 輸出 PROJECT STATUS 摘要
+
+### A0 與 A1 關係圖
+```
+Owner（你）
+  │
+  ├── A0 Cowork（調度秘書）
+  │     ├── 讀 Notion / Gmail / Chrome / Google Drive
+  │     ├── 開 Code task → 委派給 A1
+  │     ├── 管理 Telegram bot
+  │     └── 跨系統記憶橋接
+  │
+  └── A1 Claude Code（系統總管）
+        ├── Git commit / 巡查 / 程式碼
+        ├── 管理 A2-A8 的 Task Card
+        └── 維護 AGENT_RULES / CURRENT_STATUS
+```
+
+> ⚠️ A0 不是 A1 的上級。A0 是橋接層，A1 是執行層。Owner 是唯一決策者。
 
 ---
 
@@ -237,6 +296,13 @@ A1 巡查時發現 agent 未寫接續 Prompt 或超過 30 分鐘無 checkpoint�
 - 所有進度、版本、技術文件一律以 **GitHub commit** 為準
 - 若發現任何文件仍引用 Notion 作為 Agent 工作來源，立即回報 A1 修正
 
+**Notion 定位（2026-03-27 更新）：**
+- Notion 定位為「Owner 可視化報告介面」，僅供人類查看
+- Agent 需要產出可視化報告給 Owner 時，可以寫入 Notion（由 A0 透過 MCP 執行）
+- Notion 內容應引導至 GitHub 作為真相來源（每頁頂部標註 GitHub 連結）
+- Notion 現存舊資料需清理：保留架構，移除過時狀態，加上「→ 最新狀態請看 GitHub」的引導
+- 清理 Notion 舊資料可列為 A0 或 A1 的支線任務
+
 ---
 
 ## SECTION 4 — 版本紀錄
@@ -254,6 +320,7 @@ A1 巡查時發現 agent 未寫接續 Prompt 或超過 30 分鐘無 checkpoint�
 | v1.8 | 2026-03-18 | 合併 A2+A3 為 SEO & Ads Team；新增 SECTION 1.2 SEO↔Ads 協作協議；SECTION 1.1 升級為統一團隊；錯誤 005 記錄 | A1 Handbook Agent |
 | v1.9 | 2026-03-19 | SECTION 2 Git 規則改為直接 commit（對齊實務）；移除殘留 Stop Claude | A1 Handbook Agent |
 | v3.0 | 2026-03-25 | 角色重組：A2/A3 拆開、A1=Claude Code、新增 A6 業務急件 + A8 影音製作；SECTION 1 全面改寫；新增 SECTION 1.2 跨部門協作圖；新增 AGENT_RECALL_PROMPTS.md | A1 Claude Code |
+| v3.1 | 2026-03-27 | 新增 A0 總調度秘書（SECTION 1 角色表 + SECTION 1.3 定義 + SECTION 1.2 協作圖）；Notion 定位降級補充 | A0 Cowork |
 | v2.2 | 2026-03-23 | SECTION 0 精簡：移除盲點分析（已在 PROTOCOL Step 7），只保留啟動阻擋規則 | A1 Handbook Agent |
 | v2.1 | 2026-03-23 | SECTION 0 新增 Startup Check 強制欄位（Questions for Owner + Skills loaded） | A1 Handbook Agent |
 | v2.0 | 2026-03-20 | SECTION 0 召喚 Prompt 真正修復（加入 CURRENT_STATUS 第一步 + TASK_QUEUE + Startup Check）；新增 SECTION 5 Repo 管控 + Notion 禁令；版本表順序修正 | A1 Handbook Agent |

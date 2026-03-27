@@ -4,7 +4,30 @@
 格式：版本號 | 日期 | 變更摘要 | 執行 Agent
 
 
-## v5.0 — 2026-03-26（最新）
+## v5.1 — 2026-03-27（最新）
+
+**A0 總調度秘書建立 + Telegram bot daemon 上線 + Notion 定位降級**
+
+執行 Agent：A0 Cowork Dispatch Secretary
+
+### 系統架構
+1. **AGENT_RULES.md v3.0 → v3.1** — 新增 A0 角色（SECTION 1 角色表 + SECTION 1.3 定義）、更新 SECTION 1.2 跨部門協作圖、Notion 定位降級補充
+2. **AGENT_RECALL_PROMPTS.md** — 新增 A0 recall prompt + 角色總覽加入 A0
+3. **CURRENT_STATUS.md** — 升版至 v5.1、新增 A0 任務（T-A0-001 完成、T-A0-002 可認領）
+
+### Telegram Bot
+4. bot/ 目錄建立 — python-telegram-bot v21 daemon
+5. launchd 自啟配置（com.maplab.telegrambot.plist）— 24/7 存活，crash 30s 自動重啟
+6. 免費指令讀檔模式（9 指令：/status /task /patrol /queue /agent /commit /blocker /refresh /ping）
+7. 舊 Claude Code MCP plugin tmux session 清除（解決 409 Conflict）
+
+### Notion 定位
+8. Notion 降級為「Owner 可視化報告介面」，不再作為 Agent 狀態來源
+9. 新增清理任務 T-A0-002（保留架構，引導到 GitHub）
+
+---
+
+## v5.0 — 2026-03-26
 
 **A1 系統總管建立 + 角色重組 + MCP 工具接通 + 技能書大更新**
 

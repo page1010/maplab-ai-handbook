@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新 : 2026-03-27 17:00 ｜ 更新者 : A1 checkpoint (T-A0-002 完成)
+最後更新 : 2026-03-27 ｜ 更新者 : A2 checkpoint (seo-ads-agent v2.5 + 搜尋字詞分析)
 
 ---
 
@@ -23,7 +23,7 @@
 | T-A5-003 | 熱客招待品項定義 | A5 | 🔲 待開始 | — |
 | T-A4-001 | Phase 4 Gemini 照片分類 | A4 | 🔄 S5 running (93.5%) — S1-S4 done, GPS confirmed | projects/maplab-pipeline.md |
 | T-A2-001 | 文章精選圖片補齊（57篇→每篇獨立配圖） | A2 | ✅ 完成（57/57 獨立配圖，0 重複） | handoff/tasks/T-A2-001.md |
-| T-A2A3-001 | SEO 關鍵字頁面補足 | A2 | 🔄 進行中（子任務1+2完成，子任務3+4+5分拆至T-A2A3-001-B） | handoff/tasks/T-A2A3-001.md |001.md |
+| T-A2A3-001 | SEO 關鍵字頁面補足 | A2 | 🔄 進行中（子任務1+2全完成含Phase2數字優化，子任務3+4+5→T-A2A3-001-B） | handoff/tasks/T-A2A3-001.md |001.md |
 | T-A3-001 | GTM LINE 按鈕追蹤修復（方案 B 已確認） | A3 | 🔲 可認領（待測試） | — |
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | 🔄 確認中（已上線，受眾已記錄） | handoff/tasks/T-A3-002.md |
 | T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | ✅ Phase 1 完成（v1.0，含 SECTION 8 對話流程圖）| handoff/tasks/T-A7-001.md |
@@ -56,6 +56,8 @@
 - 2026-03-27：T-A0-002 完成（Agent 角色表、GitHub 進度報告、Pipeline 專案頁面加了 GitHub 引導）；A0 每小時 GitHub 同步巡查排程已設定
 - 2026-03-27：A2 T-A2A3-001 子任務2 Phase 2完成 — SEO Title 數字優化 36篇（Title Readability 全綠），分數抽檢 Post 253(50→51) Post 564(81→84 Good) Post 1246(54→55) Post 1227(69)。API 可修正項目已全部完成（FK in Title/Desc/Alt + Number in Title），剩餘分數需 Elementor 編輯或 ToC 插件。
 - 2026-03-27：A0 總調度秘書角色建立（Cowork Dispatch Secretary），定位為跨系統橋接層；Telegram bot daemon 上線（launchd 自啟，免費指令讀檔模式，9 個指令）；Notion 定位降級為可視化報告介面，不再作為 Agent 狀態來源
+
+- 2026-03-27：A2 SEO Title 數字優化完成 + Google Ads 搜尋字詞分析 — (1) 36篇SEO Title加入數字（Title Readability全綠，分數+1~3）(2) API可修正項目全部完成（Title/Desc/Alt/數字）(3) Google Ads 485個搜尋字詞分析，識別3個排除關鍵字建議 (4) seo-ads-agent v2.5（§17 Phase2 + §18搜尋字詞分析）(5) Elementor限制下分數天花板約51-84/100
 
 - 2026-03-26：A2 T-A2A3-001 子任務1+2完成 — (1) FK修正11篇(57/57全匹配) (2) SEO Title 27篇+Meta Desc 35篇+Alt Text 51篇修正(分數~54-76) (3) 任務分拆：子任務3+4+5→T-A2A3-001-B由同事接手 (4) seo-ads-agent v2.4(§17執行紀錄+SEO Performance更新) (5) Elementor限制文件化：RM無法讀取Elementor內容，分數天花板約54-76
 

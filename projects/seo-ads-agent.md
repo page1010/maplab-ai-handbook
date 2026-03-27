@@ -263,6 +263,7 @@ Landing Page 對應優先順序：
 - [x] ~~Google Ads 確認轉換事件定義~~（22 個轉換動作已確認，詳見 §16）→ 轉換目標設為「外連點擊」
 - [ ] 建立自訂再行銷受眾（網站訪客 7/14/30 天、IG 互動者 30 天）
 - [ ] Google Ads 評估擴大關鍵字覆蓋（預算使用率僅 25%）
+- [ ] Google Ads PMax 加入排除關鍵字：leung's creations on event decoration, sweet wedding decoration, 玖二品生活外燴廚房（避免無效點擊）
 - [ ] 處理「網站左下角 fb massage」轉換動作 → 網站已移除該按鈕，建議停用此轉換動作
 
 ---
@@ -539,7 +540,7 @@ Landing Page 對應優先順序：
                             - 網站 57 篇文章全部使用 Elementor 頁面構建器。Rank Math 的 SEO 分析引擎主要讀取 Gutenberg 區塊內容，無法解析 Elementor 的 widget 結構。因此即使文章實際字數超過 600 字、內容中有使用 FK、H2/H3 也包含 FK，Rank Math 仍會報錯。這是已知的 Rank Math + Elementor 相容性問題。
                            
                             - **突破方案（未來可考慮）：**
-                            - 1. 確認 Rank Math PRO 的 Elementor Integration 模組是否已啟用
+                            - 1. ~~確認 Rank Math PRO 的 Elementor Integration 模組是否已啟用~~ → ✅ 已確認（2026-03-27）：RM Modules 頁面共 22 個模組，無 Elementor 專用模組。Elementor 相容性由 RM 自動處理，無獨立開關可調
                               2. 2. 在 Gutenberg 編輯器中加入一段摘要段落（包含 FK + 主要內容摘要），讓 RM 能讀到
                                  3. 3. 長期：評估是否遷移部分內容從 Elementor 到 Gutenberg 原生區塊
                                    

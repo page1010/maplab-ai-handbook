@@ -36,6 +36,8 @@ OWNER_CHAT_ID = int(os.getenv("OWNER_CHAT_ID", "1077768811"))
 REPO_PATH = Path(os.getenv("REPO_PATH", "/Users/pagemacmini/maplab-ai-handbook"))
 CLAUDE_OAUTH_TOKEN = os.getenv("CLAUDE_CODE_OAUTH_TOKEN", "")
 
+TELEGRAM_LOG_DIR = REPO_PATH / "data" / "telegram-logs"
+
 # ── Logging ────────────────────────────────────────────────────────────────────
 LOG_FILE = BOT_DIR / "bot.log"
 logging.basicConfig(
@@ -49,6 +51,69 @@ logging.basicConfig(
 logger = logging.getLogger("maplab_bot")
 
 START_TIME = datetime.now()
+
+# Semaphore: only one Claude call at a time to avoid concurrent claude -p conflicts
+_claude_semaphore = asyncio.Semaphore(1)
+
+
+# ── Conversation Logger ─────────────────────────────────────────────────────────
+
+def log_conversation(owner_msg: str, bot_reply: str, context_label: str = "") -> None:
+    """Append a conversation exchange to the daily telegram log file."""
+    try:
+        TELEGRAM_LOG_DIR.mkdir(parents=True, exist_ok=True)
+        today = datetime.now().strftime("%Y-%m-%d")
+        log_file = TELEGRAM_LOG_DIR / f"{today}.md"
+        ts = datetime.now().strftime("%H:%M:%S")
+        label = f" `[{context_label}]`" if context_label else ""
+        entry = (
+            f"\n## {today} {ts}{label}\n"
+            f"**Owner：** {owner_msg}\n\n"
+            f"**Bot：** {bot_reply}\n\n"
+            f"---\n"
+        )
+        # Create header if new file
+        if not log_file.exists():
+            header = f"# Telegram 對話紀錄 — {today}\n\n> 自動產生，供 agent 恢復記憶用\n"
+            log_file.write_text(header, encoding="utf-8")
+        with log_file.open("a", encoding="utf-8") as f:
+            f.write(entry)
+    except Exception as e:
+        logger.warning(f"log_conversation failed: {e}")
+
+
+def git_commit_log_sync() -> None:
+    """Stage and commit today's telegram log. Non-blocking caller should use thread."""
+    try:
+        today = datetime.now().strftime("%Y-%m-%d")
+        log_rel = f"data/telegram-logs/{today}.md"
+        subprocess.run(
+            ["git", "add", log_rel],
+            cwd=REPO_PATH, capture_output=True, timeout=10,
+        )
+        result = subprocess.run(
+            ["git", "diff", "--cached", "--quiet"],
+            cwd=REPO_PATH, capture_output=True, timeout=5,
+        )
+        if result.returncode != 0:  # There are staged changes
+            subprocess.run(
+                ["git", "commit", "-m", f"log(telegram): {today} 對話紀錄自動存檔"],
+                cwd=REPO_PATH, capture_output=True, timeout=15,
+            )
+            subprocess.run(
+                ["git", "push", "origin", "main"],
+                cwd=REPO_PATH, capture_output=True, timeout=30,
+            )
+    except Exception as e:
+        logger.warning(f"git_commit_log failed: {e}")
+
+
+def log_and_commit(owner_msg: str, bot_reply: str, context_label: str = "") -> None:
+    """Log conversation and async commit in background thread."""
+    import threading
+    log_conversation(owner_msg, bot_reply, context_label)
+    t = threading.Thread(target=git_commit_log_sync, daemon=True)
+    t.start()
 
 
 # ── Auth guard ─────────────────────────────────────────────────────────────────
@@ -101,7 +166,7 @@ async def claude_ask(prompt: str, timeout: int = 90) -> str:
     env["PATH"] = "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:" + env.get("PATH", "")
     try:
         proc = await asyncio.create_subprocess_exec(
-            "claude", "-p", prompt,
+            "claude", "-p", "--dangerously-skip-permissions", prompt,
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE,
             env=env,
@@ -359,6 +424,17 @@ async def refresh(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         await update.message.reply_text(f"⚠️ 失敗：{e}")
 
 
+async def _run_claude_guarded(update: Update, prompt: str, log_label: str, log_user_msg: str) -> None:
+    """Acquire semaphore then call Claude. Reports busy if semaphore is taken."""
+    if _claude_semaphore.locked():
+        await update.message.reply_text("⏳ Bot 正在處理上一則訊息，請稍候再試。")
+        return
+    async with _claude_semaphore:
+        answer = await claude_ask(prompt)
+        await send_long(update, answer)
+        log_and_commit(log_user_msg, answer, log_label)
+
+
 async def ask_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if not is_owner(update):
         await deny(update)
@@ -367,9 +443,7 @@ async def ask_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         await update.message.reply_text("用法：/ask [問題]，例如 /ask A2 現在在做什麼？")
         return
     prompt = " ".join(context.args)
-    await update.message.reply_text("🤔 Claude 思考中…")
-    answer = await claude_ask(prompt)
-    await send_long(update, answer)
+    await _run_claude_guarded(update, prompt, "/ask", prompt)
 
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -388,9 +462,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         f"Owner 說：{text}\n\n"
         "請用繁體中文簡潔回答。"
     )
-    await update.message.reply_text("🤔 Claude 思考中…")
-    answer = await claude_ask(prompt)
-    await send_long(update, answer)
+    await _run_claude_guarded(update, prompt, "", text)
 
 
 async def on_error(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:

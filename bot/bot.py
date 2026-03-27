@@ -9,6 +9,7 @@ Usage:
     (or via launchd for auto-start)
 """
 
+import asyncio
 import logging
 import os
 import subprocess
@@ -33,6 +34,7 @@ load_dotenv(BOT_DIR / ".env")
 BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 OWNER_CHAT_ID = int(os.getenv("OWNER_CHAT_ID", "1077768811"))
 REPO_PATH = Path(os.getenv("REPO_PATH", "/Users/pagemacmini/maplab-ai-handbook"))
+CLAUDE_OAUTH_TOKEN = os.getenv("CLAUDE_CODE_OAUTH_TOKEN", "")
 
 # ── Logging ────────────────────────────────────────────────────────────────────
 LOG_FILE = BOT_DIR / "bot.log"
@@ -90,6 +92,35 @@ async def send_long(update: Update, text: str) -> None:
         await update.message.reply_text(text[i:i + MAX])
 
 
+async def claude_ask(prompt: str, timeout: int = 90) -> str:
+    """Call `claude -p` in non-interactive mode via OAuth (Max 訂閱，不計 API 費用)."""
+    env = os.environ.copy()
+    if CLAUDE_OAUTH_TOKEN:
+        env["CLAUDE_CODE_OAUTH_TOKEN"] = CLAUDE_OAUTH_TOKEN
+    # Ensure homebrew bin is in PATH for launchd context
+    env["PATH"] = "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:" + env.get("PATH", "")
+    try:
+        proc = await asyncio.create_subprocess_exec(
+            "claude", "-p", prompt,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+            env=env,
+        )
+        try:
+            stdout, stderr = await asyncio.wait_for(proc.communicate(), timeout=timeout)
+        except asyncio.TimeoutError:
+            proc.kill()
+            return f"⚠️ Claude 回應超時（{timeout}秒）"
+        if proc.returncode != 0:
+            err = stderr.decode(errors="replace")[:300].strip()
+            return f"⚠️ Claude 錯誤: {err or '未知錯誤'}"
+        return stdout.decode(errors="replace").strip() or "（Claude 無回應）"
+    except FileNotFoundError:
+        return "⚠️ 找不到 claude 命令，請確認已安裝 Claude Code"
+    except Exception as e:
+        return f"⚠️ 呼叫 Claude 失敗: {e}"
+
+
 # ── Command Handlers ───────────────────────────────────────────────────────────
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -120,7 +151,9 @@ async def help_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         "/blocker — 所有 blocker\n"
         "/refresh — 手動 git pull\n"
         "/ping — 心跳檢查\n"
-        "/help — 本說明",
+        "/ask \\[問題\\] — 直接問 Claude（OAuth，免費）\n"
+        "/help — 本說明\n\n"
+        "💬 直接傳訊息也可以問 Claude",
         parse_mode="MarkdownV2",
     )
 
@@ -326,13 +359,38 @@ async def refresh(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         await update.message.reply_text(f"⚠️ 失敗：{e}")
 
 
+async def ask_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not is_owner(update):
+        await deny(update)
+        return
+    if not context.args:
+        await update.message.reply_text("用法：/ask [問題]，例如 /ask A2 現在在做什麼？")
+        return
+    prompt = " ".join(context.args)
+    await update.message.reply_text("🤔 Claude 思考中…")
+    answer = await claude_ask(prompt)
+    await send_long(update, answer)
+
+
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if not is_owner(update):
         await deny(update)
         return
-    await update.message.reply_text(
-        "ℹ️ 此終端為讀檔模式，不支援自由對話。\n請使用 /help 查看可用指令。"
+    text = update.message.text or ""
+    git_pull_silent()
+    try:
+        status_snippet = read_file("CURRENT_STATUS.md")[:1500]
+    except Exception:
+        status_snippet = ""
+    prompt = (
+        "你是 MAPLAB AI 計畫的助理。以下是目前專案狀態摘要：\n\n"
+        f"{status_snippet}\n\n"
+        f"Owner 說：{text}\n\n"
+        "請用繁體中文簡潔回答。"
     )
+    await update.message.reply_text("🤔 Claude 思考中…")
+    answer = await claude_ask(prompt)
+    await send_long(update, answer)
 
 
 async def on_error(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -370,6 +428,7 @@ def main() -> None:
     app.add_handler(CommandHandler("commit", commit_cmd))
     app.add_handler(CommandHandler("blocker", blocker))
     app.add_handler(CommandHandler("refresh", refresh))
+    app.add_handler(CommandHandler("ask", ask_cmd))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     app.add_error_handler(on_error)
 

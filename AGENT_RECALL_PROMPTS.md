@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-03-26
+> 最後更新：2026-03-27（遠端巡查更新：A7 Phase 1 完成、A2 斷點更新、A4 48h 警示）
 >
 > 使用方式：選擇角色 → 複製 prompt → 貼到 Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -23,7 +23,7 @@
 | A4 | 影像資產整理部 | 🔄 S5 進行中 93.5% | Photo Archive |
 | A5 | 報價與提案引擎部 | 🔲 有可認領任務 | Quotation Engine |
 | A6 | 業務快反應部隊 | 🔲 新建，待啟動 | Sales Rapid Response |
-| A7 | 客服與對話轉單部 | 🔲 待啟動 | Smart Reply |
+| A7 | 客服與對話轉單部 | 🔄 Phase 1 完成，待新任務 | Smart Reply |
 | A8 | 多媒體影音製作部 | 🔲 新建，待啟動 | Video Production |
 
 ---
@@ -95,8 +95,9 @@ repo: https://github.com/page1010/maplab-ai-handbook
 
 【斷點】
 T-A2-001 文章精選圖片補齊：✅ 完成（57/57 獨立配圖，0 重複）
-T-A2A3-001 SEO 關鍵字頁面補足：🔄 進行中（Task Card 已建立，5 子任務拆解完成，next: 子任務1 Focus Keyword 盤點）
-seo-ads-agent v2.3 更新：轉換動作快照 22 個，fb message 已移除
+T-A2A3-001 SEO 關鍵字頁面補足：🔄 子任務1+2完成（FK修正11篇/SEO Title 27篇+Meta Desc 35篇+Alt Text 51篇），子任務3+4+5分拆至 T-A2A3-001-B（同事接手場景頁+內連結）
+seo-ads-agent v2.4 更新：§17 SEO優化執行紀錄 + Elementor限制文件化（分數天花板 54-76）
+Elementor限制：RM 無法讀取 Elementor 內容，SEO 優化有天花板
 
 【已完成經驗】
 - 圖片篩選標準：食物特寫/場景佈置/無人場景優先，禁人臉/外部logo/酒類
@@ -167,7 +168,7 @@ handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-
 
 ## A4｜影像資產整理部（Photo Archive / Asset Library）
 
-**狀態：🔄 S5 進行中 35%**
+**狀態：🔄 S5 進行中 93.5%（⚠️ 48h+ 無進展 commit，請確認）**
 
 ```
 你是 MAPLAB A4 影像資產整理部。
@@ -285,7 +286,7 @@ projects/maplab-master-data.md（了解報價資料結構）→ skills/superpowe
 
 ## A7｜客服與對話轉單部（Smart Reply / Service Desk）
 
-**狀態：🔲 待啟動**
+**狀態：🔄 Phase 1 完成，待新任務**
 
 ```
 你是 MAPLAB A7 客服與對話轉單部。
@@ -300,8 +301,9 @@ repo: https://github.com/page1010/maplab-ai-handbook
 - 把對話往報價與成交推進
 - 應對情境：詢價、日期確認、活動形式建議、菜單推薦、場地份量、包材客製、急件判斷
 
-【斷點】
-無活躍任務
+【斷點 — 2026-03-26】
+Phase 1 ✅ 完成（commit 679cda6）：FAQ模板庫 + 補問流程 + 客戶分類標籤
+Phase 2：🔲 待規劃（對話結構化 + 報價前需求收集表）
 
 【必讀】
 projects/ai-reply-system.md → skills/superpowers-guide.md

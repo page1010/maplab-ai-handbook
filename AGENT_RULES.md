@@ -141,6 +141,7 @@ A8 影音 ←── A4 素材
 | 斷點銜接 | session 結束前寫 PROJECT STATE UPDATE 到 auto-memory |
 | 記憶取回 | 新 session 開始時讀 auto-memory + git pull 恢復上下文 |
 | Telegram 管理 | 管理 bot daemon 狀態、更新指令、推送通知 |
+| 遠端 Agent 監控 | 透過 Chrome Remote Desktop 連接 Windows，監控 A4/A5 等跨機器 Agent |
 
 ### A0 不做的事
 - 不直接改 GitHub 文件（委派 Code task / A1 執行）

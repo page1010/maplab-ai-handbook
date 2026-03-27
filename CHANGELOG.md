@@ -24,6 +24,7 @@
 ### Notion 定位
 8. Notion 降級為「Owner 可視化報告介面」，不再作為 Agent 狀態來源
 9. 新增清理任務 T-A0-002（保留架構，引導到 GitHub）
+10. skills/remote-desktop-agent-bridge.md v1.0 — A0 跨機器 Agent 監控技能書（Chrome Remote Desktop 操作 SOP）
 
 ---
 

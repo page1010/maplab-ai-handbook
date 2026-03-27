@@ -36,6 +36,7 @@ h# Superpowers Skills 導覽手冊 — MAPLAB AI Agent 版
 | 策略、規劃、方向、大局 | strategic-review-guide | 5 問框架 |
 | 驗證、確認、完成檢查 | verification-checklist-guide | 5 步驗證 |
 | 媒體限制、100張、圖太多 | media-limit-workaround | 繞過限制策略 |
+| 遠端桌面、Windows、跨機器、Colab、DESKTOP-PAGEHOME、Agent 監控 | remote-desktop-agent-bridge | 適用 A0：Chrome Remote Desktop 連接 Windows，監控 A4/A5 等跨機器 Agent |
 
 ---
 

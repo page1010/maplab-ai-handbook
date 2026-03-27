@@ -40,6 +40,15 @@
 ⚠️ A1巡查 2026-03-27 00:00：A7 狀態不一致 — commit 679cda6 (2026-03-26 20:39) 顯示 A7 已完成 FAQ模板庫+補問流程+客戶分類標籤 Phase 1，但 CURRENT_STATUS 任務表與 AGENT_RECALL_PROMPTS 仍顯示「待啟動」。需補登 A7 進度至任務表，並更新 RECALL_PROMPTS A7 斷點。
 ⚠️ A1巡查 2026-03-27 00:00：A4 T-A4-001 超 48h 無實質進度 commit — 最後 S5 進展 commit 為 2026-03-25 12:24（已逾 48h）。任務狀態仍為 🔄 S5 93.5%。請 A4 確認 S5 是否仍在執行中，或已完成待結案。
 
+### 🔴 Owner Action Required
+
+| 項目 | 說明 | 優先級 |
+|------|------|--------|
+| Windows 輸入法 | 把注音預設改成英文（或確認 Shift+Space 可切換），讓 A0 能遠端打字 | 高 |
+| A4 Colab 重啟 | 登入 lb99104@gmail.com Colab，重啟 pipeline（剩 554 張，約 2 小時）| 高 |
+| A5 default_price | 在 MAPLAB_MasterData Sheets Items 表填入 D 欄 default_price | 中 |
+| A2/A7 指令貼入 | 在 Windows Chrome 側邊欄貼入 A2 SEO 和 A7 對話流程圖指令（或等 A0 遠端打字修復）| 中 |
+
 ## 最新決策
 - 2026-03-27：A0 總調度秘書角色建立（Cowork Dispatch Secretary），定位為跨系統橋接層；Telegram bot daemon 上線（launchd 自啟，免費指令讀檔模式，9 個指令）；Notion 定位降級為可視化報告介面，不再作為 Agent 狀態來源
 

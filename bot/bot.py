@@ -111,6 +111,7 @@ async def help_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text(
         "📋 *MAPLAB A1 終端指令*\n\n"
         "/status — 系統總覽（CURRENT\\_STATUS.md）\n"
+        "/owner — Owner 待處理事項清單\n"
         "/task \\[ID\\] — 查特定任務，例如 /task T\\-A2\\-001\n"
         "/patrol — 最近巡查報告（git log patrol commits）\n"
         "/queue — 待認領任務（TASK\\_QUEUE.md）\n"
@@ -259,6 +260,28 @@ async def commit_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None
     await update.message.reply_text(f"📝 最近 5 commits:\n\n{output}")
 
 
+async def owner_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not is_owner(update):
+        await deny(update)
+        return
+    git_pull_silent()
+    content = read_file("CURRENT_STATUS.md")
+    lines = content.splitlines()
+    # Extract "Owner Action Required" section
+    section_lines = []
+    in_section = False
+    for line in lines:
+        if "Owner Action Required" in line:
+            in_section = True
+            section_lines.append(line)
+        elif in_section:
+            if line.startswith("## ") or line.startswith("### "):
+                break
+            section_lines.append(line)
+    output = "\n".join(section_lines).strip() if section_lines else "✅ 目前無 Owner 待處理事項"
+    await send_long(update, f"🔴 *Owner Action Required*\n\n{output}")
+
+
 async def blocker(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if not is_owner(update):
         await deny(update)
@@ -339,6 +362,7 @@ def main() -> None:
     app.add_handler(CommandHandler("help", help_cmd))
     app.add_handler(CommandHandler("ping", ping))
     app.add_handler(CommandHandler("status", status))
+    app.add_handler(CommandHandler("owner", owner_cmd))
     app.add_handler(CommandHandler("task", task_cmd))
     app.add_handler(CommandHandler("patrol", patrol))
     app.add_handler(CommandHandler("queue", queue))

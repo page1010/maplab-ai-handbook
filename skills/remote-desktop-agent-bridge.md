@@ -118,15 +118,24 @@ Windows 有雙螢幕，Chrome Remote Desktop 預設顯示全部。
 
 ### 場景 3：跟 Windows 上的 Agent 對話
 1. 連上 DESKTOP-PAGEHOME
-2. 找到 Claude 側邊欄
-3. 點擊 "Reply to Claude" 輸入框
-4. 打字送出訊息
-5. 等待回覆，截圖讀取
+2. 切到目標 Chrome 窗口（點螢幕 tab）
+3. 按 Shift+Space 切換 Windows 輸入法到英文
+4. 點 Claude 側邊欄「Reply to Claude」輸入框
+5. 用 CRD「傳送文字」功能（ref_174 textbox）輸入指令
+6. 點「傳送」或按 Enter 送出（注意：可能觸發 Task View，改用 Enter）
+7. 或者用 Extension 的 Startup Prompt 機制——在 AGENT_RECALL_PROMPTS.md 更新目標角色的 prompt，Extension 自動讀取
 
 ### 場景 4：處理 OAuth / 權限彈窗
 1. 如果是 Chrome tab 內的彈窗 → 可以直接點
 2. 如果是獨立 popup 窗口 → 可能需要 Owner 手動處理
 3. 如果是 Google 帳戶選擇 → 選 pagewu1010@gmail.com
+
+### 場景 5：透過 Extension 遠端啟動 Agent
+1. 在 GitHub 更新 AGENT_RECALL_PROMPTS.md 對應角色的 prompt（加入當前任務指令）
+2. Owner 在 Windows 開啟 MAPLAB Agent Commander Extension
+3. Extension 自動讀取最新 prompt
+4. 選角色 → 複製 Startup Prompt → 貼到 Claude 側邊欄
+5. A0 不需要遠端打字——透過修改 GitHub 文件間接控制
 
 ---
 
@@ -229,6 +238,12 @@ Windows 有雙螢幕，Chrome Remote Desktop 預設顯示全部。
 - 鍵盤 Tab+Enter 會被 Chrome 側邊欄攔截，不是送到彈窗
 - **結論：遠端操作適合「看」（監控、辨識、截圖報告），「點小按鈕」仍有困難**
 - 大面積操作（切 tab、點 Google Drive 文件、在輸入框打字）應該可行
+
+### 2026-03-27 輸入法切換正確方法
+- Windows 注音切英文是 **Shift+Space**（不是單按 Shift，不是 CapsLock）
+- 之前所有嘗試用錯了快捷鍵（見「遠端打字深度研究結論」表格）
+- 正確流程：在 CRD 裡按 Shift+Space → Windows 注音切到英文 → 再打字或用「傳送文字」
+- 待下次連線驗證
 
 ---
 

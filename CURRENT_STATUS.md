@@ -52,6 +52,8 @@
 | A2/A7 指令貼入 | 在 Windows Chrome 側邊欄貼入 A2 SEO 和 A7 對話流程圖指令（或等 A0 遠端打字修復）| 中 |
 
 ## 最新決策
+
+- 2026-03-27：A2 T-A2A3-001 子任務2 Phase 2完成 — SEO Title 數字優化 36篇（Title Readability 全綠），分數抽檢 Post 253(50→51) Post 564(81→84 Good) Post 1246(54→55) Post 1227(69)。API 可修正項目已全部完成（FK in Title/Desc/Alt + Number in Title），剩餘分數需 Elementor 編輯或 ToC 插件。
 - 2026-03-27：A0 總調度秘書角色建立（Cowork Dispatch Secretary），定位為跨系統橋接層；Telegram bot daemon 上線（launchd 自啟，免費指令讀檔模式，9 個指令）；Notion 定位降級為可視化報告介面，不再作為 Agent 狀態來源
 
 - 2026-03-26：A2 T-A2A3-001 子任務1+2完成 — (1) FK修正11篇(57/57全匹配) (2) SEO Title 27篇+Meta Desc 35篇+Alt Text 51篇修正(分數~54-76) (3) 任務分拆：子任務3+4+5→T-A2A3-001-B由同事接手 (4) seo-ads-agent v2.4(§17執行紀錄+SEO Performance更新) (5) Elementor限制文件化：RM無法讀取Elementor內容，分數天花板約54-76

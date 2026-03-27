@@ -165,6 +165,12 @@ Windows 有雙螢幕，Chrome Remote Desktop 預設顯示全部。
 - 辨識 Agent 角色靠 Claude 側邊欄的對話內容和 Agent Commander 面板
 - Windows 上有多個 Chrome 視窗各自扮演不同角色，需要仔細辨識 tab 標題
 
+### 2026-03-27 遠端點擊精度問題
+- Chrome Remote Desktop 雙螢幕模式下，畫面被壓縮到一個 tab 裡顯示，小按鈕（如彈窗的 Connect/Ignore）很難精確點中
+- 解法：操作小按鈕前，先切到單螢幕模式（右側 > 箭頭 → Display → 選 Display 1 或 Display 2），讓畫面放大後再點
+- 或使用 Cmd+Option+M 快捷鍵切換螢幕
+- 大面積元素（如 tab 切換、大按鈕）在雙螢幕模式下可以正常點擊
+
 ---
 
 *建立者：A0 Cowork Dispatch Secretary | 2026-03-27 | 基於實際操作經驗撰寫*

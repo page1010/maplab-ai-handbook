@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-03-28 ｜ 更新者：A2 T-A2A3-001-B 子任務3+4完成
+最後更新：2026-03-28 ｜ 更新者：A1 v5.3 — QUOTE_DRAFT修復+MCP恢復+Extension修復+歷史分析+A2子任務3+4完成
 
 ---
 
@@ -19,7 +19,7 @@
 |---------|------|-----------|------|-----------| 
 | T-A1-002 | Phase 4.1 系統治理升級 | A1 | ✅ 完成 | handoff/tasks/T-A1-002.md |
 | T-A5-001 | Items 去重 + 全品項重新編碼 | A5 | ✅ 完成（APP050/DST041/MAIN009/BEV008=108，已排序+連號） | handoff/tasks/T-A5-001.md |
-| T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔲 可認領 | handoff/tasks/T-A5-002.md |
+| T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔄 進行中（QUOTE_DRAFT 修復完成，車馬費/服務費區塊待加）| handoff/tasks/T-A5-002.md |
 | T-A5-003 | 熱客招待品項定義 | A5 | 🔲 待開始 | — |
 | T-A4-001 | Phase 4 Gemini 照片分類 | A4 | 🔄 S5 ✅ DONE, S6 running (2,950/16,251=18.2%), S5.5 GPS planned | projects/maplab-pipeline.md |
 | T-A2-001 | 文章精選圖片補齊（57篇→每篇獨立配圖） | A2 | ✅ 完成（57/57 獨立配圖，0 重複） | handoff/tasks/T-A2-001.md |
@@ -48,14 +48,19 @@
 
 | 項目 | 說明 | 優先級 |
 |------|------|--------|
-| Windows 輸入法 | 把注音預設改成英文（或確認 Shift+Space 可切換），讓 A0 能遠端打字 | 高 |
 | A4 Colab 重啟 | 登入 lb99104@gmail.com Colab，重啟 pipeline（剩 554 張，約 2 小時）| 高 |
-| A5 default_price | 在 MAPLAB_MasterData Sheets Items 表填入 D 欄 default_price | 中 |
-| A2/A7 指令貼入 | 在 Windows Chrome 側邊欄貼入 A2 SEO 和 A7 對話流程圖指令（或等 A0 遠端打字修復）| 中 |
+| Items DST 成本補填 | 在 MAPLAB_MasterData Sheets Items 表補填 21 筆 DST 品項成本（E 欄）| 高 |
+| Extension v4.8 重裝 | Chrome 重新安裝 Extension v4.8（private repo 已改用 GitHub Contents API）| 中 |
+| A0 User Preferences 貼入 | 在 A0 bot 貼入 User Preferences 設定（個性化回覆偏好）| 中 |
 
 ## 最新決策
 
-
+- 2026-03-28：QUOTE_DRAFT 報價單修復完成（VLOOKUP 統一讀 E 欄成本、業務報價 I 欄、成本小計 H 欄、D6-D8 APP 下拉、D13 DST 下拉、E32 業務報價總額、H33 毛利率）
+- 2026-03-28：Items backup 覆蓋 Items + QUOTE_V2_FUTURE 刪除
+- 2026-03-28：Google Sheets MCP OAuth token 恢復成功（google-token.json 建立）
+- 2026-03-28：Extension v4.8 修復（private repo 改用 GitHub Contents API）
+- 2026-03-28：歷史訂單分析完成（2026 真實 6 筆、2025 為合成資料）
+- 2026-03-28：車馬費分析（新化 18.4km/30min=$720、歸仁 14.8km/35min=$780，邏輯為人力時間成本 200×4=$800）
 - 2026-03-28：A2 T-A2A3-001-B 同事接手完成 — (1) 確認同事無commit記錄，A2接手 (2) 子任務3 LP 3頁建立（Post 1584/1587/1588, Draft） (3) 子任務4 內連結56/57篇完成 (4) 首頁排名確認：GSC avg position 8.0未下降 (5) 子任務5等7-14天。
 2026-03-28：A5 Sheets 清理 — Owner 確認三個決策：(1) GFT001-005 不保留（Owner 未加）(2) Items_backup 完全覆蓋 Items（115行/1063 cells 已驗證一致）(3) QUOTE_V2_FUTURE 工作表刪除 ✅ 全部完成。
 

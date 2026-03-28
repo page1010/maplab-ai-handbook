@@ -23,7 +23,7 @@
 | T-A5-003 | 熱客招待品項定義 | A5 | 🔲 待開始 | — |
 | T-A4-001 | Phase 4 Gemini 照片分類 | A4 | 🔄 S5 running (93.5%) — S1-S4 done, GPS confirmed | projects/maplab-pipeline.md |
 | T-A2-001 | 文章精選圖片補齊（57篇→每篇獨立配圖） | A2 | ✅ 完成（57/57 獨立配圖，0 重複） | handoff/tasks/T-A2-001.md |
-| T-A2A3-001 | SEO 關鍵字頁面補足 | A2 | 🔄 進行中（子任務1+2全完成含Phase2數字優化，子任務3+4+5→T-A2A3-001-B） | handoff/tasks/T-A2A3-001.md |001.md |
+| T-A2A3-001 | SEO 關鍵字頁面補足 | A2 | 🔄 進行中（子任務1+2+2-A全完成，子任務3 LP建立待開始） | handoff/tasks/T-A2A3-001.md |
 | T-A3-001 | GTM LINE 按鈕追蹤修復（方案 B 已確認） | A3 | 🔲 可認領（待測試） | — |
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | 🔄 確認中（已上線，受眾已記錄） | handoff/tasks/T-A3-002.md |
 | T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | ✅ Phase 1 完成（v1.0，含 SECTION 8 對話流程圖）| handoff/tasks/T-A7-001.md |
@@ -54,7 +54,8 @@
 
 ## 最新決策
 
-- 2026-03-28：bot.py session resume 修復成功（claude -p -c flag），有記憶+MCP+bash+Max免費
+- 2026-03-28：A2 T-A2A3-001 斷點補齊完成 — Task Card 子任務2狀態從🔄更新為✅（Phase1 Title/Desc/Alt+Phase2數字優化36篇+2-A內連結16篇全部確認完成）。子任務3 Landing Page（週歲/婚禮/企業）為下一步。（commit: c17f0e5）
+2026-03-28：bot.py session resume 修復成功（claude -p -c flag），有記憶+MCP+bash+Max免費
 - 2026-03-27 深夜：bot.py 記憶斷裂根因確認（claude -p one-shot = 無記憶），修復方向：回到 Anthropic SDK + OAuth token + conversation_history；A0/A1 並列架構 v3.2 由 A1 自主建立；CLAUDE.md 已同步 RECALL_PROMPTS；experience-log 新增 F007-F009 + S007-S008
 
 - 2026-03-27：T-A0-002 完成（Agent 角色表、GitHub 進度報告、Pipeline 專案頁面加了 GitHub 引導）；A0 每小時 GitHub 同步巡查排程已設定

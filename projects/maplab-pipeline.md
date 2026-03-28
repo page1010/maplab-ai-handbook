@@ -1,5 +1,5 @@
 # Pipeline Agent — 角色定位與技術文件
-  版本：v2.0 | 建立：2026-03-12 | 更新：2026-03-25
+  版本：v2.0 | 建立：2026-03-12 | 更新：2026-03-28
 
 ---
 
@@ -16,7 +16,7 @@
 
 ## 你是誰（接手前先讀這段）
 
-- 角色：A4 Pipeline Agent
+- 角色：A4 Pipeline Agen
 - 任務：相簿整理自動化（Google Photos Takeout → Drive → Gemini 分類 → WebP → Notion）
 - GitHub：https://github.com/page1010/maplab-pipeline
 - 進度：project_state.md（maplab-pipeline repo）

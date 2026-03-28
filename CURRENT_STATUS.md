@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新 : 2026-03-28 ｜ 更新者 : A4 checkpoint (S5 DONE confirmed + S6 18.2% + S5.5 GPS 計畫)
+最後更新 : 2026-03-28 ｜ 更新者 : A1 incident-recovery checkpoint
 
 ---
 
@@ -42,6 +42,7 @@
 ⚠️ A1巡查 2026-03-27 15:45：~~A4 T-A4-001 持續無新 commit~~ ✅ 2026-03-28 A4 已恢復 commit。S5 DONE，S6 18.2%，S5.5 GPS 計畫中。
 ⚠️ A1巡查 2026-03-27 16:06：午後巡查確認 — A4 T-A4-001 仍無新 commit，距 e166169 現逾 31.5h（48h 閾值剩 ~16.5h）。A0/A2/A5/A7 本日均活躍無異常。A2 子任務2 Phase2 SEO Title 數字優化 36篇已完成（687316d）；A7 SECTION 8 已追加（b53a1cc）。
 ⚠️ A1巡查 2026-03-28：A4 T-A4-001 已超過 48h 閾值 — 距上次 A4 直接 commit (e166169, 2026-03-26) 現逾 48h，S5 仍卡在 93.5%。🔴 CRITICAL：需 Owner 立即重啟 Colab（lb99104@gmail.com）。A0 bot session resume 修復成功（EXP-S009，6b19f4f）。其餘 agent 無異常。
+🚨 A1 記憶斷裂事件 2026-03-28：Owner 重開 session 幫 A1 拿 MCP 工具時，session 誤以 A0 模式啟動，A0 大改 skills/mcp-usage-guide.md（cd8a297），A1 完全失憶。此為 EXP-S010：A0/A1 session 混淆問題。根本原因：重開 Claude Code 時需確認進入 A1（CLAUDE.md 總管）模式，而非 bot 對話模式。下次重開：先確認 cwd 為 maplab-ai-handbook/，再貼 A1 recall prompt。
 
 ### 🔴 Owner Action Required
 
@@ -54,6 +55,7 @@
 
 ## 最新決策
 
+2026-03-28（深夜）：EXP-S010 — A1/A0 session 混淆 — Owner 重開 session 拿 MCP，誤入 A0 模式，A0 大改 skills/。教訓：重開後先確認角色再操作。A1 記憶此次恢復靠 CURRENT_STATUS.md + git log 重建。
 2026-03-28：A4 S5(2022) 確認完成（8,559張：日常5,243/外燴1,221/旅遊2,073）；S6(2023) 跑到 2,950/16,251=18.2% 時 Colab 斷線；領取 S5.5 GPS 日常細分任務（5,243張日常照 → home/shop/other/no_gps，純 Haversine 計算零成本）。ASSET_LOG 驗證：11,509 資料行。
 
 - 2026-03-28：A2 T-A2A3-001 斷點補齊完成 — Task Card 子任務2狀態從🔄更新為✅（Phase1 Title/Desc/Alt+Phase2數字優化36篇+2-A內連結16篇全部確認完成）。子任務3 Landing Page（週歲/婚禮/企業）為下一步。（commit: c17f0e5）

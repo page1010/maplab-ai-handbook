@@ -212,6 +212,17 @@
 - **更好的方向**: 如果 `-c` 不夠穩定（resume 到錯誤的 session），可以用 `--session-id telegram-bot` 固定 session ID
 - **下次怎麼做最快**: 加 `-c` flag 就好，先查 `claude --help` 再動手
 
+### EXP-FEEDBACK-001 — Cowork Dispatch 產品限制（2026-03-28）
+
+- **日期**: 2026-03-28
+- **Agent**: A0 Cowork Dispatch Secretary
+- **類型**: FEEDBACK — 產品限制回報
+- **問題 1**: Cowork 沒有像 Telegram 那樣的「指定回話」功能——每次新 session 都從零開始，A0 只有 auto-memory 跨 session，不是完整對話上下文
+- **問題 2**: Cowork 沒有複製貼上功能——無法方便地複製長文字（如 recall prompt）貼到 Code task
+- **影響**: A0 每次 session 開始要花大量 token 重建上下文；開 Code task 帶 recall prompt 很不方便
+- **建議**: 回報給 Anthropic，建議 Cowork 加入 session resume 和 clipboard 功能
+- **下次怎麼做最快**: A0 開 Code task 時，透過 Extension 複製 recall prompt，再貼到 Code task（比在 Cowork 打字快）
+
 ---
 
 ## 格式模板（新增時複製）

@@ -67,7 +67,7 @@
 | 44 | CHANGELOG v5.4 整理 | A0→Code task | 🔲 |
 | 45 | experience-log 重新編號 | A0→Code task | 🔲 |
 | 46 | bot/ DEPRECATED 移到 archive/ | A0→Code task | 🔲 |
-| 47 | A1 巡查排程強化 | A0→排程 | 🔲 |
+| 47 | Notion Dashboard 即時同步（從 GitHub 拉最新狀態讓 Owner 看） | A0→Code task | 🔲 |
 | 48 | start-a1.sh 升級 | A0→Code task | 🔲 |
 | 49 | 系統架構圖 Mermaid | A0→Code task | 🔲 |
 | 50 | 預留：Owner 臨時任務 | — | 🔲 |

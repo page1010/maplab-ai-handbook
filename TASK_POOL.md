@@ -8,8 +8,8 @@
 |---|------|---------|------|
 | 1 | QUOTE_DRAFT 加服務費 10% 自動計算（已修正為可選：D25 下拉是/否，否→免） | A0→Code task | ✅ |
 | 2 | QUOTE_DRAFT 加長桌費 $350 選項 | A0→Code task | ✅ |
-| 3 | QUOTE_DRAFT 加車馬費下拉（市區免/近郊$400/遠郊$800） | A0→Code task | 🔲 |
-| 4 | DropdownHelper 增加 DST/BEV/MAIN 分類下拉 | A0→Code task | 🔲 |
+| 3 | QUOTE_DRAFT 加車馬費下拉（市區免/近郊$400/遠郊$800） | A0→Code task | ✅ |
+| 4 | DropdownHelper 增加 DST/BEV/MAIN 分類下拉 | A0→Code task | ✅ |
 | 5 | A7 客服 FAQ Phase 2 — 從 Drive 報價單整理常見問答 | A0→Windows A7 | 🔲 |
 | 6 | A6 急件報價 SOP — 從歷史 6 筆訂單建模板 | A0→Code task | 🔲 |
 | 7 | Google Slides 報價簡報模板 v1 | A0→Code task | 🔲 |

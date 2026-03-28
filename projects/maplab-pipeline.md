@@ -1,5 +1,5 @@
 # Pipeline Agent — 角色定位與技術文件
-  版本：v1.9 | 建立：2026-03-12 | 更新：2026-03-25
+  版本：v2.0 | 建立：2026-03-12 | 更新：2026-03-25
 
 ---
 
@@ -203,9 +203,9 @@ seo_name格式：{category}-{description}-{detail}，例：catering-birthday-buf
 | S2 | 先鋒 10 張（驗證 prompt + API 流程） | ✅ DONE | 2026-03-23 | ASSET_LOG rows 2-11 |
 | S3 | 定版 Gemini prompt | ✅ DONE | 2026-03-23 | 見上方 prompt |
 | S4 | 建 MAPLAB_ASSETS 資料夾結構 | ✅ DONE | 2026-03-23 | 2022-2026 × catering/travel/daily |
-| S5 | 2022 全年 batch（8,559 images） | 🔄 93.5% (8005/8559) | 2026-03-25 | REST API ~277/h，第6次重啟中，剩餘554張 |
-| S5.5 | 日常 home/shop GPS 細分 | 🔲 待 S5 完成 | — | 新增步驟，見下方說明 |
-| S6 | 2023 batch | 🔲 待開始 | — | 19,459 files |
+| S5 | 2022 全年 batch（8,559 images） | ✅ DONE | 2026-03-25 | 8,559 完成（日常5,243/外燴1,221/旅遊2,073） |
+| S5.5 | 日常 home/shop GPS 細分 | 🔄 進行中 | 2026-03-28 | A4 已領取，5,243張日常照待 Colab 執行 |
+| S6 | 2023 batch | 🔄 18.2% (2,950/16,251) | 2026-03-25 | Colab斷線待重啟，16,251 files |
 | S6.5 | 2023 日常 GPS 細分 | 🔲 待 S6 完成 | — | 同 S5.5 邏輯 |
 
 ### S5.5 / S6.5 — 日常 home/shop GPS 細分（新增）
@@ -403,3 +403,4 @@ seo_name格式：{category}-{description}-{detail}，例：catering-birthday-buf
 | v1.7 | 2026-03-23 | Phase 4 v4.0：S1-S4 完成 + S5 進行中 + S5.5 GPS + REST API | A4 |
 | v1.8 | 2026-03-24 | 版本更新 + GPS 座標查詢中 | A4 |
 | v1.9 | 2026-03-25 | S5 93.5% + GPS 座標確認 + 付費 tier 發現 + 加速方案 + 全年份排程 + 執行 SOP + A2 素材指南 | A4 |
+| v2.0 | 2026-03-28 | S5 DONE confirmed + S6 18.2% + S5.5 GPS 領取 + ASSET_LOG 驗證 11,509 rows | A4 |

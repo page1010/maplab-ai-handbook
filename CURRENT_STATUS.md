@@ -43,6 +43,9 @@
 ⚠️ A1巡查 2026-03-27 16:06：午後巡查確認 — A4 T-A4-001 仍無新 commit，距 e166169 現逾 31.5h（48h 閾值剩 ~16.5h）。A0/A2/A5/A7 本日均活躍無異常。A2 子任務2 Phase2 SEO Title 數字優化 36篇已完成（687316d）；A7 SECTION 8 已追加（b53a1cc）。
 ⚠️ A1巡查 2026-03-28：A4 T-A4-001 已超過 48h 閾值 — 距上次 A4 直接 commit (e166169, 2026-03-26) 現逾 48h，S5 仍卡在 93.5%。🔴 CRITICAL：需 Owner 立即重啟 Colab（lb99104@gmail.com）。A0 bot session resume 修復成功（EXP-S009，6b19f4f）。其餘 agent 無異常。
 🚨 A1 記憶斷裂事件 2026-03-28：Owner 重開 session 幫 A1 拿 MCP 工具時，session 誤以 A0 模式啟動，A0 大改 skills/mcp-usage-guide.md（cd8a297），A1 完全失憶。此為 EXP-S010：A0/A1 session 混淆問題。根本原因：重開 Claude Code 時需確認進入 A1（CLAUDE.md 總管）模式，而非 bot 對話模式。下次重開：先確認 cwd 為 maplab-ai-handbook/，再貼 A1 recall prompt。
+⚠️ A1巡查 2026-03-28 下午：A7 Phase 2 活動未登記 — commit aea3094（Phase 2 20筆CSV驗證+Q1-Q10重構 v2.0）+ f239b40（T-A7-002 80/20任務清單 10大任務+執行路線圖）已落地，但 CURRENT_STATUS 任務表仍顯示「Phase 1 完成，待新任務」。請 A7 補更新任務狀態。
+⚠️ A1巡查 2026-03-28 下午：A4 S5.5 GPS 進度超前文件記錄 — commit b1be7c6 顯示 S5.5 GPS partial(1221/no_gps)，CURRENT_STATUS 任務表仍標示「S5.5 GPS planned」，已過時。
+⚠️ A1巡查 2026-03-28 下午：A5 T-A5-002 進度超前 CURRENT_STATUS — commit ac37fc7（Items.E default_cost串入 + QUOTE_DRAFT成本/毛利率公式完成），但任務表仍顯示「車馬費/服務費區塊待加」，需 A5 更新 Task Card。
 
 ### 🔴 Owner Action Required
 

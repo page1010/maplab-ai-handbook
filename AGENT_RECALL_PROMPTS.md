@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-03-27（A0/A1 recall prompt 修復：Extension 正則合規 + A0 強制貼入 A1 prompt 規則 + A1 斷點更新至 2026-03-27）
+> 最後更新：2026-03-28 下午巡查（A1斷點更新至 v5.3：A4 S5 DONE + S5.5 GPS partial + A7 Phase 2 + A5進度 + Extension v4.8）
 >
 > 使用方式：選擇角色 → 複製 prompt → 貼到 Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -21,10 +21,10 @@
 | A1 | 系統總管中心 | ✅ Claude Code 常駐 | 不需召喚，直接下指令 |
 | A2 | 搜尋流量作戰部 | ✅ T-A2-001 完成，待新任務 | SEO / GA / 關鍵字 |
 | A3 | 社群與廣告成長部 | 🔄 有進行中任務 | Meta Ads / Social |
-| A4 | 影像資產整理部 | 🔄 S5 進行中 93.5% | Photo Archive |
-| A5 | 報價與提案引擎部 | 🔲 有可認領任務 | Quotation Engine |
+| A4 | 影像資產整理部 | 🔄 S5✅/S5.5 GPS partial/S6 18.2% | Photo Archive |
+| A5 | 報價與提案引擎部 | 🔄 T-A5-002 進行中 | Quotation Engine |
 | A6 | 業務快反應部隊 | 🔲 新建，待啟動 | Sales Rapid Response |
-| A7 | 客服與對話轉單部 | 🔄 Phase 1 完成，待新任務 | Smart Reply |
+| A7 | 客服與對話轉單部 | 🔄 Phase 2 進行中（T-A7-001+T-A7-002）| Smart Reply |
 | A8 | 多媒體影音製作部 | 🔲 新建，待啟動 | Video Production |
 
 ---
@@ -96,21 +96,21 @@ repo: https://github.com/page1010/maplab-ai-handbook
 【MCP 工具（直接可用，不需手動開網頁）】
 Google Sheets / Drive / Analytics / Search Console / Ads / Meta Ads — 2026-03-26 已接通
 
-【斷點 — 2026-03-28】
-1. 系統版本：v5.2 / Phase 5 — 營運執行 + 廣告優化
-2. A0 bot session resume 修復成功（EXP-S009，6b19f4f）+ extension-agent-summon-guide v1.0
-3. A2 T-A2A3-001 子任務2 Phase2 完成 + 內連結16/16篇完成（7f7c54d）
-4. A7 T-A7-001 Phase 1 完成（FAQ模板庫 + SECTION 8 客戶對話流程圖，b53a1cc）
-5. A4 T-A4-001 S5 卡在 93.5%，距上次 A4 直接 commit (e166169, 2026-03-26) 已逾 48h — 🔴 CRITICAL Owner Action Required（Colab 重啟）
-6. T-A0-002 Notion 舊資料清理 ✅ 完成（e830aa8）
-7. AGENT_RULES.md v3.1、AGENT_RECALL_PROMPTS.md 已更新
-8. Chrome Extension v4.6（Side Panel + 角色選擇器 + 高對比 UI）
-9. GitHub Actions system-patrol.yml 已部署（每日 UTC 01:00 巡查）
+【斷點 — 2026-03-28 下午巡查更新】
+1. 系統版本：v5.3 / Phase 5 — 營運執行 + 廣告優化
+2. EXP-S010 A0/A1 session 混淆已記錄（c41b698）；下次重開先確認 cwd + 貼 A1 recall prompt
+3. A2 T-A2A3-001 ✅ 子任務1-4全完成（子任務5等7-14天觀察期）
+4. A7 T-A7-001 Phase 1 ✅ 完成；Phase 2 進行中（aea3094 CSV驗證+Q1-Q10重構 v2.0）；T-A7-002 80/20任務清單建立（f239b40）
+5. A4 T-A4-001 S5(2022) ✅ DONE 8,559張；S6(2023) 🔄 2,950/16,251=18.2%（Colab斷線待重啟）；S5.5 GPS 🔄 partial(1221/no_gps，b1be7c6）
+6. A5 T-A5-002 🔄 進行中：Items.E default_cost串入 + 成本/毛利率公式完成（ac37fc7）；N/A品項修復+飲料容量欄位待處理
+7. Chrome Extension v4.8（private repo 改用 GitHub Contents API，b2f031c）
+8. GitHub Actions system-patrol.yml 已部署（每日 UTC 01:00 巡查）
+9. QUOTE_DRAFT 修復完成（VLOOKUP統一讀E欄）；Google Sheets MCP OAuth token 恢復
 
 【可認領任務】
-- T-A5-002 QUOTE_DRAFT 報價單欄位增強（A5，🔲 可認領）
-- T-A2A3-001-B SEO 場景頁+內連結子任務（A2，🔲 分拆中）
+- T-A5-002 車馬費/服務費/N/A品項修復（A5，🔄 進行中）
 - T-A3-001 GTM LINE 按鈕追蹤（A3，🔲 可認領）
+- T-A5-003 熱客招待品項定義（A5，🔲 待開始）
 
 【維護中的檔案】
 - CURRENT_STATUS.md — 每次狀態變更必更新

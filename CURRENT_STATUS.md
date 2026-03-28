@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-03-28 ｜ 更新者：A1 v5.3 — QUOTE_DRAFT修復+MCP恢復+Extension修復+歷史分析+A2子任務3+4完成
+最後更新：2026-03-28 晚間巡查 ｜ 更新者：A1 v5.3 — 晚間巡查：A5進度更新/A4 Critical持續/RECALL_PROMPTS斷點更新
 
 ---
 
@@ -19,7 +19,7 @@
 |---------|------|-----------|------|-----------| 
 | T-A1-002 | Phase 4.1 系統治理升級 | A1 | ✅ 完成 | handoff/tasks/T-A1-002.md |
 | T-A5-001 | Items 去重 + 全品項重新編碼 | A5 | ✅ 完成（APP050/DST041/MAIN009/BEV008=108，已排序+連號） | handoff/tasks/T-A5-001.md |
-| T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔄 進行中（QUOTE_DRAFT 修復完成，車馬費/服務費區塊待加）| handoff/tasks/T-A5-002.md |
+| T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔄 進行中（服務費可選✅/長桌費$350✅/車馬費下拉✅/DropdownHelper分類驗證✅，dbcf9d4；待確認剩餘增強項目）| handoff/tasks/T-A5-002.md |
 | T-A5-003 | 熱客招待品項定義 | A5 | 🔲 待開始 | — |
 | T-A4-001 | Phase 4 Gemini 照片分類 | A4 | 🔄 S5 ✅ DONE, S6 running (2,950/16,251=18.2%), S5.5 GPS planned | projects/maplab-pipeline.md |
 | T-A2-001 | 文章精選圖片補齊（57篇→每篇獨立配圖） | A2 | ✅ 完成（57/57 獨立配圖，0 重複） | handoff/tasks/T-A2-001.md |
@@ -45,7 +45,8 @@
 🚨 A1 記憶斷裂事件 2026-03-28：Owner 重開 session 幫 A1 拿 MCP 工具時，session 誤以 A0 模式啟動，A0 大改 skills/mcp-usage-guide.md（cd8a297），A1 完全失憶。此為 EXP-S010：A0/A1 session 混淆問題。根本原因：重開 Claude Code 時需確認進入 A1（CLAUDE.md 總管）模式，而非 bot 對話模式。下次重開：先確認 cwd 為 maplab-ai-handbook/，再貼 A1 recall prompt。
 ⚠️ A1巡查 2026-03-28 下午：A7 Phase 2 活動未登記 — commit aea3094（Phase 2 20筆CSV驗證+Q1-Q10重構 v2.0）+ f239b40（T-A7-002 80/20任務清單 10大任務+執行路線圖）已落地，但 CURRENT_STATUS 任務表仍顯示「Phase 1 完成，待新任務」。請 A7 補更新任務狀態。
 ⚠️ A1巡查 2026-03-28 下午：A4 S5.5 GPS 進度超前文件記錄 — commit b1be7c6 顯示 S5.5 GPS partial(1221/no_gps)，CURRENT_STATUS 任務表仍標示「S5.5 GPS planned」，已過時。
-⚠️ A1巡查 2026-03-28 下午：A5 T-A5-002 進度超前 CURRENT_STATUS — commit ac37fc7（Items.E default_cost串入 + QUOTE_DRAFT成本/毛利率公式完成），但任務表仍顯示「車馬費/服務費區塊待加」，需 A5 更新 Task Card。
+✅ A1巡查 2026-03-28 下午：A5 T-A5-002 進度超前已修正 — 任務表已更新（服務費可選/長桌費/車馬費下拉/DropdownHelper均已完成，dbcf9d4）。
+⚠️ A1巡查 2026-03-28 晚間：A5 T-A5-002 Task Card 待 A5 更新 — handoff/tasks/T-A5-002.md 斷點尚未反映最新進度（服務費/車馬費/長桌費完成），請 A5 下次開工前補更新 Task Card。
 
 ### 🔴 Owner Action Required
 

@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-03-28 下午巡查（A1斷點更新至 v5.3：A4 S5 DONE + S5.5 GPS partial + A7 Phase 2 + A5進度 + Extension v4.8）
+> 最後更新：2026-03-28 晚間巡查（A5 T-A5-002 進度更新：服務費/車馬費/長桌費完成；A4/A7 斷點補齊；A1 斷點更新）
 >
 > 使用方式：選擇角色 → 複製 prompt → 貼到 Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -96,19 +96,19 @@ repo: https://github.com/page1010/maplab-ai-handbook
 【MCP 工具（直接可用，不需手動開網頁）】
 Google Sheets / Drive / Analytics / Search Console / Ads / Meta Ads — 2026-03-26 已接通
 
-【斷點 — 2026-03-28 下午巡查更新】
+【斷點 — 2026-03-28 晚間巡查更新】
 1. 系統版本：v5.3 / Phase 5 — 營運執行 + 廣告優化
 2. EXP-S010 A0/A1 session 混淆已記錄（c41b698）；下次重開先確認 cwd + 貼 A1 recall prompt
-3. A2 T-A2A3-001 ✅ 子任務1-4全完成（子任務5等7-14天觀察期）
-4. A7 T-A7-001 Phase 1 ✅ 完成；Phase 2 進行中（aea3094 CSV驗證+Q1-Q10重構 v2.0）；T-A7-002 80/20任務清單建立（f239b40）
-5. A4 T-A4-001 S5(2022) ✅ DONE 8,559張；S6(2023) 🔄 2,950/16,251=18.2%（Colab斷線待重啟）；S5.5 GPS 🔄 partial(1221/no_gps，b1be7c6）
-6. A5 T-A5-002 🔄 進行中：Items.E default_cost串入 + 成本/毛利率公式完成（ac37fc7）；N/A品項修復+飲料容量欄位待處理
-7. Chrome Extension v4.8（private repo 改用 GitHub Contents API，b2f031c）
-8. GitHub Actions system-patrol.yml 已部署（每日 UTC 01:00 巡查）
-9. QUOTE_DRAFT 修復完成（VLOOKUP統一讀E欄）；Google Sheets MCP OAuth token 恢復
+3. A2 T-A2A3-001 ✅ 子任務1-4全完成（子任務5等7-14天觀察期），TASK_QUEUE 已同步（d1c4635）
+4. A7 T-A7-001 Phase 2 進行中（aea3094 CSV驗證+Q1-Q10重構 v2.0）；T-A7-002 80/20任務清單已建立（f239b40）
+5. A4 T-A4-001 S5 ✅ DONE(8,559張)；S5.5 GPS 🔄 partial(1221/no_gps，b1be7c6)；S6 🔴 2,950/16,251=18.2%（Colab斷線，Owner需重啟）
+6. A5 T-A5-002 🔄 大量進展：服務費可選(203db7b)+長桌費$350(74377fb)+車馬費下拉+DropdownHelper(c4ee06d)+車馬費/桌子修正(dbcf9d4)；Task Card 待 A5 補更新
+7. A0 TASK_POOL 50 tasks weekend battle plan (f38cebf)；Telegram bot 活躍
+8. Chrome Extension v4.8（private repo 改用 GitHub Contents API，b2f031c）
+9. GitHub Actions system-patrol.yml 已部署（每日 UTC 01:00 巡查）
 
 【可認領任務】
-- T-A5-002 車馬費/服務費/N/A品項修復（A5，🔄 進行中）
+- T-A5-002 剩餘增強項目確認（A5，🔄 進行中，需更新 Task Card）
 - T-A3-001 GTM LINE 按鈕追蹤（A3，🔲 可認領）
 - T-A5-003 熱客招待品項定義（A5，🔲 待開始）
 
@@ -231,7 +231,7 @@ handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-
 
 ## A4｜影像資產整理部（Photo Archive / Asset Library）
 
-**狀態：🔄 S5 進行中 93.5%（⚠️ 48h+ 無進展 commit，請確認）**
+**狀態：🔄 S5✅DONE / S5.5 GPS partial / S6 18.2%（🔴 Colab 斷線待重啟）**
 
 ```
 你是 MAPLAB A4 影像資產整理部。
@@ -239,8 +239,13 @@ handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-
 repo: https://github.com/page1010/maplab-ai-handbook
 先讀 CURRENT_STATUS.md，再讀你的 Task Card。
 
-【斷點】
-T-A4-001 Gemini 照片分類：S1-S4 ✅ 完成，S5 🔄 93.5% — GPS confirmed, paid tier
+【斷點 — 2026-03-28 晚間巡查更新】
+T-A4-001 Gemini 照片分類：
+  - S1-S4 ✅ 完成
+  - S5(2022) ✅ DONE 8,559張（日常5,243/外燴1,221/旅遊2,073）
+  - S5.5 GPS 🔄 partial（1221/no_gps，b1be7c6）— 需修 Takeout JSON path
+  - S6(2023) 🔄 2,950/16,251=18.2%（Colab 斷線待 Owner 重啟）
+  - ASSET_LOG 驗證：11,509 資料行
 新增技能書：gps-daily-subdivision-guide（Haversine GPS 分類 home/shop/other）
 Photo scan 總量：60,584 files
 Pre-classified：C=4,593 / T=254 / D=55,737
@@ -273,7 +278,7 @@ projects/maplab-pipeline.md → handoff/handoff-to-A4.md → skills/superpowers-
 
 ## A5｜報價與提案引擎部（Quotation Engine）
 
-**狀態：🔲 主要完成，有可認領任務**
+**狀態：🔄 T-A5-002 進行中（服務費/車馬費/長桌費已完成，待確認剩餘項目）**
 
 ```
 你是 MAPLAB A5 報價與提案引擎部。
@@ -281,9 +286,15 @@ projects/maplab-pipeline.md → handoff/handoff-to-A4.md → skills/superpowers-
 repo: https://github.com/page1010/maplab-ai-handbook
 先讀 CURRENT_STATUS.md，再讀你的 Task Card。
 
-【斷點】
+【斷點 — 2026-03-28 晚間巡查更新】
 T-A5-001 Items 去重 + 全品項重新編碼：✅ 完成（108品項，APP050/DST041/MAIN009/BEV008，排序連號）
-T-A5-002 QUOTE_DRAFT 報價單欄位增強：🔲 可認領
+T-A5-002 QUOTE_DRAFT 報價單欄位增強：🔄 進行中
+  - ✅ Items.E default_cost 串入 + 成本/毛利率公式（ac37fc7）
+  - ✅ 服務費改為可選（D25 下拉是/否，203db7b）
+  - ✅ 長桌費 $350 選項（74377fb）
+  - ✅ 車馬費下拉 + DropdownHelper 分類驗證（c4ee06d）
+  - ✅ 車馬費下拉更新 + 桌子下拉修正（dbcf9d4）
+  - ⬜ 待確認：Task Card 斷點更新（A5 需補寫 handoff/tasks/T-A5-002.md）
 T-A5-003 熱客招待品項定義：🔲 待開始
 
 【Blocker】
@@ -349,7 +360,7 @@ projects/maplab-master-data.md（了解報價資料結構）→ skills/superpowe
 
 ## A7｜客服與對話轉單部（Smart Reply / Service Desk）
 
-**狀態：🔄 Phase 1 完成，待新任務**
+**狀態：🔄 Phase 2 進行中（T-A7-001+T-A7-002 活躍）**
 
 ```
 你是 MAPLAB A7 客服與對話轉單部。
@@ -364,9 +375,11 @@ repo: https://github.com/page1010/maplab-ai-handbook
 - 把對話往報價與成交推進
 - 應對情境：詢價、日期確認、活動形式建議、菜單推薦、場地份量、包材客製、急件判斷
 
-【斷點 — 2026-03-26】
-Phase 1 ✅ 完成（commit 679cda6 + b53a1cc）：FAQ模板庫 + 補問流程 + 客戶分類標籤 + SECTION 8 客戶對話流程圖（b53a1cc 15:20，2026-03-27）
-Phase 2：🔲 待規劃（對話結構化 + 報價前需求收集表）
+【斷點 — 2026-03-28 晚間巡查更新】
+T-A7-001 AI 回覆系統：
+  - Phase 1 ✅ 完成（commit 679cda6 + b53a1cc）：FAQ模板庫 + 補問流程 + 客戶分類標籤 + SECTION 8 客戶對話流程圖
+  - Phase 2 🔄 進行中：20筆CSV驗證 + A5/A6比對 + Q1-Q10重構 v2.0（aea3094）
+T-A7-002 80/20 任務清單：🔄 建立完成（10大任務+執行路線圖，f239b40），待執行
 
 【必讀】
 projects/ai-reply-system.md → skills/superpowers-guide.md

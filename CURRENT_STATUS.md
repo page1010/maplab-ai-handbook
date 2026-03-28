@@ -55,6 +55,8 @@
 
 ## 最新決策
 
+2026-03-28：A5 Sheets 清理 — Owner 確認三個決策：(1) GFT001-005 不保留（Owner 未加）(2) Items_backup 完全覆蓋 Items（115行/1063 cells 已驗證一致）(3) QUOTE_V2_FUTURE 工作表刪除 ✅ 全部完成。
+
 2026-03-28（深夜）：EXP-S010 — A1/A0 session 混淆 — Owner 重開 session 拿 MCP，誤入 A0 模式，A0 大改 skills/。教訓：重開後先確認角色再操作。A1 記憶此次恢復靠 CURRENT_STATUS.md + git log 重建。
 2026-03-28：A4 S5(2022) 確認完成（8,559張：日常5,243/外燴1,221/旅遊2,073）；S6(2023) 跑到 2,950/16,251=18.2% 時 Colab 斷線；領取 S5.5 GPS 日常細分任務（5,243張日常照 → home/shop/other/no_gps，純 Haversine 計算零成本）。ASSET_LOG 驗證：11,509 資料行。
 

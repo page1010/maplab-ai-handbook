@@ -583,8 +583,111 @@ A4 目前的 Gemini Vision 分類 Prompt 產出：category / keywords / alt_text
 ### 11.9 重要約束提醒
 
 1. **Slides Menu Showcase 只顯示品項名稱 + 照片**，不顯示價格/數量/說明
-2. **Master Template 永遠不被腳本修改**，每次生成都是副本操作
-3. **item_id 是唯一橋接鍵**（ITEM_MASTER ↔ ASSET_MASTER ↔ Drive 資料夾 ↔ Slides）
-4. **優先處理有照片的品項**，沒照片的品項在 Slides 中顯示 placeholder
-5. **WebP 格式優先**，如 A4 處理前是 JPG/HEIC，轉換後再入庫
-6. **照片品質閾值**：quality_score >= 3 才進入 ASSET_MASTER（避免低品質照片出現在客戶簡報）
+
+---
+
+## SECTION 12 實際案例紀錄：台南文學館展覽開幕茶會 2026/5/27
+
+### 12.1 案件概覽
+
+| 欄位 | 內容 |
+|------|------|
+| 案件名稱 | 台南文學館展覽開幕茶會 |
+| 客戶 | Czech Centre / Czech Centres |
+| 客戶 ID | 48546038 |
+| 客戶地址 | Václavské náměstí 816/49, 110 00 Praha 1（捷克總部） |
+| 活動日期 | 2026/5/27（三）14:00–15:30 |
+| 場地 | 台南文學館（一樓會議室）|
+| 規模 | 30–40 人 |
+| 餐點總件數 | 200 件 |
+| **成交金額** | **TWD 23,000** |
+| 訂金 | TWD 3,000 |
+
+### 12.2 報價版本演進
+
+| 版本 | 金額 | 狀態 |
+|------|------|------|
+| 版本一（Slide + Sheet）| TWD 28,000 | 未成交 |
+| **版本二（Slide + Sheet）** | **TWD 23,000** | **✅ 成交** |
+
+兩版本都有製作 Google Slides 簡報版 + Google Sheets 試算表版，並都有對外發送給客戶。最終以 23,000 版本成交。
+
+### 12.3 最終成交菜單（23,000 版）
+
+**SAVORY (5款)：**
+
+| 品項 | 數量 |
+|------|------|
+| Aussie-style Tartare Shrimp Burger | 20 |
+| Italian Basil Pesto Chicken Sandwich | 20 |
+| Seasonal Tomato Bruschetta with Parmigiano *(NEW — 替換綠咖喱鹹派)* | 20 |
+| Slow-Braised Neapolitan Spiced Pork Ball Skewer *(NEW — 替換虱目魚香腸)* | 25 |
+| Tainan Shrimp Roll w/ Chef's Sour Plum Sauce | 25 |
+
+**DESSERT (5款)：**
+
+| 品項 | 數量 |
+|------|------|
+| Japanese Light Cheesecake | 15 |
+| French Rose Lemon Tartlet | 20 |
+| Orange Dark Chocolate Brownie | 25 |
+| Rose Cream Berry Chantilly Cupcake | 15 |
+| Caramel Mini Mille-feuille *(NEW — 替換磅蛋糕)* | 20 |
+
+**BEVERAGES 6L (2款)：**
+
+| 品項 |
+|------|
+| Assam Black Tea |
+| Cold Brew Golden Buckwheat Tea |
+
+### 12.4 Quotation / Invoice 格式規範（對外英文版）
+
+此案首次使用英文版 Quotation/Invoice 格式，適用於外資客戶。格式標準應與報價系統 A5 共享：
+
+1. **標題行**：MAP LAB KITCHEN + 副標題 + `Quotation / Invoice`
+2. **客戶資訊欄位**：Client / Date / Event / Guests / Contact / Address
+3. **Address 注意**：外資客戶使用捷克/海外總部地址，**非台灣地址**
+4. **幣別**：一律使用 `TWD`（禁止使用 `NTD`）
+5. **菜單分組**：SAVORY / DESSERT / BEVERAGES + 數量 + 金額
+6. **費用摘要**：Item / Amount (TWD) / Notes
+7. **英文條款**：Terms and Conditions of Service Agreement（4 Articles）
+8. **Vendor Information**：銀行帳號放於文件最底部（Row 44）
+   - 銀行：中國信託 CTCBTWTP / 西台南分行
+   - 戶名：圖管實業社
+   - 帳號：222540645172
+
+### 12.5 報價系統格式維持目標（教訓 1）
+
+未來報價系統一鍵輸出後，應維持「23000的副本」結構 **八九成相似**：
+
+- 雖然資料庫以格子分隔存儲，視覺輸出結構應對應原始格式
+- 此格式標準已記錄於本節，供 A5 quotation engine 參考
+- 關鍵：不要因為 DB 結構不同而讓輸出格式跑版
+
+### 12.6 此案技術教訓（教訓 2）
+
+**Apps Script / Sheets 操作限制：**
+
+- Monaco API `editor.executeEdits()` 修改 editor 文字後，不觸發 React 狀態更新 → Commit 按鈕失效
+- 解法：每次用 Monaco API 後需手動點擊一次 Commit 按鈕才能激活
+- Apps Script 函式下拉需滾動才能看到新加的函式
+- Merged cell 換行：`Ctrl+Enter`（不是 Enter）
+- 特殊字元（如【】）輸入可用 `document.execCommand('insertText')`
+- Name Box 輸入 cell reference 時，如已在 edit mode 會把 reference 文字打進格子（需先 Esc 退出 edit mode）
+
+**語言版本管理：**
+
+- 中文版 → 台灣本地客戶（原始分頁格式）
+- 英文版 Quotation/Invoice → 外資客戶（副本分頁，調整標題 + 客戶地址為海外總部）
+- 兩版本保留在同一 Sheets 的不同分頁，方便對照管理
+
+### 12.7 資源連結
+
+| 資源 | ID |
+|------|------|
+| Google Slides（報價簡報）| `16R9Ivi-BTND7mWu8LkZ9cWnTG_wMCBBF7fXfP8lYhFo` |
+| Google Sheets（報價單）| `1lRkmSla8roVC7wgWjp46Nok8I6ipqVTzTyY2cI1L2Gw` |
+| Apps Script（對齊工具）| `1jqPdpYxltfbzOrSVYlKZ_nnJTY0C0evjv1gTR2wFM69F5CqbOO4_0EO6` |
+| 「23000的副本」分頁 gid | `2114602586` |
+| Quotation-Invoice 分頁 gid | `2019046993` |

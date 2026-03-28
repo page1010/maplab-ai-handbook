@@ -49,8 +49,17 @@ async function fetchCommits(token) {
   } catch { return []; }
 }
 async function fetchFile(base, path, token) {
+  // Private repo: raw.githubusercontent.com 不支援 Authorization header
+  // 有 token 時改用 GitHub Contents API（回傳 base64 內容）
+  if (token) {
+    const apiUrl = `${GITHUB_API}/contents/${path}?t=${Date.now()}`;
+    const resp = await fetch(apiUrl, { headers: authHeaders(token) });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const json = await resp.json();
+    return atob(json.content.replace(/\n/g, ''));
+  }
   const url = base.replace(/\/$/, '') + '/' + path + '?t=' + Date.now();
-  const resp = await fetch(url, { headers: authHeaders(token) });
+  const resp = await fetch(url);
   if (!resp.ok) throw new Error('HTTP ' + resp.status);
   return resp.text();
 }

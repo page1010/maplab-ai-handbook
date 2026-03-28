@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新 : 2026-03-28 ｜ 更新者 : A1 incident-recovery checkpoint
+最後更新：2026-03-28 ｜ 更新者：A2 T-A2A3-001-B 子任務3+4完成
 
 ---
 
@@ -23,7 +23,7 @@
 | T-A5-003 | 熱客招待品項定義 | A5 | 🔲 待開始 | — |
 | T-A4-001 | Phase 4 Gemini 照片分類 | A4 | 🔄 S5 ✅ DONE, S6 running (2,950/16,251=18.2%), S5.5 GPS planned | projects/maplab-pipeline.md |
 | T-A2-001 | 文章精選圖片補齊（57篇→每篇獨立配圖） | A2 | ✅ 完成（57/57 獨立配圖，0 重複） | handoff/tasks/T-A2-001.md |
-| T-A2A3-001 | SEO 關鍵字頁面補足 | A2 | 🔄 進行中（子任務1+2+2-A全完成，子任務3 LP建立待開始） | handoff/tasks/T-A2A3-001.md |
+| T-A2A3-001 | SEO 關鍵字頁面補足 | A2 | ✅ 子任務1-4完成（子任務5等7-14天）| handoff/tasks/T-A2A3-001.md + T-A2A3-001-B.md |
 | T-A3-001 | GTM LINE 按鈕追蹤修復（方案 B 已確認） | A3 | 🔲 可認領（待測試） | — |
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | 🔄 確認中（已上線，受眾已記錄） | handoff/tasks/T-A3-002.md |
 | T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | ✅ Phase 1 完成（v1.0，含 SECTION 8 對話流程圖）| handoff/tasks/T-A7-001.md |
@@ -55,6 +55,8 @@
 
 ## 最新決策
 
+
+- 2026-03-28：A2 T-A2A3-001-B 同事接手完成 — (1) 確認同事無commit記錄，A2接手 (2) 子任務3 LP 3頁建立（Post 1584/1587/1588, Draft） (3) 子任務4 內連結56/57篇完成 (4) 首頁排名確認：GSC avg position 8.0未下降 (5) 子任務5等7-14天。
 2026-03-28：A5 Sheets 清理 — Owner 確認三個決策：(1) GFT001-005 不保留（Owner 未加）(2) Items_backup 完全覆蓋 Items（115行/1063 cells 已驗證一致）(3) QUOTE_V2_FUTURE 工作表刪除 ✅ 全部完成。
 
 2026-03-28（深夜）：EXP-S010 — A1/A0 session 混淆 — Owner 重開 session 拿 MCP，誤入 A0 模式，A0 大改 skills/。教訓：重開後先確認角色再操作。A1 記憶此次恢復靠 CURRENT_STATUS.md + git log 重建。

@@ -3,13 +3,13 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新 : 2026-03-27 深夜 ｜ 更新者 : A1 session 收尾（bot 記憶修復 + 並列架構 v3.2）
+最後更新 : 2026-03-28 ｜ 更新者 : A4 checkpoint (S5 DONE confirmed + S6 18.2% + S5.5 GPS 計畫)
 
 ---
 
 ## 系統版本
 
-- **Version**: v5.2
+- **Version**: v5.3
 - **Phase**: Phase 5 — 營運執行 + 廣告優化
 - **Status**: Active
 
@@ -21,7 +21,7 @@
 | T-A5-001 | Items 去重 + 全品項重新編碼 | A5 | ✅ 完成（APP050/DST041/MAIN009/BEV008=108，已排序+連號） | handoff/tasks/T-A5-001.md |
 | T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔲 可認領 | handoff/tasks/T-A5-002.md |
 | T-A5-003 | 熱客招待品項定義 | A5 | 🔲 待開始 | — |
-| T-A4-001 | Phase 4 Gemini 照片分類 | A4 | 🔄 S5 running (93.5%) — S1-S4 done, GPS confirmed | projects/maplab-pipeline.md |
+| T-A4-001 | Phase 4 Gemini 照片分類 | A4 | 🔄 S5 ✅ DONE, S6 running (2,950/16,251=18.2%), S5.5 GPS planned | projects/maplab-pipeline.md |
 | T-A2-001 | 文章精選圖片補齊（57篇→每篇獨立配圖） | A2 | ✅ 完成（57/57 獨立配圖，0 重複） | handoff/tasks/T-A2-001.md |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2 | 🔄 進行中（子任務1+2+2-A全完成，子任務3 LP建立待開始） | handoff/tasks/T-A2A3-001.md |
 | T-A3-001 | GTM LINE 按鈕追蹤修復（方案 B 已確認） | A3 | 🔲 可認領（待測試） | — |
@@ -34,12 +34,12 @@
 
 - ~~A5：甜點去重需使用者手動完成後才能重新編碼~~ ✅ resolved — T-A5-001 完成（108品項已排序+連號）
 - A5：使用者需填 Items.D 欄 default_price
-- ~~A4：需 Gemini API Key~~ ✅ resolved — Photo scan 60,584 files, pre-classified C=4,593 T=254 D=55,737
+- ~~A4：Gemini API ✅ | S5(2022) ✅ DONE 8,559 | S6(2023) 🔄 2,950/16,251=18.2% Colab斷線待重啟 | S5.5 GPS細分 planned(5,243日常照)
 - A3：「慶生周歲派對」已上線（現有貼文），需確認受眾設定；GTM 方案 B 可認領
 - ~~A2：T-A2-001 Google Drive 2025相簿僅約20張可用照片~~ ✅ resolved — 跨相簿找圖完成（2024/2023/2019/素材開幕），57篇全部獨立配圖
 
 ~~⚠️ A1巡查 2026-03-27 00:00：A7 狀態不一致~~ ✅ 已修復 — b53a1cc (15:20) A7 補交 SECTION 8 客戶對話流程圖 + 更新任務狀態，T-A7-001 已標記 ✅ Phase 1 完成。
-⚠️ A1巡查 2026-03-27 15:45：A4 T-A4-001 持續無新 commit — 距上次 A4 直接 commit (e166169, 2026-03-26 08:37) 已逾 31h。任務仍卡在 S5 93.5%，需 Owner 重啟 Colab。Owner Action Required 已記錄。
+⚠️ A1巡查 2026-03-27 15:45：~~A4 T-A4-001 持續無新 commit~~ ✅ 2026-03-28 A4 已恢復 commit。S5 DONE，S6 18.2%，S5.5 GPS 計畫中。
 ⚠️ A1巡查 2026-03-27 16:06：午後巡查確認 — A4 T-A4-001 仍無新 commit，距 e166169 現逾 31.5h（48h 閾值剩 ~16.5h）。A0/A2/A5/A7 本日均活躍無異常。A2 子任務2 Phase2 SEO Title 數字優化 36篇已完成（687316d）；A7 SECTION 8 已追加（b53a1cc）。
 ⚠️ A1巡查 2026-03-28：A4 T-A4-001 已超過 48h 閾值 — 距上次 A4 直接 commit (e166169, 2026-03-26) 現逾 48h，S5 仍卡在 93.5%。🔴 CRITICAL：需 Owner 立即重啟 Colab（lb99104@gmail.com）。A0 bot session resume 修復成功（EXP-S009，6b19f4f）。其餘 agent 無異常。
 
@@ -53,6 +53,8 @@
 | A2/A7 指令貼入 | 在 Windows Chrome 側邊欄貼入 A2 SEO 和 A7 對話流程圖指令（或等 A0 遠端打字修復）| 中 |
 
 ## 最新決策
+
+2026-03-28：A4 S5(2022) 確認完成（8,559張：日常5,243/外燴1,221/旅遊2,073）；S6(2023) 跑到 2,950/16,251=18.2% 時 Colab 斷線；領取 S5.5 GPS 日常細分任務（5,243張日常照 → home/shop/other/no_gps，純 Haversine 計算零成本）。ASSET_LOG 驗證：11,509 資料行。
 
 - 2026-03-28：A2 T-A2A3-001 斷點補齊完成 — Task Card 子任務2狀態從🔄更新為✅（Phase1 Title/Desc/Alt+Phase2數字優化36篇+2-A內連結16篇全部確認完成）。子任務3 Landing Page（週歲/婚禮/企業）為下一步。（commit: c17f0e5）
 2026-03-28：bot.py session resume 修復成功（claude -p -c flag），有記憶+MCP+bash+Max免費

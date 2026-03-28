@@ -1,5 +1,10 @@
 # Chrome Extension Changelog
 
+## v4.7 — 2026-03-28
+變更者：A1 Claude Code
+- **A0 角色支援**：popup.html 加入 A0 角色選項，可直接召喚 A0（Telegram bot）的 recall prompt
+- commit：b330149
+
 ## v4.6 — 2026-03-25
 變更者：A1 Claude Code
 - **移除 commit history 面板**：使用者不需要看系統管理的 commit 紀錄，釋放空間給 prompt

@@ -1,0 +1,6 @@
+# API keys - never commit
+.mcp.json
+cookies.txt
+
+# System
+.DS_Store

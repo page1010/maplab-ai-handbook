@@ -4,6 +4,26 @@
 格式：版本號 | 日期 | 變更摘要 | 執行 Agent
 
 
+## v5.4 — 2026-03-28
+
+**Chrome Extension v4.7：加入 A0/A1 角色選項 + MCP 修復**
+
+執行 Agent：A1 Claude Code
+
+### Chrome Extension
+1. popup.html：下拉選單加入 `A0｜Telegram 對話機器人` 和 `A1｜系統總管中心`
+2. 之前沒放是因為當初 AGENT_RECALL_PROMPTS.md 的 A0/A1 區塊 format 不確定是否符合 parseRecallPrompts regex — 現在加入
+
+### MCP 修復（根本問題解決）
+3. 建立 `/maplab-ai-handbook/.mcp.json`（從 `~/.claude/.mcp.json` 複製）
+4. 根目錄 `.gitignore` 新增，排除 `.mcp.json` 和 `cookies.txt`（含 API keys，絕不 commit）
+5. 根因：MCP 需要專案目錄下有 `.mcp.json`，`~/.claude/.mcp.json` 全域設定不被專案 session 自動讀取
+
+### 教訓
+- 下次開 Claude Code session 要在 `maplab-ai-handbook/` 根目錄，才能載入 MCP 工具
+
+---
+
 ## v5.2 — 2026-03-27（深夜更新）
 
 **bot.py 記憶修復 + A0/A1 並列架構 + 經驗總結**

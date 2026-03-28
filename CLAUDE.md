@@ -11,22 +11,21 @@ repo: https://github.com/page1010/maplab-ai-handbook
 【MCP 工具（直接可用，不需手動開網頁）】
 Google Sheets / Drive / Analytics / Search Console / Ads / Meta Ads — 2026-03-26 已接通
 
-【斷點 — 2026-03-27】
-1. 系統版本：v5.1 / Phase 5 — 營運執行 + 廣告優化
-2. A2 T-A2A3-001 SEO 子任務2 Phase2 完成（SEO Title 數字優化 36篇，687316d 15:37）
-3. A7 T-A7-001 Phase 1 完成（FAQ模板庫 + SECTION 8 客戶對話流程圖，b53a1cc）
-4. A4 T-A4-001 S5 卡在 93.5%，距上次 commit 逾 31h — ⚠️ Owner Action Required
-5. A0 Telegram bot daemon 上線（launchd 自啟，9 個指令，免費指令讀檔模式）
-6. AGENT_RULES.md v3.1、AGENT_RECALL_PROMPTS.md 已更新（A0/A1 recall prompt 修復）
-7. Chrome Extension v4.6（Side Panel + 角色選擇器 + 高對比 UI）
-8. GitHub Actions system-patrol.yml 已部署（每日 UTC 01:00 巡查）
-9. Mac mini 每小時自動 git pull
+【斷點 — 2026-03-28】
+1. 系統版本：v5.2 / Phase 5 — 營運執行 + 廣告優化
+2. A0 bot session resume 修復成功（EXP-S009，6b19f4f）+ extension-agent-summon-guide v1.0
+3. A2 T-A2A3-001 子任務2 Phase2 完成 + 內連結16/16篇完成（7f7c54d）
+4. A7 T-A7-001 Phase 1 完成（FAQ模板庫 + SECTION 8 客戶對話流程圖，b53a1cc）
+5. A4 T-A4-001 S5 卡在 93.5%，距上次 A4 直接 commit (e166169, 2026-03-26) 已逾 48h — 🔴 CRITICAL Owner Action Required（Colab 重啟）
+6. T-A0-002 Notion 舊資料清理 ✅ 完成（e830aa8）
+7. AGENT_RULES.md v3.1、AGENT_RECALL_PROMPTS.md 已更新
+8. Chrome Extension v4.6（Side Panel + 角色選擇器 + 高對比 UI）
+9. GitHub Actions system-patrol.yml 已部署（每日 UTC 01:00 巡查）
 
 【可認領任務】
 - T-A5-002 QUOTE_DRAFT 報價單欄位增強（A5，🔲 可認領）
 - T-A2A3-001-B SEO 場景頁+內連結子任務（A2，🔲 分拆中）
 - T-A3-001 GTM LINE 按鈕追蹤（A3，🔲 可認領）
-- T-A0-002 Notion 舊資料清理（A0/A1，🔲 可認領）
 
 【維護中的檔案】
 - CURRENT_STATUS.md — 每次狀態變更必更新

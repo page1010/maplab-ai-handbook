@@ -22,10 +22,10 @@
 | # | 任務 | 執行方式 | 狀態 |
 |---|------|---------|------|
 | 11 | A4 S6 Colab 監控 + 斷線提醒 | A0 排程 | 🔲 |
-| 12 | A4 S5.5 GPS 日常細分 5,243 張 | A0→Code task | 🔲 |
-| 13 | Items 21 筆 DST 成本 — 從歷史反推建議值（⏸️ 暫停：資料來源待確認；視覺規範 v1.0 已整合進系統） | A0→Code task | ⏸️ |
-| 14 | A3 GTM LINE 按鈕追蹤方案 B | A0→Windows A3 | 🔲 |
-| 15 | A3 Meta 廣告受眾分析報告 | A0→Code task | 🔲 |
+| 12 | A4 S5.5 GPS 日常細分 5,243 張 | A0→Code task | 🔴 斷點：資料在 Drive，需 Colab lb99104 帳號執行。S5 已完成可直接做，不需等 S6。GPS 座標已確認（home/shop）。|
+| 13 | Items 21 筆 DST 成本 — 從歷史反推建議值 | A0→Code task | 🔲 |
+| 14 | A3 GTM LINE 按鈕追蹤方案 B | A0→Windows A3 | 🔴 斷點：方案A ✅ GTM v19 已驗證。方案B規格完成（T-A3-001.md），需人工登入GTM後台新增 Click ID trigger |
+| 15 | A3 Meta 廣告受眾分析報告 | A0→Code task | ✅ 完成（T-A3-002.md 更新，693筆訂單分析）|
 | 16 | A5 熱客招待品項定義 GFT 規則 | A0→Code task | 🔲 |
 | 17 | A5 2025 訂單品項抽樣 | A0→Code task | 🔲 |
 | 18 | A7 LINE OA 自動回覆腳本 v1 | A0→Code task | 🔲 |

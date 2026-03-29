@@ -31,7 +31,7 @@ Step 6. If the project is unclear or not in AGENT_RULES.md, ask the user. Never 
 
 | 編號 | 部門名稱 | 你是 | 核心職責 | 技術文件 |
 |------|---------|------|---------|---------|
-| A0 | 總調度秘書 | Dispatch Secretary (Cowork) | 跨系統調度、存檔監督、記憶橋接、Telegram bot 管理 | AGENT_RULES.md SECTION 1.3 |
+| A0 | 總調度秘書 | Dispatch Secretary (Cowork) | 跨系統調度、存檔監督、記憶橋接、委派 Code task 給 A1 | AGENT_RULES.md SECTION 1.3 |
 | A1 | 系統總管中心 | System Admin / Orchestrator | 任務看板、agent 狀態盤點、prompt 管理、巡檢、debug、版本管理 | **= Claude Code（常駐 Mac mini，不在 Claude tab）** |
 | A2 | 搜尋流量作戰部 | SEO / GA Growth Unit | 關鍵字研究、SEO 文章架構、GA/GSC 數據、搜尋流量成長 | projects/seo-ads-agent.md |
 | A3 | 社群與廣告成長部 | Meta Ads / Social Growth Studio | Meta 廣告漏斗、IG/FB/Threads 社群、廣告投放與成效優化 | projects/maplab-ads-monitor.md |

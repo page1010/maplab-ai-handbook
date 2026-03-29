@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-03-29 午後巡查 ｜ 更新者：A1 v5.3 — A3 T-A3-001 進行中更新 + 新治理功能登記 + A4/A5/A7 警告持續
+最後更新：2026-03-29 晚間巡查 ｜ 更新者：A1 v5.3 — A6 LINE報價助手新任務登記 + A3報告更新 + A4第四天CRITICAL + A7持續無活動
 
 ---
 
@@ -25,7 +25,8 @@
 | T-A2-001 | 文章精選圖片補齊（57篇→每篇獨立配圖） | A2 | ✅ 完成（57/57 獨立配圖，0 重複） | handoff/tasks/T-A2-001.md |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2 | ✅ 子任務1-4完成（子任務5等7-14天）| handoff/tasks/T-A2A3-001.md + T-A2A3-001-B.md |
 | T-A3-001 | GTM LINE 按鈕追蹤修復（方案 B 已確認） | A3 | 🔄 進行中（GTM方案B規格已記錄 2aca2ae，待技術實作+測試）| — |
-| T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | 🔄 確認中（已上線，受眾已記錄） | handoff/tasks/T-A3-002.md |
+| T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | 🔄 確認中（已上線，受眾已記錄；廣告成效報告 v1.0 + 嘉義地區建議已產出 69b50ec） | handoff/tasks/T-A3-002.md |
+| T-A6-001 | LINE 業務報價助手系統 | A6 | 🔄 進行中（v1.1 架構修正：三層資料/CONVERSATION_LOG/Sheet 3個新分頁，d9fba1a+3a2df7b） | projects/line-quote-assistant.md |
 | T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | 🔄 Phase 2 進行中（CSV驗證+Q1-Q10 v2.0，aea3094）| handoff/tasks/T-A7-001.md |
 | T-A7-002 | 80/20 優先任務清單 + 執行路線圖 | A7 | 🔄 建立完成（10大任務+路線圖，f239b40），待執行 | — |
 | T-A0-001 | Telegram bot 指令模式上線 | A0 | ✅ 完成 | — |
@@ -54,6 +55,12 @@
 ⚠️ A1巡查 2026-03-29 午後巡查：新治理功能未入 A1 recall 斷點 — SECTION 7 全域檢查器 (faed6a9) + SECTION 8 權限治理 + 10 credential skills v3.5 (6e80723) 今日落地，已於本次巡查補寫入 RECALL_PROMPTS。
 ✅ A1巡查 2026-03-29 午後巡查：A3 T-A3-001 狀態更正 — 2aca2ae 確認 GTM方案B規格 (#14) + 受眾分析 (#15) 已記錄，任務表從「🔲 可認領」更新為「🔄 進行中」。
 ⚠️ A1巡查 2026-03-29 每日巡查：A4 CRITICAL 持續 — S6 Colab 距上次 A4 commit (b1be7c6, 2026-03-28) 已逾 24h，仍未重啟。Owner 需立即登入 lb99104@gmail.com Colab 重啟 pipeline。任務表已更正：T-A4-001 S5.5 GPS 從「planned」改為「partial(1221/no_gps)」；T-A7-001 更新為 Phase 2；T-A7-002 新增入任務表。A0 今日 03:25 有新 commit (#7 skip record + next-three-report)。A5 Task Card 仍未更新（連續兩次巡查標記）。
+
+⚠️ A1巡查 2026-03-29 晚間巡查：A6 新任務補登記 — LINE 業務報價助手系統 v1.0+v1.1（d9fba1a, 3a2df7b）今日落地（18:37+19:28），已補入任務表 T-A6-001。架構：三層資料模型（LINE真實對話+A6協作對話，source欄區分）+ Sheets 3個分頁（SALES_INTAKE/REVISION_LOG/CONVERSATION_LOG）+ A6 SOP skill 建立。
+⚠️ A1巡查 2026-03-29 晚間巡查：A4 CRITICAL 第四天 — 距 b1be7c6 (2026-03-28) 已逾 48h+，S6 Colab 仍未重啟。Owner 需立即登入 lb99104@gmail.com 重啟 pipeline（剩約 13,301 張，約 50h/Colab 標準速度）。
+⚠️ A1巡查 2026-03-29 晚間巡查：A7 持續無活動第二次晚間標記 — T-A7-001 Phase 2 與 T-A7-002 均 🔄 進行中，今日仍無 A7 新 commit。若 A7 有執行請補存檔；若無計畫，請 Owner 確認 A7 是否暫停。
+⚠️ A1巡查 2026-03-29 晚間巡查：A5 Task Card 第四次連續警告 — handoff/tasks/T-A5-002.md 仍未反映服務費/車馬費/長桌費完成進度。A5 下次開工第一件事：補更新 Task Card（已連續 4 次巡查標記，升級為 🔴）。
+⚠️ A1巡查 2026-03-29 晚間巡查：SECTION 9 新治理功能已落地 — 0076a3a feat(governance): SECTION 9 API三層備援 + 身份確認 + CLAUDE.md指向器，已補入 A1 recall 斷點。A6 SOP skill (skills/a6-rapid-quote-sop.md) 同步建立。
 
 ### 🔴 Owner Action Required
 

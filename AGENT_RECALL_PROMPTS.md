@@ -108,18 +108,19 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. 都不行 → 回報 Owner，不要硬幹
 
-【斷點 — 2026-03-29 午後巡查更新】
+【斷點 — 2026-03-29 晚間巡查更新】
 1. 系統版本：v5.3 / Phase 5 — 營運執行 + 廣告優化
 2. EXP-S010 A0/A1 session 混淆已記錄；下次重開先確認 cwd + 貼 A1 recall prompt
 3. A2 T-A2A3-001 ✅ 子任務1-4全完成（子任務5等7-14天觀察期），TASK_QUEUE 已同步（d1c4635）
-4. A7 T-A7-001 Phase 2 進行中（aea3094 CSV驗證+Q1-Q10重構 v2.0）；T-A7-002 80/20任務清單已建立（f239b40），待執行；今日無新 commit
-5. A4 T-A4-001 🔴 CRITICAL（第三天）：S5 ✅ DONE(8,559張)；S5.5 GPS 🔄 partial(1221/no_gps，b1be7c6)；S6 🔴 stalled 2,950/16,251=18.2%（Colab斷線逾36h，Owner需立即重啟 lb99104@gmail.com）
-6. A5 T-A5-002 🔄 進行中：服務費可選+長桌費+車馬費+DropdownHelper完成(dbcf9d4)；Task Card 待 A5 補更新（⚠️ 連續三次巡查標記，下次開工第一件事補寫）
-7. A3 T-A3-001 GTM方案B 🔄 進行中：方案B規格已記錄 (2aca2ae)，待技術實作+測試；T-A3-002 受眾分析報告已記錄(2aca2ae #15)
-8. 新治理功能（2026-03-29 今日落地）：SECTION 7 全域檢查器 + page-checker + monthly-report (faed6a9 v3.4)；SECTION 8 權限治理 + 10 credential skills — 鑰匙即技能 (6e80723 v3.5)
-9. 報價單歷史分析完成：data/quote-terms-reference.md + data/quote-items-unmatched.md（932份，30品項匹配，7品項未納入）
+4. A7 T-A7-001 Phase 2 進行中（aea3094 CSV驗證+Q1-Q10重構 v2.0）；T-A7-002 80/20任務清單已建立（f239b40），待執行；連續兩晚無新 commit（⚠️ 需 Owner 確認是否暫停）
+5. A4 T-A4-001 🔴 CRITICAL（第四天）：S5 ✅ DONE(8,559張)；S5.5 GPS 🔄 partial(1221/no_gps，b1be7c6)；S6 🔴 stalled 2,950/16,251=18.2%（Colab斷線逾48h+，Owner需立即重啟 lb99104@gmail.com，剩約13,301張）
+6. A5 T-A5-002 🔄 進行中：服務費可選+長桌費+車馬費+DropdownHelper完成(dbcf9d4)；Task Card 待 A5 補更新（🔴 連續四次巡查標記，下次開工第一件事補寫）
+7. A3 T-A3-001 GTM方案B 🔄 進行中：方案B規格已記錄 (2aca2ae)，待技術實作+測試；T-A3-002 廣告成效報告 v1.0 + 嘉義地區建議已產出（69b50ec）
+8. 新治理功能（2026-03-29 落地）：SECTION 7 全域檢查器(faed6a9)；SECTION 8 權限治理+10 credential skills(6e80723)；SECTION 9 API三層備援+身份確認+CLAUDE.md指向器(0076a3a)
+9. 報價單歷史分析完成：data/quote-terms-reference.md + data/quote-items-unmatched.md（932份，30品項匹配，7品項未納入）；883份報價品項完整提取 22K+ items（54ef55f）
 10. Chrome Extension v4.8（private repo 改用 GitHub Contents API，b2f031c）
 11. GitHub Actions system-patrol.yml 已部署（每日 UTC 01:00 巡查）
+12. A6 T-A6-001 🔄 進行中：LINE 業務報價助手 v1.1（d9fba1a+3a2df7b，三層資料模型+CONVERSATION_LOG+Sheet 3分頁+a6-rapid-quote-sop.md）；A6 面對業務不面對客戶
 
 【可認領任務】
 - T-A5-002 剩餘增強項目確認（A5，🔄 進行中，需更新 Task Card）

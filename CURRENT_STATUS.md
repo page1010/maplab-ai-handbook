@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-03-29 每日巡查 ｜ 更新者：A1 v5.3 — 每日巡查：A4 Critical持續/A7任務表補齊/A4 S5.5狀態更正
+最後更新：2026-03-29 報價單分析整理 ｜ 更新者：A1 v5.3 — 報價條款+品項比對兩份參考文件產出完成
 
 ---
 
@@ -60,6 +60,8 @@
 | A0 User Preferences 貼入 | 在 A0 bot 貼入 User Preferences 設定（個性化回覆偏好）| 中 |
 
 ## 最新決策
+
+- 2026-03-29：報價單歷史分析整理完成 — 產出 data/quote-terms-reference.md（個人/企業/特規三區條款）+ data/quote-items-unmatched.md（932份報價 × Items主表比對：30品項已匹配、7品項未納入Items表供Owner參考）
 
 - 2026-03-28：QUOTE_DRAFT 報價單修復完成（VLOOKUP 統一讀 E 欄成本、業務報價 I 欄、成本小計 H 欄、D6-D8 APP 下拉、D13 DST 下拉、E32 業務報價總額、H33 毛利率）
 - 2026-03-28：Items backup 覆蓋 Items + QUOTE_V2_FUTURE 刪除

@@ -44,6 +44,7 @@ h# Superpowers Skills 導覽手冊 — MAPLAB AI Agent 版
 | 視覺、色彩、字體、品牌、設計、IG、社群、Landing Page、CSS | maplab-visual-spec | 適用 A2/A3/A6/A8：7色票+CSS變數、字體規範、影像處理、IG版面系統、設計元素、黃花規則、命名規則 |
 | 斷點、接下來、下一步、預覽、session 結束 | next-three-report | 每次斷點必用：回報下三個任務的目標/方法/步驟 |
 | 執行、開工、任務啟動、protocol、SOP | task-execution-protocol | 任務執行標準流程：啟動前確認 + 每步紀錄 + 完成驗證 |
+| API key、OAuth、token、credentials、密碼、鑰匙、認證 | skills/credentials/（依服務選擇）| 每個外部服務一本技能書：鑰匙在哪、怎麼取用、可做什麼、禁止什麼 |
 
 ---
 
@@ -190,6 +191,7 @@ checkpoint 機制：每完成外部系統操作立即 commit，防止進度丟�
 | v1.2 | 2026-03-17 | 加入 github-api-workflow / verification-checklist / systematic-debugging-cloud | A4 |
 | v1.3 | 2026-03-17 | 加入 troubleshooting-hub | A1 |
 | v1.4 | 2026-03-18 | 新增「任務類型 → 建議預讀技能書」路由表；修正 troubleshooting-hub 格式 | A1 |
+| v2.5 | 2026-03-29 | 新增 credentials/ 路由（API key / OAuth / token 觸發詞） | A1 |
 | v2.4 | 2026-03-29 | 新增 page-checker + check-rules/sheets-data + next-three-report + task-execution-protocol + maplab-visual-spec 路由 | A1 |
 | v2.3 | 2026-03-28 | 新增 extension-agent-summon-guide 路由 | A0 |
 | v2.2 | 2026-03-27 | 新增 a0-proactive-dispatch-guide 路由 | A0 |

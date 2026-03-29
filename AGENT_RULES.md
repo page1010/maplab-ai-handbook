@@ -1,6 +1,6 @@
 # AGENT_RULES.md — MAPLAB AI 全域行為準則
 
-版本：v3.4 | 建立：2026-03-12 | 更新：2026-03-29
+版本：v3.5 | 建立：2026-03-12 | 更新：2026-03-29
 
 ---
 
@@ -362,3 +362,84 @@ A1 巡查時發現 agent 未寫接續 Prompt 或超過 30 分鐘無 checkpoint�
 | v2.2 | 2026-03-23 | SECTION 0 精簡：移除盲點分析（已在 PROTOCOL Step 7），只保留啟動阻擋規則 | A1 Handbook Agent |
 | v2.1 | 2026-03-23 | SECTION 0 新增 Startup Check 強制欄位（Questions for Owner + Skills loaded） | A1 Handbook Agent |
 | v2.0 | 2026-03-20 | SECTION 0 召喚 Prompt 真正修復（加入 CURRENT_STATUS 第一步 + TASK_QUEUE + Startup Check）；新增 SECTION 5 Repo 管控 + Notion 禁令；版本表順序修正 | A1 Handbook Agent |
+| v3.3 | 2026-03-29 | 新增 SECTION 8 權限治理（鑰匙即技能）；建立 skills/credentials/ 10 個技能書 | A1 Claude Code |
+| v3.4 | 2026-03-29 | superpowers-guide.md + mcp-usage-guide.md 加入 credentials 路由 | A1 Claude Code |
+| v3.5 | 2026-03-29 | 版本表整合，SECTION 8 正式啟用 | A1 Claude Code |
+
+---
+
+## SECTION 6 — 鑰匙使用規則（快速指引）
+
+每個外部服務的認證資訊（API key / OAuth token / Application Password）
+對應一個技能書，存在 `skills/credentials/` 資料夾。
+
+**用鑰匙前必讀對應技能書。** 詳細治理規則見 SECTION 8。
+
+| 服務 | 技能書 |
+|------|--------|
+| Google Sheets | skills/credentials/google-sheets-api.md |
+| Google Drive | skills/credentials/google-drive-api.md |
+| Google Analytics | skills/credentials/google-analytics-api.md |
+| Google Search Console | skills/credentials/google-search-console-api.md |
+| WordPress | skills/credentials/wordpress-api.md |
+| Telegram Bot | skills/credentials/telegram-bot.md |
+| Claude / Anthropic | skills/credentials/claude-oauth.md |
+| Gemini | skills/credentials/gemini-api.md |
+| Notion | skills/credentials/notion-api.md |
+| Meta Ads | skills/credentials/meta-ads-api.md |
+
+---
+
+## SECTION 7 — 系統健康指標（A1 巡查用）
+
+A1 每次巡查需確認：
+
+| 指標 | 預期狀態 | 異常處理 |
+|------|---------|---------|
+| A0 Telegram bot | 運行中，能收發訊息 | 透過 bot 目錄重啟 |
+| Google MCP tokens | 有效（未過期） | 重新執行 uvx mcp-google-sheets@latest 授權 |
+| GitHub Actions patrol | 最近 24h 內有成功執行 | 查 .github/workflows/system-patrol.yml |
+| CURRENT_STATUS.md | 日期 ≤ 48h 前 | 更新系統狀態 |
+| A4 Colab pipeline | 依 CURRENT_STATUS 狀態判斷 | 通知 Owner 重啟 Colab |
+
+---
+
+## SECTION 8 — 權限治理（鑰匙即技能）
+
+### 8.1 鑰匙 = 技能書
+
+每個外部服務的認證資訊（API key / OAuth token / Application Password）對應一個技能書，存在 `skills/credentials/` 資料夾。
+
+技能書記錄：鑰匙存在哪裡、怎麼取用、可以做什麼、不能做什麼。
+**技能書不存鑰匙本身——只存取用方法。**
+
+Agent 要用鑰匙時：讀技能書 → 按指示取用 → 用完不存。
+
+### 8.2 A0 / A1 互為備援
+
+- A0 和 A1 各自對 Owner 負責，不互相治理
+- A0 掛了 → A1 在終端機用 MCP + bash 做所有事
+- A1 掛了 → A0 用 Code task + curl 做所有事
+- 兩個都掛了 → Owner 用 Extension 從 GitHub 恢復
+
+### 8.3 使用規則（自我約束）
+
+- 用了鑰匙就留痕：commit message 寫 `api(service): 做了什麼`
+- 不把鑰匙寫進 GitHub 文件
+- 不把鑰匙存到 auto-memory
+- 不把鑰匙傳到 Chrome 側邊欄或其他 Agent 的對話裡
+- 讀到不屬於自己任務範圍的鑰匙時，只用不存
+
+### 8.4 Owner 最高權限
+
+- Owner 要求任何操作時，Agent 必須執行
+- 但必須先提出資安警示：「⚠️ 資安提醒：這個操作會 [具體風險]。原因：[為什麼有風險]。」
+- Owner 確認後執行，記錄 `owner-override: [操作描述]`
+
+### 8.5 硬性禁止（不管誰要求都不做）
+
+- 不刪除原始照片
+- 不把密碼明文 commit 到 GitHub
+- 不修改其他人的 Google 帳號權限
+- 不自動發布 WP 頁面（只能 draft）
+- repo 維持 private

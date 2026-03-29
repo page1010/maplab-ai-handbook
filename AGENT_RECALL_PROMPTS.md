@@ -184,6 +184,7 @@ projects/seo-ads-agent.md → skills/superpowers-guide.md
 3. 沒有 commit = 沒有存檔 = 下一個接手的人什麼都看不到
 
 讀完文件後輸出 Startup Check，確認斷點再開工。必拿：skills/task-progress-guide.md
+必拿技能（新增）：skills/page-checker.md（頁面檢查器）
 ```
 
 ---
@@ -225,6 +226,7 @@ handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-
 3. 沒有 commit = 沒有存檔 = 下一個接手的人什麼都看不到
 
 讀完文件後輸出 Startup Check，確認斷點再開工。必拿：skills/task-progress-guide.md
+必拿技能（新增）：skills/page-checker.md（頁面檢查器）
 ```
 
 ---

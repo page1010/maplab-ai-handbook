@@ -1,6 +1,6 @@
 # AGENT_RULES.md — MAPLAB AI 全域行為準則
 
-版本：v3.2 | 建立：2026-03-12 | 更新：2026-03-27
+版本：v3.4 | 建立：2026-03-12 | 更新：2026-03-29
 
 ---
 
@@ -322,6 +322,25 @@ A1 巡查時發現 agent 未寫接續 Prompt 或超過 30 分鐘無 checkpoint�
 
 ---
 
+## SECTION 7 — 全域檢查器（Universal Checker）
+
+> 所有 Agent 的產出在提交前必須過三關。沒有通過檢查的產出不算完成。
+
+### Check（判定）
+對照對應的檢查規則判定。規則在 skills/check-rules/ 和 skills/page-checker.md。
+- WP 頁面 → skills/page-checker.md
+- Sheets 修改 → skills/check-rules/sheets-data.md
+- 其他產出 → 至少檢查「有沒有改錯地方」和「有沒有破壞現有資料」
+
+### Suggest（建議）
+如果 Check 有 ❌，先建議修正方向，不直接改。
+
+### Log（記錄）
+不管通過或不通過，commit message 或 Task Card 記錄檢查結果。
+格式：`checked: page-checker 10/10 ✅` 或 `checked: page-checker 8/10 ❌ missing FAQ + alt`
+
+---
+
 ## SECTION 4 — 版本紀錄
 
 | 版本 | 日期 | 說明 | 更新者 |
@@ -339,6 +358,7 @@ A1 巡查時發現 agent 未寫接續 Prompt 或超過 30 分鐘無 checkpoint�
 | v3.0 | 2026-03-25 | 角色重組：A2/A3 拆開、A1=Claude Code、新增 A6 業務急件 + A8 影音製作；SECTION 1 全面改寫；新增 SECTION 1.2 跨部門協作圖；新增 AGENT_RECALL_PROMPTS.md | A1 Claude Code |
 | v3.1 | 2026-03-27 | 新增 A0 總調度秘書（SECTION 1 角色表 + SECTION 1.3 定義 + SECTION 1.2 協作圖）；Notion 定位降級補充 | A0 Cowork |
 | v3.2 | 2026-03-27 | P0-1 定位句修正（A0/A1 並列）；P0-2 協作圖 Owner 頂層；P1 新增 Extension 職責 + A0 可用工具；P2-7 新增 A0↔A1 溝通協議表 | A1 Claude Code |
+| v3.4 | 2026-03-29 | 新增 SECTION 7 全域檢查器（Check/Suggest/Log 三關）；新增 skills/page-checker.md + skills/check-rules/sheets-data.md + data/monthly-report-template.md | A1 Claude Code |
 | v2.2 | 2026-03-23 | SECTION 0 精簡：移除盲點分析（已在 PROTOCOL Step 7），只保留啟動阻擋規則 | A1 Handbook Agent |
 | v2.1 | 2026-03-23 | SECTION 0 新增 Startup Check 強制欄位（Questions for Owner + Skills loaded） | A1 Handbook Agent |
 | v2.0 | 2026-03-20 | SECTION 0 召喚 Prompt 真正修復（加入 CURRENT_STATUS 第一步 + TASK_QUEUE + Startup Check）；新增 SECTION 5 Repo 管控 + Notion 禁令；版本表順序修正 | A1 Handbook Agent |

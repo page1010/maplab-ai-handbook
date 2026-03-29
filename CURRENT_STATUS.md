@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-03-29 報價單分析整理 ｜ 更新者：A1 v5.3 — 報價條款+品項比對兩份參考文件產出完成
+最後更新：2026-03-29 午後巡查 ｜ 更新者：A1 v5.3 — A3 T-A3-001 進行中更新 + 新治理功能登記 + A4/A5/A7 警告持續
 
 ---
 
@@ -24,7 +24,7 @@
 | T-A4-001 | Phase 4 Gemini 照片分類 | A4 | 🔄 S5 ✅ DONE(8,559張), S6 🔴 stalled 2,950/16,251=18.2%(Colab斷線), S5.5 GPS partial(1221/no_gps) | projects/maplab-pipeline.md |
 | T-A2-001 | 文章精選圖片補齊（57篇→每篇獨立配圖） | A2 | ✅ 完成（57/57 獨立配圖，0 重複） | handoff/tasks/T-A2-001.md |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2 | ✅ 子任務1-4完成（子任務5等7-14天）| handoff/tasks/T-A2A3-001.md + T-A2A3-001-B.md |
-| T-A3-001 | GTM LINE 按鈕追蹤修復（方案 B 已確認） | A3 | 🔲 可認領（待測試） | — |
+| T-A3-001 | GTM LINE 按鈕追蹤修復（方案 B 已確認） | A3 | 🔄 進行中（GTM方案B規格已記錄 2aca2ae，待技術實作+測試）| — |
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | 🔄 確認中（已上線，受眾已記錄） | handoff/tasks/T-A3-002.md |
 | T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | 🔄 Phase 2 進行中（CSV驗證+Q1-Q10 v2.0，aea3094）| handoff/tasks/T-A7-001.md |
 | T-A7-002 | 80/20 優先任務清單 + 執行路線圖 | A7 | 🔄 建立完成（10大任務+路線圖，f239b40），待執行 | — |
@@ -48,6 +48,11 @@
 ⚠️ A1巡查 2026-03-28 下午：A4 S5.5 GPS 進度超前文件記錄 — commit b1be7c6 顯示 S5.5 GPS partial(1221/no_gps)，CURRENT_STATUS 任務表仍標示「S5.5 GPS planned」，已過時。
 ✅ A1巡查 2026-03-28 下午：A5 T-A5-002 進度超前已修正 — 任務表已更新（服務費可選/長桌費/車馬費下拉/DropdownHelper均已完成，dbcf9d4）。
 ⚠️ A1巡查 2026-03-28 晚間：A5 T-A5-002 Task Card 待 A5 更新 — handoff/tasks/T-A5-002.md 斷點尚未反映最新進度（服務費/車馬費/長桌費完成），請 A5 下次開工前補更新 Task Card。
+⚠️ A1巡查 2026-03-29 午後巡查：A4 CRITICAL 第三天 — S6 Colab 距 b1be7c6 (2026-03-28) 已逾 36h，無 A4 新 commit。Owner 需立即重啟 Colab (lb99104@gmail.com)。
+⚠️ A1巡查 2026-03-29 午後巡查：A5 Task Card 第三次連續警告 — handoff/tasks/T-A5-002.md 仍未反映服務費/車馬費/長桌費完成進度。A5 下次開工前第一件事：補更新 Task Card。
+⚠️ A1巡查 2026-03-29 午後巡查：A7 今日無新 commit — T-A7-001 Phase 2 與 T-A7-002 均標為 🔄 進行中，但今日無 A7 活動記錄。若 A7 有執行未 commit，請補存檔。
+⚠️ A1巡查 2026-03-29 午後巡查：新治理功能未入 A1 recall 斷點 — SECTION 7 全域檢查器 (faed6a9) + SECTION 8 權限治理 + 10 credential skills v3.5 (6e80723) 今日落地，已於本次巡查補寫入 RECALL_PROMPTS。
+✅ A1巡查 2026-03-29 午後巡查：A3 T-A3-001 狀態更正 — 2aca2ae 確認 GTM方案B規格 (#14) + 受眾分析 (#15) 已記錄，任務表從「🔲 可認領」更新為「🔄 進行中」。
 ⚠️ A1巡查 2026-03-29 每日巡查：A4 CRITICAL 持續 — S6 Colab 距上次 A4 commit (b1be7c6, 2026-03-28) 已逾 24h，仍未重啟。Owner 需立即登入 lb99104@gmail.com Colab 重啟 pipeline。任務表已更正：T-A4-001 S5.5 GPS 從「planned」改為「partial(1221/no_gps)」；T-A7-001 更新為 Phase 2；T-A7-002 新增入任務表。A0 今日 03:25 有新 commit (#7 skip record + next-three-report)。A5 Task Card 仍未更新（連續兩次巡查標記）。
 
 ### 🔴 Owner Action Required

@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-03-28 晚間巡查（A5 T-A5-002 進度更新：服務費/車馬費/長桌費完成；A4/A7 斷點補齊；A1 斷點更新）
+> 最後更新：2026-03-29 每日巡查（任務表更正：A4 S5.5 GPS partial；A7 Phase 2 + T-A7-002 登記；A4 CRITICAL持續）
 >
 > 使用方式：選擇角色 → 複製 prompt → 貼到 Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -96,14 +96,14 @@ repo: https://github.com/page1010/maplab-ai-handbook
 【MCP 工具（直接可用，不需手動開網頁）】
 Google Sheets / Drive / Analytics / Search Console / Ads / Meta Ads — 2026-03-26 已接通
 
-【斷點 — 2026-03-28 晚間巡查更新】
+【斷點 — 2026-03-29 每日巡查更新】
 1. 系統版本：v5.3 / Phase 5 — 營運執行 + 廣告優化
-2. EXP-S010 A0/A1 session 混淆已記錄（c41b698）；下次重開先確認 cwd + 貼 A1 recall prompt
+2. EXP-S010 A0/A1 session 混淆已記錄；下次重開先確認 cwd + 貼 A1 recall prompt
 3. A2 T-A2A3-001 ✅ 子任務1-4全完成（子任務5等7-14天觀察期），TASK_QUEUE 已同步（d1c4635）
-4. A7 T-A7-001 Phase 2 進行中（aea3094 CSV驗證+Q1-Q10重構 v2.0）；T-A7-002 80/20任務清單已建立（f239b40）
-5. A4 T-A4-001 S5 ✅ DONE(8,559張)；S5.5 GPS 🔄 partial(1221/no_gps，b1be7c6)；S6 🔴 2,950/16,251=18.2%（Colab斷線，Owner需重啟）
-6. A5 T-A5-002 🔄 大量進展：服務費可選(203db7b)+長桌費$350(74377fb)+車馬費下拉+DropdownHelper(c4ee06d)+車馬費/桌子修正(dbcf9d4)；Task Card 待 A5 補更新
-7. A0 TASK_POOL 50 tasks weekend battle plan (f38cebf)；Telegram bot 活躍
+4. A7 T-A7-001 Phase 2 進行中（aea3094 CSV驗證+Q1-Q10重構 v2.0）；T-A7-002 80/20任務清單已建立（f239b40），待執行
+5. A4 T-A4-001 🔴 CRITICAL：S5 ✅ DONE(8,559張)；S5.5 GPS 🔄 partial(1221/no_gps，b1be7c6)；S6 🔴 stalled 2,950/16,251=18.2%（Colab斷線逾48h，Owner需重啟 lb99104@gmail.com）
+6. A5 T-A5-002 🔄 進行中：服務費可選+長桌費+車馬費+DropdownHelper完成(dbcf9d4)；Task Card 待 A5 補更新（連續兩次巡查標記）
+7. A0 today 334d15c #7 skip record + next-three-report skill + task-execution-protocol route（2026-03-29 03:25）
 8. Chrome Extension v4.8（private repo 改用 GitHub Contents API，b2f031c）
 9. GitHub Actions system-patrol.yml 已部署（每日 UTC 01:00 巡查）
 
@@ -183,7 +183,7 @@ projects/seo-ads-agent.md → skills/superpowers-guide.md
    (c) commit 到 GitHub
 3. 沒有 commit = 沒有存檔 = 下一個接手的人什麼都看不到
 
-讀完文件後輸出 Startup Check，確認斷點再開工。必拿：skills/task-progress-guide.md
+讀完文件後輸出 Startup Check，確認斷點再開工。必拿：skills/task-progress-guide.md + skills/maplab-visual-spec.md（視覺規範）
 必拿技能（新增）：skills/page-checker.md（頁面檢查器）
 ```
 
@@ -225,7 +225,7 @@ handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-
    (c) commit 到 GitHub
 3. 沒有 commit = 沒有存檔 = 下一個接手的人什麼都看不到
 
-讀完文件後輸出 Startup Check，確認斷點再開工。必拿：skills/task-progress-guide.md
+讀完文件後輸出 Startup Check，確認斷點再開工。必拿：skills/task-progress-guide.md + skills/maplab-visual-spec.md（視覺規範）
 必拿技能（新增）：skills/page-checker.md（頁面檢查器）
 ```
 

@@ -23,7 +23,7 @@
 |---|------|---------|------|
 | 11 | A4 S6 Colab 監控 + 斷線提醒 | A0 排程 | 🔲 |
 | 12 | A4 S5.5 GPS 日常細分 5,243 張 | A0→Code task | 🔲 |
-| 13 | Items 21 筆 DST 成本 — 從歷史反推建議值 | A0→Code task | 🔲 |
+| 13 | Items 21 筆 DST 成本 — 從歷史反推建議值（⏸️ 暫停：資料來源待確認；視覺規範 v1.0 已整合進系統） | A0→Code task | ⏸️ |
 | 14 | A3 GTM LINE 按鈕追蹤方案 B | A0→Windows A3 | 🔲 |
 | 15 | A3 Meta 廣告受眾分析報告 | A0→Code task | 🔲 |
 | 16 | A5 熱客招待品項定義 GFT 規則 | A0→Code task | 🔲 |

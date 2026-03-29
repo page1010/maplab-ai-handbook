@@ -39,6 +39,7 @@ h# Superpowers Skills 導覽手冊 — MAPLAB AI Agent 版
 | 遠端桌面、Windows、跨機器、Colab、DESKTOP-PAGEHOME、Agent 監控 | remote-desktop-agent-bridge | 適用 A0：Chrome Remote Desktop 連接 Windows，監控 A4/A5 等跨機器 Agent |
 | A0 行為、被動、回報、提醒、Owner Action | a0-proactive-dispatch-guide | 適用 A0（每次 session 必拿）：禁止被動回報，行動優先，驗證 Owner Action 狀態 |
 | Extension、召喚、summon、Agent Commander、Side Panel、Chrome 側邊欄 | extension-agent-summon-guide | 適用 A0（主要）、所有角色（參考）：透過 Chrome Extension 召喚 A0-A8，含平台差異 + 遠端召喚 SOP |
+| 視覺、色彩、字體、品牌、設計、IG、社群、Landing Page、CSS | maplab-visual-spec | 適用 A2/A3/A6/A8：7色票+CSS變數、字體規範、影像處理、IG版面系統、設計元素、黃花規則、命名規則 |
 
 ---
 

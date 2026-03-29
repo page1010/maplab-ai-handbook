@@ -183,7 +183,7 @@ projects/seo-ads-agent.md → skills/superpowers-guide.md
    (c) commit 到 GitHub
 3. 沒有 commit = 沒有存檔 = 下一個接手的人什麼都看不到
 
-讀完文件後輸出 Startup Check，確認斷點再開工。必拿：skills/task-progress-guide.md
+讀完文件後輸出 Startup Check，確認斷點再開工。必拿：skills/task-progress-guide.md + skills/maplab-visual-spec.md（視覺規範）
 ```
 
 ---
@@ -224,7 +224,7 @@ handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-
    (c) commit 到 GitHub
 3. 沒有 commit = 沒有存檔 = 下一個接手的人什麼都看不到
 
-讀完文件後輸出 Startup Check，確認斷點再開工。必拿：skills/task-progress-guide.md
+讀完文件後輸出 Startup Check，確認斷點再開工。必拿：skills/task-progress-guide.md + skills/maplab-visual-spec.md（視覺規範）
 ```
 
 ---

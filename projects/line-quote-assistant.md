@@ -53,22 +53,35 @@ C: Optimization Task（優化任務）
 ### 資料流
 
 ```
-[LINE OA / Telegram] → [對話接口層] → [SALES_INTAKE Sheet]
-                                              ↓
-                                     [A6 讀取需求]
-                                              ↓
-                                     [A5 計算報價]
-                                              ↓
-                                  [QUOTE_WORKBENCH Sheet]
-                                              ↓
-                                    [業務修改最終版]
-                                              ↓
-                                    [REVISION_LOG 自動記錄]
-                                              ↓
-                                  [C 層：優化任務產出]
-                                              ↓
-                                    [回饋到 A5 模板]
+[LINE OA]──webhook──→ [CONVERSATION_LOG] ←── A層：真實對話（自動，業務無感）
+     ↑                       ↓
+     │              [SALES_INTAKE]（進件，由系統或業務建立）
+  業務自己管                  ↓
+  LINE 對話            [A6 讀取需求] ──→ [CONVERSATION_LOG] ←── B層：A6協作對話
+                             ↓
+                      [A5 計算報價]
+                             ↓
+                   [QUOTE_WORKBENCH]
+                             ↓
+                     [業務修改最終版]
+                             ↓
+                     [REVISION_LOG]（修改紀錄）
+                             ↓
+                   [C 層：優化任務產出]
+                             ↓
+                     [回饋到 A5 模板]
 ```
+
+### 關鍵設計：CONVERSATION_LOG 統一存所有對話
+
+LINE 真實對話（A 層）和 A6 協作對話（B 層）存在同一張表，用 source 欄區分：
+- source=LINE → 客戶與業務的真實對話（webhook 自動寫入，業務零操作）
+- source=Telegram/Sheet → 業務與 A6 的協作對話
+- 同一個 case_id 下，兩種對話自然排在一起，完整還原案件脈絡
+
+**LINE 對話自動收集：**
+LINE OA Messaging API webhook → Google Apps Script → 寫入 CONVERSATION_LOG
+業務完全無感，繼續用 LINE 跟客戶聊天就好。不需要手動貼對話、不需要匯出。
 
 ---
 
@@ -76,11 +89,12 @@ C: Optimization Task（優化任務）
 
 | Agent | 角色 | 職責 | 輸入 | 輸出 |
 |-------|------|------|------|------|
-| A0 | 調度 | 接收對話接口訊息，分派給 A6 | LINE/Telegram webhook | SALES_INTAKE 寫入 |
-| A5 | 引擎 | 計算報價、成本、毛利 | SALES_INTAKE 需求 | QUOTE_WORKBENCH 草稿 |
-| A6 | 助手 | 整理需求、產出補問清單、呼叫 A5 | 業務指令 | 報價草稿 + slide 結構 + 補問清單 |
-| A7 | 整理 | 前期只做資料整理（FAQ/常見問題） | 客戶對話紀錄 | 結構化需求摘要 |
-| A1 | 系統 | REVISION_LOG diff 比對、優化任務產出 | 業務修改紀錄 | C 層優化建議 |
+| A0 | 調度 | 跨系統調度、監督存檔、記憶橋接 | Owner 指令 | 任務分派 |
+| A5 | 引擎 | 計算報價、成本、毛利（唯一報價計算者） | 品項+數量+條件 | QUOTE_WORKBENCH 草稿 |
+| A6 | 助手 | 面對業務：整理需求、產補問清單、調用 A5（不碰 LINE、不碰客戶） | 業務 Telegram 指令 | 報價草稿 + 補問清單 |
+| A7 | 整理 | 前期只做 CONVERSATION_LOG 資料整理（FAQ/常見問題歸納） | CONVERSATION_LOG | 結構化需求摘要 |
+| A1 | 系統 | REVISION_LOG diff 比對、CONVERSATION_LOG 維護、優化任務產出 | 修改紀錄 + 對話紀錄 | C 層優化建議 |
+| Apps Script | 橋接 | LINE webhook → CONVERSATION_LOG（純存檔，不做邏輯處理） | LINE 訊息 | CONVERSATION_LOG 寫入 |
 
 ### 關鍵分工原則
 - A6 永遠只是「調用 A5 + 包裝輸出」，A6 不自己算報價
@@ -128,6 +142,22 @@ C: Optimization Task（優化任務）
 | I  | reason_note | TEXT | 簡述原因（選填） |
 | J  | revised_by | TEXT | 業務名稱 |
 
+#### 新增分頁：CONVERSATION_LOG（A+B 層對話紀錄 — 系統學習的原始素材）
+
+| 欄 | 欄位名 | 類型 | 說明 |
+|----|--------|------|------|
+| A  | msg_id | TEXT | 自動編號 MSG-YYYYMMDD-NNNNN |
+| B  | case_id | TEXT | 對應 SALES_INTAKE（用 LINE userId 或手動關聯） |
+| C  | timestamp | DATETIME | 訊息時間 |
+| D  | speaker | TEXT | 客戶 / 業務 / A6 / A7 / A5 / 系統 |
+| E  | message | TEXT | 訊息原文 |
+| F  | source | TEXT | LINE / Telegram / Sheet / 電話備註 / 面談備註 |
+| G  | line_user_id | TEXT | LINE 用戶 ID（webhook 自動帶入，非 LINE 來源為空） |
+| H  | reply_to_msg_id | TEXT | 回覆哪則訊息（串接對話脈絡） |
+
+> CONVERSATION_LOG 是整個系統的學習素材。LINE webhook 自動寫入 A 層對話，A6 互動自動寫入 B 層對話。
+> 業務不需要操作這張表。
+
 #### 現有分頁維持不變
 - Items（品項主表，E 欄 default_cost）
 - QUOTE_DRAFT（A5 報價引擎）
@@ -136,47 +166,60 @@ C: Optimization Task（優化任務）
 
 ---
 
-## SECTION 4 — 對話接口設計（預留架構）
+## SECTION 4 — 對話接口設計
 
-### 接口層抽象
+### 核心原則
+- **LINE 是業務的工具，業務自己管對話**，AI 不介入 LINE 對話
+- **LINE webhook 只做一件事：自動把對話存到 CONVERSATION_LOG**，業務完全無感
+- **A6 面對的是業務，不是客戶**。業務透過 Telegram 或 Sheet 跟 A6 互動
+
+### 架構
 
 ```
-[對話平台] → [Webhook Receiver] → [Message Parser] → [SALES_INTAKE]
-    ↑                                                       ↓
-    └──────────── [Response Builder] ←── [A6 Output] ←── [A5]
+[LINE OA] ──webhook──→ [Apps Script] ──→ [CONVERSATION_LOG]（自動，靜默存檔）
+                                              ↑
+[Telegram] ──A6互動──→ [A6 處理] ──寫入──→ [CONVERSATION_LOG]（A6 對話也存）
+                            ↓
+                     [SALES_INTAKE]（建立進件）
+                            ↓
+                     [A5 → QUOTE_WORKBENCH]（產出報價）
 ```
 
-### 平台適配
+### LINE OA webhook（自動收集對話，不介入）
 
-| 平台 | 接口方式 | 狀態 | 優先級 |
-|------|---------|------|--------|
-| LINE OA | Messaging API webhook | 🔲 待建 | 高（業務日常使用） |
-| Telegram | Bot API + Claude MCP plugin | ✅ A1 已有 | 中（內部測試） |
-| Google Sheet 直接輸入 | 業務手動填 SALES_INTAKE | ✅ 立即可用 | MVP 首選 |
-
-### LINE OA 接口規劃（短期落地）
-
-技術方案：LINE Messaging API → Google Apps Script（Webhook Receiver）→ 寫入 SALES_INTAKE
+技術方案：LINE Messaging API → Google Apps Script → CONVERSATION_LOG
 
 ```
 LINE OA 設定：
 - Webhook URL: Google Apps Script Web App URL
 - 啟用 Webhook
-- 關閉自動回覆
+- 不關閉自動回覆（業務自己設定 LINE OA 回覆）
 
-Apps Script 邏輯：
+Apps Script 邏輯（極簡）：
 1. doPost(e) 接收 LINE webhook
-2. 解析 message.text
-3. 寫入 SALES_INTAKE（raw_request = message.text）
-4. 呼叫 Claude API（A6 角色）整理需求
-5. 回覆 LINE：「收到！正在為您準備報價，請稍候。」
-6. A6 產出結果後，推送 LINE：「報價草稿已準備好：[Sheet連結]」
+2. 解析 message：userId / text / timestamp
+3. 寫入 CONVERSATION_LOG（speaker=客戶或業務, source=LINE）
+4. 不回覆、不處理、不觸發 AI — 純存檔
 ```
 
-### Telegram 接口（已有基礎）
+> LINE webhook 的目的不是做聊天機器人，是**建立 A 層 Reality Log**。
+> 業務繼續用 LINE 跟客戶聊天，系統在背景靜默記錄所有對話。
 
-A1 tmux 環境已有 Telegram MCP plugin，可直接接收指令。
-業務在 Telegram 輸入需求 → A1 轉發給 A6 → A6 輸出到 QUOTE_WORKBENCH。
+### A6 協作接口（業務 → A6）
+
+| 接口 | 方式 | 狀態 | 說明 |
+|------|------|------|------|
+| Telegram | 業務在 Telegram 跟 A6 對話 | ✅ A1 已有 MCP | 主要協作通道 |
+| Google Sheet | 業務填 SALES_INTAKE | ✅ 已建好 | 備用（簡單案件直接填） |
+
+A6 的每一輪回覆都自動寫入 CONVERSATION_LOG（source=Telegram, speaker=A6）。
+
+### case_id 關聯邏輯
+
+- LINE 對話用 line_user_id 分群
+- 業務在 Telegram 跟 A6 說「幫王小明報價」→ A6 建 SALES_INTAKE 一筆 → 生成 case_id
+- A6 同時在 CONVERSATION_LOG 搜尋相近的 line_user_id 對話 → 自動關聯
+- 關聯不到的（電話/面談進來的）→ case_id 先空，業務之後手動補或不補
 
 ---
 

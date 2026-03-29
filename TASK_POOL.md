@@ -12,7 +12,7 @@
 | 4 | DropdownHelper 增加 DST/BEV/MAIN 分類下拉 | A0→Code task | ✅ |
 | 5 | A7 客服 FAQ Phase 2 — 從 Drive 報價單整理常見問答 | A0→Windows A7 | 🔲 |
 | 6 | A6 急件報價 SOP — 從歷史 6 筆訂單建模板 | A0→Code task | 🔲 |
-| 7 | Google Slides 報價簡報模板 v1 | A0→Code task | 🔲 |
+| 7 | Google Slides 報價簡報模板 v1 | A0→Code task | ⏭️ 跳過 — A6 已有 MAPLAB_Proposal_Template（ID: 1OUpmgwwRlbolClfgJi1qzlQ8CLudYkjen3vI0a9C3bU），不新建。需改良時從此模板建副本。 |
 | 8 | A2 SEO 場景頁 LP — 週歲派對 | A0→Windows A2 | 🔲 |
 | 9 | A2 SEO 場景頁 LP — 婚禮外燴 | A0→Windows A2 | 🔲 |
 | 10 | A2 SEO 場景頁 LP — 企業活動 | A0→Windows A2 | 🔲 |

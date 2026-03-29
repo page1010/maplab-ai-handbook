@@ -1,6 +1,6 @@
 # AGENT_RULES.md — MAPLAB AI 全域行為準則
 
-版本：v3.5 | 建立：2026-03-12 | 更新：2026-03-29
+版本：v3.6 | 建立：2026-03-12 | 更新：2026-03-29
 
 ---
 
@@ -365,6 +365,7 @@ A1 巡查時發現 agent 未寫接續 Prompt 或超過 30 分鐘無 checkpoint�
 | v3.3 | 2026-03-29 | 新增 SECTION 8 權限治理（鑰匙即技能）；建立 skills/credentials/ 10 個技能書 | A1 Claude Code |
 | v3.4 | 2026-03-29 | superpowers-guide.md + mcp-usage-guide.md 加入 credentials 路由 | A1 Claude Code |
 | v3.5 | 2026-03-29 | 版本表整合，SECTION 8 正式啟用 | A1 Claude Code |
+| v3.6 | 2026-03-29 | SECTION 9 API三層備援+身份確認；CLAUDE.md改指向器；recall prompt加身份確認+API備援 | A0 Cowork |
 
 ---
 
@@ -443,3 +444,32 @@ Agent 要用鑰匙時：讀技能書 → 按指示取用 → 用完不存。
 - 不修改其他人的 Google 帳號權限
 - 不自動發布 WP 頁面（只能 draft）
 - repo 維持 private
+
+---
+
+## SECTION 9 — API 存取三層備援（強制）
+
+> 新增：2026-03-29 ｜ 原因：Code task 不繼承 MCP（已知限制），Chrome tab 無 MCP。Agent 不得以「沒有 MCP」為由拒絕工作。
+
+### 9.1 三層備援規則
+
+所有 Agent 啟動時，依以下優先順序存取外部服務：
+
+| 優先級 | 方式 | 適用環境 | 說明 |
+|--------|------|---------|------|
+| 1 | MCP | A0 Cowork / A1 tmux 常駐 | 最快，直接用 |
+| 2 | curl + OAuth（credential skill） | A1 Code task / 任何環境 | 讀 skills/credentials/ 取用方法 |
+| 3 | Chrome 截圖讀取 | Claude tab（A2-A8） | 自行開啟需要的網頁分頁，用截圖讀取資料 |
+
+### 9.2 強制行為
+
+- **MCP 不可用時，必須自動降級到 credential skill（curl + OAuth）**，不能停下來等 Owner 幫忙
+- **Chrome tab 環境的 Agent（A2-A8）需要資料時，自行開啟 GitHub / Google Sheets / GA 等網頁分頁**，不是 Owner 的工作
+- **credential skill 在 skills/credentials/ 資料夾**，每個外部服務一個檔案，記錄取用方法
+- **說「做不到」之前，必須先確認三層都試過**
+
+### 9.3 身份確認（防止混淆）
+
+每個 Agent 的 recall prompt 開頭都有【身份確認】區塊。啟動後第一件事：確認自己的身份，不要假設。
+
+已知問題：A0 開的 Code task 會讓 A1 以為自己是 A0 → 用【身份確認】修正。

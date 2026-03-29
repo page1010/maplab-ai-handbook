@@ -1,6 +1,8 @@
-# MCP 使用指南 v1.0
+# MCP 使用指南 v1.1
 
-> 建立：2026-03-28 | 作者：A1 | 解決問題：誰能用 MCP、bot.py 為何 MCP 無效、替代方案
+> 建立：2026-03-28 | 更新：2026-03-29 | 作者：A1 | 解決問題：誰能用 MCP、bot.py 為何 MCP 無效、替代方案
+
+> 📁 每個 MCP 服務的鑰匙取用方式詳見 `skills/credentials/` 對應技能書。
 
 ---
 
@@ -68,6 +70,12 @@ Google token 存在 `/Users/pagemacmini/.claude/mcp-keys/google-token.json`。
 uvx mcp-google-sheets@latest
 # 跑起來後會印出 OAuth URL → 瀏覽器授權 → token 自動存回
 ```
+
+詳細的鑰匙取用方式見：
+- `skills/credentials/google-sheets-api.md`
+- `skills/credentials/google-drive-api.md`
+- `skills/credentials/google-analytics-api.md`
+- `skills/credentials/google-search-console-api.md`
 
 ### 3c. 驗證 MCP 是否正常（在 A1 session 中）
 ```

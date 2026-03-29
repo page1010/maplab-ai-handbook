@@ -1,5 +1,5 @@
 h# Superpowers Skills 導覽手冊 — MAPLAB AI Agent 版
-版本：v2.1 | 建立：2026-03-14 | 更新：2026-03-26
+版本：v2.4 | 建立：2026-03-14 | 更新：2026-03-29
 
 > 完整互動版：https://www.notion.so/Superpowers-Skills-320ab0806d5c807c95c7d8d633a7e5c5
 > 原始 Repo：https://github.com/obra/superpowers
@@ -39,6 +39,7 @@ h# Superpowers Skills 導覽手冊 — MAPLAB AI Agent 版
 | 遠端桌面、Windows、跨機器、Colab、DESKTOP-PAGEHOME、Agent 監控 | remote-desktop-agent-bridge | 適用 A0：Chrome Remote Desktop 連接 Windows，監控 A4/A5 等跨機器 Agent |
 | A0 行為、被動、回報、提醒、Owner Action | a0-proactive-dispatch-guide | 適用 A0（每次 session 必拿）：禁止被動回報，行動優先，驗證 Owner Action 狀態 |
 | Extension、召喚、summon、Agent Commander、Side Panel、Chrome 側邊欄 | extension-agent-summon-guide | 適用 A0（主要）、所有角色（參考）：透過 Chrome Extension 召喚 A0-A8，含平台差異 + 遠端召喚 SOP |
+| API key、OAuth、token、credentials、密碼、鑰匙、認證 | skills/credentials/（依服務選擇）| 每個外部服務一本技能書：鑰匙在哪、怎麼取用、可做什麼、禁止什麼 |
 
 ---
 
@@ -185,6 +186,7 @@ checkpoint 機制：每完成外部系統操作立即 commit，防止進度丟�
 | v1.2 | 2026-03-17 | 加入 github-api-workflow / verification-checklist / systematic-debugging-cloud | A4 |
 | v1.3 | 2026-03-17 | 加入 troubleshooting-hub | A1 |
 | v1.4 | 2026-03-18 | 新增「任務類型 → 建議預讀技能書」路由表；修正 troubleshooting-hub 格式 | A1 |
+| v2.4 | 2026-03-29 | 新增 credentials/ 路由（API key / OAuth / token 觸發詞） | A1 |
 | v2.3 | 2026-03-28 | 新增 extension-agent-summon-guide 路由 | A0 |
 | v2.2 | 2026-03-27 | 新增 a0-proactive-dispatch-guide 路由 | A0 |
 | v2.1 | 2026-03-26 | 新增 gps-daily-subdivision-guide 路由 + 技能描述 | A4 |

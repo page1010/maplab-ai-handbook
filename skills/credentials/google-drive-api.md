@@ -59,3 +59,11 @@ scopes=["https://www.googleapis.com/auth/drive.readonly"]
 ## Token 過期恢復
 
 同 google-sheets-api.md — 重新執行 MCP server 授權即可（兩者共用 token）。
+
+---
+
+## 重要資料夾 ID
+
+| 資料夾 | ID | 說明 |
+|--------|-----|------|
+| 歷史報價單 | 17wM4wldkllDbj0T8Xg_rgY3mM3RgH7LG | 932份報價（2024+2025+2026），品項提取來源 |

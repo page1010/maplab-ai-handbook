@@ -1,5 +1,5 @@
 # Pipeline Agent — 角色定位與技術文件
-  版本：v2.0 | 建立：2026-03-12 | 更新：2026-03-28
+  版本：v2.1 | 建立：2026-03-12 | 更新：2026-03-31
 
 ---
 
@@ -204,7 +204,7 @@ seo_name格式：{category}-{description}-{detail}，例：catering-birthday-buf
 | S3 | 定版 Gemini prompt | ✅ DONE | 2026-03-23 | 見上方 prompt |
 | S4 | 建 MAPLAB_ASSETS 資料夾結構 | ✅ DONE | 2026-03-23 | 2022-2026 × catering/travel/daily |
 | S5 | 2022 全年 batch（8,559 images） | ✅ DONE | 2026-03-25 | 8,559 完成（日常5,243/外燴1,221/旅遊2,073） |
-| S5.5 | 日常 home/shop GPS 細分 | 🔄 進行中 | 2026-03-28 | A4 已領取，5,243張日常照待 Colab 執行 |
+| S5.5 | 日常 home/shop GPS 細分 | ⛔ Backlog | 2026-03-31 | Takeout JSON 未上傳 Drive（Phase 2 unzip 只取圖片），GPS 資料不存在；全部維持 no_gps |
 | S6 | 2023 batch | 🔄 18.2% (2,950/16,251) | 2026-03-25 | Colab斷線待重啟，16,251 files |
 | S6.5 | 2023 日常 GPS 細分 | 🔲 待 S6 完成 | — | 同 S5.5 邏輯 |
 
@@ -404,3 +404,4 @@ seo_name格式：{category}-{description}-{detail}，例：catering-birthday-buf
 | v1.8 | 2026-03-24 | 版本更新 + GPS 座標查詢中 | A4 |
 | v1.9 | 2026-03-25 | S5 93.5% + GPS 座標確認 + 付費 tier 發現 + 加速方案 + 全年份排程 + 執行 SOP + A2 素材指南 | A4 |
 | v2.0 | 2026-03-28 | S5 DONE confirmed + S6 18.2% + S5.5 GPS 領取 + ASSET_LOG 驗證 11,509 rows | A4 |
+| v2.1 | 2026-03-31 | S5.5 GPS 根本原因（Takeout JSON 未存 Drive）確認 + 決策 Backlog + S6 重啟 | A4 |

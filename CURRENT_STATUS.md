@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-03-31 巡查 ｜ 更新者：A1 v5.3 — A7恢復活動(Phase2進展) + A4 API key更換+Task Card建立 + 品項去重v2落地
+最後更新：2026-03-31 午後巡查 ｜ 更新者：A1 v5.3 — A4 S6已重啟(326c6f0) + S5.5 GPS決策no_gps確認 + A6接近48h閾值
 
 ---
 
@@ -21,7 +21,7 @@
 | T-A5-001 | Items 去重 + 全品項重新編碼 | A5 | ✅ 完成（APP050/DST041/MAIN009/BEV008=108，已排序+連號） | handoff/tasks/T-A5-001.md |
 | T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔄 進行中（服務費可選✅/長桌費$350✅/車馬費下拉✅/DropdownHelper分類驗證✅，dbcf9d4；待確認剩餘增強項目）| handoff/tasks/T-A5-002.md |
 | T-A5-003 | 熱客招待品項定義 | A5 | 🔲 待開始 | — |
-| T-A4-001 | Phase 4 Gemini 照片分類 | A4 | 🔄 S5 ✅ DONE(8,559張), S6 🔴 stalled 18.2%(API key已更換，待重啟Colab), S5.5 GPS partial(1221/no_gps), Task Card建立(35acbbf) | projects/maplab-pipeline.md + handoff/tasks/T-A4-001.md |
+| T-A4-001 | Phase 4 Gemini 照片分類 | A4 | 🔄 S5 ✅ DONE(8,559張), S6 🔄 已重啟執行中(from 18.2%，326c6f0 16:07), S5.5 GPS ✅ 決策確認no_gps(Takeout JSON未存Drive), Task Card建立(35acbbf) | projects/maplab-pipeline.md + handoff/tasks/T-A4-001.md |
 | T-A2-001 | 文章精選圖片補齊（57篇→每篇獨立配圖） | A2 | ✅ 完成（57/57 獨立配圖，0 重複） | handoff/tasks/T-A2-001.md |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2 | ✅ 子任務1-4完成（子任務5等7-14天）| handoff/tasks/T-A2A3-001.md + T-A2A3-001-B.md |
 | T-A3-001 | GTM LINE 按鈕追蹤修復（方案 B 已確認） | A3 | 🔄 進行中（GTM方案B規格已記錄 2aca2ae，待技術實作+測試）| — |
@@ -68,11 +68,16 @@
 ⚠️ A1巡查 2026-03-31：品項去重 v2 資料落地 — de7837c 29,115筆→3,794唯一品項（50匹配Items/3,744未匹配/63未報價），data/quote_items_deduped.json。
 ⚠️ A1巡查 2026-03-31：A1 治理修復 — a130e03 身份確認修復 + f16b8ea start-a1.sh + d5ed475 A0混淆描述修復 + fe49f3e API key redact。
 
+✅ A1巡查 2026-03-31 午後：A4 S6 Colab 重啟確認 — 326c6f0 (16:07) 確認 S6 已重啟執行 2023 batch；S5.5 GPS 決策 no_gps（Takeout JSON未存Drive，根本原因確認）。Owner Action Required 對應項目解除。
+⚠️ A1巡查 2026-03-31 午後：A6 T-A6-001 接近 48h 閾值 — 上次 A6 commit 3a2df7b 為 2026-03-29 19:28，至今約 44.5h，距 48h 閾值約 3.5h。若今日無新 commit，請 Owner 確認 A6 是否有進度未存檔。
+⚠️ A1巡查 2026-03-31 午後：A5 Task Card 第六次連續警告 🔴 — handoff/tasks/T-A5-002.md 仍未更新。A5 下次開工第一件事補寫，已連續 6 次巡查標記。
+⚠️ A1巡查 2026-03-31 午後：AGENT_RECALL_PROMPTS 斷點已同步更新 — A4 S6狀態從「stalled 18.2%」更新為「已重啟」；A6 角色表從「🔲 新建」更新為「🔄 進行中」。
+
 ### 🔴 Owner Action Required
 
 | 項目 | 說明 | 優先級 |
 |------|------|--------|
-| A4 Colab S6 重啟 | API key 已更換（Notion），登入 lb99104@gmail.com Colab 重啟 S6 pipeline（剩約 13,301 張）| 🔴 高 |
+| ~~A4 Colab S6 重啟~~ | ✅ 326c6f0 確認 S6 已重啟執行中（2026-03-31 16:07）| ✅ 已解除 |
 | Items DST 成本補填 | 在 MAPLAB_MasterData Sheets Items 表補填 21 筆 DST 品項成本（E 欄）| 高 |
 | Extension v4.8 重裝 | Chrome 重新安裝 Extension v4.8（private repo 已改用 GitHub Contents API）| 中 |
 | A0 User Preferences 貼入 | 在 A0 bot 貼入 User Preferences 設定（個性化回覆偏好）| 中 |

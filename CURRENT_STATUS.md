@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-03-29 晚間巡查 ｜ 更新者：A1 v5.3 — A6 LINE報價助手新任務登記 + A3報告更新 + A4第四天CRITICAL + A7持續無活動
+最後更新：2026-03-31 巡查 ｜ 更新者：A1 v5.3 — A7恢復活動(Phase2進展) + A4 API key更換+Task Card建立 + 品項去重v2落地
 
 ---
 
@@ -21,14 +21,14 @@
 | T-A5-001 | Items 去重 + 全品項重新編碼 | A5 | ✅ 完成（APP050/DST041/MAIN009/BEV008=108，已排序+連號） | handoff/tasks/T-A5-001.md |
 | T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔄 進行中（服務費可選✅/長桌費$350✅/車馬費下拉✅/DropdownHelper分類驗證✅，dbcf9d4；待確認剩餘增強項目）| handoff/tasks/T-A5-002.md |
 | T-A5-003 | 熱客招待品項定義 | A5 | 🔲 待開始 | — |
-| T-A4-001 | Phase 4 Gemini 照片分類 | A4 | 🔄 S5 ✅ DONE(8,559張), S6 🔴 stalled 2,950/16,251=18.2%(Colab斷線), S5.5 GPS partial(1221/no_gps) | projects/maplab-pipeline.md |
+| T-A4-001 | Phase 4 Gemini 照片分類 | A4 | 🔄 S5 ✅ DONE(8,559張), S6 🔴 stalled 18.2%(API key已更換，待重啟Colab), S5.5 GPS partial(1221/no_gps), Task Card建立(35acbbf) | projects/maplab-pipeline.md + handoff/tasks/T-A4-001.md |
 | T-A2-001 | 文章精選圖片補齊（57篇→每篇獨立配圖） | A2 | ✅ 完成（57/57 獨立配圖，0 重複） | handoff/tasks/T-A2-001.md |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2 | ✅ 子任務1-4完成（子任務5等7-14天）| handoff/tasks/T-A2A3-001.md + T-A2A3-001-B.md |
 | T-A3-001 | GTM LINE 按鈕追蹤修復（方案 B 已確認） | A3 | 🔄 進行中（GTM方案B規格已記錄 2aca2ae，待技術實作+測試）| — |
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | 🔄 確認中（已上線，受眾已記錄；廣告成效報告 v1.0 + 嘉義地區建議已產出 69b50ec） | handoff/tasks/T-A3-002.md |
 | T-A6-001 | LINE 業務報價助手系統 | A6 | 🔄 進行中（v1.1 架構修正：三層資料/CONVERSATION_LOG/Sheet 3個新分頁，d9fba1a+3a2df7b） | projects/line-quote-assistant.md |
-| T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | 🔄 Phase 2 進行中（CSV驗證+Q1-Q10 v2.0，aea3094）| handoff/tasks/T-A7-001.md |
-| T-A7-002 | 80/20 優先任務清單 + 執行路線圖 | A7 | 🔄 建立完成（10大任務+路線圖，f239b40），待執行 | — |
+| T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | 🔄 Phase 2 進展中（skills v2.0 8種對話模式 68df5d7 + reply-templates v1.0 d165d7d）| handoff/tasks/T-A7-001.md |
+| T-A7-002 | 80/20 優先任務清單 + 執行路線圖 | A7 | 🔄 任務6+10完成（cf9f166），部分執行中 | — |
 | T-A0-001 | Telegram bot 指令模式上線 | A0 | ✅ 完成 | — |
 | T-A0-002 | Notion 舊資料清理（保留架構，引導到 GitHub）| A0/A1 | ✅ 完成（3 個主要頁面加了 GitHub 引導警告） | — |
 
@@ -36,7 +36,7 @@
 
 - ~~A5：甜點去重需使用者手動完成後才能重新編碼~~ ✅ resolved — T-A5-001 完成（108品項已排序+連號）
 - A5：使用者需填 Items.D 欄 default_price
-- ~~A4：Gemini API ✅ | S5(2022) ✅ DONE 8,559 | S6(2023) 🔄 2,950/16,251=18.2% Colab斷線待重啟 | S5.5 GPS細分 planned(5,243日常照)
+- ~~A4：Gemini API key leaked (b822f90) → 已更換新 key（記錄於 Notion）~~ ✅ resolved — API key 已更新。S6 Colab 仍待重啟（18.2%）
 - A3：「慶生周歲派對」已上線（現有貼文），需確認受眾設定；GTM 方案 B 可認領
 - ~~A2：T-A2-001 Google Drive 2025相簿僅約20張可用照片~~ ✅ resolved — 跨相簿找圖完成（2024/2023/2019/素材開幕），57篇全部獨立配圖
 
@@ -62,16 +62,26 @@
 ⚠️ A1巡查 2026-03-29 晚間巡查：A5 Task Card 第四次連續警告 — handoff/tasks/T-A5-002.md 仍未反映服務費/車馬費/長桌費完成進度。A5 下次開工第一件事：補更新 Task Card（已連續 4 次巡查標記，升級為 🔴）。
 ⚠️ A1巡查 2026-03-29 晚間巡查：SECTION 9 新治理功能已落地 — 0076a3a feat(governance): SECTION 9 API三層備援 + 身份確認 + CLAUDE.md指向器，已補入 A1 recall 斷點。A6 SOP skill (skills/a6-rapid-quote-sop.md) 同步建立。
 
+✅ A1巡查 2026-03-31：A7 恢復活動 — 3 commits 落地：(1) 68df5d7 skills v2.0 Phase 2 重寫（8種對話模式+跨部門SOP+Q7/Q10業務人工決策）(2) d165d7d reply-templates v1.0 Mina 操作版模板庫 Q1-Q10 (3) cf9f166 T-A7-002 v1.1 任務6+10完成。之前連續兩晚無活動警告解除。
+✅ A1巡查 2026-03-31：A4 Gemini API key 已更換 — 舊 key leaked (b822f90)，已 redact (fe49f3e)，新 key 記錄於 Notion。S6 Colab 重啟 blocker 解除，待 Owner 登入重啟。A4 Task Card 已建立 (35acbbf)。
+⚠️ A1巡查 2026-03-31：A5 Task Card 第五次連續警告 🔴 — handoff/tasks/T-A5-002.md 仍未更新。已連續 5 次巡查標記。
+⚠️ A1巡查 2026-03-31：品項去重 v2 資料落地 — de7837c 29,115筆→3,794唯一品項（50匹配Items/3,744未匹配/63未報價），data/quote_items_deduped.json。
+⚠️ A1巡查 2026-03-31：A1 治理修復 — a130e03 身份確認修復 + f16b8ea start-a1.sh + d5ed475 A0混淆描述修復 + fe49f3e API key redact。
+
 ### 🔴 Owner Action Required
 
 | 項目 | 說明 | 優先級 |
 |------|------|--------|
-| A4 Colab 重啟 | 登入 lb99104@gmail.com Colab，重啟 pipeline（剩 554 張，約 2 小時）| 高 |
+| A4 Colab S6 重啟 | API key 已更換（Notion），登入 lb99104@gmail.com Colab 重啟 S6 pipeline（剩約 13,301 張）| 🔴 高 |
 | Items DST 成本補填 | 在 MAPLAB_MasterData Sheets Items 表補填 21 筆 DST 品項成本（E 欄）| 高 |
 | Extension v4.8 重裝 | Chrome 重新安裝 Extension v4.8（private repo 已改用 GitHub Contents API）| 中 |
 | A0 User Preferences 貼入 | 在 A0 bot 貼入 User Preferences 設定（個性化回覆偏好）| 中 |
 
 ## 最新決策
+
+- 2026-03-31：A4 Gemini API key 更換完成（舊 key leaked → redact → 新 key 記錄於 Notion），S6 Colab 重啟 blocker 解除
+- 2026-03-31：A7 Phase 2 實質進展 — reply-templates v1.0（Mina 操作版）+ skills v2.0（8種對話模式）+ T-A7-002 任務6+10完成
+- 2026-03-31：品項去重 v2 資料落地（de7837c，29,115筆→3,794唯一品項）
 
 - 2026-03-29：報價單歷史分析整理完成 — 產出 data/quote-terms-reference.md（個人/企業/特規三區條款）+ data/quote-items-unmatched.md（932份報價 × Items主表比對：30品項已匹配、7品項未納入Items表供Owner參考）
 
@@ -141,6 +151,7 @@
 | 客戶/活動資料 | data/timetree_events_2022_2026.json | 746 筆外燴事件（含客戶名、日期、活動類型）|
 | 品項資料 | data/item-master-cross-reference.md | 108 品項對照表（APP/DST/MAIN/BEV）|
 | 品項頻率 | data/item-frequency-top50.md | 399 筆歷史訂單品項分析 |
+| 品項去重 v2 | data/quote_items_deduped.json | 3,794 唯一品項（50匹配/3,744未匹配/63未報價）|
 | 報價系統 | projects/maplab-master-data.md | A5 報價邏輯 + Sheets 結構 |
 | SEO/廣告 | projects/seo-ads-agent.md | A2/A3 核心文件 + 轉換動作快照 |
 | 照片管線 | projects/maplab-pipeline.md | A4 照片分類流程 + Gemini API |

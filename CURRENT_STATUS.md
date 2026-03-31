@@ -9,9 +9,11 @@
 
 ## 系統版本
 
-- **Version**: v5.3
-- **Phase**: Phase 5 — 營運執行 + 廣告優化
+- **Version**: v6.0
+- **Phase**: Phase 6 — 觀測性 + 業務閉環 + 策略循環
 - **Status**: Active
+- **v6.0 設計文件**: `.claude/plans/iterative-yawning-eich.md`
+- **Sheets Dashboard**: `1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg` → Task Board + Owner Actions 分頁
 
 ## 當前進行中任務
 
@@ -84,6 +86,7 @@
 
 ## 最新決策
 
+- 2026-03-31：**v6.0 Phase 1 觀測性建設落地** — (1) Sheets Dashboard 建立（Task Board 12筆任務 + Owner Actions 5筆）(2) AGENT_RECALL_PROMPTS 更新：A1 加 Sheets 巡查同步、A0 加 Artifacts 看板渲染 (3) 設計文件：.claude/plans/iterative-yawning-eich.md。v6.0 三階段：Phase 1 觀測性 / Phase 2 業務閉環 MVP / Phase 3 自動化+策略循環。
 - 2026-03-31：A4 Gemini API key 更換完成（舊 key leaked → redact → 新 key 記錄於 Notion），S6 Colab 重啟 blocker 解除
 - 2026-03-31：A7 Phase 2 實質進展 — reply-templates v1.0（Mina 操作版）+ skills v2.0（8種對話模式）+ T-A7-002 任務6+10完成
 - 2026-03-31：品項去重 v2 資料落地（de7837c，29,115筆→3,794唯一品項）

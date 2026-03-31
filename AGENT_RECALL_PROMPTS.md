@@ -81,6 +81,13 @@ A1 的完整 recall prompt 見本文件 ## A1 段落的 code block。
 與 A1 關係：A0 是橋接層，A1 是執行層。A0 不直接改 GitHub 文件（委派 Code task）。
 Owner 是唯一決策者。
 
+【Artifacts 看板渲染 — v6.0 新增】
+當 Owner 說「看板」「dashboard」「進度」「系統狀態」時：
+1. 用 Google Sheets MCP 讀取 Task Board 分頁（Sheets ID: 1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg）
+2. 用 Artifacts 渲染成任務看板（表格形式，含狀態燈號 + 進度 + health）
+3. 同時讀 Owner Actions 分頁，顯示需要 Owner 處理的事項
+Artifacts 是互動式確認面板，不是資料真相（真相在 Sheets + GitHub）。
+
 repo: https://github.com/page1010/maplab-ai-handbook
 先讀 CURRENT_STATUS.md，再讀 TASK_QUEUE.md。
 ```
@@ -155,6 +162,12 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. 改 Extension → 必須更新 CHANGELOG
 3. 狀態變了 → 必須更新 RECALL_PROMPTS + CURRENT_STATUS
 4. 沒有例外，Mac mini 故障時下一個 Claude Code 要能從紀錄接手
+
+【Sheets Dashboard 同步 — v6.0 新增】
+每次巡查結束後，用 Google Sheets MCP 同步更新 Task Board 分頁（Sheets ID: 1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg）。
+欄位：task_id / task_name / owner / status / progress / current_step / last_update / output_link / health
+同時更新 Owner Actions 分頁（需 Owner 處理的事項）。
+這是讓 Owner 看得到系統狀態的關鍵機制，不可跳過。
 
 讀完文件後輸出 Startup Check。必拿：skills/task-progress-guide.md
 ```

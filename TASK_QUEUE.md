@@ -32,6 +32,9 @@ Task Claim
 
 | Task ID | 任務 | 適合 Agent | 前置條件 | 狀態 |
 |---------|------|-----------|---------|------|
+| T-A1-V6 | v6.0 Phase 1 觀測性建設 | A1 | 無 | 🔄 進行中（Sheets Dashboard + RECALL_PROMPTS 完成）|
+| T-A1-V6-P2 | v6.0 Phase 2 業務閉環 MVP（建 4 Sheets 分頁 + A6 報價測試） | A1 | Phase 1 完成 | 🔲 待開始 |
+| T-A1-V6-P3 | v6.0 Phase 3 自動化+策略循環（LINE webhook + A6 獨立 bot + strategy-cycle-guide） | A1 | Phase 2 完成 | 🔲 待開始 |
 | T-A2-001 | 文章精選圖片補齊（57篇→每篇獨立配圖） | A2 | 無 | ✅ 完成（57/57） |
 | T-A1-002 | Phase 4.1 系統治理升級 — 全部完成 | A1 | 無 | ✅ 完成 |
 | T-A5-001 | Items 甜點(DST)去重 + 全品項重新編碼 | A5 | 使用者手動完成甜點去重 | ⏸️ 等使用者 |

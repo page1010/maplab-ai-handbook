@@ -86,6 +86,7 @@
 
 ## 最新決策
 
+- 2026-03-31：**v6.0 Phase 2 業務閉環 MVP 落地** — (1) QUOTE_WORKBENCH 分頁建立（14欄：case_id→terms_type）(2) 4組下拉驗證：SALES_INTAKE status+event_type、REVISION_LOG change_type+reason_tag (3) Phase 2 四個分頁全部就緒：SALES_INTAKE/REVISION_LOG/CONVERSATION_LOG（已存在）+ QUOTE_WORKBENCH（新建）。下一步：Owner/業務填測試資料 → A6 報價測試。
 - 2026-03-31：**v6.0 Phase 1 觀測性建設落地** — (1) Sheets Dashboard 建立（Task Board 12筆任務 + Owner Actions 5筆）(2) AGENT_RECALL_PROMPTS 更新：A1 加 Sheets 巡查同步、A0 加 Artifacts 看板渲染 (3) 設計文件：.claude/plans/iterative-yawning-eich.md。v6.0 三階段：Phase 1 觀測性 / Phase 2 業務閉環 MVP / Phase 3 自動化+策略循環。
 - 2026-03-31：A4 Gemini API key 更換完成（舊 key leaked → redact → 新 key 記錄於 Notion），S6 Colab 重啟 blocker 解除
 - 2026-03-31：A7 Phase 2 實質進展 — reply-templates v1.0（Mina 操作版）+ skills v2.0（8種對話模式）+ T-A7-002 任務6+10完成

@@ -17,8 +17,8 @@
 
 | 編號 | 部門名稱 | 狀態 | 備註 |
 |------|---------|------|------|
-| A0 | 總調度秘書 | ✅ Cowork 常駐 | 跨系統橋接、調度、Telegram 管理 |
-| A1 | 系統總管中心 | ✅ Claude Code 常駐 | 不需召喚，直接下指令 |
+| A0 | 總調度秘書 | ✅ Cowork 常駐 | 跨系統橋接、調度、桌面控制 |
+| A1 | 系統總管中心 | ✅ Claude Code 常駐 | Telegram bot + 終端機，直接下指令 |
 | A2 | 搜尋流量作戰部 | ✅ T-A2-001 完成，待新任務 | SEO / GA / 關鍵字 |
 | A3 | 社群與廣告成長部 | 🔄 有進行中任務 | Meta Ads / Social |
 | A4 | 影像資產整理部 | 🔄 S5✅/S5.5 GPS partial/S6 18.2% | Photo Archive |
@@ -146,8 +146,8 @@ repo: https://github.com/page1010/maplab-ai-handbook
 - Extension 每次改版必須寫 CHANGELOG（含 commit hash + 變更原因 + 失敗教訓）
 - 角色/任務狀態變更必須更新 RECALL_PROMPTS
 
-【協作】對 A0+A2-A8 下指令、產出召喚 prompt、接收 Telegram 指令、管理 GitHub repo
-⚠️ 決策點：若任務需要對話/溝通而非寫程式 → 指令給 A0，讓 A0 透過 Telegram 執行，A1 不要獨自卡住
+【協作】對 A0+A2-A8 下指令、產出召喚 prompt、透過 Telegram bot 接收 Owner 指令、管理 GitHub repo
+⚠️ 決策點：若任務需要桌面操控/跨系統調度而非寫程式 → 指令給 A0（Cowork），A1 不要獨自卡住
 
 【強制存檔規則 — A1 也必須遵守】
 1. 每 30 分鐘至少 commit 一次

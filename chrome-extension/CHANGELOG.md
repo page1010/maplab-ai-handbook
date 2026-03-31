@@ -2,7 +2,7 @@
 
 ## v4.7 — 2026-03-28
 變更者：A1 Claude Code
-- **A0 角色支援**：popup.html 加入 A0 角色選項，可直接召喚 A0（Telegram bot）的 recall prompt
+- **A0 角色支援**：popup.html 加入 A0 角色選項，可直接召喚 A0（Cowork 總調度秘書）的 recall prompt
 - commit：b330149
 
 ## v4.6 — 2026-03-25

@@ -29,7 +29,7 @@
 | T-A6-001 | LINE 業務報價助手系統 | A6 | 🔄 進行中（v1.1 架構修正：三層資料/CONVERSATION_LOG/Sheet 3個新分頁，d9fba1a+3a2df7b） | projects/line-quote-assistant.md |
 | T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | 🔄 Phase 2 進展中（skills v2.0 8種對話模式 68df5d7 + reply-templates v1.0 d165d7d）| handoff/tasks/T-A7-001.md |
 | T-A7-002 | 80/20 優先任務清單 + 執行路線圖 | A7 | 🔄 任務6+10完成（cf9f166），部分執行中 | — |
-| T-A0-001 | Telegram bot 指令模式上線 | A0 | ✅ 完成 | — |
+| T-A0-001 | Telegram bot 指令模式上線 | A1 | ✅ 完成（bot.py 為 A1 的 Telegram 前端，非 A0）| — |
 | T-A0-002 | Notion 舊資料清理（保留架構，引導到 GitHub）| A0/A1 | ✅ 完成（3 個主要頁面加了 GitHub 引導警告） | — |
 
 ## Blockers（阻塞事項）

@@ -190,7 +190,7 @@ Owner（你）
 | Owner 下技術指令 | 判斷後開 Code task，貼 A1 recall prompt | 讀 recall prompt 後執行，commit 後回報 |
 | A1 需要跨系統資料 | A0 透過 MCP 取得後回寫 GitHub | A1 讀 GitHub 取用，不直接呼叫 MCP |
 | A1 完成任務 | A0 確認 commit 已 push，同步更新 Notion | A1 更新 CURRENT_STATUS + RECALL_PROMPTS |
-| 緊急通知 | A0 透過 Telegram bot 推送給 Owner | — |
+| 緊急通知 | A0 透過 Cowork 桌面通知 Owner | A1 透過 Telegram bot 推送給 Owner |
 
 > A0 委派任務必須附 recall prompt；A1 接任務前必須確認 prompt 已貼入。
 
@@ -397,7 +397,7 @@ A1 每次巡查需確認：
 
 | 指標 | 預期狀態 | 異常處理 |
 |------|---------|---------|
-| A0 Telegram bot | 運行中，能收發訊息 | 透過 bot 目錄重啟 |
+| A1 Telegram bot | 運行中，能收發訊息 | 透過 bot/ 目錄重啟 |
 | Google MCP tokens | 有效（未過期） | 重新執行 uvx mcp-google-sheets@latest 授權 |
 | GitHub Actions patrol | 最近 24h 內有成功執行 | 查 .github/workflows/system-patrol.yml |
 | CURRENT_STATUS.md | 日期 ≤ 48h 前 | 更新系統狀態 |

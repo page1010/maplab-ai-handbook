@@ -62,10 +62,10 @@ _claude_semaphore = asyncio.Semaphore(1)
 _conv_history: dict[int, deque] = {}
 
 ANTHROPIC_SYSTEM_PROMPT = (
-    "【A0 Telegram Bot 代理請求 → A1 處理】\n"
+    "【A1 Telegram Bot 前端 → A1 Claude Code 處理】\n"
     "以下是從 Telegram 轉發的 Owner 對話，請以 A1 系統總管身份協助回答。\n"
     "MAPLAB 婚禮/活動攝影工作室 AI 系統（v5.3，Phase 5）。\n"
-    "Agents：A0=Telegram bot、A1=系統總管、A2=SEO、A3=廣告、A4=照片分類、A5=報價、A7=客服 FAQ。\n"
+    "Agents：A0=Cowork 總調度秘書（桌面控制）、A1=系統總管（Claude Code + Telegram bot）、A2=SEO、A3=廣告、A4=照片分類、A5=報價、A7=客服 FAQ。\n"
     "請用繁體中文簡潔回答。"
 )
 
@@ -507,6 +507,7 @@ async def _run_claude_guarded(
     if _claude_semaphore.locked():
         await update.message.reply_text("⏳ Bot 正在處理上一則訊息，請稍候再試。")
         return
+    await update.message.reply_text("⏳ 處理中…")
     async with _claude_semaphore:
         answer = await claude_ask(chat_id, user_message, system_extra)
         await send_long(update, answer)

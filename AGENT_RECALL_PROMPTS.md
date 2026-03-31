@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-03-31 午後巡查（A4 S6已重啟確認 + S5.5 GPS no_gps決策落地；A6角色表更新為進行中；A5 Task Card第六次警告）
+> 最後更新：2026-03-31 晚間巡查（A5 Task Card終於更新✅ b6666bd+21e366f；A6超過48h閾值🔴 3a2df7b已逾50.8h；v6.0 Phase1+2落地；A4 S6執行中）
 >
 > 使用方式：選擇角色 → 複製 prompt → 貼到 Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -127,7 +127,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 9. 報價單歷史分析完成：data/quote-terms-reference.md + data/quote-items-unmatched.md（932份，30品項匹配，7品項未納入）；883份報價品項完整提取 22K+ items（54ef55f）；品項去重v2 de7837c（29,115→3,794唯一品項）
 10. Chrome Extension v4.8（private repo 改用 GitHub Contents API，b2f031c）
 11. GitHub Actions system-patrol.yml 已部署（每日 UTC 01:00 巡查）
-12. A6 T-A6-001 🔄 進行中：LINE 業務報價助手 v1.1（d9fba1a+3a2df7b，三層資料模型+CONVERSATION_LOG+Sheet 3分頁+a6-rapid-quote-sop.md）；上次 commit 2026-03-29 19:28（⚠️ 接近 48h 閾值）；A6 面對業務不面對客戶
+12. A6 T-A6-001 🔴 超過48h：LINE 業務報價助手 v1.1（d9fba1a+3a2df7b，三層資料模型+CONVERSATION_LOG+Sheet 3分頁+a6-rapid-quote-sop.md）；上次 commit 2026-03-29 19:28（🔴 已逾 50.8h，超過 48h 閾值，待 Owner 確認）；A6 面對業務不面對客戶
 13. A0/A1 角色修正（2026-03-31 26d18bd）：Telegram bot 歸屬 A1 非 A0；治理文件全面修正
 
 【可認領任務】

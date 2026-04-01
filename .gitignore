@@ -2,5 +2,8 @@
 .mcp.json
 cookies.txt
 
+# Telegram logs - may contain sensitive info from conversations
+data/telegram-logs/
+
 # System
 .DS_Store

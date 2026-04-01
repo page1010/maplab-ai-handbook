@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Google Sans', 'Noto Sans TC', Arial, sans-serif;
+      font-size: 14px;
+      padding: 20px;
+      color: #202124;
+    }
+    h3 { margin: 0 0 16px; font-size: 16px; color: #1a73e8; }
+    label {
+      display: block;
+      margin-top: 12px;
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+    .required::after { content: ' *'; color: #d93025; }
+    input, select {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #dadce0;
+      border-radius: 4px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    input:focus, select:focus { border-color: #1a73e8; }
+    .hint {
+      font-size: 12px;
+      color: #5f6368;
+      margin-top: 2px;
+    }
+    .btn-row {
+      margin-top: 20px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+    button {
+      padding: 8px 20px;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    #cancelBtn {
+      background: #f1f3f4;
+      color: #202124;
+    }
+    #cancelBtn:hover { background: #e8eaed; }
+    #submitBtn {
+      background: #1a73e8;
+      color: #fff;
+    }
+    #submitBtn:hover { background: #1765cc; }
+    #submitBtn:disabled { background: #8ab4f8; cursor: not-allowed; }
+    .msg-error  { color: #d93025; font-size: 13px; margin-top: 10px; }
+    .msg-success {
+      color: #137333;
+      font-size: 13px;
+      margin-top: 10px;
+      line-height: 1.7;
+    }
+  </style>
+</head>
+<body>
+  <h3>產出報價單</h3>
+
+  <label class="required">客戶名稱</label>
+  <input type="text" id="clientName" placeholder="例：王小明">
+
+  <label>公司名稱</label>
+  <input type="text" id="company" placeholder="（企業客戶填寫；留空 = 個人版條款）">
+
+  <label>聯絡電話</label>
+  <input type="tel" id="phone" placeholder="09XX-XXX-XXX">
+
+  <label class="required">活動類型</label>
+  <select id="eventType">
+    <option value="">-- 請選擇 --</option>
+    <option value="生日派對">生日派對</option>
+    <option value="企業聚會">企業聚會</option>
+    <option value="婚禮">婚禮</option>
+    <option value="外燴到府">外燴到府</option>
+    <option value="尾牙/春酒">尾牙/春酒</option>
+    <option value="節日聚餐">節日聚餐</option>
+    <option value="其他">其他</option>
+  </select>
+
+  <label class="required">活動日期</label>
+  <input type="date" id="eventDate">
+
+  <label>活動地點</label>
+  <input type="text" id="location" placeholder="例：台南市東區">
+
+  <label>完整地址</label>
+  <input type="text" id="address" placeholder="（選填）">
+
+  <label>預計人數</label>
+  <input type="number" id="pax" placeholder="例：30" min="1">
+
+  <div id="message"></div>
+
+  <div class="btn-row">
+    <button id="cancelBtn" onclick="google.script.host.close()">取消</button>
+    <button id="submitBtn" onclick="submitForm()">產出報價單</button>
+  </div>
+
+  <script>
+    function submitForm() {
+      var clientName = document.getElementById('clientName').value.trim();
+      var eventType  = document.getElementById('eventType').value;
+      var eventDate  = document.getElementById('eventDate').value;
+      var msgEl      = document.getElementById('message');
+
+      // 必填驗證
+      if (!clientName || !eventType || !eventDate) {
+        msgEl.innerHTML = '<p class="msg-error">請填寫必填欄位：客戶名稱、活動類型、活動日期。</p>';
+        return;
+      }
+
+      var formData = {
+        clientName : clientName,
+        company    : document.getElementById('company').value.trim(),
+        phone      : document.getElementById('phone').value.trim(),
+        eventType  : eventType,
+        eventDate  : eventDate,
+        location   : document.getElementById('location').value.trim(),
+        address    : document.getElementById('address').value.trim(),
+        pax        : document.getElementById('pax').value.trim()
+      };
+
+      var btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.textContent = '處理中…';
+      msgEl.innerHTML = '';
+
+      google.script.run
+        .withSuccessHandler(onSuccess)
+        .withFailureHandler(onFailure)
+        .createQuote(formData);
+    }
+
+    function onSuccess(result) {
+      var btn = document.getElementById('submitBtn');
+      btn.textContent = '完成';
+      document.getElementById('message').innerHTML =
+        '<p class="msg-success">' +
+        '✓ 報價單已建立！<br>' +
+        '案件編號：<strong>' + result.caseId + '</strong><br>' +
+        '分頁名稱：' + result.sheetName + '<br>' +
+        '<a href="' + result.url + '" target="_blank">開啟報價單 ↗</a>' +
+        '</p>';
+    }
+
+    function onFailure(error) {
+      var btn = document.getElementById('submitBtn');
+      btn.disabled = false;
+      btn.textContent = '產出報價單';
+      document.getElementById('message').innerHTML =
+        '<p class="msg-error">錯誤：' + error.message + '</p>';
+    }
+  </script>
+</body>
+</html>

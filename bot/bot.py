@@ -203,7 +203,7 @@ async def send_long(update: Update, text: str) -> None:
         await update.message.reply_text(text[i:i + MAX])
 
 
-async def claude_ask(chat_id: int, user_message: str, system_extra: str = "", timeout: int = 90) -> str:
+async def claude_ask(chat_id: int, user_message: str, system_extra: str = "", timeout: int = 600) -> str:
     """Call claude -p with conversation history injected into prompt (OAuth, Max 訂閱，不計 API 費用).
 
     Since OAuth tokens can't be used directly with Anthropic SDK, we use claude CLI
@@ -495,23 +495,42 @@ async def refresh(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         await update.message.reply_text(f"⚠️ 失敗：{e}")
 
 
-async def _run_claude_guarded(
-    update: Update,
+async def _run_claude_background(
+    bot,
     chat_id: int,
     user_message: str,
     system_extra: str,
     log_label: str,
     log_user_msg: str,
 ) -> None:
-    """Acquire semaphore then call Claude. Reports busy if semaphore is taken."""
+    """Background task: call Claude then push result via send_message."""
+    async with _claude_semaphore:
+        answer = await claude_ask(chat_id, user_message, system_extra)
+        MAX = 4096
+        for i in range(0, len(answer), MAX):
+            await bot.send_message(chat_id=chat_id, text=answer[i:i + MAX])
+        log_and_commit(log_user_msg, answer, log_label)
+
+
+async def _run_claude_guarded(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+    chat_id: int,
+    user_message: str,
+    system_extra: str,
+    log_label: str,
+    log_user_msg: str,
+) -> None:
+    """Reply immediately, then run Claude in background. Reports busy if semaphore is taken."""
     if _claude_semaphore.locked():
         await update.message.reply_text("⏳ Bot 正在處理上一則訊息，請稍候再試。")
         return
     await update.message.reply_text("⏳ 處理中…")
-    async with _claude_semaphore:
-        answer = await claude_ask(chat_id, user_message, system_extra)
-        await send_long(update, answer)
-        log_and_commit(log_user_msg, answer, log_label)
+    asyncio.create_task(
+        _run_claude_background(
+            context.bot, chat_id, user_message, system_extra, log_label, log_user_msg
+        )
+    )
 
 
 async def ask_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -523,7 +542,7 @@ async def ask_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         return
     prompt = " ".join(context.args)
     chat_id = update.effective_chat.id
-    await _run_claude_guarded(update, chat_id, prompt, "", "/ask", prompt)
+    await _run_claude_guarded(update, context, chat_id, prompt, "", "/ask", prompt)
 
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -541,7 +560,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         f"{status_snippet}"
     )
     chat_id = update.effective_chat.id
-    await _run_claude_guarded(update, chat_id, text, system_extra, "", text)
+    await _run_claude_guarded(update, context, chat_id, text, system_extra, "", text)
 
 
 async def on_error(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:

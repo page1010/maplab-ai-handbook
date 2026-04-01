@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-03-31 晚間巡查 ｜ 更新者：A1 v5.3 — A5 Task Card終於更新✅ + A6超過48h閾值🔴 + v6.0 Phase1+2落地
+最後更新：2026-04-01 ｜ 更新者：A1 v5.3 — Phase 3.1 Dashboard 自動更新 ✅（crontab + update-dashboard.py 就位）
 
 ---
 
@@ -88,6 +88,8 @@
 | A0 User Preferences 貼入 | 在 A0 bot 貼入 User Preferences 設定（個性化回覆偏好）| 中 |
 
 ## 最新決策
+
+- 2026-04-01：**v6.0 Phase 3.1 Dashboard 自動更新 ✅** — crontab `*/30 * * * *` + `scripts/update-dashboard.py` 已就位（ef2c21b），每 30 分鐘自動同步 CURRENT_STATUS + git log 至 Sheets DASHBOARD 分頁。Phase 3 自動化+策略循環正式啟動。
 
 - 2026-03-31：**v6.0 Phase 2 業務閉環 MVP 落地** — (1) QUOTE_WORKBENCH 分頁建立（14欄：case_id→terms_type）(2) 4組下拉驗證：SALES_INTAKE status+event_type、REVISION_LOG change_type+reason_tag (3) Phase 2 四個分頁全部就緒：SALES_INTAKE/REVISION_LOG/CONVERSATION_LOG（已存在）+ QUOTE_WORKBENCH（新建）。下一步：Owner/業務填測試資料 → A6 報價測試。
 - 2026-03-31：**v6.0 Phase 1 觀測性建設落地** — (1) Sheets Dashboard 建立（Task Board 12筆任務 + Owner Actions 5筆）(2) AGENT_RECALL_PROMPTS 更新：A1 加 Sheets 巡查同步、A0 加 Artifacts 看板渲染 (3) 設計文件：projects/v6-architecture.md。v6.0 三階段：Phase 1 觀測性 / Phase 2 業務閉環 MVP / Phase 3 自動化+策略循環。

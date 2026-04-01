@@ -25,6 +25,10 @@ source venv/bin/activate
 echo "📦 安裝/更新依賴…"
 pip install -q -r requirements.txt
 
+# Kill any existing bot.py process before starting
+pkill -f bot.py 2>/dev/null && echo "🛑 舊 bot process 已終止" || true
+sleep 1
+
 echo ""
 echo "🤖 MAPLAB Claude Bot 啟動中（前台模式）…"
 echo "   按 Ctrl+C 停止"

@@ -70,82 +70,77 @@ function createQuote(formData) {
   // ── 新檔案名稱：20260425_王小明 ──
   var newFileName = dateSuffix + '_' + formData.clientName;
 
-  // ── 取模板分頁 QUOTE_DRAFT ──
-  var templateSheet = ss.getSheetByName(TEMPLATE_SHEET_NAME);
-  if (!templateSheet) {
-    throw new Error('找不到 QUOTE_DRAFT 模板分頁，請確認分頁名稱正確。');
-  }
+  // ── 確保 Drive 資料夾存在 ──
+  var yearFolder = ensureDriveFolder_(eventDate.getFullYear().toString());
 
-  // ── 建立獨立新 Spreadsheet ──
-  var newSs = SpreadsheetApp.create(newFileName);
+  // ── 用 makeCopy 複製整個 Spreadsheet（保留所有分頁與公式） ──
+  var sourceFile = DriveApp.getFileById(SPREADSHEET_ID);
+  var newFile = sourceFile.makeCopy(newFileName, yearFolder);
+  var newSs = SpreadsheetApp.openById(newFile.getId());
 
-  // ── 複製 QUOTE_DRAFT 到新檔案 ──
-  templateSheet.copyTo(newSs);
-
-  // ── 找到複製的分頁（非預設 Sheet1）──
-  var copiedSheet = null;
-  var allSheets = newSs.getSheets();
-  for (var i = 0; i < allSheets.length; i++) {
-    if (allSheets[i].getName() !== 'Sheet1') {
-      copiedSheet = allSheets[i];
-      break;
+  // ── 保留 QUOTE_DRAFT 與 Items，刪除其餘分頁 ──
+  var sheets = newSs.getSheets();
+  var keepSheet = null;
+  var itemsSheet = null;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].getName() === TEMPLATE_SHEET_NAME) {
+      keepSheet = sheets[i];
+    } else if (sheets[i].getName() === 'Items') {
+      itemsSheet = sheets[i];
     }
   }
-  if (!copiedSheet) {
-    // 若模板複製後沒有非 Sheet1 的分頁（極少數情況），取第一個
-    copiedSheet = allSheets[0];
+  if (!keepSheet) {
+    throw new Error('新檔案中找不到 QUOTE_DRAFT 分頁。');
   }
 
-  // ── 改名為「報價單」──
-  copiedSheet.setName('報價單');
+  // 先 activate 要保留的分頁，避免刪最後一個 sheet 報錯
+  newSs.setActiveSheet(keepSheet);
 
-  // ── 刪預設空白頁 Sheet1 ──
-  var defaultSheet = newSs.getSheetByName('Sheet1');
-  if (defaultSheet) {
-    newSs.deleteSheet(defaultSheet);
+  // 刪除非 QUOTE_DRAFT、非 Items 的所有分頁
+  for (var i = 0; i < sheets.length; i++) {
+    var name = sheets[i].getName();
+    if (name !== TEMPLATE_SHEET_NAME && name !== 'Items') {
+      newSs.deleteSheet(sheets[i]);
+    }
+  }
+
+  // ── 改名 QUOTE_DRAFT → 報價單 ──
+  keepSheet.setName('報價單');
+
+  // ── 隱藏 Items 分頁（保留 VLOOKUP 正常運作） ──
+  if (itemsSheet) {
+    itemsSheet.hideSheet();
   }
 
   // ── 填入客戶資訊（對應 QUOTE_DRAFT 客戶區） ──
   // B 欄為填入欄，A 欄為標籤
-  copiedSheet.getRange('B2').setValue(formData.clientName);
-  copiedSheet.getRange('B3').setValue(formData.company || '');
-  copiedSheet.getRange('B4').setValue(formData.phone || '');
-  copiedSheet.getRange('B5').setValue(formData.address || '');
-  copiedSheet.getRange('B6').setValue(formData.eventType);
-  copiedSheet.getRange('B7').setValue(formData.eventDate);
-  copiedSheet.getRange('B8').setValue(formData.pax || '');
-  copiedSheet.getRange('B9').setValue(formData.location || '');
+  keepSheet.getRange('B2').setValue(formData.clientName);
+  keepSheet.getRange('B3').setValue(formData.company || '');
+  keepSheet.getRange('B4').setValue(formData.phone || '');
+  keepSheet.getRange('B5').setValue(formData.address || '');
+  keepSheet.getRange('B6').setValue(formData.eventType);
+  keepSheet.getRange('B7').setValue(formData.eventDate);
+  keepSheet.getRange('B8').setValue(formData.pax || '');
+  keepSheet.getRange('B9').setValue(formData.location || '');
 
   // ── Case ID & 建立時間（右上角） ──
-  copiedSheet.getRange('H1').setValue(caseId);
-  copiedSheet.getRange('H2').setValue(Utilities.formatDate(now, 'Asia/Taipei', 'yyyy-MM-dd HH:mm'));
+  keepSheet.getRange('H1').setValue(caseId);
+  keepSheet.getRange('H2').setValue(Utilities.formatDate(now, 'Asia/Taipei', 'yyyy-MM-dd HH:mm'));
 
   // ── 條款自動帶入（個人版 / 企業版） ──
   var isCorporate = formData.company && formData.company.trim().length > 0;
   var terms = isCorporate
     ? getCorpTerms(eventDate)
     : getPersonalTerms();
-  copiedSheet.getRange('A30').setValue('【合約條款】');
-  copiedSheet.getRange('A31').setValue(terms);
+  keepSheet.getRange('A30').setValue('【合約條款】');
+  keepSheet.getRange('A31').setValue(terms);
 
   // ── 狀態區 ──
-  copiedSheet.getRange('E2').setValue('報價中');   // 報價狀態
-  copiedSheet.getRange('E3').setValue('');          // 成交金額（業務填）
-  copiedSheet.getRange('E4').setValue('未匯');      // 匯款狀態
-  copiedSheet.getRange('E5').setValue('系統');      // 最後修改者
-  copiedSheet.getRange('E6').setValue('v1');        // 版本號
-
-  // ── 移到 Drive 資料夾 MAPLAB_報價單/[年份]/ ──
-  try {
-    var yearFolder = ensureDriveFolder_(eventDate.getFullYear().toString());
-    var fileId = newSs.getId();
-    var file = DriveApp.getFileById(fileId);
-    yearFolder.addFile(file);
-    // 移除根目錄的預設位置
-    DriveApp.getRootFolder().removeFile(file);
-  } catch (e) {
-    console.warn('Drive 資料夾移動失敗（不影響主流程）：' + e.message);
-  }
+  keepSheet.getRange('E2').setValue('報價中');   // 報價狀態
+  keepSheet.getRange('E3').setValue('');          // 成交金額（業務填）
+  keepSheet.getRange('E4').setValue('未匯');      // 匯款狀態
+  keepSheet.getRange('E5').setValue('系統');      // 最後修改者
+  keepSheet.getRange('E6').setValue('v1');        // 版本號
 
   // ── 返回新檔案 URL ──
   var newUrl = newSs.getUrl();

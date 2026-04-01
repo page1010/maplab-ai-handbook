@@ -1,14 +1,14 @@
 /**
  * MAPLAB 報價系統 v2 — Phase 1
- * 功能：一鍵產出報價單、寫入 SALES_INTAKE
+ * 功能：一鍵產出報價單（獨立 Spreadsheet 檔案）、寫入 SALES_INTAKE
  *
  * 部署目標 Sheet：1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg
- * 模板分頁：QUOTE_WORKBENCH
+ * 模板分頁：QUOTE_DRAFT
  * 寫入分頁：SALES_INTAKE
  */
 
 var SPREADSHEET_ID = '1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg';
-var TEMPLATE_SHEET_NAME = 'QUOTE_WORKBENCH';
+var TEMPLATE_SHEET_NAME = 'QUOTE_DRAFT';
 var INTAKE_SHEET_NAME = 'SALES_INTAKE';
 var DRIVE_ROOT_FOLDER = 'MAPLAB_報價單';
 
@@ -42,7 +42,7 @@ function showQuoteForm() {
 // ─────────────────────────────────────────
 
 /**
- * 由 HTML 表單呼叫，接收表單資料、產出獨立報價單檔案、回傳結果
+ * 由 HTML 表單呼叫，接收表單資料、產出獨立報價單 Spreadsheet、回傳結果
  *
  * @param {Object} formData
  *   .clientName {string} 客戶名稱（必填）
@@ -56,6 +56,7 @@ function showQuoteForm() {
  * @returns {Object} { success, caseId, fileName, url }
  */
 function createQuote(formData) {
+  // ── 打開主系統 Sheet ──
   var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
 
   // ── 產生 case_id ──
@@ -65,28 +66,47 @@ function createQuote(formData) {
   // ── 格式化活動日期 ──
   var eventDate = new Date(formData.eventDate + 'T00:00:00+08:00');
   var dateSuffix = Utilities.formatDate(eventDate, 'Asia/Taipei', 'yyyyMMdd');
+
+  // ── 新檔案名稱：20260425_王小明 ──
   var newFileName = dateSuffix + '_' + formData.clientName;
 
-  // ── 取得 QUOTE_WORKBENCH 模板 ──
+  // ── 取模板分頁 QUOTE_DRAFT ──
   var templateSheet = ss.getSheetByName(TEMPLATE_SHEET_NAME);
   if (!templateSheet) {
-    throw new Error('找不到 QUOTE_WORKBENCH 模板分頁，請確認分頁名稱正確。');
+    throw new Error('找不到 QUOTE_DRAFT 模板分頁，請確認分頁名稱正確。');
   }
 
-  // ── 建立新獨立 Spreadsheet，複製模板分頁過去 ──
+  // ── 建立獨立新 Spreadsheet ──
   var newSs = SpreadsheetApp.create(newFileName);
-  var copiedSheet = templateSheet.copyTo(newSs);
-  copiedSheet.setName(TEMPLATE_SHEET_NAME);
 
-  // 刪除新 Spreadsheet 預設產生的空白分頁（Sheet1）
-  var defaultSheets = newSs.getSheets();
-  for (var i = 0; i < defaultSheets.length; i++) {
-    if (defaultSheets[i].getSheetId() !== copiedSheet.getSheetId()) {
-      newSs.deleteSheet(defaultSheets[i]);
+  // ── 複製 QUOTE_DRAFT 到新檔案 ──
+  templateSheet.copyTo(newSs);
+
+  // ── 找到複製的分頁（非預設 Sheet1）──
+  var copiedSheet = null;
+  var allSheets = newSs.getSheets();
+  for (var i = 0; i < allSheets.length; i++) {
+    if (allSheets[i].getName() !== 'Sheet1') {
+      copiedSheet = allSheets[i];
+      break;
     }
   }
+  if (!copiedSheet) {
+    // 若模板複製後沒有非 Sheet1 的分頁（極少數情況），取第一個
+    copiedSheet = allSheets[0];
+  }
 
-  // ── 填入客戶資訊（對應 QUOTE_WORKBENCH 客戶區） ──
+  // ── 改名為「報價單」──
+  copiedSheet.setName('報價單');
+
+  // ── 刪預設空白頁 Sheet1 ──
+  var defaultSheet = newSs.getSheetByName('Sheet1');
+  if (defaultSheet) {
+    newSs.deleteSheet(defaultSheet);
+  }
+
+  // ── 填入客戶資訊（對應 QUOTE_DRAFT 客戶區） ──
+  // B 欄為填入欄，A 欄為標籤
   copiedSheet.getRange('B2').setValue(formData.clientName);
   copiedSheet.getRange('B3').setValue(formData.company || '');
   copiedSheet.getRange('B4').setValue(formData.phone || '');
@@ -115,29 +135,29 @@ function createQuote(formData) {
   copiedSheet.getRange('E5').setValue('系統');      // 最後修改者
   copiedSheet.getRange('E6').setValue('v1');        // 版本號
 
-  // ── 移動新檔案到 MAPLAB_報價單/[年份]/ ──
-  var yearStr = eventDate.getFullYear().toString();
+  // ── 移到 Drive 資料夾 MAPLAB_報價單/[年份]/ ──
   try {
-    var targetFolder = ensureDriveFolder_(yearStr);
-    var newFile = DriveApp.getFileById(newSs.getId());
-    targetFolder.addFile(newFile);
-    // 從 My Drive 根目錄移除（避免重複出現）
-    DriveApp.getRootFolder().removeFile(newFile);
+    var yearFolder = ensureDriveFolder_(eventDate.getFullYear().toString());
+    var fileId = newSs.getId();
+    var file = DriveApp.getFileById(fileId);
+    yearFolder.addFile(file);
+    // 移除根目錄的預設位置
+    DriveApp.getRootFolder().removeFile(file);
   } catch (e) {
-    console.warn('移動檔案到 Drive 資料夾失敗（不影響主流程）：' + e.message);
+    console.warn('Drive 資料夾移動失敗（不影響主流程）：' + e.message);
   }
 
-  // ── 取得新檔案 URL ──
-  var fileUrl = newSs.getUrl();
+  // ── 返回新檔案 URL ──
+  var newUrl = newSs.getUrl();
 
   // ── 寫入 SALES_INTAKE ──
-  writeToIntake_(ss, caseId, formData, fileUrl, now);
+  writeToIntake_(ss, caseId, formData, newUrl, now);
 
   return {
     success: true,
     caseId: caseId,
     fileName: newFileName,
-    url: fileUrl
+    url: newUrl
   };
 }
 
@@ -212,7 +232,7 @@ function ensureDriveFolder_(year) {
  *   H: event_date
  *   I: location
  *   J: pax
- *   K: sheet_url
+ *   K: sheet_url（新獨立 Spreadsheet URL）
  *   L–N: （預留）
  *   O: notes
  */
@@ -235,7 +255,7 @@ function writeToIntake_(ss, caseId, formData, sheetUrl, now) {
     formData.eventDate,                    // H: event_date
     formData.location   || '',             // I: location
     formData.pax        || '',             // J: pax
-    sheetUrl,                              // K: sheet_url
+    sheetUrl,                              // K: sheet_url（獨立 Spreadsheet URL）
     '',                                    // L: （預留）
     '',                                    // M: （預留）
     '',                                    // N: （預留）

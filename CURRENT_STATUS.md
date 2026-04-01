@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-04-01 ｜ 更新者：A1 v5.3 — Phase 3.1 Dashboard 自動更新 ✅（crontab + update-dashboard.py 就位）| 每日巡查：A6🔴第三天(74h+) + A4 S6 WATCH(20h) + A3 WATCH(24h無commit)
+最後更新：2026-04-01 22:10 ｜ 更新者：A1 晚間巡查 — A4 S11(2024) 2600/12213 進行中 ✅ + A6 Task Card 建立 CRITICAL解除 ✅ + A3 WATCH持續
 
 ---
 
@@ -25,7 +25,7 @@
 | T-A5-001 | Items 去重 + 全品項重新編碼 | A5 | ✅ 完成（APP050/DST041/MAIN009/BEV008=108，已排序+連號） | handoff/tasks/T-A5-001.md |
 | T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔄 進行中（服務費可選✅/長桌費$350✅/車馬費下拉✅/DropdownHelper分類驗證✅，dbcf9d4；待確認剩餘增強項目）| handoff/tasks/T-A5-002.md |
 | T-A5-003 | 熱客招待品項定義 | A5 | 🔲 待開始 | — |
-| T-A4-001 | Phase 4 Gemini 照片分類 | A4 | 🔄 S5 ✅ DONE(8,559張), S6 🔄 已重啟執行中(from 18.2%，326c6f0 16:07), S5.5 GPS ✅ 決策確認no_gps(Takeout JSON未存Drive), Task Card建立(35acbbf) | projects/maplab-pipeline.md + handoff/tasks/T-A4-001.md |
+| T-A4-001 | Phase 4 Gemini 照片分類 | A4 | 🔄 S5 ✅ DONE(8,559張), S6(2023) ✅ DONE（進度待確認），S11(2024) 🔄 執行中(2600/12213, de2cf2e 20:54), S5.5 GPS ✅ 決策確認no_gps(Takeout JSON未存Drive), Task Card建立(35acbbf) | projects/maplab-pipeline.md + handoff/tasks/T-A4-001.md |
 | T-A2-001 | 文章精選圖片補齊（57篇→每篇獨立配圖） | A2 | ✅ 完成（57/57 獨立配圖，0 重複） | handoff/tasks/T-A2-001.md |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2 | ✅ 子任務1-4完成（子任務5等7-14天）| handoff/tasks/T-A2A3-001.md + T-A2A3-001-B.md |
 | T-A3-001 | GTM LINE 按鈕追蹤修復（方案 B 已確認） | A3 | 🔄 進行中（GTM方案B規格已記錄 2aca2ae，待技術實作+測試）| — |
@@ -80,6 +80,11 @@
 ⚠️ A1巡查 2026-04-01 09:00：A6 T-A6-001 🔴 CRITICAL 持續第三天 — 距 3a2df7b (2026-03-29 19:28) 已逾 74h+。前次 ccbb944 晚間巡查標記後仍無新 commit。Owner 需立即確認 A6 阻塞原因，或決定 T-A6-001 暫停。
 ⚠️ A1巡查 2026-04-01 09:00：A4 T-A4-001 ⚠️ WATCH — S6 Colab 重啟後 (326c6f0, 2026-03-31 16:07) 至今約 20h 無新 commit。未達 48h 閾值，但 Colab 斷線風險高。下次巡查（04-01 晚間）需確認 S6 進度。
 ⚠️ A1巡查 2026-04-01 09:00：A3 ⚠️ WATCH — T-A3-001 (GTM方案B待技術實作) + T-A3-002 (廣告確認中) 均 🔄，最近 24h 無 A3 新 commit。若有執行進度請補存檔；若等待外部條件（GTM權限/廣告成效週期），請在 Task Card 補記阻塞原因。
+
+✅ A1巡查 2026-04-01 22:10：A6 T-A6-001 CRITICAL 解除 — 92513c8 docs(A6): 建立 T-A6-001 Task Card (19:07) 今日落地，A6 恢復活動。連續三天 🔴 警告正式解除。同日 82cd6eb 報價系統 v2 使用者回饋 + 1bbcd0f 報價單 makeCopy 修復，A5/A6 均有實質進展。
+⚠️ A1巡查 2026-04-01 22:10：A4 T-A4-001 狀態不一致 — CURRENT_STATUS 顯示 S6(2023) 🔄 進行中，但今日 commits 顯示 S11(2024) 已執行（b82aeea 14:35 + de2cf2e 20:54，2600/12213 執行中 6h20m）。S6 完成狀態未記錄。已更新任務表，但需 A4 補充 S6 完成情況至 Task Card。
+⚠️ A1巡查 2026-04-01 22:10：A3 持續無活動（第二次晚間標記）— T-A3-001 GTM方案B + T-A3-002 廣告成效 均 🔄，09:00 巡查後仍無 A3 新 commit。若等待外部條件請在 Task Card 補記原因。距 T-A3-001 最後記錄 (2aca2ae) 已逾 72h。
+⚠️ A1巡查 2026-04-01 22:10：A7 ⚠️ WATCH — T-A7-001 Phase 2 + T-A7-002 均 🔄，今日無 A7 新 commit（上次活動 2026-03-31 cf9f166）。未達 48h，明日巡查需追蹤。
 
 ### 🔴 Owner Action Required
 

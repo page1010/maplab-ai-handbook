@@ -1,14 +1,14 @@
 /**
  * MAPLAB 報價系統 v2 — Phase 1
- * 功能：一鍵產出報價單、寫入 SALES_INTAKE
+ * 功能：一鍵產出報價單（獨立 Spreadsheet 檔案）、寫入 SALES_INTAKE
  *
  * 部署目標 Sheet：1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg
- * 模板分頁：QUOTE_WORKBENCH
+ * 模板分頁：QUOTE_DRAFT
  * 寫入分頁：SALES_INTAKE
  */
 
 var SPREADSHEET_ID = '1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg';
-var TEMPLATE_SHEET_NAME = 'QUOTE_WORKBENCH';
+var TEMPLATE_SHEET_NAME = 'QUOTE_DRAFT';
 var INTAKE_SHEET_NAME = 'SALES_INTAKE';
 var DRIVE_ROOT_FOLDER = 'MAPLAB_報價單';
 
@@ -42,7 +42,7 @@ function showQuoteForm() {
 // ─────────────────────────────────────────
 
 /**
- * 由 HTML 表單呼叫，接收表單資料、產出報價單、回傳結果
+ * 由 HTML 表單呼叫，接收表單資料、產出獨立報價單 Spreadsheet、回傳結果
  *
  * @param {Object} formData
  *   .clientName {string} 客戶名稱（必填）
@@ -53,9 +53,10 @@ function showQuoteForm() {
  *   .location   {string} 活動地點（選填）
  *   .pax        {string} 預計人數（選填）
  *   .address    {string} 活動地址（選填）
- * @returns {Object} { success, caseId, sheetName, url }
+ * @returns {Object} { success, caseId, fileName, url }
  */
 function createQuote(formData) {
+  // ── 打開主系統 Sheet ──
   var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
 
   // ── 產生 case_id ──
@@ -65,68 +66,98 @@ function createQuote(formData) {
   // ── 格式化活動日期 ──
   var eventDate = new Date(formData.eventDate + 'T00:00:00+08:00');
   var dateSuffix = Utilities.formatDate(eventDate, 'Asia/Taipei', 'yyyyMMdd');
-  var newSheetName = '報價_' + formData.clientName + '_' + dateSuffix;
 
-  // ── 複製 QUOTE_WORKBENCH 模板 ──
+  // ── 新檔案名稱：20260425_王小明 ──
+  var newFileName = dateSuffix + '_' + formData.clientName;
+
+  // ── 取模板分頁 QUOTE_DRAFT ──
   var templateSheet = ss.getSheetByName(TEMPLATE_SHEET_NAME);
   if (!templateSheet) {
-    throw new Error('找不到 QUOTE_WORKBENCH 模板分頁，請確認分頁名稱正確。');
+    throw new Error('找不到 QUOTE_DRAFT 模板分頁，請確認分頁名稱正確。');
   }
-  var newSheet = templateSheet.copyTo(ss);
-  newSheet.setName(newSheetName);
 
-  // 移到最後一頁
-  ss.setActiveSheet(newSheet);
-  ss.moveActiveSheet(ss.getNumSheets());
+  // ── 建立獨立新 Spreadsheet ──
+  var newSs = SpreadsheetApp.create(newFileName);
 
-  // ── 填入客戶資訊（對應 QUOTE_WORKBENCH 客戶區） ──
-  // 假設模板 B 欄為填入欄，A 欄為標籤
-  newSheet.getRange('B2').setValue(formData.clientName);
-  newSheet.getRange('B3').setValue(formData.company || '');
-  newSheet.getRange('B4').setValue(formData.phone || '');
-  newSheet.getRange('B5').setValue(formData.address || '');
-  newSheet.getRange('B6').setValue(formData.eventType);
-  newSheet.getRange('B7').setValue(formData.eventDate);
-  newSheet.getRange('B8').setValue(formData.pax || '');
-  newSheet.getRange('B9').setValue(formData.location || '');
+  // ── 複製 QUOTE_DRAFT 到新檔案 ──
+  templateSheet.copyTo(newSs);
+
+  // ── 找到複製的分頁（非預設 Sheet1）──
+  var copiedSheet = null;
+  var allSheets = newSs.getSheets();
+  for (var i = 0; i < allSheets.length; i++) {
+    if (allSheets[i].getName() !== 'Sheet1') {
+      copiedSheet = allSheets[i];
+      break;
+    }
+  }
+  if (!copiedSheet) {
+    // 若模板複製後沒有非 Sheet1 的分頁（極少數情況），取第一個
+    copiedSheet = allSheets[0];
+  }
+
+  // ── 改名為「報價單」──
+  copiedSheet.setName('報價單');
+
+  // ── 刪預設空白頁 Sheet1 ──
+  var defaultSheet = newSs.getSheetByName('Sheet1');
+  if (defaultSheet) {
+    newSs.deleteSheet(defaultSheet);
+  }
+
+  // ── 填入客戶資訊（對應 QUOTE_DRAFT 客戶區） ──
+  // B 欄為填入欄，A 欄為標籤
+  copiedSheet.getRange('B2').setValue(formData.clientName);
+  copiedSheet.getRange('B3').setValue(formData.company || '');
+  copiedSheet.getRange('B4').setValue(formData.phone || '');
+  copiedSheet.getRange('B5').setValue(formData.address || '');
+  copiedSheet.getRange('B6').setValue(formData.eventType);
+  copiedSheet.getRange('B7').setValue(formData.eventDate);
+  copiedSheet.getRange('B8').setValue(formData.pax || '');
+  copiedSheet.getRange('B9').setValue(formData.location || '');
 
   // ── Case ID & 建立時間（右上角） ──
-  newSheet.getRange('H1').setValue(caseId);
-  newSheet.getRange('H2').setValue(Utilities.formatDate(now, 'Asia/Taipei', 'yyyy-MM-dd HH:mm'));
+  copiedSheet.getRange('H1').setValue(caseId);
+  copiedSheet.getRange('H2').setValue(Utilities.formatDate(now, 'Asia/Taipei', 'yyyy-MM-dd HH:mm'));
 
   // ── 條款自動帶入（個人版 / 企業版） ──
   var isCorporate = formData.company && formData.company.trim().length > 0;
   var terms = isCorporate
     ? getCorpTerms(eventDate)
     : getPersonalTerms();
-  newSheet.getRange('A30').setValue('【合約條款】');
-  newSheet.getRange('A31').setValue(terms);
+  copiedSheet.getRange('A30').setValue('【合約條款】');
+  copiedSheet.getRange('A31').setValue(terms);
 
   // ── 狀態區 ──
-  newSheet.getRange('E2').setValue('報價中');   // 報價狀態
-  newSheet.getRange('E3').setValue('');          // 成交金額（業務填）
-  newSheet.getRange('E4').setValue('未匯');      // 匯款狀態
-  newSheet.getRange('E5').setValue('系統');      // 最後修改者
-  newSheet.getRange('E6').setValue('v1');        // 版本號
+  copiedSheet.getRange('E2').setValue('報價中');   // 報價狀態
+  copiedSheet.getRange('E3').setValue('');          // 成交金額（業務填）
+  copiedSheet.getRange('E4').setValue('未匯');      // 匯款狀態
+  copiedSheet.getRange('E5').setValue('系統');      // 最後修改者
+  copiedSheet.getRange('E6').setValue('v1');        // 版本號
 
-  // ── 建 Drive 資料夾（MAPLAB_報價單/[年份]/）──
+  // ── 移到 Drive 資料夾 MAPLAB_報價單/[年份]/ ──
   try {
-    ensureDriveFolder_(eventDate.getFullYear().toString());
+    var yearFolder = ensureDriveFolder_(eventDate.getFullYear().toString());
+    var fileId = newSs.getId();
+    var file = DriveApp.getFileById(fileId);
+    yearFolder.addFile(file);
+    // 移除根目錄的預設位置
+    DriveApp.getRootFolder().removeFile(file);
   } catch (e) {
-    console.warn('Drive 資料夾建立失敗（不影響主流程）：' + e.message);
+    console.warn('Drive 資料夾移動失敗（不影響主流程）：' + e.message);
   }
 
-  // ── 取得 Sheet URL ──
-  var sheetUrl = ss.getUrl() + '#gid=' + newSheet.getSheetId();
+  // ── 返回新檔案 URL ──
+  var newUrl = newSs.getUrl();
 
   // ── 寫入 SALES_INTAKE ──
-  writeToIntake_(ss, caseId, formData, sheetUrl, now);
+  writeToIntake_(ss, caseId, formData, newUrl, now);
 
   return {
     success: true,
     caseId: caseId,
-    sheetName: newSheetName,
-    url: sheetUrl
+    fileName: newFileName,
+    url: newUrl
   };
 }
 
@@ -201,7 +232,7 @@ function ensureDriveFolder_(year) {
  *   H: event_date
  *   I: location
  *   J: pax
- *   K: sheet_url
+ *   K: sheet_url（新獨立 Spreadsheet URL）
  *   L–N: （預留）
  *   O: notes
  */
@@ -224,7 +255,7 @@ function writeToIntake_(ss, caseId, formData, sheetUrl, now) {
     formData.eventDate,                    // H: event_date
     formData.location   || '',             // I: location
     formData.pax        || '',             // J: pax
-    sheetUrl,                              // K: sheet_url
+    sheetUrl,                              // K: sheet_url（獨立 Spreadsheet URL）
     '',                                    // L: （預留）
     '',                                    // M: （預留）
     '',                                    // N: （預留）

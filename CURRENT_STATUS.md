@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-04-02 晚間 ｜ 更新者：A0 Cowork — T-A5-004 Phase 1 Items K欄照片提取完成（16筆 Slide→Items URL 寫入），AGENT_RECALL_PROMPTS A0 段落補充 Apps Script 自主操作教訓 ｜ A1 午後巡查：A7 🔴 CRITICAL 67h+, A3 🔴 CRITICAL 105h+, A4 S11 WATCH ~21h, A6 WATCH 正常
+最後更新：2026-04-02 深夜 ｜ 更新者：A0 Cowork — T-A5-004 Phase 1 完整收尾：Items 照片提取（16筆）+ 照片 URL 修正（5移轉/7清除）+ Items 重新編號（91格，按 default_cost）+ items-management Skill 建立 + 220個舊 worktrees 清理 + item_id 引用掃描（QUOTE_DRAFT/DropdownHelper 均為公式引用，不受影響）
 
 ---
 
@@ -103,6 +103,8 @@
 | A0 User Preferences 貼入 | 在 A0 bot 貼入 User Preferences 設定（個性化回覆偏好）| 中 |
 
 ## 最新決策
+
+- 2026-04-02（深夜）：**T-A5-004 Phase 1 完整收尾 ✅** — (1) Slide 照片提取：16 筆有效 URL 寫入 Items K 欄（scripts/extract_slide_photos_to_items.py，drive scope，模糊比對 ≥60）。(2) Items 照片 URL 修正：5 筆移轉 + 7 筆清除（誤配 score=4 清除）。(3) Items 重新編號：91 格，按 default_cost 升序排序，APP/DST/MAIN 各自連號。(4) item_id 引用掃描：QUOTE_DRAFT（9 筆 VLOOKUP by name，不受影響）、DropdownHelper（5 筆 FILTER by category，不受影響），無寫死舊 item_id 的 Sheet。(5) items-management Skill 建立（skills/items-management/SKILL.md），含 Input/Output 格式供 A6 呼叫。(6) 220 個舊 worktrees 清理。(7) AGENT_RECALL_PROMPTS A0 段落補充 Apps Script 自主操作教訓 + Worktree 結尾規則。
 
 - 2026-04-02：**T-A5-004 Phase 1 Items K欄照片提取 ✅** — 用 Python + Google Slides API + Sheets API（scripts/extract_slide_photos_to_items.py），從文學館 Slide（16R9Ivi...）提取 Menu Showcase 品項照片 URL，模糊比對後寫入 16 筆到 Items K 欄。Slide API 不需 presentations scope，用 drive scope 即可。4 筆誤配已清除（score=4 threshold 過低）。AGENT_RECALL_PROMPTS A0 段落補充 Apps Script 自主操作教訓 + Worktree 結尾規則。
 

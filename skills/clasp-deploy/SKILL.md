@@ -1,13 +1,16 @@
-# ⚠️ 此檔案已移動至 skills/clasp-deploy/SKILL.md
-
-> 請讀新位置。本檔保留作跳轉提示，避免舊連結失效。
-
----
-
 # clasp 部署防呆指南（Apps Script 部署技能）
 
 > 每次 AI 協作者需要部署 Apps Script 時，先讀這份文件。
 > 最後更新：2026-04-01 | 教訓來源：.clasp.json 在 worktree 遺失導致反覆排查
+
+## 觸發條件
+
+Owner 說以下任何一句話時，啟動本 Skill：
+- 「clasp 部署」「clasp push」「部署 Apps Script」
+- 「更新 Google Apps Script」「把程式碼推上 Google」
+- 「LINE webhook 部署」「報價系統部署」
+
+---
 
 ## 快速部署（30 秒版本）
 

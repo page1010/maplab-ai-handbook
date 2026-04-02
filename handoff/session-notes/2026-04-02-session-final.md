@@ -1,5 +1,36 @@
 # Session Notes — 2026-04-02 Final Handoff
 
+---
+
+## Session 2 Update — 2026-04-02 晚間
+
+### 新完成
+- MasterData 引用更新完成（13 檔案，commit d0466f3 on main）→ Owner 可安全刪除 MAPLAB_MasterData_Sheets
+- K 欄清洗完成（cleanItemsImageUrl 已執行：22 有 URL / 92 空白 / 0 搬移）
+- Code.gs v3.1 部署確認（Owner 已手動貼入，Code.gs 已刪除）
+- extractSlidePhotosToItems 函數寫好但 Apps Script 存檔失敗（語法衝突）
+
+### 卡住的事
+- extractSlidePhotosToItems 無法在 Apps Script 編輯器正確儲存執行
+- 需要換方式：用 Google Slides API + Sheets API 從 code task 直接執行
+
+### Owner 重要回饋
+1. 「不要老是叫我改程式碼，你自己解決」— AI 必須自主完成所有 Apps Script 操作
+2. 「寫在召喚和人設 prompt，不是技能」— 操作流程寫進 AGENT_RECALL_PROMPTS
+3. 「你是 Cowork，可以開 Chrome tab、Claude Code、很多功能」— 充分利用 Cowork 能力
+4. 「造鏟子以後拿鏟子上工」— 建立可重複使用的標準流程
+
+### 下一步（下個 session 立即做）
+1. 用 Google API（不是 Apps Script 編輯器）執行 Slide 照片提取 → Items K 欄
+2. 把「自主操作 Apps Script」流程寫進 AGENT_RECALL_PROMPTS
+3. Items K 欄照片提取完成後，開始 createSlides.gs 開發
+
+### Worktree commit 問題已修正
+- 上一輪所有 worktree 分支的 commit 已 cherry-pick 到 main（c1d3126, d0466f3）
+- 但新的 code task 仍會建新 worktree — 需要在每個 session 結尾確認 merge 到 main
+
+---
+
 > Context 即將耗盡，這是本輪最終 handoff。
 > 下一個 AI 先讀這份文件 + 2026-04-02-session.md
 

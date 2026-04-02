@@ -20,11 +20,22 @@ function getConfig_() {
 }
 
 function getLineProfile(userId) {
+  if (!userId) return '';
   try {
     const token = getConfig_().accessToken;
+    if (!token) {
+      Logger.log('getLineProfile: LINE_ACCESS_TOKEN not set in Script Properties');
+      return userId;
+    }
     const res = UrlFetchApp.fetch('https://api.line.me/v2/bot/profile/' + userId, {
-      headers: { 'Authorization': 'Bearer ' + token }
+      headers: { 'Authorization': 'Bearer ' + token },
+      muteHttpExceptions: true
     });
+    const code = res.getResponseCode();
+    if (code !== 200) {
+      Logger.log('getLineProfile HTTP ' + code + ': ' + res.getContentText());
+      return userId;
+    }
     return JSON.parse(res.getContentText()).displayName || userId;
   } catch(err) {
     Logger.log('getLineProfile error: ' + err);
@@ -72,7 +83,7 @@ function processQueue() {
     let sheet = ss.getSheetByName(LOG_SHEET);
     if (!sheet) {
       sheet = ss.insertSheet(LOG_SHEET);
-      sheet.appendRow(['msg_id', 'case_id', 'timestamp', 'speaker', 'message', 'source']);
+      sheet.appendRow(['msg_id', 'case_id', 'timestamp', 'speaker', 'message', 'source', 'line_user_id', 'reply_to_msg_id']);
     }
 
     pendingKeys.forEach(key => {
@@ -83,14 +94,18 @@ function processQueue() {
         const events = body.events || [];
         events.forEach(event => {
           if (event.type === 'message' && event.message.type === 'text') {
-            const displayName = getLineProfile(event.source.userId || '');
+            const userId = event.source.userId || '';
+            const displayName = getLineProfile(userId);
+            const replyToMsgId = (event.message.quotedMessageId) || '';
             sheet.appendRow([
-              Utilities.getUuid(),       // A: msg_id
-              '',                        // B: case_id（待業務填入）
-              new Date(event.timestamp), // C: timestamp
-              displayName,               // D: speaker（LINE 顯示名稱）
-              event.message.text || '',  // E: message
-              'LINE'                     // F: source
+              Utilities.getUuid(),             // A: msg_id
+              '',                              // B: case_id（待業務填入）
+              new Date(event.timestamp),       // C: timestamp
+              displayName,                     // D: speaker（LINE 顯示名稱）
+              event.message.text || '',        // E: message
+              'LINE',                          // F: source
+              userId,                          // G: line_user_id（原始 userId）
+              replyToMsgId                     // H: reply_to_msg_id（長按回覆時才有值）
             ]);
           }
         });

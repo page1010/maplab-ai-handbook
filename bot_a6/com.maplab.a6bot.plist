@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  MAPLAB A6 報價助理 bot — launchd plist
+
+  安裝步驟：
+    1. 複製 .env.example → .env 並填入 A6_BOT_TOKEN / SALES_USER_ID / CLAUDE_CODE_OAUTH_TOKEN
+    2. chmod +x bot_a6/run_daemon.sh
+    3. cp bot_a6/com.maplab.a6bot.plist ~/Library/LaunchAgents/
+    4. launchctl load ~/Library/LaunchAgents/com.maplab.a6bot.plist
+    5. 驗證：launchctl list | grep maplab
+
+  停止：
+    launchctl unload ~/Library/LaunchAgents/com.maplab.a6bot.plist
+
+  Log：
+    bot_a6/launchd_stdout.log
+    bot_a6/launchd_stderr.log
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.maplab.a6bot</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/pagemacmini/maplab-ai-handbook/bot_a6/run_daemon.sh</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/pagemacmini/maplab-ai-handbook/bot_a6</string>
+
+    <key>KeepAlive</key>
+    <true/>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>ThrottleInterval</key>
+    <integer>30</integer>
+
+    <key>StandardOutPath</key>
+    <string>/Users/pagemacmini/maplab-ai-handbook/bot_a6/launchd_stdout.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/pagemacmini/maplab-ai-handbook/bot_a6/launchd_stderr.log</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PYTHONUNBUFFERED</key>
+        <string>1</string>
+    </dict>
+</dict>
+</plist>

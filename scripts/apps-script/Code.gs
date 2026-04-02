@@ -1,6 +1,7 @@
 /**
- * MAPLAB 報價系統 v2 — Phase 1
+ * MAPLAB 報價系統 v3.1
  * 功能：一鍵產出報價單（獨立 Spreadsheet 檔案）、寫入 SALES_INTAKE
+ * 系統資訊欄位改為 N 欄（標籤在 M 欄）
  *
  * 部署目標 Sheet：1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg
  * 模板分頁：QUOTE_DRAFT
@@ -32,7 +33,7 @@ function onOpen() {
 function showQuoteForm() {
   var html = HtmlService.createHtmlOutputFromFile('QuoteForm')
     .setWidth(500)
-    .setHeight(560)
+    .setHeight(680)
     .setTitle('新建報價單');
   SpreadsheetApp.getUi().showModalDialog(html, '新建報價單');
 }
@@ -127,6 +128,32 @@ function createQuote(formData) {
   keepSheet.getRange('H1').setValue(caseId);
   keepSheet.getRange('H2').setValue(Utilities.formatDate(now, 'Asia/Taipei', 'yyyy-MM-dd HH:mm'));
 
+  // ── 系統資訊寫入 N 欄（標籤在 M 欄） ──
+  keepSheet.getRange('M2').setValue('CaseID');
+  keepSheet.getRange('N2').setValue(caseId);
+  keepSheet.getRange('M3').setValue('建立時間');
+  keepSheet.getRange('N3').setValue(Utilities.formatDate(now, 'Asia/Taipei', 'yyyy-MM-dd HH:mm'));
+  keepSheet.getRange('M5').setValue('報價狀態');
+  keepSheet.getRange('N5').setValue('報價中');
+  keepSheet.getRange('M7').setValue('匯款狀態');
+  keepSheet.getRange('N7').setValue('未匯');
+  keepSheet.getRange('M9').setValue('版本');
+  keepSheet.getRange('N9').setValue('v3.1');
+
+  // N5 下拉驗證：報價狀態
+  var quoteStatusRule = SpreadsheetApp.newDataValidation()
+    .requireValueInList(['報價中', '成交', '未成交結案'], true)
+    .setAllowInvalid(false)
+    .build();
+  keepSheet.getRange('N5').setDataValidation(quoteStatusRule);
+
+  // N7 下拉驗證：匯款狀態
+  var paymentStatusRule = SpreadsheetApp.newDataValidation()
+    .requireValueInList(['未匯', '已收訂金', '已收全額'], true)
+    .setAllowInvalid(false)
+    .build();
+  keepSheet.getRange('N7').setDataValidation(paymentStatusRule);
+
   // ── 條款自動帶入（個人版 / 企業版） ──
   var isCorporate = formData.company && formData.company.trim().length > 0;
   var terms = isCorporate
@@ -134,13 +161,6 @@ function createQuote(formData) {
     : getPersonalTerms();
   keepSheet.getRange('A30').setValue('【合約條款】');
   keepSheet.getRange('A31').setValue(terms);
-
-  // ── 狀態區 ──
-  keepSheet.getRange('E2').setValue('報價中');   // 報價狀態
-  keepSheet.getRange('E3').setValue('');          // 成交金額（業務填）
-  keepSheet.getRange('E4').setValue('未匯');      // 匯款狀態
-  keepSheet.getRange('E5').setValue('系統');      // 最後修改者
-  keepSheet.getRange('E6').setValue('v1');        // 版本號
 
   // ── 返回新檔案 URL ──
   var newUrl = newSs.getUrl();
@@ -153,6 +173,34 @@ function createQuote(formData) {
     caseId: caseId,
     fileName: newFileName,
     url: newUrl
+  };
+}
+
+// ─────────────────────────────────────────
+// 表單預填資料
+// ─────────────────────────────────────────
+
+/**
+ * 從 QUOTE_DRAFT 讀取預填資料供表單使用
+ * @returns {Object} 預填欄位值
+ */
+function getQuoteDraftValues() {
+  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  var sheet = ss.getSheetByName(TEMPLATE_SHEET_NAME);
+  if (!sheet) return {};
+
+  return {
+    clientName : sheet.getRange('B2').getValue() || '',
+    company    : sheet.getRange('B3').getValue() || '',
+    phone      : sheet.getRange('B4').getValue() || '',
+    address    : sheet.getRange('B5').getValue() || '',
+    eventType  : sheet.getRange('B6').getValue() || '',
+    eventDate  : sheet.getRange('F2').getValue()
+                  ? Utilities.formatDate(new Date(sheet.getRange('F2').getValue()), 'Asia/Taipei', 'yyyy-MM-dd')
+                  : '',
+    headcount  : sheet.getRange('B8').getValue() || '',
+    eventName  : sheet.getRange('B9').getValue() || '',
+    totalItems : sheet.getRange('B10').getValue() || ''
   };
 }
 

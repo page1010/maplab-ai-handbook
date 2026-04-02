@@ -34,6 +34,21 @@
       color: #5f6368;
       margin-top: 2px;
     }
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .checkbox-row input[type="checkbox"] {
+      width: auto;
+      margin: 0;
+    }
+    .checkbox-row label {
+      margin: 0;
+      font-weight: 500;
+      cursor: pointer;
+    }
     .btn-row {
       margin-top: 20px;
       display: flex;
@@ -72,13 +87,16 @@
   <h3>產出報價單</h3>
 
   <label class="required">客戶名稱</label>
-  <input type="text" id="clientName" placeholder="例：王小明">
+  <input type="text" id="customer" placeholder="例：王小明">
 
-  <label>公司名稱</label>
-  <input type="text" id="company" placeholder="（企業客戶填寫；留空 = 個人版條款）">
+  <label class="required">活動日期</label>
+  <input type="date" id="date">
 
-  <label>聯絡電話</label>
-  <input type="tel" id="phone" placeholder="09XX-XXX-XXX">
+  <label>活動時間</label>
+  <input type="time" id="time" placeholder="例：14:00">
+
+  <label>完整地址</label>
+  <input type="text" id="address" placeholder="（選填）">
 
   <label class="required">活動類型</label>
   <select id="eventType">
@@ -92,17 +110,19 @@
     <option value="其他">其他</option>
   </select>
 
-  <label class="required">活動日期</label>
-  <input type="date" id="eventDate">
-
-  <label>活動地點</label>
-  <input type="text" id="location" placeholder="例：台南市東區">
-
-  <label>完整地址</label>
-  <input type="text" id="address" placeholder="（選填）">
-
   <label>預計人數</label>
-  <input type="number" id="pax" placeholder="例：30" min="1">
+  <input type="number" id="headcount" placeholder="例：30" min="1">
+
+  <label>活動名稱</label>
+  <input type="text" id="eventName" placeholder="（選填）">
+
+  <label>總品項數</label>
+  <input type="number" id="totalItems" placeholder="（選填）" min="1">
+
+  <div class="checkbox-row">
+    <input type="checkbox" id="hasDeposit" checked>
+    <label for="hasDeposit">已收訂金</label>
+  </div>
 
   <div id="message"></div>
 
@@ -112,27 +132,46 @@
   </div>
 
   <script>
-    function submitForm() {
-      var clientName = document.getElementById('clientName').value.trim();
-      var eventType  = document.getElementById('eventType').value;
-      var eventDate  = document.getElementById('eventDate').value;
-      var msgEl      = document.getElementById('message');
+    // 頁面載入後從 QUOTE_DRAFT 預填
+    window.onload = function() {
+      google.script.run
+        .withSuccessHandler(prefillForm)
+        .withFailureHandler(function() { /* 預填失敗靜默忽略 */ })
+        .getQuoteDraftValues();
+    };
 
-      // 必填驗證
-      if (!clientName || !eventType || !eventDate) {
-        msgEl.innerHTML = '<p class="msg-error">請填寫必填欄位：客戶名稱、活動類型、活動日期。</p>';
+    function prefillForm(data) {
+      if (!data) return;
+      if (data.clientName) document.getElementById('customer').value   = data.clientName;
+      if (data.eventDate)  document.getElementById('date').value       = data.eventDate;
+      if (data.address)    document.getElementById('address').value    = data.address;
+      if (data.eventType)  document.getElementById('eventType').value  = data.eventType;
+      if (data.headcount)  document.getElementById('headcount').value  = data.headcount;
+      if (data.eventName)  document.getElementById('eventName').value  = data.eventName;
+      if (data.totalItems) document.getElementById('totalItems').value = data.totalItems;
+    }
+
+    function submitForm() {
+      var customer  = document.getElementById('customer').value.trim();
+      var date      = document.getElementById('date').value;
+      var eventType = document.getElementById('eventType').value;
+      var msgEl     = document.getElementById('message');
+
+      if (!customer || !date || !eventType) {
+        msgEl.innerHTML = '<p class="msg-error">請填寫必填欄位：客戶名稱、活動日期、活動類型。</p>';
         return;
       }
 
       var formData = {
-        clientName : clientName,
-        company    : document.getElementById('company').value.trim(),
-        phone      : document.getElementById('phone').value.trim(),
-        eventType  : eventType,
-        eventDate  : eventDate,
-        location   : document.getElementById('location').value.trim(),
+        customer   : customer,
+        date       : date,
+        time       : document.getElementById('time').value.trim(),
         address    : document.getElementById('address').value.trim(),
-        pax        : document.getElementById('pax').value.trim()
+        eventType  : eventType,
+        headcount  : document.getElementById('headcount').value.trim(),
+        eventName  : document.getElementById('eventName').value.trim(),
+        totalItems : document.getElementById('totalItems').value.trim(),
+        hasDeposit : document.getElementById('hasDeposit').checked
       };
 
       var btn = document.getElementById('submitBtn');

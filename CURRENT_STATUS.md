@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-04-02 深夜（巡檢版）｜ 更新者：A0 巡檢角色 — 系統巡檢完成：T-A5-001 card 補建 + 2 新 Skill（system-audit + session-lifecycle）+ A0 prompt 規則追加 + 舊檔歸檔。A1 晚間巡查同日：A3 🔴 CRITICAL ~110h+，A4 S11 ⚠️ WATCH，A7 🔴 CRITICAL ~72h+
+最後更新：2026-04-02 深夜（A1 更新）｜ 更新者：A1 — 使用者需求文件 projects/line-quote-assistant.md 寫入必讀位置 + A6 Telegram 窗口技能書建立 (skills/a6-telegram-window.md) + AGENT_RECALL_PROMPTS A6 段落更新
 
 ---
 
@@ -15,6 +15,13 @@
 - **v6.0 設計文件**: `projects/v6-architecture.md`（完整設計 + 三階段計畫 + Dashboard 召喚方式 + Sheets 速查）
 - **v6.0 Session Handoff**: `handoff/sessions/2026-03-31-v6-phase1-phase2.md`
 - **Sheets Dashboard**: `1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg` → Task Board + Owner Actions 分頁
+
+## 關鍵規劃文件（必讀，Owner 確認過的需求）
+
+| 文件 | 內容 | 適用 Agent |
+|------|------|-----------|
+| `projects/line-quote-assistant.md` | **使用者需求 v1.0** — A6/A7 系統架構、三層資料模型（A=客人↔業務真實對話、B=業務↔A6協作、C=優化任務）、CONVERSATION_LOG/SALES_INTAKE/REVISION_LOG 表結構、A6 vs A5 職責邊界 | A6, A7, A5, A1 |
+| `skills/a6-telegram-window.md` | A6 Telegram 窗口操作手冊 — 指令格式、修改場景、進件流程 | A6 |
 - **Dashboard 召喚**：A0 Cowork 說「看板」→ Artifacts 渲染 ／ 直接開 Sheets ／ Telegram `/status`
 
 ## 當前進行中任務

@@ -98,6 +98,13 @@ Owner 是唯一決策者。
 2. CURRENT_STATUS.md 更新
 3. git push 到 remote
 
+【⚠️ 持續操作規則 — 2026-04-02 系統巡檢追加】
+1. **立即 commit**：每次完成有意義的變更後立即 commit + push，不要等 session 結束積累。
+   → 有意義的變更 = 新增/修改任何腳本、技能書、task card、設定檔
+2. **新建腳本前先確認**：新建任何腳本前必須先 `ls scripts/` 確認不存在，避免重複造輪。
+3. **CURRENT_STATUS.md 是 commit 的一部分**：每次 commit 前必須同步更新 CURRENT_STATUS.md，
+   讓狀態記錄與程式碼一起版控。沒更新 CURRENT_STATUS = commit 不完整。
+
 【Artifacts 看板渲染 — v6.0 新增】
 當 Owner 說「看板」「dashboard」「進度」「系統狀態」時：
 1. 用 Google Sheets MCP 讀取 Task Board 分頁（Sheets ID: 1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg）

@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-04-02 晚間巡查 ｜ 更新者：A1 晚間巡查 — A0 T-A5-004 Phase 1 完整收尾 ✅，A3 🔴 CRITICAL ~110h+，A4 S11 ⚠️ WATCH ~26h（距48h剩~22h，明晨09:00前確認），A7 🔴 CRITICAL ~72h+
+最後更新：2026-04-02 深夜（巡檢版）｜ 更新者：A0 巡檢角色 — 系統巡檢完成：T-A5-001 card 補建 + 2 新 Skill（system-audit + session-lifecycle）+ A0 prompt 規則追加 + 舊檔歸檔。A1 晚間巡查同日：A3 🔴 CRITICAL ~110h+，A4 S11 ⚠️ WATCH，A7 🔴 CRITICAL ~72h+
 
 ---
 
@@ -105,6 +105,8 @@
 | A0 User Preferences 貼入 | 在 A0 bot 貼入 User Preferences 設定（個性化回覆偏好）| 中 |
 
 ## 最新決策
+
+- 2026-04-02（巡檢）：**系統巡檢 ✅** — (1) T-A5-001 task card 補建（handoff/tasks/T-A5-001.md）。(2) skills/system-audit/SKILL.md 建立（巡檢 SOP）。(3) skills/session-lifecycle/SKILL.md 建立（session 開始/結束規則）。(4) AGENT_RECALL_PROMPTS A0 段落追加三條操作規則（立即commit / ls確認 / CURRENT_STATUS是commit一部分）。(5) handoff/2026-03-14-master-data-agent.md 歸檔到 archive/。
 
 - 2026-04-02（深夜）：**T-A5-004 Phase 1 完整收尾 ✅** — (1) Slide 照片提取：16 筆有效 URL 寫入 Items K 欄（scripts/extract_slide_photos_to_items.py，drive scope，模糊比對 ≥60）。(2) Items 照片 URL 修正：5 筆移轉 + 7 筆清除（誤配 score=4 清除）。(3) Items 重新編號：91 格，按 default_cost 升序排序，APP/DST/MAIN 各自連號。(4) item_id 引用掃描：QUOTE_DRAFT（9 筆 VLOOKUP by name，不受影響）、DropdownHelper（5 筆 FILTER by category，不受影響），無寫死舊 item_id 的 Sheet。(5) items-management Skill 建立（skills/items-management/SKILL.md），含 Input/Output 格式供 A6 呼叫。(6) 220 個舊 worktrees 清理。(7) AGENT_RECALL_PROMPTS A0 段落補充 Apps Script 自主操作教訓 + Worktree 結尾規則。
 

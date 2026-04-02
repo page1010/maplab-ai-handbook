@@ -46,7 +46,7 @@
 ## Blockers（阻塞事項）
 
 - ~~A5：甜點去重需使用者手動完成後才能重新編碼~~ ✅ resolved — T-A5-001 完成（108品項已排序+連號）
-- A5：使用者需填 Items.D 欄 default_price
+- A5：使用者需填 Items.D 欄 default_price（0/102 空白，為成本毛利率計算的前提）
 - ~~A4：Gemini API key leaked (b822f90) → 已更換新 key（記錄於 Notion）~~ ✅ resolved — API key 已更新。S6 Colab 仍待重啟（18.2%）
 - A3：「慶生周歲派對」已上線（現有貼文），需確認受眾設定；GTM 方案 B 可認領
 - ~~A2：T-A2-001 Google Drive 2025相簿僅約20張可用照片~~ ✅ resolved — 跨相簿找圖完成（2024/2023/2019/素材開幕），57篇全部獨立配圖
@@ -101,6 +101,8 @@
 ⚠️ A1巡查 2026-04-02 16:30 午後巡查：過去 8h 無任何 agent 新 commit — A7 🔴 CRITICAL 持續第 67h+（T-A7-001 Phase 2 + T-A7-002，上次活動 2026-03-31 cf9f166），A3 🔴 CRITICAL 持續第 105h+（T-A3-001 GTM方案B + T-A3-002，上次 2aca2ae ~2026-03-29 22:10）。A4 S11(2024) ⚠️ WATCH 升至 ~21h（de2cf2e 2026-04-01 20:54），距 48h 閾值剩約 27h，Owner 需於明日 09:00 前確認 S11 Colab 仍執行中。A6 T-A6-001 ⚠️ WATCH ~22h，正常範圍內。
 
 ⚠️ A1巡查 2026-04-02 晚間巡查：A0 今晚活躍 ✅（T-A5-004 Phase 1 完整收尾：Items照片提取16筆+URL修正+重新編號91格+items-management Skill+220個舊worktrees清理，5e6d3b4）；A3 🔴 CRITICAL 持續第5天 ~110h+（上次 2aca2ae ~2026-03-29，Owner 需確認外部阻塞原因或指示暫停）；A4 S11(2024) ⚠️ WATCH 升至 ~26h（de2cf2e 2026-04-01 20:54），距 48h 閾值剩 ~22h，需明日 09:00 前確認 Colab 仍執行中，否則升級 CRITICAL；A7 🔴 CRITICAL 持續第3天 ~72h+（T-A7-001 Phase 2 + T-A7-002，上次 cf9f166 2026-03-31）；A6 T-A6-001 ⚠️ WATCH ~28h（正常範圍）。A5 T-A5-004 Phase 1 完成，A5 無其他新活動（T-A5-002 等待 Owner 回饋正常）。
+
+✅ A0 Kitchen 巡檢 2026-04-02 午後：Items K欄 corrupt資料修正完成 — 12筆非URL資料已清理：7筆訂單記錄移至note欄（APP001/APP026/APP012/APP019/DST013/MAIN004/MAIN005），5筆容量資料移至batch_size欄（BEV002/BEV004/BEV005/BEV006/BEV007）。K欄現狀：45有效URL / 57空白 / 0corrupt。成本模型現狀：default_cost ✅ 102/102完整，default_price ❌ 0/102（Owner需填）。QUOTE_DRAFT已有毛利率計算公式(75.7%範例)。圖片下游：Slides簡報系統Phase 3待A4相片分類完成後啟動，届時會從Items K欄取image_url。57筆空白image_url = Slides尚未涵蓋的品項，需未來從Menu Showcase補充。
 
 ⚠️ A1巡查 2026-04-03 09:00：A3 🔴 CRITICAL 持續第6天 ~130h+ — T-A3-001 GTM方案B + T-A3-002 廣告成效，最後 commit 2aca2ae (~2026-03-29 22:10) 距今已逾 130h。連續6天無 A3 活動。Owner 需明確指示：(a) 確認外部阻塞原因（GTM權限待核准/廣告觀察期），或 (b) 指示暫停並在 Task Card 補記原因。
 ⚠️ A1巡查 2026-04-03 09:00：A7 🔴 CRITICAL 持續第4天 ~90h+ — T-A7-001 Phase 2 + T-A7-002，最後 commit cf9f166 (2026-03-31) 距今已逾 90h。Owner 需確認 A7 是否有未 commit 進度，或決定暫停等待外部條件。

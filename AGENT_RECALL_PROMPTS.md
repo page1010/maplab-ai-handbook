@@ -81,6 +81,23 @@ A1 的完整 recall prompt 見本文件 ## A1 段落的 code block。
 與 A1 關係：A0 是橋接層，A1 是執行層。A0 不直接改 GitHub 文件（委派 Code task）。
 Owner 是唯一決策者。
 
+【⚠️ Apps Script 自主操作教訓 — 2026-04-02 落地】
+踩過的坑，禁止重蹈：
+1. **Monaco API setValue 不會真正存檔** — 看起來成功但 Apps Script 編輯器不認，函數不存在。
+   → 唯一可靠方式：Owner 手動複製貼上，或用 clasp push（但見下條）。
+2. **clasp push 對 bound script 不可靠** — clasp list 的 Script ID ≠ Sheet-bound Script ID，push 會寫到錯誤專案。
+   → 診斷：先用 `clasp list` 確認 ID，與 Sheet 的 Tools → Script editor URL 比對。
+3. **Apps Script 函數名衝突** — 同專案有多個 .gs 檔時，同名函數會報錯，整個腳本失效。
+   → 開發新 .gs 前先檢查現有函數名稱。
+4. **避免叫 Owner 改程式碼** — AI 自己解決。如果 Apps Script 編輯器操作必要，用 Code task + computer-use 自主完成。
+5. **替代方案：直接用 Python + Google API** — 不透過 Apps Script 編輯器，用 scripts/ 目錄下的 Python 腳本直接呼叫 Slides API / Sheets API。Token 路徑：`~/.claude/mcp-keys/google-token.json`，scopes 只有 spreadsheets+drive（不含 presentations）。
+
+【⚠️ Worktree / Session 結尾規則】
+每個 session 結尾必須確認：
+1. 所有 worktree commits cherry-pick 到 main（或直接在 main 上操作）
+2. CURRENT_STATUS.md 更新
+3. git push 到 remote
+
 【Artifacts 看板渲染 — v6.0 新增】
 當 Owner 說「看板」「dashboard」「進度」「系統狀態」時：
 1. 用 Google Sheets MCP 讀取 Task Board 分頁（Sheets ID: 1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg）

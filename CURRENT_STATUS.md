@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-04-01 ｜ 更新者：A1 v5.3 — Phase 3.1 Dashboard 自動更新 ✅（crontab + update-dashboard.py 就位）| 每日巡查：A6🔴第三天(74h+) + A4 S6 WATCH(20h) + A3 WATCH(24h無commit)
+最後更新：2026-04-02 ｜ 更新者：A0 Cowork — T-A5-004 Phase 1 Items K欄照片提取完成（16筆 Slide→Items URL 寫入），AGENT_RECALL_PROMPTS A0 段落補充 Apps Script 自主操作教訓
 
 ---
 
@@ -91,6 +91,8 @@
 | A0 User Preferences 貼入 | 在 A0 bot 貼入 User Preferences 設定（個性化回覆偏好）| 中 |
 
 ## 最新決策
+
+- 2026-04-02：**T-A5-004 Phase 1 Items K欄照片提取 ✅** — 用 Python + Google Slides API + Sheets API（scripts/extract_slide_photos_to_items.py），從文學館 Slide（16R9Ivi...）提取 Menu Showcase 品項照片 URL，模糊比對後寫入 16 筆到 Items K 欄。Slide API 不需 presentations scope，用 drive scope 即可。4 筆誤配已清除（score=4 threshold 過低）。AGENT_RECALL_PROMPTS A0 段落補充 Apps Script 自主操作教訓 + Worktree 結尾規則。
 
 - 2026-04-01：**v6.0 Phase 3.1 Dashboard 自動更新 ✅** — crontab `*/30 * * * *` + `scripts/update-dashboard.py` 已就位（ef2c21b），每 30 分鐘自動同步 CURRENT_STATUS + git log 至 Sheets DASHBOARD 分頁。Phase 3 自動化+策略循環正式啟動。
 

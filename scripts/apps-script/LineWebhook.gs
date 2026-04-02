@@ -86,6 +86,11 @@ function processQueue() {
       sheet.appendRow(['msg_id', 'case_id', 'timestamp', 'speaker', 'message', 'source', 'line_user_id', 'reply_to_msg_id']);
     }
 
+    // 讀取已處理過的 LINE message ID，用於去重
+    const PROCESSED_KEY = 'processed_line_msg_ids';
+    let processedIds = {};
+    try { processedIds = JSON.parse(props.getProperty(PROCESSED_KEY) || '{}'); } catch(e) {}
+
     pendingKeys.forEach(key => {
       const rawData = allProps[key];
       props.deleteProperty(key);  // 先刪，防重複
@@ -94,6 +99,14 @@ function processQueue() {
         const events = body.events || [];
         events.forEach(event => {
           if (event.type === 'message' && event.message.type === 'text') {
+            const lineMessageId = event.message.id;
+            // 已處理過的 message ID → 跳過，防止重複寫入
+            if (lineMessageId && processedIds[lineMessageId]) {
+              Logger.log('Skipping duplicate LINE message: ' + lineMessageId);
+              return;
+            }
+            if (lineMessageId) processedIds[lineMessageId] = true;
+
             const userId = event.source.userId || '';
             const displayName = getLineProfile(userId);
             const replyToMsgId = (event.message.quotedMessageId) || '';
@@ -113,6 +126,16 @@ function processQueue() {
         Logger.log('processQueue error: ' + err);
       }
     });
+
+    // 保存已處理 ID（最多保留最新 2000 筆，防止 Script Properties 過大）
+    const idList = Object.keys(processedIds);
+    if (idList.length > 2000) {
+      const trimmed = {};
+      idList.slice(-1000).forEach(id => trimmed[id] = true);
+      props.setProperty(PROCESSED_KEY, JSON.stringify(trimmed));
+    } else {
+      props.setProperty(PROCESSED_KEY, JSON.stringify(processedIds));
+    }
 
     // 清除本次觸發的所有 processQueue triggers
     ScriptApp.getProjectTriggers().forEach(t => {

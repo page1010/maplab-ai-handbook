@@ -16,7 +16,7 @@
 
 **接手前必讀：**
 1. 讀本文件 SECTION 1 確認你的角色
-2. 開啟 [MAPLAB_MasterData_Sheets](https://docs.google.com/spreadsheets/d/1d2_SiEXh5JT4lzjkgHDI5JU9UWBY9TiPlC8DaxkQnKs) 看目前資料狀態
+2. 開啟 [MAPLAB_外燴系統_v0.1](https://docs.google.com/spreadsheets/d/1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg) 看目前資料狀態（舊 MasterData ID: 1d2_SiEXh5JT4lzjkgHDI5JU9UWBY9TiPlC8DaxkQnKs）
 3. 看 Drive 資料夾 [MAPLAB_DATA](https://drive.google.com/drive/u/0/folders/19RKLsBfNKuoCHVPFzT9D7tJrAdkTSmpt) 了解訂單結構
 4. 確認進度：CURRENT_STATUS.md + TASK_QUEUE.md（GitHub 唯一真相）
 
@@ -109,7 +109,7 @@
 | 已結案_Completed Orders | 已完成訂單 | 已成功服務完成的外燴案件 |
 | 進行中_Active Orders | 進行中訂單 | 目前確認且即將服務的案件 |
 | MAPLAB_外燴系統_v0.1 | 外燴系統主文件 | 報價、合約、流程相關文件 |
-| MAPLAB_MasterData_Sheets | Master Data 試算表 | 本文件對應的 Sheets 主體 |
+| MAPLAB_外燴系統_v0.1 | 外燴系統主試算表 | 本文件對應的 Sheets 主體（舊名 MAPLAB_MasterData_Sheets）|
 
 ---
 
@@ -159,7 +159,7 @@
 
 ## SECTION 7 — 接手 SOP
 
-1. **確認 Sheets 狀態**：開啟 MAPLAB_MasterData_Sheets，看 1_ITEM_MASTER 目前填了幾筆
+1. **確認 Sheets 狀態**：開啟 MAPLAB_外燴系統_v0.1，看 1_ITEM_MASTER 目前填了幾筆
 2. **看 Drive Active Orders**：了解目前有哪些進行中案件，確認哪些品項需要優先建檔
 3. **格式驗證**：新增任何 item_id 前先確認命名規則 {TYPE}-{SUBTYPE}-{SEQ3}
 4. **不干擾進行中填寫**：如果看到資料輸入區有資料，詢問用戶目前填到哪裡
@@ -187,7 +187,7 @@
       3. **缺少客戶類型分類**：無法區分「行銷公司/一般家庭/外帶客人/企業全包」等客群，無法套用不同成本建議值
       4. **無逆向報價模式**：企業客戶給固定預算（如 NT$30,000 全包）時，系統無法從總預算回推可用食材預算
       5. **無難度係數（Pain Surcharge）**：搬運環境惡劣、溝通成本高等場地條件無法量化加成
-      6. **Items 與 ITEM_MASTER 分離**：目前 v0.2 的 Items sheet 命名規則（如 DST001）與 MasterData 的 {TYPE}-{SUBTYPE}-{SEQ3} 不一致，需對齊
+      6. **Items 與 ITEM_MASTER 分離**：目前 v0.2 的 Items sheet 命名規則（如 DST001）與 外燴系統_v0.1 的 {TYPE}-{SUBTYPE}-{SEQ3} 不一致，需對齊
       7. 7. **無 Google Slides 串接**：尚未實現「選品項→自動替換簡報圖片→一鍵匯出 PDF」的完整流程
       8. **Dashboard 有 #REF! 錯誤**：Overdue/Unpaid 區塊公式斷連，需修復
       9.

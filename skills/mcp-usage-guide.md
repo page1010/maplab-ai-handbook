@@ -80,7 +80,7 @@ uvx mcp-google-sheets@latest
 ### 3c. 驗證 MCP 是否正常（在 A1 session 中）
 ```
 # 在 Claude Code 互動模式中直接呼叫 tool：
-# 例：讀 Google Sheets MAPLAB_MasterData
+# 例：讀 Google Sheets MAPLAB_外燴系統_v0.1
 # 如果回傳資料 = 正常；如果報 401/403 = token 過期需重新授權
 ```
 
@@ -141,7 +141,7 @@ MCP server 是 **本地 process**（跑在 Mac mini 上，如 `uvx mcp-google-sh
 ## 6. Chrome 側邊欄 Agent 替代方案（要讀 Sheets 怎麼做）
 
 ### 方案 A：讓 A1 讀取後寫入 markdown（推薦）
-1. 在 Telegram 傳 `/ask 請讀 MAPLAB_MasterData Items 表` → A0 轉給 A1
+1. 在 Telegram 傳 `/ask 請讀 MAPLAB_外燴系統_v0.1 Items 表` → A0 轉給 A1
 2. A1（Claude Code）用 MCP 讀 Sheets → 結果寫入 `data/snapshot-xxx.md`
 3. Chrome Extension 讀 `raw.githubusercontent.com` 取得快照
 

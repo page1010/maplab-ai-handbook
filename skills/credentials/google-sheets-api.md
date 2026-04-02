@@ -57,7 +57,7 @@ if creds.expired and creds.refresh_token:
 
 | 允許操作 | 對象 |
 |---------|------|
-| ✅ 讀取 / 寫入 | MAPLAB_MasterData（Items, QUOTE_DRAFT, DST 等所有工作表） |
+| ✅ 讀取 / 寫入 | MAPLAB_外燴系統_v0.1（Items, QUOTE_DRAFT, DST 等所有工作表）（舊名 MAPLAB_MasterData）|
 | ✅ 讀取 | MAPLAB_外燴系統_v0.1 |
 | ✅ 讀取 | 所有共用到此帳號的 Spreadsheet |
 

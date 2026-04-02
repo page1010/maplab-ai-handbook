@@ -74,7 +74,7 @@
 
 - 目前實作：**4 張主表**（Customers / Orders / Events / Items）
 - OrderLines 列為 **v0.2 擴展項目**，目前用 Orders.total_amount 手動結算替代
-- ITEM_MASTER 對應關係：Items 表 = MasterData Sheets 的 `1_ITEM_MASTER`，同一命名規則
+- ITEM_MASTER 對應關係：Items 表 = MAPLAB_外燴系統_v0.1 的 `1_ITEM_MASTER`，同一命名規則
 
 ---
 

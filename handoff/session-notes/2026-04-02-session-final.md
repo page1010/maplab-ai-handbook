@@ -43,7 +43,7 @@
 ### 中優先
 4. **Drive 資料夾整合** — MAPLAB_報價單 搬到 MAPLAB_DATA 下（等 v3.1 部署確認後）
 5. **createSlides.gs 開發** — Phase 3 of Slide integration
-6. **MAPLAB_MasterData_Sheets 退役** — 15+ 處引用需更新
+6. ~~**MAPLAB_MasterData_Sheets 退役**~~ ✅ 完成 — 已全面更新為 MAPLAB_外燴系統_v0.1（舊 ID: 1d2_SiEXh5JT4lzjkgHDI5JU9UWBY9TiPlC8DaxkQnKs）
 
 ### 低優先
 7. worktree 清理（~160 個）
@@ -72,7 +72,7 @@
 | MAPLAB_DATA | 19RKLsBfNKuoCHVPFzT9D7tJrAdkTSmpt |
 | 進行中_Active Orders | 1vCiqYelK0Z24vLthVib9qqzw6Bdj2o4_ |
 | MAPLAB_ASSETS | 1L0udpuXLy3vEbHmzBbaLqNVDut2FFpCe |
-| MasterData_Sheets | 1d2_SiEXh5JT4lzjkgHDI5JU9UWBY9TiPlC8DaxkQnKs |
+| MAPLAB_外燴系統_v0.1 | 1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg |（舊 MasterData_Sheets ID: 1d2_SiEXh5JT4lzjkgHDI5JU9UWBY9TiPlC8DaxkQnKs）
 | WordPress | https://www.maplabkitchen.com/ |
 
 ## 接續 prompt

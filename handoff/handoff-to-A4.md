@@ -17,7 +17,7 @@ A5 已完成 Schema v0.1 的所有必要產出。你可以根據本文件獨立�
 | Schema 定義 | `handoff/schema-v0.1.md` | 4 張表完整欄位規格 |
 | 表關係圖 | `handoff/table-relationship-map.md` | PK/FK + 資料流向 ASCII 圖 |
 | 命名規則 | `handoff/field-naming-rules.md` | ID 格式 / 日期格式 / Enum 允許値 |
-| 實際資料 | Google Sheets `MAPLAB_MasterData_Sheets` | 目前只有 Items 欄位定義，資料區空白 |
+| 實際資料 | Google Sheets `MAPLAB_外燴系統_v0.1` | 目前只有 Items 欄位定義，資料區空白（舊名 MAPLAB_MasterData_Sheets）|
 
 ---
 
@@ -41,7 +41,7 @@ A5 已完成 Schema v0.1 的所有必要產出。你可以根據本文件獨立�
 **Items**
 - PK: `item_id`（格式: {TYPE}-{SUBTYPE}-{SEQ3}，如 DES-MAC-001）
 - 關鍵欄: item_name_zh, category, unit_price, unit, is_active
-- 對應: MasterData Sheets 的 `1_ITEM_MASTER`
+- 對應: MAPLAB_外燴系統_v0.1 的 `1_ITEM_MASTER`
 
 ---
 

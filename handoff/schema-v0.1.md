@@ -84,7 +84,7 @@ difficulty_level：`easy`（一般室內）/ `medium`（輕度困難）/ `hard`�
 ## TABLE 4 — Items（品項表）
 
 **主鍵：** `item_id`  
-**用途：** 所有可販售品項的主檔（對應 MasterData Sheets 的 1_ITEM_MASTER）。
+**用途：** 所有可販售品項的主檔（對應 MAPLAB_外燴系統_v0.1 的 1_ITEM_MASTER）。
 
 | 欄位名稱 | 資料型態 | 必填 | 說明 | 範例値 |
 |---------|---------|------|------|--------|

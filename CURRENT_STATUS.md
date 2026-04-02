@@ -86,7 +86,7 @@
 | 項目 | 說明 | 優先級 |
 |------|------|--------|
 | ~~A4 Colab S6 重啟~~ | ✅ 326c6f0 確認 S6 已重啟執行中（2026-03-31 16:07）| ✅ 已解除 |
-| Items DST 成本補填 | 在 MAPLAB_MasterData Sheets Items 表補填 21 筆 DST 品項成本（E 欄）| 高 |
+| Items DST 成本補填 | 在 MAPLAB_外燴系統_v0.1 Items 表補填 21 筆 DST 品項成本（E 欄）| 高 |
 | Extension v4.8 重裝 | Chrome 重新安裝 Extension v4.8（private repo 已改用 GitHub Contents API）| 中 |
 | A0 User Preferences 貼入 | 在 A0 bot 貼入 User Preferences 設定（個性化回覆偏好）| 中 |
 

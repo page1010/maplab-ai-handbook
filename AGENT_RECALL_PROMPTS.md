@@ -374,7 +374,7 @@ projects/maplab-master-data.md → handoff/handoff-to-A5.md → handoff/field-na
 
 【協作】A6 直接拿 A5 資料做急件報價、A7 用 A5 規則回答客戶、A2/A3 導流最後落到 A5 轉單
 
-【可用工具】Google Sheets（MAPLAB_MasterData 直接讀寫品項/報價）、Google Drive（文件存取）、Google Slides（報價簡報生成）
+【可用工具】Google Sheets（MAPLAB_外燴系統_v0.1 直接讀寫品項/報價）、Google Drive（文件存取）、Google Slides（報價簡報生成）
 
 【強制存檔規則 — 違反會被 A1 標記警告】
 1. 每 30 分鐘至少 commit 一次，格式：checkpoint(Ax): [做了什麼] — [下一步]

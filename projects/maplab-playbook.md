@@ -141,7 +141,7 @@ A3 GTM  ──→ A3 廣告（轉換追蹤優化）
 
 ### 踩過的坑
 
-- Items 與 ITEM_MASTER 命名不一致（v0.2 用 DST001，MasterData 用 DES-MAC-001）
+- Items 與 ITEM_MASTER 命名不一致（v0.2 用 DST001，外燴系統_v0.1 用 DES-MAC-001）
 - Dashboard #REF! 錯誤（QUERY LIMIT 公式斷連）
 - 甜點去重需人工（AI 無法判斷「玫瑰馬卡龍」和「覆盆子馬卡龍」是否同品項）
 

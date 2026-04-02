@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-04-02 深夜 ｜ 更新者：A0 Cowork — T-A5-004 Phase 1 完整收尾：Items 照片提取（16筆）+ 照片 URL 修正（5移轉/7清除）+ Items 重新編號（91格，按 default_cost）+ items-management Skill 建立 + 220個舊 worktrees 清理 + item_id 引用掃描（QUOTE_DRAFT/DropdownHelper 均為公式引用，不受影響）
+最後更新：2026-04-02 晚間巡查 ｜ 更新者：A1 晚間巡查 — A0 T-A5-004 Phase 1 完整收尾 ✅，A3 🔴 CRITICAL ~110h+，A4 S11 ⚠️ WATCH ~26h（距48h剩~22h，明晨09:00前確認），A7 🔴 CRITICAL ~72h+
 
 ---
 
@@ -92,6 +92,8 @@
 ⚠️ A1巡查 2026-04-02 09:00：A6 T-A6-001 ⚠️ WATCH — CRITICAL 昨日解除（92513c8 Task Card 建立），最後 commit 約 14h 前，未達 48h。繼續監控後續 LINE 業務報價助手 v1.1 開發進展。
 
 ⚠️ A1巡查 2026-04-02 16:30 午後巡查：過去 8h 無任何 agent 新 commit — A7 🔴 CRITICAL 持續第 67h+（T-A7-001 Phase 2 + T-A7-002，上次活動 2026-03-31 cf9f166），A3 🔴 CRITICAL 持續第 105h+（T-A3-001 GTM方案B + T-A3-002，上次 2aca2ae ~2026-03-29 22:10）。A4 S11(2024) ⚠️ WATCH 升至 ~21h（de2cf2e 2026-04-01 20:54），距 48h 閾值剩約 27h，Owner 需於明日 09:00 前確認 S11 Colab 仍執行中。A6 T-A6-001 ⚠️ WATCH ~22h，正常範圍內。
+
+⚠️ A1巡查 2026-04-02 晚間巡查：A0 今晚活躍 ✅（T-A5-004 Phase 1 完整收尾：Items照片提取16筆+URL修正+重新編號91格+items-management Skill+220個舊worktrees清理，5e6d3b4）；A3 🔴 CRITICAL 持續第5天 ~110h+（上次 2aca2ae ~2026-03-29，Owner 需確認外部阻塞原因或指示暫停）；A4 S11(2024) ⚠️ WATCH 升至 ~26h（de2cf2e 2026-04-01 20:54），距 48h 閾值剩 ~22h，需明日 09:00 前確認 Colab 仍執行中，否則升級 CRITICAL；A7 🔴 CRITICAL 持續第3天 ~72h+（T-A7-001 Phase 2 + T-A7-002，上次 cf9f166 2026-03-31）；A6 T-A6-001 ⚠️ WATCH ~28h（正常範圍）。A5 T-A5-004 Phase 1 完成，A5 無其他新活動（T-A5-002 等待 Owner 回饋正常）。
 
 ### 🔴 Owner Action Required
 

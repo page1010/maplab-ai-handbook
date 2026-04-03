@@ -65,7 +65,8 @@ bash scripts/verify-commit-on-main.sh  # 確認上次 commit 已在 main
 ```
 
 接著：
-1. 建立 session note（如果本 session 有重要發現/決策）：
+1. 更新 `AGENT_RECALL_PROMPTS.md` 你的角色段落（## AX 下的 code block），寫入最新的斷點狀態。這樣 Extension 下次拉取時就是最新進度。
+2. 建立 session note（如果本 session 有重要發現/決策）：
    - 路徑：`handoff/session-notes/YYYY-MM-DD-session-[n].md`
 6. 輸出 SESSION END 摘要給 Owner：
    - 本 session 完成了什麼

@@ -7,6 +7,21 @@
 
 ---
 
+## Google Drive 根目錄（所有資料存放位置）
+
+| 資料夾 | Drive ID | 說明 |
+|--------|----------|------|
+| **MAPLAB_DATA（根目錄）** | `19RKLsBfNKuoCHVPFzT9D7tJrAdkTSmpt` | 所有 MAPLAB 資料的根，所有新資料夾建在這裡 |
+| MAPLAB_ASSETS | `1L0udpuXLy3vEbHmzBbaLqNVDut2FFpCe` | 活動素材（DST-CKE-001~005） |
+| **MAPLAB_Items_Photos** | `1Z62HUIiVutGNqLJMGyTfBCZ-D5g2vnOT` | 品項圖片（2026-04-03 建立） |
+| 歷史報價單 | `17wM4wldkllDbj0T8Xg_rgY3mM3RgH7LG` | 932份報價（2024+2025+2026） |
+| _MAPLAB_TEMP_IMAGES | `19HYqhrH2joKDrawGeGT4GKR858MC1_xi` | 暫存圖片（APP1xx 舊編號，8張 webp） |
+
+> OAuth token：`~/.claude/mcp-keys/google-token.json`（drive + spreadsheets scope）
+> 主試算表：`1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg`（MAPLAB_外燴系統_v0.1）
+
+---
+
 ## 系統版本
 
 - **Version**: v6.0

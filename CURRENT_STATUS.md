@@ -47,6 +47,8 @@
 | T-A5-001 | Items 去重 + 全品項重新編碼 | A5 | ✅ 完成（APP050/DST041/MAIN009/BEV008=108，已排序+連號） | handoff/tasks/T-A5-001.md |
 | T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔄 進行中（服務費可選✅/長桌費$350✅/車馬費下拉✅/DropdownHelper分類驗證✅，dbcf9d4；待確認剩餘增強項目）| handoff/tasks/T-A5-002.md |
 | T-A5-003 | 熱客招待品項定義 | A5 | 🔲 待開始 | — |
+| T-A5-004 | createSlides.gs Slide簡報 | A5 | 🔲 待啟動（不依賴A4） | handoff/tasks/T-A5-004.md |
+| T-A5-005 | onEdit追蹤同步+Dashboard | A5 | 🔲 待啟動 | handoff/tasks/T-A5-005.md |
 | T-A4-001 | Phase 4 Gemini 照片分類 | A4 | 🔄 S5 ✅(8,549), S6 ✅(8,505), S11(2024) 🔄 4,550/12,213=37.2%（ETA≈17h，預計04-04 12:00完成），GPS全步驟 ⛔ Owner指示跳過，ASSET_LOG總計21,414行；48h閾值 = **04-05 18:00** | projects/maplab-pipeline.md + handoff/tasks/T-A4-001.md |
 | T-A2-001 | 文章精選圖片補齊（57篇→每篇獨立配圖） | A2 | ✅ 完成（57/57 獨立配圖，0 重複） | handoff/tasks/T-A2-001.md |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2 | ✅ 子任務1-4完成（子任務5等7-14天）| handoff/tasks/T-A2A3-001.md + T-A2A3-001-B.md |
@@ -138,6 +140,12 @@
 ✅ A1巡查 2026-04-03 晚間：A1 本日重大落地 — Extension v5.0（注入按鈕+即時系統快照），Recall 拆分（recalls/Ax_recall.md），bot_a6 結案確認，security fix（歷史敏感記錄清除），GAS Web App v12 doPost 上線（A6 可用 curl POST 觸發報價）。
 ✅ A0 2026-04-03：DST002 餅乾_玫瑰愛心 K欄補上 — Items!K98 已寫入 Drive 照片連結（1fXLJvfiiXOQhbKgLg4sI8xIWThv52U3G）。規則新增：BEV 飲品類不需要照片；沒有 K欄 image_url 的品項不放入 Slide 報價簡報。Items 圖片整理視為完成（BEV 8筆免照片，非BEV 缺圖等 Owner 補充）。
 
+✅ A0 Session 收尾 2026-04-03 晚間：T-A5-004/T-A5-005 task card 建立 + CURRENT_STATUS 更新
+- GAS Web App v12 doPost 上線 ✅（A6 可用 curl POST 觸發報價）
+- 舊 GAS 部署清理（v1 封存）✅
+- Telegram bot token 已換新（A1 確認）✅
+- LINE Webhook URL 確認：https://script.google.com/macros/s/AKfycbz_zA_tG2fxNRlvrRMsJyMAzbnpNC-IL8oKqc5h94kyhExsIOuuo7LujbrSuZGK_eap/exec（來源：T-A6-001 Task Card）
+
 ✅ A0 Session Handoff 2026-04-03 晚間：今日完整工作記錄
 - **Items 圖片整理**：45 → 99 筆有圖（Drive hosted jpg，MAPLAB_Items_Photos 資料夾）
   - d6fe0e3：品項圖片整理 pipeline（62筆下載轉換上傳Drive+K欄更新）
@@ -161,6 +169,7 @@
 | A0 User Preferences 貼入 | 在 A0 bot 貼入 User Preferences 設定（個性化回覆偏好）| 中 |
 | 品項缺圖補充（29筆）| A0 f13224d 確認：29 筆品項在 WordPress 無法找到場景照，需 Owner 手動提供或拍攝補充至 Drive | 低 |
 | **⚠️ Token 輪換（安全修復）** | A1 安全修復後，需輪換：(1) Telegram bot token — **A1 bot 已換新（A1 4/3 晚間確認）✅**，A6 bot 待確認 (2) Claude API token — 狀態待確認。舊 token 已從 git history 清除，但仍需撤銷作廢。 | 高 |
+| LINE Webhook URL | 目前用部署：script.google.com/macros/s/AKfycbz...eap/exec（記錄於 T-A6-001 Task Card）。LINE Developers Console Webhook URL 欄位是否已填入？需確認。 | 中 |
 | A4 Colab S11 確認 | S11(2024) 最後 commit 9693797 (2026-04-03 下班存檔)，48h 閾值 = **04-05 18:00**。需在 04-05 18:00 前確認 Colab 仍執行中（進度 4,550/12,213=37.2%，ETA≈17h 預計 04-04 12:00 完成）| 中 |
 
 ## 最新決策

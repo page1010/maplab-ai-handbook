@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAPLAB Kitchen — 系統儀表板</title>
+<style>
+:root {
+  --cream: #FAF7F2;
+  --sand: #EDE5D8;
+  --olive: #3A3A2E;
+  --brown: #7A5C3E;
+  --sage: #8FA68E;
+  --blush: #D9C4B8;
+  --charcoal: #2C2C2C;
+  --green: #2D5F2D;
+  --gold: #E8A838;
+  --red: #C44D4D;
+  --yellow: #E8C838;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--cream); color: var(--olive); }
+.header { background: linear-gradient(135deg, var(--green), #1a3d1a); padding: 32px 40px; color: white; display: flex; justify-content: space-between; align-items: center; }
+.header h1 { font-size: 24px; font-weight: 700; letter-spacing: 0.5px; }
+.header .subtitle { font-size: 13px; opacity: 0.8; margin-top: 4px; }
+.header .version { background: rgba(255,255,255,0.15); padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; }
+.container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+.stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+.stat-card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); border-left: 4px solid var(--sage); }
+.stat-card .label { font-size: 12px; color: var(--brown); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+.stat-card .value { font-size: 28px; font-weight: 700; color: var(--olive); }
+.stat-card .sub { font-size: 11px; color: #999; margin-top: 4px; }
+.stat-card.highlight { border-left-color: var(--gold); }
+.stat-card.warning { border-left-color: var(--red); }
+.section { background: white; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+.section h2 { font-size: 16px; font-weight: 700; color: var(--green); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.section h2::before { content: ''; width: 4px; height: 20px; background: var(--green); border-radius: 2px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead th { background: var(--sand); padding: 10px 12px; text-align: left; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.3px; color: var(--brown); border-bottom: 2px solid #ddd; }
+tbody td { padding: 10px 12px; border-bottom: 1px solid #f0ede8; vertical-align: top; }
+tbody tr:hover { background: #faf8f4; }
+.status { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+.status.active { background: #e8f5e9; color: #2e7d32; }
+.status.blocked { background: #ffebee; color: #c62828; }
+.status.pending { background: #fff3e0; color: #e65100; }
+.status.done { background: #e0f2f1; color: #00695c; }
+.status.new { background: var(--sand); color: var(--brown); }
+.commit-row { display: flex; gap: 12px; padding: 8px 0; border-bottom: 1px solid #f0ede8; align-items: baseline; }
+.commit-row:last-child { border-bottom: none; }
+.commit-sha { font-family: 'SF Mono', monospace; font-size: 12px; color: var(--sage); background: #f5f5f0; padding: 2px 8px; border-radius: 4px; flex-shrink: 0; }
+.commit-msg { font-size: 13px; color: var(--olive); flex: 1; }
+.commit-date { font-size: 11px; color: #aaa; flex-shrink: 0; }
+.two-col { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+.link-btn { display: inline-block; background: var(--green); color: white; padding: 8px 20px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 600; margin-top: 12px; transition: 0.2s; }
+.link-btn:hover { background: #1a4a1a; }
+.link-btn.secondary { background: var(--brown); }
+.link-btn.secondary:hover { background: #5a3f2a; }
+.footer { text-align: center; padding: 24px; font-size: 11px; color: #bbb; }
+@media (max-width: 768px) { .stats-row { grid-template-columns: repeat(2, 1fr); } .two-col { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>⬡ MAPLAB KITCHEN</h1>
+    <div class="subtitle">AI 協作系統儀表板 — A0 Cowork 唯一窗口</div>
+  </div>
+  <div class="version">v6.0 · Phase 6</div>
+</div>
+
+<div class="container">
+
+<div class="stats-row">
+  <div class="stat-card highlight">
+    <div class="label">品項提取</div>
+    <div class="value">29,115</div>
+    <div class="sub">883 份報價單 → 3,794 唯一品項</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">Items 主表</div>
+    <div class="value">102</div>
+    <div class="sub">50 已匹配 · 63 未報價</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">Sheet 分頁</div>
+    <div class="value">15</div>
+    <div class="sub">含 DASHBOARD · SALES_INTAKE · REVISION_LOG · CONVERSATION_LOG</div>
+  </div>
+  <div class="stat-card warning">
+    <div class="label">A4 照片分類</div>
+    <div class="value">18.2%</div>
+    <div class="sub">S6 · 2,950/16,251 · Gemini key 需更換</div>
+  </div>
+</div>
+
+<div class="two-col">
+<div class="section">
+  <h2>進行中任務</h2>
+  <table>
+    <thead><tr><th>任務 ID</th><th>名稱</th><th>狀態</th><th>備註</th></tr></thead>
+    <tbody>
+      <tr><td>T-A4-001</td><td>Gemini 照片分類 S6</td><td><span class="status blocked">🔴 BLOCKED</span></td><td>Gemini API key 洩漏，需更換</td></tr>
+      <tr><td>T-A5-002</td><td>QUOTE_DRAFT 報價單增強</td><td><span class="status active">🔄 進行中</span></td><td>服務費/車馬費/長桌費已完成</td></tr>
+      <tr><td>T-A5-003</td><td>熱客招待品項定義</td><td><span class="status new">🔲 待開始</span></td><td>GFT 規則 v1.0 已定義</td></tr>
+      <tr><td>T-A3-001</td><td>GTM LINE 按鈕追蹤</td><td><span class="status pending">⏳ 方案B待實作</span></td><td>需 Owner 登入 GTM 操作</td></tr>
+      <tr><td>T-A3-002</td><td>Meta 廣告受眾</td><td><span class="status active">🔄 監控中</span></td><td>B組 CPA $5/$13 · 建議加嘉義</td></tr>
+      <tr><td>LINE報價助手</td><td>業務報價助手系統</td><td><span class="status active">🔄 MVP建設中</span></td><td>Sheet分頁已建 · A6 skill已寫</td></tr>
+      <tr><td>品項清洗</td><td>29K品項去重比對</td><td><span class="status active">🔄 v2完成</span></td><td>50匹配 · 待重跑更精準版</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <h2>系統架構</h2>
+  <table>
+    <thead><tr><th>組件</th><th>狀態</th></tr></thead>
+    <tbody>
+      <tr><td>CLAUDE.md 指向器</td><td><span class="status done">✅</span></td></tr>
+      <tr><td>AGENT_RULES v3.6</td><td><span class="status done">✅</span></td></tr>
+      <tr><td>SECTION 9 三層備援</td><td><span class="status done">✅</span></td></tr>
+      <tr><td>身份確認（正面陳述）</td><td><span class="status done">✅</span></td></tr>
+      <tr><td>/review 斜槓命令</td><td><span class="status done">✅</span></td></tr>
+      <tr><td>/checkpoint 斜槓命令</td><td><span class="status done">✅</span></td></tr>
+      <tr><td>pre-commit hook</td><td><span class="status done">✅</span></td></tr>
+      <tr><td>Cowork Project</td><td><span class="status done">✅</span></td></tr>
+      <tr><td>Sheet DASHBOARD</td><td><span class="status done">✅</span></td></tr>
+      <tr><td>Extension v4.7</td><td><span class="status done">✅</span></td></tr>
+    </tbody>
+  </table>
+
+  <a href="https://docs.google.com/spreadsheets/d/1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg/edit#gid=1041135542" class="link-btn" target="_blank">📊 開啟 Sheet Dashboard</a>
+  <a href="https://github.com/page1010/maplab-ai-handbook" class="link-btn secondary" target="_blank">📂 GitHub Repo</a>
+</div>
+</div>
+
+<div class="section">
+  <h2>最近 Commit</h2>
+  <div class="commit-row"><span class="commit-sha">cda5736</span><span class="commit-msg">feat(claude): pre-commit credential hook + review/checkpoint slash commands</span><span class="commit-date">3/31</span></div>
+  <div class="commit-row"><span class="commit-sha">65cd5b5</span><span class="commit-msg">feat(skills): Claude 平台功能對照手冊 v1.0</span><span class="commit-date">3/31</span></div>
+  <div class="commit-row"><span class="commit-sha">72b7844</span><span class="commit-msg">doc(v6.0): 設計文件落地 + session handoff</span><span class="commit-date">3/31</span></div>
+  <div class="commit-row"><span class="commit-sha">236a9fd</span><span class="commit-msg">feat(v6.0): Phase 2 業務閉環 MVP</span><span class="commit-date">3/31</span></div>
+  <div class="commit-row"><span class="commit-sha">b93e8e8</span><span class="commit-msg">feat(v6.0): Phase 1 觀測性建設</span><span class="commit-date">3/31</span></div>
+  <div class="commit-row"><span class="commit-sha">26d18bd</span><span class="commit-msg">fix(governance): A0/A1 角色混淆全面修正</span><span class="commit-date">3/31</span></div>
+  <div class="commit-row"><span class="commit-sha">de7837c</span><span class="commit-msg">data: 品項去重 v2 — 29,115→3,794唯一品項</span><span class="commit-date">3/29</span></div>
+  <div class="commit-row"><span class="commit-sha">3a2df7b</span><span class="commit-msg">feat(A6): LINE 報價助手 v1.1 + CONVERSATION_LOG</span><span class="commit-date">3/29</span></div>
+  <div class="commit-row"><span class="commit-sha">0076a3a</span><span class="commit-msg">feat(governance): SECTION 9 API三層備援 + 身份確認</span><span class="commit-date">3/29</span></div>
+  <div class="commit-row"><span class="commit-sha">8cafa1d</span><span class="commit-msg">fix(governance): 移除 A0=Telegram bot 混淆描述</span><span class="commit-date">3/29</span></div>
+</div>
+
+</div>
+
+<div class="footer">
+  MAPLAB Kitchen AI System · A0 Cowork · 最後更新 2026-03-31<br>
+  <span style="color:#ccc">⬡</span>
+</div>
+
+</body>
+</html>

@@ -307,3 +307,51 @@ function writeToIntake_(ss, caseId, formData, sheetUrl, now) {
 
   intakeSheet.appendRow(row);
 }
+
+// ─────────────────────────────────────────
+// doPost 報價入口（A6 透過 HTTP POST 呼叫）
+// ─────────────────────────────────────────
+
+/**
+ * 由 LineWebhook.gs 的 doPost 路由呼叫
+ * @param {Object} params
+ *   .action     {string} "createQuote"（必要，由路由判斷）
+ *   .clientName {string} 客戶名稱（必填）
+ *   .eventType  {string} 活動類型（必填，例如 "私廚餐會"）
+ *   .eventDate  {string} 活動日期 YYYY-MM-DD（必填）
+ *   .company    {string} 公司名稱（選填）
+ *   .phone      {string} 聯絡電話（選填）
+ *   .address    {string} 活動地址（選填）
+ *   .pax        {string} 預計人數（選填）
+ *   .location   {string} 活動地點（選填）
+ * @returns {TextOutput} JSON: { success, caseId, fileName, url } 或 { success, error }
+ */
+function handleQuoteRequest_(params) {
+  try {
+    var formData = {
+      clientName: params.clientName || '',
+      company:    params.company    || '',
+      phone:      params.phone      || '',
+      address:    params.address    || '',
+      eventType:  params.eventType  || '',
+      eventDate:  params.eventDate  || '',
+      pax:        params.pax        || '',
+      location:   params.location   || ''
+    };
+
+    var result = createQuote(formData);
+
+    return ContentService.createTextOutput(JSON.stringify({
+      success:  true,
+      caseId:   result.caseId,
+      fileName: result.fileName,
+      url:      result.url
+    })).setMimeType(ContentService.MimeType.JSON);
+
+  } catch(err) {
+    return ContentService.createTextOutput(JSON.stringify({
+      success: false,
+      error:   err.message
+    })).setMimeType(ContentService.MimeType.JSON);
+  }
+}

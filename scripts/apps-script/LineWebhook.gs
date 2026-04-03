@@ -47,6 +47,26 @@ function getLineProfile(userId) {
 }
 
 function doPost(e) {
+  // 路由判斷：JSON + action:"createQuote" → 走報價流程
+  var contentType = (e && e.postData) ? e.postData.type : '';
+  var contents    = (e && e.postData) ? e.postData.contents : '';
+
+  if (contentType === 'application/json') {
+    try {
+      var json = JSON.parse(contents);
+      if (json.action === 'createQuote') {
+        return handleQuoteRequest_(json);
+      }
+    } catch(err) {
+      // 不是合法 JSON 或無 action，繼續走 LINE 流程
+    }
+  }
+
+  // 否則走原本的 LINE Webhook 流程
+  return handleLineWebhook_(e);
+}
+
+function handleLineWebhook_(e) {
   // 先立即回 200，LINE 不會 retry
   const okResponse = ContentService
     .createTextOutput(JSON.stringify({ status: 'ok' }))

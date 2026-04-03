@@ -347,6 +347,8 @@ async function loadAll() {
     updatePromptDisplay();
 
     el('overdueCount').textContent = cachedOverdue.length > 0 ? `⏰ ${cachedOverdue.length}` : '';
+    const vb = document.getElementById('versionBadge');
+    if (vb && cachedParsed.version) vb.textContent = `v${cachedParsed.version}`;
     setStatus('ok', `v${cachedParsed.version} ｜ 系統已載入`);
   } catch(e) {
     setStatus('err', '載入失敗：' + e.message);

@@ -1,4 +1,4 @@
-// MAPLAB Agent Commander v5.2 — popup.js
+// MAPLAB Agent Commander v5.3 — popup.js
 // 角色選擇 + 專屬召喚 prompt（精簡版，無 commit history 面板）
 const DEFAULT_BASE = 'https://raw.githubusercontent.com/page1010/maplab-ai-handbook/main';
 const GITHUB_API   = 'https://api.github.com/repos/page1010/maplab-ai-handbook';
@@ -249,7 +249,7 @@ function updatePromptDisplay() {
     }
 
     if (cachedParsed) {
-      const tasks = cachedParsed.activeTasks.filter(t => t.agent.includes(role.replace('A','')));
+      const tasks = cachedParsed.activeTasks.filter(t => t.agent.includes(role.replace('A','')) && !t.status.includes('✅'));
       if (tasks.length > 0) {
         el('roleStatus').innerHTML = tasks.map(t =>
           `<span class="${t.status.includes('🔄') ? 'active' : 'pending'}">${t.status.substring(0,2)}</span> ${t.id} ${t.name.substring(0,35)}`
@@ -319,6 +319,7 @@ async function autoSave() {
 
 // === Main loader ===
 async function loadAll() {
+  cachedRecallPrompts = {}; // v5.3: 每次重新抓取都清除 recall 快取，確保拿到最新版
   setStatus('loading', '讀取中...');
   el('promptText').value = '';
   const data  = await chrome.storage.local.get(['githubRawBase','githubToken','lastRole']);

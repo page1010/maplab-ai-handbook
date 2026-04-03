@@ -7,6 +7,9 @@
 - 動態狀態 = 由 Extension 即時附加的 `buildSystemSnapshot()`（來自 CURRENT_STATUS.md），agent 自己讀文件
 - 效果：注入文字大幅縮短，agent 取得的是即時狀態而非過期快照
 - 新增踩坑條目：「recalls 塞斷點+任務清單 → 過期快照誤導 agent」
+- **popup.js v5.3 程式碼更新（Problem 2 修復）**：
+  - `loadAll()` 加入 `cachedRecallPrompts = {}` — 每次↻重新抓取都清除快取，確保拿到 GitHub 最新 recall
+  - roleStatus 過濾掉 ✅ 已完成任務，只顯示 🔄 進行中 / 🔲 可認領
 
 ## v5.2 — 2026-04-03
 變更者：A1 Claude Code

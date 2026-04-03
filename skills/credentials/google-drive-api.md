@@ -62,8 +62,37 @@ scopes=["https://www.googleapis.com/auth/drive.readonly"]
 
 ---
 
-## 重要資料夾 ID
+## 重要資料夾 / 檔案 ID
 
-| 資料夾 | ID | 說明 |
+| 資料夾/檔案 | ID | 說明 |
 |--------|-----|------|
-| 歷史報價單 | 17wM4wldkllDbj0T8Xg_rgY3mM3RgH7LG | 932份報價（2024+2025+2026），品項提取來源 |
+| **MAPLAB_DATA（根目錄）** | `19RKLsBfNKuoCHVPFzT9D7tJrAdkTSmpt` | 所有 MAPLAB 資料根目錄 |
+| **line_oa_chat_csv** | `1bS77rE0-RcdNpAEI0U0yxPFI5DhkiNFR` | A層對話 CSV（LINE OA 匯出，業務↔客人），格式：傳送者類型/名稱/日期/時間/內容 |
+| 歷史報價單 | `17wM4wldkllDbj0T8Xg_rgY3mM3RgH7LG` | 932份報價（2024+2025+2026），品項提取來源 |
+| MAPLAB_ASSETS | `1L0udpuXLy3vEbHmzBbaLqNVDut2FFpCe` | 活動素材（DST-CKE-001~005） |
+| MAPLAB_Items_Photos | `1Z62HUIiVutGNqLJMGyTfBCZ-D5g2vnOT` | 品項照片 |
+| MAPLAB_Proposals | `1uGBCSTLFRVm5ZPh6v10G-tImf2QB5deu` | 提案資料 |
+| MAPLAB_報價單 | `1aJBnL_fAmMDsNUqMPmLo07KWS47bnSBd` | 報價單 |
+| ✅ 已結案_Completed Orders | `1k8BtS1AEdyCuupOnWqPye9qUVyrSax9Q` | 已結案訂單 |
+| ❌ 未成交_Lost Quotes | `1RMWBdXYYqtFPmBMss8cNrUFtaXiSgu_2` | 未成交報價 |
+| 📋 進行中_Active Orders | `1vCiqYelK0Z24vLthVib9qqzw6Bdj2o4_` | 進行中訂單 |
+| **MAPLAB_外燴系統_v0.1（主表）** | `1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg` | A5 報價系統、Items 主表、QUOTE_DRAFT、CONVERSATION_LOG |
+| MAPLAB_MasterData_Sheets | `1d2_SiEXh5JT4lzjkgHDI5JU9UWBY9TiPlC8DaxkQnKs` | 主資料備份 |
+
+## 主試算表分頁 ID（MAPLAB_外燴系統_v0.1）
+
+| 分頁名稱 | sheetId | 說明 |
+|---------|---------|------|
+| DASHBOARD | 1041135542 | 系統概覽 |
+| QUOTE_DRAFT | 2135827399 | **A5 報價單模板**（複雜格式，非簡單表格）|
+| Items | 2137253687 | **品項主表**（item_id, category, standard_name, default_price[空], default_cost, unit）|
+| SALES_INTAKE | 366814598 | 業務詢價進件 |
+| CONVERSATION_LOG | 1795458209 | LINE 對話紀錄（目前只有客人→業務單邊）|
+| Orders / OrderLines / OrderCharges | — | 訂單系統 |
+| TERMS_MASTER | 387592355 | 條款模板（個人版/企業版）|
+
+## ⚠️ 重要注意事項
+
+- `Items.default_price` 欄**多數為空**，只有 `default_cost`（成本）有值
+- 報價必須讀 Items 主表拿 `default_cost`，**不能自己發明售價**
+- `QUOTE_DRAFT` 是複雜 Sheets 模板（有合併儲存格、公式），要填入正確欄位位置

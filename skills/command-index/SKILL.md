@@ -25,6 +25,7 @@ Owner 說以下任何一句話時，輸出下方速查表：
 | 照片分類 / 照片整理 | A4 照片分類 pipeline（Gemini + Google Drive） | a4-photo-asset-skills | ✅ 已建立 |
 | 客服 / 回覆訊息 | A7 客服回覆模板 + 補問流程 | a7-customer-service-skills | ✅ 已建立 |
 | 報告 / 業務報告 | A5 報價引擎 + 品項數據分析 | a5-quotation-engine-skills | ✅ 已建立 |
+| 開 AX / 召喚 AX / 跑 AX | 召喚對應角色的 Code session | summon-role | ✅ 已建立 |
 
 ---
 
@@ -39,6 +40,8 @@ skills/
 ├── items-management/    ← Items 品項管理
 │   └── SKILL.md
 ├── clasp-deploy/        ← Apps Script 部署
+│   └── SKILL.md
+├── summon-role/         ← 角色召喚 SOP（Code session + Extension 兩路徑）
 │   └── SKILL.md
 ├── session-lifecycle/   ← Session 開始/結束規則
 │   └── SKILL.md

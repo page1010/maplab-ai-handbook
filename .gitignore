@@ -1,6 +1,8 @@
 # API keys - never commit
 .mcp.json
 cookies.txt
+**/.env
+.env
 
 # Telegram logs - may contain sensitive info from conversations
 data/telegram-logs/

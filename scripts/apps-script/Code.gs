@@ -1,8 +1,14 @@
 /**
- * MAPLAB 報價系統 v3.3
- * 修正：cell references 對齊 Chrome 截圖確認之 QUOTE_DRAFT 實際版面
- *   - 時間 F3→E3，鹹食 D8:D10，甜點 D12:D14，飲品 D15:D16，條款 B34
- * 參考：handoff/feedback/2026-04-02-quote-draft-v3-layout.md
+ * MAPLAB 報價系統 v3.4
+ * 修正：品項名稱格式、客戶資訊欄位、毛利率驗證、禮盒殘留資料
+ *   - Bug1: D欄品項名寫入格式改為「品名 (item_id)」+ G欄qty
+ *   - Bug2: D2 只寫 clientName，company 不混入
+ *   - Bug3: D3 = location || address
+ *   - Bug4: D5 自動組合活動名稱
+ *   - Bug5: F5 = 品項總數
+ *   - Bug6: 整體毛利率驗證 ≥ minMargin，不合格直接拋錯
+ *   - Bug7: makeCopy 後清空 D18:D19
+ * 前版：v3.3 cell reference 修正
  *
  * 部署目標 Sheet：1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg
  * 模板分頁：QUOTE_DRAFT
@@ -139,16 +145,18 @@ function createQuote(formData) {
   if (itemsSheet) itemsSheet.hideSheet();
 
   // ── 填入客戶資訊（對應 QUOTE_DRAFT v3 版面） ──
-  var displayName = formData.company
-    ? formData.company + '｜' + formData.clientName
-    : formData.clientName;
-  keepSheet.getRange('D2').setValue(displayName);
+  // Bug2 修正：D2 只寫 clientName，company 不混入
+  keepSheet.getRange('D2').setValue(formData.clientName || '');
   keepSheet.getRange('E2').setValue(formData.eventDate || '');
-  keepSheet.getRange('D3').setValue(formData.address   || '');
+  // Bug3 修正：D3 = location || address
+  keepSheet.getRange('D3').setValue(formData.location || formData.address || '');
   keepSheet.getRange('E3').setValue(formData.eventTime || '');  // v3.3 修正：原錯寫 F3
   keepSheet.getRange('D4').setValue(formData.eventType || '');
   keepSheet.getRange('F4').setValue(formData.pax       || '');
-  keepSheet.getRange('D5').setValue(formData.eventName || '');
+  // Bug4 修正：D5 = eventName 或自動組合
+  var autoEventName = formData.eventName ||
+    ((formData.clientName || '') + ' ' + (formData.eventType || '') + ' ' + (formData.eventDate || '')).trim();
+  keepSheet.getRange('D5').setValue(autoEventName);
   keepSheet.getRange('F5').setValue(formData.totalItems|| '');
 
   // ── 系統資訊寫入 K 欄（列印範圍外） ──
@@ -173,21 +181,23 @@ function createQuote(formData) {
 
   // ── 清除 D 欄品項區的 dropdown 驗證（D8:D19，含 D18:D19 禮盒格） ──
   keepSheet.getRange('D8:D19').clearDataValidations();
+  // Bug7 修正：清空 D18:D19 禮盒殘留模板資料
+  keepSheet.getRange('D18:D19').clearContent();
 
-  // ── 【修正 問題 1+2】若有傳入預算，自動篩選品項寫入菜單區 ──
+  // ── 若有傳入預算，自動篩選品項寫入菜單區 ──
   if (formData.budget && itemsSheet) {
-    try {
-      var selected = selectItemsForBudget_(itemsSheet, {
-        budget:    Number(formData.budget),
-        pax:       Number(formData.pax) || 1,
-        itemCount: Number(formData.itemCount) || 8,
-        minMargin: Number(formData.minMargin) || 0.7,
-        style:     formData.style || 'tea_time'
-      });
-      writeItemsToQuote_(keepSheet, selected);
-    } catch(e) {
-      Logger.log('品項篩選失敗，跳過：' + e.message);
-    }
+    var paxNum = Number(formData.pax) || 1;
+    var selected = selectItemsForBudget_(itemsSheet, {
+      budget:    Number(formData.budget),
+      pax:       paxNum,
+      itemCount: Number(formData.itemCount) || 8,
+      minMargin: Number(formData.minMargin) || 0.7,
+      style:     formData.style || 'tea_time'
+    });
+    writeItemsToQuote_(keepSheet, selected, paxNum);
+    // Bug5 修正：F5 = 品項總數（覆蓋之前設的空值）
+    var totalItemCount = selected.appetizers.length + selected.desserts.length;
+    keepSheet.getRange('F5').setValue(formData.totalItems || totalItemCount);
   }
 
   // ── 條款寫入 B34（v3.3 修正：B33=【合約條款】template 已有，B34 寫內容） ──
@@ -257,12 +267,14 @@ function selectItemsForBudget_(itemsSheet, params) {
     var cost     = Number(data[i][4]);  // E: 成本
     var imageUrl = data[i][10];  // K: 圖片URL
 
+    var itemId = data[i][0];   // A: 序號/item_id (e.g. APP004)
+
     if (!name || !price) continue;
 
     var margin = price > 0 ? (price - cost) / price : 0;
     if (margin < minMargin) continue;
 
-    allItems.push({ name: name, price: price, cost: cost, margin: margin, imageUrl: imageUrl, category: String(category).trim() });
+    allItems.push({ id: itemId, name: name, price: price, cost: cost, margin: margin, imageUrl: imageUrl, category: String(category).trim() });
   }
 
   if (allItems.length === 0) return { appetizers: [], desserts: [] };
@@ -310,29 +322,55 @@ function selectItemsForBudget_(itemsSheet, params) {
   Logger.log('品項篩選完成：鹹食 ' + selected_s.length + ' 項，甜點 ' + selected_d.length + ' 項');
   Logger.log('預算 ' + budget + '，人數 ' + pax + '，每人預算 ' + perPersonBudget.toFixed(0) + '，每項均攤 ' + pricePerItem.toFixed(0));
 
+  // Bug6 修正：驗證整體毛利率 ≥ minMargin
+  var allSelected = selected_s.concat(selected_d);
+  if (allSelected.length > 0) {
+    var totalRevenue = 0, totalCost = 0;
+    for (var k = 0; k < allSelected.length; k++) {
+      totalRevenue += allSelected[k].price;
+      totalCost    += allSelected[k].cost;
+    }
+    var overallMargin = totalRevenue > 0 ? (totalRevenue - totalCost) / totalRevenue : 0;
+    Logger.log('整體毛利率：' + (overallMargin * 100).toFixed(1) + '%，最低要求：' + (minMargin * 100).toFixed(0) + '%');
+    if (overallMargin < minMargin) {
+      throw new Error(
+        '整體毛利率 ' + (overallMargin * 100).toFixed(1) + '% 低於最低要求 ' +
+        (minMargin * 100).toFixed(0) + '%，無法產出合格報價單。' +
+        '請調整預算或降低 minMargin。'
+      );
+    }
+  }
+
   return { appetizers: selected_s, desserts: selected_d };
 }
 
 /**
- * 把篩選結果寫入 QUOTE_DRAFT 菜單區（D 欄品名）
+ * 把篩選結果寫入 QUOTE_DRAFT 菜單區
+ * Bug1 修正：D 欄格式「品名 (item_id)」，G 欄寫 qty（=pax），I 欄寫成本
  * @param {Sheet}  sheet    keepSheet（已重命名為報價單）
  * @param {Object} selected { appetizers: [...], desserts: [...] }
+ * @param {number} pax      人數（G 欄 qty）
  */
-function writeItemsToQuote_(sheet, selected) {
+function writeItemsToQuote_(sheet, selected, pax) {
   var appetizers = selected.appetizers || [];
   var desserts   = selected.desserts   || [];
-  var maxSlots   = APPETIZER_ROWS.end - APPETIZER_ROWS.start + 1;  // 6
-  var maxDSlots  = DESSERT_ROWS.end   - DESSERT_ROWS.start + 1;    // 5
+  var qty        = pax || 1;
+  var maxSlots   = APPETIZER_ROWS.end - APPETIZER_ROWS.start + 1;  // 3
+  var maxDSlots  = DESSERT_ROWS.end   - DESSERT_ROWS.start + 1;    // 3
 
   // 寫 appetizer D8:D10
   for (var i = 0; i < maxSlots; i++) {
     var row  = APPETIZER_ROWS.start + i;
     var item = appetizers[i];
     if (item) {
-      sheet.getRange('D' + row).setValue(item.name);
-      sheet.getRange('I' + row).setValue(item.cost);   // 單位成本（業務欄位）
+      var displayName = item.id ? item.name + ' (' + item.id + ')' : item.name;
+      sheet.getRange('D' + row).setValue(displayName);
+      sheet.getRange('G' + row).setValue(qty);         // 數量 = 人數
+      sheet.getRange('I' + row).setValue(item.cost);   // 單位成本
     } else {
       sheet.getRange('D' + row).clearContent();
+      sheet.getRange('G' + row).clearContent();
+      sheet.getRange('I' + row).clearContent();
     }
   }
 
@@ -341,14 +379,18 @@ function writeItemsToQuote_(sheet, selected) {
     var dRow  = DESSERT_ROWS.start + j;
     var dItem = desserts[j];
     if (dItem) {
-      sheet.getRange('D' + dRow).setValue(dItem.name);
+      var dDisplayName = dItem.id ? dItem.name + ' (' + dItem.id + ')' : dItem.name;
+      sheet.getRange('D' + dRow).setValue(dDisplayName);
+      sheet.getRange('G' + dRow).setValue(qty);
       sheet.getRange('I' + dRow).setValue(dItem.cost);
     } else {
       sheet.getRange('D' + dRow).clearContent();
+      sheet.getRange('G' + dRow).clearContent();
+      sheet.getRange('I' + dRow).clearContent();
     }
   }
 
-  Logger.log('品項已寫入 QUOTE_DRAFT 菜單區');
+  Logger.log('品項已寫入 QUOTE_DRAFT 菜單區（含 D 格式、G qty=' + qty + '、I 成本）');
 }
 
 // ─────────────────────────────────────────
@@ -434,7 +476,7 @@ function writeToIntake_(ss, caseId, formData, sheetUrl, now) {
   intakeSheet.appendRow([
     caseId,
     createdAt,
-    'quote-system-v3.3',
+    'quote-system-v3.4',
     formData.clientName,
     formData.company    || '',
     formData.phone      || '',

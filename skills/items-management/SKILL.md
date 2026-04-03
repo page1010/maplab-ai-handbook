@@ -203,6 +203,13 @@ print(f"品項統計: {dict(counts)}")
 
 ---
 
+## 照片與 Slide 規則
+
+- **飲品類（BEV）不需要照片**：BEV 品項不用在 Items K 欄填 image_url，Slide 報價簡報也不包含飲品照片。
+- **沒有照片的品項不放入 Slide 報價簡報**：Items K 欄 image_url 為空的品項，一律不放入 Slide 投影片。
+
+---
+
 ## 注意事項與已知陷阱
 
 1. **重新編號前必須備份**：先讀取現有 Items 完整資料存到變數，出錯才能還原

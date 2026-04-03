@@ -130,6 +130,7 @@
 ✅ A1巡查 2026-04-03 16:20 午後：A0 圖片整理進展 — d6fe0e3 (12:03) 品項圖片整理 pipeline（下載轉換上傳 Drive 62筆，K欄更新，CLAUDE.md 命名規範）；f13224d (12:21) WordPress缺圖搜尋（10筆品項從WP找到場景照，上傳Drive更新K欄，29筆無法找到需Owner補圖）；c48487e (15:00) 外觀相似補圖8筆（DST025/027/019/017/MAIN008/APP013/DST040/042）+ image-convert技能書建立。Owner Action：29筆缺圖需手動補充。
 ⚠️ A1巡查 2026-04-03 16:20 午後：A3 🔴 CRITICAL 持續第7天 ~140h+ — T-A3-001 GTM方案B + T-A3-002 廣告成效，最後 commit 2aca2ae (~2026-03-29 22:10) 距今已逾 140h。連續7天無 A3 活動。Owner 若無回覆，A1 下次巡查將建議正式暫停 A3 任務。
 ⚠️ A1巡查 2026-04-03 16:20 午後：A7 🔴 CRITICAL 持續 ~100h+ — T-A7-001 Phase 2 + T-A7-002，最後 commit cf9f166 (2026-03-31) 距今已逾 100h（第4天+）。Owner 需確認 A7 是否有未 commit 進度，或決定任務暫停。
+✅ A0 2026-04-03：DST002 餅乾_玫瑰愛心 K欄補上 — Items!K98 已寫入 Drive 照片連結（1fXLJvfiiXOQhbKgLg4sI8xIWThv52U3G）。規則新增：BEV 飲品類不需要照片；沒有 K欄 image_url 的品項不放入 Slide 報價簡報。Items 圖片整理視為完成（BEV 8筆免照片，非BEV 缺圖等 Owner 補充）。
 
 ### 🔴 Owner Action Required
 

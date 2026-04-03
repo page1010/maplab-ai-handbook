@@ -1,5 +1,13 @@
 # Chrome Extension Changelog
 
+## v5.3 — 2026-04-03
+變更者：A1 Claude Code
+- **召喚文瘦身（Problem 1 修復）**：`recalls/A1_recall.md` 移除所有動態內容（斷點、任務清單、系統快照）
+- 靜態 recall = 身份+規則+必讀指令+踩過的坑，Extension 架構說明
+- 動態狀態 = 由 Extension 即時附加的 `buildSystemSnapshot()`（來自 CURRENT_STATUS.md），agent 自己讀文件
+- 效果：注入文字大幅縮短，agent 取得的是即時狀態而非過期快照
+- 新增踩坑條目：「recalls 塞斷點+任務清單 → 過期快照誤導 agent」
+
 ## v5.2 — 2026-04-03
 變更者：A1 Claude Code
 commit：a21d9a2

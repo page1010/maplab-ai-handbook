@@ -1,4 +1,4 @@
-// MAPLAB Agent Commander v4.9 — popup.js
+// MAPLAB Agent Commander v5.0 — popup.js
 // 角色選擇 + 專屬召喚 prompt（精簡版，無 commit history 面板）
 const DEFAULT_BASE = 'https://raw.githubusercontent.com/page1010/maplab-ai-handbook/main';
 const GITHUB_API   = 'https://api.github.com/repos/page1010/maplab-ai-handbook';
@@ -157,6 +157,67 @@ function buildOverviewPrompt(parsed, overdueWarnings) {
   return lines.join('\n');
 }
 
+// === System snapshot (Task B) ===
+function buildSystemSnapshot(parsed) {
+  const lines = ['', '---', '【系統快照 — 即時】'];
+  lines.push(`版本：${parsed.version} ｜ ${parsed.phase}`);
+  const inProgress = parsed.activeTasks.filter(t => t.status.includes('🔄'));
+  if (inProgress.length > 0) {
+    lines.push('進行中：' + inProgress.map(t => `${t.id}(${t.name.substring(0,20)})`).join('、'));
+  }
+  const available = parsed.activeTasks.filter(t => t.status.includes('🔲'));
+  if (available.length > 0) {
+    lines.push('可認領：' + available.map(t => t.id).join('、'));
+  }
+  if (parsed.blockers.length > 0) {
+    lines.push('Blockers：' + parsed.blockers.slice(0, 2).map(b => b.substring(0, 60)).join(' | '));
+  }
+  return lines.join('\n');
+}
+
+// === Inject to Claude tab (Task A) ===
+async function injectToClaudeTab() {
+  const text = el('promptText').value;
+  if (!text || text.startsWith('//')) return;
+  const btn = el('injectBtn');
+
+  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  if (!tab || !tab.url?.includes('claude.ai')) {
+    btn.textContent = '❌ 請先切到 claude.ai tab';
+    btn.style.background = '#e85538'; btn.style.color = '#fff';
+    setTimeout(() => { btn.textContent = '⚡ 注入到 Claude tab'; btn.style.background = ''; btn.style.color = ''; }, 2500);
+    return;
+  }
+
+  try {
+    const results = await chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      func: (promptText) => {
+        const editor = document.querySelector('div[contenteditable="true"].ProseMirror') ||
+                       document.querySelector('div[contenteditable="true"]');
+        if (!editor) return false;
+        editor.focus();
+        document.execCommand('selectAll', false, null);
+        document.execCommand('insertText', false, promptText);
+        return true;
+      },
+      args: [text]
+    });
+    const ok = results?.[0]?.result;
+    if (ok) {
+      btn.textContent = '✅ 已注入！';
+      btn.style.background = '#38e87a'; btn.style.color = '#0a1a10';
+    } else {
+      btn.textContent = '❌ 找不到輸入框';
+      btn.style.background = '#e85538'; btn.style.color = '#fff';
+    }
+  } catch(e) {
+    btn.textContent = '❌ ' + e.message.substring(0, 35);
+    btn.style.background = '#e85538'; btn.style.color = '#fff';
+  }
+  setTimeout(() => { btn.textContent = '⚡ 注入到 Claude tab'; btn.style.background = ''; btn.style.color = ''; }, 3000);
+}
+
 // === Display ===
 function updatePromptDisplay() {
   const role = el('roleSelect').value;
@@ -173,9 +234,15 @@ function updatePromptDisplay() {
     el('promptBoxLabel').textContent = `${role} 召喚 prompt`;
     el('promptLabel').textContent = `⚡ ${role} Startup Prompt`;
 
+    let prompt = '';
     if (cachedRecallPrompts[role]) {
-      el('promptText').value = cachedRecallPrompts[role];
-      updateCharCount(cachedRecallPrompts[role]);
+      prompt = cachedRecallPrompts[role];
+      // Task B: append live system snapshot
+      if (cachedParsed) {
+        prompt += buildSystemSnapshot(cachedParsed);
+      }
+      el('promptText').value = prompt;
+      updateCharCount(prompt);
     } else {
       el('promptText').value = `// ${role} 的召喚 prompt 尚未載入或不存在`;
       updateCharCount('');

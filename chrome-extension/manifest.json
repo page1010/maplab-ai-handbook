@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "MAPLAB Agent Commander",
-  "version": "4.7.0",
-  "description": "Loads CURRENT_STATUS + commit history. Token-auth for private repos.",
+  "version": "5.0.0",
+  "description": "角色召喚 + 系統快照注入 + 直接填入 Claude tab。",
   "permissions": ["storage", "activeTab", "scripting", "tabs", "clipboardWrite", "sidePanel"],
   "host_permissions": [
     "https://claude.ai/*",

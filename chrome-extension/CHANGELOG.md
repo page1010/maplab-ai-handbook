@@ -1,5 +1,11 @@
 # Chrome Extension Changelog
 
+## v5.0 — 2026-04-03
+變更者：A1 Claude Code
+- **注入按鈕（Task A）**：新增「⚡ 注入到 Claude tab」按鈕，透過 `chrome.scripting.executeScript` 直接填入 claude.ai 輸入框（ProseMirror contenteditable），不需手動貼上
+- **即時系統快照（Task B）**：選角色後，recall prompt 底部自動附加即時快照（版本+進行中任務+可認領+blockers），來自當次抓取的 CURRENT_STATUS.md
+- manifest 版本更新至 5.0.0
+
 ## v4.9 — 2026-04-03
 變更者：A1 Claude Code
 - **Recall 拆分**：各 agent 改用獨立 `recalls/Ax_recall.md`，不再從單一大檔 AGENT_RECALL_PROMPTS.md 解析

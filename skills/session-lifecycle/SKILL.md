@@ -33,11 +33,19 @@
 1. **更新 `CURRENT_STATUS.md`**：
    - 修改對應任務的狀態
    - 更新「最後更新」時間戳記
-2. **Commit + Push**：
+2. **Commit + Cherry-pick 到 main + Push**：
    ```bash
    git add -p                    # 選擇要 commit 的變更
    git commit -m "..."           # commit message 包含狀態摘要
-   git push origin main          # 或當前分支
+   # 如果在 worktree，必須立即 cherry-pick 到 main：
+   HASH=$(git rev-parse HEAD)
+   cd /Users/pagemacmini/maplab-ai-handbook
+   git checkout main
+   git cherry-pick $HASH
+   git push origin main
+   cd -                          # 回 worktree
+   # 如果在 main branch，直接 push：
+   git push origin main
    ```
 3. Commit message 格式：`type(scope): [做了什麼] — [下一步]`
    - type: feat / fix / docs / audit / checkpoint
@@ -58,8 +66,9 @@
 
 1. ✅ 所有進行中的變更已 commit（no uncommitted changes）
 2. ✅ `CURRENT_STATUS.md` 反映本 session 最終狀態
-3. ✅ 所有 worktree commits 已 cherry-pick 到 main
+3. ✅ 所有 worktree commits 已 cherry-pick 到 main（執行 `bash scripts/verify-commit-on-main.sh` 確認）
 4. ✅ `git push` 到 remote 已完成
+5. ✅ `git log main --oneline -1` 確認最新 commit 已在 main
 5. 建立 session note（如果本 session 有重要發現/決策）：
    - 路徑：`handoff/session-notes/YYYY-MM-DD-session-[n].md`
 6. 輸出 SESSION END 摘要給 Owner：

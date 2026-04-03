@@ -30,3 +30,13 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. 改 Extension → 必須更新 CHANGELOG
 3. 狀態變了 → 必須更新 RECALL_PROMPTS + CURRENT_STATUS
 4. 沒有例外，Mac mini 故障時下一個 Claude Code 要能從紀錄接手
+
+## Worktree Commit 規則（強制）
+1. 每次 commit 後，必須立即 cherry-pick 到 main 並 push
+2. 操作方式：
+   - 記下 worktree 的 commit hash
+   - cd 到父 repo（/Users/pagemacmini/maplab-ai-handbook）
+   - git checkout main && git cherry-pick <hash> && git push
+   - 如果有衝突，解決後 commit
+3. Session 結束前的最後一個動作必須是：確認 `git log main --oneline -1` 包含你的最新 commit
+4. 如果你在 worktree 裡，永遠不要只在 worktree commit 就結束

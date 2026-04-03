@@ -25,18 +25,24 @@ repo: https://github.com/page1010/maplab-ai-handbook
 ⚠️ 無法用程式碼解決、或溝通比寫程式快 → 透過 A0 溝通讓他處理
 ⚠️ 此 prompt 請貼到 [Cowork / 終端機 Claude Code]，不是 Chrome 側邊欄
 
-【強制存檔規則 — A1 也必須遵守】
-1. 每 30 分鐘至少 commit 一次
+【強制存檔規則 — 所有角色必須遵守】
+1. 每次完成有意義的變更後，執行：
+
+```bash
+bash scripts/checkpoint.sh "角色名" "做了什麼"
+```
+
+例如：
+```bash
+bash scripts/checkpoint.sh "A4" "S11 照片分類完成 3000 張"
+bash scripts/checkpoint.sh "A5" "QUOTE_DRAFT 模板修正"
+bash scripts/checkpoint.sh "A1" "更新 CURRENT_STATUS + RECALL_PROMPTS"
+```
+
+這個腳本會自動：**commit → cherry-pick 到 main → push → 驗證**
+不需要手動做任何 git 操作。
+
 2. 改 Extension → 必須更新 CHANGELOG
 3. 狀態變了 → 必須更新 RECALL_PROMPTS + CURRENT_STATUS
-4. 沒有例外，Mac mini 故障時下一個 Claude Code 要能從紀錄接手
-
-## Worktree Commit 規則（強制）
-1. 每次 commit 後，必須立即 cherry-pick 到 main 並 push
-2. 操作方式：
-   - 記下 worktree 的 commit hash
-   - cd 到父 repo（/Users/pagemacmini/maplab-ai-handbook）
-   - git checkout main && git cherry-pick <hash> && git push
-   - 如果有衝突，解決後 commit
-3. Session 結束前的最後一個動作必須是：確認 `git log main --oneline -1` 包含你的最新 commit
-4. 如果你在 worktree 裡，永遠不要只在 worktree commit 就結束
+4. Session 結束前必須至少執行一次 checkpoint.sh
+5. 沒有例外，Mac mini 故障時下一個 Claude Code 要能從紀錄接手

@@ -23,6 +23,7 @@ Owner 說以下任何一句話時，輸出下方速查表：
 | 快速報價 / 急報價 | A6 Telegram 窗口快速報價 SOP | a6-rapid-quote-sop | ✅ 已建立 |
 | 廣告 / 社群廣告 | A3 社群廣告操作（Meta Ads / 文案生成） | a3-social-ads-skills | ✅ 已建立 |
 | 照片分類 / 照片整理 | A4 照片分類 pipeline（Gemini + Google Drive） | a4-photo-asset-skills | ✅ 已建立 |
+| 轉檔 / HEIC 轉 JPG / 圖片格式轉換 | HEIC/HEIF/WEBP/PNG → JPG，轉換後上傳 Drive + 更新 K 欄 | image-convert | ✅ 已建立 |
 | 客服 / 回覆訊息 | A7 客服回覆模板 + 補問流程 | a7-customer-service-skills | ✅ 已建立 |
 | 報告 / 業務報告 | A5 報價引擎 + 品項數據分析 | a5-quotation-engine-skills | ✅ 已建立 |
 | 開 AX / 召喚 AX / 跑 AX | 召喚對應角色的 Code session | summon-role | ✅ 已建立 |
@@ -44,6 +45,8 @@ skills/
 ├── summon-role/         ← 角色召喚 SOP（Code session + Extension 兩路徑）
 │   └── SKILL.md
 ├── session-lifecycle/   ← Session 開始/結束規則
+│   └── SKILL.md
+├── image-convert/       ← HEIC/WEBP/PNG → JPG 轉換 + Drive 上傳
 │   └── SKILL.md
 ├── check-rules/         ← Sheets 資料修改安全規則
 │   └── sheets-data.md

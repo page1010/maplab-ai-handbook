@@ -1,5 +1,13 @@
 # Chrome Extension Changelog
 
+## v5.2 — 2026-04-03
+變更者：A1 Claude Code
+commit：a21d9a2
+- **Bot 剪貼板橋接**：加入「📋 從 Bot 抓取」按鈕，從 127.0.0.1:9876 fetch /tmp/maplab_clip.json，自動填入 promptText 欄位
+- **架構**：Telegram `/clip [文字]` → bot.py 寫入 /tmp/maplab_clip.json → Bot 內建 HTTP server（127.0.0.1:9876）→ Extension popup fetch → 注入 Claude tab
+- **解決問題**：完全繞過 AppleScript / 輔助使用權限，macOS 系統更新不會壞掉
+- ⚠️ 使用前提：bot.py 需已重啟（才能跑 HTTP server）
+
 ## v5.1 — 2026-04-03
 變更者：A1 Claude Code
 - **自我重載按鈕**：popup 右下加「⟳ 重載 Extension」，呼叫 `chrome.runtime.reload()`，更新後不需去 chrome://extensions/ 手動 reload

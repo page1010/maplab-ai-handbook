@@ -139,7 +139,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. 都不行 → 回報 Owner，不要硬幹
 
-【斷點 — 2026-04-03 16:20 午後巡查更新】
+【斷點 — 2026-04-03 深夜 Extension v5.2 更新】
 1. 系統版本：v6.0 / Phase 6 — 觀測性 + 業務閉環 + 策略循環（Phase 3.1 Dashboard 自動更新已就位 ef2c21b）
 2. EXP-S010 A0/A1 session 混淆已記錄；下次重開先確認 cwd + 貼 A1 recall prompt
 3. A2 T-A2A3-001 ✅ 子任務1-4全完成（子任務5等7-14天觀察期），TASK_QUEUE 已同步（d1c4635）
@@ -161,6 +161,10 @@ repo: https://github.com/page1010/maplab-ai-handbook
 19. 安全修復（04-03）：bot_a6.log/launchd_stdout.log/conv_history.json 從 git history 清除；.gitignore 補 **/.env/*.log/conv_history.json；Token 輪換中（Owner Action）
 20. 系統治理（04-03）：CLAUDE.md 冷啟動防呆+命名規範；Skills新建：system-audit/session-lifecycle/summon-role/command-index/items-management/image-convert；220個舊worktrees清理（5e6d3b4）
 21. Items 表修改（04-03）：APP024 普切塔拆5品項、APP040 canape新增、重新編號、D欄隱藏
+22. Extension v5.1（bc1ad19）：popup 加「⟳ 重載 Extension」按鈕（chrome.runtime.reload()）；scripts/update_extension.sh 建立（等於 git pull + 提示）；技能書 skills/extension-update.md 建立。更新流程：bash scripts/update_extension.sh → popup 點「⟳ 重載」，不再需手動去 chrome://extensions/
+23. Extension v5.2（a21d9a2）：加入 Bot 剪貼板橋接架構。流程：Telegram /clip [文字] → bot.py 寫 /tmp/maplab_clip.json → bot 內建 HTTP server 127.0.0.1:9876 → popup「📋 從 Bot 抓取」fetch → 自動填入 promptText → 點「⚡ 注入到 Claude tab」。此方案完全不需 AppleScript / 輔助使用權限。
+24. ⚠️ 未完成（04-03 深夜）：Extension v5.2 Owner 尚未 reload（需 git pull + chrome://extensions/ 手動 reload 最後一次 + 重啟 bot.py）。測試未跑完，下次 session 先確認這步。
+25. ⚠️ A0 進行中任務：Owner 要求把「不能做按鈕」問題（AppleScript 輔助使用權限失敗的問題）交給 A0 處理，但具體任務內容/狀態尚未記錄在 Task Card。下次確認 A0 是否已建立 Task Card 或記錄接續點。
 
 【可認領任務】
 - T-A5-002 剩餘增強項目確認（A5，🔄 進行中，需更新 Task Card）

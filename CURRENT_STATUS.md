@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-04-02 深夜（A1 更新）｜ 更新者：A1 — 使用者需求文件 projects/line-quote-assistant.md 寫入必讀位置 + A6 Telegram 窗口技能書建立 (skills/a6-telegram-window.md) + AGENT_RECALL_PROMPTS A6 段落更新
+最後更新：2026-04-03 09:00（A1 日常巡查）｜ 更新者：A1 — 每日巡查：A3 CRITICAL 第6天130h+、A7 CRITICAL 第4天90h+、A4 WATCH 36h（閾值今日20:54）、A6活躍（0f5a961）、LineWebhook兩項修復✅
 
 ---
 
@@ -101,6 +101,12 @@
 ⚠️ A1巡查 2026-04-02 16:30 午後巡查：過去 8h 無任何 agent 新 commit — A7 🔴 CRITICAL 持續第 67h+（T-A7-001 Phase 2 + T-A7-002，上次活動 2026-03-31 cf9f166），A3 🔴 CRITICAL 持續第 105h+（T-A3-001 GTM方案B + T-A3-002，上次 2aca2ae ~2026-03-29 22:10）。A4 S11(2024) ⚠️ WATCH 升至 ~21h（de2cf2e 2026-04-01 20:54），距 48h 閾值剩約 27h，Owner 需於明日 09:00 前確認 S11 Colab 仍執行中。A6 T-A6-001 ⚠️ WATCH ~22h，正常範圍內。
 
 ⚠️ A1巡查 2026-04-02 晚間巡查：A0 今晚活躍 ✅（T-A5-004 Phase 1 完整收尾：Items照片提取16筆+URL修正+重新編號91格+items-management Skill+220個舊worktrees清理，5e6d3b4）；A3 🔴 CRITICAL 持續第5天 ~110h+（上次 2aca2ae ~2026-03-29，Owner 需確認外部阻塞原因或指示暫停）；A4 S11(2024) ⚠️ WATCH 升至 ~26h（de2cf2e 2026-04-01 20:54），距 48h 閾值剩 ~22h，需明日 09:00 前確認 Colab 仍執行中，否則升級 CRITICAL；A7 🔴 CRITICAL 持續第3天 ~72h+（T-A7-001 Phase 2 + T-A7-002，上次 cf9f166 2026-03-31）；A6 T-A6-001 ⚠️ WATCH ~28h（正常範圍）。A5 T-A5-004 Phase 1 完成，A5 無其他新活動（T-A5-002 等待 Owner 回饋正常）。
+
+⚠️ A1巡查 2026-04-03 09:00：A3 🔴 CRITICAL 持續第6天 ~130h+ — T-A3-001 GTM方案B + T-A3-002 廣告成效，最後 commit 2aca2ae (~2026-03-29 22:10) 距今已逾 130h。連續6天無 A3 活動。Owner 需明確指示：(a) 確認外部阻塞原因（GTM權限待核准/廣告觀察期），或 (b) 指示暫停並在 Task Card 補記原因。
+⚠️ A1巡查 2026-04-03 09:00：A7 🔴 CRITICAL 持續第4天 ~90h+ — T-A7-001 Phase 2 + T-A7-002，最後 commit cf9f166 (2026-03-31) 距今已逾 90h。Owner 需確認 A7 是否有未 commit 進度，或決定暫停等待外部條件。
+⚠️ A1巡查 2026-04-03 09:00：A4 T-A4-001 ⚠️ WATCH 升級警示 — S11(2024) 最後 commit de2cf2e (2026-04-01 20:54) 距今約 36h，48h 閾值約在今日 20:54。若今日 20:54 前無新 A4 commit，自動升級 🔴 CRITICAL。Owner 需於今日晚間確認 Colab S11 仍執行中。
+✅ A1巡查 2026-04-03 09:00：A6 T-A6-001 活躍 — 0f5a961 (04-02深夜) 使用者需求寫入必讀位置 + A6 Telegram窗口技能書建立（skills/a6-telegram-window.md）。前次 WATCH 狀態解除，A6 正常活動中。
+✅ A1巡查 2026-04-03 09:00：LineWebhook 兩項關鍵修復落地 — 065c2f1 改用 doPost 直接寫入（根除 trigger queue 競爭條件）+ d5dc622 LINE message.id 去重邏輯（防重複寫入）。A0 583c956 建立 command-index Skill + clasp-deploy 整理到子目錄。
 
 ### 🔴 Owner Action Required
 

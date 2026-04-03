@@ -139,23 +139,23 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. 都不行 → 回報 Owner，不要硬幹
 
-【斷點 — 2026-04-02 晚間巡查更新】
+【斷點 — 2026-04-03 日常巡查更新】
 1. 系統版本：v6.0 / Phase 6 — 觀測性 + 業務閉環 + 策略循環（Phase 3.1 Dashboard 自動更新已就位 ef2c21b）
 2. EXP-S010 A0/A1 session 混淆已記錄；下次重開先確認 cwd + 貼 A1 recall prompt
 3. A2 T-A2A3-001 ✅ 子任務1-4全完成（子任務5等7-14天觀察期），TASK_QUEUE 已同步（d1c4635）
-4. A7 T-A7-001 Phase 2 + T-A7-002 🔴 CRITICAL：上次活動 2026-03-31 cf9f166，距今已逾 72h+，持續惡化第3天。Owner 需確認 A7 狀態或重啟 session。
-5. A4 T-A4-001 🔄：S5 ✅ DONE(8,559張)；S5.5 GPS ✅ 決策no_gps；S6(2023) ✅ 完成（進度待 A4 確認回填 Task Card）；S11(2024) 🔄 執行中（2600/12213，de2cf2e 2026-04-01 20:54，WATCH ~26h，距48h閾值~22h，明日09:00前必須確認 Colab 執行中）；API key已更換（舊key leaked→redact fe49f3e）
+4. A7 T-A7-001 Phase 2 + T-A7-002 🔴 CRITICAL：上次活動 2026-03-31 cf9f166，距今已逾 90h+，持續惡化第4天。Owner 需確認 A7 狀態或重啟 session。
+5. A4 T-A4-001 🔄：S5 ✅ DONE(8,559張)；S5.5 GPS ✅ 決策no_gps；S6(2023) ✅ 完成（進度待 A4 確認回填 Task Card）；S11(2024) 🔄 執行中（2600/12213，de2cf2e 2026-04-01 20:54，WATCH ~36h，48h閾值 = 今日 04-03 20:54，若無新 commit 則升級 CRITICAL）；API key已更換（舊key leaked→redact fe49f3e）
 6. A5 T-A5-002 🔄 進行中：服務費可選+長桌費+車馬費+DropdownHelper完成(dbcf9d4)；Task Card ✅ 已更新；T-A5-004 Phase 1 ✅ 04-02晚完整收尾（5e6d3b4，A0執行：Items照片16筆+URL修正+重新編號91格+items-management Skill建立）
-7. A3 T-A3-001 GTM方案B + T-A3-002 🔴 CRITICAL：最後 commit 2aca2ae 距今已逾 110h+（2026-03-29 起，第5天）。Owner 需確認 A3 外部阻塞原因（GTM權限/廣告週期）或指示暫停。
+7. A3 T-A3-001 GTM方案B + T-A3-002 🔴 CRITICAL：最後 commit 2aca2ae 距今已逾 130h+（2026-03-29 起，第6天）。Owner 需明確指示：確認外部阻塞原因，或指示暫停並在 Task Card 補記。
 8. 新治理功能（2026-03-29 落地）：SECTION 7 全域檢查器(faed6a9)；SECTION 8 權限治理+10 credential skills(6e80723)；SECTION 9 API三層備援+身份確認+CLAUDE.md指向器(0076a3a)
 9. 報價單歷史分析完成：data/quote-terms-reference.md + data/quote-items-unmatched.md（932份，30品項匹配，7品項未納入）；883份報價品項完整提取 22K+ items（54ef55f）；品項去重v2 de7837c（29,115→3,794唯一品項）
 10. Chrome Extension v4.8（private repo 改用 GitHub Contents API，b2f031c）
 11. GitHub Actions system-patrol.yml 已部署（每日 UTC 01:00 巡查）
-12. A6 T-A6-001 ✅ CRITICAL 解除：92513c8 Task Card 建立 (2026-04-01 19:07)，A6 恢復活動；LINE 業務報價助手 v1.1（d9fba1a+3a2df7b，三層資料模型+CONVERSATION_LOG+Sheet 3分頁+a6-rapid-quote-sop.md）；A6 面對業務不面對客戶；WATCH ~28h（正常）
+12. A6 T-A6-001 ✅ 活躍：0f5a961 (04-02深夜) 使用者需求寫入必讀位置 + Telegram窗口技能書建立（skills/a6-telegram-window.md）；LINE 業務報價助手 v1.1（d9fba1a+3a2df7b，三層資料模型+CONVERSATION_LOG+Sheet 3分頁+a6-rapid-quote-sop.md）；A6 面對業務不面對客戶
 13. A0/A1 角色修正（2026-03-31 26d18bd）：Telegram bot 歸屬 A1 非 A0；治理文件全面修正
 14. session-handoff 技能落地（1eec81f 2026-04-01 19:17）：context 滿時產出 handoff prompt，供重啟時接手
-15. LINE Bot Webhook 技能書新增（3e00f66 2026-04-01 14:50）；LINE credentials redact（067045f）
-16. A0 今日成果（04-02）：T-A5-004 Phase 1 完整收尾（5e6d3b4）；MasterData引用全面更新為MAPLAB_外燴系統_v0.1（d0466f3）；session 2 handoff（8353e75）；Apps Script 自主操作教訓補入 A0 recall（4069067）
+15. LINE Bot Webhook 技能書新增（3e00f66 2026-04-01 14:50）；LINE credentials redact（067045f）；兩項關鍵修復：065c2f1 doPost直接寫入（根除trigger queue競爭條件）+ d5dc622 message.id去重（防重複寫入）
+16. A0 最新成果（04-02/04-03）：T-A5-004 Phase 1 完整收尾（5e6d3b4）；583c956 command-index Skill建立 + clasp-deploy整理到子目錄；MasterData引用全面更新（d0466f3）；Apps Script 自主操作教訓補入 recall（4069067）
 
 【可認領任務】
 - T-A5-002 剩餘增強項目確認（A5，🔄 進行中，需更新 Task Card）

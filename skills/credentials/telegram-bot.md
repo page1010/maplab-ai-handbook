@@ -8,8 +8,13 @@
 
 | 變數 | 位置 | 說明 |
 |------|------|------|
-| `TELEGRAM_BOT_TOKEN` | `bot/.env`（本機）或環境變數 | Bot API token（由 @BotFather 發放） |
-| `OWNER_CHAT_ID` | `bot/.env.example`（明文可見）| `1077768811` |
+| `A6_BOT_TOKEN` | `bot_a6/.env`（本機，git 不追蹤） | A6 bot token（由 @BotFather 發放） |
+| `OWNER_USER_ID` | `bot_a6/.env` | `1077768811` |
+
+> **Token 更換流程（一行指令）：**
+> 1. Telegram → @BotFather → `/revoke` → 選 A6 bot → 取得新 token
+> 2. 執行：`bash scripts/update_a6_token.sh "新TOKEN"`
+> 3. 完成，bot 自動重啟
 
 ---
 

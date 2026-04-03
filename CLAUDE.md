@@ -71,3 +71,21 @@ bash scripts/checkpoint.sh "A1" "更新 CURRENT_STATUS + RECALL_PROMPTS"
 3. 狀態變了 → 必須更新 RECALL_PROMPTS + CURRENT_STATUS
 4. Session 結束前必須至少執行一次 checkpoint.sh
 5. 沒有例外，Mac mini 故障時下一個 Claude Code 要能從紀錄接手
+
+---
+
+## 命名規範（Owner 指定，2026-04-03）
+
+### Drive 圖片檔案命名
+格式：`{item_id}_{中文品名}.jpg`
+例如：`APP002_義大利嫩煎香料豚肉球.jpg`
+原則：一看就知道是什麼品項，不用代碼或縮寫
+
+### Drive 資料夾命名
+使用完整說明性名稱，不用 temp、代碼、縮寫
+例如：`MAPLAB_Items_Photos`（品項照片）、`MAPLAB_ASSETS`（活動素材）
+
+### Python 腳本命名
+格式：`動作_對象_用途.py`
+例如：`整理_品項圖片_pipeline.py`、`下載_Slides圖片_轉換上傳.py`
+原則：看檔名就知道這支腳本做什麼

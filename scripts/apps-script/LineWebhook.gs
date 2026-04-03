@@ -57,6 +57,9 @@ function doPost(e) {
       if (json.action === 'createQuote') {
         return handleQuoteRequest_(json);
       }
+      if (json.action === 'createSlides') {
+        return handleSlidesRequest_(json);
+      }
     } catch(err) {
       // 不是合法 JSON 或無 action，繼續走 LINE 流程
     }
@@ -149,4 +152,25 @@ function handleLineWebhook_(e) {
   }
 
   return okResponse;
+}
+
+// ─────────────────────────────────────────
+// createSlides doPost 入口
+// ─────────────────────────────────────────
+
+/**
+ * 處理 action: "createSlides" 的 POST 請求
+ * @param {Object} params
+ *   .spreadsheetId {string} 報價單 Spreadsheet ID（選填）
+ *   .clientName    {string} 客戶名稱（選填，用於檔名）
+ * @returns {TextOutput} JSON: { success, url } 或 { success, error }
+ */
+function handleSlidesRequest_(params) {
+  var result = createSlidesFromPost(
+    params.spreadsheetId || null,
+    params.clientName    || null
+  );
+  return ContentService
+    .createTextOutput(JSON.stringify(result))
+    .setMimeType(ContentService.MimeType.JSON);
 }

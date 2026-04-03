@@ -1,0 +1,403 @@
+/**
+ * createSlides.gs — T-A5-004: Slide 報價簡報自動生成
+ * 版本：v1.0 | 2026-04-03
+ *
+ * 主要流程：
+ * 1. 從 Items 表讀取品項清單（含 K 欄 image_url）
+ * 2. 複製 Slide 模板到 MAPLAB_Proposals 資料夾
+ * 3. 找到模板 Menu Showcase 頁（含 {{ITEM_NAME}} 佔位符）
+ * 4. 每 6 品項複製一頁，填入 {{ITEM_NAME}} 和 {{PHOTO}}
+ * 5. 有 image_url → 嘗試插入圖片；無 image_url → 清除 {{PHOTO}} 填入 [Photo]
+ * 6. 刪除原始模板 Menu Showcase 頁
+ * 7. 回傳新 Slide URL
+ *
+ * 依賴：
+ * - SPREADSHEET_ID 定義於 Code.gs（同 script project 共用 global scope）
+ * - Items 表 K 欄 header = image_url
+ */
+
+var SLIDES_TEMPLATE_ID  = '1rRxwPK9Nsgb7oqoRiUOCFqu3iGNuw_zRKW3zeHbdHBY';
+var PROPOSALS_FOLDER_ID = '1uGBCSTLFRVm5ZPh6v10G-tImf2QB5deu';
+var ITEMS_PER_SLIDE     = 6; // 每頁 6 品項（3x2 grid）
+
+// ─────────────────────────────────────────
+// 公開入口
+// ─────────────────────────────────────────
+
+/**
+ * 從目前 Active Spreadsheet 讀品項，產出 Slide，彈出結果對話框
+ * 掛到 onOpen() 選單：MAPLAB > 產出 Slide 提案
+ */
+function createSlidesFromSheet() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var url = createClientSlides_(ss, null);
+  SpreadsheetApp.getUi().alert('✅ Slide 簡報已產出！\n\n' + url);
+}
+
+/**
+ * 供 doPost / handleQuoteRequest_ 呼叫
+ * @param {string} spreadsheetId  報價單 Spreadsheet ID（選填，預設用主系統 SPREADSHEET_ID）
+ * @param {string} clientName     客戶名稱（用於檔名）
+ * @returns {{ success: boolean, url: string, error?: string }}
+ */
+function createSlidesFromPost(spreadsheetId, clientName) {
+  try {
+    var ssId = spreadsheetId || SPREADSHEET_ID;
+    var ss   = SpreadsheetApp.openById(ssId);
+    var url  = createClientSlides_(ss, clientName);
+    return { success: true, url: url };
+  } catch (err) {
+    Logger.log('createSlidesFromPost error: ' + err.message);
+    return { success: false, error: err.message };
+  }
+}
+
+// ─────────────────────────────────────────
+// 核心邏輯
+// ─────────────────────────────────────────
+
+/**
+ * 主函式：讀品項 → 複製模板 → 填入 → 回傳 URL
+ * @param {Spreadsheet} ss
+ * @param {string|null} clientName
+ * @returns {string} 新 Slide 的 URL
+ */
+function createClientSlides_(ss, clientName) {
+  // 1. 讀取品項
+  var items = readItemsForSlides_(ss);
+  if (!items || items.length === 0) {
+    throw new Error('Items 表沒有有效品項，無法產出 Slide。');
+  }
+  Logger.log('讀取品項數：' + items.length);
+
+  // 2. 複製 Slide 模板到 MAPLAB_Proposals
+  var templateFile = DriveApp.getFileById(SLIDES_TEMPLATE_ID);
+  var now          = new Date();
+  var dateStr      = Utilities.formatDate(now, 'Asia/Taipei', 'yyyyMMdd');
+  var fileName     = dateStr + '_' + (clientName || 'Proposal');
+  var destFolder   = DriveApp.getFolderById(PROPOSALS_FOLDER_ID);
+  var newFile      = templateFile.makeCopy(fileName, destFolder);
+  Logger.log('複製模板完成：' + newFile.getId());
+
+  var presentation = SlidesApp.openById(newFile.getId());
+
+  // 3. 找到 Menu Showcase 模板頁（第一個含 {{ITEM_NAME}} 的頁面）
+  var slides        = presentation.getSlides();
+  var templateSlide = findMenuTemplateSlide_(slides);
+  if (!templateSlide) {
+    // 找不到模板頁 → 刪除新建的檔案，丟出錯誤
+    newFile.setTrashed(true);
+    throw new Error('Slide 模板中找不到 {{ITEM_NAME}} 佔位符，請確認模板結構。');
+  }
+
+  // 4. 分批（每 ITEMS_PER_SLIDE 品項一頁）
+  var chunks = chunkArray_(items, ITEMS_PER_SLIDE);
+  Logger.log('共 ' + chunks.length + ' 頁 Menu Showcase');
+
+  // 5. 複製模板頁 N 份（duplicate() 會加到最後）
+  var insertedSlides = [];
+  for (var i = 0; i < chunks.length; i++) {
+    var dup = templateSlide.duplicate();
+    insertedSlides.push(dup);
+  }
+
+  // 6. 移到正確位置（templateSlide 後面，保持順序）
+  //    倒序 insert → 每次都插到 templateSlide 正後方 → 最終順序正確
+  for (var i = insertedSlides.length - 1; i >= 0; i--) {
+    var currentSlides = presentation.getSlides();
+    var tIdx = currentSlides.indexOf(templateSlide);
+    presentation.moveSlide(insertedSlides[i], tIdx + 1);
+  }
+
+  // 7. 填入品項資料（名稱 + 照片）
+  for (var i = 0; i < chunks.length; i++) {
+    fillMenuSlide_(insertedSlides[i], chunks[i]);
+  }
+
+  // 8. 刪除原始模板頁（佔位符頁）
+  templateSlide.remove();
+
+  // 9. 存檔
+  presentation.saveAndClose();
+
+  return 'https://docs.google.com/presentation/d/' + newFile.getId() + '/edit';
+}
+
+// ─────────────────────────────────────────
+// 品項讀取
+// ─────────────────────────────────────────
+
+/**
+ * 從 Spreadsheet 的 Items 分頁讀取品項清單
+ * 欄位假設：B 欄 = 中文品名，K 欄 (index 10) = image_url
+ * 跳過空白行與非 URL 的 K 欄值
+ * @param {Spreadsheet} ss
+ * @returns {Array<{name: string, imageUrl: string}>}
+ */
+function readItemsForSlides_(ss) {
+  var sheet = ss.getSheetByName('Items');
+  if (!sheet) {
+    throw new Error('找不到 Items 分頁。');
+  }
+
+  var data    = sheet.getDataRange().getValues();
+  if (data.length < 2) return [];
+
+  var headers     = data[0];
+
+  // 找欄位 index
+  var nameIdx  = findColIdx_(headers, ['item_name_zh', '品名', '中文品名', '名稱', 'name']);
+  var imageIdx = findColIdx_(headers, ['image_url', 'image', '圖片', 'photo_url']);
+
+  // K 欄 fallback（index 10）
+  if (nameIdx  === -1) nameIdx  = 1;  // B欄
+  if (imageIdx === -1) imageIdx = 10; // K欄
+
+  var items = [];
+  for (var r = 1; r < data.length; r++) {
+    var row  = data[r];
+    var name = (row[nameIdx] || '').toString().trim();
+    if (!name) continue; // 跳過空行
+
+    var rawUrl  = (imageIdx < row.length) ? (row[imageIdx] || '') : '';
+    var imgUrl  = cleanImageUrl_(rawUrl.toString().trim());
+
+    items.push({ name: name, imageUrl: imgUrl });
+  }
+
+  return items;
+}
+
+/**
+ * 清理 image_url：確保是合法 http(s) URL，否則回傳空字串
+ * 過濾活動紀錄、數字、日期等非 URL 值
+ */
+function cleanImageUrl_(val) {
+  if (!val) return '';
+  if (val.indexOf('http://') !== 0 && val.indexOf('https://') !== 0) return '';
+  return val;
+}
+
+// ─────────────────────────────────────────
+// Slide 操作
+// ─────────────────────────────────────────
+
+/**
+ * 在所有 slides 中找到含有 {{ITEM_NAME}} 文字的第一頁（Menu Showcase 模板頁）
+ * @param {Slide[]} slides
+ * @returns {Slide|null}
+ */
+function findMenuTemplateSlide_(slides) {
+  for (var i = 0; i < slides.length; i++) {
+    var slide  = slides[i];
+    var shapes = slide.getShapes();
+    for (var j = 0; j < shapes.length; j++) {
+      try {
+        var txt = shapes[j].getText().asString();
+        if (txt.indexOf('{{ITEM_NAME}}') !== -1) {
+          return slide;
+        }
+      } catch (e) {
+        // 部分 shape 沒有 text，ignore
+      }
+    }
+  }
+  return null;
+}
+
+/**
+ * 填入單頁 Menu Showcase 的品項資料
+ * @param {Slide} slide   已複製的 Menu 模板頁
+ * @param {Array} items   最多 ITEMS_PER_SLIDE 個 {name, imageUrl}
+ */
+function fillMenuSlide_(slide, items) {
+  var shapes = slide.getShapes();
+
+  // 收集 {{ITEM_NAME}} 和 {{PHOTO}} 佔位符，按位置排序（上→下，左→右）
+  var nameShapes  = [];
+  var photoShapes = [];
+
+  for (var i = 0; i < shapes.length; i++) {
+    var shape = shapes[i];
+    var txt;
+    try {
+      txt = shape.getText().asString();
+    } catch (e) {
+      continue;
+    }
+    if (txt.indexOf('{{ITEM_NAME}}') !== -1) {
+      nameShapes.push(shape);
+    } else if (txt.indexOf('{{PHOTO}}') !== -1) {
+      photoShapes.push(shape);
+    }
+  }
+
+  // 位置排序（上→下，同排左→右）
+  nameShapes.sort(sortByPosition_);
+  photoShapes.sort(sortByPosition_);
+
+  // 填入品項名稱
+  for (var i = 0; i < nameShapes.length; i++) {
+    if (i < items.length) {
+      nameShapes[i].getText().setText(items[i].name);
+    } else {
+      nameShapes[i].getText().setText(''); // 超出品項數 → 清空
+    }
+  }
+
+  // 處理照片佔位符
+  for (var i = 0; i < photoShapes.length; i++) {
+    var photoShape = photoShapes[i];
+    if (i >= items.length) {
+      // 超出品項數 → 清空
+      photoShape.getText().setText('');
+      continue;
+    }
+
+    var imgUrl = items[i].imageUrl;
+    if (imgUrl) {
+      // 有 image_url → 嘗試插入圖片
+      var inserted = tryInsertImage_(slide, photoShape, imgUrl);
+      if (inserted) {
+        photoShape.remove(); // 插入成功 → 移除文字佔位符
+      } else {
+        photoShape.getText().setText('[Photo]'); // 插入失敗 → 顯示提示文字
+        Logger.log('圖片插入失敗，改用[Photo]文字，品項：' + items[i].name + '，URL：' + imgUrl);
+      }
+    } else {
+      // 無 image_url → 不放圖片，清除佔位符
+      photoShape.getText().setText('[Photo]');
+    }
+  }
+}
+
+/**
+ * 嘗試在 Slide 中，於 placeholder shape 相同位置/大小插入圖片
+ * @param {Slide}  slide
+ * @param {Shape}  placeholder  {{PHOTO}} 文字框
+ * @param {string} imageUrl
+ * @returns {boolean} 是否成功插入
+ */
+function tryInsertImage_(slide, placeholder, imageUrl) {
+  try {
+    var left   = placeholder.getLeft();
+    var top    = placeholder.getTop();
+    var width  = placeholder.getWidth();
+    var height = placeholder.getHeight();
+
+    var blob = fetchImageBlob_(imageUrl);
+    if (!blob) return false;
+
+    var img = slide.insertImage(blob);
+    img.setLeft(left);
+    img.setTop(top);
+    img.setWidth(width);
+    img.setHeight(height);
+    return true;
+  } catch (e) {
+    Logger.log('tryInsertImage_ 失敗 url=' + imageUrl + ' err=' + e.message);
+    return false;
+  }
+}
+
+/**
+ * 取得圖片 Blob
+ * 支援：Google Drive URL / WordPress URL / Google Photos URL
+ * @param {string} url
+ * @returns {Blob|null}
+ */
+function fetchImageBlob_(url) {
+  try {
+    // Google Drive 直連 → 用 DriveApp 取 blob（最穩定）
+    if (url.indexOf('drive.google.com') !== -1) {
+      var fileId = extractDriveFileId_(url);
+      if (fileId) {
+        var file = DriveApp.getFileById(fileId);
+        return file.getBlob();
+      }
+    }
+
+    // 一般 URL（WordPress / Google Photos）→ UrlFetchApp fetch
+    var response = UrlFetchApp.fetch(url, {
+      muteHttpExceptions: true,
+      followRedirects: true
+    });
+    if (response.getResponseCode() !== 200) {
+      Logger.log('fetchImageBlob_ HTTP ' + response.getResponseCode() + ' url=' + url);
+      return null;
+    }
+    var blob        = response.getBlob();
+    var contentType = blob.getContentType() || '';
+    if (contentType.indexOf('image') !== -1) {
+      return blob;
+    }
+    // avif 有時 contentType 不含 image，嘗試強制設定
+    if (url.indexOf('.avif') !== -1 || url.indexOf('.webp') !== -1) {
+      blob.setContentType('image/webp');
+      return blob;
+    }
+    Logger.log('fetchImageBlob_ contentType 不是 image: ' + contentType + ' url=' + url);
+    return null;
+  } catch (e) {
+    Logger.log('fetchImageBlob_ 失敗: ' + e.message + ' url=' + url);
+    return null;
+  }
+}
+
+/**
+ * 從 Google Drive URL 提取 file ID
+ * 支援格式：/file/d/{id}/ | open?id={id} | uc?id={id} | /d/{id}/
+ */
+function extractDriveFileId_(url) {
+  var patterns = [
+    /\/file\/d\/([a-zA-Z0-9_-]+)/,
+    /[?&]id=([a-zA-Z0-9_-]+)/,
+    /\/d\/([a-zA-Z0-9_-]+)\//
+  ];
+  for (var i = 0; i < patterns.length; i++) {
+    var match = url.match(patterns[i]);
+    if (match) return match[1];
+  }
+  return null;
+}
+
+// ─────────────────────────────────────────
+// 工具函式
+// ─────────────────────────────────────────
+
+/**
+ * Shape 排序依據：上→下，同排左→右（容忍 10pt 誤差）
+ */
+function sortByPosition_(a, b) {
+  var aTop  = a.getTop();
+  var bTop  = b.getTop();
+  if (Math.abs(aTop - bTop) < 10) {
+    return a.getLeft() - b.getLeft();
+  }
+  return aTop - bTop;
+}
+
+/**
+ * 陣列分批
+ */
+function chunkArray_(arr, size) {
+  var chunks = [];
+  for (var i = 0; i < arr.length; i += size) {
+    chunks.push(arr.slice(i, i + size));
+  }
+  return chunks;
+}
+
+/**
+ * 在 headers 中找到候選欄位名稱的第一個匹配 index（不區分大小寫）
+ */
+function findColIdx_(headers, candidates) {
+  for (var i = 0; i < candidates.length; i++) {
+    for (var j = 0; j < headers.length; j++) {
+      if ((headers[j] || '').toString().toLowerCase() === candidates[i].toLowerCase()) {
+        return j;
+      }
+    }
+  }
+  return -1;
+}

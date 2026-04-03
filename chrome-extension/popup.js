@@ -1,4 +1,4 @@
-// MAPLAB Agent Commander v5.0 — popup.js
+// MAPLAB Agent Commander v5.1 — popup.js
 // 角色選擇 + 專屬召喚 prompt（精簡版，無 commit history 面板）
 const DEFAULT_BASE = 'https://raw.githubusercontent.com/page1010/maplab-ai-handbook/main';
 const GITHUB_API   = 'https://api.github.com/repos/page1010/maplab-ai-handbook';
@@ -259,6 +259,11 @@ function updatePromptDisplay() {
       }
     }
   }
+}
+
+// === Reload Extension ===
+function reloadExtension() {
+  chrome.runtime.reload();
 }
 
 // === Copy ===

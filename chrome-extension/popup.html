@@ -41,6 +41,9 @@ body { width:400px; background:#0d0f14; color:#e8ecf4; font-family:'JetBrains Mo
 .btn-inject:hover { background:#2a4a7a; color:#a0c8ff; }
 .btn-refresh { width:100%; padding:8px; background:transparent; border:1px solid #1e2535; border-radius:4px; color:#7a8a9d; font-family:inherit; font-size:11px; cursor:pointer; }
 .btn-refresh:hover { border-color:#e8a838; color:#e8a838; }
+.btn-reload { flex:1; padding:8px; background:transparent; border:1px solid #2a3a1a; border-radius:4px; color:#5a8a4a; font-family:inherit; font-size:11px; cursor:pointer; }
+.btn-reload:hover { border-color:#38e87a; color:#38e87a; }
+.btn-row { display:flex; gap:8px; }
 hr { border:none; border-top:1px solid #1a2030; }
 .field label { display:block; font-size:10px; color:#7a8a9d; text-transform:uppercase; margin-bottom:5px; }
 .field input { width:100%; padding:8px 10px; background:#141820; border:1px solid #1e2535; border-radius:5px; color:#e8ecf4; font-family:inherit; font-size:11px; outline:none; }
@@ -57,7 +60,7 @@ hr { border:none; border-top:1px solid #1a2030; }
   <div class="logo">⬡ MAPLAB COMMANDER</div>
   <div class="header-right">
     <span class="overdue-badge" id="overdueCount"></span>
-    <span class="version">v5.0</span>
+    <span class="version">v5.1</span>
   </div>
 </div>
 <div class="body">
@@ -104,7 +107,10 @@ hr { border:none; border-top:1px solid #1a2030; }
     <label>GitHub Token（存本地，不上傳）</label>
     <input type="password" id="githubToken" placeholder="ghp_xxxxxxxxxxxx" />
   </div>
-  <button class="btn-refresh" onclick="loadAll()">↻ 重新抓取</button>
+  <div class="btn-row">
+    <button class="btn-refresh" style="flex:1" onclick="loadAll()">↻ 重新抓取</button>
+    <button class="btn-reload" onclick="reloadExtension()">⟳ 重載 Extension</button>
+  </div>
   <div class="save-status" id="saveStatus"></div>
   <div class="links">
     <a href="https://github.com/page1010/maplab-ai-handbook" target="_blank">📂 Repo</a>

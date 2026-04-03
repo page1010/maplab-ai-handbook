@@ -1,5 +1,11 @@
 # Chrome Extension Changelog
 
+## v5.1 — 2026-04-03
+變更者：A1 Claude Code
+- **自我重載按鈕**：popup 右下加「⟳ 重載 Extension」，呼叫 `chrome.runtime.reload()`，更新後不需去 chrome://extensions/ 手動 reload
+- **配套技能書**：`skills/extension-update` — 兩步更新流程（git pull + 點按鈕）
+- **配套腳本**：`scripts/update_extension.sh` — 自動 pull + 提示下一步
+
 ## v5.0 — 2026-04-03
 變更者：A1 Claude Code
 - **注入按鈕（Task A）**：新增「⚡ 注入到 Claude tab」按鈕，透過 `chrome.scripting.executeScript` 直接填入 claude.ai 輸入框（ProseMirror contenteditable），不需手動貼上

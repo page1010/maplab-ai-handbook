@@ -1,0 +1,56 @@
+# Extension 更新技能書
+
+版本：v1.0 | 建立：2026-04-03 | 維護者：A1
+
+---
+
+## 目的
+
+讓 Extension 更新從「超多步驟超煩」變成兩個動作搞定。
+
+---
+
+## 更新流程（每次 A1 推新版 Extension 後）
+
+### Step 1 — 拉最新程式碼
+
+在 Terminal 執行：
+
+```bash
+bash scripts/update_extension.sh
+```
+
+這會自動 `git pull origin main`，把 chrome-extension/ 下的所有檔案更新到最新版。
+
+### Step 2 — Extension 自我重載
+
+開 Extension popup → 點右下角「**⟳ 重載 Extension**」按鈕。
+
+Extension 會呼叫 `chrome.runtime.reload()`，從磁碟重新載入最新程式碼。
+
+完成。不需要去 `chrome://extensions/`。
+
+---
+
+## 版本確認
+
+Extension popup 右上角顯示版本號（例如 `v5.1`），對比 CHANGELOG.md 確認是否最新。
+
+---
+
+## 初次安裝（全新電腦）
+
+1. `git clone https://github.com/page1010/maplab-ai-handbook.git`
+2. 開 `chrome://extensions/` → 啟用開發人員模式 → 「載入未封裝項目」
+3. 選 `maplab-ai-handbook/chrome-extension/` 資料夾
+4. 之後更新只需上面兩步，不需要重新安裝
+
+---
+
+## 常見問題
+
+| 問題 | 解法 |
+|------|------|
+| 點「⟳ 重載」沒反應 | popup 關掉重開，再點 |
+| 版本號還是舊的 | 確認 `git pull` 有成功，檢查網路 |
+| Extension 消失 | 去 chrome://extensions/ 重新「載入未封裝項目」（只有初次裝才需要） |

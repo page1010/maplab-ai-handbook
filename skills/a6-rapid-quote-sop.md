@@ -384,5 +384,62 @@ A6 不自己算成本，不修改 Items 主表，不直接發給客戶。
 
 ---
 
+---
+
+## SECTION 8 — GAS Web App doPost 觸發報價（HTTP 方式）
+
+> **A6 可以不透過 MCP Sheets 手動填表，改用 HTTP POST 直接呼叫 GAS Web App 自動產出報價單。**
+
+### 8.1 Web App 資訊
+
+- **URL**：`https://script.google.com/macros/s/AKfycbyMvc3-gl1sI_9prPjzp0zg0N353f9fL5jzR-9wm_xYPZ8A8IsTJSoTjbmDefYFI0o/exec`
+- **部署版本**：v12（2026-04-03 上線）
+- **存取權**：所有人（不需要 OAuth token）
+
+### 8.2 curl 呼叫方式
+
+```bash
+curl -L \
+  -H "Content-Type: application/json" \
+  -d '{"action":"createQuote","clientName":"客戶名","eventType":"私廚餐會","eventDate":"2026-04-10","pax":"8","phone":"0912345678"}' \
+  "https://script.google.com/macros/s/AKfycbyMvc3-gl1sI_9prPjzp0zg0N353f9fL5jzR-9wm_xYPZ8A8IsTJSoTjbmDefYFI0o/exec"
+```
+
+**參數說明：**
+| 欄位 | 說明 | 範例 |
+|------|------|------|
+| action | 固定填 `createQuote` | `"createQuote"` |
+| clientName | 客戶姓名 | `"王小明"` |
+| eventType | 活動類型 | `"週歲派對"` / `"企業開幕"` |
+| eventDate | 活動日期（YYYY-MM-DD） | `"2026-04-10"` |
+| pax | 人數（字串） | `"30"` |
+| phone | 聯絡電話 | `"0912345678"` |
+
+**回傳格式：**
+```json
+{"success": true, "quoteId": "Q20260403222140", "sheetUrl": "https://docs.google.com/..."}
+```
+
+### 8.3 踩坑注意
+
+⚠️ **不要加 `-X POST`**。加了之後，curl 302 redirect 時會把 POST 方法帶到 `/macros/echo`，GAS 返回 405 Method Not Allowed。
+只用 `-d` 帶 payload，curl 自動設為 POST，302 後轉 GET 正常取回結果。
+
+### 8.4 何時用 HTTP vs MCP Sheets
+
+| 場景 | 建議方式 |
+|------|---------|
+| A6 自動化、無 MCP 可用 | **HTTP doPost**（本 SECTION） |
+| 需要手動調整品項/費用 | MCP Sheets（SECTION 7） |
+| A1 terminal 觸發 | **HTTP doPost** |
+
+---
+
+| 版本 | 日期 | 說明 | 更新者 |
+|------|------|------|--------|
+| v1.2 | 2026-04-03 | 新增 SECTION 8：GAS doPost HTTP 觸發方式 + curl 用法 + 踩坑 | A0 |
+
+---
+
 *本技能書由 A6 在執行報價任務時讀取。品項組合邏輯基於 932 份歷史報價統計。*
 *條款來源：data/quote-terms-reference.md | 品項來源：Items 主表 E 欄 default_cost*

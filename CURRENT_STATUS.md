@@ -52,7 +52,7 @@
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2 | ✅ 子任務1-4完成（子任務5等7-14天）| handoff/tasks/T-A2A3-001.md + T-A2A3-001-B.md |
 | T-A3-001 | GTM LINE 按鈕追蹤修復（方案 B 已確認） | A3 | 🔄 進行中（GTM方案B規格已記錄 2aca2ae，待技術實作+測試）| — |
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | 🔄 確認中（已上線，受眾已記錄；廣告成效報告 v1.0 + 嘉義地區建議已產出 69b50ec） | handoff/tasks/T-A3-002.md |
-| T-A6-001 | LINE 業務報價助手系統 | A6 | 🔄 進行中（v1.1 架構修正：三層資料/CONVERSATION_LOG/Sheet 3個新分頁，d9fba1a+3a2df7b） | projects/line-quote-assistant.md |
+| T-A6-001 | LINE 業務報價助手系統 | A6 | 🔄 進行中（v1.1 架構修正：三層資料/CONVERSATION_LOG/Sheet 3個新分頁，d9fba1a+3a2df7b）；**GAS doPost Web App v12 已上線（2026-04-03），A6 可用 curl POST 觸發報價，舊部署 v1 封存/v11 待封存** | projects/line-quote-assistant.md |
 | T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | 🔄 Phase 2 進展中（skills v2.0 8種對話模式 68df5d7 + reply-templates v1.0 d165d7d）| handoff/tasks/T-A7-001.md |
 | T-A7-002 | 80/20 優先任務清單 + 執行路線圖 | A7 | 🔄 任務6+10完成（cf9f166），部分執行中 | — |
 | T-A0-001 | Telegram bot 指令模式上線 | A1 | ✅ 完成（bot.py 為 A1 的 Telegram 前端，非 A0）| — |
@@ -155,7 +155,7 @@
 | Extension v4.8 重裝 | Chrome 重新安裝 Extension v4.8（private repo 已改用 GitHub Contents API）| 中 |
 | A0 User Preferences 貼入 | 在 A0 bot 貼入 User Preferences 設定（個性化回覆偏好）| 中 |
 | 品項缺圖補充（29筆）| A0 f13224d 確認：29 筆品項在 WordPress 無法找到場景照，需 Owner 手動提供或拍攝補充至 Drive | 低 |
-| **⚠️ Token 輪換（安全修復）** | A1 安全修復後，需輪換：(1) Telegram bot token（A1 bot + A6 bot）(2) Claude API token。舊 token 已從 git history 清除，但仍需撤銷作廢。 | 高 |
+| **⚠️ Token 輪換（安全修復）** | A1 安全修復後，需輪換：(1) Telegram bot token — **A1 bot 已換新（A1 4/3 晚間確認）✅**，A6 bot 待確認 (2) Claude API token — 狀態待確認。舊 token 已從 git history 清除，但仍需撤銷作廢。 | 高 |
 | A4 Colab S11 確認 | S11(2024) 最後 commit d909061 (2026-04-03 10:40)，48h 閾值 = 04-05 10:40。需在 04-05 前確認 Colab 仍執行中（進度 4,350/12,213=35.6%）| 中 |
 
 ## 最新決策

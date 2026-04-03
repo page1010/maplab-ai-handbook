@@ -59,12 +59,33 @@ function doPost(e) {
 
 需要 Owner 提供 Apps Script 原始碼（試算表 → 擴充功能 → Apps Script）。
 
+## Web App 資訊（v12，已上線）
+
+- **URL**：`https://script.google.com/macros/s/AKfycbyMvc3-gl1sI_9prPjzp0zg0N353f9fL5jzR-9wm_xYPZ8A8IsTJSoTjbmDefYFI0o/exec`
+- **部署版本**：v12（Execute as: Me, Access: Anyone）
+- **舊部署**：v1 已封存，v11 待封存
+
+## curl 呼叫範例
+
+```bash
+curl -L \
+  -H "Content-Type: application/json" \
+  -d '{"action":"createQuote","clientName":"客戶名","eventType":"私廚餐會","eventDate":"2026-04-10","pax":"8","phone":"0912345678"}' \
+  "https://script.google.com/macros/s/AKfycbyMvc3-gl1sI_9prPjzp0zg0N353f9fL5jzR-9wm_xYPZ8A8IsTJSoTjbmDefYFI0o/exec"
+```
+
+⚠️ **重要踩坑**：不要加 `-X POST`。curl 加了 `-X POST` 後，302 redirect 會打到 `/macros/echo` 並返回 405 Method Not Allowed。只用 `-d` 讓 curl 自動設為 POST，302 後自動轉 GET 取回結果。
+
+## 測試結果
+
+✅ 成功（報價單 ID：Q20260403222140）
+
 ## 狀態
 
-- [ ] 取得 Apps Script 原始碼
-- [ ] 撰寫 doPost() 版本
-- [ ] Owner 部署 Web App
-- [ ] 測試 curl 觸發
-- [ ] 寫進 A6 技能書
+- [x] 取得 Apps Script 原始碼
+- [x] 撰寫 doPost() 版本
+- [x] Owner 部署 Web App
+- [x] 測試 curl 觸發
+- [x] 寫進 A6 技能書（skills/a6-rapid-quote-sop.md SECTION 8）
 
-最後更新：2026-04-03 A1
+最後更新：2026-04-03 A0（doPost v12 上線完成）

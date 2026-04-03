@@ -441,5 +441,54 @@ curl -L \
 
 ---
 
+---
+
+## SECTION 9：Slide 報價簡報生成
+
+### 用途
+A6 透過 HTTP POST 觸發 Slide 報價簡報自動生成。
+
+### curl 呼叫方式
+```bash
+curl -L \
+  -H "Content-Type: application/json" \
+  -d '{"action":"createSlides","spreadsheetId":"<報價單的Spreadsheet ID>","clientName":"客戶名"}' \
+  "https://script.google.com/macros/s/AKfycbyMvc3-gl1sI_9prPjzp0zg0N353f9fL5jzR-9wm_xYPZ8A8IsTJSoTjbmDefYFI0o/exec"
+```
+
+### 參數說明
+| 參數 | 必填 | 說明 |
+|------|------|------|
+| action | ✅ | 固定 `"createSlides"` |
+| spreadsheetId | ✅ | 報價單的 Spreadsheet ID（從 createQuote 回傳的 url 解析） |
+| clientName | ✅ | 客戶名稱（用於 Slide 檔名） |
+
+### 回傳格式
+```json
+{
+  "success": true,
+  "slideUrl": "https://docs.google.com/presentation/d/..."
+}
+```
+
+### 完整流程（A6 自動化）
+1. 客戶進件 → A6 POST `action:"createQuote"` → 拿到報價單 URL + spreadsheetId
+2. A6 POST `action:"createSlides"` → 拿到 Slide URL
+3. 兩個 URL 都回覆給客戶或 Owner
+
+### 注意
+- 無 K 欄 image_url 的品項不會放圖片
+- Slide 模板：MAPLAB Kitchen - Catering Proposal v2 (ID: `1rRxwPK9Nsgb7oqoRiUOCFqu3iGNuw_zRKW3zeHbdHBY`)
+- 產出資料夾：MAPLAB_Proposals (ID: `1uGBCSTLFRVm5ZPh6v10G-tImf2QB5deu`)
+- ⚠️ 同樣不加 `-X POST`，避免 302 redirect 帶 POST 到 `/macros/echo` 返回 405
+
+---
+
+| 版本 | 日期 | 說明 | 更新者 |
+|------|------|------|--------|
+| v1.3 | 2026-04-03 | 新增 SECTION 9：Slide 報價簡報生成 | A1 |
+
+---
+
 *本技能書由 A6 在執行報價任務時讀取。品項組合邏輯基於 932 份歷史報價統計。*
 *條款來源：data/quote-terms-reference.md | 品項來源：Items 主表 E 欄 default_cost*

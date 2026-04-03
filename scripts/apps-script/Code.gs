@@ -299,13 +299,166 @@ function writeToIntake_(ss, caseId, formData, sheetUrl, now) {
     formData.location   || '',             // I: location
     formData.pax        || '',             // J: pax
     sheetUrl,                              // K: sheet_url（獨立 Spreadsheet URL）
-    '',                                    // L: （預留）
-    '',                                    // M: （預留）
+    '報價中',                              // L: quote_status（初始值）
+    '未匯',                                // M: payment_status（初始值）
     '',                                    // N: （預留）
     ''                                     // O: notes
   ];
 
   intakeSheet.appendRow(row);
+}
+
+// ─────────────────────────────────────────
+// T-A5-005：報價狀態同步 + Dashboard
+// ─────────────────────────────────────────
+
+/**
+ * 確保 SALES_INTAKE L1/M1 有欄標題
+ */
+function ensureIntakeHeaders_() {
+  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  var sheet = ss.getSheetByName(INTAKE_SHEET_NAME);
+  if (!sheet) return;
+  if (!sheet.getRange('L1').getValue()) sheet.getRange('L1').setValue('quote_status');
+  if (!sheet.getRange('M1').getValue()) sheet.getRange('M1').setValue('payment_status');
+}
+
+/**
+ * 掃描 SALES_INTAKE K 欄 → 打開每份報價單 → 讀 N5/N7 → 寫回 L/M
+ * 由 time-driven trigger 每 30 分鐘自動執行
+ */
+function syncQuoteStatus_() {
+  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  var sheet = ss.getSheetByName(INTAKE_SHEET_NAME);
+  if (!sheet) return;
+
+  ensureIntakeHeaders_();
+
+  var lastRow = sheet.getLastRow();
+  if (lastRow < 2) return;
+
+  var kValues = sheet.getRange(2, 11, lastRow - 1, 1).getValues(); // K 欄 URLs
+  var lmValues = sheet.getRange(2, 12, lastRow - 1, 2).getValues(); // 現有 L/M 欄
+  var updates = [];
+
+  for (var i = 0; i < kValues.length; i++) {
+    var url = kValues[i][0];
+    if (!url || typeof url !== 'string' || url.indexOf('https://') !== 0) {
+      updates.push([lmValues[i][0], lmValues[i][1]]); // 保留現有值
+      continue;
+    }
+
+    try {
+      var quoteId = extractSpreadsheetId_(url);
+      var quoteSs = SpreadsheetApp.openById(quoteId);
+      var quoteSheet = quoteSs.getSheetByName('報價單') || quoteSs.getSheets()[0];
+      var quoteStatus  = quoteSheet.getRange('N5').getValue();
+      var paymentStatus = quoteSheet.getRange('N7').getValue();
+      updates.push([quoteStatus || '', paymentStatus || '']);
+    } catch (e) {
+      Logger.log('無法同步列 ' + (i + 2) + '：' + e.message);
+      updates.push([lmValues[i][0], lmValues[i][1]]); // 保留現有值
+    }
+  }
+
+  if (updates.length > 0) {
+    sheet.getRange(2, 12, updates.length, 2).setValues(updates);
+  }
+
+  Logger.log('syncQuoteStatus_ 完成，共掃描 ' + updates.length + ' 筆');
+}
+
+/**
+ * 從 Google Sheets URL 擷取 Spreadsheet ID
+ * @param {string} url
+ * @returns {string}
+ */
+function extractSpreadsheetId_(url) {
+  var match = url.match(/\/spreadsheets\/d\/([a-zA-Z0-9_-]+)/);
+  if (!match) throw new Error('無法解析 Spreadsheet URL: ' + url);
+  return match[1];
+}
+
+/**
+ * 設定每 30 分鐘自動執行 syncQuoteStatus_ 的 time-driven trigger
+ * 手動執行一次即可，重複執行會自動跳過
+ */
+function setupSyncTrigger() {
+  ensureIntakeHeaders_();
+
+  var triggers = ScriptApp.getProjectTriggers();
+  for (var i = 0; i < triggers.length; i++) {
+    if (triggers[i].getHandlerFunction() === 'syncQuoteStatus_') {
+      Logger.log('syncQuoteStatus_ trigger 已存在，跳過');
+      return;
+    }
+  }
+
+  ScriptApp.newTrigger('syncQuoteStatus_')
+    .timeBased()
+    .everyMinutes(30)
+    .create();
+  Logger.log('已建立 syncQuoteStatus_ 每 30 分鐘 trigger');
+}
+
+/**
+ * 刪除 syncQuoteStatus_ trigger（停用時使用）
+ */
+function removeSyncTrigger() {
+  var triggers = ScriptApp.getProjectTriggers();
+  for (var i = 0; i < triggers.length; i++) {
+    if (triggers[i].getHandlerFunction() === 'syncQuoteStatus_') {
+      ScriptApp.deleteTrigger(triggers[i]);
+      Logger.log('已刪除 syncQuoteStatus_ trigger');
+    }
+  }
+}
+
+/**
+ * 在主系統 Sheet 建立/更新 Dashboard 分頁
+ * 用 COUNTIF 公式統計 SALES_INTAKE 的報價狀態與匯款狀態
+ * 手動執行一次即可，之後公式會自動更新
+ */
+function setupDashboard() {
+  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+
+  // 取得或建立 Dashboard 分頁
+  var dash = ss.getSheetByName('Dashboard');
+  if (!dash) {
+    dash = ss.insertSheet('Dashboard');
+  }
+
+  dash.clearContents();
+
+  // 標題
+  dash.getRange('A1').setValue('MAPLAB 報價 Dashboard');
+  dash.getRange('A1').setFontWeight('bold').setFontSize(14);
+  dash.getRange('A3').setValue('最後更新');
+  dash.getRange('B3').setFormula('=NOW()');
+
+  // 報價狀態區
+  dash.getRange('A5').setValue('報價狀態').setFontWeight('bold');
+  dash.getRange('A6').setValue('報價中');
+  dash.getRange('A7').setValue('成交');
+  dash.getRange('A8').setValue('未成交結案');
+  dash.getRange('B6').setFormula('=COUNTIF(SALES_INTAKE!L:L,"報價中")');
+  dash.getRange('B7').setFormula('=COUNTIF(SALES_INTAKE!L:L,"成交")');
+  dash.getRange('B8').setFormula('=COUNTIF(SALES_INTAKE!L:L,"未成交結案")');
+
+  // 匯款狀態區
+  dash.getRange('A10').setValue('匯款狀態').setFontWeight('bold');
+  dash.getRange('A11').setValue('未匯');
+  dash.getRange('A12').setValue('已收訂金');
+  dash.getRange('A13').setValue('已收全額');
+  dash.getRange('B11').setFormula('=COUNTIF(SALES_INTAKE!M:M,"未匯")');
+  dash.getRange('B12').setFormula('=COUNTIF(SALES_INTAKE!M:M,"已收訂金")');
+  dash.getRange('B13').setFormula('=COUNTIF(SALES_INTAKE!M:M,"已收全額")');
+
+  // 總計
+  dash.getRange('A15').setValue('總報價筆數').setFontWeight('bold');
+  dash.getRange('B15').setFormula('=COUNTA(SALES_INTAKE!A:A)-1');
+
+  Logger.log('Dashboard 分頁已建立/更新');
 }
 
 // ─────────────────────────────────────────

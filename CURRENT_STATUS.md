@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-04-03 16:20（A1 午後巡查）｜ 更新者：A1 — A4 WATCH ✅ 解除（d909061 10:40）、A1 bot_a6 全部署✅（launchd+security fix）、A0活躍✅（圖片pipeline62筆+WP缺圖）、A6 bot運行✅、A3 CRITICAL 第7天140h+、A7 CRITICAL 100h+
+最後更新：2026-04-03 晚間（A0 Session Handoff）｜ 更新者：A0 — Items圖片整理完成（45→99筆有圖）、系統治理+安全修復落地、Session Handoff 存檔
 
 ---
 
@@ -132,6 +132,19 @@
 ⚠️ A1巡查 2026-04-03 16:20 午後：A7 🔴 CRITICAL 持續 ~100h+ — T-A7-001 Phase 2 + T-A7-002，最後 commit cf9f166 (2026-03-31) 距今已逾 100h（第4天+）。Owner 需確認 A7 是否有未 commit 進度，或決定任務暫停。
 ✅ A0 2026-04-03：DST002 餅乾_玫瑰愛心 K欄補上 — Items!K98 已寫入 Drive 照片連結（1fXLJvfiiXOQhbKgLg4sI8xIWThv52U3G）。規則新增：BEV 飲品類不需要照片；沒有 K欄 image_url 的品項不放入 Slide 報價簡報。Items 圖片整理視為完成（BEV 8筆免照片，非BEV 缺圖等 Owner 補充）。
 
+✅ A0 Session Handoff 2026-04-03 晚間：今日完整工作記錄
+- **Items 圖片整理**：45 → 99 筆有圖（Drive hosted jpg，MAPLAB_Items_Photos 資料夾）
+  - d6fe0e3：品項圖片整理 pipeline（62筆下載轉換上傳Drive+K欄更新）
+  - f13224d：WordPress缺圖搜尋（10筆找到/29筆需Owner補圖）
+  - c48487e：外觀相似補圖8筆+image-convert技能書建立
+  - 5673928：DST002 K欄補上+無照片不上Slide規則確立
+- **Items 表修改**：APP024 普切塔拆5品項、APP040 canape新增、重新編號、D欄隱藏
+- **系統治理**：checkpoint.sh強制存檔、CLAUDE.md冷啟動防呆+命名規範
+- **Skills 新建**：system-audit / session-lifecycle / summon-role / command-index / items-management / image-convert / clasp-deploy 整理
+- **AGENT_RECALL_PROMPTS**：session-lifecycle規則寫入
+- **220個舊worktrees清理**（5e6d3b4）
+- **安全修復**：git history清除敏感檔案、.gitignore更新、token輪換中（見Owner Action）
+
 ### 🔴 Owner Action Required
 
 | 項目 | 說明 | 優先級 |
@@ -141,8 +154,16 @@
 | Extension v4.8 重裝 | Chrome 重新安裝 Extension v4.8（private repo 已改用 GitHub Contents API）| 中 |
 | A0 User Preferences 貼入 | 在 A0 bot 貼入 User Preferences 設定（個性化回覆偏好）| 中 |
 | 品項缺圖補充（29筆）| A0 f13224d 確認：29 筆品項在 WordPress 無法找到場景照，需 Owner 手動提供或拍攝補充至 Drive | 低 |
+| **⚠️ Token 輪換（安全修復）** | A1 安全修復後，需輪換：(1) Telegram bot token（A1 bot + A6 bot）(2) Claude API token。舊 token 已從 git history 清除，但仍需撤銷作廢。 | 高 |
+| A4 Colab S11 確認 | S11(2024) 最後 commit d909061 (2026-04-03 10:40)，48h 閾值 = 04-05 10:40。需在 04-05 前確認 Colab 仍執行中（進度 4,350/12,213=35.6%）| 中 |
 
 ## 最新決策
+
+- 2026-04-03（晚間）：**Items 圖片整理完成 ✅** — Items K欄從 45 筆有效URL 增加到 99 筆（BEV 8筆免照片，非BEV 29筆缺圖等Owner補充）。規則確立：無 K欄 image_url 的品項不放入 Slide 報價簡報。MAPLAB_Items_Photos Drive 資料夾建立，所有品項圖片統一 {item_id}_{中文品名}.jpg 格式。APP024 普切塔拆 5 品項，APP040 canape 新增，重新編號。
+
+- 2026-04-03（晚間）：**安全修復完成 ✅** — bot_a6.log / launchd_stdout.log / conv_history.json 敏感歷史記錄已從 git history 清除（BFG 或 filter-branch）。.gitignore 補上 **/.env、*.log、conv_history.json。Token 輪換中（Owner Action Required）。
+
+- 2026-04-03（晚間）：**系統治理落地 ✅** — CLAUDE.md 新增冷啟動防呆（依序讀文件）+ 命名規範（Drive 圖片/資料夾/Python 腳本）。checkpoint.sh 強制存檔規則文件化。Skills 新建：system-audit / session-lifecycle / summon-role / command-index / items-management / image-convert / clasp-deploy 整理。220 個舊 worktrees 清理完成。
 
 - 2026-04-02（巡檢）：**系統巡檢 ✅** — (1) T-A5-001 task card 補建（handoff/tasks/T-A5-001.md）。(2) skills/system-audit/SKILL.md 建立（巡檢 SOP）。(3) skills/session-lifecycle/SKILL.md 建立（session 開始/結束規則）。(4) AGENT_RECALL_PROMPTS A0 段落追加三條操作規則（立即commit / ls確認 / CURRENT_STATUS是commit一部分）。(5) handoff/2026-03-14-master-data-agent.md 歸檔到 archive/。
 

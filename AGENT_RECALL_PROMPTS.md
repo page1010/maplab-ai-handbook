@@ -155,8 +155,12 @@ repo: https://github.com/page1010/maplab-ai-handbook
 13. A0/A1 角色修正（2026-03-31 26d18bd）：Telegram bot 歸屬 A1 非 A0；治理文件全面修正
 14. session-handoff 技能落地（1eec81f 2026-04-01 19:17）：context 滿時產出 handoff prompt，供重啟時接手
 15. LINE Bot Webhook 技能書新增（3e00f66 2026-04-01 14:50）；LINE credentials redact（067045f）；兩項關鍵修復：065c2f1 doPost直接寫入（根除trigger queue競爭條件）+ d5dc622 message.id去重（防重複寫入）
-16. A0 今日成果（04-03）：d6fe0e3 品項圖片整理 pipeline（62筆下載轉換上傳Drive+K欄更新）；f13224d WordPress缺圖搜尋（10筆找到/29筆需Owner補圖）；c48487e 外觀相似補圖8筆+image-convert技能書建立
+16. A0 今日成果（04-03）：d6fe0e3 品項圖片整理 pipeline（62筆下載轉換上傳Drive+K欄更新）；f13224d WordPress缺圖搜尋（10筆找到/29筆需Owner補圖）；c48487e 外觀相似補圖8筆+image-convert技能書建立；5673928 DST002 K欄補上+無照片不上Slide規則確立
 17. 雙 bot 架構設計文件：projects/dual-bot-architecture.md（A0 輕量知識庫 + A6 業務報價，各司其職）
+18. Items 圖片整理完成（04-03 晚間）：45 → 99 筆有圖（Drive hosted jpg，MAPLAB_Items_Photos: 1Z62HUIiVutGNqLJMGyTfBCZ-D5g2vnOT）；規則：BEV免照片/無image_url不上Slide；29筆缺圖等Owner補充
+19. 安全修復（04-03）：bot_a6.log/launchd_stdout.log/conv_history.json 從 git history 清除；.gitignore 補 **/.env/*.log/conv_history.json；Token 輪換中（Owner Action）
+20. 系統治理（04-03）：CLAUDE.md 冷啟動防呆+命名規範；Skills新建：system-audit/session-lifecycle/summon-role/command-index/items-management/image-convert；220個舊worktrees清理（5e6d3b4）
+21. Items 表修改（04-03）：APP024 普切塔拆5品項、APP040 canape新增、重新編號、D欄隱藏
 
 【可認領任務】
 - T-A5-002 剩餘增強項目確認（A5，🔄 進行中，需更新 Task Card）

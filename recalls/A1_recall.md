@@ -13,16 +13,17 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. 都不行 → 回報 Owner，不要硬幹
 
-【斷點 — 2026-04-03】
+【斷點 — 2026-04-03 晚間巡查後】
 1. 系統版本：v6.0 / Phase 6 — 觀測性 + 業務閉環 + 策略循環
 2. A2 T-A2A3-001 ✅ 子任務1-4全完成（子任務5等7-14天觀察期）
-3. A7 T-A7-001 Phase 2 + T-A7-002 🔴 CRITICAL：距今已逾 100h+。Owner 需確認 A7 狀態或重啟。
-4. A4 T-A4-001：S11(2024) 🔄 4,350/12,213=35.6%（48h閾值 = 04-05 10:40）
-5. A5 T-A5-002 🔄 進行中：服務費/車馬費/長桌費/DropdownHelper 已完成
-6. A3 T-A3-001 GTM方案B + T-A3-002 🔴 CRITICAL：距今已逾 140h+（第7天）
+3. A7 T-A7-001 Phase 2 + T-A7-002 🔴 CRITICAL：第5天 ~108h+。Owner 需確認 A7 狀態或決定暫停。
+4. A4 T-A4-001：S11(2024) 🔄 4,550/12,213=37.2%（ETA≈17h 04-04 12:00），48h閾值 = **04-05 18:00**
+5. A5 T-A5-002 🔄 進行中：服務費/車馬費/長桌費/DropdownHelper 已完成，等 Owner 回饋
+6. A3 T-A3-001 GTM方案B + T-A3-002 🔴 CRITICAL：第8天 ~148h+；A1 已正式建議 Owner 暫停 A3 任務
 7. A6 T-A6-001 ✅ Bot 全部署：bot_a6 已上線（launchd 開機自啟）；B層對話自動存檔運行中
-8. GAS Web App doPost() — 待 Owner 提供 Apps Script 原始碼（方案B）
-9. Recall 拆分計畫落地：recalls/ 目錄，各 agent 一個檔，Extension 按需載入
+8. GAS Web App v12 doPost ✅ 已上線（938b37f）：A6 可用 curl POST 觸發報價，舊部署 v1 封存/v11 待封存
+9. Recall 拆分落地（876ec0f）：recalls/ 目錄，各 agent 一個檔，Extension 按需載入
+10. Extension v5.0 落地（38427e1）：注入按鈕 + 即時系統快照，Task A+B 完成
 
 【可認領任務】
 - T-A5-002 剩餘增強項目確認（A5，🔄 進行中）
@@ -72,6 +73,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 - [x] Chrome Extension v4.8（GitHub Contents API）
 - [x] 系統治理：CLAUDE.md 冷啟動防呆+命名規範
 - [x] recalls/ 拆分 + Extension 按需載入
-- [ ] GAS Web App doPost()（等 Owner 提供 Apps Script 原始碼）
-- [ ] A3 CRITICAL 處理（第7天無 commit）
-- [ ] A7 CRITICAL 處理（逾 100h 無 commit）
+- [x] Extension v5.0（注入按鈕+即時系統快照，38427e1）
+- [x] GAS Web App v12 doPost 上線（938b37f，A6 可用 curl 觸發）
+- [ ] A3 CRITICAL 處理（第8天 ~148h+，已建議 Owner 暫停）
+- [ ] A7 CRITICAL 處理（第5天 ~108h+，Owner 需確認或暫停）

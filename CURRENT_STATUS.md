@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-04-03 晚間（A0 Session Handoff）｜ 更新者：A0 — Items圖片整理完成（45→99筆有圖）、系統治理+安全修復落地、Session Handoff 存檔
+最後更新：2026-04-03 晚間（A1 Evening Patrol）｜ 更新者：A1 — 晚間巡查：A4 進度更新(37.2%)、A3 CRITICAL第8天、A7 CRITICAL第5天、GAS Web App v12+Extension v5.0 落地確認
 
 ---
 
@@ -47,7 +47,7 @@
 | T-A5-001 | Items 去重 + 全品項重新編碼 | A5 | ✅ 完成（APP050/DST041/MAIN009/BEV008=108，已排序+連號） | handoff/tasks/T-A5-001.md |
 | T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔄 進行中（服務費可選✅/長桌費$350✅/車馬費下拉✅/DropdownHelper分類驗證✅，dbcf9d4；待確認剩餘增強項目）| handoff/tasks/T-A5-002.md |
 | T-A5-003 | 熱客招待品項定義 | A5 | 🔲 待開始 | — |
-| T-A4-001 | Phase 4 Gemini 照片分類 | A4 | 🔄 S5 ✅(8,549), S6 ✅(8,505), S11(2024) 🔄 4,350/12,213=35.6%（ASSET_LOG 2026-04-03 Sheets API確認），GPS全步驟 ⛔ Owner指示跳過，ASSET_LOG總計21,414行 | projects/maplab-pipeline.md + handoff/tasks/T-A4-001.md |
+| T-A4-001 | Phase 4 Gemini 照片分類 | A4 | 🔄 S5 ✅(8,549), S6 ✅(8,505), S11(2024) 🔄 4,550/12,213=37.2%（ETA≈17h，預計04-04 12:00完成），GPS全步驟 ⛔ Owner指示跳過，ASSET_LOG總計21,414行；48h閾值 = **04-05 18:00** | projects/maplab-pipeline.md + handoff/tasks/T-A4-001.md |
 | T-A2-001 | 文章精選圖片補齊（57篇→每篇獨立配圖） | A2 | ✅ 完成（57/57 獨立配圖，0 重複） | handoff/tasks/T-A2-001.md |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2 | ✅ 子任務1-4完成（子任務5等7-14天）| handoff/tasks/T-A2A3-001.md + T-A2A3-001-B.md |
 | T-A3-001 | GTM LINE 按鈕追蹤修復（方案 B 已確認） | A3 | 🔄 進行中（GTM方案B規格已記錄 2aca2ae，待技術實作+測試）| — |
@@ -131,6 +131,11 @@
 ✅ A1巡查 2026-04-03 16:20 午後：A0 圖片整理進展 — d6fe0e3 (12:03) 品項圖片整理 pipeline（下載轉換上傳 Drive 62筆，K欄更新，CLAUDE.md 命名規範）；f13224d (12:21) WordPress缺圖搜尋（10筆品項從WP找到場景照，上傳Drive更新K欄，29筆無法找到需Owner補圖）；c48487e (15:00) 外觀相似補圖8筆（DST025/027/019/017/MAIN008/APP013/DST040/042）+ image-convert技能書建立。Owner Action：29筆缺圖需手動補充。
 ⚠️ A1巡查 2026-04-03 16:20 午後：A3 🔴 CRITICAL 持續第7天 ~140h+ — T-A3-001 GTM方案B + T-A3-002 廣告成效，最後 commit 2aca2ae (~2026-03-29 22:10) 距今已逾 140h。連續7天無 A3 活動。Owner 若無回覆，A1 下次巡查將建議正式暫停 A3 任務。
 ⚠️ A1巡查 2026-04-03 16:20 午後：A7 🔴 CRITICAL 持續 ~100h+ — T-A7-001 Phase 2 + T-A7-002，最後 commit cf9f166 (2026-03-31) 距今已逾 100h（第4天+）。Owner 需確認 A7 是否有未 commit 進度，或決定任務暫停。
+
+⚠️ A1巡查 2026-04-03 晚間：A3 🔴 CRITICAL 持續第8天 ~148h+ — T-A3-001 GTM方案B + T-A3-002 廣告成效，最後 commit 2aca2ae (~2026-03-29 22:10) 距今已逾 148h。今日巡查仍無 A3 新 commit。**A1 正式建議 Owner 暫停 A3 任務**（T-A3-001 + T-A3-002 標記為 ⏸️），等待 GTM 權限/廣告觀察期外部條件就緒後再認領。若 A3 有外部阻塞原因請在 Task Card 補記，否則下次巡查執行暫停動作。
+⚠️ A1巡查 2026-04-03 晚間：A7 🔴 CRITICAL 持續第5天 ~108h+ — T-A7-001 Phase 2 + T-A7-002，最後 commit cf9f166 (2026-03-31) 距今已逾 108h。今日巡查仍無 A7 新 commit。Owner 需明確指示：(a) A7 有未 commit 進度請立即補存檔，或 (b) 決定任務暫停，或 (c) 確認外部阻塞原因。
+✅ A1巡查 2026-04-03 晚間：A4 S11 進度更新確認 — d120f05 + 9693797 今日兩次確認 S11 Colab 正常執行，進度 4,550/12,213=37.2%（ETA≈17h 預計 04-04 12:00），48h 閾值重設至 04-05 18:00。
+✅ A1巡查 2026-04-03 晚間：A1 本日重大落地 — Extension v5.0（注入按鈕+即時系統快照），Recall 拆分（recalls/Ax_recall.md），bot_a6 結案確認，security fix（歷史敏感記錄清除），GAS Web App v12 doPost 上線（A6 可用 curl POST 觸發報價）。
 ✅ A0 2026-04-03：DST002 餅乾_玫瑰愛心 K欄補上 — Items!K98 已寫入 Drive 照片連結（1fXLJvfiiXOQhbKgLg4sI8xIWThv52U3G）。規則新增：BEV 飲品類不需要照片；沒有 K欄 image_url 的品項不放入 Slide 報價簡報。Items 圖片整理視為完成（BEV 8筆免照片，非BEV 缺圖等 Owner 補充）。
 
 ✅ A0 Session Handoff 2026-04-03 晚間：今日完整工作記錄
@@ -156,7 +161,7 @@
 | A0 User Preferences 貼入 | 在 A0 bot 貼入 User Preferences 設定（個性化回覆偏好）| 中 |
 | 品項缺圖補充（29筆）| A0 f13224d 確認：29 筆品項在 WordPress 無法找到場景照，需 Owner 手動提供或拍攝補充至 Drive | 低 |
 | **⚠️ Token 輪換（安全修復）** | A1 安全修復後，需輪換：(1) Telegram bot token — **A1 bot 已換新（A1 4/3 晚間確認）✅**，A6 bot 待確認 (2) Claude API token — 狀態待確認。舊 token 已從 git history 清除，但仍需撤銷作廢。 | 高 |
-| A4 Colab S11 確認 | S11(2024) 最後 commit d909061 (2026-04-03 10:40)，48h 閾值 = 04-05 10:40。需在 04-05 前確認 Colab 仍執行中（進度 4,350/12,213=35.6%）| 中 |
+| A4 Colab S11 確認 | S11(2024) 最後 commit 9693797 (2026-04-03 下班存檔)，48h 閾值 = **04-05 18:00**。需在 04-05 18:00 前確認 Colab 仍執行中（進度 4,550/12,213=37.2%，ETA≈17h 預計 04-04 12:00 完成）| 中 |
 
 ## 最新決策
 

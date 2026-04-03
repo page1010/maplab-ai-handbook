@@ -1,25 +1,50 @@
 /**
- * MAPLAB 報價系統 v3.1
- * 功能：一鍵產出報價單（獨立 Spreadsheet 檔案）、寫入 SALES_INTAKE
- * 系統資訊欄位改為 N 欄（標籤在 M 欄）
+ * MAPLAB 報價系統 v3.2
+ * 修正：cell references 對齊 QUOTE_DRAFT v3 版面 + 品項篩選 + D 欄清除 + 條款位置
+ * 參考：handoff/feedback/2026-04-02-quote-draft-v3-layout.md
  *
  * 部署目標 Sheet：1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg
  * 模板分頁：QUOTE_DRAFT
  * 寫入分頁：SALES_INTAKE
+ *
+ * QUOTE_DRAFT v3 版面對應：
+ *   D2: 客戶名（企業版：公司名 + 聯絡人）
+ *   E2: 活動日期
+ *   D3: 地址
+ *   F3: 時間
+ *   D4: 活動型態
+ *   F4: 規劃人數
+ *   D5: 活動名稱
+ *   F5: 餐點總件數
+ *   D8:D13  appetizer 品名（dropdown → 產出後清除 validation）
+ *   D15:D19 dessert 品名（dropdown → 產出後清除 validation）
+ *   D21:D22 飲品品名
+ *   F欄: qty, I欄: 單位成本, J欄: 小計
+ *   K1: Case ID
+ *   K2: 建立時間
+ *   K3: 報價狀態（dropdown 保留）
+ *   K4: 匯款狀態（dropdown 保留）
+ *   K5: 版本
+ *   C39: 合約條款
+ *   E35: 總金額, J35: 訂單成本, J36: 毛利率%
+ *
+ * Items 分頁欄位（A=序號, B=品名, C=品類, D=售價, E=成本, K=圖片URL）
  */
 
-var SPREADSHEET_ID = '1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg';
+var SPREADSHEET_ID      = '1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg';
 var TEMPLATE_SHEET_NAME = 'QUOTE_DRAFT';
-var INTAKE_SHEET_NAME = 'SALES_INTAKE';
-var DRIVE_ROOT_FOLDER = 'MAPLAB_報價單';
+var INTAKE_SHEET_NAME   = 'SALES_INTAKE';
+var DRIVE_ROOT_FOLDER   = 'MAPLAB_報價單';
+
+// 菜單品項在 QUOTE_DRAFT 的列範圍
+var APPETIZER_ROWS = { start: 8,  end: 13 };  // 鹹食 appetizer（6 格）
+var DESSERT_ROWS   = { start: 15, end: 19 };  // 甜點 dessert（5 格）
+var DRINK_ROWS     = { start: 21, end: 22 };  // 飲品（2 格）
 
 // ─────────────────────────────────────────
 // 選單 & 入口
 // ─────────────────────────────────────────
 
-/**
- * 開啟 Spreadsheet 時自動掛載選單
- */
 function onOpen() {
   SpreadsheetApp.getUi()
     .createMenu('MAPLAB')
@@ -29,9 +54,6 @@ function onOpen() {
     .addToUi();
 }
 
-/**
- * 彈出報價單表單對話框
- */
 function showQuoteForm() {
   var html = HtmlService.createHtmlOutputFromFile('QuoteForm')
     .setWidth(500)
@@ -45,29 +67,35 @@ function showQuoteForm() {
 // ─────────────────────────────────────────
 
 /**
- * 由 HTML 表單呼叫，接收表單資料、產出獨立報價單 Spreadsheet、回傳結果
+ * 由 HTML 表單或 handleQuoteRequest_ 呼叫
  *
  * @param {Object} formData
- *   .clientName {string} 客戶名稱（必填）
- *   .company    {string} 公司名稱（選填，有 = 企業版條款）
- *   .phone      {string} 聯絡電話（選填）
- *   .eventType  {string} 活動類型（必填）
- *   .eventDate  {string} 活動日期 YYYY-MM-DD（必填）
- *   .location   {string} 活動地點（選填）
- *   .pax        {string} 預計人數（選填）
- *   .address    {string} 活動地址（選填）
+ *   .clientName  {string} 客戶名稱（必填）
+ *   .company     {string} 公司名稱（選填，有 = 企業版條款）
+ *   .phone       {string} 聯絡電話（選填）
+ *   .eventType   {string} 活動型態（必填）
+ *   .eventDate   {string} 活動日期 YYYY-MM-DD（必填）
+ *   .eventTime   {string} 活動時間 ex. "15:00-17:00"（選填）
+ *   .eventName   {string} 活動名稱（選填）
+ *   .location    {string} 活動地點（選填）
+ *   .address     {string} 活動地址（選填）
+ *   .pax         {string|number} 規劃人數（選填）
+ *   .totalItems  {string|number} 餐點總件數（選填）
+ *   .budget      {number} 總預算（選填，有則執行品項篩選）
+ *   .itemCount   {number} 品項數量需求（選填，預設 8）
+ *   .minMargin   {number} 最低毛利率 0~1（選填，預設 0.7）
+ *   .style       {string} "tea_time"=甜鹹均衡 / "savory"=鹹食為主 / "sweet"=甜點為主（選填）
  * @returns {Object} { success, caseId, fileName, url }
  */
 function createQuote(formData) {
-  // ── 打開主系統 Sheet ──
   var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
 
   // ── 產生 case_id ──
-  var now = new Date();
+  var now    = new Date();
   var caseId = 'Q' + Utilities.formatDate(now, 'Asia/Taipei', 'yyyyMMddHHmmss');
 
   // ── 格式化活動日期 ──
-  var eventDate = new Date(formData.eventDate + 'T00:00:00+08:00');
+  var eventDate  = new Date(formData.eventDate + 'T00:00:00+08:00');
   var dateSuffix = Utilities.formatDate(eventDate, 'Asia/Taipei', 'yyyyMMdd');
 
   // ── 新檔案名稱：20260425_王小明 ──
@@ -76,133 +104,271 @@ function createQuote(formData) {
   // ── 確保 Drive 資料夾存在 ──
   var yearFolder = ensureDriveFolder_(eventDate.getFullYear().toString());
 
-  // ── 用 makeCopy 複製整個 Spreadsheet（保留所有分頁與公式） ──
+  // ── 用 makeCopy 複製整個 Spreadsheet ──
   var sourceFile = DriveApp.getFileById(SPREADSHEET_ID);
-  var newFile = sourceFile.makeCopy(newFileName, yearFolder);
-  var newSs = SpreadsheetApp.openById(newFile.getId());
+  var newFile    = sourceFile.makeCopy(newFileName, yearFolder);
+  var newSs      = SpreadsheetApp.openById(newFile.getId());
 
-  // ── 保留 QUOTE_DRAFT 與 Items，刪除其餘分頁 ──
-  var sheets = newSs.getSheets();
-  var keepSheet = null;
+  // ── 找出要保留的分頁 ──
+  var sheets     = newSs.getSheets();
+  var keepSheet  = null;
   var itemsSheet = null;
   for (var i = 0; i < sheets.length; i++) {
-    if (sheets[i].getName() === TEMPLATE_SHEET_NAME) {
-      keepSheet = sheets[i];
-    } else if (sheets[i].getName() === 'Items') {
-      itemsSheet = sheets[i];
-    }
+    if (sheets[i].getName() === TEMPLATE_SHEET_NAME) keepSheet  = sheets[i];
+    if (sheets[i].getName() === 'Items')             itemsSheet = sheets[i];
   }
-  if (!keepSheet) {
-    throw new Error('新檔案中找不到 QUOTE_DRAFT 分頁。');
-  }
+  if (!keepSheet) throw new Error('新檔案中找不到 QUOTE_DRAFT 分頁。');
 
-  // 先 activate 要保留的分頁，避免刪最後一個 sheet 報錯
+  // ── 先 activate 保留分頁，再批次刪除其餘分頁 ──
   newSs.setActiveSheet(keepSheet);
-
-  // 刪除非 QUOTE_DRAFT、非 Items 的所有分頁
+  var sheetsToDelete = [];
   for (var i = 0; i < sheets.length; i++) {
-    var name = sheets[i].getName();
-    if (name !== TEMPLATE_SHEET_NAME && name !== 'Items') {
-      newSs.deleteSheet(sheets[i]);
-    }
+    var n = sheets[i].getName();
+    if (n !== TEMPLATE_SHEET_NAME && n !== 'Items') sheetsToDelete.push(sheets[i]);
+  }
+  for (var j = 0; j < sheetsToDelete.length; j++) {
+    try { newSs.deleteSheet(sheetsToDelete[j]); } catch(e) { Logger.log('刪除分頁失敗: ' + e.message); }
   }
 
   // ── 改名 QUOTE_DRAFT → 報價單 ──
   keepSheet.setName('報價單');
 
-  // ── 隱藏 Items 分頁（保留 VLOOKUP 正常運作） ──
-  if (itemsSheet) {
-    itemsSheet.hideSheet();
+  // ── 隱藏 Items 分頁（保留 VLOOKUP） ──
+  if (itemsSheet) itemsSheet.hideSheet();
+
+  // ── 填入客戶資訊（對應 QUOTE_DRAFT v3 版面） ──
+  var displayName = formData.company
+    ? formData.company + '｜' + formData.clientName
+    : formData.clientName;
+  keepSheet.getRange('D2').setValue(displayName);
+  keepSheet.getRange('E2').setValue(formData.eventDate || '');
+  keepSheet.getRange('D3').setValue(formData.address   || '');
+  keepSheet.getRange('F3').setValue(formData.eventTime || '');
+  keepSheet.getRange('D4').setValue(formData.eventType || '');
+  keepSheet.getRange('F4').setValue(formData.pax       || '');
+  keepSheet.getRange('D5').setValue(formData.eventName || '');
+  keepSheet.getRange('F5').setValue(formData.totalItems|| '');
+
+  // ── 系統資訊寫入 K 欄（列印範圍外） ──
+  keepSheet.getRange('K1').setValue(caseId);
+  keepSheet.getRange('K2').setValue(Utilities.formatDate(now, 'Asia/Taipei', 'yyyy-MM-dd HH:mm'));
+  keepSheet.getRange('K3').setValue('報價中');
+  keepSheet.getRange('K4').setValue('未匯');
+  keepSheet.getRange('K5').setValue('v1');
+
+  // K3 下拉驗證：報價狀態
+  keepSheet.getRange('K3').setDataValidation(
+    SpreadsheetApp.newDataValidation()
+      .requireValueInList(['報價中', '成交', '未成交結案'], true)
+      .setAllowInvalid(false).build()
+  );
+  // K4 下拉驗證：匯款狀態
+  keepSheet.getRange('K4').setDataValidation(
+    SpreadsheetApp.newDataValidation()
+      .requireValueInList(['未匯', '已收訂金', '已收全額'], true)
+      .setAllowInvalid(false).build()
+  );
+
+  // ── 【修正 問題 4】清除 D 欄品項區的 dropdown 驗證（範圍 D8:D22） ──
+  keepSheet.getRange('D8:D22').clearDataValidations();
+
+  // ── 【修正 問題 1+2】若有傳入預算，自動篩選品項寫入菜單區 ──
+  if (formData.budget && itemsSheet) {
+    try {
+      var selected = selectItemsForBudget_(itemsSheet, {
+        budget:    Number(formData.budget),
+        pax:       Number(formData.pax) || 1,
+        itemCount: Number(formData.itemCount) || 8,
+        minMargin: Number(formData.minMargin) || 0.7,
+        style:     formData.style || 'tea_time'
+      });
+      writeItemsToQuote_(keepSheet, selected);
+    } catch(e) {
+      Logger.log('品項篩選失敗，跳過：' + e.message);
+    }
   }
 
-  // ── 填入客戶資訊（對應 QUOTE_DRAFT 客戶區） ──
-  // B 欄為填入欄，A 欄為標籤
-  keepSheet.getRange('B2').setValue(formData.clientName);
-  keepSheet.getRange('B3').setValue(formData.company || '');
-  keepSheet.getRange('B4').setValue(formData.phone || '');
-  keepSheet.getRange('B5').setValue(formData.address || '');
-  keepSheet.getRange('B6').setValue(formData.eventType);
-  keepSheet.getRange('B7').setValue(formData.eventDate);
-  keepSheet.getRange('B8').setValue(formData.pax || '');
-  keepSheet.getRange('B9').setValue(formData.location || '');
-
-  // ── Case ID & 建立時間（右上角） ──
-  keepSheet.getRange('H1').setValue(caseId);
-  keepSheet.getRange('H2').setValue(Utilities.formatDate(now, 'Asia/Taipei', 'yyyy-MM-dd HH:mm'));
-
-  // ── 系統資訊寫入 N 欄（標籤在 M 欄） ──
-  keepSheet.getRange('M2').setValue('CaseID');
-  keepSheet.getRange('N2').setValue(caseId);
-  keepSheet.getRange('M3').setValue('建立時間');
-  keepSheet.getRange('N3').setValue(Utilities.formatDate(now, 'Asia/Taipei', 'yyyy-MM-dd HH:mm'));
-  keepSheet.getRange('M5').setValue('報價狀態');
-  keepSheet.getRange('N5').setValue('報價中');
-  keepSheet.getRange('M7').setValue('匯款狀態');
-  keepSheet.getRange('N7').setValue('未匯');
-  keepSheet.getRange('M9').setValue('版本');
-  keepSheet.getRange('N9').setValue('v3.1');
-
-  // N5 下拉驗證：報價狀態
-  var quoteStatusRule = SpreadsheetApp.newDataValidation()
-    .requireValueInList(['報價中', '成交', '未成交結案'], true)
-    .setAllowInvalid(false)
-    .build();
-  keepSheet.getRange('N5').setDataValidation(quoteStatusRule);
-
-  // N7 下拉驗證：匯款狀態
-  var paymentStatusRule = SpreadsheetApp.newDataValidation()
-    .requireValueInList(['未匯', '已收訂金', '已收全額'], true)
-    .setAllowInvalid(false)
-    .build();
-  keepSheet.getRange('N7').setDataValidation(paymentStatusRule);
-
-  // ── 條款自動帶入（個人版 / 企業版） ──
+  // ── 【修正 問題 3】條款寫入 C39，確保可見格式 ──
   var isCorporate = formData.company && formData.company.trim().length > 0;
-  var terms = isCorporate
-    ? getCorpTerms(eventDate)
-    : getPersonalTerms();
-  keepSheet.getRange('A30').setValue('【合約條款】');
-  keepSheet.getRange('A31').setValue(terms);
+  var terms = isCorporate ? getCorpTerms(eventDate) : getPersonalTerms();
+  keepSheet.getRange('C39').setValue('【合約條款】').setFontWeight('bold').setFontSize(10);
+  keepSheet.getRange('C40').setValue(terms)
+    .setWrap(true)
+    .setFontSize(9)
+    .setVerticalAlignment('top');
 
-  // ── 返回新檔案 URL ──
+  // 確保條款行可見（取消隱藏 39-45）
+  keepSheet.showRows(39, 10);
+
+  // ── 回傳新檔案 URL ──
   var newUrl = newSs.getUrl();
 
   // ── 寫入 SALES_INTAKE ──
   writeToIntake_(ss, caseId, formData, newUrl, now);
 
-  return {
-    success: true,
-    caseId: caseId,
-    fileName: newFileName,
-    url: newUrl
-  };
+  return { success: true, caseId: caseId, fileName: newFileName, url: newUrl };
+}
+
+// ─────────────────────────────────────────
+// 【新增 問題 1+2】品項篩選：selectItemsForBudget_
+// ─────────────────────────────────────────
+
+/**
+ * 從 Items 分頁根據預算、人數、品項數量、毛利率篩選品項
+ *
+ * Items 分頁欄位：
+ *   A: 序號, B: 品名, C: 品類（鹹/甜/飲品）, D: 售價, E: 成本, K: 圖片URL
+ *
+ * @param {Sheet}  itemsSheet  Items 分頁物件
+ * @param {Object} params
+ *   .budget    {number} 總預算
+ *   .pax       {number} 人數
+ *   .itemCount {number} 品項總數量
+ *   .minMargin {number} 最低毛利率 0~1（預設 0.7）
+ *   .style     {string} "tea_time"=甜鹹均衡 / "savory"=鹹食為主 / "sweet"=甜點為主
+ * @returns {Object} { appetizers: [...], desserts: [...] }
+ *   每個品項：{ name, price, cost, margin, imageUrl, category }
+ */
+function selectItemsForBudget_(itemsSheet, params) {
+  var budget    = params.budget;
+  var pax       = params.pax    || 1;
+  var itemCount = params.itemCount || 8;
+  var minMargin = params.minMargin || 0.7;
+  var style     = params.style  || 'tea_time';
+
+  // 每人預算
+  var perPersonBudget = budget / pax;
+
+  // 讀取 Items 資料（第 2 行起）
+  var lastRow = itemsSheet.getLastRow();
+  if (lastRow < 2) return { appetizers: [], desserts: [] };
+
+  var data = itemsSheet.getRange(2, 1, lastRow - 1, 11).getValues();
+  // 欄位索引（0-based）：A=0, B=1, C=2, D=3, E=4, K=10
+
+  // 篩選：有品名、有售價、毛利率 ≥ minMargin
+  var allItems = [];
+  for (var i = 0; i < data.length; i++) {
+    var name     = data[i][1];   // B: 品名
+    var category = data[i][2];   // C: 品類
+    var price    = Number(data[i][3]);  // D: 售價
+    var cost     = Number(data[i][4]);  // E: 成本
+    var imageUrl = data[i][10];  // K: 圖片URL
+
+    if (!name || !price) continue;
+
+    var margin = price > 0 ? (price - cost) / price : 0;
+    if (margin < minMargin) continue;
+
+    allItems.push({ name: name, price: price, cost: cost, margin: margin, imageUrl: imageUrl, category: String(category).trim() });
+  }
+
+  if (allItems.length === 0) return { appetizers: [], desserts: [] };
+
+  // 依風格決定甜/鹹比例
+  var appetizerCount, dessertCount;
+  if (style === 'tea_time') {
+    appetizerCount = Math.ceil(itemCount * 0.55);   // 約 55% 鹹食
+    dessertCount   = itemCount - appetizerCount;    // 約 45% 甜點
+  } else if (style === 'savory') {
+    appetizerCount = Math.ceil(itemCount * 0.8);
+    dessertCount   = itemCount - appetizerCount;
+  } else if (style === 'sweet') {
+    dessertCount   = Math.ceil(itemCount * 0.7);
+    appetizerCount = itemCount - dessertCount;
+  } else {
+    appetizerCount = Math.ceil(itemCount * 0.55);
+    dessertCount   = itemCount - appetizerCount;
+  }
+
+  // 分類
+  var savoryPool  = allItems.filter(function(x) { return x.category === '鹹' || x.category === '鹹食' || x.category === 'appetizer'; });
+  var sweetPool   = allItems.filter(function(x) { return x.category === '甜' || x.category === '甜點' || x.category === 'dessert'; });
+
+  // 若分類不足，從 allItems 補充
+  if (savoryPool.length < appetizerCount) savoryPool = allItems.filter(function(x) { return sweetPool.indexOf(x) === -1; });
+  if (sweetPool.length < dessertCount)   sweetPool  = allItems.filter(function(x) { return savoryPool.indexOf(x) === -1; });
+
+  // 依售價從低到高排序（預算最佳化）
+  savoryPool.sort(function(a, b) { return a.price - b.price; });
+  sweetPool.sort(function(a, b)  { return a.price - b.price; });
+
+  // 計算可用預算（每人）下的品項目標單價上限
+  var pricePerItem = perPersonBudget / itemCount;
+
+  // 篩選：price ≤ pricePerItem * 1.3（容許 30% 彈性）
+  var priceLimit = pricePerItem * 1.3;
+  var selected_s = savoryPool.filter(function(x) { return x.price <= priceLimit; }).slice(0, appetizerCount);
+  var selected_d = sweetPool.filter(function(x)  { return x.price <= priceLimit; }).slice(0, dessertCount);
+
+  // 若嚴格預算篩不夠，就取最便宜的
+  if (selected_s.length < appetizerCount) selected_s = savoryPool.slice(0, appetizerCount);
+  if (selected_d.length < dessertCount)   selected_d = sweetPool.slice(0, dessertCount);
+
+  Logger.log('品項篩選完成：鹹食 ' + selected_s.length + ' 項，甜點 ' + selected_d.length + ' 項');
+  Logger.log('預算 ' + budget + '，人數 ' + pax + '，每人預算 ' + perPersonBudget.toFixed(0) + '，每項均攤 ' + pricePerItem.toFixed(0));
+
+  return { appetizers: selected_s, desserts: selected_d };
+}
+
+/**
+ * 把篩選結果寫入 QUOTE_DRAFT 菜單區（D 欄品名）
+ * @param {Sheet}  sheet    keepSheet（已重命名為報價單）
+ * @param {Object} selected { appetizers: [...], desserts: [...] }
+ */
+function writeItemsToQuote_(sheet, selected) {
+  var appetizers = selected.appetizers || [];
+  var desserts   = selected.desserts   || [];
+  var maxSlots   = APPETIZER_ROWS.end - APPETIZER_ROWS.start + 1;  // 6
+  var maxDSlots  = DESSERT_ROWS.end   - DESSERT_ROWS.start + 1;    // 5
+
+  // 寫 appetizer D8:D13
+  for (var i = 0; i < maxSlots; i++) {
+    var row  = APPETIZER_ROWS.start + i;
+    var item = appetizers[i];
+    if (item) {
+      sheet.getRange('D' + row).setValue(item.name);
+      sheet.getRange('I' + row).setValue(item.cost);   // 單位成本（業務欄位）
+    } else {
+      sheet.getRange('D' + row).clearContent();
+    }
+  }
+
+  // 寫 dessert D15:D19
+  for (var j = 0; j < maxDSlots; j++) {
+    var dRow  = DESSERT_ROWS.start + j;
+    var dItem = desserts[j];
+    if (dItem) {
+      sheet.getRange('D' + dRow).setValue(dItem.name);
+      sheet.getRange('I' + dRow).setValue(dItem.cost);
+    } else {
+      sheet.getRange('D' + dRow).clearContent();
+    }
+  }
+
+  Logger.log('品項已寫入 QUOTE_DRAFT 菜單區');
 }
 
 // ─────────────────────────────────────────
 // 表單預填資料
 // ─────────────────────────────────────────
 
-/**
- * 從 QUOTE_DRAFT 讀取預填資料供表單使用
- * @returns {Object} 預填欄位值
- */
 function getQuoteDraftValues() {
-  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  var ss    = SpreadsheetApp.openById(SPREADSHEET_ID);
   var sheet = ss.getSheetByName(TEMPLATE_SHEET_NAME);
   if (!sheet) return {};
 
   return {
-    clientName : sheet.getRange('B2').getValue() || '',
-    company    : sheet.getRange('B3').getValue() || '',
-    phone      : sheet.getRange('B4').getValue() || '',
-    address    : sheet.getRange('B5').getValue() || '',
-    eventType  : sheet.getRange('B6').getValue() || '',
-    eventDate  : sheet.getRange('F2').getValue()
-                  ? Utilities.formatDate(new Date(sheet.getRange('F2').getValue()), 'Asia/Taipei', 'yyyy-MM-dd')
-                  : '',
-    headcount  : sheet.getRange('B8').getValue() || '',
-    eventName  : sheet.getRange('B9').getValue() || '',
-    totalItems : sheet.getRange('B10').getValue() || ''
+    clientName : sheet.getRange('D2').getValue() || '',
+    eventDate  : sheet.getRange('E2').getValue()
+                   ? Utilities.formatDate(new Date(sheet.getRange('E2').getValue()), 'Asia/Taipei', 'yyyy-MM-dd')
+                   : '',
+    address    : sheet.getRange('D3').getValue() || '',
+    eventTime  : sheet.getRange('F3').getValue() || '',
+    eventType  : sheet.getRange('D4').getValue() || '',
+    pax        : sheet.getRange('F4').getValue() || '',
+    eventName  : sheet.getRange('D5').getValue() || '',
+    totalItems : sheet.getRange('F5').getValue() || ''
   };
 }
 
@@ -228,7 +394,6 @@ function getCorpTerms(eventDate) {
   var year  = eventDate.getFullYear();
   var month = eventDate.getMonth() + 1;
   var day   = eventDate.getDate();
-
   return [
     '▶簽約使用條款及細則：',
     '（1）鑒於部分企業用戶之會計核銷，此合約僅供公司行號使用。',
@@ -246,79 +411,49 @@ function getCorpTerms(eventDate) {
 // 內部工具函式
 // ─────────────────────────────────────────
 
-/**
- * 確保 MAPLAB_報價單/[year]/ 資料夾存在
- * @param {string} year 例 '2026'
- * @returns {Folder} 年份子資料夾
- */
 function ensureDriveFolder_(year) {
-  var rootIter = DriveApp.getFoldersByName(DRIVE_ROOT_FOLDER);
-  var rootFolder = rootIter.hasNext()
-    ? rootIter.next()
-    : DriveApp.createFolder(DRIVE_ROOT_FOLDER);
-
-  var yearIter = rootFolder.getFoldersByName(year);
-  return yearIter.hasNext()
-    ? yearIter.next()
-    : rootFolder.createFolder(year);
+  var rootIter   = DriveApp.getFoldersByName(DRIVE_ROOT_FOLDER);
+  var rootFolder = rootIter.hasNext() ? rootIter.next() : DriveApp.createFolder(DRIVE_ROOT_FOLDER);
+  var yearIter   = rootFolder.getFoldersByName(year);
+  return yearIter.hasNext() ? yearIter.next() : rootFolder.createFolder(year);
 }
 
 /**
  * 在 SALES_INTAKE 最後一行新增報價紀錄
- *
- * 欄位對應（依照現有表頭）：
- *   A: case_id
- *   B: created_at
- *   C: source
- *   D: client_name
- *   E: company
- *   F: phone
- *   G: event_type
- *   H: event_date
- *   I: location
- *   J: pax
- *   K: sheet_url（新獨立 Spreadsheet URL）
- *   L–N: （預留）
- *   O: notes
+ * A: case_id, B: created_at, C: source, D: client_name, E: company,
+ * F: phone, G: event_type, H: event_date, I: location, J: pax,
+ * K: sheet_url, L: quote_status, M: payment_status, N: (預留), O: notes
  */
 function writeToIntake_(ss, caseId, formData, sheetUrl, now) {
   var intakeSheet = ss.getSheetByName(INTAKE_SHEET_NAME);
-  if (!intakeSheet) {
-    throw new Error('找不到 SALES_INTAKE 分頁，請確認分頁名稱正確。');
-  }
+  if (!intakeSheet) throw new Error('找不到 SALES_INTAKE 分頁。');
 
   var createdAt = Utilities.formatDate(now, 'Asia/Taipei', 'yyyy-MM-dd HH:mm:ss');
-
-  var row = [
-    caseId,                                // A: case_id
-    createdAt,                             // B: created_at
-    'quote-system-v2',                     // C: source
-    formData.clientName,                   // D: client_name
-    formData.company    || '',             // E: company
-    formData.phone      || '',             // F: phone
-    formData.eventType,                    // G: event_type
-    formData.eventDate,                    // H: event_date
-    formData.location   || '',             // I: location
-    formData.pax        || '',             // J: pax
-    sheetUrl,                              // K: sheet_url（獨立 Spreadsheet URL）
-    '報價中',                              // L: quote_status（初始值）
-    '未匯',                                // M: payment_status（初始值）
-    '',                                    // N: （預留）
-    ''                                     // O: notes
-  ];
-
-  intakeSheet.appendRow(row);
+  intakeSheet.appendRow([
+    caseId,
+    createdAt,
+    'quote-system-v3.2',
+    formData.clientName,
+    formData.company    || '',
+    formData.phone      || '',
+    formData.eventType  || '',
+    formData.eventDate  || '',
+    formData.location   || '',
+    formData.pax        || '',
+    sheetUrl,
+    '報價中',
+    '未匯',
+    '',
+    ''
+  ]);
 }
 
 // ─────────────────────────────────────────
 // T-A5-005：報價狀態同步 + Dashboard
 // ─────────────────────────────────────────
 
-/**
- * 確保 SALES_INTAKE L1/M1 有欄標題
- */
 function ensureIntakeHeaders_() {
-  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  var ss    = SpreadsheetApp.openById(SPREADSHEET_ID);
   var sheet = ss.getSheetByName(INTAKE_SHEET_NAME);
   if (!sheet) return;
   if (!sheet.getRange('L1').getValue()) sheet.getRange('L1').setValue('quote_status');
@@ -326,11 +461,11 @@ function ensureIntakeHeaders_() {
 }
 
 /**
- * 掃描 SALES_INTAKE K 欄 → 打開每份報價單 → 讀 N5/N7 → 寫回 L/M
- * 由 time-driven trigger 每 30 分鐘自動執行
+ * 掃描 SALES_INTAKE K 欄 → 打開每份報價單 → 讀 K3/K4 → 寫回 L/M
+ * 注意：v3.2 狀態位置改為 K3（報價狀態）/ K4（匯款狀態）
  */
 function syncQuoteStatus_() {
-  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  var ss    = SpreadsheetApp.openById(SPREADSHEET_ID);
   var sheet = ss.getSheetByName(INTAKE_SHEET_NAME);
   if (!sheet) return;
 
@@ -339,55 +474,41 @@ function syncQuoteStatus_() {
   var lastRow = sheet.getLastRow();
   if (lastRow < 2) return;
 
-  var kValues = sheet.getRange(2, 11, lastRow - 1, 1).getValues(); // K 欄 URLs
-  var lmValues = sheet.getRange(2, 12, lastRow - 1, 2).getValues(); // 現有 L/M 欄
-  var updates = [];
+  var kValues  = sheet.getRange(2, 11, lastRow - 1, 1).getValues();
+  var lmValues = sheet.getRange(2, 12, lastRow - 1, 2).getValues();
+  var updates  = [];
 
   for (var i = 0; i < kValues.length; i++) {
     var url = kValues[i][0];
     if (!url || typeof url !== 'string' || url.indexOf('https://') !== 0) {
-      updates.push([lmValues[i][0], lmValues[i][1]]); // 保留現有值
+      updates.push([lmValues[i][0], lmValues[i][1]]);
       continue;
     }
-
     try {
-      var quoteId = extractSpreadsheetId_(url);
-      var quoteSs = SpreadsheetApp.openById(quoteId);
-      var quoteSheet = quoteSs.getSheetByName('報價單') || quoteSs.getSheets()[0];
-      var quoteStatus  = quoteSheet.getRange('N5').getValue();
-      var paymentStatus = quoteSheet.getRange('N7').getValue();
+      var quoteId      = extractSpreadsheetId_(url);
+      var quoteSs      = SpreadsheetApp.openById(quoteId);
+      var quoteSheet   = quoteSs.getSheetByName('報價單') || quoteSs.getSheets()[0];
+      var quoteStatus  = quoteSheet.getRange('K3').getValue();  // v3.2: K3
+      var paymentStatus = quoteSheet.getRange('K4').getValue(); // v3.2: K4
       updates.push([quoteStatus || '', paymentStatus || '']);
     } catch (e) {
       Logger.log('無法同步列 ' + (i + 2) + '：' + e.message);
-      updates.push([lmValues[i][0], lmValues[i][1]]); // 保留現有值
+      updates.push([lmValues[i][0], lmValues[i][1]]);
     }
   }
 
-  if (updates.length > 0) {
-    sheet.getRange(2, 12, updates.length, 2).setValues(updates);
-  }
-
+  if (updates.length > 0) sheet.getRange(2, 12, updates.length, 2).setValues(updates);
   Logger.log('syncQuoteStatus_ 完成，共掃描 ' + updates.length + ' 筆');
 }
 
-/**
- * 從 Google Sheets URL 擷取 Spreadsheet ID
- * @param {string} url
- * @returns {string}
- */
 function extractSpreadsheetId_(url) {
   var match = url.match(/\/spreadsheets\/d\/([a-zA-Z0-9_-]+)/);
   if (!match) throw new Error('無法解析 Spreadsheet URL: ' + url);
   return match[1];
 }
 
-/**
- * 設定每 30 分鐘自動執行 syncQuoteStatus_ 的 time-driven trigger
- * 手動執行一次即可，重複執行會自動跳過
- */
 function setupSyncTrigger() {
   ensureIntakeHeaders_();
-
   var triggers = ScriptApp.getProjectTriggers();
   for (var i = 0; i < triggers.length; i++) {
     if (triggers[i].getHandlerFunction() === 'syncQuoteStatus_') {
@@ -395,17 +516,10 @@ function setupSyncTrigger() {
       return;
     }
   }
-
-  ScriptApp.newTrigger('syncQuoteStatus_')
-    .timeBased()
-    .everyMinutes(30)
-    .create();
+  ScriptApp.newTrigger('syncQuoteStatus_').timeBased().everyMinutes(30).create();
   Logger.log('已建立 syncQuoteStatus_ 每 30 分鐘 trigger');
 }
 
-/**
- * 刪除 syncQuoteStatus_ trigger（停用時使用）
- */
 function removeSyncTrigger() {
   var triggers = ScriptApp.getProjectTriggers();
   for (var i = 0; i < triggers.length; i++) {
@@ -416,29 +530,15 @@ function removeSyncTrigger() {
   }
 }
 
-/**
- * 在主系統 Sheet 建立/更新 Dashboard 分頁
- * 用 COUNTIF 公式統計 SALES_INTAKE 的報價狀態與匯款狀態
- * 手動執行一次即可，之後公式會自動更新
- */
 function setupDashboard() {
-  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
-
-  // 取得或建立 Dashboard 分頁
-  var dash = ss.getSheetByName('Dashboard');
-  if (!dash) {
-    dash = ss.insertSheet('Dashboard');
-  }
-
+  var ss   = SpreadsheetApp.openById(SPREADSHEET_ID);
+  var dash = ss.getSheetByName('Dashboard') || ss.insertSheet('Dashboard');
   dash.clearContents();
 
-  // 標題
-  dash.getRange('A1').setValue('MAPLAB 報價 Dashboard');
-  dash.getRange('A1').setFontWeight('bold').setFontSize(14);
+  dash.getRange('A1').setValue('MAPLAB 報價 Dashboard').setFontWeight('bold').setFontSize(14);
   dash.getRange('A3').setValue('最後更新');
   dash.getRange('B3').setFormula('=NOW()');
 
-  // 報價狀態區
   dash.getRange('A5').setValue('報價狀態').setFontWeight('bold');
   dash.getRange('A6').setValue('報價中');
   dash.getRange('A7').setValue('成交');
@@ -447,7 +547,6 @@ function setupDashboard() {
   dash.getRange('B7').setFormula('=COUNTIF(SALES_INTAKE!L:L,"成交")');
   dash.getRange('B8').setFormula('=COUNTIF(SALES_INTAKE!L:L,"未成交結案")');
 
-  // 匯款狀態區
   dash.getRange('A10').setValue('匯款狀態').setFontWeight('bold');
   dash.getRange('A11').setValue('未匯');
   dash.getRange('A12').setValue('已收訂金');
@@ -456,7 +555,6 @@ function setupDashboard() {
   dash.getRange('B12').setFormula('=COUNTIF(SALES_INTAKE!M:M,"已收訂金")');
   dash.getRange('B13').setFormula('=COUNTIF(SALES_INTAKE!M:M,"已收全額")');
 
-  // 總計
   dash.getRange('A15').setValue('總報價筆數').setFontWeight('bold');
   dash.getRange('B15').setFormula('=COUNTA(SALES_INTAKE!A:A)-1');
 
@@ -464,49 +562,65 @@ function setupDashboard() {
 }
 
 // ─────────────────────────────────────────
-// doPost 報價入口（A6 透過 HTTP POST 呼叫）
+// doPost 報價入口（LINE Bot 透過 HTTP POST 呼叫）
 // ─────────────────────────────────────────
 
 /**
  * 由 LineWebhook.gs 的 doPost 路由呼叫
+ *
  * @param {Object} params
- *   .action     {string} "createQuote"（必要，由路由判斷）
- *   .clientName {string} 客戶名稱（必填）
- *   .eventType  {string} 活動類型（必填，例如 "私廚餐會"）
- *   .eventDate  {string} 活動日期 YYYY-MM-DD（必填）
- *   .company    {string} 公司名稱（選填）
- *   .phone      {string} 聯絡電話（選填）
- *   .address    {string} 活動地址（選填）
- *   .pax        {string} 預計人數（選填）
- *   .location   {string} 活動地點（選填）
- * @returns {TextOutput} JSON: { success, caseId, fileName, url } 或 { success, error }
+ *   .action      {string}  "createQuote"（必要）
+ *   .clientName  {string}  客戶名稱（必填）
+ *   .eventType   {string}  活動型態（必填）
+ *   .eventDate   {string}  活動日期 YYYY-MM-DD（必填）
+ *   .company     {string}  公司名稱（選填）
+ *   .phone       {string}  聯絡電話（選填）
+ *   .address     {string}  活動地址（選填）
+ *   .eventTime   {string}  活動時間（選填）
+ *   .eventName   {string}  活動名稱（選填）
+ *   .location    {string}  活動地點（選填）
+ *   .pax         {string}  規劃人數（選填）
+ *   .totalItems  {string}  餐點總件數（選填）
+ *   ── 品項篩選參數（選填，有 budget 才執行品項篩選）──
+ *   .budget      {number}  總預算
+ *   .itemCount   {number}  品項數量（預設 8）
+ *   .minMargin   {number}  最低毛利率 0~1（預設 0.7）
+ *   .style       {string}  "tea_time" / "savory" / "sweet"（預設 "tea_time"）
  */
 function handleQuoteRequest_(params) {
   try {
     var formData = {
-      clientName: params.clientName || '',
-      company:    params.company    || '',
-      phone:      params.phone      || '',
-      address:    params.address    || '',
-      eventType:  params.eventType  || '',
-      eventDate:  params.eventDate  || '',
-      pax:        params.pax        || '',
-      location:   params.location   || ''
+      clientName : params.clientName  || '',
+      company    : params.company     || '',
+      phone      : params.phone       || '',
+      address    : params.address     || '',
+      eventType  : params.eventType   || '',
+      eventDate  : params.eventDate   || '',
+      eventTime  : params.eventTime   || '',
+      eventName  : params.eventName   || '',
+      location   : params.location    || '',
+      pax        : params.pax         || '',
+      totalItems : params.totalItems  || '',
+      // 品項篩選參數
+      budget     : params.budget      || null,
+      itemCount  : params.itemCount   || 8,
+      minMargin  : params.minMargin   || 0.7,
+      style      : params.style       || 'tea_time'
     };
 
     var result = createQuote(formData);
 
     return ContentService.createTextOutput(JSON.stringify({
-      success:  true,
-      caseId:   result.caseId,
-      fileName: result.fileName,
-      url:      result.url
+      success  : true,
+      caseId   : result.caseId,
+      fileName : result.fileName,
+      url      : result.url
     })).setMimeType(ContentService.MimeType.JSON);
 
   } catch(err) {
     return ContentService.createTextOutput(JSON.stringify({
       success: false,
-      error:   err.message
+      error  : err.message
     })).setMimeType(ContentService.MimeType.JSON);
   }
 }

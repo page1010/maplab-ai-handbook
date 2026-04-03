@@ -31,6 +31,14 @@
     {
       "role": "assistant",
       "content": "**可以拉群組**，bot 本來就設計支援群組（`若群組中有多人，只回應白名單內的指令`）。\n\n但有一個 Telegram 限制要注意：\n\n---\n\n### 目前行為\n\n- 群組中**只有白名單用戶**（你 + SALES_USER_ID）的訊息會被處理，其他人的訊息直接忽略（不回覆）\n- 非白名單用戶發訊息 → bot 靜默，不會出聲\n\n### 有個陷阱：Telegram 群組隱私設定\n\nTelegram bot 預設**「群組隱私模式開啟」**，在群組裡**只看得到 `/指令`，看不到一般文字訊息**。\n\n目前 bot 靠一般文字觸發（`filters.TEXT & ~filters.COMMAND`），拉進群組後**可能失效**。\n\n**解法二選一：**\n\n| 方案 | 做法 | 優缺點 |\n|------|------|--------|\n| **關閉隱私模式** | BotFather → `/mybots` → Bot Settings → Group Privacy → **Disable** | bot 看到所有訊息，但需要信任群組成員 |\n| **改成 @mention 觸發** | 改 code，群組裡必須 `@bot名稱 報價...` 才觸發 | 更安全，不用改 BotFather 設定 |\n\n---\n\n**建議：先去 BotFather 確認群組隱私設定是否已關閉**，若沒關閉，拉進群組後下指令會沒反應。\n\n要我幫你改成「群組需 @mention 才觸發」的版本嗎？"
+    },
+    {
+      "role": "user",
+      "content": "測試"
+    },
+    {
+      "role": "assistant",
+      "content": "收到，A6 報價助理運作正常。\n\n可用指令：\n- `報價 姓名 類型 人數 預算`\n- `查 姓名`\n- `改 品項X → 品項Y`\n\n有需要請直接下指令。"
     }
   ]
 }

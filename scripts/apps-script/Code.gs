@@ -118,14 +118,17 @@ function createQuote(formData) {
   var newSs      = SpreadsheetApp.openById(newFile.getId());
 
   // ── 找出要保留的分頁 ──
-  var sheets     = newSs.getSheets();
-  var keepSheet  = null;
-  var itemsSheet = null;
+  var sheets        = newSs.getSheets();
+  var keepSheet     = null;
+  var newItemsSheet = null;
   for (var i = 0; i < sheets.length; i++) {
-    if (sheets[i].getName() === TEMPLATE_SHEET_NAME) keepSheet  = sheets[i];
-    if (sheets[i].getName() === 'Items')             itemsSheet = sheets[i];
+    if (sheets[i].getName() === TEMPLATE_SHEET_NAME) keepSheet     = sheets[i];
+    if (sheets[i].getName() === 'Items')             newItemsSheet = sheets[i];
   }
   if (!keepSheet) throw new Error('新檔案中找不到 QUOTE_DRAFT 分頁。');
+
+  // v3.5 修正：從原始 ss 讀 Items，避免複製後公式失效（price=0 → 全部被過濾 → D欄空白）
+  var itemsSheet = ss.getSheetByName('Items');
 
   // ── 先 activate 保留分頁，再批次刪除其餘分頁 ──
   newSs.setActiveSheet(keepSheet);
@@ -142,7 +145,7 @@ function createQuote(formData) {
   keepSheet.setName('報價單');
 
   // ── 隱藏 Items 分頁（保留 VLOOKUP） ──
-  if (itemsSheet) itemsSheet.hideSheet();
+  if (newItemsSheet) newItemsSheet.hideSheet();
 
   // ── 填入客戶資訊（對應 QUOTE_DRAFT v3 版面） ──
   // Bug2 修正：D2 只寫 clientName，company 不混入
@@ -269,12 +272,23 @@ function selectItemsForBudget_(itemsSheet, params) {
 
     var itemId = data[i][0];   // A: 序號/item_id (e.g. APP004)
 
-    if (!name || !price) continue;
+    if (!name || !price) {
+      Logger.log('跳過 row ' + (i+2) + '：name=' + name + ' price=' + price);
+      continue;
+    }
 
     var margin = price > 0 ? (price - cost) / price : 0;
-    if (margin < minMargin) continue;
+    if (margin < minMargin) {
+      Logger.log('跳過 row ' + (i+2) + ' ' + name + '：毛利率 ' + (margin*100).toFixed(1) + '% < ' + (minMargin*100).toFixed(0) + '%');
+      continue;
+    }
 
     allItems.push({ id: itemId, name: name, price: price, cost: cost, margin: margin, imageUrl: imageUrl, category: String(category).trim() });
+  }
+
+  Logger.log('[selectItemsForBudget_] 讀取 ' + data.length + ' 列，通過 margin 篩選：' + allItems.length + ' 項');
+  if (allItems.length > 0) {
+    Logger.log('品類分布：' + allItems.map(function(x){return x.category;}).join(', '));
   }
 
   if (allItems.length === 0) return { appetizers: [], desserts: [] };
@@ -358,6 +372,8 @@ function writeItemsToQuote_(sheet, selected, pax) {
   var maxSlots   = APPETIZER_ROWS.end - APPETIZER_ROWS.start + 1;  // 3
   var maxDSlots  = DESSERT_ROWS.end   - DESSERT_ROWS.start + 1;    // 3
 
+  Logger.log('[writeItemsToQuote_] appetizers=' + appetizers.length + ' desserts=' + desserts.length + ' qty=' + qty);
+
   // 寫 appetizer D8:D10
   for (var i = 0; i < maxSlots; i++) {
     var row  = APPETIZER_ROWS.start + i;
@@ -365,8 +381,9 @@ function writeItemsToQuote_(sheet, selected, pax) {
     if (item) {
       var displayName = item.id ? item.name + ' (' + item.id + ')' : item.name;
       sheet.getRange('D' + row).setValue(displayName);
-      sheet.getRange('G' + row).setValue(qty);         // 數量 = 人數
-      sheet.getRange('I' + row).setValue(item.cost);   // 單位成本
+      sheet.getRange('G' + row).setValue(qty);
+      sheet.getRange('I' + row).setValue(item.cost);
+      Logger.log('寫入 D' + row + '：' + displayName + ' G=' + qty + ' I=' + item.cost);
     } else {
       sheet.getRange('D' + row).clearContent();
       sheet.getRange('G' + row).clearContent();
@@ -383,6 +400,7 @@ function writeItemsToQuote_(sheet, selected, pax) {
       sheet.getRange('D' + dRow).setValue(dDisplayName);
       sheet.getRange('G' + dRow).setValue(qty);
       sheet.getRange('I' + dRow).setValue(dItem.cost);
+      Logger.log('寫入 D' + dRow + '：' + dDisplayName + ' G=' + qty + ' I=' + dItem.cost);
     } else {
       sheet.getRange('D' + dRow).clearContent();
       sheet.getRange('G' + dRow).clearContent();

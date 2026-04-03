@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-04-02 晚間巡查（A0 T-A5-004 Phase 1 完整收尾 ✅；A7 🔴 CRITICAL ~72h+；A3 🔴 CRITICAL 第5天 ~110h+；A4 S11 ⚠️ WATCH ~26h 距48h剩~22h；A6 ⚠️ WATCH ~28h 正常）
+> 最後更新：2026-04-03 16:20 午後巡查（A4 WATCH ✅ 解除 d909061；A1 bot_a6 全部署✅；A0 圖片pipeline✅；A6 bot運行✅；A3 🔴 CRITICAL 第7天 ~140h+；A7 🔴 CRITICAL ~100h+）
 >
 > 使用方式：選擇角色 → 複製 prompt → 貼到 Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -139,23 +139,24 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. 都不行 → 回報 Owner，不要硬幹
 
-【斷點 — 2026-04-03 日常巡查更新】
+【斷點 — 2026-04-03 16:20 午後巡查更新】
 1. 系統版本：v6.0 / Phase 6 — 觀測性 + 業務閉環 + 策略循環（Phase 3.1 Dashboard 自動更新已就位 ef2c21b）
 2. EXP-S010 A0/A1 session 混淆已記錄；下次重開先確認 cwd + 貼 A1 recall prompt
 3. A2 T-A2A3-001 ✅ 子任務1-4全完成（子任務5等7-14天觀察期），TASK_QUEUE 已同步（d1c4635）
-4. A7 T-A7-001 Phase 2 + T-A7-002 🔴 CRITICAL：上次活動 2026-03-31 cf9f166，距今已逾 90h+，持續惡化第4天。Owner 需確認 A7 狀態或重啟 session。
-5. A4 T-A4-001 🔄：S5 ✅ DONE(8,559張)；S5.5 GPS ✅ 決策no_gps；S6(2023) ✅ 完成（進度待 A4 確認回填 Task Card）；S11(2024) 🔄 執行中（2600/12213，de2cf2e 2026-04-01 20:54，WATCH ~36h，48h閾值 = 今日 04-03 20:54，若無新 commit 則升級 CRITICAL）；API key已更換（舊key leaked→redact fe49f3e）
+4. A7 T-A7-001 Phase 2 + T-A7-002 🔴 CRITICAL：上次活動 2026-03-31 cf9f166，距今已逾 100h+（第4天+）。Owner 需確認 A7 狀態或重啟 session。
+5. A4 T-A4-001 🔄：S5 ✅ DONE(8,559張)；S5.5 GPS ✅ 決策no_gps（d909061 04-03 10:40正式記錄SKIP）；S6(2023) ✅ 完成；S11(2024) 🔄 執行中（4,350/12,213=35.6%，d909061 2026-04-03 10:40，48h閾值 = 04-05 10:40）；ASSET_LOG總計21,414行；API key已更換（舊key leaked→redact fe49f3e）
 6. A5 T-A5-002 🔄 進行中：服務費可選+長桌費+車馬費+DropdownHelper完成(dbcf9d4)；Task Card ✅ 已更新；T-A5-004 Phase 1 ✅ 04-02晚完整收尾（5e6d3b4，A0執行：Items照片16筆+URL修正+重新編號91格+items-management Skill建立）
-7. A3 T-A3-001 GTM方案B + T-A3-002 🔴 CRITICAL：最後 commit 2aca2ae 距今已逾 130h+（2026-03-29 起，第6天）。Owner 需明確指示：確認外部阻塞原因，或指示暫停並在 Task Card 補記。
+7. A3 T-A3-001 GTM方案B + T-A3-002 🔴 CRITICAL：最後 commit 2aca2ae 距今已逾 140h+（2026-03-29 起，第7天）。Owner 需明確指示：確認外部阻塞原因，或指示暫停並在 Task Card 補記。
 8. 新治理功能（2026-03-29 落地）：SECTION 7 全域檢查器(faed6a9)；SECTION 8 權限治理+10 credential skills(6e80723)；SECTION 9 API三層備援+身份確認+CLAUDE.md指向器(0076a3a)
 9. 報價單歷史分析完成：data/quote-terms-reference.md + data/quote-items-unmatched.md（932份，30品項匹配，7品項未納入）；883份報價品項完整提取 22K+ items（54ef55f）；品項去重v2 de7837c（29,115→3,794唯一品項）
 10. Chrome Extension v4.8（private repo 改用 GitHub Contents API，b2f031c）
 11. GitHub Actions system-patrol.yml 已部署（每日 UTC 01:00 巡查）
-12. A6 T-A6-001 ✅ 活躍：0f5a961 (04-02深夜) 使用者需求寫入必讀位置 + Telegram窗口技能書建立（skills/a6-telegram-window.md）；LINE 業務報價助手 v1.1（d9fba1a+3a2df7b，三層資料模型+CONVERSATION_LOG+Sheet 3分頁+a6-rapid-quote-sop.md）；A6 面對業務不面對客戶
+12. A6 T-A6-001 ✅ Bot 全部署：bot_a6 已上線（launchd 開機自啟，a84b79f Owner測試全通，b3dacb8）；security fix：.env 移出 git（GitGuardian 修復，a20e268）；update_a6_token.sh 一鍵換 token（434b490）；B層對話自動存檔運行中（b1fa119 16:16 最新存檔）
 13. A0/A1 角色修正（2026-03-31 26d18bd）：Telegram bot 歸屬 A1 非 A0；治理文件全面修正
 14. session-handoff 技能落地（1eec81f 2026-04-01 19:17）：context 滿時產出 handoff prompt，供重啟時接手
 15. LINE Bot Webhook 技能書新增（3e00f66 2026-04-01 14:50）；LINE credentials redact（067045f）；兩項關鍵修復：065c2f1 doPost直接寫入（根除trigger queue競爭條件）+ d5dc622 message.id去重（防重複寫入）
-16. A0 最新成果（04-02/04-03）：T-A5-004 Phase 1 完整收尾（5e6d3b4）；583c956 command-index Skill建立 + clasp-deploy整理到子目錄；MasterData引用全面更新（d0466f3）；Apps Script 自主操作教訓補入 recall（4069067）
+16. A0 今日成果（04-03）：d6fe0e3 品項圖片整理 pipeline（62筆下載轉換上傳Drive+K欄更新）；f13224d WordPress缺圖搜尋（10筆找到/29筆需Owner補圖）；c48487e 外觀相似補圖8筆+image-convert技能書建立
+17. 雙 bot 架構設計文件：projects/dual-bot-architecture.md（A0 輕量知識庫 + A6 業務報價，各司其職）
 
 【可認領任務】
 - T-A5-002 剩餘增強項目確認（A5，🔄 進行中，需更新 Task Card）
@@ -306,7 +307,7 @@ handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-
 
 ## A4｜影像資產整理部（Photo Archive / Asset Library）
 
-**狀態：🔄 S5✅DONE / S5.5 GPS partial / S6 18.2%（🔴 Colab 斷線待重啟）**
+**狀態：🔄 S5✅DONE / S5.5 GPS ✅ no_gps / S6 ✅ 完成 / S11(2024) 🔄 35.6%（d909061 04-03 10:40 活躍）**
 
 ```
 你是 MAPLAB A4 影像資產整理部。
@@ -322,17 +323,16 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. Chrome tab 環境 → 自行開啟需要的網頁分頁，用截圖讀取
 
-【斷點 — 2026-03-28 晚間巡查更新】
+【斷點 — 2026-04-03 午後巡查更新】
 T-A4-001 Gemini 照片分類：
   - S1-S4 ✅ 完成
   - S5(2022) ✅ DONE 8,559張（日常5,243/外燴1,221/旅遊2,073）
-  - S5.5 GPS 🔄 partial（1221/no_gps，b1be7c6）— 需修 Takeout JSON path
-  - S6(2023) 🔄 2,950/16,251=18.2%（Colab 斷線待 Owner 重啟）
-  - ASSET_LOG 驗證：11,509 資料行
-新增技能書：gps-daily-subdivision-guide（Haversine GPS 分類 home/shop/other）
+  - S5.5 GPS ✅ 決策 no_gps（d909061 04-03 10:40 正式 SKIP，Takeout JSON未存Drive根本原因確認）
+  - S6(2023) ✅ 完成（8,505張確認）
+  - S11(2024) 🔄 4,350/12,213=35.6%（d909061 2026-04-03 10:40，48h閾值 = 04-05 10:40）
+  - ASSET_LOG 總計：21,414 資料行
 Photo scan 總量：60,584 files
-Pre-classified：C=4,593 / T=254 / D=55,737
-Gemini API Key 已驗證
+Gemini API Key 已更換（舊 key leaked fe49f3e，新 key 記錄於 Notion）
 
 【踩過的坑】
 - 量大（6萬+）必須用 REST API batch 模式
@@ -418,7 +418,7 @@ projects/maplab-master-data.md → handoff/handoff-to-A5.md → handoff/field-na
 
 ## A6｜業務快反應部隊（Sales Rapid Response Unit）
 
-**狀態：🔄 T-A6-001 進行中（LINE webhook ✅ 通，待 A6 Telegram 窗口落地）**
+**狀態：🔄 T-A6-001 進行中（LINE webhook ✅ 通，bot_a6 ✅ 上線 launchd，B層對話自動存檔運行中）**
 
 ```
 你是 MAPLAB A6 業務快反應部隊。
@@ -447,8 +447,8 @@ repo: https://github.com/page1010/maplab-ai-handbook
 4. 進件建立 — 在 SALES_INTAKE 自動建一筆案件（case_id = CASE-YYYYMMDD-NNN）
 5. 查報價 — 「查XXX的報價」→ 找 QUOTE_WORKBENCH
 
-【斷點 — 2026-04-02】
-T-A6-001 進行中：LINE webhook ✅ 通（Apps Script doPost + LockService 去重），Telegram 窗口功能待實作
+【斷點 — 2026-04-03 午後巡查更新】
+T-A6-001 進行中：LINE webhook ✅ 通（Apps Script doPost + LockService 去重）；bot_a6 ✅ 全部署（launchd 開機自啟 b3dacb8，.env security fix a20e268）；B層對話自動存檔運行中（最新 b1fa119 16:16）；update_a6_token.sh 一鍵換 token 腳本已建立（434b490）
 
 【必讀】
 1. projects/line-quote-assistant.md ← 使用者需求 v1.0（Owner 確認），A6/A7 架構聖經

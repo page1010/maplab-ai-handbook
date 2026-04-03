@@ -1,4 +1,4 @@
-// MAPLAB Agent Commander v4.6 — popup.js
+// MAPLAB Agent Commander v4.9 — popup.js
 // 角色選擇 + 專屬召喚 prompt（精簡版，無 commit history 面板）
 const DEFAULT_BASE = 'https://raw.githubusercontent.com/page1010/maplab-ai-handbook/main';
 const GITHUB_API   = 'https://api.github.com/repos/page1010/maplab-ai-handbook';
@@ -93,15 +93,15 @@ function parseStatus(md) {
   return r;
 }
 
-// === Parse AGENT_RECALL_PROMPTS.md ===
-function parseRecallPrompts(md) {
-  const prompts = {};
-  const regex = /## (A\d)[^\n]*\n[\s\S]*?```\n([\s\S]*?)```/g;
-  let match;
-  while ((match = regex.exec(md)) !== null) {
-    prompts[match[1]] = match[2].trim();
+// === Lazy-load per-agent recall from recalls/Ax_recall.md ===
+async function loadAgentRecall(role, base, token) {
+  if (cachedRecallPrompts[role]) return; // already cached
+  try {
+    const md = await fetchFile(base, `recalls/${role}_recall.md`, token);
+    cachedRecallPrompts[role] = md.trim();
+  } catch(e) {
+    cachedRecallPrompts[role] = `// ${role} recall 載入失敗: ${e.message}`;
   }
-  return prompts;
 }
 
 // === Overdue detection (uses commits internally, no UI) ===
@@ -231,21 +231,25 @@ async function loadAll() {
   if (data.lastRole) el('roleSelect').value = data.lastRole;
 
   try {
-    const [md, recallMd, commits] = await Promise.all([
+    const [md, commits] = await Promise.all([
       fetchFile(base, 'CURRENT_STATUS.md', token),
-      fetchFile(base, 'AGENT_RECALL_PROMPTS.md', token).catch(() => ''),
       fetchCommits(token)
     ]);
 
     cachedParsed  = parseStatus(md);
     cachedCommits = commits;
     cachedOverdue = detectOverdueTasks(commits, cachedParsed.activeTasks);
-    cachedRecallPrompts = recallMd ? parseRecallPrompts(recallMd) : {};
+
+    // If a role is pre-selected, lazy-load its recall file now
+    const selectedRole = el('roleSelect').value;
+    if (selectedRole) {
+      await loadAgentRecall(selectedRole, base, token);
+    }
 
     updatePromptDisplay();
 
     el('overdueCount').textContent = cachedOverdue.length > 0 ? `⏰ ${cachedOverdue.length}` : '';
-    setStatus('ok', `v${cachedParsed.version} ｜ ${Object.keys(cachedRecallPrompts).length} 角色已載入`);
+    setStatus('ok', `v${cachedParsed.version} ｜ 系統已載入`);
   } catch(e) {
     setStatus('err', '載入失敗：' + e.message);
     el('promptText').value = '// 錯誤：' + e.message;
@@ -269,9 +273,18 @@ document.addEventListener('DOMContentLoaded', async () => {
   el('githubRawBase').addEventListener('keydown', e => { if(e.key==='Enter') { autoSave(); loadAll(); } });
   el('githubToken').addEventListener('keydown',   e => { if(e.key==='Enter') { autoSave(); loadAll(); } });
 
-  el('roleSelect').addEventListener('change', () => {
+  el('roleSelect').addEventListener('change', async () => {
+    const role = el('roleSelect').value;
+    if (role && !cachedRecallPrompts[role]) {
+      setStatus('loading', `載入 ${role} recall...`);
+      const d = await chrome.storage.local.get(['githubRawBase','githubToken']);
+      const base  = d.githubRawBase || DEFAULT_BASE;
+      const token = d.githubToken  || '';
+      await loadAgentRecall(role, base, token);
+      setStatus('ok', `${role} recall 已載入`);
+    }
     updatePromptDisplay();
-    chrome.storage.local.set({ lastRole: el('roleSelect').value });
+    chrome.storage.local.set({ lastRole: role });
   });
 
   await loadAll();

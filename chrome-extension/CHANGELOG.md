@@ -1,5 +1,17 @@
 # Chrome Extension Changelog
 
+## v4.9 — 2026-04-03
+變更者：A1 Claude Code
+- **Recall 拆分**：各 agent 改用獨立 `recalls/Ax_recall.md`，不再從單一大檔 AGENT_RECALL_PROMPTS.md 解析
+- **按需載入**：選角色時才抓該角色的 recall 檔（lazy load），初始載入只抓 CURRENT_STATUS.md + commits，速度更快
+- **任務清單格式**：各 recall 檔底部加 `[ ]` / `[x]` 任務清單，做完直接畫 x
+- commit：(本次)
+
+## v4.8 — 2026-03-29
+變更者：A1 Claude Code
+- **Private repo 支援**：改用 GitHub Contents API（token 存在 chrome.storage），解決 raw.githubusercontent.com 對 private repo 不支援 Authorization header 的問題
+- commit：b2f031c
+
 ## v4.7 — 2026-03-28
 變更者：A1 Claude Code
 - **A0 角色支援**：popup.html 加入 A0 角色選項，可直接召喚 A0（Cowork 總調度秘書）的 recall prompt

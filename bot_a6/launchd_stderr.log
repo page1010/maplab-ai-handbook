@@ -1,0 +1,55 @@
+Traceback (most recent call last):
+  File "/Users/pagemacmini/maplab-ai-handbook/bot_a6/bot_a6.py", line 393, in <module>
+    main()
+  File "/Users/pagemacmini/maplab-ai-handbook/bot_a6/bot_a6.py", line 389, in main
+    app.run_polling(allowed_updates=Update.ALL_TYPES, drop_pending_updates=True)
+  File "/Users/pagemacmini/maplab-ai-handbook/bot/venv/lib/python3.9/site-packages/telegram/ext/_application.py", line 868, in run_polling
+    return self.__run(
+  File "/Users/pagemacmini/maplab-ai-handbook/bot/venv/lib/python3.9/site-packages/telegram/ext/_application.py", line 1088, in __run
+    loop.run_until_complete(self.updater.stop())  # type: ignore[union-attr]
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/Users/pagemacmini/maplab-ai-handbook/bot/venv/lib/python3.9/site-packages/telegram/ext/_updater.py", line 872, in stop
+    await self._stop_polling()
+  File "/Users/pagemacmini/maplab-ai-handbook/bot/venv/lib/python3.9/site-packages/telegram/ext/_updater.py", line 890, in _stop_polling
+    await self.__polling_task
+  File "/Users/pagemacmini/maplab-ai-handbook/bot/venv/lib/python3.9/site-packages/telegram/ext/_updater.py", line 750, in _network_loop_retry
+    if not await do_action():
+  File "/Users/pagemacmini/maplab-ai-handbook/bot/venv/lib/python3.9/site-packages/telegram/ext/_updater.py", line 744, in do_action
+    return action_cb_task.result()
+  File "/Users/pagemacmini/maplab-ai-handbook/bot/venv/lib/python3.9/site-packages/telegram/ext/_updater.py", line 371, in polling_action_cb
+    updates = await self.bot.get_updates(
+  File "/Users/pagemacmini/maplab-ai-handbook/bot/venv/lib/python3.9/site-packages/telegram/ext/_extbot.py", line 650, in get_updates
+    updates = await super().get_updates(
+  File "/Users/pagemacmini/maplab-ai-handbook/bot/venv/lib/python3.9/site-packages/telegram/_bot.py", line 4480, in get_updates
+    await self._post(
+  File "/Users/pagemacmini/maplab-ai-handbook/bot/venv/lib/python3.9/site-packages/telegram/_bot.py", line 619, in _post
+    return await self._do_post(
+  File "/Users/pagemacmini/maplab-ai-handbook/bot/venv/lib/python3.9/site-packages/telegram/ext/_extbot.py", line 354, in _do_post
+    return await super()._do_post(
+  File "/Users/pagemacmini/maplab-ai-handbook/bot/venv/lib/python3.9/site-packages/telegram/_bot.py", line 648, in _do_post
+    result = await request.post(
+  File "/Users/pagemacmini/maplab-ai-handbook/bot/venv/lib/python3.9/site-packages/telegram/request/_baserequest.py", line 202, in post
+    result = await self._request_wrapper(
+  File "/Users/pagemacmini/maplab-ai-handbook/bot/venv/lib/python3.9/site-packages/telegram/request/_baserequest.py", line 381, in _request_wrapper
+    raise InvalidToken(message)
+telegram.error.InvalidToken: Unauthorized
+Exception ignored in: <bound method BaseEventLoop.call_exception_handler of <_UnixSelectorEventLoop running=False closed=True debug=False>>
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 1771, in call_exception_handler
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/logging/__init__.py", line 1475, in error
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/logging/__init__.py", line 1589, in _log
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/logging/__init__.py", line 1599, in handle
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/logging/__init__.py", line 1661, in callHandlers
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/logging/__init__.py", line 952, in handle
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/logging/__init__.py", line 1186, in emit
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/logging/__init__.py", line 1175, in _open
+NameError: name 'open' is not defined
+Exception ignored in: <coroutine object Application._update_fetcher at 0x10ad8f3c0>
+Traceback (most recent call last):
+  File "/Users/pagemacmini/maplab-ai-handbook/bot/venv/lib/python3.9/site-packages/telegram/ext/_application.py", line 1248, in _update_fetcher
+  File "/Users/pagemacmini/maplab-ai-handbook/bot/venv/lib/python3.9/site-packages/telegram/ext/_application.py", line 1227, in __update_fetcher
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/queues.py", line 168, in get
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 746, in call_soon
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 510, in _check_closed
+RuntimeError: Event loop is closed

@@ -1,6 +1,7 @@
 /**
- * MAPLAB 報價系統 v3.2
- * 修正：cell references 對齊 QUOTE_DRAFT v3 版面 + 品項篩選 + D 欄清除 + 條款位置
+ * MAPLAB 報價系統 v3.3
+ * 修正：cell references 對齊 Chrome 截圖確認之 QUOTE_DRAFT 實際版面
+ *   - 時間 F3→E3，鹹食 D8:D10，甜點 D12:D14，飲品 D15:D16，條款 B34
  * 參考：handoff/feedback/2026-04-02-quote-draft-v3-layout.md
  *
  * 部署目標 Sheet：1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg
@@ -11,22 +12,23 @@
  *   D2: 客戶名（企業版：公司名 + 聯絡人）
  *   E2: 活動日期
  *   D3: 地址
- *   F3: 時間
+ *   E3: 時間（v3.3 修正：原錯寫 F3）
  *   D4: 活動型態
  *   F4: 規劃人數
  *   D5: 活動名稱
  *   F5: 餐點總件數
- *   D8:D13  appetizer 品名（dropdown → 產出後清除 validation）
- *   D15:D19 dessert 品名（dropdown → 產出後清除 validation）
- *   D21:D22 飲品品名
- *   F欄: qty, I欄: 單位成本, J欄: 小計
+ *   D8:D10  appetizer 鹹食品名（3格）
+ *   D12:D14 dessert 甜點品名（3格）
+ *   D15:D16 飲品品名（2格）
+ *   G欄: qty, I欄: 單位成本
  *   K1: Case ID
  *   K2: 建立時間
  *   K3: 報價狀態（dropdown 保留）
  *   K4: 匯款狀態（dropdown 保留）
  *   K5: 版本
- *   C39: 合約條款
- *   E35: 總金額, J35: 訂單成本, J36: 毛利率%
+ *   B33: 【合約條款】（template 已有，不覆寫）
+ *   B34: 條款內容（v3.3 修正：原錯寫 C40）
+ *   E29: 總金額, H29: 訂單成本標籤, H30: 毛利率標籤, I30: 毛利率%
  *
  * Items 分頁欄位（A=序號, B=品名, C=品類, D=售價, E=成本, K=圖片URL）
  */
@@ -36,10 +38,10 @@ var TEMPLATE_SHEET_NAME = 'QUOTE_DRAFT';
 var INTAKE_SHEET_NAME   = 'SALES_INTAKE';
 var DRIVE_ROOT_FOLDER   = 'MAPLAB_報價單';
 
-// 菜單品項在 QUOTE_DRAFT 的列範圍
-var APPETIZER_ROWS = { start: 8,  end: 13 };  // 鹹食 appetizer（6 格）
-var DESSERT_ROWS   = { start: 15, end: 19 };  // 甜點 dessert（5 格）
-var DRINK_ROWS     = { start: 21, end: 22 };  // 飲品（2 格）
+// 菜單品項在 QUOTE_DRAFT 的列範圍（v3.3 對照 Chrome 截圖修正）
+var APPETIZER_ROWS = { start: 8,  end: 10 };  // 鹹食 appetizer D8:D10（3 格）
+var DESSERT_ROWS   = { start: 12, end: 14 };  // 甜點 dessert D12:D14（3 格）
+var DRINK_ROWS     = { start: 15, end: 16 };  // 飲品 D15:D16（2 格）
 
 // ─────────────────────────────────────────
 // 選單 & 入口
@@ -143,7 +145,7 @@ function createQuote(formData) {
   keepSheet.getRange('D2').setValue(displayName);
   keepSheet.getRange('E2').setValue(formData.eventDate || '');
   keepSheet.getRange('D3').setValue(formData.address   || '');
-  keepSheet.getRange('F3').setValue(formData.eventTime || '');
+  keepSheet.getRange('E3').setValue(formData.eventTime || '');  // v3.3 修正：原錯寫 F3
   keepSheet.getRange('D4').setValue(formData.eventType || '');
   keepSheet.getRange('F4').setValue(formData.pax       || '');
   keepSheet.getRange('D5').setValue(formData.eventName || '');
@@ -169,8 +171,8 @@ function createQuote(formData) {
       .setAllowInvalid(false).build()
   );
 
-  // ── 【修正 問題 4】清除 D 欄品項區的 dropdown 驗證（範圍 D8:D22） ──
-  keepSheet.getRange('D8:D22').clearDataValidations();
+  // ── 清除 D 欄品項區的 dropdown 驗證（D8:D19，含 D18:D19 禮盒格） ──
+  keepSheet.getRange('D8:D19').clearDataValidations();
 
   // ── 【修正 問題 1+2】若有傳入預算，自動篩選品項寫入菜單區 ──
   if (formData.budget && itemsSheet) {
@@ -188,17 +190,17 @@ function createQuote(formData) {
     }
   }
 
-  // ── 【修正 問題 3】條款寫入 C39，確保可見格式 ──
+  // ── 條款寫入 B34（v3.3 修正：B33=【合約條款】template 已有，B34 寫內容） ──
   var isCorporate = formData.company && formData.company.trim().length > 0;
   var terms = isCorporate ? getCorpTerms(eventDate) : getPersonalTerms();
-  keepSheet.getRange('C39').setValue('【合約條款】').setFontWeight('bold').setFontSize(10);
-  keepSheet.getRange('C40').setValue(terms)
+  // B33 的【合約條款】標籤由 template 提供，此處直接寫 B34 內容
+  keepSheet.getRange('B34').setValue(terms)
     .setWrap(true)
     .setFontSize(9)
     .setVerticalAlignment('top');
 
-  // 確保條款行可見（取消隱藏 39-45）
-  keepSheet.showRows(39, 10);
+  // 確保條款行可見（取消隱藏 33-45）
+  keepSheet.showRows(33, 15);
 
   // ── 回傳新檔案 URL ──
   var newUrl = newSs.getUrl();
@@ -322,7 +324,7 @@ function writeItemsToQuote_(sheet, selected) {
   var maxSlots   = APPETIZER_ROWS.end - APPETIZER_ROWS.start + 1;  // 6
   var maxDSlots  = DESSERT_ROWS.end   - DESSERT_ROWS.start + 1;    // 5
 
-  // 寫 appetizer D8:D13
+  // 寫 appetizer D8:D10
   for (var i = 0; i < maxSlots; i++) {
     var row  = APPETIZER_ROWS.start + i;
     var item = appetizers[i];
@@ -334,7 +336,7 @@ function writeItemsToQuote_(sheet, selected) {
     }
   }
 
-  // 寫 dessert D15:D19
+  // 寫 dessert D12:D14
   for (var j = 0; j < maxDSlots; j++) {
     var dRow  = DESSERT_ROWS.start + j;
     var dItem = desserts[j];
@@ -364,7 +366,7 @@ function getQuoteDraftValues() {
                    ? Utilities.formatDate(new Date(sheet.getRange('E2').getValue()), 'Asia/Taipei', 'yyyy-MM-dd')
                    : '',
     address    : sheet.getRange('D3').getValue() || '',
-    eventTime  : sheet.getRange('F3').getValue() || '',
+    eventTime  : sheet.getRange('E3').getValue() || '',  // v3.3 修正：原錯寫 F3
     eventType  : sheet.getRange('D4').getValue() || '',
     pax        : sheet.getRange('F4').getValue() || '',
     eventName  : sheet.getRange('D5').getValue() || '',
@@ -432,7 +434,7 @@ function writeToIntake_(ss, caseId, formData, sheetUrl, now) {
   intakeSheet.appendRow([
     caseId,
     createdAt,
-    'quote-system-v3.2',
+    'quote-system-v3.3',
     formData.clientName,
     formData.company    || '',
     formData.phone      || '',

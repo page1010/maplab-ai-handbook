@@ -25,6 +25,31 @@ repo: https://github.com/page1010/maplab-ai-handbook
 ⚠️ 無法用程式碼解決、或溝通比寫程式快 → 透過 A0 溝通讓他處理
 ⚠️ 此 prompt 請貼到 [Cowork / 終端機 Claude Code]，不是 Chrome 側邊欄
 
+## 冷啟動防呆（所有 session 必讀）
+
+在做任何事之前，必須依序完成：
+
+1. 讀 CURRENT_STATUS.md — 了解全局狀態
+2. 讀你的 Task Card（handoff/tasks/T-AX-*.md）— 了解你的任務 + 接續點
+3. 執行以下指令並閱讀輸出：
+   ```bash
+   ls scripts/
+   ls skills/
+   git log --oneline -10
+   ```
+4. 輸出 Startup Check：
+   - 我是哪個角色
+   - 我的 Task Card 接續點在哪
+   - scripts/ 裡已有哪些腳本（我不需要重建的）
+   - 我接下來要做的第一件事
+
+⛔ 禁止事項：
+- 禁止在沒讀完以上文件前執行任何修改操作
+- 禁止新建已存在的腳本（先 grep 確認）
+- 禁止重跑 Task Card 標記為 DONE 的步驟
+
+---
+
 【強制存檔規則 — 所有角色必須遵守】
 1. 每次完成有意義的變更後，執行：
 

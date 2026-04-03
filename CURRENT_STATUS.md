@@ -126,6 +126,7 @@
 ✅ A1巡查 2026-04-03 09:00：LineWebhook 兩項關鍵修復落地 — 065c2f1 改用 doPost 直接寫入（根除 trigger queue 競爭條件）+ d5dc622 LINE message.id 去重邏輯（防重複寫入）。A0 583c956 建立 command-index Skill + clasp-deploy 整理到子目錄。
 
 ✅ A1巡查 2026-04-03 16:20 午後：A4 T-A4-001 WATCH ✅ 解除 — d909061 (2026-04-03 10:40 +0800) 確認：ASSET_LOG 真實進度確認 + GPS步驟 SKIP 正式記錄 + Task Card 更新。A4 今日 10:40 活躍，48h 時鐘重設為 2026-04-05 10:40。早上巡查 WATCH 閾值警告解除。S11(2024) 進度 4,350/12,213=35.6%，持續執行中。
+✅ A4 下班存檔 2026-04-03 18:00：S11 Colab 重啟確認（commit 3343eff）— Already completed 4,550/12,213，TODO 7,663，rate≈435/h，ETA≈17h（預計04-04 12:00完成）。Task Card Checkpoint 6 已記錄。48h 時鐘重設為 2026-04-05 18:00。
 ✅ A1巡查 2026-04-03 16:20 午後：A1 bot_a6 全部署完成 — 今日落地：(1) 4aaafb4 (12:05) 雙 bot 架構設計文件 + bot_a6 初始程式碼；(2) a84b79f (14:56) A6 bot 測試通過（token填入/online確認/Owner測試全通）；(3) b3dacb8 (14:58) bot_a6 切換 launchd 後台（plist 安裝至 LaunchAgents，開機自動啟動）；(4) a20e268/cab788d (15:19) security fix：bot_a6/.env 移出 git 追蹤（GitGuardian token 洩漏警告修復，.gitignore 補 **/.env）；(5) 434b490 (15:33) update_a6_token.sh 一鍵換 token 腳本 + telegram-bot.md 路徑修正。A6 Telegram bot 已穩定上線。
 ✅ A1巡查 2026-04-03 16:20 午後：A0 圖片整理進展 — d6fe0e3 (12:03) 品項圖片整理 pipeline（下載轉換上傳 Drive 62筆，K欄更新，CLAUDE.md 命名規範）；f13224d (12:21) WordPress缺圖搜尋（10筆品項從WP找到場景照，上傳Drive更新K欄，29筆無法找到需Owner補圖）；c48487e (15:00) 外觀相似補圖8筆（DST025/027/019/017/MAIN008/APP013/DST040/042）+ image-convert技能書建立。Owner Action：29筆缺圖需手動補充。
 ⚠️ A1巡查 2026-04-03 16:20 午後：A3 🔴 CRITICAL 持續第7天 ~140h+ — T-A3-001 GTM方案B + T-A3-002 廣告成效，最後 commit 2aca2ae (~2026-03-29 22:10) 距今已逾 140h。連續7天無 A3 活動。Owner 若無回覆，A1 下次巡查將建議正式暫停 A3 任務。

@@ -4,6 +4,30 @@
 格式：版本號 | 日期 | 變更摘要 | 執行 Agent
 
 
+## v5.2（Extension）— 2026-04-03
+
+**Extension v5.2：Bot → Extension 剪貼板橋接（方案 2，不需輔助使用權限）**
+
+執行 Agent：A1 Claude Code
+
+### Bot
+1. `bot.py`：加入 `/clip [文字]` 指令 — 將文字寫入 `/tmp/maplab_clip.json`
+2. `bot.py`：內建輕量 HTTP server（127.0.0.1:9876）跑在 daemon thread，提供 `GET /clip` 端點回傳 JSON + CORS header
+3. `bot.py`：新增 `clip_cmd` handler，已掛載到 CommandHandler
+
+### Chrome Extension
+4. `manifest.json`：`host_permissions` 新增 `http://localhost/*` + `http://127.0.0.1/*`（Extension fetch localhost 必要）
+5. `popup.js`：新增 `fetchFromBot()` 函式 — fetch 127.0.0.1:9876/clip → 寫入 promptText 輸入框
+6. `popup.html`：新增「📋 從 Bot 抓取」按鈕（位於注入按鈕上方）
+7. 版本升級至 v5.2
+
+### 使用流程
+1. Telegram 傳 `/clip 你要傳的文字`
+2. 開 Extension popup → 點「📋 從 Bot 抓取」
+3. promptText 自動填入 → 點「⚡ 注入到 Claude tab」
+
+---
+
 ## v5.4 — 2026-03-28
 
 **Chrome Extension v4.7：加入 A0/A1 角色選項 + MCP 修復**

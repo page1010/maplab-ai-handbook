@@ -10,11 +10,13 @@ Usage:
 """
 
 import asyncio
+import http.server
 import json
 import logging
 import os
 import subprocess
 import sys
+import threading
 from collections import deque
 from pathlib import Path
 from datetime import datetime
@@ -40,6 +42,10 @@ CLAUDE_OAUTH_TOKEN = os.getenv("CLAUDE_CODE_OAUTH_TOKEN", "")
 
 TELEGRAM_LOG_DIR = REPO_PATH / "data" / "telegram-logs"
 CONV_HISTORY_FILE = BOT_DIR / "conv_history.json"
+
+# ── Clipboard Server ────────────────────────────────────────────────────────────
+CLIP_FILE = Path("/tmp/maplab_clip.json")
+CLIP_SERVER_PORT = 9876
 
 # ── Logging ────────────────────────────────────────────────────────────────────
 LOG_FILE = BOT_DIR / "bot.log"
@@ -567,6 +573,69 @@ async def on_error(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
     logger.error(f"Unhandled exception: {context.error}", exc_info=context.error)
 
 
+# ── /clip command ───────────────────────────────────────────────────────────────
+
+async def clip_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Store text to local clipboard file for Extension to fetch."""
+    if not is_owner(update):
+        await deny(update)
+        return
+    text = " ".join(context.args) if context.args else ""
+    if not text:
+        current = ""
+        if CLIP_FILE.exists():
+            try:
+                current = json.loads(CLIP_FILE.read_text(encoding="utf-8")).get("text", "")[:80]
+            except Exception:
+                pass
+        await update.message.reply_text(
+            "用法：/clip [文字] — 儲存文字到 Extension 剪貼板\n"
+            f"目前剪貼板：{current or '（空）'}"
+        )
+        return
+    ts = datetime.now().strftime("%H:%M:%S")
+    CLIP_FILE.write_text(
+        json.dumps({"text": text, "ts": ts}, ensure_ascii=False),
+        encoding="utf-8",
+    )
+    await update.message.reply_text(
+        f"📋 已存入剪貼板（{len(text)} 字）\n"
+        f"開 Extension popup → 點「📋 從 Bot 抓取」→「⚡ 注入」"
+    )
+
+
+# ── Local HTTP Clipboard Server ─────────────────────────────────────────────────
+
+class _ClipHandler(http.server.BaseHTTPRequestHandler):
+    def do_GET(self):
+        if self.path != "/clip":
+            self.send_response(404)
+            self.end_headers()
+            return
+        if CLIP_FILE.exists():
+            content = CLIP_FILE.read_bytes()
+        else:
+            content = json.dumps({"text": "", "ts": ""}).encode("utf-8")
+        self.send_response(200)
+        self.send_header("Content-Type", "application/json; charset=utf-8")
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Content-Length", str(len(content)))
+        self.end_headers()
+        self.wfile.write(content)
+
+    def log_message(self, format, *args):
+        pass  # suppress HTTP access logs
+
+
+def _start_clip_server() -> None:
+    try:
+        server = http.server.HTTPServer(("127.0.0.1", CLIP_SERVER_PORT), _ClipHandler)
+        logger.info(f"Clipboard server running on 127.0.0.1:{CLIP_SERVER_PORT}")
+        server.serve_forever()
+    except Exception as e:
+        logger.error(f"Clipboard server failed to start: {e}")
+
+
 # ── Main ───────────────────────────────────────────────────────────────────────
 
 def main() -> None:
@@ -576,6 +645,10 @@ def main() -> None:
 
     _load_conv_history()
     logger.info(f"Starting MAPLAB A1 遠端終端 (repo={REPO_PATH})…")
+
+    # Start local clipboard HTTP server in background thread
+    t = threading.Thread(target=_start_clip_server, daemon=True)
+    t.start()
 
     app = (
         Application.builder()
@@ -600,6 +673,7 @@ def main() -> None:
     app.add_handler(CommandHandler("blocker", blocker))
     app.add_handler(CommandHandler("refresh", refresh))
     app.add_handler(CommandHandler("ask", ask_cmd))
+    app.add_handler(CommandHandler("clip", clip_cmd))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     app.add_error_handler(on_error)
 

@@ -1,13 +1,15 @@
 {
   "manifest_version": 3,
   "name": "MAPLAB Agent Commander",
-  "version": "5.0.0",
+  "version": "5.2.0",
   "description": "角色召喚 + 系統快照注入 + 直接填入 Claude tab。",
   "permissions": ["storage", "activeTab", "scripting", "tabs", "clipboardWrite", "sidePanel"],
   "host_permissions": [
     "https://claude.ai/*",
     "https://raw.githubusercontent.com/*",
-    "https://api.github.com/*"
+    "https://api.github.com/*",
+    "http://localhost/*",
+    "http://127.0.0.1/*"
   ],
   "action": {
     "default_popup": "popup.html"

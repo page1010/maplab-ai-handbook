@@ -43,6 +43,8 @@ body { width:400px; background:#0d0f14; color:#e8ecf4; font-family:'JetBrains Mo
 .btn-refresh:hover { border-color:#e8a838; color:#e8a838; }
 .btn-reload { flex:1; padding:8px; background:transparent; border:1px solid #2a3a1a; border-radius:4px; color:#5a8a4a; font-family:inherit; font-size:11px; cursor:pointer; }
 .btn-reload:hover { border-color:#38e87a; color:#38e87a; }
+.btn-bot-fetch { width:100%; padding:11px; background:#1a2a1a; border:1px solid #2a4a2a; border-radius:5px; color:#5a9a5a; font-family:inherit; font-size:12px; font-weight:700; cursor:pointer; }
+.btn-bot-fetch:hover { background:#1e3a1e; border-color:#38e87a; color:#38e87a; }
 .btn-row { display:flex; gap:8px; }
 hr { border:none; border-top:1px solid #1a2030; }
 .field label { display:block; font-size:10px; color:#7a8a9d; text-transform:uppercase; margin-bottom:5px; }
@@ -60,7 +62,7 @@ hr { border:none; border-top:1px solid #1a2030; }
   <div class="logo">⬡ MAPLAB COMMANDER</div>
   <div class="header-right">
     <span class="overdue-badge" id="overdueCount"></span>
-    <span class="version">v5.1</span>
+    <span class="version">v5.2</span>
   </div>
 </div>
 <div class="body">
@@ -96,6 +98,7 @@ hr { border:none; border-top:1px solid #1a2030; }
       <textarea id="promptText" readonly placeholder="選擇角色後顯示專屬召喚 prompt..."></textarea>
     </div>
   </div>
+  <button class="btn-bot-fetch" id="botFetchBtn" onclick="fetchFromBot()">📋 從 Bot 抓取</button>
   <button class="btn-copy" id="copyBtn" onclick="copyPrompt()">📋 複製 Startup Prompt</button>
   <button class="btn-inject" id="injectBtn" onclick="injectToClaudeTab()">⚡ 注入到 Claude tab</button>
   <hr>

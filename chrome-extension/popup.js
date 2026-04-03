@@ -1,4 +1,4 @@
-// MAPLAB Agent Commander v5.1 — popup.js
+// MAPLAB Agent Commander v5.2 — popup.js
 // 角色選擇 + 專屬召喚 prompt（精簡版，無 commit history 面板）
 const DEFAULT_BASE = 'https://raw.githubusercontent.com/page1010/maplab-ai-handbook/main';
 const GITHUB_API   = 'https://api.github.com/repos/page1010/maplab-ai-handbook';
@@ -259,6 +259,31 @@ function updatePromptDisplay() {
       }
     }
   }
+}
+
+// === Fetch from Bot (Method 2) ===
+async function fetchFromBot() {
+  const btn = el('botFetchBtn');
+  btn.textContent = '⏳ 抓取中…';
+  btn.disabled = true;
+  try {
+    const resp = await fetch('http://127.0.0.1:9876/clip', { cache: 'no-store' });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const data = await resp.json();
+    if (!data.text) throw new Error('剪貼板是空的');
+    el('promptText').value = data.text;
+    updateCharCount(data.text);
+    btn.textContent = `✅ 已抓取（${data.ts || '?'}）`;
+    btn.style.background = '#1a3a1a'; btn.style.borderColor = '#38e87a'; btn.style.color = '#38e87a';
+  } catch(e) {
+    btn.textContent = '❌ ' + e.message.substring(0, 40);
+    btn.style.background = '#3a1a1a'; btn.style.borderColor = '#e85538'; btn.style.color = '#e85538';
+  }
+  btn.disabled = false;
+  setTimeout(() => {
+    btn.textContent = '📋 從 Bot 抓取';
+    btn.style.background = ''; btn.style.borderColor = ''; btn.style.color = '';
+  }, 3500);
 }
 
 // === Reload Extension ===

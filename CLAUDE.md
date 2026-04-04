@@ -47,6 +47,9 @@ repo: https://github.com/page1010/maplab-ai-handbook
 - 禁止在沒讀完以上文件前執行任何修改操作
 - 禁止新建已存在的腳本（先 grep 確認）
 - 禁止重跑 Task Card 標記為 DONE 的步驟
+- ⛔ clasp 操作前必須確認 .clasp.json 的 scriptId 指向正確的 GAS 專案
+   報價系統 = 1JIiPW_OUwNzB4VHS4k0KHi7LYDdPlFgHWejotsY4KE3KdLTc3EB-0vpc
+   LINE 對話 = 1Fkl34P7p395k0YzwY8hyhz7DAAsgA3CBgyumx9ImSOFoXu771lFABSi7
 
 ---
 

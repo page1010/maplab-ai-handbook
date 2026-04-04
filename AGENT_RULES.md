@@ -581,3 +581,25 @@ A0 在 2026-04-04 session 中多次修改 Code.gs 的 createQuote 函數，導�
 ### 公式參考（QUOTE_DRAFT I 欄）
 I8: =IF(D8="","",IFERROR(VLOOKUP(D8,Items!C:E,3,0),"N/A"))
 （所有 I8:I16 都是同樣公式，對應不同的 D 欄品項）
+
+## Section 12: clasp 操作安全規則（2026-04-04 追加）
+
+### 開始前必做
+1. 確認 .clasp.json 的 scriptId 指向正確的 GAS 專案
+2. 到 Chrome 的「擴充功能 > Apps Script」確認 Bound Script 的 Script ID
+3. 比對兩者是否一致
+
+### 兩個 GAS 專案（不要搞混）
+| 專案 | 名稱 | Script ID | 用途 |
+|------|------|-----------|------|
+| 報價系統 | MAPLAB_外燴系統_v0.1 | 1JIiPW_OUwNzB4VHS4k0KHi7LYDdPlFgHWejotsY4KE3KdLTc3EB-0vpc | Code.gs, createSlides, QuoteForm |
+| LINE 對話 | 傳line對話到外燴系統sheet | 1Fkl34P7p395k0YzwY8hyhz7DAAsgA3CBgyumx9ImSOFoXu771lFABSi7 | LineWebhook.gs |
+
+### clasp push 前必做
+1. clasp pull 先看線上版有什麼
+2. 不要直接覆蓋 — 比對差異後再決定
+3. 備份現有程式碼（git commit 或另存）
+
+### 禁止事項
+- 禁止在不確認 scriptId 的情況下 clasp push
+- 禁止把 LINE 專案的檔案推到報價系統專案（或反過來）

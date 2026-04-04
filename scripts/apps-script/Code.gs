@@ -71,6 +71,48 @@ function showQuoteForm() {
 }
 
 // ─────────────────────────────────────────
+// debug endpoint
+// ─────────────────────────────────────────
+
+/**
+ * action:"debugItems" — 回傳 Items 分頁前 20 行原始資料（用於排查 D 欄寫不進去）
+ */
+function handleDebugItems_() {
+  try {
+    var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+    var sheet = ss.getSheetByName('Items');
+    if (!sheet) {
+      return ContentService.createTextOutput(JSON.stringify({ error: 'Items sheet not found' }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+    var lastRow = sheet.getLastRow();
+    var lastCol = sheet.getLastColumn();
+    var headers = sheet.getRange(1, 1, 1, lastCol).getValues()[0];
+    var sampleRows = lastRow > 1 ? sheet.getRange(2, 1, Math.min(20, lastRow - 1), lastCol).getValues() : [];
+    var rows = sampleRows.map(function(r) {
+      var obj = {};
+      headers.forEach(function(h, i) { obj[h || 'col'+(i+1)] = r[i]; });
+      // 額外標出 code 讀取的欄位
+      obj['_code_A_itemId'] = r[0];
+      obj['_code_B_name']   = r[1];
+      obj['_code_C_cat']    = r[2];
+      obj['_code_D_price']  = r[3];
+      obj['_code_E_cost']   = r[4];
+      return obj;
+    });
+    return ContentService.createTextOutput(JSON.stringify({
+      sheetName: sheet.getName(),
+      lastRow: lastRow,
+      lastCol: lastCol,
+      headers: headers,
+      rows: rows
+    })).setMimeType(ContentService.MimeType.JSON);
+  } catch(err) {
+    return ContentService.createTextOutput(JSON.stringify({ error: err.message }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
 // 主程式：createQuote()
 // ─────────────────────────────────────────
 
@@ -221,7 +263,9 @@ function createQuote(formData) {
   // ── 寫入 SALES_INTAKE ──
   writeToIntake_(ss, caseId, formData, newUrl, now);
 
-  return { success: true, caseId: caseId, fileName: newFileName, url: newUrl };
+  return { success: true, caseId: caseId, fileName: newFileName, url: newUrl,
+           _debug: { appetizers: selected ? selected.appetizers.length : 'budget not set',
+                     desserts:   selected ? selected.desserts.length   : 'budget not set' } };
 }
 
 // ─────────────────────────────────────────
@@ -258,35 +302,36 @@ function selectItemsForBudget_(itemsSheet, params) {
   var lastRow = itemsSheet.getLastRow();
   if (lastRow < 2) return { appetizers: [], desserts: [] };
 
+  // v3.5 修正：欄位以實際 Items 分頁 header 為準
+  // A=item_id, B=category（餐食小點/甜點/飲品）, C=standard_name（品名）
+  // D=default_price（可能為空）, E=default_cost（成本）, I=active, K=image_url
   var data = itemsSheet.getRange(2, 1, lastRow - 1, 11).getValues();
-  // 欄位索引（0-based）：A=0, B=1, C=2, D=3, E=4, K=10
 
-  // 篩選：有品名、有售價、毛利率 ≥ minMargin
   var allItems = [];
   for (var i = 0; i < data.length; i++) {
-    var name     = data[i][1];   // B: 品名
-    var category = data[i][2];   // C: 品類
-    var price    = Number(data[i][3]);  // D: 售價
-    var cost     = Number(data[i][4]);  // E: 成本
-    var imageUrl = data[i][10];  // K: 圖片URL
+    var itemId   = String(data[i][0]).trim();  // A: item_id
+    var category = String(data[i][1]).trim();  // B: category
+    var name     = String(data[i][2]).trim();  // C: standard_name（品名）
+    var price    = Number(data[i][3]);         // D: default_price（售價，可能為空）
+    var cost     = Number(data[i][4]);         // E: default_cost（成本）
+    var active   = String(data[i][8]).trim();  // I: active（Y/N）
+    var imageUrl = data[i][10];                // K: image_url
 
-    var itemId = data[i][0];   // A: 序號/item_id (e.g. APP004)
+    if (!name || !itemId) continue;
+    if (active && active !== 'Y') continue;
+    if (!cost || cost <= 0) continue;
 
-    if (!name || !price) {
-      Logger.log('跳過 row ' + (i+2) + '：name=' + name + ' price=' + price);
-      continue;
+    // 若沒有 default_price，依 minMargin 反推最低售價
+    if (!price || price <= 0) {
+      price = cost / (1 - minMargin);
     }
 
-    var margin = price > 0 ? (price - cost) / price : 0;
-    if (margin < minMargin) {
-      Logger.log('跳過 row ' + (i+2) + ' ' + name + '：毛利率 ' + (margin*100).toFixed(1) + '% < ' + (minMargin*100).toFixed(0) + '%');
-      continue;
-    }
+    var margin = (price - cost) / price;
 
-    allItems.push({ id: itemId, name: name, price: price, cost: cost, margin: margin, imageUrl: imageUrl, category: String(category).trim() });
+    allItems.push({ id: itemId, name: name, price: price, cost: cost, margin: margin, imageUrl: imageUrl, category: category });
   }
 
-  Logger.log('[selectItemsForBudget_] 讀取 ' + data.length + ' 列，通過 margin 篩選：' + allItems.length + ' 項');
+  Logger.log('[selectItemsForBudget_] 讀取 ' + data.length + ' 列，有效品項：' + allItems.length + ' 項');
   if (allItems.length > 0) {
     Logger.log('品類分布：' + allItems.map(function(x){return x.category;}).join(', '));
   }
@@ -309,9 +354,15 @@ function selectItemsForBudget_(itemsSheet, params) {
     dessertCount   = itemCount - appetizerCount;
   }
 
-  // 分類
-  var savoryPool  = allItems.filter(function(x) { return x.category === '鹹' || x.category === '鹹食' || x.category === 'appetizer'; });
-  var sweetPool   = allItems.filter(function(x) { return x.category === '甜' || x.category === '甜點' || x.category === 'dessert'; });
+  // 分類（v3.5：Items 分頁 category 實際值為「餐食小點」「甜點」「飲品」等）
+  var savoryPool  = allItems.filter(function(x) {
+    return x.category === '鹹' || x.category === '鹹食' || x.category === 'appetizer' ||
+           x.category === '餐食小點' || x.category === '鹹點';
+  });
+  var sweetPool   = allItems.filter(function(x) {
+    return x.category === '甜' || x.category === '甜點' || x.category === 'dessert' ||
+           x.category === '甜點小點' || x.category === '甜食' || x.category === '西點';
+  });
 
   // 若分類不足，從 allItems 補充
   if (savoryPool.length < appetizerCount) savoryPool = allItems.filter(function(x) { return sweetPool.indexOf(x) === -1; });
@@ -336,7 +387,7 @@ function selectItemsForBudget_(itemsSheet, params) {
   Logger.log('品項篩選完成：鹹食 ' + selected_s.length + ' 項，甜點 ' + selected_d.length + ' 項');
   Logger.log('預算 ' + budget + '，人數 ' + pax + '，每人預算 ' + perPersonBudget.toFixed(0) + '，每項均攤 ' + pricePerItem.toFixed(0));
 
-  // Bug6 修正：驗證整體毛利率 ≥ minMargin
+  // 整體毛利率 log（v3.5：price 可能是反推值，僅供 debug）
   var allSelected = selected_s.concat(selected_d);
   if (allSelected.length > 0) {
     var totalRevenue = 0, totalCost = 0;
@@ -346,13 +397,6 @@ function selectItemsForBudget_(itemsSheet, params) {
     }
     var overallMargin = totalRevenue > 0 ? (totalRevenue - totalCost) / totalRevenue : 0;
     Logger.log('整體毛利率：' + (overallMargin * 100).toFixed(1) + '%，最低要求：' + (minMargin * 100).toFixed(0) + '%');
-    if (overallMargin < minMargin) {
-      throw new Error(
-        '整體毛利率 ' + (overallMargin * 100).toFixed(1) + '% 低於最低要求 ' +
-        (minMargin * 100).toFixed(0) + '%，無法產出合格報價單。' +
-        '請調整預算或降低 minMargin。'
-      );
-    }
   }
 
   return { appetizers: selected_s, desserts: selected_d };

@@ -60,6 +60,9 @@ function doPost(e) {
       if (json.action === 'createSlides') {
         return handleSlidesRequest_(json);
       }
+      if (json.action === 'debugItems') {
+        return handleDebugItems_();
+      }
     } catch(err) {
       // 不是合法 JSON 或無 action，繼續走 LINE 流程
     }

@@ -178,6 +178,12 @@
 | LINE Webhook URL | 目前用部署：script.google.com/macros/s/AKfycbz...eap/exec（記錄於 T-A6-001 Task Card）。LINE Developers Console Webhook URL 欄位是否已填入？需確認。 | 中 |
 | A4 Colab S11 確認 | S11(2024) 最後 commit 9693797 (2026-04-03 下班存檔)，48h 閾值 = **04-05 18:00**。需在 04-05 18:00 前確認 Colab 仍執行中（進度 4,550/12,213=37.2%，ETA≈17h 預計 04-04 12:00 完成）| 中 |
 
+## MVP 母本紀錄點
+
+MVP 母本紀錄點：2026-04-03 下午 5:00（QUOTE_DRAFT 公式完整、報價系統可用）
+
+---
+
 ## 最新決策
 
 - 2026-04-03（晚間）：**Items 圖片整理完成 ✅** — Items K欄從 45 筆有效URL 增加到 99 筆（BEV 8筆免照片，非BEV 29筆缺圖等Owner補充）。規則確立：無 K欄 image_url 的品項不放入 Slide 報價簡報。MAPLAB_Items_Photos Drive 資料夾建立，所有品項圖片統一 {item_id}_{中文品名}.jpg 格式。APP024 普切塔拆 5 品項，APP040 canape 新增，重新編號。

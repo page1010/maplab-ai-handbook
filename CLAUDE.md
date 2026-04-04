@@ -43,6 +43,16 @@ repo: https://github.com/page1010/maplab-ai-handbook
    - scripts/ 裡已有哪些腳本（我不需要重建的）
    - 我接下來要做的第一件事
 
+【品牌規範必讀觸發條件】
+以下任務類型開始前，必須先讀 skills/maplab-visual-spec.md 和 skills/brand-voice-guide.md：
+- SEO 文案、IG 文案、FB 文案
+- 廣告素材、社群貼文
+- Slide 提案簡報
+- 報價單視覺設計
+- 任何有視覺輸出的媒體類型
+
+注意：Slide 完成後不需要再讀（已經套用了），但開始做之前一定要讀。
+
 ⛔ 禁止事項：
 - 禁止在沒讀完以上文件前執行任何修改操作
 - 禁止新建已存在的腳本（先 grep 確認）

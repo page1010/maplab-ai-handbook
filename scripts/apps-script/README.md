@@ -1,3 +1,11 @@
+# apps-script 目錄
+指向：報價系統 GAS 專案（MAPLAB_外燴系統_v0.1）
+Script ID: 1JIiPW_OUwNzB4VHS4k0KHi7LYDdPlFgHWejotsY4KE3KdLTc3EB-0vpc
+
+⚠️ LINE 對話專案在 scripts/apps-script-line/
+
+---
+
 # 報價系統 v2 — Apps Script 部署說明
 
 **Phase 1：一鍵產出報價單**

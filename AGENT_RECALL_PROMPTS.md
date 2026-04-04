@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-04-03 16:20 午後巡查（A4 WATCH ✅ 解除 d909061；A1 bot_a6 全部署✅；A0 圖片pipeline✅；A6 bot運行✅；A3 🔴 CRITICAL 第7天 ~140h+；A7 🔴 CRITICAL ~100h+）
+> 最後更新：2026-04-04 每日巡查（A3 🔴 CRITICAL 第9天 ~168h+暫停建議；A7 🔴 CRITICAL 第6天 ~120h+；A4 S11 ETA已過WATCH；A0 GAS v3.7✅；A1 Extension v5.3✅；A6 活躍✅）
 >
 > 使用方式：選擇角色 → 複製 prompt → 貼到 Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -20,11 +20,11 @@
 | A0 | 總調度秘書 | ✅ Cowork 常駐 | 跨系統橋接、調度、桌面控制 |
 | A1 | 系統總管中心 | ✅ Claude Code 常駐 | Telegram bot + 終端機，直接下指令 |
 | A2 | 搜尋流量作戰部 | ✅ T-A2-001 完成，待新任務 | SEO / GA / 關鍵字 |
-| A3 | 社群與廣告成長部 | 🔴 CRITICAL 96h無commit（T-A3-001+T-A3-002）| Meta Ads / Social |
-| A4 | 影像資產整理部 | 🔄 S5✅/S5.5 GPS no_gps✅/S6 🔄已重啟 | Photo Archive |
+| A3 | 社群與廣告成長部 | 🔴 CRITICAL 168h+無commit（T-A3-001+T-A3-002）⏸️ 暫停建議中 | Meta Ads / Social |
+| A4 | 影像資產整理部 | 🔄 S5✅/S5.5 GPS no_gps✅/S6✅/S11 ETA 04-04 12:00已過⚠️ | Photo Archive |
 | A5 | 報價與提案引擎部 | 🔄 T-A5-002 進行中 | Quotation Engine |
 | A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（LINE業務報價助手 v1.1）| Sales Rapid Response |
-| A7 | 客服與對話轉單部 | 🔴 CRITICAL 58h無commit（T-A7-001+T-A7-002）| Smart Reply |
+| A7 | 客服與對話轉單部 | 🔴 CRITICAL 120h+無commit（T-A7-001+T-A7-002）| Smart Reply |
 | A8 | 多媒體影音製作部 | 🔲 新建，待啟動 | Video Production |
 
 ---
@@ -139,14 +139,14 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. 都不行 → 回報 Owner，不要硬幹
 
-【斷點 — 2026-04-03 深夜 Extension v5.2 更新】
+【斷點 — 2026-04-04 每日巡查更新】
 1. 系統版本：v6.0 / Phase 6 — 觀測性 + 業務閉環 + 策略循環（Phase 3.1 Dashboard 自動更新已就位 ef2c21b）
 2. EXP-S010 A0/A1 session 混淆已記錄；下次重開先確認 cwd + 貼 A1 recall prompt
 3. A2 T-A2A3-001 ✅ 子任務1-4全完成（子任務5等7-14天觀察期），TASK_QUEUE 已同步（d1c4635）
-4. A7 T-A7-001 Phase 2 + T-A7-002 🔴 CRITICAL：上次活動 2026-03-31 cf9f166，距今已逾 100h+（第4天+）。Owner 需確認 A7 狀態或重啟 session。
-5. A4 T-A4-001 🔄：S5 ✅ DONE(8,559張)；S5.5 GPS ✅ 決策no_gps（d909061 04-03 10:40正式記錄SKIP）；S6(2023) ✅ 完成；S11(2024) 🔄 執行中（4,350/12,213=35.6%，d909061 2026-04-03 10:40，48h閾值 = 04-05 10:40）；ASSET_LOG總計21,414行；API key已更換（舊key leaked→redact fe49f3e）
+4. A7 T-A7-001 Phase 2 + T-A7-002 🔴 CRITICAL 第6天：上次活動 2026-03-31 cf9f166，距今已逾 120h+。Owner 需明確決定暫停或確認阻塞原因。
+5. A4 T-A4-001 🔄：S5 ✅ DONE(8,559張)；S5.5 GPS ✅ 決策no_gps；S6(2023) ✅ 完成；S11(2024) 🔄 執行中（4,550/12,213=37.2%，9693797 2026-04-03 下班存檔，ETA 04-04 12:00已過⚠️，48h閾值 = **04-05 18:00**）—請A4補確認commit或重啟Colab；ASSET_LOG總計21,414行；API key已更換（舊key leaked→redact fe49f3e）
 6. A5 T-A5-002 🔄 進行中：服務費可選+長桌費+車馬費+DropdownHelper完成(dbcf9d4)；Task Card ✅ 已更新；T-A5-004 Phase 1 ✅ 04-02晚完整收尾（5e6d3b4，A0執行：Items照片16筆+URL修正+重新編號91格+items-management Skill建立）
-7. A3 T-A3-001 GTM方案B + T-A3-002 🔴 CRITICAL：最後 commit 2aca2ae 距今已逾 140h+（2026-03-29 起，第7天）。Owner 需明確指示：確認外部阻塞原因，或指示暫停並在 Task Card 補記。
+7. A3 T-A3-001 GTM方案B + T-A3-002 🔴 CRITICAL 第9天：最後 commit 2aca2ae 距今已逾 168h+（2026-03-29 起）。A1 已正式建議暫停（第8天晚間），今日仍無回應。**Owner 需執行：T-A3-001 + T-A3-002 標記為 ⏸️ 暫停**，待外部條件就緒再重啟。
 8. 新治理功能（2026-03-29 落地）：SECTION 7 全域檢查器(faed6a9)；SECTION 8 權限治理+10 credential skills(6e80723)；SECTION 9 API三層備援+身份確認+CLAUDE.md指向器(0076a3a)
 9. 報價單歷史分析完成：data/quote-terms-reference.md + data/quote-items-unmatched.md（932份，30品項匹配，7品項未納入）；883份報價品項完整提取 22K+ items（54ef55f）；品項去重v2 de7837c（29,115→3,794唯一品項）
 10. Chrome Extension v4.8（private repo 改用 GitHub Contents API，b2f031c）

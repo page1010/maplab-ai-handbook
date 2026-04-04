@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-04-03 晚間（A1 Evening Patrol）｜ 更新者：A1 — 晚間巡查：A4 進度更新(37.2%)、A3 CRITICAL第8天、A7 CRITICAL第5天、GAS Web App v12+Extension v5.0 落地確認
+最後更新：2026-04-04（A1 Daily Patrol）｜ 更新者：A1 — 每日巡查：A3 CRITICAL第9天(168h+)暫停建議執行中、A7 CRITICAL第6天(120h+)、A4 S11 ETA已過WATCH、A0 GAS v3.7✅、A1 Extension v5.3✅、A6 活躍✅
 
 ---
 
@@ -138,6 +138,11 @@
 ⚠️ A1巡查 2026-04-03 晚間：A7 🔴 CRITICAL 持續第5天 ~108h+ — T-A7-001 Phase 2 + T-A7-002，最後 commit cf9f166 (2026-03-31) 距今已逾 108h。今日巡查仍無 A7 新 commit。Owner 需明確指示：(a) A7 有未 commit 進度請立即補存檔，或 (b) 決定任務暫停，或 (c) 確認外部阻塞原因。
 ✅ A1巡查 2026-04-03 晚間：A4 S11 進度更新確認 — d120f05 + 9693797 今日兩次確認 S11 Colab 正常執行，進度 4,550/12,213=37.2%（ETA≈17h 預計 04-04 12:00），48h 閾值重設至 04-05 18:00。
 ✅ A1巡查 2026-04-03 晚間：A1 本日重大落地 — Extension v5.0（注入按鈕+即時系統快照），Recall 拆分（recalls/Ax_recall.md），bot_a6 結案確認，security fix（歷史敏感記錄清除），GAS Web App v12 doPost 上線（A6 可用 curl POST 觸發報價）。
+
+⚠️ A1巡查 2026-04-04：A3 🔴 CRITICAL 持續第9天 ~168h+ — T-A3-001 GTM方案B + T-A3-002 廣告成效，最後 commit 2aca2ae (~2026-03-29 22:10) 距今已逾 168h。前次巡查已正式建議暫停，今日仍無 A3 回應。**Owner 需執行：T-A3-001 + T-A3-002 標記為 ⏸️ 暫停**，待 GTM 權限或廣告觀察期外部條件就緒再重啟。
+⚠️ A1巡查 2026-04-04：A7 🔴 CRITICAL 持續第6天 ~120h+ — T-A7-001 Phase 2 + T-A7-002，最後 commit cf9f166 (2026-03-31) 距今已逾 120h。Owner 需明確決定：暫停任務或確認阻塞原因。
+⚠️ A1巡查 2026-04-04：A4 S11 ETA 已過無確認 commit ⚠️ WATCH — S11(2024) 預計 04-04 12:00 完成，但今日尚無新 A4 commit 確認完成。48h 閾值 = 04-05 18:00 仍在安全範圍，但 ETA 已過需注意。若 S11 已完成請補 commit；若 Colab 斷線請重啟。
+✅ A1巡查 2026-04-04：A0 GAS報價系統極活躍 — Code.gs v3.3→v3.7（品項名稱寫入/客戶資訊/毛利率/I-J欄公式保護修復）；A1 Extension v5.2→v5.3（popup快取修正+recall瘦身）；A6 T-A6-001 B層對話自動存檔正常進行中✅。
 ✅ A0 2026-04-03：DST002 餅乾_玫瑰愛心 K欄補上 — Items!K98 已寫入 Drive 照片連結（1fXLJvfiiXOQhbKgLg4sI8xIWThv52U3G）。規則新增：BEV 飲品類不需要照片；沒有 K欄 image_url 的品項不放入 Slide 報價簡報。Items 圖片整理視為完成（BEV 8筆免照片，非BEV 缺圖等 Owner 補充）。
 
 ✅ A0 Session 收尾 2026-04-03 晚間：T-A5-004/T-A5-005 task card 建立 + CURRENT_STATUS 更新

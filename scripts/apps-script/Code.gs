@@ -1,5 +1,5 @@
 /**
- * MAPLAB 報價系統 v3.4
+ * MAPLAB 報價系統 v3.7
  * 修正：品項名稱格式、客戶資訊欄位、毛利率驗證、禮盒殘留資料
  *   - Bug1: D欄品項名寫入格式改為「品名 (item_id)」+ G欄qty
  *   - Bug2: D2 只寫 clientName，company 不混入
@@ -403,7 +403,8 @@ function selectItemsForBudget_(itemsSheet, params) {
 
 /**
  * 把篩選結果寫入 QUOTE_DRAFT 菜單區
- * Bug1 修正：D 欄格式「品名 (item_id)」，G 欄寫 qty（=pax），I 欄寫成本
+ * v3.7 修正：只寫 D 欄（品名）和 G 欄（數量），不碰 I/J 欄公式
+ * I 欄 = VLOOKUP 公式自動帶成本，J 欄 = G×I 公式自動算小計
  * @param {Sheet}  sheet    keepSheet（已重命名為報價單）
  * @param {Object} selected { appetizers: [...], desserts: [...] }
  * @param {number} pax      人數（G 欄 qty）
@@ -417,14 +418,12 @@ function writeItemsToQuote_(sheet, selected, pax) {
 
   Logger.log('[writeItemsToQuote_] appetizers=' + appetizers.length + ' desserts=' + desserts.length + ' qty=' + qty);
 
-  // Bug修正 v3.6：先用 setValue('') 清空所有品項列（含飲品列），
-  // 確保模板殘留值或公式被覆蓋（clearContent 對公式格無效）
+  // 先清空 D 欄和 G 欄（不碰 I/J 欄，保留 VLOOKUP 和小計公式）
   var allItemRows = [8, 9, 10, 12, 13, 14, 15, 16];
   for (var k = 0; k < allItemRows.length; k++) {
     var r = allItemRows[k];
     sheet.getRange('D' + r).setValue('');
     sheet.getRange('G' + r).setValue('');
-    sheet.getRange('I' + r).setValue('');
   }
 
   // 寫 appetizer D8:D10
@@ -435,8 +434,7 @@ function writeItemsToQuote_(sheet, selected, pax) {
       var displayName = item.id ? item.name + ' (' + item.id + ')' : item.name;
       sheet.getRange('D' + row).setValue(displayName);
       sheet.getRange('G' + row).setValue(qty);
-      sheet.getRange('I' + row).setValue(item.cost);
-      Logger.log('寫入 D' + row + '：' + displayName + ' G=' + qty + ' I=' + item.cost);
+      Logger.log('寫入 D' + row + '：' + displayName + ' G=' + qty);
     }
   }
 
@@ -448,12 +446,11 @@ function writeItemsToQuote_(sheet, selected, pax) {
       var dDisplayName = dItem.id ? dItem.name + ' (' + dItem.id + ')' : dItem.name;
       sheet.getRange('D' + dRow).setValue(dDisplayName);
       sheet.getRange('G' + dRow).setValue(qty);
-      sheet.getRange('I' + dRow).setValue(dItem.cost);
-      Logger.log('寫入 D' + dRow + '：' + dDisplayName + ' G=' + qty + ' I=' + dItem.cost);
+      Logger.log('寫入 D' + dRow + '：' + dDisplayName + ' G=' + qty);
     }
   }
 
-  Logger.log('品項已寫入 QUOTE_DRAFT 菜單區（含 D 格式、G qty=' + qty + '、I 成本）');
+  Logger.log('品項已寫入 QUOTE_DRAFT 菜單區（D 品名 + G 數量，I/J 公式保留）');
 }
 
 // ─────────────────────────────────────────

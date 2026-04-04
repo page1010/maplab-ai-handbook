@@ -139,14 +139,14 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. 都不行 → 回報 Owner，不要硬幹
 
-【斷點 — 2026-04-04 午後巡查更新】
+【斷點 — 2026-04-04 晚間巡查更新】
 1. 系統版本：v6.0 / Phase 6 — 觀測性 + 業務閉環 + 策略循環（Phase 3.1 Dashboard 自動更新已就位 ef2c21b）
 2. EXP-S010 A0/A1 session 混淆已記錄；下次重開先確認 cwd + 貼 A1 recall prompt
 3. A2 T-A2A3-001 ✅ 子任務1-4全完成（子任務5等7-14天觀察期），TASK_QUEUE 已同步（d1c4635）
-4. A7 T-A7-001 Phase 2 + T-A7-002 🔴 CRITICAL 第6天：上次活動 2026-03-31 cf9f166，距今已逾 120h+。Owner 需明確決定暫停或確認阻塞原因。
-5. A4 T-A4-001 🔄：S5 ✅ DONE(8,559張)；S5.5 GPS ✅ 決策no_gps；S6(2023) ✅ 完成；S11(2024) 🔄 執行中（4,550/12,213=37.2%，9693797 2026-04-03 下班存檔，ETA 04-04 12:00已過⚠️，48h閾值 = **04-05 18:00**）—請A4補確認commit或重啟Colab；ASSET_LOG總計21,414行；API key已更換（舊key leaked→redact fe49f3e）
+4. A7 T-A7-001 Phase 2 + T-A7-002 🔴 CRITICAL 第6天晚間：上次活動 2026-03-31 cf9f166，距今已逾 133h+。Owner 需明確決定暫停或確認阻塞原因。
+5. A4 T-A4-001 🔄：S5 ✅ DONE(8,559張)；S5.5 GPS ✅ 決策no_gps；S6(2023) ✅ 完成；S11(2024) 🔄 執行中（4,550/12,213=37.2%，9693797 2026-04-03 下班存檔，ETA 04-04 12:00已過 ~30h⚠️ WATCH，48h閾值 = **04-05 18:00**，剩約 20h，若 04-05 上午無 commit 升級 CRITICAL）—請A4補確認commit或重啟Colab；ASSET_LOG總計21,414行；API key已更換（舊key leaked→redact fe49f3e）
 6. A5 T-A5-002 🔄 進行中：服務費可選+長桌費+車馬費+DropdownHelper完成(dbcf9d4)；Task Card ✅ 已更新；T-A5-004 Phase 1 ✅ 04-02晚完整收尾（5e6d3b4，A0執行：Items照片16筆+URL修正+重新編號91格+items-management Skill建立）
-7. A3 T-A3-001 GTM方案B + T-A3-002 🔴 CRITICAL 第9天：最後 commit 2aca2ae 距今已逾 168h+（2026-03-29 起）。A1 已正式建議暫停（第8天晚間），今日仍無回應。**Owner 需執行：T-A3-001 + T-A3-002 標記為 ⏸️ 暫停**，待外部條件就緒再重啟。
+7. A3 T-A3-001 GTM方案B + T-A3-002 🔴 CRITICAL 第9天晚間：最後 commit 2aca2ae 距今已逾 182h+（2026-03-29 起）。A1 已正式建議暫停（第8天晚間），今日仍無回應。**Owner 需立即執行：T-A3-001 + T-A3-002 標記為 ⏸️ 暫停**，待外部條件就緒再重啟。
 8. 新治理功能（2026-03-29 落地）：SECTION 7 全域檢查器(faed6a9)；SECTION 8 權限治理+10 credential skills(6e80723)；SECTION 9 API三層備援+身份確認+CLAUDE.md指向器(0076a3a)
 9. 報價單歷史分析完成：data/quote-terms-reference.md + data/quote-items-unmatched.md（932份，30品項匹配，7品項未納入）；883份報價品項完整提取 22K+ items（54ef55f）；品項去重v2 de7837c（29,115→3,794唯一品項）
 10. Chrome Extension v4.8（private repo 改用 GitHub Contents API，b2f031c）

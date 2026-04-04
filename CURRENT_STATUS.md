@@ -156,7 +156,8 @@
 ⚠️ A1巡查 2026-04-04 午後：A3 🔴 CRITICAL 持續第9天 ~176h+ — 自上午巡查起無新 A3 commit。T-A3-001 + T-A3-002 持續無活動，暫停指令仍待 Owner 執行（T-A3-001 GTM方案B + T-A3-002 廣告成效 → 建議標記 ⏸️）。
 ⚠️ A1巡查 2026-04-04 午後：A7 🔴 CRITICAL 持續第6天 ~127h+ — T-A7-001 Phase 2 + T-A7-002，最後 commit cf9f166 (2026-03-31) 距今逾 127h，自上午巡查起無新活動，Owner 需決定暫停或確認阻塞原因。
 ⚠️ A1巡查 2026-04-04 午後：A4 S11 ETA 已過 ~22h ⚠️ WATCH — S11(2024) ETA 04-04 12:00 已過，距最後 commit (9693797, 2026-04-03 18:00) 現約 22h，48h 閾值 = 04-05 18:00。需今日晚間確認 Colab 執行中或 S11 完成 commit，否則明日升級 CRITICAL。
-✅ A1巡查 2026-04-04 午後：A0 session 今日收尾 (b851103) — Slide v2 三輪測試完成（generateProposal_v2.gs 基本可用）+ 報價系統還原✅（Code.gs v3.8）+ 治理規則新增（AGENT_RULES v3.8 Rule4 + SECTION 11-13）+ 品牌規範觸發規則✅（CLAUDE.md）。剩餘 Slide 問題（結尾頁/圖片裁切/無圖垂直置中/Canva裁切模組）下個 session 繼續。A6 B層對話自動存檔（6cd1db5）正常運行。
+✅ A1巡查 2026-04-04 午後：A0 session 今日收尾 (b851103)
+⚠️ A1巡查 2026-04-04 晚間：過去 8h 無任何 agent 新 commit — A3 🔴 CRITICAL 持續第9天晚間 ~182h+（T-A3-001 GTM方案B + T-A3-002，暫停指令仍待 Owner 執行，建議立即標記 ⏸️）；A7 🔴 CRITICAL 持續第6天晚間 ~133h+（T-A7-001 Phase 2 + T-A7-002，上次活動 cf9f166 2026-03-31）；A4 S11 ⚠️ WATCH — ETA 已過 ~30h，距 48h 閾值 (04-05 18:00) 剩約 20h，若明日上午 10:00 前無新 commit 升級 🔴 CRITICAL；A6 今日 B層對話自動存檔 (6cd1db5) ✅；A0 session 收尾 (b851103) ✅。一切如午後巡查，無新增異常。 — Slide v2 三輪測試完成（generateProposal_v2.gs 基本可用）+ 報價系統還原✅（Code.gs v3.8）+ 治理規則新增（AGENT_RULES v3.8 Rule4 + SECTION 11-13）+ 品牌規範觸發規則✅（CLAUDE.md）。剩餘 Slide 問題（結尾頁/圖片裁切/無圖垂直置中/Canva裁切模組）下個 session 繼續。A6 B層對話自動存檔（6cd1db5）正常運行。
 ✅ A0 2026-04-03：DST002 餅乾_玫瑰愛心 K欄補上 — Items!K98 已寫入 Drive 照片連結（1fXLJvfiiXOQhbKgLg4sI8xIWThv52U3G）。規則新增：BEV 飲品類不需要照片；沒有 K欄 image_url 的品項不放入 Slide 報價簡報。Items 圖片整理視為完成（BEV 8筆免照片，非BEV 缺圖等 Owner 補充）。
 
 ✅ A0 Session 收尾 2026-04-03 晚間：T-A5-004/T-A5-005 task card 建立 + CURRENT_STATUS 更新

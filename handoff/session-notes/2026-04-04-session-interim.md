@@ -73,8 +73,25 @@
 
 ---
 
+---
+
+## Slide v2 開發進度（T-A5-004）
+
+### 第三輪測試結果（2026-04-04 下午）
+
+**狀態：基本成功**
+
+本輪修正項目：
+- **move bug 修正**：元素移動邏輯錯誤已修正
+- **圖片裁切**：品項圖片裁切處理正常
+- **空白格移除**：品項數量不足時多餘格子正確移除
+- **slide-production-rules 技能**：新增 skills/slide-production-rules/ 技能書
+
+---
+
 ## 後續待辦
 
 - [ ] 確認 Code.gs v3.8 在副本上測試 createQuote 正常（Owner 確認）
 - [ ] T-A5-004 createSlides.gs 繼續開發（需副本測試）
 - [ ] A4 S11 Colab 確認（ETA 已過，需 commit 確認完成）
+- [ ] Slide v2 第四輪測試（視 Owner 回饋決定是否繼續迭代）

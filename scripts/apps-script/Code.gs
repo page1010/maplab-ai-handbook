@@ -240,9 +240,8 @@ function createQuote(formData) {
       style:     formData.style || 'tea_time'
     });
     writeItemsToQuote_(keepSheet, selected, paxNum);
-    // Bug5 修正：F5 = 品項總數（覆蓋之前設的空值）
-    var totalItemCount = selected.appetizers.length + selected.desserts.length;
-    keepSheet.getRange('F5').setValue(formData.totalItems || totalItemCount);
+    // Bug5 修正 v3.6：F5 = 餐點總件數（所有 G 欄數量加總），非品項種類數
+    keepSheet.getRange('F5').setFormula('=SUM(G8:G10,G12:G16)');
   }
 
   // ── 條款寫入 B34（v3.3 修正：B33=【合約條款】template 已有，B34 寫內容） ──
@@ -418,6 +417,16 @@ function writeItemsToQuote_(sheet, selected, pax) {
 
   Logger.log('[writeItemsToQuote_] appetizers=' + appetizers.length + ' desserts=' + desserts.length + ' qty=' + qty);
 
+  // Bug修正 v3.6：先用 setValue('') 清空所有品項列（含飲品列），
+  // 確保模板殘留值或公式被覆蓋（clearContent 對公式格無效）
+  var allItemRows = [8, 9, 10, 12, 13, 14, 15, 16];
+  for (var k = 0; k < allItemRows.length; k++) {
+    var r = allItemRows[k];
+    sheet.getRange('D' + r).setValue('');
+    sheet.getRange('G' + r).setValue('');
+    sheet.getRange('I' + r).setValue('');
+  }
+
   // 寫 appetizer D8:D10
   for (var i = 0; i < maxSlots; i++) {
     var row  = APPETIZER_ROWS.start + i;
@@ -428,10 +437,6 @@ function writeItemsToQuote_(sheet, selected, pax) {
       sheet.getRange('G' + row).setValue(qty);
       sheet.getRange('I' + row).setValue(item.cost);
       Logger.log('寫入 D' + row + '：' + displayName + ' G=' + qty + ' I=' + item.cost);
-    } else {
-      sheet.getRange('D' + row).clearContent();
-      sheet.getRange('G' + row).clearContent();
-      sheet.getRange('I' + row).clearContent();
     }
   }
 
@@ -445,10 +450,6 @@ function writeItemsToQuote_(sheet, selected, pax) {
       sheet.getRange('G' + dRow).setValue(qty);
       sheet.getRange('I' + dRow).setValue(dItem.cost);
       Logger.log('寫入 D' + dRow + '：' + dDisplayName + ' G=' + qty + ' I=' + dItem.cost);
-    } else {
-      sheet.getRange('D' + dRow).clearContent();
-      sheet.getRange('G' + dRow).clearContent();
-      sheet.getRange('I' + dRow).clearContent();
     }
   }
 

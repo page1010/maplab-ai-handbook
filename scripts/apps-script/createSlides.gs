@@ -106,7 +106,7 @@ function createClientSlides_(ss, clientName) {
   for (var i = insertedSlides.length - 1; i >= 0; i--) {
     var currentSlides = presentation.getSlides();
     var tIdx = currentSlides.indexOf(templateSlide);
-    presentation.moveSlide(insertedSlides[i], tIdx + 1);
+    insertedSlides[i].move(tIdx + 1);
   }
 
   // 7. 填入品項資料（名稱 + 照片）

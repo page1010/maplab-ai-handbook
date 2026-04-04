@@ -143,6 +143,7 @@
 ⚠️ A1巡查 2026-04-04：A7 🔴 CRITICAL 持續第6天 ~120h+ — T-A7-001 Phase 2 + T-A7-002，最後 commit cf9f166 (2026-03-31) 距今已逾 120h。Owner 需明確決定：暫停任務或確認阻塞原因。
 ⚠️ A1巡查 2026-04-04：A4 S11 ETA 已過無確認 commit ⚠️ WATCH — S11(2024) 預計 04-04 12:00 完成，但今日尚無新 A4 commit 確認完成。48h 閾值 = 04-05 18:00 仍在安全範圍，但 ETA 已過需注意。若 S11 已完成請補 commit；若 Colab 斷線請重啟。
 ✅ A1巡查 2026-04-04：A0 GAS報價系統極活躍 — Code.gs v3.3→v3.7（品項名稱寫入/客戶資訊/毛利率/I-J欄公式保護修復）；A1 Extension v5.2→v5.3（popup快取修正+recall瘦身）；A6 T-A6-001 B層對話自動存檔正常進行中✅。
+🚨 A0 2026-04-04 QUOTE_DRAFT 毀損事件：A0 在今日 session 多次修改 createQuote，導致 QUOTE_DRAFT I 欄 VLOOKUP 公式被 setValue 覆蓋、D 欄下拉驗證被 clearDataValidations 清除，MVP 報價系統無法正常運作。Owner 已用 Google Sheets 版本紀錄還原到 2026-04-03 17:00。治理回應：(1) 新增 AGENT_RULES SECTION 11 QUOTE_DRAFT 保護規則；(2) 建立 skills/sheet-version-restore/SKILL.md 版本恢復 SOP；(3) 更新 skills/check-rules/SKILL.md 加入公式完整性檢查清單。Code.gs 已回到 v3.8（接手前版本，createQuote 只寫 B2-B9/H1-H2/M-N 欄/A30-A31，不碰 D 欄公式）。
 ✅ A0 2026-04-03：DST002 餅乾_玫瑰愛心 K欄補上 — Items!K98 已寫入 Drive 照片連結（1fXLJvfiiXOQhbKgLg4sI8xIWThv52U3G）。規則新增：BEV 飲品類不需要照片；沒有 K欄 image_url 的品項不放入 Slide 報價簡報。Items 圖片整理視為完成（BEV 8筆免照片，非BEV 缺圖等 Owner 補充）。
 
 ✅ A0 Session 收尾 2026-04-03 晚間：T-A5-004/T-A5-005 task card 建立 + CURRENT_STATUS 更新

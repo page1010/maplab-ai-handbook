@@ -1,6 +1,6 @@
 # AGENT_RULES.md — MAPLAB AI 全域行為準則
 
-版本：v3.7 | 建立：2026-03-12 | 更新：2026-04-04
+版本：v3.9 | 建立：2026-03-12 | 更新：2026-04-04
 
 ---
 
@@ -546,3 +546,38 @@ Agent 要用鑰匙時：讀技能書 → 按指示取用 → 用完不存。
 改動：（涉及哪些檔案/函式）
 符合需求：（Owner 確認的需求編號或描述）
 ```
+
+---
+
+## SECTION 11 — QUOTE_DRAFT 模板保護規則（2026-04-04 Owner 指定）
+
+### 背景
+A0 在 2026-04-04 session 中多次修改 Code.gs 的 createQuote 函數，導致：
+- QUOTE_DRAFT 的 I 欄 VLOOKUP 公式被 setValue 覆蓋
+- D 欄下拉驗證被 clearDataValidations 清除
+- 模板從可用狀態被改到無法正常出報價單
+- 最終需要用 Google Sheets 版本紀錄還原到 2026-04-03 17:00
+
+### 強制規則
+
+⛔ 禁止事項（任何角色、任何理由都不能違反）：
+1. 禁止在 createQuote 裡對 I 欄、J 欄使用 setValue — 這些是公式格
+2. 禁止在 createQuote 裡使用 clearDataValidations — D 欄下拉是業務功能
+3. 禁止在主系統 Sheet（SPREADSHEET_ID）上直接跑測試 — 必須用副本
+4. 禁止修改 QUOTE_DRAFT 的版面結構（行列位置）而不經 Owner 確認
+
+✅ 允許事項：
+1. createQuote 可以 makeCopy → 在副本上填客戶資訊（B2-B9）、條款（A30-A31）、系統狀態（M/N 欄）
+2. createQuote 可以刪除副本裡的多餘分頁
+3. 新功能（品項自動篩選等）必須先跟 Owner 討論需求、確認不影響公式，才能加入 createQuote
+
+### 修改 createQuote 的流程
+1. 先跟 Owner 討論需求
+2. 在「建立副本」上開發和測試
+3. Chrome 核對副本的公式和下拉是否完整
+4. Owner 確認後才 clasp push 到正式環境
+5. push 後立即在 Chrome 核對主系統 Sheet 沒有被影響
+
+### 公式參考（QUOTE_DRAFT I 欄）
+I8: =IF(D8="","",IFERROR(VLOOKUP(D8,Items!C:E,3,0),"N/A"))
+（所有 I8:I16 都是同樣公式，對應不同的 D 欄品項）

@@ -139,7 +139,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. 都不行 → 回報 Owner，不要硬幹
 
-【斷點 — 2026-04-04 每日巡查更新】
+【斷點 — 2026-04-04 午後巡查更新】
 1. 系統版本：v6.0 / Phase 6 — 觀測性 + 業務閉環 + 策略循環（Phase 3.1 Dashboard 自動更新已就位 ef2c21b）
 2. EXP-S010 A0/A1 session 混淆已記錄；下次重開先確認 cwd + 貼 A1 recall prompt
 3. A2 T-A2A3-001 ✅ 子任務1-4全完成（子任務5等7-14天觀察期），TASK_QUEUE 已同步（d1c4635）
@@ -165,6 +165,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 23. Extension v5.2（a21d9a2）：加入 Bot 剪貼板橋接架構。流程：Telegram /clip [文字] → bot.py 寫 /tmp/maplab_clip.json → bot 內建 HTTP server 127.0.0.1:9876 → popup「📋 從 Bot 抓取」fetch → 自動填入 promptText → 點「⚡ 注入到 Claude tab」。此方案完全不需 AppleScript / 輔助使用權限。
 24. ⚠️ 未完成（04-03 深夜）：Extension v5.2 Owner 尚未 reload（需 git pull + chrome://extensions/ 手動 reload 最後一次 + 重啟 bot.py）。測試未跑完，下次 session 先確認這步。
 25. ⚠️ A0 進行中任務：Owner 要求把「不能做按鈕」問題（AppleScript 輔助使用權限失敗的問題）交給 A0 處理，但具體任務內容/狀態尚未記錄在 Task Card。下次確認 A0 是否已建立 Task Card 或記錄接續點。
+26. A0 session 今日收尾（04-04 b851103）：Slide v2 三輪測試完成（generateProposal_v2.gs 基本可用，圖片拉伸/空白格/頁序錯 v1→v2→v3 修正），QUOTE_DRAFT 已還原 MVP 母本（04-03 17:00），Code.gs v3.8，AGENT_RULES v3.8 Rule4（禁止 GAS 留 v2/v3 舊版）+ SECTION 11-13（QUOTE_DRAFT保護/clasp安全/MVP母本），品牌規範觸發規則寫入 CLAUDE.md；剩餘 Slide 問題（結尾頁搜不到/圖片裁切品質/無圖垂直置中/Canva裁切模組）下個 session 繼續。
 
 【可認領任務】
 - T-A5-002 剩餘增強項目確認（A5，🔄 進行中，需更新 Task Card）

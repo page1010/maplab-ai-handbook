@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-04-04（A1 Daily Patrol）｜ 更新者：A1 — 每日巡查：A3 CRITICAL第9天(168h+)暫停建議執行中、A7 CRITICAL第6天(120h+)、A4 S11 ETA已過WATCH、A0 GAS v3.7✅、A1 Extension v5.3✅、A6 活躍✅
+最後更新：2026-04-04（A1 Afternoon Patrol）｜ 更新者：A1 — 午後巡查：A3 CRITICAL第9天(176h+)暫停待執行、A7 CRITICAL第6天(127h+)、A4 S11 ETA已過22h WATCH、A0 session收尾b851103✅、A6 B層存檔✅
 
 ---
 
@@ -153,6 +153,10 @@
 - **Canva 照片裁切模組**：Owner 提出需求，下個 session 規劃
 ✅ A1巡查 2026-04-04：A0 GAS報價系統極活躍 — Code.gs v3.3→v3.7（品項名稱寫入/客戶資訊/毛利率/I-J欄公式保護修復）；A1 Extension v5.2→v5.3（popup快取修正+recall瘦身）；A6 T-A6-001 B層對話自動存檔正常進行中✅。
 🚨 A0 2026-04-04 QUOTE_DRAFT 毀損事件：A0 在今日 session 多次修改 createQuote，導致 QUOTE_DRAFT I 欄 VLOOKUP 公式被 setValue 覆蓋、D 欄下拉驗證被 clearDataValidations 清除，MVP 報價系統無法正常運作。Owner 已用 Google Sheets 版本紀錄還原到 2026-04-03 17:00。治理回應：(1) 新增 AGENT_RULES SECTION 11 QUOTE_DRAFT 保護規則；(2) 建立 skills/sheet-version-restore/SKILL.md 版本恢復 SOP；(3) 更新 skills/check-rules/SKILL.md 加入公式完整性檢查清單。Code.gs 已回到 v3.8（接手前版本，createQuote 只寫 B2-B9/H1-H2/M-N 欄/A30-A31，不碰 D 欄公式）。
+⚠️ A1巡查 2026-04-04 午後：A3 🔴 CRITICAL 持續第9天 ~176h+ — 自上午巡查起無新 A3 commit。T-A3-001 + T-A3-002 持續無活動，暫停指令仍待 Owner 執行（T-A3-001 GTM方案B + T-A3-002 廣告成效 → 建議標記 ⏸️）。
+⚠️ A1巡查 2026-04-04 午後：A7 🔴 CRITICAL 持續第6天 ~127h+ — T-A7-001 Phase 2 + T-A7-002，最後 commit cf9f166 (2026-03-31) 距今逾 127h，自上午巡查起無新活動，Owner 需決定暫停或確認阻塞原因。
+⚠️ A1巡查 2026-04-04 午後：A4 S11 ETA 已過 ~22h ⚠️ WATCH — S11(2024) ETA 04-04 12:00 已過，距最後 commit (9693797, 2026-04-03 18:00) 現約 22h，48h 閾值 = 04-05 18:00。需今日晚間確認 Colab 執行中或 S11 完成 commit，否則明日升級 CRITICAL。
+✅ A1巡查 2026-04-04 午後：A0 session 今日收尾 (b851103) — Slide v2 三輪測試完成（generateProposal_v2.gs 基本可用）+ 報價系統還原✅（Code.gs v3.8）+ 治理規則新增（AGENT_RULES v3.8 Rule4 + SECTION 11-13）+ 品牌規範觸發規則✅（CLAUDE.md）。剩餘 Slide 問題（結尾頁/圖片裁切/無圖垂直置中/Canva裁切模組）下個 session 繼續。A6 B層對話自動存檔（6cd1db5）正常運行。
 ✅ A0 2026-04-03：DST002 餅乾_玫瑰愛心 K欄補上 — Items!K98 已寫入 Drive 照片連結（1fXLJvfiiXOQhbKgLg4sI8xIWThv52U3G）。規則新增：BEV 飲品類不需要照片；沒有 K欄 image_url 的品項不放入 Slide 報價簡報。Items 圖片整理視為完成（BEV 8筆免照片，非BEV 缺圖等 Owner 補充）。
 
 ✅ A0 Session 收尾 2026-04-03 晚間：T-A5-004/T-A5-005 task card 建立 + CURRENT_STATUS 更新

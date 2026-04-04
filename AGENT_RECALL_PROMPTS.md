@@ -23,7 +23,7 @@
 | A3 | 社群與廣告成長部 | 🔴 CRITICAL 168h+無commit（T-A3-001+T-A3-002）⏸️ 暫停建議中 | Meta Ads / Social |
 | A4 | 影像資產整理部 | 🔄 S5✅/S5.5 GPS no_gps✅/S6✅/S11 ETA 04-04 12:00已過⚠️ | Photo Archive |
 | A5 | 報價與提案引擎部 | 🔄 T-A5-002 進行中 | Quotation Engine |
-| A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（LINE業務報價助手 v1.1）| Sales Rapid Response |
+| A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（Telegram 報價助手 v1.1）| Sales Rapid Response |
 | A7 | 客服與對話轉單部 | 🔴 CRITICAL 120h+無commit（T-A7-001+T-A7-002）| Smart Reply |
 | A8 | 多媒體影音製作部 | 🔲 新建，待啟動 | Video Production |
 

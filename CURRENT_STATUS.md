@@ -54,7 +54,7 @@
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2 | ✅ 子任務1-4完成（子任務5等7-14天）| handoff/tasks/T-A2A3-001.md + T-A2A3-001-B.md |
 | T-A3-001 | GTM LINE 按鈕追蹤修復（方案 B 已確認） | A3 | 🔄 進行中（GTM方案B規格已記錄 2aca2ae，待技術實作+測試）| — |
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | 🔄 確認中（已上線，受眾已記錄；廣告成效報告 v1.0 + 嘉義地區建議已產出 69b50ec） | handoff/tasks/T-A3-002.md |
-| T-A6-001 | LINE 業務報價助手系統 | A6 | 🔄 進行中（v1.1 架構修正：三層資料/CONVERSATION_LOG/Sheet 3個新分頁，d9fba1a+3a2df7b）；**GAS doPost Web App v12 已上線（2026-04-03），A6 可用 curl POST 觸發報價，舊部署 v1 封存/v11 待封存** | projects/line-quote-assistant.md |
+| T-A6-001 | Telegram 報價助手系統 | A6 | 🔄 進行中（v1.1 架構修正：三層資料/CONVERSATION_LOG/Sheet 3個新分頁，d9fba1a+3a2df7b）；**GAS doPost Web App v12 已上線（2026-04-03），A6 可用 curl POST 觸發報價，舊部署 v1 封存/v11 待封存** | projects/line-quote-assistant.md |
 | T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | 🔄 Phase 2 進展中（skills v2.0 8種對話模式 68df5d7 + reply-templates v1.0 d165d7d）| handoff/tasks/T-A7-001.md |
 | T-A7-002 | 80/20 優先任務清單 + 執行路線圖 | A7 | 🔄 任務6+10完成（cf9f166），部分執行中 | — |
 | T-A0-001 | Telegram bot 指令模式上線 | A1 | ✅ 完成（bot.py 為 A1 的 Telegram 前端，非 A0）| — |

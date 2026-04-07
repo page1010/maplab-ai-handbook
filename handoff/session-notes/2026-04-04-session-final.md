@@ -17,6 +17,7 @@
 1. clasp 指向錯的 GAS 專案（LINE 專案而非報價系統）→ 所有 push 推錯地方
 2. Code.gs 多次修改 createQuote 的 cell references → 破壞 QUOTE_DRAFT 模板公式和下拉
 3. Items 表 default_price 空的導致品項篩選全部被跳過
+   （更正 2026-04-07）：這條描述本身有誤。實際上 QUOTE_DRAFT 公式查的是 default_cost (E欄)，default_price (D欄) 從來沒被使用。真正的問題是 A0 多寫了不必要的 selectItemsForBudget_() 函數試圖讀 D 欄，這個函數本來就不該存在。MVP 流程是業務手選下拉，不需要自動篩選。
 4. Slide 的 moveSlide API 用法錯 → Ready to Create 頁找不到
 
 ## Slide 現狀

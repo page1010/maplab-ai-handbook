@@ -63,7 +63,7 @@
 ## Blockers（阻塞事項）
 
 - ~~A5：甜點去重需使用者手動完成後才能重新編碼~~ ✅ resolved — T-A5-001 完成（108品項已排序+連號）
-- A5：使用者需填 Items.D 欄 default_price（0/102 空白，為成本毛利率計算的前提）
+- ~~A5：使用者需填 Items.D 欄 default_price（為成本毛利率計算的前提）~~ ✅ 撤銷（2026-04-07）— 此判斷錯誤。Items 欄位確認：E 欄 default_cost = 業務維護成本，QUOTE_DRAFT 公式 VLOOKUP 用這個算成本；D 欄 default_price 未被任何流程讀取，待隱藏。之前 session 把 D 欄當 blocker 是錯誤判斷，已撤銷。
 - ~~A4：Gemini API key leaked (b822f90) → 已更換新 key（記錄於 Notion）~~ ✅ resolved — API key 已更新。S6 Colab 仍待重啟（18.2%）
 - A3：「慶生周歲派對」已上線（現有貼文），需確認受眾設定；GTM 方案 B 可認領
 - ~~A2：T-A2-001 Google Drive 2025相簿僅約20張可用照片~~ ✅ resolved — 跨相簿找圖完成（2024/2023/2019/素材開幕），57篇全部獨立配圖

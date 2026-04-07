@@ -1,3 +1,12 @@
+> ⚠️ 結論已撤銷（2026-04-07）
+>
+> 本文件原本判斷「Items.D 欄 default_price 是 blocker」是錯誤的。
+> 正確邏輯：QUOTE_DRAFT 公式 VLOOKUP(D,Items!C:E,3,0) 查的是 E 欄 default_cost。
+> D 欄 default_price 未被任何流程讀取，應隱藏不使用。
+> 原文保留作為歷史紀錄，內容不再生效。
+
+---
+
 # 問題調查：Items.default_price（D 欄）全空導致品項篩選失效
 
 建立：2026-04-04 ｜ 調查者：A1

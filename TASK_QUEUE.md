@@ -1,4 +1,9 @@
 # TASK_QUEUE.md — 任務池
+
+> ⚠️ **2026-04-08 棄用說明**：任務狀態已統一到 Sheets DASHBOARD 管理。
+> 本文件保留作為 AGENT_RULES.md 引用的向後相容入口，不再主動更新。
+> **最新任務狀態請查：** Sheets DASHBOARD 分頁 + `handoff/tasks/T-AX-*.md`
+
 > Agent 從這裡認領任務。認領前必須先讀 CURRENT_STATUS.md。
 
 最後更新：2026-03-28 ｜ 維護者：A1 / Owner / A2

@@ -1,5 +1,11 @@
 # Plan B — GAS Web App HTTP 觸發報價單產出
 
+> ⚠️ **【結論已撤銷 — 2026-04-07】**
+> 本文件記錄的 GAS Web App URL（v12）是被誤用的 LINE 對話 GAS 專案部署（Script ID: 1Fkl34P7p395k0YzwY8hyhz7DAAsgA3CBgyumx9ImSOFoXu771lFABSi7）。
+> createQuote + createSlides 路由在 2026-04-04 因 .clasp.json 指錯被推送到 LINE 專案，屬於幻覺需求。
+> **正確 Slide 邏輯在報價系統 GAS 專案的 `generateProposal_v2.gs`（Script ID: 1JIiPW_OUwNzB4VHS4k0KHi7LYDdPlFgHWejotsY4KE3KdLTc3EB-0vpc）。**
+> 本文件保留作歷史紀錄，不可依據此計畫繼續執行。
+
 ## 要做什麼（What）
 
 將現有 Google Apps Script「MAPLAB 按鈕」邏輯包裝成 Web App，新增 `doPost(e)` 入口，讓任何 Agent 或 webhook 可透過 HTTP POST 觸發，自動產出獨立報價單 Spreadsheet。

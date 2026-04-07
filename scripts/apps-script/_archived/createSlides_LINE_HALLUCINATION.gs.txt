@@ -1,4 +1,16 @@
 /**
+ * ⚠️ 幻覺檔案 — 2026-04-07 歸檔（不可 clasp push）
+ *
+ * 原始位置：scripts/apps-script/createSlides.gs
+ * 歸檔原因：上個 session (2026-04-04) A0 因 .clasp.json 指錯，
+ *           把 createSlides 加到 LINE 對話 GAS 專案
+ *           （Script ID: 1Fkl34P7p395k0YzwY8hyhz7DAAsgA3CBgyumx9ImSOFoXu771lFABSi7）
+ *           菜單型錄是幻覺需求，正確 Slide 邏輯在報價系統 GAS 專案的 generateProposal_v2.gs
+ *           （Script ID: 1JIiPW_OUwNzB4VHS4k0KHi7LYDdPlFgHWejotsY4KE3KdLTc3EB-0vpc）
+ * 注意：副檔名改為 .txt，clasp 不會 push 此檔案
+ */
+
+/**
  * createSlides.gs — T-A5-004: Slide 報價簡報自動生成
  * 版本：v1.0 | 2026-04-03
  *
@@ -29,7 +41,7 @@ var ITEMS_PER_SLIDE     = 6; // 每頁 6 品項（3x2 grid）
  * 掛到 onOpen() 選單：MAPLAB > 產出 Slide 提案
  */
 function createSlidesFromSheet() {
-  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
   var url = createClientSlides_(ss, null);
   SpreadsheetApp.getUi().alert('✅ Slide 簡報已產出！\n\n' + url);
 }
@@ -106,7 +118,7 @@ function createClientSlides_(ss, clientName) {
   for (var i = insertedSlides.length - 1; i >= 0; i--) {
     var currentSlides = presentation.getSlides();
     var tIdx = currentSlides.indexOf(templateSlide);
-    presentation.moveSlide(insertedSlides[i], tIdx + 1);
+    insertedSlides[i].move(tIdx + 1);
   }
 
   // 7. 填入品項資料（名稱 + 照片）

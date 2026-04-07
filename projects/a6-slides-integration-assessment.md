@@ -1,4 +1,11 @@
 # A6 bot_a6.py × createSlides 整合評估
+
+> ⚠️ **【結論已撤銷 — 2026-04-07】**
+> 本文件評估的 createSlides 整合方案（LINE webhook doPost 路由 → createSlides → Slide 生成）已確認為幻覺需求。
+> 原因：createSlides 邏輯被誤推送到 LINE 對話 GAS 專案（Script ID: 1Fkl34P7p395k0YzwY8hyhz7DAAsgA3CBgyumx9ImSOFoXu771lFABSi7）。
+> **正確版本在報價系統 GAS 專案的 `generateProposal_v2.gs`（Script ID: 1JIiPW_OUwNzB4VHS4k0KHi7LYDdPlFgHWejotsY4KE3KdLTc3EB-0vpc）。**
+> 本文件保留作歷史紀錄，不可依據此評估執行任何實作。
+
 版本：v1.0 | 建立：2026-04-03 | 評估者：A1
 
 ---

@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-04-04（A1 Afternoon Patrol）｜ 更新者：A1 — 午後巡查：A3 CRITICAL第9天(176h+)暫停待執行、A7 CRITICAL第6天(127h+)、A4 S11 ETA已過22h WATCH、A0 session收尾b851103✅、A6 B層存檔✅
+最後更新：2026-04-07（A0 Phase 3a）｜ 更新者：A0 — createSlides 幻覺清理完成（LINE GAS 本地檔案）+ T-A6-002 暫停記錄（LINE webhook 拿不到業務回覆）
 
 ---
 
@@ -47,7 +47,7 @@
 | T-A5-001 | Items 去重 + 全品項重新編碼 | A5 | ✅ 完成（APP050/DST041/MAIN009/BEV008=108，已排序+連號） | handoff/tasks/T-A5-001.md |
 | T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔄 進行中（服務費可選✅/長桌費$350✅/車馬費下拉✅/DropdownHelper分類驗證✅，dbcf9d4；待確認剩餘增強項目）| handoff/tasks/T-A5-002.md |
 | T-A5-003 | 熱客招待品項定義 | A5 | 🔲 待開始 | — |
-| T-A5-004 | createSlides.gs Slide簡報 | A5 | 🔲 待啟動（不依賴A4） | handoff/tasks/T-A5-004.md |
+| T-A5-004 | generateProposal_v2.gs Slide簡報（正確版） | A5 | 🔲 待啟動（舊 createSlides.gs 幻覺版已清理 2026-04-07，新版需對齊標準模板文學館版 1s4VJY3h...） | handoff/tasks/T-A5-004.md |
 | T-A5-005 | onEdit追蹤同步+Dashboard | A5 | 🔲 待啟動 | handoff/tasks/T-A5-005.md |
 | T-A4-001 | Phase 4 Gemini 照片分類 | A4 | 🔄 S5 ✅(8,549), S6 ✅(8,505), S11(2024) 🔄 4,550/12,213=37.2%（ETA≈17h，預計04-04 12:00完成），GPS全步驟 ⛔ Owner指示跳過，ASSET_LOG總計21,414行；48h閾值 = **04-05 18:00** | projects/maplab-pipeline.md + handoff/tasks/T-A4-001.md |
 | T-A2-001 | 文章精選圖片補齊（57篇→每篇獨立配圖） | A2 | ✅ 完成（57/57 獨立配圖，0 重複） | handoff/tasks/T-A2-001.md |
@@ -55,6 +55,7 @@
 | T-A3-001 | GTM LINE 按鈕追蹤修復（方案 B 已確認） | A3 | 🔄 進行中（GTM方案B規格已記錄 2aca2ae，待技術實作+測試）| — |
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | 🔄 確認中（已上線，受眾已記錄；廣告成效報告 v1.0 + 嘉義地區建議已產出 69b50ec） | handoff/tasks/T-A3-002.md |
 | T-A6-001 | Telegram 報價助手系統 | A6 | 🔄 進行中（v1.1 架構修正：三層資料/CONVERSATION_LOG/Sheet 3個新分頁，d9fba1a+3a2df7b）；**GAS doPost Web App v12 已上線（2026-04-03），A6 可用 curl POST 觸發報價，舊部署 v1 封存/v11 待封存** | projects/line-quote-assistant.md |
+| T-A6-002 | LINE 對話訓練資料收集計畫 | A6 | 🔲 暫停（LINE webhook 只有客人訊息，無業務回覆，訓練資料殘缺。新方向：LINE OA 後台 .csv 匯出，待 Owner 決定） | handoff/tasks/T-A6-002.md |
 | T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | 🔄 Phase 2 進展中（skills v2.0 8種對話模式 68df5d7 + reply-templates v1.0 d165d7d）| handoff/tasks/T-A7-001.md |
 | T-A7-002 | 80/20 優先任務清單 + 執行路線圖 | A7 | 🔄 任務6+10完成（cf9f166），部分執行中 | — |
 | T-A0-001 | Telegram bot 指令模式上線 | A1 | ✅ 完成（bot.py 為 A1 的 Telegram 前端，非 A0）| — |

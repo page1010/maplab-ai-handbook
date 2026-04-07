@@ -1,7 +1,7 @@
 /**
  * MAPLAB 報價系統 v3.8
  * 修正：createQuote 客戶區 cell reference 回到接手前版本（B2:B9 / H1-H2 / M/N 欄 / A30-A31 條款）
- * 保留：doPost 路由（LineWebhook.gs）/ handleQuoteRequest_ / selectItemsForBudget_ / writeItemsToQuote_
+ * 保留：doPost 路由（LineWebhook.gs）/ handleQuoteRequest_
  *
  * 部署目標 Sheet：1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg
  * 模板分頁：QUOTE_DRAFT
@@ -119,10 +119,6 @@ function handleDebugItems_() {
  *   .location    {string} 活動地點（選填）
  *   .address     {string} 活動地址（選填）
  *   .pax         {string|number} 預計人數（選填）
- *   .budget      {number} 總預算（選填，有則執行品項篩選）
- *   .itemCount   {number} 品項數量需求（選填，預設 8）
- *   .minMargin   {number} 最低毛利率 0~1（選填，預設 0.7）
- *   .style       {string} "tea_time" / "savory" / "sweet"（選填）
  * @returns {Object} { success, caseId, fileName, url }
  */
 function createQuote(formData) {
@@ -246,162 +242,6 @@ function createQuote(formData) {
     fileName: newFileName,
     url: newUrl
   };
-}
-
-// ─────────────────────────────────────────
-// 品項篩選：selectItemsForBudget_
-// ─────────────────────────────────────────
-
-/**
- * 從 Items 分頁根據預算、人數、品項數量、毛利率篩選品項
- *
- * Items 分頁欄位：
- *   A: item_id, B: category, C: standard_name（品名）
- *   D: default_price（售價）, E: default_cost（成本）, I: active, K: image_url
- *
- * @param {Sheet}  itemsSheet  Items 分頁物件
- * @param {Object} params
- *   .budget    {number} 總預算
- *   .pax       {number} 人數
- *   .itemCount {number} 品項總數量
- *   .minMargin {number} 最低毛利率 0~1（預設 0.7）
- *   .style     {string} "tea_time" / "savory" / "sweet"
- * @returns {Object} { appetizers: [...], desserts: [...] }
- */
-function selectItemsForBudget_(itemsSheet, params) {
-  var budget    = params.budget;
-  var pax       = params.pax    || 1;
-  var itemCount = params.itemCount || 8;
-  var minMargin = params.minMargin || 0.7;
-  var style     = params.style  || 'tea_time';
-
-  var perPersonBudget = budget / pax;
-
-  var lastRow = itemsSheet.getLastRow();
-  if (lastRow < 2) return { appetizers: [], desserts: [] };
-
-  // A=item_id, B=category, C=standard_name, D=default_price, E=default_cost, I=active, K=image_url
-  var data = itemsSheet.getRange(2, 1, lastRow - 1, 11).getValues();
-
-  var allItems = [];
-  for (var i = 0; i < data.length; i++) {
-    var itemId   = String(data[i][0]).trim();  // A: item_id
-    var category = String(data[i][1]).trim();  // B: category
-    var name     = String(data[i][2]).trim();  // C: standard_name
-    var price    = Number(data[i][3]);         // D: default_price
-    var cost     = Number(data[i][4]);         // E: default_cost
-    var active   = String(data[i][8]).trim();  // I: active
-    var imageUrl = data[i][10];                // K: image_url
-
-    if (!name || !itemId) continue;
-    if (active && active !== 'Y') continue;
-    if (!cost || cost <= 0) continue;
-
-    if (!price || price <= 0) {
-      price = cost / (1 - minMargin);
-    }
-
-    var margin = (price - cost) / price;
-    allItems.push({ id: itemId, name: name, price: price, cost: cost, margin: margin, imageUrl: imageUrl, category: category });
-  }
-
-  Logger.log('[selectItemsForBudget_] 讀取 ' + data.length + ' 列，有效品項：' + allItems.length + ' 項');
-
-  if (allItems.length === 0) return { appetizers: [], desserts: [] };
-
-  var appetizerCount, dessertCount;
-  if (style === 'tea_time') {
-    appetizerCount = Math.ceil(itemCount * 0.55);
-    dessertCount   = itemCount - appetizerCount;
-  } else if (style === 'savory') {
-    appetizerCount = Math.ceil(itemCount * 0.8);
-    dessertCount   = itemCount - appetizerCount;
-  } else if (style === 'sweet') {
-    dessertCount   = Math.ceil(itemCount * 0.7);
-    appetizerCount = itemCount - dessertCount;
-  } else {
-    appetizerCount = Math.ceil(itemCount * 0.55);
-    dessertCount   = itemCount - appetizerCount;
-  }
-
-  var savoryPool = allItems.filter(function(x) {
-    return x.category === '鹹' || x.category === '鹹食' || x.category === 'appetizer' ||
-           x.category === '餐食小點' || x.category === '鹹點';
-  });
-  var sweetPool = allItems.filter(function(x) {
-    return x.category === '甜' || x.category === '甜點' || x.category === 'dessert' ||
-           x.category === '甜點小點' || x.category === '甜食' || x.category === '西點';
-  });
-
-  if (savoryPool.length < appetizerCount) savoryPool = allItems.filter(function(x) { return sweetPool.indexOf(x) === -1; });
-  if (sweetPool.length < dessertCount)   sweetPool  = allItems.filter(function(x) { return savoryPool.indexOf(x) === -1; });
-
-  savoryPool.sort(function(a, b) { return a.price - b.price; });
-  sweetPool.sort(function(a, b)  { return a.price - b.price; });
-
-  var pricePerItem = perPersonBudget / itemCount;
-  var priceLimit   = pricePerItem * 1.3;
-
-  var selected_s = savoryPool.filter(function(x) { return x.price <= priceLimit; }).slice(0, appetizerCount);
-  var selected_d = sweetPool.filter(function(x)  { return x.price <= priceLimit; }).slice(0, dessertCount);
-
-  if (selected_s.length < appetizerCount) selected_s = savoryPool.slice(0, appetizerCount);
-  if (selected_d.length < dessertCount)   selected_d = sweetPool.slice(0, dessertCount);
-
-  Logger.log('品項篩選完成：鹹食 ' + selected_s.length + ' 項，甜點 ' + selected_d.length + ' 項');
-
-  return { appetizers: selected_s, desserts: selected_d };
-}
-
-/**
- * 把篩選結果寫入 QUOTE_DRAFT 菜單區
- * 只寫 D 欄（品名）和 G 欄（數量），不碰 I/J 欄公式
- * I 欄 = VLOOKUP 公式自動帶成本，J 欄 = G×I 公式自動算小計
- *
- * @param {Sheet}  sheet    keepSheet（已重命名為報價單）
- * @param {Object} selected { appetizers: [...], desserts: [...] }
- * @param {number} pax      人數（G 欄 qty）
- */
-function writeItemsToQuote_(sheet, selected, pax) {
-  var appetizers = selected.appetizers || [];
-  var desserts   = selected.desserts   || [];
-  var qty        = pax || 1;
-  var maxSlots   = APPETIZER_ROWS.end - APPETIZER_ROWS.start + 1;  // 3
-  var maxDSlots  = DESSERT_ROWS.end   - DESSERT_ROWS.start + 1;    // 3
-
-  Logger.log('[writeItemsToQuote_] appetizers=' + appetizers.length + ' desserts=' + desserts.length + ' qty=' + qty);
-
-  // 先清空 D 欄和 G 欄（不碰 I/J 欄，保留 VLOOKUP 和小計公式）
-  var allItemRows = [8, 9, 10, 12, 13, 14, 15, 16];
-  for (var k = 0; k < allItemRows.length; k++) {
-    var r = allItemRows[k];
-    sheet.getRange('D' + r).setValue('');
-    sheet.getRange('G' + r).setValue('');
-  }
-
-  // 寫 appetizer D8:D10
-  for (var i = 0; i < maxSlots; i++) {
-    var row  = APPETIZER_ROWS.start + i;
-    var item = appetizers[i];
-    if (item) {
-      var displayName = item.id ? item.name + ' (' + item.id + ')' : item.name;
-      sheet.getRange('D' + row).setValue(displayName);
-      sheet.getRange('G' + row).setValue(qty);
-    }
-  }
-
-  // 寫 dessert D12:D14
-  for (var j = 0; j < maxDSlots; j++) {
-    var dRow  = DESSERT_ROWS.start + j;
-    var dItem = desserts[j];
-    if (dItem) {
-      var dDisplayName = dItem.id ? dItem.name + ' (' + dItem.id + ')' : dItem.name;
-      sheet.getRange('D' + dRow).setValue(dDisplayName);
-      sheet.getRange('G' + dRow).setValue(qty);
-    }
-  }
-
-  Logger.log('品項已寫入菜單區（D 品名 + G 數量，I/J 公式保留）');
 }
 
 // ─────────────────────────────────────────
@@ -648,12 +488,7 @@ function handleQuoteRequest_(params) {
       eventType  : params.eventType   || '',
       eventDate  : params.eventDate   || '',
       location   : params.location    || '',
-      pax        : params.pax         || '',
-      // 品項篩選參數
-      budget     : params.budget      || null,
-      itemCount  : params.itemCount   || 8,
-      minMargin  : params.minMargin   || 0.7,
-      style      : params.style       || 'tea_time'
+      pax        : params.pax         || ''
     };
 
     var result = createQuote(formData);

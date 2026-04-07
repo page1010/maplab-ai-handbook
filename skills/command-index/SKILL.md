@@ -23,6 +23,7 @@ Owner 說以下任何一句話時，輸出下方速查表：
 | 快速報價 / 急報價 | A6 Telegram 窗口快速報價 SOP | a6-rapid-quote-sop | ✅ 已建立 |
 | 廣告 / 社群廣告 | A3 社群廣告操作（Meta Ads / 文案生成） | a3-social-ads-skills | ✅ 已建立 |
 | 照片分類 / 照片整理 | A4 照片分類 pipeline（Gemini + Google Drive） | a4-photo-asset-skills | ✅ 已建立 |
+| Canva修圖 / 品項照片 / 套濾鏡 | 用品牌色濾鏡標準調整食物照片 | canva-photo-filter | ✅ 已建立 |
 | 轉檔 / HEIC 轉 JPG / 圖片格式轉換 | HEIC/HEIF/WEBP/PNG → JPG，轉換後上傳 Drive + 更新 K 欄 | image-convert | ✅ 已建立 |
 | 客服 / 回覆訊息 | A7 客服回覆模板 + 補問流程 | a7-customer-service-skills | ✅ 已建立 |
 | 報告 / 業務報告 | A5 報價引擎 + 品項數據分析 | a5-quotation-engine-skills | ✅ 已建立 |

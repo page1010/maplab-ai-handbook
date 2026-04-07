@@ -51,6 +51,9 @@ repo: https://github.com/page1010/maplab-ai-handbook
 - 報價單視覺設計
 - 任何有視覺輸出的媒體類型
 
+任何 Canva 編輯任務（修圖、套濾鏡、品項照片上傳）開始前，額外必讀：
+- skills/canva-photo-filter/SKILL.md（品牌色濾鏡參數 + 裁切 SOP）
+
 注意：Slide 完成後不需要再讀（已經套用了），但開始做之前一定要讀。
 
 ⛔ 禁止事項：

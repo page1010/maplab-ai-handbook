@@ -615,3 +615,31 @@ I8: =IF(D8="","",IFERROR(VLOOKUP(D8,Items!C:E,3,0),"N/A"))
 ### 禁止事項
 - 禁止在不確認 scriptId 的情況下 clasp push
 - 禁止把 LINE 專案的檔案推到報價系統專案（或反過來）
+
+## Section 14: WordPress 內容生成規則（2026-04-07 追加）
+
+### 背景
+ID:698 發現一篇 SEO 文章的 FAQ 區塊含自定義 HTML + `<script type="application/ld+json">` + inline `<style>` + JS toggle。這是某次 session agent 直接寫入 WP 編輯器 HTML 區塊的產物，造成食安紅線詞（無麩質）同時存在於 HTML 可見文字和 JSON-LD 結構化資料兩處，QA 很容易漏掉。
+
+### ⛔ 絕對禁止
+1. **絕不在 WP post content 寫入 `<script>` 標籤**（Schema 一律由 Rank Math 的 Schema Generator 產生，放 `<head>` 不放 `<body>`）
+2. **絕不在 WP post content 寫入 `<style>` 標籤**（樣式交給 theme 或 Elementor）
+3. **絕不手寫 custom JS 互動**（用 Rank Math FAQ Block 或 Gutenberg FAQ Block）
+4. **絕不使用禁用詞**（食安 / 法規 / SEO 過度承諾）— 完整清單見 `skills/seo-session-checklist.md` 的「SEO 文案禁用詞清單」章節
+
+### ✅ 必須做
+1. FAQ → Rank Math FAQ Block（Gutenberg）
+2. SEO meta → Rank Math Meta tab，不要手寫到 content
+3. Schema → Rank Math Schema Generator，不要手寫 JSON-LD
+4. 視覺樣式 → Elementor 元件或 theme CSS，不要 inline
+5. 任何 WP 內容生成後，agent 必須跑 `skills/wp-content-audit/` 驗證
+
+### 違反處理
+- A0 每次 WP 內容生成後必須跑 wp-content-audit 掃描
+- 若發現違反 → 當下回滾，不要 commit
+- 重複違反 → 提升到 Owner 層級討論
+
+### 關聯
+- `skills/wp-content-audit/SKILL.md`（B 層程式檢查）
+- `skills/seo-session-checklist.md`（禁用詞清單 — 唯一來源）
+- `handoff/feedback/2026-04-07-wp-foodsafety-update-log.md`（本事件變更紀錄）

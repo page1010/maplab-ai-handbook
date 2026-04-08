@@ -148,12 +148,36 @@ function generateProposalV2() {
 
   // ── Step 9：Ready to Create 移到最後 ────────────────────
   // Bug 3 修正：結尾頁永遠在最後
+  // 2026-04-08 修正：經過 Step 5 的多次 remove() 和 Step 6-8 的多次 insert()，
+  // 原本 Step 5 抓的 readyToCreateSlide reference 裡存的內部 page id 已變 stale，
+  // 直接呼叫 move() 會拋 "The page (SLIDES_API...) could not be found"。
+  // 改為：從目前簡報 re-query 一次，用文字內容比對找到 Ready to Create 頁，
+  // 拿新的 reference 再 move()。
   if (readyToCreateSlide) {
-    var finalCount = pres.getSlides().length;
-    readyToCreateSlide.move(finalCount - 1);
-    Logger.log('[V2] Ready to Create 已移至最後: P' + finalCount);
+    var freshSlides = pres.getSlides();
+    var freshReadyToCreate = null;
+    for (var si = 0; si < freshSlides.length; si++) {
+      var elements = freshSlides[si].getPageElements();
+      for (var ei = 0; ei < elements.length; ei++) {
+        try {
+          var txt = elements[ei].asShape().getText().asString();
+          if (txt.indexOf('Ready') >= 0 && txt.indexOf('Create') >= 0) {
+            freshReadyToCreate = freshSlides[si];
+            break;
+          }
+        } catch(e) {}
+      }
+      if (freshReadyToCreate) break;
+    }
+    if (freshReadyToCreate) {
+      var finalCount = pres.getSlides().length;
+      freshReadyToCreate.move(finalCount - 1);
+      Logger.log('[V2] Ready to Create 已移至最後: P' + finalCount);
+    } else {
+      Logger.log('[V2] re-query 找不到 Ready to Create 頁，略過 move');
+    }
   } else {
-    Logger.log('[V2] 找不到 Ready to Create 頁，略過');
+    Logger.log('[V2] 一開始就找不到 Ready to Create 頁，略過');
   }
 
   // ── 完成 ─────────────────────────────────────────────────

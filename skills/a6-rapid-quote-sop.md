@@ -242,7 +242,7 @@ A6 不自己算成本，不修改 Items 主表，不直接發給客戶。
 
 **Step B：填入客戶基本資訊**
 
-> ⚠️ 2026-04-08 依 live sheet 直接驗證更新。舊版（E2/I2/E3/I3/E4/E5）完全過期，I 欄根本不在列印範圍 C1:F61 內。
+> ⚠️ 2026-04-08 依 live sheet 直接驗證更新。舊版（E2/I2/E3/I3/E4/E5）完全過期，I 欄根本不在列印範圍 C1:F55 內。完整列印範圍規範見 `docs/business-requirements/quote-sheet-print-range.md`。
 >
 > QUOTE_DRAFT 上半部的排版是「雙標籤-雙值配對」：**C 欄和 E 欄都是標籤欄，D 欄和 F 欄才是值欄**。填值一律寫 D/F，不要碰 C/E。
 

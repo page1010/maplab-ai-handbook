@@ -7,8 +7,12 @@
  * 模板分頁：QUOTE_DRAFT
  * 寫入分頁：SALES_INTAKE
  *
- * QUOTE_DRAFT 版面對應（2026-04-08 修正：對齊 C1:F61 列印範圍）：
- *   D2: 客戶名稱（框線內，列印範圍 C1:F61）
+ * QUOTE_DRAFT 版面對應（2026-04-08 修正：對齊 C1:F55 列印範圍）：
+ *   列印範圍 = C1:F55（Owner 用實體框線劃的客人可見區）
+ *   框線外（B/G/H/I/J/K/L/M/N 欄 + row 56 以下）= 業務內部
+ *   完整規則：docs/business-requirements/quote-sheet-print-range.md
+ *
+ *   D2: 客戶名稱（框線內）
  *   B3: 公司名稱（generateProposalV2 相容暫留）
  *   E2: 活動日期（框線內）
  *   D3: 活動地點（框線內，location || address）
@@ -24,7 +28,7 @@
  *   A30: 【合約條款】
  *   A31: 條款內容
  *
- * 對齊決策（2026-04-08 A0）：B 欄在 C1:F61 框線外（labels），主體資料對齊框線內 D/E/F。
+ * 對齊決策（2026-04-08 A0）：B 欄在 C1:F55 框線外（labels），主體資料對齊框線內 D/E/F。
  * 改前：B2:B9（接手前版本，v3.8 回滾後狀態）
  * 改後：D2/E2/D3/D4/F4（與 generateProposalV2 讀取位置統一，避免業務填兩次）
  *
@@ -279,7 +283,7 @@ function createQuote(formData) {
 // ─────────────────────────────────────────
 
 /**
- * 從 QUOTE_DRAFT 讀取預填資料供表單使用（對應 C1:F61 框線內版面，2026-04-08 修正）
+ * 從 QUOTE_DRAFT 讀取預填資料供表單使用（對應 C1:F55 框線內版面，2026-04-08 修正）
  */
 function getQuoteDraftValues() {
   var ss    = SpreadsheetApp.openById(SPREADSHEET_ID);

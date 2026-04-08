@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-04-08 晚間｜更新者：A0 — 🎉 **報價系統首次 runtime e2e 通過**：createQuote + generateProposalV2 兩個核心流程 Owner 親自按按鈕跑通（tag `verified-e2e-2026-04-08`，commit 4bca296）。這是專案歷史上第一個「真的跑得起來」的 stable 點，之前所有「v3.8 穩定版」都是 compile-time 標籤。｜A3 🔴 D11；A7 🔴 D9；A4 S11 ⚠️WATCH 閾值04-09 15:30
+最後更新：2026-04-08 晚間（A1 晚間巡查更新）｜更新者：A0+A1 — 🎉 **報價系統首次 runtime e2e 通過**（tag verified-e2e-2026-04-08，4bca296）；晚間巡查：A3 🔴 D11 ~252h+；A7 🔴 D9 ~204h+；A4 S11 ⚠️WATCH 閾值04-09 15:30（剩18h）；A0/A1/A5 今日活躍✅
 
 ## 2026-04-08 晚間重大修復（commit 77d7202 / f94a229 / 03b8300 / 4bca296，tag verified-e2e-2026-04-08）
 
@@ -242,6 +242,11 @@
 ⚠️ A1巡查 2026-04-08 16:00 午後巡查：A7 🔴 CRITICAL 持續第9天 ~198h+ — T-A7-001 Phase 2 + T-A7-002，最後 commit cf9f166 (2026-03-31) 距今已逾 198h。晨間巡查後無新活動。Owner 需明確決定：(a) 暫停任務，或 (b) 確認外部阻塞原因。
 ⚠️ A1巡查 2026-04-08 16:00 午後巡查：A4 S11 ⚠️ WATCH 接近閾值 — 最後 commit 36ee642 (2026-04-07 15:30)，48h 閾值 = 04-09 15:30，距今約 24.5h，剩約 23.5h。明日 15:30 前若無新 A4 commit，自動升級 🔴 CRITICAL。Owner 需確認 S11 Colab 仍執行中。
 ✅ A1巡查 2026-04-08 16:00 午後巡查：A0/A1/A5 今日活躍 ✅ — A0: first-principles-check/SKILL.md 建立（cold-start 三件套完成，82a8ddf）；A1: checkpoint.sh 改為預設 branch 模式 + approve.sh 新增（9bb59aa）；A5: QUOTE_DRAFT 客戶基本資料統一從 D/E/F 欄讀取（框線內，避免業務填兩次，4301369）。A6 B層自動存檔持續正常。A2 任務完成待機。整體與晨間巡查一致，無新增異常。
+
+⚠️ A1巡查 2026-04-08 晚間：A3 🔴 CRITICAL 持續第11天晚間 ~252h+ — T-A3-001 GTM方案B + T-A3-002 廣告成效，最後 commit 2aca2ae (~2026-03-29 22:10) 距今已逾 252h。下午巡查後無新活動，Owner 多次收到暫停建議仍未執行。**強烈要求立即執行：T-A3-001 + T-A3-002 標記 ⏸️ 暫停**，等 GTM 權限/廣告觀察期就緒後再重啟。
+⚠️ A1巡查 2026-04-08 晚間：A7 🔴 CRITICAL 持續第9天晚間 ~204h+ — T-A7-001 Phase 2 + T-A7-002，最後 commit cf9f166 (2026-03-31) 距今已逾 204h。下午巡查後無新活動。Owner 需明確決定：(a) 暫停任務，或 (b) 確認外部阻塞原因。
+⚠️ A1巡查 2026-04-08 晚間：A4 S11 ⚠️ WATCH 接近閾值 — 最後 commit 36ee642 (2026-04-07 15:30)，48h 閾值 = **04-09 15:30**，距今約 30h，剩約 18h。明日 15:30 前若無新 A4 commit 自動升級 🔴 CRITICAL。Owner 需確認 S11 Colab 仍執行中。
+✅ A1巡查 2026-04-08 晚間：今日重大里程碑 🎉 — **報價系統首次 runtime e2e 驗證通過**（tag verified-e2e-2026-04-08，4bca296）：createQuote + generateProposalV2 兩個核心流程 Owner 親自跑通。修復 6 層 bug：QuoteForm schema不同步（6天老bug）/E2-E3 label誤用/appsscript.json缺scope/Slide stale reference/列印範圍規範C1:F55確立/鐵律0「實況永遠勝過文件」。A0/A1/A5 今日均活躍✅。A6 B層自動存檔持續正常。系統整體狀態：健康（A3/A7 CRITICAL 持續，A4 WATCH 接近閾值）。
 
 ## MVP 母本紀錄點
 

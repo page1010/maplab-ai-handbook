@@ -103,6 +103,8 @@ GAS 的 `Range.setValue()` 會直接覆蓋公式，`clearDataValidations()` 會�
 - 2026-04-03~04：Code.gs 從 v3.1 迭代到 v3.8，共 8 個版本。每個版本都修了上一版的 bug，但同時引入新 bug。過程中：v3.3 修 cell reference 但破 D 欄；v3.5 修 D 欄但 I/J 被覆蓋；v3.6 修 I/J 但殘留模板 bug；v3.7 修 I/J 覆蓋但品項篩選邏輯又壞。
 - `bf487e2` (2026-04-04)：v3.3 大幅修改 cell reference，但沒有先讀版面文件確認，結果時間欄 E3 vs F3 又搞錯。
 - `d7b478b` (2026-04-03)：v3.2 自我檢討：根因是沒讀 `2026-04-02-quote-draft-v3-layout.md` 就開始改 code。
+- `78cdb0c` (2026-04-04)：**v3.8 最終結局 = 完全回滾**。放棄 v3.1~v3.7 所有迭代，退回接手前版本（客戶資料寫 B2:B9）。7 個版本工作全部作廢。根因：開始改 code 前沒讀 QUOTE_DRAFT 版面文件，不知道正確 cell 在哪裡，用猜的。
+- **殘留問題（v3.8 回滾後）**：`generateProposal_v2.gs` 在 v3.x 時期按新版面寫成（讀 D2/E2/D3/D4/F4），v3.8 回滾後 createQuote 改寫 B 欄，導致 generateProposalV2 讀到空值，Slide 提案客戶姓名/日期/地點全部顯示 '-'。這就是「業務填兩次」的根源。
 
 **根本原因**：
 每次修 bug 只看症狀，沒有對照「版面真相來源文件」確認所有 cell reference 一次到位。改了一個地方，其他地方的假設就失效了。

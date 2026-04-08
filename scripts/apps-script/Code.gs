@@ -7,15 +7,13 @@
  * 模板分頁：QUOTE_DRAFT
  * 寫入分頁：SALES_INTAKE
  *
- * QUOTE_DRAFT v3.1 版面對應（接手前版本）：
- *   B2: 客戶名稱
- *   B3: 公司名稱
- *   B4: 聯絡電話
- *   B5: 活動地址
- *   B6: 活動型態
- *   B7: 活動日期
- *   B8: 預計人數
- *   B9: 活動地點
+ * QUOTE_DRAFT 版面對應（2026-04-08 修正：對齊 C1:F61 列印範圍）：
+ *   D2: 客戶名稱（框線內，列印範圍 C1:F61）
+ *   B3: 公司名稱（generateProposalV2 相容暫留）
+ *   E2: 活動日期（框線內）
+ *   D3: 活動地點（框線內，location || address）
+ *   D4: 活動型態（框線內）
+ *   F4: 預計人數（框線內）
  *   H1: Case ID
  *   H2: 建立時間
  *   M2/N2: CaseID
@@ -25,6 +23,10 @@
  *   M9/N9: 版本
  *   A30: 【合約條款】
  *   A31: 條款內容
+ *
+ * 對齊決策（2026-04-08 A0）：B 欄在 C1:F61 框線外（labels），主體資料對齊框線內 D/E/F。
+ * 改前：B2:B9（接手前版本，v3.8 回滾後狀態）
+ * 改後：D2/E2/D3/D4/F4（與 generateProposalV2 讀取位置統一，避免業務填兩次）
  *
  * Items 分頁欄位（A=item_id, B=category, C=standard_name, D=default_price, E=default_cost, K=image_url）
  * 菜單品項寫入位置：D8:D10（鹹食）/ D12:D14（甜點） + G欄（qty）
@@ -182,15 +184,14 @@ function createQuote(formData) {
     itemsSheet.hideSheet();
   }
 
-  // ── 填入客戶資訊（對應 QUOTE_DRAFT 客戶區，B 欄填入） ──
-  keepSheet.getRange('B2').setValue(formData.clientName);
-  keepSheet.getRange('B3').setValue(formData.company   || '');
-  keepSheet.getRange('B4').setValue(formData.phone     || '');
-  keepSheet.getRange('B5').setValue(formData.address   || '');
-  keepSheet.getRange('B6').setValue(formData.eventType);
-  keepSheet.getRange('B7').setValue(formData.eventDate);
-  keepSheet.getRange('B8').setValue(formData.pax       || '');
-  keepSheet.getRange('B9').setValue(formData.location  || '');
+  // ── 填入客戶資訊（對應 QUOTE_DRAFT 列印範圍 C1:F61，框線內 D/E/F 欄） ──
+  // 2026-04-08：改用 D2/E2/D3/D4/F4，與 generateProposalV2 讀取位置統一
+  keepSheet.getRange('D2').setValue(formData.clientName);
+  keepSheet.getRange('B3').setValue(formData.company   || '');  // generateProposalV2 讀 B3，暫維持
+  keepSheet.getRange('E2').setValue(formData.eventDate);
+  keepSheet.getRange('D3').setValue(formData.location || formData.address || '');  // 活動地點
+  keepSheet.getRange('D4').setValue(formData.eventType);
+  keepSheet.getRange('F4').setValue(formData.pax       || '');
 
   // ── Case ID & 建立時間（右上角） ──
   keepSheet.getRange('H1').setValue(caseId);
@@ -249,25 +250,26 @@ function createQuote(formData) {
 // ─────────────────────────────────────────
 
 /**
- * 從 QUOTE_DRAFT 讀取預填資料供表單使用（對應 v3.1 B 欄版面）
+ * 從 QUOTE_DRAFT 讀取預填資料供表單使用（對應 C1:F61 框線內版面，2026-04-08 修正）
  */
 function getQuoteDraftValues() {
   var ss    = SpreadsheetApp.openById(SPREADSHEET_ID);
   var sheet = ss.getSheetByName(TEMPLATE_SHEET_NAME);
   if (!sheet) return {};
 
+  var rawDate = sheet.getRange('E2').getValue();
   return {
-    clientName : sheet.getRange('B2').getValue() || '',
+    clientName : sheet.getRange('D2').getValue() || '',
     company    : sheet.getRange('B3').getValue() || '',
     phone      : sheet.getRange('B4').getValue() || '',
-    address    : sheet.getRange('B5').getValue() || '',
-    eventType  : sheet.getRange('B6').getValue() || '',
-    eventDate  : sheet.getRange('B7').getValue()
-                  ? Utilities.formatDate(new Date(sheet.getRange('B7').getValue()), 'Asia/Taipei', 'yyyy-MM-dd')
+    address    : sheet.getRange('D3').getValue() || '',
+    eventType  : sheet.getRange('D4').getValue() || '',
+    eventDate  : rawDate
+                  ? Utilities.formatDate(new Date(rawDate), 'Asia/Taipei', 'yyyy-MM-dd')
                   : '',
-    headcount  : sheet.getRange('B8').getValue() || '',
-    eventName  : sheet.getRange('B9').getValue() || '',
-    totalItems : sheet.getRange('B10').getValue() || ''
+    headcount  : sheet.getRange('F4').getValue() || '',
+    eventName  : sheet.getRange('D5').getValue() || '',
+    totalItems : sheet.getRange('F5').getValue() || ''
   };
 }
 

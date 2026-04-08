@@ -643,3 +643,29 @@ ID:698 發現一篇 SEO 文章的 FAQ 區塊含自定義 HTML + `<script type="a
 - `skills/wp-content-audit/SKILL.md`（B 層程式檢查）
 - `skills/seo-session-checklist.md`（禁用詞清單 — 唯一來源）
 - `handoff/feedback/2026-04-07-wp-foodsafety-update-log.md`（本事件變更紀錄）
+
+---
+
+## Section 15: 第一性原理強制檢查（2026-04-08 追加）
+
+> 新增原因：60+ session 的連環錯誤（v3.1→v3.8 全廢、業務填兩次單、default_price 誤判）根因都是思考問題，不是技術問題。
+
+### 強制規則
+
+遇到以下任何一個情境，**必須**先跑 `skills/first-principles-check/SKILL.md` 的 5 題 checklist，才能動手：
+
+- 正在修**第 3 次同一個錯誤**
+- Owner 說「為什麼要這樣？」或「這不對吧」
+- 版號連跳（v3.1 → v3.2 → v3.3 ...）卻在解同一個問題
+- 即將接受「流程本來就是這樣」的說法
+- 準備把空欄位或缺失函數**宣告為 blocker**
+- 即將把「使用者目前在做的事」當成「系統設計」
+
+### 違反後果
+
+未跑 checklist 就動手，且事後確認是思考問題造成的錯誤 → 在 `skills/pitfalls/SKILL.md` 追加 pattern，並在 `skills/first-principles-check/SKILL.md` 追加失敗案例。
+
+### 關聯
+- `skills/first-principles-check/SKILL.md`（完整 checklist）
+- `skills/pitfalls/SKILL.md`（過去失敗 pattern）
+- `docs/glossary.md`（Cold-start 三件套的第三件）

@@ -15,6 +15,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. 讀 CURRENT_STATUS.md = 最新系統狀態
 3. 讀 AGENT_RULES.md = 治理規則
 4. 讀 skills/task-progress-guide.md
+⚠️ **必讀**：`skills/pitfalls/SKILL.md` — 60+ session 踩過的坑，開始 GAS/Sheets 任務前必掃
 5. 輸出 Startup Check
 
 【API 存取三層備援】
@@ -29,6 +30,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 
 在做任何事之前，必須依序完成：
 
+0. **必讀**：`skills/pitfalls/SKILL.md` — 過去踩過的坑（clasp推錯專案/公式覆蓋/API幻覺等7個pattern）
 1. 讀 CURRENT_STATUS.md — 了解全局狀態
 2. 讀你的 Task Card（handoff/tasks/T-AX-*.md）— 了解你的任務 + 接續點
 3. 執行以下指令並閱讀輸出：

@@ -147,6 +147,10 @@ function createQuote(formData) {
   formData.eventName  = _eventName;
   formData.totalItems = _totalItems;
 
+  // ── B2B / B2C 判別（公司名有填 = 企業版）──
+  // 影響：N5/N7 狀態下拉選項、條款版本。B2B 不收訂金，N7 下拉不應該有「已收訂金」。
+  var isCorporate = _company && _company.trim().length > 0;
+
   // ── 打開主系統 Sheet ──
   var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
 
@@ -237,27 +241,38 @@ function createQuote(formData) {
   keepSheet.getRange('N3').setValue(Utilities.formatDate(now, 'Asia/Taipei', 'yyyy-MM-dd HH:mm'));
   keepSheet.getRange('M5').setValue('報價狀態');
   keepSheet.getRange('N5').setValue('報價中');
-  keepSheet.getRange('M7').setValue('匯款狀態');
-  keepSheet.getRange('N7').setValue('未匯');
+  keepSheet.getRange('M7').setValue('付款狀態');
+  // B2B 和 B2C 預設狀態與下拉選項不同
+  var defaultPaymentStatus = isCorporate ? '未請款' : '未匯';
+  var paymentOptions       = isCorporate
+    ? ['未請款', '請款中', '已收款']        // B2B：不收訂金，按業務流程請款
+    : ['未匯', '已收訂金', '已收全額'];     // B2C：訂金制
+  keepSheet.getRange('N7').setValue(defaultPaymentStatus);
   keepSheet.getRange('M9').setValue('版本');
-  keepSheet.getRange('N9').setValue('v3.8');
+  keepSheet.getRange('N9').setValue('v3.8-verified-2026-04-08');
 
-  // N5 下拉驗證：報價狀態
+  // N5 下拉驗證：報價狀態（B2B/B2C 共用）
   var quoteStatusRule = SpreadsheetApp.newDataValidation()
     .requireValueInList(['報價中', '成交', '未成交結案'], true)
     .setAllowInvalid(false)
     .build();
   keepSheet.getRange('N5').setDataValidation(quoteStatusRule);
 
-  // N7 下拉驗證：匯款狀態
+  // N7 下拉驗證：付款狀態（2026-04-08 拆分 B2B/B2C）
+  // 原本的 ['未匯','已收訂金','已收全額'] 對 B2B 不準，B2B 不收訂金。
   var paymentStatusRule = SpreadsheetApp.newDataValidation()
-    .requireValueInList(['未匯', '已收訂金', '已收全額'], true)
+    .requireValueInList(paymentOptions, true)
     .setAllowInvalid(false)
     .build();
   keepSheet.getRange('N7').setDataValidation(paymentStatusRule);
 
+  // ── 隱藏 D19/D20（熱客招待內部品項，不給客人看）──
+  // Owner 2026-04-08 指示：d19 d20 設為隱藏。對應 master 模板中「熱客招待 Complimentary」
+  // 下方的內部品項，generated copy 不應該列在客人看的報價單上。
+  keepSheet.hideRows(19, 2);
+
   // ── 條款自動帶入（個人版 / 企業版） ──
-  var isCorporate = _company && _company.trim().length > 0;
+  // isCorporate 在函式最上方已判別，這裡直接用
   var terms = isCorporate
     ? getCorpTerms(eventDate)
     : getPersonalTerms();
@@ -376,10 +391,24 @@ function writeToIntake_(ss, caseId, formData, sheetUrl, now) {
 
   var createdAt = Utilities.formatDate(now, 'Asia/Taipei', 'yyyy-MM-dd HH:mm:ss');
 
+  // 從 sheetUrl 抽出 spreadsheet id 給 IMPORTRANGE 用
+  var quoteIdMatch = sheetUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  var quoteId      = quoteIdMatch ? quoteIdMatch[1] : '';
+
+  // L/M 欄使用 IMPORTRANGE 形成動態連結（2026-04-08 Owner 需求）
+  // 原本是靜態字串 + 手動 syncQuoteStatus_ 拉取，改為 live formula。
+  // 首次使用時 SALES_INTAKE 會彈出 #REF! → 需點「允許存取」授權一次這個 source sheet。
+  var quoteStatusFormula   = quoteId
+    ? '=IFERROR(IMPORTRANGE("' + quoteId + '","報價單!N5"),"報價中")'
+    : '';
+  var paymentStatusFormula = quoteId
+    ? '=IFERROR(IMPORTRANGE("' + quoteId + '","報價單!N7"),"未匯")'
+    : '';
+
   var row = [
     caseId,                      // A: case_id
     createdAt,                   // B: created_at
-    'quote-system-v3.8',         // C: source
+    'quote-system-v3.8-verified',// C: source
     formData.clientName,         // D: client_name
     formData.company    || '',   // E: company
     formData.phone      || '',   // F: phone
@@ -388,13 +417,15 @@ function writeToIntake_(ss, caseId, formData, sheetUrl, now) {
     formData.location   || '',   // I: location
     formData.pax        || '',   // J: pax
     sheetUrl,                    // K: sheet_url
-    '',                          // L: （預留）
-    '',                          // M: （預留）
+    quoteStatusFormula,          // L: quote_status (IMPORTRANGE live link)
+    paymentStatusFormula,        // M: payment_status (IMPORTRANGE live link)
     '',                          // N: （預留）
     ''                           // O: notes
   ];
 
-  intakeSheet.appendRow(row);
+  // 用 setValues 寫入一整列（含 = 開頭的 IMPORTRANGE 字串會被解析為 formula）
+  var lastRow = intakeSheet.getLastRow() + 1;
+  intakeSheet.getRange(lastRow, 1, 1, row.length).setValues([row]);
 }
 
 // ─────────────────────────────────────────

@@ -29,7 +29,19 @@ function generateProposalV2() {
 
   // ── Step 1：讀客戶資訊 ──────────────────────────────────
   var clientName  = String(qd.getRange('D2').getValue() || '客戶');
-  var eventDate   = _formatDate(qd.getRange('E2').getValue());
+  var company     = String(qd.getRange('B3').getValue() || '').trim();
+  var rawEventDate = qd.getRange('E2').getValue();
+  var eventDate   = _formatDate(rawEventDate);
+  // 檔名用 YYYYMMDD，來源有效日期 fallback 當日
+  var eventDateForFile;
+  if (rawEventDate instanceof Date && !isNaN(rawEventDate.getTime())) {
+    eventDateForFile = Utilities.formatDate(rawEventDate, 'Asia/Taipei', 'yyyyMMdd');
+  } else if (eventDate !== '-') {
+    eventDateForFile = eventDate.replace(/-/g, '');
+  } else {
+    eventDateForFile = Utilities.formatDate(new Date(), 'Asia/Taipei', 'yyyyMMdd');
+    Logger.log('[V2] ⚠️ E2 活動日期欄位為空，以今日日期代替 → 請補填 QUOTE_DRAFT E2');
+  }
   var venue       = String(qd.getRange('D3').getValue() || '-');
   var eventType   = String(qd.getRange('D4').getValue() || '-');
   var eventTime   = String(qd.getRange('E3').getValue() || '-');
@@ -69,7 +81,7 @@ function generateProposalV2() {
   // ── Step 4：複製模板 ────────────────────────────────────
   var templateFile = DriveApp.getFileById(SLIDES_TEMPLATE_ID);
   var folder       = DriveApp.getFolderById(PROPOSALS_FOLDER_ID);
-  var fileName     = eventDate + '_' + clientName + '_提案簡報_v2TEST';
+  var fileName     = eventDateForFile + '_' + clientName + (company ? '_' + company : '') + '_提案簡報';
   var newFile      = templateFile.makeCopy(fileName, folder);
   var pres         = SlidesApp.openById(newFile.getId());
 
@@ -151,7 +163,7 @@ function generateProposalV2() {
   } catch(e) {
     Logger.log('[V2] 非試算表 context，略過 alert');
   }
-  return url;
+  return { ok: true, url: url, name: fileName };
 }
 
 // ============================================================

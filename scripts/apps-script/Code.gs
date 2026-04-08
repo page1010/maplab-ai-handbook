@@ -49,7 +49,7 @@ function onOpen() {
     .createMenu('MAPLAB')
     .addItem('產出報價單', 'showQuoteForm')
     .addSeparator()
-    .addItem('產出 Slide 提案', 'createSlidesFromSheet')
+    .addItem('產出 Slide 提案', 'generateProposalV2')
     .addToUi();
 }
 

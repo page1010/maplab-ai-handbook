@@ -26,6 +26,44 @@
 
 ---
 
+## 鐵律 0：實況永遠勝過文件（Sheet is truth, repo is doc）
+
+**在所有問題之前，先搞清楚真相來源的優先順序：**
+
+| 真相順位 | 來源 | 為什麼 |
+|---------|------|--------|
+| **第一順位（Ground truth）** | 活系統：Google Sheet 實際儲存格、部署版 Apps Script 實際執行碼、live API 真實回傳、線上 UI 實際畫面 | 這是「此刻真的在運作的樣子」 |
+| 第二順位（線索） | repo 底下任何 .md / handoff/ / layout doc / SOP / README | 這是「某個人當時寫給未來的人看的」。可能過期、可能 aspirational、可能作者自己也是憑印象 |
+
+**規則：**
+- 任何「現況是 X」的斷言，必須能追溯到第一順位。第二順位只能當線索，不能當結論。
+- 工具失敗（token 過期、API 429、權限不足）不是退回文件的藉口，是觸發三層備援的訊號：API → MCP → Chrome 擴充 JS → computer-use 桌面截圖。**一定要拿到實況。**
+- 文件 vs 實況衝突時：實況勝。同時開任務修文件，不要把文件當沒事。
+
+**反面案例 — 信任 layout doc 結果把全系統帶進陰溝（2026-04-08）**：
+
+`handoff/feedback/2026-04-02-quote-draft-v3-layout.md` 自稱「Code.gs 所有 cell references 的唯一真相來源」，裡面宣稱 QUOTE_DRAFT 的 `E2 = 活動日期值`。於是：
+
+1. 2026-04-03 commit 4301369 `createQuote()` 照 layout doc 寫 `E2 ← eventDate`
+2. `generateProposal_v2.gs` 也照 layout doc 讀 `E2 → eventDate`
+3. 兩邊內部一致，看起來沒問題
+
+2026-04-08 用 Chrome 擴充的 fetch 直接打 Google CSV export 端點讀 live sheet，發現：
+
+- **C2~C5 和 E2~E5 都是標籤欄**（C2="客戶"、E2="\ndate"、E3="\n時間\n\n"、E4="規劃人數"、E5="餐點總件數"）
+- **D2~D5 和 F2~F5 才是值欄**
+- Layout doc 自己的 Row 3~5 mapping 都是「C=label、D=value、E=label、F=value」的對稱結構，**只有 Row 2 的 E2 被誤記成值欄** — 作者從截圖肉眼判讀時把標籤「\ndate」誤讀成日期值
+- Code.gs 寫 E2 = 把模板的「date」標籤覆蓋掉（副本看起來沒標籤，像孤兒日期）
+- generateProposal_v2.gs 讀 E3 = 把「\n時間\n\n」這個標籤字串當時間值塞進 Slide
+
+**第一順位檢查本來只要打一個 CSV export 端點就會抓到。**沒人做，因為大家都信文件自稱的「唯一真相來源」。這是第二順位蓋過第一順位的典型災難。
+
+**第一性原理答案**：`sheet.getRange('E2').getValue()` 比 `grep -n E2 handoff/*.md` 更接近真相。永遠從活系統 verify。
+
+> 來源：commit 4301369 的全系統錯位事件、本次 2026-04-08 live sheet 驗證
+
+---
+
 ## Checklist（每題都要答，不能跳過）
 
 ---
@@ -158,6 +196,7 @@ Code.gs 從 v3.1 迭代到 v3.8，共 8 個版本，每版都在修上一版的 
 | 4 | 業務填兩次單 | 使用者配合程式 bug 運作 | Q1 |
 | 5 | QUOTE_DRAFT 公式被 setValue 覆蓋 | 需要 Sheets 版本紀錄還原 | Q5 |
 | 6 | clasp 推到 LINE 專案 | 報價系統 3 天沒被動到，所有改動推錯地方 | Q3/Q5 |
+| 7 | Layout doc 把標籤欄 E2 誤當值欄，Code.gs + generateProposal_v2.gs 全跟著錯 | 寫入副本時覆蓋「date」標籤、產 Slide 把「\n時間\n\n」當時間值 | 鐵律 0（實況優先） |
 
 詳情見 `skills/pitfalls/SKILL.md`。
 

@@ -1,7 +1,8 @@
 # QUOTE_DRAFT 新版 Cell Mapping — 2026-04-02 Owner 重構後
 
 > Owner 手動重構了 QUOTE_DRAFT 母版，以下是從 Chrome 截圖逐格確認的完整版面。
-> 這份文件是 Code.gs 所有 cell references 的唯一真相來源。
+>
+> ⚠️ **2026-04-08 更正**：原作者從截圖肉眼判讀時把 Row 2 的標籤「\ndate」誤記為日期值，造成全文 Row 2 的 E2 描述錯誤。本次用 Chrome extension fetch `docs.google.com/.../gviz/tq?tqx=out:csv` 直接打 live sheet 驗證後：**E2 是標籤欄（與 E3/E4/E5 對稱一致），活動日期值應寫在 F2，而不是 E2**。同時補 F3 為活動時間值欄。所有相關欄位已在本文 Row 2 說明、Code.gs 欄位表、踩坑紀錄三處同步更正。**此後任何 cell reference 若與 live sheet 不符，以 live sheet 為準，本文件立即更新。**
 
 ---
 
@@ -17,11 +18,14 @@ G 欄以後（單位成本、小計、業務備註等）= 業務內部資訊，�
 | Cell | Label | Value（範例） | 說明 |
 |------|-------|-------------|------|
 | C1-F1 | — | MAP LAB KITCHEN 私廚/外燴 quotation / invoice | 標題（跨欄合併） |
-| C2 | 客戶 | maplabkitchen | 客戶名稱。如果是公司客戶：D2 = 公司名 + 聯絡人 |
-| E2 | date | 2026/05/27 | 活動日期 |
-| C3 | 地址 | 台南市北區何偉路 | 活動地址 |
+| C2 | 客戶 | — | label |
+| D2 | — | maplabkitchen | 客戶名稱值。公司客戶塞「公司名+聯絡人」 |
+| E2 | date | — | **label（2026-04-08 更正，原本誤記為日期值）** |
+| F2 | — | 2026/05/27 | **活動日期值（2026-04-08 更正新增）** |
+| C3 | 地址 | — | label |
+| D3 | — | 台南市北區何偉路 | 活動地址值 |
 | E3 | 時間 | — | label |
-| F3 | — | 15:00-17:00 | 活動時間 |
+| F3 | — | 15:00-17:00 | 活動時間值 |
 | C4 | 活動型態 | — | label（給客人選的活動類型） |
 | D4 | — | 尾牙/年度慶典 | 活動型態值 |
 | E4 | 規劃人數 | — | label |
@@ -125,14 +129,14 @@ G 欄以後（單位成本、小計、業務備註等）= 業務內部資訊，�
 
 | Cell | 值 | 來源 |
 |------|-----|------|
-| D2 | 客戶名 or 公司名+聯絡人 | QuoteForm |
-| E2 | 活動日期 | QuoteForm |
-| D3 | 地址 | QuoteForm |
-| F3 | 時間 | QuoteForm |
-| D4 | 活動型態 | QuoteForm |
-| F4 | 規劃人數 | QuoteForm |
-| D5 | 活動名稱 | QuoteForm |
-| F5 | 餐點總件數 | QuoteForm |
+| D2 | 客戶名 or 公司名+聯絡人 | QuoteForm.customer |
+| F2 | 活動日期 | QuoteForm.date（**2026-04-08 更正：原本誤記 E2**） |
+| D3 | 地址 | QuoteForm.address |
+| F3 | 時間 | QuoteForm.time |
+| D4 | 活動型態 | QuoteForm.eventType |
+| F4 | 規劃人數 | QuoteForm.headcount |
+| D5 | 活動名稱 | QuoteForm.eventName |
+| F5 | 餐點總件數 | QuoteForm.totalItems |
 | K1 | Case ID | auto |
 | K2 | 建立時間 | auto |
 | K3 | 報價狀態=報價中 | auto |
@@ -146,6 +150,7 @@ G 欄以後（單位成本、小計、業務備註等）= 業務內部資訊，�
 - C3 label「地址」
 - C4 label「活動型態」
 - C5 label「活動名稱」
+- **E2 label「date」（2026-04-08 更正補上，原本漏列）**
 - E3 label「時間」
 - E4 label「規劃人數」
 - E5 label「餐點總件數」
@@ -160,3 +165,4 @@ G 欄以後（單位成本、小計、業務備註等）= 業務內部資訊，�
 2. **B 欄是 label** — Code.gs 不可以覆蓋 B 欄或 C 欄的 label
 3. **版本號意思** — 不是每次修改就重新產出，而是產出一次，後續在同一份修改
 4. **毛利率計算** — 要扣加購服務費才能算食物實收
+5. **E 欄整欄都是 label（2026-04-08 更正）** — C 欄和 E 欄同時是標籤欄，D 欄和 F 欄才是值欄。Row 2 的 E2「date」也是 label，活動日期值寫在 F2。原本文件 Row 2 誤把 E2 當日期值，導致 Code.gs + generateProposal_v2.gs 全跟著錯。詳見 `skills/first-principles-check/SKILL.md` 鐵律 0 案例。

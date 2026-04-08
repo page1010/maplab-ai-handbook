@@ -67,6 +67,9 @@ _claude_semaphore = asyncio.Semaphore(1)
 # Conversation history per chat_id (deque maxlen=20 messages)
 _conv_history: dict[int, deque] = {}
 
+# Pending reset confirmations: chat_id → generated summary text
+_pending_reset: dict[int, str] = {}
+
 ANTHROPIC_SYSTEM_PROMPT = (
     "【A1 Telegram Bot 前端 → A1 Claude Code 處理】\n"
     "以下是從 Telegram 轉發的 Owner 對話，請以 A1 系統總管身份協助回答。\n"
@@ -263,6 +266,55 @@ async def claude_ask(chat_id: int, user_message: str, system_extra: str = "", ti
         return f"⚠️ 呼叫 Claude 失敗: {e}"
 
 
+async def _generate_phase_summary(chat_id: int) -> str:
+    """Generate a phase summary from current conversation history (one-shot, no history modification)."""
+    history = list(_get_history(chat_id))
+    if not history:
+        return "（無對話記錄）"
+
+    history_text = "\n".join(
+        f"{'Owner' if m['role'] == 'user' else '助理'}：{m['content']}"
+        for m in history
+    )
+    prompt = (
+        f"{ANTHROPIC_SYSTEM_PROMPT}\n\n"
+        "請根據以下對話歷史，產生一份「階段摘要」，格式如下：\n\n"
+        "## 本階段完成事項\n（條列）\n\n"
+        "## 待辦 / 未完成\n（條列，標注優先級）\n\n"
+        "## 重要決策紀錄\n（本階段的重要決定）\n\n"
+        "## 接手時需知道的事\n（下個 session 最重要的接續點）\n\n"
+        f"【對話記錄】\n{history_text}\n【對話記錄結束】\n\n"
+        "請用繁體中文，條列式，簡潔。"
+    )
+
+    env = os.environ.copy()
+    if CLAUDE_OAUTH_TOKEN:
+        env["CLAUDE_CODE_OAUTH_TOKEN"] = CLAUDE_OAUTH_TOKEN
+    env["PATH"] = "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:" + env.get("PATH", "")
+
+    try:
+        proc = await asyncio.create_subprocess_exec(
+            "claude", "-p", "--dangerously-skip-permissions",
+            prompt,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+            env=env,
+        )
+        try:
+            stdout, stderr = await asyncio.wait_for(proc.communicate(), timeout=120)
+        except asyncio.TimeoutError:
+            proc.kill()
+            return "⚠️ 摘要生成超時（120秒）"
+        if proc.returncode != 0:
+            err = stderr.decode(errors="replace")[:300].strip()
+            return f"⚠️ Claude 錯誤: {err or '未知錯誤'}"
+        return stdout.decode(errors="replace").strip() or "（Claude 無回應）"
+    except FileNotFoundError:
+        return "⚠️ 找不到 claude 命令"
+    except Exception as e:
+        return f"⚠️ 摘要生成失敗: {e}"
+
+
 # ── Command Handlers ───────────────────────────────────────────────────────────
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -294,6 +346,7 @@ async def help_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         "/refresh — 手動 git pull\n"
         "/ping — 心跳檢查\n"
         "/ask \\[問題\\] — 直接問 Claude（OAuth，免費）\n"
+        "/reset — 生成本階段摘要+待辦，確認後清除對話記錄\n"
         "/help — 本說明\n\n"
         "💬 直接傳訊息也可以問 Claude",
         parse_mode="MarkdownV2",
@@ -539,6 +592,95 @@ async def _run_claude_guarded(
     )
 
 
+async def reset_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Two-step phase reset: generate summary → confirm → save file + clear history.
+
+    Usage:
+        /reset          — generate and show phase summary + todos
+        /reset confirm  — save summary to file and clear conversation history
+        /reset cancel   — cancel pending reset
+    """
+    if not is_owner(update):
+        await deny(update)
+        return
+    chat_id = update.effective_chat.id
+    arg = context.args[0].lower() if context.args else ""
+
+    # Step: cancel
+    if arg == "cancel":
+        if chat_id in _pending_reset:
+            _pending_reset.pop(chat_id)
+            await update.message.reply_text("↩️ 已取消 /reset")
+        else:
+            await update.message.reply_text("目前沒有待確認的 /reset")
+        return
+
+    # Step 2: confirm → save + clear
+    if arg == "confirm":
+        if chat_id not in _pending_reset:
+            await update.message.reply_text("⚠️ 沒有待確認的摘要，請先執行 /reset")
+            return
+        summary = _pending_reset.pop(chat_id)
+        TELEGRAM_LOG_DIR.mkdir(parents=True, exist_ok=True)
+        today = datetime.now().strftime("%Y-%m-%d")
+        ts_str = datetime.now().strftime("%Y-%m-%d_%H%M%S")
+        summary_file = TELEGRAM_LOG_DIR / f"phase-summary-{ts_str}.md"
+        header = f"# Phase Summary — {today}\n\n> /reset 執行時自動產生\n\n"
+        summary_file.write_text(header + summary, encoding="utf-8")
+        # Clear history
+        if chat_id in _conv_history:
+            _conv_history[chat_id].clear()
+        _save_conv_history()
+        # Git commit in background
+        rel_path = f"data/telegram-logs/phase-summary-{ts_str}.md"
+        def _commit_summary():
+            try:
+                subprocess.run(["git", "add", rel_path], cwd=REPO_PATH, capture_output=True, timeout=10)
+                subprocess.run(
+                    ["git", "commit", "-m", f"log(phase-reset): {today} 階段摘要存檔"],
+                    cwd=REPO_PATH, capture_output=True, timeout=15,
+                )
+                subprocess.run(["git", "push", "origin", "main"], cwd=REPO_PATH, capture_output=True, timeout=30)
+            except Exception as e:
+                logger.warning(f"git commit phase-summary failed: {e}")
+        threading.Thread(target=_commit_summary, daemon=True).start()
+        await update.message.reply_text(
+            f"✅ 階段摘要已存檔：{summary_file.name}\n"
+            "對話記錄已清除，新階段開始。"
+        )
+        return
+
+    # Step 1: generate summary
+    history = list(_get_history(chat_id))
+    if not history:
+        await update.message.reply_text("目前沒有對話記錄可以摘要。")
+        return
+    if _claude_semaphore.locked():
+        await update.message.reply_text("⏳ Bot 正在處理其他訊息，請稍候再試。")
+        return
+
+    await update.message.reply_text("⏳ 生成階段摘要中，請稍候…")
+
+    async def _do_summary():
+        async with _claude_semaphore:
+            summary = await _generate_phase_summary(chat_id)
+            _pending_reset[chat_id] = summary
+            MAX = 4096
+            for i in range(0, len(summary), MAX):
+                await context.bot.send_message(chat_id=chat_id, text=summary[i:i + MAX])
+            await context.bot.send_message(
+                chat_id=chat_id,
+                text=(
+                    "─────────────────\n"
+                    "以上是本階段摘要與待辦。\n\n"
+                    "✅ 確認存檔並清除記錄：/reset confirm\n"
+                    "❌ 取消：/reset cancel"
+                ),
+            )
+
+    asyncio.create_task(_do_summary())
+
+
 async def ask_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if not is_owner(update):
         await deny(update)
@@ -673,6 +815,7 @@ def main() -> None:
     app.add_handler(CommandHandler("blocker", blocker))
     app.add_handler(CommandHandler("refresh", refresh))
     app.add_handler(CommandHandler("ask", ask_cmd))
+    app.add_handler(CommandHandler("reset", reset_cmd))
     app.add_handler(CommandHandler("clip", clip_cmd))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     app.add_error_handler(on_error)

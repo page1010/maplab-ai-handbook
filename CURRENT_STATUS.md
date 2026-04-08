@@ -3,7 +3,29 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-04-08（A1 午後巡查）｜ 更新者：A1 — A3 🔴 D11 ~246h+持續；A7 🔴 D9 ~198h+持續；A4 S11 ⚠️WATCH 閾值04-09 15:30；A0/A1/A5 今日活躍✅
+最後更新：2026-04-08 晚間｜更新者：A0 — 🎉 **報價系統首次 runtime e2e 通過**：createQuote + generateProposalV2 兩個核心流程 Owner 親自按按鈕跑通（tag `verified-e2e-2026-04-08`，commit 4bca296）。這是專案歷史上第一個「真的跑得起來」的 stable 點，之前所有「v3.8 穩定版」都是 compile-time 標籤。｜A3 🔴 D11；A7 🔴 D9；A4 S11 ⚠️WATCH 閾值04-09 15:30
+
+## 2026-04-08 晚間重大修復（commit 77d7202 / f94a229 / 03b8300 / 4bca296，tag verified-e2e-2026-04-08）
+
+踩到多層 bug 同時爆發，Owner 按「MAPLAB → 產出報價單」全掛。追查後發現過去一週以來從未有任何 commit 真的 runtime 測試過。修好的東西：
+
+1. **QuoteForm 表單欄位 ↔ Code.gs 不同步（6 天老 bug）** — 2026-04-02 commit e51d637 把表單 id 從 `clientName/eventDate/pax` 改成 `customer/date/headcount`，但 Code.gs createQuote() 沒跟著改，導致 `new Date(undefined)` 每次按按鈕都爆。修法：createQuote 加欄位名稱相容層，同時吃新舊兩種 schema。
+
+2. **E2/E3 label 欄被當值欄用** — 透過 Chrome extension fetch live sheet CSV 直接驗證發現 QUOTE_DRAFT 的 C/E 整欄是 label、D/F 才是 value。原本 Code.gs 寫 E2、generateProposal_v2 讀 E2/E3，都讀到 label 字串 `"\ndate"`。修法：寫/讀都改到 F2/F3，並補寫之前漏的 D5/F5。
+
+3. **appsscript.json 缺 `script.container.ui` scope** — Ui.showModalDialog 需要這個權限但 manifest 沒宣告，表單彈窗直接被擋。修法：補 scope。
+
+4. **Slide Ready to Create 頁 stale reference** — generateProposalV2 Step 5 抓了 slide reference 後，後面大量 remove/insert 導致內部 page id stale，Step 9 move() 拋 `The page (SLIDES_API...) could not be found`。修法：Step 9 開始時 re-query 重新找 reference。
+
+5. **列印範圍 C1:F55 規範確立** — Owner 確認列印範圍是 C1:F55（不是 C1:F61），框線內 = 客人看到，框線外 = 業務內部。新建 `docs/business-requirements/quote-sheet-print-range.md` 作為硬性需求單一真相來源；repo 內 5 個檔案的 C1:F61 全部改正。
+
+6. **SKILL.md 新增鐵律 0「實況永遠勝過文件」** — sheet / deployed code / live API 是第一順位真相，repo/.md 是第二順位。任何 cold-start session 會先被這條打中。
+
+## 尚待處理（下次迭代）
+
+- **A30/A31 條款位置錯誤** — 條款應在 C37+ 框線內，但目前 Code.gs 寫 A30/A31（A 欄，框線外），客人看不到條款。
+- **報價單格式細節** — Owner 驗證時說「格式不準」，列印範圍規範已存檔，下次回頭對齊。
+- **M/N 欄系統資訊位置** — 是否合理待驗證。
 
 ---
 

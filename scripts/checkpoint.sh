@@ -1,15 +1,28 @@
 #!/bin/bash
-# checkpoint.sh — 一鍵存檔：commit → cherry-pick 到 main → push → 驗證
-# 用法：bash scripts/checkpoint.sh "角色名" "做了什麼"
-# 例如：bash scripts/checkpoint.sh "A4" "S11 照片分類完成 3000 張"
+# checkpoint.sh — 一鍵存檔
+# 預設：commit 到 agent branch，等 Owner 執行 approve.sh 才進 main
+# 加 --fast：直接 push 到 main（信任模式，適合 A1 本身操作）
+#
+# 用法：
+#   bash scripts/checkpoint.sh "角色名" "做了什麼"           # 預設 branch 模式
+#   bash scripts/checkpoint.sh "角色名" "做了什麼" --fast    # 直接進 main
+#
+# 例如：
+#   bash scripts/checkpoint.sh "A5" "修正 QUOTE_DRAFT 公式"
+#   bash scripts/checkpoint.sh "A1" "更新 CURRENT_STATUS" --fast
 
 ROLE="${1:-}"
 MESSAGE="${2:-}"
+FAST_MODE=false
 REPO_ROOT="/Users/pagemacmini/maplab-ai-handbook"
 
+# Parse --fast flag（位置不限）
+for arg in "$@"; do
+  [ "$arg" = "--fast" ] && FAST_MODE=true
+done
+
 if [ -z "$ROLE" ] || [ -z "$MESSAGE" ]; then
-  echo "❌ 用法：bash scripts/checkpoint.sh \"角色名\" \"做了什麼\""
-  echo "   例如：bash scripts/checkpoint.sh \"A4\" \"S11 照片分類完成 3000 張\""
+  echo "❌ 用法：bash scripts/checkpoint.sh \"角色名\" \"做了什麼\" [--fast]"
   echo "   角色名：A0 / A1 / A2 / A4 / A5 / A6 / A7 / A8"
   exit 1
 fi
@@ -17,19 +30,24 @@ fi
 COMMIT_MSG="checkpoint($ROLE): $MESSAGE"
 WORKTREE_DIR=$(git rev-parse --show-toplevel 2>/dev/null)
 CURRENT_BRANCH=$(git branch --show-current 2>/dev/null)
+TODAY=$(date +%Y%m%d)
+AGENT_BRANCH="agent/$ROLE-$TODAY"
 
 echo "======================================"
 echo "🔄 CHECKPOINT 存檔流程啟動"
 echo "   角色：$ROLE"
 echo "   訊息：$MESSAGE"
-echo "   分支：$CURRENT_BRANCH"
+if [ "$FAST_MODE" = true ]; then
+  echo "   模式：⚡ --fast（直接進 main）"
+else
+  echo "   模式：🔒 branch 模式（需 Owner approve 才進 main）"
+fi
 echo "======================================"
 echo ""
 
 # 確認有沒有變更
 if [ -z "$(git status --porcelain 2>/dev/null)" ]; then
   echo "ℹ️  沒有需要存檔的變更，跳過。"
-  echo "   （如果你認為有變更，請確認 git status）"
   exit 0
 fi
 
@@ -37,91 +55,112 @@ echo "📋 變更清單："
 git status --short
 echo ""
 
-# Step 1: git add -A
-echo "📁 [1/4] 暫存所有變更..."
-if ! git add -A; then
-  echo "❌ git add 失敗"
-  exit 1
-fi
-echo "       ✅ 完成"
+# ============================================================
+# FAST MODE：直接 commit → cherry-pick 到 main → push（原有行為）
+# ============================================================
+if [ "$FAST_MODE" = true ]; then
 
-# Step 2: commit
-echo "💾 [2/4] Commit..."
-if ! git commit -m "$COMMIT_MSG"; then
-  echo "❌ git commit 失敗"
-  exit 1
-fi
-HASH=$(git rev-parse HEAD)
-SHORT="${HASH:0:7}"
-echo "       ✅ $SHORT — $COMMIT_MSG"
-echo ""
+  echo "📁 [1/4] 暫存所有變更..."
+  git add -A && echo "       ✅ 完成" || { echo "❌ git add 失敗"; exit 1; }
 
-# Step 3: cherry-pick 到 main（如果不在 main branch 上）
-if [ "$CURRENT_BRANCH" != "main" ]; then
-  echo "🍒 [3/4] Cherry-pick 到 main..."
-  if ! cd "$REPO_ROOT"; then
-    echo "❌ 無法切到 $REPO_ROOT"
-    exit 1
-  fi
+  echo "💾 [2/4] Commit..."
+  git commit -m "$COMMIT_MSG" || { echo "❌ git commit 失敗"; exit 1; }
+  HASH=$(git rev-parse HEAD)
+  SHORT="${HASH:0:7}"
+  echo "       ✅ $SHORT — $COMMIT_MSG"
+  echo ""
 
-  MAIN_BRANCH=$(git branch --show-current)
-  if [ "$MAIN_BRANCH" != "main" ]; then
-    if ! git checkout main; then
-      echo "❌ git checkout main 失敗"
-      exit 1
-    fi
-  fi
-
-  if git cherry-pick "$HASH"; then
-    echo "       ✅ Cherry-pick 完成"
-  else
-    echo "⚠️  發現衝突，嘗試自動解（theirs 策略）..."
-    git checkout --theirs . 2>/dev/null || true
-    git add -A
-    if git cherry-pick --continue --no-edit; then
-      echo "       ✅ 衝突已自動解決"
+  if [ "$CURRENT_BRANCH" != "main" ]; then
+    echo "🍒 [3/4] Cherry-pick 到 main..."
+    cd "$REPO_ROOT"
+    [ "$(git branch --show-current)" != "main" ] && git checkout main
+    if git cherry-pick "$HASH"; then
+      echo "       ✅ Cherry-pick 完成"
     else
-      echo "❌ Cherry-pick 失敗，請手動解衝突："
-      echo "   cd $REPO_ROOT"
-      echo "   git cherry-pick --abort"
-      echo "   git cherry-pick $HASH  # 或手動合併"
-      git cherry-pick --abort 2>/dev/null || true
+      echo "⚠️  發現衝突，嘗試自動解（theirs 策略）..."
+      git checkout --theirs . 2>/dev/null || true
+      git add -A
+      if git cherry-pick --continue --no-edit; then
+        echo "       ✅ 衝突已自動解決"
+      else
+        echo "❌ Cherry-pick 失敗，請手動處理"
+        git cherry-pick --abort 2>/dev/null || true
+        exit 1
+      fi
+    fi
+  else
+    echo "⏭️  [3/4] 已在 main branch，跳過 cherry-pick"
+    cd "$REPO_ROOT"
+  fi
+
+  echo "🚀 [4/4] Push main 到 remote..."
+  if git push origin main; then
+    echo "       ✅ Push 完成"
+  else
+    echo "⚠️  Push 失敗，嘗試 pull --rebase..."
+    if git pull --rebase origin main && git push origin main; then
+      echo "       ✅ Push 完成（rebase 後）"
+    else
+      echo "❌ Push 失敗，請手動處理"
       exit 1
     fi
   fi
-else
-  echo "⏭️  [3/4] 已在 main branch，跳過 cherry-pick"
-  cd "$REPO_ROOT"
-fi
 
-# Step 4: push main
-echo "🚀 [4/4] Push main 到 remote..."
-if git push origin main; then
-  echo "       ✅ Push 完成"
+  cd "$WORKTREE_DIR"
+
+  echo ""
+  echo "🔍 驗證 main 是否包含此次 commit..."
+  bash "$WORKTREE_DIR/scripts/verify-commit-on-main.sh" "$HASH"
+
+  echo ""
+  echo "======================================"
+  echo "✅ 存檔完成（fast mode）"
+  echo "   Commit: $SHORT"
+  echo "   main 已同步到 remote。"
+  echo "======================================"
+
+# ============================================================
+# 預設模式：commit 到 agent branch，push branch，等 Owner approve
+# ============================================================
 else
-  echo "⚠️  Push 失敗（remote 可能有更新），嘗試 pull --rebase..."
-  if git pull --rebase origin main && git push origin main; then
-    echo "       ✅ Push 完成（rebase 後）"
+
+  # 如果在 main，切換到 agent branch（uncommitted changes 會跟過去）
+  if [ "$CURRENT_BRANCH" = "main" ]; then
+    echo "🌿 [1/3] 切換到 agent branch: $AGENT_BRANCH"
+    if git checkout -b "$AGENT_BRANCH" 2>/dev/null || git checkout "$AGENT_BRANCH" 2>/dev/null; then
+      echo "       ✅ 完成"
+    else
+      echo "❌ 無法切換到 $AGENT_BRANCH"
+      exit 1
+    fi
   else
-    echo "❌ Push 失敗，請手動處理："
-    echo "   cd $REPO_ROOT"
-    echo "   git pull --rebase origin main"
-    echo "   git push origin main"
+    # 已在 agent branch 或其他 branch，直接用
+    AGENT_BRANCH="$CURRENT_BRANCH"
+    echo "🌿 [1/3] 使用現有 branch: $AGENT_BRANCH"
+  fi
+
+  echo "💾 [2/3] 暫存 + Commit..."
+  git add -A && git commit -m "$COMMIT_MSG" || { echo "❌ commit 失敗"; exit 1; }
+  HASH=$(git rev-parse HEAD)
+  SHORT="${HASH:0:7}"
+  echo "       ✅ $SHORT — $COMMIT_MSG"
+  echo ""
+
+  echo "🚀 [3/3] Push $AGENT_BRANCH 到 remote..."
+  if git push origin "$AGENT_BRANCH" 2>/dev/null || git push --set-upstream origin "$AGENT_BRANCH"; then
+    echo "       ✅ Push 完成"
+  else
+    echo "❌ Push 失敗"
     exit 1
   fi
+
+  echo ""
+  echo "======================================"
+  echo "✅ 存檔完成（branch 模式）"
+  echo "   Commit: $SHORT"
+  echo "   Branch: $AGENT_BRANCH"
+  echo ""
+  echo "⚠️  尚未進入 main。Owner 確認後執行："
+  echo "   bash scripts/approve.sh $AGENT_BRANCH"
+  echo "======================================"
 fi
-
-# 回到 worktree 目錄
-cd "$WORKTREE_DIR"
-
-# Step 5: 驗證
-echo ""
-echo "🔍 驗證 main 是否包含此次 commit..."
-bash "$WORKTREE_DIR/scripts/verify-commit-on-main.sh" "$HASH"
-
-echo ""
-echo "======================================"
-echo "✅ 存檔完成！"
-echo "   Commit: $SHORT"
-echo "   main 已同步到 remote。"
-echo "======================================"

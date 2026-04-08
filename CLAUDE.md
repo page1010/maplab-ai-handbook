@@ -16,6 +16,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 3. 讀 AGENT_RULES.md = 治理規則
 4. 讀 skills/task-progress-guide.md
 ⚠️ **必讀**：`skills/pitfalls/SKILL.md` — 60+ session 踩過的坑，開始 GAS/Sheets 任務前必掃
+⚠️ **必讀**：`docs/glossary.md` — 術語統一定義（母版/Slide/報價系統/文學館等歧義詞彙）
 5. 輸出 Startup Check
 
 【API 存取三層備援】

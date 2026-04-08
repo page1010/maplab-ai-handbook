@@ -124,6 +124,25 @@ function handleDebugItems_() {
  * @returns {Object} { success, caseId, fileName, url }
  */
 function createQuote(formData) {
+  // ── 欄位名稱相容層（QuoteForm 新名 + doPost/舊版舊名都吃）──
+  // QuoteForm.html (2026-04-02+): customer / date / time / headcount / eventName / totalItems
+  // 舊版 createQuote 期待:      clientName / eventDate / -     / pax       / eventName / totalItems
+  var _clientName  = formData.clientName || formData.customer  || '';
+  var _eventDateStr= formData.eventDate  || formData.date      || '';
+  var _eventTime   = formData.time       || '';
+  var _address     = formData.location   || formData.address   || '';
+  var _eventType   = formData.eventType  || '';
+  var _pax         = formData.pax        || formData.headcount || '';
+  var _eventName   = formData.eventName  || '';
+  var _totalItems  = formData.totalItems || '';
+  var _company     = formData.company    || '';
+  // 寫回 formData 讓下游（writeToIntake_ 等）也拿到正規化後的值
+  formData.clientName = _clientName;
+  formData.eventDate  = _eventDateStr;
+  formData.pax        = _pax;
+  formData.eventName  = _eventName;
+  formData.totalItems = _totalItems;
+
   // ── 打開主系統 Sheet ──
   var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
 
@@ -132,11 +151,17 @@ function createQuote(formData) {
   var caseId = 'Q' + Utilities.formatDate(now, 'Asia/Taipei', 'yyyyMMddHHmmss');
 
   // ── 格式化活動日期 ──
-  var eventDate = new Date(formData.eventDate + 'T00:00:00+08:00');
+  if (!_eventDateStr) {
+    throw new Error('活動日期為空（表單 date / eventDate 欄位都沒值）');
+  }
+  var eventDate = new Date(_eventDateStr + 'T00:00:00+08:00');
+  if (isNaN(eventDate.getTime())) {
+    throw new Error('活動日期格式無法解析：' + _eventDateStr);
+  }
   var dateSuffix = Utilities.formatDate(eventDate, 'Asia/Taipei', 'yyyyMMdd');
 
   // ── 新檔案名稱：20260425_王小明 ──
-  var newFileName = dateSuffix + '_' + formData.clientName;
+  var newFileName = dateSuffix + '_' + _clientName;
 
   // ── 確保 Drive 資料夾存在 ──
   var yearFolder = ensureDriveFolder_(eventDate.getFullYear().toString());
@@ -184,14 +209,18 @@ function createQuote(formData) {
     itemsSheet.hideSheet();
   }
 
-  // ── 填入客戶資訊（對應 QUOTE_DRAFT 列印範圍 C1:F61，框線內 D/E/F 欄） ──
-  // 2026-04-08：改用 D2/E2/D3/D4/F4，與 generateProposalV2 讀取位置統一
-  keepSheet.getRange('D2').setValue(formData.clientName);
-  keepSheet.getRange('B3').setValue(formData.company   || '');  // generateProposalV2 讀 B3，暫維持
-  keepSheet.getRange('E2').setValue(formData.eventDate);
-  keepSheet.getRange('D3').setValue(formData.location || formData.address || '');  // 活動地點
-  keepSheet.getRange('D4').setValue(formData.eventType);
-  keepSheet.getRange('F4').setValue(formData.pax       || '');
+  // ── 填入客戶資訊 ──
+  // 2026-04-08 依 live sheet 驗證：QUOTE_DRAFT 上半部 C/E 整欄是 label，D/F 整欄是 value。
+  // 原 commit 4301369 誤把 E2 當日期值寫入，結果覆蓋模板的 "date" 標籤。
+  keepSheet.getRange('D2').setValue(_clientName);  // C2="客戶" label
+  keepSheet.getRange('B3').setValue(_company);     // generateProposalV2 讀 B3 公司名（框線外，保留）
+  keepSheet.getRange('F2').setValue(_eventDateStr);// E2="date" label，F2 才是活動日期值
+  keepSheet.getRange('D3').setValue(_address);     // C3="地址" label
+  keepSheet.getRange('F3').setValue(_eventTime);   // E3="時間" label，F3 才是活動時間值
+  keepSheet.getRange('D4').setValue(_eventType);   // C4="活動型態" label
+  keepSheet.getRange('F4').setValue(_pax);         // E4="規劃人數" label
+  keepSheet.getRange('D5').setValue(_eventName);   // C5="活動名稱" label
+  keepSheet.getRange('F5').setValue(_totalItems);  // E5="餐點總件數" label
 
   // ── Case ID & 建立時間（右上角） ──
   keepSheet.getRange('H1').setValue(caseId);
@@ -224,7 +253,7 @@ function createQuote(formData) {
   keepSheet.getRange('N7').setDataValidation(paymentStatusRule);
 
   // ── 條款自動帶入（個人版 / 企業版） ──
-  var isCorporate = formData.company && formData.company.trim().length > 0;
+  var isCorporate = _company && _company.trim().length > 0;
   var terms = isCorporate
     ? getCorpTerms(eventDate)
     : getPersonalTerms();
@@ -257,16 +286,20 @@ function getQuoteDraftValues() {
   var sheet = ss.getSheetByName(TEMPLATE_SHEET_NAME);
   if (!sheet) return {};
 
-  var rawDate = sheet.getRange('E2').getValue();
+  var rawDate = sheet.getRange('F2').getValue();  // 2026-04-08: E2 是 label，活動日期值在 F2
+  var rawTime = sheet.getRange('F3').getValue();  // 2026-04-08: E3 是 label，活動時間值在 F3
   return {
     clientName : sheet.getRange('D2').getValue() || '',
     company    : sheet.getRange('B3').getValue() || '',
     phone      : sheet.getRange('B4').getValue() || '',
     address    : sheet.getRange('D3').getValue() || '',
     eventType  : sheet.getRange('D4').getValue() || '',
-    eventDate  : rawDate
-                  ? Utilities.formatDate(new Date(rawDate), 'Asia/Taipei', 'yyyy-MM-dd')
-                  : '',
+    eventDate  : rawDate instanceof Date
+                  ? Utilities.formatDate(rawDate, 'Asia/Taipei', 'yyyy-MM-dd')
+                  : (rawDate ? String(rawDate) : ''),
+    time       : rawTime instanceof Date
+                  ? Utilities.formatDate(rawTime, 'Asia/Taipei', 'HH:mm')
+                  : (rawTime ? String(rawTime) : ''),
     headcount  : sheet.getRange('F4').getValue() || '',
     eventName  : sheet.getRange('D5').getValue() || '',
     totalItems : sheet.getRange('F5').getValue() || ''

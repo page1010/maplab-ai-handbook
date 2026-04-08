@@ -28,9 +28,11 @@ function generateProposalV2() {
   var qd = ss.getSheetByName('QUOTE_DRAFT');
 
   // ── Step 1：讀客戶資訊 ──────────────────────────────────
+  // 2026-04-08 依 live sheet 驗證更正：QUOTE_DRAFT 上半部 C/E 欄是 label，D/F 欄才是 value。
+  // 原本讀 E2/E3 會讀到 label 字串 "\ndate" / "\n時間\n\n"，現改讀 F2/F3。
   var clientName  = String(qd.getRange('D2').getValue() || '客戶');
   var company     = String(qd.getRange('B3').getValue() || '').trim();
-  var rawEventDate = qd.getRange('E2').getValue();
+  var rawEventDate = qd.getRange('F2').getValue();  // 原 E2，04-08 改 F2
   var eventDate   = _formatDate(rawEventDate);
   // 檔名用 YYYYMMDD，來源有效日期 fallback 當日
   var eventDateForFile;
@@ -40,11 +42,11 @@ function generateProposalV2() {
     eventDateForFile = eventDate.replace(/-/g, '');
   } else {
     eventDateForFile = Utilities.formatDate(new Date(), 'Asia/Taipei', 'yyyyMMdd');
-    Logger.log('[V2] ⚠️ E2 活動日期欄位為空，以今日日期代替 → 請補填 QUOTE_DRAFT E2');
+    Logger.log('[V2] ⚠️ F2 活動日期欄位為空，以今日日期代替 → 請補填 QUOTE_DRAFT F2');
   }
   var venue       = String(qd.getRange('D3').getValue() || '-');
   var eventType   = String(qd.getRange('D4').getValue() || '-');
-  var eventTime   = String(qd.getRange('E3').getValue() || '-');
+  var eventTime   = String(qd.getRange('F3').getValue() || '-');  // 原 E3，04-08 改 F3
   var pax         = String(qd.getRange('F4').getValue() || '-');
   var totalItems  = String(qd.getRange('F5').getValue() || '-');
   var totalAmount = Number(qd.getRange('E29').getValue()) || 0;

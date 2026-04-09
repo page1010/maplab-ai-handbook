@@ -66,6 +66,16 @@ if (isCorporate) {
 
 ---
 
+## 訂金金額規則（2026-04-09 Owner 兩輪決策 + 14 份真實 sample 驗證）
+
+- **個人（to_c）baseline NT$3,000** — 業務依案件規模可覆寫。**baseline 3000 只對個人客戶**（Owner 2026-04-09 第二輪明示）
+- **to_b_deposit 企業** — **沒有 baseline**，業務逐案判斷（實務看到 5,000 / 10,000 都有）
+- **to_b_full 一次性後付** — 不收訂金，QuoteForm 的 `depositAmount` UI 欄位可忽略
+- **to_b_marketing 行銷/公關** — **沒有 baseline**，業務逐案評估（通常比一般企業高，保護前期客製成本）
+- **實作**：QuoteForm 加 `depositAmount` number input，default 3000；createQuote 傳入 `getContractTermsV4` 作為第三參數；條款文字由 `_getDepositClause_(version, depositAmount)` 動態帶入「本案訂金 NT$X」字串
+
+---
+
 ## 【版本一】`to_c` — 個人版｜有訂金
 
 『簽約使用條款及細則』

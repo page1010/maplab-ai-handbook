@@ -375,3 +375,57 @@ A6 要做的事：
 
 
 所以 A6 的品項數量邏輯不是「均分」而是「每品都足量 15-20，超量是刻意的」。
+
+---
+
+## A6 訓練架構（Owner 2026-04-09 定版）
+
+### Step 1 — 操作手冊（skills/a6-system-operations.md）
+- MAPLAB 報價系統完整操作路徑圖
+- createQuote 參數表 + 回傳值 + 寫入 cell 對照
+- generateProposalV2 產出 Slide 提案的操作路徑 + 參數 + 產出內容
+- Items 表查詢方式 + 欄位意義
+- SALES_INTAKE 建案流程
+- QuoteForm 欄位 ↔ 系統行為對照
+- **包含 Slide proposal 產出邏輯**（generateProposalV2 讀哪些 cell → 產出什麼頁面 → 業務怎麼用）
+
+### Step 2 — QA 範例庫（skills/a6-qa-examples.md）★ 大工程
+- 每個活動類型各 2-3 組指標性客人的**完整對話 + 操作記錄**
+- 格式：「Mina 原話 → A6 判斷（對號入座哪個類型）→ 系統操作步驟 → 預期產出 → Mina 驗收」
+- 類型覆蓋（目標 12-18 組）：
+  | 類型 | 目標組數 | 目前有 | 缺 |
+  |------|---------|--------|-----|
+  | 週歲/慶生 | 2-3 | L4 李晴宜 / L1 吳惠珍(入厝但可參考) | 需 1-2 組純週歲 |
+  | 入厝 | 2-3 | L5 洪炳輝 | 需 1-2 組（不同規模/場地） |
+  | 企業開幕 | 2-3 | L7 Gina 浥慧(低預算) / L3 立碩(未成交) | 需 1 組正常成交企業 |
+  | 外帶自取 | 2-3 | L6 范純禎 | 需 1-2 組（不同品項量） |
+  | 婚禮/Candy bar | 2-3 | 無 | 需 2-3 組 ★ |
+  | 代辦/同業 | 1-2 | L2 郭秋燕(推測) | 需 1 組確認 |
+- **含 Slide proposal 範例**：A6 產完報價單後怎麼觸發 generateProposalV2 + 產出的 Slide 長什麼樣
+
+### Step 3 — 安全框架（skills/a6-safety-boundaries.md）
+- 硬限 / 確認點 / 錯誤處理
+
+### Step 4 — 更新 recalls/A6_recall.md
+- 指向 Step 1/2/3 三份文件
+- cold-start 必讀清單更新
+
+### Step 5 — 端到端測試
+- Telegram 真實情境測試
+
+---
+
+## 代辦清單（TODO）
+
+| 優先級 | 項目 | 狀態 |
+|--------|------|------|
+| 🔴 | Step 2 QA 範例庫 — 回 LINE CSV 每類型補抓 2-3 組指標性客人 | **進行中** |
+| 🔴 | Step 1 操作手冊 — 含 Slide proposal 產出邏輯 | 待做 |
+| 🔴 | Step 4 更新 A6 recall | 待做 |
+| 🟡 | 外帶自取表單（QuoteForm 外帶模式 or 獨立 form） | 待做 |
+| 🟡 | Slide proposal 訓練 — A6 要知道怎麼觸發 generateProposalV2 + 產出什麼 | 併入 Step 1 |
+| 🟡 | Step 3 安全框架 | 待做 |
+| 🟢 | Step 5 端到端 Telegram 測試 | 待 Step 1/2/4 完成 |
+| 🟢 | createQuote 品項自動填入（100 分目標） | 待 Step 2 範例確認品項邏輯後 |
+| 🟢 | 情境 F 自動偵測（LINE webhook → A6 自動觸發） | 後期 |
+| 🟢 | 情境 G 修改品項（find & replace on copy） | 後期 |

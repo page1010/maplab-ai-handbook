@@ -139,7 +139,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. 都不行 → 回報 Owner，不要硬幹
 
-【斷點 — 2026-04-09 晨間巡查更新】
+【斷點 — 2026-04-09 午間收尾更新】
 1. 系統版本：v6.0 / Phase 6 — 觀測性 + 業務閉環 + 策略循環（Phase 3.1 Dashboard 自動更新已就位 ef2c21b）
 2. EXP-S010 A0/A1 session 混淆已記錄；下次重開先確認 cwd + 貼 A1 recall prompt
 3. A2 T-A2-002 ✅ 完成（2026-04-07）：WP 食安+法規 SEO 字眼清理（13篇）+ AGENT_RULES Section 14（禁用詞清單）+ wp-content-audit 技能書（e92af1d+ecc1a3e+e8e5915）；T-A2A3-001 ✅ 子任務1-4全完成（子任務5等7-14天觀察期）
@@ -153,6 +153,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 30. checkpoint.sh 行為變更（9bb59aa 2026-04-08）：預設改為 branch 模式（存到 agent/Ax-YYYYMMDD，等 Owner approve 才進 main）；--fast 旗標直接進 main（僅 A1 系統操作使用）；新增 approve.sh（一鍵 merge branch 到 main）。CLAUDE.md 已同步更新說明。
 31. cold-start 三件套完成（82a8ddf 2026-04-08）：skills/first-principles-check/SKILL.md 新增（決策前/debug超過3輪必跑）。三件套 = pitfalls/SKILL.md + first-principles-check/SKILL.md + docs/glossary.md，已寫入 CLAUDE.md 冷啟動防呆。
 32. A5 T-A5-002 Phase 5 修復（4301369 2026-04-08）：QUOTE_DRAFT 客戶基本資料統一從 D/E/F 欄讀取（框線內），避免業務填兩次。clasp push 成功。Sheet 選單入口/檔名格式/URL 回傳均已修復（aa06a60）。
+33. 環境整備完成（a2b7dd5 2026-04-09）：① Cloudflare API token 已寫入 `bot/.env`（不進 git）；② 技能書 `skills/credentials/cloudflare-api.md` 建立（含權限對照/curl範例/安全提醒）；③ 桌面 `start-telegram-bot.sh` 已刪除（LaunchAgent 取代，不再需要）；④ bot 重啟指令：`sudo launchctl unload/load ~/Library/LaunchAgents/com.maplab.telegrambot.plist`；⑤ LaunchAgent 架構確認：3個服務開機自啟（com.maplab.telegrambot / com.maplab.a6bot / com.maplab.git-pull）；⑥ `CLAUDE_CODE_AUTO_COMPACT_WINDOW=200000` 已在 `.env`（7d17545）；⑦ bot `/reset` 指令已上線（7a8dec8）。
 8. 新治理功能（2026-03-29 落地）：SECTION 7 全域檢查器(faed6a9)；SECTION 8 權限治理+10 credential skills(6e80723)；SECTION 9 API三層備援+身份確認+CLAUDE.md指向器(0076a3a)
 9. 報價單歷史分析完成：data/quote-terms-reference.md + data/quote-items-unmatched.md（932份，30品項匹配，7品項未納入）；883份報價品項完整提取 22K+ items（54ef55f）；品項去重v2 de7837c（29,115→3,794唯一品項）
 10. Chrome Extension v4.8（private repo 改用 GitHub Contents API，b2f031c）

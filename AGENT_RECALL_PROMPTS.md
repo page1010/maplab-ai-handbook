@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-04-09 晨間巡查（A3 🔴D11 ~258h+；A7 🔴D9 ~210h+；A4 ⚠️WATCH 閾值今日15:30；e2e里程碑持續；斷點30-32 04-08晚間已入）
+> 最後更新：2026-04-09 晚間巡查（A3 🔴D12 ~270h+；A7 🔴D10 ~222h+；A4 🔴S11閾值已超過；A6訓練框架Steps1-4今日完成里程碑 🎉；斷點35已入）
 >
 > 使用方式：選擇角色 → 複製 prompt → 貼到 Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -155,6 +155,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 32. A5 T-A5-002 Phase 5 修復（4301369 2026-04-08）：QUOTE_DRAFT 客戶基本資料統一從 D/E/F 欄讀取（框線內），避免業務填兩次。clasp push 成功。Sheet 選單入口/檔名格式/URL 回傳均已修復（aa06a60）。
 33. 環境整備完成（a2b7dd5 2026-04-09）：① Cloudflare API token 已寫入 `bot/.env`（不進 git）；② 技能書 `skills/credentials/cloudflare-api.md` 建立（含權限對照/curl範例/安全提醒）；③ 桌面 `start-telegram-bot.sh` 已刪除（LaunchAgent 取代，不再需要）；④ bot 重啟指令：`sudo launchctl unload/load ~/Library/LaunchAgents/com.maplab.telegrambot.plist`；⑤ LaunchAgent 架構確認：3個服務開機自啟（com.maplab.telegrambot / com.maplab.a6bot / com.maplab.git-pull）；⑥ `CLAUDE_CODE_AUTO_COMPACT_WINDOW=200000` 已在 `.env`（7d17545）；⑦ bot `/reset` 指令已上線（7a8dec8）。
 34. A6/報價系統今日重大落地（2026-04-09 午後）：① 合約條款v4.0 — 四個版本（標準/企業分期/不收訂金/行銷公關公司），訂金baseline 3000只限個人客戶（806fc4e+1f8c2ed）；② P0落地 — 訂金可調+飲食禁忌+條款動態帶入訂金金額（ca395c1）；③ 解耦契約類型vs付款狀態（1e9f201）；④ S6車馬費+S9搬運費自動計算helpers+車馬費定版（cb2e9d3+cfeebd1）；⑤ LINE對話訓練資料 L1-L7+T16-T33（兩層架構：A6業務思維 vs 系統底層）；⑥ A6實際使用場景與角色定位「80分報價加速器」（367f819）；⑦ Mina指令模擬×A6 action 7種情境對照表（66216e3）；⑧ 企業價值五原則+客戶系統連結研究（ce19ebb）；⑨ google-ads-api技能書（OAuth SOP+踩坑，63b04e9）。
+35. A6 訓練框架 Steps 1-4 今日完成里程碑 🎉（2026-04-09 晚間）：① Step 1 操作手冊v1.0（createQuote+generateProposalV2+Items+車馬費完整操作流程，299ecb0）；② Step 2 QA範例庫v0.5（7組真實業務場景配對問答，0a7d878）；③ Step 3 安全框架v1.0（硬限8條+需確認9條+自動執行11條，21b5fec）；④ Step 4 A6 RECALL完整重寫（100分報價加速器定位+三件套指引+Owner五項硬規則，ad7a896）；⑤ A6訓練方法論文件建立（3b9dcdd）；⑥ A6訓練架構5步+代辦清單（7b80638）。A6今日全日13+commits，史上單日最活躍。T-A6-001 進入訓練驗收階段。下一步：Owner測試A6操作手冊 → QA範例庫實戰 → 安全框架確認。
 8. 新治理功能（2026-03-29 落地）：SECTION 7 全域檢查器(faed6a9)；SECTION 8 權限治理+10 credential skills(6e80723)；SECTION 9 API三層備援+身份確認+CLAUDE.md指向器(0076a3a)
 9. 報價單歷史分析完成：data/quote-terms-reference.md + data/quote-items-unmatched.md（932份，30品項匹配，7品項未納入）；883份報價品項完整提取 22K+ items（54ef55f）；品項去重v2 de7837c（29,115→3,794唯一品項）
 10. Chrome Extension v4.8（private repo 改用 GitHub Contents API，b2f031c）
@@ -469,8 +470,10 @@ repo: https://github.com/page1010/maplab-ai-handbook
 4. 進件建立 — 在 SALES_INTAKE 自動建一筆案件（case_id = CASE-YYYYMMDD-NNN）
 5. 查報價 — 「查XXX的報價」→ 找 QUOTE_WORKBENCH
 
-【斷點 — 2026-04-03 午後巡查更新】
-T-A6-001 進行中：LINE webhook ✅ 通（Apps Script doPost + LockService 去重）；bot_a6 ✅ 全部署（launchd 開機自啟 b3dacb8，.env security fix a20e268）；B層對話自動存檔運行中（最新 b1fa119 16:16）；update_a6_token.sh 一鍵換 token 腳本已建立（434b490）
+【斷點 — 2026-04-09 晚間巡查更新】
+T-A6-001 進行中：LINE webhook ✅ 通（Apps Script doPost + LockService 去重）；bot_a6 ✅ 全部署（launchd 開機自啟 b3dacb8，.env security fix a20e268）；B層對話自動存檔運行中；update_a6_token.sh 一鍵換 token 腳本已建立（434b490）。
+訓練框架今日里程碑 🎉：Steps 1-4 全部完成（操作手冊v1.0 + QA範例庫v0.5 + 安全框架v1.0 + RECALL重寫）；Owner五項硬規則落地（100分報價/品項自動補齊/外帶TODO/L2修正/足量邏輯）；訓練資料 L1-L7 + T16-T33 齊備。
+下一步：Owner 測試操作手冊流程 → QA範例庫實戰 → 安全框架邊界確認 → T-A6-001 結案。
 
 【必讀】
 1. projects/line-quote-assistant.md ← 使用者需求 v1.0（Owner 確認），A6/A7 架構聖經

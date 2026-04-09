@@ -633,6 +633,80 @@ Owner 對第一輪 30 條 pattern + 16 條改進建議的回覆：
 
 ---
 
+## 改進分類（Owner 2026-04-09 定義的兩層架構）
+
+> **Owner 親口框架**：所有研究結果分兩類處理。
+> 1. **訓練 A6 可以有業務的思維與邏輯** — 讓 A6 學會「像業務一樣思考」。寫進 A6 recall / prompt / SOP 技能書。系統不硬 code 規則，A6 依情境判斷。
+> 2. **需要在系統優化讓他重複可用的** — 可程式化的跨案件工具。寫進 code / form / 試算表結構，業務和 A6 都能呼叫。
+
+**為什麼要分兩層**：
+- 如果把業務判斷硬 code 進系統，遇到例外就僵化（例如「自動推品項」一被鎖死就無法「隨廚房有什麼出什麼」）
+- 如果把可程式化工具留在 A6 prompt，每次都要 LLM 重新推理（浪費 token、不穩定、慢）
+- 正確切法：**系統提供工具與資料，A6 提供判斷與應用**
+
+---
+
+### 第一層 — 訓練 A6 的業務思維（寫進 `recalls/A6_recall.md` + `skills/a6-*`）
+
+**從 pattern 抽出的 A6 應該學會的業務思維：**
+
+| 編號 | 業務思維 | A6 要學什麼 | 證據 sample |
+|------|---------|------------|-------------|
+| T1 | **活動類型 → 菜單結構 mental model** | 週歲 / 入厝 / 開幕 / 證婚 / 性別揭曉 各自的「鹹食/主食/甜點/飲品」權重比例（P24） | 9 份 sample（週歲 dessert 偏重、入厝 main 偏重、證婚純 dessert） |
+| T2 | **品項隨廚房出** — 不要假設固定組合 | 接到需求後要問「今天冰箱有什麼」而不是查固定 SKU 組合 | Owner 2026-04-09 明示 |
+| T3 | **訂金 3000 baseline + 調整時機** | 個人 baseline 3000；大訂單 / 證婚客製 / 高難度 → 5000+；B2B 逐案判斷 | P22（8 sample 訂金分佈） |
+| T4 | **服務費呈現雙模式** | 個人展示 10%（顯式）；B2B / 大型 / 證婚用「已含服務費」隱藏式 | P25 |
+| T5 | **熱客招待的時機** | 不是金額觸發，是業務判斷「這客人值得招待」。招待品項直接加在菜單行並註「（招待）」 | P6 / P14 / Owner 明示 |
+| T6 | **案例相似度搜尋**（M 重新定位）| 接新案時找「同預算區間 + 同活動類型 + 同人數範圍」的歷史報價當參考，不是同客戶歷史 | P8 糾正（Jolin 怡瑩 dual quote） |
+| T7 | **規劃人數 vs 提供份數 buffet 邏輯** | 場地上限 vs 實際出餐量分開算，預算緊時降實供量保品質 | P21 |
+| T8 | **主題色客製化識別** | 「性別揭曉 = 藍綠+粉色系」「證婚 = 帝芬尼藍+粉系」這類事件 → 色彩 mapping | P9 / P29 |
+| T9 | **披薩 10 吋 X N** 規格常識 | 大型入厝用 10 吋披薩 X 2-3 片，每片約 700 | P28 |
+| T10 | **大型活動額外成本直覺** | 40+ 人要估人力費 + 長桌數 + 擺設工時 | P30 |
+| T11 | **Discount 是談判空間不是系統欄位** | 業務手寫在備註區，不要預期系統給 dropdown | Owner 2026-04-09 拒絕 G |
+| T12 | **Dual budget 是 A6 orchestration 時機** | 業務面對不確定預算的客戶時，A6 可以一次產出 2 個 tier 讓客戶選 | P12 + Owner 2026-04-09 |
+| T13 | **客戶飲食禁忌要主動問** | 接洽時先問「有沒有忌口」、「素食需求」、「中西偏好」 | P7（5/9 sample 有禁忌備註） |
+| T14 | **飲品桶 pax 對應但入厝升級** | 10人 → 4L / 20人 → 6L / 20人入厝 → 8L（升級）/ 30+ → 8L。入厝類活動容易多喝 | P17 |
+| T15 | **B2B / 企業客戶餐具需求不同** | 個人用贈送規則（pax × 1.5），企業可能要「固定 50 組 / 一次性 / 公司自備」 | Owner 2026-04-09 |
+
+**落地建議**：
+- `skills/a6-sales-thinking-skills.md` 新建一份技能書，把 T1-T15 寫進去
+- `recalls/A6_recall.md` 在「角色定位」段落加一條「你要用業務思維做決策，不是用固定規則」
+- `skills/a6-rapid-quote-sop.md` 的 SECTION 5 (高頻場景 Quick Reference) 補完 5 個活動類型的完整 mental model
+
+---
+
+### 第二層 — 系統可重複用的底層工具（寫進 `code` / `form` / `sheet structure`）
+
+**從 pattern 抽出的系統該做的工具：**
+
+| 編號 | 系統工具 | 狀態 | 實作位置 |
+|------|---------|------|---------|
+| S1 | QuoteForm `depositAmount` input | ✅ 已落地 | QuoteForm.html + Code.gs |
+| S2 | QuoteForm `dietaryNotes` textarea | ✅ 已落地 | QuoteForm.html + Code.gs K10/L10 |
+| S3 | contractTerms.gs 動態帶訂金金額 | ✅ 已落地 | `_getDepositClause_()` |
+| S4 | QuoteForm `plannedPax` + `actualServings` 雙欄位 | ⏳ 待議 | QuoteForm.html + createQuote |
+| S5 | 自動算毛利率 formula 寫進 generated copy | ⏳ 待驗證 cost cell 位置 | Code.gs createQuote |
+| S6 | 車馬費 region → 金額 對照表 helper | ⏳ 待做 | contractTerms.gs 或新 `_helpers.gs` |
+| S7 | 飲品桶大小 helper `_calcDrinkVolume_(pax, eventType)` | ⏳ 待先看成本公式 | `_helpers.gs` |
+| S8 | 餐具贈送 helper 分個人/企業兩套 | ⏳ 待做 | `_helpers.gs` |
+| S9 | 搬運費 helper（2F $1000 / 有人協助 $500）| ⏳ 可做 | `_helpers.gs` |
+| S10 | Items 表加 `category='complimentary'` flag | ⏳ 待做（給熱客招待按鈕用） | Google Sheets Items |
+| S11 | Items 表加 `unit`（件/片/鍋）欄位 | ⏳ 待做（披薩 10 吋 X N 用） | Google Sheets Items |
+| S12 | SALES_INTAKE 「案例相似度搜尋」query | ⏳ 待做 | Code.gs 新增函式 `_findSimilarCases_(pax, eventType, budget)` |
+| S13 | LINE 自由文字 regex parser → SALES_INTAKE 8 欄 | ⏳ 可做（不需 LLM）| LineWebhook.gs 或 Apps Script doPost |
+| S14 | C32/C33 合約條款 `setWrapStrategy` + row height | ✅ 已落地 | createQuote |
+| S15 | 大型活動人力費計算 helper `_calcLaborFee_(pax, hours)` | ⏳ 待做 | `_helpers.gs` |
+| S16 | hideRows 17-19 熱客預留 + 按鈕 unhide 觸發插入 | ⏳ Owner 決定熱客按鈕要不要做再動 | Code.gs + custom menu |
+
+**落地建議優先順序**：
+1. 最高 C/P：S6 車馬費 + S9 搬運費（規則清楚可立刻做，commit 不動 UI）
+2. 中 C/P：S4 雙人數 + S5 毛利率（要先驗證 cell 位置）
+3. 中 C/P：S7/S8 飲品+餐具 helper（要先看現有公式）
+4. 待議：S10/S11 Items 表結構（動 master，風險高）
+5. 未決：S12 案例搜尋 + S13 LINE parser + S15 人力費（需要更多設計討論）
+
+---
+
 ## 系統改進建議（從 14 份 sample + 30 條 pattern 推導）
 
 > 不是「我覺得應該怎樣」，是「真實 sample 顯示業務這樣做，所以系統該配合」。

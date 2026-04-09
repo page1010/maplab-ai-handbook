@@ -219,7 +219,7 @@
 | 品項缺圖補充（29筆）| A0 f13224d 確認：29 筆品項在 WordPress 無法找到場景照，需 Owner 手動提供或拍攝補充至 Drive | 低 |
 | **⚠️ Token 輪換（安全修復）** | A1 安全修復後，需輪換：(1) Telegram bot token — **A1 bot 已換新（A1 4/3 晚間確認）✅**，A6 bot 待確認 (2) Claude API token — 狀態待確認。舊 token 已從 git history 清除，但仍需撤銷作廢。 | 高 |
 | LINE Webhook URL | 目前用部署：script.google.com/macros/s/AKfycbz...eap/exec（記錄於 T-A6-001 Task Card）。LINE Developers Console Webhook URL 欄位是否已填入？需確認。 | 中 |
-| A4 Colab S11 確認 | S11(2024) 最新 commit 36ee642 (2026-04-07)，進度 6,000/12,213=49.1%，48h 閾值 = **04-09 15:30**。S11 完成後接 S12(2025)。 | 中 |
+| **🔴 A4 Colab S11 重啟** | S11(2024) 48h 閾值 **04-09 15:30 已超過**，最後 commit 36ee642 (2026-04-07 15:30)，無後續確認 commit。Owner 需立即登入 lb99104@gmail.com Colab 確認執行中 / 斷線重啟（進度 6,000/12,213=49.1%，完成後接 S12(2025)）。 | **緊急** |
 
 ⚠️ A1巡查 2026-04-07 16:00 午後巡查：A3 🔴 CRITICAL 持續第10天 ~216h+ — T-A3-001 GTM方案B + T-A3-002 廣告成效，最後 commit 2aca2ae (~2026-03-29) 距今已逾 216h。前次巡查已連續多次建議 Owner 標記 ⏸️ 暫停，仍未執行。**Owner 需立即決定：T-A3-001 + T-A3-002 標記 ⏸️ 暫停，等外部條件（GTM權限/廣告觀察期）就緒再重啟。**
 ⚠️ A1巡查 2026-04-07 16:00 午後巡查：A7 🔴 CRITICAL 持續第8天 ~168h+ — T-A7-001 Phase 2 + T-A7-002，最後 commit cf9f166 (2026-03-31) 距今已逾 168h。Owner 需明確決定：暫停任務 或 確認外部阻塞原因。
@@ -252,6 +252,11 @@
 ⚠️ A1巡查 2026-04-09 08:47：A7 🔴 CRITICAL 持續第9天 ~210h+ — T-A7-001 Phase 2 + T-A7-002，最後 commit cf9f166 (2026-03-31) 距今已逾 210h。連續9天無 A7 新 commit。Owner 需明確決定：(a) 暫停任務，或 (b) 確認外部阻塞原因。
 ⚠️ A1巡查 2026-04-09 08:47：A4 S11 ⚠️ WATCH 閾值今日 15:30 — 最後 commit 36ee642 (2026-04-07 15:30)，48h 閾值 = **04-09 15:30**（距現在約 6.7h，UTC 07:30）。今日 15:30 (+0800) 前若無新 A4 commit 自動升級 🔴 CRITICAL。Owner 需確認 S11 Colab 仍執行中。
 ✅ A1巡查 2026-04-09 08:47：昨日（04-08）系統活動正常 — A0（first-principles-check 落地，77d7202）/ A1（bot.py /reset 指令，7a8dec8）/ A5（QUOTE_DRAFT 欄位對齊，4301369+aa06a60）/ A6（SALES_INTAKE L/M IMPORTRANGE 動態連結，c999006）均活躍 ✅。報價系統 e2e 里程碑持續 🎉（tag verified-e2e-2026-04-08）。RECALL 斷點無需更新（04-08 晚間巡查已完成斷點30-32補入）。
+
+⚠️ A1巡查 2026-04-09 16:00：A4 S11 🔴 CRITICAL — 48h 閾值（04-09 15:30）已超過，最後 commit 36ee642 (2026-04-07 15:30) 距今已逾 48h，本次 8h 視窗無任何 A4 新 commit。Owner 需立即登入 lb99104@gmail.com Colab 確認 S11 執行狀態；若斷線請重啟（進度 6,000/12,213=49.1%，S11完成後接 S12(2025)）。
+⚠️ A1巡查 2026-04-09 16:00：A3 🔴 CRITICAL 持續第12天 ~264h+ — T-A3-001 GTM方案B + T-A3-002 廣告成效，最後 commit 2aca2ae (~2026-03-29 22:10) 距今已逾 264h。連續12天無 A3 活動，Owner 多次收到暫停建議均未執行。**Owner 需立即執行：T-A3-001 + T-A3-002 標記 ⏸️ 暫停**。
+⚠️ A1巡查 2026-04-09 16:00：A7 🔴 CRITICAL 持續第10天 ~216h+ — T-A7-001 Phase 2 + T-A7-002，最後 commit cf9f166 (2026-03-31) 距今已逾 216h。Owner 需明確決定：(a) 暫停任務，或 (b) 確認外部阻塞原因。
+✅ A1巡查 2026-04-09 16:00：A5/A6 今日極活躍 — 報價系統重大進展：合約條款v4.0實作(1f8c2ed)/P0訂金可調+飲食禁忌+條款動態帶入(ca395c1)/解耦契約類型vs付款狀態(1e9f201)/6個Owner feedback修復(f67672d)/S6車馬費+S9搬運費helpers(cb2e9d3)/車馬費定版門市地址+km/min取高(cfeebd1)；A6研究：LINE對話L1-L7 T16-T33兩層架構(da071be/c5d04ef/3296cf2/5db9fc4)/A6實際使用場景80分報價加速器(367f819)/Mina指令模擬7種情境(66216e3)/企業價值五原則(ce19ebb)；A1：google-ads-api技能書(63b04e9)/Cloudflare技能書+token(a2b7dd5)/RECALL_PROMPTS斷點33(bececf3)。T-A6-001 已是系統核心，今日 A6 研究量超越過去任何一天。
 
 ## MVP 母本紀錄點
 

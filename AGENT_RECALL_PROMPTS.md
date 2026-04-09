@@ -144,7 +144,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. EXP-S010 A0/A1 session 混淆已記錄；下次重開先確認 cwd + 貼 A1 recall prompt
 3. A2 T-A2-002 ✅ 完成（2026-04-07）：WP 食安+法規 SEO 字眼清理（13篇）+ AGENT_RULES Section 14（禁用詞清單）+ wp-content-audit 技能書（e92af1d+ecc1a3e+e8e5915）；T-A2A3-001 ✅ 子任務1-4全完成（子任務5等7-14天觀察期）
 4. A7 T-A7-001 Phase 2 + T-A7-002 🔴 CRITICAL 第9天 ~210h+：上次活動 2026-03-31 cf9f166，距今已逾 210h。Owner 需明確決定暫停或確認阻塞原因。
-5. A4 T-A4-001 🔄：S5 ✅ DONE(8,559張)；S5.5 GPS ✅ 決策no_gps；S6(2023) ✅ 完成；S11(2024) 🔄 執行中（6,000/12,213=49.1%，36ee642 2026-04-07 15:30，⚠️ 48h閾值 = **04-09 15:30** 今日截止）—下一步：S11完成後接 S12(2025)；ASSET_LOG總計21,414行；API key已更換（舊key leaked→redact fe49f3e）
+5. A4 T-A4-001 🔴 CRITICAL：S5 ✅ DONE(8,559張)；S5.5 GPS ✅ 決策no_gps；S6(2023) ✅ 完成；S11(2024) 🔴 CRITICAL — 48h閾值 04-09 15:30 已超過，最後 commit 36ee642 (2026-04-07 15:30)，無後續確認 commit。Owner 需立即登入 lb99104@gmail.com Colab 確認S11執行狀態（進度 6,000/12,213=49.1%，完成後接 S12(2025)）；ASSET_LOG總計21,414行；API key已更換（舊key leaked→redact fe49f3e）
 6. A5 T-A5-002 🔄 進行中：服務費可選+長桌費+車馬費+DropdownHelper完成(dbcf9d4)；Task Card ✅ 已更新；T-A5-004 Phase 1 ✅ 04-02晚完整收尾（5e6d3b4，A0執行：Items照片16筆+URL修正+重新編號91格+items-management Skill建立）
 7. A3 T-A3-001 GTM方案B + T-A3-002 🔴 CRITICAL 第11天 ~258h+：最後 commit 2aca2ae 距今已逾 258h（2026-03-29 22:10 起）。A1 多次建議暫停，Owner 仍未執行暫停動作。**Owner 需立即執行：T-A3-001 + T-A3-002 標記為 ⏸️ 暫停**，待外部條件就緒再重啟。
 27. A1 worktree 清理完成（576e7df 2026-04-07）：清除全部 29 個 worktree（含 peaceful-yalow / interesting-shaw / pedantic-mendeleev），Mac mini 環境整潔。
@@ -154,6 +154,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 31. cold-start 三件套完成（82a8ddf 2026-04-08）：skills/first-principles-check/SKILL.md 新增（決策前/debug超過3輪必跑）。三件套 = pitfalls/SKILL.md + first-principles-check/SKILL.md + docs/glossary.md，已寫入 CLAUDE.md 冷啟動防呆。
 32. A5 T-A5-002 Phase 5 修復（4301369 2026-04-08）：QUOTE_DRAFT 客戶基本資料統一從 D/E/F 欄讀取（框線內），避免業務填兩次。clasp push 成功。Sheet 選單入口/檔名格式/URL 回傳均已修復（aa06a60）。
 33. 環境整備完成（a2b7dd5 2026-04-09）：① Cloudflare API token 已寫入 `bot/.env`（不進 git）；② 技能書 `skills/credentials/cloudflare-api.md` 建立（含權限對照/curl範例/安全提醒）；③ 桌面 `start-telegram-bot.sh` 已刪除（LaunchAgent 取代，不再需要）；④ bot 重啟指令：`sudo launchctl unload/load ~/Library/LaunchAgents/com.maplab.telegrambot.plist`；⑤ LaunchAgent 架構確認：3個服務開機自啟（com.maplab.telegrambot / com.maplab.a6bot / com.maplab.git-pull）；⑥ `CLAUDE_CODE_AUTO_COMPACT_WINDOW=200000` 已在 `.env`（7d17545）；⑦ bot `/reset` 指令已上線（7a8dec8）。
+34. A6/報價系統今日重大落地（2026-04-09 午後）：① 合約條款v4.0 — 四個版本（標準/企業分期/不收訂金/行銷公關公司），訂金baseline 3000只限個人客戶（806fc4e+1f8c2ed）；② P0落地 — 訂金可調+飲食禁忌+條款動態帶入訂金金額（ca395c1）；③ 解耦契約類型vs付款狀態（1e9f201）；④ S6車馬費+S9搬運費自動計算helpers+車馬費定版（cb2e9d3+cfeebd1）；⑤ LINE對話訓練資料 L1-L7+T16-T33（兩層架構：A6業務思維 vs 系統底層）；⑥ A6實際使用場景與角色定位「80分報價加速器」（367f819）；⑦ Mina指令模擬×A6 action 7種情境對照表（66216e3）；⑧ 企業價值五原則+客戶系統連結研究（ce19ebb）；⑨ google-ads-api技能書（OAuth SOP+踩坑，63b04e9）。
 8. 新治理功能（2026-03-29 落地）：SECTION 7 全域檢查器(faed6a9)；SECTION 8 權限治理+10 credential skills(6e80723)；SECTION 9 API三層備援+身份確認+CLAUDE.md指向器(0076a3a)
 9. 報價單歷史分析完成：data/quote-terms-reference.md + data/quote-items-unmatched.md（932份，30品項匹配，7品項未納入）；883份報價品項完整提取 22K+ items（54ef55f）；品項去重v2 de7837c（29,115→3,794唯一品項）
 10. Chrome Extension v4.8（private repo 改用 GitHub Contents API，b2f031c）

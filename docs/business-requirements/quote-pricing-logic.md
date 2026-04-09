@@ -107,6 +107,43 @@ max_cost_total = budget × (1 - 0.70) = budget × 0.30
 
 ---
 
+## 車馬費規則（2026-04-09 Owner 定義）
+
+**公式**：
+```
+if (Google Maps 導航時間 < 30 分鐘) → 車馬費 = 0
+else                                → 車馬費 = ceil(單程距離 km) × NT$6
+```
+
+**起點**：MAPLAB 台南和緯店（實際地址 Owner 待確認，`quoteHelpers.gs` 的 `MAPLAB_ORIGIN_ADDRESS` 常數）
+
+**驗證**：
+- 台南市內（大部分）→ 導航通常 < 30 min → **$0**
+- 嘉義 → 導航 ≈ 50-60 min、單程 ≈ 65 km → $390
+- ⚠️ 歷史 sample `2025/1/4 曹家瑄 嘉義` 車馬費為 $3,000，跟 $6/km 公式差 $2,610。可能是舊版定價或有 base fee，**Owner 待確認**。
+
+**實作**：`scripts/apps-script/quoteHelpers.gs` → `calcTransportFee(address)`
+- 用 Apps Script `Maps.newDirectionFinder()` 查路線
+- 回傳 `{ fee, distanceKm, driveMin, method, note }`
+- createQuote 自動寫 E27（車馬費 cell）+ L11（計算備註）
+
+---
+
+## 搬運費規則（2026-04-09 Owner 定義 + sample 驗證）
+
+**公式**：
+```
+2F 無電梯 + 有人協助 → $500
+2F 無電梯 + 無人協助 → $1,000
+其他（平面 / 有電梯）  → $0
+```
+
+**實作**：`scripts/apps-script/quoteHelpers.gs` → `calcFloorFee(mode)`
+- QuoteForm 加 `floorFeeMode` select（三選一）
+- createQuote 自動寫 E28（搬運費 cell）+ L12（mode 備註）
+
+---
+
 ## 待 Owner 確認的細節（暫時假設值）
 
 - **單人取餐量係數**：暫定 4，如果是純甜點派對可能 3，企業可能 5。可由 form 覆蓋。

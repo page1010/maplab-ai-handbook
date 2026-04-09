@@ -125,6 +125,13 @@
   <label>飲食禁忌 / 客戶偏好（例：不要牛羊、不要起司、中西合併）</label>
   <textarea id="dietaryNotes" rows="2" placeholder="（選填，業務接洽時抄下客戶明確說的禁忌與偏好）" style="width:100%;font-family:inherit;"></textarea>
 
+  <label>樓層/搬運狀況（2F 以上無電梯會加收搬運費）</label>
+  <select id="floorFeeMode">
+    <option value="none">平面 / 有電梯（$0）</option>
+    <option value="with_help">2F 無電梯，客戶有人協助搬運（$500）</option>
+    <option value="no_help">2F 無電梯，MAPLAB 獨力搬運（$1,000）</option>
+  </select>
+
   <div class="checkbox-row">
     <input type="checkbox" id="noDeposit">
     <label for="noDeposit">⚠️ 不收訂金（例外：活動後一次付清 → to_b_full）</label>
@@ -184,6 +191,7 @@
         totalItems        : document.getElementById('totalItems').value.trim(),
         depositAmount     : document.getElementById('depositAmount').value || '3000',
         dietaryNotes      : document.getElementById('dietaryNotes').value.trim(),
+        floorFeeMode      : document.getElementById('floorFeeMode').value || 'none',
         noDeposit         : document.getElementById('noDeposit').checked,
         isMarketingAgency : document.getElementById('isMarketingAgency').checked
       };

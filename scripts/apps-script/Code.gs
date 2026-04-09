@@ -143,6 +143,8 @@ function createQuote(formData) {
   // 2026-04-09 新增：訂金金額（個人 baseline 3000，業務可調）+ 飲食禁忌
   var _depositAmount = Number(formData.depositAmount) || 3000;
   var _dietaryNotes  = formData.dietaryNotes || '';
+  // 2026-04-09 新增：樓層搬運費 mode (none / with_help / no_help)
+  var _floorFeeMode  = formData.floorFeeMode || 'none';
   // 寫回 formData 讓下游（writeToIntake_ / resolveContractVersion 等）也拿到正規化後的值
   formData.clientName    = _clientName;
   formData.eventDate     = _eventDateStr;
@@ -303,6 +305,30 @@ function createQuote(formData) {
     keepSheet.getRange('K10').setValue('客戶禁忌/偏好');
     keepSheet.getRange('L10').setValue(_dietaryNotes);
   }
+
+  // ── 車馬費自動計算（S6：Google Maps 導航 30 分鐘以上，每公里 $6）──
+  // 2026-04-09 Owner 決策：台南不是 0 元，是用 Maps 導航距離計算
+  try {
+    var transport = calcTransportFee(_address);
+    if (transport.fee > 0) {
+      keepSheet.getRange('E27').setValue(transport.fee);
+    }
+    // note 寫進框線外備註，方便業務檢視計算根據
+    keepSheet.getRange('K11').setValue('車馬費計算');
+    keepSheet.getRange('L11').setValue(transport.note);
+  } catch (e) {
+    Logger.log('[createQuote] calcTransportFee 失敗: ' + e.message);
+    keepSheet.getRange('K11').setValue('車馬費計算');
+    keepSheet.getRange('L11').setValue('計算失敗 (' + e.message + ')，業務手動填 E27');
+  }
+
+  // ── 搬運費自動計算（S9：2F 無電梯 $500/$1000）──
+  var floorFee = calcFloorFee(_floorFeeMode);
+  if (floorFee > 0) {
+    keepSheet.getRange('E28').setValue(floorFee);
+  }
+  keepSheet.getRange('K12').setValue('搬運費模式');
+  keepSheet.getRange('L12').setValue(_floorFeeMode + ' → NT$' + floorFee);
 
   // ── 返回新檔案 URL ──
   var newUrl = newSs.getUrl();

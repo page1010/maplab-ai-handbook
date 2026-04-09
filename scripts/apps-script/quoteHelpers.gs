@@ -169,3 +169,79 @@ function _testCalcFloorFee_() {
   Logger.log('no_help   → ' + calcFloorFee('no_help'));    // 1000
   Logger.log('(empty)   → ' + calcFloorFee(''));           // 0
 }
+
+// ─────────────────────────────────────────
+// 情境測試函式（Apps Script 編輯器直接跑）
+// ─────────────────────────────────────────
+
+/**
+ * 情境 A 測試：個人週歲 20 人 K 輕食 A
+ * 在 Apps Script 編輯器選這個函式 → 點 Run
+ * 會產出一份真正的報價單 copy 到 Drive，回傳 URL
+ */
+function test_scenarioA_週歲20人() {
+  var result = createQuote({
+    customer: '測試_李晴宜',
+    date: '2026-05-15',
+    time: '11:00',
+    address: '台南市安南區安和路三段190巷71弄17號',
+    eventType: '生日派對',
+    headcount: '20',
+    eventName: '抓周派對測試',
+    totalItems: '',
+    depositAmount: '3000',
+    dietaryNotes: '不要羊 部分長輩不吃牛 串燒可以',
+    floorFeeMode: 'none',
+    noDeposit: false,
+    isMarketingAgency: false
+  });
+  Logger.log('scenarioA result: ' + JSON.stringify(result));
+  return result;
+}
+
+/**
+ * 情境 B 測試：個人入厝 30 人 K 主食 B
+ */
+function test_scenarioB_入厝30人() {
+  var result = createQuote({
+    customer: '測試_洪炳輝',
+    date: '2026-06-20',
+    time: '17:30',
+    address: '台南市安南區安興街351巷60號',
+    eventType: '外燴到府',
+    headcount: '30',
+    eventName: '新居入厝測試',
+    totalItems: '',
+    depositAmount: '3000',
+    dietaryNotes: '',
+    floorFeeMode: 'none',
+    noDeposit: false,
+    isMarketingAgency: false
+  });
+  Logger.log('scenarioB result: ' + JSON.stringify(result));
+  return result;
+}
+
+/**
+ * 情境 C 測試：企業開幕 30 人 K
+ */
+function test_scenarioC_企業開幕() {
+  var result = createQuote({
+    customer: '測試_Gina浥慧',
+    company: '測試開幕公司',
+    date: '2026-07-10',
+    time: '10:00',
+    address: '台南市安平區慶平路440號',
+    eventType: '企業聚會',
+    headcount: '30',
+    eventName: '開幕茶會測試',
+    totalItems: '',
+    depositAmount: '5000',
+    dietaryNotes: '',
+    floorFeeMode: 'none',
+    noDeposit: false,
+    isMarketingAgency: false
+  });
+  Logger.log('scenarioC result: ' + JSON.stringify(result));
+  return result;
+}

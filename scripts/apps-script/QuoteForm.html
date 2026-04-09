@@ -119,6 +119,12 @@
   <label>總品項數</label>
   <input type="number" id="totalItems" placeholder="（選填）" min="1">
 
+  <label>訂金金額（個人預設 $3,000，可依案件規模調整）</label>
+  <input type="number" id="depositAmount" placeholder="3000" min="0" value="3000">
+
+  <label>飲食禁忌 / 客戶偏好（例：不要牛羊、不要起司、中西合併）</label>
+  <textarea id="dietaryNotes" rows="2" placeholder="（選填，業務接洽時抄下客戶明確說的禁忌與偏好）" style="width:100%;font-family:inherit;"></textarea>
+
   <div class="checkbox-row">
     <input type="checkbox" id="noDeposit">
     <label for="noDeposit">⚠️ 不收訂金（例外：活動後一次付清 → to_b_full）</label>
@@ -176,6 +182,8 @@
         headcount  : document.getElementById('headcount').value.trim(),
         eventName         : document.getElementById('eventName').value.trim(),
         totalItems        : document.getElementById('totalItems').value.trim(),
+        depositAmount     : document.getElementById('depositAmount').value || '3000',
+        dietaryNotes      : document.getElementById('dietaryNotes').value.trim(),
         noDeposit         : document.getElementById('noDeposit').checked,
         isMarketingAgency : document.getElementById('isMarketingAgency').checked
       };

@@ -131,21 +131,26 @@ function createQuote(formData) {
   // ── 欄位名稱相容層（QuoteForm 新名 + doPost/舊版舊名都吃）──
   // QuoteForm.html (2026-04-02+): customer / date / time / headcount / eventName / totalItems
   // 舊版 createQuote 期待:      clientName / eventDate / -     / pax       / eventName / totalItems
-  var _clientName  = formData.clientName || formData.customer  || '';
-  var _eventDateStr= formData.eventDate  || formData.date      || '';
-  var _eventTime   = formData.time       || '';
-  var _address     = formData.location   || formData.address   || '';
-  var _eventType   = formData.eventType  || '';
-  var _pax         = formData.pax        || formData.headcount || '';
-  var _eventName   = formData.eventName  || '';
-  var _totalItems  = formData.totalItems || '';
-  var _company     = formData.company    || '';
+  var _clientName   = formData.clientName || formData.customer  || '';
+  var _eventDateStr = formData.eventDate  || formData.date      || '';
+  var _eventTime    = formData.time       || '';
+  var _address      = formData.location   || formData.address   || '';
+  var _eventType    = formData.eventType  || '';
+  var _pax          = formData.pax        || formData.headcount || '';
+  var _eventName    = formData.eventName  || '';
+  var _totalItems   = formData.totalItems || '';
+  var _company      = formData.company    || '';
+  // 2026-04-09 新增：訂金金額（個人 baseline 3000，業務可調）+ 飲食禁忌
+  var _depositAmount = Number(formData.depositAmount) || 3000;
+  var _dietaryNotes  = formData.dietaryNotes || '';
   // 寫回 formData 讓下游（writeToIntake_ / resolveContractVersion 等）也拿到正規化後的值
-  formData.clientName = _clientName;
-  formData.eventDate  = _eventDateStr;
-  formData.pax        = _pax;
-  formData.eventName  = _eventName;
-  formData.totalItems = _totalItems;
+  formData.clientName    = _clientName;
+  formData.eventDate     = _eventDateStr;
+  formData.pax           = _pax;
+  formData.eventName     = _eventName;
+  formData.totalItems    = _totalItems;
+  formData.depositAmount = _depositAmount;
+  formData.dietaryNotes  = _dietaryNotes;
   // noDeposit / isMarketingAgency 由 resolveContractVersion 自己從 formData 讀
 
   // ── 決議合約版本（四版 v4.0：to_c / to_b_deposit / to_b_full / to_b_marketing）──
@@ -285,11 +290,19 @@ function createQuote(formData) {
   // ── 條款自動帶入 C32/C33（列印範圍 C1:F55 框線內） ──
   // 2026-04-08 v4.0：四版動態選擇，contractTerms.gs 負責文字生成。
   // getContractTermsV4 會把匯款資訊（個人或公司帳戶）+ 分隔線 + 完整條款合成一段。
-  var terms = getContractTermsV4(_contractVersion, eventDate);
+  // 2026-04-09：傳入 depositAmount 讓條款裡的訂金金額可由業務調整（baseline 3000）
+  var terms = getContractTermsV4(_contractVersion, eventDate, _depositAmount);
   keepSheet.getRange('C32').setValue('【合約條款】（' + _contractVersion + '）');
   keepSheet.getRange('C33').setValue(terms).setWrapStrategy(SpreadsheetApp.WrapStrategy.WRAP);
   // 合約條款會很長，確保 C33 儲存格有足夠高度顯示多行文字
   keepSheet.setRowHeight(33, 600);
+
+  // ── 飲食禁忌 / 客戶偏好寫進框線外備註區（K10 附近，看得到但不印出）──
+  // 2026-04-09 依 Owner 需求：業務接洽時抄下的禁忌提醒
+  if (_dietaryNotes) {
+    keepSheet.getRange('K10').setValue('客戶禁忌/偏好');
+    keepSheet.getRange('L10').setValue(_dietaryNotes);
+  }
 
   // ── 返回新檔案 URL ──
   var newUrl = newSs.getUrl();

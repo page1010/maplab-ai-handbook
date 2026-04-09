@@ -9,10 +9,11 @@
  *   to_b_marketing - 行銷/公關公司版｜高變動專案型（4 條 → 6 條）
  *
  * 對外主要入口：
- *   resolveContractVersion(formData)       → 'to_c' | 'to_b_*'
- *   getContractTermsV4(version, eventDate) → 完整條款 + 匯款資訊（字串）
- *   isCorporateEventType(eventType)        → boolean
- *   getBankInfoBlock(version)              → 匯款資訊字串（個人或公司帳戶）
+ *   resolveContractVersion(formData)                            → 'to_c' | 'to_b_*'
+ *   getContractTermsV4(version, eventDate, depositAmount)        → 完整條款 + 匯款資訊 + 訂金說明
+ *   isCorporateEventType(eventType)                              → boolean
+ *   getBankInfoBlock(version)                                    → 匯款資訊字串（個人或公司帳戶）
+ *   _getDepositClause_(version, depositAmount)                   → 訂金金額說明（內部）
  */
 
 // ─────────────────────────────────────────
@@ -348,12 +349,13 @@ function _buildToBMarketing_() {
 // ─────────────────────────────────────────
 
 /**
- * 完整條款輸出（匯款資訊 + 分隔線 + 四版條款之一）
+ * 完整條款輸出（匯款資訊 + 分隔線 + 四版條款之一 + 訂金金額說明）
  * @param {string} version - 'to_c' | 'to_b_deposit' | 'to_b_full' | 'to_b_marketing'
- * @param {Date}   eventDate - 活動日期（目前 v4.0 條款文字沒有動態日期，但保留參數給未來擴充）
+ * @param {Date}   eventDate - 活動日期（保留給未來動態帶入日期用）
+ * @param {number} depositAmount - 訂金金額（個人 baseline 3000，業務可調）
  * @returns {string} 完整條款文字
  */
-function getContractTermsV4(version, eventDate) {
+function getContractTermsV4(version, eventDate, depositAmount) {
   var termsText;
   switch (version) {
     case 'to_c':           termsText = _buildToC_();           break;
@@ -365,8 +367,28 @@ function getContractTermsV4(version, eventDate) {
       termsText = _buildToC_();
   }
   var bankInfo = getBankInfoBlock(version);
+  var depositClause = _getDepositClause_(version, depositAmount);
   var separator = '\n\n───────────────────────────\n\n';
-  return bankInfo + separator + termsText;
+  return bankInfo + '\n\n' + depositClause + separator + termsText;
+}
+
+/**
+ * 依合約版本產生訂金金額說明（2026-04-09 Owner 決策：個人 baseline 3000，業務可調）
+ */
+function _getDepositClause_(version, depositAmount) {
+  var amt = Number(depositAmount) || 3000;
+  var amtStr = 'NT$' + amt.toLocaleString();
+  if (version === 'to_b_full') {
+    return '▶付款安排（一次性後付）：本案採活動結束後一次請款制，不收取訂金。';
+  }
+  if (version === 'to_b_marketing') {
+    return '▶付款安排（行銷/公關專案）：本案訂金 ' + amtStr + '，尾款依請款流程與專案約定日期匯款完成。';
+  }
+  if (version === 'to_b_deposit') {
+    return '▶付款安排（企業版）：本案訂金 ' + amtStr + '，尾款依雙方約定之最晚入帳日期完成付款。';
+  }
+  // to_c
+  return '▶付款安排：本案訂金 ' + amtStr + '（業務依案件規模評估），尾款請於活動日前完成匯款，或於活動當日擺設完畢後以現金或匯款方式支付。';
 }
 
 /**
@@ -377,7 +399,7 @@ function _testContractTermsV4_() {
   var versions = ['to_c', 'to_b_deposit', 'to_b_full', 'to_b_marketing'];
   var today = new Date();
   for (var i = 0; i < versions.length; i++) {
-    var text = getContractTermsV4(versions[i], today);
+    var text = getContractTermsV4(versions[i], today, 3000);
     Logger.log('=== ' + versions[i] + ' (' + text.length + ' chars) ===');
     Logger.log(text.slice(0, 500));
   }

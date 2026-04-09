@@ -140,12 +140,18 @@ function createQuote(formData) {
   var _eventName   = formData.eventName  || '';
   var _totalItems  = formData.totalItems || '';
   var _company     = formData.company    || '';
+  // 付款狀態：新版 QuoteForm 送 paymentMode，舊版送 hasDeposit checkbox
+  var _paymentMode = formData.paymentMode
+                   || (formData.hasDeposit === true  ? 'deposit_received'
+                   :  formData.hasDeposit === false ? 'not_yet'
+                   :  'not_yet');
   // 寫回 formData 讓下游（writeToIntake_ 等）也拿到正規化後的值
   formData.clientName = _clientName;
   formData.eventDate  = _eventDateStr;
   formData.pax        = _pax;
   formData.eventName  = _eventName;
   formData.totalItems = _totalItems;
+  formData.paymentMode= _paymentMode;
 
   // ── B2B / B2C 判別（公司名有填 = 企業版）──
   // 影響：N5/N7 狀態下拉選項、條款版本。B2B 不收訂金，N7 下拉不應該有「已收訂金」。
@@ -266,18 +272,27 @@ function createQuote(formData) {
     .build();
   keepSheet.getRange('N7').setDataValidation(paymentStatusRule);
 
-  // ── 隱藏 D19/D20（熱客招待內部品項，不給客人看）──
-  // Owner 2026-04-08 指示：d19 d20 設為隱藏。對應 master 模板中「熱客招待 Complimentary」
-  // 下方的內部品項，generated copy 不應該列在客人看的報價單上。
-  keepSheet.hideRows(19, 2);
+  // ── 隱藏熱客招待整塊（Row 17 label + Row 18-19 兩個內部品項）──
+  // Owner 2026-04-08 指示：客人不應看到熱客招待的內部品項與標籤。
+  // 2026-04-08 依 live sheet 重新定位：label 在 row 17、item 在 row 18-19，
+  // 所以隱藏 row 17-19 三列；row 20 是「項目」header（費用區開始），必須保留可見。
+  keepSheet.hideRows(17, 3);
 
-  // ── 條款自動帶入（個人版 / 企業版） ──
-  // isCorporate 在函式最上方已判別，這裡直接用
+  // ── 還原 E25 租借長桌公式 ──
+  // 原本 master 有 =G25*350+H25*100 的公式（大桌 $350 x 大桌數 + 小桌 $100 x 小桌數），
+  // 歷次 setValue 覆蓋過程中被清掉了。generated copy 必須恢復這條公式，
+  // 否則業務填 G25/H25 數量後 E25 不會自動算金額。
+  keepSheet.getRange('E25').setFormula('=IF(OR(G25>0,H25>0),G25*350+H25*100,"")');
+
+  // ── 條款自動帶入 C32/C33（列印範圍 C1:F55 框線內） ──
+  // 2026-04-08 Owner 需求：合約條款必須在列印範圍內，之前寫到 A30/A31（A 欄框線外）
+  // 客人根本看不到。改寫到 C32（label）+ C33（內容），替換原本的 placeholder
+  // 「條款將依客戶類型自動帶入」文字。同時依 (isCorporate, paymentMode) 生成對應版本。
   var terms = isCorporate
-    ? getCorpTerms(eventDate)
-    : getPersonalTerms();
-  keepSheet.getRange('A30').setValue('【合約條款】');
-  keepSheet.getRange('A31').setValue(terms);
+    ? getCorpTerms(eventDate, _paymentMode)
+    : getPersonalTerms(_paymentMode);
+  keepSheet.getRange('C32').setValue('【合約條款】');
+  keepSheet.getRange('C33').setValue(terms);
 
   // ── 返回新檔案 URL ──
   var newUrl = newSs.getUrl();
@@ -329,21 +344,54 @@ function getQuoteDraftValues() {
 // 條款文字
 // ─────────────────────────────────────────
 
-function getPersonalTerms() {
+/**
+ * 付款方式對應的條款行（B2C / 個人版）
+ * paymentMode: 'not_yet' | 'deposit_received' | 'paid_in_full'
+ */
+function _personalPaymentClause_(paymentMode) {
+  if (paymentMode === 'deposit_received') {
+    return '▶付款方式：訂金已收訖，尾款請於活動前 3 天匯款完成。';
+  }
+  if (paymentMode === 'paid_in_full') {
+    return '▶付款方式：總金額一次付清，請於活動前 3 天匯款完成。';
+  }
+  // not_yet (default)
+  return '▶付款方式：訂金為總金額 50%，請於確認活動後 3 個工作日內匯款；尾款請於活動前 3 天匯款完成。';
+}
+
+function getPersonalTerms(paymentMode) {
   return [
-    '匯款資訊如下：',
-    '中國信託822 / 西台南分行',
+    '▶匯款資訊：',
+    '中國信託 822 / 西台南分行',
     '帳號：222510859464',
     '戶名：莊貴棻',
     '匯款後，再麻煩提供後五碼對帳。如需收據請提前告知，當日會附上。',
     '',
-    '（1）已保留檔期，預約付訂後取消，欲收取訂金50%作為成本取消費',
-    '（2）用餐日期14天內取消（或變更），收取訂金80%作為食材成本取消費',
-    '（3）用餐當日取消（或變更），收取訂金100%作為取消與變更費'
+    _personalPaymentClause_(paymentMode),
+    '',
+    '▶取消與變更規則：',
+    '（1）已保留檔期，預約付訂後取消，收取訂金 50% 作為成本取消費。',
+    '（2）用餐日期 14 天內取消（或變更），收取訂金 80% 作為食材成本取消費。',
+    '（3）用餐當日取消（或變更），收取訂金 100% 作為取消與變更費。'
   ].join('\n');
 }
 
-function getCorpTerms(eventDate) {
+/**
+ * 付款方式對應的條款行（B2B / 企業版）
+ */
+function _corpPaymentClause_(paymentMode) {
+  if (paymentMode === 'paid_in_full') {
+    return '▶付款方式：活動結束後依請款單一次付清，請於收到請款單後 7 個工作日內匯款。';
+  }
+  if (paymentMode === 'deposit_received') {
+    // B2B 收訂金較罕見但保留支援
+    return '▶付款方式：訂金已收訖，尾款請於收到請款單後 7 個工作日內匯款。';
+  }
+  // not_yet (default)
+  return '▶付款方式：依企業請款流程，活動結束後發送請款單，請於收到後 7 個工作日內匯款。';
+}
+
+function getCorpTerms(eventDate, paymentMode) {
   var year  = eventDate.getFullYear();
   var month = eventDate.getMonth() + 1;
   var day   = eventDate.getDate();
@@ -351,13 +399,16 @@ function getCorpTerms(eventDate) {
   return [
     '▶簽約使用條款及細則：',
     '（1）鑒於部分企業用戶之會計核銷，此合約僅供公司行號使用。',
-    '（2）本合約代表雙方對於' + year + '年' + month + '月' + day + '日之活動做出預約，並確認保留檔期。',
-    '（3）已保留之檔期，如有於十日內取消服務之情事，須支付活動合約總金額之20%材料損失費。',
+    '（2）本合約代表雙方對於 ' + year + ' 年 ' + month + ' 月 ' + day + ' 日之活動做出預約，並確認保留檔期。',
+    '（3）已保留之檔期，如有於十日內取消服務之情事，須支付活動合約總金額之 20% 材料損失費。',
     '（4）活動當日取消（或臨時有地點、菜色、時間之變更），將酌情形額外收取費用。',
     '',
-    '‣活動指定地點如超過30分鐘距離須收取車馬費，諮詢依地區實際公里數各別報價。',
-    '‣擺設場地有樓層必須預先告知，2F以上無電梯須收取$1,000搬運費，有人協助收取$500元搬運費。',
-    ' 若當日電梯因故無法使用，則現場以現金加收$1,000樓層搬運費。'
+    _corpPaymentClause_(paymentMode),
+    '',
+    '▶其他須知：',
+    '‣活動指定地點如超過 30 分鐘距離須收取車馬費，依地區實際公里數個別報價。',
+    '‣擺設場地有樓層必須預先告知，2F 以上無電梯須收取 $1,000 搬運費；有人協助收取 $500 搬運費。',
+    ' 若當日電梯因故無法使用，則現場以現金加收 $1,000 樓層搬運費。'
   ].join('\n');
 }
 

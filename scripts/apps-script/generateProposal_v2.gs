@@ -49,36 +49,48 @@ function generateProposalV2() {
   var eventTime   = String(qd.getRange('F3').getValue() || '-');  // 原 E3，04-08 改 F3
   var pax         = String(qd.getRange('F4').getValue() || '-');
   var totalItems  = String(qd.getRange('F5').getValue() || '-');
-  var totalAmount = Number(qd.getRange('E29').getValue()) || 0;
-  var notes       = String(qd.getRange('E30').getValue() || '-');
+  // 2026-04-08 晚二修：live sheet 驗證 總金額 在 E30，不是 E29（E29 是額外成本行）
+  var totalAmount = Number(qd.getRange('E30').getValue()) || 0;
+  var notes       = '';  // 目前 master 沒有固定 notes cell，留空不讀避免拿到錯的
 
   Logger.log('[V2] 客戶=' + clientName + ' 日期=' + eventDate + ' 金額=' + totalAmount);
 
   // ── Step 2：讀品項 ──────────────────────────────────────
+  // 2026-04-08 晚二修：依 live sheet 重新校正
+  //   - 鹹食 appetizer = row 7-10（原本漏 row 7 比利時薯條）
+  //   - 甜點 dessert  = row 12-14
+  //   - 飲料 drinks   = row 15-16 **刻意排除**：Owner 明確說飲料不需要圖，不應放進 Slide
+  //   - qty 欄位從 G 改 F：live sheet F 欄才是數量（G 欄是空的）
   var itemRanges = [
-    {rows: [8, 9, 10],   label: '餐點'},
-    {rows: [12, 13, 14], label: '餐點'},
-    {rows: [15, 16],     label: '餐點'}
+    {rows: [7, 8, 9, 10], label: '鹹食'},
+    {rows: [12, 13, 14],  label: '甜點'}
   ];
   var selectedItems = [];
   itemRanges.forEach(function(range) {
     range.rows.forEach(function(r) {
       var name = String(qd.getRange('D' + r).getValue() || '').trim();
-      var qty  = String(qd.getRange('G' + r).getValue() || '').trim();
+      var qty  = String(qd.getRange('F' + r).getValue() || '').trim();  // 原 G，改 F
       if (name) {
         selectedItems.push({ zh: name, qty: qty });
       }
     });
   });
 
-  Logger.log('[V2] 品項數=' + selectedItems.length + ': ' + selectedItems.map(function(x){return x.zh}).join(', '));
+  Logger.log('[V2] 品項數（未過濾圖片）=' + selectedItems.length + ': ' + selectedItems.map(function(x){return x.zh}).join(', '));
 
-  // ── Step 3：從 Items 表比對 image_url ──────────────────
+  // ── Step 3：從 Items 表比對 image_url，沒圖的直接從 Slide 排除 ──
+  // 2026-04-08 晚二修：Owner 明確需求 — 沒圖的品項完全不進 Slide，不要顯示空名字或空圖。
   var imgMap = _buildImageMap(ss);
+  var withImages = [];
   selectedItems.forEach(function(item) {
     item.imageUrl = _findImage(item.zh, imgMap);
-    Logger.log('[V2] 圖片 ' + item.zh + ' → ' + (item.imageUrl ? 'found' : 'none'));
+    Logger.log('[V2] 圖片 ' + item.zh + ' → ' + (item.imageUrl ? 'found' : 'NONE (excluded from Slide)'));
+    if (item.imageUrl) {
+      withImages.push(item);
+    }
   });
+  selectedItems = withImages;
+  Logger.log('[V2] 品項數（過濾後剩有圖的）=' + selectedItems.length);
 
   // ── Step 4：複製模板 ────────────────────────────────────
   var templateFile = DriveApp.getFileById(SLIDES_TEMPLATE_ID);
@@ -184,10 +196,26 @@ function generateProposalV2() {
   pres.saveAndClose();
   var url = 'https://docs.google.com/presentation/d/' + newFile.getId() + '/edit';
   Logger.log('[V2] 完成！URL=' + url);
+  // 2026-04-08 晚二修：alert 只能顯示純文字 URL，改用 HtmlService 彈出真正的可點擊超連結。
   try {
-    SpreadsheetApp.getUi().alert('✅ 提案簡報已產生！\n\n' + fileName + '\n\n' + url);
+    var escapedName = fileName.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    var html =
+      '<div style="font-family:sans-serif;padding:16px;line-height:1.6;">' +
+        '<h3 style="margin:0 0 12px;color:#3A3A2E;">✅ 提案簡報已產生</h3>' +
+        '<p style="margin:0 0 6px;color:#555;">' + escapedName + '</p>' +
+        '<p style="margin:8px 0 0;">' +
+          '<a href="' + url + '" target="_blank" rel="noopener"' +
+          ' style="display:inline-block;padding:8px 14px;background:#7A5C3E;color:#fff;' +
+          'text-decoration:none;border-radius:4px;font-size:14px;">' +
+          '🔗 開啟提案簡報（新分頁）' +
+          '</a>' +
+        '</p>' +
+        '<p style="margin-top:14px;color:#888;font-size:11px;word-break:break-all;">' + url + '</p>' +
+      '</div>';
+    var htmlOutput = HtmlService.createHtmlOutput(html).setWidth(460).setHeight(230);
+    SpreadsheetApp.getUi().showModalDialog(htmlOutput, '提案簡報已產生');
   } catch(e) {
-    Logger.log('[V2] 非試算表 context，略過 alert');
+    Logger.log('[V2] 非試算表 context，略過彈窗：' + e.message);
   }
   return { ok: true, url: url, name: fileName };
 }

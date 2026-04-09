@@ -119,10 +119,12 @@
   <label>總品項數</label>
   <input type="number" id="totalItems" placeholder="（選填）" min="1">
 
-  <div class="checkbox-row">
-    <input type="checkbox" id="hasDeposit" checked>
-    <label for="hasDeposit">已收訂金</label>
-  </div>
+  <label>付款狀態</label>
+  <select id="paymentMode">
+    <option value="not_yet">尚未收款（B2C 未收訂金 / B2B 未請款）</option>
+    <option value="deposit_received">已收訂金（B2C 專用）</option>
+    <option value="paid_in_full">尾款一次付清（B2B 典型 / B2C 一次付清）</option>
+  </select>
 
   <div id="message"></div>
 
@@ -171,7 +173,7 @@
         headcount  : document.getElementById('headcount').value.trim(),
         eventName  : document.getElementById('eventName').value.trim(),
         totalItems : document.getElementById('totalItems').value.trim(),
-        hasDeposit : document.getElementById('hasDeposit').checked
+        paymentMode: document.getElementById('paymentMode').value
       };
 
       var btn = document.getElementById('submitBtn');

@@ -107,25 +107,39 @@ max_cost_total = budget × (1 - 0.70) = budget × 0.30
 
 ---
 
-## 車馬費規則（2026-04-09 Owner 定義）
+## 車馬費規則（2026-04-09 Owner 定版）
 
-**公式**：
+**起點**：台南市北區和緯路 2 段 450 號（MAPLAB 門市）
+
+**公式（Owner 定版）**：
 ```
 if (Google Maps 導航時間 < 30 分鐘) → 車馬費 = 0
-else                                → 車馬費 = ceil(單程距離 km) × NT$6
+else                                → 車馬費 = max(
+                                        ceil(單程距離 km) × NT$6,
+                                        導航分鐘數 × NT$50
+                                      )
 ```
 
-**起點**：MAPLAB 台南和緯店（實際地址 Owner 待確認，`quoteHelpers.gs` 的 `MAPLAB_ORIGIN_ADDRESS` 常數）
+**設計思想**（Owner 原話）：**用高的算好了，讓業務談**。
+- 取 km 制與 min 制兩者較高值，確保業務手上有空間往下 discount
+- 30 分鐘內免費（台南市內近距離）
 
 **驗證**：
-- 台南市內（大部分）→ 導航通常 < 30 min → **$0**
-- 嘉義 → 導航 ≈ 50-60 min、單程 ≈ 65 km → $390
-- ⚠️ 歷史 sample `2025/1/4 曹家瑄 嘉義` 車馬費為 $3,000，跟 $6/km 公式差 $2,610。可能是舊版定價或有 base fee，**Owner 待確認**。
+| 目的地 | 距離 | 時間 | km 制 | min 制 | 實收 |
+|--------|------|------|-------|--------|------|
+| 台南市內（近） | 5-10 km | 15-25 min | - | - | **$0**（未達 30 分鐘） |
+| 台南市郊 | 15 km | 30 min | $90 | $1,500 | **$1,500** |
+| 嘉義 | 65 km | 60 min | $390 | $3,000 | **$3,000** ✓ 跟歷史 sample 對齊 |
+| 高雄市區 | 50 km | 45 min | $300 | $2,250 | **$2,250** |
+| 新營 | 40 km | 40 min | $240 | $2,000 | **$2,000** |
 
 **實作**：`scripts/apps-script/quoteHelpers.gs` → `calcTransportFee(address)`
 - 用 Apps Script `Maps.newDirectionFinder()` 查路線
-- 回傳 `{ fee, distanceKm, driveMin, method, note }`
-- createQuote 自動寫 E27（車馬費 cell）+ L11（計算備註）
+- 回傳 `{ fee, feeByKm, feeByMin, distanceKm, driveMin, method, note }`
+- createQuote 自動寫：
+  - `E27` 車馬費金額
+  - `L11` 計算 note（含取高邏輯）
+  - `L12` 距離/時間/兩制比較一眼看清楚
 
 ---
 

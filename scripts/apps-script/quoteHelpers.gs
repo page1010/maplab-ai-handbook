@@ -17,16 +17,21 @@
 
 /**
  * MAPLAB 門市起點地址（Google Maps 導航基準點）
- * ⚠️ Owner 2026-04-09：此處為暫用值，實際門市地址確認後請更新
- * 來源：LINE OA 自動回應提到「台南和緯店」
+ * 2026-04-09 Owner 確認：台南市北區和緯路2段450號
  */
-var MAPLAB_ORIGIN_ADDRESS = '台南市北區和緯路二段';
+var MAPLAB_ORIGIN_ADDRESS = '台南市北區和緯路2段450號';
 
 /**
- * 車馬費規則（Owner 2026-04-09 定義）
+ * 車馬費規則（Owner 2026-04-09 兩次調整後定版）
+ * 三要素：
+ *   (a) 30 分鐘內免費
+ *   (b) 30 分鐘以上取「每公里 $6」與「每分鐘 $50」兩者的較高值
+ *       （Owner 指示：用高的算好了 讓業務談）
+ *   (c) 驗證樣本：嘉義案 60 min 65 km → max(390, 3000) = $3000 ✓ 跟歷史 sample 對齊
  */
 var TRANSPORT_FREE_THRESHOLD_MINUTES = 30;  // 導航時間 < 30 min → 免費
-var TRANSPORT_FEE_PER_KM              = 6;  // ≥ 30 min → 每公里 NT$6
+var TRANSPORT_FEE_PER_KM              = 6;  // 每公里 NT$6
+var TRANSPORT_FEE_PER_MIN             = 50; // 每分鐘 NT$50
 
 /**
  * 搬運費規則（2F 無電梯，SOP 確認 + sample 驗證）
@@ -83,17 +88,24 @@ function calcTransportFee(destinationAddress) {
     var driveMin       = Math.round(durationSec / 60);
 
     var fee = 0;
+    var feeByKm = 0;
+    var feeByMin = 0;
     var note = '';
     if (driveMin < TRANSPORT_FREE_THRESHOLD_MINUTES) {
       fee = 0;
       note = 'Maps 導航 ' + driveMin + ' 分 / ' + distanceKm + ' km，未達 30 分鐘免收';
     } else {
-      fee = distanceKm * TRANSPORT_FEE_PER_KM;
-      note = 'Maps 導航 ' + driveMin + ' 分 / ' + distanceKm + ' km × $' + TRANSPORT_FEE_PER_KM + ' = $' + fee;
+      feeByKm  = distanceKm * TRANSPORT_FEE_PER_KM;   // 公里制
+      feeByMin = driveMin   * TRANSPORT_FEE_PER_MIN;  // 分鐘制
+      fee = Math.max(feeByKm, feeByMin);               // Owner：用高的算好了 讓業務談
+      note = 'Maps 導航 ' + driveMin + ' 分 / ' + distanceKm + ' km | ' +
+             'km 制 $' + feeByKm + ' vs min 制 $' + feeByMin + ' → 取高 $' + fee;
     }
 
     return {
       fee: fee,
+      feeByKm: feeByKm,
+      feeByMin: feeByMin,
       distanceKm: distanceKm,
       driveMin: driveMin,
       method: 'maps_auto',

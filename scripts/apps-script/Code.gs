@@ -306,16 +306,22 @@ function createQuote(formData) {
     keepSheet.getRange('L10').setValue(_dietaryNotes);
   }
 
-  // ── 車馬費自動計算（S6：Google Maps 導航 30 分鐘以上，每公里 $6）──
-  // 2026-04-09 Owner 決策：台南不是 0 元，是用 Maps 導航距離計算
+  // ── 車馬費自動計算（S6：30 分鐘內免費 / 以上取 km 制與 min 制較高值）──
+  // 2026-04-09 Owner 定版：用高的算好了 讓業務談
   try {
     var transport = calcTransportFee(_address);
     if (transport.fee > 0) {
       keepSheet.getRange('E27').setValue(transport.fee);
     }
-    // note 寫進框線外備註，方便業務檢視計算根據
+    // 框線外備註寫 3 列：計算結果 + 距離時間 + 公式拆解，業務一眼看清楚
     keepSheet.getRange('K11').setValue('車馬費計算');
     keepSheet.getRange('L11').setValue(transport.note);
+    keepSheet.getRange('K12').setValue('距離 / 時間');
+    keepSheet.getRange('L12').setValue(
+      transport.distanceKm + ' km｜約 ' + transport.driveMin + ' 分鐘｜' +
+      'km 制 $' + (transport.feeByKm || 0) + ' / min 制 $' + (transport.feeByMin || 0) +
+      ' → 取高 $' + transport.fee
+    );
   } catch (e) {
     Logger.log('[createQuote] calcTransportFee 失敗: ' + e.message);
     keepSheet.getRange('K11').setValue('車馬費計算');
@@ -327,8 +333,8 @@ function createQuote(formData) {
   if (floorFee > 0) {
     keepSheet.getRange('E28').setValue(floorFee);
   }
-  keepSheet.getRange('K12').setValue('搬運費模式');
-  keepSheet.getRange('L12').setValue(_floorFeeMode + ' → NT$' + floorFee);
+  keepSheet.getRange('K13').setValue('搬運費模式');
+  keepSheet.getRange('L13').setValue(_floorFeeMode + ' → NT$' + floorFee);
 
   // ── 返回新檔案 URL ──
   var newUrl = newSs.getUrl();

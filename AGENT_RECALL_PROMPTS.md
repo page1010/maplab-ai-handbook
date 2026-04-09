@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-04-08 大整理後（Sheets 18→12頁；GitHub 廢棄文件 archive；5張新 Task Card 建立：T-A1-V6-P2/P3、T-GBP-001、T-A5-006、T-A4-002）
+> 最後更新：2026-04-09 晨間巡查（A3 🔴D11 ~258h+；A7 🔴D9 ~210h+；A4 ⚠️WATCH 閾值今日15:30；e2e里程碑持續；斷點30-32 04-08晚間已入）
 >
 > 使用方式：選擇角色 → 複製 prompt → 貼到 Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -20,11 +20,11 @@
 | A0 | 總調度秘書 | ✅ Cowork 常駐 | 跨系統橋接、調度、桌面控制 |
 | A1 | 系統總管中心 | ✅ Claude Code 常駐 | Telegram bot + 終端機，直接下指令 |
 | A2 | 搜尋流量作戰部 | ✅ T-A2-001 完成，待新任務 | SEO / GA / 關鍵字 |
-| A3 | 社群與廣告成長部 | 🔴 CRITICAL 216h+無commit（T-A3-001+T-A3-002）⏸️ 暫停待Owner執行 | Meta Ads / Social |
-| A4 | 影像資產整理部 | 🔄 S5✅/S5.5 GPS no_gps✅/S6✅/S11 6,000/12,213=49.1%（04-07活躍）| Photo Archive |
+| A3 | 社群與廣告成長部 | 🔴 CRITICAL 258h+無commit（T-A3-001+T-A3-002）⏸️ 暫停待Owner執行 | Meta Ads / Social |
+| A4 | 影像資產整理部 | 🔄 S5✅/S5.5 GPS no_gps✅/S6✅/S11 6,000/12,213=49.1%（⚠️WATCH 閾值04-09 15:30）| Photo Archive |
 | A5 | 報價與提案引擎部 | 🔄 T-A5-002 進行中 | Quotation Engine |
 | A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（Telegram 報價助手 v1.1）| Sales Rapid Response |
-| A7 | 客服與對話轉單部 | 🔴 CRITICAL 168h+無commit（T-A7-001+T-A7-002）| Smart Reply |
+| A7 | 客服與對話轉單部 | 🔴 CRITICAL 210h+無commit（T-A7-001+T-A7-002）| Smart Reply |
 | A8 | 多媒體影音製作部 | 🔲 新建，待啟動 | Video Production |
 
 ---
@@ -139,14 +139,14 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. 都不行 → 回報 Owner，不要硬幹
 
-【斷點 — 2026-04-08 晚間巡查更新】
+【斷點 — 2026-04-09 晨間巡查更新】
 1. 系統版本：v6.0 / Phase 6 — 觀測性 + 業務閉環 + 策略循環（Phase 3.1 Dashboard 自動更新已就位 ef2c21b）
 2. EXP-S010 A0/A1 session 混淆已記錄；下次重開先確認 cwd + 貼 A1 recall prompt
 3. A2 T-A2-002 ✅ 完成（2026-04-07）：WP 食安+法規 SEO 字眼清理（13篇）+ AGENT_RULES Section 14（禁用詞清單）+ wp-content-audit 技能書（e92af1d+ecc1a3e+e8e5915）；T-A2A3-001 ✅ 子任務1-4全完成（子任務5等7-14天觀察期）
-4. A7 T-A7-001 Phase 2 + T-A7-002 🔴 CRITICAL 第9天：上次活動 2026-03-31 cf9f166，距今已逾 198h+。Owner 需明確決定暫停或確認阻塞原因。
-5. A4 T-A4-001 🔄：S5 ✅ DONE(8,559張)；S5.5 GPS ✅ 決策no_gps；S6(2023) ✅ 完成；S11(2024) 🔄 執行中（6,000/12,213=49.1%，36ee642 2026-04-07 15:30，48h閾值 = **04-09 15:30**）—下一步：S11完成後接 S12(2025)；ASSET_LOG總計21,414行；API key已更換（舊key leaked→redact fe49f3e）
+4. A7 T-A7-001 Phase 2 + T-A7-002 🔴 CRITICAL 第9天 ~210h+：上次活動 2026-03-31 cf9f166，距今已逾 210h。Owner 需明確決定暫停或確認阻塞原因。
+5. A4 T-A4-001 🔄：S5 ✅ DONE(8,559張)；S5.5 GPS ✅ 決策no_gps；S6(2023) ✅ 完成；S11(2024) 🔄 執行中（6,000/12,213=49.1%，36ee642 2026-04-07 15:30，⚠️ 48h閾值 = **04-09 15:30** 今日截止）—下一步：S11完成後接 S12(2025)；ASSET_LOG總計21,414行；API key已更換（舊key leaked→redact fe49f3e）
 6. A5 T-A5-002 🔄 進行中：服務費可選+長桌費+車馬費+DropdownHelper完成(dbcf9d4)；Task Card ✅ 已更新；T-A5-004 Phase 1 ✅ 04-02晚完整收尾（5e6d3b4，A0執行：Items照片16筆+URL修正+重新編號91格+items-management Skill建立）
-7. A3 T-A3-001 GTM方案B + T-A3-002 🔴 CRITICAL 第11天：最後 commit 2aca2ae 距今已逾 246h+（2026-03-29 起）。A1 多次建議暫停，Owner 仍未執行暫停動作。**Owner 需立即執行：T-A3-001 + T-A3-002 標記為 ⏸️ 暫停**，待外部條件就緒再重啟。
+7. A3 T-A3-001 GTM方案B + T-A3-002 🔴 CRITICAL 第11天 ~258h+：最後 commit 2aca2ae 距今已逾 258h（2026-03-29 22:10 起）。A1 多次建議暫停，Owner 仍未執行暫停動作。**Owner 需立即執行：T-A3-001 + T-A3-002 標記為 ⏸️ 暫停**，待外部條件就緒再重啟。
 27. A1 worktree 清理完成（576e7df 2026-04-07）：清除全部 29 個 worktree（含 peaceful-yalow / interesting-shaw / pedantic-mendeleev），Mac mini 環境整潔。
 28. A1 大整理（9721cc1+9478c79 2026-04-08）：Sheets 18→12頁（隱藏5個、辦公室改資源速查、Specials虛擬範例SP000、REVISION_LOG精簡、DASHBOARD加Agent警示區）；GitHub 廢棄文件（TASK_POOL/TASK_QUEUE/CURRENT_EXECUTION_BOARD/project_state/AI_WORKFLOW_MAP/SYSTEM_MAP）移入 archive/；data/ 舊快照清理。
 29. 新 Task Card（2026-04-08）：T-A1-V6-P2（🔄業務閉環MVP），T-A1-V6-P3（🔲自動化閉環，等P2），T-GBP-001（🔲GBP產品圖更換，等Owner），T-A5-006（🔲OrderLines 2025重建，等T-A5-005），T-A4-002（🔲pagewu1010 187GB Takeout，等T-A4-001完成）。

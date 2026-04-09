@@ -119,11 +119,10 @@
   <label>總品項數</label>
   <input type="number" id="totalItems" placeholder="（選填）" min="1">
 
-  <label>付款狀態</label>
-  <select id="paymentMode">
-    <option value="not_yet">尚未收款（B2C 未收訂金 / B2B 未請款）</option>
-    <option value="deposit_received">已收訂金（B2C 專用）</option>
-    <option value="paid_in_full">尾款一次付清（B2B 典型 / B2C 一次付清）</option>
+  <label>契約類型</label>
+  <select id="contractType">
+    <option value="deposit_standard">訂金制（B2C 標準：收訂金+尾款）</option>
+    <option value="lump_sum_after">一次性後付（活動後一次付清，不收訂金）</option>
   </select>
 
   <div id="message"></div>
@@ -171,9 +170,9 @@
         address    : document.getElementById('address').value.trim(),
         eventType  : eventType,
         headcount  : document.getElementById('headcount').value.trim(),
-        eventName  : document.getElementById('eventName').value.trim(),
-        totalItems : document.getElementById('totalItems').value.trim(),
-        paymentMode: document.getElementById('paymentMode').value
+        eventName    : document.getElementById('eventName').value.trim(),
+        totalItems   : document.getElementById('totalItems').value.trim(),
+        contractType : document.getElementById('contractType').value
       };
 
       var btn = document.getElementById('submitBtn');

@@ -67,24 +67,28 @@ _claude_semaphore = asyncio.Semaphore(1)
 # Conversation history per chat_id (deque maxlen=20)
 _conv_history: dict[int, deque] = {}
 
-A6_SYSTEM_PROMPT = (
-    "【MAPLAB A6 報價助理】\n"
-    "你是 MAPLAB 婚禮/活動攝影工作室的 A6 報價助理，運行在業務群組 Telegram bot。\n"
-    "你的工作：\n"
-    "- 急件報價：業務說「報價 王小明 婚禮 80人 預算6萬」，你立即調用 A5 品項邏輯出草稿\n"
-    "- 品項修改：收到「你幫我把X改成Y」，查 Items 表，輸出 diff（品項名、數量、金額差異）\n"
-    "  → 若 Y 不在 Items 表，詢問業務臨時輸入成本\n"
-    "  → 業務確認後，寫入 REVISION_LOG 並更新 QUOTE_WORKBENCH\n"
-    "- 查詢：「查 王小明」→ 查 SALES_INTAKE 回傳案件狀態\n"
-    "- 對話紀錄（B層）：業務指令 + A6 輸出結果，自動記入 CONVERSATION_LOG\n\n"
-    "Sheets ID: 1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg\n"
-    "（含 SALES_INTAKE / QUOTE_WORKBENCH / Items / REVISION_LOG / CONVERSATION_LOG）\n\n"
-    "重要：\n"
-    "- 你不提供「建議回覆」給客人，那不是你的工作\n"
-    "- 報價邏輯以 A5 Items 表為準，不自己亂算\n"
-    "- 若群組中有多人，只回應白名單內的指令\n"
-    "請用繁體中文簡潔回答，報價草稿用表格呈現。"
-)
+def _load_a6_recall():
+    """
+    從 recalls/A6_recall.md 讀取 A6 的完整角色定義 + 操作手冊指引。
+    2026-04-09：不再 hardcode system prompt，改讀 repo 裡的 recall 檔案。
+    這樣 recall 更新後只要重啟 bot 就生效，不用改 Python code。
+    """
+    import os
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    recall_path = os.path.join(base_dir, 'recalls', 'A6_recall.md')
+    try:
+        with open(recall_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+        return content
+    except Exception as e:
+        # fallback: 如果 recall 檔讀不到，用最小版本避免 bot 啟動失敗
+        return (
+            "你是 MAPLAB A6 報價加速器。面對業務 Mina，不面對客人。\n"
+            "錯誤：recalls/A6_recall.md 讀取失敗 (" + str(e) + ")，請通知 A0 修復。\n"
+            "暫時以最小功能運作：接收業務指令，用繁體中文簡潔回答。"
+        )
+
+A6_SYSTEM_PROMPT = _load_a6_recall()
 
 
 def _load_conv_history() -> None:

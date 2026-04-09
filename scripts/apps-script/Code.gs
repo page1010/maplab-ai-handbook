@@ -140,28 +140,21 @@ function createQuote(formData) {
   var _eventName   = formData.eventName  || '';
   var _totalItems  = formData.totalItems || '';
   var _company     = formData.company    || '';
-  // 契約類型：決定條款版本 + N7 付款狀態下拉選項
-  //   - deposit_standard: B2C 訂金制，收訂金+尾款
-  //   - lump_sum_after  : 例外 / B2B 典型，活動結束後一次付清
-  // 舊版相容：form 若送 paymentMode 或 hasDeposit，自動換算為 contractType
-  var _contractType = formData.contractType
-                    || (formData.paymentMode === 'paid_in_full' ? 'lump_sum_after'
-                    :   formData.paymentMode ? 'deposit_standard'
-                    :   formData.hasDeposit === true  ? 'deposit_standard'
-                    :   formData.hasDeposit === false ? 'deposit_standard'
-                    :   'deposit_standard');
-  // 寫回 formData 讓下游（writeToIntake_ 等）也拿到正規化後的值
-  formData.clientName   = _clientName;
-  formData.eventDate    = _eventDateStr;
-  formData.pax          = _pax;
-  formData.eventName    = _eventName;
-  formData.totalItems   = _totalItems;
-  formData.contractType = _contractType;
+  // 寫回 formData 讓下游（writeToIntake_ / resolveContractVersion 等）也拿到正規化後的值
+  formData.clientName = _clientName;
+  formData.eventDate  = _eventDateStr;
+  formData.pax        = _pax;
+  formData.eventName  = _eventName;
+  formData.totalItems = _totalItems;
+  // noDeposit / isMarketingAgency 由 resolveContractVersion 自己從 formData 讀
 
-  // ── B2B / B2C 判別（公司名有填 = 企業版）──
-  // 只影響條款裡的公司抬頭段落和 SALES_INTAKE 紀錄，不再影響 N7 下拉
-  // （N7 下拉改由 contractType 決定）
-  var isCorporate = _company && _company.trim().length > 0;
+  // ── 決議合約版本（四版 v4.0：to_c / to_b_deposit / to_b_full / to_b_marketing）──
+  // 由 contractTerms.gs 的 resolveContractVersion 依決策樹判斷：
+  //   企業類（公司名有填 or 活動類型含企業關鍵字）→ 行銷公關 > 不收訂金 > 有訂金
+  //   個人類 → to_c
+  var _contractVersion = resolveContractVersion(formData);
+  // isCorporate 保留給 SALES_INTAKE 紀錄用
+  var isCorporate = _contractVersion !== 'to_c';
 
   // ── 打開主系統 Sheet ──
   var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
@@ -254,17 +247,10 @@ function createQuote(formData) {
   keepSheet.getRange('M5').setValue('報價狀態');
   keepSheet.getRange('N5').setValue('報價中');
   keepSheet.getRange('M7').setValue('付款狀態');
-  // N7 下拉選項依契約類型決定（不再依 isCorporate）
-  // 2026-04-08 Owner 指正：付款狀態 vs 契約類型是兩件事，要分開
-  var defaultPaymentStatus, paymentOptions;
-  if (_contractType === 'lump_sum_after') {
-    defaultPaymentStatus = '未收款';
-    paymentOptions       = ['未收款', '已收款'];
-  } else {
-    // deposit_standard (預設)
-    defaultPaymentStatus = '未收訂金';
-    paymentOptions       = ['未收訂金', '已收訂金', '已收全額'];
-  }
+  // N7 下拉維持單一組（2026-04-08 Owner 最終指示：付款狀態和契約類型解耦，
+  // 這三個狀態對 to_c / to_b_* 全部適用，業務自己依合約判斷）
+  var defaultPaymentStatus = '未匯款';
+  var paymentOptions       = ['未匯款', '已收訂金', '已收全額'];
   keepSheet.getRange('N7').setValue(defaultPaymentStatus);
   keepSheet.getRange('M9').setValue('版本');
   keepSheet.getRange('N9').setValue('v3.8-verified-2026-04-08');
@@ -297,13 +283,13 @@ function createQuote(formData) {
   keepSheet.getRange('E25').setFormula('=IF(OR(G25>0,H25>0),G25*350+H25*100,"")');
 
   // ── 條款自動帶入 C32/C33（列印範圍 C1:F55 框線內） ──
-  // 2026-04-08 Owner 需求：合約條款必須在列印範圍內；條款類型由 contractType 決定，
-  // 不再由付款狀態決定。isCorporate 只影響條款裡的公司抬頭段落。
-  var terms = (_contractType === 'lump_sum_after')
-    ? getLumpSumAfterTerms(eventDate, isCorporate)
-    : getDepositStandardTerms(eventDate, isCorporate);
-  keepSheet.getRange('C32').setValue('【合約條款】');
-  keepSheet.getRange('C33').setValue(terms);
+  // 2026-04-08 v4.0：四版動態選擇，contractTerms.gs 負責文字生成。
+  // getContractTermsV4 會把匯款資訊（個人或公司帳戶）+ 分隔線 + 完整條款合成一段。
+  var terms = getContractTermsV4(_contractVersion, eventDate);
+  keepSheet.getRange('C32').setValue('【合約條款】（' + _contractVersion + '）');
+  keepSheet.getRange('C33').setValue(terms).setWrapStrategy(SpreadsheetApp.WrapStrategy.WRAP);
+  // 合約條款會很長，確保 C33 儲存格有足夠高度顯示多行文字
+  keepSheet.setRowHeight(33, 600);
 
   // ── 返回新檔案 URL ──
   var newUrl = newSs.getUrl();
@@ -355,94 +341,11 @@ function getQuoteDraftValues() {
 // 條款文字
 // ─────────────────────────────────────────
 
-/**
- * 契約 A：訂金制（預設 / B2C 標準）
- * 收訂金 50% + 尾款活動前 3 天；取消政策以訂金 % 為基準
- * isCorporate=true 時加一段公司抬頭條款
- */
-function getDepositStandardTerms(eventDate, isCorporate) {
-  var year  = eventDate.getFullYear();
-  var month = eventDate.getMonth() + 1;
-  var day   = eventDate.getDate();
-
-  var lines = [];
-  lines.push('▶匯款資訊：');
-  lines.push('中國信託 822 / 西台南分行');
-  lines.push('帳號：222510859464');
-  lines.push('戶名:莊貴棻');
-  lines.push('匯款後，再麻煩提供後五碼對帳。如需收據請提前告知，當日會附上。');
-  lines.push('');
-
-  if (isCorporate) {
-    lines.push('▶合約適用對象：');
-    lines.push('（1）本合約僅供公司行號使用（因應企業用戶會計核銷需求）。');
-    lines.push('（2）本合約代表雙方對於 ' + year + ' 年 ' + month + ' 月 ' + day + ' 日之活動做出預約，並確認保留檔期。');
-    lines.push('');
-  }
-
-  lines.push('▶付款方式（訂金制）：');
-  lines.push('訂金為活動總金額 50%，請於確認活動後 3 個工作日內匯款；尾款請於活動前 3 天匯款完成。');
-  lines.push('');
-
-  lines.push('▶取消與變更規則：');
-  lines.push('（1）已保留檔期，預約付訂後取消，收取訂金 50% 作為成本取消費。');
-  lines.push('（2）用餐日期 14 天內取消（或變更），收取訂金 80% 作為食材成本取消費。');
-  lines.push('（3）用餐當日取消（或變更），收取訂金 100% 作為取消與變更費。');
-  lines.push('');
-
-  lines.push('▶其他須知：');
-  lines.push('‣活動指定地點如超過 30 分鐘距離須收取車馬費，依地區實際公里數個別報價。');
-  lines.push('‣擺設場地有樓層必須預先告知，2F 以上無電梯須收取 $1,000 搬運費；有人協助收取 $500 搬運費。');
-  lines.push(' 若當日電梯因故無法使用，則現場以現金加收 $1,000 樓層搬運費。');
-  return lines.join('\n');
-}
-
-/**
- * 契約 B：一次性後付（例外 / B2B 典型）
- * 不收訂金，活動結束後一次付清；取消政策以天數為基準
- * isCorporate=true 時加一段公司抬頭條款 + 請款流程
- */
-function getLumpSumAfterTerms(eventDate, isCorporate) {
-  var year  = eventDate.getFullYear();
-  var month = eventDate.getMonth() + 1;
-  var day   = eventDate.getDate();
-
-  var lines = [];
-  lines.push('▶匯款資訊：');
-  lines.push('中國信託 822 / 西台南分行');
-  lines.push('帳號：222510859464');
-  lines.push('戶名:莊貴棻');
-  lines.push('匯款後，再麻煩提供後五碼對帳。如需收據請提前告知，當日會附上。');
-  lines.push('');
-
-  if (isCorporate) {
-    lines.push('▶合約適用對象：');
-    lines.push('（1）本合約僅供公司行號使用（因應企業用戶會計核銷需求）。');
-    lines.push('（2）本合約代表雙方對於 ' + year + ' 年 ' + month + ' 月 ' + day + ' 日之活動做出預約，並確認保留檔期。');
-    lines.push('');
-  }
-
-  lines.push('▶付款方式（一次性後付）：');
-  if (isCorporate) {
-    lines.push('本活動採一次性後付制，不收取訂金；活動結束後依請款單一次付清，請於收到請款單後 7 個工作日內匯款完成。');
-  } else {
-    lines.push('本活動採一次性後付制，不收取訂金；請於活動結束後 3 個工作日內將總金額一次匯款完成。');
-  }
-  lines.push('');
-
-  lines.push('▶取消與變更規則（無訂金版）：');
-  lines.push('（1）活動日 10 天（含）以前取消，無取消費。');
-  lines.push('（2）活動日 10 天內、4 天（含）以前取消或變更，收取活動總金額 20% 作為材料取消費。');
-  lines.push('（3）活動日 3 天（含）內取消或變更，收取活動總金額 50%。');
-  lines.push('（4）活動當日取消或變更，收取活動總金額 100%。');
-  lines.push('');
-
-  lines.push('▶其他須知：');
-  lines.push('‣活動指定地點如超過 30 分鐘距離須收取車馬費，依地區實際公里數個別報價。');
-  lines.push('‣擺設場地有樓層必須預先告知，2F 以上無電梯須收取 $1,000 搬運費；有人協助收取 $500 搬運費。');
-  lines.push(' 若當日電梯因故無法使用，則現場以現金加收 $1,000 樓層搬運費。');
-  return lines.join('\n');
-}
+// ─────────────────────────────────────────
+// 條款函式已移到 contractTerms.gs（v4.0 四版）
+// getContractTermsV4 / resolveContractVersion / isCorporateEventType / getBankInfoBlock
+// 舊的 getDepositStandardTerms / getLumpSumAfterTerms 已於 2026-04-08 晚三修移除
+// ─────────────────────────────────────────
 
 // ─────────────────────────────────────────
 // 內部工具函式

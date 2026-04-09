@@ -119,11 +119,15 @@
   <label>總品項數</label>
   <input type="number" id="totalItems" placeholder="（選填）" min="1">
 
-  <label>契約類型</label>
-  <select id="contractType">
-    <option value="deposit_standard">訂金制（B2C 標準：收訂金+尾款）</option>
-    <option value="lump_sum_after">一次性後付（活動後一次付清，不收訂金）</option>
-  </select>
+  <div class="checkbox-row">
+    <input type="checkbox" id="noDeposit">
+    <label for="noDeposit">⚠️ 不收訂金（例外：活動後一次付清 → to_b_full）</label>
+  </div>
+
+  <div class="checkbox-row">
+    <input type="checkbox" id="isMarketingAgency">
+    <label for="isMarketingAgency">行銷／公關公司（高變動專案型 → to_b_marketing）</label>
+  </div>
 
   <div id="message"></div>
 
@@ -170,9 +174,10 @@
         address    : document.getElementById('address').value.trim(),
         eventType  : eventType,
         headcount  : document.getElementById('headcount').value.trim(),
-        eventName    : document.getElementById('eventName').value.trim(),
-        totalItems   : document.getElementById('totalItems').value.trim(),
-        contractType : document.getElementById('contractType').value
+        eventName         : document.getElementById('eventName').value.trim(),
+        totalItems        : document.getElementById('totalItems').value.trim(),
+        noDeposit         : document.getElementById('noDeposit').checked,
+        isMarketingAgency : document.getElementById('isMarketingAgency').checked
       };
 
       var btn = document.getElementById('submitBtn');

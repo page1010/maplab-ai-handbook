@@ -59,6 +59,7 @@
 |------|------|-----------|
 | `projects/line-quote-assistant.md` | **使用者需求 v1.0** — A6/A7 系統架構、三層資料模型（A=客人↔業務真實對話、B=業務↔A6協作、C=優化任務）、CONVERSATION_LOG/SALES_INTAKE/REVISION_LOG 表結構、A6 vs A5 職責邊界 | A6, A7, A5, A1 |
 | `skills/a6-telegram-window.md` | A6 Telegram 窗口操作手冊 — 指令格式、修改場景、進件流程 | A6 |
+| `docs/a0-dispatch-operations-manual.md` | **A0 調度操作手冊（2026-04-10 建立）** — 使用者視角系統架構圖、入口×角色對照表、委派前 7 問題協議、操作路徑表、踩坑記錄 | A0, A1 |
 - **Dashboard 召喚**：A0 Cowork 說「看板」→ Artifacts 渲染 ／ 直接開 Sheets ／ Telegram `/status`
 
 ## 當前進行中任務

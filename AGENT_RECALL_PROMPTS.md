@@ -139,14 +139,14 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. 都不行 → 回報 Owner，不要硬幹
 
-【斷點 — 2026-04-09 午間收尾更新】
+【斷點 — 2026-04-10 午後巡查更新】
 1. 系統版本：v6.0 / Phase 6 — 觀測性 + 業務閉環 + 策略循環（Phase 3.1 Dashboard 自動更新已就位 ef2c21b）
 2. EXP-S010 A0/A1 session 混淆已記錄；下次重開先確認 cwd + 貼 A1 recall prompt
 3. A2 T-A2-002 ✅ 完成（2026-04-07）：WP 食安+法規 SEO 字眼清理（13篇）+ AGENT_RULES Section 14（禁用詞清單）+ wp-content-audit 技能書（e92af1d+ecc1a3e+e8e5915）；T-A2A3-001 ✅ 子任務1-4全完成（子任務5等7-14天觀察期）
-4. A7 T-A7-001 Phase 2 + T-A7-002 🔴 CRITICAL 第11天 ~234h+：上次活動 2026-03-31 cf9f166，距今已逾 234h。Owner 需明確決定暫停或確認阻塞原因。
+4. A7 T-A7-001 Phase 2 + T-A7-002 🔴 CRITICAL 第11天 ~240h+：上次活動 2026-03-31 cf9f166，距今已逾 240h（04-10 15:00）。Owner 需明確決定暫停或確認阻塞原因。
 5. A4 T-A4-001 🔄 正常執行中（2026-04-10 CRITICAL解除）：S5 ✅(8,559張)；S5.5 GPS ✅ no_gps；S6(2023) ✅；S11(2024) 🔄 10,050/12,213=82.2%（差2163待Owner決策補跑）；S12(2025) 🔄 2,750/7,646=36.0%（5787f3e 04-10）；48h時鐘重設至04-12；ASSET_LOG總計21,414行；API key已更換(fe49f3e)
-6. A5 T-A5-002 🔄 進行中：服務費可選+長桌費+車馬費+DropdownHelper完成(dbcf9d4)；Task Card ✅ 已更新；T-A5-004 Phase 1 ✅ 04-02晚完整收尾（5e6d3b4，A0執行：Items照片16筆+URL修正+重新編號91格+items-management Skill建立）
-7. A3 T-A3-001 GTM方案B + T-A3-002 🔴 CRITICAL 第11天 ~258h+：最後 commit 2aca2ae 距今已逾 258h（2026-03-29 22:10 起）。A1 多次建議暫停，Owner 仍未執行暫停動作。**Owner 需立即執行：T-A3-001 + T-A3-002 標記為 ⏸️ 暫停**，待外部條件就緒再重啟。
+6. A5 T-A5-002 🔄 進行中：服務費可選+長桌費+車馬費+DropdownHelper完成(dbcf9d4)；**04-09重大進展：合約條款v4.0/訂金可調/飲食禁忌/車馬費定版/6項Owner feedback修復（cfeebd1 04-09 14:03+0800）；48h閾值=04-11 14:00**；Task Card ✅ 已更新；T-A5-004 Phase 1 ✅ 04-02晚完整收尾（5e6d3b4，A0執行：Items照片16筆+URL修正+重新編號91格+items-management Skill建立）
+7. A3 T-A3-001 GTM方案B + T-A3-002 🔴 CRITICAL 第13天 ~288h+：最後 commit 2aca2ae 距今已逾 288h（2026-03-29 22:10 起，04-10 15:00）。A1 多次建議暫停，Owner 仍未執行暫停動作。**Owner 需立即執行：T-A3-001 + T-A3-002 標記為 ⏸️ 暫停**，待外部條件就緒再重啟。
 27. A1 worktree 清理完成（576e7df 2026-04-07）：清除全部 29 個 worktree（含 peaceful-yalow / interesting-shaw / pedantic-mendeleev），Mac mini 環境整潔。
 28. A1 大整理（9721cc1+9478c79 2026-04-08）：Sheets 18→12頁（隱藏5個、辦公室改資源速查、Specials虛擬範例SP000、REVISION_LOG精簡、DASHBOARD加Agent警示區）；GitHub 廢棄文件（TASK_POOL/TASK_QUEUE/CURRENT_EXECUTION_BOARD/project_state/AI_WORKFLOW_MAP/SYSTEM_MAP）移入 archive/；data/ 舊快照清理。
 29. 新 Task Card（2026-04-08）：T-A1-V6-P2（🔄業務閉環MVP），T-A1-V6-P3（🔲自動化閉環，等P2），T-GBP-001（🔲GBP產品圖更換，等Owner），T-A5-006（🔲OrderLines 2025重建，等T-A5-005），T-A4-002（🔲pagewu1010 187GB Takeout，等T-A4-001完成）。

@@ -47,6 +47,17 @@ Owner 有三個操作入口，角色和入口之間是多對多關係：
 | Cowork Dispatch | A0 總調度 | Cowork VM | 有 MCP（Gmail/Drive/Notion/Chrome）；委派 Code Task |
 | Code Task (A0 委派) | A1 執行層 | Claude Code worktree | 完整 repo 存取；git 操作；API 呼叫 |
 
+### 運行環境說明
+
+| 項目 | 說明 |
+|------|------|
+| Claude 方案 | **Max plan**（訂閱制，非 API token 計費）。沒有 per-request token 費用，但有每日使用量上限。密集使用可能觸發暫時限速。 |
+| claude -p 特性 | print mode，純文字輸出，無 MCP / tool call。每次呼叫是獨立 subprocess。 |
+| 回應時間 | 簡單問候 ~10 秒，報價場景 ~3-6 分鐘（正常，不是當機）。Max plan 無 per-request timeout。 |
+| bot_a6 timeout | 600 秒（10 分鐘）。超時自動 kill subprocess 並回報。 |
+| 不會發生的事 | API 額度耗盡（Max plan 不按量計費）、per-request 被強制中斷（只有 bot 自己的 timeout 在管） |
+| 可能發生的事 | 每日使用量觸發限速（降速但不中斷）、Mac mini 網路不穩（Wi-Fi 斷線 → httpx.ConnectError） |
+
 ### 進階場景：同角色多實例
 
 Owner 會讓 A1 用 Chrome Extension 再開一個 A1 來核對自己的工作：

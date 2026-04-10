@@ -324,6 +324,22 @@ async def reset_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 # ── Background Claude runner ───────────────────────────────────────────────────
 
+async def _heartbeat(bot, chat_id: int, start_time: float, cancel_event: asyncio.Event) -> None:
+    """每 60 秒發一次心跳，直到 cancel_event 被設定。"""
+    await asyncio.sleep(60)
+    while not cancel_event.is_set():
+        elapsed = int((asyncio.get_event_loop().time() - start_time) / 60)
+        if elapsed >= 5:
+            msg = f"⏳ 這次分析較複雜，A6 還在處理中...（已等 {elapsed} 分鐘）"
+        else:
+            msg = f"⏳ A6 仍在分析中，請稍候...（已等 {elapsed} 分鐘）"
+        try:
+            await bot.send_message(chat_id=chat_id, text=msg)
+        except Exception:
+            pass
+        await asyncio.sleep(60)
+
+
 async def _run_claude_background(
     bot,
     chat_id: int,
@@ -331,7 +347,16 @@ async def _run_claude_background(
     user_name: str,
 ) -> None:
     async with _claude_semaphore:
-        answer = await claude_ask(chat_id, user_message, user_name)
+        cancel_event = asyncio.Event()
+        start_time = asyncio.get_event_loop().time()
+        heartbeat_task = asyncio.create_task(
+            _heartbeat(bot, chat_id, start_time, cancel_event)
+        )
+        try:
+            answer = await claude_ask(chat_id, user_message, user_name)
+        finally:
+            cancel_event.set()
+            heartbeat_task.cancel()
         MAX = 4096
         for i in range(0, len(answer), MAX):
             await bot.send_message(chat_id=chat_id, text=answer[i:i + MAX])

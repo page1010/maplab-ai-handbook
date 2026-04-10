@@ -69,22 +69,30 @@ _conv_history: dict[int, deque] = {}
 
 def _load_a6_recall():
     """
-    從 recalls/A6_recall.md 讀取 A6 的完整角色定義 + 操作手冊指引。
-    2026-04-09：不再 hardcode system prompt，改讀 repo 裡的 recall 檔案。
-    這樣 recall 更新後只要重啟 bot 就生效，不用改 Python code。
+    從 recalls/A6_recall_compact.md 讀取精簡版 recall（~20 行）。
+    2026-04-09 P1 修正：原本讀 A6_recall.md（159 行）太長，
+    claude -p 把整個 recall 當回覆吐出來。
+    改讀精簡版，完整手冊留在 skills/ 讓 A6 需要時自己讀。
     """
     import os
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    recall_path = os.path.join(base_dir, 'recalls', 'A6_recall.md')
+    # 優先讀精簡版，fallback 讀完整版的前 30 行
+    compact_path = os.path.join(base_dir, 'recalls', 'A6_recall_compact.md')
+    full_path = os.path.join(base_dir, 'recalls', 'A6_recall.md')
     try:
-        with open(recall_path, 'r', encoding='utf-8') as f:
-            content = f.read()
-        return content
+        if os.path.exists(compact_path):
+            with open(compact_path, 'r', encoding='utf-8') as f:
+                return f.read()
+        elif os.path.exists(full_path):
+            with open(full_path, 'r', encoding='utf-8') as f:
+                lines = f.readlines()
+            return ''.join(lines[:30])  # 只取前 30 行
+        else:
+            raise FileNotFoundError('neither compact nor full recall found')
     except Exception as e:
-        # fallback: 如果 recall 檔讀不到，用最小版本避免 bot 啟動失敗
         return (
             "你是 MAPLAB A6 報價加速器。面對業務 Mina，不面對客人。\n"
-            "錯誤：recalls/A6_recall.md 讀取失敗 (" + str(e) + ")，請通知 A0 修復。\n"
+            "錯誤：recall 檔讀取失敗 (" + str(e) + ")，請通知 A0 修復。\n"
             "暫時以最小功能運作：接收業務指令，用繁體中文簡潔回答。"
         )
 

@@ -39,14 +39,3 @@ projects/maplab-pipeline.md → handoff/handoff-to-A4.md → skills/superpowers-
 2. 結束 session 前：更新 Task Card Done/Next/Blockers + 寫接續 Prompt + commit
 
 讀完文件後輸出 Startup Check，確認斷點再開工。必拿：skills/task-progress-guide.md
-
----
-
-## 任務清單（做完畫 x）
-
-- [x] S1-S4 照片分類
-- [x] S5(2022) 8,559張 DONE
-- [x] S5.5 GPS 決策 no_gps（SKIP）
-- [x] S6(2023) 8,505張 完成
-- [ ] S11(2024) 4,350/12,213=35.6%（繼續跑）
-- [ ] S11 完成後 → S7/S8/S9/S10 計畫

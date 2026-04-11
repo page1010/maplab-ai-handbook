@@ -412,18 +412,19 @@ async def patrol(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if not is_owner(update):
         await deny(update)
         return
+    git_pull_silent()
     try:
         result = subprocess.run(
-            ["git", "log", "--oneline", "--grep=patrol", "-10"],
+            ["bash", str(REPO_PATH / "scripts" / "patrol.sh")],
             cwd=REPO_PATH,
             capture_output=True,
             text=True,
-            timeout=10,
+            timeout=15,
         )
-        output = result.stdout.strip() or "（無 patrol 相關 commit）"
+        output = result.stdout.strip() or result.stderr.strip() or "（patrol.sh 無輸出）"
     except Exception as e:
-        output = f"⚠️ git log 失敗：{e}"
-    await update.message.reply_text(f"🔍 最近 patrol commits:\n\n{output}")
+        output = f"⚠️ patrol.sh 執行失敗：{e}"
+    await send_long(update, f"🔍 {output}")
 
 
 async def queue(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:

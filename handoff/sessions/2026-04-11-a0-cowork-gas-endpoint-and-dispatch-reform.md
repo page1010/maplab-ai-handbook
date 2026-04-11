@@ -255,3 +255,12 @@ Telegram → Claude 寫 master → bot 偵測「寫入成功」
 | 15:00 | recall 清理 + Slide 觸發 + Chrome 驗證標準動作 |
 | 16:15 | 第五輪 e2e 通過（報價單 + Slide 提案 + 心跳） |
 | 17:00 | QuoteForm 改良（業務不再填兩次）+ GAS v3 部署 + Chrome 驗證 |
+| 19:33 | Slide 中文翻譯 + 語言切換 + overflow fix + GAS v4 部署 |
+
+### Slide 中文翻譯 + 語言切換 + overflow fix + GAS v4 部署（19:33）
+- SLIDE_LANG = 'zh' 預設中文，改 'en' 切英文
+- 品項移除數量括號
+- Quotation/Terms y 座標修正
+- handleQuoteRequest_ 補 3 欄位
+- GAS v4 部署成功
+- curl createSlide 測試通過：https://docs.google.com/presentation/d/1yX4qoXXG8o3jc1VO6FY6OyIPAO_r2UCTH5HZtxfHR9k/edit

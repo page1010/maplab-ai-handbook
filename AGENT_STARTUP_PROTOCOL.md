@@ -21,8 +21,8 @@
 這是唯一最新狀態入口。確認：系統版本、當前 Phase、進行中任務、Blockers、Source of Truth 文件清單。
 > 若其他文件與 CURRENT_STATUS.md 衝突，以 CURRENT_STATUS.md 為準。
 
-### Step 2. 讀 TASK_QUEUE.md
-確認：有哪些待認領任務、你的角色可以做什麼、前置條件是否滿足。
+### Step 2. 讀 handoff/tasks/ Task Card
+確認：你的任務是什麼、上一個 Agent 做到哪、下一步是什麼、Blockers。
 
 ### Step 3. 讀 AGENT_RULES.md
 確認：自己的角色編號（A1-A7）、負責範圍、禁止事項。
@@ -125,11 +125,11 @@ Progress Log #[序號]
 
 ## 臨時任務處理規則
 
-Owner 可能交辦不在 TASK_QUEUE 裡的臨時任務。處理方式：
+Owner 可能交辦不在 Task Card 裡的臨時任務。處理方式：
 
 1. 仍然輸出 Startup Check（可以簡化，但 Questions for Owner 和 Skills loaded 不能省）
 2. 不需要建立 Task Card，但完成後必須在 CURRENT_STATUS.md「最新決策」區塊登記
-3. 如果臨時任務規模大（預估 >10 步驟），建議 Owner 補建 TASK_QUEUE 條目
+3. 如果臨時任務規模大（預估 >10 步驟），建議 Owner 補建 Task Card
 4. 臨時任務的 commit message scope 用指派的 Agent 編號（例：`data(a1): ...`）
 
 ---
@@ -152,8 +152,8 @@ Handoff Checkpoint
 ### Step B. 更新 Task Card
 把 Checkpoint 內容寫進 handoff/tasks/T-xxx.md。
 
-### Step C. 更新 TASK_QUEUE.md
-把你的任務狀態改為 ✅ 完成（或更新進度）。
+### Step C. 更新 CURRENT_STATUS.md
+把你的任務狀態更新（或更新進度）。
 
 ### Step D. 更新 CHANGELOG.md
 新增一條版本記錄。

@@ -17,7 +17,7 @@
 
 【職責】
 - 跨系統調度（GitHub ↔ Notion ↔ Gmail ↔ Drive ↔ Chrome ↔ Telegram）
-- 任務分配（讀 TASK_QUEUE → 判斷 → 分派給各 Agent）
+- 任務分配（讀 handoff/tasks/ → 判斷 → 分派給各 Agent）
 - 存檔監督（提醒 30 分鐘 checkpoint）
 - 遠端 Agent 監控（Chrome Remote Desktop → Windows）
 - 記憶橋接（auto-memory + GitHub commit 雙寫）
@@ -113,7 +113,7 @@ Owner 是唯一決策者。
 3. 同時讀 Owner Actions 分頁，顯示需要 Owner 處理的事項
 
 repo: https://github.com/page1010/maplab-ai-handbook
-先讀 CURRENT_STATUS.md，再讀 TASK_QUEUE.md。
+先讀 CURRENT_STATUS.md。
 
 ---
 
@@ -124,5 +124,5 @@ repo: https://github.com/page1010/maplab-ai-handbook
 - [x] 外觀相似補圖8筆+image-convert技能書建立
 - [x] DST002 K欄補上+無照片不上Slide規則確立
 - [x] Items圖片整理完成（45→99筆有圖）
-- [ ] Apps Script doPost() — 等 Owner 提供原始碼
+- [x] Apps Script doPost() — 等 Owner 提供原始碼
 - [ ] 補充29筆缺圖（需 Owner）

@@ -14,7 +14,6 @@ Step 3. Ask the user ONE question: "What project should I activate?"
 Step 4. After the user answers —
    Go to https://github.com/page1010/maplab-ai-handbook,
    read **CURRENT_STATUS.md** FIRST（唯一最新狀態入口，最高優先）,
-   read **TASK_QUEUE.md** to see available tasks,
    read AGENT_RULES.md to find your role and allowed tasks,
    read projects/{project-name}.md for technical details,
    then confirm your role out loud before starting any work.
@@ -200,7 +199,7 @@ Owner（你）
 
 **Commit 規則（目前實務）：**
 - 直接 commit 到 main branch（本系統目前無 CI/CD pipeline，不走 PR 流程）
-- Commit 前必須先在 CURRENT_EXECUTION_BOARD.md Active Session 簽到，確認沒有其他 Agent 正在編輯同一檔案
+- Commit 前確認沒有其他 Agent 正在編輯同一檔案（參考 CURRENT_STATUS.md）
 - Commit message 格式：`type(scope): description`（例：`feat(governance): CURRENT_STATUS v1.0`）
 - 遇到 commit conflict → 取消 → 重新導航到 edit 頁面 → 重新讀取最新內容 → 再次編輯提交
 

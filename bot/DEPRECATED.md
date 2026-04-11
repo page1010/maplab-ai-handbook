@@ -1,4 +1,4 @@
-# ⚠️ DEPRECATED — 此資料夾已棄用
+# ⚠️ 本文件描述過期 — bot/bot.py 實際為 A1 遠端讀檔終端，PID active via launchd
 
 建立日期：2026-03-27
 棄用日期：2026-03-27

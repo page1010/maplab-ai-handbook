@@ -71,6 +71,32 @@ Owner 提出三個系統層改進：
 - [ ] **A6 recall 裡 formData JSON block 格式** — 需要確認 Claude 是否穩定輸出正確格式
 - [ ] **handleQuoteRequest_ 缺三個新欄位** — depositAmount / dietaryNotes / floorFeeMode（verified-e2e tag 之後新增的）
 
+### 第三輪測試診斷結果（09:38）
+
+完整斷點鏈：
+1. ✅ Bot 收到訊息 → Claude 回覆「25 cells 寫入成功」
+2. ⚠️ _extract_form_data 沒找到 JSON block → fallback 觸發（偵測到「寫入成功」）
+3. ✅ _trigger_gas_quote_sync POST 到 GAS — HTTP 200 送達
+4. ❌ GAS 回傳 success: false — 「活動日期為空（eventDate 沒值）」
+
+Root cause：Claude recall 沒有指示輸出 JSON block，fallback 只傳 {fromMaster: true} 缺必要欄位。
+
+待修（二擇一）：
+- [ ] 方案 A：改 recall 讓 Claude 輸出 JSON block（最小改動）
+- [ ] 方案 B：改 GAS createQuote 支援 fromMaster 模式（更穩但改動大）
+
+### 當前存檔點 — 復原基準
+
+git commit hash：167ec16
+bot_a6.py 狀態：468 行，含 GAS_QUOTE_URL + _trigger_gas_quote_sync + _extract_form_data + _heartbeat
+GAS 部署：Web App v1 活著（ApiEndpoint.gs doPost）
+.env：GAS_QUOTE_URL 已填
+
+如果後續修改爆了，復原到此 commit 即可：
+- bot 行為 = Claude 回覆文字 + 嘗試 GAS（失敗靜默）
+- GAS endpoint 活著但需要完整 formData
+- 心跳函數存在但未被長場景驗證
+
 ## 接手者指南
 
 **從哪裡開始：**

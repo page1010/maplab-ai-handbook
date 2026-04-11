@@ -47,6 +47,20 @@ function getLineProfile(userId) {
 }
 
 function doPost(e) {
+  // 路由：JSON body 帶 action 欄位時走對應 handler
+  try {
+    if (e && e.postData && e.postData.type === 'application/json') {
+      var body = JSON.parse(e.postData.contents);
+      if (body.action === 'createQuote') {
+        if (body.fromMaster === true) {
+          return createQuoteFromMaster_();
+        }
+        return handleQuoteRequest_(body);
+      }
+    }
+  } catch(err) {
+    // JSON parse 失敗 or 無 action → fall through 到 LINE webhook handler
+  }
   return handleLineWebhook_(e);
 }
 

@@ -573,6 +573,58 @@ function setupDashboard() {
 }
 
 // ─────────────────────────────────────────
+// fromMaster 模式：從 master QUOTE_DRAFT 讀取已有資料，組 formData 後走正常流程
+// ─────────────────────────────────────────
+
+/**
+ * 當 bot_a6 已將資料寫入 master QUOTE_DRAFT sheet，
+ * 傳 {action:"createQuote", fromMaster:true} 時呼叫此函數。
+ * 反向讀取 sheet cells → 組 formData → 呼叫 createQuote()。
+ */
+function createQuoteFromMaster_() {
+  try {
+    var ss    = SpreadsheetApp.openById(SPREADSHEET_ID);
+    var sheet = ss.getSheetByName(TEMPLATE_SHEET_NAME);
+    if (!sheet) throw new Error('找不到 QUOTE_DRAFT sheet');
+
+    var rawDate = sheet.getRange('F2').getValue();
+    var rawTime = sheet.getRange('F3').getValue();
+
+    var formData = {
+      clientName : sheet.getRange('D2').getValue() || '',
+      company    : sheet.getRange('B3').getValue() || '',
+      phone      : sheet.getRange('B4').getValue() || '',
+      address    : sheet.getRange('D3').getValue() || '',
+      eventType  : sheet.getRange('D4').getValue() || '',
+      pax        : String(sheet.getRange('F4').getValue() || ''),
+      eventName  : sheet.getRange('D5').getValue() || '',
+      totalItems : sheet.getRange('F5').getValue() || '',
+      eventDate  : rawDate instanceof Date
+                    ? Utilities.formatDate(rawDate, 'Asia/Taipei', 'yyyy-MM-dd')
+                    : (rawDate ? String(rawDate) : ''),
+      time       : rawTime instanceof Date
+                    ? Utilities.formatDate(rawTime, 'Asia/Taipei', 'HH:mm')
+                    : (rawTime ? String(rawTime) : '')
+    };
+
+    var result = createQuote(formData);
+
+    return ContentService.createTextOutput(JSON.stringify({
+      success  : true,
+      caseId   : result.caseId,
+      fileName : result.fileName,
+      url      : result.url
+    })).setMimeType(ContentService.MimeType.JSON);
+
+  } catch(err) {
+    return ContentService.createTextOutput(JSON.stringify({
+      success: false,
+      error  : err.message
+    })).setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+// ─────────────────────────────────────────
 // HTTP 入口：handleQuoteRequest_（由 LineWebhook.gs doPost 呼叫）
 // ─────────────────────────────────────────
 

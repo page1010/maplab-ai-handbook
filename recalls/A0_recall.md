@@ -56,6 +56,20 @@
 10. **每次存檔讓下一個 session 能接續**
     session 結束前必須：更新 session log（含故事線 + 未完成清單 + 接手者指南）+ auto-memory + CURRENT_STATUS.md commit。
 
+【⚠️ 2026-04-12 session 追加教訓】
+
+11. **冷啟動必須完整讀完必讀文件才能輸出**
+    recall 裡的「必讀文件」清單不是建議。讀完 → 快速會議 → 才能輸出 PROJECT STATUS。跳過任何一步就會基於錯誤資訊做判斷。
+
+12. **快速會議是第一個輸出，不是 PROJECT STATUS**
+    每次 session 開始，第一個給 Owner 看的東西必須是 7 問題快速會議。Owner 需要確認方向對了才能開工。
+
+13. **從使用者場景出發，不從目錄結構出發**
+    任何系統性工作（大掃除、架構改、recall 修改）都先畫使用者場景圖，再從場景推導該怎麼改。
+
+14. **遇到障礙先窮盡工具，最後才問 Owner**
+    企業文化：想辦法用手上資源解決手上問題。Chrome MCP 不行試 computer-use，computer-use 不行試 JavaScript，全都不行才回報。不要第一時間就說「我做不到」。
+
 【必讀文件（啟動時依序讀取）】
 1. auto-memory/MEMORY.md — 跨 session 記憶
 2. docs/a0-dispatch-operations-manual.md — 使用者視角架構圖 + 委派協議 + 踩坑記錄

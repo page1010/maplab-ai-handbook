@@ -196,6 +196,27 @@ Agent 傾向「先寫再測試」，不傾向「先讀文件再寫」。當文�
 
 ---
 
+## P11: 文件標記 ≠ 實際狀態 — 必須驗證
+> 來源：2026-04-12 A0 session — bot/DEPRECATED.md 說「棄用」但 PID 在跑
+
+DEPRECATED / 已修復 / 已完成 / ✅ — 這些標記只代表「寫的人當時認為如此」。
+驗證方式：ps aux / launchctl list / Chrome 眼見為憑 / git log。
+不驗證就斷言 = 幻覺。
+
+## P12: handoff log 必須完整讀完
+> 來源：2026-04-12 A0 session — 只讀前 80 行就斷定 e2e 沒通過
+
+未完成清單是 session 過程中的快照，後面的段落可能已經記錄完成。
+只讀開頭就下結論 = 跟只看 commit message 不看 diff 一樣危險。
+
+## P13: 檢查檔案存在用 ls，不用花式 one-liner
+> 來源：2026-04-12 A0 session — python3 -c parse 失敗誤判為「檔案不存在」
+
+ls -la path/to/file 是唯一可靠的存在性檢查。
+用 cat | python3 -c 或 jq 等工具鏈，任何一環失敗都會誤報。
+
+---
+
 ## 快速對照表
 
 | 場景 | 對應 Pattern | 停下來做什麼 |

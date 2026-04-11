@@ -180,3 +180,44 @@ Mina Telegram → A6 bot → Claude 寫 master QUOTE_DRAFT
 - 復原基準：b118095
 - bot PID：50596（含 slide trigger + heartbeat）
 - GAS：Web App v2（含 fromMaster + createSlide）
+
+### 第五輪測試 — 報價單 + Slide 提案 雙通（16:14-16:16）
+
+**場景：** 吳小姐 婚禮 60人 $50K 主食B 不要蝦 台南安平區
+
+**結果：**
+1. ✅ Claude 回覆品項草稿（2熱主食+3鹹食+3甜點+2飲品），毛利率 75.9%
+2. ✅ 不要蝦正確識別
+3. ✅ 心跳（已等 2 分鐘）
+4. ✅ 📄 報價單自動產出 — Q20260411161501
+5. ✅ 📊 提案簡報自動產出 — Slide URL
+6. ✅ recall 清理生效 — 沒有「請手動按按鈕」
+
+**完整鏈路確認（報價 + Slide）：**
+```
+Telegram → Claude 寫 master → bot 偵測「寫入成功」
+→ POST createQuote fromMaster → 📄 Sheet copy URL
+→ POST createSlide → 📊 Slide URL
+→ 全部回傳 Telegram
+```
+
+---
+
+## 本 session 最終總結
+
+**技術產出：**
+- ApiEndpoint.gs（doPost + fromMaster + createSlide 路由）
+- Code.gs createQuoteFromMaster_()
+- bot_a6.py GAS 觸發 + Slide 觸發 + 心跳 + extract_form_data
+- A6 recall 清理
+
+**系統改進：**
+- A0 調度操作手冊（使用者視角架構圖 + 委派協議 + 踩坑記錄 + Chrome 驗證標準動作 + worktree 規則）
+- 3 個 auto-memory feedback
+- Session log 完整記錄（含前因後果 + 錯誤考古 + 修復過程）
+
+**驗證通過的功能：**
+- GAS fromMaster makeCopy ✅
+- GAS createSlide ✅
+- Bot 心跳防呆 ✅
+- A6 recall 更新 ✅

@@ -85,6 +85,9 @@
 </head>
 <body>
   <h3>產出報價單</h3>
+  <p style="color:#888; font-size:12px; margin-bottom:10px;">
+    灰色欄位已從報價母版帶入，僅需確認下方選項後送出。
+  </p>
 
   <label class="required">客戶名稱</label>
   <input type="text" id="customer" placeholder="例：王小明">
@@ -162,11 +165,38 @@
       if (!data) return;
       if (data.clientName) document.getElementById('customer').value   = data.clientName;
       if (data.eventDate)  document.getElementById('date').value       = data.eventDate;
+      if (data.time)       document.getElementById('time').value       = data.time;
       if (data.address)    document.getElementById('address').value    = data.address;
       if (data.eventType)  document.getElementById('eventType').value  = data.eventType;
       if (data.headcount)  document.getElementById('headcount').value  = data.headcount;
       if (data.eventName)  document.getElementById('eventName').value  = data.eventName;
       if (data.totalItems) document.getElementById('totalItems').value = data.totalItems;
+
+      // 自動帶入的欄位設 readonly + 灰化
+      var autoFields = ['customer', 'date', 'time', 'address', 'headcount', 'eventName', 'totalItems'];
+      autoFields.forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el && el.value) {
+          el.readOnly = true;
+          el.style.backgroundColor = '#f0f0f0';
+          el.style.color = '#666';
+        }
+      });
+      // select 元素用 disabled（readOnly 對 select 無效）
+      var selectFields = ['eventType'];
+      selectFields.forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el && el.value) {
+          el.disabled = true;
+          el.style.backgroundColor = '#f0f0f0';
+          // disabled 的 select 不會被 submit，需要加 hidden input
+          var hidden = document.createElement('input');
+          hidden.type = 'hidden';
+          hidden.name = id;
+          hidden.value = el.value;
+          el.parentNode.appendChild(hidden);
+        }
+      });
     }
 
     function submitForm() {

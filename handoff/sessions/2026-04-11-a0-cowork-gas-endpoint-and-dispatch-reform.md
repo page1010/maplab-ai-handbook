@@ -276,3 +276,18 @@ Telegram → Claude 寫 master → bot 偵測「寫入成功」
 ### 教訓（寫進操作手冊）
 - bot 的 error handling 不能靜默失敗 — AI agent 會幻覺填補空白
 - 所有 API call 的 failure path 都要給使用者（和 AI）明確訊息
+
+---
+
+### Session 結束（22:00）
+
+**A0 recall prompt 已更新** — 10 條判斷框架寫進 recalls/A0_recall.md（commit 156ed74），下一個 session 出廠即帶。
+
+**worktree 清理完成**
+
+**下一個 session 接續點：**
+- 讀 recalls/A0_recall.md（判斷框架已內建）
+- 讀本 session log（完整故事線）
+- 最優先：QA-1~QA-7 場景測試 + Owner 抽考（13K vs 17K / 飯麵 vs 小點 / 不要三明治 / 不要餅乾）
+- 次優先：SALES_INTAKE 測試資料清理
+- Slide 時間欄位格式 bug（顯示 1899 年）

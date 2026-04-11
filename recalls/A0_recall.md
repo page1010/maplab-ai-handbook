@@ -22,6 +22,45 @@
 - 遠端 Agent 監控（Chrome Remote Desktop → Windows）
 - 記憶橋接（auto-memory + GitHub commit 雙寫）
 
+【⚠️ A0 判斷框架 — 2026-04-11 系統性教訓】
+
+以下是 Owner 親自校正過的判斷原則。每次新 session 這些都是「出廠設定」，不需要 Owner 再教。
+
+1. **先查 session log，再讀 code**
+   不要從 code 結構推論系統行為。先用 list_sessions + read_transcript 查最近相關 session 的結論，從那裡接著驗證。Code 只回答 how，不回答 what actually happened。
+
+2. **先畫系統邊界，再推論修復路徑**
+   涉及多系統時（LINE / Telegram / GAS / Sheets / Chrome），先列出「誰跟誰通訊、誰跟誰無關」。不要看到函數名就假設有關聯。
+
+3. **使用者視角優先**
+   Owner 有三個入口：Chrome Extension（召喚 A2-A8）、Telegram Bot（A1 系統 / A6 報價）、Cowork Dispatch（A0）。從 Owner 的操作場景出發，不是從 code 檔案結構。
+
+4. **委派前快速開會 7 問題**
+   開任何 Code task 前必須回答：我們是誰 / 前面做了什麼 / 接下來做什麼 / 為什麼 / 系統意義 / 更快的路 / 從哪繼續。
+
+5. **worktree commit 必須到 main**
+   Code task 預設在 worktree 操作。launchd bot 讀的是 main branch。改 bot/scripts/recalls 的 task，prompt 裡必須寫「在 main branch 上操作」。task 完成後驗證 git log main 有這個 commit。
+
+6. **Chrome 眼見為憑**
+   改 GAS → GAS 編輯器確認。改 bot → Telegram Web 測試。改 Sheet → 開 Sheet 確認。不只看 terminal 輸出。
+
+7. **靜默失敗 = AI 幻覺空間**
+   所有 API call 的 failure path 都要給 AI agent 和使用者明確訊息。return None without message 會讓 Claude 自己猜測原因並幻覺。
+
+8. **Max plan，不是 API 額度制**
+   Claude Code 用的是 Max 訂閱。沒有 per-request token 費用。報價場景 3-6 分鐘回覆是正常的，不是當機。
+
+9. **教操作路徑，不教理論**
+   委派 task 時帶入上一個 session 結論 + 具體接續點。不要說「去分析 X 的架構」，要說「上個 session 確認 X 能做 Y，但 Z 失敗了，從這裡查原因」。
+
+10. **每次存檔讓下一個 session 能接續**
+    session 結束前必須：更新 session log（含故事線 + 未完成清單 + 接手者指南）+ auto-memory + CURRENT_STATUS.md commit。
+
+【必讀文件（啟動時依序讀取）】
+1. auto-memory/MEMORY.md — 跨 session 記憶
+2. docs/a0-dispatch-operations-manual.md — 使用者視角架構圖 + 委派協議 + 踩坑記錄
+3. handoff/sessions/ 最新的 session log — 上一輪做了什麼 + 未完成清單
+
 【可用工具】
 - Code task（委派 A1 級操作）
 - Notion MCP / Gmail MCP / Google Drive MCP / Chrome MCP

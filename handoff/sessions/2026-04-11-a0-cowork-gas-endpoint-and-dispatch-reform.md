@@ -118,3 +118,52 @@ GAS 部署：Web App v1 活著（ApiEndpoint.gs doPost）
 - GAS 部署可直接刪除（管理部署作業 → 刪除）
 - bot_a6/.env 清空 GAS_QUOTE_URL → bot 自動 fallback 舊行為
 - git revert + clasp push 回推
+
+---
+
+### 第四輪測試 — 完整 e2e 通過（11:52-11:56）
+
+**測試場景：** 陳太太 入厝派對 25人 $20K 主食B 不要花生 台南永康區
+
+**結果：**
+1. ✅ A6 先補問缺的資料（人數/預算/日期/主食）— 正確行為
+2. ✅ 補齊資料後 Claude 回覆品項草稿（58 cells 寫入成功）
+3. ✅ 心跳運作：11:54「已等 1 分鐘」、11:55「已等 2 分鐘」
+4. ✅ **GAS fromMaster 自動觸發 — 報價單獨立 copy 建立成功**
+5. ✅ 案件編號 Q20260411115641，Sheet URL 回傳到 Telegram
+
+**完整鏈路確認：**
+```
+Mina Telegram → A6 bot → Claude 寫 master QUOTE_DRAFT
+→ bot 偵測「寫入成功」→ POST {fromMaster:true} → GAS ApiEndpoint.gs
+→ createQuoteFromMaster_() → 讀 master → createQuote() → makeCopy
+→ 📄 報價單 URL 回傳 Telegram
+```
+
+**三個新功能全部驗證：**
+- GAS fromMaster makeCopy ✅
+- 心跳防呆（每 60 秒）✅  
+- bot_a6 GAS 觸發邏輯 ✅
+
+### 本 session 最終產出清單（更新版）
+
+**已 commit 到 main + 驗證通過：**
+- [x] scripts/apps-script/ApiEndpoint.gs — doPost + fromMaster 路由
+- [x] scripts/apps-script/Code.gs — createQuoteFromMaster_() 函數
+- [x] scripts/apps-script/.claspignore — 排除 LineWebhook.gs
+- [x] bot_a6/bot_a6.py — GAS 觸發 + 心跳 + extract_form_data（在 main 上）
+- [x] docs/a0-dispatch-operations-manual.md — 架構圖 + 委派協議 + 踩坑記錄 + worktree 規則
+- [x] GAS Web App v2 部署（fromMaster 模式）
+- [x] bot_a6/.env GAS_QUOTE_URL 設定
+
+**auto-memory 更新：**
+- [x] feedback_verify_before_analyze.md
+- [x] feedback_a0_dispatch_protocol.md
+
+**仍待處理（下一輪）：**
+- [ ] QA-1~QA-7 場景測試（品項品質驗證）
+- [ ] 測試資料清理（SALES_INTAKE 有 5+ 筆 curl 測試資料）
+- [ ] A6 recall 優化（Claude 回覆的「注意：這是寫在 master 上」段落應該移除，因為現在會自動 copy）
+- [ ] 舊 bot/ DEPRECATED 清理（PID 仍在跑）
+- [ ] handleQuoteRequest_ 補 depositAmount/dietaryNotes/floorFeeMode
+- [ ] Slide proposal 自動觸發（createSlide 路由已在 ApiEndpoint.gs，但 bot 觸發邏輯未加）

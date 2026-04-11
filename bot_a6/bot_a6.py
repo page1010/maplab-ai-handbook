@@ -345,6 +345,24 @@ def _trigger_gas_quote_sync(form_data: dict) -> Optional[dict]:
         return None
 
 
+def _trigger_gas_slide_sync() -> Optional[dict]:
+    """POST createSlide action to GAS Web App, return {success, url} or None"""
+    if not GAS_QUOTE_URL:
+        return None
+    try:
+        import urllib.request
+        payload = json.dumps({"action": "createSlide"}).encode()
+        req = urllib.request.Request(
+            GAS_QUOTE_URL, data=payload,
+            headers={"Content-Type": "application/json"}, method="POST"
+        )
+        with urllib.request.urlopen(req, timeout=60) as resp:
+            return json.loads(resp.read().decode())
+    except Exception as e:
+        logging.error(f"GAS createSlide failed: {e}")
+        return None
+
+
 def _extract_form_data(claude_reply: str) -> Optional[dict]:
     """從 Claude 回覆中找 ```json block，解析 formData"""
     import re
@@ -405,6 +423,13 @@ async def _run_claude_background(
                 url = gas_result.get('url', '')
                 case_id = gas_result.get('caseId', '')
                 answer += f"\n\n📄 **報價單已自動產出！**\n連結：{url}\n案件編號：{case_id}"
+
+                # createQuote 成功後，也觸發 Slide
+                slide_result = await asyncio.get_event_loop().run_in_executor(
+                    None, lambda: _trigger_gas_slide_sync())
+                if slide_result and slide_result.get('success'):
+                    slide_url = slide_result.get('url', '')
+                    answer += f"\n\n📊 **提案簡報已自動產出！**\n連結：{slide_url}"
 
         MAX = 4096
         for i in range(0, len(answer), MAX):

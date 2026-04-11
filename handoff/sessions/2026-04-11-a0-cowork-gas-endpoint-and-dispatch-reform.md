@@ -221,3 +221,37 @@ Telegram → Claude 寫 master → bot 偵測「寫入成功」
 - GAS createSlide ✅
 - Bot 心跳防呆 ✅
 - A6 recall 更新 ✅
+
+---
+
+### QuoteForm 改良 — 業務不再填兩次（17:29）
+
+**問題：** Mina 在 QUOTE_DRAFT 填好客戶資料試算毛利率後，點「產出報價單」彈出 QuoteForm 又問她一次客戶名/日期/人數等已填過的資料。
+
+**解法：** QuoteForm.html prefillForm 機制已存在，補了 time 欄位帶入 + 8 個自動帶入欄位設 readonly + 灰化。保留 5 個勾選/選擇欄位（訂金/禁忌/搬運費/不收訂金/行銷公司）可互動。
+
+**Chrome 眼見為憑：** 打開 Sheet → MAPLAB 選單 → 產出報價單 → 表單彈出，8 個欄位預填灰化，提示「灰色欄位已從報價母版帶入」。
+
+**commit：** dc85640 + GAS v3 部署
+
+**對 A6 bot 零影響** — bot 走 fromMaster 路徑繞過 QuoteForm
+
+---
+
+### 本 session 完整時間線
+
+| 時間 | 事件 |
+|---|---|
+| 05:00 | A0 啟動，GitHub 同步 |
+| 05:30 | A6 測試狀態確認（兩組歷史測試） |
+| 06:00 | 深度盤查 → Owner 3 輪糾正 → 系統性反思 |
+| 07:00 | 方案二規劃（GAS endpoint + bot HTTP call） |
+| 08:00 | A0 調度操作手冊 + 架構圖 + 踩坑記錄 |
+| 09:00 | ApiEndpoint.gs 建立 + GAS v1 部署 + curl 測試通過 |
+| 09:30 | Telegram e2e 測試（第一輪報價單成功，第二輪 GAS 觸發失敗） |
+| 10:00 | 診斷：worktree commit 沒合回 main + GAS fromMaster 缺失 |
+| 11:00 | 復原 + 正確實作 fromMaster + GAS v2 部署 |
+| 11:50 | 第四輪 e2e 通過（報價單 + 心跳） |
+| 15:00 | recall 清理 + Slide 觸發 + Chrome 驗證標準動作 |
+| 16:15 | 第五輪 e2e 通過（報價單 + Slide 提案 + 心跳） |
+| 17:00 | QuoteForm 改良（業務不再填兩次）+ GAS v3 部署 + Chrome 驗證 |

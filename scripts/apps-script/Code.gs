@@ -56,6 +56,7 @@ function onOpen() {
     .addItem('產出報價單', 'showQuoteForm')
     .addSeparator()
     .addItem('產出 Slide 提案', 'generateProposalV2')
+    .addItem('產出 Slide 提案（英文版）', 'generateProposalV2_EN')
     .addToUi();
 }
 

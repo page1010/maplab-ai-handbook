@@ -644,3 +644,12 @@ function _formatDate(val) {
   }
   return String(val);
 }
+
+// ============================================================
+// Wrapper: English version of generateProposalV2
+// ============================================================
+function generateProposalV2_EN() {
+  SLIDE_LANG = 'en';
+  T = SLIDE_TEXT[SLIDE_LANG];
+  return generateProposalV2();
+}

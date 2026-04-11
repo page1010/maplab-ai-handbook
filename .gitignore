@@ -15,5 +15,8 @@ bot/conv_history.json
 # OAuth tokens
 scripts/token.json
 
+# Claude Code worktrees
+.claude/worktrees/
+
 # System
 .DS_Store

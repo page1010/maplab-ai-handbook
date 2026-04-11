@@ -114,6 +114,37 @@ A1 (terminal) ─── 做完系統修改 ───→ commit
 
 ---
 
+## 三點五、修改程式碼的標準動作（所有 Code task 必讀）
+
+每次修改 bot / GAS / scripts 時，必須遵守以下流程：
+
+**1. 存檔點（改之前）**
+- `git log main --oneline -3` 記下當前 commit hash
+- 這是復原基準，寫進 session log
+
+**2. 修改 + commit（在 main 上）**
+- 確認 `git branch --show-current` = main
+- 改完立即 commit + push origin main
+- 如果是 worktree，必須 cherry-pick 到 main
+
+**3. Chrome 眼見為憑（改之後）**
+- GAS 修改 → 開 GAS 編輯器確認程式碼在
+- bot 修改 → Telegram Web 發測試訊息確認行為
+- Sheet 修改 → 開 Sheet 確認資料正確
+- **不要只看 terminal 輸出，必須用 Chrome 看使用者會看到的東西**
+
+**4. 存檔點（驗證後）**
+- commit session log 記錄測試結果
+- 標記「驗證通過」或「發現問題」
+
+**5. worktree 特別注意**
+- Code task 預設在 worktree 操作
+- launchd bot 讀的是 main branch 的檔案
+- clasp push 從 worktree 推的程式碼和 main 可能不同
+- **改 bot/GAS/scripts 的 task，prompt 裡必須寫「在 main branch 上操作」**
+
+---
+
 ## 四、踩坑記錄 — 做錯了就記在這裡
 
 ### 2026-04-10：A0 從 code 推論系統行為（3 輪糾正）

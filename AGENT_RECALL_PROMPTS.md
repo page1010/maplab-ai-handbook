@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-04-11 16:30 午後巡查（A5🔴T-A5-002 48h閾值已超升CRITICAL；A3🔴D14 ~314h+；A7🔴D11 ~266h+；A6🎉e2e round5 passed+auto-trigger Slide+fromMaster；A4✅正常48h=04-12）
+> 最後更新：2026-04-11 22:00 晚間巡查（A5🔴T-A5-002 ~8h超閾值CRITICAL；A3🔴D14 ~320h+；A7🔴D11 ~272h+；A6🎉晚間極活躍lang-switch+zh+English btn+GAS幻覺fix+QA測試；A4⚠️WATCH 48h=04-12 08:31；T-A5-004→🔄更正）
 >
 > 使用方式：選擇角色 → 複製 prompt → 貼到 Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -472,10 +472,13 @@ repo: https://github.com/page1010/maplab-ai-handbook
 4. 進件建立 — 在 SALES_INTAKE 自動建一筆案件（case_id = CASE-YYYYMMDD-NNN）
 5. 查報價 — 「查XXX的報價」→ 找 QUOTE_WORKBENCH
 
-【斷點 — 2026-04-09 晚間巡查更新】
-T-A6-001 進行中：LINE webhook ✅ 通（Apps Script doPost + LockService 去重）；bot_a6 ✅ 全部署（launchd 開機自啟 b3dacb8，.env security fix a20e268）；B層對話自動存檔運行中；update_a6_token.sh 一鍵換 token 腳本已建立（434b490）。
-訓練框架今日里程碑 🎉：Steps 1-4 全部完成（操作手冊v1.0 + QA範例庫v0.5 + 安全框架v1.0 + RECALL重寫）；Owner五項硬規則落地（100分報價/品項自動補齊/外帶TODO/L2修正/足量邏輯）；訓練資料 L1-L7 + T16-T33 齊備。
-下一步：Owner 測試操作手冊流程 → QA範例庫實戰 → 安全框架邊界確認 → T-A6-001 結案。
+【斷點 — 2026-04-11 晚間巡查更新】
+T-A6-001 進行中：LINE webhook ✅ 通（Apps Script doPost + LockService 去重）；bot_a6 ✅ 全部署（launchd 開機自啟 b3dacb8，.env security fix a20e268）；B層對話自動存檔運行中；update_a6_token.sh 已建立（434b490）。
+e2e round 5 全通過里程碑 🎉（04-11 06ce9c6）：quote + slide + heartbeat all verified；auto-trigger Slide after createQuote（b118095）；fromMaster mode（b82df34）。
+04-11 晚間重大進展：(1) generateProposal_v2 lang-switch+zh titles+overflow fix+Code.gs +3欄（c6f2734，GAS v4 已部署）；(2) English Slide button 新增（9b45eab）；(3) bot_a6 GAS失敗明確錯誤訊息取代靜默fallback（37a88a0，防AI幻覺填補）；(4) QA場景測試+抽考開始（f3cd73b）；(5) A0判斷框架10原則嵌入RECALL（156ed74）。
+⚠️ GAS 鐵律（780d43c）：禁止推測 endpoint/部署狀態 — 未明確確認=失敗，不可推測已部署。
+訓練框架 Steps 1-4 完成（操作手冊v1.0 + QA範例庫v0.5 + 安全框架v1.0 + RECALL重寫）；Owner五項硬規則落地。
+下一步：QA 抽考繼續驗收 → 結尾頁/無圖垂直置中 → T-A6-001 結案。
 
 【必讀】
 1. projects/line-quote-assistant.md ← 使用者需求 v1.0（Owner 確認），A6/A7 架構聖經

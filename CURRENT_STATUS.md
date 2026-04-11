@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-04-11 16:30（A1 午後巡查）｜更新者：A1 — A3🔴D14 ~314h+/A7🔴D11 ~266h+持續；A5🔴T-A5-002 48h閾值已超(04-11 14:00,超出~2.5h)升級CRITICAL；A6✅午後e2e round5 passed(quote+slide+heartbeat)/auto-trigger Slide/fromMaster；A4✅正常(48h=04-12)
+最後更新：2026-04-11 22:00（A1 晚間巡查）｜更新者：A1 — A3🔴D14 ~320h+/A7🔴D11 ~272h+持續；A5🔴T-A5-002 ~8h超閾值CRITICAL；A6🎉晚間極活躍(lang-switch+zh+English btn+GAS幻覺fix+QA測試)；A4⚠️WATCH(48h=04-12 08:31剩~10.5h)；T-A5-004狀態已修正→🔄
 
 ## 2026-04-08 晚間重大修復（commit 77d7202 / f94a229 / 03b8300 / 4bca296，tag verified-e2e-2026-04-08）
 
@@ -70,7 +70,7 @@
 | T-A5-001 | Items 去重 + 全品項重新編碼 | A5 | ✅ 完成（APP050/DST041/MAIN009/BEV008=108，已排序+連號） | handoff/tasks/T-A5-001.md |
 | T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔄 進行中（服務費可選✅/長桌費$350✅/車馬費下拉✅/DropdownHelper分類驗證✅；04-09重大進展：合約條款v4.0✅/訂金可調✅/飲食禁忌✅/車馬費定版✅/6項Owner feedback修復（cfeebd1 04-09 14:03）；待 Owner 確認剩餘增強項目；48h閾值=04-11 14:00）| handoff/tasks/T-A5-002.md |
 | T-A5-003 | 熱客招待品項定義 | A5 | 🔲 待開始 | — |
-| T-A5-004 | generateProposal_v2.gs Slide簡報（正確版） | A5 | 🔲 待啟動（舊 createSlides.gs 幻覺版已清理 2026-04-07，新版需對齊標準模板文學館版 1s4VJY3h...） | handoff/tasks/T-A5-004.md |
+| T-A5-004 | generateProposal_v2.gs Slide簡報（正確版） | A5/A6 | 🔄 進行中（04-11重大進展：lang-switch/zh titles/overflow fix/English Slide btn上線(c6f2734/9b45eab)，GAS v4已部署，e2e round5 passed；待完善：結尾頁/無圖垂直置中） | handoff/tasks/T-A5-004.md |
 | T-A5-005 | onEdit追蹤同步+Dashboard | A5 | 🔲 待啟動 | handoff/tasks/T-A5-005.md |
 | T-A4-001 | Phase 4 Gemini 照片分類 | A4 | 🔄 S5 ✅(8,549), S6 ✅(8,505), S11(2024) 🔄 10,050/12,213=82.2%（差2163待Owner決策補跑），S12(2025) 🔄 2,750/7,646=36.0%（5787f3e 2026-04-10）；GPS全步驟 ⛔ Owner指示跳過，ASSET_LOG總計21,414行；48h閾值 = **04-12** | projects/maplab-pipeline.md + handoff/tasks/T-A4-001.md |
 | T-A2-001 | 文章精選圖片補齊（57篇→每篇獨立配圖） | A2 | ✅ 完成（57/57 獨立配圖，0 重複） | handoff/tasks/T-A2-001.md |
@@ -288,6 +288,13 @@
 ⚠️ A1巡查 2026-04-11 16:30：A3 🔴 CRITICAL 持續第 14 天 ~314h+ — T-A3-001 GTM方案B + T-A3-002 廣告成效，最後 commit 2aca2ae (~2026-03-29 22:10) 距今已逾 314h。晨間至午後巡查仍無新 A3 commit。**Owner 需立即執行：T-A3-001 + T-A3-002 標記 ⏸️ 暫停**，等 GTM 權限/廣告觀察期就緒後再重啟。
 ⚠️ A1巡查 2026-04-11 16:30：A7 🔴 CRITICAL 持續第 11 天 ~266h+ — T-A7-001 Phase 2 + T-A7-002，最後 commit cf9f166 (2026-03-31) 距今已逾 266h。今日無新 A7 commit。Owner 需明確決定：(a) 暫停任務，或 (b) 確認外部阻塞原因。
 ✅ A1巡查 2026-04-11 16:30：A6 午後 e2e round 5 全通過 🎉 — 06ce9c6 session complete: quote + slide + heartbeat all verified；b118095 feat(a6): _trigger_gas_slide_sync — createQuote 成功後自動觸發 Slide（無需手動按按鈕）；b82df34 feat(GAS): fromMaster mode — createQuote 從母版 QUOTE_DRAFT 讀取資料；45e26a0 fix(GAS): restore ApiEndpoint.gs + fix .claspignore；fe76f8a/f99cf31 fix(bot_a6): GAS trigger + py3.9 compat；A6 系統整合里程碑達成。A0: 731cff0 Chrome 驗證標準動作 SOP 落地。A1: b502417 Task Card v1.2格式統一(12張) + 52f6873 .gitignore修復(.claude/worktrees/)。A4 ✅ 正常（S12 36%，48h=04-12）。A2 ✅ 待機。
+
+⚠️ A1巡查 2026-04-11 22:00：A5 T-A5-002 🔴 CRITICAL 持續 — 48h 閾值（04-11 14:00）已超出 ~8h，上次活動 cfeebd1 (04-09 14:03) 至今逾 56h，晚間 8h 視窗無新 A5 commit。**Owner 需確認：(a) A5 有未 commit 進度，或 (b) T-A5-002 正等待 Owner 回饋確認剩餘增強項目（外部阻塞記錄即可）。**
+⚠️ A1巡查 2026-04-11 22:00：A3 🔴 CRITICAL 持續第 14 天 ~320h+ — T-A3-001 GTM方案B + T-A3-002 廣告成效，最後 commit 2aca2ae (~2026-03-29 22:10) 距今已逾 320h。Owner 需立即執行：T-A3-001 + T-A3-002 標記 ⏸️ 暫停，等 GTM 權限/廣告觀察期就緒後再重啟。
+⚠️ A1巡查 2026-04-11 22:00：A7 🔴 CRITICAL 持續第 11 天 ~272h+ — T-A7-001 Phase 2 + T-A7-002，最後 commit cf9f166 (2026-03-31) 距今已逾 272h。Owner 需明確決定：(a) 暫停任務，或 (b) 確認外部阻塞原因。
+⚠️ A1巡查 2026-04-11 22:00：A4 T-A4-001 ⚠️ WATCH 接近閾值 — 最後 commit 5787f3e (2026-04-10 08:31 +0800)，48h 閾值 = **04-12 08:31**（距今約 10.5h），今日 8h 視窗無新 A4 commit。若 04-12 08:31 前無新 commit 自動升級 🔴 CRITICAL。Owner 需確認 S12 Colab 仍執行中。
+✅ A1巡查 2026-04-11 22:00：A6 晚間極活躍 🎉 — c6f2734 generateProposal_v2 lang-switch+zh titles+overflow fix+Code.gs +3欄(depositAmount/dietaryNotes/floorFeeMode)；9b45eab English Slide button（MAPLAB menu generateProposalV2_EN 包裝器）；37a88a0 fix(bot_a6) GAS失敗明確錯誤訊息（取代靜默fallback，防AI幻覺填補）；f3cd73b QA場景測試+抽考開始；156ed74 A0判斷框架10原則嵌入RECALL；02b8778 session結尾+接續點+worktree清理。GAS v4 已部署。
+⚠️ A1巡查 2026-04-11 22:00：T-A5-004 狀態不一致已修正 — 任務表原標 🔲 待啟動，但今日 generateProposal_v2 lang-switch/zh titles/overflow fix/English btn 已部署並通過 e2e round5，已更正為 🔄 進行中（A5/A6 共負）。AGENT_RECALL_PROMPTS A6 斷點同步更新。
 
 ## MVP 母本紀錄點
 

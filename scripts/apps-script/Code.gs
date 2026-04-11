@@ -634,14 +634,17 @@ function createQuoteFromMaster_() {
 function handleQuoteRequest_(params) {
   try {
     var formData = {
-      clientName : params.clientName  || '',
-      company    : params.company     || '',
-      phone      : params.phone       || '',
-      address    : params.address     || '',
-      eventType  : params.eventType   || '',
-      eventDate  : params.eventDate   || '',
-      location   : params.location    || '',
-      pax        : params.pax         || ''
+      clientName    : params.clientName    || '',
+      company       : params.company       || '',
+      phone         : params.phone         || '',
+      address       : params.address       || '',
+      eventType     : params.eventType     || '',
+      eventDate     : params.eventDate     || '',
+      location      : params.location      || '',
+      pax           : params.pax           || '',
+      depositAmount : params.depositAmount || '3000',
+      dietaryNotes  : params.dietaryNotes  || '',
+      floorFeeMode  : params.floorFeeMode  || 'none'
     };
 
     var result = createQuote(formData);

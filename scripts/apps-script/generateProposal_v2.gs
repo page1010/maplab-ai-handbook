@@ -16,6 +16,61 @@ var BRAND = {
   MID_GRAY: '#888888'
 };
 
+// ============================================================
+// 語言切換（'zh' 中文 / 'en' 英文）
+// ============================================================
+var SLIDE_LANG = 'zh';
+
+var SLIDE_TEXT = {
+  zh: {
+    menuTitle            : '餐點內容',
+    quotationTitle       : '報價單',
+    quotationSubtitle    : 'MAPLAB Kitchen — 精緻外燴',
+    totalAmountLabel     : '報價總額',
+    depositLabel         : '訂金 Deposit',
+    notesLabel           : '備註',
+    serviceIncludesLabel : '服務包含',
+    serviceIncludesContent: '專業餐點製作 · 外場佈置服務 · 器具提供 · 活動當日全程服務',
+    termsTitle           : '合約條款',
+    termsSubtitle        : '簽約使用條款及細則',
+    sigConfirmation      : '確認簽署 Confirmation',
+    clientSignatureLabel : '客戶簽名 Client Signature',
+    signDateField        : '日期 Date: _______________',
+    eventDateLabel       : '活動日期',
+    eventTypeLabel       : '活動類型',
+    eventTimeLabel       : '活動時間',
+    headcountLabel       : '預估人數',
+    headcountUnit        : ' 人',
+    menuItemsLabel       : '餐點件數',
+    menuItemsUnit        : ' 件',
+    venueLabel           : '活動地點'
+  },
+  en: {
+    menuTitle            : 'Menu',
+    quotationTitle       : 'Quotation',
+    quotationSubtitle    : 'MAPLAB Kitchen — Private Catering',
+    totalAmountLabel     : 'Total Amount',
+    depositLabel         : 'Deposit',
+    notesLabel           : 'Notes',
+    serviceIncludesLabel : 'Service Includes',
+    serviceIncludesContent: 'Professional food preparation · Setup & decor · Equipment supply · Full event-day service',
+    termsTitle           : 'Terms & Conditions',
+    termsSubtitle        : 'Please read carefully before signing',
+    sigConfirmation      : 'Confirmation',
+    clientSignatureLabel : 'Client Signature',
+    signDateField        : 'Date: _______________',
+    eventDateLabel       : 'Event Date',
+    eventTypeLabel       : 'Event Type',
+    eventTimeLabel       : 'Event Time',
+    headcountLabel       : 'Headcount',
+    headcountUnit        : '',
+    menuItemsLabel       : 'Menu Items',
+    menuItemsUnit        : '',
+    venueLabel           : 'Venue'
+  }
+};
+var T = SLIDE_TEXT[SLIDE_LANG];
+
 var SLIDES_TEMPLATE_ID  = '1s4VJY3hIoIDd5gF_WcKVlTNzoAYr6YIq69oZ0lDnU5E';
 var PROPOSALS_FOLDER_ID = '1uGBCSTLFRVm5ZPh6v10G-tImf2QB5deu';
 var SPREADSHEET_ID      = '1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg';
@@ -144,12 +199,12 @@ function generateProposalV2() {
 
   // ── Step 7：插入 Quotation 頁 ───────────────────────────
   var fields = [
-    ['活動日期', eventDate],
-    ['活動類型', eventType],
-    ['活動時間', eventTime],
-    ['預估人數', pax + ' 人'],
-    ['餐點件數', totalItems + ' 件'],
-    ['活動地點', venue]
+    [T.eventDateLabel,  eventDate],
+    [T.eventTypeLabel,  eventType],
+    [T.eventTimeLabel,  eventTime],
+    [T.headcountLabel,  pax + T.headcountUnit],
+    [T.menuItemsLabel,  totalItems + T.menuItemsUnit],
+    [T.venueLabel,      venue]
   ];
   _addQuotationSlide(pres, totalAmount, fields, notes);
   Logger.log('[V2] Quotation 頁完成');
@@ -235,7 +290,7 @@ function _addMenuSlide(pres, insertIdx, pageItems) {
   titleBar.getBorder().setTransparent();
 
   // 標題文字
-  var titleBox = s.insertTextBox('MENU', 40, 10, 300, 32);
+  var titleBox = s.insertTextBox(T.menuTitle, 40, 10, 300, 32);
   titleBox.getText().getTextStyle()
     .setFontSize(18).setFontFamily('Georgia')
     .setForegroundColor(BRAND.OLIVE).setBold(true);
@@ -272,8 +327,8 @@ function _addMenuSlide(pres, insertIdx, pageItems) {
     }
     // 無 imgUrl 或圖片載入失敗：完全不放圖片區塊，只有品名標籤
 
-    // 品名標籤：中文品名 (數量) — 無圖時調整位置置中
-    var label = pageItems[n].zh + (pageItems[n].qty ? ' (' + pageItems[n].qty + ')' : '');
+    // 品名標籤：中文品名 — 無圖時調整位置置中
+    var label = pageItems[n].zh;
     var labelY = imgUrl ? iy + 114 : iy + 50;  // 有圖放圖下方，無圖置中
     var nb = s.insertTextBox(label, ix, labelY, 210, 28);
     nb.getText().getTextStyle()
@@ -296,19 +351,19 @@ function _addQuotationSlide(pres, totalAmount, fields, notes) {
   topLine.getBorder().setTransparent();
 
   // 標題
-  var title = s.insertTextBox('Quotation', 40, 36, 320, 34);
-  title.getText().setText('Quotation');
+  var title = s.insertTextBox(T.quotationTitle, 40, 36, 320, 34);
+  title.getText().setText(T.quotationTitle);
   title.getText().getTextStyle()
     .setFontSize(26).setFontFamily('Georgia')
     .setForegroundColor(BRAND.OLIVE).setBold(true);
 
-  var sub = s.insertTextBox('MAPLAB Kitchen — Private Catering', 40, 70, 400, 18);
-  sub.getText().setText('MAPLAB Kitchen — Private Catering');
+  var sub = s.insertTextBox(T.quotationSubtitle, 40, 70, 400, 18);
+  sub.getText().setText(T.quotationSubtitle);
   sub.getText().getTextStyle()
     .setFontSize(10).setFontFamily('Georgia').setForegroundColor(BRAND.MID_GRAY);
 
   // 左欄：資訊表（白底圓角）
-  var infoPanel = s.insertShape(SlidesApp.ShapeType.ROUND_RECTANGLE, 40, 100, 350, 210);
+  var infoPanel = s.insertShape(SlidesApp.ShapeType.ROUND_RECTANGLE, 40, 100, 350, 190);
   infoPanel.getFill().setSolidFill(BRAND.WHITE);
   infoPanel.getBorder().getLineFill().setSolidFill(BRAND.BLUSH);
   infoPanel.getBorder().setWeight(0.5);
@@ -328,12 +383,12 @@ function _addQuotationSlide(pres, totalAmount, fields, notes) {
   }
 
   // 右欄：金額（棕褐底）
-  var amtPanel = s.insertShape(SlidesApp.ShapeType.ROUND_RECTANGLE, 420, 100, 260, 210);
+  var amtPanel = s.insertShape(SlidesApp.ShapeType.ROUND_RECTANGLE, 420, 100, 260, 190);
   amtPanel.getFill().setSolidFill(BRAND.BROWN);
   amtPanel.getBorder().setTransparent();
 
-  var amtLbl = s.insertTextBox('Total Amount', 420, 138, 260, 22);
-  amtLbl.getText().setText('Total Amount');
+  var amtLbl = s.insertTextBox(T.totalAmountLabel, 420, 138, 260, 22);
+  amtLbl.getText().setText(T.totalAmountLabel);
   amtLbl.getText().getTextStyle()
     .setFontSize(11).setFontFamily('Georgia').setForegroundColor(BRAND.CREAM);
   amtLbl.getText().getParagraphStyle()
@@ -348,8 +403,8 @@ function _addQuotationSlide(pres, totalAmount, fields, notes) {
   amtVal.getText().getParagraphStyle()
     .setParagraphAlignment(SlidesApp.ParagraphAlignment.CENTER);
 
-  var depLbl = s.insertTextBox('訂金 Deposit', 420, 232, 260, 18);
-  depLbl.getText().setText('訂金 Deposit');
+  var depLbl = s.insertTextBox(T.depositLabel, 420, 232, 260, 18);
+  depLbl.getText().setText(T.depositLabel);
   depLbl.getText().getTextStyle()
     .setFontSize(9).setFontFamily('Georgia').setForegroundColor(BRAND.BLUSH);
   depLbl.getText().getParagraphStyle()
@@ -364,29 +419,28 @@ function _addQuotationSlide(pres, totalAmount, fields, notes) {
   depVal.getText().getParagraphStyle()
     .setParagraphAlignment(SlidesApp.ParagraphAlignment.CENTER);
 
-  // 備註
-  var nTitle = s.insertTextBox('備註', 40, 330, 200, 18);
-  nTitle.getText().setText('備註');
+  // 備註（y 向上調整 24pt，讓服務包含區塊不超出頁面底部 405pt）
+  var nTitle = s.insertTextBox(T.notesLabel, 40, 306, 200, 18);
+  nTitle.getText().setText(T.notesLabel);
   nTitle.getText().getTextStyle()
     .setFontSize(10).setFontFamily('Georgia')
     .setForegroundColor(BRAND.BROWN).setBold(true);
 
   var nText = (notes && notes !== '-') ? notes : '無';
-  var nBox = s.insertTextBox(nText, 40, 352, 640, 28);
+  var nBox = s.insertTextBox(nText, 40, 322, 640, 24);
   nBox.getText().setText(nText);
   nBox.getText().getTextStyle()
     .setFontSize(9).setFontFamily('Georgia').setForegroundColor(BRAND.OLIVE);
 
-  // 服務包含
-  var iTitle = s.insertTextBox('服務包含 Included Services', 40, 390, 350, 18);
-  iTitle.getText().setText('服務包含 Included Services');
+  // 服務包含（底邊 y=369+20=389，留 16pt margin）
+  var iTitle = s.insertTextBox(T.serviceIncludesLabel, 40, 351, 350, 18);
+  iTitle.getText().setText(T.serviceIncludesLabel);
   iTitle.getText().getTextStyle()
     .setFontSize(10).setFontFamily('Georgia')
     .setForegroundColor(BRAND.BROWN).setBold(true);
 
-  var included = '專業餐點製作 · 外場佈置服務 · 器具提供 · 活動當日全程服務';
-  var iBox = s.insertTextBox(included, 40, 412, 640, 22);
-  iBox.getText().setText(included);
+  var iBox = s.insertTextBox(T.serviceIncludesContent, 40, 369, 640, 20);
+  iBox.getText().setText(T.serviceIncludesContent);
   iBox.getText().getTextStyle()
     .setFontSize(9).setFontFamily('Georgia').setForegroundColor(BRAND.OLIVE);
 }
@@ -403,14 +457,14 @@ function _addTermsSlide(pres, clientName, eventDate) {
   topLine.getFill().setSolidFill(BRAND.BROWN);
   topLine.getBorder().setTransparent();
 
-  var t2 = s.insertTextBox('Terms & Conditions', 40, 36, 400, 28);
-  t2.getText().setText('Terms & Conditions');
+  var t2 = s.insertTextBox(T.termsTitle, 40, 36, 400, 28);
+  t2.getText().setText(T.termsTitle);
   t2.getText().getTextStyle()
     .setFontSize(20).setFontFamily('Georgia')
     .setForegroundColor(BRAND.OLIVE).setBold(true);
 
-  var sub2 = s.insertTextBox('簽約使用條款及細則', 40, 64, 400, 16);
-  sub2.getText().setText('簽約使用條款及細則');
+  var sub2 = s.insertTextBox(T.termsSubtitle, 40, 64, 400, 16);
+  sub2.getText().setText(T.termsSubtitle);
   sub2.getText().getTextStyle()
     .setFontSize(9).setFontFamily('Georgia').setForegroundColor(BRAND.MID_GRAY);
 
@@ -435,45 +489,47 @@ function _addTermsSlide(pres, clientName, eventDate) {
       '爭議由本公司所在地法院管轄。']
   ];
 
-  var ty = 88;
+  // 各條款：每條 title(h=14, +14) + body(h=40, +42) = 56pt；4條 = 224pt
+  // 起點 84pt，簽名區起始 ≈ 308pt，最末元素底邊 ≈ 392pt，留 13pt margin（頁高 405pt）
+  var ty = 84;
   termsData.forEach(function(sec) {
-    var secTitle = s.insertTextBox(sec[0], 40, ty, 660, 16);
+    var secTitle = s.insertTextBox(sec[0], 40, ty, 660, 14);
     secTitle.getText().setText(sec[0]);
     secTitle.getText().getTextStyle()
       .setFontSize(8).setFontFamily('Georgia')
       .setForegroundColor(BRAND.BROWN).setBold(true);
-    ty += 16;
+    ty += 14;
 
-    var secBody = s.insertTextBox(sec[1], 50, ty, 650, 48);
+    var secBody = s.insertTextBox(sec[1], 50, ty, 650, 40);
     secBody.getText().setText(sec[1]);
     secBody.getText().getTextStyle()
       .setFontSize(7).setFontFamily('Georgia').setForegroundColor(BRAND.CHARCOAL);
-    ty += 50;
+    ty += 42;
   });
 
   // 簽名區
-  ty += 8;
+  ty += 6;
   var sigLine = s.insertShape(SlidesApp.ShapeType.RECTANGLE, 40, ty, 660, 1.5);
   sigLine.getFill().setSolidFill(BRAND.BROWN);
   sigLine.getBorder().setTransparent();
   ty += 10;
 
-  var sigT = s.insertTextBox('確認簽署 Confirmation', 40, ty, 300, 18);
-  sigT.getText().setText('確認簽署 Confirmation');
+  var sigT = s.insertTextBox(T.sigConfirmation, 40, ty, 300, 16);
+  sigT.getText().setText(T.sigConfirmation);
   sigT.getText().getTextStyle()
     .setFontSize(10).setFontFamily('Georgia')
     .setForegroundColor(BRAND.OLIVE).setBold(true);
-  ty += 22;
+  ty += 20;
 
-  var cL = s.insertTextBox('客戶簽名 Client Signature', 40, ty, 280, 14);
-  cL.getText().setText('客戶簽名 Client Signature');
+  var cL = s.insertTextBox(T.clientSignatureLabel, 40, ty, 280, 14);
+  cL.getText().setText(T.clientSignatureLabel);
   cL.getText().getTextStyle()
     .setFontSize(8).setFontFamily('Georgia').setForegroundColor(BRAND.MID_GRAY);
-  var cLine = s.insertShape(SlidesApp.ShapeType.RECTANGLE, 40, ty + 35, 280, 1);
+  var cLine = s.insertShape(SlidesApp.ShapeType.RECTANGLE, 40, ty + 28, 280, 1);
   cLine.getFill().setSolidFill(BRAND.OLIVE);
   cLine.getBorder().setTransparent();
-  var cD = s.insertTextBox('日期 Date: _______________', 40, ty + 42, 280, 14);
-  cD.getText().setText('日期 Date: _______________');
+  var cD = s.insertTextBox(T.signDateField, 40, ty + 34, 280, 12);
+  cD.getText().setText(T.signDateField);
   cD.getText().getTextStyle()
     .setFontSize(8).setFontFamily('Georgia').setForegroundColor(BRAND.MID_GRAY);
 
@@ -481,11 +537,11 @@ function _addTermsSlide(pres, clientName, eventDate) {
   mL.getText().setText('MAPLAB Kitchen');
   mL.getText().getTextStyle()
     .setFontSize(8).setFontFamily('Georgia').setForegroundColor(BRAND.MID_GRAY);
-  var mLine = s.insertShape(SlidesApp.ShapeType.RECTANGLE, 400, ty + 35, 280, 1);
+  var mLine = s.insertShape(SlidesApp.ShapeType.RECTANGLE, 400, ty + 28, 280, 1);
   mLine.getFill().setSolidFill(BRAND.OLIVE);
   mLine.getBorder().setTransparent();
-  var mD = s.insertTextBox('日期 Date: _______________', 400, ty + 42, 280, 14);
-  mD.getText().setText('日期 Date: _______________');
+  var mD = s.insertTextBox(T.signDateField, 400, ty + 34, 280, 12);
+  mD.getText().setText(T.signDateField);
   mD.getText().getTextStyle()
     .setFontSize(8).setFontFamily('Georgia').setForegroundColor(BRAND.MID_GRAY);
 }

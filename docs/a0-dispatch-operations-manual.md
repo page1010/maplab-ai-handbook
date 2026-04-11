@@ -170,6 +170,14 @@ A1 (terminal) ─── 做完系統修改 ───→ commit
 - A0 不要假設「task 說成功了就是成功了」— 每次都要 post-verify
 - 如果不確定 commit 在哪個 branch，跑 git branch --contains <hash> 確認
 
+### 2026-04-11（晚）：AI 幻覺填補靜默失敗
+
+| 錯誤 | 為什麼錯 | 正確做法 |
+|------|---------|---------|
+| A6 Claude 說「GAS endpoint 需重新部署」 | bot 的 GAS 觸發靜默回傳 None，Claude 自己猜測原因 | API 失敗時必須給明確錯誤訊息，不能靜默 |
+
+**通用規則：所有 API call 的 failure path 都要給 AI agent 和使用者明確訊息。靜默失敗 = AI 幻覺空間。**
+
 ---
 
 ## 五、訓練方法論 — 從 A6 推廣到所有角色

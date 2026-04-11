@@ -264,3 +264,15 @@ Telegram → Claude 寫 master → bot 偵測「寫入成功」
 - handleQuoteRequest_ 補 3 欄位
 - GAS v4 部署成功
 - curl createSlide 測試通過：https://docs.google.com/presentation/d/1yX4qoXXG8o3jc1VO6FY6OyIPAO_r2UCTH5HZtxfHR9k/edit
+
+---
+
+### GAS 幻覺 bug 修復（21:30）
+- A6 Claude 在 GAS 觸發靜默失敗時自行幻覺「endpoint 需重新部署」
+- 根本原因：bot 靜默回傳 None，Claude 自己填補解釋
+- 修法：bot 失敗時給明確錯誤訊息 + recall 禁止 Claude 猜測系統狀態
+- GAS endpoint 確認正常（curl success:true）
+
+### 教訓（寫進操作手冊）
+- bot 的 error handling 不能靜默失敗 — AI agent 會幻覺填補空白
+- 所有 API call 的 failure path 都要給使用者（和 AI）明確訊息

@@ -430,6 +430,14 @@ async def _run_claude_background(
                 if slide_result and slide_result.get('success'):
                     slide_url = slide_result.get('url', '')
                     answer += f"\n\n📊 **提案簡報已自動產出！**\n連結：{slide_url}"
+                else:
+                    # Slide 觸發了但失敗
+                    slide_error = slide_result.get('error', '未知錯誤') if slide_result else 'GAS 無回應'
+                    answer += f"\n\n⚠️ 提案簡報自動產出失敗（{slide_error}）。資料已寫入母版，可手動點選單產出。"
+            elif form_data:
+                # 報價單 GAS 觸發了但失敗
+                error_msg = gas_result.get('error', '未知錯誤') if gas_result else 'GAS 無回應'
+                answer += f"\n\n⚠️ 報價單自動產出失敗（{error_msg}）。資料已寫入母版，可手動點選單產出。"
 
         MAX = 4096
         for i in range(0, len(answer), MAX):

@@ -15,6 +15,36 @@ ROLE="${1:-}"
 MESSAGE="${2:-}"
 FAST_MODE=false
 REPO_ROOT="/Users/pagemacmini/maplab-ai-handbook"
+TASKS_DIR="$REPO_ROOT/handoff/tasks"
+
+# === 自動更新 Task Card「最後活動」欄位 ===
+_update_task_cards() {
+  local role="$1"
+  local short_hash="$2"
+  local today=$(date +%Y-%m-%d)
+  local updated=0
+
+  # 找該角色的進行中 (🔄) Task Card
+  for card in "$TASKS_DIR"/T-${role}-*.md "$TASKS_DIR"/T-${role}[A-Z]*-*.md; do
+    [ -f "$card" ] || continue
+    if grep -q '🔄 進行中' "$card"; then
+      # 更新「最後活動」行
+      if grep -q '^\- \*\*最後活動\*\*:' "$card"; then
+        sed -i '' "s/^- \*\*最後活動\*\*:.*/- **最後活動**: ${today} ${short_hash}/" "$card"
+        updated=$((updated + 1))
+        echo "📝 Task Card 更新：$(basename "$card") → 最後活動 ${today} ${short_hash}"
+      fi
+    fi
+  done
+
+  if [ "$updated" -gt 0 ]; then
+    echo ""
+    echo "⚠️  Task Card「最後活動」已更新（本地）。下次 checkpoint 會一起提交。"
+    echo "⚠️  請同時更新 Task Card 的「接續點」欄位（做到哪、下一步做什麼）。"
+  else
+    echo "ℹ️  未找到 ${role} 的 🔄 進行中 Task Card，跳過自動更新。"
+  fi
+}
 
 # Parse --fast flag（位置不限）
 for arg in "$@"; do
@@ -112,6 +142,9 @@ if [ "$FAST_MODE" = true ]; then
   echo "🔍 驗證 main 是否包含此次 commit..."
   bash "$WORKTREE_DIR/scripts/verify-commit-on-main.sh" "$HASH"
 
+  # === 自動更新 Task Card 最後活動 ===
+  _update_task_cards "$ROLE" "$SHORT"
+
   echo ""
   echo "======================================"
   echo "✅ 存檔完成（fast mode）"
@@ -153,6 +186,9 @@ else
     echo "❌ Push 失敗"
     exit 1
   fi
+
+  # === 自動更新 Task Card 最後活動 ===
+  _update_task_cards "$ROLE" "$SHORT"
 
   echo ""
   echo "======================================"

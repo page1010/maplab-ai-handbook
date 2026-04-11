@@ -1,6 +1,19 @@
 # T-A2-003: 每週全站 WP 內容稽核排程
 
-## 狀態
+---
+
+## 接續狀態
+
+> **Agent 冷啟動時第一個看的區塊。每次 checkpoint 必須更新。**
+
+- **狀態**: 🔲 待開始
+- **最後活動**: 2026-04-07
+- **接續點**: 腳本已建好（wp-audit.sh / wp-audit-cron.sh）。待 Owner 用 /schedule 建立 cron 排程。
+- **阻塞**: 等 Owner 建立排程
+
+---
+
+## 狀態（舊）
 PENDING — 待 Owner 用 schedule skill 建立實際排程
 
 ## 背景

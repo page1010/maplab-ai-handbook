@@ -38,6 +38,7 @@ OWNER_USER_ID = int(os.getenv("OWNER_USER_ID", "1077768811"))
 SALES_USER_ID = int(os.getenv("SALES_USER_ID", "0"))  # 業務的 Telegram user ID
 REPO_PATH = Path(os.getenv("REPO_PATH", "/Users/pagemacmini/maplab-ai-handbook"))
 CLAUDE_OAUTH_TOKEN = os.getenv("CLAUDE_CODE_OAUTH_TOKEN", "")
+GAS_QUOTE_URL = os.getenv("GAS_QUOTE_URL", "")
 
 # 白名單：只有這兩人的訊息會被處理
 ALLOWED_USER_IDS: set[int] = {OWNER_USER_ID}
@@ -324,6 +325,42 @@ async def reset_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 # ── Background Claude runner ───────────────────────────────────────────────────
 
+def _trigger_gas_quote_sync(form_data: dict) -> dict | None:
+    """POST formData to GAS Web App, return {success, url, caseId} or None"""
+    if not GAS_QUOTE_URL:
+        return None
+    try:
+        import urllib.request
+        import urllib.error
+        payload = json.dumps({"action": "createQuote", **form_data}).encode()
+        req = urllib.request.Request(
+            GAS_QUOTE_URL, data=payload,
+            headers={"Content-Type": "application/json"}, method="POST"
+        )
+        with urllib.request.urlopen(req, timeout=60) as resp:
+            return json.loads(resp.read().decode())
+    except Exception as e:
+        logging.error(f"GAS trigger failed: {e}")
+        return None
+
+
+def _extract_form_data(claude_reply: str) -> dict | None:
+    """從 Claude 回覆中找 ```json block，解析 formData"""
+    import re
+    match = re.search(r'```json\s*(\{.*?\})\s*```', claude_reply, re.DOTALL)
+    if match:
+        try:
+            data = json.loads(match.group(1))
+            if 'clientName' in data or 'action' in data:
+                return data
+        except json.JSONDecodeError:
+            pass
+    # fallback: 找 「報價完成」+ Sheet 連結 → 代表已寫入 master，觸發 makeCopy
+    if '報價完成' in claude_reply or 'cells 全部寫入' in claude_reply:
+        return {"action": "createQuote", "fromMaster": True}
+    return None
+
+
 async def _heartbeat(bot, chat_id: int, start_time: float, cancel_event: asyncio.Event) -> None:
     """每 60 秒發一次心跳，直到 cancel_event 被設定。"""
     await asyncio.sleep(60)
@@ -357,6 +394,17 @@ async def _run_claude_background(
         finally:
             cancel_event.set()
             heartbeat_task.cancel()
+
+        # 嘗試觸發 GAS 產報價單
+        form_data = _extract_form_data(answer)
+        if form_data:
+            gas_result = await asyncio.get_event_loop().run_in_executor(
+                None, lambda: _trigger_gas_quote_sync(form_data))
+            if gas_result and gas_result.get('success'):
+                url = gas_result.get('url', '')
+                case_id = gas_result.get('caseId', '')
+                answer += f"\n\n📄 **報價單已自動產出！**\n連結：{url}\n案件編號：{case_id}"
+
         MAX = 4096
         for i in range(0, len(answer), MAX):
             await bot.send_message(chat_id=chat_id, text=answer[i:i + MAX])

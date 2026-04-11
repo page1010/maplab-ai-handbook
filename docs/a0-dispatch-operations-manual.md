@@ -125,6 +125,20 @@ A1 (terminal) ─── 做完系統修改 ───→ commit
 | 開 8 個 worktree 各自分析 | Owner 看不到，每個都從零開始 | 先讀前人結論，最多 2 個 task |
 | 沒有使用者視角就派任務 | A0 在技術世界打轉 | 委派前跑 7 問題 pre-check |
 
+### 2026-04-11：Worktree commit 沒合回 main（功能不存在）
+
+| 錯誤 | 為什麼錯 | 正確做法 |
+|------|---------|---------|
+| build task 說「已 commit + push」就假設生效 | Code task 在 worktree branch commit，push 到 remote 的是 worktree branch，不是 main | 每個 task 結束後 A0 驗證：git log main --oneline -3 |
+| bot_a6.py 改了但 bot 沒有新功能 | launchd 跑的 bot 讀 main branch 的檔案，worktree 修改對它不可見 | task prompt 必須明確要求「cherry-pick 到 main + push origin main」 |
+| 重複發生（build + heartbeat + docs 三次） | A0 沒有 post-verify 流程 | 改 bot/scripts/recalls 的 task，結束後必須用 Chrome 或 Code task 做 post-verify |
+
+**Worktree 使用規則（新增）：**
+- Code task 會自動在 worktree 裡操作。如果改的是 main branch 上需要生效的檔案（bot_a6.py、recalls/、scripts/ 等），task prompt 裡必須包含：「確認在 main branch 上操作，或 cherry-pick 到 main」
+- launchd 管理的 bot 只讀 main branch，worktree 修改對它不可見
+- A0 不要假設「task 說成功了就是成功了」— 每次都要 post-verify
+- 如果不確定 commit 在哪個 branch，跑 git branch --contains <hash> 確認
+
 ---
 
 ## 五、訓練方法論 — 從 A6 推廣到所有角色

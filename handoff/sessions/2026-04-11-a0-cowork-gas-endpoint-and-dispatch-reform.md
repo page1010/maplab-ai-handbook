@@ -167,3 +167,16 @@ Mina Telegram → A6 bot → Claude 寫 master QUOTE_DRAFT
 - [ ] 舊 bot/ DEPRECATED 清理（PID 仍在跑）
 - [ ] handleQuoteRequest_ 補 depositAmount/dietaryNotes/floorFeeMode
 - [ ] Slide proposal 自動觸發（createSlide 路由已在 ApiEndpoint.gs，但 bot 觸發邏輯未加）
+
+### Slide 觸發診斷（任務 2 結論）
+
+- Slide 未出現是時序問題：第四輪測試時 bot 跑的是 f99cf31（無 slide trigger），commit b118095 比測試晚 4 小時
+- GAS createSlide curl 手測成功
+- bot 15:18 重啟後已載入新版 → 第五輪可驗證
+- 「寫在 master 上」的設計邏輯正確（generateProposalV2 hardcode 讀 master），但 Claude 回覆文字過時
+- recall 已更新（56f4c38），conv_history 舊記憶會自然消失
+
+### 存檔點
+- 復原基準：b118095
+- bot PID：50596（含 slide trigger + heartbeat）
+- GAS：Web App v2（含 fromMaster + createSlide）

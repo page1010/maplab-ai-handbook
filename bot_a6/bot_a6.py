@@ -18,6 +18,7 @@ import sys
 from collections import deque
 from pathlib import Path
 from datetime import datetime
+from typing import Optional
 
 from dotenv import load_dotenv
 from telegram import Update
@@ -325,7 +326,7 @@ async def reset_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 # ── Background Claude runner ───────────────────────────────────────────────────
 
-def _trigger_gas_quote_sync(form_data: dict) -> dict | None:
+def _trigger_gas_quote_sync(form_data: dict) -> Optional[dict]:
     """POST formData to GAS Web App, return {success, url, caseId} or None"""
     if not GAS_QUOTE_URL:
         return None
@@ -344,7 +345,7 @@ def _trigger_gas_quote_sync(form_data: dict) -> dict | None:
         return None
 
 
-def _extract_form_data(claude_reply: str) -> dict | None:
+def _extract_form_data(claude_reply: str) -> Optional[dict]:
     """從 Claude 回覆中找 ```json block，解析 formData"""
     import re
     match = re.search(r'```json\s*(\{.*?\})\s*```', claude_reply, re.DOTALL)

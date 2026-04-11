@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-04-11 08:07（A1 每日巡查）｜更新者：A1 — A3🔴D14 ~306h+/A7🔴D11 ~258h+持續；A5 T-A5-002 48h閾值04-11 14:00剩~6h(⚠️緊急WATCH)；A6✅今日活躍(heartbeat+GAS_QUOTE_URL)；A4✅正常(48h=04-12)
+最後更新：2026-04-11 16:30（A1 午後巡查）｜更新者：A1 — A3🔴D14 ~314h+/A7🔴D11 ~266h+持續；A5🔴T-A5-002 48h閾值已超(04-11 14:00,超出~2.5h)升級CRITICAL；A6✅午後e2e round5 passed(quote+slide+heartbeat)/auto-trigger Slide/fromMaster；A4✅正常(48h=04-12)
 
 ## 2026-04-08 晚間重大修復（commit 77d7202 / f94a229 / 03b8300 / 4bca296，tag verified-e2e-2026-04-08）
 
@@ -282,6 +282,12 @@
 ⚠️ A1巡查 2026-04-11 08:07：A5 T-A5-002 ⚠️ 緊急 WATCH — 48h 閾值 04-11 14:00 距今僅剩約 6h。上次活動 cfeebd1 (04-09 14:03)，至今無新 commit。若 14:00 前無新 A5 commit，自動升級 🔴 CRITICAL。Owner 需確認 A5 是否有未 commit 進度，或任務等待外部回饋。
 ⚠️ A1巡查 2026-04-11 08:07：A7 🔴 CRITICAL 持續第 11 天 ~258h+ — T-A7-001 Phase 2 + T-A7-002，最後 commit cf9f166 (2026-03-31) 距今已逾 258h。今日晨間巡查仍無新 A7 commit。Owner 需明確決定：(a) 暫停任務，或 (b) 確認外部阻塞原因。
 ✅ A1巡查 2026-04-11 08:07：A6 今日活躍 ✅ — c0bcd89 heartbeat（每60s顯示 elapsed time）+ b22d9d4 GAS_QUOTE_URL加入.env.example + 7c9b5cd session log 2026-04-11（GAS endpoint build + A0 dispatch reform）+ 4f841ec B層對話自動存檔。A4 ✅ 正常（S12 36%，48h=04-12）。A2 ✅ 待機。A0 ✅ dispatch 操作手冊（1795324 Max plan+runtime notes補充）。
+
+
+⚠️ A1巡查 2026-04-11 16:30：A5 T-A5-002 🔴 CRITICAL 閾值已超 — 48h 閾值（04-11 14:00）已過約 2.5h，上次活動 cfeebd1 (04-09 14:03)，今日晨間至午後整個視窗無新 A5 commit（fix(GAS)/feat(GAS) 為 A6 session 推進，非 A5 獨立工作）。升級 ⚠️WATCH → 🔴CRITICAL。**Owner 需確認：(a) A5 是否有未 commit 進度，或 (b) T-A5-002 正在等待 Owner 回饋確認剩餘增強項目（此情況可視為外部阻塞，記錄原因即可）。**
+⚠️ A1巡查 2026-04-11 16:30：A3 🔴 CRITICAL 持續第 14 天 ~314h+ — T-A3-001 GTM方案B + T-A3-002 廣告成效，最後 commit 2aca2ae (~2026-03-29 22:10) 距今已逾 314h。晨間至午後巡查仍無新 A3 commit。**Owner 需立即執行：T-A3-001 + T-A3-002 標記 ⏸️ 暫停**，等 GTM 權限/廣告觀察期就緒後再重啟。
+⚠️ A1巡查 2026-04-11 16:30：A7 🔴 CRITICAL 持續第 11 天 ~266h+ — T-A7-001 Phase 2 + T-A7-002，最後 commit cf9f166 (2026-03-31) 距今已逾 266h。今日無新 A7 commit。Owner 需明確決定：(a) 暫停任務，或 (b) 確認外部阻塞原因。
+✅ A1巡查 2026-04-11 16:30：A6 午後 e2e round 5 全通過 🎉 — 06ce9c6 session complete: quote + slide + heartbeat all verified；b118095 feat(a6): _trigger_gas_slide_sync — createQuote 成功後自動觸發 Slide（無需手動按按鈕）；b82df34 feat(GAS): fromMaster mode — createQuote 從母版 QUOTE_DRAFT 讀取資料；45e26a0 fix(GAS): restore ApiEndpoint.gs + fix .claspignore；fe76f8a/f99cf31 fix(bot_a6): GAS trigger + py3.9 compat；A6 系統整合里程碑達成。A0: 731cff0 Chrome 驗證標準動作 SOP 落地。A1: b502417 Task Card v1.2格式統一(12張) + 52f6873 .gitignore修復(.claude/worktrees/)。A4 ✅ 正常（S12 36%，48h=04-12）。A2 ✅ 待機。
 
 ## MVP 母本紀錄點
 

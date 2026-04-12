@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-04-12 00:30（A1 大掃除後重建）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-04-12 08:42（A1 每日巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -21,18 +21,18 @@
 
 | Task ID | 任務 | 負責 Agent | 狀態 | Task Card |
 |---------|------|-----------|------|-----------|
-| T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔴 CRITICAL（~56h無commit，等Owner確認剩餘增強項目） | handoff/tasks/T-A5-002.md |
+| T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔴 CRITICAL（~66h無commit，等Owner確認剩餘增強項目） | handoff/tasks/T-A5-002.md |
 | T-A5-003 | 熱客招待品項定義 | A5 | 🔲 待開始 | — |
 | T-A5-004 | generateProposal_v2.gs Slide 簡報 | A5/A6 | 🔄 進行中（GAS v4已部署，e2e round5 passed；待：結尾頁/無圖垂直置中） | handoff/tasks/T-A5-004.md |
 | T-A5-005 | onEdit追蹤同步+Dashboard | A5 | 🔲 待啟動 | handoff/tasks/T-A5-005.md |
-| T-A4-001 | Phase 4 Gemini 照片分類 | A4 | ⚠️ WATCH（48h閾值=04-12 08:31；S11 82.2%差2163待Owner決策；S12 36.0%執行中） | projects/maplab-pipeline.md + handoff/tasks/T-A4-001.md |
+| T-A4-001 | Phase 4 Gemini 照片分類 | A4 | 🔴 CRITICAL（48h閾值04-12 08:31已過；最後commit 04-10 5787f3e；S12執行狀態未知，需Owner確認Colab） | projects/maplab-pipeline.md + handoff/tasks/T-A4-001.md |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2 | 🔄 子任務1-4完成，子任務5等7-14天 | handoff/tasks/T-A2A3-001.md + T-A2A3-001-B.md |
-| T-A3-001 | GTM LINE 按鈕追蹤修復（方案 B） | A3 | 🔴 CRITICAL（~320h無commit，GTM方案B規格已記錄，待技術實作） | — |
-| T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 | A3 | 🔴 CRITICAL（~320h無commit，廣告成效報告v1.0已產出） | handoff/tasks/T-A3-002.md |
+| T-A3-001 | GTM LINE 按鈕追蹤修復（方案 B） | A3 | 🔴 CRITICAL（~330h無commit，GTM方案B規格已記錄，待技術實作） | — |
+| T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 | A3 | 🔴 CRITICAL（~330h無commit，廣告成效報告v1.0已產出） | handoff/tasks/T-A3-002.md |
 | T-A6-001 | Telegram 報價助手系統 | A6 | 🔄 進行中（GAS doPost Web App v12已上線，訓練架構Steps 1-4完成，e2e round5 passed） | projects/line-quote-assistant.md |
 | T-A6-002 | LINE 對話訓練資料收集 | A6 | 🔲 暫停（LINE webhook無業務回覆，待Owner決定新方向） | handoff/tasks/T-A6-002.md |
-| T-A7-001 | FAQ 回覆模板庫 + 補問流程 | A7 | 🔴 CRITICAL（~272h無commit，skills v2.0/reply-templates v1.0已產出） | handoff/tasks/T-A7-001.md |
-| T-A7-002 | 80/20 優先任務清單 + 執行路線圖 | A7 | 🔴 CRITICAL（~272h無commit，任務6+10完成） | — |
+| T-A7-001 | FAQ 回覆模板庫 + 補問流程 | A7 | 🔴 CRITICAL（~282h無commit，skills v2.0/reply-templates v1.0已產出） | handoff/tasks/T-A7-001.md |
+| T-A7-002 | 80/20 優先任務清單 + 執行路線圖 | A7 | 🔴 CRITICAL（~282h無commit，任務6+10完成） | — |
 | T-A1-V6-P2 | v6.0 Phase 2 業務閉環 MVP | A1 | 🔄 進行中 | handoff/tasks/T-A1-V6-P2.md |
 | T-A1-V6-P3 | v6.0 Phase 3 自動化+策略循環 | A1 | 🔲 待開始（前置: T-A1-V6-P2） | handoff/tasks/T-A1-V6-P3.md |
 | T-A4-002 | pagewu1010 帳號 187GB Takeout 處理 | A4 | 🔲 待開始（前置: T-A4-001 完成） | handoff/tasks/T-A4-002.md |
@@ -45,14 +45,16 @@
 
 | 對象 | 問題 | 行動 |
 |------|------|------|
-| A3 | T-A3-001 + T-A3-002 連續14天無commit（~320h+） | **Owner 需執行：標記 ⏸️ 暫停**，等GTM權限/廣告觀察期就緒再重啟 |
-| A7 | T-A7-001 + T-A7-002 連續11天無commit（~272h+） | **Owner 需決定：暫停 或 確認外部阻塞原因** |
-| A5 | T-A5-002 已逾48h閾值（~56h無commit） | Owner 確認：(a)有未commit進度，或(b)等待Owner回饋確認增強項目（記錄即可） |
-| A4 | T-A4-001 48h閾值 = 04-12 08:31（~10.5h後） | Owner 確認 S12 Colab 仍執行中 |
+| A3 | T-A3-001 + T-A3-002 連續14天無commit（~330h+） | **Owner 需執行：標記 ⏸️ 暫停**，等GTM權限/廣告觀察期就緒再重啟 |
+| A7 | T-A7-001 + T-A7-002 連續12天無commit（~282h+） | **Owner 需決定：暫停 或 確認外部阻塞原因** |
+| A5 | T-A5-002 已逾48h閾值（~66h無commit） | Owner 確認：(a)有未commit進度，或(b)等待Owner回饋確認增強項目（記錄即可） |
+| A4 | T-A4-001 48h閾值04-12 08:31已過（→🔴CRITICAL升級） | **Owner 需確認：S12 Colab 是否仍執行中，或已斷線需重啟** |
 | A5 | A30/A31 條款位置：應在 C37+ 框線內，但目前寫 A 欄框線外，客人看不到 | 下次 A5 session 修正 |
 | Owner | Items DST 成本補填（21筆 E 欄） | 手動填入 MAPLAB_外燴系統_v0.1 Items 表 |
 | Owner | Token 輪換：A6 bot token 待確認；Claude API token 待確認 | 舊token已從git history清除，需撤銷作廢 |
 | Owner | LINE Webhook URL 是否已填入 LINE Developers Console？ | 確認 GAS doPost URL 已設定 |
+
+> ⚠️ A1巡查 2026-04-12 08:42：T-A4-001 48h閾值已過（04-12 08:31），距最後commit(04-10 5787f3e)已逾48h，Colab S12執行狀態未確認，自動升級🔴CRITICAL。A3 ~330h無commit，A7 ~282h無commit，A5-002 ~66h無commit，均維持CRITICAL。
 
 ---
 

@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-04-11 22:00 晚間巡查（A5🔴T-A5-002 ~8h超閾值CRITICAL；A3🔴D14 ~320h+；A7🔴D11 ~272h+；A6🎉晚間極活躍lang-switch+zh+English btn+GAS幻覺fix+QA測試；A4⚠️WATCH 48h=04-12 08:31；T-A5-004→🔄更正）
+> 最後更新：2026-04-12 08:42 每日巡查（A4🔴CRITICAL 48h閾值已過/最後commit 04-10；A5🔴T-A5-002 ~66h；A3🔴~330h；A7🔴~282h；A6🔄T-A6-001正常；T-A5-004🔄GAS v4 e2e round5 passed）
 >
 > 使用方式：選擇角色 → 複製 prompt → 貼到 Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -20,11 +20,11 @@
 | A0 | 總調度秘書 | ✅ Cowork 常駐 | 跨系統橋接、調度、桌面控制 |
 | A1 | 系統總管中心 | ✅ Claude Code 常駐 | Telegram bot + 終端機，直接下指令 |
 | A2 | 搜尋流量作戰部 | ✅ T-A2-001 完成，待新任務 | SEO / GA / 關鍵字 |
-| A3 | 社群與廣告成長部 | 🔴 CRITICAL 282h+無commit（T-A3-001+T-A3-002）⏸️ 暫停待Owner執行 | Meta Ads / Social |
-| A4 | 影像資產整理部 | 🔄 S5✅/S5.5 GPS no_gps✅/S6✅/S11 10,050/12,213=82.2%（🔄 差2163待Owner決策），S12 2,750/7,646=36.0%（5787f3e 04-10，48h閾值04-12）| Photo Archive |
+| A3 | 社群與廣告成長部 | 🔴 CRITICAL 330h+無commit（T-A3-001+T-A3-002）⏸️ 暫停待Owner執行 | Meta Ads / Social |
+| A4 | 影像資產整理部 | 🔴 CRITICAL（48h閾值04-12 08:31已過；S11 82.2%差2163/S12 36.0%執行中，最後commit 04-10 5787f3e）| Photo Archive |
 | A5 | 報價與提案引擎部 | 🔄 T-A5-002 進行中 | Quotation Engine |
 | A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（Telegram 報價助手 v1.1）| Sales Rapid Response |
-| A7 | 客服與對話轉單部 | 🔴 CRITICAL 234h+無commit（T-A7-001+T-A7-002）| Smart Reply |
+| A7 | 客服與對話轉單部 | 🔴 CRITICAL 282h+無commit（T-A7-001+T-A7-002）| Smart Reply |
 | A8 | 多媒體影音製作部 | 🔲 新建，待啟動 | Video Production |
 
 ---
@@ -143,10 +143,10 @@ repo: https://github.com/page1010/maplab-ai-handbook
 1. 系統版本：v6.0 / Phase 6 — 觀測性 + 業務閉環 + 策略循環（Phase 3.1 Dashboard 自動更新已就位 ef2c21b）
 2. EXP-S010 A0/A1 session 混淆已記錄；下次重開先確認 cwd + 貼 A1 recall prompt
 3. A2 T-A2-002 ✅ 完成（2026-04-07）：WP 食安+法規 SEO 字眼清理（13篇）+ AGENT_RULES Section 14（禁用詞清單）+ wp-content-audit 技能書（e92af1d+ecc1a3e+e8e5915）；T-A2A3-001 ✅ 子任務1-4全完成（子任務5等7-14天觀察期）
-4. A7 T-A7-001 Phase 2 + T-A7-002 🔴 CRITICAL 第11天 ~266h+：上次活動 2026-03-31 cf9f166，距今已逾 266h（04-11 16:30）。今日整天無新 A7 活動。Owner 需明確決定暫停或確認阻塞原因。
-5. A4 T-A4-001 🔄 正常執行中（2026-04-10 CRITICAL解除）：S5 ✅(8,559張)；S5.5 GPS ✅ no_gps；S6(2023) ✅；S11(2024) 🔄 10,050/12,213=82.2%（差2163待Owner決策補跑）；S12(2025) 🔄 2,750/7,646=36.0%（5787f3e 04-10）；48h時鐘重設至04-12；ASSET_LOG總計21,414行；API key已更換(fe49f3e)
+4. A7 T-A7-001 Phase 2 + T-A7-002 🔴 CRITICAL 第12天 ~282h+：上次活動 2026-03-31 cf9f166，距今已逾 282h（04-12 08:42）。Owner 需明確決定暫停或確認阻塞原因。
+5. A4 T-A4-001 🔴 CRITICAL（2026-04-12 08:42 升級）：48h閾值04-12 08:31已過，最後commit 5787f3e 04-10；S5✅(8,549張)；S5.5 GPS✅no_gps；S6(2023)✅；S11(2024)⚠️10,050/12,213=82.2%（差2163待Owner決策）；S12(2025)🔄狀態未知（上次36.0%，Colab是否斷線未確認）；需Owner確認Colab執行狀態
 6. A5 T-A5-002 🔴 CRITICAL（04-11 16:30 升級）：服務費可選+長桌費+車馬費+DropdownHelper完成(dbcf9d4)；**04-09重大進展：合約條款v4.0/訂金可調/飲食禁忌/車馬費定版/6項Owner feedback修復（cfeebd1 04-09 14:03+0800）；48h閾值04-11 14:00 已超出~2.5h，無新A5 commit，已升級🔴CRITICAL。Owner確認：(a)未commit進度，或(b)等待Owner回饋（外部阻塞，記錄即可）**；Task Card ✅ 已更新；T-A5-004 Phase 1 ✅ 04-02晚完整收尾
-7. A3 T-A3-001 GTM方案B + T-A3-002 🔴 CRITICAL 第14天 ~314h+：最後 commit 2aca2ae 距今已逾 314h（2026-03-29 22:10 起，04-11 16:30）。今日整天無新活動。**Owner 需立即執行：T-A3-001 + T-A3-002 標記為 ⏸️ 暫停**，待外部條件就緒再重啟。
+7. A3 T-A3-001 GTM方案B + T-A3-002 🔴 CRITICAL 第14天 ~330h+：最後 commit 2aca2ae 距今已逾 330h（2026-03-29 22:10 起，04-12 08:42）。**Owner 需立即執行：T-A3-001 + T-A3-002 標記為 ⏸️ 暫停**，待外部條件就緒再重啟。
 36b. A6 e2e round 5 全通過里程碑 🎉（04-11 16:18 06ce9c6）：quote + slide + heartbeat all verified；auto-trigger Slide after createQuote（b118095，無需手動）；fromMaster mode（b82df34，從母版QUOTE_DRAFT讀資料）；ApiEndpoint.gs 還原+.claspignore修復（45e26a0）；bot_a6 GAS trigger + py3.9 compat（fe76f8a/f99cf31）。A6系統整合達成。A1：Task Card v1.2格式統一12張（b502417）+.gitignore修復（52f6873）。A0：Chrome驗證SOP落地（731cff0）。
 36. A0 dispatch 操作手冊落地（2a1879a 04-10）：docs/a0-dispatch-operations-manual.md 建立 — 使用者視角系統架構圖、入口×角色對照表、委派前7問題協議、操作路徑表、A0/A1分工踩坑記錄。A0 角色定位更完整。
 27. A1 worktree 清理完成（576e7df 2026-04-07）：清除全部 29 個 worktree（含 peaceful-yalow / interesting-shaw / pedantic-mendeleev），Mac mini 環境整潔。
@@ -332,7 +332,7 @@ handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-
 
 ## A4｜影像資產整理部（Photo Archive / Asset Library）
 
-**狀態：🔄 S5✅DONE / S5.5 GPS ✅ no_gps / S6 ✅ 完成 / S11(2024) 🔄 49.1%（36ee642 04-07 15:30 活躍）**
+**狀態：🔴 CRITICAL（48h閾值04-12 08:31已過）/ S5✅ / S5.5 GPS✅ / S6✅ / S11 82.2%差2163待Owner決策 / S12 36.0%執行中，最後commit 04-10 5787f3e**
 
 ```
 你是 MAPLAB A4 影像資產整理部。
@@ -348,14 +348,16 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. Chrome tab 環境 → 自行開啟需要的網頁分頁，用截圖讀取
 
-【斷點 — 2026-04-03 午後巡查更新】
+【斷點 — 2026-04-12 08:42 A1巡查更新】
 T-A4-001 Gemini 照片分類：
   - S1-S4 ✅ 完成
-  - S5(2022) ✅ DONE 8,559張（日常5,243/外燴1,221/旅遊2,073）
-  - S5.5 GPS ✅ 決策 no_gps（d909061 04-03 10:40 正式 SKIP，Takeout JSON未存Drive根本原因確認）
-  - S6(2023) ✅ 完成（8,505張確認）
-  - S11(2024) 🔄 6,000/12,213=49.1%（36ee642 2026-04-07 15:30，48h閾值 = 04-09 15:30）
-  - ASSET_LOG 總計：21,414 資料行
+  - S5(2022) ✅ DONE 8,549張（日常5,243/外燴1,221/旅遊2,073）
+  - S5.5 GPS ✅ 決策 no_gps（Owner指示跳過）
+  - S6(2023) ✅ 完成（8,505張，2026-04-01）
+  - S11(2024) ⚠️ 10,050/12,213=82.2%（差2163張，Colab已切至2025，待Owner決策補跑）
+  - S12(2025) 🔄 2,750/7,646=36.0%（5787f3e 04-10，rate~366/h，⚠️ 48h無commit→狀態未知）
+  - ASSET_LOG 總計：29,854 資料行（2022:8,549 / 2023:8,505 / 2024:10,050 / 2025:2,750）
+  - 🔴 CRITICAL：48h閾值 04-12 08:31 已過，需Owner確認Colab是否仍執行中
 Photo scan 總量：60,584 files
 Gemini API Key 已更換（舊 key leaked fe49f3e，新 key 記錄於 Notion）
 

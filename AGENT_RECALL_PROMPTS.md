@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-04-12 21:00 晚間巡查（A4🔴~60h無commit/Colab狀態未知；A5🔴T-A5-002 ~78h；A3🔴~342h；A7🔴~294h；A6🔄T-A6-001正常；今日8h零新commit）
+> 最後更新：2026-04-14 14:00 午後巡查（A4🔴~101h無commit/Colab S12持續未確認；A5🔴T-A5-002 ~119h；A3🔴~383h；A7🔴~335h；A6🔄T-A6-001正常；全系統41h零新commit，異常靜止）
 >
 > 使用方式：選擇角色 → 複製 prompt → 貼到 Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -20,11 +20,11 @@
 | A0 | 總調度秘書 | ✅ Cowork 常駐 | 跨系統橋接、調度、桌面控制 |
 | A1 | 系統總管中心 | ✅ Claude Code 常駐 | Telegram bot + 終端機，直接下指令 |
 | A2 | 搜尋流量作戰部 | ✅ T-A2-001 完成，待新任務 | SEO / GA / 關鍵字 |
-| A3 | 社群與廣告成長部 | 🔴 CRITICAL 342h+無commit（T-A3-001+T-A3-002）⏸️ 暫停待Owner執行 | Meta Ads / Social |
-| A4 | 影像資產整理部 | 🔴 CRITICAL（~60h無commit；S11 82.2%差2163/S12 36.0%執行狀態未知，Colab未確認，最後commit 04-10 5787f3e）| Photo Archive |
-| A5 | 報價與提案引擎部 | 🔴 CRITICAL T-A5-002 ~78h無commit | Quotation Engine |
+| A3 | 社群與廣告成長部 | 🔴 CRITICAL 383h+無commit（T-A3-001+T-A3-002）⏸️ 暫停待Owner執行 | Meta Ads / Social |
+| A4 | 影像資產整理部 | 🔴 CRITICAL（~101h無commit；S11 82.2%差2163/S12 36.0%執行狀態未知，Colab未確認，最後commit 04-10 5787f3e）| Photo Archive |
+| A5 | 報價與提案引擎部 | 🔴 CRITICAL T-A5-002 ~119h無commit | Quotation Engine |
 | A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（Telegram 報價助手 v1.1）| Sales Rapid Response |
-| A7 | 客服與對話轉單部 | 🔴 CRITICAL 294h+無commit（T-A7-001+T-A7-002）| Smart Reply |
+| A7 | 客服與對話轉單部 | 🔴 CRITICAL 335h+無commit（T-A7-001+T-A7-002）| Smart Reply |
 | A8 | 多媒體影音製作部 | 🔲 新建，待啟動 | Video Production |
 
 ---

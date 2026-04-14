@@ -57,6 +57,7 @@
 > ⚠️ A1巡查 2026-04-12 08:42：T-A4-001 48h閾值已過（04-12 08:31），距最後commit(04-10 5787f3e)已逾48h，Colab S12執行狀態未確認，自動升級🔴CRITICAL。A3 ~330h無commit，A7 ~282h無commit，A5-002 ~66h無commit，均維持CRITICAL。
 > ⚠️ A1巡查 2026-04-12 21:00（晚間）：過去8h零新commit。所有CRITICAL任務時鐘持續累計：A4 ~60h（Colab狀態仍未確認）、A5-002 ~78h、A7 ~294h、A3 ~342h。今日唯一活動為docs commit（user-scenarios.md，10:02 +0800），無業務Agent進展。四項CRITICAL待Owner行動，建議優先處理A4 Colab確認及A3/A7暫停決策。
 > ⚠️ A1巡查 2026-04-14 14:00（午後）：距上次巡查（04-12 21:00）已逾~41h，全系統零新commit。所有CRITICAL時鐘繼續累計：A4 ~101h（Colab S12狀態持續未確認，已超4天）、A5-002 ~119h（已超5天）、A7 ~335h（約14天）、A3 ~383h（約16天）。全系統連續~41h無任何業務活動，屬異常靜止期。【強烈建議Owner】：(1) 立即確認 A4 Colab S12 是否仍在執行，或已斷線需重啟；(2) 決策 A3/A7 暫停或重啟；(3) 確認 A5-002 Owner 回饋是否已提供。
+> ⚠️ A1巡查 2026-04-14 14:00（git構造異常）：偵測到兩條分歧的 git 歷史。origin/main 停在 04-10 `5787f3e`（50 commits），本機 detached HEAD 有獨立的 51 commits（04-10至04-14的所有巡查記錄）。兩條歷史無共同祖先，無法 fast-forward push。本次巡查 commit 已 push 到 `patrol/a1-2026-04-14` branch。【Owner 需決策】：確認 detached HEAD 的歷史是否為正確主線 → 若是，執行 `git push --force-with-lease origin HEAD:main` 將 detached HEAD 設為新 main。
 
 ---
 

@@ -3,7 +3,7 @@
 ## 接續狀態
 - **狀態**: 🔄 進行中
 - **最後活動**: 2026-04-15 539f304
-- **接續點**: Phase 2-1 完成 — checkpoint.sh 新增 `_sync_recalls()` 函數，每次 commit 後自動從 Task Card 提取現況寫入 recalls/ 的 AUTO-SYNC 區塊。9 個 recall 已初始化。下一步：Phase 2-2 自動更新 CURRENT_STATUS.md
+- **接續點**: Phase 2 全部完成 — 2-1 sync recalls、2-2 sync CURRENT_STATUS（awk 重生成任務表+Blockers，遵守 parseStatus() 契約）、2-3 決策提示。下一步：Phase 3 瘦身
 - **阻塞**: 無
 
 ## 背景

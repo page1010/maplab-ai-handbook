@@ -122,8 +122,14 @@ _sync_current_status() {
     local blocker=$(grep -m1 '^\- \*\*阻塞\*\*' "$card" 2>/dev/null | sed 's/.*\*\*: //' || echo "無")
     local next_step=$(grep -m1 '^\- \*\*接續點\*\*' "$card" 2>/dev/null | sed 's/.*\*\*: //' || echo "")
 
-    # 提取標題（去掉 # 和 Task Card: 前綴）
-    local title=$(head -1 "$card" | sed -e 's/^# //' -e 's/^Task Card: //' -e "s/^${filename}[: —–-]*//" | sed 's/^ *//')
+    # 提取標題（去掉 # 和 Task Card: 前綴和 Task ID 前綴）
+    local raw_title=$(head -1 "$card" | sed -e 's/^# //' -e 's/^Task Card: //')
+    # 去掉 Task ID 前綴（T-A1-V7: 或 T-A1-V7 — 等格式）
+    local title=$(echo "$raw_title" | sed -E "s/^${filename}[: —–\-]+//" | sed 's/^ *//')
+    # 如果標題就是 Task ID 或空，嘗試讀第二行非空行
+    if [ -z "$title" ] || [ "$title" = "$filename" ]; then
+      title=$(sed -n '2,10p' "$card" | grep -v '^$' | grep -v '^#' | grep -v '^\-' | grep -v '^>' | head -1 | sed 's/^ *//')
+    fi
     [ -z "$title" ] && title="$filename"
 
     # 提取 agent（從檔名 T-A5-002 → A5, T-A2A3-001 → A2/A3）
@@ -176,53 +182,79 @@ _sync_current_status() {
     table_rows="${table_rows}| ${filename} | ${title} | ${agent} | ${display_status} | ${card_path} |
 "
 
-    # 收集 Blocker
-    if [ "$blocker" != "無" ] && [ -n "$blocker" ]; then
+    # 收集 Blocker（「無」開頭的不算阻塞）
+    if [ -n "$blocker" ] && ! echo "$blocker" | grep -q '^無'; then
       blocker_rows="${blocker_rows}| ${agent} | ${filename}: ${blocker} | 見 Task Card |
 "
     fi
   done
 
   # ── 重組 CURRENT_STATUS.md ──
-  # 策略：保留靜態區塊，只替換「當前進行中任務」表和「Blockers」和時間戳
+  # 策略：用 awk 逐行處理，保留靜態區塊，替換任務表和 Blockers
   local tmp="${status_file}.tmp"
+  local task_table_file=$(mktemp)
+  local blocker_section_file=$(mktemp)
 
-  # 更新時間戳
-  sed "s/^最後更新：.*/最後更新：${today} ${now_time}（checkpoint.sh 自動同步）｜完整歷史存於 \`archive\/CURRENT_STATUS_2026-04-11_full.md\`/" "$status_file" > "$tmp"
+  # 寫任務表到暫存檔
+  {
+    echo "## 當前進行中任務"
+    echo ""
+    echo "| Task ID | 任務 | 負責 Agent | 狀態 | Task Card |"
+    echo "|---------|------|-----------|------|-----------|"
+    printf '%s' "$table_rows"
+  } > "$task_table_file"
 
-  # 替換任務表：從 ## 當前進行中任務 到下一個 ---
-  local new_table="## 當前進行中任務
-
-| Task ID | 任務 | 負責 Agent | 狀態 | Task Card |
-|---------|------|-----------|------|-----------|
-${table_rows}
----"
-
-  # 用 perl 替換多行區塊（從 ## 當前進行中任務 到 ---）
-  perl -0777 -i -pe "s/## 當前進行中任務.*?(?=\n---\n\n## )/$(echo "$new_table" | sed 's/[&/\]/\\&/g; s/$/\\n/' | tr -d '\n')\n/s" "$tmp" 2>/dev/null
-
-  # 替換 Blockers 區塊
+  # 寫 Blocker 區塊到暫存檔
   if [ -n "$blocker_rows" ]; then
-    local new_blockers="## Blockers（只列未解決的）
-
-| 對象 | 問題 | 行動 |
-|------|------|------|
-${blocker_rows}"
+    {
+      echo "## Blockers（只列未解決的）"
+      echo ""
+      echo "| 對象 | 問題 | 行動 |"
+      echo "|------|------|------|"
+      printf '%s' "$blocker_rows"
+    } > "$blocker_section_file"
   else
-    local new_blockers="## Blockers（只列未解決的）
-
-（無阻塞項目）"
+    echo "## Blockers（只列未解決的）" > "$blocker_section_file"
+    echo "" >> "$blocker_section_file"
+    echo "（無阻塞項目）" >> "$blocker_section_file"
   fi
 
-  # 用 perl 替換 Blockers 區塊（從 ## Blocker 到 ---）
-  perl -0777 -i -pe "s/## Blockers.*?(?=\n---\n\n## Source)/$(echo "$new_blockers" | sed 's/[&/\]/\\&/g; s/$/\\n/' | tr -d '\n')\n/s" "$tmp" 2>/dev/null
+  # awk 逐行處理：替換時間戳、任務表區塊、Blocker 區塊
+  awk -v today="$today" -v now_time="$now_time" \
+      -v task_file="$task_table_file" \
+      -v blocker_file="$blocker_section_file" '
+  BEGIN { skip=0 }
+  # 更新時間戳
+  /^最後更新：/ {
+    print "最後更新：" today " " now_time "（checkpoint.sh 自動同步）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`"
+    next
+  }
+  # 替換任務表區塊（從 ## 當前進行中任務 到 ---）
+  /^## 當前進行中任務/ {
+    while ((getline line < task_file) > 0) print line
+    close(task_file)
+    skip=1
+    next
+  }
+  # 替換 Blocker 區塊（從 ## Blockers 到 ---）
+  /^## Blockers/ {
+    while ((getline line < blocker_file) > 0) print line
+    close(blocker_file)
+    skip=1
+    next
+  }
+  # 跳過舊的 > ⚠️ A1巡查 追加行
+  /^> ⚠️ A1巡查/ { next }
+  # --- 分隔線結束 skip 模式
+  skip==1 && /^---$/ { skip=0; print; next }
+  skip==0 { print }
+  ' "$status_file" > "$tmp"
 
-  # 清除舊的 A1巡查 追加行（> ⚠️ A1巡查 開頭的行）— 這些由 patrol 負責
-  # 保留最近一條作為歷史參考
-  # 不做：保持向後兼容
-
+  rm -f "$task_table_file" "$blocker_section_file"
   mv "$tmp" "$status_file"
-  echo "📊 CURRENT_STATUS.md 自動同步完成（$(echo "$table_rows" | grep -c '^|') 張任務卡）"
+
+  local task_count=$(printf '%s' "$table_rows" | grep -c '^|' || echo 0)
+  echo "📊 CURRENT_STATUS.md 自動同步完成（${task_count} 張任務卡）"
 }
 
 # === 自動同步 recall 現況區（Phase 2-1: T-A1-V7） ===
@@ -447,6 +479,10 @@ if [ "$FAST_MODE" = true ]; then
   echo "   Commit: $SHORT"
   echo "   main 已同步到 remote。"
   echo "======================================"
+  echo ""
+  echo "💡 決策提示：這次有值得記錄的決策嗎？"
+  echo "   （為什麼不用方案 A？踩過什麼坑？改了什麼設計？）"
+  echo "   有的話請追加到 decisions.md：格式「[角色]-[主題]: 決策內容 → 原因」"
 
 # ============================================================
 # 預設模式：commit 到 agent branch，push branch，等 Owner approve
@@ -501,4 +537,8 @@ else
   echo "⚠️  尚未進入 main。Owner 確認後執行："
   echo "   bash scripts/approve.sh $AGENT_BRANCH"
   echo "======================================"
+  echo ""
+  echo "💡 決策提示：這次有值得記錄的決策嗎？"
+  echo "   （為什麼不用方案 A？踩過什麼坑？改了什麼設計？）"
+  echo "   有的話請追加到 decisions.md：格式「[角色]-[主題]: 決策內容 → 原因」"
 fi

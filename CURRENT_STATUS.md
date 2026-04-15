@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-04-15 21:00（A1 每日巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-04-15 21:39（checkpoint.sh 自動同步）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -21,44 +21,47 @@
 
 | Task ID | 任務 | 負責 Agent | 狀態 | Task Card |
 |---------|------|-----------|------|-----------|
-| T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔴 CRITICAL（~150h無commit，等Owner確認剩餘增強項目） | handoff/tasks/T-A5-002.md |
-| T-A5-003 | 熱客招待品項定義 | A5 | 🔲 待開始 | — |
-| T-A5-004 | generateProposal_v2.gs Slide 簡報 | A5/A6 | 🔄 進行中（GAS v4已部署，e2e round5 passed；待：結尾頁/無圖垂直置中） | handoff/tasks/T-A5-004.md |
-| T-A5-005 | onEdit追蹤同步+Dashboard | A5 | 🔲 待啟動 | handoff/tasks/T-A5-005.md |
-| T-A4-001 | Phase 4 Gemini 照片分類 | A4 | 🔴 CRITICAL（最後commit 04-10 08:31 5787f3e，逾~132h；S12執行狀態未知，需Owner確認Colab是否斷線） | projects/maplab-pipeline.md + handoff/tasks/T-A4-001.md |
-| T-A2A3-001 | SEO 關鍵字頁面補足 | A2 | 🔄 子任務1-4完成，子任務5等7-14天 | handoff/tasks/T-A2A3-001.md + T-A2A3-001-B.md |
-| T-A3-001 | GTM LINE 按鈕追蹤修復（方案 B） | A3 | 🔴 CRITICAL（~414h無commit，GTM方案B規格已記錄，待技術實作） | — |
-| T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 | A3 | 🔴 CRITICAL（~414h無commit，廣告成效報告v1.0已產出） | handoff/tasks/T-A3-002.md |
-| T-A6-001 | Telegram 報價助手系統 | A6 | 🔄 進行中（GAS doPost Web App v12已上線，訓練架構Steps 1-4完成，e2e round5 passed） | projects/line-quote-assistant.md |
-| T-A6-002 | LINE 對話訓練資料收集 | A6 | 🔲 暫停（LINE webhook無業務回覆，待Owner決定新方向） | handoff/tasks/T-A6-002.md |
-| T-A7-001 | FAQ 回覆模板庫 + 補問流程 | A7 | 🔴 CRITICAL（~366h無commit，skills v2.0/reply-templates v1.0已產出） | handoff/tasks/T-A7-001.md |
-| T-A7-002 | 80/20 優先任務清單 + 執行路線圖 | A7 | 🔴 CRITICAL（~366h無commit，任務6+10完成） | — |
-| T-A1-V6-P2 | v6.0 Phase 2 業務閉環 MVP | A1 | 🔄 進行中 | handoff/tasks/T-A1-V6-P2.md |
-| T-A1-V6-P3 | v6.0 Phase 3 自動化+策略循環 | A1 | 🔲 待開始（前置: T-A1-V6-P2） | handoff/tasks/T-A1-V6-P3.md |
-| T-A4-002 | pagewu1010 帳號 187GB Takeout 處理 | A4 | 🔲 待開始（前置: T-A4-001 完成） | handoff/tasks/T-A4-002.md |
-| T-A5-006 | OrderLines 2025 手動重建 | A5 | 🔲 待開始（前置: T-A5-005 完成） | handoff/tasks/T-A5-006.md |
-| T-GBP-001 | Google 商家檔案「週歲派對」產品圖片更換 | Owner | 🔲 待開始 | handoff/tasks/T-GBP-001.md |
-
+| T-A1-V6-P2 | T-A1-V6-P2 | A1 | 🔄 進行中（4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下一步：建虛擬測試案例 →） | handoff/tasks/T-A1-V6-P2.md |
+| T-A1-V6-P3 | T-A1-V6-P3 | A1 | 🔲 待開始（尚未開始。等 T-A1-V6-P2 完成後啟動。） | handoff/tasks/T-A1-V6-P3.md |
+| T-A1-V7 | 系統進化 — 單一真相源 + 自動同步 + 瘦身 + 自動技能生成 + 自動壓縮 | A1 | 🔄 進行中（Phase 2-1 完成 — checkpoint.sh 新增 `_sync_recalls()` 函數，每次 comm） | handoff/tasks/T-A1-V7.md |
+| T-A2-002-foodsafety-seo-cleanup | T-A2-002 — 食安 + 法規 SEO 字眼清理 | A2 | ⏸️ 阻塞（Repo 端已清理完成；WordPress 端需 Owner 手動刪除/修改 5 篇文章的食安字眼） | handoff/tasks/T-A2-002-foodsafety-seo-cleanup.md |
+| T-A2-003-weekly-wp-audit | T-A2-003: 每週全站 WP 內容稽核排程 | A2 | 🔲 待開始（腳本已建好（wp-audit.sh / wp-audit-cron.sh）。待 Owner 用 /schedule 建立） | handoff/tasks/T-A2-003-weekly-wp-audit.md |
+| T-A2-004 | 首頁結構優化 — 配合品牌色票微調 + 轉換路徑整理 | A2 | 🔲 待開始（任務卡建立。A0 已完成對標分析和色票微調。） | handoff/tasks/T-A2-004.md |
+| T-A2A3-001-B | SEO 場景頁面 + 內連結（從 T-A2A3-001 分拆） | A2/A3 | ⏸️ 阻塞（子任務 3+4 完成（3 個場景頁 + 56 篇內連結）；子任務 5 等 Google 重新索引（7-14 天）） | handoff/tasks/T-A2A3-001-B.md |
+| T-A2A3-001 | SEO 關鍵字頁面補足 | A2/A3 | ⏸️ 阻塞（子任務 1-4 完成；子任務 5 等 Google 重新索引驗證排名變化） | handoff/tasks/T-A2A3-001.md |
+| T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | ⏸️ 阻塞中（受眾輪廓分析完成（693筆 Orders）。待執行：嘉義加入廣告地區、興趣條件精簡、策略一冷受眾上線。） | handoff/tasks/T-A3-002.md |
+| T-A4-001 | Phase 4 Gemini 照片分類（2022-2026） | A4 | 🔄 進行中（S11/2024 補跑執行中）（S12(2025) ✅ DONE 7,645/7,642（45張補完，2026-04-15 08:58 完成）。S11(） | handoff/tasks/T-A4-001.md |
+| T-A4-002 | T-A4-002 | A4 | 🔲 待開始（尚未開始。等 T-A4-001 完成後啟動。） | handoff/tasks/T-A4-002.md |
+| T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔴 CRITICAL（~167h無commit） | handoff/tasks/T-A5-002.md |
+| T-A5-004 | createSlides.gs — Slide 報價簡報自動生成 | A5 | 🔴 CRITICAL（~143h無commit） | handoff/tasks/T-A5-004.md |
+| T-A5-005 | 報價狀態追蹤同步 + Dashboard | A5 | 🔴 CRITICAL（~167h無commit） | handoff/tasks/T-A5-005.md |
+| T-A5-006 | T-A5-006 | A5 | 🔲 待開始（尚未開始。等 T-A5-005 完成後啟動。） | handoff/tasks/T-A5-006.md |
+| T-A6-001 | A6 LINE 業務報價助手系統 | A6 | ⏸️ 阻塞中（Sheet 三分頁架構完成、LINE Bot Webhook 技能書完成、GAS doPost 已部署。差最後一步：LI） | handoff/tasks/T-A6-001.md |
+| T-A6-002 | LINE 對話訓練資料收集計畫 | A6 | 💤 暫停（原計畫拆 Sheet 做訓練資料，04-07 重新規劃方向。等 Owner 決定是否需要 LINE 訓練資料及取得方式。） | handoff/tasks/T-A6-002.md |
+| T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | 💤 暫停（Phase 2 v2.0 完成，等 Owner 確認政策 + A5 欄位補齊）（Q1-Q10 重構完成（真實 CSV 驅動），下一步是 Q7/Q10 政策確認 + Phase 3 上線測試） | handoff/tasks/T-A7-001.md |
+| T-A7-002 | A7 部門 80/20 優先任務清單 | A7 | ⏸️ 阻塞中（任務 6（Q1-Q10 實裝）+ 任務 10（技能書 v2.0）已完成。Phase 3A 剩任務 4（地區判斷）、7（流） | handoff/tasks/T-A7-002.md |
+| T-GBP-001 | T-GBP-001 | Owner | 🔲 待開始（尚未開始。等 Owner 準備新圖片。） | handoff/tasks/T-GBP-001.md |
 ---
 
 ## Blockers（只列未解決的）
 
 | 對象 | 問題 | 行動 |
 |------|------|------|
-| A3 | T-A3-001 + T-A3-002 連續14天無commit（~342h+） | **Owner 需執行：標記 ⏸️ 暫停**，等GTM權限/廣告觀察期就緒再重啟 |
-| A7 | T-A7-001 + T-A7-002 連續12天無commit（~294h+） | **Owner 需決定：暫停 或 確認外部阻塞原因** |
-| A5 | T-A5-002 已逾48h閾值（~78h無commit） | Owner 確認：(a)有未commit進度，或(b)等待Owner回饋確認增強項目（記錄即可） |
-| A4 | T-A4-001 ~60h無commit（最後04-10 08:31） | **Owner 需確認：S12 Colab 是否仍執行中，或已斷線需重啟** |
-| A5 | A30/A31 條款位置：應在 C37+ 框線內，但目前寫 A 欄框線外，客人看不到 | 下次 A5 session 修正 |
-| Owner | Items DST 成本補填（21筆 E 欄） | 手動填入 MAPLAB_外燴系統_v0.1 Items 表 |
-| Owner | Token 輪換：A6 bot token 待確認；Claude API token 待確認 | 舊token已從git history清除，需撤銷作廢 |
-| Owner | LINE Webhook URL 是否已填入 LINE Developers Console？ | 確認 GAS doPost URL 已設定 |
-
-> ⚠️ A1巡查 2026-04-12 08:42：T-A4-001 48h閾值已過（04-12 08:31），距最後commit(04-10 5787f3e)已逾48h，Colab S12執行狀態未確認，自動升級🔴CRITICAL。A3 ~330h無commit，A7 ~282h無commit，A5-002 ~66h無commit，均維持CRITICAL。
-> ⚠️ A1巡查 2026-04-12 21:00（晚間）：過去8h零新commit。所有CRITICAL任務時鐘持續累計：A4 ~60h（Colab狀態仍未確認）、A5-002 ~78h、A7 ~294h、A3 ~342h。今日唯一活動為docs commit（user-scenarios.md，10:02 +0800），無業務Agent進展。四項CRITICAL待Owner行動，建議優先處理A4 Colab確認及A3/A7暫停決策。
-> ⚠️ A1巡查 2026-04-14 21:00：系統整體靜默異常 —— 自 e935500（04-12 21:00）至今約48h零commit，04-13整日無任何活動（包含GitHub Actions daily patrol排程），系統可能進入休眠或Actions workflow觸發失敗。各CRITICAL任務時鐘再增：A4 T-A4-001 ~108h（Colab S12狀態仍未確認）、A5-002 ~126h、A7 ~342h（第16天）、A3 ~390h（第17天）。**Owner須確認：(1) GitHub Actions system-patrol.yml 是否已失效；(2) A4 Colab 執行狀態；(3) A3/A7 CRITICAL任務是否需正式標記⏸️暫停。**
-> ⚠️ A1巡查 2026-04-15 21:00：系統靜默第三日（04-13至今）—— 過去24h僅有昨日巡查commit（c5a4347），零業務Agent活動。GitHub Actions daily patrol 疑似持續未觸發（連續3天無自動patrol commit）。各CRITICAL任務時鐘再+24h：A4 ~132h（Colab S12仍未確認）、A5-002 ~150h（第7天）、A7 ~366h（第17天）、A3 ~414h（第18天）。**⚠️ 緊急升級：A3+A7已近3週無業務活動，建議Owner本日決策：正式標記⏸️暫停或確認外部阻塞原因。A4 Colab斷線風險極高（~132h）。**
-
+| A1 | T-A1-V6-P2: 等 A6 實際報價測試 | 見 Task Card |
+| A1 | T-A1-V6-P3: 前置 T-A1-V6-P2 需先完成 | 見 Task Card |
+| A2 | T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台 | 見 Task Card |
+| A2 | T-A2-003-weekly-wp-audit: 等 Owner 建立排程 | 見 Task Card |
+| A2/A3 | T-A2A3-001-B: 等 Google 重新索引，預計 04-11 後可驗證 | 見 Task Card |
+| A2/A3 | T-A2A3-001: 等 Google 重新索引，預計 04-11 後可驗證 | 見 Task Card |
+| A3 | T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） | 見 Task Card |
+| A4 | T-A4-002: 前置 T-A4-001 需先完成 | 見 Task Card |
+| A5 | T-A5-002: 等 Owner 確認（品項名稱改法、重複品項、I 欄用途） | 見 Task Card |
+| A5 | T-A5-006: 前置 T-A5-005 需先完成 | 見 Task Card |
+| A6 | T-A6-001: 需 Owner 在 LINE Developers Console 填入 Webhook URL（Channel 1654658337） | 見 Task Card |
+| A6 | T-A6-002: 等 Owner 決定方向 | 見 Task Card |
+| A7 | T-A7-001: Q7 試吃政策需 Owner 決定、Q10 取消/改期政策需 Owner 決定、A5 外送費級距未建立 | 見 Task Card |
+| A7 | T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 | 見 Task Card |
+| Owner | T-GBP-001: 等 Owner 準備新圖片 | 見 Task Card |
 ---
 
 ## Source of Truth（有效文件清單）

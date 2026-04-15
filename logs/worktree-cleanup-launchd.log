@@ -19,3 +19,10 @@ Deleted branch claude/hardcore-shannon (was 5f67ccd).
 [2026-04-15 21:08:55] ⚠️  跳過 nervous-booth — 有未提交變更
 [2026-04-15 21:08:55] 完成：掃描 2 個 worktree，清理 1 個，跳過 1 個
 [2026-04-15 21:08:55] 估計釋放 ~16MB 磁碟空間
+[2026-04-15 21:38:56] ⚠️  跳過 nervous-booth — 有未提交變更
+[2026-04-15 21:38:56] 🗑️  清理 zealous-villani...
+[2026-04-15 21:38:56]    ✅ worktree 已移除
+Deleted branch claude/zealous-villani (was c52feb1).
+[2026-04-15 21:38:56]    🌿 本地 branch claude/zealous-villani 已刪除
+[2026-04-15 21:38:56] 完成：掃描 2 個 worktree，清理 1 個，跳過 1 個
+[2026-04-15 21:38:56] 估計釋放 ~16MB 磁碟空間

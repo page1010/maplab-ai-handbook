@@ -99,6 +99,132 @@ _update_task_cards() {
   fi
 }
 
+# === 自動同步 CURRENT_STATUS.md 任務表（Phase 2-2: T-A1-V7） ===
+_sync_current_status() {
+  local status_file="$REPO_ROOT/CURRENT_STATUS.md"
+  [ -f "$status_file" ] || return 0
+
+  local today=$(date +%Y-%m-%d)
+  local now_time=$(date +%H:%M)
+  local now_ts=$(date +%s)
+
+  # ── 掃描所有 Task Card，建任務表行 ──
+  local table_rows=""
+  local blocker_rows=""
+
+  for card in "$TASKS_DIR"/T-*.md; do
+    [ -f "$card" ] || continue
+    local filename=$(basename "$card" .md)
+
+    # 提取欄位
+    local status=$(grep -m1 '^\- \*\*狀態\*\*' "$card" 2>/dev/null | sed 's/.*\*\*: //' || echo "")
+    local last_activity=$(grep -m1 '^\- \*\*最後活動\*\*' "$card" 2>/dev/null | sed 's/.*\*\*: //' || echo "")
+    local blocker=$(grep -m1 '^\- \*\*阻塞\*\*' "$card" 2>/dev/null | sed 's/.*\*\*: //' || echo "無")
+    local next_step=$(grep -m1 '^\- \*\*接續點\*\*' "$card" 2>/dev/null | sed 's/.*\*\*: //' || echo "")
+
+    # 提取標題（去掉 # 和 Task Card: 前綴）
+    local title=$(head -1 "$card" | sed -e 's/^# //' -e 's/^Task Card: //' -e "s/^${filename}[: —–-]*//" | sed 's/^ *//')
+    [ -z "$title" ] && title="$filename"
+
+    # 提取 agent（從檔名 T-A5-002 → A5, T-A2A3-001 → A2/A3）
+    local agent=$(echo "$filename" | sed -E 's/^T-//' | grep -oE 'A[0-9]+' | head -1 || echo "??")
+    # 特殊處理 A2A3
+    if echo "$filename" | grep -q 'A2A3'; then
+      agent="A2/A3"
+    fi
+    # GBP 特殊處理
+    if echo "$filename" | grep -q 'GBP'; then
+      agent="Owner"
+    fi
+
+    # 跳過已完成的
+    if echo "$status" | grep -q '✅'; then
+      continue
+    fi
+
+    # 計算時間差（用於顯示）
+    local activity_date=$(echo "$last_activity" | grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2}' | head -1)
+    local age_info=""
+    if [ -n "$activity_date" ]; then
+      local then_ts=$(date -j -f "%Y-%m-%d" "$activity_date" +%s 2>/dev/null || echo 0)
+      if [ "$then_ts" != "0" ]; then
+        local hours_ago=$(( (now_ts - then_ts) / 3600 ))
+        if [ "$hours_ago" -gt 48 ]; then
+          age_info="~${hours_ago}h無commit"
+        fi
+      fi
+    fi
+
+    # 組裝狀態描述
+    local display_status="$status"
+    # 如果進行中且超過 48h → 標記 CRITICAL
+    if echo "$status" | grep -q '🔄' && [ -n "$age_info" ]; then
+      display_status="🔴 CRITICAL（${age_info}）"
+    elif echo "$status" | grep -q '🔲' && [ -n "$age_info" ]; then
+      display_status="$status"
+    fi
+    # 如果有接續點，附在狀態後
+    if [ -n "$next_step" ] && [ "$next_step" != "（checkpoint.sh 自動補建，請 agent 填寫）" ] && ! echo "$display_status" | grep -q 'CRITICAL'; then
+      # 截短到 60 字
+      local short_next=$(echo "$next_step" | cut -c1-60)
+      display_status="${display_status}（${short_next}）"
+    fi
+
+    # Task Card 路徑
+    local card_path="handoff/tasks/${filename}.md"
+
+    table_rows="${table_rows}| ${filename} | ${title} | ${agent} | ${display_status} | ${card_path} |
+"
+
+    # 收集 Blocker
+    if [ "$blocker" != "無" ] && [ -n "$blocker" ]; then
+      blocker_rows="${blocker_rows}| ${agent} | ${filename}: ${blocker} | 見 Task Card |
+"
+    fi
+  done
+
+  # ── 重組 CURRENT_STATUS.md ──
+  # 策略：保留靜態區塊，只替換「當前進行中任務」表和「Blockers」和時間戳
+  local tmp="${status_file}.tmp"
+
+  # 更新時間戳
+  sed "s/^最後更新：.*/最後更新：${today} ${now_time}（checkpoint.sh 自動同步）｜完整歷史存於 \`archive\/CURRENT_STATUS_2026-04-11_full.md\`/" "$status_file" > "$tmp"
+
+  # 替換任務表：從 ## 當前進行中任務 到下一個 ---
+  local new_table="## 當前進行中任務
+
+| Task ID | 任務 | 負責 Agent | 狀態 | Task Card |
+|---------|------|-----------|------|-----------|
+${table_rows}
+---"
+
+  # 用 perl 替換多行區塊（從 ## 當前進行中任務 到 ---）
+  perl -0777 -i -pe "s/## 當前進行中任務.*?(?=\n---\n\n## )/$(echo "$new_table" | sed 's/[&/\]/\\&/g; s/$/\\n/' | tr -d '\n')\n/s" "$tmp" 2>/dev/null
+
+  # 替換 Blockers 區塊
+  if [ -n "$blocker_rows" ]; then
+    local new_blockers="## Blockers（只列未解決的）
+
+| 對象 | 問題 | 行動 |
+|------|------|------|
+${blocker_rows}"
+  else
+    local new_blockers="## Blockers（只列未解決的）
+
+（無阻塞項目）"
+  fi
+
+  # 用 perl 替換 Blockers 區塊（從 ## Blocker 到 ---）
+  perl -0777 -i -pe "s/## Blockers.*?(?=\n---\n\n## Source)/$(echo "$new_blockers" | sed 's/[&/\]/\\&/g; s/$/\\n/' | tr -d '\n')\n/s" "$tmp" 2>/dev/null
+
+  # 清除舊的 A1巡查 追加行（> ⚠️ A1巡查 開頭的行）— 這些由 patrol 負責
+  # 保留最近一條作為歷史參考
+  # 不做：保持向後兼容
+
+  mv "$tmp" "$status_file"
+  echo "📊 CURRENT_STATUS.md 自動同步完成（$(echo "$table_rows" | grep -c '^|') 張任務卡）"
+}
+
 # === 自動同步 recall 現況區（Phase 2-1: T-A1-V7） ===
 _sync_recalls() {
   local role="$1"
@@ -312,6 +438,9 @@ if [ "$FAST_MODE" = true ]; then
   # === 自動同步 recall 現況區 ===
   _sync_recalls "$ROLE"
 
+  # === 自動同步 CURRENT_STATUS.md ===
+  _sync_current_status
+
   echo ""
   echo "======================================"
   echo "✅ 存檔完成（fast mode）"
@@ -359,6 +488,9 @@ else
 
   # === 自動同步 recall 現況區 ===
   _sync_recalls "$ROLE"
+
+  # === 自動同步 CURRENT_STATUS.md ===
+  _sync_current_status
 
   echo ""
   echo "======================================"

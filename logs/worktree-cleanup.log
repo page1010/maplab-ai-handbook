@@ -1,0 +1,16 @@
+[2026-04-15 17:08:43] [DRY-RUN] 會清理 eloquent-chatelet (無變更)
+[2026-04-15 17:08:43] [DRY-RUN] 會清理 gallant-herschel (無變更)
+[2026-04-15 17:08:43] [DRY-RUN] 會清理 gracious-bassi (無變更)
+[2026-04-15 17:08:43] 完成：掃描 3 個 worktree，清理 3 個，跳過 0 個
+[2026-04-15 17:08:49] 🗑️  清理 eloquent-chatelet...
+[2026-04-15 17:08:49]    ✅ worktree 已移除
+[2026-04-15 17:08:49]    🌿 本地 branch claude/eloquent-chatelet 已刪除
+[2026-04-15 17:08:49] 🗑️  清理 gallant-herschel...
+[2026-04-15 17:08:49]    ✅ worktree 已移除
+[2026-04-15 17:08:49]    🌿 本地 branch claude/gallant-herschel 已刪除
+[2026-04-15 17:08:49] 🗑️  清理 gracious-bassi...
+[2026-04-15 17:08:49]    ✅ worktree 已移除
+[2026-04-15 17:08:49]    🌿 本地 branch claude/gracious-bassi 已刪除
+[2026-04-15 17:08:49] 完成：掃描 3 個 worktree，清理 3 個，跳過 0 個
+[2026-04-15 17:08:49] 估計釋放 ~48MB 磁碟空間
+[2026-04-15 17:08:54] 完成：掃描 0 個 worktree，清理 0 個，跳過 0 個

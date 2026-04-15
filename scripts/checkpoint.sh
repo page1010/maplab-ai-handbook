@@ -18,18 +18,66 @@ REPO_ROOT="/Users/pagemacmini/maplab-ai-handbook"
 TASKS_DIR="$REPO_ROOT/handoff/tasks"
 
 # === 自動更新 Task Card「最後活動」欄位 ===
+_inject_status_block() {
+  # 對缺接續狀態區塊的 Task Card 補上空白模板
+  local card="$1"
+  local today=$(date +%Y-%m-%d)
+
+  # 已有接續狀態區塊 → 跳過
+  grep -q '^\- \*\*狀態\*\*' "$card" && return 1
+
+  # 在第一個 --- 或 ## 之後插入（跳過標題行）
+  # 找到第一個非標題、非空行的位置，在檔案開頭的標題後插入
+  local tmp="${card}.tmp"
+  local inserted=false
+
+  while IFS= read -r line; do
+    echo "$line" >> "$tmp"
+    # 在第一個 # 標題行之後插入
+    if [[ "$inserted" == false ]] && echo "$line" | grep -q '^# '; then
+      inserted=true
+      cat >> "$tmp" << BLOCK
+
+## 接續狀態
+- **狀態**: 🔄 進行中
+- **最後活動**: ${today}
+- **接續點**: （checkpoint.sh 自動補建，請 agent 填寫）
+- **阻塞**: 無
+BLOCK
+    fi
+  done < "$card"
+
+  if [[ "$inserted" == true ]]; then
+    mv "$tmp" "$card"
+    return 0
+  else
+    rm -f "$tmp"
+    return 1
+  fi
+}
+
 _update_task_cards() {
   local role="$1"
   local short_hash="$2"
   local today=$(date +%Y-%m-%d)
   local updated=0
+  local injected=0
 
-  # 找該角色的進行中 (🔄) Task Card
+  # 找該角色的進行中 (🔄) 或任何 Task Card
   for card in "$TASKS_DIR"/T-${role}-*.md "$TASKS_DIR"/T-${role}[A-Z]*-*.md; do
     [ -f "$card" ] || continue
+
+    # 偵測缺接續區塊 → 自動補上
+    if ! grep -q '^\- \*\*最後活動\*\*' "$card"; then
+      if _inject_status_block "$card"; then
+        injected=$((injected + 1))
+        echo "🔧 Task Card 自動補建接續區塊：$(basename "$card")"
+      fi
+    fi
+
     if grep -q '🔄 進行中' "$card"; then
       # 更新「最後活動」行
-      if grep -q '^\- \*\*最後活動\*\*:' "$card"; then
+      if grep -q '^\- \*\*最後活動\*\*' "$card"; then
         sed -i '' "s/^- \*\*最後活動\*\*:.*/- **最後活動**: ${today} ${short_hash}/" "$card"
         updated=$((updated + 1))
         echo "📝 Task Card 更新：$(basename "$card") → 最後活動 ${today} ${short_hash}"
@@ -37,11 +85,16 @@ _update_task_cards() {
     fi
   done
 
+  if [ "$injected" -gt 0 ]; then
+    echo ""
+    echo "⚠️  ${injected} 張 Task Card 缺接續區塊，已自動補建。請檢查內容是否正確。"
+  fi
+
   if [ "$updated" -gt 0 ]; then
     echo ""
     echo "⚠️  Task Card「最後活動」已更新（本地）。下次 checkpoint 會一起提交。"
     echo "⚠️  請同時更新 Task Card 的「接續點」欄位（做到哪、下一步做什麼）。"
-  else
+  elif [ "$injected" -eq 0 ]; then
     echo "ℹ️  未找到 ${role} 的 🔄 進行中 Task Card，跳過自動更新。"
   fi
 }

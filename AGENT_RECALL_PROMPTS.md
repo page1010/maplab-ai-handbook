@@ -139,7 +139,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. 都不行 → 回報 Owner，不要硬幹
 
-【斷點 — 2026-04-15 每日巡查更新】
+【斷點 — 2026-04-15 午後巡查更新（14:00 UTC+8）】
 1. 系統版本：v6.0 / Phase 6 — 觀測性 + 業務閉環 + 策略循環（Phase 3.1 Dashboard 自動更新已就位 ef2c21b）
 2. EXP-S010 A0/A1 session 混淆已記錄；下次重開先確認 cwd + 貼 A1 recall prompt
 3. A2 T-A2-002 ✅ 完成（2026-04-07）：WP 食安+法規 SEO 字眼清理（13篇）+ AGENT_RULES Section 14（禁用詞清單）+ wp-content-audit 技能書（e92af1d+ecc1a3e+e8e5915）；T-A2A3-001 ✅ 子任務1-4全完成（子任務5等7-14天觀察期）
@@ -147,7 +147,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 5. A4 T-A4-001 🔴 CRITICAL：最後commit 5787f3e 04-10 08:31，現已逾~132h；S5✅(8,549張)；S5.5 GPS✅no_gps；S6(2023)✅；S11(2024)⚠️10,050/12,213=82.2%（差2163待Owner決策）；S12(2025)🔄狀態未知（上次36.0%，Colab斷線風險極高~132h無活動）；需Owner確認Colab執行狀態
 6. A5 T-A5-002 🔴 CRITICAL：服務費可選+長桌費+車馬費+DropdownHelper完成(dbcf9d4)；04-09重大進展：合約條款v4.0/訂金可調/飲食禁忌/車馬費定版/6項Owner feedback修復（cfeebd1 04-09 14:03+0800）；現已~150h無commit。Owner確認：(a)未commit進度，或(b)等待Owner回饋（外部阻塞，記錄即可）；Task Card ✅ 已更新；T-A5-004 Phase 1 ✅ 04-02晚完整收尾
 7. A3 T-A3-001 GTM方案B + T-A3-002 🔴 CRITICAL 第18天 ~414h+：最後 commit 2aca2ae 距今已逾 414h（2026-03-29 22:10 起，04-15 21:00）。**Owner 需立即執行：T-A3-001 + T-A3-002 標記為 ⏸️ 暫停**，待外部條件就緒再重啟。
-⚠️ 持續異常（04-15 巡查）：系統靜默第3日（04-12 21:00 → 04-15 21:00），過去24h僅巡查commit，GitHub Actions daily patrol 連續3天未觸發。**需Owner確認 .github/workflows/system-patrol.yml 執行狀態並手動觸發或修復。**
+⚠️ 持續異常（04-15 午後巡查）：系統靜默第3日（04-12 21:00 → 04-15 14:00），過去8h僅晨間巡查commit（0d637b5），無業務Agent活動。GitHub Actions daily patrol 連續4天未觸發。各CRITICAL累積：A4 ~138h、A5-002 ~156h、A7 ~372h/D18、A3 ~420h/D19。**需Owner確認：(1) .github/workflows/system-patrol.yml 執行狀態（手動觸發/修復）；(2) A3+A7正式標記⏸️；(3) A4 Colab狀態。**
 36b. A6 e2e round 5 全通過里程碑 🎉（04-11 16:18 06ce9c6）：quote + slide + heartbeat all verified；auto-trigger Slide after createQuote（b118095，無需手動）；fromMaster mode（b82df34，從母版QUOTE_DRAFT讀資料）；ApiEndpoint.gs 還原+.claspignore修復（45e26a0）；bot_a6 GAS trigger + py3.9 compat（fe76f8a/f99cf31）。A6系統整合達成。A1：Task Card v1.2格式統一12張（b502417）+.gitignore修復（52f6873）。A0：Chrome驗證SOP落地（731cff0）。
 36. A0 dispatch 操作手冊落地（2a1879a 04-10）：docs/a0-dispatch-operations-manual.md 建立 — 使用者視角系統架構圖、入口×角色對照表、委派前7問題協議、操作路徑表、A0/A1分工踩坑記錄。A0 角色定位更完整。
 27. A1 worktree 清理完成（576e7df 2026-04-07）：清除全部 29 個 worktree（含 peaceful-yalow / interesting-shaw / pedantic-mendeleev），Mac mini 環境整潔。

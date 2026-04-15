@@ -2,8 +2,8 @@
 
 ## 接續狀態
 - **狀態**: 🔄 進行中
-- **最後活動**: 2026-04-15
-- **接續點**: Phase 0 完成 — 建好 `skills/save-checkpoint/SKILL.md` 存檔技能。下一步：Phase 1-1 建 `decisions.md`（從 recalls/pitfalls/Task Card 提取歷史決策）
+- **最後活動**: 2026-04-15 539f304
+- **接續點**: Phase 1 完成 — decisions.md（~85 條歷史決策）+ dependency-map.md（連動地圖）+ Task Card 一致性修正。下一步：Phase 2-1 改 checkpoint.sh 自動更新 recalls/ 現況區
 - **阻塞**: 無
 
 ## 背景

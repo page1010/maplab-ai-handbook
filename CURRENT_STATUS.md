@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-04-14 21:00（A1 晚間巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-04-15 21:00（A1 每日巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -21,18 +21,18 @@
 
 | Task ID | 任務 | 負責 Agent | 狀態 | Task Card |
 |---------|------|-----------|------|-----------|
-| T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔴 CRITICAL（~126h無commit，等Owner確認剩餘增強項目） | handoff/tasks/T-A5-002.md |
+| T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔴 CRITICAL（~150h無commit，等Owner確認剩餘增強項目） | handoff/tasks/T-A5-002.md |
 | T-A5-003 | 熱客招待品項定義 | A5 | 🔲 待開始 | — |
 | T-A5-004 | generateProposal_v2.gs Slide 簡報 | A5/A6 | 🔄 進行中（GAS v4已部署，e2e round5 passed；待：結尾頁/無圖垂直置中） | handoff/tasks/T-A5-004.md |
 | T-A5-005 | onEdit追蹤同步+Dashboard | A5 | 🔲 待啟動 | handoff/tasks/T-A5-005.md |
-| T-A4-001 | Phase 4 Gemini 照片分類 | A4 | 🔴 CRITICAL（最後commit 04-10 08:31 5787f3e，逾~108h；S12執行狀態未知，需Owner確認Colab是否斷線） | projects/maplab-pipeline.md + handoff/tasks/T-A4-001.md |
+| T-A4-001 | Phase 4 Gemini 照片分類 | A4 | 🔴 CRITICAL（最後commit 04-10 08:31 5787f3e，逾~132h；S12執行狀態未知，需Owner確認Colab是否斷線） | projects/maplab-pipeline.md + handoff/tasks/T-A4-001.md |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2 | 🔄 子任務1-4完成，子任務5等7-14天 | handoff/tasks/T-A2A3-001.md + T-A2A3-001-B.md |
-| T-A3-001 | GTM LINE 按鈕追蹤修復（方案 B） | A3 | 🔴 CRITICAL（~390h無commit，GTM方案B規格已記錄，待技術實作） | — |
-| T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 | A3 | 🔴 CRITICAL（~390h無commit，廣告成效報告v1.0已產出） | handoff/tasks/T-A3-002.md |
+| T-A3-001 | GTM LINE 按鈕追蹤修復（方案 B） | A3 | 🔴 CRITICAL（~414h無commit，GTM方案B規格已記錄，待技術實作） | — |
+| T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 | A3 | 🔴 CRITICAL（~414h無commit，廣告成效報告v1.0已產出） | handoff/tasks/T-A3-002.md |
 | T-A6-001 | Telegram 報價助手系統 | A6 | 🔄 進行中（GAS doPost Web App v12已上線，訓練架構Steps 1-4完成，e2e round5 passed） | projects/line-quote-assistant.md |
 | T-A6-002 | LINE 對話訓練資料收集 | A6 | 🔲 暫停（LINE webhook無業務回覆，待Owner決定新方向） | handoff/tasks/T-A6-002.md |
-| T-A7-001 | FAQ 回覆模板庫 + 補問流程 | A7 | 🔴 CRITICAL（~342h無commit，skills v2.0/reply-templates v1.0已產出） | handoff/tasks/T-A7-001.md |
-| T-A7-002 | 80/20 優先任務清單 + 執行路線圖 | A7 | 🔴 CRITICAL（~342h無commit，任務6+10完成） | — |
+| T-A7-001 | FAQ 回覆模板庫 + 補問流程 | A7 | 🔴 CRITICAL（~366h無commit，skills v2.0/reply-templates v1.0已產出） | handoff/tasks/T-A7-001.md |
+| T-A7-002 | 80/20 優先任務清單 + 執行路線圖 | A7 | 🔴 CRITICAL（~366h無commit，任務6+10完成） | — |
 | T-A1-V6-P2 | v6.0 Phase 2 業務閉環 MVP | A1 | 🔄 進行中 | handoff/tasks/T-A1-V6-P2.md |
 | T-A1-V6-P3 | v6.0 Phase 3 自動化+策略循環 | A1 | 🔲 待開始（前置: T-A1-V6-P2） | handoff/tasks/T-A1-V6-P3.md |
 | T-A4-002 | pagewu1010 帳號 187GB Takeout 處理 | A4 | 🔲 待開始（前置: T-A4-001 完成） | handoff/tasks/T-A4-002.md |
@@ -57,6 +57,7 @@
 > ⚠️ A1巡查 2026-04-12 08:42：T-A4-001 48h閾值已過（04-12 08:31），距最後commit(04-10 5787f3e)已逾48h，Colab S12執行狀態未確認，自動升級🔴CRITICAL。A3 ~330h無commit，A7 ~282h無commit，A5-002 ~66h無commit，均維持CRITICAL。
 > ⚠️ A1巡查 2026-04-12 21:00（晚間）：過去8h零新commit。所有CRITICAL任務時鐘持續累計：A4 ~60h（Colab狀態仍未確認）、A5-002 ~78h、A7 ~294h、A3 ~342h。今日唯一活動為docs commit（user-scenarios.md，10:02 +0800），無業務Agent進展。四項CRITICAL待Owner行動，建議優先處理A4 Colab確認及A3/A7暫停決策。
 > ⚠️ A1巡查 2026-04-14 21:00：系統整體靜默異常 —— 自 e935500（04-12 21:00）至今約48h零commit，04-13整日無任何活動（包含GitHub Actions daily patrol排程），系統可能進入休眠或Actions workflow觸發失敗。各CRITICAL任務時鐘再增：A4 T-A4-001 ~108h（Colab S12狀態仍未確認）、A5-002 ~126h、A7 ~342h（第16天）、A3 ~390h（第17天）。**Owner須確認：(1) GitHub Actions system-patrol.yml 是否已失效；(2) A4 Colab 執行狀態；(3) A3/A7 CRITICAL任務是否需正式標記⏸️暫停。**
+> ⚠️ A1巡查 2026-04-15 21:00：系統靜默第三日（04-13至今）—— 過去24h僅有昨日巡查commit（c5a4347），零業務Agent活動。GitHub Actions daily patrol 疑似持續未觸發（連續3天無自動patrol commit）。各CRITICAL任務時鐘再+24h：A4 ~132h（Colab S12仍未確認）、A5-002 ~150h（第7天）、A7 ~366h（第17天）、A3 ~414h（第18天）。**⚠️ 緊急升級：A3+A7已近3週無業務活動，建議Owner本日決策：正式標記⏸️暫停或確認外部阻塞原因。A4 Colab斷線風險極高（~132h）。**
 
 ---
 

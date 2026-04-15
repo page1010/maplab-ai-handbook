@@ -39,3 +39,16 @@ projects/maplab-pipeline.md → handoff/handoff-to-A4.md → skills/superpowers-
 2. 結束 session 前：更新 Task Card Done/Next/Blockers + 寫接續 Prompt + commit
 
 讀完文件後輸出 Startup Check，確認斷點再開工。必拿：skills/task-progress-guide.md
+
+<!-- AUTO-SYNC START — checkpoint.sh 自動更新，勿手動修改 -->
+## 當前任務現況（自動同步 2026-04-15）
+
+**T-A4-001** Phase 4 Gemini 照片分類（2022-2026）
+- 狀態: 🔄 進行中（S11/2024 補跑執行中）
+- 接續點: S12(2025) ✅ DONE 7,645/7,642（45張補完，2026-04-15 08:58 完成）。S11(2024) 🔄 補跑執行中 2026-04-15 09:04啟動，TODO=2163張，ETA~4.2h
+- 阻塞: 無（S11決策已確認：補跑，已啟動）
+- 最後活動: 2026-04-15 S12✅DONE / S11補跑啟動
+2026-04-10 5787f3e
+2026-04-15（S12 DONE + S11補跑啟動）
+
+<!-- AUTO-SYNC END -->

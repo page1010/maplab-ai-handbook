@@ -49,3 +49,20 @@ repo: https://github.com/page1010/maplab-ai-handbook
 【Sheets Dashboard 同步 — v6.0 新增】
 每次巡查結束後，用 Google Sheets MCP 同步更新 Task Board 分頁
 （Sheets ID: 1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg）。
+
+<!-- AUTO-SYNC START — checkpoint.sh 自動更新，勿手動修改 -->
+## 當前任務現況（自動同步 2026-04-15）
+
+**T-A1-V6-P2** （無描述）
+- 狀態: 🔄 進行中
+- 接續點: 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下一步：建虛擬測試案例 → A6 跑報價流程 → 驗證寫入。
+- 阻塞: 等 A6 實際報價測試
+- 最後活動: 2026-04-15 539f304
+
+**T-A1-V7** 系統進化 — 單一真相源 + 自動同步 + 瘦身 + 自動技能生成 + 自動壓縮
+- 狀態: 🔄 進行中
+- 接續點: Phase 1 完成 — decisions.md（~85 條歷史決策）+ dependency-map.md（連動地圖）+ Task Card 一致性修正。下一步：Phase 2-1 改 checkpoint.sh 自動更新 recalls/ 現況區
+- 阻塞: 無
+- 最後活動: 2026-04-15 539f304
+
+<!-- AUTO-SYNC END -->

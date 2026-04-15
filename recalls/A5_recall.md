@@ -46,6 +46,29 @@ projects/maplab-master-data.md → handoff/handoff-to-A5.md → handoff/field-na
 
 ---
 
+<!-- AUTO-SYNC START — checkpoint.sh 自動更新，勿手動修改 -->
+## 當前任務現況（自動同步 2026-04-15）
+
+**T-A5-002** QUOTE_DRAFT 報價單欄位增強
+- 狀態: 🔄 進行中（核心欄位已可用，業務可實際操作）
+- 接續點: 核心公式已修正、e2e 通過。剩餘：T-A5-003 熱客招待品項定義 + 3 項待 Owner 確認
+- 阻塞: 等 Owner 確認（品項名稱改法、重複品項、I 欄用途）
+- 最後活動: 2026-04-08 77d7202（e2e 大修）
+
+**T-A5-004** createSlides.gs — Slide 報價簡報自動生成
+- 狀態: 🔄 進行中（核心功能已可用，Owner 可按「MAPLAB > 產出 Slide 提案」一鍵出簡報）
+- 接續點: Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔案清理、Items english_name 確認
+- 阻塞: 無（功能已上線，剩餘為優化項）
+- 最後活動: 2026-04-09 f67672d（6 項 Owner feedback 修復）
+
+**T-A5-005** 報價狀態追蹤同步 + Dashboard
+- 狀態: 🔄 進行中
+- 接續點: 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboard / ensureIntakeHeaders_）。下一步：clasp push → 手動啟動 trigger + Dashboard。
+- 阻塞: 無（待 clasp push 部署）
+- 最後活動: 2026-04-08
+
+<!-- AUTO-SYNC END -->
+
 ## 任務清單（做完畫 x）
 
 - [x] T-A5-001 Items 去重 + 全品項重新編碼（108品項）

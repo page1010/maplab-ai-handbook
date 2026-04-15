@@ -7,6 +7,12 @@ repo: https://github.com/page1010/maplab-ai-handbook
 
 ---
 
+<!-- AUTO-SYNC START — checkpoint.sh 自動更新，勿手動修改 -->
+## 當前任務現況（自動同步 2026-04-15）
+
+（無進行中任務）
+<!-- AUTO-SYNC END -->
+
 ## ⚠️ 開工前必讀（cold-start 四件套 + A6 三件套）
 
 **全 agent 共用四件套**：

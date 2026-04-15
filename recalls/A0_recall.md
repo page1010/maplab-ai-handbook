@@ -131,6 +131,12 @@ repo: https://github.com/page1010/maplab-ai-handbook
 
 ---
 
+<!-- AUTO-SYNC START — checkpoint.sh 自動更新，勿手動修改 -->
+## 當前任務現況（自動同步 2026-04-15）
+
+（無進行中任務）
+<!-- AUTO-SYNC END -->
+
 ## 任務清單（做完畫 x）
 
 - [x] 品項圖片整理 pipeline（62筆下載轉換上傳Drive+K欄更新）

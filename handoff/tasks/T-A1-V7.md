@@ -3,7 +3,7 @@
 ## 接續狀態
 - **狀態**: 🔄 進行中
 - **最後活動**: 2026-04-15 539f304
-- **接續點**: Phase 1 完成 — decisions.md（~85 條歷史決策）+ dependency-map.md（連動地圖）+ Task Card 一致性修正。下一步：Phase 2-1 改 checkpoint.sh 自動更新 recalls/ 現況區
+- **接續點**: Phase 2-1 完成 — checkpoint.sh 新增 `_sync_recalls()` 函數，每次 commit 後自動從 Task Card 提取現況寫入 recalls/ 的 AUTO-SYNC 區塊。9 個 recall 已初始化。下一步：Phase 2-2 自動更新 CURRENT_STATUS.md
 - **阻塞**: 無
 
 ## 背景

@@ -99,6 +99,117 @@ _update_task_cards() {
   fi
 }
 
+# === 自動同步 recall 現況區（Phase 2-1: T-A1-V7） ===
+_sync_recalls() {
+  local role="$1"
+  local recalls_dir="$REPO_ROOT/recalls"
+  local recall_file="$recalls_dir/${role}_recall.md"
+
+  [ -f "$recall_file" ] || return 0
+
+  # 收集該角色所有進行中的 Task Card 現況
+  local sync_content=""
+  local card_count=0
+
+  for card in "$TASKS_DIR"/T-${role}-*.md "$TASKS_DIR"/T-${role}[A-Z]*-*.md; do
+    [ -f "$card" ] || continue
+    grep -q '🔄 進行中' "$card" || continue
+
+    local task_id=$(basename "$card" .md)
+    # 提取標題：去掉 # 前綴、Task Card: 前綴、Task ID 前綴
+    local title=$(head -1 "$card" | sed -e 's/^# //' -e 's/^Task Card: //' -e "s/^${task_id}[: —–-]*//" | sed 's/^ *//')
+    local status="" next="" blocker="" last_activity=""
+
+    # 提取接續狀態區塊的各欄位
+    if grep -q '^\- \*\*狀態\*\*' "$card"; then
+      status=$(grep '^\- \*\*狀態\*\*' "$card" | sed 's/^- \*\*狀態\*\*: //')
+    fi
+    if grep -q '^\- \*\*接續點\*\*' "$card"; then
+      next=$(grep '^\- \*\*接續點\*\*' "$card" | sed 's/^- \*\*接續點\*\*: //')
+    fi
+    if grep -q '^\- \*\*阻塞\*\*' "$card"; then
+      blocker=$(grep '^\- \*\*阻塞\*\*' "$card" | sed 's/^- \*\*阻塞\*\*: //')
+    fi
+    if grep -q '^\- \*\*最後活動\*\*' "$card"; then
+      last_activity=$(grep '^\- \*\*最後活動\*\*' "$card" | sed 's/^- \*\*最後活動\*\*: //')
+    fi
+
+    local display_title="${title:-（無描述）}"
+    sync_content="${sync_content}**${task_id}** ${display_title}
+- 狀態: ${status:-未標記}
+- 接續點: ${next:-未填寫}
+- 阻塞: ${blocker:-無}
+- 最後活動: ${last_activity:-未記錄}
+
+"
+    card_count=$((card_count + 1))
+  done
+
+  # 沒有進行中的 Task Card → 寫「無進行中任務」
+  if [ "$card_count" -eq 0 ]; then
+    sync_content="（無進行中任務）
+"
+  fi
+
+  local today=$(date +%Y-%m-%d)
+  local new_block="<!-- AUTO-SYNC START — checkpoint.sh 自動更新，勿手動修改 -->
+## 當前任務現況（自動同步 ${today}）
+
+${sync_content}<!-- AUTO-SYNC END -->"
+
+  # 如果 recall 已有 AUTO-SYNC 區塊 → 替換
+  if grep -q '<!-- AUTO-SYNC START' "$recall_file"; then
+    # 寫新區塊到暫存檔
+    local block_file=$(mktemp)
+    echo "$new_block" > "$block_file"
+    # 用 bash 逐行處理：遇到 START 標記時輸出新區塊，跳過到 END
+    local tmp="${recall_file}.tmp"
+    local skip=false
+    > "$tmp"
+    while IFS= read -r line; do
+      if echo "$line" | grep -q '<!-- AUTO-SYNC START'; then
+        cat "$block_file" >> "$tmp"
+        skip=true
+        continue
+      fi
+      if echo "$line" | grep -q '<!-- AUTO-SYNC END'; then
+        skip=false
+        continue
+      fi
+      if [[ "$skip" == false ]]; then
+        echo "$line" >> "$tmp"
+      fi
+    done < "$recall_file"
+    rm -f "$block_file"
+    mv "$tmp" "$recall_file"
+    echo "🔄 Recall 自動同步：${role}_recall.md（${card_count} 張 Task Card）"
+  else
+    # 沒有 AUTO-SYNC 區塊 → 在第一個 --- 分隔線後插入
+    local inserted=false
+    local tmp="${recall_file}.tmp"
+    > "$tmp"
+    while IFS= read -r line; do
+      echo "$line" >> "$tmp"
+      if [[ "$inserted" == false ]] && [[ "$line" == "---" ]]; then
+        inserted=true
+        echo "" >> "$tmp"
+        echo "$new_block" >> "$tmp"
+      fi
+    done < "$recall_file"
+
+    if [[ "$inserted" == true ]]; then
+      mv "$tmp" "$recall_file"
+      echo "🔄 Recall 自動同步（首次）：${role}_recall.md（${card_count} 張 Task Card）"
+    else
+      # 沒有 --- 分隔線，附加到檔案末尾
+      echo "" >> "$recall_file"
+      echo "$new_block" >> "$recall_file"
+      rm -f "$tmp"
+      echo "🔄 Recall 自動同步（附加）：${role}_recall.md（${card_count} 張 Task Card）"
+    fi
+  fi
+}
+
 # Parse --fast flag（位置不限）
 for arg in "$@"; do
   [ "$arg" = "--fast" ] && FAST_MODE=true
@@ -198,6 +309,9 @@ if [ "$FAST_MODE" = true ]; then
   # === 自動更新 Task Card 最後活動 ===
   _update_task_cards "$ROLE" "$SHORT"
 
+  # === 自動同步 recall 現況區 ===
+  _sync_recalls "$ROLE"
+
   echo ""
   echo "======================================"
   echo "✅ 存檔完成（fast mode）"
@@ -242,6 +356,9 @@ else
 
   # === 自動更新 Task Card 最後活動 ===
   _update_task_cards "$ROLE" "$SHORT"
+
+  # === 自動同步 recall 現況區 ===
+  _sync_recalls "$ROLE"
 
   echo ""
   echo "======================================"

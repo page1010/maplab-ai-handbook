@@ -44,6 +44,12 @@ handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-
 
 ---
 
+<!-- AUTO-SYNC START — checkpoint.sh 自動更新，勿手動修改 -->
+## 當前任務現況（自動同步 2026-04-15）
+
+（無進行中任務）
+<!-- AUTO-SYNC END -->
+
 ## 任務清單（做完畫 x）
 
 - [x] T-A3-002 Meta 廣告上線（慶生周歲派對）

@@ -44,6 +44,12 @@ projects/ai-reply-system.md → skills/superpowers-guide.md
 
 ---
 
+<!-- AUTO-SYNC START — checkpoint.sh 自動更新，勿手動修改 -->
+## 當前任務現況（自動同步 2026-04-15）
+
+（無進行中任務）
+<!-- AUTO-SYNC END -->
+
 ## 任務清單（做完畫 x）
 
 - [x] T-A7-001 Phase 1 完成（FAQ模板庫+補問流程+客戶分類標籤）

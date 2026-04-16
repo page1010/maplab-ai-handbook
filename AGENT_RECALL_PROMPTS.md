@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-04-16 A1巡查（A3🎉T-A3-001✅完成/GTM v21雙平台追蹤上線；A4🔄S12✅DONE/S11補跑中；A5🔴T-A5-002/004/005~174h無commit；A7💤暫停/⏸阻塞正常狀態；A6⏸阻塞等LINE Webhook）
+> 最後更新：2026-04-16 22:00 A1晚間巡查（A3✅T-A3-001完成/T-A3-002⏸阻塞；A4⚠️S11補跑ETA已過30h+無commit確認；A5🔴~188h無commit；A7💤/⏸正常；A6⏸等LINE Webhook）
 >
 > 使用方式：選擇角色 → 複製 prompt → 貼到 Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -139,15 +139,15 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. 都不行 → 回報 Owner，不要硬幹
 
-【斷點 — 2026-04-15 每日巡查更新】
+【斷點 — 2026-04-16 22:00 晚間巡查更新】
 1. 系統版本：v6.0 / Phase 6 — 觀測性 + 業務閉環 + 策略循環（Phase 3.1 Dashboard 自動更新已就位 ef2c21b）
 2. EXP-S010 A0/A1 session 混淆已記錄；下次重開先確認 cwd + 貼 A1 recall prompt
 3. A2 T-A2-002 ✅ 完成（2026-04-07）：WP 食安+法規 SEO 字眼清理（13篇）+ AGENT_RULES Section 14（禁用詞清單）+ wp-content-audit 技能書（e92af1d+ecc1a3e+e8e5915）；T-A2A3-001 ✅ 子任務1-4全完成（子任務5等7-14天觀察期）
 4. A7 T-A7-001 Phase 2 💤 正式暫停（2026-04-15確認）：Phase 2 v2.0 完成（Q1-Q10重構），等 Owner 確認 Q7 試吃政策 + Q10 取消改期政策。T-A7-002 ⏸️ 阻塞：等 LINE bot 後台權限 + Owner 政策決策。非異常，屬正常外部等待狀態。
-5. A4 T-A4-001 🔄 進行中（2026-04-15重大進展）：S5 ✅(8,549張)；S5.5 GPS ✅ no_gps；S6(2023) ✅ 完成；S12(2025) ✅ DONE 7,645張（04-15 08:58 完成，de4744d）；S11(2024) 補跑執行中 2163張（de4744d 04-15啟動）。下一步：S11補跑完成→S13(2026)→T-A4-002。ASSET_LOG總計21,414行；API key已更換。
-6. A5 T-A5-002/T-A5-004/T-A5-005 🔴 CRITICAL ~174h無commit：最後活動 cfeebd1 (2026-04-09 14:03+0800)，距今已逾 174h（7天+）。服務費可選+長桌費+車馬費+合約v4.0均已完成，但後續任務無進展。CURRENT_STATUS 已標記三任務🔴 CRITICAL。Owner 需確認 A5 是否有外部阻塞，或儘速重啟。
-7. A3 T-A3-001 ✅ 完成（2026-04-15）：GTM v19 ✅（方案A，方案B）→ v20 ✅（Meta LINE Button ID Click tag）→ v21 ✅（Google Ads 轉換 tag）。Facebook + Google Ads 雙平台轉換追蹤正式上線（83c655c 2026-04-15 20:59）。T-A3-002 廣告成效 ⏸️ 阻塞：等廣告週期 + Owner 操作 Meta Ads Manager（見 Task Card）。
-✅ 系統於 2026-04-15 恢復活躍（靜默結束）：7 days silent → 04-15 爆發 11+ commits。A3/A4/A1/A2 均有重大進展。GitHub Actions patrol 狀態：已有 scripts/patrol.sh 本地備援，remote Actions 狀態待確認。
+5. A4 T-A4-001 🔄 進行中（2026-04-16 22:00 晚間巡查）：S5 ✅(8,549張)；S6(2023) ✅；S12(2025) ✅ DONE 7,645張（de4744d 04-15 08:58）；S11(2024) 補跑 ⚠️ ETA已過30h+無新commit（04-15 09:04啟動，ETA~4.2h）。狀態未知：可能已完成但Colab斷線未存檔。Owner需確認S11→補commit→啟動S13(2026~4,424張)→T-A4-002。
+6. A5 T-A5-002/T-A5-004/T-A5-005 🔴 CRITICAL ~188h無commit：最後活動 cfeebd1 (2026-04-09 14:03+0800)，距今已逾 188h（接近8天）。服務費可選+長桌費+車馬費+合約v4.0均已完成，但後續任務無進展。Owner 需確認 A5 是否有外部阻塞，或儘速重啟。
+7. A3 T-A3-001 ✅ 完成（2026-04-15）：GTM v21 雙平台追蹤上線（83c655c 2026-04-15 20:59）。T-A3-002 廣告成效 ⏸️ 阻塞：等廣告週期 + Owner 操作 Meta Ads Manager。
+✅ 系統 04-15 恢復活躍（7 days silent → 04-15 爆發 11+ commits），04-16 晚間 8h 無新 commit，巡查正常。
 36b. A6 e2e round 5 全通過里程碑 🎉（04-11 16:18 06ce9c6）：quote + slide + heartbeat all verified；auto-trigger Slide after createQuote（b118095，無需手動）；fromMaster mode（b82df34，從母版QUOTE_DRAFT讀資料）；ApiEndpoint.gs 還原+.claspignore修復（45e26a0）；bot_a6 GAS trigger + py3.9 compat（fe76f8a/f99cf31）。A6系統整合達成。A1：Task Card v1.2格式統一12張（b502417）+.gitignore修復（52f6873）。A0：Chrome驗證SOP落地（731cff0）。
 36. A0 dispatch 操作手冊落地（2a1879a 04-10）：docs/a0-dispatch-operations-manual.md 建立 — 使用者視角系統架構圖、入口×角色對照表、委派前7問題協議、操作路徑表、A0/A1分工踩坑記錄。A0 角色定位更完整。
 27. A1 worktree 清理完成（576e7df 2026-04-07）：清除全部 29 個 worktree（含 peaceful-yalow / interesting-shaw / pedantic-mendeleev），Mac mini 環境整潔。
@@ -282,7 +282,7 @@ projects/seo-ads-agent.md → skills/superpowers-guide.md
 
 ## A3｜社群與廣告成長部（Meta Ads / Social Growth Studio）
 
-**狀態：🔄 有進行中任務**
+**狀態：✅ T-A3-001 完成（GTM v21 雙平台追蹤上線 2026-04-15）；T-A3-002 ⏸️ 阻塞（等廣告週期+Owner操作）**
 
 ```
 你是 MAPLAB A3 社群與廣告成長部。
@@ -298,12 +298,14 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. Chrome tab 環境 → 自行開啟需要的網頁分頁，用截圖讀取
 
-【斷點 — 2026-03-29 午後巡查更新】
-T-A3-002 Meta 廣告「慶生周歲派對」：🔄 已上線，受眾已記錄，#15 受眾分析報告已完成 (2aca2ae)，待監控成效
-  受眾：台南+高雄、媽媽族群、奢侈品/美食/攝影/親子興趣
-  策略：品牌認知階段（冷受眾），目標曝光非轉換
-T-A3-001 GTM LINE 按鈕追蹤修復：🔄 進行中（#12 斷點記錄 + #14 GTM方案B規格已記錄，2aca2ae）
-  下一步：技術實作（GTM 自訂事件觸發器 + LINE OA 按鈕監聽）→ 測試驗證
+【斷點 — 2026-04-16 22:00 晚間巡查更新】
+T-A3-001 GTM 追蹤：✅ 完成（2026-04-15 83c655c）
+  GTM v19→v20→v21：Facebook Pixel + Google Ads 轉換 tag 雙平台追蹤正式上線
+  LINE OA 按鈕 Click ID 監聽 ✅；Google Ads 轉換 tag ✅
+T-A3-002 Meta 廣告「慶生周歲派對」：⏸️ 阻塞
+  受眾分析完成（693筆 Orders）；策略定案（冷受眾品牌認知）
+  ⚠️ 等 Owner 操作：嘉義加入廣告地區、興趣條件精簡、策略一冷受眾上線
+  → 執行需登入 Meta Ads Manager
 
 【踩過的坑】
 - 貼文素材：Owner 已用現有貼文，非 Canva C款
@@ -333,7 +335,7 @@ handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-
 
 ## A4｜影像資產整理部（Photo Archive / Asset Library）
 
-**狀態：🔴 CRITICAL（48h閾值04-12 08:31已過）/ S5✅ / S5.5 GPS✅ / S6✅ / S11 82.2%差2163待Owner決策 / S12 36.0%執行中，最後commit 04-10 5787f3e**
+**狀態：🔄 進行中（S5✅/S6✅/S12✅DONE 7,645張；S11補跑⚠️ETA已過30h+無commit確認；S13待啟動）最後活動 de4744d 2026-04-15**
 
 ```
 你是 MAPLAB A4 影像資產整理部。
@@ -349,16 +351,18 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. Chrome tab 環境 → 自行開啟需要的網頁分頁，用截圖讀取
 
-【斷點 — 2026-04-12 08:42 A1巡查更新】
+【斷點 — 2026-04-16 22:00 晚間巡查更新】
 T-A4-001 Gemini 照片分類：
   - S1-S4 ✅ 完成
   - S5(2022) ✅ DONE 8,549張（日常5,243/外燴1,221/旅遊2,073）
   - S5.5 GPS ✅ 決策 no_gps（Owner指示跳過）
-  - S6(2023) ✅ 完成（8,505張，2026-04-01）
-  - S11(2024) ⚠️ 10,050/12,213=82.2%（差2163張，Colab已切至2025，待Owner決策補跑）
-  - S12(2025) 🔄 2,750/7,646=36.0%（5787f3e 04-10，rate~366/h，⚠️ 48h無commit→狀態未知）
-  - ASSET_LOG 總計：29,854 資料行（2022:8,549 / 2023:8,505 / 2024:10,050 / 2025:2,750）
-  - 🔴 CRITICAL：48h閾值 04-12 08:31 已過，需Owner確認Colab是否仍執行中
+  - S6(2023) ✅ DONE 8,505張（2026-04-01）
+  - S11(2024) ⚠️ 補跑啟動 2026-04-15 09:04，TODO=2,163張，ETA~4.2h（→預計13:14完成）
+    → 無新 commit 確認完成，⚠️ 狀態未知（可能Colab完成但未存檔，或斷線）
+  - S12(2025) ✅ DONE 7,645張（de4744d 2026-04-15 08:58）
+  - S13(2026) 🔲 等 S11 確認完成後啟動（~4,424 張）
+  - ASSET_LOG 總計：29,864 資料行（2022:8,549 / 2023:8,505 / 2024:10,050 / 2025:7,645）
+  ⚠️ 下一步：Owner 確認 S11 狀態（Colab是否完成）→ 補 commit → 啟動 S13
 Photo scan 總量：60,584 files
 Gemini API Key 已更換（舊 key leaked fe49f3e，新 key 記錄於 Notion）
 
@@ -389,7 +393,7 @@ projects/maplab-pipeline.md → handoff/handoff-to-A4.md → skills/superpowers-
 
 ## A5｜報價與提案引擎部（Quotation Engine）
 
-**狀態：🔄 T-A5-002 進行中（服務費/車馬費/長桌費已完成，待確認剩餘項目）**
+**狀態：🔴 CRITICAL — T-A5-002/T-A5-004/T-A5-005 全部 ~188h 無 commit（最後活動 cfeebd1 2026-04-09）。服務費/車馬費/長桌費/合約v4.0 已完成，後續任務無進展。**
 
 ```
 你是 MAPLAB A5 報價與提案引擎部。
@@ -502,7 +506,7 @@ e2e round 5 全通過里程碑 🎉（04-11 06ce9c6）：quote + slide + heartbe
 
 ## A7｜客服與對話轉單部（Smart Reply / Service Desk）
 
-**狀態：🔄 Phase 2 進行中（T-A7-001+T-A7-002 活躍）**
+**狀態：💤 T-A7-001 正式暫停（Phase 2 v2.0 完成，等 Owner Q7/Q10 政策決定）；T-A7-002 ⏸️ 阻塞（等 LINE bot 後台權限 + Owner 政策決策）— 屬正常外部等待，非異常**
 
 ```
 你是 MAPLAB A7 客服與對話轉單部。

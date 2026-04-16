@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-04-15 21:00 每日巡查（A4🔴~132h/Colab狀態未確認；A5🔴T-A5-002 ~150h；A3🔴~414h/D18；A7🔴~366h/D17；A6🔄T-A6-001正常；系統靜默第3日/Actions疑似失效）
+> 最後更新：2026-04-16 A1巡查（A3🎉T-A3-001✅完成/GTM v21雙平台追蹤上線；A4🔄S12✅DONE/S11補跑中；A5🔴T-A5-002/004/005~174h無commit；A7💤暫停/⏸阻塞正常狀態；A6⏸阻塞等LINE Webhook）
 >
 > 使用方式：選擇角色 → 複製 prompt → 貼到 Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -20,11 +20,11 @@
 | A0 | 總調度秘書 | ✅ Cowork 常駐 | 跨系統橋接、調度、桌面控制 |
 | A1 | 系統總管中心 | ✅ Claude Code 常駐 | Telegram bot + 終端機，直接下指令 |
 | A2 | 搜尋流量作戰部 | ✅ T-A2-001 完成，待新任務 | SEO / GA / 關鍵字 |
-| A3 | 社群與廣告成長部 | 🔴 CRITICAL 414h+無commit（T-A3-001+T-A3-002）⏸️ 暫停待Owner執行 | Meta Ads / Social |
-| A4 | 影像資產整理部 | 🔴 CRITICAL（~132h無commit；S11 82.2%差2163/S12 36.0%執行狀態未知，Colab斷線風險極高，最後commit 04-10 5787f3e）| Photo Archive |
-| A5 | 報價與提案引擎部 | 🔴 CRITICAL T-A5-002 ~150h無commit | Quotation Engine |
-| A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（Telegram 報價助手 v1.1）| Sales Rapid Response |
-| A7 | 客服與對話轉單部 | 🔴 CRITICAL 366h+無commit（T-A7-001+T-A7-002）| Smart Reply |
+| A3 | 社群與廣告成長部 | ✅ T-A3-001 完成（GTM v21 雙平台追蹤上線）；T-A3-002 ⏸️ 阻塞（等廣告週期+Owner操作）| Meta Ads / Social |
+| A4 | 影像資產整理部 | 🔄 進行中（S12 ✅ DONE 7,645張；S11 補跑 2163張執行中 de4744d 2026-04-15）| Photo Archive |
+| A5 | 報價與提案引擎部 | 🔴 CRITICAL T-A5-002/004/005 ~174h無commit（最後活動 2026-04-09）| Quotation Engine |
+| A6 | 業務快反應部隊 | ⏸️ T-A6-001 阻塞（等Owner在LINE填Webhook URL）| Sales Rapid Response |
+| A7 | 客服與對話轉單部 | 💤 T-A7-001 正式暫停；T-A7-002 ⏸️ 阻塞（等LINE後台權限+Owner政策決策）| Smart Reply |
 | A8 | 多媒體影音製作部 | 🔲 新建，待啟動 | Video Production |
 
 ---
@@ -143,11 +143,11 @@ repo: https://github.com/page1010/maplab-ai-handbook
 1. 系統版本：v6.0 / Phase 6 — 觀測性 + 業務閉環 + 策略循環（Phase 3.1 Dashboard 自動更新已就位 ef2c21b）
 2. EXP-S010 A0/A1 session 混淆已記錄；下次重開先確認 cwd + 貼 A1 recall prompt
 3. A2 T-A2-002 ✅ 完成（2026-04-07）：WP 食安+法規 SEO 字眼清理（13篇）+ AGENT_RULES Section 14（禁用詞清單）+ wp-content-audit 技能書（e92af1d+ecc1a3e+e8e5915）；T-A2A3-001 ✅ 子任務1-4全完成（子任務5等7-14天觀察期）
-4. A7 T-A7-001 Phase 2 + T-A7-002 🔴 CRITICAL 第17天 ~366h+：上次活動 2026-03-31 cf9f166，距今已逾 366h（04-15 21:00）。**Owner 需立即決定：正式標記⏸️暫停或確認外部阻塞原因（近3週無活動）。**
-5. A4 T-A4-001 🔴 CRITICAL：最後commit 5787f3e 04-10 08:31，現已逾~132h；S5✅(8,549張)；S5.5 GPS✅no_gps；S6(2023)✅；S11(2024)⚠️10,050/12,213=82.2%（差2163待Owner決策）；S12(2025)🔄狀態未知（上次36.0%，Colab斷線風險極高~132h無活動）；需Owner確認Colab執行狀態
-6. A5 T-A5-002 🔴 CRITICAL：服務費可選+長桌費+車馬費+DropdownHelper完成(dbcf9d4)；04-09重大進展：合約條款v4.0/訂金可調/飲食禁忌/車馬費定版/6項Owner feedback修復（cfeebd1 04-09 14:03+0800）；現已~150h無commit。Owner確認：(a)未commit進度，或(b)等待Owner回饋（外部阻塞，記錄即可）；Task Card ✅ 已更新；T-A5-004 Phase 1 ✅ 04-02晚完整收尾
-7. A3 T-A3-001 GTM方案B + T-A3-002 🔴 CRITICAL 第18天 ~414h+：最後 commit 2aca2ae 距今已逾 414h（2026-03-29 22:10 起，04-15 21:00）。**Owner 需立即執行：T-A3-001 + T-A3-002 標記為 ⏸️ 暫停**，待外部條件就緒再重啟。
-⚠️ 持續異常（04-15 巡查）：系統靜默第3日（04-12 21:00 → 04-15 21:00），過去24h僅巡查commit，GitHub Actions daily patrol 連續3天未觸發。**需Owner確認 .github/workflows/system-patrol.yml 執行狀態並手動觸發或修復。**
+4. A7 T-A7-001 Phase 2 💤 正式暫停（2026-04-15確認）：Phase 2 v2.0 完成（Q1-Q10重構），等 Owner 確認 Q7 試吃政策 + Q10 取消改期政策。T-A7-002 ⏸️ 阻塞：等 LINE bot 後台權限 + Owner 政策決策。非異常，屬正常外部等待狀態。
+5. A4 T-A4-001 🔄 進行中（2026-04-15重大進展）：S5 ✅(8,549張)；S5.5 GPS ✅ no_gps；S6(2023) ✅ 完成；S12(2025) ✅ DONE 7,645張（04-15 08:58 完成，de4744d）；S11(2024) 補跑執行中 2163張（de4744d 04-15啟動）。下一步：S11補跑完成→S13(2026)→T-A4-002。ASSET_LOG總計21,414行；API key已更換。
+6. A5 T-A5-002/T-A5-004/T-A5-005 🔴 CRITICAL ~174h無commit：最後活動 cfeebd1 (2026-04-09 14:03+0800)，距今已逾 174h（7天+）。服務費可選+長桌費+車馬費+合約v4.0均已完成，但後續任務無進展。CURRENT_STATUS 已標記三任務🔴 CRITICAL。Owner 需確認 A5 是否有外部阻塞，或儘速重啟。
+7. A3 T-A3-001 ✅ 完成（2026-04-15）：GTM v19 ✅（方案A，方案B）→ v20 ✅（Meta LINE Button ID Click tag）→ v21 ✅（Google Ads 轉換 tag）。Facebook + Google Ads 雙平台轉換追蹤正式上線（83c655c 2026-04-15 20:59）。T-A3-002 廣告成效 ⏸️ 阻塞：等廣告週期 + Owner 操作 Meta Ads Manager（見 Task Card）。
+✅ 系統於 2026-04-15 恢復活躍（靜默結束）：7 days silent → 04-15 爆發 11+ commits。A3/A4/A1/A2 均有重大進展。GitHub Actions patrol 狀態：已有 scripts/patrol.sh 本地備援，remote Actions 狀態待確認。
 36b. A6 e2e round 5 全通過里程碑 🎉（04-11 16:18 06ce9c6）：quote + slide + heartbeat all verified；auto-trigger Slide after createQuote（b118095，無需手動）；fromMaster mode（b82df34，從母版QUOTE_DRAFT讀資料）；ApiEndpoint.gs 還原+.claspignore修復（45e26a0）；bot_a6 GAS trigger + py3.9 compat（fe76f8a/f99cf31）。A6系統整合達成。A1：Task Card v1.2格式統一12張（b502417）+.gitignore修復（52f6873）。A0：Chrome驗證SOP落地（731cff0）。
 36. A0 dispatch 操作手冊落地（2a1879a 04-10）：docs/a0-dispatch-operations-manual.md 建立 — 使用者視角系統架構圖、入口×角色對照表、委派前7問題協議、操作路徑表、A0/A1分工踩坑記錄。A0 角色定位更完整。
 27. A1 worktree 清理完成（576e7df 2026-04-07）：清除全部 29 個 worktree（含 peaceful-yalow / interesting-shaw / pedantic-mendeleev），Mac mini 環境整潔。

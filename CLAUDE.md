@@ -69,6 +69,8 @@ git log --oneline -5
 | Colab 斷線/恢復 | `skills/colab-resilience-guide.md` + `skills/crash-recovery-guide.md` |
 | 品項管理 | `skills/items-management/` |
 | Cloud debug | `skills/systematic-debugging-cloud-guide.md` |
+| 踩坑經驗（自動生成） | `skills/auto/` — checkpoint.sh 偵測 fix/踩坑 commit 時提示生成 |
+| 手動產技能檔 | `bash scripts/generate-skill.sh "名稱" "問題" "解法" "觸發條件"` |
 | 其他 | `ls skills/` 搜尋 |
 
 ---

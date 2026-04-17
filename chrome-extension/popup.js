@@ -104,25 +104,15 @@ async function loadAgentRecall(role, base, token) {
   }
 }
 
-// === Overdue detection (uses commits internally, no UI) ===
+// === Overdue detection — 直接讀 CURRENT_STATUS 的 🔴 CRITICAL 標記（與 checkpoint.sh/patrol.sh 統一邏輯） ===
 function detectOverdueTasks(commits, activeTasks) {
   const warnings = [];
-  const OVERDUE_HOURS = 48;
-  const taskLastSeen = {};
-  for (const c of commits) {
-    for (const t of activeTasks) {
-      if (t.id && c.message.includes(t.id) && !taskLastSeen[t.id])
-        taskLastSeen[t.id] = c.date;
-    }
-  }
   for (const task of activeTasks) {
-    if (!task.status.includes('🔄')) continue;
-    if (taskLastSeen[task.id]) {
-      const hours = Math.round((Date.now() - new Date(taskLastSeen[task.id]).getTime()) / 3600000);
-      if (hours > OVERDUE_HOURS)
-        warnings.push(`${task.id} 超過 ${hours}h 無 commit（${task.name.substring(0,30)}）`);
-    } else {
-      warnings.push(`${task.id} 在最近 ${COMMIT_COUNT} 筆 commit 無紀錄`);
+    if (task.status.includes('🔴') || task.status.includes('CRITICAL')) {
+      // 從狀態欄提取時間資訊（如 ~215h無commit）
+      const match = task.status.match(/~(\d+)h/);
+      const hours = match ? match[1] + 'h' : '?h';
+      warnings.push(`${task.id} 🔴 CRITICAL（${hours}無commit）— ${task.name.substring(0,30)}`);
     }
   }
   return warnings;
@@ -133,8 +123,14 @@ function buildOverviewPrompt(parsed, overdueWarnings) {
   const lines = [];
   lines.push(`系統 ${parsed.version} ｜ ${parsed.phase}`);
   lines.push('');
-  const inProgress = parsed.activeTasks.filter(t => t.status.includes('🔄'));
+  const critical   = parsed.activeTasks.filter(t => t.status.includes('🔴') || t.status.includes('CRITICAL'));
+  const inProgress = parsed.activeTasks.filter(t => t.status.includes('🔄') && !t.status.includes('🔴') && !t.status.includes('CRITICAL'));
   const available  = parsed.activeTasks.filter(t => t.status.includes('🔲'));
+  if (critical.length > 0) {
+    lines.push('【🔴 CRITICAL — 需立即處理】');
+    critical.forEach(t => lines.push(`🔴 ${t.id} (${t.agent}) — ${t.status.substring(0,60)}`));
+    lines.push('');
+  }
   if (inProgress.length > 0) {
     lines.push('【進行中】');
     inProgress.forEach(t => lines.push(`🔄 ${t.id} (${t.agent}) — ${t.name.substring(0,40)}`));
@@ -161,7 +157,11 @@ function buildOverviewPrompt(parsed, overdueWarnings) {
 function buildSystemSnapshot(parsed) {
   const lines = ['', '---', '【系統快照 — 即時】'];
   lines.push(`版本：${parsed.version} ｜ ${parsed.phase}`);
-  const inProgress = parsed.activeTasks.filter(t => t.status.includes('🔄'));
+  const critical   = parsed.activeTasks.filter(t => t.status.includes('🔴') || t.status.includes('CRITICAL'));
+  const inProgress = parsed.activeTasks.filter(t => t.status.includes('🔄') && !t.status.includes('🔴') && !t.status.includes('CRITICAL'));
+  if (critical.length > 0) {
+    lines.push('🔴 CRITICAL：' + critical.map(t => t.id).join('、'));
+  }
   if (inProgress.length > 0) {
     lines.push('進行中：' + inProgress.map(t => `${t.id}(${t.name.substring(0,20)})`).join('、'));
   }
@@ -251,9 +251,10 @@ function updatePromptDisplay() {
     if (cachedParsed) {
       const tasks = cachedParsed.activeTasks.filter(t => t.agent.includes(role.replace('A','')) && !t.status.includes('✅'));
       if (tasks.length > 0) {
-        el('roleStatus').innerHTML = tasks.map(t =>
-          `<span class="${t.status.includes('🔄') ? 'active' : 'pending'}">${t.status.substring(0,2)}</span> ${t.id} ${t.name.substring(0,35)}`
-        ).join('<br>');
+        el('roleStatus').innerHTML = tasks.map(t => {
+          const cls = (t.status.includes('🔴') || t.status.includes('CRITICAL')) ? 'critical' : t.status.includes('🔄') ? 'active' : 'pending';
+          return `<span class="${cls}">${t.status.substring(0,2)}</span> ${t.id} ${t.name.substring(0,35)}`;
+        }).join('<br>');
       } else {
         el('roleStatus').innerHTML = '<span class="new">無進行中任務</span>';
       }

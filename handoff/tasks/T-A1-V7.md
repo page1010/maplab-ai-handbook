@@ -2,10 +2,10 @@
 
 ## 接續狀態
 - **狀態**: 🔄 進行中
-- **最後活動**: 2026-04-17
-- **接續點**: Phase 3 全部完成 — 3-1 recalls 精簡（刪 141 行）、3-2 舊檔歸檔（190MB 釋放）、3-3+3-4 CLAUDE.md 改寫（啟動必讀 ~2000→~170 行、技能索引化 60 個技能觸發條件表）。下一步：Phase 4 自動技能生成 或 修復項（Extension CRITICAL / patrol 統一 / git-pull exit 78）
+- **最後活動**: 2026-04-17 080450b
+- **接續點**: Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 ReMe）為加分項。
 - **阻塞**: 無
-- **已完成修復項**: A0 TASK_QUEUE 死連結 ✅、A6 重複 recall 刪除 ✅、bot log 180MB 輪轉 ✅
+- **已完成修復項**: A0 TASK_QUEUE 死連結 ✅、A6 重複 recall 刪除 ✅、bot log 180MB 輪轉 ✅、Extension 🔴 CRITICAL 顯示 ✅、patrol/Extension 邏輯統一 ✅、git-pull launchd exit 78 ✅
 
 ## 背景
 Owner 反映：226 個 .md 檔沒人讀、Agent reset 後不了解就動手產出亂七八糟、同一資訊散落 3-4 處且多數過時。

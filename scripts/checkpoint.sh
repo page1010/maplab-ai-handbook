@@ -483,6 +483,13 @@ if [ "$FAST_MODE" = true ]; then
   echo "💡 決策提示：這次有值得記錄的決策嗎？"
   echo "   （為什麼不用方案 A？踩過什麼坑？改了什麼設計？）"
   echo "   有的話請追加到 decisions.md：格式「[角色]-[主題]: 決策內容 → 原因」"
+  echo ""
+  # Phase 4: 自動技能生成偵測
+  if echo "$MESSAGE" | grep -qiE 'fix|修復|踩坑|workaround|解法|繞過|排查|debug|陷阱|坑'; then
+    echo "🧠 技能生成提示：這次 commit 看起來解決了非顯而易見的問題。"
+    echo "   如果這個解法未來可能會重複用到，建議產技能檔："
+    echo "   bash scripts/generate-skill.sh \"技能名\" \"問題描述\" \"解法描述\" \"觸發條件\""
+  fi
 
 # ============================================================
 # 預設模式：commit 到 agent branch，push branch，等 Owner approve
@@ -541,4 +548,11 @@ else
   echo "💡 決策提示：這次有值得記錄的決策嗎？"
   echo "   （為什麼不用方案 A？踩過什麼坑？改了什麼設計？）"
   echo "   有的話請追加到 decisions.md：格式「[角色]-[主題]: 決策內容 → 原因」"
+  echo ""
+  # Phase 4: 自動技能生成偵測
+  if echo "$MESSAGE" | grep -qiE 'fix|修復|踩坑|workaround|解法|繞過|排查|debug|陷阱|坑'; then
+    echo "🧠 技能生成提示：這次 commit 看起來解決了非顯而易見的問題。"
+    echo "   如果這個解法未來可能會重複用到，建議產技能檔："
+    echo "   bash scripts/generate-skill.sh \"技能名\" \"問題描述\" \"解法描述\" \"觸發條件\""
+  fi
 fi

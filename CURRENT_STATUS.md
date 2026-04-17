@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-04-17 17:00 A1午後巡查｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-04-17 18:26（checkpoint.sh 自動同步）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -23,7 +23,7 @@
 |---------|------|-----------|------|-----------|
 | T-A1-V6-P2 | T-A1-V6-P2 | A1 | 🔄 進行中（4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下一步：建虛擬測試案例 →） | handoff/tasks/T-A1-V6-P2.md |
 | T-A1-V6-P3 | T-A1-V6-P3 | A1 | 🔲 待開始（尚未開始。等 T-A1-V6-P2 完成後啟動。） | handoff/tasks/T-A1-V6-P3.md |
-| T-A1-V7 | 系統進化 — 單一真相源 + 自動同步 + 瘦身 + 自動技能生成 + 自動壓縮 | A1 | 🔄 進行中（Phase 2 全部完成 — 2-1 sync recalls、2-2 sync CURRENT_STATUS（awk ） | handoff/tasks/T-A1-V7.md |
+| T-A1-V7 | 系統進化 — 單一真相源 + 自動同步 + 瘦身 + 自動技能生成 + 自動壓縮 | A1 | 🔄 進行中（Phase 3 全部完成 — 3-1 recalls 精簡（刪 141 行）、3-2 舊檔歸檔（190MB 釋放）、3-） | handoff/tasks/T-A1-V7.md |
 | T-A2-002-foodsafety-seo-cleanup | T-A2-002 — 食安 + 法規 SEO 字眼清理 | A2 | ⏸️ 阻塞（Repo 端已清理完成；WordPress 端需 Owner 手動刪除/修改 5 篇文章的食安字眼） | handoff/tasks/T-A2-002-foodsafety-seo-cleanup.md |
 | T-A2-003-weekly-wp-audit | T-A2-003: 每週全站 WP 內容稽核排程 | A2 | 🔲 待開始（腳本已建好（wp-audit.sh / wp-audit-cron.sh）。待 Owner 用 /schedule 建立） | handoff/tasks/T-A2-003-weekly-wp-audit.md |
 | T-A2-004 | 首頁結構優化 — 配合品牌色票微調 + 轉換路徑整理 | A2 | 🔲 待開始（任務卡建立。A0 已完成對標分析和色票微調。） | handoff/tasks/T-A2-004.md |
@@ -32,9 +32,9 @@
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | ⏸️ 阻塞中（受眾輪廓分析完成（693筆 Orders）。待執行：嘉義加入廣告地區、興趣條件精簡、策略一冷受眾上線。） | handoff/tasks/T-A3-002.md |
 | T-A4-001 | Phase 4 Gemini 照片分類（2022-2026） | A4 | 🔄 進行中（S11/2024 補跑執行中）（S12(2025) ✅ DONE 7,645/7,642（45張補完，2026-04-15 08:58 完成）。S11(） | handoff/tasks/T-A4-001.md |
 | T-A4-002 | T-A4-002 | A4 | 🔲 待開始（尚未開始。等 T-A4-001 完成後啟動。） | handoff/tasks/T-A4-002.md |
-| T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔴 CRITICAL（~200h無commit，最後活動 cfeebd1 2026-04-09） | handoff/tasks/T-A5-002.md |
-| T-A5-004 | createSlides.gs — Slide 報價簡報自動生成 | A5 | 🔴 CRITICAL（~176h無commit，最後活動 2026-04-09） | handoff/tasks/T-A5-004.md |
-| T-A5-005 | 報價狀態追蹤同步 + Dashboard | A5 | 🔴 CRITICAL（~200h無commit，最後活動 2026-04-09）| handoff/tasks/T-A5-005.md |
+| T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔴 CRITICAL（~215h無commit） | handoff/tasks/T-A5-002.md |
+| T-A5-004 | createSlides.gs — Slide 報價簡報自動生成 | A5 | 🔴 CRITICAL（~191h無commit） | handoff/tasks/T-A5-004.md |
+| T-A5-005 | 報價狀態追蹤同步 + Dashboard | A5 | 🔴 CRITICAL（~215h無commit） | handoff/tasks/T-A5-005.md |
 | T-A5-006 | T-A5-006 | A5 | 🔲 待開始（尚未開始。等 T-A5-005 完成後啟動。） | handoff/tasks/T-A5-006.md |
 | T-A6-001 | A6 LINE 業務報價助手系統 | A6 | ⏸️ 阻塞中（Sheet 三分頁架構完成、LINE Bot Webhook 技能書完成、GAS doPost 已部署。差最後一步：LI） | handoff/tasks/T-A6-001.md |
 | T-A6-002 | LINE 對話訓練資料收集計畫 | A6 | 💤 暫停（原計畫拆 Sheet 做訓練資料，04-07 重新規劃方向。等 Owner 決定是否需要 LINE 訓練資料及取得方式。） | handoff/tasks/T-A6-002.md |
@@ -55,9 +55,6 @@
 | A2/A3 | T-A2A3-001: 等 Google 重新索引，預計 04-11 後可驗證 | 見 Task Card |
 | A3 | T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） | 見 Task Card |
 | A4 | T-A4-002: 前置 T-A4-001 需先完成 | 見 Task Card |
-| A4 | ⚠️ A1巡查 2026-04-17 17:00：T-A4-001 S11補跑 ETA 已過 ~52h（04-15 09:04 啟動，ETA~4.2h，預計13:14完成）。仍無新 commit 確認完成狀態。Colab 可能已完成但未存檔，或已斷線。Owner 需確認：若完成請補 commit；若斷線請重啟繼續 S13(2026)。 | 緊急 |
-| A5 | ⚠️ A1巡查 2026-04-17 17:00：T-A5-002/T-A5-004/T-A5-005 全部 🔴 CRITICAL，最後活動 cfeebd1 (2026-04-09)，距今 ~208h（超過 8 天，第 10 天）。Owner 需確認 A5 阻塞原因或儘速重啟任務。 | 緊急 |
-| A2/A3 | ⚠️ A1巡查 2026-04-17 17:00：T-A2A3-001/T-A2A3-001-B Google 索引觀察期已過（原估 04-11 後可驗證，今日 04-17 = +6天）。Owner 可開始查 Google Search Console 排名變化，確認子任務5是否達標。 | 建議確認 |
 | A5 | T-A5-002: 等 Owner 確認（品項名稱改法、重複品項、I 欄用途） | 見 Task Card |
 | A5 | T-A5-006: 前置 T-A5-005 需先完成 | 見 Task Card |
 | A6 | T-A6-001: 需 Owner 在 LINE Developers Console 填入 Webhook URL（Channel 1654658337） | 見 Task Card |

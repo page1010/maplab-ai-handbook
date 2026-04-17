@@ -203,3 +203,39 @@
 [2026-04-17 18:14:40] 已跳過：1 個
 [2026-04-17 18:14:40] 已 merge（stale）：0 個
 [2026-04-17 18:14:40] === 完成 ===
+[2026-04-17 18:39:04] === Worktree 健康檢查 開始 ===
+[2026-04-17 18:39:04] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-17 18:39:04] 模式: LIVE | all-clean | safe
+[2026-04-17 18:39:04] git worktree prune 完成
+[2026-04-17 18:39:04] 
+[2026-04-17 18:39:04] --- 目前所有 worktree ---
+[2026-04-17 18:39:04]   /Users/pagemacmini/maplab-ai-handbook                                      080450b [main]
+[2026-04-17 18:39:04]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/blissful-torvalds  361c0de [claude/blissful-torvalds]
+[2026-04-17 18:39:04]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/competent-hellman  865ab5d [claude/competent-hellman]
+[2026-04-17 18:39:04]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/goofy-joliot       865ab5d [claude/goofy-joliot]
+[2026-04-17 18:39:04]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/vigorous-torvalds  080450b [claude/vigorous-torvalds]
+[2026-04-17 18:39:04] 
+[2026-04-17 18:39:04] 📋 blissful-torvalds (branch: claude/blissful-torvalds) — 未 merge
+[2026-04-17 18:39:04]    🗑️  清理中...
+[2026-04-17 18:39:04]    ✅ worktree 已移除
+[2026-04-17 18:39:04]    🌿 本地 branch claude/blissful-torvalds 已刪除
+[2026-04-17 18:39:04] 📋 competent-hellman (branch: claude/competent-hellman) — 未 merge
+[2026-04-17 18:39:04]    🗑️  清理中...
+[2026-04-17 18:39:04]    ✅ worktree 已移除
+[2026-04-17 18:39:05]    🌿 本地 branch claude/competent-hellman 已刪除
+[2026-04-17 18:39:05] 📋 goofy-joliot (branch: claude/goofy-joliot) — 未 merge
+[2026-04-17 18:39:05]    🗑️  清理中...
+[2026-04-17 18:39:05]    ✅ worktree 已移除
+[2026-04-17 18:39:05]    🌿 本地 branch claude/goofy-joliot 已刪除
+[2026-04-17 18:39:05] 📋 vigorous-torvalds (branch: claude/vigorous-torvalds) — 未 merge
+[2026-04-17 18:39:05]    🗑️  清理中...
+[2026-04-17 18:39:05]    ✅ worktree 已移除
+[2026-04-17 18:39:05]    🌿 本地 branch claude/vigorous-torvalds 已刪除
+[2026-04-17 18:39:05] 
+[2026-04-17 18:39:05] === 結果摘要 ===
+[2026-04-17 18:39:05] 掃描 worktree：4 個
+[2026-04-17 18:39:05] 已清理：4 個
+[2026-04-17 18:39:05] 已跳過：0 個
+[2026-04-17 18:39:05] 已 merge（stale）：0 個
+[2026-04-17 18:39:05] 估計釋放 ~64MB 磁碟空間
+[2026-04-17 18:39:05] === 完成 ===

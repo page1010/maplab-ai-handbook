@@ -2,9 +2,10 @@
 
 ## 接續狀態
 - **狀態**: 🔄 進行中
-- **最後活動**: 2026-04-15 68d3b48
-- **接續點**: Phase 2 全部完成 — 2-1 sync recalls、2-2 sync CURRENT_STATUS（awk 重生成任務表+Blockers，遵守 parseStatus() 契約）、2-3 決策提示。下一步：Phase 3 瘦身
+- **最後活動**: 2026-04-17
+- **接續點**: Phase 3-1 ✅ recalls 精簡（刪 141 行）、Phase 3-2 ✅ 舊檔歸檔（telegram-logs/a6-logs 歸 archive/raw、digest.md 索引、bot log 輪轉釋放 190MB）。下一步：Phase 3-3 改 CLAUDE.md 啟動流程
 - **阻塞**: 無
+- **已完成修復項**: A0 TASK_QUEUE 死連結 ✅、A6 重複 recall 刪除 ✅、bot log 180MB 輪轉 ✅
 
 ## 背景
 Owner 反映：226 個 .md 檔沒人讀、Agent reset 後不了解就動手產出亂七八糟、同一資訊散落 3-4 處且多數過時。

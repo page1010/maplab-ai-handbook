@@ -6,6 +6,7 @@ cookies.txt
 
 # Telegram logs - may contain sensitive info from conversations
 data/telegram-logs/
+archive/raw/telegram-logs/
 
 # Bot logs & sensitive runtime files — may contain tokens
 bot_a6/bot_a6.log

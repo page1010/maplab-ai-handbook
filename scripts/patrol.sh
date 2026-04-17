@@ -78,6 +78,9 @@ for card in "$TASKS_DIR"/T-*.md; do
   fi
 done
 
+# ── Log 輪轉 ──
+bash "$REPO_ROOT/scripts/rotate-bot-logs.sh" 2>/dev/null | grep -v "nothing to do" || true
+
 # ── 輸出 ──
 echo "=== MAPLAB 系統巡查 $(date '+%Y-%m-%d %H:%M') ==="
 echo ""

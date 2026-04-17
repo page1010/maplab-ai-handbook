@@ -329,6 +329,7 @@ async def reset_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 def _trigger_gas_quote_sync(form_data: dict) -> Optional[dict]:
     """POST formData to GAS Web App, return {success, url, caseId} or None"""
     if not GAS_QUOTE_URL:
+        logging.warning("GAS_QUOTE_URL not set, skipping GAS trigger")
         return None
     try:
         import urllib.request
@@ -340,9 +341,16 @@ def _trigger_gas_quote_sync(form_data: dict) -> Optional[dict]:
         )
         with urllib.request.urlopen(req, timeout=60) as resp:
             return json.loads(resp.read().decode())
+    except urllib.error.HTTPError as e:
+        body = e.read().decode(errors='replace')
+        logging.error(f"GAS trigger HTTP {e.code}: {body}")
+        return {"success": False, "error": f"HTTP {e.code}: {body[:200]}"}
+    except urllib.error.URLError as e:
+        logging.error(f"GAS trigger URL error: {e.reason}")
+        return {"success": False, "error": f"連線失敗: {e.reason}"}
     except Exception as e:
         logging.error(f"GAS trigger failed: {e}")
-        return None
+        return {"success": False, "error": str(e)}
 
 
 def _trigger_gas_slide_sync() -> Optional[dict]:
@@ -374,8 +382,12 @@ def _extract_form_data(claude_reply: str) -> Optional[dict]:
                 return data
         except json.JSONDecodeError:
             pass
-    # fallback: 找 「報價完成」+ Sheet 連結 → 代表已寫入 master，觸發 makeCopy
-    if '報價完成' in claude_reply or 'cells 全部寫入' in claude_reply:
+    # fallback: 報價完成特徵關鍵字（任一符合就嘗試觸發 GAS）
+    completion_keywords = ['報價完成', 'cells 全部寫入', '報價定稿', '報價總覽', '費用總覽']
+    if any(kw in claude_reply for kw in completion_keywords):
+        return {"action": "createQuote", "fromMaster": True}
+    # 毛利率 + % 同時出現（報價完成的結構特徵）
+    if '毛利率' in claude_reply and '%' in claude_reply:
         return {"action": "createQuote", "fromMaster": True}
     return None
 

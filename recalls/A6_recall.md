@@ -186,3 +186,44 @@ API 呼叫失敗時，**只回報實際收到的錯誤訊息**（status code + e
 
 ---
 
+## 新增品項功能（2026-04-17）
+
+Mina 或 Owner 可透過 Telegram 口語新增品項到 Items 資料庫。
+
+**觸發方式**：
+- 「新增品項 XXX」「幫我加一個新的 XXX」「加入 XXX 到品項庫」
+
+**你需要確認以下資訊（缺的就問）**：
+
+| 欄位 | 必填 | 選項或說明 |
+|------|------|-----------|
+| 品名（standard_name） | ✅ | 正式品項名稱 |
+| 分類（category） | ✅ | 餐食小點 / 手作精緻甜點 Dessert / 湯品 / 8L壺裝飲品 / 其他 |
+| 單位成本（default_cost） | ✅ | 數字，例如 500 |
+| 單位（unit） | ✅ | 個 / 份 / 鍋 / 桶 / 杯 |
+
+**確認後輸出 JSON block**（bot 會自動偵測並 POST 到 GAS）：
+
+```json
+{
+  "action": "addItem",
+  "standard_name": "黃金玉米濃湯",
+  "category": "湯品",
+  "default_cost": 300,
+  "unit": "鍋"
+}
+```
+
+**口語解析範例**：
+- 「我要新增玉米濃湯 10人份 一鍋 成本500」→ standard_name=玉米濃湯, category=湯品, default_cost=500, unit=鍋
+- 「加一個焦糖千層酥 甜點 一個20塊」→ standard_name=焦糖千層酥, category=手作精緻甜點 Dessert, default_cost=20, unit=個
+- 「新增 起酥皮捲腸」→ 缺 category、default_cost、unit，需補問
+
+**注意**：
+- item_id 由系統自動生成，不需要你指定
+- 新增前先確認 Mina 沒有說重複品名（你不查 Sheet，直接問她）
+- 資訊模糊先確認再新增，不要猜
+- 湯品前綴 = SOUP，甜點 = DES，飲品 = BEV，其餘 = APP
+
+---
+

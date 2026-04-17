@@ -371,6 +371,33 @@ def _trigger_gas_slide_sync() -> Optional[dict]:
         return None
 
 
+def _trigger_gas_add_item(item_data: dict) -> Optional[dict]:
+    """POST addItem action to GAS Web App, return {success, item_id, message} or None"""
+    if not GAS_QUOTE_URL:
+        logging.warning("GAS_QUOTE_URL not set, skipping addItem trigger")
+        return None
+    try:
+        import urllib.request
+        import urllib.error
+        payload = json.dumps({"action": "addItem", **item_data}).encode()
+        req = urllib.request.Request(
+            GAS_QUOTE_URL, data=payload,
+            headers={"Content-Type": "application/json"}, method="POST"
+        )
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            return json.loads(resp.read().decode())
+    except urllib.error.HTTPError as e:
+        body = e.read().decode(errors='replace')
+        logging.error(f"GAS addItem HTTP {e.code}: {body}")
+        return {"success": False, "error": f"HTTP {e.code}: {body[:200]}"}
+    except urllib.error.URLError as e:
+        logging.error(f"GAS addItem URL error: {e.reason}")
+        return {"success": False, "error": f"連線失敗: {e.reason}"}
+    except Exception as e:
+        logging.error(f"GAS addItem failed: {e}")
+        return {"success": False, "error": str(e)}
+
+
 def _extract_form_data(claude_reply: str) -> Optional[dict]:
     """從 Claude 回覆中找 ```json block，解析 formData"""
     import re
@@ -426,30 +453,39 @@ async def _run_claude_background(
             cancel_event.set()
             heartbeat_task.cancel()
 
-        # 嘗試觸發 GAS 產報價單
+        # 嘗試觸發 GAS（依 action 分流）
         form_data = _extract_form_data(answer)
         if form_data:
-            gas_result = await asyncio.get_event_loop().run_in_executor(
-                None, lambda: _trigger_gas_quote_sync(form_data))
-            if gas_result and gas_result.get('success'):
-                url = gas_result.get('url', '')
-                case_id = gas_result.get('caseId', '')
-                answer += f"\n\n📄 **報價單已自動產出！**\n連結：{url}\n案件編號：{case_id}"
-
-                # createQuote 成功後，也觸發 Slide
-                slide_result = await asyncio.get_event_loop().run_in_executor(
-                    None, lambda: _trigger_gas_slide_sync())
-                if slide_result and slide_result.get('success'):
-                    slide_url = slide_result.get('url', '')
-                    answer += f"\n\n📊 **提案簡報已自動產出！**\n連結：{slide_url}"
+            if form_data.get('action') == 'addItem':
+                # 新增品項流程
+                gas_result = await asyncio.get_event_loop().run_in_executor(
+                    None, lambda: _trigger_gas_add_item(form_data))
+                if gas_result and gas_result.get('success'):
+                    answer += f"\n\n✅ {gas_result.get('message', '品項已新增')}"
                 else:
-                    # Slide 觸發了但失敗
-                    slide_error = slide_result.get('error', '未知錯誤') if slide_result else 'GAS 無回應'
-                    answer += f"\n\n⚠️ 提案簡報自動產出失敗（{slide_error}）。資料已寫入母版，可手動點選單產出。"
-            elif form_data:
-                # 報價單 GAS 觸發了但失敗
-                error_msg = gas_result.get('error', '未知錯誤') if gas_result else 'GAS 無回應'
-                answer += f"\n\n⚠️ 報價單自動產出失敗（{error_msg}）。資料已寫入母版，可手動點選單產出。"
+                    error_msg = gas_result.get('error', '未知錯誤') if gas_result else 'GAS 無回應'
+                    answer += f"\n\n❌ 新增品項失敗：{error_msg}"
+            else:
+                # 原有報價單流程
+                gas_result = await asyncio.get_event_loop().run_in_executor(
+                    None, lambda: _trigger_gas_quote_sync(form_data))
+                if gas_result and gas_result.get('success'):
+                    url = gas_result.get('url', '')
+                    case_id = gas_result.get('caseId', '')
+                    answer += f"\n\n📄 **報價單已自動產出！**\n連結：{url}\n案件編號：{case_id}"
+
+                    # createQuote 成功後，也觸發 Slide
+                    slide_result = await asyncio.get_event_loop().run_in_executor(
+                        None, lambda: _trigger_gas_slide_sync())
+                    if slide_result and slide_result.get('success'):
+                        slide_url = slide_result.get('url', '')
+                        answer += f"\n\n📊 **提案簡報已自動產出！**\n連結：{slide_url}"
+                    else:
+                        slide_error = slide_result.get('error', '未知錯誤') if slide_result else 'GAS 無回應'
+                        answer += f"\n\n⚠️ 提案簡報自動產出失敗（{slide_error}）。資料已寫入母版，可手動點選單產出。"
+                else:
+                    error_msg = gas_result.get('error', '未知錯誤') if gas_result else 'GAS 無回應'
+                    answer += f"\n\n⚠️ 報價單自動產出失敗（{error_msg}）。資料已寫入母版，可手動點選單產出。"
 
         MAX = 4096
         for i in range(0, len(answer), MAX):

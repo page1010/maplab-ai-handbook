@@ -160,6 +160,58 @@ print(f"品項統計: {dict(counts)}")
 
 ---
 
+## A6 Telegram 新增品項（2026-04-17 新增）
+
+Mina 可透過 Telegram 口語對 A6 新增品項，bot 自動 POST 到 GAS 寫入 Items 表。
+
+### 流程
+
+1. Mina 說：「新增品項 XXX」或「幫我加一個新的 XXX」
+2. A6 確認品名、分類、成本、單位（缺一就補問）
+3. A6 輸出 JSON block（格式如下），bot 偵測後自動觸發 GAS addItem
+4. GAS 回傳成功 → bot 推送 `✅ 品項已新增：XXX（SOUPXXX）`
+
+### JSON 格式
+
+```json
+{
+  "action": "addItem",
+  "standard_name": "黃金玉米濃湯",
+  "category": "湯品",
+  "default_cost": 300,
+  "unit": "鍋"
+}
+```
+
+### 前綴對照
+
+| category | item_id 前綴 |
+|----------|-------------|
+| 餐食小點 / 其他 | APP |
+| 湯品 | SOUP |
+| 手作精緻甜點 Dessert | DES |
+| 8L壺裝飲品 | BEV |
+
+### 寫入欄位
+
+| 欄 | 內容 |
+|----|------|
+| A | 自動產生 item_id（同前綴最大號 +1）|
+| B | category |
+| C | name（standard_name）|
+| E | default_cost |
+| F | unit |
+| H | TRUE（is_active）|
+
+D（default_price）、G（min_qty）、I（note）、J（source_tag）、K（image_url）留空，後續補填。
+
+### 部署要求
+
+GAS `ApiEndpoint.gs` 已加入 `addItem` action（`addItemToDatabase_` 函數）。
+每次修改 GAS 後需重新部署 Web App → Extensions → Apps Script → Deploy。
+
+---
+
 ## 腳本清單
 
 | 腳本 | 用途 |

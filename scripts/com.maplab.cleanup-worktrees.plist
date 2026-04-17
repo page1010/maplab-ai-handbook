@@ -8,6 +8,7 @@
     <array>
         <string>/bin/bash</string>
         <string>/Users/pagemacmini/maplab-ai-handbook/scripts/cleanup-worktrees.sh</string>
+        <string>--merged-only</string>
     </array>
     <key>StartInterval</key>
     <integer>1800</integer>

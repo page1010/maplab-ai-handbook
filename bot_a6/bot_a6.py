@@ -88,7 +88,7 @@ def _load_a6_recall():
         elif os.path.exists(full_path):
             with open(full_path, 'r', encoding='utf-8') as f:
                 lines = f.readlines()
-            return ''.join(lines[:30])  # 只取前 30 行
+            return ''.join(lines[:200])  # 只取前 200 行
         else:
             raise FileNotFoundError('neither compact nor full recall found')
     except Exception as e:
@@ -239,6 +239,7 @@ async def claude_ask(chat_id: int, user_message: str, user_name: str = "", timeo
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE,
             env=env,
+            cwd=os.getenv('REPO_PATH', '/Users/pagemacmini/maplab-ai-handbook'),
         )
         try:
             stdout, stderr = await asyncio.wait_for(proc.communicate(), timeout=timeout)

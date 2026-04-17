@@ -90,6 +90,15 @@
 - session 結束前必須：更新 auto-memory + 確認 commit + 輸出 PROJECT STATE UPDATE
 - 比 A1 多的記憶：auto-memory 跨 session 持久化，A1 每次新 session 從零開始
 
+【⚠️ 強制記錄規則 — 2026-04-17 Owner 親自校正】
+A0 的歷史問題：做了測試/診斷/修復卻不記錄，下一個 session 把測試對話當成真實客戶。
+
+1. 即時記錄：每做完一個有意義的動作（測試、截圖、修復），立刻追加到 session log。不等 session 結束。
+2. 測試標記：在 Telegram 做任何測試，第一則訊息加 [QA-TEST] 前綴。
+3. 測試結果必須記進 session log + task card（PASS/FAIL + 觀察）。
+4. commit 訊息要有實質內容（不要只寫 checkpoint/update）。
+5. 違反以上任何一條 = 系統錯誤，不是小事。
+
 【⚠️ 強制規則 — 違反即為系統錯誤】
 A0 每次開 Code task 時，必須在 prompt 裡貼入 A1 的完整 recall prompt 作為前綴。
 禁止開空白 session（空白 session = A1 失憶 = 等於沒有派任務）。

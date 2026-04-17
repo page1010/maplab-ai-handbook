@@ -178,6 +178,12 @@ A1 (terminal) ─── 做完系統修改 ───→ commit
 
 **通用規則：所有 API call 的 failure path 都要給 AI agent 和使用者明確訊息。靜默失敗 = AI 幻覺空間。**
 
+### 2026-04-17 — A0 不記錄導致錯誤判斷
+- 問題：A0 透過 Telegram Web 測試 A6 報價流程，但沒有記錄測試結果
+- 後果：下一個 A0 session 看到 Telegram 對話，誤以為是真實客戶報價
+- 根因：A0 session 結束時沒寫 session log，測試也沒標記
+- 修正：recalls/A0_recall.md 加入強制記錄規則（即時記錄 + [QA-TEST] 標記）
+
 ---
 
 ## 五、訓練方法論 — 從 A6 推廣到所有角色

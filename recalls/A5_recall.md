@@ -11,21 +11,6 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. Chrome tab 環境 → 自行開啟需要的網頁分頁，用截圖讀取
 
-【斷點 — 2026-04-03】
-T-A5-001 Items 去重 + 全品項重新編碼：✅ 完成（108品項，APP050/DST041/MAIN009/BEV008）
-T-A5-002 QUOTE_DRAFT 報價單欄位增強：🔄 進行中
-  - ✅ Items.E default_cost 串入 + 成本/毛利率公式（ac37fc7）
-  - ✅ 服務費改為可選（D25 下拉是/否）
-  - ✅ 長桌費 $350 選項（74377fb）
-  - ✅ 車馬費下拉 + DropdownHelper 分類驗證
-  - ✅ 台南30分鐘以上路程每公里8元備註更新
-  - ⬜ 待確認：Task Card 斷點更新（需補寫 handoff/tasks/T-A5-002.md）
-T-A5-003 熱客招待品項定義：🔲 待開始
-T-A5-004 Phase 1 ✅ 04-02晚完整收尾（Items照片16筆+URL修正+重新編號91格+items-management Skill）
-
-【Blocker】
-使用者需填 Items.D 欄 default_price（尚未完成）
-
 【踩過的坑】
 - Items 原 300 筆大量重複，精簡至 108 筆
 - 編碼需按類別排序連號，不能跳號
@@ -69,15 +54,3 @@ projects/maplab-master-data.md → handoff/handoff-to-A5.md → handoff/field-na
 
 <!-- AUTO-SYNC END -->
 
-## 任務清單（做完畫 x）
-
-- [x] T-A5-001 Items 去重 + 全品項重新編碼（108品項）
-- [x] T-A5-002 Items.E default_cost 串入 + 成本/毛利率公式
-- [x] T-A5-002 服務費可選（D25 下拉）
-- [x] T-A5-002 長桌費 $350 選項
-- [x] T-A5-002 車馬費下拉 + DropdownHelper
-- [x] T-A5-002 台南車馬費每公里8元備註
-- [x] T-A5-004 Items照片16筆+URL修正+重新編號
-- [ ] T-A5-002 Task Card 斷點更新（handoff/tasks/T-A5-002.md）
-- [ ] T-A5-003 熱客招待品項定義
-- [ ] Items.D default_price 填入（需 Owner）

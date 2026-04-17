@@ -11,19 +11,6 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. Chrome tab 環境 → 自行開啟需要的網頁分頁，用截圖讀取
 
-【⚠️ 警示 — 2026-04-03 巡查】
-🔴 CRITICAL：T-A3-001 + T-A3-002 距上次 commit 已逾 140h+（第7天）
-上次活躍：2026-03-29 2aca2ae
-必須說明阻擋原因，或在 Task Card 補記後暫停。
-
-【斷點 — 2026-03-29 午後巡查】
-T-A3-002 Meta 廣告「慶生周歲派對」：🔄 已上線，受眾已記錄，#15 受眾分析報告已完成
-  受眾：台南+高雄、媽媽族群、奢侈品/美食/攝影/親子興趣
-  策略：品牌認知階段（冷受眾），目標曝光非轉換
-T-A3-001 GTM LINE 按鈕追蹤修復：🔄 進行中
-  斷點：#12 斷點記錄 + #14 GTM方案B規格已記錄
-  下一步：技術實作（GTM 自訂事件觸發器 + LINE OA 按鈕監聽）→ 測試驗證
-
 【踩過的坑】
 - 貼文素材：Owner 已用現有貼文，非 Canva C款
 - Meta Pixel / GTM 技術設定用 Claude
@@ -50,10 +37,3 @@ handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-
 （無進行中任務）
 <!-- AUTO-SYNC END -->
 
-## 任務清單（做完畫 x）
-
-- [x] T-A3-002 Meta 廣告上線（慶生周歲派對）
-- [x] T-A3-002 #15 受眾分析報告
-- [ ] T-A3-001 GTM LINE 按鈕追蹤 技術實作
-- [ ] T-A3-001 GTM 方案B 測試驗證
-- [ ] T-A3-002 廣告成效監控報告（上線後14天）

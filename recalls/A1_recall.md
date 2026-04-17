@@ -57,12 +57,12 @@ repo: https://github.com/page1010/maplab-ai-handbook
 - 狀態: 🔄 進行中
 - 接續點: 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下一步：建虛擬測試案例 → A6 跑報價流程 → 驗證寫入。
 - 阻塞: 等 A6 實際報價測試
-- 最後活動: 2026-04-15 539f304
+- 最後活動: 2026-04-15 68d3b48
 
 **T-A1-V7** 系統進化 — 單一真相源 + 自動同步 + 瘦身 + 自動技能生成 + 自動壓縮
 - 狀態: 🔄 進行中
-- 接續點: Phase 1 完成 — decisions.md（~85 條歷史決策）+ dependency-map.md（連動地圖）+ Task Card 一致性修正。下一步：Phase 2-1 改 checkpoint.sh 自動更新 recalls/ 現況區
+- 接續點: Phase 2 全部完成 — 2-1 sync recalls、2-2 sync CURRENT_STATUS（awk 重生成任務表+Blockers，遵守 parseStatus() 契約）、2-3 決策提示。下一步：Phase 3 瘦身
 - 阻塞: 無
-- 最後活動: 2026-04-15 539f304
+- 最後活動: 2026-04-15 68d3b48
 
 <!-- AUTO-SYNC END -->

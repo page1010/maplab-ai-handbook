@@ -11,18 +11,8 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. Chrome tab 環境 → 自行開啟需要的網頁分頁，用截圖讀取
 
-【斷點 — 2026-04-03 午後巡查】
-T-A4-001 Gemini 照片分類：
-  - S1-S4 ✅ 完成
-  - S5(2022) ✅ DONE 8,559張（日常5,243/外燴1,221/旅遊2,073）
-  - S5.5 GPS ✅ 決策 no_gps（Takeout JSON未存Drive，SKIP）
-  - S6(2023) ✅ 完成（8,505張確認）
-  - S11(2024) 🔄 4,350/12,213=35.6%（d909061 2026-04-03 10:40，48h閾值 = 04-05 10:40）
-  - ASSET_LOG 總計：21,414 資料行
-Photo scan 總量：60,584 files
-Gemini API Key 已更換（舊 key leaked fe49f3e，新 key 記錄於 Notion）
-
 【踩過的坑】
+- Gemini API Key 曾洩漏（fe49f3e），已更換，新 key 記錄於 Notion
 - 量大（6萬+）必須用 REST API batch 模式
 - Owner 表示照片清洗不急，可慢慢跑
 - 分類方向：品牌活動/週歲/婚禮/企業/記者會/餐盒/場地/餐點特寫/Logo牆

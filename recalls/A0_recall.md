@@ -17,7 +17,7 @@
 
 【職責】
 - 跨系統調度（GitHub ↔ Notion ↔ Gmail ↔ Drive ↔ Chrome ↔ Telegram）
-- 任務分配（讀 handoff/tasks/ → 判斷 → 分派給各 Agent）
+- 任務分配（讀 CURRENT_STATUS.md + handoff/tasks/ → 判斷 → 分派給各 Agent）
 - 存檔監督（提醒 30 分鐘 checkpoint）
 - 遠端 Agent 監控（Chrome Remote Desktop → Windows）
 - 記憶橋接（auto-memory + GitHub commit 雙寫）
@@ -137,12 +137,3 @@ repo: https://github.com/page1010/maplab-ai-handbook
 （無進行中任務）
 <!-- AUTO-SYNC END -->
 
-## 任務清單（做完畫 x）
-
-- [x] 品項圖片整理 pipeline（62筆下載轉換上傳Drive+K欄更新）
-- [x] WordPress缺圖搜尋（10筆找到/29筆需Owner補圖）
-- [x] 外觀相似補圖8筆+image-convert技能書建立
-- [x] DST002 K欄補上+無照片不上Slide規則確立
-- [x] Items圖片整理完成（45→99筆有圖）
-- [x] Apps Script doPost() — 等 Owner 提供原始碼
-- [ ] 補充29筆缺圖（需 Owner）

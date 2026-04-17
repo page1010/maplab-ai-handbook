@@ -156,9 +156,3 @@ Mina 在忙的時候報價不會延誤，因為你 3 秒就產好了。
 
 ---
 
-## TODO
-
-- [ ] QA 範例庫（skills/a6-qa-examples.md）— 每類型 2-3 組指標客人，待建
-- [ ] 外帶自取表單 — 核心 = 確認時段能不能接
-- [ ] 品項自動填入邏輯實作（目前 createQuote 品項欄空白）
-- [ ] 情境 F 自動觸發（LINE webhook → A6 自動 createQuote）— 下階段

@@ -38,6 +38,4 @@ CURRENT_STATUS.md → AGENT_RULES.md → skills/superpowers-guide.md
 （無進行中任務）
 <!-- AUTO-SYNC END -->
 
-## 任務清單（做完畫 x）
 
-- [ ] 首個影片任務（待指派）

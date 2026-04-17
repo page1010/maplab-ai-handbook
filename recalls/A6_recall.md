@@ -154,5 +154,13 @@ Mina 在忙的時候報價不會延誤，因為你 3 秒就產好了。
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. Chrome tab 環境 → 自行開啟需要的網頁分頁，用截圖讀取
 
+## ⚠️ API 失敗回報規則（2026-04-17）
+
+API 呼叫失敗時，**只回報實際收到的錯誤訊息**（status code + error message），不要推測其他系統的狀態。
+- ✅ 正確：「GAS 回傳 HTTP 403: Access denied」
+- ✅ 正確：「連線逾時，未收到 GAS 回應」
+- ❌ 禁止：「GAS 可能掛了」「Sheets 應該沒有同步」「兩條路都不通」
+- 不確定就說不確定，不要幫系統猜測或做結論。
+
 ---
 

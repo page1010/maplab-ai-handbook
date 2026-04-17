@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-04-17 18:26（checkpoint.sh 自動同步）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-04-17 22:00（A1 晚間巡查更新）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -23,7 +23,7 @@
 |---------|------|-----------|------|-----------|
 | T-A1-V6-P2 | T-A1-V6-P2 | A1 | 🔄 進行中（4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下一步：建虛擬測試案例 →） | handoff/tasks/T-A1-V6-P2.md |
 | T-A1-V6-P3 | T-A1-V6-P3 | A1 | 🔲 待開始（尚未開始。等 T-A1-V6-P2 完成後啟動。） | handoff/tasks/T-A1-V6-P3.md |
-| T-A1-V7 | 系統進化 — 單一真相源 + 自動同步 + 瘦身 + 自動技能生成 + 自動壓縮 | A1 | 🔄 進行中（Phase 3 全部完成 — 3-1 recalls 精簡（刪 141 行）、3-2 舊檔歸檔（190MB 釋放）、3-） | handoff/tasks/T-A1-V7.md |
+| T-A1-V7 | 系統進化 — 單一真相源 + 自動同步 + 瘦身 + 自動技能生成 + 自動壓縮 | A1 | 🔄 進行中（Phase 4 完成（44ecc8d 2026-04-17）— 自動技能生成 + Extension CRITICAL 修復 + patrol/Extension 邏輯統一 + git-pull launchd exit 78 修正。下一步：Phase 5 自動壓縮。） | handoff/tasks/T-A1-V7.md |
 | T-A2-002-foodsafety-seo-cleanup | T-A2-002 — 食安 + 法規 SEO 字眼清理 | A2 | ⏸️ 阻塞（Repo 端已清理完成；WordPress 端需 Owner 手動刪除/修改 5 篇文章的食安字眼） | handoff/tasks/T-A2-002-foodsafety-seo-cleanup.md |
 | T-A2-003-weekly-wp-audit | T-A2-003: 每週全站 WP 內容稽核排程 | A2 | 🔲 待開始（腳本已建好（wp-audit.sh / wp-audit-cron.sh）。待 Owner 用 /schedule 建立） | handoff/tasks/T-A2-003-weekly-wp-audit.md |
 | T-A2-004 | 首頁結構優化 — 配合品牌色票微調 + 轉換路徑整理 | A2 | 🔲 待開始（任務卡建立。A0 已完成對標分析和色票微調。） | handoff/tasks/T-A2-004.md |
@@ -55,6 +55,7 @@
 | A2/A3 | T-A2A3-001: 等 Google 重新索引，預計 04-11 後可驗證 | 見 Task Card |
 | A3 | T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） | 見 Task Card |
 | A4 | T-A4-002: 前置 T-A4-001 需先完成 | 見 Task Card |
+| A4 | ⚠️ A1巡查 2026-04-17 22:00：T-A4-001 S11補跑~57h無新commit（last: de4744d 2026-04-15 17:14），Colab疑斷線未存檔 | Owner確認S11狀態→補commit→啟動S13 |
 | A5 | T-A5-002: 等 Owner 確認（品項名稱改法、重複品項、I 欄用途） | 見 Task Card |
 | A5 | T-A5-006: 前置 T-A5-005 需先完成 | 見 Task Card |
 | A6 | T-A6-001: 需 Owner 在 LINE Developers Console 填入 Webhook URL（Channel 1654658337） | 見 Task Card |

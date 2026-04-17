@@ -150,3 +150,56 @@
 [2026-04-17 16:39:04] 完成：掃描 0 個 worktree，清理 0 個，跳過 0 個
 [2026-04-17 17:09:04] 完成：掃描 0 個 worktree，清理 0 個，跳過 0 個
 [2026-04-17 17:39:04] 完成：掃描 0 個 worktree，清理 0 個，跳過 0 個
+[2026-04-17 18:09:04] 完成：掃描 0 個 worktree，清理 0 個，跳過 0 個
+[2026-04-17 18:13:01] [DRY-RUN] 會清理 blissful-torvalds (無變更)
+[2026-04-17 18:13:01] 完成：掃描 1 個 worktree，清理 1 個，跳過 0 個
+[2026-04-17 18:13:47] === Worktree 健康檢查 開始 ===
+[2026-04-17 18:13:47] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-17 18:13:47] CURRENT_WORKTREE: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-17 18:13:47] 
+[2026-04-17 18:13:47] --- 目前所有 worktree ---
+[2026-04-17 18:13:47]   /Users/pagemacmini/maplab-ai-handbook                                      361c0de [main]
+[2026-04-17 18:13:47]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/blissful-torvalds  361c0de [claude/blissful-torvalds]
+[2026-04-17 18:13:47] 
+[2026-04-17 18:13:47] [DRY-RUN] 會清理 blissful-torvalds
+[2026-04-17 18:13:47] 
+[2026-04-17 18:13:47] === 結果摘要 ===
+[2026-04-17 18:13:47] 掃描 worktree：1 個
+[2026-04-17 18:13:47] 已清理：1 個
+[2026-04-17 18:13:47] 已跳過：0 個
+[2026-04-17 18:13:47] 已 merge（stale）：0 個
+[2026-04-17 18:13:47] === 完成 ===
+[2026-04-17 18:14:38] === Worktree 健康檢查 開始 ===
+[2026-04-17 18:14:38] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-17 18:14:38] 模式: DRY-RUN | all-clean | safe
+[2026-04-17 18:14:38] 
+[2026-04-17 18:14:38] --- 目前所有 worktree ---
+[2026-04-17 18:14:38]   /Users/pagemacmini/maplab-ai-handbook                                      361c0de [main]
+[2026-04-17 18:14:38]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/blissful-torvalds  361c0de [claude/blissful-torvalds]
+[2026-04-17 18:14:38] 
+[2026-04-17 18:14:38] 📋 blissful-torvalds (branch: claude/blissful-torvalds) — 未 merge
+[2026-04-17 18:14:38]    [DRY-RUN] 會清理 blissful-torvalds
+[2026-04-17 18:14:38] 
+[2026-04-17 18:14:38] === 結果摘要 ===
+[2026-04-17 18:14:38] 掃描 worktree：1 個
+[2026-04-17 18:14:38] 已清理：1 個
+[2026-04-17 18:14:38] 已跳過：0 個
+[2026-04-17 18:14:38] 已 merge（stale）：0 個
+[2026-04-17 18:14:38] === 完成 ===
+[2026-04-17 18:14:40] === Worktree 健康檢查 開始 ===
+[2026-04-17 18:14:40] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-17 18:14:40] 模式: DRY-RUN | merged-only | safe
+[2026-04-17 18:14:40] 
+[2026-04-17 18:14:40] --- 目前所有 worktree ---
+[2026-04-17 18:14:40]   /Users/pagemacmini/maplab-ai-handbook                                      361c0de [main]
+[2026-04-17 18:14:40]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/blissful-torvalds  361c0de [claude/blissful-torvalds]
+[2026-04-17 18:14:40] 
+[2026-04-17 18:14:40] 📋 blissful-torvalds (branch: claude/blissful-torvalds) — 未 merge
+[2026-04-17 18:14:40]    ⏭️  跳過 — branch 未 merge（--merged-only 模式）
+[2026-04-17 18:14:40] 
+[2026-04-17 18:14:40] === 結果摘要 ===
+[2026-04-17 18:14:40] 掃描 worktree：1 個
+[2026-04-17 18:14:40] 已清理：0 個
+[2026-04-17 18:14:40] 已跳過：1 個
+[2026-04-17 18:14:40] 已 merge（stale）：0 個
+[2026-04-17 18:14:40] === 完成 ===

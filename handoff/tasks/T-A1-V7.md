@@ -3,7 +3,7 @@
 ## 接續狀態
 - **狀態**: 🔄 進行中
 - **最後活動**: 2026-04-17
-- **接續點**: Phase 3-1 ✅ recalls 精簡（刪 141 行）、Phase 3-2 ✅ 舊檔歸檔（telegram-logs/a6-logs 歸 archive/raw、digest.md 索引、bot log 輪轉釋放 190MB）。下一步：Phase 3-3 改 CLAUDE.md 啟動流程
+- **接續點**: Phase 3 全部完成 — 3-1 recalls 精簡（刪 141 行）、3-2 舊檔歸檔（190MB 釋放）、3-3+3-4 CLAUDE.md 改寫（啟動必讀 ~2000→~170 行、技能索引化 60 個技能觸發條件表）。下一步：Phase 4 自動技能生成 或 修復項（Extension CRITICAL / patrol 統一 / git-pull exit 78）
 - **阻塞**: 無
 - **已完成修復項**: A0 TASK_QUEUE 死連結 ✅、A6 重複 recall 刪除 ✅、bot log 180MB 輪轉 ✅
 

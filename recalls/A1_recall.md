@@ -38,6 +38,26 @@ repo: https://github.com/page1010/maplab-ai-handbook
 - 角色/任務狀態變更必須更新 CURRENT_STATUS.md（不是 recall 檔，recall 只放靜態規則）
 - 每 30 分鐘至少執行一次 checkpoint.sh
 
+【⚠️ A1 新增職責：A0 Briefing + 抽考 — 2026-04-17】
+
+1. 寫 A0 Briefing
+   - 每次完成重要操作後，更新 handoff/a0-briefing.md
+   - 格式見 projects/a0-a1-briefing-protocol.md
+   - 必須包含：Owner 最新校正、系統狀態變更、未完成清單、關鍵 commit
+
+2. 讀 A0 Briefing
+   - 每次 session 開始時讀 handoff/a1-briefing.md（A0 留的）
+   - 整合到自己的系統認知中
+
+3. 抽考 A0
+   - 當 A0 開 Code task 請求系統狀態時，隨機從題庫抽 3 題
+   - 題庫在 projects/a0-a1-briefing-protocol.md
+   - 驗證方式：用文件內容獨立判斷，不靠 A0 自己說對不對
+   - 全對 → 提供完整 briefing
+   - 有錯 → 指出錯誤 + 給文件出處 + 要求重讀
+   - A0 連續 3 次失敗 → 通知 Owner
+   - A0 試圖跳過 → 拒絕提供 briefing + 通知 Owner
+
 【協作】對 A0+A2-A8 下指令、透過 Telegram bot 接收 Owner 指令、管理 GitHub repo
 
 【Extension v5.x 架構說明】

@@ -81,8 +81,81 @@ done
 # ── Log 輪轉 ──
 bash "$REPO_ROOT/scripts/rotate-bot-logs.sh" 2>/dev/null | grep -v "nothing to do" || true
 
+# ── Token 過期偵測 ──
+check_token_expiry() {
+    local TOKEN_FILE="$HOME/.claude/mcp-keys/google-token.json"
+    if [ ! -f "$TOKEN_FILE" ]; then
+        echo "⚠️ Google token file not found: $TOKEN_FILE"
+        return
+    fi
+
+    local EXPIRY
+    EXPIRY=$(python3 -c "
+import json
+from datetime import datetime, timezone
+d = json.load(open('$TOKEN_FILE'))
+expiry_str = d.get('expiry', '')
+if expiry_str:
+    expiry = datetime.fromisoformat(expiry_str.replace('Z', '+00:00'))
+    now = datetime.now(timezone.utc)
+    hours_left = (expiry - now).total_seconds() / 3600
+    if hours_left < 0:
+        print('EXPIRED')
+    elif hours_left < 6:
+        print(f'WARNING:{hours_left:.1f}h')
+    else:
+        print(f'OK:{hours_left:.1f}h')
+else:
+    print('NO_EXPIRY')
+" 2>/dev/null || echo "ERROR")
+
+    case "$EXPIRY" in
+        EXPIRED|WARNING:*)
+            local label="🔴 EXPIRED"
+            [[ "$EXPIRY" == WARNING:* ]] && label="🟡 expires in ${EXPIRY#WARNING:}"
+            echo "[$label] Google OAuth token — auto-refreshing..."
+            python3 - "$TOKEN_FILE" << 'PYEOF' 2>&1 || echo "⛔ Token refresh failed — invalid_grant: refresh token 已失效，需重新授權 (Owner 執行 OAuth flow)"
+import sys, json, urllib.request, urllib.parse
+from datetime import datetime, timedelta, timezone
+TOKEN_PATH = sys.argv[1]
+d = json.load(open(TOKEN_PATH))
+data = urllib.parse.urlencode({
+    'client_id': d['client_id'],
+    'client_secret': d['client_secret'],
+    'refresh_token': d['refresh_token'],
+    'grant_type': 'refresh_token'
+}).encode()
+req = urllib.request.Request('https://oauth2.googleapis.com/token', data=data)
+try:
+    resp = urllib.request.urlopen(req)
+    new = json.loads(resp.read())
+    d['token'] = new['access_token']
+    d['expiry'] = (datetime.now(timezone.utc) + timedelta(seconds=new['expires_in'])).isoformat()
+    json.dump(d, open(TOKEN_PATH, 'w'), indent=2)
+    print(f'✅ Token refreshed, new expiry: {d["expiry"]}')
+except urllib.error.HTTPError as e:
+    body = e.read().decode()
+    sys.exit(f'HTTP {e.code}: {body}')
+PYEOF
+            ;;
+        OK:*)
+            echo "🟢 Google OAuth token OK (${EXPIRY#OK:} remaining)"
+            ;;
+        NO_EXPIRY)
+            echo "⚠️ Google token: no expiry field found"
+            ;;
+        *)
+            echo "⚠️ Google token check error: $EXPIRY"
+            ;;
+    esac
+}
+
 # ── 輸出 ──
 echo "=== MAPLAB 系統巡查 $(date '+%Y-%m-%d %H:%M') ==="
+echo ""
+
+# Token 檢查
+check_token_expiry
 echo ""
 
 if [[ ${#owner_actions[@]} -gt 0 ]]; then

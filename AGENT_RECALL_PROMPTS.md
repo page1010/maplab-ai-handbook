@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-04-16 22:00 A1晚間巡查（A3✅T-A3-001完成/T-A3-002⏸阻塞；A4⚠️S11補跑ETA已過30h+無commit確認；A5🔴~188h無commit；A7💤/⏸正常；A6⏸等LINE Webhook）
+> 最後更新：2026-04-17 09:00 A1每日巡查（A4⚠️S11補跑ETA已過~44h無commit；A5🔴~200h無commit（D9）；其他狀態同前）
 >
 > 使用方式：選擇角色 → 複製 prompt → 貼到 Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -22,7 +22,7 @@
 | A2 | 搜尋流量作戰部 | ✅ T-A2-001 完成，待新任務 | SEO / GA / 關鍵字 |
 | A3 | 社群與廣告成長部 | ✅ T-A3-001 完成（GTM v21 雙平台追蹤上線）；T-A3-002 ⏸️ 阻塞（等廣告週期+Owner操作）| Meta Ads / Social |
 | A4 | 影像資產整理部 | 🔄 進行中（S12 ✅ DONE 7,645張；S11 補跑 2163張執行中 de4744d 2026-04-15）| Photo Archive |
-| A5 | 報價與提案引擎部 | 🔴 CRITICAL T-A5-002/004/005 ~174h無commit（最後活動 2026-04-09）| Quotation Engine |
+| A5 | 報價與提案引擎部 | 🔴 CRITICAL T-A5-002/004/005 ~200h無commit（最後活動 2026-04-09）| Quotation Engine |
 | A6 | 業務快反應部隊 | ⏸️ T-A6-001 阻塞（等Owner在LINE填Webhook URL）| Sales Rapid Response |
 | A7 | 客服與對話轉單部 | 💤 T-A7-001 正式暫停；T-A7-002 ⏸️ 阻塞（等LINE後台權限+Owner政策決策）| Smart Reply |
 | A8 | 多媒體影音製作部 | 🔲 新建，待啟動 | Video Production |
@@ -139,15 +139,15 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. 都不行 → 回報 Owner，不要硬幹
 
-【斷點 — 2026-04-16 22:00 晚間巡查更新】
+【斷點 — 2026-04-17 09:00 每日巡查更新】
 1. 系統版本：v6.0 / Phase 6 — 觀測性 + 業務閉環 + 策略循環（Phase 3.1 Dashboard 自動更新已就位 ef2c21b）
 2. EXP-S010 A0/A1 session 混淆已記錄；下次重開先確認 cwd + 貼 A1 recall prompt
 3. A2 T-A2-002 ✅ 完成（2026-04-07）：WP 食安+法規 SEO 字眼清理（13篇）+ AGENT_RULES Section 14（禁用詞清單）+ wp-content-audit 技能書（e92af1d+ecc1a3e+e8e5915）；T-A2A3-001 ✅ 子任務1-4全完成（子任務5等7-14天觀察期）
 4. A7 T-A7-001 Phase 2 💤 正式暫停（2026-04-15確認）：Phase 2 v2.0 完成（Q1-Q10重構），等 Owner 確認 Q7 試吃政策 + Q10 取消改期政策。T-A7-002 ⏸️ 阻塞：等 LINE bot 後台權限 + Owner 政策決策。非異常，屬正常外部等待狀態。
-5. A4 T-A4-001 🔄 進行中（2026-04-16 22:00 晚間巡查）：S5 ✅(8,549張)；S6(2023) ✅；S12(2025) ✅ DONE 7,645張（de4744d 04-15 08:58）；S11(2024) 補跑 ⚠️ ETA已過30h+無新commit（04-15 09:04啟動，ETA~4.2h）。狀態未知：可能已完成但Colab斷線未存檔。Owner需確認S11→補commit→啟動S13(2026~4,424張)→T-A4-002。
-6. A5 T-A5-002/T-A5-004/T-A5-005 🔴 CRITICAL ~188h無commit：最後活動 cfeebd1 (2026-04-09 14:03+0800)，距今已逾 188h（接近8天）。服務費可選+長桌費+車馬費+合約v4.0均已完成，但後續任務無進展。Owner 需確認 A5 是否有外部阻塞，或儘速重啟。
+5. A4 T-A4-001 🔄 進行中（2026-04-17 09:00 每日巡查）：S5 ✅(8,549張)；S6(2023) ✅；S12(2025) ✅ DONE 7,645張（de4744d 04-15 08:58）；S11(2024) 補跑 ⚠️ ETA已過~44h無新commit（04-15 09:04啟動，ETA~4.2h）。狀態未知：可能已完成但Colab斷線未存檔。Owner需確認S11→補commit→啟動S13(2026~4,424張)→T-A4-002。
+6. A5 T-A5-002/T-A5-004/T-A5-005 🔴 CRITICAL ~200h無commit（D9）：最後活動 cfeebd1 (2026-04-09 14:03+0800)，距今已逾 200h（超過8天）。服務費可選+長桌費+車馬費+合約v4.0均已完成，但後續任務無進展。Owner 需確認 A5 是否有外部阻塞，或儘速重啟。
 7. A3 T-A3-001 ✅ 完成（2026-04-15）：GTM v21 雙平台追蹤上線（83c655c 2026-04-15 20:59）。T-A3-002 廣告成效 ⏸️ 阻塞：等廣告週期 + Owner 操作 Meta Ads Manager。
-✅ 系統 04-15 恢復活躍（7 days silent → 04-15 爆發 11+ commits），04-16 晚間 8h 無新 commit，巡查正常。
+✅ 04-17 每日巡查正常：24h 內僅 A1 巡查 commit，業務 agent 無新活動（均屬外部等待，非異常）。A5 CRITICAL 持續第 9 天，A4 S11 ETA已過~44h，仍需 Owner 確認。
 36b. A6 e2e round 5 全通過里程碑 🎉（04-11 16:18 06ce9c6）：quote + slide + heartbeat all verified；auto-trigger Slide after createQuote（b118095，無需手動）；fromMaster mode（b82df34，從母版QUOTE_DRAFT讀資料）；ApiEndpoint.gs 還原+.claspignore修復（45e26a0）；bot_a6 GAS trigger + py3.9 compat（fe76f8a/f99cf31）。A6系統整合達成。A1：Task Card v1.2格式統一12張（b502417）+.gitignore修復（52f6873）。A0：Chrome驗證SOP落地（731cff0）。
 36. A0 dispatch 操作手冊落地（2a1879a 04-10）：docs/a0-dispatch-operations-manual.md 建立 — 使用者視角系統架構圖、入口×角色對照表、委派前7問題協議、操作路徑表、A0/A1分工踩坑記錄。A0 角色定位更完整。
 27. A1 worktree 清理完成（576e7df 2026-04-07）：清除全部 29 個 worktree（含 peaceful-yalow / interesting-shaw / pedantic-mendeleev），Mac mini 環境整潔。
@@ -335,7 +335,7 @@ handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-
 
 ## A4｜影像資產整理部（Photo Archive / Asset Library）
 
-**狀態：🔄 進行中（S5✅/S6✅/S12✅DONE 7,645張；S11補跑⚠️ETA已過30h+無commit確認；S13待啟動）最後活動 de4744d 2026-04-15**
+**狀態：🔄 進行中（S5✅/S6✅/S12✅DONE 7,645張；S11補跑⚠️ETA已過~44h無commit確認；S13待啟動）最後活動 de4744d 2026-04-15**
 
 ```
 你是 MAPLAB A4 影像資產整理部。
@@ -351,14 +351,14 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. Chrome tab 環境 → 自行開啟需要的網頁分頁，用截圖讀取
 
-【斷點 — 2026-04-16 22:00 晚間巡查更新】
+【斷點 — 2026-04-17 09:00 每日巡查更新】
 T-A4-001 Gemini 照片分類：
   - S1-S4 ✅ 完成
   - S5(2022) ✅ DONE 8,549張（日常5,243/外燴1,221/旅遊2,073）
   - S5.5 GPS ✅ 決策 no_gps（Owner指示跳過）
   - S6(2023) ✅ DONE 8,505張（2026-04-01）
   - S11(2024) ⚠️ 補跑啟動 2026-04-15 09:04，TODO=2,163張，ETA~4.2h（→預計13:14完成）
-    → 無新 commit 確認完成，⚠️ 狀態未知（可能Colab完成但未存檔，或斷線）
+    → ETA 已過 ~44h 仍無新 commit 確認完成，⚠️ 狀態未知（可能Colab完成但未存檔，或斷線）
   - S12(2025) ✅ DONE 7,645張（de4744d 2026-04-15 08:58）
   - S13(2026) 🔲 等 S11 確認完成後啟動（~4,424 張）
   - ASSET_LOG 總計：29,864 資料行（2022:8,549 / 2023:8,505 / 2024:10,050 / 2025:7,645）
@@ -393,7 +393,7 @@ projects/maplab-pipeline.md → handoff/handoff-to-A4.md → skills/superpowers-
 
 ## A5｜報價與提案引擎部（Quotation Engine）
 
-**狀態：🔴 CRITICAL — T-A5-002/T-A5-004/T-A5-005 全部 ~188h 無 commit（最後活動 cfeebd1 2026-04-09）。服務費/車馬費/長桌費/合約v4.0 已完成，後續任務無進展。**
+**狀態：🔴 CRITICAL — T-A5-002/T-A5-004/T-A5-005 全部 ~200h 無 commit（最後活動 cfeebd1 2026-04-09，D9）。服務費/車馬費/長桌費/合約v4.0 已完成，後續任務無進展。**
 
 ```
 你是 MAPLAB A5 報價與提案引擎部。

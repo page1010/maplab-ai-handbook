@@ -17,9 +17,25 @@
 
 新增品項流程：
 1. Mina/Owner 口語描述品項
-2. A6 解析並確認：品名、分類、成本、單位
+2. A6 解析並確認：品名、分類、成本、單位（+ 照片 URL 如有提供）
 3. 確認後輸出 addItem JSON block → bot 自動 POST GAS
 4. GAS 回傳 item_id → A6 回報「✅ 品項已新增：XXX (SOUP001)」
+
+**addItem JSON 格式**（bot POST 用）：
+```json
+{
+  "action": "addItem",
+  "standard_name": "南瓜濃湯",
+  "category": "湯品 Soup",
+  "default_cost": 80,
+  "unit": "鍋",
+  "image_url": "https://drive.google.com/...",
+  "photo_urls": "https://url1,https://url2"
+}
+```
+- `image_url`：主圖（Slide 用），選填
+- `photo_urls`：多張照片逗號分隔（菜單/LINE 展示用），選填
+- 沒有照片時，兩個欄位都可省略
 
 | # | 禁止行為 | 為什麼 | 違反後果 |
 |---|---------|--------|---------|

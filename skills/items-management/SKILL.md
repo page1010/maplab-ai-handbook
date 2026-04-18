@@ -23,15 +23,15 @@ Owner 說以下任何一句話時，啟動本 Skill：
 | Google API Token | `~/.claude/mcp-keys/google-token.json`（需要 drive + spreadsheets scope） |
 | Sheet ID | `1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg` |
 | Slide ID | `16R9Ivi-BTND7mWu8LkZ9cWnTG_wMCBBF7fXfP8lYhFo`（Menu Showcase，照片提取用） |
-| Items 工作表欄位 | A=item_id, B=category, C=name, D=default_price, E=default_cost, F=unit, G=min_qty, H=is_active, I=note, J=source_tag, K=image_url |
+| Items 工作表欄位 | A=item_id, B=category, C=name, D=default_price, E=default_cost, F=unit, G=min_qty, H=is_active, I=note, J=source_tag, K=image_url, L=photo_urls |
 
 ---
 
 ## Items 表結構速查
 
 ```
-A: item_id     — APP/DST/MAIN/BEV 前綴 + 3位數序號（按 default_cost 排序，類似品項連號）
-B: category    — 甜點 / 餐食小點 / 飲品 / 主食 / 招待
+A: item_id     — APP/DST/MAIN/BEV/SOUP 前綴 + 3位數序號（按 default_cost 排序，類似品項連號）
+B: category    — 甜點 Dessert / 餐食小點 / 飲品 Beverage / 主食 / 湯品 Soup / 招待（全名字串）
 C: name        — 品項名稱（QUOTE_DRAFT / DropdownHelper 的 VLOOKUP/FILTER 鍵值）
 D: default_price
 E: default_cost
@@ -39,8 +39,9 @@ F: unit
 G: min_qty
 H: is_active   — TRUE/FALSE
 I: note
-J: source_tag  — APP / DST / MAIN（來源標籤）
-K: image_url   — Google Drive 或 Slide 圖片 URL
+J: source_tag  — APP / DST / MAIN / BEV / SOUP（來源標籤，等於 item_id 前綴）
+K: image_url   — 主圖 URL（Google Drive 或 Slide，Slide 生成用）
+L: photo_urls  — 多張照片 URL，逗號分隔（例如 "url1,url2,url3"，BEV 品項不需要）
 ```
 
 ---
@@ -205,8 +206,13 @@ print(f"品項統計: {dict(counts)}")
 
 ## 照片與 Slide 規則
 
-- **飲品類（BEV）不需要照片**：BEV 品項不用在 Items K 欄填 image_url，Slide 報價簡報也不包含飲品照片。
+- **飲品類（BEV）不需要照片**：BEV 品項不用在 Items K/L 欄填照片 URL，Slide 報價簡報也不包含飲品照片。
 - **沒有照片的品項不放入 Slide 報價簡報**：Items K 欄 image_url 為空的品項，一律不放入 Slide 投影片。
+- **K 欄 image_url = 主圖**（Slide 生成使用，一張）。
+- **L 欄 photo_urls = 多張照片**（逗號分隔），供未來多圖展示用途（菜單頁、LINE 圖片推播等），不影響 Slide 生成。
+  - addItem API 帶入：`"photo_urls": "url1,url2,url3"`
+  - 讀取時：`photoUrls.split(',')`
+  - 若只有一張主圖，只填 K 欄即可，L 欄可留空。
 
 ---
 

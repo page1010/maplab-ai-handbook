@@ -121,20 +121,24 @@ var result = createQuote(formData);
 
 | 欄 | 欄位 | 說明 |
 |----|------|------|
-| A | item_id | 編號（APP001, DST001, MAIN001, BEV001） |
-| B | category | 類別：APP(鹹食) / DST(甜點) / MAIN(主食) / BEV(飲品) |
+| A | item_id | 編號（APP001, DST001, MAIN001, BEV001, SOUP001） |
+| B | category | 類別全名（甜點 Dessert / 餐食小點 / 飲品 Beverage / 主食 / 湯品 Soup） |
 | C | standard_name | 品項正式名稱（QUOTE_DRAFT D 欄 dropdown 來源） |
 | D | default_price | 報價單價（對客戶，目前很多空白） |
 | E | default_cost | 食材成本（每份） |
-| K | image_url | 品項照片 URL（Slide 用） |
+| F | unit | 單位（例如 份、鍋、個） |
+| J | source_tag | 前綴標籤（APP / DST / MAIN / BEV / SOUP） |
+| K | image_url | 主圖 URL（Slide 生成用，一張） |
+| L | photo_urls | 多圖 URL（逗號分隔，菜單/LINE 展示用） |
 
-**查詢方式**：用 Sheets API 讀 Items 分頁 A:K 欄，或用 `_buildImageMap(ss)` 查圖片。
+**查詢方式**：用 Sheets API 讀 Items 分頁 A:L 欄，或用 `_buildImageMap(ss)` 查圖片。
 
 **品項編碼規則**：
 - APP = 鹹食/開胃（appetizer）
 - DST = 甜點（dessert）
 - MAIN = 主食
 - BEV = 飲品（beverage）
+- SOUP = 湯品（soup）
 
 ### 2.4 QUOTE_DRAFT cell 地圖（copy 裡你會碰的 cell）
 

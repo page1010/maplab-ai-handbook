@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-04-18 19:00（A1 晚間巡查更新）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-04-18 EOD（A0 session 完整存檔）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -36,7 +36,7 @@
 | T-A5-004 | createSlides.gs — Slide 報價簡報自動生成 | A5 | 🔴 CRITICAL（~213h無commit） | handoff/tasks/T-A5-004.md |
 | T-A5-005 | 報價狀態追蹤同步 + Dashboard | A5 | 🔴 CRITICAL（~244h無commit） | handoff/tasks/T-A5-005.md |
 | T-A5-006 | T-A5-006 | A5 | 🔲 待開始（尚未開始。等 T-A5-005 完成後啟動。） | handoff/tasks/T-A5-006.md |
-| T-A6-001 | A6 LINE 業務報價助手系統 | A6 | 🔄 進行中（04-18：addItem修復b042d93+GAS同步2beac99+QA Round1 addItem PASS 45b4758；B層對話自動存檔運行中。LINE Developers Console Webhook URL填入待Owner確認是否已完成） | handoff/tasks/T-A6-001.md |
+| T-A6-001 | A6 LINE 業務報價助手系統 | A6 | 🔄 進行中（04-18 EOD：GAS v8部署+addItem+模糊比對+多照片；10輪QA全PASS（含R9修B4後重測）；H1三層權限；B層自動存檔運行中。未完成：照片Phase2、QA測試資料清理、LINE webhook確認） | handoff/tasks/T-A6-001.md |
 | T-A6-002 | LINE 對話訓練資料收集計畫 | A6 | 💤 暫停（原計畫拆 Sheet 做訓練資料，04-07 重新規劃方向。等 Owner 決定是否需要 LINE 訓練資料及取得方式。） | handoff/tasks/T-A6-002.md |
 | T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | 💤 暫停（Phase 2 v2.0 完成，等 Owner 確認政策 + A5 欄位補齊）（Q1-Q10 重構完成（真實 CSV 驅動），下一步是 Q7/Q10 政策確認 + Phase 3 上線測試） | handoff/tasks/T-A7-001.md |
 | T-A7-002 | A7 部門 80/20 優先任務清單 | A7 | ⏸️ 阻塞中（任務 6（Q1-Q10 實裝）+ 任務 10（技能書 v2.0）已完成。Phase 3A 剩任務 4（地區判斷）、7（流） | handoff/tasks/T-A7-002.md |

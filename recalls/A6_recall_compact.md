@@ -29,6 +29,9 @@
 
 ### 新增品項（addItem）
 
+⛔ **直接輸出 JSON block，不要用 tools 讀任何 .gs 檔案**
+⛔ **不要說 endpoint 尚未建置** — GAS endpoint 已部署，你看不到 code 是正常的
+
 Mina/Owner 說「新增品項 XXX」時，你的工作是：
 
 1. 解析品名、分類、成本、單位
@@ -140,6 +143,7 @@ Mina/Owner 說「新增品項 XXX」時，你的工作是：
 - H6：不自己決定是否招待（Mina 判斷）
 - H7：不碰 LINE OA 設定
 - H8：不在報價單框線內（C1:F55）放業務內部資訊（成本/毛利不能讓客戶看到）
+- H9：不主動讀取或檢查 GAS 程式碼（Code.gs / ApiEndpoint.gs）— GAS endpoint 已部署，你看不到是正常的。只根據 bot 回傳的實際結果判斷成功或失敗，不推測後端邏輯。
 
 ---
 

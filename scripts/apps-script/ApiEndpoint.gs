@@ -73,22 +73,18 @@ function addItemToDatabase_(body) {
   if (!sheet) throw new Error('Items 分頁不存在');
 
   var standardName = (body.standard_name || '').trim();
-  var categoryRaw = (body.category || '').toUpperCase();
+  var cat = (body.category || '');
   var defaultCost = Number(body.default_cost) || 0;
 
   if (!standardName) throw new Error('standard_name 為必填');
 
-  // 從 category 字串推斷 source_tag prefix
+  // 從 category 字串推斷 source_tag prefix（模糊比對，單字比對優先）
   var prefix;
-  if (categoryRaw.indexOf('DST') !== -1 || categoryRaw.indexOf('甜點') !== -1 || categoryRaw.indexOf('DESSERT') !== -1) {
-    prefix = 'DST';
-  } else if (categoryRaw.indexOf('BEV') !== -1 || categoryRaw.indexOf('飲品') !== -1 || categoryRaw.indexOf('BEVERAGE') !== -1) {
-    prefix = 'BEV';
-  } else if (categoryRaw.indexOf('MAIN') !== -1 || categoryRaw.indexOf('主食') !== -1) {
-    prefix = 'MAIN';
-  } else {
-    prefix = 'APP';
-  }
+  if (cat.indexOf('湯') >= 0) prefix = 'SOUP';
+  else if (cat.indexOf('飲') >= 0) prefix = 'BEV';
+  else if (cat.indexOf('甜') >= 0) prefix = 'DES';
+  else if (cat.indexOf('主食') >= 0 || cat.indexOf('Main') >= 0) prefix = 'MAIN';
+  else prefix = 'APP';
 
   // 找同 prefix 的最大編號
   var allData = sheet.getDataRange().getValues();

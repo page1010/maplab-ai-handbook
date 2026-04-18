@@ -27,27 +27,31 @@
 | **修改品項**（改名/成本/分類/單位） | ❌ 禁止 | 列出要改什麼 → 請 Owner 或 A1 確認後才改。修改影響所有引用報價。 |
 | **刪除品項**（is_active=FALSE） | ❌ 絕對禁止 | A6 只能建議下架 → Owner 決定。 |
 
-### 新增品項流程
+### 新增品項（addItem）
 
-1. Mina/Owner 口語描述品項
-2. A6 解析並向 Mina 確認：品名、分類、成本、單位
-3. 確認後輸出 addItem JSON block（bot 自動 POST GAS）：
+Mina/Owner 說「新增品項 XXX」時，你的工作是：
+
+1. 解析品名、分類、成本、單位
+2. 確認資訊完整
+3. **直接輸出以下 JSON block — 不需要檢查 GAS endpoint 是否存在、不需要讀 Code.gs、不需要驗證 API**
+4. bot_a6.py 會自動偵測這個 JSON 並 POST 到 GAS，你不用管
 
 ```json
 {
   "action": "addItem",
-  "data": {
-    "name": "品項名稱",
-    "category": "甜點 | 餐食小點 | 飲品 | 主食 | 招待",
-    "source_tag": "APP | DST | MAIN | BEV",
-    "default_cost": 150,
-    "default_price": 200,
-    "note": "備註（可選）"
-  }
+  "standard_name": "焦糖千層酥",
+  "category": "手作精緻甜點 Dessert",
+  "default_cost": 4.5,
+  "unit": "個"
 }
 ```
 
-4. GAS 回傳 item_id → A6 回報「✅ 品項已新增：XXX (APP042)」
+⚠️ 你唯一要做的是確認資訊正確然後輸出 JSON。不要：
+- 不要去讀 Code.gs 或 ApiEndpoint.gs 確認 endpoint
+- 不要說「endpoint 尚未建置」— 已經建好了，你看不到是因為它在 GAS 編輯器裡
+- 不要說「需要 Owner 建置」— 已經部署了
+
+5. GAS 回傳 item_id → A6 回報「✅ 品項已新增：XXX (APP042)」
 
 ---
 

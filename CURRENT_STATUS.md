@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-04-17 22:00（A1 晚間巡查更新）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-04-18 08:36（A1 早晨巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -30,11 +30,11 @@
 | T-A2A3-001-B | SEO 場景頁面 + 內連結（從 T-A2A3-001 分拆） | A2/A3 | ⏸️ 阻塞（子任務 3+4 完成（3 個場景頁 + 56 篇內連結）；子任務 5 等 Google 重新索引（7-14 天）） | handoff/tasks/T-A2A3-001-B.md |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2/A3 | ⏸️ 阻塞（子任務 1-4 完成；子任務 5 等 Google 重新索引驗證排名變化） | handoff/tasks/T-A2A3-001.md |
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | ⏸️ 阻塞中（受眾輪廓分析完成（693筆 Orders）。待執行：嘉義加入廣告地區、興趣條件精簡、策略一冷受眾上線。） | handoff/tasks/T-A3-002.md |
-| T-A4-001 | Phase 4 Gemini 照片分類（2022-2026） | A4 | 🔄 進行中（S11/2024 補跑執行中）（S12(2025) ✅ DONE 7,645/7,642（45張補完，2026-04-15 08:58 完成）。S11(） | handoff/tasks/T-A4-001.md |
+| T-A4-001 | Phase 4 Gemini 照片分類（2022-2026） | A4 | 🔄 進行中（S11/2024 換新 API Key 重啟 413張 2026-04-17 23:05 429542a，ETA~1h；但~9.5h後無完成 commit，狀態未知）（S12(2025) ✅ DONE 7,645張 de4744d 2026-04-15） | handoff/tasks/T-A4-001.md |
 | T-A4-002 | T-A4-002 | A4 | 🔲 待開始（尚未開始。等 T-A4-001 完成後啟動。） | handoff/tasks/T-A4-002.md |
-| T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔴 CRITICAL（~215h無commit） | handoff/tasks/T-A5-002.md |
-| T-A5-004 | createSlides.gs — Slide 報價簡報自動生成 | A5 | 🔴 CRITICAL（~191h無commit） | handoff/tasks/T-A5-004.md |
-| T-A5-005 | 報價狀態追蹤同步 + Dashboard | A5 | 🔴 CRITICAL（~215h無commit） | handoff/tasks/T-A5-005.md |
+| T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔴 CRITICAL（~226h無commit，D10）| handoff/tasks/T-A5-002.md |
+| T-A5-004 | createSlides.gs — Slide 報價簡報自動生成 | A5 | 🔴 CRITICAL（~202h無commit） | handoff/tasks/T-A5-004.md |
+| T-A5-005 | 報價狀態追蹤同步 + Dashboard | A5 | 🔴 CRITICAL（~226h無commit，D10）| handoff/tasks/T-A5-005.md |
 | T-A5-006 | T-A5-006 | A5 | 🔲 待開始（尚未開始。等 T-A5-005 完成後啟動。） | handoff/tasks/T-A5-006.md |
 | T-A6-001 | A6 LINE 業務報價助手系統 | A6 | ⏸️ 阻塞中（Sheet 三分頁架構完成、LINE Bot Webhook 技能書完成、GAS doPost 已部署。差最後一步：LI） | handoff/tasks/T-A6-001.md |
 | T-A6-002 | LINE 對話訓練資料收集計畫 | A6 | 💤 暫停（原計畫拆 Sheet 做訓練資料，04-07 重新規劃方向。等 Owner 決定是否需要 LINE 訓練資料及取得方式。） | handoff/tasks/T-A6-002.md |
@@ -51,11 +51,11 @@
 | A1 | T-A1-V6-P3: 前置 T-A1-V6-P2 需先完成 | 見 Task Card |
 | A2 | T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台 | 見 Task Card |
 | A2 | T-A2-003-weekly-wp-audit: 等 Owner 建立排程 | 見 Task Card |
-| A2/A3 | T-A2A3-001-B: 等 Google 重新索引，預計 04-11 後可驗證 | 見 Task Card |
-| A2/A3 | T-A2A3-001: 等 Google 重新索引，預計 04-11 後可驗證 | 見 Task Card |
+| A2/A3 | T-A2A3-001-B: 等 Google 重新索引，預計 04-11 後可驗證（⚠️ A1巡查 2026-04-18：索引觀察已+13天，超出7-14天預估窗口，Owner 應立即查 GSC 驗證排名變化） | 見 Task Card |
+| A2/A3 | T-A2A3-001: 等 Google 重新索引，預計 04-11 後可驗證（同上，索引觀察+13天，Owner 應查 GSC） | 見 Task Card |
 | A3 | T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） | 見 Task Card |
 | A4 | T-A4-002: 前置 T-A4-001 需先完成 | 見 Task Card |
-| A4 | ⚠️ A1巡查 2026-04-17 22:00：T-A4-001 S11補跑~57h無新commit（last: de4744d 2026-04-15 17:14），Colab疑斷線未存檔 | Owner確認S11狀態→補commit→啟動S13 |
+| A4 | ⚠️ A1巡查 2026-04-18 08:36：T-A4-001 S11換新Key重啟（429542a 2026-04-17 23:05，413張 ETA~1h），但~9.5h後無完成commit — Colab疑完成後斷線未存檔，或再次斷線 | Owner確認S11狀態→補commit→啟動S13 |
 | A5 | T-A5-002: 等 Owner 確認（品項名稱改法、重複品項、I 欄用途） | 見 Task Card |
 | A5 | T-A5-006: 前置 T-A5-005 需先完成 | 見 Task Card |
 | A6 | T-A6-001: 需 Owner 在 LINE Developers Console 填入 Webhook URL（Channel 1654658337） | 見 Task Card |

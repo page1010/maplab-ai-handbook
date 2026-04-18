@@ -35,6 +35,7 @@ git log --oneline -5
 | 跨 agent 連動問題、不確定改動影響誰 | `dependency-map.md` |
 | 決策衝突、需要知道「為什麼不用 X」 | `decisions.md` |
 | 治理規則爭議、權限問題 | `AGENT_RULES.md` |
+| 阻塞審查、任務要上報 Owner 前、巡檢 | `AGENT_RULES.md` Section 16（三層主管審查 SOP） |
 | Extension agent 召喚、recalls 問題 | `AGENT_RECALL_PROMPTS.md` → 對應角色段落 |
 | 術語歧義（母版/Slide/報價系統等） | `docs/glossary.md` |
 
@@ -56,6 +57,7 @@ git log --oneline -5
 | A4 照片分類 | `skills/a4-photo-asset-skills.md` |
 | A7 客服 FAQ | `skills/a7-customer-service-skills.md` |
 | A0 調度派遣 | `skills/a0-proactive-dispatch-guide.md` |
+| 阻塞審查 / 任務上報 Owner 前 / 巡檢 | `AGENT_RULES.md` Section 16 + `skills/a0-proactive-dispatch-guide.md` |
 | API 認證問題 | `skills/credentials/` 目錄下對應技能書 |
 | Session 交接 / context 滿 | `skills/session-handoff.md` + `skills/session-lifecycle/` |
 | 存檔流程 | `skills/save-checkpoint/SKILL.md` |

@@ -1,0 +1,122 @@
+[2026-04-17 19:52:09] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-04-17 19:52
+
+=== MAPLAB 系統巡查 2026-04-17 19:52 ===
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A6-001: 需 Owner 在 LINE Developers Console 填入 Webhook URL（Channel 1654658337）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [10d ago]
+  ⏸️ T-A2A3-001-B (A2): 等 Google 重新索引，預計 04-11 後可驗證 [20d ago]
+  ⏸️ T-A2A3-001 (A2): 等 Google 重新索引，預計 04-11 後可驗證 [20d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [19d ago]
+  ⏸️ T-A6-001 (A6): 需 Owner 在 LINE Developers Console 填入 Webhook URL（Channel 1654658337） [16d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [19d ago]
+
+【進行中】
+  ⏳ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下一步：建虛擬測試案例 → A6 跑報價流程 → 驗證寫入。 [0d ago]
+  ⏳ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 ReMe）為加分項。 [0d ago]
+  ⚠️ T-A4-001 (A4): S12(2025) ✅ DONE 7,645/7,642（45張補完，2026-04-15 08:58 完成）。S11(2024) 🔄 補跑執行中 2026-0 [2d ago]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。剩餘：T-A5-003 熱客招待品項定義 + 3 項待 Owner 確認 [9d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔案清理、Items english_name 確認 [8d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboard / ensureInta [9d ago]
+
+【暫停/待開始】
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A4-002 (A4): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [10d ago]
+  💤 T-A7-001 (A7): 暫停中 [20d ago]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[2026-04-17 19:52:15] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-04-17 19:52
+
+=== MAPLAB 系統巡查 2026-04-17 19:52 ===
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A6-001: 需 Owner 在 LINE Developers Console 填入 Webhook URL（Channel 1654658337）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [10d ago]
+  ⏸️ T-A2A3-001-B (A2): 等 Google 重新索引，預計 04-11 後可驗證 [20d ago]
+  ⏸️ T-A2A3-001 (A2): 等 Google 重新索引，預計 04-11 後可驗證 [20d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [19d ago]
+  ⏸️ T-A6-001 (A6): 需 Owner 在 LINE Developers Console 填入 Webhook URL（Channel 1654658337） [16d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [19d ago]
+
+【進行中】
+  ⏳ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下一步：建虛擬測試案例 → A6 跑報價流程 → 驗證寫入。 [0d ago]
+  ⏳ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 ReMe）為加分項。 [0d ago]
+  ⚠️ T-A4-001 (A4): S12(2025) ✅ DONE 7,645/7,642（45張補完，2026-04-15 08:58 完成）。S11(2024) 🔄 補跑執行中 2026-0 [2d ago]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。剩餘：T-A5-003 熱客招待品項定義 + 3 項待 Owner 確認 [9d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔案清理、Items english_name 確認 [8d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboard / ensureInta [9d ago]
+
+【暫停/待開始】
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A4-002 (A4): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [10d ago]
+  💤 T-A7-001 (A7): 暫停中 [20d ago]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[2026-04-17 19:52:16] 推送成功
+[2026-04-18 09:00:02] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-04-18 09:00
+
+=== MAPLAB 系統巡查 2026-04-18 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+✅ Token refreshed, new expiry: 2026-04-18T02:00:02.314324+00:00
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A6-001: 需 Owner 在 LINE Developers Console 填入 Webhook URL（Channel 1654658337）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [11d ago]
+  ⏸️ T-A2A3-001-B (A2): 等 Google 重新索引，預計 04-11 後可驗證 [21d ago]
+  ⏸️ T-A2A3-001 (A2): 等 Google 重新索引，預計 04-11 後可驗證 [21d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [20d ago]
+  ⏸️ T-A6-001 (A6): 需 Owner 在 LINE Developers Console 填入 Webhook URL（Channel 1654658337） [16d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [19d ago]
+
+【進行中】
+  ⏳ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [1d ago]
+  ⏳ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [1d ago]
+  ⏳ T-A4-001 (A4): S11(2024) 🔄 補跑中 2026-04-17 14:59啟動，TODO=413張，ETA~1.0h，新AP [1d ago]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。剩餘：T-A5-003 熱客招待品項定義  [10d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [8d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [9d ago]
+
+【暫停/待開始】
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A4-002 (A4): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [10d ago]
+  💤 T-A7-001 (A7): 暫停中 [20d ago]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送

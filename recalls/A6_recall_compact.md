@@ -1,5 +1,5 @@
 # A6 Recall Compact — Mina 的報價加速器（精簡版）
-> 版本 v1.1 ｜ 2026-04-18 ｜ 完整手冊在 skills/a6-*.md
+> 版本 v1.2 ｜ 2026-04-18 ｜ 完整手冊在 skills/a6-*.md
 
 ---
 
@@ -29,15 +29,11 @@
 
 ### 新增品項（addItem）
 
-⛔ **直接輸出 JSON block，不要用 tools 讀任何 .gs 檔案**
-⛔ **不要說 endpoint 尚未建置** — GAS endpoint 已部署，你看不到 code 是正常的
-
 Mina/Owner 說「新增品項 XXX」時，你的工作是：
 
 1. 解析品名、分類、成本、單位
 2. 確認資訊完整
-3. **直接輸出以下 JSON block — 不需要檢查 GAS endpoint 是否存在、不需要讀 Code.gs、不需要驗證 API**
-4. bot_a6.py 會自動偵測這個 JSON 並 POST 到 GAS，你不用管
+3. 輸出 JSON block 前，你可以（但不必須）讀 `scripts/apps-script/ApiEndpoint.gs` 確認 addItem action 存在。確認存在後直接輸出 JSON：
 
 ```json
 {
@@ -49,12 +45,8 @@ Mina/Owner 說「新增品項 XXX」時，你的工作是：
 }
 ```
 
-⚠️ 你唯一要做的是確認資訊正確然後輸出 JSON。不要：
-- 不要去讀 Code.gs 或 ApiEndpoint.gs 確認 endpoint
-- 不要說「endpoint 尚未建置」— 已經建好了，你看不到是因為它在 GAS 編輯器裡
-- 不要說「需要 Owner 建置」— 已經部署了
-
-5. GAS 回傳 item_id → A6 回報「✅ 品項已新增：XXX (APP042)」
+4. bot_a6.py 會自動偵測這個 JSON 並 POST 到 GAS，你不用管
+5. GAS 回傳 item_id → A6 回報「✅ 品項已新增：XXX (DST043)」
 
 ---
 
@@ -143,7 +135,6 @@ Mina/Owner 說「新增品項 XXX」時，你的工作是：
 - H6：不自己決定是否招待（Mina 判斷）
 - H7：不碰 LINE OA 設定
 - H8：不在報價單框線內（C1:F55）放業務內部資訊（成本/毛利不能讓客戶看到）
-- H9：不主動讀取或檢查 GAS 程式碼（Code.gs / ApiEndpoint.gs）— GAS endpoint 已部署，你看不到是正常的。只根據 bot 回傳的實際結果判斷成功或失敗，不推測後端邏輯。
 
 ---
 

@@ -239,3 +239,525 @@
 [2026-04-17 18:39:05] 已 merge（stale）：0 個
 [2026-04-17 18:39:05] 估計釋放 ~64MB 磁碟空間
 [2026-04-17 18:39:05] === 完成 ===
+[2026-04-17 19:09:05] === Worktree 健康檢查 開始 ===
+[2026-04-17 19:09:05] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-17 19:09:05] 模式: LIVE | all-clean | safe
+[2026-04-17 19:09:05] git worktree prune 完成
+[2026-04-17 19:09:05] 
+[2026-04-17 19:09:05] --- 目前所有 worktree ---
+[2026-04-17 19:09:05]   /Users/pagemacmini/maplab-ai-handbook                                     44ecc8d [main]
+[2026-04-17 19:09:05]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/ecstatic-swanson  44ecc8d [claude/ecstatic-swanson]
+[2026-04-17 19:09:05]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/peaceful-leavitt  080450b [claude/peaceful-leavitt]
+[2026-04-17 19:09:05] 
+[2026-04-17 19:09:05] 📋 ecstatic-swanson (branch: claude/ecstatic-swanson) — 未 merge
+[2026-04-17 19:09:05]    🗑️  清理中...
+[2026-04-17 19:09:05]    ✅ worktree 已移除
+[2026-04-17 19:09:05]    🌿 本地 branch claude/ecstatic-swanson 已刪除
+[2026-04-17 19:09:05] 📋 peaceful-leavitt (branch: claude/peaceful-leavitt) — 未 merge
+[2026-04-17 19:09:05]    🗑️  清理中...
+[2026-04-17 19:09:05]    ✅ worktree 已移除
+[2026-04-17 19:09:05]    🌿 本地 branch claude/peaceful-leavitt 已刪除
+[2026-04-17 19:09:05] 
+[2026-04-17 19:09:05] === 結果摘要 ===
+[2026-04-17 19:09:05] 掃描 worktree：2 個
+[2026-04-17 19:09:05] 已清理：2 個
+[2026-04-17 19:09:05] 已跳過：0 個
+[2026-04-17 19:09:05] 已 merge（stale）：0 個
+[2026-04-17 19:09:05] 估計釋放 ~32MB 磁碟空間
+[2026-04-17 19:09:05] === 完成 ===
+[2026-04-17 19:39:05] === Worktree 健康檢查 開始 ===
+[2026-04-17 19:39:05] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-17 19:39:05] 模式: LIVE | all-clean | safe
+[2026-04-17 19:39:05] git worktree prune 完成
+[2026-04-17 19:39:05] 
+[2026-04-17 19:39:05] --- 目前所有 worktree ---
+[2026-04-17 19:39:05]   /Users/pagemacmini/maplab-ai-handbook                                    44ecc8d [main]
+[2026-04-17 19:39:05]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/goofy-engelbart  44ecc8d [claude/goofy-engelbart]
+[2026-04-17 19:39:05] 
+[2026-04-17 19:39:06] 📋 goofy-engelbart (branch: claude/goofy-engelbart) — 未 merge
+[2026-04-17 19:39:06]    🗑️  清理中...
+[2026-04-17 19:39:06]    ✅ worktree 已移除
+[2026-04-17 19:39:06]    🌿 本地 branch claude/goofy-engelbart 已刪除
+[2026-04-17 19:39:06] 
+[2026-04-17 19:39:06] === 結果摘要 ===
+[2026-04-17 19:39:06] 掃描 worktree：1 個
+[2026-04-17 19:39:06] 已清理：1 個
+[2026-04-17 19:39:06] 已跳過：0 個
+[2026-04-17 19:39:06] 已 merge（stale）：0 個
+[2026-04-17 19:39:06] 估計釋放 ~16MB 磁碟空間
+[2026-04-17 19:39:06] === 完成 ===
+[2026-04-17 20:09:06] === Worktree 健康檢查 開始 ===
+[2026-04-17 20:09:06] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-17 20:09:06] 模式: LIVE | all-clean | safe
+[2026-04-17 20:09:06] git worktree prune 完成
+[2026-04-17 20:09:06] 
+[2026-04-17 20:09:06] --- 目前所有 worktree ---
+[2026-04-17 20:09:06]   /Users/pagemacmini/maplab-ai-handbook                                    3746ec9 [main]
+[2026-04-17 20:09:06]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/ecstatic-pascal  3746ec9 [claude/ecstatic-pascal]
+[2026-04-17 20:09:06]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/fervent-faraday  532febf [claude/fervent-faraday]
+[2026-04-17 20:09:06] 
+[2026-04-17 20:09:06] 📋 ecstatic-pascal (branch: claude/ecstatic-pascal) — 未 merge
+[2026-04-17 20:09:06]    🗑️  清理中...
+[2026-04-17 20:09:06]    ✅ worktree 已移除
+[2026-04-17 20:09:06]    🌿 本地 branch claude/ecstatic-pascal 已刪除
+[2026-04-17 20:09:06] 📋 fervent-faraday (branch: claude/fervent-faraday) — 未 merge
+[2026-04-17 20:09:06]    🗑️  清理中...
+[2026-04-17 20:09:06]    ✅ worktree 已移除
+[2026-04-17 20:09:06]    🌿 本地 branch claude/fervent-faraday 已刪除
+[2026-04-17 20:09:06] 
+[2026-04-17 20:09:06] === 結果摘要 ===
+[2026-04-17 20:09:06] 掃描 worktree：2 個
+[2026-04-17 20:09:06] 已清理：2 個
+[2026-04-17 20:09:06] 已跳過：0 個
+[2026-04-17 20:09:06] 已 merge（stale）：0 個
+[2026-04-17 20:09:06] 估計釋放 ~32MB 磁碟空間
+[2026-04-17 20:09:06] === 完成 ===
+[2026-04-17 20:39:06] === Worktree 健康檢查 開始 ===
+[2026-04-17 20:39:06] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-17 20:39:06] 模式: LIVE | all-clean | safe
+[2026-04-17 20:39:06] git worktree prune 完成
+[2026-04-17 20:39:06] 
+[2026-04-17 20:39:06] --- 目前所有 worktree ---
+[2026-04-17 20:39:06]   /Users/pagemacmini/maplab-ai-handbook  3746ec9 [main]
+[2026-04-17 20:39:06] 
+[2026-04-17 20:39:06] 
+[2026-04-17 20:39:06] === 結果摘要 ===
+[2026-04-17 20:39:06] 掃描 worktree：0 個
+[2026-04-17 20:39:06] 已清理：0 個
+[2026-04-17 20:39:06] 已跳過：0 個
+[2026-04-17 20:39:06] 已 merge（stale）：0 個
+[2026-04-17 20:39:06] === 完成 ===
+[2026-04-17 21:09:06] === Worktree 健康檢查 開始 ===
+[2026-04-17 21:09:06] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-17 21:09:06] 模式: LIVE | all-clean | safe
+[2026-04-17 21:09:07] git worktree prune 完成
+[2026-04-17 21:09:07] 
+[2026-04-17 21:09:07] --- 目前所有 worktree ---
+[2026-04-17 21:09:07]   /Users/pagemacmini/maplab-ai-handbook  3746ec9 [main]
+[2026-04-17 21:09:07] 
+[2026-04-17 21:09:07] 
+[2026-04-17 21:09:07] === 結果摘要 ===
+[2026-04-17 21:09:07] 掃描 worktree：0 個
+[2026-04-17 21:09:07] 已清理：0 個
+[2026-04-17 21:09:07] 已跳過：0 個
+[2026-04-17 21:09:07] 已 merge（stale）：0 個
+[2026-04-17 21:09:07] === 完成 ===
+[2026-04-17 21:39:07] === Worktree 健康檢查 開始 ===
+[2026-04-17 21:39:07] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-17 21:39:07] 模式: LIVE | all-clean | safe
+[2026-04-17 21:39:07] git worktree prune 完成
+[2026-04-17 21:39:07] 
+[2026-04-17 21:39:07] --- 目前所有 worktree ---
+[2026-04-17 21:39:07]   /Users/pagemacmini/maplab-ai-handbook  3746ec9 [main]
+[2026-04-17 21:39:07] 
+[2026-04-17 21:39:07] 
+[2026-04-17 21:39:07] === 結果摘要 ===
+[2026-04-17 21:39:07] 掃描 worktree：0 個
+[2026-04-17 21:39:07] 已清理：0 個
+[2026-04-17 21:39:07] 已跳過：0 個
+[2026-04-17 21:39:07] 已 merge（stale）：0 個
+[2026-04-17 21:39:07] === 完成 ===
+[2026-04-17 22:09:07] === Worktree 健康檢查 開始 ===
+[2026-04-17 22:09:07] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-17 22:09:07] 模式: LIVE | all-clean | safe
+[2026-04-17 22:09:07] git worktree prune 完成
+[2026-04-17 22:09:07] 
+[2026-04-17 22:09:07] --- 目前所有 worktree ---
+[2026-04-17 22:09:07]   /Users/pagemacmini/maplab-ai-handbook  3746ec9 [main]
+[2026-04-17 22:09:07] 
+[2026-04-17 22:09:07] 
+[2026-04-17 22:09:07] === 結果摘要 ===
+[2026-04-17 22:09:07] 掃描 worktree：0 個
+[2026-04-17 22:09:07] 已清理：0 個
+[2026-04-17 22:09:07] 已跳過：0 個
+[2026-04-17 22:09:07] 已 merge（stale）：0 個
+[2026-04-17 22:09:07] === 完成 ===
+[2026-04-17 22:39:07] === Worktree 健康檢查 開始 ===
+[2026-04-17 22:39:07] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-17 22:39:07] 模式: LIVE | all-clean | safe
+[2026-04-17 22:39:07] git worktree prune 完成
+[2026-04-17 22:39:07] 
+[2026-04-17 22:39:07] --- 目前所有 worktree ---
+[2026-04-17 22:39:07]   /Users/pagemacmini/maplab-ai-handbook                                              cc5b925 [main]
+[2026-04-17 22:39:07]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/competent-tu-c0f0f3        7d06b78 [claude/competent-tu-c0f0f3]
+[2026-04-17 22:39:07]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/happy-swirles-a38d8e       c576578 [claude/happy-swirles-a38d8e]
+[2026-04-17 22:39:07]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/nervous-heisenberg-062b13  8c412c8 [claude/nervous-heisenberg-062b13]
+[2026-04-17 22:39:07] 
+[2026-04-17 22:39:07] 📋 competent-tu-c0f0f3 (branch: claude/competent-tu-c0f0f3) — 未 merge
+[2026-04-17 22:39:07]    🗑️  清理中...
+[2026-04-17 22:39:07]    ✅ worktree 已移除
+[2026-04-17 22:39:07]    🌿 本地 branch claude/competent-tu-c0f0f3 已刪除
+[2026-04-17 22:39:07] 📋 happy-swirles-a38d8e (branch: claude/happy-swirles-a38d8e) — 未 merge
+[2026-04-17 22:39:07]    🗑️  清理中...
+[2026-04-17 22:39:07]    ✅ worktree 已移除
+[2026-04-17 22:39:07]    🌿 本地 branch claude/happy-swirles-a38d8e 已刪除
+[2026-04-17 22:39:07] 📋 nervous-heisenberg-062b13 (branch: claude/nervous-heisenberg-062b13) — 未 merge
+[2026-04-17 22:39:07]    🗑️  清理中...
+[2026-04-17 22:39:08]    ✅ worktree 已移除
+[2026-04-17 22:39:08]    🌿 本地 branch claude/nervous-heisenberg-062b13 已刪除
+[2026-04-17 22:39:08] 
+[2026-04-17 22:39:08] === 結果摘要 ===
+[2026-04-17 22:39:08] 掃描 worktree：3 個
+[2026-04-17 22:39:08] 已清理：3 個
+[2026-04-17 22:39:08] 已跳過：0 個
+[2026-04-17 22:39:08] 已 merge（stale）：0 個
+[2026-04-17 22:39:08] 估計釋放 ~48MB 磁碟空間
+[2026-04-17 22:39:08] === 完成 ===
+[2026-04-17 23:09:08] === Worktree 健康檢查 開始 ===
+[2026-04-17 23:09:08] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-17 23:09:08] 模式: LIVE | all-clean | safe
+[2026-04-17 23:09:08] git worktree prune 完成
+[2026-04-17 23:09:08] 
+[2026-04-17 23:09:08] --- 目前所有 worktree ---
+[2026-04-17 23:09:08]   /Users/pagemacmini/maplab-ai-handbook                                           71fa1a8 [main]
+[2026-04-17 23:09:08]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/laughing-agnesi-ff8ce2  cc5b925 [claude/laughing-agnesi-ff8ce2]
+[2026-04-17 23:09:08]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/nice-shamir-c1aa4a      35ae526 [claude/nice-shamir-c1aa4a]
+[2026-04-17 23:09:08]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/stoic-faraday-88865d    c576578 [claude/stoic-faraday-88865d]
+[2026-04-17 23:09:08] 
+[2026-04-17 23:09:08] 📋 laughing-agnesi-ff8ce2 (branch: claude/laughing-agnesi-ff8ce2) — 未 merge
+[2026-04-17 23:09:08]    🗑️  清理中...
+[2026-04-17 23:09:08]    ✅ worktree 已移除
+[2026-04-17 23:09:08]    🌿 本地 branch claude/laughing-agnesi-ff8ce2 已刪除
+[2026-04-17 23:09:08] 📋 nice-shamir-c1aa4a (branch: claude/nice-shamir-c1aa4a) — 未 merge
+[2026-04-17 23:09:08]    🗑️  清理中...
+[2026-04-17 23:09:08]    ✅ worktree 已移除
+[2026-04-17 23:09:08]    🌿 本地 branch claude/nice-shamir-c1aa4a 已刪除
+[2026-04-17 23:09:08] 📋 stoic-faraday-88865d (branch: claude/stoic-faraday-88865d) — 未 merge
+[2026-04-17 23:09:08]    🗑️  清理中...
+[2026-04-17 23:09:08]    ✅ worktree 已移除
+[2026-04-17 23:09:08]    🌿 本地 branch claude/stoic-faraday-88865d 已刪除
+[2026-04-17 23:09:08] 
+[2026-04-17 23:09:08] === 結果摘要 ===
+[2026-04-17 23:09:08] 掃描 worktree：3 個
+[2026-04-17 23:09:08] 已清理：3 個
+[2026-04-17 23:09:08] 已跳過：0 個
+[2026-04-17 23:09:08] 已 merge（stale）：0 個
+[2026-04-17 23:09:08] 估計釋放 ~48MB 磁碟空間
+[2026-04-17 23:09:08] === 完成 ===
+[2026-04-17 23:39:08] === Worktree 健康檢查 開始 ===
+[2026-04-17 23:39:08] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-17 23:39:08] 模式: LIVE | all-clean | safe
+[2026-04-17 23:39:08] git worktree prune 完成
+[2026-04-17 23:39:08] 
+[2026-04-17 23:39:08] --- 目前所有 worktree ---
+[2026-04-17 23:39:08]   /Users/pagemacmini/maplab-ai-handbook                                             a7f8cc6 [main]
+[2026-04-17 23:39:08]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/blissful-lamarr-cc4ebe    f9afaf7 [claude/blissful-lamarr-cc4ebe]
+[2026-04-17 23:39:08]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/eager-maxwell-2f6961      3933b9e [claude/eager-maxwell-2f6961]
+[2026-04-17 23:39:08]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/gifted-spence-6c7c97      549517a [claude/gifted-spence-6c7c97]
+[2026-04-17 23:39:08]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/recursing-babbage-987f42  06d9b38 [claude/recursing-babbage-987f42]
+[2026-04-17 23:39:08]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/sad-wu-6e1e1b             3933b9e [claude/sad-wu-6e1e1b]
+[2026-04-17 23:39:08] 
+[2026-04-17 23:39:08] 📋 blissful-lamarr-cc4ebe (branch: claude/blissful-lamarr-cc4ebe) — 未 merge
+[2026-04-17 23:39:08]    🗑️  清理中...
+[2026-04-17 23:39:08]    ✅ worktree 已移除
+[2026-04-17 23:39:08]    🌿 本地 branch claude/blissful-lamarr-cc4ebe 已刪除
+[2026-04-17 23:39:08] 📋 eager-maxwell-2f6961 (branch: claude/eager-maxwell-2f6961) — 未 merge
+[2026-04-17 23:39:09]    🗑️  清理中...
+[2026-04-17 23:39:09]    ✅ worktree 已移除
+[2026-04-17 23:39:09]    🌿 本地 branch claude/eager-maxwell-2f6961 已刪除
+[2026-04-17 23:39:09] 📋 gifted-spence-6c7c97 (branch: claude/gifted-spence-6c7c97) — 未 merge
+[2026-04-17 23:39:09]    🗑️  清理中...
+[2026-04-17 23:39:09]    ✅ worktree 已移除
+[2026-04-17 23:39:09]    🌿 本地 branch claude/gifted-spence-6c7c97 已刪除
+[2026-04-17 23:39:09] 📋 recursing-babbage-987f42 (branch: claude/recursing-babbage-987f42) — 未 merge
+[2026-04-17 23:39:09]    🗑️  清理中...
+[2026-04-17 23:39:09]    ✅ worktree 已移除
+[2026-04-17 23:39:09]    🌿 本地 branch claude/recursing-babbage-987f42 已刪除
+[2026-04-17 23:39:09] 📋 sad-wu-6e1e1b (branch: claude/sad-wu-6e1e1b) — 未 merge
+[2026-04-17 23:39:09]    🗑️  清理中...
+[2026-04-17 23:39:09]    ✅ worktree 已移除
+[2026-04-17 23:39:09]    🌿 本地 branch claude/sad-wu-6e1e1b 已刪除
+[2026-04-17 23:39:09] 
+[2026-04-17 23:39:09] === 結果摘要 ===
+[2026-04-17 23:39:09] 掃描 worktree：5 個
+[2026-04-17 23:39:09] 已清理：5 個
+[2026-04-17 23:39:09] 已跳過：0 個
+[2026-04-17 23:39:09] 已 merge（stale）：0 個
+[2026-04-17 23:39:09] 估計釋放 ~80MB 磁碟空間
+[2026-04-17 23:39:09] === 完成 ===
+[2026-04-18 00:09:09] === Worktree 健康檢查 開始 ===
+[2026-04-18 00:09:09] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-18 00:09:09] 模式: LIVE | all-clean | safe
+[2026-04-18 00:09:09] git worktree prune 完成
+[2026-04-18 00:09:09] 
+[2026-04-18 00:09:09] --- 目前所有 worktree ---
+[2026-04-18 00:09:09]   /Users/pagemacmini/maplab-ai-handbook                                               b56a2b2 [main]
+[2026-04-18 00:09:09]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/beautiful-lewin-09133f      5d454a7 [claude/beautiful-lewin-09133f]
+[2026-04-18 00:09:09]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/cool-nobel-516df2           a7f8cc6 [claude/cool-nobel-516df2]
+[2026-04-18 00:09:09]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/nervous-ardinghelli-d25a3e  62f557e [claude/nervous-ardinghelli-d25a3e]
+[2026-04-18 00:09:09] 
+[2026-04-18 00:09:09] 📋 beautiful-lewin-09133f (branch: claude/beautiful-lewin-09133f) — 未 merge
+[2026-04-18 00:09:09]    🗑️  清理中...
+[2026-04-18 00:09:09]    ✅ worktree 已移除
+[2026-04-18 00:09:09]    🌿 本地 branch claude/beautiful-lewin-09133f 已刪除
+[2026-04-18 00:09:09] 📋 cool-nobel-516df2 (branch: claude/cool-nobel-516df2) — 未 merge
+[2026-04-18 00:09:09]    🗑️  清理中...
+[2026-04-18 00:09:09]    ✅ worktree 已移除
+[2026-04-18 00:09:09]    🌿 本地 branch claude/cool-nobel-516df2 已刪除
+[2026-04-18 00:09:09] 📋 nervous-ardinghelli-d25a3e (branch: claude/nervous-ardinghelli-d25a3e) — 未 merge
+[2026-04-18 00:09:09]    🗑️  清理中...
+[2026-04-18 00:09:09]    ✅ worktree 已移除
+[2026-04-18 00:09:09]    🌿 本地 branch claude/nervous-ardinghelli-d25a3e 已刪除
+[2026-04-18 00:09:09] 
+[2026-04-18 00:09:09] === 結果摘要 ===
+[2026-04-18 00:09:09] 掃描 worktree：3 個
+[2026-04-18 00:09:09] 已清理：3 個
+[2026-04-18 00:09:09] 已跳過：0 個
+[2026-04-18 00:09:09] 已 merge（stale）：0 個
+[2026-04-18 00:09:09] 估計釋放 ~48MB 磁碟空間
+[2026-04-18 00:09:09] === 完成 ===
+[2026-04-18 00:39:10] === Worktree 健康檢查 開始 ===
+[2026-04-18 00:39:10] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-18 00:39:10] 模式: LIVE | all-clean | safe
+[2026-04-18 00:39:10] git worktree prune 完成
+[2026-04-18 00:39:10] 
+[2026-04-18 00:39:10] --- 目前所有 worktree ---
+[2026-04-18 00:39:10]   /Users/pagemacmini/maplab-ai-handbook  b56a2b2 [main]
+[2026-04-18 00:39:10] 
+[2026-04-18 00:39:10] 
+[2026-04-18 00:39:10] === 結果摘要 ===
+[2026-04-18 00:39:10] 掃描 worktree：0 個
+[2026-04-18 00:39:10] 已清理：0 個
+[2026-04-18 00:39:10] 已跳過：0 個
+[2026-04-18 00:39:10] 已 merge（stale）：0 個
+[2026-04-18 00:39:10] === 完成 ===
+[2026-04-18 01:09:10] === Worktree 健康檢查 開始 ===
+[2026-04-18 01:09:10] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-18 01:09:10] 模式: LIVE | all-clean | safe
+[2026-04-18 01:09:10] git worktree prune 完成
+[2026-04-18 01:09:10] 
+[2026-04-18 01:09:10] --- 目前所有 worktree ---
+[2026-04-18 01:09:10]   /Users/pagemacmini/maplab-ai-handbook  b56a2b2 [main]
+[2026-04-18 01:09:10] 
+[2026-04-18 01:09:10] 
+[2026-04-18 01:09:10] === 結果摘要 ===
+[2026-04-18 01:09:10] 掃描 worktree：0 個
+[2026-04-18 01:09:10] 已清理：0 個
+[2026-04-18 01:09:10] 已跳過：0 個
+[2026-04-18 01:09:10] 已 merge（stale）：0 個
+[2026-04-18 01:09:10] === 完成 ===
+[2026-04-18 01:39:10] === Worktree 健康檢查 開始 ===
+[2026-04-18 01:39:10] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-18 01:39:10] 模式: LIVE | all-clean | safe
+[2026-04-18 01:39:10] git worktree prune 完成
+[2026-04-18 01:39:10] 
+[2026-04-18 01:39:10] --- 目前所有 worktree ---
+[2026-04-18 01:39:10]   /Users/pagemacmini/maplab-ai-handbook  b56a2b2 [main]
+[2026-04-18 01:39:10] 
+[2026-04-18 01:39:10] 
+[2026-04-18 01:39:10] === 結果摘要 ===
+[2026-04-18 01:39:10] 掃描 worktree：0 個
+[2026-04-18 01:39:10] 已清理：0 個
+[2026-04-18 01:39:10] 已跳過：0 個
+[2026-04-18 01:39:10] 已 merge（stale）：0 個
+[2026-04-18 01:39:10] === 完成 ===
+[2026-04-18 02:09:10] === Worktree 健康檢查 開始 ===
+[2026-04-18 02:09:10] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-18 02:09:10] 模式: LIVE | all-clean | safe
+[2026-04-18 02:09:10] git worktree prune 完成
+[2026-04-18 02:09:10] 
+[2026-04-18 02:09:10] --- 目前所有 worktree ---
+[2026-04-18 02:09:10]   /Users/pagemacmini/maplab-ai-handbook  b56a2b2 [main]
+[2026-04-18 02:09:10] 
+[2026-04-18 02:09:10] 
+[2026-04-18 02:09:10] === 結果摘要 ===
+[2026-04-18 02:09:10] 掃描 worktree：0 個
+[2026-04-18 02:09:10] 已清理：0 個
+[2026-04-18 02:09:10] 已跳過：0 個
+[2026-04-18 02:09:10] 已 merge（stale）：0 個
+[2026-04-18 02:09:10] === 完成 ===
+[2026-04-18 02:39:10] === Worktree 健康檢查 開始 ===
+[2026-04-18 02:39:10] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-18 02:39:10] 模式: LIVE | all-clean | safe
+[2026-04-18 02:39:11] git worktree prune 完成
+[2026-04-18 02:39:11] 
+[2026-04-18 02:39:11] --- 目前所有 worktree ---
+[2026-04-18 02:39:11]   /Users/pagemacmini/maplab-ai-handbook  b56a2b2 [main]
+[2026-04-18 02:39:11] 
+[2026-04-18 02:39:11] 
+[2026-04-18 02:39:11] === 結果摘要 ===
+[2026-04-18 02:39:11] 掃描 worktree：0 個
+[2026-04-18 02:39:11] 已清理：0 個
+[2026-04-18 02:39:11] 已跳過：0 個
+[2026-04-18 02:39:11] 已 merge（stale）：0 個
+[2026-04-18 02:39:11] === 完成 ===
+[2026-04-18 03:09:11] === Worktree 健康檢查 開始 ===
+[2026-04-18 03:09:11] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-18 03:09:11] 模式: LIVE | all-clean | safe
+[2026-04-18 03:09:11] git worktree prune 完成
+[2026-04-18 03:09:11] 
+[2026-04-18 03:09:11] --- 目前所有 worktree ---
+[2026-04-18 03:09:11]   /Users/pagemacmini/maplab-ai-handbook  b56a2b2 [main]
+[2026-04-18 03:09:11] 
+[2026-04-18 03:09:11] 
+[2026-04-18 03:09:11] === 結果摘要 ===
+[2026-04-18 03:09:11] 掃描 worktree：0 個
+[2026-04-18 03:09:11] 已清理：0 個
+[2026-04-18 03:09:11] 已跳過：0 個
+[2026-04-18 03:09:11] 已 merge（stale）：0 個
+[2026-04-18 03:09:11] === 完成 ===
+[2026-04-18 03:39:11] === Worktree 健康檢查 開始 ===
+[2026-04-18 03:39:11] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-18 03:39:11] 模式: LIVE | all-clean | safe
+[2026-04-18 03:39:11] git worktree prune 完成
+[2026-04-18 03:39:11] 
+[2026-04-18 03:39:11] --- 目前所有 worktree ---
+[2026-04-18 03:39:11]   /Users/pagemacmini/maplab-ai-handbook  b56a2b2 [main]
+[2026-04-18 03:39:11] 
+[2026-04-18 03:39:11] 
+[2026-04-18 03:39:11] === 結果摘要 ===
+[2026-04-18 03:39:11] 掃描 worktree：0 個
+[2026-04-18 03:39:11] 已清理：0 個
+[2026-04-18 03:39:11] 已跳過：0 個
+[2026-04-18 03:39:11] 已 merge（stale）：0 個
+[2026-04-18 03:39:11] === 完成 ===
+[2026-04-18 04:09:11] === Worktree 健康檢查 開始 ===
+[2026-04-18 04:09:11] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-18 04:09:11] 模式: LIVE | all-clean | safe
+[2026-04-18 04:09:11] git worktree prune 完成
+[2026-04-18 04:09:11] 
+[2026-04-18 04:09:11] --- 目前所有 worktree ---
+[2026-04-18 04:09:11]   /Users/pagemacmini/maplab-ai-handbook  b56a2b2 [main]
+[2026-04-18 04:09:11] 
+[2026-04-18 04:09:11] 
+[2026-04-18 04:09:11] === 結果摘要 ===
+[2026-04-18 04:09:11] 掃描 worktree：0 個
+[2026-04-18 04:09:11] 已清理：0 個
+[2026-04-18 04:09:11] 已跳過：0 個
+[2026-04-18 04:09:11] 已 merge（stale）：0 個
+[2026-04-18 04:09:11] === 完成 ===
+[2026-04-18 04:39:11] === Worktree 健康檢查 開始 ===
+[2026-04-18 04:39:11] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-18 04:39:11] 模式: LIVE | all-clean | safe
+[2026-04-18 04:39:11] git worktree prune 完成
+[2026-04-18 04:39:11] 
+[2026-04-18 04:39:11] --- 目前所有 worktree ---
+[2026-04-18 04:39:11]   /Users/pagemacmini/maplab-ai-handbook  b56a2b2 [main]
+[2026-04-18 04:39:11] 
+[2026-04-18 04:39:12] 
+[2026-04-18 04:39:12] === 結果摘要 ===
+[2026-04-18 04:39:12] 掃描 worktree：0 個
+[2026-04-18 04:39:12] 已清理：0 個
+[2026-04-18 04:39:12] 已跳過：0 個
+[2026-04-18 04:39:12] 已 merge（stale）：0 個
+[2026-04-18 04:39:12] === 完成 ===
+[2026-04-18 05:09:12] === Worktree 健康檢查 開始 ===
+[2026-04-18 05:09:12] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-18 05:09:12] 模式: LIVE | all-clean | safe
+[2026-04-18 05:09:12] git worktree prune 完成
+[2026-04-18 05:09:12] 
+[2026-04-18 05:09:12] --- 目前所有 worktree ---
+[2026-04-18 05:09:12]   /Users/pagemacmini/maplab-ai-handbook  b56a2b2 [main]
+[2026-04-18 05:09:12] 
+[2026-04-18 05:09:12] 
+[2026-04-18 05:09:12] === 結果摘要 ===
+[2026-04-18 05:09:12] 掃描 worktree：0 個
+[2026-04-18 05:09:12] 已清理：0 個
+[2026-04-18 05:09:12] 已跳過：0 個
+[2026-04-18 05:09:12] 已 merge（stale）：0 個
+[2026-04-18 05:09:12] === 完成 ===
+[2026-04-18 05:39:12] === Worktree 健康檢查 開始 ===
+[2026-04-18 05:39:12] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-18 05:39:12] 模式: LIVE | all-clean | safe
+[2026-04-18 05:39:12] git worktree prune 完成
+[2026-04-18 05:39:12] 
+[2026-04-18 05:39:12] --- 目前所有 worktree ---
+[2026-04-18 05:39:12]   /Users/pagemacmini/maplab-ai-handbook  b56a2b2 [main]
+[2026-04-18 05:39:12] 
+[2026-04-18 05:39:12] 
+[2026-04-18 05:39:12] === 結果摘要 ===
+[2026-04-18 05:39:12] 掃描 worktree：0 個
+[2026-04-18 05:39:12] 已清理：0 個
+[2026-04-18 05:39:12] 已跳過：0 個
+[2026-04-18 05:39:12] 已 merge（stale）：0 個
+[2026-04-18 05:39:12] === 完成 ===
+[2026-04-18 06:09:12] === Worktree 健康檢查 開始 ===
+[2026-04-18 06:09:12] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-18 06:09:12] 模式: LIVE | all-clean | safe
+[2026-04-18 06:09:12] git worktree prune 完成
+[2026-04-18 06:09:12] 
+[2026-04-18 06:09:12] --- 目前所有 worktree ---
+[2026-04-18 06:09:12]   /Users/pagemacmini/maplab-ai-handbook  b56a2b2 [main]
+[2026-04-18 06:09:12] 
+[2026-04-18 06:09:12] 
+[2026-04-18 06:09:12] === 結果摘要 ===
+[2026-04-18 06:09:12] 掃描 worktree：0 個
+[2026-04-18 06:09:12] 已清理：0 個
+[2026-04-18 06:09:12] 已跳過：0 個
+[2026-04-18 06:09:12] 已 merge（stale）：0 個
+[2026-04-18 06:09:12] === 完成 ===
+[2026-04-18 06:39:12] === Worktree 健康檢查 開始 ===
+[2026-04-18 06:39:12] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-18 06:39:12] 模式: LIVE | all-clean | safe
+[2026-04-18 06:39:12] git worktree prune 完成
+[2026-04-18 06:39:12] 
+[2026-04-18 06:39:12] --- 目前所有 worktree ---
+[2026-04-18 06:39:12]   /Users/pagemacmini/maplab-ai-handbook  b56a2b2 [main]
+[2026-04-18 06:39:12] 
+[2026-04-18 06:39:13] 
+[2026-04-18 06:39:13] === 結果摘要 ===
+[2026-04-18 06:39:13] 掃描 worktree：0 個
+[2026-04-18 06:39:13] 已清理：0 個
+[2026-04-18 06:39:13] 已跳過：0 個
+[2026-04-18 06:39:13] 已 merge（stale）：0 個
+[2026-04-18 06:39:13] === 完成 ===
+[2026-04-18 07:09:13] === Worktree 健康檢查 開始 ===
+[2026-04-18 07:09:13] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-18 07:09:13] 模式: LIVE | all-clean | safe
+[2026-04-18 07:09:13] git worktree prune 完成
+[2026-04-18 07:09:13] 
+[2026-04-18 07:09:13] --- 目前所有 worktree ---
+[2026-04-18 07:09:13]   /Users/pagemacmini/maplab-ai-handbook  b56a2b2 [main]
+[2026-04-18 07:09:13] 
+[2026-04-18 07:09:13] 
+[2026-04-18 07:09:13] === 結果摘要 ===
+[2026-04-18 07:09:13] 掃描 worktree：0 個
+[2026-04-18 07:09:13] 已清理：0 個
+[2026-04-18 07:09:13] 已跳過：0 個
+[2026-04-18 07:09:13] 已 merge（stale）：0 個
+[2026-04-18 07:09:13] === 完成 ===
+[2026-04-18 07:39:13] === Worktree 健康檢查 開始 ===
+[2026-04-18 07:39:13] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-18 07:39:13] 模式: LIVE | all-clean | safe
+[2026-04-18 07:39:13] git worktree prune 完成
+[2026-04-18 07:39:13] 
+[2026-04-18 07:39:13] --- 目前所有 worktree ---
+[2026-04-18 07:39:13]   /Users/pagemacmini/maplab-ai-handbook  b56a2b2 [main]
+[2026-04-18 07:39:13] 
+[2026-04-18 07:39:13] 
+[2026-04-18 07:39:13] === 結果摘要 ===
+[2026-04-18 07:39:13] 掃描 worktree：0 個
+[2026-04-18 07:39:13] 已清理：0 個
+[2026-04-18 07:39:13] 已跳過：0 個
+[2026-04-18 07:39:13] 已 merge（stale）：0 個
+[2026-04-18 07:39:13] === 完成 ===
+[2026-04-18 08:09:13] === Worktree 健康檢查 開始 ===
+[2026-04-18 08:09:13] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-18 08:09:13] 模式: LIVE | all-clean | safe
+[2026-04-18 08:09:13] git worktree prune 完成
+[2026-04-18 08:09:13] 
+[2026-04-18 08:09:13] --- 目前所有 worktree ---
+[2026-04-18 08:09:13]   /Users/pagemacmini/maplab-ai-handbook  b56a2b2 [main]
+[2026-04-18 08:09:13] 
+[2026-04-18 08:09:13] 
+[2026-04-18 08:09:13] === 結果摘要 ===
+[2026-04-18 08:09:13] 掃描 worktree：0 個
+[2026-04-18 08:09:13] 已清理：0 個
+[2026-04-18 08:09:13] 已跳過：0 個
+[2026-04-18 08:09:13] 已 merge（stale）：0 個
+[2026-04-18 08:09:13] === 完成 ===
+[2026-04-18 08:39:13] === Worktree 健康檢查 開始 ===
+[2026-04-18 08:39:13] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-18 08:39:13] 模式: LIVE | all-clean | safe
+[2026-04-18 08:39:13] git worktree prune 完成
+[2026-04-18 08:39:13] 
+[2026-04-18 08:39:13] --- 目前所有 worktree ---
+[2026-04-18 08:39:13]   /Users/pagemacmini/maplab-ai-handbook  b56a2b2 [main]
+[2026-04-18 08:39:13] 
+[2026-04-18 08:39:13] 
+[2026-04-18 08:39:13] === 結果摘要 ===
+[2026-04-18 08:39:13] 掃描 worktree：0 個
+[2026-04-18 08:39:13] 已清理：0 個
+[2026-04-18 08:39:13] 已跳過：0 個
+[2026-04-18 08:39:13] 已 merge（stale）：0 個
+[2026-04-18 08:39:13] === 完成 ===

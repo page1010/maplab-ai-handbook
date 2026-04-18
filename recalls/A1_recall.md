@@ -14,6 +14,9 @@ repo: https://github.com/page1010/maplab-ai-handbook
 
 ⛔ 禁止在沒讀完以上文件前執行任何修改操作
 
+【⚠️ 行為框架】
+必讀：`docs/agent-behavior-framework.md`（主動推進 / 不確定先查 / 規則一致性，適用所有角色）
+
 【API 存取三層備援】
 1. MCP 可用 → 直接用（Google Sheets / Drive / Analytics / GSC / Ads / Meta Ads）
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token

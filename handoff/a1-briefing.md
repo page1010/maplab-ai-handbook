@@ -58,6 +58,12 @@
 - A6 照片一條龍（Telegram 接收→命名→壓縮→Drive 歸檔→Slide 連動）Phase 2
 - Items 表測試資料清理（[QA-TEST] 開頭的品項）
 - A4 照片分類 S11 進度確認
+- T-A4-002 Phase 1：pagewu1010 Takeout 解壓（Colab notebook 已建，code 需手動修正縮排後執行）
+  - Notebook：MAPLAB_pagewu_takeout_unzip（pagewu1010 Drive）
+  - 5 個 ZIP 共 187GB，解壓到 Takeout_extracted/
+  - Cell 1：drive.mount（需授權）
+  - Cell 2：shell unzip -n（不需 Python 縮排）
+  - Chrome MCP 無法可靠設定 Colab Python 縮排（已知限制，同 Monaco API setValue 踩坑記錄）
 
 ## 建議起始點
 - 讀 projects/a0-a1-briefing-protocol.md + handoff/a0-briefing.md

@@ -10,7 +10,7 @@
 - item 照片可以多於一張（photo_urls 陣列）
 - **2026-04-18 系統性校正**：A0 犯了跟 A6 一樣的錯 — 推測而不驗證、被動等指令。核心原則：A0 要求任何 Agent 遵守的規則，A0 自己先遵守。行為框架已落地 recalls/A0_recall.md（主動推進 / 不確定先查 / 規則一致性）。
 
-## 系統狀態（2026-04-18 EOD）
+## 系統狀態（2026-04-19 EOD）
 - A6 bot 運行中（B層對話自動存檔進行中）
 - GAS v8 已部署（addItem + createQuote + createSlide + 模糊比對 + 多照片）
 - Google OAuth token 有效（patrol.sh 已加自動偵測）
@@ -32,6 +32,10 @@
 - A6 照片 Phase 2（Telegram→命名→壓縮→Drive→Slide 一條龍）
 - Items 表 QA 測試資料清理（[QA-TEST] 11 筆）
 - A4 S11 進度確認（Colab 疑斷線）
+- T-A4-002 Phase 1：pagewu1010 Takeout 解壓待 Owner 手動啟動
+  - Notebook：MAPLAB_pagewu_takeout_unzip（pagewu1010 Drive）
+  - 5 個 ZIP 共 187GB，目標 Takeout_extracted/
+  - Cell 2 縮排已知問題（Chrome MCP Monaco API setValue 限制），需 Owner 手動修正後執行
 
 ## 關鍵 Commits（2026-04-17~18）
 - e0dc015: A0 強制記錄規則

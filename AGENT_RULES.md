@@ -38,8 +38,10 @@ Step 6. If the project is unclear or not in AGENT_RULES.md, ask the user. Never 
 | A5 | 報價與提案引擎部 | Quotation Engine | 菜單品項資料庫、成本毛利邏輯、報價公式、活動模板 | projects/maplab-master-data.md |
 | A6 | 業務快反應部隊 | Sales Rapid Response Unit | 急件報價、快速提案簡報、菜單方案整理 | （用 A5 + A4 資料） |
 | A7 | 客服與對話轉單部 | Smart Reply / Service Desk | 客戶詢問分類、標準回覆、對話結構化、導向報價轉單 | projects/ai-reply-system.md |
-| A8 | 多媒體影音製作部 | Video Production | 影片企劃腳本、影音素材生成、剪輯指導、影片發布 | （待建立） |
+| A8 | 影音內容產線 | Content Repurposing Pipeline | 圖文轉影音、多平台影片分發、NotebookLM podcast、Shorts 腳本 | skills/a8-video-pipeline-skills.md |
+| B1 | InnerFlowLab 內容創作 | InnerFlowLab Content Creation | Substack 文章、innerflowlab.com、英文個人品牌、旅遊日誌 | skills/b1-innerflowlab-skills.md |
 
+> ⚠️ A 系列 = MAPLAB 專案；B 系列 = InnerFlowLab 專案。A8 影音產線服務兩邊（共用基礎設施）。
 > ⚠️ A1 = Claude Code，透過 Telegram 下指令，不需要在 Claude tab 召喚。
 > ⚠️ Agent 不得將 Notion 視為狀態真相，一切以 GitHub commit 為準。
 > 不確定角色 → 先問用戶，不要假設，不要亂動。

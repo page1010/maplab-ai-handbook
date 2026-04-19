@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-04-19 10:00（A1 每日巡查更新）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-04-19 （A8+B1 角色建立）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -75,7 +75,7 @@
 |------|------|------|
 | 🎯 最新狀態（你在這裡） | CURRENT_STATUS.md | 唯一入口，最高優先 |
 | 📋 任務池 | TASK_QUEUE.md | 所有待辦任務清單 |
-| 📖 角色與規則 | AGENT_RULES.md v3.1 | 9 角色定義（含 A0）+ 協作規則 + 存檔規則 |
+| 📖 角色與規則 | AGENT_RULES.md v3.9 | 10 角色定義（A0-A8 + B1）+ 協作規則 + 存檔規則 |
 | 🚀 開工 SOP | AGENT_STARTUP_PROTOCOL.md | 啟動流程 + Startup Check 輸出格式 |
 | 📂 任務卡 | handoff/tasks/T-xxx.md | 你認領的任務的詳細狀態 |
 | 🔧 技能路由 | skills/superpowers-guide.md | 開工前查路由表（27 本技能書）|
@@ -90,6 +90,10 @@
 
 | 工具 | 用途 | 給哪些角色 |
 |------|------|-----------|
+| NotebookLM | 文章→podcast 音檔（Audio Overview）| A8 |
+| Gemini Flash | 照片分類/alt text/Shorts 腳本 | A4, A8 |
+| Google Vids | 腳本+圖片→影片組裝 | A8 |
+| YouTube Studio | 影片上傳/排程/SEO | A8 |
 | Google Sheets | 讀寫試算表（品項/報價/追蹤表）| A5, A2, A3, 全員 |
 | Google Drive | 檔案存取/上傳/管理 | A4, A6, 全員 |
 | Google Analytics | 流量數據/報表 | A2, A3 |

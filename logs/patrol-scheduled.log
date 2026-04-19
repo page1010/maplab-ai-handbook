@@ -120,3 +120,49 @@
 【已完成】6 張 Task Card
 ---
 [ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-04-19 09:00:01] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-04-19 09:00
+
+[rotate] bot_a6.log: 17056013 → 93095 bytes (kept last 1000 lines)
+[rotate] launchd_stdout.log: 5839413 → 90536 bytes (kept last 1000 lines)
+[rotate] Rotated 2 file(s).
+=== MAPLAB 系統巡查 2026-04-19 09:00 ===
+
+[🟡 expires in 0.7h] Google OAuth token — auto-refreshing...
+✅ Token refreshed, new expiry: 2026-04-19T02:00:01.638534+00:00
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A6-001: 需 Owner 在 LINE Developers Console 填入 Webhook URL（Channel 1654658337）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [11d ago]
+  ⏸️ T-A2A3-001-B (A2): 等 Google 重新索引，預計 04-11 後可驗證 [21d ago]
+  ⏸️ T-A2A3-001 (A2): 等 Google 重新索引，預計 04-11 後可驗證 [21d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [20d ago]
+  ⏸️ T-A6-001 (A6): 需 Owner 在 LINE Developers Console 填入 Webhook URL（Channel 1654658337） [17d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [20d ago]
+
+【進行中】
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [2d ago]
+  ⏳ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [1d ago]
+  ⏳ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [0d ago]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。剩餘：T-A5-003 熱客招待品項定義  [10d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [9d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [10d ago]
+
+【暫停/待開始】
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A4-002 (A4): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [11d ago]
+  💤 T-A7-001 (A7): 暫停中 [21d ago]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送

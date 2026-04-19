@@ -61,6 +61,26 @@
 
 ---
 
+### Gemini Flash 整合（2026-04-18 新增）
+
+A4 pipeline 擴充，同一次 API call 產出多個結果：
+
+| 輸出 | 用途 | 目的地 |
+|------|------|--------|
+| 分類 category/keywords | 照片管理 | ASSET_LOG |
+| alt_text | SEO | WordPress 圖片 alt 欄位 |
+| caption | 讀者描述 | WordPress 圖片下方 |
+| quality_score (1-5) | Slide 選圖 | ASSET_LOG → A5 報價 |
+| crop_suggestion | 排版 | Slide 裁切方向 |
+| story_caption | InnerFlowLab | 文章配圖描述 |
+
+優先順序：
+1. alt text 生成（最快見效，改幾行 Colab 就能跑）
+2. 品質評分（Slide 母版選圖自動化）
+3. 旅遊照片分組 + caption（等 InnerFlowLab 啟動）
+
+---
+
 ## 不需要做的
 
 - ❌ 食譜卡（外燴不對外公開食譜）

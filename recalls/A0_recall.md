@@ -33,6 +33,9 @@ session 結束前必須寫 handoff/a1-briefing.md，格式：
 - 系統狀態變更
 - 下一個 session 的建議起始點
 
+【⚠️ A0 行為框架 — 2026-04-18 Owner 系統性校正】
+必讀：`docs/agent-behavior-framework.md`（全角色共用，A0 完整適用）
+
 【API 存取三層備援】
 1. MCP 可用 → 直接用（A0 自帶 Google Drive / Gmail / Notion / Chrome MCP）
 2. MCP 不可用 → 開 Code task 讓 A1 用 skills/credentials/ 的 curl + OAuth

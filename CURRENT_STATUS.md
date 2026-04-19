@@ -36,7 +36,7 @@
 | T-A5-004 | createSlides.gs — Slide 報價簡報自動生成 | A5 | 🔴 CRITICAL（~226h無commit，D9+） | handoff/tasks/T-A5-004.md |
 | T-A5-005 | 報價狀態追蹤同步 + Dashboard | A5 | 🔴 CRITICAL（~250h無commit，D11+） | handoff/tasks/T-A5-005.md |
 | T-A5-006 | T-A5-006 | A5 | 🔲 待開始（尚未開始。等 T-A5-005 完成後啟動。） | handoff/tasks/T-A5-006.md |
-| T-A6-001 | A6 LINE 業務報價助手系統 | A6 | 🔄 進行中（bot_a6 ✅ 部署、LINE webhook ✅ 通、B層對話自動存檔運行中、addItem action QA Round 1 PASS (45b4758 2026-04-18)。⚠️ Task Card T-A6-001.md 嚴重過時（仍顯示04-01斷點）需更新。） | handoff/tasks/T-A6-001.md |
+| T-A6-001 | A6 LINE 業務報價助手系統 | A6 | 🔄 進行中（04-18 EOD：GAS v8部署+addItem+模糊比對+多照片；10輪QA全PASS（含R9修B4後重測）；H1三層權限；B層自動存檔運行中。未完成：照片Phase2、LINE webhook Owner確認。⚠️ Task Card T-A6-001.md 嚴重過時（仍顯示04-01斷點）需A6更新。） | handoff/tasks/T-A6-001.md |
 | T-A6-002 | LINE 對話訓練資料收集計畫 | A6 | 💤 暫停（原計畫拆 Sheet 做訓練資料，04-07 重新規劃方向。等 Owner 決定是否需要 LINE 訓練資料及取得方式。） | handoff/tasks/T-A6-002.md |
 | T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | 💤 暫停（Phase 2 v2.0 完成，等 Owner 確認政策 + A5 欄位補齊）（Q1-Q10 重構完成（真實 CSV 驅動），下一步是 Q7/Q10 政策確認 + Phase 3 上線測試） | handoff/tasks/T-A7-001.md |
 | T-A7-002 | A7 部門 80/20 優先任務清單 | A7 | ⏸️ 阻塞中（任務 6（Q1-Q10 實裝）+ 任務 10（技能書 v2.0）已完成。Phase 3A 剩任務 4（地區判斷）、7（流） | handoff/tasks/T-A7-002.md |
@@ -56,11 +56,11 @@
 | A2/A3 | T-A2A3-001: 等 Google 重新索引，預計 04-11 後可驗證 | 見 Task Card |
 | A3 | T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） | 見 Task Card |
 | A4 | T-A4-002: 前置 T-A4-001 需先完成 | 見 Task Card |
-| A4 | ⚠️ A1巡查 2026-04-19 10:00：T-A4-001 S11補跑 429542a(04-17) ETA~1h→現已過ETA ~47h仍無completion commit。已連續3次巡查標記 | Owner確認S11狀態→補commit→啟動S13 |
-| A5 | ⚠️ A1巡查 2026-04-19 10:00：T-A5-002/004/005 CRITICAL D11+ ~250h無commit（last: cfeebd1 2026-04-09）。已連續多次標記。Owner 需決定是否重啟 A5 或確認外部阻塞原因 | Owner 決策 |
+| A4 | ⚠️ A1巡查 2026-04-19 10:00：T-A4-001 S11 14ed423(04-18) 存檔82.2%+Colab重啟，仍在執行中，待completion commit | Owner確認S11最新Colab狀態→補completion commit→啟動S13(~4,424張) |
+| A5 | ⚠️ A1巡查 2026-04-19 10:00：T-A5-002/004/005 CRITICAL D11+ ~250h無commit（last: cfeebd1 2026-04-09）。Owner 需決定是否重啟 A5 | Owner 決策 |
 | A5 | T-A5-002: 等 Owner 確認（品項名稱改法、重複品項、I 欄用途） | 見 Task Card |
 | A5 | T-A5-006: 前置 T-A5-005 需先完成 | 見 Task Card |
-| A6 | ⚠️ A1巡查 2026-04-19 10:00：T-A6-001 Task Card 嚴重過時（仍顯示04-01「等填Webhook URL」狀態）— 但 webhook 早已接通、bot部署、e2e全通、addItem QA Pass。Task Card 需由 A6 在下次 session 更新至 04-18 最新斷點 | A6 session 開始即更新 Task Card |
+| A6 | ⚠️ A1巡查 2026-04-19 10:00：T-A6-001 Task Card 嚴重過時（仍顯示04-01斷點）— 10輪QA全PASS，系統活躍。LINE Developers Console Webhook URL填入狀態待Owner確認（Channel 1654658337） | A6 session 開始即更新 Task Card；Owner確認webhook填入 |
 | A6 | T-A6-002: 等 Owner 決定方向 | 見 Task Card |
 | A7 | T-A7-001: Q7 試吃政策需 Owner 決定、Q10 取消/改期政策需 Owner 決定、A5 外送費級距未建立 | 見 Task Card |
 | A7 | T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 | 見 Task Card |

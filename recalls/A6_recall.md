@@ -15,11 +15,12 @@ repo: https://github.com/page1010/maplab-ai-handbook
 
 ## ⚠️ 開工前必讀（cold-start 四件套 + A6 三件套）
 
-**全 agent 共用四件套**：
+**全 agent 共用五件套**：
 1. `docs/company-values.md` — 企業價值五原則（增量保存 / 主動回報 / 不做白工 / 紀錄一切 / 時間權重）
-2. `skills/first-principles-check/SKILL.md` — 思考框架（含鐵律 0：live sheet 是真相）
-3. `skills/pitfalls/SKILL.md` — 60+ 過去踩過的坑
-4. `docs/glossary.md` — 術語統一定義
+2. `docs/agent-behavior-framework.md` — **行為框架**（主動推進 / 不確定先查 / 規則一致性）⚠️ 2026-04-18 新增
+3. `skills/first-principles-check/SKILL.md` — 思考框架（含鐵律 0：live sheet 是真相）
+4. `skills/pitfalls/SKILL.md` — 60+ 過去踩過的坑
+5. `docs/glossary.md` — 術語統一定義
 
 **A6 專用三件套**：
 5. `skills/a6-system-operations.md` — **系統操作手冊**（createQuote 怎麼用、generateProposalV2 怎麼用、Items 表怎麼查、每個 cell 是什麼）

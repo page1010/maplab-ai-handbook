@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-04-19 14:00 A1午後巡查（A4🔄T-A4-002 Phase 1 規劃完成 d0b3238，Task Card誤標前置⚠️需更正；A5🔴~256h D11+；Owner fix(framework)v1.2+v1.3三commits(e8a2aa3/6801266/4958a89)已落地；A6 Task Card仍過時；A8+B1新角色已建立待啟動）
+> 最後更新：2026-04-19 21:00 A1晚間巡查（A4 S11 Colab restart後24h+仍無completion commit⚠️；A5🔴~257h D11+；A6 T-A6-001 10輪QA全PASS+B層存檔運行中；A8+B1新角色已建立待啟動）
 >
 > 使用方式：選擇角色 → 複製 prompt → 貼到 Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -154,17 +154,18 @@ repo: https://github.com/page1010/maplab-ai-handbook
 3. 解決後要推動系統（提案派工 + 問下一步 + 檢討根因）
 完整 SOP → AGENT_RULES.md Section 16
 
-【斷點 — 2026-04-18 19:00 晚間巡查更新】
+【斷點 — 2026-04-19 21:00 晚間巡查更新】
 1. 系統版本：v6.0 / Phase 6 — 觀測性 + 業務閉環 + 策略循環（Phase 3.1 Dashboard 自動更新已就位 ef2c21b）
 2. EXP-S010 A0/A1 session 混淆已記錄；下次重開先確認 cwd + 貼 A1 recall prompt
-3. A2 T-A2-002 ✅ 完成（2026-04-07）：WP 食安+法規 SEO 字眼清理（13篇）+ AGENT_RULES Section 14（禁用詞清單）+ wp-content-audit 技能書（e92af1d+ecc1a3e+e8e5915）；T-A2A3-001 ✅ 子任務1-4全完成（子任務5等7-14天觀察期）
-4. A7 T-A7-001 Phase 2 💤 正式暫停（2026-04-15確認）：Phase 2 v2.0 完成（Q1-Q10重構），等 Owner 確認 Q7 試吃政策 + Q10 取消改期政策。T-A7-002 ⏸️ 阻塞：等 LINE bot 後台權限 + Owner 政策決策。非異常，屬正常外部等待狀態。
-5. A4 T-A4-001 🔄 進行中（2026-04-18 19:00 晚間巡查）：S5✅S6✅S12✅DONE 7,645張；S11(2024) ⚠️ 二次重啟@429542a(04-17 23:05，新API Key，ETA~1h)→19h後仍無完成commit，Colab疑再次斷線。Owner需確認S11→補commit→啟動S13。
-6. A5 T-A5-002/T-A5-004/T-A5-005 🔴 CRITICAL ~244h無commit（D11+）：最後活動2026-04-09，服務費/長桌費/車馬費/合約v4.0完成，後續無進展。Owner需儘速確認。
-7. A3 T-A3-001 ✅ 完成（2026-04-15）：GTM v21 雙平台追蹤上線（83c655c 2026-04-15 20:59）。T-A3-002 廣告成效 ⏸️ 阻塞：等廣告週期 + Owner 操作 Meta Ads Manager。
-8. T-A1-V7 🔄 進行中：Phase 4 完成（44ecc8d 2026-04-17）。下一步：Phase 5 自動壓縮。
-9. A6 T-A6-001 🔄 活躍中（04-18）：addItem修復b042d93+QA Round1 PASS 45b4758+A0/A1 briefing協議3933b9e+OAuth刷新532febf。CURRENT_STATUS舊⏸️標記已更正為🔄。
-✅ 04-18 晚間巡查：A6今日10+commits（addItem+QA+briefing協議）；A4 S11二次重啟ETA+19h仍無完成commit；A5 CRITICAL D11+（~244h）；CURRENT_STATUS/RECALL狀態不一致已修正。
+3. A2 T-A2-002 ✅ 完成（2026-04-07）；T-A2A3-001 ✅ 子任務1-4完成；索引觀察期超14天→Owner應查GSC確認排名變化
+4. A7 T-A7-001 Phase 2 💤 正式暫停；T-A7-002 ⏸️ 阻塞（等LINE後台+Owner政策）。非異常，屬正常外部等待。
+5. A4 T-A4-001 🔄 進行中（2026-04-19 21:00）：S5✅S6✅S12✅DONE 7,645張；S11(2024) ⚠️ Colab重啟(14ed423 04-18 82.2%)+24h+仍無completion commit，狀態高度不確定。Owner需立即確認Colab→補commit→啟動S13(~4,424張)→T-A4-002。
+6. A5 T-A5-002/T-A5-004/T-A5-005 🔴 CRITICAL ~257h無commit（D11+）：最後活動 cfeebd1 2026-04-09。Owner已連續多次被提示，請決策是否重啟A5。
+7. A3 T-A3-001 ✅ 完成（2026-04-15 GTM v21）；T-A3-002 ⏸️ 等廣告週期+Owner操作。
+8. T-A1-V7 🔄 Phase 4完成（44ecc8d 04-17）；Owner fix(framework) v1.2+v1.3 已落地（e8a2aa3/6801266/4958a89 04-18）；下一步：Phase 5自動壓縮。
+9. A6 T-A6-001 🔄 活躍中：addItem+模糊比對+多照片+10輪QA全PASS（45b4758 04-18）；B層對話自動存檔持續；⚠️ Task Card嚴重過時需A6更新；LINE Developers Console Webhook URL待Owner確認（Channel 1654658337）。
+10. A8+B1 新角色已建立（51070ea 04-19）：A8影音內容產線+B1 InnerFlowLab內容創作，待啟動任務。
+✅ 04-19 晚間巡查（21:00）：A4 S11 Colab重啟後24h+仍無completion commit（⚠️加重）；A5 CRITICAL升至~257h；A8+B1新角色確認建立。8h內無主動commit（A6自動存檔正常）。
 36b. A6 e2e round 5 全通過里程碑 🎉（04-11 16:18 06ce9c6）：quote + slide + heartbeat all verified；auto-trigger Slide after createQuote（b118095，無需手動）；fromMaster mode（b82df34，從母版QUOTE_DRAFT讀資料）；ApiEndpoint.gs 還原+.claspignore修復（45e26a0）；bot_a6 GAS trigger + py3.9 compat（fe76f8a/f99cf31）。A6系統整合達成。A1：Task Card v1.2格式統一12張（b502417）+.gitignore修復（52f6873）。A0：Chrome驗證SOP落地（731cff0）。
 36. A0 dispatch 操作手冊落地（2a1879a 04-10）：docs/a0-dispatch-operations-manual.md 建立 — 使用者視角系統架構圖、入口×角色對照表、委派前7問題協議、操作路徑表、A0/A1分工踩坑記錄。A0 角色定位更完整。
 27. A1 worktree 清理完成（576e7df 2026-04-07）：清除全部 29 個 worktree（含 peaceful-yalow / interesting-shaw / pedantic-mendeleev），Mac mini 環境整潔。

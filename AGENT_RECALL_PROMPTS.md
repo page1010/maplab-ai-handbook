@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-04-17 22:00 A1晚間巡查（A4⚠️S11~57h無commit；A5🔴~215h無commit（D10+）；T-A1-V7 Phase 4完成；其他狀態同前）
+> 最後更新：2026-04-19 10:00 A1每日巡查（A6🔄addItem QA Round 1 PASS 04-18；A4⚠️S11 ETA+47h仍無completion；A5🔴~250h D11+；A2/A3索引14天Owner待查GSC；T-A6-001 Task Card 嚴重過時需A6更新）
 >
 > 使用方式：選擇角色 → 複製 prompt → 貼到 Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -21,9 +21,9 @@
 | A1 | 系統總管中心 | ✅ Claude Code 常駐 | Telegram bot + 終端機，直接下指令 |
 | A2 | 搜尋流量作戰部 | ✅ T-A2-001 完成，待新任務 | SEO / GA / 關鍵字 |
 | A3 | 社群與廣告成長部 | ✅ T-A3-001 完成（GTM v21 雙平台追蹤上線）；T-A3-002 ⏸️ 阻塞（等廣告週期+Owner操作）| Meta Ads / Social |
-| A4 | 影像資產整理部 | 🔄 進行中（S12 ✅ DONE 7,645張；S11 補跑 2163張執行中 de4744d 2026-04-15）| Photo Archive |
-| A5 | 報價與提案引擎部 | 🔴 CRITICAL T-A5-002/004/005 ~200h無commit（最後活動 2026-04-09）| Quotation Engine |
-| A6 | 業務快反應部隊 | ⏸️ T-A6-001 阻塞（等Owner在LINE填Webhook URL）| Sales Rapid Response |
+| A4 | 影像資產整理部 | 🔄 進行中（S12✅DONE；S11 補跑 429542a 04-17重啟ETA~1h→ETA+47h仍無completion commit）| Photo Archive |
+| A5 | 報價與提案引擎部 | 🔴 CRITICAL T-A5-002/004/005 ~250h無commit D11+（最後活動 cfeebd1 2026-04-09）| Quotation Engine |
+| A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（LINE webhook✅通、bot✅部署、addItem QA Round 1 PASS 45b4758 04-18）⚠️Task Card嚴重過時需更新 | Sales Rapid Response |
 | A7 | 客服與對話轉單部 | 💤 T-A7-001 正式暫停；T-A7-002 ⏸️ 阻塞（等LINE後台權限+Owner政策決策）| Smart Reply |
 | A8 | 多媒體影音製作部 | 🔲 新建，待啟動 | Video Production |
 
@@ -350,7 +350,7 @@ handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-
 
 ## A4｜影像資產整理部（Photo Archive / Asset Library）
 
-**狀態：🔄 進行中（S5✅/S6✅/S12✅DONE 7,645張；S11補跑⚠️ETA已過~57h無commit確認；S13待啟動）最後活動 de4744d 2026-04-15**
+**狀態：🔄 進行中（S5✅/S6✅/S12✅DONE 7,645張；S11補跑⚠️ 429542a 04-17重啟ETA~1h→現已ETA+47h仍無completion commit（連續3次巡查標記）；S13待啟動）**
 
 ```
 你是 MAPLAB A4 影像資產整理部。
@@ -366,14 +366,14 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. Chrome tab 環境 → 自行開啟需要的網頁分頁，用截圖讀取
 
-【斷點 — 2026-04-17 22:00 晚間巡查更新】
+【斷點 — 2026-04-19 10:00 A1巡查更新】
 T-A4-001 Gemini 照片分類：
   - S1-S4 ✅ 完成
   - S5(2022) ✅ DONE 8,549張（日常5,243/外燴1,221/旅遊2,073）
   - S5.5 GPS ✅ 決策 no_gps（Owner指示跳過）
   - S6(2023) ✅ DONE 8,505張（2026-04-01）
-  - S11(2024) ⚠️ 補跑啟動 2026-04-15 09:04，TODO=2,163張，ETA~4.2h（→預計13:14完成）
-    → ETA 已過 ~57h 仍無新 commit 確認完成，⚠️ 狀態未知（可能Colab完成但未存檔，或斷線）
+  - S11(2024) ⚠️ 429542a 2026-04-17 新 API Key 重啟，413張，ETA~1h
+    → 現已 ETA+47h（連續3次巡查標記）仍無 completion commit，⚠️ 狀態未知（Colab完成但未存檔，或再次斷線）
   - S12(2025) ✅ DONE 7,645張（de4744d 2026-04-15 08:58）
   - S13(2026) 🔲 等 S11 確認完成後啟動（~4,424 張）
   - ASSET_LOG 總計：29,864 資料行（2022:8,549 / 2023:8,505 / 2024:10,050 / 2025:7,645）
@@ -408,7 +408,7 @@ projects/maplab-pipeline.md → handoff/handoff-to-A4.md → skills/superpowers-
 
 ## A5｜報價與提案引擎部（Quotation Engine）
 
-**狀態：🔴 CRITICAL — T-A5-002/T-A5-004/T-A5-005 全部 ~215h 無 commit（最後活動 cfeebd1 2026-04-09，D10+）。服務費/車馬費/長桌費/合約v4.0 已完成，後續任務無進展。**
+**狀態：🔴 CRITICAL — T-A5-002/T-A5-004/T-A5-005 全部 ~250h 無 commit（最後活動 cfeebd1 2026-04-09，D11+）。服務費/車馬費/長桌費/合約v4.0 已完成，後續任務無進展。Owner 決策待跟進。**
 
 ```
 你是 MAPLAB A5 報價與提案引擎部。
@@ -494,13 +494,14 @@ repo: https://github.com/page1010/maplab-ai-handbook
 4. 進件建立 — 在 SALES_INTAKE 自動建一筆案件（case_id = CASE-YYYYMMDD-NNN）
 5. 查報價 — 「查XXX的報價」→ 找 QUOTE_WORKBENCH
 
-【斷點 — 2026-04-11 晚間巡查更新】
+【斷點 — 2026-04-19 10:00 A1巡查更新】
 T-A6-001 進行中：LINE webhook ✅ 通（Apps Script doPost + LockService 去重）；bot_a6 ✅ 全部署（launchd 開機自啟 b3dacb8，.env security fix a20e268）；B層對話自動存檔運行中；update_a6_token.sh 已建立（434b490）。
 e2e round 5 全通過里程碑 🎉（04-11 06ce9c6）：quote + slide + heartbeat all verified；auto-trigger Slide after createQuote（b118095）；fromMaster mode（b82df34）。
-04-11 晚間重大進展：(1) generateProposal_v2 lang-switch+zh titles+overflow fix+Code.gs +3欄（c6f2734，GAS v4 已部署）；(2) English Slide button 新增（9b45eab）；(3) bot_a6 GAS失敗明確錯誤訊息取代靜默fallback（37a88a0，防AI幻覺填補）；(4) QA場景測試+抽考開始（f3cd73b）；(5) A0判斷框架10原則嵌入RECALL（156ed74）。
+04-17 進展：H1 拆分三層權限（新增品項開放/35af21a）；P0 技能修正（非關鍵欄位不阻擋報價+車馬費公式統一+展覽館skeleton/c576578）；recall_compact 根因修復（修cwd+fallback/62f557e）；GAS 備援觸發邏輯強化（7d06b78）。
+04-18 進展：addItem action 分流修復（bot_a6.py 不再走 createQuote 路徑/b042d93）；addItem JSON 直接輸出指示強化（2ae0a40）；QA 10輪測試 Round 1 addItem PASS 🎉（45b4758）；B層對話自動存檔持續運行（多筆commits）。
 ⚠️ GAS 鐵律（780d43c）：禁止推測 endpoint/部署狀態 — 未明確確認=失敗，不可推測已部署。
-訓練框架 Steps 1-4 完成（操作手冊v1.0 + QA範例庫v0.5 + 安全框架v1.0 + RECALL重寫）；Owner五項硬規則落地。
-下一步：QA 抽考繼續驗收 → 結尾頁/無圖垂直置中 → T-A6-001 結案。
+⚠️ Task Card T-A6-001.md 嚴重過時（仍顯示04-01「等填Webhook URL」斷點）— A6 session 開始時必須先更新 Task Card 至 04-18 最新狀態。
+下一步：QA 10輪驗收繼續（Round 2+）→ 結尾頁/無圖垂直置中 → Task Card 補寫 → T-A6-001 結案。
 
 【必讀】
 1. projects/line-quote-assistant.md ← 使用者需求 v1.0（Owner 確認），A6/A7 架構聖經

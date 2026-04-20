@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-04-19 21:00（A1 晚間巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-04-20 09:00（A1 每日巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -51,14 +51,15 @@
 | A1 | T-A1-V6-P3: 前置 T-A1-V6-P2 需先完成 | 見 Task Card |
 | A2 | T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台 | 見 Task Card |
 | A2 | T-A2-003-weekly-wp-audit: 等 Owner 建立排程 | 見 Task Card |
-| A2/A3 | ⚠️ A1巡查 2026-04-19 10:00：T-A2A3-001/001-B 索引觀察期已達14天（04-05起），已超過預期7-14天驗證窗口。Owner 應登入 GSC 確認排名變化並回報 | Owner 查 GSC → A2 更新 Task Card |
+| A2/A3 | ⚠️ A1巡查 2026-04-20 09:00：T-A2A3-001/001-B 索引觀察期已達 **15 天**（04-05起），持續超過 7-14 天驗證窗口。Owner 尚未查 GSC，排名變化未確認 | Owner 查 GSC（逾期）→ A2 更新 Task Card |
 | A2/A3 | T-A2A3-001-B: 等 Google 重新索引，預計 04-11 後可驗證 | 見 Task Card |
 | A2/A3 | T-A2A3-001: 等 Google 重新索引，預計 04-11 後可驗證 | 見 Task Card |
 | A3 | T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） | 見 Task Card |
 | A4 | T-A4-002: 前置 T-A4-001 需先完成 | 見 Task Card |
 | A4 | ⚠️ A1巡查 2026-04-19 10:00：T-A4-001 S11 14ed423(04-18) 存檔82.2%+Colab重啟，仍在執行中，待completion commit | Owner確認S11最新Colab狀態→補completion commit→啟動S13(~4,424張) |
 | A4 | ⚠️ A1巡查 2026-04-19 21:00：S11 晚間確認仍無 completion commit（Colab restart 後超過 24h），Owner 需再次確認 Colab 狀態 | Owner 確認 Colab |
-| A5 | ⚠️ A1巡查 2026-04-19 21:00：T-A5-002/004/005 CRITICAL D11+ ~257h無commit（last: cfeebd1 2026-04-09）。Owner 需決定是否重啟 A5 | Owner 決策 |
+| A4 | ⚠️ A1巡查 2026-04-20 09:00：S11 Colab restart（14ed423 04-18）後已超過 **48h** 仍無 completion commit。高度懷疑 Colab 已崩潰或卡住。Owner 需立即確認：若已崩潰 → 重跑 S11 最後批次 → completion commit → 啟動 S13（~4,424張） | Owner 緊急確認 Colab（高優先）|
+| A5 | ⚠️ A1巡查 2026-04-20 09:00：T-A5-002/004/005 CRITICAL D12+ ~270h無commit（last: cfeebd1 2026-04-09）。連續 2 次巡查 Owner 決策無回應，系統風險持續累積 | Owner 決策（緊急，D12+）|
 | A4 | ⚠️ A1巡查 2026-04-19 14:00：T-A4-002 Task Card（d0b3238）誤標前置 T-A4-001 為 ✅ 完成，S11 實際仍執行中（82.2%）。Phase 1 Colab 解壓不得在 S11 completion 前啟動。A4 需更正 Task Card 前置條件。 | A4 更正 Task Card |
 | 全系統 | ℹ️ A1巡查 2026-04-19 14:00：Owner 今日提交 fix(framework) v1.2+v1.3 共 3 commits（e8a2aa3/6801266/4958a89）— 規則衝突優先級 + 回應校正標準。各 Agent 下次 session 開始時注意 AGENT_RULES.md 是否有更新。 | 各 Agent 留意 |
 | A5 | T-A5-002: 等 Owner 確認（品項名稱改法、重複品項、I 欄用途） | 見 Task Card |

@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-04-20 09:00 A1每日巡查（A4 S11 Colab restart後**48h+**仍無completion commit🔴升級；A5🔴~270h D12+；A2/A3 GSC觀察期第15天逾期；A6 B層存檔持續運行）
+> 最後更新：2026-04-20 14:30 A1午後巡查（A4 S11仍無completion commit；A4新活動454e7dc Drive腳本但S11狀態不明；⚠️ GCP Gemini $3K/月帳單 財務風險；A5🔴~276h D12+；A7斷點已修正23天過時）
 >
 > 使用方式：選擇角色 → 複製 prompt → 貼到 Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -154,18 +154,18 @@ repo: https://github.com/page1010/maplab-ai-handbook
 3. 解決後要推動系統（提案派工 + 問下一步 + 檢討根因）
 完整 SOP → AGENT_RULES.md Section 16
 
-【斷點 — 2026-04-20 09:00 每日巡查更新】
+【斷點 — 2026-04-20 14:30 午後巡查更新】
 1. 系統版本：v6.0 / Phase 6 — 觀測性 + 業務閉環 + 策略循環（Phase 3.1 Dashboard 自動更新已就位 ef2c21b）
 2. EXP-S010 A0/A1 session 混淆已記錄；下次重開先確認 cwd + 貼 A1 recall prompt
 3. A2 T-A2-002 ✅ 完成（2026-04-07）；T-A2A3-001 ✅ 子任務1-4完成；索引觀察期已達 **15 天**（04-05起，逾期）→ Owner 應立即查 GSC 確認排名變化
 4. A7 T-A7-001 Phase 2 💤 正式暫停；T-A7-002 ⏸️ 阻塞（等LINE後台+Owner政策）。非異常，屬正常外部等待。
-5. A4 T-A4-001 🔴 高危（2026-04-20 09:00）：S5✅S6✅S12✅DONE 7,645張；S11(2024) 🔴 Colab重啟(14ed423 04-18 82.2%)+**48h+**仍無completion commit，高度懷疑Colab已崩潰。Owner需立即確認Colab→若崩潰重跑最後批次→completion commit→啟動S13(~4,424張)→T-A4-002。
-6. A5 T-A5-002/T-A5-004/T-A5-005 🔴 CRITICAL ~270h無commit（**D12+**）：最後活動 cfeebd1 2026-04-09。連續多次巡查Owner無決策回應，請緊急決定是否重啟A5。
+5. A4 T-A4-001 🔴 高危（2026-04-20 14:30）：S5✅S6✅S12✅DONE 7,645張；S11(2024) 🔴 Colab重啟(14ed423 04-18 82.2%)+**54h+**仍無completion commit；⚠️ 今日新活動 454e7dc 12:24（Drive資料夾腳本）與S11無關；⚠️ GCP Gemini API 帳單 $3K/月（658120d 11:02，事件2026-04-18）財務風險。Owner需立即處理：① 確認S11 Colab狀態；② 確認並限制GCP帳單上限；→ completion commit → 啟動S13(~4,424張) → T-A4-002。
+6. A5 T-A5-002/T-A5-004/T-A5-005 🔴 CRITICAL ~276h無commit（**D12+**）：最後活動 cfeebd1 2026-04-09。午後巡查確認無新活動，連續多次巡查Owner無決策回應，請緊急決定是否重啟A5。
 7. A3 T-A3-001 ✅ 完成（2026-04-15 GTM v21）；T-A3-002 ⏸️ 等廣告週期+Owner操作。
 8. T-A1-V7 🔄 Phase 4完成（44ecc8d 04-17）；Owner fix(framework) v1.2+v1.3 已落地（e8a2aa3/6801266/4958a89 04-18）；下一步：Phase 5自動壓縮。
 9. A6 T-A6-001 🔄 活躍中：addItem+模糊比對+多照片+10輪QA全PASS（45b4758 04-18）；B層對話自動存檔持續；⚠️ Task Card嚴重過時需A6更新；LINE Developers Console Webhook URL待Owner確認（Channel 1654658337）。
 10. A8+B1 新角色已建立（51070ea 04-19）：A8影音內容產線+B1 InnerFlowLab內容創作，待啟動任務。
-✅ 04-20 每日巡查（09:00）：24h內無任何業務Agent commit；A4 S11 **48h+升級🔴**；A5 CRITICAL升至~270h D12+；A2/A3 GSC第15天逾期。all clear for A3/A6/A7/A8/B1。
+✅ 04-20 午後巡查（14:30）：8h內新commits：658120d GCP帳單⚠️財務風險，454e7dc A4 Drive腳本；A4 S11仍待Owner確認（54h+）；A5~276h D12+無新活動；A7 RECALL斷點已修正（23天過時→已更新）；GCP帳單$3K風險新增Blocker。all clear for A2/A3/A6/A7/A8/B1。
 36b. A6 e2e round 5 全通過里程碑 🎉（04-11 16:18 06ce9c6）：quote + slide + heartbeat all verified；auto-trigger Slide after createQuote（b118095，無需手動）；fromMaster mode（b82df34，從母版QUOTE_DRAFT讀資料）；ApiEndpoint.gs 還原+.claspignore修復（45e26a0）；bot_a6 GAS trigger + py3.9 compat（fe76f8a/f99cf31）。A6系統整合達成。A1：Task Card v1.2格式統一12張（b502417）+.gitignore修復（52f6873）。A0：Chrome驗證SOP落地（731cff0）。
 36. A0 dispatch 操作手冊落地（2a1879a 04-10）：docs/a0-dispatch-operations-manual.md 建立 — 使用者視角系統架構圖、入口×角色對照表、委派前7問題協議、操作路徑表、A0/A1分工踩坑記錄。A0 角色定位更完整。
 27. A1 worktree 清理完成（576e7df 2026-04-07）：清除全部 29 個 worktree（含 peaceful-yalow / interesting-shaw / pedantic-mendeleev），Mac mini 環境整潔。
@@ -548,11 +548,13 @@ repo: https://github.com/page1010/maplab-ai-handbook
 - 把對話往報價與成交推進
 - 應對情境：詢價、日期確認、活動形式建議、菜單推薦、場地份量、包材客製、急件判斷
 
-【斷點 — 2026-03-28 晚間巡查更新】
+【斷點 — 2026-04-20 14:30 A1午後巡查更新（修正23天過時斷點）】
 T-A7-001 AI 回覆系統：
-  - Phase 1 ✅ 完成（commit 679cda6 + b53a1cc）：FAQ模板庫 + 補問流程 + 客戶分類標籤 + SECTION 8 客戶對話流程圖
-  - Phase 2 🔄 進行中：20筆CSV驗證 + A5/A6比對 + Q1-Q10重構 v2.0（aea3094）
-T-A7-002 80/20 任務清單：🔄 建立完成（10大任務+執行路線圖，f239b40），待執行
+  - Phase 1 ✅ 完成（679cda6 + b53a1cc）：FAQ模板庫 + 補問流程 + 客戶分類標籤
+  - Phase 2 v2.0 ✅ 完成（aea3094）：Q1-Q10重構，真實CSV驅動
+  - 目前狀態：💤 正式暫停（等 Owner 確認 Q7 試吃政策 + Q10 取消/改期政策 + A5 外送費級距）
+T-A7-002 80/20 任務清單：⏸️ 阻塞（任務1/2/3 需 LINE bot 後台權限；任務9 需 Owner 政策決策；任務5/8 需 TimeTree 權限）
+⚠️ A7 目前無進行中任務，屬正常外部等待，非異常。
 
 【必讀】
 projects/ai-reply-system.md → skills/superpowers-guide.md

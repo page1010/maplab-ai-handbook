@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-04-20 14:30 A1午後巡查（A4 S11仍無completion commit；A4新活動454e7dc Drive腳本但S11狀態不明；⚠️ GCP Gemini $3K/月帳單 財務風險；A5🔴~276h D12+；A7斷點已修正23天過時）
+> 最後更新：2026-04-24 09:00 A1每日巡查（全系統96h靜止🔴；A4 S11 144h+ Colab確認崩潰🔴CRITICAL；A5🔴~372h D15+ 連續5巡查無Owner回應；GCP帳單6天未處理；A2/A3 GSC 19天逾期）
 >
 > 使用方式：選擇角色 → 複製 prompt → 貼到 Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -21,8 +21,8 @@
 | A1 | 系統總管中心 | ✅ Claude Code 常駐 | Telegram bot + 終端機，直接下指令 |
 | A2 | 搜尋流量作戰部 | ✅ T-A2-001 完成，待新任務 | SEO / GA / 關鍵字 |
 | A3 | 社群與廣告成長部 | ✅ T-A3-001 完成（GTM v21 雙平台追蹤上線）；T-A3-002 ⏸️ 阻塞（等廣告週期+Owner操作）| Meta Ads / Social |
-| A4 | 影像資產整理部 | 🔴 進行中但高危（S12✅DONE；S11 補跑 14ed423 04-18 Colab重啟→**48h+仍無completion commit**）| Photo Archive |
-| A5 | 報價與提案引擎部 | 🔴 CRITICAL T-A5-002/004/005 ~270h無commit **D12+**（最後活動 cfeebd1 2026-04-09）| Quotation Engine |
+| A4 | 影像資產整理部 | 🔴 CRITICAL（S12✅DONE；S11 補跑 14ed423 04-18 Colab重啟→**144h/6天無completion commit，Colab幾乎確認崩潰**）| Photo Archive |
+| A5 | 報價與提案引擎部 | 🔴 CRITICAL T-A5-002/004/005 ~372h無commit **D15+**（最後活動 cfeebd1 2026-04-09；連續5巡查Owner無回應）| Quotation Engine |
 | A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（LINE webhook✅通、bot✅部署、addItem QA Round 1 PASS 45b4758 04-18）⚠️Task Card嚴重過時需更新 | Sales Rapid Response |
 | A7 | 客服與對話轉單部 | 💤 T-A7-001 正式暫停；T-A7-002 ⏸️ 阻塞（等LINE後台權限+Owner政策決策）| Smart Reply |
 | A8 | 影音內容產線 | 🔲 新建，待啟動 | Content Repurposing Pipeline |

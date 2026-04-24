@@ -2020,3 +2020,410 @@
 [2026-04-19 09:09:34] 已 merge（stale）：1 個
 [2026-04-19 09:09:34] 估計釋放 ~32MB 磁碟空間
 [2026-04-19 09:09:34] === 完成 ===
+[2026-04-19 09:39:34] === Worktree 健康檢查 開始 ===
+[2026-04-19 09:39:34] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-19 09:39:34] 模式: LIVE | all-clean | safe
+[2026-04-19 09:39:34] git worktree prune 完成
+[2026-04-19 09:39:34] 
+[2026-04-19 09:39:34] --- 目前所有 worktree ---
+[2026-04-19 09:39:34]   /Users/pagemacmini/maplab-ai-handbook                                              51070ea [main]
+[2026-04-19 09:39:34]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/amazing-roentgen-995183    dee389a [claude/amazing-roentgen-995183]
+[2026-04-19 09:39:34]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/dazzling-engelbart-367e02  2beac99 [claude/dazzling-engelbart-367e02]
+[2026-04-19 09:39:34] 
+[2026-04-19 09:39:34] 📋 amazing-roentgen-995183 (branch: claude/amazing-roentgen-995183) — 未 merge
+[2026-04-19 09:39:34]    ⚠️  有未提交變更
+[2026-04-19 09:39:34]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 09:39:34] 📋 dazzling-engelbart-367e02 (branch: claude/dazzling-engelbart-367e02) — 未 merge
+[2026-04-19 09:39:34]    ⚠️  有未提交變更
+[2026-04-19 09:39:34]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 09:39:34] 🔀 great-engelbart-8429c2 (branch: main) — 已 merge 到 main
+[2026-04-19 09:39:34]    ⚠️  有未提交變更
+[2026-04-19 09:39:34]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 09:39:34] 
+[2026-04-19 09:39:34] === 結果摘要 ===
+[2026-04-19 09:39:34] 掃描 worktree：3 個
+[2026-04-19 09:39:34] 已清理：0 個
+[2026-04-19 09:39:34] 已跳過：3 個
+[2026-04-19 09:39:34] 已 merge（stale）：1 個
+[2026-04-19 09:39:34] === 完成 ===
+[2026-04-19 10:09:34] === Worktree 健康檢查 開始 ===
+[2026-04-19 10:09:34] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-19 10:09:34] 模式: LIVE | all-clean | safe
+[2026-04-19 10:09:34] git worktree prune 完成
+[2026-04-19 10:09:34] 
+[2026-04-19 10:09:34] --- 目前所有 worktree ---
+[2026-04-19 10:09:34]   /Users/pagemacmini/maplab-ai-handbook                                              51070ea [main]
+[2026-04-19 10:09:34]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/amazing-roentgen-995183    dee389a [claude/amazing-roentgen-995183]
+[2026-04-19 10:09:34]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/dazzling-engelbart-367e02  2beac99 [claude/dazzling-engelbart-367e02]
+[2026-04-19 10:09:34] 
+[2026-04-19 10:09:34] 📋 amazing-roentgen-995183 (branch: claude/amazing-roentgen-995183) — 未 merge
+[2026-04-19 10:09:34]    ⚠️  有未提交變更
+[2026-04-19 10:09:34]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 10:09:34] 📋 dazzling-engelbart-367e02 (branch: claude/dazzling-engelbart-367e02) — 未 merge
+[2026-04-19 10:09:34]    ⚠️  有未提交變更
+[2026-04-19 10:09:34]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 10:09:34] 🔀 great-engelbart-8429c2 (branch: main) — 已 merge 到 main
+[2026-04-19 10:09:34]    ⚠️  有未提交變更
+[2026-04-19 10:09:34]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 10:09:34] 
+[2026-04-19 10:09:34] === 結果摘要 ===
+[2026-04-19 10:09:34] 掃描 worktree：3 個
+[2026-04-19 10:09:34] 已清理：0 個
+[2026-04-19 10:09:34] 已跳過：3 個
+[2026-04-19 10:09:34] 已 merge（stale）：1 個
+[2026-04-19 10:09:34] === 完成 ===
+[2026-04-19 10:39:34] === Worktree 健康檢查 開始 ===
+[2026-04-19 10:39:34] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-19 10:39:34] 模式: LIVE | all-clean | safe
+[2026-04-19 10:39:34] git worktree prune 完成
+[2026-04-19 10:39:34] 
+[2026-04-19 10:39:34] --- 目前所有 worktree ---
+[2026-04-19 10:39:34]   /Users/pagemacmini/maplab-ai-handbook                                              51070ea [main]
+[2026-04-19 10:39:34]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/amazing-roentgen-995183    dee389a [claude/amazing-roentgen-995183]
+[2026-04-19 10:39:34]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/dazzling-engelbart-367e02  2beac99 [claude/dazzling-engelbart-367e02]
+[2026-04-19 10:39:34] 
+[2026-04-19 10:39:35] 📋 amazing-roentgen-995183 (branch: claude/amazing-roentgen-995183) — 未 merge
+[2026-04-19 10:39:35]    ⚠️  有未提交變更
+[2026-04-19 10:39:35]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 10:39:35] 📋 dazzling-engelbart-367e02 (branch: claude/dazzling-engelbart-367e02) — 未 merge
+[2026-04-19 10:39:35]    ⚠️  有未提交變更
+[2026-04-19 10:39:35]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 10:39:35] 🔀 great-engelbart-8429c2 (branch: main) — 已 merge 到 main
+[2026-04-19 10:39:35]    ⚠️  有未提交變更
+[2026-04-19 10:39:35]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 10:39:35] 
+[2026-04-19 10:39:35] === 結果摘要 ===
+[2026-04-19 10:39:35] 掃描 worktree：3 個
+[2026-04-19 10:39:35] 已清理：0 個
+[2026-04-19 10:39:35] 已跳過：3 個
+[2026-04-19 10:39:35] 已 merge（stale）：1 個
+[2026-04-19 10:39:35] === 完成 ===
+[2026-04-19 11:09:35] === Worktree 健康檢查 開始 ===
+[2026-04-19 11:09:35] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-19 11:09:35] 模式: LIVE | all-clean | safe
+[2026-04-19 11:09:35] git worktree prune 完成
+[2026-04-19 11:09:35] 
+[2026-04-19 11:09:35] --- 目前所有 worktree ---
+[2026-04-19 11:09:35]   /Users/pagemacmini/maplab-ai-handbook                                              51070ea [main]
+[2026-04-19 11:09:35]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/amazing-roentgen-995183    dee389a [claude/amazing-roentgen-995183]
+[2026-04-19 11:09:35]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/dazzling-engelbart-367e02  2beac99 [claude/dazzling-engelbart-367e02]
+[2026-04-19 11:09:35]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/stupefied-banzai-c58b36    3693054 [claude/stupefied-banzai-c58b36]
+[2026-04-19 11:09:35] 
+[2026-04-19 11:09:35] 📋 amazing-roentgen-995183 (branch: claude/amazing-roentgen-995183) — 未 merge
+[2026-04-19 11:09:35]    ⚠️  有未提交變更
+[2026-04-19 11:09:35]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 11:09:35] 📋 dazzling-engelbart-367e02 (branch: claude/dazzling-engelbart-367e02) — 未 merge
+[2026-04-19 11:09:35]    ⚠️  有未提交變更
+[2026-04-19 11:09:35]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 11:09:35] 🔀 great-engelbart-8429c2 (branch: main) — 已 merge 到 main
+[2026-04-19 11:09:35]    ⚠️  有未提交變更
+[2026-04-19 11:09:35]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 11:09:35] 📋 stupefied-banzai-c58b36 (branch: claude/stupefied-banzai-c58b36) — 未 merge
+[2026-04-19 11:09:35]    🗑️  清理中...
+[2026-04-19 11:09:35]    ✅ worktree 已移除
+[2026-04-19 11:09:35]    🌿 本地 branch claude/stupefied-banzai-c58b36 已刪除
+[2026-04-19 11:09:35] 
+[2026-04-19 11:09:35] === 結果摘要 ===
+[2026-04-19 11:09:35] 掃描 worktree：4 個
+[2026-04-19 11:09:35] 已清理：1 個
+[2026-04-19 11:09:35] 已跳過：3 個
+[2026-04-19 11:09:35] 已 merge（stale）：1 個
+[2026-04-19 11:09:35] 估計釋放 ~16MB 磁碟空間
+[2026-04-19 11:09:35] === 完成 ===
+[2026-04-19 11:39:35] === Worktree 健康檢查 開始 ===
+[2026-04-19 11:39:35] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-19 11:39:35] 模式: LIVE | all-clean | safe
+[2026-04-19 11:39:35] git worktree prune 完成
+[2026-04-19 11:39:35] 
+[2026-04-19 11:39:35] --- 目前所有 worktree ---
+[2026-04-19 11:39:35]   /Users/pagemacmini/maplab-ai-handbook                                              51070ea [main]
+[2026-04-19 11:39:35]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/amazing-roentgen-995183    dee389a [claude/amazing-roentgen-995183]
+[2026-04-19 11:39:35]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/dazzling-engelbart-367e02  2beac99 [claude/dazzling-engelbart-367e02]
+[2026-04-19 11:39:35] 
+[2026-04-19 11:39:35] 📋 amazing-roentgen-995183 (branch: claude/amazing-roentgen-995183) — 未 merge
+[2026-04-19 11:39:35]    ⚠️  有未提交變更
+[2026-04-19 11:39:35]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 11:39:35] 📋 dazzling-engelbart-367e02 (branch: claude/dazzling-engelbart-367e02) — 未 merge
+[2026-04-19 11:39:35]    ⚠️  有未提交變更
+[2026-04-19 11:39:35]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 11:39:35] 🔀 great-engelbart-8429c2 (branch: main) — 已 merge 到 main
+[2026-04-19 11:39:35]    ⚠️  有未提交變更
+[2026-04-19 11:39:35]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 11:39:35] 
+[2026-04-19 11:39:35] === 結果摘要 ===
+[2026-04-19 11:39:36] 掃描 worktree：3 個
+[2026-04-19 11:39:36] 已清理：0 個
+[2026-04-19 11:39:36] 已跳過：3 個
+[2026-04-19 11:39:36] 已 merge（stale）：1 個
+[2026-04-19 11:39:36] === 完成 ===
+[2026-04-19 12:09:36] === Worktree 健康檢查 開始 ===
+[2026-04-19 12:09:36] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-19 12:09:36] 模式: LIVE | all-clean | safe
+[2026-04-19 12:09:36] git worktree prune 完成
+[2026-04-19 12:09:36] 
+[2026-04-19 12:09:36] --- 目前所有 worktree ---
+[2026-04-19 12:09:36]   /Users/pagemacmini/maplab-ai-handbook                                              51070ea [main]
+[2026-04-19 12:09:36]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/amazing-roentgen-995183    dee389a [claude/amazing-roentgen-995183]
+[2026-04-19 12:09:36]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/dazzling-engelbart-367e02  2beac99 [claude/dazzling-engelbart-367e02]
+[2026-04-19 12:09:36] 
+[2026-04-19 12:09:36] 📋 amazing-roentgen-995183 (branch: claude/amazing-roentgen-995183) — 未 merge
+[2026-04-19 12:09:36]    ⚠️  有未提交變更
+[2026-04-19 12:09:36]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 12:09:36] 📋 dazzling-engelbart-367e02 (branch: claude/dazzling-engelbart-367e02) — 未 merge
+[2026-04-19 12:09:36]    ⚠️  有未提交變更
+[2026-04-19 12:09:36]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 12:09:36] 🔀 great-engelbart-8429c2 (branch: main) — 已 merge 到 main
+[2026-04-19 12:09:36]    ⚠️  有未提交變更
+[2026-04-19 12:09:36]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 12:09:36] 
+[2026-04-19 12:09:36] === 結果摘要 ===
+[2026-04-19 12:09:36] 掃描 worktree：3 個
+[2026-04-19 12:09:36] 已清理：0 個
+[2026-04-19 12:09:36] 已跳過：3 個
+[2026-04-19 12:09:36] 已 merge（stale）：1 個
+[2026-04-19 12:09:36] === 完成 ===
+[2026-04-19 12:39:36] === Worktree 健康檢查 開始 ===
+[2026-04-19 12:39:36] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-19 12:39:36] 模式: LIVE | all-clean | safe
+[2026-04-19 12:39:36] git worktree prune 完成
+[2026-04-19 12:39:36] 
+[2026-04-19 12:39:36] --- 目前所有 worktree ---
+[2026-04-19 12:39:36]   /Users/pagemacmini/maplab-ai-handbook                                              4958a89 [main]
+[2026-04-19 12:39:36]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/amazing-roentgen-995183    dee389a [claude/amazing-roentgen-995183]
+[2026-04-19 12:39:36]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/bold-goodall-e8711d        6801266 [claude/bold-goodall-e8711d]
+[2026-04-19 12:39:36]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/dazzling-engelbart-367e02  2beac99 [claude/dazzling-engelbart-367e02]
+[2026-04-19 12:39:36]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/silly-turing-45b3c4        e8a2aa3 [claude/silly-turing-45b3c4]
+[2026-04-19 12:39:36] 
+[2026-04-19 12:39:36] 📋 amazing-roentgen-995183 (branch: claude/amazing-roentgen-995183) — 未 merge
+[2026-04-19 12:39:36]    ⚠️  有未提交變更
+[2026-04-19 12:39:36]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 12:39:36] 📋 bold-goodall-e8711d (branch: claude/bold-goodall-e8711d) — 未 merge
+[2026-04-19 12:39:36]    🗑️  清理中...
+[2026-04-19 12:39:36]    ✅ worktree 已移除
+[2026-04-19 12:39:36]    🌿 本地 branch claude/bold-goodall-e8711d 已刪除
+[2026-04-19 12:39:36] 📋 dazzling-engelbart-367e02 (branch: claude/dazzling-engelbart-367e02) — 未 merge
+[2026-04-19 12:39:36]    ⚠️  有未提交變更
+[2026-04-19 12:39:36]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 12:39:36] 🔀 great-engelbart-8429c2 (branch: main) — 已 merge 到 main
+[2026-04-19 12:39:36]    ⚠️  有未提交變更
+[2026-04-19 12:39:36]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 12:39:36] 📋 silly-turing-45b3c4 (branch: claude/silly-turing-45b3c4) — 未 merge
+[2026-04-19 12:39:36]    🗑️  清理中...
+[2026-04-19 12:39:36]    ✅ worktree 已移除
+[2026-04-19 12:39:36]    🌿 本地 branch claude/silly-turing-45b3c4 已刪除
+[2026-04-19 12:39:36] 
+[2026-04-19 12:39:36] === 結果摘要 ===
+[2026-04-19 12:39:36] 掃描 worktree：5 個
+[2026-04-19 12:39:36] 已清理：2 個
+[2026-04-19 12:39:36] 已跳過：3 個
+[2026-04-19 12:39:36] 已 merge（stale）：1 個
+[2026-04-19 12:39:36] 估計釋放 ~32MB 磁碟空間
+[2026-04-19 12:39:36] === 完成 ===
+[2026-04-19 13:09:36] === Worktree 健康檢查 開始 ===
+[2026-04-19 13:09:36] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-19 13:09:36] 模式: LIVE | all-clean | safe
+[2026-04-19 13:09:36] git worktree prune 完成
+[2026-04-19 13:09:37] 
+[2026-04-19 13:09:37] --- 目前所有 worktree ---
+[2026-04-19 13:09:37]   /Users/pagemacmini/maplab-ai-handbook                                              4958a89 [main]
+[2026-04-19 13:09:37]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/amazing-roentgen-995183    dee389a [claude/amazing-roentgen-995183]
+[2026-04-19 13:09:37]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/dazzling-engelbart-367e02  2beac99 [claude/dazzling-engelbart-367e02]
+[2026-04-19 13:09:37] 
+[2026-04-19 13:09:37] 📋 amazing-roentgen-995183 (branch: claude/amazing-roentgen-995183) — 未 merge
+[2026-04-19 13:09:37]    ⚠️  有未提交變更
+[2026-04-19 13:09:37]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 13:09:37] 📋 dazzling-engelbart-367e02 (branch: claude/dazzling-engelbart-367e02) — 未 merge
+[2026-04-19 13:09:37]    ⚠️  有未提交變更
+[2026-04-19 13:09:37]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 13:09:37] 🔀 great-engelbart-8429c2 (branch: main) — 已 merge 到 main
+[2026-04-19 13:09:37]    ⚠️  有未提交變更
+[2026-04-19 13:09:37]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 13:09:37] 
+[2026-04-19 13:09:37] === 結果摘要 ===
+[2026-04-19 13:09:37] 掃描 worktree：3 個
+[2026-04-19 13:09:37] 已清理：0 個
+[2026-04-19 13:09:37] 已跳過：3 個
+[2026-04-19 13:09:37] 已 merge（stale）：1 個
+[2026-04-19 13:09:37] === 完成 ===
+[2026-04-19 13:39:37] === Worktree 健康檢查 開始 ===
+[2026-04-19 13:39:37] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-19 13:39:37] 模式: LIVE | all-clean | safe
+[2026-04-19 13:39:37] git worktree prune 完成
+[2026-04-19 13:39:37] 
+[2026-04-19 13:39:37] --- 目前所有 worktree ---
+[2026-04-19 13:39:37]   /Users/pagemacmini/maplab-ai-handbook                                              4958a89 [main]
+[2026-04-19 13:39:37]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/amazing-roentgen-995183    dee389a [claude/amazing-roentgen-995183]
+[2026-04-19 13:39:37]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/dazzling-engelbart-367e02  2beac99 [claude/dazzling-engelbart-367e02]
+[2026-04-19 13:39:37] 
+[2026-04-19 13:39:37] 📋 amazing-roentgen-995183 (branch: claude/amazing-roentgen-995183) — 未 merge
+[2026-04-19 13:39:37]    ⚠️  有未提交變更
+[2026-04-19 13:39:37]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 13:39:37] 📋 dazzling-engelbart-367e02 (branch: claude/dazzling-engelbart-367e02) — 未 merge
+[2026-04-19 13:39:37]    ⚠️  有未提交變更
+[2026-04-19 13:39:37]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 13:39:37] 🔀 great-engelbart-8429c2 (branch: main) — 已 merge 到 main
+[2026-04-19 13:39:37]    ⚠️  有未提交變更
+[2026-04-19 13:39:37]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 13:39:37] 
+[2026-04-19 13:39:37] === 結果摘要 ===
+[2026-04-19 13:39:37] 掃描 worktree：3 個
+[2026-04-19 13:39:37] 已清理：0 個
+[2026-04-19 13:39:37] 已跳過：3 個
+[2026-04-19 13:39:37] 已 merge（stale）：1 個
+[2026-04-19 13:39:37] === 完成 ===
+[2026-04-19 14:09:37] === Worktree 健康檢查 開始 ===
+[2026-04-19 14:09:37] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-19 14:09:37] 模式: LIVE | all-clean | safe
+[2026-04-19 14:09:37] git worktree prune 完成
+[2026-04-19 14:09:37] 
+[2026-04-19 14:09:37] --- 目前所有 worktree ---
+[2026-04-19 14:09:37]   /Users/pagemacmini/maplab-ai-handbook                                              4958a89 [main]
+[2026-04-19 14:09:37]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/amazing-roentgen-995183    dee389a [claude/amazing-roentgen-995183]
+[2026-04-19 14:09:37]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/dazzling-engelbart-367e02  2beac99 [claude/dazzling-engelbart-367e02]
+[2026-04-19 14:09:37] 
+[2026-04-19 14:09:37] 📋 amazing-roentgen-995183 (branch: claude/amazing-roentgen-995183) — 未 merge
+[2026-04-19 14:09:37]    ⚠️  有未提交變更
+[2026-04-19 14:09:37]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 14:09:37] 📋 dazzling-engelbart-367e02 (branch: claude/dazzling-engelbart-367e02) — 未 merge
+[2026-04-19 14:09:37]    ⚠️  有未提交變更
+[2026-04-19 14:09:37]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 14:09:37] 🔀 great-engelbart-8429c2 (branch: main) — 已 merge 到 main
+[2026-04-19 14:09:38]    ⚠️  有未提交變更
+[2026-04-19 14:09:38]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 14:09:38] 
+[2026-04-19 14:09:38] === 結果摘要 ===
+[2026-04-19 14:09:38] 掃描 worktree：3 個
+[2026-04-19 14:09:38] 已清理：0 個
+[2026-04-19 14:09:38] 已跳過：3 個
+[2026-04-19 14:09:38] 已 merge（stale）：1 個
+[2026-04-19 14:09:38] === 完成 ===
+[2026-04-19 14:39:38] === Worktree 健康檢查 開始 ===
+[2026-04-19 14:39:38] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-19 14:39:38] 模式: LIVE | all-clean | safe
+[2026-04-19 14:39:38] git worktree prune 完成
+[2026-04-19 14:39:38] 
+[2026-04-19 14:39:38] --- 目前所有 worktree ---
+[2026-04-19 14:39:38]   /Users/pagemacmini/maplab-ai-handbook                                              4958a89 [main]
+[2026-04-19 14:39:38]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/amazing-roentgen-995183    dee389a [claude/amazing-roentgen-995183]
+[2026-04-19 14:39:38]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/dazzling-engelbart-367e02  2beac99 [claude/dazzling-engelbart-367e02]
+[2026-04-19 14:39:38] 
+[2026-04-19 14:39:38] 📋 amazing-roentgen-995183 (branch: claude/amazing-roentgen-995183) — 未 merge
+[2026-04-19 14:39:38]    ⚠️  有未提交變更
+[2026-04-19 14:39:38]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 14:39:38] 📋 dazzling-engelbart-367e02 (branch: claude/dazzling-engelbart-367e02) — 未 merge
+[2026-04-19 14:39:38]    ⚠️  有未提交變更
+[2026-04-19 14:39:38]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 14:39:38] 🔀 great-engelbart-8429c2 (branch: main) — 已 merge 到 main
+[2026-04-19 14:39:38]    ⚠️  有未提交變更
+[2026-04-19 14:39:38]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 14:39:38] 
+[2026-04-19 14:39:38] === 結果摘要 ===
+[2026-04-19 14:39:38] 掃描 worktree：3 個
+[2026-04-19 14:39:38] 已清理：0 個
+[2026-04-19 14:39:38] 已跳過：3 個
+[2026-04-19 14:39:38] 已 merge（stale）：1 個
+[2026-04-19 14:39:38] === 完成 ===
+[2026-04-19 15:09:38] === Worktree 健康檢查 開始 ===
+[2026-04-19 15:09:38] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-19 15:09:38] 模式: LIVE | all-clean | safe
+[2026-04-19 15:09:38] git worktree prune 完成
+[2026-04-19 15:09:38] 
+[2026-04-19 15:09:38] --- 目前所有 worktree ---
+[2026-04-19 15:09:38]   /Users/pagemacmini/maplab-ai-handbook                                              4958a89 [main]
+[2026-04-19 15:09:38]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/amazing-roentgen-995183    dee389a [claude/amazing-roentgen-995183]
+[2026-04-19 15:09:38]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/dazzling-engelbart-367e02  2beac99 [claude/dazzling-engelbart-367e02]
+[2026-04-19 15:09:38] 
+[2026-04-19 15:09:38] 📋 amazing-roentgen-995183 (branch: claude/amazing-roentgen-995183) — 未 merge
+[2026-04-19 15:09:38]    ⚠️  有未提交變更
+[2026-04-19 15:09:38]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 15:09:38] 📋 dazzling-engelbart-367e02 (branch: claude/dazzling-engelbart-367e02) — 未 merge
+[2026-04-19 15:09:38]    ⚠️  有未提交變更
+[2026-04-19 15:09:38]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 15:09:38] 🔀 great-engelbart-8429c2 (branch: main) — 已 merge 到 main
+[2026-04-19 15:09:38]    ⚠️  有未提交變更
+[2026-04-19 15:09:38]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 15:09:38] 
+[2026-04-19 15:09:38] === 結果摘要 ===
+[2026-04-19 15:09:38] 掃描 worktree：3 個
+[2026-04-19 15:09:38] 已清理：0 個
+[2026-04-19 15:09:38] 已跳過：3 個
+[2026-04-19 15:09:38] 已 merge（stale）：1 個
+[2026-04-19 15:09:38] === 完成 ===
+[2026-04-19 15:39:38] === Worktree 健康檢查 開始 ===
+[2026-04-19 15:39:38] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-19 15:39:38] 模式: LIVE | all-clean | safe
+[2026-04-19 15:39:38] git worktree prune 完成
+[2026-04-19 15:39:38] 
+[2026-04-19 15:39:38] --- 目前所有 worktree ---
+[2026-04-19 15:39:38]   /Users/pagemacmini/maplab-ai-handbook                                              4958a89 [main]
+[2026-04-19 15:39:38]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/amazing-roentgen-995183    dee389a [claude/amazing-roentgen-995183]
+[2026-04-19 15:39:38]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/dazzling-engelbart-367e02  2beac99 [claude/dazzling-engelbart-367e02]
+[2026-04-19 15:39:38] 
+[2026-04-19 15:39:39] 📋 amazing-roentgen-995183 (branch: claude/amazing-roentgen-995183) — 未 merge
+[2026-04-19 15:39:39]    ⚠️  有未提交變更
+[2026-04-19 15:39:39]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 15:39:39] 📋 dazzling-engelbart-367e02 (branch: claude/dazzling-engelbart-367e02) — 未 merge
+[2026-04-19 15:39:39]    ⚠️  有未提交變更
+[2026-04-19 15:39:39]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 15:39:39] 🔀 great-engelbart-8429c2 (branch: main) — 已 merge 到 main
+[2026-04-19 15:39:39]    ⚠️  有未提交變更
+[2026-04-19 15:39:39]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 15:39:39] 
+[2026-04-19 15:39:39] === 結果摘要 ===
+[2026-04-19 15:39:39] 掃描 worktree：3 個
+[2026-04-19 15:39:39] 已清理：0 個
+[2026-04-19 15:39:39] 已跳過：3 個
+[2026-04-19 15:39:39] 已 merge（stale）：1 個
+[2026-04-19 15:39:39] === 完成 ===
+[2026-04-19 16:09:39] === Worktree 健康檢查 開始 ===
+[2026-04-19 16:09:39] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-19 16:09:39] 模式: LIVE | all-clean | safe
+[2026-04-19 16:09:39] git worktree prune 完成
+[2026-04-19 16:09:39] 
+[2026-04-19 16:09:39] --- 目前所有 worktree ---
+[2026-04-19 16:09:39]   /Users/pagemacmini/maplab-ai-handbook                                              4958a89 [main]
+[2026-04-19 16:09:39]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/amazing-roentgen-995183    dee389a [claude/amazing-roentgen-995183]
+[2026-04-19 16:09:39]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/dazzling-engelbart-367e02  2beac99 [claude/dazzling-engelbart-367e02]
+[2026-04-19 16:09:39] 
+[2026-04-19 16:09:39] 📋 amazing-roentgen-995183 (branch: claude/amazing-roentgen-995183) — 未 merge
+[2026-04-19 16:09:39]    ⚠️  有未提交變更
+[2026-04-19 16:09:39]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 16:09:39] 📋 dazzling-engelbart-367e02 (branch: claude/dazzling-engelbart-367e02) — 未 merge
+[2026-04-19 16:09:39]    ⚠️  有未提交變更
+[2026-04-19 16:09:39]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 16:09:39] 🔀 great-engelbart-8429c2 (branch: main) — 已 merge 到 main
+[2026-04-19 16:09:39]    ⚠️  有未提交變更
+[2026-04-19 16:09:39]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 16:09:39] 
+[2026-04-19 16:09:39] === 結果摘要 ===
+[2026-04-19 16:09:39] 掃描 worktree：3 個
+[2026-04-19 16:09:39] 已清理：0 個
+[2026-04-19 16:09:39] 已跳過：3 個
+[2026-04-19 16:09:39] 已 merge（stale）：1 個
+[2026-04-19 16:09:39] === 完成 ===
+[2026-04-19 16:39:39] === Worktree 健康檢查 開始 ===
+[2026-04-19 16:39:39] REPO_ROOT: /Users/pagemacmini/maplab-ai-handbook
+[2026-04-19 16:39:39] 模式: LIVE | all-clean | safe
+[2026-04-19 16:39:39] git worktree prune 完成
+[2026-04-19 16:39:39] 
+[2026-04-19 16:39:39] --- 目前所有 worktree ---
+[2026-04-19 16:39:39]   /Users/pagemacmini/maplab-ai-handbook                                              4958a89 [main]
+[2026-04-19 16:39:39]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/amazing-roentgen-995183    dee389a [claude/amazing-roentgen-995183]
+[2026-04-19 16:39:39]   /Users/pagemacmini/maplab-ai-handbook/.claude/worktrees/dazzling-engelbart-367e02  2beac99 [claude/dazzling-engelbart-367e02]
+[2026-04-19 16:39:39] 
+[2026-04-19 16:39:39] 📋 amazing-roentgen-995183 (branch: claude/amazing-roentgen-995183) — 未 merge
+[2026-04-19 16:39:39]    ⚠️  有未提交變更
+[2026-04-19 16:39:39]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 16:39:39] 📋 dazzling-engelbart-367e02 (branch: claude/dazzling-engelbart-367e02) — 未 merge
+[2026-04-19 16:39:39]    ⚠️  有未提交變更
+[2026-04-19 16:39:39]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 16:39:39] 🔀 great-engelbart-8429c2 (branch: main) — 已 merge 到 main
+[2026-04-19 16:39:39]    ⚠️  有未提交變更
+[2026-04-19 16:39:39]    ⚠️  跳過 — 有未提交變更（用 --all 強制清理）
+[2026-04-19 16:39:39] 
+[2026-04-19 16:39:39] === 結果摘要 ===
+[2026-04-19 16:39:39] 掃描 worktree：3 個
+[2026-04-19 16:39:39] 已清理：0 個
+[2026-04-19 16:39:39] 已跳過：3 個
+[2026-04-19 16:39:39] 已 merge（stale）：1 個
+[2026-04-19 16:39:39] === 完成 ===

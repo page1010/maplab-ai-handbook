@@ -47,6 +47,7 @@ if SALES_USER_ID:
     ALLOWED_USER_IDS.add(SALES_USER_ID)
 
 A6_LOG_DIR = REPO_PATH / "data" / "a6-logs"
+A6_PHOTO_DIR = REPO_PATH / "data" / "a6-photos"
 CONV_HISTORY_FILE = BOT_DIR / "conv_history_a6.json"
 
 # ── Logging ────────────────────────────────────────────────────────────────────
@@ -511,6 +512,33 @@ async def _run_claude_guarded(
     )
 
 
+async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Handle photo messages: download image and pass to Claude Code for analysis."""
+    if not is_allowed(update):
+        await deny(update)
+        return
+
+    # Download the largest photo resolution
+    photo = update.message.photo[-1]
+    photo_file = await context.bot.get_file(photo.file_id)
+    A6_PHOTO_DIR.mkdir(parents=True, exist_ok=True)
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    file_ext = Path(photo_file.file_path or "photo.jpg").suffix or ".jpg"
+    local_path = A6_PHOTO_DIR / f"{ts}_{photo.file_unique_id}{file_ext}"
+    await photo_file.download_to_drive(str(local_path))
+    logger.info(f"A6 photo saved: {local_path}")
+
+    caption = update.message.caption or ""
+    caption_note = f"\nOwner/業務 附的文字說明：{caption}" if caption else ""
+
+    user_message = (
+        f"收到一張圖片，已存在 {local_path}，請用 Read 工具讀取並分析圖片內容。{caption_note}\n"
+        f"如果是品項/食物照片，辨識品名並協助新增品項（addItem）。"
+        f"如果是截圖/對話截圖，分析內容並回應。"
+    )
+    await _run_claude_guarded(update, context, user_message)
+
+
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if not is_allowed(update):
         await deny(update)
@@ -551,6 +579,7 @@ def main() -> None:
     app.add_handler(CommandHandler("help", help_cmd))
     app.add_handler(CommandHandler("ping", ping))
     app.add_handler(CommandHandler("reset", reset_cmd))
+    app.add_handler(MessageHandler(filters.PHOTO, handle_photo))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     app.add_error_handler(on_error)
 

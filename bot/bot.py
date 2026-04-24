@@ -41,6 +41,7 @@ REPO_PATH = Path(os.getenv("REPO_PATH", "/Users/pagemacmini/maplab-ai-handbook")
 CLAUDE_OAUTH_TOKEN = os.getenv("CLAUDE_CODE_OAUTH_TOKEN", "")
 
 TELEGRAM_LOG_DIR = REPO_PATH / "data" / "telegram-logs"
+TELEGRAM_PHOTO_DIR = REPO_PATH / "data" / "telegram-photos"
 CONV_HISTORY_FILE = BOT_DIR / "conv_history.json"
 
 # ── Clipboard Server ────────────────────────────────────────────────────────────
@@ -694,6 +695,45 @@ async def ask_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await _run_claude_guarded(update, context, chat_id, prompt, "", "/ask", prompt)
 
 
+async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Handle photo messages: download image and pass to Claude Code for analysis."""
+    if not is_owner(update):
+        await deny(update)
+        return
+    git_pull_silent()
+
+    # Download the largest photo resolution
+    photo = update.message.photo[-1]  # last = highest resolution
+    photo_file = await context.bot.get_file(photo.file_id)
+    TELEGRAM_PHOTO_DIR.mkdir(parents=True, exist_ok=True)
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    file_ext = Path(photo_file.file_path or "photo.jpg").suffix or ".jpg"
+    local_path = TELEGRAM_PHOTO_DIR / f"{ts}_{photo.file_unique_id}{file_ext}"
+    await photo_file.download_to_drive(str(local_path))
+    logger.info(f"Photo saved: {local_path}")
+
+    # Caption = user's text alongside the photo (if any)
+    caption = update.message.caption or ""
+    caption_note = f"\nOwner 附的文字說明：{caption}" if caption else ""
+
+    try:
+        status_snippet = read_file("CURRENT_STATUS.md")[:1500]
+    except Exception:
+        status_snippet = ""
+    system_extra = (
+        "以下是目前 MAPLAB 專案狀態摘要（供參考）：\n\n"
+        f"{status_snippet}"
+    )
+
+    user_message = (
+        f"Owner 傳了一張圖片，已存在 {local_path}，請用 Read 工具讀取並分析圖片內容。{caption_note}\n"
+        f"根據圖片內容和 Owner 的說明來回應。如果是品項照片，協助辨識品名和用途。"
+    )
+    log_msg = f"[📷 圖片] {caption}" if caption else "[📷 圖片]"
+    chat_id = update.effective_chat.id
+    await _run_claude_guarded(update, context, chat_id, user_message, system_extra, "photo", log_msg)
+
+
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if not is_owner(update):
         await deny(update)
@@ -818,6 +858,7 @@ def main() -> None:
     app.add_handler(CommandHandler("ask", ask_cmd))
     app.add_handler(CommandHandler("reset", reset_cmd))
     app.add_handler(CommandHandler("clip", clip_cmd))
+    app.add_handler(MessageHandler(filters.PHOTO, handle_photo))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     app.add_error_handler(on_error)
 

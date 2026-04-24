@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-04-24 14:30（A1 午後巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-04-24 22:00（A1 晚間巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -30,11 +30,11 @@
 | T-A2A3-001-B | SEO 場景頁面 + 內連結（從 T-A2A3-001 分拆） | A2/A3 | ⏸️ 阻塞（子任務 3+4 完成（3 個場景頁 + 56 篇內連結）；子任務 5 等 Google 重新索引（7-14 天）） | handoff/tasks/T-A2A3-001-B.md |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2/A3 | ⏸️ 阻塞（子任務 1-4 完成；子任務 5 等 Google 重新索引驗證排名變化） | handoff/tasks/T-A2A3-001.md |
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | ⏸️ 阻塞中（受眾輪廓分析完成（693筆 Orders）。待執行：嘉義加入廣告地區、興趣條件精簡、策略一冷受眾上線。） | handoff/tasks/T-A3-002.md |
-| T-A4-001 | Phase 4 Gemini 照片分類（2022-2026） | A4 | 🔄 進行中（S11/2024 補跑執行中）（S12(2025) ✅ DONE 7,645/7,642（45張補完，2026-04-15 08:58 完成）。S11(） | handoff/tasks/T-A4-001.md |
+| T-A4-001 | Phase 4 Gemini 照片分類（2022-2026） | A4 | 🔴 CRITICAL（S12✅DONE 7,645張；S11補跑 14ed423 04-18 Colab重啟→**~158h/6.5天**無completion commit，Colab幾乎確認崩潰） | handoff/tasks/T-A4-001.md |
 | T-A4-002 | T-A4-002 | A4 | 🔄 進行中（Phase 1 規劃完成 d0b3238 04-18；4 Phase 架構：解壓→Gemini分類→Slide選圖→旅遊caption；⚠️ Colab 解壓實際執行需待 S11 completion 後啟動） | handoff/tasks/T-A4-002.md |
-| T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔴 CRITICAL（~372h無commit，D15+） | handoff/tasks/T-A5-002.md |
-| T-A5-004 | createSlides.gs — Slide 報價簡報自動生成 | A5 | 🔴 CRITICAL（~372h無commit，D15+） | handoff/tasks/T-A5-004.md |
-| T-A5-005 | 報價狀態追蹤同步 + Dashboard | A5 | 🔴 CRITICAL（~372h無commit，D15+） | handoff/tasks/T-A5-005.md |
+| T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔴 CRITICAL（~385h無commit，D15+） | handoff/tasks/T-A5-002.md |
+| T-A5-004 | createSlides.gs — Slide 報價簡報自動生成 | A5 | 🔴 CRITICAL（~385h無commit，D15+） | handoff/tasks/T-A5-004.md |
+| T-A5-005 | 報價狀態追蹤同步 + Dashboard | A5 | 🔴 CRITICAL（~385h無commit，D15+） | handoff/tasks/T-A5-005.md |
 | T-A5-006 | T-A5-006 | A5 | 🔲 待開始（尚未開始。等 T-A5-005 完成後啟動。） | handoff/tasks/T-A5-006.md |
 | T-A6-001 | A6 LINE 業務報價助手系統 | A6 | 🔄 進行中（04-18 EOD：GAS v8部署+addItem+模糊比對+多照片；10輪QA全PASS（含R9修B4後重測）；H1三層權限；B層自動存檔運行中。未完成：照片Phase2、LINE webhook Owner確認。⚠️ Task Card T-A6-001.md 嚴重過時（仍顯示04-01斷點）需A6更新。） | handoff/tasks/T-A6-001.md |
 | T-A6-002 | LINE 對話訓練資料收集計畫 | A6 | 💤 暫停（原計畫拆 Sheet 做訓練資料，04-07 重新規劃方向。等 Owner 決定是否需要 LINE 訓練資料及取得方式。） | handoff/tasks/T-A6-002.md |
@@ -77,6 +77,7 @@
 | A5 | ⚠️ A1巡查 2026-04-24 09:00：**T-A5-002/004/005 升級 D15+（~372h 無 commit，last: cfeebd1 2026-04-09）**。連續 5 次巡查 Owner 決策無回應。業務報價系統已近 2.5 週停滯，風險為全系統最高。 | Owner **最高優先決策**：指定 A5 session 優先處理或告知 T-A5 整體暫緩策略 |
 | 全系統 | ⚠️ A1巡查 2026-04-24 09:00：**GCP Gemini API 帳單持續 6 天未處理**（658120d 2026-04-18，$3K/月）。若 A4 Colab job 重啟需確認 API 呼叫上限已設定，否則帳單事件將重演 | Owner 優先：確認 GCP Billing Alert 已啟用 + API quota 已設上限，再授權 A4 重啟 Colab |
 | A2/A3 | ⚠️ A1巡查 2026-04-24 09:00：**T-A2A3-001/001-B GSC 索引觀察期已達 19 天**（04-05起），遠超 7-14 天驗證窗口。Owner 仍未查 GSC，排名驗證完全停滯 | Owner 查 GSC（嚴重逾期）→ A2 更新 Task Card |
+| 全系統 | ⚠️ A1巡查 2026-04-24 22:00：**晚間確認 — 下午巡查後 8h 仍零新 commit（非 patrol）**。非 patrol commit 靜止已達 **~103h**（last: 23e6c4c 2026-04-20 14:30）。A4 S11 Colab 崩潰升至 **~158h/6.5天**；A5 T-A5-002/004/005 升至 **~385h（D15+）**；GCP 帳單風險 **~158h/6.5天** 仍未處理。A2/A3/A6/A7/A8/B1 all clear。 | 同早晨巡查，Owner 緊急決策 |
 ---
 
 ## Source of Truth（有效文件清單）

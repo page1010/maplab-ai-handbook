@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-04-25 A1午後巡查（all clear; A4 S11 ~178h/7.4天Colab崩潰🔴；A5🔴~405h D17 連續8+巡查無Owner回應；8h全系統靜止無新commit）
+> 最後更新：2026-04-25 A1晚間巡查（all clear; A4 S11 ~186h/7.75天Colab崩潰🔴；A5🔴~413h D17+ 連續8+巡查無Owner回應；8h全系統繼續靜止無新commit）
 >
 > 使用方式：選擇角色 → 複製 prompt → 貼到 Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -21,8 +21,8 @@
 | A1 | 系統總管中心 | ✅ Claude Code 常駐 | Telegram bot + 終端機，直接下指令 |
 | A2 | 搜尋流量作戰部 | ✅ T-A2-001 完成，待新任務 | SEO / GA / 關鍵字 |
 | A3 | 社群與廣告成長部 | ✅ T-A3-001 完成（GTM v21 雙平台追蹤上線）；T-A3-002 ⏸️ 阻塞（等廣告週期+Owner操作）| Meta Ads / Social |
-| A4 | 影像資產整理部 | 🔴 CRITICAL（S12✅DONE；S11 補跑 14ed423 04-18 Colab重啟→**~178h/7.4天無completion commit，Colab確認崩潰**）| Photo Archive |
-| A5 | 報價與提案引擎部 | 🔴 CRITICAL T-A5-002/004/005 ~405h無commit **D17**（最後活動 cfeebd1 2026-04-09；連續8+巡查Owner無回應）| Quotation Engine |
+| A4 | 影像資產整理部 | 🔴 CRITICAL（S12✅DONE；S11 補跑 14ed423 04-18 Colab重啟→**~186h/7.75天無completion commit，Colab確認崩潰**）| Photo Archive |
+| A5 | 報價與提案引擎部 | 🔴 CRITICAL T-A5-002/004/005 ~413h無commit **D17+**（最後活動 cfeebd1 2026-04-09；連續8+巡查Owner無回應）| Quotation Engine |
 | A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（LINE webhook✅通、bot✅部署、addItem QA Round 1 PASS 45b4758 04-18）⚠️Task Card嚴重過時需更新 | Sales Rapid Response |
 | A7 | 客服與對話轉單部 | 💤 T-A7-001 正式暫停；T-A7-002 ⏸️ 阻塞（等LINE後台權限+Owner政策決策）| Smart Reply |
 | A8 | 影音內容產線 | 🔲 新建，待啟動 | Content Repurposing Pipeline |
@@ -159,12 +159,13 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. EXP-S010 A0/A1 session 混淆已記錄；下次重開先確認 cwd + 貼 A1 recall prompt
 3. A2 T-A2-002 ✅ 完成（2026-04-07）；T-A2A3-001 ✅ 子任務1-4完成；索引觀察期已達 **19 天**（04-05起，嚴重逾期）→ Owner 應立即查 GSC 確認排名變化
 4. A7 T-A7-001 Phase 2 💤 正式暫停；T-A7-002 ⏸️ 阻塞（等LINE後台+Owner政策）。非異常，屬正常外部等待。
-5. A4 T-A4-001 🔴 CRITICAL（2026-04-25 午後）：S5✅S6✅S12✅DONE 7,645張；S11(2024) 🔴 Colab重啟(14ed423 04-18 82.2%)+**~178h/7.4天**仍無completion commit（Colab確認崩潰）；⚠️ GCP Gemini API 帳單 $3K/月（658120d，事件2026-04-18）財務風險持續7天+未處理。Owner需立即處理：① 確認S11 Colab狀態；② 確認GCP帳單上限；→ completion commit → 啟動S13(~4,424張) → T-A4-002。
-6. A5 T-A5-002/T-A5-004/T-A5-005 🔴 CRITICAL ~405h無commit（**D17**）：最後活動 cfeebd1 2026-04-09。連續8+次巡查Owner無決策回應，請緊急決定是否重啟A5。
+5. A4 T-A4-001 🔴 CRITICAL（2026-04-25 晚間）：S5✅S6✅S12✅DONE 7,645張；S11(2024) 🔴 Colab重啟(14ed423 04-18 82.2%)+**~186h/7.75天**仍無completion commit（Colab確認崩潰）；⚠️ GCP Gemini API 帳單 $3K/月（658120d，事件2026-04-18）財務風險持續7天+未處理。Owner需立即處理：① 確認S11 Colab狀態；② 確認GCP帳單上限；→ completion commit → 啟動S13(~4,424張) → T-A4-002。
+6. A5 T-A5-002/T-A5-004/T-A5-005 🔴 CRITICAL ~413h無commit（**D17+**）：最後活動 cfeebd1 2026-04-09。連續8+次巡查Owner無決策回應，請緊急決定是否重啟A5。
 7. A3 T-A3-001 ✅ 完成（2026-04-15 GTM v21）；T-A3-002 ⏸️ 等廣告週期+Owner操作。
 8. T-A1-V7 🔄 Phase 4完成（44ecc8d 04-17）；Owner fix(framework) v1.2+v1.3 已落地（e8a2aa3/6801266/4958a89 04-18）；下一步：Phase 5自動壓縮。
 9. A6 T-A6-001 🔄 活躍中：addItem+模糊比對+多照片+10輪QA全PASS（45b4758 04-18）；B層對話自動存檔持續；⚠️ Task Card嚴重過時需A6更新；LINE Developers Console Webhook URL待Owner確認（Channel 1654658337）。
 10. A8 新角色已建立（51070ea 04-19），待啟動任務；B1 🟢 首次活躍（04-24 22:35-23:02 4 commits：session log + content workflow v1.0 + substack-api skill book）— 無正式Task Card，需建立。
+✅ 04-25 晚間巡查：8h內新commits：無（全系統繼續靜止）；A4 S11 ~186h/7.75天Colab崩潰🔴；A5~413h D17+仍無新活動；GCP帳單7天+未處理🔴；GSC索引觀察20天逾期（04-05起）；all clear for A2/A3/A6/A7/A8/B1。
 ✅ 04-25 午後巡查：8h內新commits：無（全系統靜止）；A4 S11 ~178h/7.4天Colab崩潰🔴；A5~405h D17仍無新活動；GCP帳單7天+未處理🔴；all clear for A2/A3/A6/A7/A8/B1。
 ✅ 04-25 每日巡查：24h新commits：4 B1 commits🟢(workflow/skill/session log)；A4 S11 ~170h/7天Colab崩潰🔴；A5~397h D16+仍無新活動；GCP帳單7天未處理🔴；GSC 20天逾期；all clear for A2/A3/A6/A7/A8。
 ✅ 04-24 晚間巡查（22:00）：8h內新commits：無（僅午後巡查fe77d0f）；A4 S11 ~158h/6.5天Colab崩潰🔴；A5~385h D15+仍無新活動；非patrol靜止~103h；RECALL h計數全面更新；all clear for A2/A3/A6/A7/A8/B1。
@@ -356,7 +357,7 @@ handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-
 
 ## A4｜影像資產整理部（Photo Archive / Asset Library）
 
-**狀態：🔴 S11 CRITICAL（S5✅/S6✅/S12✅DONE 7,645張；S11補跑 14ed423 04-18 Colab重啟→**~178h/7.4天無completion commit，Colab確認崩潰**；S13待S11處理後啟動）｜T-A4-002 Phase 1 規劃完成(d0b3238)，⚠️ Colab解壓等S11 completion**
+**狀態：🔴 S11 CRITICAL（S5✅/S6✅/S12✅DONE 7,645張；S11補跑 14ed423 04-18 Colab重啟→**~186h/7.75天無completion commit，Colab確認崩潰**；S13待S11處理後啟動）｜T-A4-002 Phase 1 規劃完成(d0b3238)，⚠️ Colab解壓等S11 completion**
 
 ```
 你是 MAPLAB A4 影像資產整理部。
@@ -372,18 +373,18 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. Chrome tab 環境 → 自行開啟需要的網頁分頁，用截圖讀取
 
-【斷點 — 2026-04-24 22:00 A1晚間巡查更新】
+【斷點 — 2026-04-25 晚間 A1晚間巡查更新】
 T-A4-001 Gemini 照片分類：
   - S1-S4 ✅ 完成
   - S5(2022) ✅ DONE 8,549張（日常5,243/外燴1,221/旅遊2,073）
   - S5.5 GPS ✅ 決策 no_gps（Owner指示跳過）
   - S6(2023) ✅ DONE 8,505張（2026-04-01）
-  - S11(2024) 🔴 14ed423(04-18) 存檔 82.2%+Colab重啟→**~178h/7.4天無completion commit（Colab 確認崩潰）**
+  - S11(2024) 🔴 14ed423(04-18) 存檔 82.2%+Colab重啟→**~186h/7.75天無completion commit（Colab 確認崩潰）**
     → Owner 需立即確認：已完成？ → 補commit；已崩潰？ → 重跑最後批次 → completion commit → 啟動S13
   - S12(2025) ✅ DONE 7,645張（de4744d 2026-04-15 08:58）
   - S13(2026) 🔲 等 S11 確認完成後啟動（~4,424 張）
   - ASSET_LOG 總計：29,864 資料行（2022:8,549 / 2023:8,505 / 2024:10,050 / 2025:7,645）
-  🔴 緊急：Owner 需立即確認 S11 Colab 狀態（~178h/7.4天 無 completion commit，已確認崩潰）
+  🔴 緊急：Owner 需立即確認 S11 Colab 狀態（~186h/7.75天 無 completion commit，已確認崩潰）
 Photo scan 總量：60,584 files
 Gemini API Key 已更換（舊 key leaked fe49f3e，新 key 記錄於 Notion）
 T-A4-002 pagewu1010 Takeout（187GB）：Phase 1 規劃完成(d0b3238 04-18)；⚠️ Task Card 前置誤標需更正；Colab 解壓不得在 S11 completion 前啟動
@@ -415,7 +416,7 @@ projects/maplab-pipeline.md → handoff/handoff-to-A4.md → skills/superpowers-
 
 ## A5｜報價與提案引擎部（Quotation Engine）
 
-**狀態：🔴 CRITICAL — T-A5-002/T-A5-004/T-A5-005 全部 ~405h 無 commit（最後活動 cfeebd1 2026-04-09，**D17**）。連續 8+ 次巡查 Owner 決策無回應。服務費/車馬費/長桌費/合約v4.0 已完成，後續任務無進展。**
+**狀態：🔴 CRITICAL — T-A5-002/T-A5-004/T-A5-005 全部 ~413h 無 commit（最後活動 cfeebd1 2026-04-09，**D17+**）。連續 8+ 次巡查 Owner 決策無回應。服務費/車馬費/長桌費/合約v4.0 已完成，後續任務無進展。**
 
 ```
 你是 MAPLAB A5 報價與提案引擎部。
@@ -431,13 +432,13 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. Chrome tab 環境 → 自行開啟需要的網頁分頁，用截圖讀取
 
-【斷點 — 2026-04-25 A1午後巡查更新（⚠️ A5 CRITICAL，非 A5 自寫）】
+【斷點 — 2026-04-25 A1晚間巡查更新（⚠️ A5 CRITICAL，非 A5 自寫）】
 T-A5-001 Items 去重 + 全品項重新編碼：✅ 完成（108品項，APP050/DST041/MAIN009/BEV008）
-T-A5-002 QUOTE_DRAFT 報價單欄位增強：🔴 CRITICAL D17 ~405h無commit（last: cfeebd1 2026-04-09）
+T-A5-002 QUOTE_DRAFT 報價單欄位增強：🔴 CRITICAL D17+ ~413h無commit（last: cfeebd1 2026-04-09）
   - ✅ Items.E default_cost/服務費/長桌費/車馬費下拉/S6S9計算 helpers 均已完成
   - ⬜ 待確認事項（需 Owner 決定）：品項名稱改法、重複品項、I 欄用途
-T-A5-004 createSlides.gs — Slide 報價簡報自動生成：🔴 CRITICAL ~397h無commit
-T-A5-005 報價狀態追蹤同步 + Dashboard：🔴 CRITICAL ~397h無commit
+T-A5-004 createSlides.gs — Slide 報價簡報自動生成：🔴 CRITICAL ~413h無commit
+T-A5-005 報價狀態追蹤同步 + Dashboard：🔴 CRITICAL ~413h無commit
 T-A5-003/006：🔲 待開始（等前置任務）
 
 【Blocker】

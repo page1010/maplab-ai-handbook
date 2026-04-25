@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-04-25（A1巡查 — B1首次活躍4 commits(workflow v1.0+skill book+session log)；A4 S11 ~170h/7天；A5 D16+~397h）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-04-25 午後（A1巡查 — all clear; A4 S11 ~178h/7.4天；A5 D17/~405h；8h無新commit全系統靜止）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -55,8 +55,8 @@
 | A2/A3 | T-A2A3-001: 等 Google 重新索引，預計 04-11 後可驗證 | 見 Task Card |
 | A3 | T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） | 見 Task Card |
 | A4 | T-A4-002: 前置 T-A4-001 S11 尚未完成，Phase 1 Colab 解壓不得在 S11 completion 前啟動 | Owner確認S11最新Colab狀態→補completion commit |
-| A4 | ⚠️ A1巡查 2026-04-25：T-A4-001 S11 ~170h/7天無completion commit（Colab確認崩潰）；GCP帳單$3K/月已7天未處理 | Owner立即：①確認S11 Colab狀態→補completion commit；②確認GCP帳單上限 |
-| A5 | ⚠️ A1巡查 2026-04-25：T-A5-002/004/005 CRITICAL D16+ ~397h無commit（last: cfeebd1 2026-04-09）。連續8+巡查Owner無決策回應 | Owner 決策：是否重啟A5 |
+| A4 | ⚠️ A1巡查 2026-04-25 午後：T-A4-001 S11 ~178h/7.4天無completion commit（Colab確認崩潰）；GCP帳單$3K/月已7天+未處理 | Owner立即：①確認S11 Colab狀態→補completion commit；②確認GCP帳單上限 |
+| A5 | ⚠️ A1巡查 2026-04-25 午後：T-A5-002/004/005 CRITICAL D17/~405h無commit（last: cfeebd1 2026-04-09）。連續8+巡查Owner無決策回應 | Owner 決策：是否重啟A5 |
 | - | ℹ️ A1巡查 2026-04-25：B1首次活躍（4 commits: sessions/B1/2026-04-24-session-01.md + workflows/B1-content-workflow-v1.md + skills/substack-api.md）— RECALL_PROMPTS已更新B1狀態 | B1需建立正式Task Card |
 | 全系統 | ℹ️ A1巡查 2026-04-19 14:00：Owner 今日提交 fix(framework) v1.2+v1.3 共 3 commits（e8a2aa3/6801266/4958a89）— 規則衝突優先級 + 回應校正標準。各 Agent 下次 session 開始時注意 AGENT_RULES.md 是否有更新。 | 各 Agent 留意 |
 | A5 | T-A5-002: 等 Owner 確認（品項名稱改法、重複品項、I 欄用途） | 見 Task Card |

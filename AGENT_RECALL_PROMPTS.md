@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-04-25 A1晚間巡查（all clear; A4 S11 ~186h/7.75天Colab崩潰🔴；A5🔴~413h D17+ 連續8+巡查無Owner回應；8h全系統繼續靜止無新commit）
+> 最後更新：2026-04-30 A1晚間巡查（5天無patrol⚠️; A4 S11 ~306h/12.75天Colab崩潰🔴；A5🔴~533h D22+ 連續多巡查無Owner回應；A2/A3索引19天可驗證ℹ️；B1無Task Card⚠️；全系統非patrol靜止~143h）
 >
 > 使用方式：選擇角色 → 複製 prompt → 貼到 Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -21,8 +21,8 @@
 | A1 | 系統總管中心 | ✅ Claude Code 常駐 | Telegram bot + 終端機，直接下指令 |
 | A2 | 搜尋流量作戰部 | ✅ T-A2-001 完成，待新任務 | SEO / GA / 關鍵字 |
 | A3 | 社群與廣告成長部 | ✅ T-A3-001 完成（GTM v21 雙平台追蹤上線）；T-A3-002 ⏸️ 阻塞（等廣告週期+Owner操作）| Meta Ads / Social |
-| A4 | 影像資產整理部 | 🔴 CRITICAL（S12✅DONE；S11 補跑 14ed423 04-18 Colab重啟→**~186h/7.75天無completion commit，Colab確認崩潰**）| Photo Archive |
-| A5 | 報價與提案引擎部 | 🔴 CRITICAL T-A5-002/004/005 ~413h無commit **D17+**（最後活動 cfeebd1 2026-04-09；連續8+巡查Owner無回應）| Quotation Engine |
+| A4 | 影像資產整理部 | 🔴 CRITICAL（S12✅DONE；S11 補跑 14ed423 04-18 Colab重啟→**~306h/12.75天無completion commit，Colab確認崩潰**）| Photo Archive |
+| A5 | 報價與提案引擎部 | 🔴 CRITICAL T-A5-002/004/005 ~533h無commit **D22+**（最後活動 cfeebd1 2026-04-09；連續多巡查Owner無回應）| Quotation Engine |
 | A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（LINE webhook✅通、bot✅部署、addItem QA Round 1 PASS 45b4758 04-18）⚠️Task Card嚴重過時需更新 | Sales Rapid Response |
 | A7 | 客服與對話轉單部 | 💤 T-A7-001 正式暫停；T-A7-002 ⏸️ 阻塞（等LINE後台權限+Owner政策決策）| Smart Reply |
 | A8 | 影音內容產線 | 🔲 新建，待啟動 | Content Repurposing Pipeline |

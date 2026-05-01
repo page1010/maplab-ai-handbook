@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-05-01 A1每日巡查（⚠️ 全系統靜止144h+/6天；A4 S11 ~312h/13天Colab崩潰🔴；A5🔴~528h D22 連續10+巡查無Owner回應；GCP帳單13天未處理🔴）
+> 最後更新：2026-05-01 A1午後巡查（⚠️ 全系統靜止168h+/7天；A4 S11 ~320h/~13.3天Colab崩潰🔴；A5🔴~536h D22 連續10+巡查無Owner回應；GCP帳單14天未處理🔴；8h零新commit）
 >
 > 使用方式：選擇角色 → 複製 prompt → 貼到 Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -165,7 +165,8 @@ repo: https://github.com/page1010/maplab-ai-handbook
 8. T-A1-V7 🔄 Phase 4完成（44ecc8d 04-17）；Owner fix(framework) v1.2+v1.3 已落地（e8a2aa3/6801266/4958a89 04-18）；下一步：Phase 5自動壓縮。
 9. A6 T-A6-001 🔄 活躍中：addItem+模糊比對+多照片+10輪QA全PASS（45b4758 04-18）；B層對話自動存檔持續；⚠️ Task Card嚴重過時需A6更新；LINE Developers Console Webhook URL待Owner確認（Channel 1654658337）。
 10. A8 新角色已建立（51070ea 04-19），待啟動任務；B1 🟢 首次活躍（04-24 22:35-23:02 4 commits：session log + content workflow v1.0 + substack-api skill book）— 無正式Task Card，需建立。7天無新commit。
-11. ⚠️ 全系統靜止 144h+（6天）：上次non-patrol commit B1 2026-04-24；上次patrol 2026-04-25 08:06 UTC。A2/A3/A6/A7/A8/B1均無新活動。
+11. ⚠️ 全系統靜止 168h+（7天）：上次non-patrol commit B1 2026-04-24；上次patrol 2026-05-01 每日巡查。A2/A3/A6/A7/A8/B1均無新活動。
+✅ 05-01 午後巡查：8h內新commits：無（全系統168h/7天靜止🔴）；A4 S11 ~320h/~13.3天Colab崩潰🔴；A5~536h D22+仍無活動；GCP帳單14天未處理🔴；GSC 26天+逾期；B1無Task Card；all else clear(A2/A3/A6/A7/A8)。
 ✅ 05-01 每日巡查：24h內新commits：無（全系統144h靜止🔴）；A4 S11 ~312h/13天Colab崩潰🔴；A5~528h D22仍無活動；GCP帳單13天未處理🔴；GSC 26天逾期；B1無Task Card 7天靜止；all else clear(A2/A3/A6/A7/A8)。
 ✅ 04-25 晚間巡查：8h內新commits：無（全系統繼續靜止）；A4 S11 ~186h/7.75天Colab崩潰🔴；A5~413h D17+仍無新活動；GCP帳單7天+未處理🔴；GSC索引觀察20天逾期（04-05起）；all clear for A2/A3/A6/A7/A8/B1。
 ✅ 04-25 午後巡查：8h內新commits：無（全系統靜止）；A4 S11 ~178h/7.4天Colab崩潰🔴；A5~405h D17仍無新活動；GCP帳單7天+未處理🔴；all clear for A2/A3/A6/A7/A8/B1。
@@ -359,7 +360,7 @@ handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-
 
 ## A4｜影像資產整理部（Photo Archive / Asset Library）
 
-**狀態：🔴 S11 CRITICAL（S5✅/S6✅/S12✅DONE 7,645張；S11補跑 14ed423 04-18 Colab重啟→**~312h/13天無completion commit，Colab確認崩潰；GCP帳單13天未處理🔴**；S13待S11處理後啟動）｜T-A4-002 Phase 1 規劃完成(d0b3238)，⚠️ Colab解壓等S11 completion**
+**狀態：🔴 S11 CRITICAL（S5✅/S6✅/S12✅DONE 7,645張；S11補跑 14ed423 04-18 Colab重啟→**~320h/~13.3天無completion commit，Colab確認崩潰；GCP帳單14天未處理🔴**；S13待S11處理後啟動）｜T-A4-002 Phase 1 規劃完成(d0b3238)，⚠️ Colab解壓等S11 completion**
 
 ```
 你是 MAPLAB A4 影像資產整理部。
@@ -375,18 +376,18 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. Chrome tab 環境 → 自行開啟需要的網頁分頁，用截圖讀取
 
-【斷點 — 2026-04-25 晚間 A1晚間巡查更新】
+【斷點 — 2026-05-01 A1午後巡查更新】
 T-A4-001 Gemini 照片分類：
   - S1-S4 ✅ 完成
   - S5(2022) ✅ DONE 8,549張（日常5,243/外燴1,221/旅遊2,073）
   - S5.5 GPS ✅ 決策 no_gps（Owner指示跳過）
   - S6(2023) ✅ DONE 8,505張（2026-04-01）
-  - S11(2024) 🔴 14ed423(04-18) 存檔 82.2%+Colab重啟→**~186h/7.75天無completion commit（Colab 確認崩潰）**
+  - S11(2024) 🔴 14ed423(04-18) 存檔 82.2%+Colab重啟→**~320h/~13.3天無completion commit（Colab 確認崩潰）**
     → Owner 需立即確認：已完成？ → 補commit；已崩潰？ → 重跑最後批次 → completion commit → 啟動S13
   - S12(2025) ✅ DONE 7,645張（de4744d 2026-04-15 08:58）
   - S13(2026) 🔲 等 S11 確認完成後啟動（~4,424 張）
   - ASSET_LOG 總計：29,864 資料行（2022:8,549 / 2023:8,505 / 2024:10,050 / 2025:7,645）
-  🔴 緊急：Owner 需立即確認 S11 Colab 狀態（~186h/7.75天 無 completion commit，已確認崩潰）
+  🔴 緊急：Owner 需立即確認 S11 Colab 狀態（~320h/~13.3天 無 completion commit，已確認崩潰）
 Photo scan 總量：60,584 files
 Gemini API Key 已更換（舊 key leaked fe49f3e，新 key 記錄於 Notion）
 T-A4-002 pagewu1010 Takeout（187GB）：Phase 1 規劃完成(d0b3238 04-18)；⚠️ Task Card 前置誤標需更正；Colab 解壓不得在 S11 completion 前啟動

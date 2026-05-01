@@ -57,7 +57,9 @@
 | A4 | T-A4-002: 前置 T-A4-001 S11 尚未完成，Phase 1 Colab 解壓不得在 S11 completion 前啟動 | Owner確認S11最新Colab狀態→補completion commit |
 | A4 | ⚠️ A1巡查 2026-05-01：T-A4-001 S11 ~312h/13天無completion commit（Colab崩潰）；GCP帳單$3K/月已13天未處理🔴 | Owner立即：①確認S11 Colab狀態→補completion commit；②確認GCP帳單上限 |
 | A5 | ⚠️ A1巡查 2026-05-01：T-A5-002/004/005 CRITICAL D22/~528h無commit（last: cfeebd1 2026-04-09）。連續10+巡查Owner無決策回應 | Owner 決策：是否重啟A5 |
-| 全系統 | ⚠️ A1巡查 2026-05-01：全系統靜止144h+（6天，上次non-patrol commit B1 2026-04-24；上次patrol 2026-04-25 08:06）。A2/A3/A6/A7/A8/B1均無新活動 | Owner確認各Agent狀態；B1需建立正式Task Card |
+| 全系統 | ⚠️ A1巡查 2026-05-01：全系統靜止144h+（6天，上次non-patrol commit B1 2026-04-24）。A2/A3/A6/A7/A8/B1均無新活動 | Owner確認各Agent狀態；B1需建立正式Task Card |
+| A2/A3 | ℹ️ A1巡查 2026-04-30：T-A2A3-001/001-B Google重新索引等待期已逾26天（預計7-14天，早已超過），可進入排名驗證階段 | Owner登入GSC確認索引+排名變化 |
+| B1 | ⚠️ A1巡查 2026-04-30：B1首次活躍04-24至今無正式Task Card（7天仍未建立） | A1建立T-B1-001 Task Card |
 | - | ℹ️ A1巡查 2026-04-25：B1首次活躍（4 commits: sessions/B1/2026-04-24-session-01.md + workflows/B1-content-workflow-v1.md + skills/substack-api.md）— RECALL_PROMPTS已更新B1狀態 | B1需建立正式Task Card |
 | 全系統 | ℹ️ A1巡查 2026-04-19 14:00：Owner 今日提交 fix(framework) v1.2+v1.3 共 3 commits（e8a2aa3/6801266/4958a89）— 規則衝突優先級 + 回應校正標準。各 Agent 下次 session 開始時注意 AGENT_RULES.md 是否有更新。 | 各 Agent 留意 |
 | A5 | T-A5-002: 等 Owner 確認（品項名稱改法、重複品項、I 欄用途） | 見 Task Card |

@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-05-01 A1午後巡查（⚠️ 全系統靜止7天168h+；A4 S11 ~320h/~13.3天CRITICAL；A5 D22/~536h CRITICAL；GCP帳單14天未處理🔴；8h零新commit）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-05-01 A1晚間巡查（⚠️ 全系統靜止176h+/7.3天；A4 S11 ~328h/~13.7天CRITICAL；A5 D22/~544h CRITICAL；GCP帳單14天未處理🔴；8h零新commit）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -58,6 +58,7 @@
 | A4 | ⚠️ A1巡查 2026-05-01午後：T-A4-001 S11 ~320h/~13.3天無completion commit（Colab崩潰）；GCP帳單$3K/月已14天未處理🔴 | Owner立即：①確認S11 Colab狀態→補completion commit；②確認GCP帳單上限 |
 | A5 | ⚠️ A1巡查 2026-05-01午後：T-A5-002/004/005 CRITICAL D22/~536h無commit（last: cfeebd1 2026-04-09）。連續10+巡查Owner無決策回應 | Owner 決策：是否重啟A5 |
 | 全系統 | ⚠️ A1巡查 2026-05-01午後：全系統靜止168h+（7天，上次non-patrol commit B1 2026-04-24）。8h零新commit；A2/A3/A6/A7/A8/B1均無新活動 | Owner確認各Agent狀態；B1需建立正式Task Card |
+| A4/A5/全系統 | ⚠️ A1巡查 2026-05-01 22:00晚間：8h零新commit（全系統176h+/7.3天靜止持續）；A4 S11 ~328h/~13.7天Colab崩潰🔴；A5 D22/~544h無commit🔴；GCP帳單14天未處理🔴 — 所有午後警告仍未解除 | Owner 緊急決策（同午後 Blocker 行動項） |
 | A2/A3 | ℹ️ A1巡查 2026-04-30：T-A2A3-001/001-B Google重新索引等待期已逾26天（預計7-14天，早已超過），可進入排名驗證階段 | Owner登入GSC確認索引+排名變化 |
 | B1 | ⚠️ A1巡查 2026-04-30：B1首次活躍04-24至今無正式Task Card（7天仍未建立） | A1建立T-B1-001 Task Card |
 | - | ℹ️ A1巡查 2026-04-25：B1首次活躍（4 commits: sessions/B1/2026-04-24-session-01.md + workflows/B1-content-workflow-v1.md + skills/substack-api.md）— RECALL_PROMPTS已更新B1狀態 | B1需建立正式Task Card |

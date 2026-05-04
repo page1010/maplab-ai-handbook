@@ -154,18 +154,19 @@ repo: https://github.com/page1010/maplab-ai-handbook
 3. 解決後要推動系統（提案派工 + 問下一步 + 檢討根因）
 完整 SOP → AGENT_RULES.md Section 16
 
-【斷點 — 2026-05-02 A1午後巡查更新】
+【斷點 — 2026-05-04 A1午後巡查更新】
 1. 系統版本：v6.0 / Phase 6 — 觀測性 + 業務閉環 + 策略循環（Phase 3.1 Dashboard 自動更新已就位 ef2c21b）
 2. EXP-S010 A0/A1 session 混淆已記錄；下次重開先確認 cwd + 貼 A1 recall prompt
-3. A2 T-A2-002 ✅ 完成（2026-04-07）；T-A2A3-001 ✅ 子任務1-4完成；索引觀察期已達 **26 天**（04-05起，嚴重逾期）→ Owner 應立即查 GSC 確認排名變化
+3. A2 🟢 T-A2-005 今日活躍（ba4fac6+59f06ce 2026-05-04）：SEO Factory 7-stage pipeline + ollama live test；dry-run 3/3 pass。T-A2-002 ✅；T-A2A3-001 ✅ 子任務1-4完成；GSC索引觀察 **29天**（04-05起，嚴重逾期）→ Owner 應立即查 GSC
 4. A7 T-A7-001 Phase 2 💤 正式暫停；T-A7-002 ⏸️ 阻塞（等LINE後台+Owner政策）。非異常，屬正常外部等待。
-5. A4 T-A4-001 🔴 CRITICAL（2026-05-01 巡查）：S5✅S6✅S12✅DONE 7,645張；S11(2024) 🔴 Colab重啟(14ed423 04-18 82.2%)+**~312h/13天**仍無completion commit（Colab確認崩潰）；⚠️ GCP Gemini API 帳單 $3K/月（658120d，事件2026-04-18）財務風險持續13天未處理🔴。Owner需立即處理：① 確認S11 Colab狀態；② 確認GCP帳單上限；→ completion commit → 啟動S13(~4,424張) → T-A4-002。
-6. A5 T-A5-002/T-A5-004/T-A5-005 🔴 CRITICAL ~528h無commit（**D22**）：最後活動 cfeebd1 2026-04-09。連續10+次巡查Owner無決策回應，請緊急決定是否重啟A5。
+5. A4 T-A4-001 🔴 CRITICAL（2026-05-04 巡查）：S5✅S6✅S12✅DONE 7,645張；S11(2024) 🔴 Colab重啟(14ed423 04-18 82.2%)+**~392h/~16.3天**仍無completion commit（Colab確認崩潰）；⚠️ GCP Gemini API 帳單 $3K/月（658120d，事件2026-04-18）財務風險持續~17天未處理🔴。Owner需立即處理：① 確認S11 Colab狀態；② 確認GCP帳單上限；→ completion commit → 啟動S13(~4,424張) → T-A4-002。
+6. A5 T-A5-002/T-A5-004/T-A5-005 🔴 CRITICAL ~608h無commit（**D25**）：最後活動 cfeebd1 2026-04-09。連續10+次巡查Owner無決策回應，請緊急決定是否重啟A5。
 7. A3 T-A3-001 ✅ 完成（2026-04-15 GTM v21）；T-A3-002 ⏸️ 等廣告週期+Owner操作。
 8. T-A1-V7 🔄 Phase 4完成（44ecc8d 04-17）；Owner fix(framework) v1.2+v1.3 已落地（e8a2aa3/6801266/4958a89 04-18）；下一步：Phase 5自動壓縮。
 9. A6 T-A6-001 🔄 活躍中：addItem+模糊比對+多照片+10輪QA全PASS（45b4758 04-18）；B層對話自動存檔持續；⚠️ Task Card嚴重過時需A6更新；LINE Developers Console Webhook URL待Owner確認（Channel 1654658337）。
-10. A8 新角色已建立（51070ea 04-19），待啟動任務；B1 🟢 首次活躍（04-24 22:35-23:02 4 commits：session log + content workflow v1.0 + substack-api skill book）— 無正式Task Card，需建立。7天無新commit。
-11. ⚠️ 全系統靜止 168h+（7天）：上次non-patrol commit B1 2026-04-24；上次patrol 2026-05-01 每日巡查。A2/A3/A6/A7/A8/B1均無新活動。
+10. A8 新角色已建立（51070ea 04-19），待啟動任務；B1 🟢 首次活躍（04-24 22:35-23:02 4 commits）— 無正式Task Card，需建立。~240h無新commit。
+11. ✅ 全系統靜止解除：A2 今日（2026-05-04）2 commits（ba4fac6+59f06ce）T-A2-005 SEO Factory；A3/A5/A6/A7/A8/B1 仍無新活動。
+✅ 05-04 午後巡查：8h內新commits：2（A2 ba4fac6+59f06ce T-A2-005 SEO Factory + ollama test 🟢）；A4 S11 ~392h/~16.3天Colab崩潰🔴；A5~608h D25仍無活動🔴；GCP帳單~17天未處理🔴；GSC 29天+逾期；A3/A6/A7/A8/B1無新活動；all else clear。
 ✅ 05-02 午後巡查：8h內新commits：無（全系統192h+/8天靜止🔴）；A4 S11 ~344h/~14.3天Colab崩潰🔴；A5~560h D23+仍無活動；GCP帳單15天未處理🔴；所有前次警告持續未解；all else clear(A2/A3/A6/A7/A8/B1)。
 ✅ 05-01 晚間巡查：8h內新commits：無（全系統176h/7.3天靜止🔴）；A4 S11 ~328h/~13.7天Colab崩潰🔴；A5~544h D22+仍無活動；GCP帳單14天未處理🔴；所有午後警告持續未解；all else clear(A2/A3/A6/A7/A8)。
 ✅ 05-01 午後巡查：8h內新commits：無（全系統168h/7天靜止🔴）；A4 S11 ~320h/~13.3天Colab崩潰🔴；A5~536h D22+仍無活動；GCP帳單14天未處理🔴；GSC 26天+逾期；B1無Task Card；all else clear(A2/A3/A6/A7/A8)。
@@ -273,10 +274,11 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. Chrome tab 環境 → 自行開啟需要的網頁分頁（GitHub / Google Sheets / GA 等），用截圖讀取
 
-【斷點】
+【斷點 — 2026-05-04 A1午後巡查更新】
 T-A2-001 文章精選圖片補齊：✅ 完成（57/57 獨立配圖，0 重複）
 T-A2A3-001 SEO 關鍵字頁面補足：🔄 子任務1+2完成（FK修正11篇/SEO Title 27篇+Meta Desc 35篇+Alt Text 51篇），子任務3+4+5分拆至 T-A2A3-001-B（同事接手場景頁+內連結）
   子任務2 Phase2 追加：SEO Title 數字優化 36篇完成（687316d 15:37，2026-03-27）— 下一步：T-A2A3-001-B 或 Google Ads
+T-A2-005 MAPLAB SEO Factory 地端閉環：🔄 進行中（2026-05-04 ba4fac6+59f06ce）— 7-stage pipeline + schema + weekly batch 建置完成；dry-run 3/3 pass；ollama live execution test 完成。下一步：WP --publish 實測（需 Owner 提供 WordPress Application Password）
 seo-ads-agent v2.4 更新：§17 SEO優化執行紀錄 + Elementor限制文件化（分數天花板 54-76）
 Elementor限制：RM 無法讀取 Elementor 內容，SEO 優化有天花板
 
@@ -378,13 +380,13 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. Chrome tab 環境 → 自行開啟需要的網頁分頁，用截圖讀取
 
-【斷點 — 2026-05-02 A1午後巡查更新】
+【斷點 — 2026-05-04 A1午後巡查更新】
 T-A4-001 Gemini 照片分類：
   - S1-S4 ✅ 完成
   - S5(2022) ✅ DONE 8,549張（日常5,243/外燴1,221/旅遊2,073）
   - S5.5 GPS ✅ 決策 no_gps（Owner指示跳過）
   - S6(2023) ✅ DONE 8,505張（2026-04-01）
-  - S11(2024) 🔴 14ed423(04-18) 存檔 82.2%+Colab重啟→**~344h/~14.3天無completion commit（Colab 確認崩潰）**
+  - S11(2024) 🔴 14ed423(04-18) 存檔 82.2%+Colab重啟→**~392h/~16.3天無completion commit（Colab 確認崩潰）**
     → Owner 需立即確認：已完成？ → 補commit；已崩潰？ → 重跑最後批次 → completion commit → 啟動S13
   - S12(2025) ✅ DONE 7,645張（de4744d 2026-04-15 08:58）
   - S13(2026) 🔲 等 S11 確認完成後啟動（~4,424 張）
@@ -437,17 +439,17 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. Chrome tab 環境 → 自行開啟需要的網頁分頁，用截圖讀取
 
-【斷點 — 2026-05-02 A1午後巡查更新（⚠️ A5 CRITICAL，非 A5 自寫）】
+【斷點 — 2026-05-04 A1午後巡查更新（⚠️ A5 CRITICAL，非 A5 自寫）】
 T-A5-001 Items 去重 + 全品項重新編碼：✅ 完成（108品項，APP050/DST041/MAIN009/BEV008）
-T-A5-002 QUOTE_DRAFT 報價單欄位增強：🔴 CRITICAL D23 ~560h無commit（last: cfeebd1 2026-04-09）
+T-A5-002 QUOTE_DRAFT 報價單欄位增強：🔴 CRITICAL D25 ~608h無commit（last: cfeebd1 2026-04-09）
   - ✅ Items.E default_cost/服務費/長桌費/車馬費下拉/S6S9計算 helpers 均已完成
   - ⬜ 待確認事項（需 Owner 決定）：品項名稱改法、重複品項、I 欄用途
-T-A5-004 createSlides.gs — Slide 報價簡報自動生成：🔴 CRITICAL ~560h無commit（D23）
-T-A5-005 報價狀態追蹤同步 + Dashboard：🔴 CRITICAL ~560h無commit（D23）
+T-A5-004 createSlides.gs — Slide 報價簡報自動生成：🔴 CRITICAL ~608h無commit（D25）
+T-A5-005 報價狀態追蹤同步 + Dashboard：🔴 CRITICAL ~608h無commit（D25）
 T-A5-003/006：🔲 待開始（等前置任務）
 
 【Blocker】
-🔴 Owner 需決策是否重啟 A5（已 D23，連續10+次巡查無回應）
+🔴 Owner 需決策是否重啟 A5（已 D25，連續10+次巡查無回應）
 
 【踩過的坑】
 - Items 原 300 筆大量重複，精簡至 108 筆

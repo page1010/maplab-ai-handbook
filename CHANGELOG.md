@@ -27,6 +27,9 @@
 11. `CURRENT_STATUS.md` 新增 T-A2-005 任務與 blocker（待 WP 憑證）
 12. `projects/maplab-kitchen-web-optimization.md` 補上 Local SEO Factory 區塊
 13. `.gitignore` 新增 `automation/seo_factory/output/`（避免提交執行產物）
+14. 新增 `test_ollama_execution.py`（Ollama 實跑 + 單一 Pillar 測試）
+15. `seo_factory.py` 新增 `OLLAMA_TIMEOUT_SECONDS` 與 `--pillars` 參數，降低批次卡死風險
+16. 實測通過：Ollama 本地生成 + WP draft live publish（post_id 1679）
 
 
 ## v5.2（Extension）— 2026-04-03

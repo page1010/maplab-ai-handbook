@@ -50,6 +50,7 @@ class FactoryConfig:
     wp_username: Optional[str]
     wp_app_password: Optional[str]
     publish_enabled: bool
+    ollama_timeout_seconds: int
 
 
 class OllamaClient:
@@ -57,6 +58,7 @@ class OllamaClient:
         self.base_url = cfg.ollama_base_url.rstrip("/")
         self.model_small = cfg.model_small
         self.model_medium = cfg.model_medium
+        self.timeout_seconds = cfg.ollama_timeout_seconds
 
     def generate(self, prompt: str, medium: bool = False) -> str:
         model = self.model_medium if medium else self.model_small
@@ -64,7 +66,7 @@ class OllamaClient:
             resp = requests.post(
                 f"{self.base_url}/api/generate",
                 json={"model": model, "prompt": prompt, "stream": False},
-                timeout=90,
+                timeout=self.timeout_seconds,
             )
             resp.raise_for_status()
             data = resp.json()
@@ -386,10 +388,11 @@ def load_factory_config(publish_enabled: bool) -> FactoryConfig:
         wp_username=os.getenv("WP_USERNAME"),
         wp_app_password=os.getenv("WP_APP_PASSWORD"),
         publish_enabled=publish_enabled,
+        ollama_timeout_seconds=int(os.getenv("OLLAMA_TIMEOUT_SECONDS", "45")),
     )
 
 
-def run_factory(publish: bool = False) -> Dict[str, Any]:
+def run_factory(publish: bool = False, pillars_filter: Optional[List[str]] = None) -> Dict[str, Any]:
     cfg = load_factory_config(publish_enabled=publish)
     trace_id = f"seo-factory-{datetime.now().strftime('%Y%m%d-%H%M%S')}-{uuid.uuid4().hex[:8]}"
     run_dir = OUTPUT_DIR / trace_id
@@ -397,6 +400,9 @@ def run_factory(publish: bool = False) -> Dict[str, Any]:
     reports_dir = run_dir / "reports"
 
     pillars = read_json(CONFIG_DIR / "pillars.json")["pillars"]
+    if pillars_filter:
+        wanted = set([x.strip().lower() for x in pillars_filter if x.strip()])
+        pillars = [p for p in pillars if p.get("pillar", "").lower() in wanted]
     link_policy = read_json(CONFIG_DIR / "link_policy.json")
     signals_path = INPUT_DIR / "post_signals_sample.json"
     signals = read_json(signals_path).get("signals", []) if signals_path.exists() else []
@@ -463,8 +469,15 @@ def run_factory(publish: bool = False) -> Dict[str, Any]:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run MAPLAB local SEO content factory.")
     parser.add_argument("--publish", action="store_true", help="Publish WordPress drafts (requires WP env vars).")
+    parser.add_argument(
+        "--pillars",
+        type=str,
+        default="",
+        help="Optional comma-separated pillars to run, e.g. corporate,birthday,wedding",
+    )
     args = parser.parse_args()
-    result = run_factory(publish=args.publish)
+    selected = [x for x in args.pillars.split(",") if x.strip()] if args.pillars else None
+    result = run_factory(publish=args.publish, pillars_filter=selected)
     print(json.dumps(result, ensure_ascii=False, indent=2))
 
 

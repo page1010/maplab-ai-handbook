@@ -29,6 +29,7 @@ export WP_APP_PASSWORD="xxxx xxxx xxxx xxxx xxxx xxxx"
 export OLLAMA_BASE_URL="http://127.0.0.1:11434"
 export OLLAMA_MODEL_SMALL="llama3.1:latest"
 export OLLAMA_MODEL_MEDIUM="llama3.1:latest"
+export OLLAMA_TIMEOUT_SECONDS="45"
 ```
 
 4. Run weekly batch in dry-run mode (default):
@@ -41,6 +42,26 @@ python3 automation/seo_factory/run_weekly_batch.py
 
 ```bash
 python3 automation/seo_factory/run_weekly_batch.py --publish
+```
+
+## Practical Ollama tests
+
+Run a real local model test + one-pillar pipeline run:
+
+```bash
+python3 automation/seo_factory/test_ollama_execution.py --pillar corporate
+```
+
+Run one-pillar with draft publishing:
+
+```bash
+python3 automation/seo_factory/test_ollama_execution.py --pillar corporate --publish
+```
+
+You can also run only selected pillars in weekly batch:
+
+```bash
+python3 automation/seo_factory/run_weekly_batch.py --pillars corporate,wedding
 ```
 
 ## Output

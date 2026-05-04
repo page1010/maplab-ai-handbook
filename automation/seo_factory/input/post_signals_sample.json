@@ -1,0 +1,40 @@
+{
+  "signals": [
+    {
+      "url": "/tainan-catering-vs-restaurant-private-room-guide/",
+      "intent_key": "catering-vs-restaurant-private-room",
+      "impressions": 2800,
+      "clicks": 170
+    },
+    {
+      "url": "/catering-vs-private-room-which-is-better/",
+      "intent_key": "catering-vs-restaurant-private-room",
+      "impressions": 1900,
+      "clicks": 90
+    },
+    {
+      "url": "/tainan-catering-venue-top-list/",
+      "intent_key": "tainan-catering-venue-recommendation",
+      "impressions": 3200,
+      "clicks": 150
+    },
+    {
+      "url": "/tainan-catering-venue-selection-guide-2026/",
+      "intent_key": "tainan-catering-venue-recommendation",
+      "impressions": 2700,
+      "clicks": 110
+    },
+    {
+      "url": "/tainan-catering-menu-buffet-ideas/",
+      "intent_key": "tainan-catering-menu-recommendation",
+      "impressions": 2100,
+      "clicks": 125
+    },
+    {
+      "url": "/tainan-afternoon-tea-catering-menu/",
+      "intent_key": "tainan-catering-menu-recommendation",
+      "impressions": 1400,
+      "clicks": 65
+    }
+  ]
+}

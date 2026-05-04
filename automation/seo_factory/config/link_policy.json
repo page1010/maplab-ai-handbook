@@ -1,0 +1,35 @@
+{
+  "anchor_mix": {
+    "exact_match": 0.3,
+    "semantic_related": 0.4,
+    "brand_generic": 0.3
+  },
+  "max_links_per_doc": 8,
+  "clusters": [
+    {
+      "cluster": "corporate",
+      "allowed_targets": [
+        "/catering-corporate-tainan/",
+        "/corporate-opening-reception/",
+        "/brand-event-catering/",
+        "/corporate-meeting-snacks/"
+      ]
+    },
+    {
+      "cluster": "birthday",
+      "allowed_targets": [
+        "/catering-birthday-party-tainan/",
+        "/zhuazhou-party-catering/",
+        "/small-family-catering/"
+      ]
+    },
+    {
+      "cluster": "wedding",
+      "allowed_targets": [
+        "/catering-wedding-tainan/",
+        "/outdoor-wedding-catering/",
+        "/wedding-reception-snacks/"
+      ]
+    }
+  ]
+}

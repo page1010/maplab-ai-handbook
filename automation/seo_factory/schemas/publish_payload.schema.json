@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PublishPayload",
+  "type": "object",
+  "required": ["status", "content", "meta_fields", "trace_id"],
+  "properties": {
+    "post_id": {
+      "anyOf": [
+        { "type": "integer" },
+        { "type": "null" }
+      ]
+    },
+    "status": { "type": "string", "enum": ["draft"] },
+    "content": { "type": "string", "minLength": 100 },
+    "meta_fields": {
+      "type": "object",
+      "required": [
+        "rank_math_focus_keyword",
+        "rank_math_title",
+        "rank_math_description"
+      ],
+      "properties": {
+        "rank_math_focus_keyword": { "type": "string" },
+        "rank_math_title": { "type": "string" },
+        "rank_math_description": { "type": "string" }
+      }
+    },
+    "trace_id": { "type": "string", "minLength": 8 }
+  }
+}

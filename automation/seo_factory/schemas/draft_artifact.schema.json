@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DraftArtifact",
+  "type": "object",
+  "required": [
+    "slug",
+    "title",
+    "body_md",
+    "faq_items",
+    "cta",
+    "meta",
+    "schema_jsonld",
+    "internal_links"
+  ],
+  "properties": {
+    "slug": { "type": "string", "pattern": "^[a-z0-9\\-]+$" },
+    "title": { "type": "string", "minLength": 8 },
+    "body_md": { "type": "string", "minLength": 200 },
+    "faq_items": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["q", "a"],
+        "properties": {
+          "q": { "type": "string", "minLength": 5 },
+          "a": { "type": "string", "minLength": 20 }
+        }
+      }
+    },
+    "cta": { "type": "string", "minLength": 8 },
+    "meta": {
+      "type": "object",
+      "required": ["focus_keyword", "title", "description"],
+      "properties": {
+        "focus_keyword": { "type": "string", "minLength": 2 },
+        "title": { "type": "string", "minLength": 8 },
+        "description": { "type": "string", "minLength": 20 }
+      }
+    },
+    "schema_jsonld": {
+      "type": "array",
+      "minItems": 2,
+      "items": { "type": "object" }
+    },
+    "internal_links": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["anchor_text", "url", "position_hint", "anchor_type"],
+        "properties": {
+          "anchor_text": { "type": "string", "minLength": 2 },
+          "url": { "type": "string", "pattern": "^/" },
+          "position_hint": { "type": "string" },
+          "anchor_type": {
+            "type": "string",
+            "enum": ["exact_match", "semantic_related", "brand_generic"]
+          }
+        }
+      }
+    }
+  }
+}

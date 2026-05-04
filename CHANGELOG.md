@@ -3,6 +3,31 @@
 本文件記錄 maplab-ai-handbook 的所有重大版本變更。
 格式：版本號 | 日期 | 變更摘要 | 執行 Agent
 
+## v6.1（SEO Factory）— 2026-05-04
+
+**A1 治理同步 + A2 地端 SEO 內容工廠（Pillar First）**
+
+執行 Agent：A1（治理同步）+ A2（SEO 實作）
+
+### 新增模組
+1. `automation/seo_factory/` 地端內容工廠骨架（local-first）
+2. 七階段流程實作：`Planner -> Writer -> Linker -> Schema Builder -> Verifier -> WP Draft Publisher -> Auditor`
+3. 三大 Pillar 設定：企業 / 週歲 / 婚禮（config）
+4. 介面 schema：`ContentBrief` / `DraftArtifact` / `PublishPayload`
+5. 週批次入口：`run_weekly_batch.py`
+6. 第二波候選報告：`cannibalization-candidates.json`（由 post signals 產生）
+
+### 配置與驗證
+7. Ollama 預設模型切換為 `llama3.1:latest`（對齊本機已安裝模型）
+8. RUN_LOG 新增：`automation/seo_factory/RUN_LOG_2026-05-04.md`
+9. dry-run 驗證：3 個 Pillar 全通過（score 100，draft payload 正常產生）
+
+### A1 治理層同步
+10. 新增 Task Card：`handoff/tasks/T-A2-005-local-seo-factory.md`
+11. `CURRENT_STATUS.md` 新增 T-A2-005 任務與 blocker（待 WP 憑證）
+12. `projects/maplab-kitchen-web-optimization.md` 補上 Local SEO Factory 區塊
+13. `.gitignore` 新增 `automation/seo_factory/output/`（避免提交執行產物）
+
 
 ## v5.2（Extension）— 2026-04-03
 

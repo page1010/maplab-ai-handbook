@@ -95,6 +95,20 @@ maplab-kitchen-web-optimization/
 - Accessibility 88 → 95+（對比度 + 連結名稱 + iframe 修正）
 - JS defer + TTFB 優化
 
+## Local SEO Factory（2026-05-04 新增）
+
+為了讓 SEO 內容生產在 Max 配額外仍可持續，已在 handbook 主倉新增本地內容工廠：
+
+- 路徑：`automation/seo_factory/`
+- 模式：`Planner -> Writer -> Linker -> Schema Builder -> Verifier -> WP Draft Publisher -> Auditor`
+- 批次：`python3 automation/seo_factory/run_weekly_batch.py`
+- 發佈策略：`draft only`（人工審核後再 publish）
+- 關聯任務：`handoff/tasks/T-A2-005-local-seo-factory.md`
+
+此模組屬於治理層與執行層的橋接：
+- A2/A3 負責 SEO 意圖、內容與內連策略
+- A1 負責任務卡、狀態同步、版本治理
+
 ## 已知約束
 
 - ⚠️ 所有 CSS/Elementor 修改須在草稿預覽確認後才上線

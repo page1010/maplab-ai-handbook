@@ -21,3 +21,6 @@ scripts/token.json
 
 # System
 .DS_Store
+
+# SEO factory runtime artifacts
+automation/seo_factory/output/

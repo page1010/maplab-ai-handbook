@@ -1,0 +1,65 @@
+{
+  "pillars": [
+    {
+      "pillar": "corporate",
+      "slug": "catering-corporate-tainan",
+      "target_intent": "B2B corporate catering in Tainan",
+      "audience": "office admins, HR, marketing, PR teams",
+      "required_sections": [
+        "hero-value-prop",
+        "service-scenarios",
+        "menu-and-budget-guidance",
+        "execution-workflow",
+        "social-proof",
+        "faq",
+        "cta"
+      ],
+      "banned_topics": [
+        "camping",
+        "bbq-lifestyle",
+        "picnic-only"
+      ],
+      "focus_keyword": "台南企業外燴"
+    },
+    {
+      "pillar": "birthday",
+      "slug": "catering-birthday-party-tainan",
+      "target_intent": "B2C birthday and zhuazhou party catering in Tainan",
+      "audience": "families planning birthday or zhuazhou events",
+      "required_sections": [
+        "hero-value-prop",
+        "party-formats",
+        "menu-and-setup",
+        "space-and-logistics",
+        "social-proof",
+        "faq",
+        "cta"
+      ],
+      "banned_topics": [
+        "low-intent-picnic",
+        "generic-bbq-only"
+      ],
+      "focus_keyword": "台南週歲派對外燴"
+    },
+    {
+      "pillar": "wedding",
+      "slug": "catering-wedding-tainan",
+      "target_intent": "modern wedding catering and reception snacks in Tainan",
+      "audience": "couples planning modern or outdoor weddings",
+      "required_sections": [
+        "hero-value-prop",
+        "wedding-service-types",
+        "menu-and-reception-snacks",
+        "venue-and-logistics",
+        "social-proof",
+        "faq",
+        "cta"
+      ],
+      "banned_topics": [
+        "traditional-banquet-only",
+        "low-intent-picnic"
+      ],
+      "focus_keyword": "台南婚禮外燴"
+    }
+  ]
+}

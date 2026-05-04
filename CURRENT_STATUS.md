@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-05-04 17:00 A1午後巡查（A2 🟢 T-A2-005 ba4fac6+59f06ce；A4 S11 ~392h🔴；A5 D25/~608h🔴；GCP ~17天🔴）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-05-04 21:00 A1晚間巡查（A6 🟢 5ae9c79 ollama chat/seo modes；A4 S11 ~400h🔴；A5 D25/~616h🔴；GCP ~17.3天🔴）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -37,7 +37,7 @@
 | T-A5-004 | createSlides.gs — Slide 報價簡報自動生成 | A5 | 🔴 CRITICAL（~528h無commit，D22）| handoff/tasks/T-A5-004.md |
 | T-A5-005 | 報價狀態追蹤同步 + Dashboard | A5 | 🔴 CRITICAL（~528h無commit，D22）| handoff/tasks/T-A5-005.md |
 | T-A5-006 | T-A5-006 | A5 | 🔲 待開始（尚未開始。等 T-A5-005 完成後啟動。） | handoff/tasks/T-A5-006.md |
-| T-A6-001 | A6 LINE 業務報價助手系統 | A6 | ⏸️ 阻塞中（Sheet 三分頁架構完成、LINE Bot Webhook 技能書完成、GAS doPost 已部署。差最後一步：LI） | handoff/tasks/T-A6-001.md |
+| T-A6-001 | A6 LINE 業務報價助手系統 | A6 | 🔄 進行中（5ae9c79 20:23 ollama chat/seo modes + menu 新增；前置阻塞仍存在：LINE Developers Console Webhook URL 待 Owner 確認（Channel 1654658337）） | handoff/tasks/T-A6-001.md |
 | T-A6-002 | LINE 對話訓練資料收集計畫 | A6 | 💤 暫停（原計畫拆 Sheet 做訓練資料，04-07 重新規劃方向。等 Owner 決定是否需要 LINE 訓練資料及取得方式。） | handoff/tasks/T-A6-002.md |
 | T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | 💤 暫停（Phase 2 v2.0 完成，等 Owner 確認政策 + A5 欄位補齊）（Q1-Q10 重構完成（真實 CSV 驅動），下一步是 Q7/Q10 政策確認 + Phase 3 上線測試） | handoff/tasks/T-A7-001.md |
 | T-A7-002 | A7 部門 80/20 優先任務清單 | A7 | ⏸️ 阻塞中（任務 6（Q1-Q10 實裝）+ 任務 10（技能書 v2.0）已完成。Phase 3A 剩任務 4（地區判斷）、7（流） | handoff/tasks/T-A7-002.md |
@@ -60,6 +60,7 @@
 | A4 | ⚠️ A1巡查 2026-05-01午後：T-A4-001 S11 ~320h/~13.3天無completion commit（Colab崩潰）；GCP帳單$3K/月已14天未處理🔴 | Owner立即：①確認S11 Colab狀態→補completion commit；②確認GCP帳單上限 |
 | A5 | ⚠️ A1巡查 2026-05-01午後：T-A5-002/004/005 CRITICAL D22/~536h無commit（last: cfeebd1 2026-04-09）。連續10+巡查Owner無決策回應 | Owner 決策：是否重啟A5 |
 | 全系統 | ⚠️ A1巡查 2026-05-01午後：全系統靜止168h+（7天，上次non-patrol commit B1 2026-04-24）。8h零新commit；A2/A3/A6/A7/A8/B1均無新活動 | Owner確認各Agent狀態；B1需建立正式Task Card |
+| A4/A5/A6 | ⚠️ A1巡查 2026-05-04 21:00晚間：A6 🟢 5ae9c79（ollama chat/seo modes + menu）打破A6長期靜止；A4 S11 ~400h/~16.7天Colab崩潰🔴；A5 D25/~616h無commit🔴；GCP帳單~17.3天未處理🔴；A2/A3/A7/A8/B1無新活動（A2截至午後已有活動）；LINE webhook仍等Owner確認（Channel 1654658337）；T-A6-001狀態從⏸️更新為🔄 | Owner 緊急決策：①確認A4 S11 Colab狀態；②確認GCP帳單上限；③決定是否重啟A5；④確認LINE webhook URL |
 | A4/A5 | ⚠️ A1巡查 2026-05-04 17:00午後：A2 🟢 2新commit（ba4fac6+59f06ce T-A2-005 SEO Factory + ollama live test）打破全系統靜止（~240h）；A4 S11 ~392h/~16.3天Colab崩潰🔴；A5 D25/~608h無commit🔴；GCP帳單~17天未處理🔴；A3/A6/A7/A8/B1仍無活動；GSC索引觀察29天+逾期 | Owner 緊急決策：①確認A4 S11 Colab狀態；②確認GCP帳單上限；③決定是否重啟A5 |
 | A4/A5/全系統 | ⚠️ A1巡查 2026-05-02 14:00午後：8h零新commit（全系統192h+/8天靜止持續）；A4 S11 ~344h/~14.3天Colab崩潰🔴；A5 D23/~560h無commit🔴；GCP帳單15天未處理🔴 — 所有前次警告仍未解除 | Owner 緊急決策（同前次 Blocker 行動項） |
 | A4/A5/全系統 | ⚠️ A1巡查 2026-05-01 22:00晚間：8h零新commit（全系統176h+/7.3天靜止持續）；A4 S11 ~328h/~13.7天Colab崩潰🔴；A5 D22/~544h無commit🔴；GCP帳單14天未處理🔴 — 所有午後警告仍未解除 | Owner 緊急決策（同午後 Blocker 行動項） |

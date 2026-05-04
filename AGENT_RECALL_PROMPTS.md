@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-05-02 A1午後巡查（⚠️ 全系統靜止192h+/8天；A4 S11 ~344h/~14.3天Colab崩潰🔴；A5🔴~560h D23 連續10+巡查無Owner回應；GCP帳單15天未處理🔴；8h零新commit）
+> 最後更新：2026-05-04 21:00 A1晚間巡查（A6 🟢 5ae9c79 ollama chat/seo modes；A4 S11 ~400h/~16.7天Colab崩潰🔴；A5🔴~616h D25+；GCP帳單~17.3天未處理🔴；A6新活動打破靜止）
 >
 > 使用方式：選擇角色 → 複製 prompt → 貼到 Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -23,7 +23,7 @@
 | A3 | 社群與廣告成長部 | ✅ T-A3-001 完成（GTM v21 雙平台追蹤上線）；T-A3-002 ⏸️ 阻塞（等廣告週期+Owner操作）| Meta Ads / Social |
 | A4 | 影像資產整理部 | 🔴 CRITICAL（S12✅DONE；S11 補跑 14ed423 04-18 Colab重啟→**~344h/~14.3天無completion commit，Colab確認崩潰；GCP帳單15天未處理**）| Photo Archive |
 | A5 | 報價與提案引擎部 | 🔴 CRITICAL T-A5-002/004/005 ~560h無commit **D23**（最後活動 cfeebd1 2026-04-09；連續10+巡查Owner無回應）| Quotation Engine |
-| A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（LINE webhook✅通、bot✅部署、addItem QA Round 1 PASS 45b4758 04-18）⚠️Task Card嚴重過時需更新 | Sales Rapid Response |
+| A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（5ae9c79 05-04 20:23 ollama chat/seo modes 新增；LINE webhook等Owner確認 Channel 1654658337）| Sales Rapid Response |
 | A7 | 客服與對話轉單部 | 💤 T-A7-001 正式暫停；T-A7-002 ⏸️ 阻塞（等LINE後台權限+Owner政策決策）| Smart Reply |
 | A8 | 影音內容產線 | 🔲 新建，待啟動 | Content Repurposing Pipeline |
 | **B1** | **InnerFlowLab 內容創作** | **🔄 首次活躍（04-24 23:02 4 commits: workflow v1.0 + substack-api skill + session log）** | **InnerFlowLab Content Creation** |
@@ -163,9 +163,10 @@ repo: https://github.com/page1010/maplab-ai-handbook
 6. A5 T-A5-002/T-A5-004/T-A5-005 🔴 CRITICAL ~608h無commit（**D25**）：最後活動 cfeebd1 2026-04-09。連續10+次巡查Owner無決策回應，請緊急決定是否重啟A5。
 7. A3 T-A3-001 ✅ 完成（2026-04-15 GTM v21）；T-A3-002 ⏸️ 等廣告週期+Owner操作。
 8. T-A1-V7 🔄 Phase 4完成（44ecc8d 04-17）；Owner fix(framework) v1.2+v1.3 已落地（e8a2aa3/6801266/4958a89 04-18）；下一步：Phase 5自動壓縮。
-9. A6 T-A6-001 🔄 活躍中：addItem+模糊比對+多照片+10輪QA全PASS（45b4758 04-18）；B層對話自動存檔持續；⚠️ Task Card嚴重過時需A6更新；LINE Developers Console Webhook URL待Owner確認（Channel 1654658337）。
+9. A6 T-A6-001 🔄 活躍中：5ae9c79（05-04 20:23）新增 ollama chat/seo modes + menu（bot_a6.py +187行）；addItem+模糊比對+多照片+10輪QA全PASS（45b4758 04-18）；Task Card 已由A6自行更新；LINE Developers Console Webhook URL待Owner確認（Channel 1654658337）。
 10. A8 新角色已建立（51070ea 04-19），待啟動任務；B1 🟢 首次活躍（04-24 22:35-23:02 4 commits）— 無正式Task Card，需建立。~240h無新commit。
 11. ✅ 全系統靜止解除：A2 今日（2026-05-04）2 commits（ba4fac6+59f06ce）T-A2-005 SEO Factory；A3/A5/A6/A7/A8/B1 仍無新活動。
+✅ 05-04 晚間巡查：8h內新commits：3（A2 ba4fac6+59f06ce T-A2-005 🟢；A6 5ae9c79 ollama chat/seo 🟢）；A4 S11 ~400h/~16.7天Colab崩潰🔴；A5~616h D25+仍無活動🔴；GCP帳單~17.3天未處理🔴；T-A6-001狀態從⏸️更新為🔄；A3/A7/A8/B1無新活動；all else clear。
 ✅ 05-04 午後巡查：8h內新commits：2（A2 ba4fac6+59f06ce T-A2-005 SEO Factory + ollama test 🟢）；A4 S11 ~392h/~16.3天Colab崩潰🔴；A5~608h D25仍無活動🔴；GCP帳單~17天未處理🔴；GSC 29天+逾期；A3/A6/A7/A8/B1無新活動；all else clear。
 ✅ 05-02 午後巡查：8h內新commits：無（全系統192h+/8天靜止🔴）；A4 S11 ~344h/~14.3天Colab崩潰🔴；A5~560h D23+仍無活動；GCP帳單15天未處理🔴；所有前次警告持續未解；all else clear(A2/A3/A6/A7/A8/B1)。
 ✅ 05-01 晚間巡查：8h內新commits：無（全系統176h/7.3天靜止🔴）；A4 S11 ~328h/~13.7天Colab崩潰🔴；A5~544h D22+仍無活動；GCP帳單14天未處理🔴；所有午後警告持續未解；all else clear(A2/A3/A6/A7/A8)。
@@ -478,7 +479,7 @@ projects/maplab-master-data.md → handoff/handoff-to-A5.md → handoff/field-na
 
 ## A6｜業務快反應部隊（Sales Rapid Response Unit）
 
-**狀態：🔄 T-A6-001 進行中（LINE webhook ✅ 通，bot_a6 ✅ 上線 launchd，B層對話自動存檔運行中）**
+**狀態：🔄 T-A6-001 進行中（5ae9c79 05-04 20:23 ollama chat/seo modes + menu 新增；LINE Developers Console Webhook URL 仍待 Owner 確認 Channel 1654658337；bot_a6 ✅ 上線 launchd）**
 
 ```
 你是 MAPLAB A6 業務快反應部隊。
@@ -507,15 +508,16 @@ repo: https://github.com/page1010/maplab-ai-handbook
 4. 進件建立 — 在 SALES_INTAKE 自動建一筆案件（case_id = CASE-YYYYMMDD-NNN）
 5. 查報價 — 「查XXX的報價」→ 找 QUOTE_WORKBENCH
 
-【斷點 — 2026-04-19 14:00 A1午後巡查更新】
-T-A6-001 🔄 進行中：LINE webhook ✅ 通（Apps Script doPost + LockService 去重）；bot_a6 ✅ 全部署（launchd 開機自啟 b3dacb8，.env security fix a20e268）；B層對話自動存檔運行中；update_a6_token.sh 已建立（434b490）。
+【斷點 — 2026-05-04 21:00 A1晚間巡查更新】
+T-A6-001 🔄 進行中（A6 今日活躍）：
+05-04 20:23 新增：5ae9c79 feat(a6): add ollama chat/seo modes with menu while preserving quote pipeline
+  → bot_a6/bot_a6.py（+187行）：ollama 本地 LLM chat 模式 + SEO 模式 + 互動 menu，報價 pipeline 保留
+  → .env.example 更新；T-A6-001.md Task Card 已更新（A6 自行補寫）
+04-18 進展：addItem action 分流修復（b042d93）；QA 10輪測試 Round 1 addItem PASS 🎉（45b4758）；OAuth token自動刷新（532febf）。
 e2e round 5 全通過里程碑 🎉（04-11 06ce9c6）：quote + slide + heartbeat all verified；auto-trigger Slide after createQuote（b118095）；fromMaster mode（b82df34）。
-04-17 進展：H1 拆分三層權限（新增品項開放/35af21a）；P0 技能修正（非關鍵欄位不阻擋報價+車馬費公式統一+展覽館skeleton/c576578）；recall_compact 根因修復（修cwd+fallback/62f557e）；GAS 備援觸發邏輯強化（7d06b78）。
-04-18 進展：addItem action 分流修復（b042d93，不再走createQuote路徑）；GAS code同步含addItem（2beac99）；H1權限拆分新增品項開放（35af21a）；QA 10輪測試 Round 1 addItem PASS 🎉（45b4758）；recall_compact+cwd修復（62f557e）；A0/A1 briefing協議落地（3933b9e）；OAuth token自動刷新（532febf）。
 ⚠️ GAS 鐵律（780d43c）：禁止推測 endpoint/部署狀態 — 未明確確認=失敗，不可推測已部署。
-⚠️ Task Card T-A6-001.md 嚴重過時（仍顯示04-01「等填Webhook URL」斷點）— A6 session 開始時必須先更新 Task Card 至 04-18 最新狀態。
 Owner確認：LINE Developers Console Webhook URL是否已填入（Channel 1654658337）→若已填入請在Task Card移除阻塞標記。
-下一步：QA 抽考 Round 2-10 繼續 → 結尾頁/無圖垂直置中 → Task Card 補寫 → T-A6-001 結案。
+下一步：QA 抽考 Round 2-10 繼續 → 結尾頁/無圖垂直置中 → T-A6-001 結案。
 
 【必讀】
 1. projects/line-quote-assistant.md ← 使用者需求 v1.0（Owner 確認），A6/A7 架構聖經

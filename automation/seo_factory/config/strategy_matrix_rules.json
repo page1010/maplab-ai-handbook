@@ -1,0 +1,67 @@
+{
+  "version": "2026-05-04",
+  "global_rules": {
+    "content_model": "pillar-cluster",
+    "publish_policy": "draft_only",
+    "core_signal_priority": [
+      "corporate_catering",
+      "birthday_zhuazhou_catering",
+      "wedding_catering"
+    ],
+    "deprioritized_topics": [
+      "picnic",
+      "camping",
+      "bbq_lifestyle"
+    ],
+    "internal_linking": {
+      "max_links_per_2000_words": 10,
+      "prefer_positions": [
+        "early-body",
+        "mid-body"
+      ],
+      "avoid_cross_cluster_noise": true,
+      "anchor_mix": {
+        "exact_match": 0.3,
+        "semantic_related": 0.4,
+        "brand_generic": 0.3
+      }
+    },
+    "schema_priority": [
+      "FoodService",
+      "Service",
+      "FAQPage"
+    ]
+  },
+  "pillar_rules": {
+    "corporate": {
+      "must_cover": [
+        "meeting_snacks",
+        "opening_reception",
+        "brand_event"
+      ],
+      "avoid": [
+        "low_intent_lifestyle"
+      ]
+    },
+    "birthday": {
+      "must_cover": [
+        "birthday_party",
+        "zhuazhou",
+        "small_family_catering"
+      ],
+      "avoid": [
+        "generic_picnic"
+      ]
+    },
+    "wedding": {
+      "must_cover": [
+        "wedding_reception_snacks",
+        "outdoor_wedding",
+        "modern_style_positioning"
+      ],
+      "avoid": [
+        "traditional_banquet_only_competition"
+      ]
+    }
+  }
+}

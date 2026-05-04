@@ -81,11 +81,13 @@ class OllamaClient:
 
 
 class Planner:
-    def run(self, brief: Dict[str, Any]) -> Dict[str, Any]:
+    def run(self, brief: Dict[str, Any], strategy_rules: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         sections = [
             {"section": s, "goal": f"Cover {s} for {brief['target_intent']} intent."}
             for s in brief["required_sections"]
         ]
+        global_rules = (strategy_rules or {}).get("global_rules", {})
+        pillar_rules = (strategy_rules or {}).get("pillar_rules", {}).get(brief["pillar"], {})
         return {
             "pillar": brief["pillar"],
             "slug": brief["slug"],
@@ -93,6 +95,8 @@ class Planner:
             "intent": brief["target_intent"],
             "audience": brief["audience"],
             "banned_topics": brief["banned_topics"],
+            "strategy_global": global_rules,
+            "strategy_pillar": pillar_rules,
         }
 
 
@@ -101,6 +105,8 @@ class Writer:
         self.ollama = ollama
 
     def run(self, plan: Dict[str, Any], focus_keyword: str) -> Dict[str, Any]:
+        strategy_global = plan.get("strategy_global", {})
+        strategy_pillar = plan.get("strategy_pillar", {})
         prompt = textwrap.dedent(
             f"""
             Write a structured Chinese markdown landing page draft.
@@ -109,6 +115,11 @@ class Writer:
             Focus keyword: {focus_keyword}
             Required sections: {', '.join([s['section'] for s in plan['outline']])}
             Avoid: {', '.join(plan['banned_topics'])}
+            SEO strategy model: {strategy_global.get('content_model', 'pillar-cluster')}
+            Core signal priority: {', '.join(strategy_global.get('core_signal_priority', []))}
+            Deprioritized topics: {', '.join(strategy_global.get('deprioritized_topics', []))}
+            Pillar must cover: {', '.join(strategy_pillar.get('must_cover', []))}
+            Pillar avoid: {', '.join(strategy_pillar.get('avoid', []))}
             Must include conversion-first CTA.
             """
         ).strip()
@@ -392,7 +403,11 @@ def load_factory_config(publish_enabled: bool) -> FactoryConfig:
     )
 
 
-def run_factory(publish: bool = False, pillars_filter: Optional[List[str]] = None) -> Dict[str, Any]:
+def run_factory(
+    publish: bool = False,
+    pillars_filter: Optional[List[str]] = None,
+    strategy_rules_path: Optional[str] = None,
+) -> Dict[str, Any]:
     cfg = load_factory_config(publish_enabled=publish)
     trace_id = f"seo-factory-{datetime.now().strftime('%Y%m%d-%H%M%S')}-{uuid.uuid4().hex[:8]}"
     run_dir = OUTPUT_DIR / trace_id
@@ -404,6 +419,8 @@ def run_factory(publish: bool = False, pillars_filter: Optional[List[str]] = Non
         wanted = set([x.strip().lower() for x in pillars_filter if x.strip()])
         pillars = [p for p in pillars if p.get("pillar", "").lower() in wanted]
     link_policy = read_json(CONFIG_DIR / "link_policy.json")
+    resolved_strategy = Path(strategy_rules_path) if strategy_rules_path else (CONFIG_DIR / "strategy_matrix_rules.json")
+    strategy_rules = read_json(resolved_strategy) if resolved_strategy.exists() else {}
     signals_path = INPUT_DIR / "post_signals_sample.json"
     signals = read_json(signals_path).get("signals", []) if signals_path.exists() else []
 
@@ -426,7 +443,7 @@ def run_factory(publish: bool = False, pillars_filter: Optional[List[str]] = Non
             auditor.add("brief_validation_failed", {"pillar": brief.get("pillar"), "error": brief_error})
             validation_summary.append({"pillar": brief.get("pillar"), "pass": False, "score": 0, "failures": [brief_error], "auto_fixable": []})
             continue
-        plan = planner.run(brief)
+        plan = planner.run(brief, strategy_rules=strategy_rules)
         auditor.add("planner", {"pillar": brief["pillar"], "sections": len(plan["outline"])})
 
         draft = writer.run(plan, brief["focus_keyword"])
@@ -475,9 +492,19 @@ def main() -> None:
         default="",
         help="Optional comma-separated pillars to run, e.g. corporate,birthday,wedding",
     )
+    parser.add_argument(
+        "--strategy-rules",
+        type=str,
+        default="",
+        help="Optional path to strategy rules JSON (defaults to config/strategy_matrix_rules.json)",
+    )
     args = parser.parse_args()
     selected = [x for x in args.pillars.split(",") if x.strip()] if args.pillars else None
-    result = run_factory(publish=args.publish, pillars_filter=selected)
+    result = run_factory(
+        publish=args.publish,
+        pillars_filter=selected,
+        strategy_rules_path=args.strategy_rules or None,
+    )
     print(json.dumps(result, ensure_ascii=False, indent=2))
 
 

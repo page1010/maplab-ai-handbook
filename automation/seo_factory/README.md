@@ -83,6 +83,15 @@ Main files include:
 
 - Pillar briefs: `automation/seo_factory/config/pillars.json`
 - Link policy: `automation/seo_factory/config/link_policy.json`
+- Strategy rules: `automation/seo_factory/config/strategy_matrix_rules.json`
 - Existing post signals (optional): `automation/seo_factory/input/post_signals_sample.json`
 
 To improve recommendations, replace sample signals with GSC/GA exported data transformed into the same schema.
+
+Use a custom strategy rules file:
+
+```bash
+python3 automation/seo_factory/run_weekly_batch.py \
+  --pillars corporate \
+  --strategy-rules automation/seo_factory/config/strategy_matrix_rules.json
+```

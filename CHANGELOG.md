@@ -31,6 +31,12 @@
 15. `seo_factory.py` 新增 `OLLAMA_TIMEOUT_SECONDS` 與 `--pillars` 參數，降低批次卡死風險
 16. 實測通過：Ollama 本地生成 + WP draft live publish（post_id 1679）
 
+### A6 本地模式路由（2026-05-04 追加）
+17. `bot_a6.py` 新增模式切換：`/mode quote|chat|seo` + Telegram 鍵盤選單
+18. 報價模式維持原本 `Claude + GAS + Sheets`；聊天/SEO 模式改走本地 `Ollama`
+19. 雙人白名單機制保持不變（Owner + Sales user ID）
+20. `bot_a6/.env.example` 新增 `OLLAMA_BASE_URL` / `OLLAMA_MODEL_CHAT` / `OLLAMA_TIMEOUT_SECONDS`
+
 
 ## v5.2（Extension）— 2026-04-03
 

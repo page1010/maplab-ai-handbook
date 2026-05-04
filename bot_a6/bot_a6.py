@@ -15,13 +15,14 @@ import logging
 import os
 import subprocess
 import sys
+import urllib.request
 from collections import deque
 from pathlib import Path
 from datetime import datetime
 from typing import Optional
 
 from dotenv import load_dotenv
-from telegram import Update
+from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import (
     Application,
     CommandHandler,
@@ -40,6 +41,9 @@ SALES_USER_ID = int(os.getenv("SALES_USER_ID", "0"))  # 業務的 Telegram user 
 REPO_PATH = Path(os.getenv("REPO_PATH", "/Users/pagemacmini/maplab-ai-handbook"))
 CLAUDE_OAUTH_TOKEN = os.getenv("CLAUDE_CODE_OAUTH_TOKEN", "")
 GAS_QUOTE_URL = os.getenv("GAS_QUOTE_URL", "")
+OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434")
+OLLAMA_MODEL_CHAT = os.getenv("OLLAMA_MODEL_CHAT", "llama3.1:latest")
+OLLAMA_TIMEOUT_SECONDS = int(os.getenv("OLLAMA_TIMEOUT_SECONDS", "45"))
 
 # 白名單：只有這兩人的訊息會被處理
 ALLOWED_USER_IDS: set[int] = {OWNER_USER_ID}
@@ -69,6 +73,39 @@ _claude_semaphore = asyncio.Semaphore(1)
 
 # Conversation history per chat_id (deque maxlen=20)
 _conv_history: dict[int, deque] = {}
+_chat_modes: dict[int, str] = {}  # quote|chat|seo
+
+MODE_QUOTE = "quote"
+MODE_CHAT = "chat"
+MODE_SEO = "seo"
+
+MODE_LABELS = {
+    MODE_QUOTE: "🧾 報價模式（Claude + GAS + Sheets）",
+    MODE_CHAT: "💬 聊天模式（Ollama）",
+    MODE_SEO: "📝 SEO 模式（Ollama）",
+}
+
+MENU_BUTTON_QUOTE = "🧾 報價模式"
+MENU_BUTTON_CHAT = "💬 一般聊天"
+MENU_BUTTON_SEO = "📝 SEO 草稿"
+MENU_BUTTON_HELP = "❓ 指令說明"
+
+
+def _get_mode(chat_id: int) -> str:
+    return _chat_modes.get(chat_id, MODE_QUOTE)
+
+
+def _set_mode(chat_id: int, mode: str) -> None:
+    if mode in (MODE_QUOTE, MODE_CHAT, MODE_SEO):
+        _chat_modes[chat_id] = mode
+
+
+def _mode_keyboard() -> ReplyKeyboardMarkup:
+    return ReplyKeyboardMarkup(
+        [[MENU_BUTTON_QUOTE, MENU_BUTTON_CHAT], [MENU_BUTTON_SEO, MENU_BUTTON_HELP]],
+        resize_keyboard=True,
+        one_time_keyboard=False,
+    )
 
 def _load_a6_recall():
     """
@@ -214,6 +251,61 @@ async def send_long(update: Update, text: str) -> None:
         await update.message.reply_text(text[i:i + MAX])
 
 
+def _build_ollama_prompt(chat_id: int, user_message: str, mode: str, user_name: str = "") -> str:
+    history = _get_history(chat_id)
+    if mode == MODE_SEO:
+        system = (
+            "你是 MAPLAB Kitchen 的 SEO 助手。請用繁體中文回答，輸出要可直接執行。"
+            "避免虛構資料，若資訊不足要明確標示假設。"
+        )
+    else:
+        system = (
+            "你是 MAPLAB A6 的地端聊天助理。請用繁體中文、簡潔、實用地回覆，"
+            "語氣專業友善，避免過度冗長。"
+        )
+
+    parts = [system]
+    if history:
+        parts.append("\n【對話記錄】")
+        for msg in history:
+            role_label = f"使用者（{user_name or '業務'}）" if msg["role"] == "user" else "助理"
+            parts.append(f"{role_label}：{msg['content']}")
+        parts.append("【對話記錄結束】")
+    parts.append(f"\n使用者（本次）：{user_message}\n請直接回答。")
+    return "\n".join(parts)
+
+
+def _ollama_generate_sync(prompt: str) -> str:
+    payload = json.dumps(
+        {"model": OLLAMA_MODEL_CHAT, "prompt": prompt, "stream": False},
+        ensure_ascii=False,
+    ).encode("utf-8")
+    req = urllib.request.Request(
+        f"{OLLAMA_BASE_URL.rstrip('/')}/api/generate",
+        data=payload,
+        headers={"Content-Type": "application/json"},
+        method="POST",
+    )
+    with urllib.request.urlopen(req, timeout=OLLAMA_TIMEOUT_SECONDS) as resp:
+        data = json.loads(resp.read().decode("utf-8", errors="replace"))
+    return (data.get("response") or "").strip()
+
+
+async def ollama_ask(chat_id: int, user_message: str, mode: str, user_name: str = "") -> str:
+    prompt = _build_ollama_prompt(chat_id, user_message, mode, user_name)
+    try:
+        answer = await asyncio.to_thread(_ollama_generate_sync, prompt)
+        if not answer:
+            return "⚠️ Ollama 無回應，請稍後再試。"
+        history = _get_history(chat_id)
+        history.append({"role": "user", "content": user_message})
+        history.append({"role": "assistant", "content": answer})
+        _save_conv_history()
+        return answer
+    except Exception as e:
+        return f"⚠️ Ollama 呼叫失敗：{e}"
+
+
 async def claude_ask(chat_id: int, user_message: str, user_name: str = "", timeout: int = 600) -> str:
     """Call claude -p with A6 system prompt + conversation history."""
     history = _get_history(chat_id)
@@ -267,16 +359,20 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if not is_allowed(update):
         await deny(update)
         return
+    chat_id = update.effective_chat.id
+    _set_mode(chat_id, MODE_QUOTE)
     await update.message.reply_text(
         f"🟢 MAPLAB A6 報價助理 online\n"
         f"時間: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
+        f"目前模式：{MODE_LABELS[_get_mode(chat_id)]}\n\n"
         f"可用指令：\n"
         f"/help — 指令說明\n"
         f"/ping — 心跳\n\n"
         f"或直接說：\n"
         f"「報價 王小明 婚禮 80人 預算6萬」\n"
         f"「你幫我把主菜換成素食版本」\n"
-        f"「查 王小明」"
+        f"「查 王小明」",
+        reply_markup=_mode_keyboard(),
     )
 
 
@@ -284,8 +380,14 @@ async def help_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if not is_allowed(update):
         await deny(update)
         return
+    chat_id = update.effective_chat.id
     await update.message.reply_text(
         "📋 MAPLAB A6 報價助理指令\n\n"
+        f"【模式切換】\n"
+        f"/mode quote — 報價模式（Claude + GAS）\n"
+        f"/mode chat — 一般聊天（Ollama）\n"
+        f"/mode seo — SEO 助手（Ollama）\n"
+        f"目前模式：{MODE_LABELS[_get_mode(chat_id)]}\n\n"
         "【急件報價】\n"
         "報價 [客名] [類型] [人數] [預算]\n"
         "例：報價 王小明 婚禮 80人 預算6萬\n\n"
@@ -299,6 +401,30 @@ async def help_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         "/ping — 心跳檢查\n"
         "/reset — 清除對話記憶（新案件時用）\n\n"
         "💬 也可以直接說中文，A6 會理解"
+    )
+
+
+async def mode_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not is_allowed(update):
+        await deny(update)
+        return
+    chat_id = update.effective_chat.id
+    args = context.args or []
+    if not args:
+        await update.message.reply_text(
+            "用法：/mode quote | /mode chat | /mode seo\n"
+            f"目前模式：{MODE_LABELS[_get_mode(chat_id)]}",
+            reply_markup=_mode_keyboard(),
+        )
+        return
+    raw = args[0].strip().lower()
+    if raw not in (MODE_QUOTE, MODE_CHAT, MODE_SEO):
+        await update.message.reply_text("⚠️ 模式只接受 quote / chat / seo")
+        return
+    _set_mode(chat_id, raw)
+    await update.message.reply_text(
+        f"✅ 已切換：{MODE_LABELS[raw]}",
+        reply_markup=_mode_keyboard(),
     )
 
 
@@ -512,6 +638,38 @@ async def _run_claude_guarded(
     )
 
 
+async def _run_ollama_background(
+    bot,
+    chat_id: int,
+    user_message: str,
+    user_name: str,
+    mode: str,
+) -> None:
+    async with _claude_semaphore:
+        answer = await ollama_ask(chat_id, user_message, mode, user_name)
+        MAX = 4096
+        for i in range(0, len(answer), MAX):
+            await bot.send_message(chat_id=chat_id, text=answer[i:i + MAX])
+        log_and_commit_a6(user_name, user_message, answer)
+
+
+async def _run_ollama_guarded(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+    user_message: str,
+    mode: str,
+) -> None:
+    if _claude_semaphore.locked():
+        await update.message.reply_text("⏳ A6 正在處理上一則，請稍候。")
+        return
+    chat_id = update.effective_chat.id
+    user_name = update.effective_user.first_name or "業務"
+    await update.message.reply_text("⏳ Ollama 處理中…")
+    asyncio.create_task(
+        _run_ollama_background(context.bot, chat_id, user_message, user_name, mode)
+    )
+
+
 async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Handle photo messages: download image and pass to Claude Code for analysis."""
     if not is_allowed(update):
@@ -546,7 +704,29 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     text = update.message.text or ""
     if not text.strip():
         return
-    await _run_claude_guarded(update, context, text)
+    chat_id = update.effective_chat.id
+
+    if text == MENU_BUTTON_QUOTE:
+        _set_mode(chat_id, MODE_QUOTE)
+        await update.message.reply_text(f"✅ 已切換：{MODE_LABELS[MODE_QUOTE]}", reply_markup=_mode_keyboard())
+        return
+    if text == MENU_BUTTON_CHAT:
+        _set_mode(chat_id, MODE_CHAT)
+        await update.message.reply_text(f"✅ 已切換：{MODE_LABELS[MODE_CHAT]}", reply_markup=_mode_keyboard())
+        return
+    if text == MENU_BUTTON_SEO:
+        _set_mode(chat_id, MODE_SEO)
+        await update.message.reply_text(f"✅ 已切換：{MODE_LABELS[MODE_SEO]}", reply_markup=_mode_keyboard())
+        return
+    if text == MENU_BUTTON_HELP:
+        await help_cmd(update, context)
+        return
+
+    mode = _get_mode(chat_id)
+    if mode == MODE_QUOTE:
+        await _run_claude_guarded(update, context, text)
+    else:
+        await _run_ollama_guarded(update, context, text, mode)
 
 
 async def on_error(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -577,6 +757,7 @@ def main() -> None:
 
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("help", help_cmd))
+    app.add_handler(CommandHandler("mode", mode_cmd))
     app.add_handler(CommandHandler("ping", ping))
     app.add_handler(CommandHandler("reset", reset_cmd))
     app.add_handler(MessageHandler(filters.PHOTO, handle_photo))

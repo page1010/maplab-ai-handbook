@@ -166,7 +166,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 9. A6 T-A6-001 🔄 活躍中：5ae9c79（05-04 20:23）新增 ollama chat/seo modes + menu（bot_a6.py +187行）；addItem+模糊比對+多照片+10輪QA全PASS（45b4758 04-18）；Task Card 已由A6自行更新；LINE Developers Console Webhook URL待Owner確認（Channel 1654658337）。
 10. A8 新角色已建立（51070ea 04-19），待啟動任務；B1 🟢 首次活躍（04-24 22:35-23:02 4 commits）— 無正式Task Card，需建立。~240h無新commit。
 11. ✅ 全系統靜止解除：A2 今日（2026-05-04）2 commits（ba4fac6+59f06ce）T-A2-005 SEO Factory；A3/A5/A6/A7/A8/B1 仍無新活動。
-✅ 05-04 晚間巡查：8h內新commits：3（A2 ba4fac6+59f06ce T-A2-005 🟢；A6 5ae9c79 ollama chat/seo 🟢）；A4 S11 ~400h/~16.7天Colab崩潰🔴；A5~616h D25+仍無活動🔴；GCP帳單~17.3天未處理🔴；T-A6-001狀態從⏸️更新為🔄；A3/A7/A8/B1無新活動；all else clear。
+✅ 05-04 晚間巡查：8h內新commits：4（A2 ba4fac6+59f06ce+6f98c5d T-A2-005 keyword-matrix 🟢；A6 5ae9c79 ollama chat/seo 🟢）；A4 S11 ~400h/~16.7天Colab崩潰🔴；A5~616h D25+仍無活動🔴；GCP帳單~17.3天未處理🔴；T-A6-001狀態從⏸️更新為🔄；A3/A7/A8/B1無新活動；all else clear。
 ✅ 05-04 午後巡查：8h內新commits：2（A2 ba4fac6+59f06ce T-A2-005 SEO Factory + ollama test 🟢）；A4 S11 ~392h/~16.3天Colab崩潰🔴；A5~608h D25仍無活動🔴；GCP帳單~17天未處理🔴；GSC 29天+逾期；A3/A6/A7/A8/B1無新活動；all else clear。
 ✅ 05-02 午後巡查：8h內新commits：無（全系統192h+/8天靜止🔴）；A4 S11 ~344h/~14.3天Colab崩潰🔴；A5~560h D23+仍無活動；GCP帳單15天未處理🔴；所有前次警告持續未解；all else clear(A2/A3/A6/A7/A8/B1)。
 ✅ 05-01 晚間巡查：8h內新commits：無（全系統176h/7.3天靜止🔴）；A4 S11 ~328h/~13.7天Colab崩潰🔴；A5~544h D22+仍無活動；GCP帳單14天未處理🔴；所有午後警告持續未解；all else clear(A2/A3/A6/A7/A8)。

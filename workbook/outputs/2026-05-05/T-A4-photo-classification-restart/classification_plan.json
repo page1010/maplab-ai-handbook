@@ -1,0 +1,29 @@
+{
+  "date": "2026-05-05",
+  "scan_dir": "data/telegram-photos",
+  "total_images": 2,
+  "cluster_counts": {
+    "uncategorized": 2
+  },
+  "rules": [
+    "先產生分類計畫，不直接搬檔",
+    "低信心項目交給 ollama/gemini 補分類",
+    "人工核准後才 move"
+  ],
+  "items": [
+    {
+      "source": "data/telegram-photos/20260419_162724_AQADExFrGy6FIVd-.jpg",
+      "target_cluster": "uncategorized",
+      "suggested_target": "assets/uncategorized/20260419_162724_AQADExFrGy6FIVd-.jpg",
+      "confidence": 0.55,
+      "status": "proposed_only"
+    },
+    {
+      "source": "data/telegram-photos/20260419_163001_AQADFBFrGy6FIVd-.jpg",
+      "target_cluster": "uncategorized",
+      "suggested_target": "assets/uncategorized/20260419_163001_AQADFBFrGy6FIVd-.jpg",
+      "confidence": 0.55,
+      "status": "proposed_only"
+    }
+  ]
+}

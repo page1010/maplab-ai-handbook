@@ -1,0 +1,932 @@
+{
+  "date": "2026-05-05",
+  "nodes": [
+    {
+      "id": "T-A1-002",
+      "type": "task",
+      "label": "T-A1-002"
+    },
+    {
+      "id": "A1",
+      "type": "agent",
+      "label": "A1"
+    },
+    {
+      "id": "blocker:無",
+      "type": "blocker",
+      "label": "無"
+    },
+    {
+      "id": "project:OPS",
+      "type": "project",
+      "label": "OPS"
+    },
+    {
+      "id": "output_contract:OPS",
+      "type": "output_contract",
+      "label": "output_contract:OPS"
+    },
+    {
+      "id": "T-A1-V6-P2",
+      "type": "task",
+      "label": "T-A1-V6-P2"
+    },
+    {
+      "id": "blocker:等 A6 實際報價測試",
+      "type": "blocker",
+      "label": "等 A6 實際報價測試"
+    },
+    {
+      "id": "project:QUOTE",
+      "type": "project",
+      "label": "QUOTE"
+    },
+    {
+      "id": "output_contract:QUOTE",
+      "type": "output_contract",
+      "label": "output_contract:QUOTE"
+    },
+    {
+      "id": "T-A1-V6-P3",
+      "type": "task",
+      "label": "T-A1-V6-P3"
+    },
+    {
+      "id": "blocker:前置 T-A1-V6-P2 需先完成",
+      "type": "blocker",
+      "label": "前置 T-A1-V6-P2 需先完成"
+    },
+    {
+      "id": "T-A1-V7",
+      "type": "task",
+      "label": "T-A1-V7"
+    },
+    {
+      "id": "T-A2-001",
+      "type": "task",
+      "label": "T-A2-001"
+    },
+    {
+      "id": "A2",
+      "type": "agent",
+      "label": "A2"
+    },
+    {
+      "id": "project:SEO",
+      "type": "project",
+      "label": "SEO"
+    },
+    {
+      "id": "output_contract:SEO",
+      "type": "output_contract",
+      "label": "output_contract:SEO"
+    },
+    {
+      "id": "T-A2-002",
+      "type": "task",
+      "label": "T-A2-002"
+    },
+    {
+      "id": "blocker:等 Owner 操作 WordPress 後台",
+      "type": "blocker",
+      "label": "等 Owner 操作 WordPress 後台"
+    },
+    {
+      "id": "T-A2-003",
+      "type": "task",
+      "label": "T-A2-003"
+    },
+    {
+      "id": "blocker:等 Owner 建立排程",
+      "type": "blocker",
+      "label": "等 Owner 建立排程"
+    },
+    {
+      "id": "T-A2-004",
+      "type": "task",
+      "label": "T-A2-004"
+    },
+    {
+      "id": "T-A2-005",
+      "type": "task",
+      "label": "T-A2-005"
+    },
+    {
+      "id": "blocker:WordPress 寫入憑證與測試站檢核流程待 Owner 確認",
+      "type": "blocker",
+      "label": "WordPress 寫入憑證與測試站檢核流程待 Owner 確認"
+    },
+    {
+      "id": "T-A2A3-001-B",
+      "type": "task",
+      "label": "T-A2A3-001-B"
+    },
+    {
+      "id": "blocker:等 Google 重新索引，預計 04-11 後可驗證",
+      "type": "blocker",
+      "label": "等 Google 重新索引，預計 04-11 後可驗證"
+    },
+    {
+      "id": "T-A2A3-001",
+      "type": "task",
+      "label": "T-A2A3-001"
+    },
+    {
+      "id": "T-A3-001",
+      "type": "task",
+      "label": "T-A3-001"
+    },
+    {
+      "id": "A3",
+      "type": "agent",
+      "label": "A3"
+    },
+    {
+      "id": "T-A3-002",
+      "type": "task",
+      "label": "T-A3-002"
+    },
+    {
+      "id": "blocker:執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）",
+      "type": "blocker",
+      "label": "執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）"
+    },
+    {
+      "id": "T-A4-001",
+      "type": "task",
+      "label": "T-A4-001"
+    },
+    {
+      "id": "A4",
+      "type": "agent",
+      "label": "A4"
+    },
+    {
+      "id": "blocker:無（S11 補跑已重啟，等 Google 憑證授權後自動開始）",
+      "type": "blocker",
+      "label": "無（S11 補跑已重啟，等 Google 憑證授權後自動開始）"
+    },
+    {
+      "id": "T-A4-002",
+      "type": "task",
+      "label": "T-A4-002"
+    },
+    {
+      "id": "T-A5-001",
+      "type": "task",
+      "label": "T-A5-001"
+    },
+    {
+      "id": "A5",
+      "type": "agent",
+      "label": "A5"
+    },
+    {
+      "id": "T-A5-002",
+      "type": "task",
+      "label": "T-A5-002"
+    },
+    {
+      "id": "blocker:等 Owner 確認（品項名稱改法、重複品項、I 欄用途）",
+      "type": "blocker",
+      "label": "等 Owner 確認（品項名稱改法、重複品項、I 欄用途）"
+    },
+    {
+      "id": "T-A5-003",
+      "type": "task",
+      "label": "T-A5-003"
+    },
+    {
+      "id": "blocker:無（Phase 2 等優先序排定）",
+      "type": "blocker",
+      "label": "無（Phase 2 等優先序排定）"
+    },
+    {
+      "id": "T-A5-004",
+      "type": "task",
+      "label": "T-A5-004"
+    },
+    {
+      "id": "blocker:無（功能已上線，剩餘為優化項）",
+      "type": "blocker",
+      "label": "無（功能已上線，剩餘為優化項）"
+    },
+    {
+      "id": "T-A5-005",
+      "type": "task",
+      "label": "T-A5-005"
+    },
+    {
+      "id": "blocker:無（待 clasp push 部署）",
+      "type": "blocker",
+      "label": "無（待 clasp push 部署）"
+    },
+    {
+      "id": "T-A5-006",
+      "type": "task",
+      "label": "T-A5-006"
+    },
+    {
+      "id": "blocker:前置 T-A5-005 需先完成",
+      "type": "blocker",
+      "label": "前置 T-A5-005 需先完成"
+    },
+    {
+      "id": "T-A6-001",
+      "type": "task",
+      "label": "T-A6-001"
+    },
+    {
+      "id": "A6",
+      "type": "agent",
+      "label": "A6"
+    },
+    {
+      "id": "blocker:若要啟用「LINE OA Webhook 寫入 CONVERSATION_LOG」仍需 Owner 完成 LINE Developers Console Web",
+      "type": "blocker",
+      "label": "若要啟用「LINE OA Webhook 寫入 CONVERSATION_LOG」仍需 Owner 完成 LINE Developers Console Webhook URL 設定"
+    },
+    {
+      "id": "T-A6-002",
+      "type": "task",
+      "label": "T-A6-002"
+    },
+    {
+      "id": "blocker:等 Owner 決定方向",
+      "type": "blocker",
+      "label": "等 Owner 決定方向"
+    },
+    {
+      "id": "T-A7-001",
+      "type": "task",
+      "label": "T-A7-001"
+    },
+    {
+      "id": "A7",
+      "type": "agent",
+      "label": "A7"
+    },
+    {
+      "id": "blocker:Q7 試吃政策需 Owner 決定、Q10 取消/改期政策需 Owner 決定、A5 外送費級距未建立",
+      "type": "blocker",
+      "label": "Q7 試吃政策需 Owner 決定、Q10 取消/改期政策需 Owner 決定、A5 外送費級距未建立"
+    },
+    {
+      "id": "T-A7-002",
+      "type": "task",
+      "label": "T-A7-002"
+    },
+    {
+      "id": "blocker:任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權",
+      "type": "blocker",
+      "label": "任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限"
+    },
+    {
+      "id": "T-A7-003",
+      "type": "task",
+      "label": "T-A7-003"
+    },
+    {
+      "id": "blocker:等 Owner 部署到 LINE OA 後台",
+      "type": "blocker",
+      "label": "等 Owner 部署到 LINE OA 後台"
+    },
+    {
+      "id": "T-B1-001",
+      "type": "task",
+      "label": "T-B1-001"
+    },
+    {
+      "id": "T-GBP-001",
+      "type": "task",
+      "label": "T-GBP-001"
+    },
+    {
+      "id": "UNKNOWN",
+      "type": "agent",
+      "label": "UNKNOWN"
+    },
+    {
+      "id": "blocker:等 Owner 準備新圖片",
+      "type": "blocker",
+      "label": "等 Owner 準備新圖片"
+    },
+    {
+      "id": "project:PHOTO",
+      "type": "project",
+      "label": "PHOTO"
+    },
+    {
+      "id": "output_contract:PHOTO",
+      "type": "output_contract",
+      "label": "output_contract:PHOTO"
+    },
+    {
+      "id": "TASK_CARD_TEMPLATE",
+      "type": "task",
+      "label": "TASK_CARD_TEMPLATE"
+    },
+    {
+      "id": "blocker:無 / [具體原因 + 誰能解除]",
+      "type": "blocker",
+      "label": "無 / [具體原因 + 誰能解除]"
+    },
+    {
+      "id": "T-AX-NNN",
+      "type": "task",
+      "label": "T-AX-NNN"
+    }
+  ],
+  "edges": [
+    {
+      "from": "T-A1-002",
+      "to": "A1",
+      "relation": "task->agent"
+    },
+    {
+      "from": "T-A1-002",
+      "to": "blocker:無",
+      "relation": "task->blocker"
+    },
+    {
+      "from": "T-A1-002",
+      "to": "project:OPS",
+      "relation": "task->project"
+    },
+    {
+      "from": "T-A1-002",
+      "to": "output_contract:OPS",
+      "relation": "task->output_contract"
+    },
+    {
+      "from": "T-A1-V6-P2",
+      "to": "A1",
+      "relation": "task->agent"
+    },
+    {
+      "from": "T-A1-V6-P2",
+      "to": "blocker:等 A6 實際報價測試",
+      "relation": "task->blocker"
+    },
+    {
+      "from": "T-A1-V6-P2",
+      "to": "project:QUOTE",
+      "relation": "task->project"
+    },
+    {
+      "from": "T-A1-V6-P2",
+      "to": "output_contract:QUOTE",
+      "relation": "task->output_contract"
+    },
+    {
+      "from": "T-A1-V6-P3",
+      "to": "A1",
+      "relation": "task->agent"
+    },
+    {
+      "from": "T-A1-V6-P3",
+      "to": "blocker:前置 T-A1-V6-P2 需先完成",
+      "relation": "task->blocker"
+    },
+    {
+      "from": "T-A1-V6-P3",
+      "to": "project:OPS",
+      "relation": "task->project"
+    },
+    {
+      "from": "T-A1-V6-P3",
+      "to": "output_contract:OPS",
+      "relation": "task->output_contract"
+    },
+    {
+      "from": "T-A1-V7",
+      "to": "A1",
+      "relation": "task->agent"
+    },
+    {
+      "from": "T-A1-V7",
+      "to": "blocker:無",
+      "relation": "task->blocker"
+    },
+    {
+      "from": "T-A1-V7",
+      "to": "project:QUOTE",
+      "relation": "task->project"
+    },
+    {
+      "from": "T-A1-V7",
+      "to": "output_contract:QUOTE",
+      "relation": "task->output_contract"
+    },
+    {
+      "from": "T-A2-001",
+      "to": "A2",
+      "relation": "task->agent"
+    },
+    {
+      "from": "T-A2-001",
+      "to": "blocker:無",
+      "relation": "task->blocker"
+    },
+    {
+      "from": "T-A2-001",
+      "to": "project:SEO",
+      "relation": "task->project"
+    },
+    {
+      "from": "T-A2-001",
+      "to": "output_contract:SEO",
+      "relation": "task->output_contract"
+    },
+    {
+      "from": "T-A2-002",
+      "to": "A2",
+      "relation": "task->agent"
+    },
+    {
+      "from": "T-A2-002",
+      "to": "blocker:等 Owner 操作 WordPress 後台",
+      "relation": "task->blocker"
+    },
+    {
+      "from": "T-A2-002",
+      "to": "project:SEO",
+      "relation": "task->project"
+    },
+    {
+      "from": "T-A2-002",
+      "to": "output_contract:SEO",
+      "relation": "task->output_contract"
+    },
+    {
+      "from": "T-A2-003",
+      "to": "A2",
+      "relation": "task->agent"
+    },
+    {
+      "from": "T-A2-003",
+      "to": "blocker:等 Owner 建立排程",
+      "relation": "task->blocker"
+    },
+    {
+      "from": "T-A2-003",
+      "to": "project:SEO",
+      "relation": "task->project"
+    },
+    {
+      "from": "T-A2-003",
+      "to": "output_contract:SEO",
+      "relation": "task->output_contract"
+    },
+    {
+      "from": "T-A2-004",
+      "to": "A2",
+      "relation": "task->agent"
+    },
+    {
+      "from": "T-A2-004",
+      "to": "blocker:無",
+      "relation": "task->blocker"
+    },
+    {
+      "from": "T-A2-004",
+      "to": "project:SEO",
+      "relation": "task->project"
+    },
+    {
+      "from": "T-A2-004",
+      "to": "output_contract:SEO",
+      "relation": "task->output_contract"
+    },
+    {
+      "from": "T-A2-005",
+      "to": "A2",
+      "relation": "task->agent"
+    },
+    {
+      "from": "T-A2-005",
+      "to": "blocker:WordPress 寫入憑證與測試站檢核流程待 Owner 確認",
+      "relation": "task->blocker"
+    },
+    {
+      "from": "T-A2-005",
+      "to": "project:SEO",
+      "relation": "task->project"
+    },
+    {
+      "from": "T-A2-005",
+      "to": "output_contract:SEO",
+      "relation": "task->output_contract"
+    },
+    {
+      "from": "T-A2A3-001-B",
+      "to": "A2",
+      "relation": "task->agent"
+    },
+    {
+      "from": "T-A2A3-001-B",
+      "to": "blocker:等 Google 重新索引，預計 04-11 後可驗證",
+      "relation": "task->blocker"
+    },
+    {
+      "from": "T-A2A3-001-B",
+      "to": "project:SEO",
+      "relation": "task->project"
+    },
+    {
+      "from": "T-A2A3-001-B",
+      "to": "output_contract:SEO",
+      "relation": "task->output_contract"
+    },
+    {
+      "from": "T-A2A3-001",
+      "to": "A2",
+      "relation": "task->agent"
+    },
+    {
+      "from": "T-A2A3-001",
+      "to": "blocker:等 Google 重新索引，預計 04-11 後可驗證",
+      "relation": "task->blocker"
+    },
+    {
+      "from": "T-A2A3-001",
+      "to": "project:SEO",
+      "relation": "task->project"
+    },
+    {
+      "from": "T-A2A3-001",
+      "to": "output_contract:SEO",
+      "relation": "task->output_contract"
+    },
+    {
+      "from": "T-A3-001",
+      "to": "A3",
+      "relation": "task->agent"
+    },
+    {
+      "from": "T-A3-001",
+      "to": "blocker:無",
+      "relation": "task->blocker"
+    },
+    {
+      "from": "T-A3-001",
+      "to": "project:SEO",
+      "relation": "task->project"
+    },
+    {
+      "from": "T-A3-001",
+      "to": "output_contract:SEO",
+      "relation": "task->output_contract"
+    },
+    {
+      "from": "T-A3-002",
+      "to": "A3",
+      "relation": "task->agent"
+    },
+    {
+      "from": "T-A3-002",
+      "to": "blocker:執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）",
+      "relation": "task->blocker"
+    },
+    {
+      "from": "T-A3-002",
+      "to": "project:SEO",
+      "relation": "task->project"
+    },
+    {
+      "from": "T-A3-002",
+      "to": "output_contract:SEO",
+      "relation": "task->output_contract"
+    },
+    {
+      "from": "T-A4-001",
+      "to": "A4",
+      "relation": "task->agent"
+    },
+    {
+      "from": "T-A4-001",
+      "to": "blocker:無（S11 補跑已重啟，等 Google 憑證授權後自動開始）",
+      "relation": "task->blocker"
+    },
+    {
+      "from": "T-A4-001",
+      "to": "project:SEO",
+      "relation": "task->project"
+    },
+    {
+      "from": "T-A4-001",
+      "to": "output_contract:SEO",
+      "relation": "task->output_contract"
+    },
+    {
+      "from": "T-A4-002",
+      "to": "A4",
+      "relation": "task->agent"
+    },
+    {
+      "from": "T-A4-002",
+      "to": "project:SEO",
+      "relation": "task->project"
+    },
+    {
+      "from": "T-A4-002",
+      "to": "output_contract:SEO",
+      "relation": "task->output_contract"
+    },
+    {
+      "from": "T-A5-001",
+      "to": "A5",
+      "relation": "task->agent"
+    },
+    {
+      "from": "T-A5-001",
+      "to": "blocker:無",
+      "relation": "task->blocker"
+    },
+    {
+      "from": "T-A5-001",
+      "to": "project:QUOTE",
+      "relation": "task->project"
+    },
+    {
+      "from": "T-A5-001",
+      "to": "output_contract:QUOTE",
+      "relation": "task->output_contract"
+    },
+    {
+      "from": "T-A5-002",
+      "to": "A5",
+      "relation": "task->agent"
+    },
+    {
+      "from": "T-A5-002",
+      "to": "blocker:等 Owner 確認（品項名稱改法、重複品項、I 欄用途）",
+      "relation": "task->blocker"
+    },
+    {
+      "from": "T-A5-002",
+      "to": "project:QUOTE",
+      "relation": "task->project"
+    },
+    {
+      "from": "T-A5-002",
+      "to": "output_contract:QUOTE",
+      "relation": "task->output_contract"
+    },
+    {
+      "from": "T-A5-003",
+      "to": "A5",
+      "relation": "task->agent"
+    },
+    {
+      "from": "T-A5-003",
+      "to": "blocker:無（Phase 2 等優先序排定）",
+      "relation": "task->blocker"
+    },
+    {
+      "from": "T-A5-003",
+      "to": "project:QUOTE",
+      "relation": "task->project"
+    },
+    {
+      "from": "T-A5-003",
+      "to": "output_contract:QUOTE",
+      "relation": "task->output_contract"
+    },
+    {
+      "from": "T-A5-004",
+      "to": "A5",
+      "relation": "task->agent"
+    },
+    {
+      "from": "T-A5-004",
+      "to": "blocker:無（功能已上線，剩餘為優化項）",
+      "relation": "task->blocker"
+    },
+    {
+      "from": "T-A5-004",
+      "to": "project:QUOTE",
+      "relation": "task->project"
+    },
+    {
+      "from": "T-A5-004",
+      "to": "output_contract:QUOTE",
+      "relation": "task->output_contract"
+    },
+    {
+      "from": "T-A5-005",
+      "to": "A5",
+      "relation": "task->agent"
+    },
+    {
+      "from": "T-A5-005",
+      "to": "blocker:無（待 clasp push 部署）",
+      "relation": "task->blocker"
+    },
+    {
+      "from": "T-A5-005",
+      "to": "project:QUOTE",
+      "relation": "task->project"
+    },
+    {
+      "from": "T-A5-005",
+      "to": "output_contract:QUOTE",
+      "relation": "task->output_contract"
+    },
+    {
+      "from": "T-A5-006",
+      "to": "A5",
+      "relation": "task->agent"
+    },
+    {
+      "from": "T-A5-006",
+      "to": "blocker:前置 T-A5-005 需先完成",
+      "relation": "task->blocker"
+    },
+    {
+      "from": "T-A5-006",
+      "to": "project:QUOTE",
+      "relation": "task->project"
+    },
+    {
+      "from": "T-A5-006",
+      "to": "output_contract:QUOTE",
+      "relation": "task->output_contract"
+    },
+    {
+      "from": "T-A6-001",
+      "to": "A6",
+      "relation": "task->agent"
+    },
+    {
+      "from": "T-A6-001",
+      "to": "blocker:若要啟用「LINE OA Webhook 寫入 CONVERSATION_LOG」仍需 Owner 完成 LINE Developers Console Web",
+      "relation": "task->blocker"
+    },
+    {
+      "from": "T-A6-001",
+      "to": "project:SEO",
+      "relation": "task->project"
+    },
+    {
+      "from": "T-A6-001",
+      "to": "output_contract:SEO",
+      "relation": "task->output_contract"
+    },
+    {
+      "from": "T-A6-002",
+      "to": "A6",
+      "relation": "task->agent"
+    },
+    {
+      "from": "T-A6-002",
+      "to": "blocker:等 Owner 決定方向",
+      "relation": "task->blocker"
+    },
+    {
+      "from": "T-A6-002",
+      "to": "project:QUOTE",
+      "relation": "task->project"
+    },
+    {
+      "from": "T-A6-002",
+      "to": "output_contract:QUOTE",
+      "relation": "task->output_contract"
+    },
+    {
+      "from": "T-A7-001",
+      "to": "A7",
+      "relation": "task->agent"
+    },
+    {
+      "from": "T-A7-001",
+      "to": "blocker:Q7 試吃政策需 Owner 決定、Q10 取消/改期政策需 Owner 決定、A5 外送費級距未建立",
+      "relation": "task->blocker"
+    },
+    {
+      "from": "T-A7-001",
+      "to": "project:QUOTE",
+      "relation": "task->project"
+    },
+    {
+      "from": "T-A7-001",
+      "to": "output_contract:QUOTE",
+      "relation": "task->output_contract"
+    },
+    {
+      "from": "T-A7-002",
+      "to": "A7",
+      "relation": "task->agent"
+    },
+    {
+      "from": "T-A7-002",
+      "to": "blocker:任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權",
+      "relation": "task->blocker"
+    },
+    {
+      "from": "T-A7-002",
+      "to": "project:QUOTE",
+      "relation": "task->project"
+    },
+    {
+      "from": "T-A7-002",
+      "to": "output_contract:QUOTE",
+      "relation": "task->output_contract"
+    },
+    {
+      "from": "T-A7-003",
+      "to": "A7",
+      "relation": "task->agent"
+    },
+    {
+      "from": "T-A7-003",
+      "to": "blocker:等 Owner 部署到 LINE OA 後台",
+      "relation": "task->blocker"
+    },
+    {
+      "from": "T-A7-003",
+      "to": "project:QUOTE",
+      "relation": "task->project"
+    },
+    {
+      "from": "T-A7-003",
+      "to": "output_contract:QUOTE",
+      "relation": "task->output_contract"
+    },
+    {
+      "from": "T-B1-001",
+      "to": "A1",
+      "relation": "task->agent"
+    },
+    {
+      "from": "T-B1-001",
+      "to": "project:SEO",
+      "relation": "task->project"
+    },
+    {
+      "from": "T-B1-001",
+      "to": "output_contract:SEO",
+      "relation": "task->output_contract"
+    },
+    {
+      "from": "T-GBP-001",
+      "to": "UNKNOWN",
+      "relation": "task->agent"
+    },
+    {
+      "from": "T-GBP-001",
+      "to": "blocker:等 Owner 準備新圖片",
+      "relation": "task->blocker"
+    },
+    {
+      "from": "T-GBP-001",
+      "to": "project:PHOTO",
+      "relation": "task->project"
+    },
+    {
+      "from": "T-GBP-001",
+      "to": "output_contract:PHOTO",
+      "relation": "task->output_contract"
+    },
+    {
+      "from": "TASK_CARD_TEMPLATE",
+      "to": "UNKNOWN",
+      "relation": "task->agent"
+    },
+    {
+      "from": "TASK_CARD_TEMPLATE",
+      "to": "blocker:無 / [具體原因 + 誰能解除]",
+      "relation": "task->blocker"
+    },
+    {
+      "from": "TASK_CARD_TEMPLATE",
+      "to": "project:OPS",
+      "relation": "task->project"
+    },
+    {
+      "from": "TASK_CARD_TEMPLATE",
+      "to": "output_contract:OPS",
+      "relation": "task->output_contract"
+    },
+    {
+      "from": "T-AX-NNN",
+      "to": "UNKNOWN",
+      "relation": "task->agent"
+    },
+    {
+      "from": "T-AX-NNN",
+      "to": "blocker:無",
+      "relation": "task->blocker"
+    },
+    {
+      "from": "T-AX-NNN",
+      "to": "project:OPS",
+      "relation": "task->project"
+    },
+    {
+      "from": "T-AX-NNN",
+      "to": "output_contract:OPS",
+      "relation": "task->output_contract"
+    }
+  ]
+}

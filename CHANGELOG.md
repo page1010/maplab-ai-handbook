@@ -3,6 +3,37 @@
 本文件記錄 maplab-ai-handbook 的所有重大版本變更。
 格式：版本號 | 日期 | 變更摘要 | 執行 Agent
 
+## v6.2（AI Workbook Core + A4 Photo Restart）— 2026-05-05
+
+**A1 治理落地：建立任務閉環核心（model-agnostic）+ 啟動相片分類重啟流程**
+
+執行 Agent：A1（Codex）
+
+### AI Workbook Core（MVP v0.1）
+1. 新增 `tools/ai_workbook/` 核心模組：
+   - `ingest.py`（讀取 GitHub 真相源索引）
+   - `parse_task_cards.py`（任務卡欄位抽取）
+   - `build_context_pack.py`（最小上下文包）
+   - `create_microtask.py`（短任務閉環模板）
+   - `relation_graph.py`（task 關聯圖輸出）
+   - `infer_need.py`（真實需求推斷 + 第二意見接口）
+   - `runtime_adapter.py`（runtime 路由規則）
+   - `adapters/ollama_adapter.py`、`adapters/gemini_adapter.py`
+   - `photo_pipeline.py`（相片分類計畫生成，僅提案不搬檔）
+   - `cli.py`（`index/context/microtask/graph/infer/photo-plan`）
+2. 新增 `tools/ai_workbook/README.md`（命令、邊界、路由規則）
+3. 新增 `workbook/` 輸出目錄（只回寫 workbook，不自動改 CURRENT_STATUS）
+
+### Runtime 路由策略（先行版）
+4. 預設 `ollama`
+5. `confidence < 0.78` 或 `cross-file reasoning` 升級 `gemini-2.5-flash-lite`
+6. 若雲端金鑰缺失或輸出不穩，保留 A1 人工審核節點
+
+### A4 相片分類重啟（先提案）
+7. 建立 `workbook/outputs/2026-05-05/T-A4-photo-classification-restart/classification_plan.json`
+8. 掃描來源先鎖定 `data/telegram-photos/`，輸出分類建議（proposed_only）
+9. 明確採用「先計畫、人工核准、再搬檔」防呆流程
+
 ## v6.1（SEO Factory）— 2026-05-04
 
 **A1 治理同步 + A2 地端 SEO 內容工廠（Pillar First）**

@@ -1,0 +1,545 @@
+{
+  "count": 30,
+  "items": [
+    {
+      "task_id": "T-A1-002",
+      "surface_task": "7 項治理升級全部完成，無後續",
+      "inferred_real_need": "縮短交接成本，確保任務閉環與可追溯",
+      "actual_output": [
+        "7 項治理升級全部完成，無後續",
+        "✅ 完成"
+      ],
+      "real_next_action": "## Next（下一步）",
+      "owner_blocker": "無",
+      "confidence": 0.7,
+      "runtime_used": "gemini-2.5-flash-lite",
+      "llm_second_opinion": {
+        "ok": false,
+        "error": "missing_GEMINI_API_KEY"
+      },
+      "date": "2026-05-05"
+    },
+    {
+      "task_id": "T-A1-V6-P2",
+      "surface_task": "4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下一步：建虛擬測試案例 → A6 跑報價流程 → 驗證寫入。",
+      "inferred_real_need": "快速產生可修改的報價草稿並沉澱規則",
+      "actual_output": [
+        "4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下一步：建虛擬測試案例 → A6 跑報價流程 → 驗證寫入。",
+        "🔄 進行中"
+      ],
+      "real_next_action": "建虛擬測試案例 → A6 跑報價流程 → 驗證寫入。",
+      "owner_blocker": "等 A6 實際報價測試",
+      "confidence": 0.7,
+      "runtime_used": "gemini-2.5-flash-lite",
+      "llm_second_opinion": {
+        "ok": false,
+        "error": "missing_GEMINI_API_KEY"
+      },
+      "date": "2026-05-05"
+    },
+    {
+      "task_id": "T-A1-V6-P3",
+      "surface_task": "尚未開始。等 T-A1-V6-P2 完成後啟動。",
+      "inferred_real_need": "縮短交接成本，確保任務閉環與可追溯",
+      "actual_output": [
+        "尚未開始。等 T-A1-V6-P2 完成後啟動。",
+        "🔲 待開始"
+      ],
+      "real_next_action": "確認 Phase 2 完成 → 規劃 LINE webhook 自動觸發流程",
+      "owner_blocker": "前置 T-A1-V6-P2 需先完成",
+      "confidence": 0.7,
+      "runtime_used": "gemini-2.5-flash-lite",
+      "llm_second_opinion": {
+        "ok": false,
+        "error": "missing_GEMINI_API_KEY"
+      },
+      "date": "2026-05-05"
+    },
+    {
+      "task_id": "T-A1-V7",
+      "surface_task": "Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 ReMe）為加分項。",
+      "inferred_real_need": "縮短交接成本，確保任務閉環與可追溯",
+      "actual_output": [
+        "Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 ReMe）為加分項。",
+        "🔄 進行中"
+      ],
+      "real_next_action": "",
+      "owner_blocker": "無",
+      "confidence": 0.7,
+      "runtime_used": "gemini-2.5-flash-lite",
+      "llm_second_opinion": {
+        "ok": false,
+        "error": "missing_GEMINI_API_KEY"
+      },
+      "date": "2026-05-05"
+    },
+    {
+      "task_id": "T-A2-001",
+      "surface_task": "57 篇全部配圖完成，無後續",
+      "inferred_real_need": "縮短交接成本，確保任務閉環與可追溯",
+      "actual_output": [
+        "57 篇全部配圖完成，無後續",
+        "✅ 完成"
+      ],
+      "real_next_action": "",
+      "owner_blocker": "無",
+      "confidence": 0.7,
+      "runtime_used": "gemini-2.5-flash-lite",
+      "llm_second_opinion": {
+        "ok": false,
+        "error": "missing_GEMINI_API_KEY"
+      },
+      "date": "2026-05-05"
+    },
+    {
+      "task_id": "T-A2-002",
+      "surface_task": "Repo 端已清理完成；WordPress 端需 Owner 手動刪除/修改 5 篇文章的食安字眼",
+      "inferred_real_need": "縮短交接成本，確保任務閉環與可追溯",
+      "actual_output": [
+        "Repo 端已清理完成；WordPress 端需 Owner 手動刪除/修改 5 篇文章的食安字眼",
+        "⏸️ 阻塞"
+      ],
+      "real_next_action": "",
+      "owner_blocker": "等 Owner 操作 WordPress 後台",
+      "confidence": 0.7,
+      "runtime_used": "gemini-2.5-flash-lite",
+      "llm_second_opinion": {
+        "ok": false,
+        "error": "missing_GEMINI_API_KEY"
+      },
+      "date": "2026-05-05"
+    },
+    {
+      "task_id": "T-A2-003",
+      "surface_task": "腳本已建好（wp-audit.sh / wp-audit-cron.sh）。待 Owner 用 /schedule 建立 cron 排程。",
+      "inferred_real_need": "縮短交接成本，確保任務閉環與可追溯",
+      "actual_output": [
+        "腳本已建好（wp-audit.sh / wp-audit-cron.sh）。待 Owner 用 /schedule 建立 cron 排程。",
+        "🔲 待開始"
+      ],
+      "real_next_action": "",
+      "owner_blocker": "等 Owner 建立排程",
+      "confidence": 0.7,
+      "runtime_used": "gemini-2.5-flash-lite",
+      "llm_second_opinion": {
+        "ok": false,
+        "error": "missing_GEMINI_API_KEY"
+      },
+      "date": "2026-05-05"
+    },
+    {
+      "task_id": "T-A2-004",
+      "surface_task": "任務卡建立。A0 已完成對標分析和色票微調。",
+      "inferred_real_need": "縮短交接成本，確保任務閉環與可追溯",
+      "actual_output": [
+        "任務卡建立。A0 已完成對標分析和色票微調。",
+        "🔲 待開始"
+      ],
+      "real_next_action": "",
+      "owner_blocker": "無",
+      "confidence": 0.7,
+      "runtime_used": "gemini-2.5-flash-lite",
+      "llm_second_opinion": {
+        "ok": false,
+        "error": "missing_GEMINI_API_KEY"
+      },
+      "date": "2026-05-05"
+    },
+    {
+      "task_id": "T-A2-005",
+      "surface_task": "本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar dry-run 可產生 draft payload。下一步：接 WordPress 實站憑證做 `--publish` 驗證 + 把 56 篇歸屬表餵入 Linker。",
+      "inferred_real_need": "穩定產出高意圖內容並可追蹤回寫",
+      "actual_output": [
+        "本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar dry-run 可產生 draft payload。下一步：接 WordPress 實站憑證做 `--publish` 驗證 + 把 56 篇歸屬表餵入 Linker。",
+        "🔄 進行中"
+      ],
+      "real_next_action": "接 WordPress 實站憑證做 `--publish` 驗證 + 把 56 篇歸屬表餵入 Linker。",
+      "owner_blocker": "WordPress 寫入憑證與測試站檢核流程待 Owner 確認",
+      "confidence": 0.7,
+      "runtime_used": "gemini-2.5-flash-lite",
+      "llm_second_opinion": {
+        "ok": false,
+        "error": "missing_GEMINI_API_KEY"
+      },
+      "date": "2026-05-05"
+    },
+    {
+      "task_id": "T-A2A3-001-B",
+      "surface_task": "子任務 3+4 完成（3 個場景頁 + 56 篇內連結）；子任務 5 等 Google 重新索引（7-14 天）",
+      "inferred_real_need": "縮短交接成本，確保任務閉環與可追溯",
+      "actual_output": [
+        "子任務 3+4 完成（3 個場景頁 + 56 篇內連結）；子任務 5 等 Google 重新索引（7-14 天）",
+        "⏸️ 阻塞"
+      ],
+      "real_next_action": "## Done / Next / Blockers",
+      "owner_blocker": "等 Google 重新索引，預計 04-11 後可驗證",
+      "confidence": 0.7,
+      "runtime_used": "gemini-2.5-flash-lite",
+      "llm_second_opinion": {
+        "ok": false,
+        "error": "missing_GEMINI_API_KEY"
+      },
+      "date": "2026-05-05"
+    },
+    {
+      "task_id": "T-A2A3-001",
+      "surface_task": "子任務 1-4 完成；子任務 5 等 Google 重新索引驗證排名變化",
+      "inferred_real_need": "縮短交接成本，確保任務閉環與可追溯",
+      "actual_output": [
+        "子任務 1-4 完成；子任務 5 等 Google 重新索引驗證排名變化",
+        "⏸️ 阻塞"
+      ],
+      "real_next_action": "## Done / Next / Blockers",
+      "owner_blocker": "等 Google 重新索引，預計 04-11 後可驗證",
+      "confidence": 0.7,
+      "runtime_used": "gemini-2.5-flash-lite",
+      "llm_second_opinion": {
+        "ok": false,
+        "error": "missing_GEMINI_API_KEY"
+      },
+      "date": "2026-05-05"
+    },
+    {
+      "task_id": "T-A3-001",
+      "surface_task": "方案A ✅ 完成（GTM v19）。方案B ✅ GTM v20 已發布（Meta LINE Button ID Click tag）。GTM v21 ✅ 已發布（Google Ads 轉換 tag）。Facebook + Google Ads 雙平台轉換追蹤上線。",
+      "inferred_real_need": "縮短交接成本，確保任務閉環與可追溯",
+      "actual_output": [
+        "方案A ✅ 完成（GTM v19）。方案B ✅ GTM v20 已發布（Meta LINE Button ID Click tag）。GTM v21 ✅ 已發布（Google Ads 轉換 tag）。Facebook + Google Ads 雙平台轉換追蹤上線。",
+        "✅ 完成"
+      ],
+      "real_next_action": "",
+      "owner_blocker": "無",
+      "confidence": 0.7,
+      "runtime_used": "gemini-2.5-flash-lite",
+      "llm_second_opinion": {
+        "ok": false,
+        "error": "missing_GEMINI_API_KEY"
+      },
+      "date": "2026-05-05"
+    },
+    {
+      "task_id": "T-A3-002",
+      "surface_task": "受眾輪廓分析完成（693筆 Orders）。待執行：嘉義加入廣告地區、興趣條件精簡、策略一冷受眾上線。",
+      "inferred_real_need": "縮短交接成本，確保任務閉環與可追溯",
+      "actual_output": [
+        "受眾輪廓分析完成（693筆 Orders）。待執行：嘉義加入廣告地區、興趣條件精簡、策略一冷受眾上線。",
+        "⏸️ 阻塞中"
+      ],
+      "real_next_action": "",
+      "owner_blocker": "執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）",
+      "confidence": 0.7,
+      "runtime_used": "gemini-2.5-flash-lite",
+      "llm_second_opinion": {
+        "ok": false,
+        "error": "missing_GEMINI_API_KEY"
+      },
+      "date": "2026-05-05"
+    },
+    {
+      "task_id": "T-A4-001",
+      "surface_task": "S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重啟等授權",
+      "inferred_real_need": "縮短交接成本，確保任務閉環與可追溯",
+      "actual_output": [
+        "S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重啟等授權",
+        "🔄 進行中（S11/2024 補跑執行中）"
+      ],
+      "real_next_action": "** TARGET_YEAR 改 '2026' 跑 S13",
+      "owner_blocker": "無（S11 補跑已重啟，等 Google 憑證授權後自動開始）",
+      "confidence": 0.7,
+      "runtime_used": "gemini-2.5-flash-lite",
+      "llm_second_opinion": {
+        "ok": false,
+        "error": "missing_GEMINI_API_KEY"
+      },
+      "date": "2026-05-05"
+    },
+    {
+      "task_id": "T-A4-002",
+      "surface_task": "T-A4-002",
+      "inferred_real_need": "縮短交接成本，確保任務閉環與可追溯",
+      "actual_output": [
+        "",
+        ""
+      ],
+      "real_next_action": "",
+      "owner_blocker": "",
+      "confidence": 0.86,
+      "runtime_used": "ollama",
+      "llm_second_opinion": {
+        "ok": true,
+        "raw_text": "以下是根據給定的 task 和 heuristic 輸出的 JSON:\n\n```json\n{\n    \"inferred_real_need\": \"縮短交接成本，確保任務閉環與可追溯\",\n    \"actual_output\": [\n        \"\",\n        \"\"\n    ],\n    \"real_next_action\": \"\",\n    \"owner_blocker\": [],\n    \"confidence\": 0.86\n}\n```\n\n注意，我新增了一個 `owner_blocker` 欄位，並將其設為空陣列，因為在給定的 tas\u001b[3D\u001b[K\ntask 資料中，並沒有提到任務的阻塞者。"
+      },
+      "date": "2026-05-05"
+    },
+    {
+      "task_id": "T-A5-001",
+      "surface_task": "108 品項去重+重編碼完成，無後續",
+      "inferred_real_need": "縮短交接成本，確保任務閉環與可追溯",
+      "actual_output": [
+        "108 品項去重+重編碼完成，無後續",
+        "✅ 完成"
+      ],
+      "real_next_action": "",
+      "owner_blocker": "無",
+      "confidence": 0.7,
+      "runtime_used": "gemini-2.5-flash-lite",
+      "llm_second_opinion": {
+        "ok": false,
+        "error": "missing_GEMINI_API_KEY"
+      },
+      "date": "2026-05-05"
+    },
+    {
+      "task_id": "T-A5-002",
+      "surface_task": "核心公式已修正、e2e 通過。剩餘：T-A5-003 熱客招待品項定義 + 3 項待 Owner 確認",
+      "inferred_real_need": "縮短交接成本，確保任務閉環與可追溯",
+      "actual_output": [
+        "核心公式已修正、e2e 通過。剩餘：T-A5-003 熱客招待品項定義 + 3 項待 Owner 確認",
+        "🔄 進行中（核心欄位已可用，業務可實際操作）"
+      ],
+      "real_next_action": "T-A5-003 熱客招待品項定義（GFT G22/G23 N/A 待處理）",
+      "owner_blocker": "等 Owner 確認（品項名稱改法、重複品項、I 欄用途）",
+      "confidence": 0.7,
+      "runtime_used": "gemini-2.5-flash-lite",
+      "llm_second_opinion": {
+        "ok": false,
+        "error": "missing_GEMINI_API_KEY"
+      },
+      "date": "2026-05-05"
+    },
+    {
+      "task_id": "T-A5-003",
+      "surface_task": "Phase 1 規則定義完成（觸發條件/品項選擇/成本控管）；Phase 2 GAS 整合待排",
+      "inferred_real_need": "快速產生可修改的報價草稿並沉澱規則",
+      "actual_output": [
+        "Phase 1 規則定義完成（觸發條件/品項選擇/成本控管）；Phase 2 GAS 整合待排",
+        "✅ 完成"
+      ],
+      "real_next_action": "**Next:** Owner 確認 SECTION 5 問題後，合併進 T-A5-002 QUOTE_DRAFT 增強",
+      "owner_blocker": "無（Phase 2 等優先序排定）",
+      "confidence": 0.7,
+      "runtime_used": "gemini-2.5-flash-lite",
+      "llm_second_opinion": {
+        "ok": false,
+        "error": "missing_GEMINI_API_KEY"
+      },
+      "date": "2026-05-05"
+    },
+    {
+      "task_id": "T-A5-004",
+      "surface_task": "Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔案清理、Items english_name 確認",
+      "inferred_real_need": "縮短交接成本，確保任務閉環與可追溯",
+      "actual_output": [
+        "Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔案清理、Items english_name 確認",
+        "🔄 進行中（核心功能已可用，Owner 可按「MAPLAB > 產出 Slide 提案」一鍵出簡報）"
+      ],
+      "real_next_action": "品牌色票更新（CREAM/GOLD/DGOLD 改為品牌規範值）",
+      "owner_blocker": "無（功能已上線，剩餘為優化項）",
+      "confidence": 0.7,
+      "runtime_used": "gemini-2.5-flash-lite",
+      "llm_second_opinion": {
+        "ok": false,
+        "error": "missing_GEMINI_API_KEY"
+      },
+      "date": "2026-05-05"
+    },
+    {
+      "task_id": "T-A5-005",
+      "surface_task": "程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboard / ensureIntakeHeaders_）。下一步：clasp push → 手動啟動 trigger + Dashboard。",
+      "inferred_real_need": "快速產生可修改的報價草稿並沉澱規則",
+      "actual_output": [
+        "程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboard / ensureIntakeHeaders_）。下一步：clasp push → 手動啟動 trigger + Dashboard。",
+        "🔄 進行中"
+      ],
+      "real_next_action": "clasp push → 手動啟動 trigger + Dashboard。",
+      "owner_blocker": "無（待 clasp push 部署）",
+      "confidence": 0.7,
+      "runtime_used": "gemini-2.5-flash-lite",
+      "llm_second_opinion": {
+        "ok": false,
+        "error": "missing_GEMINI_API_KEY"
+      },
+      "date": "2026-05-05"
+    },
+    {
+      "task_id": "T-A5-006",
+      "surface_task": "尚未開始。等 T-A5-005 完成後啟動。",
+      "inferred_real_need": "縮短交接成本，確保任務閉環與可追溯",
+      "actual_output": [
+        "尚未開始。等 T-A5-005 完成後啟動。",
+        "🔲 待開始"
+      ],
+      "real_next_action": "確認 T-A5-005 完成 → 開始重建 OrderLines 2025",
+      "owner_blocker": "前置 T-A5-005 需先完成",
+      "confidence": 0.7,
+      "runtime_used": "gemini-2.5-flash-lite",
+      "llm_second_opinion": {
+        "ok": false,
+        "error": "missing_GEMINI_API_KEY"
+      },
+      "date": "2026-05-05"
+    },
+    {
+      "task_id": "T-A6-001",
+      "surface_task": "已新增 Telegram 模式選單（報價/聊天/SEO）+ Ollama 聊天路由；雙人白名單維持。下一步：重啟 bot 後做實機對話測試與群組操作驗證。",
+      "inferred_real_need": "穩定產出高意圖內容並可追蹤回寫",
+      "actual_output": [
+        "已新增 Telegram 模式選單（報價/聊天/SEO）+ Ollama 聊天路由；雙人白名單維持。下一步：重啟 bot 後做實機對話測試與群組操作驗證。",
+        "🔄 進行中"
+      ],
+      "real_next_action": "重啟 bot 後做實機對話測試與群組操作驗證。",
+      "owner_blocker": "若要啟用「LINE OA Webhook 寫入 CONVERSATION_LOG」仍需 Owner 完成 LINE Developers Console Webhook URL 設定",
+      "confidence": 0.7,
+      "runtime_used": "gemini-2.5-flash-lite",
+      "llm_second_opinion": {
+        "ok": false,
+        "error": "missing_GEMINI_API_KEY"
+      },
+      "date": "2026-05-05"
+    },
+    {
+      "task_id": "T-A6-002",
+      "surface_task": "原計畫拆 Sheet 做訓練資料，04-07 重新規劃方向。等 Owner 決定是否需要 LINE 訓練資料及取得方式。",
+      "inferred_real_need": "縮短交接成本，確保任務閉環與可追溯",
+      "actual_output": [
+        "原計畫拆 Sheet 做訓練資料，04-07 重新規劃方向。等 Owner 決定是否需要 LINE 訓練資料及取得方式。",
+        "💤 暫停"
+      ],
+      "real_next_action": "",
+      "owner_blocker": "等 Owner 決定方向",
+      "confidence": 0.7,
+      "runtime_used": "gemini-2.5-flash-lite",
+      "llm_second_opinion": {
+        "ok": false,
+        "error": "missing_GEMINI_API_KEY"
+      },
+      "date": "2026-05-05"
+    },
+    {
+      "task_id": "T-A7-001",
+      "surface_task": "Q1-Q10 重構完成（真實 CSV 驅動），下一步是 Q7/Q10 政策確認 + Phase 3 上線測試",
+      "inferred_real_need": "縮短交接成本，確保任務閉環與可追溯",
+      "actual_output": [
+        "Q1-Q10 重構完成（真實 CSV 驅動），下一步是 Q7/Q10 政策確認 + Phase 3 上線測試",
+        "💤 暫停（Phase 2 v2.0 完成，等 Owner 確認政策 + A5 欄位補齊）"
+      ],
+      "real_next_action": "## Done / Next / Blockers",
+      "owner_blocker": "Q7 試吃政策需 Owner 決定、Q10 取消/改期政策需 Owner 決定、A5 外送費級距未建立",
+      "confidence": 0.7,
+      "runtime_used": "gemini-2.5-flash-lite",
+      "llm_second_opinion": {
+        "ok": false,
+        "error": "missing_GEMINI_API_KEY"
+      },
+      "date": "2026-05-05"
+    },
+    {
+      "task_id": "T-A7-002",
+      "surface_task": "任務 6（Q1-Q10 實裝）+ 任務 10（技能書 v2.0）已完成。Phase 3A 剩任務 4（地區判斷）、7（流程圖同步）。Phase 3B/3C 全部待外部條件。",
+      "inferred_real_need": "縮短交接成本，確保任務閉環與可追溯",
+      "actual_output": [
+        "任務 6（Q1-Q10 實裝）+ 任務 10（技能書 v2.0）已完成。Phase 3A 剩任務 4（地區判斷）、7（流程圖同步）。Phase 3B/3C 全部待外部條件。",
+        "⏸️ 阻塞中"
+      ],
+      "real_next_action": "",
+      "owner_blocker": "任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限",
+      "confidence": 0.7,
+      "runtime_used": "gemini-2.5-flash-lite",
+      "llm_second_opinion": {
+        "ok": false,
+        "error": "missing_GEMINI_API_KEY"
+      },
+      "date": "2026-05-05"
+    },
+    {
+      "task_id": "T-A7-003",
+      "surface_task": "Phase 1 完成（10 條關鍵字自動回覆 JSON+CSV）；部署到 LINE OA 後台需 Owner 操作",
+      "inferred_real_need": "縮短交接成本，確保任務閉環與可追溯",
+      "actual_output": [
+        "Phase 1 完成（10 條關鍵字自動回覆 JSON+CSV）；部署到 LINE OA 後台需 Owner 操作",
+        "✅ 完成"
+      ],
+      "real_next_action": "T-A7-002 任務 6 建議把這 10 條整理進 Google Sheets 讓 Mina 直接取用",
+      "owner_blocker": "等 Owner 部署到 LINE OA 後台",
+      "confidence": 0.7,
+      "runtime_used": "gemini-2.5-flash-lite",
+      "llm_second_opinion": {
+        "ok": false,
+        "error": "missing_GEMINI_API_KEY"
+      },
+      "date": "2026-05-05"
+    },
+    {
+      "task_id": "T-B1-001",
+      "surface_task": "T-B1-001",
+      "inferred_real_need": "縮短交接成本，確保任務閉環與可追溯",
+      "actual_output": [
+        "",
+        "🔄 進行中（Phase 0 — API 綁定，Owner 設定中）"
+      ],
+      "real_next_action": "",
+      "owner_blocker": "",
+      "confidence": 0.86,
+      "runtime_used": "gemini-2.5-flash-lite",
+      "llm_second_opinion": {
+        "ok": false,
+        "error": "missing_GEMINI_API_KEY"
+      },
+      "date": "2026-05-05"
+    },
+    {
+      "task_id": "T-GBP-001",
+      "surface_task": "尚未開始。等 Owner 準備新圖片。",
+      "inferred_real_need": "縮短交接成本，確保任務閉環與可追溯",
+      "actual_output": [
+        "尚未開始。等 Owner 準備新圖片。",
+        "🔲 待開始"
+      ],
+      "real_next_action": "## Next（下一步）",
+      "owner_blocker": "等 Owner 準備新圖片",
+      "confidence": 0.7,
+      "runtime_used": "gemini-2.5-flash-lite",
+      "llm_second_opinion": {
+        "ok": false,
+        "error": "missing_GEMINI_API_KEY"
+      },
+      "date": "2026-05-05"
+    },
+    {
+      "task_id": "TASK_CARD_TEMPLATE",
+      "surface_task": "[一句話：做到哪，下一步做什麼]",
+      "inferred_real_need": "縮短交接成本，確保任務閉環與可追溯",
+      "actual_output": [
+        "[一句話：做到哪，下一步做什麼]",
+        "🔲 待開始 / 🔄 進行中 / ⏸️ 阻塞中 / 💤 暫停 / ✅ 完成"
+      ],
+      "real_next_action": "[明確的下一個動作]",
+      "owner_blocker": "無 / [具體原因 + 誰能解除]",
+      "confidence": 0.7,
+      "runtime_used": "gemini-2.5-flash-lite",
+      "llm_second_opinion": {
+        "ok": false,
+        "error": "missing_GEMINI_API_KEY"
+      },
+      "date": "2026-05-05"
+    },
+    {
+      "task_id": "T-AX-NNN",
+      "surface_task": "（填寫：做到哪、下一步做什麼）",
+      "inferred_real_need": "縮短交接成本，確保任務閉環與可追溯",
+      "actual_output": [
+        "（填寫：做到哪、下一步做什麼）",
+        "🔲 待開始"
+      ],
+      "real_next_action": "",
+      "owner_blocker": "無",
+      "confidence": 0.7,
+      "runtime_used": "gemini-2.5-flash-lite",
+      "llm_second_opinion": {
+        "ok": false,
+        "error": "missing_GEMINI_API_KEY"
+      },
+      "date": "2026-05-05"
+    }
+  ]
+}

@@ -145,3 +145,17 @@ maplab-ai-handbook/
 ---
 
 *系統版本：v3.4 | 最後更新：2026-03-19 | 維護者：A1 Handbook Agent | README v2.4*
+
+---
+
+## Local Model-Agnostic Control Plane (New)
+
+為了把角色執行從單一模型供應商抽離，新增本地控制面板：
+
+- [local-control-plane/README.md](./local-control-plane/README.md)
+- [local-control-plane/panel.html](./local-control-plane/panel.html)
+
+此控制面板定義：
+- 角色能力與可接手 runtime（Claude / Ollama / GPT 等）
+- 任務拆解流水線與輸出契約（JSON contract）
+- 後續可接 A6 dispatcher 與 SEO factory 作為閉環執行面

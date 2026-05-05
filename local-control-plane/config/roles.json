@@ -1,0 +1,33 @@
+{
+  "version": "0.1.0",
+  "updated_at": "2026-05-05",
+  "roles": [
+    {
+      "role_id": "A1",
+      "name": "System Orchestrator",
+      "purpose": "Dispatch and governance",
+      "inputs": ["owner_request", "task_card", "runtime_status"],
+      "outputs": ["dispatch_plan", "task_update", "audit_log"],
+      "capabilities": ["dispatch", "git_governance", "incident_response"],
+      "preferred_runtimes": ["claude_code", "gpt_codex"]
+    },
+    {
+      "role_id": "SEO_FACTORY",
+      "name": "SEO Content Factory",
+      "purpose": "Pillar-first content pipeline",
+      "inputs": ["content_brief", "keyword_matrix", "link_policy"],
+      "outputs": ["draft_artifact", "validation_result", "publish_payload"],
+      "capabilities": ["planner", "writer", "linker", "schema_builder", "verifier"],
+      "preferred_runtimes": ["ollama", "claude_code", "gpt_codex"]
+    },
+    {
+      "role_id": "A6",
+      "name": "Sales Rapid Response",
+      "purpose": "Quote assistant and immediate response",
+      "inputs": ["customer_context", "pricing_rules", "asset_refs"],
+      "outputs": ["quote_draft", "faq_reply", "handoff_note"],
+      "capabilities": ["quote_generation", "menu_mapping", "customer_reply"],
+      "preferred_runtimes": ["ollama", "claude_code"]
+    }
+  ]
+}

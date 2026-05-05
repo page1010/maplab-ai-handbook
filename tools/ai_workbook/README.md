@@ -18,6 +18,8 @@ python3 tools/ai_workbook/cli.py microtask T-A6-001 --goal "重啟 bot 後做實
 python3 tools/ai_workbook/cli.py graph
 python3 tools/ai_workbook/cli.py infer
 python3 tools/ai_workbook/cli.py photo-plan
+python3 tools/ai_workbook/cli.py asset-snapshot
+python3 tools/ai_workbook/cli.py dashboard
 ```
 
 ## Runtime Policy
@@ -33,3 +35,17 @@ python3 tools/ai_workbook/cli.py photo-plan
 - Writes only to `workbook/*` outputs
 - Does **not** auto-modify `CURRENT_STATUS.md` or task cards
 
+## Clickable Entry
+After running `dashboard`, open:
+
+- `workbook/dashboard.html`
+
+## A4 Photo Source
+The A4 photo pipeline source of truth is:
+
+- `MAPLAB_ASSET_LOG`
+- Spreadsheet ID: `1nlxlMdaLdGEAmOjP70BYspRWqu_eYpsiRyZaujEZkYI`
+- Sheet tab: `工作表1`
+- Drive archive root: `MAPLAB_ASSETS`
+
+`photo-plan` is only for local temporary photo folders. Use `asset-snapshot` for the real A4 Sheet state.

@@ -10,11 +10,12 @@ if str(ROOT / "tools") not in sys.path:
     sys.path.insert(0, str(ROOT / "tools"))
 
 from ai_workbook.build_context_pack import build_context_pack
+from ai_workbook.build_dashboard import build_dashboard
 from ai_workbook.create_microtask import create_microtask
 from ai_workbook.ingest import ingest_repo
 from ai_workbook.infer_need import infer_needs
 from ai_workbook.parse_task_cards import parse_task_cards
-from ai_workbook.photo_pipeline import build_photo_classification_plan
+from ai_workbook.photo_pipeline import build_asset_log_snapshot, build_photo_classification_plan
 from ai_workbook.relation_graph import build_relation_graph
 from ai_workbook.writeback import write_output
 
@@ -32,6 +33,8 @@ def main() -> int:
     sub.add_parser("graph")
     sub.add_parser("infer")
     sub.add_parser("photo-plan")
+    sub.add_parser("asset-snapshot")
+    sub.add_parser("dashboard")
 
     args = parser.parse_args()
 
@@ -75,6 +78,16 @@ def main() -> int:
             {"plan_path": str(p), "status": "proposed_only"},
             name="run_log",
         )
+        print(str(p))
+        return 0
+
+    if args.cmd == "asset-snapshot":
+        p = build_asset_log_snapshot()
+        print(str(p))
+        return 0
+
+    if args.cmd == "dashboard":
+        p = build_dashboard()
         print(str(p))
         return 0
 

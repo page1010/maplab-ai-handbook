@@ -1,0 +1,61 @@
+{
+  "version": "0.1.0",
+  "updated_at": "2026-05-05",
+  "pipelines": [
+    {
+      "pipeline_id": "seo_pillar_weekly",
+      "name": "SEO Pillar Weekly Batch",
+      "steps": [
+        {
+          "id": "planner",
+          "input_type": "ContentBrief",
+          "output_type": "OutlinePlan"
+        },
+        {
+          "id": "writer",
+          "input_type": "OutlinePlan",
+          "output_type": "DraftArtifact"
+        },
+        {
+          "id": "linker",
+          "input_type": "DraftArtifact",
+          "output_type": "DraftArtifact"
+        },
+        {
+          "id": "schema_builder",
+          "input_type": "DraftArtifact",
+          "output_type": "DraftArtifact"
+        },
+        {
+          "id": "verifier",
+          "input_type": "DraftArtifact",
+          "output_type": "ValidationResult"
+        },
+        {
+          "id": "wp_draft_publisher",
+          "input_type": "PublishPayload",
+          "output_type": "PublishResult"
+        },
+        {
+          "id": "auditor",
+          "input_type": "PublishResult",
+          "output_type": "AuditReport"
+        }
+      ]
+    }
+  ],
+  "types": {
+    "ContentBrief": {
+      "required": ["pillar", "target_intent", "audience", "required_sections", "banned_topics"]
+    },
+    "DraftArtifact": {
+      "required": ["slug", "title", "body_md", "faq_items", "cta", "meta", "schema_jsonld", "internal_links"]
+    },
+    "ValidationResult": {
+      "required": ["pass", "score", "failures", "auto_fixable"]
+    },
+    "PublishPayload": {
+      "required": ["status", "content", "meta_fields", "trace_id"]
+    }
+  }
+}

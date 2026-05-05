@@ -3,18 +3,30 @@
 cookies.txt
 **/.env
 .env
+**/.env.bak
+**/.env.local
+**/.env.*.local
 
 # Telegram logs - may contain sensitive info from conversations
 data/telegram-logs/
 archive/raw/telegram-logs/
+data/a6-logs/
+archive/raw/a6-logs/
+data/telegram-photos/
 
 # Bot logs & sensitive runtime files — may contain tokens
 bot_a6/bot_a6.log
 bot_a6/launchd_stdout.log
+bot_a6/launchd_stderr.log
 bot/conv_history.json
+bot/bot.log
+bot/launchd_stdout.log
+bot/launchd_stderr.log
+bot_a6/conv_history_a6.json
 
 # OAuth tokens
 scripts/token.json
+**/token.json
 
 # Claude Code worktrees
 .claude/worktrees/

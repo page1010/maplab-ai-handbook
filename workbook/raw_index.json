@@ -1,0 +1,582 @@
+{
+  "root": "/Users/pagemacmini/maplab-ai-handbook",
+  "count": 96,
+  "files": [
+    {
+      "path": "CURRENT_STATUS.md",
+      "bytes": 13657,
+      "lines": 140,
+      "title": "# CURRENT_STATUS.md — 唯一最新狀態入口"
+    },
+    {
+      "path": "AGENT_RULES.md",
+      "bytes": 37568,
+      "lines": 759,
+      "title": "# AGENT_RULES.md — MAPLAB AI 全域行為準則"
+    },
+    {
+      "path": "AGENT_RECALL_PROMPTS.md",
+      "bytes": 47481,
+      "lines": 700,
+      "title": "# AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt"
+    },
+    {
+      "path": "handoff/tasks/T-A1-002.md",
+      "bytes": 5128,
+      "lines": 137,
+      "title": "# Task Card: T-A1-002"
+    },
+    {
+      "path": "handoff/tasks/T-A1-V6-P2.md",
+      "bytes": 2324,
+      "lines": 70,
+      "title": "# Task Card: T-A1-V6-P2"
+    },
+    {
+      "path": "handoff/tasks/T-A1-V6-P3.md",
+      "bytes": 1815,
+      "lines": 65,
+      "title": "# Task Card: T-A1-V6-P3"
+    },
+    {
+      "path": "handoff/tasks/T-A1-V7.md",
+      "bytes": 4971,
+      "lines": 94,
+      "title": "# T-A1-V7: 系統進化 — 單一真相源 + 自動同步 + 瘦身 + 自動技能生成 + 自動壓縮"
+    },
+    {
+      "path": "handoff/tasks/T-A2-001.md",
+      "bytes": 3185,
+      "lines": 75,
+      "title": "# T-A2-001 — 文章精選圖片補齊（57篇→每篇獨立配圖）"
+    },
+    {
+      "path": "handoff/tasks/T-A2-002-foodsafety-seo-cleanup.md",
+      "bytes": 3022,
+      "lines": 97,
+      "title": "# T-A2-002 — 食安 + 法規 SEO 字眼清理"
+    },
+    {
+      "path": "handoff/tasks/T-A2-003-weekly-wp-audit.md",
+      "bytes": 1529,
+      "lines": 50,
+      "title": "# T-A2-003: 每週全站 WP 內容稽核排程"
+    },
+    {
+      "path": "handoff/tasks/T-A2-004.md",
+      "bytes": 2260,
+      "lines": 51,
+      "title": "# T-A2-004: 首頁結構優化 — 配合品牌色票微調 + 轉換路徑整理"
+    },
+    {
+      "path": "handoff/tasks/T-A2-005-local-seo-factory.md",
+      "bytes": 4201,
+      "lines": 100,
+      "title": "# T-A2-005：MAPLAB SEO Factory（地端閉環，Pillar First）"
+    },
+    {
+      "path": "handoff/tasks/T-A2A3-001-B.md",
+      "bytes": 8365,
+      "lines": 145,
+      "title": "# T-A2A3-001-B — SEO 場景頁面 + 內連結（從 T-A2A3-001 分拆）"
+    },
+    {
+      "path": "handoff/tasks/T-A2A3-001.md",
+      "bytes": 3364,
+      "lines": 64,
+      "title": "# T-A2A3-001 — SEO 關鍵字頁面補足"
+    },
+    {
+      "path": "handoff/tasks/T-A3-001.md",
+      "bytes": 7205,
+      "lines": 179,
+      "title": "# T-A3-001 — GTM LINE 按鈕追蹤完整方案"
+    },
+    {
+      "path": "handoff/tasks/T-A3-002.md",
+      "bytes": 5381,
+      "lines": 198,
+      "title": "# T-A3-002 — Meta 廣告「慶生周歲派對」受眾確認 + 優化"
+    },
+    {
+      "path": "handoff/tasks/T-A4-001.md",
+      "bytes": 6683,
+      "lines": 179,
+      "title": "# Task Card: T-A4-001 — Phase 4 Gemini 照片分類（2022-2026）"
+    },
+    {
+      "path": "handoff/tasks/T-A4-002.md",
+      "bytes": 5816,
+      "lines": 149,
+      "title": "# T-A4-002 — pagewu1010 帳號 Takeout 解壓 + Gemini Flash 照片資產整合"
+    },
+    {
+      "path": "handoff/tasks/T-A5-001.md",
+      "bytes": 1299,
+      "lines": 44,
+      "title": "# Task Card: T-A5-001 — Items 去重 + 全品項重新編碼"
+    },
+    {
+      "path": "handoff/tasks/T-A5-002.md",
+      "bytes": 5993,
+      "lines": 145,
+      "title": "# Task Card: T-A5-002 — QUOTE_DRAFT 報價單欄位增強"
+    },
+    {
+      "path": "handoff/tasks/T-A5-003.md",
+      "bytes": 5264,
+      "lines": 139,
+      "title": "# T-A5-003 — 熱客招待品項定義（GFT 規則）"
+    },
+    {
+      "path": "handoff/tasks/T-A5-004.md",
+      "bytes": 6464,
+      "lines": 183,
+      "title": "# T-A5-004: createSlides.gs — Slide 報價簡報自動生成"
+    },
+    {
+      "path": "handoff/tasks/T-A5-005.md",
+      "bytes": 3013,
+      "lines": 68,
+      "title": "# T-A5-005: 報價狀態追蹤同步 + Dashboard"
+    },
+    {
+      "path": "handoff/tasks/T-A5-006.md",
+      "bytes": 1685,
+      "lines": 62,
+      "title": "# Task Card: T-A5-006"
+    },
+    {
+      "path": "handoff/tasks/T-A6-001.md",
+      "bytes": 3163,
+      "lines": 87,
+      "title": "# T-A6-001 — A6 LINE 業務報價助手系統"
+    },
+    {
+      "path": "handoff/tasks/T-A6-002.md",
+      "bytes": 2933,
+      "lines": 77,
+      "title": "# T-A6-002: LINE 對話訓練資料收集計畫"
+    },
+    {
+      "path": "handoff/tasks/T-A7-001.md",
+      "bytes": 13511,
+      "lines": 324,
+      "title": "# Task Card: T-A7-001 — FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤"
+    },
+    {
+      "path": "handoff/tasks/T-A7-002.md",
+      "bytes": 12038,
+      "lines": 230,
+      "title": "# T-A7-002 — A7 部門 80/20 優先任務清單"
+    },
+    {
+      "path": "handoff/tasks/T-A7-003.md",
+      "bytes": 12583,
+      "lines": 282,
+      "title": "# T-A7-003 — LINE OA 自動回覆腳本 v1"
+    },
+    {
+      "path": "handoff/tasks/T-B1-001.md",
+      "bytes": 5920,
+      "lines": 166,
+      "title": "# T-B1-001: Substack + 多平台同步發文建置"
+    },
+    {
+      "path": "handoff/tasks/T-GBP-001.md",
+      "bytes": 1351,
+      "lines": 49,
+      "title": "# Task Card: T-GBP-001"
+    },
+    {
+      "path": "handoff/tasks/TASK_CARD_TEMPLATE.md",
+      "bytes": 2257,
+      "lines": 89,
+      "title": "# Task Card: [TASK_ID]"
+    },
+    {
+      "path": "handoff/tasks/TEMPLATE.md",
+      "bytes": 317,
+      "lines": 18,
+      "title": "# T-AX-NNN: 任務標題"
+    },
+    {
+      "path": "projects/a0-a1-briefing-protocol.md",
+      "bytes": 18930,
+      "lines": 472,
+      "title": "# A0/A1 雙向 Briefing + 抽考機制設計文件"
+    },
+    {
+      "path": "projects/a2-asset-guide.md",
+      "bytes": 6075,
+      "lines": 179,
+      "title": "---"
+    },
+    {
+      "path": "projects/ai-reply-system.md",
+      "bytes": 14094,
+      "lines": 349,
+      "title": "# AI Reply System — MAPLAB 回覆系統技術文件"
+    },
+    {
+      "path": "projects/dual-bot-architecture.md",
+      "bytes": 4542,
+      "lines": 131,
+      "title": "# MAPLAB 雙 Bot 架構設計規劃"
+    },
+    {
+      "path": "projects/extension-browser-bridge.md",
+      "bytes": 2587,
+      "lines": 77,
+      "title": "# Extension Browser Bridge — 使用者需求 v1.0"
+    },
+    {
+      "path": "projects/gtm-conversion-setup.md",
+      "bytes": 12309,
+      "lines": 332,
+      "title": "# gtm-conversion-setup.md — MAPLAB GTM 轉換事件設定 SOP"
+    },
+    {
+      "path": "projects/line-conversation-training.md",
+      "bytes": 561,
+      "lines": 19,
+      "title": "# LINE 對話訓練備份計畫"
+    },
+    {
+      "path": "projects/maplab-ads-monitor.md",
+      "bytes": 4457,
+      "lines": 120,
+      "title": "# Ads Monitor Agent — MAPLAB 廣告數據監控技術文件"
+    },
+    {
+      "path": "projects/maplab-kitchen-web-optimization.md",
+      "bytes": 4979,
+      "lines": 132,
+      "title": "# Kitchen Web Optimization — 角色定位與技術文件"
+    },
+    {
+      "path": "projects/maplab-master-data.md",
+      "bytes": 50878,
+      "lines": 558,
+      "title": "# Master Data Agent — MAPLAB Kitchen ERP 技術文件"
+    },
+    {
+      "path": "projects/maplab-pipeline.md",
+      "bytes": 22845,
+      "lines": 408,
+      "title": "# Pipeline Agent — 角色定位與技術文件"
+    },
+    {
+      "path": "projects/maplab-playbook.md",
+      "bytes": 21303,
+      "lines": 479,
+      "title": "# MAPLAB Playbook — 從 0 到上線完整路徑"
+    },
+    {
+      "path": "projects/quote-system-v2.md",
+      "bytes": 6942,
+      "lines": 207,
+      "title": "# 報價系統 v2 — 一鍵產出 + 狀態追蹤 + 營收分析"
+    },
+    {
+      "path": "projects/seo-ads-agent.md",
+      "bytes": 35038,
+      "lines": 664,
+      "title": "# seo-ads-agent.md — MAPLAB 廣告系統技術文件"
+    },
+    {
+      "path": "projects/slides-quotation-system.md",
+      "bytes": 121906,
+      "lines": 694,
+      "title": "# Slides Quotation System — MAPLAB Kitchen 簡報報價系統規劃"
+    },
+    {
+      "path": "projects/v6-architecture.md",
+      "bytes": 7115,
+      "lines": 147,
+      "title": "# MAPLAB AI v6.0 架構設計文件"
+    },
+    {
+      "path": "skills/a0-proactive-dispatch-guide.md",
+      "bytes": 4273,
+      "lines": 92,
+      "title": "# A0 主動行動指南 — 禁止被動回報"
+    },
+    {
+      "path": "skills/a2-substack-collab.md",
+      "bytes": 4538,
+      "lines": 139,
+      "title": "# A2 技能書：Substack 故事系列協作"
+    },
+    {
+      "path": "skills/a3-social-ads-skills.md",
+      "bytes": 2452,
+      "lines": 67,
+      "title": "# A3 社群與廣告成長部 — 核心技能書"
+    },
+    {
+      "path": "skills/a4-photo-asset-skills.md",
+      "bytes": 3166,
+      "lines": 89,
+      "title": "# A4 影像資產整理部 — 核心技能書"
+    },
+    {
+      "path": "skills/a5-quotation-engine-skills.md",
+      "bytes": 2669,
+      "lines": 72,
+      "title": "# A5 報價與提案引擎部 — 核心技能書"
+    },
+    {
+      "path": "skills/a6-qa-examples.md",
+      "bytes": 9398,
+      "lines": 246,
+      "title": "# A6 QA 範例庫 — 真實對話 × 真實報價 配對"
+    },
+    {
+      "path": "skills/a6-rapid-quote-sop.md",
+      "bytes": 18258,
+      "lines": 497,
+      "title": "# A6 Rapid Quote SOP — 業務報價助手操作流程"
+    },
+    {
+      "path": "skills/a6-safety-boundaries.md",
+      "bytes": 7904,
+      "lines": 145,
+      "title": "# A6 安全框架 — 什麼能做、什麼不能做、什麼要確認"
+    },
+    {
+      "path": "skills/a6-sales-rapid-response-skills.md",
+      "bytes": 2694,
+      "lines": 77,
+      "title": "# A6 業務快反應部隊 — 核心技能書"
+    },
+    {
+      "path": "skills/a6-system-operations.md",
+      "bytes": 12268,
+      "lines": 330,
+      "title": "# A6 系統操作手冊 — MAPLAB 報價系統"
+    },
+    {
+      "path": "skills/a6-telegram-window.md",
+      "bytes": 5133,
+      "lines": 176,
+      "title": "# A6 Telegram 業務窗口 — 操作手冊"
+    },
+    {
+      "path": "skills/a7-customer-service-skills.md",
+      "bytes": 6228,
+      "lines": 133,
+      "title": "# A7 客服與對話轉單部 — 核心技能書"
+    },
+    {
+      "path": "skills/a8-video-pipeline-skills.md",
+      "bytes": 3723,
+      "lines": 114,
+      "title": "# A8 影音內容產線技能書（Video Pipeline Skills）"
+    },
+    {
+      "path": "skills/ai-model-guide.md",
+      "bytes": 8289,
+      "lines": 186,
+      "title": "# AI Model Guide — MAPLAB 各 AI 使用建議與特性技能書"
+    },
+    {
+      "path": "skills/b1-innerflowlab-skills.md",
+      "bytes": 5170,
+      "lines": 159,
+      "title": "# B1 InnerFlowLab 內容創作技能書"
+    },
+    {
+      "path": "skills/brand-voice-guide.md",
+      "bytes": 8497,
+      "lines": 207,
+      "title": "# MAPLAB Kitchen 品牌語氣統一文件 v1.1"
+    },
+    {
+      "path": "skills/clasp-deploy-guide.md",
+      "bytes": 3340,
+      "lines": 81,
+      "title": "# ⚠️ 此檔案已移動至 skills/clasp-deploy/SKILL.md"
+    },
+    {
+      "path": "skills/claude-platform-playbook.md",
+      "bytes": 13443,
+      "lines": 407,
+      "title": "# Claude 平台功能對照手冊 — MAPLAB 實戰版"
+    },
+    {
+      "path": "skills/colab-resilience-guide.md",
+      "bytes": 5300,
+      "lines": 179,
+      "title": "# Colab Resilience Guide — 防死機技能包"
+    },
+    {
+      "path": "skills/context-compression-guide.md",
+      "bytes": 6758,
+      "lines": 208,
+      "title": "# Context Compression Guide — 防 Prompt Too Long 技能書"
+    },
+    {
+      "path": "skills/crash-recovery-guide.md",
+      "bytes": 6036,
+      "lines": 170,
+      "title": "# crash-recovery-guide.md — 當機復原與進度驗證技能書"
+    },
+    {
+      "path": "skills/experience-log.md",
+      "bytes": 12377,
+      "lines": 241,
+      "title": "# Experience Log — 成功路徑 + 失敗教訓"
+    },
+    {
+      "path": "skills/extension-agent-summon-guide.md",
+      "bytes": 3220,
+      "lines": 99,
+      "title": "# Extension Agent 召喚技能書 — 透過 MAPLAB Agent Commander 啟動 Agent"
+    },
+    {
+      "path": "skills/gas-chrome-troubleshooting.md",
+      "bytes": 1371,
+      "lines": 36,
+      "title": "# Skill: gas-chrome-troubleshooting — GAS + Chrome 常見問題排除"
+    },
+    {
+      "path": "skills/gdrive-to-wordpress-upload-guide.md",
+      "bytes": 7084,
+      "lines": 209,
+      "title": "# Google Drive → WordPress 雲端圖片上傳技能書"
+    },
+    {
+      "path": "skills/github-api-workflow-guide.md",
+      "bytes": 2020,
+      "lines": 76,
+      "title": "# GitHub API Workflow Guide"
+    },
+    {
+      "path": "skills/gps-daily-subdivision-guide.md",
+      "bytes": 187108,
+      "lines": 425,
+      "title": "# GPS 日常照片細分技能書（S5.5 / S6.5 / S11.5–S13.5）"
+    },
+    {
+      "path": "skills/lessons-learned.md",
+      "bytes": 3431,
+      "lines": 109,
+      "title": "# 經驗分享 / Lessons Learned"
+    },
+    {
+      "path": "skills/maplab-visual-spec.md",
+      "bytes": 15171,
+      "lines": 414,
+      "title": "# MAPLAB KITCHEN 視覺規範 v1.0"
+    },
+    {
+      "path": "skills/mcp-usage-guide.md",
+      "bytes": 7248,
+      "lines": 176,
+      "title": "# MCP 使用指南 v1.1"
+    },
+    {
+      "path": "skills/media-limit-workaround.md",
+      "bytes": 5229,
+      "lines": 165,
+      "title": "# media-limit-workaround.md — AI 工具媒體數量上限解決方案"
+    },
+    {
+      "path": "skills/next-three-report.md",
+      "bytes": 827,
+      "lines": 43,
+      "title": "# 下三個任務回報模組 — 每個斷點必用"
+    },
+    {
+      "path": "skills/page-checker.md",
+      "bytes": 1578,
+      "lines": 44,
+      "title": "# 頁面檢查器 — WP 頁面發布前必跑"
+    },
+    {
+      "path": "skills/photo-pipeline-toolkit-guide.md",
+      "bytes": 17185,
+      "lines": 555,
+      "title": "# 相簿整理 Pipeline 工具箱"
+    },
+    {
+      "path": "skills/remote-desktop-agent-bridge.md",
+      "bytes": 14194,
+      "lines": 292,
+      "title": "# Remote Desktop Agent Bridge — A0 跨機器 Agent 監控技能書"
+    },
+    {
+      "path": "skills/seo-ranking-evaluation-guide.md",
+      "bytes": 6300,
+      "lines": 183,
+      "title": "# seo-ranking-evaluation-guide.md — SEO 排名判讀與優化決策指南"
+    },
+    {
+      "path": "skills/seo-session-checklist.md",
+      "bytes": 5798,
+      "lines": 234,
+      "title": "# seo-session-checklist.md — A2/A3 每次 Session 標準流程"
+    },
+    {
+      "path": "skills/session-handoff.md",
+      "bytes": 1566,
+      "lines": 57,
+      "title": "# Session Handoff 技能 — 重啟與交接"
+    },
+    {
+      "path": "skills/sheets-data-cleaning-guide.md",
+      "bytes": 10352,
+      "lines": 307,
+      "title": "# Google Sheets 資料清洗技能書"
+    },
+    {
+      "path": "skills/sheets-tracking-guide.md",
+      "bytes": 2181,
+      "lines": 61,
+      "title": "# Google Sheets Tracking Guide"
+    },
+    {
+      "path": "skills/slide-production-rules.md",
+      "bytes": 2155,
+      "lines": 45,
+      "title": "# Skill: slide-production-rules — Slide 提案簡報產出規範"
+    },
+    {
+      "path": "skills/strategic-review-guide.md",
+      "bytes": 3853,
+      "lines": 121,
+      "title": "# Strategic Review Guide (Big Picture Thinking)"
+    },
+    {
+      "path": "skills/superpowers-guide.md",
+      "bytes": 13220,
+      "lines": 204,
+      "title": "h# Superpowers Skills 導覽手冊 — MAPLAB AI Agent 版"
+    },
+    {
+      "path": "skills/systematic-debugging-cloud-guide.md",
+      "bytes": 2625,
+      "lines": 104,
+      "title": "# Systematic Debugging Cloud Guide — 雲端除錯技能包"
+    },
+    {
+      "path": "skills/task-progress-guide.md",
+      "bytes": 10792,
+      "lines": 306,
+      "title": "## §5 任務結束回寫（Experience Writeback）"
+    },
+    {
+      "path": "skills/troubleshooting-hub.md",
+      "bytes": 3027,
+      "lines": 72,
+      "title": "# Troubleshooting Hub — Agent 卡住時先看這裡"
+    },
+    {
+      "path": "skills/verification-checklist-guide.md",
+      "bytes": 1845,
+      "lines": 72,
+      "title": "# Verification Checklist Guide — 完成驗證技能包"
+    }
+  ]
+}

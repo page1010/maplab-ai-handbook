@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MAPLAB AI Workbook</title>
+  <style>
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #172026; background: #f7f7f4; }
+    header { padding: 24px 28px 14px; background: #ffffff; border-bottom: 1px solid #d8d8d2; }
+    h1 { margin: 0 0 6px; font-size: 28px; }
+    h2 { margin: 0 0 12px; font-size: 18px; }
+    main { padding: 20px 28px 36px; display: grid; gap: 18px; }
+    section { background: #fff; border: 1px solid #d8d8d2; border-radius: 8px; padding: 16px; }
+    .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+    .metric { background: #f2f6f3; border: 1px solid #dce5dd; border-radius: 8px; padding: 12px; }
+    .metric strong { display: block; font-size: 24px; }
+    .muted { color: #687176; font-size: 13px; }
+    a { color: #1f5e56; text-decoration: none; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td { border-bottom: 1px solid #ecece6; padding: 8px; text-align: left; vertical-align: top; }
+    th { background: #fafaf7; }
+    code { background: #f2f2ee; padding: 2px 5px; border-radius: 4px; }
+    .pill { display: inline-block; padding: 2px 7px; border-radius: 999px; background: #e9efe9; margin-right: 4px; }
+    @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>MAPLAB AI Workbook</h1>
+    <div class="muted">任務閉環工作台：GitHub 真相源、A4 素材表、context pack、microtask、relation graph</div>
+  </header>
+  <main>
+    <section>
+      <h2>A4 Photo Assets</h2>
+      <div class="grid">
+        <div class="metric"><strong>36922</strong><span class="muted">ASSET_LOG rows</span></div>
+        <div class="metric"><strong>20309</strong><span class="muted">外燴</span></div>
+        <div class="metric"><strong>7471</strong><span class="muted">旅遊</span></div>
+        <div class="metric"><strong>7396</strong><span class="muted">日常</span></div>
+      </div>
+      <p class="muted">
+        Source: <a href="https://docs.google.com/spreadsheets/d/1nlxlMdaLdGEAmOjP70BYspRWqu_eYpsiRyZaujEZkYI/edit" target="_blank">MAPLAB_ASSET_LOG</a>
+        · Sheet tab: <code>工作表1</code>
+        · MAPLAB_ASSETS folder: <code>1L0udpuXLy3vEbHmzBbaLqNVDut2FFpCe</code>
+      </p>
+      <table><thead><tr><th>year</th><th>category</th><th>filename</th><th>seo_name</th><th>file</th></tr></thead><tbody><tr><td>2022</td><td>外燴</td><td>IMG_20221224_165914.jpg</td><td>maplab-first-birthday-catering-buffet</td><td><a href="https://drive.google.com/file/d/1f-4Fua5Kj-ISyHlzzgRtEF-0NWDY9NN9/view" target="_blank">Drive</a></td></tr><tr><td>2022</td><td>外燴</td><td>IMG_20221225_181648.jpg</td><td>MAPLAB-catering-dessert-table</td><td><a href="https://drive.google.com/file/d/1f5dJVLS66OUk-8mexhgONT6lSO1bFohn/view" target="_blank">Drive</a></td></tr><tr><td>2022</td><td>外燴</td><td>IMG_20221218_100603.jpg</td><td>event-catering-buffet-food-spread</td><td><a href="https://drive.google.com/file/d/1CFE2F8GRIWuS-cY4m3CRskRuj4vjYFzg/view" target="_blank">Drive</a></td></tr><tr><td>2022</td><td>旅遊</td><td>IMG20220208120247.jpg</td><td>taiwan-historical-building-outdoor-court</td><td><a href="https://drive.google.com/file/d/1o1Zsjh6i7GYQ_TMQvsJ9vKaSjYTCvKWe/view" target="_blank">Drive</a></td></tr><tr><td>2022</td><td>外燴</td><td>IMG20220104150832.jpg</td><td>plant-fiber-meal-boxes-catering-takeaway</td><td><a href="https://drive.google.com/file/d/1VoQA-CulvMo-nYffyz6d7Dtm0BRoegg-/view" target="_blank">Drive</a></td></tr><tr><td>2022</td><td>外燴</td><td>IMG_20220812_120251.jpg</td><td>maplab-baby-first-birthday-catering-dessert-table</td><td><a href="https://drive.google.com/file/d/1RaMmfy6c6gPpUSj2lRQrzLSbTV2i_RuW/view" target="_blank">Drive</a></td></tr><tr><td>2022</td><td>日常</td><td>IMG20220429181156.jpg</td><td>MAPLAB_飛寶一家_親子用餐_日常_孩子與餐具</td><td><a href="https://drive.google.com/file/d/1L0jViHXn4lZsJ-IsBT7040ELzhTIwTFC/view" target="_blank">Drive</a></td></tr><tr><td>2022</td><td>外燴</td><td>IMG_20220821_181353.jpg</td><td>maplab-feibao-yijia-birthday-catering-buffet</td><td><a href="https://drive.google.com/file/d/1SpXSgQPAR7VlnqjIFOpQPsPdF1KWYgMP/view" target="_blank">Drive</a></td></tr></tbody></table>
+    </section>
+    <section>
+      <h2>Workbook Outputs</h2>
+      <p>
+        <a href="./task_index.json">task_index.json</a> ·
+        <a href="./relation_graph.json">relation_graph.json</a> ·
+        <a href="./inferred_needs.json">inferred_needs.json</a> ·
+        <a href="./context_packs/T-A6-001.md">T-A6-001 context pack</a> ·
+        <a href="./microtasks/MT-T-A6-001-001.md">T-A6-001 microtask</a>
+      </p>
+    </section>
+    <section>
+      <h2>Task Index</h2>
+      <table><thead><tr><th>task</th><th>owner</th><th>status</th><th>current step</th></tr></thead><tbody><tr><td><code>T-A1-002</code></td><td>A1</td><td>✅ 完成</td><td>7 項治理升級全部完成，無後續</td></tr><tr><td><code>T-A1-V6-P2</code></td><td>A1</td><td>🔄 進行中</td><td>4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下一步：建虛擬測試案例 → A6 跑報價流程 → 驗證寫入。</td></tr><tr><td><code>T-A1-V6-P3</code></td><td>A1</td><td>🔲 待開始</td><td>尚未開始。等 T-A1-V6-P2 完成後啟動。</td></tr><tr><td><code>T-A1-V7</code></td><td>A1</td><td>🔄 進行中</td><td>Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 ReMe）為加分項。</td></tr><tr><td><code>T-A2-001</code></td><td>A2</td><td>✅ 完成</td><td>57 篇全部配圖完成，無後續</td></tr><tr><td><code>T-A2-002</code></td><td>A2</td><td>⏸️ 阻塞</td><td>Repo 端已清理完成；WordPress 端需 Owner 手動刪除/修改 5 篇文章的食安字眼</td></tr><tr><td><code>T-A2-003</code></td><td>A2</td><td>🔲 待開始</td><td>腳本已建好（wp-audit.sh / wp-audit-cron.sh）。待 Owner 用 /schedule 建立 cron 排程。</td></tr><tr><td><code>T-A2-004</code></td><td>A2</td><td>🔲 待開始</td><td>任務卡建立。A0 已完成對標分析和色票微調。</td></tr><tr><td><code>T-A2-005</code></td><td>A2</td><td>🔄 進行中</td><td>本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar dry-run 可產生 draft payload。下一步：接 WordPress 實站憑證做 `--publish` 驗證 + 把 56 篇歸屬表餵入 Linker。</td></tr><tr><td><code>T-A2A3-001-B</code></td><td>A2</td><td>⏸️ 阻塞</td><td>子任務 3+4 完成（3 個場景頁 + 56 篇內連結）；子任務 5 等 Google 重新索引（7-14 天）</td></tr><tr><td><code>T-A2A3-001</code></td><td>A2</td><td>⏸️ 阻塞</td><td>子任務 1-4 完成；子任務 5 等 Google 重新索引驗證排名變化</td></tr><tr><td><code>T-A3-001</code></td><td>A3</td><td>✅ 完成</td><td>方案A ✅ 完成（GTM v19）。方案B ✅ GTM v20 已發布（Meta LINE Button ID Click tag）。GTM v21 ✅ 已發布（Google Ads 轉換 tag）。Facebook + Google Ads 雙平台轉換追蹤上線。</td></tr><tr><td><code>T-A3-002</code></td><td>A3</td><td>⏸️ 阻塞中</td><td>受眾輪廓分析完成（693筆 Orders）。待執行：嘉義加入廣告地區、興趣條件精簡、策略一冷受眾上線。</td></tr><tr><td><code>T-A4-001</code></td><td>A4</td><td>🔄 進行中（S11/2024 補跑執行中）</td><td>S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重啟等授權</td></tr><tr><td><code>T-A4-002</code></td><td>A4</td><td></td><td></td></tr><tr><td><code>T-A5-001</code></td><td>A5</td><td>✅ 完成</td><td>108 品項去重+重編碼完成，無後續</td></tr><tr><td><code>T-A5-002</code></td><td>A5</td><td>🔄 進行中（核心欄位已可用，業務可實際操作）</td><td>核心公式已修正、e2e 通過。剩餘：T-A5-003 熱客招待品項定義 + 3 項待 Owner 確認</td></tr><tr><td><code>T-A5-003</code></td><td>A5</td><td>✅ 完成</td><td>Phase 1 規則定義完成（觸發條件/品項選擇/成本控管）；Phase 2 GAS 整合待排</td></tr><tr><td><code>T-A5-004</code></td><td>A5</td><td>🔄 進行中（核心功能已可用，Owner 可按「MAPLAB &gt; 產出 Slide 提案」一鍵出簡報）</td><td>Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔案清理、Items english_name 確認</td></tr><tr><td><code>T-A5-005</code></td><td>A5</td><td>🔄 進行中</td><td>程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboard / ensureIntakeHeaders_）。下一步：clasp push → 手動啟動 trigger + Dashboard。</td></tr><tr><td><code>T-A5-006</code></td><td>A5</td><td>🔲 待開始</td><td>尚未開始。等 T-A5-005 完成後啟動。</td></tr><tr><td><code>T-A6-001</code></td><td>A6</td><td>🔄 進行中</td><td>已新增 Telegram 模式選單（報價/聊天/SEO）+ Ollama 聊天路由；雙人白名單維持。下一步：重啟 bot 後做實機對話測試與群組操作驗證。</td></tr><tr><td><code>T-A6-002</code></td><td>A6</td><td>💤 暫停</td><td>原計畫拆 Sheet 做訓練資料，04-07 重新規劃方向。等 Owner 決定是否需要 LINE 訓練資料及取得方式。</td></tr><tr><td><code>T-A7-001</code></td><td>A7</td><td>💤 暫停（Phase 2 v2.0 完成，等 Owner 確認政策 + A5 欄位補齊）</td><td>Q1-Q10 重構完成（真實 CSV 驅動），下一步是 Q7/Q10 政策確認 + Phase 3 上線測試</td></tr><tr><td><code>T-A7-002</code></td><td>A7</td><td>⏸️ 阻塞中</td><td>任務 6（Q1-Q10 實裝）+ 任務 10（技能書 v2.0）已完成。Phase 3A 剩任務 4（地區判斷）、7（流程圖同步）。Phase 3B/3C 全部待外部條件。</td></tr><tr><td><code>T-A7-003</code></td><td>A7</td><td>✅ 完成</td><td>Phase 1 完成（10 條關鍵字自動回覆 JSON+CSV）；部署到 LINE OA 後台需 Owner 操作</td></tr><tr><td><code>T-B1-001</code></td><td>A1</td><td>🔄 進行中（Phase 0 — API 綁定，Owner 設定中）</td><td></td></tr><tr><td><code>T-GBP-001</code></td><td>UNKNOWN</td><td>🔲 待開始</td><td>尚未開始。等 Owner 準備新圖片。</td></tr><tr><td><code>TASK_CARD_TEMPLATE</code></td><td>UNKNOWN</td><td>🔲 待開始 / 🔄 進行中 / ⏸️ 阻塞中 / 💤 暫停 / ✅ 完成</td><td>[一句話：做到哪，下一步做什麼]</td></tr><tr><td><code>T-AX-NNN</code></td><td>UNKNOWN</td><td>🔲 待開始</td><td>（填寫：做到哪、下一步做什麼）</td></tr></tbody></table>
+    </section>
+  </main>
+</body>
+</html>

@@ -33,6 +33,9 @@
 7. 建立 `workbook/outputs/2026-05-05/T-A4-photo-classification-restart/classification_plan.json`
 8. 掃描來源先鎖定 `data/telegram-photos/`，輸出分類建議（proposed_only）
 9. 明確採用「先計畫、人工核准、再搬檔」防呆流程
+10. 修正 A4 真實入口：`MAPLAB_ASSET_LOG` Sheet（ID: `1nlxlMdaLdGEAmOjP70BYspRWqu_eYpsiRyZaujEZkYI`，tab: `工作表1`）才是主產出，`telegram-photos` 僅為本機暫存照片。
+11. 新增 `asset-snapshot` 與 `dashboard` CLI，產出 `workbook/dashboard.html` 作為可點擊工作台入口。
+12. 修正 `scripts/organize_photos_by_category.py`：分頁名改為 `工作表1`、Drive 根目錄改用既有 `MAPLAB_ASSETS` folder ID、預設 `DRY_RUN=True`。
 
 ## v6.1（SEO Factory）— 2026-05-04
 

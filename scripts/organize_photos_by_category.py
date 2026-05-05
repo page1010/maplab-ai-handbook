@@ -22,9 +22,10 @@ drive  = build("drive",  "v3", credentials=creds)
 
 # ── 2. 設定 ───────────────────────────────────────────────────────────────────
 ASSET_LOG_SHEET_ID = "1nlxlMdaLdGEAmOjP70BYspRWqu_eYpsiRyZaujEZkYI"
-ASSET_LOG_TAB      = "ASSET_LOG"          # 讀取的分頁名稱
-ROOT_FOLDER_NAME   = "MAPLAB_Assets"      # Drive 根資料夾（若不存在會自動建立）
-DRY_RUN            = False                # True = 只列出計畫，不實際複製
+ASSET_LOG_TAB      = "工作表1"             # MAPLAB_ASSET_LOG 的實際分頁名稱
+ROOT_FOLDER_ID     = "1L0udpuXLy3vEbHmzBbaLqNVDut2FFpCe"  # 既有 MAPLAB_ASSETS
+ROOT_FOLDER_NAME   = "MAPLAB_ASSETS"      # 僅供 log 顯示，不自動建立新根目錄
+DRY_RUN            = True                 # True = 只列出計畫，不實際複製
 
 # 外燴子資料夾關鍵字對照（按順序比對，第一個命中為準）
 CATERING_SUB = [
@@ -108,8 +109,8 @@ def find_or_create_folder(name: str, parent_id: str) -> str:
     _folder_cache[key] = folder_id
     return folder_id
 
-def get_my_drive_root() -> str:
-    return "root"
+def get_asset_root() -> str:
+    return ROOT_FOLDER_ID
 
 # ── 5. 分類邏輯 ───────────────────────────────────────────────────────────────
 def resolve_folder_path(category: str, keywords: str) -> list[str]:
@@ -165,8 +166,8 @@ def main():
 
     records = read_asset_log()
 
-    # 建立根資料夾
-    root_id = find_or_create_folder(ROOT_FOLDER_NAME, get_my_drive_root())
+    # 使用既有 MAPLAB_ASSETS，避免誤建新的根資料夾。
+    root_id = get_asset_root()
     print(f"📂 根資料夾 {ROOT_FOLDER_NAME}：{root_id}")
 
     ok, skip, fail = 0, 0, 0

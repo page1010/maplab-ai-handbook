@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-05-04 21:00 A1晚間巡查（A6 🟢 5ae9c79 ollama chat/seo modes；A4 S11 ~400h/~16.7天Colab崩潰🔴；A5🔴~616h D25+；GCP帳單~17.3天未處理🔴；A6新活動打破靜止）
+> 最後更新：2026-05-07 21:00 A1晚間巡查（全系統靜止72h+；A4 S11 ~472h/~19.7天Colab崩潰🔴；A5🔴~672h D28；GCP帳單~20天未處理🔴；A2/A6 05-04後無新commit >48h）
 >
 > 使用方式：選擇角色 → 複製 prompt → 貼到 Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -21,9 +21,9 @@
 | A1 | 系統總管中心 | ✅ Claude Code 常駐 | Telegram bot + 終端機，直接下指令 |
 | A2 | 搜尋流量作戰部 | ✅ T-A2-001 完成，待新任務 | SEO / GA / 關鍵字 |
 | A3 | 社群與廣告成長部 | ✅ T-A3-001 完成（GTM v21 雙平台追蹤上線）；T-A3-002 ⏸️ 阻塞（等廣告週期+Owner操作）| Meta Ads / Social |
-| A4 | 影像資產整理部 | 🔴 CRITICAL（S12✅DONE；S11 補跑 14ed423 04-18 Colab重啟→**~344h/~14.3天無completion commit，Colab確認崩潰；GCP帳單15天未處理**）| Photo Archive |
-| A5 | 報價與提案引擎部 | 🔴 CRITICAL T-A5-002/004/005 ~560h無commit **D23**（最後活動 cfeebd1 2026-04-09；連續10+巡查Owner無回應）| Quotation Engine |
-| A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（5ae9c79 05-04 20:23 ollama chat/seo modes 新增；LINE webhook等Owner確認 Channel 1654658337）| Sales Rapid Response |
+| A4 | 影像資產整理部 | 🔴 CRITICAL（S12✅DONE；S11 補跑 14ed423 04-18 Colab重啟→**~472h/~19.7天無completion commit，Colab確認崩潰；GCP帳單~20天未處理**）| Photo Archive |
+| A5 | 報價與提案引擎部 | 🔴 CRITICAL T-A5-002/004/005 ~672h無commit **D28**（最後活動 cfeebd1 2026-04-09；連續12+巡查Owner無回應）| Quotation Engine |
+| A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（5ae9c79 05-04 20:23 ollama chat/seo modes；72h無新活動；LINE webhook等Owner確認 Channel 1654658337）| Sales Rapid Response |
 | A7 | 客服與對話轉單部 | 💤 T-A7-001 正式暫停；T-A7-002 ⏸️ 阻塞（等LINE後台權限+Owner政策決策）| Smart Reply |
 | A8 | 影音內容產線 | 🔲 新建，待啟動 | Content Repurposing Pipeline |
 | **B1** | **InnerFlowLab 內容創作** | **🔄 首次活躍（04-24 23:02 4 commits: workflow v1.0 + substack-api skill + session log）** | **InnerFlowLab Content Creation** |

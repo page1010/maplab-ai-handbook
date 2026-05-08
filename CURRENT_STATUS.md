@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-05-07 21:00 A1晚間巡查（8h零commit；全系統靜止72h+；A4 S11 ~472h🔴；A5 D28/~672h🔴；GCP ~20天🔴；A2/A6 72h無新活動）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-05-08 09:00 A1每日巡查（0非巡查commit；全系統靜止~96h；A4 S11 ~480h/~20天🔴；A5 D29/~696h🔴；GCP ~20.5天🔴；A2/A6 ~96h無新活動）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -60,6 +60,7 @@
 | A4 | ⚠️ A1巡查 2026-05-01午後：T-A4-001 S11 ~320h/~13.3天無completion commit（Colab崩潰）；GCP帳單$3K/月已14天未處理🔴 | Owner立即：①確認S11 Colab狀態→補completion commit；②確認GCP帳單上限 |
 | A5 | ⚠️ A1巡查 2026-05-01午後：T-A5-002/004/005 CRITICAL D22/~536h無commit（last: cfeebd1 2026-04-09）。連續10+巡查Owner無決策回應 | Owner 決策：是否重啟A5 |
 | 全系統 | ⚠️ A1巡查 2026-05-01午後：全系統靜止168h+（7天，上次non-patrol commit B1 2026-04-24）。8h零新commit；A2/A3/A6/A7/A8/B1均無新活動 | Owner確認各Agent狀態；B1需建立正式Task Card |
+| A4/A5/全系統 | ⚠️ A1巡查 2026-05-08 09:00每日：0非巡查commit（全系統靜止~96h，last non-patrol 5ae9c79 05-04）；A4 S11 ~480h/~20天Colab崩潰🔴；A5 D29/~696h無commit🔴；GCP帳單~20.5天未處理🔴；A2 ~96h無commit（T-A2-005 🔄>48h持續）；A6 ~96h無commit（T-A6-001 🔄>48h持續）；A3/A7/A8/B1仍無活動；T-B1-001 Task Card仍未建立（~14天）；LINE webhook仍等Owner確認（Channel 1654658337）；所有前次警告持續未解 | Owner緊急決策：①確認A4 S11 Colab狀態；②確認GCP帳單上限；③決定是否重啟A5；④確認LINE webhook URL；⑤確認B1 Task Card是否建立 |
 | A4/A5/全系統 | ⚠️ A1巡查 2026-05-07 21:00晚間：8h零新commit；全系統靜止72h+（繼續自05-04）；A4 S11 ~472h/~19.7天Colab崩潰🔴；A5 D28/~672h無commit🔴；GCP帳單~20天未處理🔴；A2/A6上次活動05-04（72h無新commit，>48h🔄警告）；A3/A7/A8/B1仍無活動；T-B1-001 Task Card仍未建立（>13天）；LINE webhook仍等Owner確認（Channel 1654658337） | Owner 緊急決策：①確認A4 S11 Colab狀態；②確認GCP帳單上限；③決定是否重啟A5；④確認LINE webhook URL；⑤確認B1 Task Card是否建立 |
 | A4/A5/A6 | ⚠️ A1巡查 2026-05-04 21:00晚間：A2 🟢 6f98c5d（keyword-matrix strategy rules 注入 SEO Factory）；A6 🟢 5ae9c79（ollama chat/seo modes + menu）打破A6長期靜止；A4 S11 ~400h/~16.7天Colab崩潰🔴；A5 D25/~616h無commit🔴；GCP帳單~17.3天未處理🔴；A3/A7/A8/B1無新活動；LINE webhook仍等Owner確認（Channel 1654658337）；T-A6-001狀態從⏸️更新為🔄 | Owner 緊急決策：①確認A4 S11 Colab狀態；②確認GCP帳單上限；③決定是否重啟A5；④確認LINE webhook URL |
 | A4/A5 | ⚠️ A1巡查 2026-05-04 17:00午後：A2 🟢 2新commit（ba4fac6+59f06ce T-A2-005 SEO Factory + ollama live test）打破全系統靜止（~240h）；A4 S11 ~392h/~16.3天Colab崩潰🔴；A5 D25/~608h無commit🔴；GCP帳單~17天未處理🔴；A3/A6/A7/A8/B1仍無活動；GSC索引觀察29天+逾期 | Owner 緊急決策：①確認A4 S11 Colab狀態；②確認GCP帳單上限；③決定是否重啟A5 |

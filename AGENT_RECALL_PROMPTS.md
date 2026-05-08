@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-05-08 09:00 A1每日巡查（全系統靜止~96h；A4 S11 ~480h/~20天Colab崩潰🔴；A5🔴~696h D29；GCP帳單~20.5天未處理🔴；A2/A6 ~96h無新commit >48h持續）
+> 最後更新：2026-05-08 14:00 A1午後巡查（全系統靜止~101h；A4 S11 ~485h/~20.2天Colab崩潰🔴；A5🔴~701h D29；GCP帳單~20.7天未處理🔴；A2/A6 ~101h無新commit >48h持續）
 >
 > 使用方式：選擇角色 → 複製 prompt → 貼到 Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -166,6 +166,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 9. A6 T-A6-001 🔄 活躍中：5ae9c79（05-04 20:23）新增 ollama chat/seo modes + menu（bot_a6.py +187行）；addItem+模糊比對+多照片+10輪QA全PASS（45b4758 04-18）；Task Card 已由A6自行更新；LINE Developers Console Webhook URL待Owner確認（Channel 1654658337）。
 10. A8 新角色已建立（51070ea 04-19），待啟動任務；B1 🟢 首次活躍（04-24 22:35-23:02 4 commits）— 無正式Task Card，需建立。~240h無新commit。
 11. ✅ 全系統靜止解除：A2 今日（2026-05-04）2 commits（ba4fac6+59f06ce）T-A2-005 SEO Factory；A3/A5/A6/A7/A8/B1 仍無新活動。
+✅ 05-08 午後巡查：8h零commit；全系統靜止~101h；A4 S11 ~485h/~20.2天🔴；A5~701h D29🔴；GCP ~20.7d🔴；A2/A6 ~101h無commit（T-A2-005/T-A6-001 >48h🔄警告持續）；A3/A7/A8/B1無新活動；B1 Task Card ~14天仍未建立；所有前次警告持續未解。
 ✅ 05-08 每日巡查：24h內新commits：0非巡查（全系統靜止~96h，last non-patrol 5ae9c79 05-04）；A4 S11 ~480h/~20天Colab崩潰🔴；A5~696h D29🔴；GCP帳單~20.5天未處理🔴；A2 ~96h無commit（T-A2-005 🔄>48h）；A6 ~96h無commit（T-A6-001 🔄>48h）；B1 Task Card ~14天仍未建立；A3/A7/A8/B1無新活動；所有前次警告持續未解。
 ✅ 05-07 晚間巡查：8h零commit；全系統靜止72h+；A4 S11 ~472h/~19.7天🔴；A5 D28/~672h🔴；GCP ~20天🔴；A2/A6 72h無commit >48h🔄警告。
 ✅ 05-04 晚間巡查：8h內新commits：4（A2 ba4fac6+59f06ce+6f98c5d T-A2-005 keyword-matrix 🟢；A6 5ae9c79 ollama chat/seo 🟢）；A4 S11 ~400h/~16.7天Colab崩潰🔴；A5~616h D25+仍無活動🔴；GCP帳單~17.3天未處理🔴；T-A6-001狀態從⏸️更新為🔄；A3/A7/A8/B1無新活動；all else clear。

@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-05-09 09:00 A1每日巡查（0非巡查commit；全系統靜止~120h/~5天；A4 S11 ~504h/~21天🔴；A5 D30/~720h🔴；GCP ~22天🔴；A2/A6 ~120h無新活動）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-05-09 14:00 A1午後巡查（0非巡查commit；全系統靜止~125h/~5.2天；A4 S11 ~509h/~21.2天🔴；A5 D30/~725h🔴；GCP ~22.2天🔴；A2/A6 ~125h無新活動）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -60,6 +60,7 @@
 | A4 | ⚠️ A1巡查 2026-05-01午後：T-A4-001 S11 ~320h/~13.3天無completion commit（Colab崩潰）；GCP帳單$3K/月已14天未處理🔴 | Owner立即：①確認S11 Colab狀態→補completion commit；②確認GCP帳單上限 |
 | A5 | ⚠️ A1巡查 2026-05-01午後：T-A5-002/004/005 CRITICAL D22/~536h無commit（last: cfeebd1 2026-04-09）。連續10+巡查Owner無決策回應 | Owner 決策：是否重啟A5 |
 | 全系統 | ⚠️ A1巡查 2026-05-01午後：全系統靜止168h+（7天，上次non-patrol commit B1 2026-04-24）。8h零新commit；A2/A3/A6/A7/A8/B1均無新活動 | Owner確認各Agent狀態；B1需建立正式Task Card |
+| A4/A5/全系統 | ⚠️ A1巡查 2026-05-09 14:00午後：8h零新commit（全系統靜止~125h/~5.2天，last non-patrol 6f98c5d/5ae9c79 05-04）；A4 S11 ~509h/~21.2天Colab崩潰🔴；A5 D30/~725h無commit🔴；GCP帳單~22.2天未處理🔴；A2/A6 ~125h無commit（T-A2-005/T-A6-001 🔄>48h警告持續）；A3/A7/A8/B1仍無活動；T-B1-001 Task Card仍未建立（~15天）；LINE webhook仍等Owner確認（Channel 1654658337）；所有前次警告持續未解 | Owner緊急決策：①確認A4 S11 Colab狀態；②確認GCP帳單上限；③決定是否重啟A5；④確認LINE webhook URL；⑤確認B1 Task Card是否建立 |
 | A4/A5/全系統 | ⚠️ A1巡查 2026-05-09 09:00每日：0非巡查commit（全系統靜止~120h/~5天，last non-patrol 6f98c5d/5ae9c79 05-04）；A4 S11 ~504h/~21天Colab崩潰🔴；A5 D30/~720h無commit🔴；GCP帳單~22天未處理🔴；A2 ~120h無commit（T-A2-005 🔄>48h持續）；A6 ~120h無commit（T-A6-001 🔄>48h持續）；A3/A7/A8/B1仍無活動；T-B1-001 Task Card仍未建立（~15天）；LINE webhook仍等Owner確認（Channel 1654658337）；所有前次警告持續未解 | Owner緊急決策：①確認A4 S11 Colab狀態；②確認GCP帳單上限；③決定是否重啟A5；④確認LINE webhook URL；⑤確認B1 Task Card是否建立 |
 | A4/A5/全系統 | ⚠️ A1巡查 2026-05-08 21:00晚間：8h零新commit；全系統靜止~108h（last non-patrol 5ae9c79 05-04）；A4 S11 ~492h/~20.5天Colab崩潰🔴；A5 D29/~708h無commit🔴；GCP帳單~21.0天未處理🔴；A2/A6 ~108h無commit（T-A2-005/T-A6-001 🔄>48h警告持續）；A3/A7/A8/B1仍無活動；T-B1-001 Task Card仍未建立（~14天）；LINE webhook仍等Owner確認（Channel 1654658337）；所有前次警告持續未解 | Owner緊急決策：①確認A4 S11 Colab狀態；②確認GCP帳單上限；③決定是否重啟A5；④確認LINE webhook URL；⑤確認B1 Task Card是否建立 |
 | A4/A5/全系統 | ⚠️ A1巡查 2026-05-08 14:00午後：8h零新commit（全系統靜止~101h，last non-patrol 5ae9c79 05-04）；A4 S11 ~485h/~20.2天Colab崩潰🔴；A5 D29/~701h無commit🔴；GCP帳單~20.7天未處理🔴；A2/A6 ~101h無commit（T-A2-005/T-A6-001 🔄>48h警告持續）；A3/A7/A8/B1仍無活動；T-B1-001 Task Card仍未建立（~14天）；LINE webhook仍等Owner確認（Channel 1654658337）；所有前次警告持續未解 | Owner緊急決策：①確認A4 S11 Colab狀態；②確認GCP帳單上限；③決定是否重啟A5；④確認LINE webhook URL；⑤確認B1 Task Card是否建立 |

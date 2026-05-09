@@ -172,14 +172,14 @@ repo: https://github.com/page1010/maplab-ai-handbook
 ✅ 05-07 晚間巡查：8h零commit；全系統靜止72h+；A4 S11 ~472h/~19.7天🔴；A5 D28/~672h🔴；GCP ~20天🔴；A2/A6 72h無commit >48h🔄警告。
 ✅ 05-04 晚間巡查：8h內新commits：4（A2 ba4fac6+59f06ce+6f98c5d T-A2-005 keyword-matrix 🟢；A6 5ae9c79 ollama chat/seo 🟢）；A4 S11 ~400h/~16.7天Colab崩潰🔴；A5~616h D25+仍無活動🔴；GCP帳單~17.3天未處理🔴；T-A6-001狀態從⏸️更新為🔄；A3/A7/A8/B1無新活動；all else clear。
 ✅ 05-04 午後巡查：8h內新commits：2（A2 ba4fac6+59f06ce T-A2-005 SEO Factory + ollama test 🟢）；A4 S11 ~392h/~16.3天Colab崩潰🔴；A5~608h D25仍無活動🔴；GCP帳單~17天未處理🔴；GSC 29天+逾期；A3/A6/A7/A8/B1無新活動；all else clear。
-✅ 05-02 午後巡查：8h內new commits：無（全系統192h+/8天靜止🔴）；A4 S11 ~344h/~14.3天Colab崩潰🔴；A5~560h D23+仍無活動；GCP帳單15天未處理🔴；所有前次警告持續未解；all else clear(A2/A3/A6/A7/A8/B1)。
-✅ 05-01 晚間巡查：8h內new commits：無（全系統176h/7.3天靜止🔴）；A4 S11 ~328h/~13.7天Colab崩潰🔴；A5~544h D22+仍無活動；GCP帳單14天未處理🔴；所有午後警告持續未解；all else clear(A2/A3/A6/A7/A8)。
-✅ 05-01 午後巡查：8h內new commits：無（全系統168h/7天靜止🔴）；A4 S11 ~320h/~13.3天Colab崩潰🔴；A5~536h D22+仍無活動；GCP帳單14天未處理🔴；GSC 26天+逾期；B1無Task Card；all else clear(A2/A3/A6/A7/A8)。
-✅ 05-01 每日巡查：24h內new commits：無（全系統144h靜止🔴）；A4 S11 ~312h/13天Colab崩潰🔴；A5~528h D22仍無活動；GCP帳單13天未處理🔴；GSC 26天逾期；B1無Task Card 7天靜止；all else clear(A2/A3/A6/A7/A8)。
-✅ 04-25 晚間巡查：8h內new commits：無（全系統繼續靜止）；A4 S11 ~186h/7.75天Colab崩潰🔴；A5~413h D17+仍無新活動；GCP帳單7天+未處理🔴；GSC索引觀察20天逾期（04-05起）；all clear for A2/A3/A6/A7/A8/B1。
-✅ 04-25 午後巡查：8h內new commits：無（全系統靜止）；A4 S11 ~178h/7.4天Colab崩潰🔴；A5~405h D17仍無新活動；GCP帳單7天+未處理🔴；all clear for A2/A3/A6/A7/A8/B1。
+✅ 05-02 午後巡查：8h內新commits：無（全系統192h+/8天靜止🔴）；A4 S11 ~344h/~14.3天Colab崩潰🔴；A5~560h D23+仍無活動；GCP帳單15天未處理🔴；所有前次警告持續未解；all else clear(A2/A3/A6/A7/A8/B1)。
+✅ 05-01 晚間巡查：8h內新commits：無（全系統176h/7.3天靜止🔴）；A4 S11 ~328h/~13.7天Colab崩潰🔴；A5~544h D22+仍無活動；GCP帳單14天未處理🔴；所有午後警告持續未解；all else clear(A2/A3/A6/A7/A8)。
+✅ 05-01 午後巡查：8h內新commits：無（全系統168h/7天靜止🔴）；A4 S11 ~320h/~13.3天Colab崩潰🔴；A5~536h D22+仍無活動；GCP帳單14天未處理🔴；GSC 26天+逾期；B1無Task Card；all else clear(A2/A3/A6/A7/A8)。
+✅ 05-01 每日巡查：24h內新commits：無（全系統144h靜止🔴）；A4 S11 ~312h/13天Colab崩潰🔴；A5~528h D22仍無活動；GCP帳單13天未處理🔴；GSC 26天逾期；B1無Task Card 7天靜止；all else clear(A2/A3/A6/A7/A8)。
+✅ 04-25 晚間巡查：8h內新commits：無（全系統繼續靜止）；A4 S11 ~186h/7.75天Colab崩潰🔴；A5~413h D17+仍無新活動；GCP帳單7天+未處理🔴；GSC索引觀察20天逾期（04-05起）；all clear for A2/A3/A6/A7/A8/B1。
+✅ 04-25 午後巡查：8h內新commits：無（全系統靜止）；A4 S11 ~178h/7.4天Colab崩潰🔴；A5~405h D17仍無新活動；GCP帳單7天+未處理🔴；all clear for A2/A3/A6/A7/A8/B1。
 ✅ 04-25 每日巡查：24h新commits：4 B1 commits🟢(workflow/skill/session log)；A4 S11 ~170h/7天Colab崩潰🔴；A5~397h D16+仍無新活動；GCP帳單7天未處理🔴；GSC 20天逾期；all clear for A2/A3/A6/A7/A8。
-✅ 04-24 晚間巡查（22:00）：8h內new commits：無（僅午後巡查fe77d0f）；A4 S11 ~158h/6.5天Colab崩潰🔴；A5~385h D15+仍無新活動；非patrol靜止~103h；RECALL h計數全面更新；all clear for A2/A3/A6/A7/A8/B1。
+✅ 04-24 晚間巡查（22:00）：8h內新commits：無（僅午後巡查fe77d0f）；A4 S11 ~158h/6.5天Colab崩潰🔴；A5~385h D15+仍無新活動；非patrol靜止~103h；RECALL h計數全面更新；all clear for A2/A3/A6/A7/A8/B1。
 ✅ 04-20 午後巡查（14:30）：8h內new commits：658120d GCP帳單⚠️財務風險，454e7dc A4 Drive腳本；A4 S11仍待Owner確認（54h+）；A5~276h D12+無新活動；A7 RECALL斷點已修正（23天過時→已更新）；GCP帳單$3K風險新增Blocker。all clear for A2/A3/A6/A7/A8/B1。
 36b. A6 e2e round 5 全通過里程碑 🎉（04-11 16:18 06ce9c6）：quote + slide + heartbeat all verified；auto-trigger Slide after createQuote（b118095，無需手動）；fromMaster mode（b82df34，從母版QUOTE_DRAFT讀資料）；ApiEndpoint.gs 還原+.claspignore修復（45e26a0）；bot_a6 GAS trigger + py3.9 compat（fe76f8a/f99cf31）。A6系統整合達成。A1：Task Card v1.2格式統一12張（b502417）+.gitignore修復（52f6873）。A0：Chrome驗證SOP落地（731cff0）。
 36. A0 dispatch 操作手冊落地（2a1879a 04-10）：docs/a0-dispatch-operations-manual.md 建立 — 使用者視角系統架構圖、入口×角色對照表、委派前7問題協議、操作路徑表、A0/A1分工踩坑記錄。A0 角色定位更完整。

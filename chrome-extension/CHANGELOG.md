@@ -1,5 +1,12 @@
 # Chrome Extension Changelog
 
+## v5.4 — 2026-05-11
+變更者：A1 Codex
+- **側邊欄改成任務模組入口**：popup 會讀 `chrome-extension/task-modules/index.json` 與各角色 JSON，顯示 runtime target、必讀來源、影響範圍、輸出契約與風險。
+- **新增 runtime selector**：Gemini / Codex / OpenClaw / Claude tab legacy，產生不同交接語境的 handoff prompt。
+- **新增一鍵複製 Handoff**：`📦 複製任務模組 Handoff` 會輸出平台中立任務包，讓 Gemini/Codex/OpenClaw 都能接角色。
+- **Claude tab 降級為 legacy**：保留舊注入能力，但不再是主流程。
+
 ## v5.4-data — 2026-05-11
 變更者：A1 Codex
 - **GitHub Dynamic Role Task Modules v0.1**：新增 `chrome-extension/task-modules/` 與 `chrome-extension/config/task-modules.json`，把 A0-A8+B1 全角色改成平台中立的任務模組資料層。

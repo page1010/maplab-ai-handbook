@@ -1,6 +1,6 @@
 {
   "schema_version": "2026-05-11.dynamic-role-module.v1",
-  "generated_at": "2026-05-11T22:12:10+08:00",
+  "generated_at": "2026-05-11T22:23:00+08:00",
   "module_id": "MAPLAB_B1_INNERFLOWLAB_CONTENT_DYNAMIC_ROLE_MODULE",
   "role_id": "B1",
   "role_name": "InnerFlowLab Content",
@@ -45,9 +45,9 @@
     },
     {
       "path": "TASK_QUEUE.md",
-      "load_mode": "read",
+      "load_mode": "fallback_to_workbook_task_index",
       "exists": "false",
-      "purpose": "core governance"
+      "purpose": "legacy task queue listed in CURRENT_STATUS; missing in canonical repo, use workbook/task_index.json"
     },
     {
       "path": "workbook/task_index.json",

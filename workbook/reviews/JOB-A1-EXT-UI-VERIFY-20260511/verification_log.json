@@ -1,0 +1,40 @@
+{
+  "job_id": "JOB-A1-EXT-UI-VERIFY-20260511",
+  "verified_by": "Codex Computer Use",
+  "verified_at": "2026-05-11T22:26:25+08:00",
+  "overall_result": "pass_with_followup",
+  "verification_targets": [
+    {
+      "type": "chrome_extension_path",
+      "expected": "Chrome loads MAPLAB Agent Commander from the canonical repo extension directory.",
+      "observed": "Chrome Secure Preferences points extension ifpmihhbfhpbcippnhdnjdecbgkmbgmf to /Users/pagemacmini/maplab-ai-handbook/chrome-extension.",
+      "result": "pass"
+    },
+    {
+      "type": "static_check",
+      "expected": "popup.js and module JSON parse cleanly.",
+      "observed": "node --check popup.js passed; manifest/index/A2 JSON parsed; module count was 10.",
+      "result": "pass"
+    },
+    {
+      "type": "ui_role召喚",
+      "expected": "Selecting A2 loads A2 SEO Growth Unit with role simulation, read-first sources, affected targets, and output contract.",
+      "observed": "Side panel displayed A2 SEO Growth Unit, runtime_target gemini, GitHub module URL, required sources, affected systems, and output contract.",
+      "screenshot": "screenshots/chrome_extension_v54_a2.png",
+      "result": "pass"
+    },
+    {
+      "type": "ui_version",
+      "expected": "No duplicated v prefix in status badge.",
+      "observed": "Initial Computer Use pass found vv6.0. Code was corrected to formatVersion(), side panel reload showed v6.0.",
+      "result": "fixed"
+    },
+    {
+      "type": "source_fallback",
+      "expected": "TASK_QUEUE.md should not appear as a hard broken link when workbook/task_index.json is the fallback truth source.",
+      "observed": "Generator was updated to mark TASK_QUEUE.md as fallback_to_workbook_task_index. This appears in generated local modules; side panel raw GitHub will show it after push and refresh.",
+      "result": "pending_post_push_refresh"
+    }
+  ]
+}
+

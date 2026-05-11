@@ -1,8 +1,9 @@
-// MAPLAB Agent Commander v5.3 — popup.js
-// 角色選擇 + 專屬召喚 prompt（精簡版，無 commit history 面板）
+// MAPLAB Agent Commander v5.4 — popup.js
+// 角色選擇 + GitHub dynamic role task modules + runtime handoff prompt
 const DEFAULT_BASE = 'https://raw.githubusercontent.com/page1010/maplab-ai-handbook/main';
 const GITHUB_API   = 'https://api.github.com/repos/page1010/maplab-ai-handbook';
 const COMMIT_COUNT = 8;
+const MODULE_INDEX_PATH = 'chrome-extension/task-modules/index.json';
 const el = id => document.getElementById(id);
 
 // Side Panel
@@ -15,6 +16,8 @@ let cachedParsed = null;
 let cachedCommits = [];
 let cachedOverdue = [];
 let cachedRecallPrompts = {};
+let cachedModuleIndex = null;
+let cachedRoleModules = {};
 
 // === UI helpers ===
 function setStatus(state, text) {
@@ -26,6 +29,23 @@ function updateCharCount(text) {
   const el_ = el('tokenCount');
   el_.textContent = n + ' chars';
   el_.className = 'token-count' + (n > 1800 ? ' warn' : '');
+}
+function escapeHtml(text) {
+  return String(text || '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;');
+}
+function truncate(text, max) {
+  if (!text) return '';
+  if (text.length <= max) return text;
+  return text.slice(0, max) + `\n\n[truncated: ${text.length - max} chars omitted]`;
+}
+function formatVersion(version) {
+  const value = String(version || '?').trim();
+  return value.startsWith('v') ? value : `v${value}`;
 }
 
 // === GitHub fetch ===
@@ -56,12 +76,20 @@ async function fetchFile(base, path, token) {
     const resp = await fetch(apiUrl, { headers: authHeaders(token) });
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
     const json = await resp.json();
-    return atob(json.content.replace(/\n/g, ''));
+    const binary = atob(json.content.replace(/\n/g, ''));
+    const bytes = Uint8Array.from(binary, ch => ch.charCodeAt(0));
+    return new TextDecoder('utf-8').decode(bytes);
   }
   const url = base.replace(/\/$/, '') + '/' + path + '?t=' + Date.now();
   const resp = await fetch(url);
   if (!resp.ok) throw new Error('HTTP ' + resp.status);
   return resp.text();
+}
+async function fetchJsonFile(base, path, token) {
+  return JSON.parse(await fetchFile(base, path, token));
+}
+function rawUrl(base, path) {
+  return base.replace(/\/$/, '') + '/' + path;
 }
 
 // === Parse CURRENT_STATUS.md ===
@@ -102,6 +130,21 @@ async function loadAgentRecall(role, base, token) {
   } catch(e) {
     cachedRecallPrompts[role] = `// ${role} recall 載入失敗: ${e.message}`;
   }
+}
+async function loadModuleIndex(base, token) {
+  cachedModuleIndex = await fetchJsonFile(base, MODULE_INDEX_PATH, token);
+  return cachedModuleIndex;
+}
+function modulePathForRole(role) {
+  const entry = cachedModuleIndex?.modules?.find(m => m.role_id === role);
+  return entry?.path || `chrome-extension/task-modules/${role}.json`;
+}
+async function loadRoleModule(role, base, token) {
+  if (!role) return null;
+  if (cachedRoleModules[role]) return cachedRoleModules[role];
+  const module = await fetchJsonFile(base, modulePathForRole(role), token);
+  cachedRoleModules[role] = module;
+  return module;
 }
 
 // === Overdue detection — 直接讀 CURRENT_STATUS 的 🔴 CRITICAL 標記（與 checkpoint.sh/patrol.sh 統一邏輯） ===
@@ -174,6 +217,154 @@ function buildSystemSnapshot(parsed) {
   }
   return lines.join('\n');
 }
+function runtimeInstruction(runtime) {
+  const map = {
+    gemini: [
+      '你正在 Gemini 側邊欄接手 MAPLAB 角色。你可能看不到本機檔案，所以請優先使用下方 GitHub raw URL / repo path 讀取來源。',
+      '如果無法讀取某個來源，請明確列為 blocker，不要用猜的補上下文。',
+    ],
+    codex: [
+      '你正在 Codex/A1 執行。請以 /Users/pagemacmini/maplab-ai-handbook 為正式 repo，先讀下方 repo path，再做任何修改。',
+      '修改後要留下 review bundle、驗證紀錄與 git commit；不要碰未列入 scope 的 runtime log。',
+    ],
+    openclaw: [
+      '你正在 OpenClaw/A6 local worker 接手短任務。只做低風險草稿/整理/分析，輸出 review bundle，不直接發布或改正式真相源。',
+      '所有高風險動作需要 Owner/A1 審查。',
+    ],
+    claude_tab: [
+      '你正在 legacy Claude tab。這只是相容入口，不是主流程；請依任務模組輸出可審查結果，不要直接發布。',
+    ],
+  };
+  return map[runtime] || map.gemini;
+}
+function formatSourceLines(sources, base, limit = 40) {
+  const list = (sources || []).slice(0, limit);
+  const lines = list.map(item => {
+    const status = item.load_mode === 'fallback_to_workbook_task_index'
+      ? 'fallback'
+      : item.exists === 'true' ? 'ok' : 'missing';
+    return `- [${status}] ${item.path} (${item.purpose || item.load_mode || 'source'})\n  ${rawUrl(base, item.path)}`;
+  });
+  if ((sources || []).length > limit) {
+    lines.push(`- ... ${sources.length - limit} more sources in the module JSON`);
+  }
+  return lines.join('\n');
+}
+function renderModulePanel(role, module) {
+  if (!role) {
+    el('moduleTitle').textContent = '任務模組尚未載入';
+    el('moduleMeta').innerHTML = '選擇角色後顯示必讀來源、技能組、影響範圍與輸出契約。';
+    el('moduleChips').innerHTML = '';
+    el('moduleSources').textContent = '—';
+    el('moduleAffects').textContent = '—';
+    return;
+  }
+  if (!module) {
+    el('moduleTitle').textContent = `${role} 任務模組未載入`;
+    el('moduleMeta').innerHTML = '請按「重新抓取」或檢查 GitHub dynamic module 檔案。';
+    el('moduleChips').innerHTML = '<span class="module-chip warn">missing module</span>';
+    el('moduleSources').textContent = '—';
+    el('moduleAffects').textContent = '—';
+    return;
+  }
+  el('moduleTitle').textContent = `${module.role_id}｜${module.department}｜${module.role_name}`;
+  el('moduleMeta').innerHTML =
+    `<strong>模擬：</strong>${escapeHtml(module.role_simulation)}<br>` +
+    `<strong>輸出：</strong>${escapeHtml((module.output_contract || []).join(' / '))}`;
+  const chips = [
+    ...(module.runtime_targets || []).map(t => ({ text: t, warn: false })),
+    { text: `risk:${module.risk_level || 'medium'}`, warn: module.risk_level === 'high' },
+  ];
+  el('moduleChips').innerHTML = chips.map(c => `<span class="module-chip${c.warn ? ' warn' : ''}">${escapeHtml(c.text)}</span>`).join('');
+  el('moduleSources').innerHTML = (module.read_first || []).slice(0, 8).map(s => {
+    const mark = s.load_mode === 'fallback_to_workbook_task_index' ? '↪' : s.exists === 'true' ? '✓' : '!';
+    return `${mark} ${escapeHtml(s.path)}`;
+  }).join('<br>') || '—';
+  el('moduleAffects').innerHTML = (module.affects || []).map(a => `→ ${escapeHtml(a)}`).join('<br>') || '—';
+}
+function buildModuleHandoff(role, module, recallText, parsed, runtime, base) {
+  if (!role || !module) {
+    return buildOverviewPrompt(parsed || { version: '?', phase: '?', activeTasks: [], blockers: [] }, cachedOverdue);
+  }
+  const lines = [];
+  lines.push(`# MAPLAB ${module.role_id} Runtime Handoff`);
+  lines.push('');
+  lines.push(`runtime_target: ${runtime}`);
+  lines.push(`module_id: ${module.module_id}`);
+  lines.push(`canonical_repo: /Users/pagemacmini/maplab-ai-handbook`);
+  lines.push(`github_module: ${rawUrl(base, `chrome-extension/task-modules/${role}.json`)}`);
+  lines.push('');
+  lines.push('## 1. 身份與任務邊界');
+  lines.push('');
+  lines.push(`你是 ${module.role_id} ${module.department}（${module.role_name}）。`);
+  lines.push(module.role_simulation);
+  lines.push('');
+  runtimeInstruction(runtime).forEach(line => lines.push(`- ${line}`));
+  lines.push('');
+  lines.push('## 2. 必讀來源');
+  lines.push('');
+  lines.push(formatSourceLines(module.read_first, base));
+  if ((module.restricted_sources || []).length > 0) {
+    lines.push('');
+    lines.push('## 3. Restricted References');
+    lines.push('');
+    lines.push('以下是受限來源，只能由 A1/Owner 授權後查閱，不要貼進公開模型 prompt：');
+    lines.push(formatSourceLines(module.restricted_sources, base, 20));
+  }
+  lines.push('');
+  lines.push('## 4. 技能組');
+  lines.push('');
+  (module.skill_group || []).forEach(skill => lines.push(`- ${skill}`));
+  lines.push('');
+  lines.push('## 5. 任務類型');
+  lines.push('');
+  (module.task_types || []).forEach(task => lines.push(`- ${task}`));
+  lines.push('');
+  lines.push('## 6. 指向性影響關係');
+  lines.push('');
+  (module.affects || []).forEach(target => lines.push(`- 會影響：${target}`));
+  lines.push('');
+  lines.push('## 7. 輸出契約');
+  lines.push('');
+  (module.output_contract || []).forEach(output => lines.push(`- ${output}`));
+  lines.push('');
+  lines.push(`writeback_default: ${module.writeback?.default_review_bundle || 'workbook/reviews/JOB-xxx/'}`);
+  lines.push(`relation_graph: ${module.writeback?.task_module_graph || 'workbook/task_modules/role_module_relation_graph.json'}`);
+  lines.push('');
+  lines.push('## 8. 禁止事項');
+  lines.push('');
+  (module.forbidden_actions || []).forEach(rule => lines.push(`- ${rule}`));
+  lines.push('');
+  lines.push('## 9. 即時系統快照');
+  lines.push('');
+  if (parsed) {
+    lines.push(`version: ${parsed.version}`);
+    lines.push(`phase: ${parsed.phase}`);
+    const roleTasks = parsed.activeTasks.filter(t => t.agent.includes(module.role_id.replace('A', '')) || t.agent.includes(module.role_id));
+    if (roleTasks.length > 0) {
+      lines.push('active_or_related_tasks:');
+      roleTasks.forEach(t => lines.push(`- ${t.id} | ${t.name} | ${t.status}`));
+    }
+    if (parsed.blockers.length > 0) {
+      lines.push('top_blockers:');
+      parsed.blockers.slice(0, 5).forEach(b => lines.push(`- ${b}`));
+    }
+  }
+  lines.push('');
+  lines.push('## 10. 角色 Recall 摘要');
+  lines.push('');
+  lines.push(truncate(recallText || `// ${role} recall unavailable`, 6000));
+  lines.push('');
+  lines.push('## 11. 開始前回覆格式');
+  lines.push('');
+  lines.push('請先回覆：');
+  lines.push('1. 我是什麼角色。');
+  lines.push('2. 我會先讀哪些來源。');
+  lines.push('3. 這次產出會影響哪些角色/檔案/系統。');
+  lines.push('4. 產出會寫到哪裡。');
+  lines.push('5. 有哪些高風險動作需要 Owner/A1 批准。');
+  return lines.join('\n');
+}
 
 // === Inject to Claude tab (Task A) ===
 async function injectToClaudeTab() {
@@ -185,7 +376,7 @@ async function injectToClaudeTab() {
   if (!tab || !tab.url?.includes('claude.ai')) {
     btn.textContent = '❌ 請先切到 claude.ai tab';
     btn.style.background = '#e85538'; btn.style.color = '#fff';
-    setTimeout(() => { btn.textContent = '⚡ 注入到 Claude tab'; btn.style.background = ''; btn.style.color = ''; }, 2500);
+    setTimeout(() => { btn.textContent = '⚡ Legacy: 注入 Claude tab'; btn.style.background = ''; btn.style.color = ''; }, 2500);
     return;
   }
 
@@ -215,15 +406,18 @@ async function injectToClaudeTab() {
     btn.textContent = '❌ ' + e.message.substring(0, 35);
     btn.style.background = '#e85538'; btn.style.color = '#fff';
   }
-  setTimeout(() => { btn.textContent = '⚡ 注入到 Claude tab'; btn.style.background = ''; btn.style.color = ''; }, 3000);
+  setTimeout(() => { btn.textContent = '⚡ Legacy: 注入 Claude tab'; btn.style.background = ''; btn.style.color = ''; }, 3000);
 }
 
 // === Display ===
 function updatePromptDisplay() {
   const role = el('roleSelect').value;
+  const runtime = el('runtimeSelect')?.value || 'gemini';
+  const base = el('githubRawBase')?.value.trim() || DEFAULT_BASE;
   if (!role) {
     el('promptBoxLabel').textContent = '總覽模式';
     el('promptLabel').textContent = '⚡ 系統總覽';
+    renderModulePanel('', null);
     if (cachedParsed) {
       const prompt = buildOverviewPrompt(cachedParsed, cachedOverdue);
       el('promptText').value = prompt;
@@ -231,20 +425,18 @@ function updatePromptDisplay() {
     }
     el('roleStatus').innerHTML = '';
   } else {
-    el('promptBoxLabel').textContent = `${role} 召喚 prompt`;
-    el('promptLabel').textContent = `⚡ ${role} Startup Prompt`;
+    const module = cachedRoleModules[role];
+    el('promptBoxLabel').textContent = `${role} → ${runtime} handoff`;
+    el('promptLabel').textContent = `⚡ ${role} Runtime Handoff Prompt`;
+    renderModulePanel(role, module);
 
     let prompt = '';
-    if (cachedRecallPrompts[role]) {
-      prompt = cachedRecallPrompts[role];
-      // Task B: append live system snapshot
-      if (cachedParsed) {
-        prompt += buildSystemSnapshot(cachedParsed);
-      }
+    if (module) {
+      prompt = buildModuleHandoff(role, module, cachedRecallPrompts[role], cachedParsed, runtime, base);
       el('promptText').value = prompt;
       updateCharCount(prompt);
     } else {
-      el('promptText').value = `// ${role} 的召喚 prompt 尚未載入或不存在`;
+      el('promptText').value = `// ${role} 的任務模組尚未載入或不存在`;
       updateCharCount('');
     }
 
@@ -302,9 +494,24 @@ function copyPrompt() {
     btn.textContent = role ? `✅ ${role} prompt 已複製！` : '✅ 已複製！';
     btn.classList.add('copied');
     setTimeout(() => {
-      btn.textContent = '📋 複製 Startup Prompt';
+      btn.textContent = '📋 複製目前文字';
       btn.classList.remove('copied');
     }, 2500);
+  }).catch(() => el('promptText').select());
+}
+function copyHandoff() {
+  const role = el('roleSelect').value;
+  const module = cachedRoleModules[role];
+  const runtime = el('runtimeSelect')?.value || 'gemini';
+  const base = el('githubRawBase')?.value.trim() || DEFAULT_BASE;
+  const text = buildModuleHandoff(role, module, cachedRecallPrompts[role], cachedParsed, runtime, base);
+  if (!text || text.startsWith('//')) return;
+  navigator.clipboard.writeText(text).then(() => {
+    el('promptText').value = text;
+    updateCharCount(text);
+    const btn = el('handoffBtn');
+    btn.textContent = `✅ ${role || '總覽'} → ${runtime} 已複製`;
+    setTimeout(() => { btn.textContent = '📦 複製任務模組 Handoff'; }, 2500);
   }).catch(() => el('promptText').select());
 }
 
@@ -321,18 +528,21 @@ async function autoSave() {
 // === Main loader ===
 async function loadAll() {
   cachedRecallPrompts = {}; // v5.3: 每次重新抓取都清除 recall 快取，確保拿到最新版
+  cachedRoleModules = {};
   setStatus('loading', '讀取中...');
   el('promptText').value = '';
-  const data  = await chrome.storage.local.get(['githubRawBase','githubToken','lastRole']);
+  const data  = await chrome.storage.local.get(['githubRawBase','githubToken','lastRole','lastRuntime']);
   const base  = data.githubRawBase || DEFAULT_BASE;
   const token = data.githubToken  || '';
 
   if (data.lastRole) el('roleSelect').value = data.lastRole;
+  if (data.lastRuntime && el('runtimeSelect')) el('runtimeSelect').value = data.lastRuntime;
 
   try {
     const [md, commits] = await Promise.all([
       fetchFile(base, 'CURRENT_STATUS.md', token),
-      fetchCommits(token)
+      fetchCommits(token),
+      loadModuleIndex(base, token)
     ]);
 
     cachedParsed  = parseStatus(md);
@@ -342,15 +552,19 @@ async function loadAll() {
     // If a role is pre-selected, lazy-load its recall file now
     const selectedRole = el('roleSelect').value;
     if (selectedRole) {
-      await loadAgentRecall(selectedRole, base, token);
+      await Promise.all([
+        loadAgentRecall(selectedRole, base, token),
+        loadRoleModule(selectedRole, base, token)
+      ]);
     }
 
     updatePromptDisplay();
 
     el('overdueCount').textContent = cachedOverdue.length > 0 ? `⏰ ${cachedOverdue.length}` : '';
     const vb = document.getElementById('versionBadge');
-    if (vb && cachedParsed.version) vb.textContent = `v${cachedParsed.version}`;
-    setStatus('ok', `v${cachedParsed.version} ｜ 系統已載入`);
+    if (vb && cachedParsed.version) vb.textContent = formatVersion(cachedParsed.version);
+    const moduleCount = cachedModuleIndex?.modules?.length || 0;
+    setStatus('ok', `${formatVersion(cachedParsed.version)} ｜ 模組 ${moduleCount} 已載入`);
   } catch(e) {
     setStatus('err', '載入失敗：' + e.message);
     el('promptText').value = '// 錯誤：' + e.message;
@@ -359,9 +573,10 @@ async function loadAll() {
 
 // === Init ===
 document.addEventListener('DOMContentLoaded', async () => {
-  const data = await chrome.storage.local.get(['githubRawBase','githubToken']);
+  const data = await chrome.storage.local.get(['githubRawBase','githubToken','lastRuntime']);
   el('githubRawBase').value = data.githubRawBase || DEFAULT_BASE;
   el('githubToken').value   = data.githubToken   || '';
+  if (data.lastRuntime && el('runtimeSelect')) el('runtimeSelect').value = data.lastRuntime;
 
   if (data.githubToken) {
     el('saveStatus').textContent = '✓ Token 已記住';
@@ -376,16 +591,24 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   el('roleSelect').addEventListener('change', async () => {
     const role = el('roleSelect').value;
-    if (role && !cachedRecallPrompts[role]) {
-      setStatus('loading', `載入 ${role} recall...`);
+    if (role && (!cachedRecallPrompts[role] || !cachedRoleModules[role])) {
+      setStatus('loading', `載入 ${role} 任務模組...`);
       const d = await chrome.storage.local.get(['githubRawBase','githubToken']);
       const base  = d.githubRawBase || DEFAULT_BASE;
       const token = d.githubToken  || '';
-      await loadAgentRecall(role, base, token);
-      setStatus('ok', `${role} recall 已載入`);
+      if (!cachedModuleIndex) await loadModuleIndex(base, token);
+      await Promise.all([
+        loadAgentRecall(role, base, token),
+        loadRoleModule(role, base, token)
+      ]);
+      setStatus('ok', `${role} 任務模組已載入`);
     }
     updatePromptDisplay();
     chrome.storage.local.set({ lastRole: role });
+  });
+  el('runtimeSelect').addEventListener('change', () => {
+    updatePromptDisplay();
+    chrome.storage.local.set({ lastRuntime: el('runtimeSelect').value });
   });
 
   await loadAll();

@@ -5,7 +5,7 @@
 <title>MAPLAB Agent Commander</title>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
-body { width:400px; background:#0d0f14; color:#e8ecf4; font-family:'JetBrains Mono','Fira Code',monospace; font-size:13px; }
+body { width:430px; background:#0d0f14; color:#e8ecf4; font-family:'JetBrains Mono','Fira Code',monospace; font-size:13px; }
 .header { background:#111520; border-bottom:1px solid #1e2535; padding:12px 16px; display:flex; align-items:center; justify-content:space-between; }
 .logo { font-size:13px; font-weight:700; color:#e8a838; }
 .header-right { display:flex; align-items:center; gap:8px; }
@@ -30,6 +30,20 @@ body { width:400px; background:#0d0f14; color:#e8ecf4; font-family:'JetBrains Mo
 .role-status .active { color:#38e87a; }
 .role-status .pending { color:#e8a838; }
 .role-status .new { color:#6a9ae8; }
+.module-card { background:#10141d; border:1px solid #1e2535; border-radius:6px; padding:10px 12px; display:flex; flex-direction:column; gap:8px; }
+.module-title { font-size:11px; color:#e8a838; font-weight:700; line-height:1.5; }
+.module-meta { font-size:10px; color:#9baab8; line-height:1.65; }
+.module-meta strong { color:#d0d8e8; font-weight:700; }
+.module-chips { display:flex; flex-wrap:wrap; gap:5px; }
+.module-chip { font-size:10px; color:#9baab8; border:1px solid #263145; border-radius:999px; padding:3px 7px; background:#0a0d12; }
+.module-chip.warn { color:#e8a838; border-color:#5a4218; }
+.module-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.module-list { max-height:76px; overflow:auto; padding:6px 8px; background:#0a0d12; border:1px solid #1a2030; border-radius:5px; color:#9baab8; font-size:10px; line-height:1.55; }
+.runtime-selector { display:flex; align-items:center; gap:10px; }
+.runtime-selector label { font-size:10px; color:#7a8a9d; text-transform:uppercase; flex-shrink:0; }
+.runtime-select { flex:1; padding:8px 10px; background:#141820; border:1px solid #1e2535; border-radius:5px; color:#9fd1ff; font-family:inherit; font-size:12px; font-weight:700; outline:none; cursor:pointer; }
+.runtime-select:focus { border-color:#6a9ae8; }
+.runtime-select option { background:#141820; color:#e8ecf4; }
 .prompt-box { background:#0a0d12; border:1px solid #1e2535; border-radius:5px; overflow:hidden; }
 .prompt-box-header { display:flex; align-items:center; justify-content:space-between; padding:8px 12px; background:#111520; border-bottom:1px solid #1a2030; }
 .prompt-box-label { font-size:10px; color:#7a8a9d; }
@@ -38,6 +52,8 @@ body { width:400px; background:#0d0f14; color:#e8ecf4; font-family:'JetBrains Mo
 #promptText { width:100%; min-height:220px; max-height:300px; padding:12px; background:transparent; border:none; color:#d0d8e8; font-family:inherit; font-size:12px; line-height:1.8; resize:none; outline:none; overflow-y:auto; }
 .btn-copy { width:100%; padding:11px; background:#e8a838; border:none; border-radius:5px; color:#0d0f14; font-family:inherit; font-size:12px; font-weight:700; cursor:pointer; }
 .btn-copy.copied { background:#38e87a; color:#0a1a10; }
+.btn-handoff { width:100%; padding:11px; background:#163022; border:1px solid #2d7a54; border-radius:5px; color:#8ee8b8; font-family:inherit; font-size:12px; font-weight:700; cursor:pointer; }
+.btn-handoff:hover { background:#1b3d2b; color:#bcffd7; }
 .btn-inject { width:100%; padding:11px; background:#1e3555; border:1px solid #3a6aaa; border-radius:5px; color:#6a9ae8; font-family:inherit; font-size:12px; font-weight:700; cursor:pointer; }
 .btn-inject:hover { background:#2a4a7a; color:#a0c8ff; }
 .btn-refresh { width:100%; padding:8px; background:transparent; border:1px solid #1e2535; border-radius:4px; color:#7a8a9d; font-family:inherit; font-size:11px; cursor:pointer; }
@@ -63,7 +79,7 @@ hr { border:none; border-top:1px solid #1a2030; }
   <div class="logo">⬡ MAPLAB COMMANDER</div>
   <div class="header-right">
     <span class="overdue-badge" id="overdueCount"></span>
-    <span class="version" id="versionBadge">v5.3</span>
+    <span class="version" id="versionBadge">v5.4</span>
   </div>
 </div>
 <div class="body">
@@ -91,8 +107,32 @@ hr { border:none; border-top:1px solid #1a2030; }
     </div>
     <div class="role-status" id="roleStatus"></div>
   </div>
+  <div class="runtime-selector">
+    <label>交接目標</label>
+    <select class="runtime-select" id="runtimeSelect">
+      <option value="gemini">Gemini 側邊欄</option>
+      <option value="codex">Codex / A1</option>
+      <option value="openclaw">OpenClaw / A6</option>
+      <option value="claude_tab">Claude tab（legacy）</option>
+    </select>
+  </div>
+  <div class="module-card" id="moduleCard">
+    <div class="module-title" id="moduleTitle">任務模組尚未載入</div>
+    <div class="module-meta" id="moduleMeta">選擇角色後顯示必讀來源、技能組、影響範圍與輸出契約。</div>
+    <div class="module-chips" id="moduleChips"></div>
+    <div class="module-grid">
+      <div>
+        <div class="section-label">Read First</div>
+        <div class="module-list" id="moduleSources">—</div>
+      </div>
+      <div>
+        <div class="section-label">Affects</div>
+        <div class="module-list" id="moduleAffects">—</div>
+      </div>
+    </div>
+  </div>
   <div>
-    <div class="section-label" id="promptLabel">⚡ Startup Prompt</div>
+    <div class="section-label" id="promptLabel">⚡ Runtime Handoff Prompt</div>
     <div class="prompt-box">
       <div class="prompt-box-header">
         <span class="prompt-box-label" id="promptBoxLabel">總覽模式</span>
@@ -101,9 +141,9 @@ hr { border:none; border-top:1px solid #1a2030; }
       <textarea id="promptText" readonly placeholder="選擇角色後顯示專屬召喚 prompt..."></textarea>
     </div>
   </div>
-  <button class="btn-bot-fetch" id="botFetchBtn" onclick="fetchFromBot()">📋 從 Bot 抓取</button>
-  <button class="btn-copy" id="copyBtn" onclick="copyPrompt()">📋 複製 Startup Prompt</button>
-  <button class="btn-inject" id="injectBtn" onclick="injectToClaudeTab()">⚡ 注入到 Claude tab</button>
+  <button class="btn-handoff" id="handoffBtn" onclick="copyHandoff()">📦 複製任務模組 Handoff</button>
+  <button class="btn-copy" id="copyBtn" onclick="copyPrompt()">📋 複製目前文字</button>
+  <button class="btn-inject" id="injectBtn" onclick="injectToClaudeTab()">⚡ Legacy: 注入 Claude tab</button>
   <hr>
   <div class="field">
     <label>GitHub Raw Base URL</label>

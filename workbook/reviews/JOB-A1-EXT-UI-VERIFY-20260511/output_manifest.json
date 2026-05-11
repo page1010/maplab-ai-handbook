@@ -1,0 +1,23 @@
+{
+  "job_id": "JOB-A1-EXT-UI-VERIFY-20260511",
+  "outputs": [
+    "chrome-extension/popup.html",
+    "chrome-extension/popup.js",
+    "chrome-extension/manifest.json",
+    "chrome-extension/CHANGELOG.md",
+    "chrome-extension/task-modules/*.json",
+    "workbook/task_modules/role_module_relation_graph.json",
+    "workbook/task_modules/role_module_relationships.csv",
+    "workbook/task_modules/role_module_relationships.xlsx",
+    "workbook/reviews/JOB-A1-EXT-UI-VERIFY-20260511/task_request.md",
+    "workbook/reviews/JOB-A1-EXT-UI-VERIFY-20260511/execution_log.json",
+    "workbook/reviews/JOB-A1-EXT-UI-VERIFY-20260511/verification_log.json",
+    "workbook/reviews/JOB-A1-EXT-UI-VERIFY-20260511/screenshots/chrome_extension_v54_a2.png"
+  ],
+  "not_in_scope": [
+    "No WordPress publish.",
+    "No external prompt sent to Gemini/ChatGPT/OpenClaw.",
+    "No secret copied into repo outputs."
+  ]
+}
+

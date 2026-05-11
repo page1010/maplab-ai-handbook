@@ -189,12 +189,17 @@ def as_source_entries(paths: list[str], load_mode: str = "read") -> list[dict[st
     entries = []
     for path in paths:
         p = ROOT / path
+        item_load_mode = load_mode
+        purpose = classify_source(path)
+        if path == "TASK_QUEUE.md" and not p.exists():
+            item_load_mode = "fallback_to_workbook_task_index"
+            purpose = "legacy task queue listed in CURRENT_STATUS; missing in canonical repo, use workbook/task_index.json"
         entries.append(
             {
                 "path": path,
-                "load_mode": load_mode,
+                "load_mode": item_load_mode,
                 "exists": str(p.exists()).lower(),
-                "purpose": classify_source(path),
+                "purpose": purpose,
             }
         )
     return entries

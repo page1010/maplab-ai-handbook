@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MAPLAB Dynamic Role Task Module",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "module_id",
+    "role_id",
+    "runtime_targets",
+    "read_first",
+    "startup_contract",
+    "output_contract",
+    "writeback",
+    "affects"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "generated_at": {
+      "type": "string"
+    },
+    "module_id": {
+      "type": "string"
+    },
+    "role_id": {
+      "type": "string"
+    },
+    "role_name": {
+      "type": "string"
+    },
+    "department": {
+      "type": "string"
+    },
+    "role_simulation": {
+      "type": "string"
+    },
+    "runtime_targets": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "task_types": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "read_first": {
+      "type": "array"
+    },
+    "restricted_sources": {
+      "type": "array"
+    },
+    "skill_group": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "source_policy": {
+      "type": "object"
+    },
+    "startup_contract": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "output_contract": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "writeback": {
+      "type": "object"
+    },
+    "affects": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "forbidden_actions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "verification_required": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "risk_level": {
+      "type": "string"
+    }
+  }
+}

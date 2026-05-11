@@ -1,0 +1,33 @@
+{
+  "job_id": "JOB-A1-EXT-001-DYNAMIC-ROLE-MODULES-20260511",
+  "status": "waiting_for_review",
+  "generated_outputs": [
+    "tools/ai_workbook/build_extension_task_modules.py",
+    "docs/extension/dynamic-role-task-modules.md",
+    "chrome-extension/config/task-modules.json",
+    "chrome-extension/task-modules/task-module.schema.json",
+    "chrome-extension/task-modules/index.json",
+    "chrome-extension/task-modules/A0.json",
+    "chrome-extension/task-modules/A1.json",
+    "chrome-extension/task-modules/A2.json",
+    "chrome-extension/task-modules/A3.json",
+    "chrome-extension/task-modules/A4.json",
+    "chrome-extension/task-modules/A5.json",
+    "chrome-extension/task-modules/A6.json",
+    "chrome-extension/task-modules/A7.json",
+    "chrome-extension/task-modules/A8.json",
+    "chrome-extension/task-modules/B1.json",
+    "workbook/task_modules/role_module_relation_graph.json",
+    "workbook/task_modules/role_module_relationships.csv",
+    "workbook/task_modules/role_module_relationships.xlsx",
+    "workbook/task_modules/role_module_build_report.json",
+    "handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md",
+    "chrome-extension/CHANGELOG.md"
+  ],
+  "review_focus": [
+    "Confirm all roles A0-A8+B1 are covered.",
+    "Confirm Chrome dynamic link is data/config only, not remote executable JS.",
+    "Confirm relationship table clearly points to read sources, affected systems, runtime targets, and risk level.",
+    "Confirm missing TASK_QUEUE.md is visible as a real repo mismatch, not hidden."
+  ]
+}

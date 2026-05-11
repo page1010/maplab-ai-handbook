@@ -1,0 +1,140 @@
+{
+  "schema_version": "2026-05-11.dynamic-role-module-index.v1",
+  "generated_at": "2026-05-11T22:12:10+08:00",
+  "repository": "page1010/maplab-ai-handbook",
+  "canonical_local_repo": "/Users/pagemacmini/maplab-ai-handbook",
+  "dynamic_link_policy": "Load JSON/Markdown task data from GitHub; do not execute remote JS.",
+  "modules": [
+    {
+      "role_id": "A0",
+      "module_id": "MAPLAB_A0_DISPATCH_SECRETARY_DYNAMIC_ROLE_MODULE",
+      "role_name": "Dispatch Secretary",
+      "department": "總調度秘書",
+      "path": "chrome-extension/task-modules/A0.json",
+      "runtime_targets": [
+        "gemini",
+        "codex",
+        "openclaw",
+        "cowork"
+      ],
+      "risk_level": "medium"
+    },
+    {
+      "role_id": "A1",
+      "module_id": "MAPLAB_A1_SYSTEM_ORCHESTRATOR_DYNAMIC_ROLE_MODULE",
+      "role_name": "System Orchestrator",
+      "department": "系統總管中心",
+      "path": "chrome-extension/task-modules/A1.json",
+      "runtime_targets": [
+        "codex",
+        "openclaw",
+        "gemini"
+      ],
+      "risk_level": "high"
+    },
+    {
+      "role_id": "A2",
+      "module_id": "MAPLAB_A2_SEO_GROWTH_UNIT_DYNAMIC_ROLE_MODULE",
+      "role_name": "SEO Growth Unit",
+      "department": "搜尋流量作戰部",
+      "path": "chrome-extension/task-modules/A2.json",
+      "runtime_targets": [
+        "gemini",
+        "codex",
+        "openclaw"
+      ],
+      "risk_level": "high"
+    },
+    {
+      "role_id": "A3",
+      "module_id": "MAPLAB_A3_ADS_GROWTH_STUDIO_DYNAMIC_ROLE_MODULE",
+      "role_name": "Ads Growth Studio",
+      "department": "社群與廣告成長部",
+      "path": "chrome-extension/task-modules/A3.json",
+      "runtime_targets": [
+        "gemini",
+        "codex",
+        "openclaw"
+      ],
+      "risk_level": "high"
+    },
+    {
+      "role_id": "A4",
+      "module_id": "MAPLAB_A4_PHOTO_ARCHIVE_DYNAMIC_ROLE_MODULE",
+      "role_name": "Photo Archive",
+      "department": "影像資產整理部",
+      "path": "chrome-extension/task-modules/A4.json",
+      "runtime_targets": [
+        "gemini",
+        "codex",
+        "openclaw"
+      ],
+      "risk_level": "medium"
+    },
+    {
+      "role_id": "A5",
+      "module_id": "MAPLAB_A5_QUOTATION_ENGINE_DYNAMIC_ROLE_MODULE",
+      "role_name": "Quotation Engine",
+      "department": "報價與提案引擎部",
+      "path": "chrome-extension/task-modules/A5.json",
+      "runtime_targets": [
+        "gemini",
+        "codex",
+        "openclaw"
+      ],
+      "risk_level": "high"
+    },
+    {
+      "role_id": "A6",
+      "module_id": "MAPLAB_A6_SALES_RAPID_RESPONSE_DYNAMIC_ROLE_MODULE",
+      "role_name": "Sales Rapid Response",
+      "department": "業務快反應部隊",
+      "path": "chrome-extension/task-modules/A6.json",
+      "runtime_targets": [
+        "gemini",
+        "codex",
+        "openclaw"
+      ],
+      "risk_level": "high"
+    },
+    {
+      "role_id": "A7",
+      "module_id": "MAPLAB_A7_SERVICE_DESK_DYNAMIC_ROLE_MODULE",
+      "role_name": "Service Desk",
+      "department": "客服與對話轉單部",
+      "path": "chrome-extension/task-modules/A7.json",
+      "runtime_targets": [
+        "gemini",
+        "codex",
+        "openclaw"
+      ],
+      "risk_level": "medium"
+    },
+    {
+      "role_id": "A8",
+      "module_id": "MAPLAB_A8_CONTENT_REPURPOSING_PIPELINE_DYNAMIC_ROLE_MODULE",
+      "role_name": "Content Repurposing Pipeline",
+      "department": "影音內容產線",
+      "path": "chrome-extension/task-modules/A8.json",
+      "runtime_targets": [
+        "gemini",
+        "codex",
+        "openclaw"
+      ],
+      "risk_level": "medium"
+    },
+    {
+      "role_id": "B1",
+      "module_id": "MAPLAB_B1_INNERFLOWLAB_CONTENT_DYNAMIC_ROLE_MODULE",
+      "role_name": "InnerFlowLab Content",
+      "department": "InnerFlowLab 內容創作",
+      "path": "chrome-extension/task-modules/B1.json",
+      "runtime_targets": [
+        "gemini",
+        "codex",
+        "openclaw"
+      ],
+      "risk_level": "medium"
+    }
+  ]
+}

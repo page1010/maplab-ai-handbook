@@ -1,0 +1,38 @@
+{
+  "job_id": "JOB-A1-EXT-001-DYNAMIC-ROLE-MODULES-20260511",
+  "verified_by": "A1 Codex",
+  "verified_at": "2026-05-11T22:10:00+08:00",
+  "checks": [
+    {
+      "target": "chrome-extension/task-modules/index.json",
+      "expected": "10 role modules",
+      "observed": "A0,A1,A2,A3,A4,A5,A6,A7,A8,B1",
+      "result": "pass"
+    },
+    {
+      "target": "workbook/task_modules/role_module_relation_graph.json",
+      "expected": "valid JSON with directed nodes/edges",
+      "observed": "194 nodes, 348 edges",
+      "result": "pass"
+    },
+    {
+      "target": "workbook/task_modules/role_module_relationships.csv",
+      "expected": "Excel-readable relation table",
+      "observed": "267 lines including header",
+      "result": "pass"
+    },
+    {
+      "target": "workbook/task_modules/role_module_relationships.xlsx",
+      "expected": "xlsx exported from relation CSV",
+      "observed": "file exists, 17 KB",
+      "result": "pass"
+    },
+    {
+      "target": "role_module_build_report.json",
+      "expected": "missing sources reported",
+      "observed": "TASK_QUEUE.md missing in canonical repo; workbook/task_index.json included as fallback",
+      "result": "warning"
+    }
+  ],
+  "overall_result": "pass_with_warning"
+}

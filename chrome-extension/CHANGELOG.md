@@ -1,5 +1,13 @@
 # Chrome Extension Changelog
 
+## v5.4-data — 2026-05-11
+變更者：A1 Codex
+- **GitHub Dynamic Role Task Modules v0.1**：新增 `chrome-extension/task-modules/` 與 `chrome-extension/config/task-modules.json`，把 A0-A8+B1 全角色改成平台中立的任務模組資料層。
+- **跨 runtime 交接**：每個角色模組都標示 Gemini / Codex / OpenClaw 可讀來源、技能組、輸出契約、禁止事項、writeback 路徑與影響對象。
+- **指向性關聯圖**：新增 `workbook/task_modules/role_module_relation_graph.json`、`role_module_relationships.csv`、`role_module_relationships.xlsx`，讓任務能追到「讀什麼 → 影響誰 → 產出去哪裡」。
+- **安全邊界**：本次只新增 JSON/Markdown/Excel 資料層，不執行遠端 JS；Claude tab 注入仍是 legacy，不再是唯一設計中心。
+- **已知缺口**：正式 repo 目前缺 `TASK_QUEUE.md`，模組已保留 missing 記錄並以 `workbook/task_index.json` 作為可讀替代來源。
+
 ## v5.3 — 2026-04-03
 變更者：A1 Claude Code
 - **召喚文瘦身（Problem 1 修復）**：`recalls/A1_recall.md` 移除所有動態內容（斷點、任務清單、系統快照）

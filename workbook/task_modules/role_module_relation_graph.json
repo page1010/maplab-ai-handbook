@@ -1,0 +1,3647 @@
+{
+  "generated_at": "2026-05-11T22:12:10+08:00",
+  "nodes": [
+    {
+      "id": "task:T-A1-EXT-001",
+      "type": "task",
+      "title": "GitHub dynamic role modules for Chrome/Gemini/Codex/OpenClaw",
+      "status": "active",
+      "path": "handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "output:role-module-index",
+      "type": "output",
+      "title": "Role module index",
+      "status": "active",
+      "path": "chrome-extension/task-modules/index.json",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "output:relationship-table",
+      "type": "output",
+      "title": "Role module relationship table",
+      "status": "active",
+      "path": "workbook/task_modules/role_module_relationships.csv",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "output:relationship-xlsx",
+      "type": "output",
+      "title": "Role module relationship workbook",
+      "status": "active",
+      "path": "workbook/task_modules/role_module_relationships.xlsx",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "code:chrome-extension",
+      "type": "code_surface",
+      "title": "chrome-extension",
+      "status": "active",
+      "path": "chrome-extension/manifest.json, chrome-extension/popup.html, chrome-extension/popup.js, chrome-extension/CHANGELOG.md, chrome-extension/task-modules/index.json, chrome-extension/config/task-modules.json",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "code:ai-workbook",
+      "type": "code_surface",
+      "title": "ai-workbook",
+      "status": "active",
+      "path": "tools/ai_workbook/cli.py, tools/ai_workbook/build_context_pack.py, tools/ai_workbook/create_microtask.py, tools/ai_workbook/relation_graph.py, tools/ai_workbook/openclaw_adapter.py, workbook/relation_graph.json",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "code:a6-openclaw-runtime",
+      "type": "code_surface",
+      "title": "a6-openclaw-runtime",
+      "status": "active",
+      "path": "bot_a6/bot_a6.py, bot_a6/openclaw_dispatch.py, docs/openclaw/dispatch-role.md, docs/openclaw/closed-loop-playbook.md, docs/openclaw/memory-governance.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "code:a2a3-workbench",
+      "type": "code_surface",
+      "title": "a2a3-workbench",
+      "status": "active",
+      "path": "automation/seo_factory/build_a2a3_workbench.py, automation/seo_factory/seo_factory.py, docs/a2a3/handoff-board.html, docs/a2a3/launchpad.html, docs/a2a3/openclaw-dispatch-pack.md, docs/a2a3/rankmath-keyword-recovery-2026-05-11.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "module:A0",
+      "type": "task_module",
+      "title": "MAPLAB_A0_DISPATCH_SECRETARY_DYNAMIC_ROLE_MODULE",
+      "status": "active",
+      "path": "chrome-extension/task-modules/A0.json",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "agent:A0",
+      "type": "agent",
+      "title": "A0 Dispatch Secretary",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "runtime:gemini",
+      "type": "runtime",
+      "title": "gemini",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "runtime:codex",
+      "type": "runtime",
+      "title": "codex",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "runtime:openclaw",
+      "type": "runtime",
+      "title": "openclaw",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "runtime:cowork",
+      "type": "runtime",
+      "title": "cowork",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:CURRENT_STATUS.md",
+      "type": "source_doc",
+      "title": "CURRENT_STATUS.md",
+      "status": "active",
+      "path": "CURRENT_STATUS.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:AGENT_RULES.md",
+      "type": "source_doc",
+      "title": "AGENT_RULES.md",
+      "status": "active",
+      "path": "AGENT_RULES.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:AGENT_STARTUP_PROTOCOL.md",
+      "type": "source_doc",
+      "title": "AGENT_STARTUP_PROTOCOL.md",
+      "status": "active",
+      "path": "AGENT_STARTUP_PROTOCOL.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:pitfalls.md",
+      "type": "source_doc",
+      "title": "pitfalls.md",
+      "status": "active",
+      "path": "pitfalls.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:TASK_QUEUE.md",
+      "type": "source_doc",
+      "title": "TASK_QUEUE.md",
+      "status": "missing",
+      "path": "TASK_QUEUE.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:workbook/task_index.json",
+      "type": "source_doc",
+      "title": "workbook/task_index.json",
+      "status": "active",
+      "path": "workbook/task_index.json",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:AGENT_RECALL_PROMPTS.md",
+      "type": "source_doc",
+      "title": "AGENT_RECALL_PROMPTS.md",
+      "status": "active",
+      "path": "AGENT_RECALL_PROMPTS.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/superpowers-guide.md",
+      "type": "source_doc",
+      "title": "skills/superpowers-guide.md",
+      "status": "active",
+      "path": "skills/superpowers-guide.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/task-progress-guide.md",
+      "type": "source_doc",
+      "title": "skills/task-progress-guide.md",
+      "status": "active",
+      "path": "skills/task-progress-guide.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:recalls/A0_recall.md",
+      "type": "source_doc",
+      "title": "recalls/A0_recall.md",
+      "status": "active",
+      "path": "recalls/A0_recall.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:docs/a0-dispatch-operations-manual.md",
+      "type": "source_doc",
+      "title": "docs/a0-dispatch-operations-manual.md",
+      "status": "active",
+      "path": "docs/a0-dispatch-operations-manual.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:projects/a0-a1-briefing-protocol.md",
+      "type": "source_doc",
+      "title": "projects/a0-a1-briefing-protocol.md",
+      "status": "active",
+      "path": "projects/a0-a1-briefing-protocol.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:handoff/a0-briefing.md",
+      "type": "source_doc",
+      "title": "handoff/a0-briefing.md",
+      "status": "active",
+      "path": "handoff/a0-briefing.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/a0-proactive-dispatch-guide.md",
+      "type": "source_doc",
+      "title": "skills/a0-proactive-dispatch-guide.md",
+      "status": "active",
+      "path": "skills/a0-proactive-dispatch-guide.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/remote-desktop-agent-bridge.md",
+      "type": "source_doc",
+      "title": "skills/remote-desktop-agent-bridge.md",
+      "status": "active",
+      "path": "skills/remote-desktop-agent-bridge.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/mcp-usage-guide.md",
+      "type": "source_doc",
+      "title": "skills/mcp-usage-guide.md",
+      "status": "active",
+      "path": "skills/mcp-usage-guide.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:docs/openclaw/output-contract.md",
+      "type": "source_doc",
+      "title": "docs/openclaw/output-contract.md",
+      "status": "active",
+      "path": "docs/openclaw/output-contract.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:docs/openclaw/relation-graph.md",
+      "type": "source_doc",
+      "title": "docs/openclaw/relation-graph.md",
+      "status": "active",
+      "path": "docs/openclaw/relation-graph.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:docs/openclaw/security-boundaries.md",
+      "type": "source_doc",
+      "title": "docs/openclaw/security-boundaries.md",
+      "status": "active",
+      "path": "docs/openclaw/security-boundaries.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:workbook/reviews/README.md",
+      "type": "source_doc",
+      "title": "workbook/reviews/README.md",
+      "status": "active",
+      "path": "workbook/reviews/README.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A0:A1",
+      "type": "impact",
+      "title": "A1",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A0:A2-A8",
+      "type": "impact",
+      "title": "A2-A8",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A0:B1",
+      "type": "impact",
+      "title": "B1",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A0:Telegram",
+      "type": "impact",
+      "title": "Telegram",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A0:Chrome side panel",
+      "type": "impact",
+      "title": "Chrome side panel",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A0:Google Drive/Sheets connectors",
+      "type": "impact",
+      "title": "Google Drive/Sheets connectors",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "module:A1",
+      "type": "task_module",
+      "title": "MAPLAB_A1_SYSTEM_ORCHESTRATOR_DYNAMIC_ROLE_MODULE",
+      "status": "active",
+      "path": "chrome-extension/task-modules/A1.json",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "agent:A1",
+      "type": "agent",
+      "title": "A1 System Orchestrator",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:recalls/A1_recall.md",
+      "type": "source_doc",
+      "title": "recalls/A1_recall.md",
+      "status": "active",
+      "path": "recalls/A1_recall.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:projects/v6-architecture.md",
+      "type": "source_doc",
+      "title": "projects/v6-architecture.md",
+      "status": "active",
+      "path": "projects/v6-architecture.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:docs/openclaw/README.md",
+      "type": "source_doc",
+      "title": "docs/openclaw/README.md",
+      "status": "active",
+      "path": "docs/openclaw/README.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:docs/openclaw/closed-loop-playbook.md",
+      "type": "source_doc",
+      "title": "docs/openclaw/closed-loop-playbook.md",
+      "status": "active",
+      "path": "docs/openclaw/closed-loop-playbook.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:docs/openclaw/memory-governance.md",
+      "type": "source_doc",
+      "title": "docs/openclaw/memory-governance.md",
+      "status": "active",
+      "path": "docs/openclaw/memory-governance.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:projects/extension-browser-bridge.md",
+      "type": "source_doc",
+      "title": "projects/extension-browser-bridge.md",
+      "status": "active",
+      "path": "projects/extension-browser-bridge.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/extension-agent-summon-guide.md",
+      "type": "source_doc",
+      "title": "skills/extension-agent-summon-guide.md",
+      "status": "active",
+      "path": "skills/extension-agent-summon-guide.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/extension-update",
+      "type": "source_doc",
+      "title": "skills/extension-update",
+      "status": "active",
+      "path": "skills/extension-update",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/save-checkpoint/SKILL.md",
+      "type": "source_doc",
+      "title": "skills/save-checkpoint/SKILL.md",
+      "status": "active",
+      "path": "skills/save-checkpoint/SKILL.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/first-principles-check/SKILL.md",
+      "type": "source_doc",
+      "title": "skills/first-principles-check/SKILL.md",
+      "status": "active",
+      "path": "skills/first-principles-check/SKILL.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/pitfalls/SKILL.md",
+      "type": "source_doc",
+      "title": "skills/pitfalls/SKILL.md",
+      "status": "active",
+      "path": "skills/pitfalls/SKILL.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/github-api-workflow-guide.md",
+      "type": "source_doc",
+      "title": "skills/github-api-workflow-guide.md",
+      "status": "active",
+      "path": "skills/github-api-workflow-guide.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A1:chrome-extension",
+      "type": "impact",
+      "title": "chrome-extension",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A1:tools/ai_workbook",
+      "type": "impact",
+      "title": "tools/ai_workbook",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A1:bot_a6",
+      "type": "impact",
+      "title": "bot_a6",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A1:CURRENT_STATUS",
+      "type": "impact",
+      "title": "CURRENT_STATUS",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A1:handoff/tasks",
+      "type": "impact",
+      "title": "handoff/tasks",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "module:A2",
+      "type": "task_module",
+      "title": "MAPLAB_A2_SEO_GROWTH_UNIT_DYNAMIC_ROLE_MODULE",
+      "status": "active",
+      "path": "chrome-extension/task-modules/A2.json",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "agent:A2",
+      "type": "agent",
+      "title": "A2 SEO Growth Unit",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:recalls/A2_recall.md",
+      "type": "source_doc",
+      "title": "recalls/A2_recall.md",
+      "status": "active",
+      "path": "recalls/A2_recall.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:projects/seo-ads-agent.md",
+      "type": "source_doc",
+      "title": "projects/seo-ads-agent.md",
+      "status": "active",
+      "path": "projects/seo-ads-agent.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:docs/a2a3/README.md",
+      "type": "source_doc",
+      "title": "docs/a2a3/README.md",
+      "status": "active",
+      "path": "docs/a2a3/README.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:docs/a2a3/live-wp-rankmath-fact-check-2026-05-11.md",
+      "type": "source_doc",
+      "title": "docs/a2a3/live-wp-rankmath-fact-check-2026-05-11.md",
+      "status": "active",
+      "path": "docs/a2a3/live-wp-rankmath-fact-check-2026-05-11.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:docs/a2a3/rankmath-keyword-recovery-2026-05-11.md",
+      "type": "source_doc",
+      "title": "docs/a2a3/rankmath-keyword-recovery-2026-05-11.md",
+      "status": "active",
+      "path": "docs/a2a3/rankmath-keyword-recovery-2026-05-11.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:docs/a2a3/live-wordpress-audit.md",
+      "type": "source_doc",
+      "title": "docs/a2a3/live-wordpress-audit.md",
+      "status": "active",
+      "path": "docs/a2a3/live-wordpress-audit.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:automation/seo_factory/README.md",
+      "type": "source_doc",
+      "title": "automation/seo_factory/README.md",
+      "status": "active",
+      "path": "automation/seo_factory/README.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:automation/seo_factory/config/strategy_matrix_rules.json",
+      "type": "source_doc",
+      "title": "automation/seo_factory/config/strategy_matrix_rules.json",
+      "status": "active",
+      "path": "automation/seo_factory/config/strategy_matrix_rules.json",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:automation/seo_factory/config/link_policy.json",
+      "type": "source_doc",
+      "title": "automation/seo_factory/config/link_policy.json",
+      "status": "active",
+      "path": "automation/seo_factory/config/link_policy.json",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/seo-session-checklist.md",
+      "type": "source_doc",
+      "title": "skills/seo-session-checklist.md",
+      "status": "active",
+      "path": "skills/seo-session-checklist.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/seo-ranking-evaluation-guide.md",
+      "type": "source_doc",
+      "title": "skills/seo-ranking-evaluation-guide.md",
+      "status": "active",
+      "path": "skills/seo-ranking-evaluation-guide.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/page-checker.md",
+      "type": "source_doc",
+      "title": "skills/page-checker.md",
+      "status": "active",
+      "path": "skills/page-checker.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/wp-content-audit/SKILL.md",
+      "type": "source_doc",
+      "title": "skills/wp-content-audit/SKILL.md",
+      "status": "active",
+      "path": "skills/wp-content-audit/SKILL.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/brand-voice-guide.md",
+      "type": "source_doc",
+      "title": "skills/brand-voice-guide.md",
+      "status": "active",
+      "path": "skills/brand-voice-guide.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/gdrive-to-wordpress-upload-guide.md",
+      "type": "source_doc",
+      "title": "skills/gdrive-to-wordpress-upload-guide.md",
+      "status": "active",
+      "path": "skills/gdrive-to-wordpress-upload-guide.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/credentials/wordpress-api.md",
+      "type": "source_doc",
+      "title": "skills/credentials/wordpress-api.md",
+      "status": "restricted",
+      "path": "skills/credentials/wordpress-api.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/credentials/google-search-console-api.md",
+      "type": "source_doc",
+      "title": "skills/credentials/google-search-console-api.md",
+      "status": "restricted",
+      "path": "skills/credentials/google-search-console-api.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A2:WordPress pages/posts",
+      "type": "impact",
+      "title": "WordPress pages/posts",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A2:Rank Math metadata",
+      "type": "impact",
+      "title": "Rank Math metadata",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A2:A3 ad landing pages",
+      "type": "impact",
+      "title": "A3 ad landing pages",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A2:A4 asset needs",
+      "type": "impact",
+      "title": "A4 asset needs",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A2:Google indexing workflow",
+      "type": "impact",
+      "title": "Google indexing workflow",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "module:A3",
+      "type": "task_module",
+      "title": "MAPLAB_A3_ADS_GROWTH_STUDIO_DYNAMIC_ROLE_MODULE",
+      "status": "active",
+      "path": "chrome-extension/task-modules/A3.json",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "agent:A3",
+      "type": "agent",
+      "title": "A3 Ads Growth Studio",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:recalls/A3_recall.md",
+      "type": "source_doc",
+      "title": "recalls/A3_recall.md",
+      "status": "active",
+      "path": "recalls/A3_recall.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:projects/maplab-ads-monitor.md",
+      "type": "source_doc",
+      "title": "projects/maplab-ads-monitor.md",
+      "status": "active",
+      "path": "projects/maplab-ads-monitor.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:docs/a2a3/tracking-pack.md",
+      "type": "source_doc",
+      "title": "docs/a2a3/tracking-pack.md",
+      "status": "active",
+      "path": "docs/a2a3/tracking-pack.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:docs/a2a3/b2b-5x5-matrix.md",
+      "type": "source_doc",
+      "title": "docs/a2a3/b2b-5x5-matrix.md",
+      "status": "active",
+      "path": "docs/a2a3/b2b-5x5-matrix.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:docs/a2a3/b2b-crosswalk.md",
+      "type": "source_doc",
+      "title": "docs/a2a3/b2b-crosswalk.md",
+      "status": "active",
+      "path": "docs/a2a3/b2b-crosswalk.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/a3-social-ads-skills.md",
+      "type": "source_doc",
+      "title": "skills/a3-social-ads-skills.md",
+      "status": "active",
+      "path": "skills/a3-social-ads-skills.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/sheets-tracking-guide.md",
+      "type": "source_doc",
+      "title": "skills/sheets-tracking-guide.md",
+      "status": "active",
+      "path": "skills/sheets-tracking-guide.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/verification-checklist-guide.md",
+      "type": "source_doc",
+      "title": "skills/verification-checklist-guide.md",
+      "status": "active",
+      "path": "skills/verification-checklist-guide.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/credentials/meta-ads-api.md",
+      "type": "source_doc",
+      "title": "skills/credentials/meta-ads-api.md",
+      "status": "restricted",
+      "path": "skills/credentials/meta-ads-api.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/credentials/google-ads-api.md",
+      "type": "source_doc",
+      "title": "skills/credentials/google-ads-api.md",
+      "status": "restricted",
+      "path": "skills/credentials/google-ads-api.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A3:A2 landing pages",
+      "type": "impact",
+      "title": "A2 landing pages",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A3:Meta Ads",
+      "type": "impact",
+      "title": "Meta Ads",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A3:Google Ads",
+      "type": "impact",
+      "title": "Google Ads",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A3:GTM/Pixel",
+      "type": "impact",
+      "title": "GTM/Pixel",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A3:A4 creative asset selection",
+      "type": "impact",
+      "title": "A4 creative asset selection",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "module:A4",
+      "type": "task_module",
+      "title": "MAPLAB_A4_PHOTO_ARCHIVE_DYNAMIC_ROLE_MODULE",
+      "status": "active",
+      "path": "chrome-extension/task-modules/A4.json",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "agent:A4",
+      "type": "agent",
+      "title": "A4 Photo Archive",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:recalls/A4_recall.md",
+      "type": "source_doc",
+      "title": "recalls/A4_recall.md",
+      "status": "active",
+      "path": "recalls/A4_recall.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:projects/maplab-pipeline.md",
+      "type": "source_doc",
+      "title": "projects/maplab-pipeline.md",
+      "status": "active",
+      "path": "projects/maplab-pipeline.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:projects/a2-asset-guide.md",
+      "type": "source_doc",
+      "title": "projects/a2-asset-guide.md",
+      "status": "active",
+      "path": "projects/a2-asset-guide.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:docs/a4/source-of-truth.md",
+      "type": "source_doc",
+      "title": "docs/a4/source-of-truth.md",
+      "status": "active",
+      "path": "docs/a4/source-of-truth.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:docs/a4/drive-map.md",
+      "type": "source_doc",
+      "title": "docs/a4/drive-map.md",
+      "status": "active",
+      "path": "docs/a4/drive-map.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:docs/a4/workflow.md",
+      "type": "source_doc",
+      "title": "docs/a4/workflow.md",
+      "status": "active",
+      "path": "docs/a4/workflow.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/a4-photo-asset-skills.md",
+      "type": "source_doc",
+      "title": "skills/a4-photo-asset-skills.md",
+      "status": "active",
+      "path": "skills/a4-photo-asset-skills.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/photo-pipeline-toolkit-guide.md",
+      "type": "source_doc",
+      "title": "skills/photo-pipeline-toolkit-guide.md",
+      "status": "active",
+      "path": "skills/photo-pipeline-toolkit-guide.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/maplab-visual-spec.md",
+      "type": "source_doc",
+      "title": "skills/maplab-visual-spec.md",
+      "status": "active",
+      "path": "skills/maplab-visual-spec.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/canva-photo-filter/SKILL.md",
+      "type": "source_doc",
+      "title": "skills/canva-photo-filter/SKILL.md",
+      "status": "active",
+      "path": "skills/canva-photo-filter/SKILL.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/image-convert/SKILL.md",
+      "type": "source_doc",
+      "title": "skills/image-convert/SKILL.md",
+      "status": "active",
+      "path": "skills/image-convert/SKILL.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/credentials/google-drive-api.md",
+      "type": "source_doc",
+      "title": "skills/credentials/google-drive-api.md",
+      "status": "restricted",
+      "path": "skills/credentials/google-drive-api.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/credentials/gemini-api.md",
+      "type": "source_doc",
+      "title": "skills/credentials/gemini-api.md",
+      "status": "restricted",
+      "path": "skills/credentials/gemini-api.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A4:A2 WordPress images",
+      "type": "impact",
+      "title": "A2 WordPress images",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A4:A3 creative packs",
+      "type": "impact",
+      "title": "A3 creative packs",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A4:A6 proposal materials",
+      "type": "impact",
+      "title": "A6 proposal materials",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A4:A8 video pipeline",
+      "type": "impact",
+      "title": "A8 video pipeline",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A4:Google Drive MAPLAB_ASSETS",
+      "type": "impact",
+      "title": "Google Drive MAPLAB_ASSETS",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "module:A5",
+      "type": "task_module",
+      "title": "MAPLAB_A5_QUOTATION_ENGINE_DYNAMIC_ROLE_MODULE",
+      "status": "active",
+      "path": "chrome-extension/task-modules/A5.json",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "agent:A5",
+      "type": "agent",
+      "title": "A5 Quotation Engine",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:recalls/A5_recall.md",
+      "type": "source_doc",
+      "title": "recalls/A5_recall.md",
+      "status": "active",
+      "path": "recalls/A5_recall.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:projects/maplab-master-data.md",
+      "type": "source_doc",
+      "title": "projects/maplab-master-data.md",
+      "status": "active",
+      "path": "projects/maplab-master-data.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:projects/quote-system-v2.md",
+      "type": "source_doc",
+      "title": "projects/quote-system-v2.md",
+      "status": "active",
+      "path": "projects/quote-system-v2.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:data/items_master.json",
+      "type": "source_doc",
+      "title": "data/items_master.json",
+      "status": "active",
+      "path": "data/items_master.json",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:data/quote-terms-reference.md",
+      "type": "source_doc",
+      "title": "data/quote-terms-reference.md",
+      "status": "active",
+      "path": "data/quote-terms-reference.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:archive/data/item-master-cross-reference.md",
+      "type": "source_doc",
+      "title": "archive/data/item-master-cross-reference.md",
+      "status": "active",
+      "path": "archive/data/item-master-cross-reference.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:archive/data/item-frequency-top50.md",
+      "type": "source_doc",
+      "title": "archive/data/item-frequency-top50.md",
+      "status": "active",
+      "path": "archive/data/item-frequency-top50.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:archive/data/quote_items_deduped.json",
+      "type": "source_doc",
+      "title": "archive/data/quote_items_deduped.json",
+      "status": "active",
+      "path": "archive/data/quote_items_deduped.json",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:handoff/table-relationship-map.md",
+      "type": "source_doc",
+      "title": "handoff/table-relationship-map.md",
+      "status": "active",
+      "path": "handoff/table-relationship-map.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/a5-quotation-engine-skills.md",
+      "type": "source_doc",
+      "title": "skills/a5-quotation-engine-skills.md",
+      "status": "active",
+      "path": "skills/a5-quotation-engine-skills.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/items-management/SKILL.md",
+      "type": "source_doc",
+      "title": "skills/items-management/SKILL.md",
+      "status": "active",
+      "path": "skills/items-management/SKILL.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/sheets-data-cleaning-guide.md",
+      "type": "source_doc",
+      "title": "skills/sheets-data-cleaning-guide.md",
+      "status": "active",
+      "path": "skills/sheets-data-cleaning-guide.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/sheet-version-restore/SKILL.md",
+      "type": "source_doc",
+      "title": "skills/sheet-version-restore/SKILL.md",
+      "status": "active",
+      "path": "skills/sheet-version-restore/SKILL.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/credentials/google-sheets-api.md",
+      "type": "source_doc",
+      "title": "skills/credentials/google-sheets-api.md",
+      "status": "restricted",
+      "path": "skills/credentials/google-sheets-api.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A5:A6 quote workflow",
+      "type": "impact",
+      "title": "A6 quote workflow",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A5:A7 customer answers",
+      "type": "impact",
+      "title": "A7 customer answers",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A5:Google Sheets master data",
+      "type": "impact",
+      "title": "Google Sheets master data",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A5:Slides quotation system",
+      "type": "impact",
+      "title": "Slides quotation system",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "module:A6",
+      "type": "task_module",
+      "title": "MAPLAB_A6_SALES_RAPID_RESPONSE_DYNAMIC_ROLE_MODULE",
+      "status": "active",
+      "path": "chrome-extension/task-modules/A6.json",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "agent:A6",
+      "type": "agent",
+      "title": "A6 Sales Rapid Response",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:recalls/A6_recall.md",
+      "type": "source_doc",
+      "title": "recalls/A6_recall.md",
+      "status": "active",
+      "path": "recalls/A6_recall.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:projects/line-conversation-training.md",
+      "type": "source_doc",
+      "title": "projects/line-conversation-training.md",
+      "status": "active",
+      "path": "projects/line-conversation-training.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:projects/dual-bot-architecture.md",
+      "type": "source_doc",
+      "title": "projects/dual-bot-architecture.md",
+      "status": "active",
+      "path": "projects/dual-bot-architecture.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:docs/openclaw/dispatch-role.md",
+      "type": "source_doc",
+      "title": "docs/openclaw/dispatch-role.md",
+      "status": "active",
+      "path": "docs/openclaw/dispatch-role.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:docs/openclaw/ads-assistant.md",
+      "type": "source_doc",
+      "title": "docs/openclaw/ads-assistant.md",
+      "status": "active",
+      "path": "docs/openclaw/ads-assistant.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:docs/business-requirements/a6-training-methodology.md",
+      "type": "source_doc",
+      "title": "docs/business-requirements/a6-training-methodology.md",
+      "status": "active",
+      "path": "docs/business-requirements/a6-training-methodology.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:docs/business-requirements/a6-usage-scenarios.md",
+      "type": "source_doc",
+      "title": "docs/business-requirements/a6-usage-scenarios.md",
+      "status": "active",
+      "path": "docs/business-requirements/a6-usage-scenarios.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:bot_a6/openclaw_dispatch.py",
+      "type": "source_doc",
+      "title": "bot_a6/openclaw_dispatch.py",
+      "status": "active",
+      "path": "bot_a6/openclaw_dispatch.py",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/a6-system-operations.md",
+      "type": "source_doc",
+      "title": "skills/a6-system-operations.md",
+      "status": "active",
+      "path": "skills/a6-system-operations.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/a6-sales-rapid-response-skills.md",
+      "type": "source_doc",
+      "title": "skills/a6-sales-rapid-response-skills.md",
+      "status": "active",
+      "path": "skills/a6-sales-rapid-response-skills.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/a6-rapid-quote-sop.md",
+      "type": "source_doc",
+      "title": "skills/a6-rapid-quote-sop.md",
+      "status": "active",
+      "path": "skills/a6-rapid-quote-sop.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/a6-safety-boundaries.md",
+      "type": "source_doc",
+      "title": "skills/a6-safety-boundaries.md",
+      "status": "active",
+      "path": "skills/a6-safety-boundaries.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/a6-telegram-window.md",
+      "type": "source_doc",
+      "title": "skills/a6-telegram-window.md",
+      "status": "active",
+      "path": "skills/a6-telegram-window.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/a6-qa-examples.md",
+      "type": "source_doc",
+      "title": "skills/a6-qa-examples.md",
+      "status": "active",
+      "path": "skills/a6-qa-examples.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/credentials/telegram-bot.md",
+      "type": "source_doc",
+      "title": "skills/credentials/telegram-bot.md",
+      "status": "restricted",
+      "path": "skills/credentials/telegram-bot.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/credentials/line-bot.md",
+      "type": "source_doc",
+      "title": "skills/credentials/line-bot.md",
+      "status": "restricted",
+      "path": "skills/credentials/line-bot.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A6:Telegram bot",
+      "type": "impact",
+      "title": "Telegram bot",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A6:OpenClaw workspace",
+      "type": "impact",
+      "title": "OpenClaw workspace",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A6:A5 quote data",
+      "type": "impact",
+      "title": "A5 quote data",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A6:A4 materials",
+      "type": "impact",
+      "title": "A4 materials",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A6:A7 reply handoff",
+      "type": "impact",
+      "title": "A7 reply handoff",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "module:A7",
+      "type": "task_module",
+      "title": "MAPLAB_A7_SERVICE_DESK_DYNAMIC_ROLE_MODULE",
+      "status": "active",
+      "path": "chrome-extension/task-modules/A7.json",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "agent:A7",
+      "type": "agent",
+      "title": "A7 Service Desk",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:recalls/A7_recall.md",
+      "type": "source_doc",
+      "title": "recalls/A7_recall.md",
+      "status": "active",
+      "path": "recalls/A7_recall.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:projects/ai-reply-system.md",
+      "type": "source_doc",
+      "title": "projects/ai-reply-system.md",
+      "status": "active",
+      "path": "projects/ai-reply-system.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/a7-customer-service-skills.md",
+      "type": "source_doc",
+      "title": "skills/a7-customer-service-skills.md",
+      "status": "active",
+      "path": "skills/a7-customer-service-skills.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A7:A6 intake",
+      "type": "impact",
+      "title": "A6 intake",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A7:A5 quote requirements",
+      "type": "impact",
+      "title": "A5 quote requirements",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A7:LINE/Telegram responses",
+      "type": "impact",
+      "title": "LINE/Telegram responses",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A7:A2/A3 FAQ insights",
+      "type": "impact",
+      "title": "A2/A3 FAQ insights",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "module:A8",
+      "type": "task_module",
+      "title": "MAPLAB_A8_CONTENT_REPURPOSING_PIPELINE_DYNAMIC_ROLE_MODULE",
+      "status": "active",
+      "path": "chrome-extension/task-modules/A8.json",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "agent:A8",
+      "type": "agent",
+      "title": "A8 Content Repurposing Pipeline",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:recalls/A8_recall.md",
+      "type": "source_doc",
+      "title": "recalls/A8_recall.md",
+      "status": "active",
+      "path": "recalls/A8_recall.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/a8-video-pipeline-skills.md",
+      "type": "source_doc",
+      "title": "skills/a8-video-pipeline-skills.md",
+      "status": "active",
+      "path": "skills/a8-video-pipeline-skills.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/media-limit-workaround.md",
+      "type": "source_doc",
+      "title": "skills/media-limit-workaround.md",
+      "status": "active",
+      "path": "skills/media-limit-workaround.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/next-three-report.md",
+      "type": "source_doc",
+      "title": "skills/next-three-report.md",
+      "status": "active",
+      "path": "skills/next-three-report.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A8:A4 assets",
+      "type": "impact",
+      "title": "A4 assets",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A8:A3 social calendar",
+      "type": "impact",
+      "title": "A3 social calendar",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A8:A2 SEO video titles",
+      "type": "impact",
+      "title": "A2 SEO video titles",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:A8:YouTube/Shorts publishing queue",
+      "type": "impact",
+      "title": "YouTube/Shorts publishing queue",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "module:B1",
+      "type": "task_module",
+      "title": "MAPLAB_B1_INNERFLOWLAB_CONTENT_DYNAMIC_ROLE_MODULE",
+      "status": "active",
+      "path": "chrome-extension/task-modules/B1.json",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "agent:B1",
+      "type": "agent",
+      "title": "B1 InnerFlowLab Content",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:recalls/B1_recall.md",
+      "type": "source_doc",
+      "title": "recalls/B1_recall.md",
+      "status": "active",
+      "path": "recalls/B1_recall.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:workflows/B1-content-workflow-v1.md",
+      "type": "source_doc",
+      "title": "workflows/B1-content-workflow-v1.md",
+      "status": "active",
+      "path": "workflows/B1-content-workflow-v1.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:docs/innerflowlab/brand-design-proposal.md",
+      "type": "source_doc",
+      "title": "docs/innerflowlab/brand-design-proposal.md",
+      "status": "active",
+      "path": "docs/innerflowlab/brand-design-proposal.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:docs/system-evolution-stories/2026-04-20-innerflowlab-system-setup.md",
+      "type": "source_doc",
+      "title": "docs/system-evolution-stories/2026-04-20-innerflowlab-system-setup.md",
+      "status": "active",
+      "path": "docs/system-evolution-stories/2026-04-20-innerflowlab-system-setup.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/b1-innerflowlab-skills.md",
+      "type": "source_doc",
+      "title": "skills/b1-innerflowlab-skills.md",
+      "status": "active",
+      "path": "skills/b1-innerflowlab-skills.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "source:skills/credentials/substack-api.md",
+      "type": "source_doc",
+      "title": "skills/credentials/substack-api.md",
+      "status": "active",
+      "path": "skills/credentials/substack-api.md",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:B1:InnerFlowLab site",
+      "type": "impact",
+      "title": "InnerFlowLab site",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:B1:Substack",
+      "type": "impact",
+      "title": "Substack",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:B1:B1 content workflow",
+      "type": "impact",
+      "title": "B1 content workflow",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    },
+    {
+      "id": "impact:B1:A8 repurposing if reused",
+      "type": "impact",
+      "title": "A8 repurposing if reused",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-05-11T22:12:10+08:00"
+    }
+  ],
+  "edges": [
+    {
+      "from": "task:T-A1-EXT-001",
+      "to": "output:role-module-index",
+      "relation": "produces",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:T-A1-EXT-001",
+      "to": "output:relationship-table",
+      "relation": "produces",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:T-A1-EXT-001",
+      "to": "output:relationship-xlsx",
+      "relation": "produces",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:T-A1-EXT-001",
+      "to": "code:chrome-extension",
+      "relation": "affects_code_surface",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:T-A1-EXT-001",
+      "to": "code:ai-workbook",
+      "relation": "affects_code_surface",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:T-A1-EXT-001",
+      "to": "code:a6-openclaw-runtime",
+      "relation": "affects_code_surface",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:T-A1-EXT-001",
+      "to": "code:a2a3-workbench",
+      "relation": "affects_code_surface",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:T-A1-EXT-001",
+      "to": "module:A0",
+      "relation": "defines_module",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A0",
+      "to": "agent:A0",
+      "relation": "activates_role",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A0",
+      "to": "runtime:gemini",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A0",
+      "to": "runtime:codex",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A0",
+      "to": "runtime:openclaw",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A0",
+      "to": "runtime:cowork",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A0",
+      "to": "source:CURRENT_STATUS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A0",
+      "to": "source:AGENT_RULES.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A0",
+      "to": "source:AGENT_STARTUP_PROTOCOL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A0",
+      "to": "source:pitfalls.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A0",
+      "to": "source:TASK_QUEUE.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A0",
+      "to": "source:workbook/task_index.json",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A0",
+      "to": "source:AGENT_RECALL_PROMPTS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A0",
+      "to": "source:skills/superpowers-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A0",
+      "to": "source:skills/task-progress-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A0",
+      "to": "source:recalls/A0_recall.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A0",
+      "to": "source:docs/a0-dispatch-operations-manual.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A0",
+      "to": "source:projects/a0-a1-briefing-protocol.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A0",
+      "to": "source:handoff/a0-briefing.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A0",
+      "to": "source:skills/a0-proactive-dispatch-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A0",
+      "to": "source:skills/remote-desktop-agent-bridge.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A0",
+      "to": "source:skills/mcp-usage-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A0",
+      "to": "source:docs/openclaw/output-contract.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A0",
+      "to": "source:docs/openclaw/relation-graph.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A0",
+      "to": "source:docs/openclaw/security-boundaries.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A0",
+      "to": "source:workbook/reviews/README.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A0",
+      "to": "impact:A0:A1",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A0",
+      "to": "impact:A0:A2-A8",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A0",
+      "to": "impact:A0:B1",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A0",
+      "to": "impact:A0:Telegram",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A0",
+      "to": "impact:A0:Chrome side panel",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A0",
+      "to": "impact:A0:Google Drive/Sheets connectors",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:T-A1-EXT-001",
+      "to": "module:A1",
+      "relation": "defines_module",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "agent:A1",
+      "relation": "activates_role",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "runtime:codex",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "runtime:openclaw",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "runtime:gemini",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "source:CURRENT_STATUS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "source:AGENT_RULES.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "source:AGENT_STARTUP_PROTOCOL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "source:pitfalls.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "source:TASK_QUEUE.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "source:workbook/task_index.json",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "source:AGENT_RECALL_PROMPTS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "source:skills/superpowers-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "source:skills/task-progress-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "source:recalls/A1_recall.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "source:projects/v6-architecture.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "source:docs/openclaw/README.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "source:docs/openclaw/closed-loop-playbook.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "source:docs/openclaw/memory-governance.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "source:projects/extension-browser-bridge.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "source:skills/extension-agent-summon-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "source:skills/extension-update",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "source:skills/save-checkpoint/SKILL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "source:skills/first-principles-check/SKILL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "source:skills/pitfalls/SKILL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "source:skills/github-api-workflow-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "source:docs/openclaw/output-contract.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "source:docs/openclaw/relation-graph.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "source:docs/openclaw/security-boundaries.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "source:workbook/reviews/README.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "impact:A1:chrome-extension",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "impact:A1:tools/ai_workbook",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "impact:A1:bot_a6",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "impact:A1:CURRENT_STATUS",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A1",
+      "to": "impact:A1:handoff/tasks",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:T-A1-EXT-001",
+      "to": "module:A2",
+      "relation": "defines_module",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "agent:A2",
+      "relation": "activates_role",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "runtime:gemini",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "runtime:codex",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "runtime:openclaw",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "source:CURRENT_STATUS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "source:AGENT_RULES.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "source:AGENT_STARTUP_PROTOCOL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "source:pitfalls.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "source:TASK_QUEUE.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "source:workbook/task_index.json",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "source:AGENT_RECALL_PROMPTS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "source:skills/superpowers-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "source:skills/task-progress-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "source:recalls/A2_recall.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "source:projects/seo-ads-agent.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "source:docs/a2a3/README.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "source:docs/a2a3/live-wp-rankmath-fact-check-2026-05-11.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "source:docs/a2a3/rankmath-keyword-recovery-2026-05-11.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "source:docs/a2a3/live-wordpress-audit.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "source:automation/seo_factory/README.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "source:automation/seo_factory/config/strategy_matrix_rules.json",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "source:automation/seo_factory/config/link_policy.json",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "source:skills/seo-session-checklist.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "source:skills/seo-ranking-evaluation-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "source:skills/page-checker.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "source:skills/wp-content-audit/SKILL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "source:skills/brand-voice-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "source:skills/gdrive-to-wordpress-upload-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "source:docs/openclaw/output-contract.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "source:docs/openclaw/relation-graph.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "source:docs/openclaw/security-boundaries.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "source:workbook/reviews/README.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "source:skills/credentials/wordpress-api.md",
+      "relation": "restricted_reference",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "source:skills/credentials/google-search-console-api.md",
+      "relation": "restricted_reference",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "impact:A2:WordPress pages/posts",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "impact:A2:Rank Math metadata",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "impact:A2:A3 ad landing pages",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "impact:A2:A4 asset needs",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A2",
+      "to": "impact:A2:Google indexing workflow",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:T-A1-EXT-001",
+      "to": "module:A3",
+      "relation": "defines_module",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "agent:A3",
+      "relation": "activates_role",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "runtime:gemini",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "runtime:codex",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "runtime:openclaw",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "source:CURRENT_STATUS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "source:AGENT_RULES.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "source:AGENT_STARTUP_PROTOCOL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "source:pitfalls.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "source:TASK_QUEUE.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "source:workbook/task_index.json",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "source:AGENT_RECALL_PROMPTS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "source:skills/superpowers-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "source:skills/task-progress-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "source:recalls/A3_recall.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "source:projects/maplab-ads-monitor.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "source:projects/seo-ads-agent.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "source:docs/a2a3/tracking-pack.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "source:docs/a2a3/b2b-5x5-matrix.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "source:docs/a2a3/b2b-crosswalk.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "source:skills/a3-social-ads-skills.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "source:skills/brand-voice-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "source:skills/sheets-tracking-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "source:skills/verification-checklist-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "source:docs/openclaw/output-contract.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "source:docs/openclaw/relation-graph.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "source:docs/openclaw/security-boundaries.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "source:workbook/reviews/README.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "source:skills/credentials/meta-ads-api.md",
+      "relation": "restricted_reference",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "source:skills/credentials/google-ads-api.md",
+      "relation": "restricted_reference",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "impact:A3:A2 landing pages",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "impact:A3:Meta Ads",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "impact:A3:Google Ads",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "impact:A3:GTM/Pixel",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A3",
+      "to": "impact:A3:A4 creative asset selection",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:T-A1-EXT-001",
+      "to": "module:A4",
+      "relation": "defines_module",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "agent:A4",
+      "relation": "activates_role",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "runtime:gemini",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "runtime:codex",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "runtime:openclaw",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "source:CURRENT_STATUS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "source:AGENT_RULES.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "source:AGENT_STARTUP_PROTOCOL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "source:pitfalls.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "source:TASK_QUEUE.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "source:workbook/task_index.json",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "source:AGENT_RECALL_PROMPTS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "source:skills/superpowers-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "source:skills/task-progress-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "source:recalls/A4_recall.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "source:projects/maplab-pipeline.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "source:projects/a2-asset-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "source:docs/a4/source-of-truth.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "source:docs/a4/drive-map.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "source:docs/a4/workflow.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "source:skills/a4-photo-asset-skills.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "source:skills/photo-pipeline-toolkit-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "source:skills/maplab-visual-spec.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "source:skills/canva-photo-filter/SKILL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "source:skills/image-convert/SKILL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "source:docs/openclaw/output-contract.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "source:docs/openclaw/relation-graph.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "source:docs/openclaw/security-boundaries.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "source:workbook/reviews/README.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "source:skills/credentials/google-drive-api.md",
+      "relation": "restricted_reference",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "source:skills/credentials/gemini-api.md",
+      "relation": "restricted_reference",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "impact:A4:A2 WordPress images",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "impact:A4:A3 creative packs",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "impact:A4:A6 proposal materials",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "impact:A4:A8 video pipeline",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A4",
+      "to": "impact:A4:Google Drive MAPLAB_ASSETS",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:T-A1-EXT-001",
+      "to": "module:A5",
+      "relation": "defines_module",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "agent:A5",
+      "relation": "activates_role",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "runtime:gemini",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "runtime:codex",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "runtime:openclaw",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "source:CURRENT_STATUS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "source:AGENT_RULES.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "source:AGENT_STARTUP_PROTOCOL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "source:pitfalls.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "source:TASK_QUEUE.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "source:workbook/task_index.json",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "source:AGENT_RECALL_PROMPTS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "source:skills/superpowers-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "source:skills/task-progress-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "source:recalls/A5_recall.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "source:projects/maplab-master-data.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "source:projects/quote-system-v2.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "source:data/items_master.json",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "source:data/quote-terms-reference.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "source:archive/data/item-master-cross-reference.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "source:archive/data/item-frequency-top50.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "source:archive/data/quote_items_deduped.json",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "source:handoff/table-relationship-map.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "source:skills/a5-quotation-engine-skills.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "source:skills/items-management/SKILL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "source:skills/sheets-data-cleaning-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "source:skills/sheet-version-restore/SKILL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "source:docs/openclaw/output-contract.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "source:docs/openclaw/relation-graph.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "source:docs/openclaw/security-boundaries.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "source:workbook/reviews/README.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "source:skills/credentials/google-sheets-api.md",
+      "relation": "restricted_reference",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "impact:A5:A6 quote workflow",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "impact:A5:A7 customer answers",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "impact:A5:Google Sheets master data",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A5",
+      "to": "impact:A5:Slides quotation system",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:T-A1-EXT-001",
+      "to": "module:A6",
+      "relation": "defines_module",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "agent:A6",
+      "relation": "activates_role",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "runtime:gemini",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "runtime:codex",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "runtime:openclaw",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "source:CURRENT_STATUS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "source:AGENT_RULES.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "source:AGENT_STARTUP_PROTOCOL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "source:pitfalls.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "source:TASK_QUEUE.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "source:workbook/task_index.json",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "source:AGENT_RECALL_PROMPTS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "source:skills/superpowers-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "source:skills/task-progress-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "source:recalls/A6_recall.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "source:projects/line-conversation-training.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "source:projects/dual-bot-architecture.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "source:projects/quote-system-v2.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "source:docs/openclaw/dispatch-role.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "source:docs/openclaw/ads-assistant.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "source:docs/openclaw/security-boundaries.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "source:docs/business-requirements/a6-training-methodology.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "source:docs/business-requirements/a6-usage-scenarios.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "source:bot_a6/openclaw_dispatch.py",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "source:skills/a6-system-operations.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "source:skills/a6-sales-rapid-response-skills.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "source:skills/a6-rapid-quote-sop.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "source:skills/a6-safety-boundaries.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "source:skills/a6-telegram-window.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "source:skills/a6-qa-examples.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "source:docs/openclaw/output-contract.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "source:docs/openclaw/relation-graph.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "source:workbook/reviews/README.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "source:skills/credentials/telegram-bot.md",
+      "relation": "restricted_reference",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "source:skills/credentials/line-bot.md",
+      "relation": "restricted_reference",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "impact:A6:Telegram bot",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "impact:A6:OpenClaw workspace",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "impact:A6:A5 quote data",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "impact:A6:A4 materials",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A6",
+      "to": "impact:A6:A7 reply handoff",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:T-A1-EXT-001",
+      "to": "module:A7",
+      "relation": "defines_module",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A7",
+      "to": "agent:A7",
+      "relation": "activates_role",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A7",
+      "to": "runtime:gemini",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A7",
+      "to": "runtime:codex",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A7",
+      "to": "runtime:openclaw",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A7",
+      "to": "source:CURRENT_STATUS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A7",
+      "to": "source:AGENT_RULES.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A7",
+      "to": "source:AGENT_STARTUP_PROTOCOL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A7",
+      "to": "source:pitfalls.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A7",
+      "to": "source:TASK_QUEUE.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A7",
+      "to": "source:workbook/task_index.json",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A7",
+      "to": "source:AGENT_RECALL_PROMPTS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A7",
+      "to": "source:skills/superpowers-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A7",
+      "to": "source:skills/task-progress-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A7",
+      "to": "source:recalls/A7_recall.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A7",
+      "to": "source:projects/ai-reply-system.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A7",
+      "to": "source:docs/business-requirements/a6-training-methodology.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A7",
+      "to": "source:skills/a7-customer-service-skills.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A7",
+      "to": "source:skills/brand-voice-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A7",
+      "to": "source:skills/a6-safety-boundaries.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A7",
+      "to": "source:docs/openclaw/output-contract.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A7",
+      "to": "source:docs/openclaw/relation-graph.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A7",
+      "to": "source:docs/openclaw/security-boundaries.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A7",
+      "to": "source:workbook/reviews/README.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A7",
+      "to": "source:skills/credentials/line-bot.md",
+      "relation": "restricted_reference",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A7",
+      "to": "impact:A7:A6 intake",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A7",
+      "to": "impact:A7:A5 quote requirements",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A7",
+      "to": "impact:A7:LINE/Telegram responses",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A7",
+      "to": "impact:A7:A2/A3 FAQ insights",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:T-A1-EXT-001",
+      "to": "module:A8",
+      "relation": "defines_module",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A8",
+      "to": "agent:A8",
+      "relation": "activates_role",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A8",
+      "to": "runtime:gemini",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A8",
+      "to": "runtime:codex",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A8",
+      "to": "runtime:openclaw",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A8",
+      "to": "source:CURRENT_STATUS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A8",
+      "to": "source:AGENT_RULES.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A8",
+      "to": "source:AGENT_STARTUP_PROTOCOL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A8",
+      "to": "source:pitfalls.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A8",
+      "to": "source:TASK_QUEUE.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A8",
+      "to": "source:workbook/task_index.json",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A8",
+      "to": "source:AGENT_RECALL_PROMPTS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A8",
+      "to": "source:skills/superpowers-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A8",
+      "to": "source:skills/task-progress-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A8",
+      "to": "source:recalls/A8_recall.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A8",
+      "to": "source:projects/maplab-pipeline.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A8",
+      "to": "source:docs/a4/source-of-truth.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A8",
+      "to": "source:skills/a8-video-pipeline-skills.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A8",
+      "to": "source:skills/media-limit-workaround.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A8",
+      "to": "source:skills/next-three-report.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A8",
+      "to": "source:skills/brand-voice-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A8",
+      "to": "source:docs/openclaw/output-contract.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A8",
+      "to": "source:docs/openclaw/relation-graph.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A8",
+      "to": "source:docs/openclaw/security-boundaries.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A8",
+      "to": "source:workbook/reviews/README.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A8",
+      "to": "impact:A8:A4 assets",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A8",
+      "to": "impact:A8:A3 social calendar",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A8",
+      "to": "impact:A8:A2 SEO video titles",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:A8",
+      "to": "impact:A8:YouTube/Shorts publishing queue",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:T-A1-EXT-001",
+      "to": "module:B1",
+      "relation": "defines_module",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:B1",
+      "to": "agent:B1",
+      "relation": "activates_role",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:B1",
+      "to": "runtime:gemini",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:B1",
+      "to": "runtime:codex",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:B1",
+      "to": "runtime:openclaw",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:B1",
+      "to": "source:CURRENT_STATUS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:B1",
+      "to": "source:AGENT_RULES.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:B1",
+      "to": "source:AGENT_STARTUP_PROTOCOL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:B1",
+      "to": "source:pitfalls.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:B1",
+      "to": "source:TASK_QUEUE.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:B1",
+      "to": "source:workbook/task_index.json",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:B1",
+      "to": "source:AGENT_RECALL_PROMPTS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:B1",
+      "to": "source:skills/superpowers-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:B1",
+      "to": "source:skills/task-progress-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:B1",
+      "to": "source:recalls/B1_recall.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:B1",
+      "to": "source:workflows/B1-content-workflow-v1.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:B1",
+      "to": "source:docs/innerflowlab/brand-design-proposal.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:B1",
+      "to": "source:docs/system-evolution-stories/2026-04-20-innerflowlab-system-setup.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:B1",
+      "to": "source:skills/b1-innerflowlab-skills.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:B1",
+      "to": "source:skills/credentials/substack-api.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:B1",
+      "to": "source:skills/brand-voice-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:B1",
+      "to": "source:docs/openclaw/output-contract.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:B1",
+      "to": "source:docs/openclaw/relation-graph.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:B1",
+      "to": "source:docs/openclaw/security-boundaries.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:B1",
+      "to": "source:workbook/reviews/README.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:B1",
+      "to": "impact:B1:InnerFlowLab site",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:B1",
+      "to": "impact:B1:Substack",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:B1",
+      "to": "impact:B1:B1 content workflow",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:B1",
+      "to": "impact:B1:A8 repurposing if reused",
+      "relation": "affects",
+      "confidence": 1.0
+    }
+  ]
+}

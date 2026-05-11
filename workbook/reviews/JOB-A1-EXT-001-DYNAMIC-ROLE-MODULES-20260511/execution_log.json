@@ -1,0 +1,16 @@
+{
+  "job_id": "JOB-A1-EXT-001-DYNAMIC-ROLE-MODULES-20260511",
+  "executor": "A1 Codex",
+  "canonical_repo": "/Users/pagemacmini/maplab-ai-handbook",
+  "commands": [
+    "python3 tools/ai_workbook/build_extension_task_modules.py",
+    "node /tmp/maplab_role_module_xlsx/build_role_module_workbook.mjs",
+    "python3 -m json.tool chrome-extension/task-modules/index.json",
+    "python3 -m json.tool workbook/task_modules/role_module_relation_graph.json"
+  ],
+  "notes": [
+    "Downloads/maplab-ai-handbook-main is not a git repo and was not used as output target.",
+    "Chrome extension remote JS remains forbidden; task modules are JSON/Markdown data.",
+    "Credential docs are listed as restricted references and should not be pasted into Gemini/OpenClaw prompts."
+  ]
+}

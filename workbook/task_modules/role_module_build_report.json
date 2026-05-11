@@ -1,0 +1,19 @@
+{
+  "generated_at": "2026-05-11T22:12:10+08:00",
+  "module_count": 10,
+  "relationship_rows": 266,
+  "graph_nodes": 194,
+  "graph_edges": 348,
+  "missing_sources": [
+    "TASK_QUEUE.md"
+  ],
+  "outputs": [
+    "docs/extension/dynamic-role-task-modules.md",
+    "chrome-extension/config/task-modules.json",
+    "chrome-extension/task-modules/index.json",
+    "workbook/task_modules/role_module_relation_graph.json",
+    "workbook/task_modules/role_module_relationships.csv",
+    "workbook/task_modules/role_module_relationships.xlsx",
+    "handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md"
+  ]
+}

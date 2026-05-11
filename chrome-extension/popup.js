@@ -1,4 +1,4 @@
-// MAPLAB Agent Commander v5.5 — popup.js
+// MAPLAB Agent Commander v5.5.1 — popup.js
 // 角色選擇 + GitHub dynamic role task modules + runtime handoff prompt
 const DEFAULT_BASE = 'https://raw.githubusercontent.com/page1010/maplab-ai-handbook/main';
 const GITHUB_API   = 'https://api.github.com/repos/page1010/maplab-ai-handbook';
@@ -91,6 +91,15 @@ async function fetchFile(base, path, token) {
   return resp.text();
 }
 async function fetchJsonFile(base, path, token) {
+  if (path.startsWith('chrome-extension/task-modules/')) {
+    const url = rawUrl(base, path) + '?cb=' + Date.now();
+    try {
+      const resp = await fetch(url, { cache: 'no-store' });
+      if (resp.ok) return JSON.parse(await resp.text());
+    } catch(e) {
+      // Fall back to Contents API below when raw access is blocked.
+    }
+  }
   return JSON.parse(await fetchFile(base, path, token));
 }
 function rawUrl(base, path) {

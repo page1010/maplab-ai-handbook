@@ -1,0 +1,41 @@
+{
+  "attempted": true,
+  "server": "mcp-server-gsc",
+  "credentials_path": "/Users/pagemacmini/.claude/mcp-keys/google-credentials.json",
+  "initialize": {
+    "result": {
+      "protocolVersion": "2024-11-05",
+      "capabilities": {
+        "resources": {},
+        "tools": {},
+        "prompts": {}
+      },
+      "serverInfo": {
+        "name": "gsc-mcp-server-enhanced",
+        "version": "0.2.0"
+      }
+    },
+    "jsonrpc": "2.0",
+    "id": 1
+  },
+  "tools_available": [
+    "list_sites",
+    "search_analytics",
+    "enhanced_search_analytics",
+    "detect_quick_wins",
+    "index_inspect",
+    "list_sitemaps",
+    "get_sitemap",
+    "submit_sitemap"
+  ],
+  "list_sites_response": {
+    "jsonrpc": "2.0",
+    "id": 3,
+    "error": {
+      "code": -32603,
+      "message": "private_key and client_email are required."
+    }
+  },
+  "stderr_tail": "Google Search Console MCP Server running on stdio\nErrorWithCode: private_key and client_email are required.\n    at GoogleToken.getCredentials (/Users/pagemacmini/.npm/_npx/50de721984d78f84/node_modules/gtoken/build/src/index.js:126:27)\n    at async GoogleToken._GoogleToken_getTokenAsyncInner (/Users/pagemacmini/.npm/_npx/50de721984d78f84/node_modules/gtoken/build/src/index.js:173:23)\n    at async GoogleToken._GoogleToken_getTokenAsync (/Users/pagemacmini/.npm/_npx/50de721984d78f84/node_modules/gtoken/build/src/index.js:160:16)\n    at async JWT.refreshTokenNoCache (/Users/pagemacmini/.npm/_npx/50de721984d78f84/node_modules/google-auth-library/build/src/auth/jwtclient.js:173:23)\n    at async JWT.getRequestMetadataAsync (/Users/pagemacmini/.npm/_npx/50de721984d78f84/node_modules/google-auth-library/build/src/auth/oauth2client.js:333:17)\n    at async JWT.requestAsync (/Users/pagemacmini/.npm/_npx/50de721984d78f84/node_modules/google-auth-library/build/src/auth/oauth2client.js:418:23)\n    at async file:///Users/pagemacmini/.npm/_npx/50de721984d78f84/node_modules/mcp-server-gsc/dist/index.js:240:34\n    at async wrappedHandler (file:///Users/pagemacmini/.npm/_npx/50de721984d78f84/node_modules/@modelcontextprotocol/sdk/dist/esm/server/index.js:125:32) {\n  code: 'MISSING_CREDENTIALS'\n}\n",
+  "result": "blocked"
+}

@@ -1,0 +1,18 @@
+{
+  "job_id": "JOB-A2-GOOGLE-RECRAWL-20260511",
+  "started_at": "2026-05-11T21:11:33+08:00",
+  "duration_seconds": 6.72,
+  "target_urls": [
+    "https://www.maplabkitchen.com/",
+    "https://www.maplabkitchen.com/tainan-catering-guide/",
+    "https://www.maplabkitchen.com/corporate-catering-tainan/",
+    "https://www.maplabkitchen.com/tainan-corporate-opening-tea-catering/",
+    "https://www.maplabkitchen.com/corporate-tea-party-desserts/",
+    "https://www.maplabkitchen.com/brand-esg-catering-service/",
+    "https://www.maplabkitchen.com/catering-one-year-old-party-tainan/",
+    "https://www.maplabkitchen.com/gender-reveal-party-tips/"
+  ],
+  "rank_math_submit_attempted": true,
+  "gsc_scope_available": false,
+  "overall_result": "partial"
+}

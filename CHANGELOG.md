@@ -3,6 +3,20 @@
 本文件記錄 maplab-ai-handbook 的所有重大版本變更。
 格式：版本號 | 日期 | 變更摘要 | 執行 Agent
 
+## v6.5（A2 Google Discovery / Rank Math Indexing Evidence）— 2026-05-11
+
+**A1/A2 live 提交證據：把 8 個修復 URL 送進可發現/可重爬流程**
+
+執行 Agent：A1（Codex acting as A2）
+
+1. 新增 `tools/google_reindex_submit.py`：檢查 sitemap membership、live URL indexability、Rank Math `submitUrls`、GSC token scope。
+2. 新增 review bundle：`workbook/reviews/JOB-A2-GOOGLE-RECRAWL-20260511/`。
+3. 8 個 Rank Math keyword recovery URL 全部確認在 sitemap 中。
+4. 8 個 URL 全部 HTTP 200、非 noindex、有 meta description、前台有 Rank Math marker。
+5. Rank Math Instant Indexing endpoint accepted：`Successfully submitted 8 URLs.`
+6. GSC API / URL Inspection 目前 blocked：本機 token 只有 Drive/Sheets scopes，GSC MCP 需要 service account credentials。
+7. 更新 `docs/a2a3/rankmath-keyword-recovery-2026-05-11.md` 與 `pitfalls.md`，記錄 Google discovery 邊界、GSC 憑證落差、Google ping deprecated。
+
 ## v6.4（A2 Rank Math Keyword Recovery）— 2026-05-11
 
 **A1/A2 live 修復：用 Rank Math REST + WP REST 搶回下滑關鍵字權重路徑**

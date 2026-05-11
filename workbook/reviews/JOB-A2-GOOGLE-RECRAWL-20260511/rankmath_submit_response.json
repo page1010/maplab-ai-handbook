@@ -1,0 +1,42 @@
+{
+  "attempted": true,
+  "endpoint": "https://www.maplabkitchen.com/wp-json/rankmath/v1/in/submitUrls",
+  "attempts": [
+    {
+      "http_status": 400,
+      "duration_seconds": 0.52,
+      "response": {
+        "code": "rest_invalid_param",
+        "message": "無效的參數: urls",
+        "data": {
+          "status": 400,
+          "params": {
+            "urls": "urls 不是 string 型別。"
+          },
+          "details": {
+            "urls": {
+              "code": "rest_invalid_type",
+              "message": "urls 不是 string 型別。",
+              "data": {
+                "param": "urls"
+              }
+            }
+          }
+        }
+      },
+      "content_type": "application/json; charset=UTF-8",
+      "payload_shape": "list"
+    },
+    {
+      "http_status": 200,
+      "duration_seconds": 1.05,
+      "response": {
+        "success": true,
+        "message": "Successfully submitted 8 URLs."
+      },
+      "content_type": "application/json; charset=UTF-8",
+      "payload_shape": "newline_string"
+    }
+  ],
+  "accepted": true
+}

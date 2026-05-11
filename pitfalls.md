@@ -43,3 +43,10 @@
 - 根因：該頁前台由 Elementor data render，普通 `post_content` 不是實際畫面來源；同時原 Elementor HTML 區塊曾有 `</section` 斷尾，造成 raw content 與 rendered HTML 進一步不一致。
 - 解法：Rank Math meta 可用 Rank Math REST 更新；但 Elementor-rendered 頁的正文、內連與 FAQ 必須走 Elementor data / wp-admin UI / Elementor 正式 API 驗證，不可只看 WP REST raw content。
 - 預防：A2 修頁時同時檢查 `content.raw`、`content.rendered`、前台 HTML 三層；三者不一致時，以前台 HTML 為準。
+
+## 2026-05-11 — Google recrawl submission cannot be inferred from old repo notes
+
+- 觸發條件：Owner 問「所以是要去送資料給google確認對吧」，需要把 Rank Math 修復後的 URL 送進 Google 可發現/可重爬流程。
+- 根因：repo 舊文件寫 GSC 已接通，但本機實際 `google-token.json` 只有 Drive/Sheets scope；`mcp-server-gsc` 可列出 `submit_sitemap` / `index_inspect` 工具，但目前憑證是 OAuth client，server 實際要求 service account 的 `private_key` + `client_email`。此外，Google sitemap ping 已 deprecated，Indexing API 也不是一般 WordPress 頁可用的萬用提交。
+- 解法：先用 live HTTP 驗證 sitemap / robots / page indexability，再用 Rank Math Instant Indexing `/wp-json/rankmath/v1/in/submitUrls` 送出 8 個 URL，並把 GSC API 權限不足記錄在 review bundle。
+- 預防：任何「提交 Google / GSC」任務必須分清楚四件事：sitemap 可發現、Rank Math indexing endpoint 是否 accepted、GSC URL Inspection 是否有 scope、Search Console UI Request Indexing 是否已人工點擊；不可把其中一項成功說成全部完成。

@@ -1,0 +1,201 @@
+{
+  "job_id": "JOB-A2-GOOGLE-RECRAWL-20260511",
+  "verified_by": "Codex local HTTP/API checks",
+  "verified_at": "2026-05-11T21:11:33+08:00",
+  "verification_targets": [
+    {
+      "type": "sitemap_membership",
+      "expected": "https://www.maplabkitchen.com/ is discoverable in Rank Math sitemap",
+      "observed": "https://www.maplabkitchen.com/page-sitemap.xml",
+      "result": "pass"
+    },
+    {
+      "type": "sitemap_membership",
+      "expected": "https://www.maplabkitchen.com/tainan-catering-guide/ is discoverable in Rank Math sitemap",
+      "observed": "https://www.maplabkitchen.com/post-sitemap.xml",
+      "result": "pass"
+    },
+    {
+      "type": "sitemap_membership",
+      "expected": "https://www.maplabkitchen.com/corporate-catering-tainan/ is discoverable in Rank Math sitemap",
+      "observed": "https://www.maplabkitchen.com/post-sitemap.xml",
+      "result": "pass"
+    },
+    {
+      "type": "sitemap_membership",
+      "expected": "https://www.maplabkitchen.com/tainan-corporate-opening-tea-catering/ is discoverable in Rank Math sitemap",
+      "observed": "https://www.maplabkitchen.com/post-sitemap.xml",
+      "result": "pass"
+    },
+    {
+      "type": "sitemap_membership",
+      "expected": "https://www.maplabkitchen.com/corporate-tea-party-desserts/ is discoverable in Rank Math sitemap",
+      "observed": "https://www.maplabkitchen.com/post-sitemap.xml",
+      "result": "pass"
+    },
+    {
+      "type": "sitemap_membership",
+      "expected": "https://www.maplabkitchen.com/brand-esg-catering-service/ is discoverable in Rank Math sitemap",
+      "observed": "https://www.maplabkitchen.com/post-sitemap.xml",
+      "result": "pass"
+    },
+    {
+      "type": "sitemap_membership",
+      "expected": "https://www.maplabkitchen.com/catering-one-year-old-party-tainan/ is discoverable in Rank Math sitemap",
+      "observed": "https://www.maplabkitchen.com/post-sitemap.xml",
+      "result": "pass"
+    },
+    {
+      "type": "sitemap_membership",
+      "expected": "https://www.maplabkitchen.com/gender-reveal-party-tips/ is discoverable in Rank Math sitemap",
+      "observed": "https://www.maplabkitchen.com/post-sitemap.xml",
+      "result": "pass"
+    },
+    {
+      "type": "live_indexability",
+      "expected": "https://www.maplabkitchen.com/ returns 200, has description, and is not noindex",
+      "observed": {
+        "http_status": 200,
+        "robots_meta": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+        "has_description": true
+      },
+      "result": "pass"
+    },
+    {
+      "type": "live_indexability",
+      "expected": "https://www.maplabkitchen.com/tainan-catering-guide/ returns 200, has description, and is not noindex",
+      "observed": {
+        "http_status": 200,
+        "robots_meta": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+        "has_description": true
+      },
+      "result": "pass"
+    },
+    {
+      "type": "live_indexability",
+      "expected": "https://www.maplabkitchen.com/corporate-catering-tainan/ returns 200, has description, and is not noindex",
+      "observed": {
+        "http_status": 200,
+        "robots_meta": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+        "has_description": true
+      },
+      "result": "pass"
+    },
+    {
+      "type": "live_indexability",
+      "expected": "https://www.maplabkitchen.com/tainan-corporate-opening-tea-catering/ returns 200, has description, and is not noindex",
+      "observed": {
+        "http_status": 200,
+        "robots_meta": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+        "has_description": true
+      },
+      "result": "pass"
+    },
+    {
+      "type": "live_indexability",
+      "expected": "https://www.maplabkitchen.com/corporate-tea-party-desserts/ returns 200, has description, and is not noindex",
+      "observed": {
+        "http_status": 200,
+        "robots_meta": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+        "has_description": true
+      },
+      "result": "pass"
+    },
+    {
+      "type": "live_indexability",
+      "expected": "https://www.maplabkitchen.com/brand-esg-catering-service/ returns 200, has description, and is not noindex",
+      "observed": {
+        "http_status": 200,
+        "robots_meta": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+        "has_description": true
+      },
+      "result": "pass"
+    },
+    {
+      "type": "live_indexability",
+      "expected": "https://www.maplabkitchen.com/catering-one-year-old-party-tainan/ returns 200, has description, and is not noindex",
+      "observed": {
+        "http_status": 200,
+        "robots_meta": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+        "has_description": true
+      },
+      "result": "pass"
+    },
+    {
+      "type": "live_indexability",
+      "expected": "https://www.maplabkitchen.com/gender-reveal-party-tips/ returns 200, has description, and is not noindex",
+      "observed": {
+        "http_status": 200,
+        "robots_meta": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+        "has_description": true
+      },
+      "result": "pass"
+    },
+    {
+      "type": "rank_math_instant_indexing",
+      "expected": "Rank Math submitUrls endpoint accepts the 8 updated URLs",
+      "observed": {
+        "attempted": true,
+        "endpoint": "https://www.maplabkitchen.com/wp-json/rankmath/v1/in/submitUrls",
+        "attempts": [
+          {
+            "http_status": 400,
+            "duration_seconds": 0.52,
+            "response": {
+              "code": "rest_invalid_param",
+              "message": "無效的參數: urls",
+              "data": {
+                "status": 400,
+                "params": {
+                  "urls": "urls 不是 string 型別。"
+                },
+                "details": {
+                  "urls": {
+                    "code": "rest_invalid_type",
+                    "message": "urls 不是 string 型別。",
+                    "data": {
+                      "param": "urls"
+                    }
+                  }
+                }
+              }
+            },
+            "content_type": "application/json; charset=UTF-8",
+            "payload_shape": "list"
+          },
+          {
+            "http_status": 200,
+            "duration_seconds": 1.05,
+            "response": {
+              "success": true,
+              "message": "Successfully submitted 8 URLs."
+            },
+            "content_type": "application/json; charset=UTF-8",
+            "payload_shape": "newline_string"
+          }
+        ],
+        "accepted": true
+      },
+      "result": "pass"
+    },
+    {
+      "type": "gsc_api_scope",
+      "expected": "OAuth token has Search Console scope for URL Inspection checks",
+      "observed": {
+        "token_path": "/Users/pagemacmini/.claude/mcp-keys/google-token.json",
+        "exists": true,
+        "account": "",
+        "expiry": "2026-05-11T02:00:04.496658+00:00",
+        "scopes": [
+          "https://www.googleapis.com/auth/spreadsheets",
+          "https://www.googleapis.com/auth/drive"
+        ],
+        "has_search_console_scope": false,
+        "gsc_api_action": "skipped",
+        "note": "Current token does not include webmasters/webmasters.readonly scope; URL Inspection API and sitemap submission through GSC are not attempted."
+      },
+      "result": "blocked"
+    }
+  ],
+  "overall_result": "partial"
+}

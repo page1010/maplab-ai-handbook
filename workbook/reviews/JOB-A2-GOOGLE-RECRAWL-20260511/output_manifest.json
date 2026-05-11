@@ -1,0 +1,15 @@
+{
+  "job_id": "JOB-A2-GOOGLE-RECRAWL-20260511",
+  "files": [
+    "task_request.md",
+    "target_urls.json",
+    "sitemap_check.json",
+    "live_url_check.json",
+    "rankmath_submit_response.json",
+    "gsc_scope_report.json",
+    "execution_log.json",
+    "verification_log.json",
+    "review_request.md",
+    "gsc_mcp_probe.json"
+  ]
+}

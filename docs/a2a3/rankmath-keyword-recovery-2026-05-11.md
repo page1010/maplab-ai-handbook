@@ -63,3 +63,26 @@ Known limitation:
 2. If planned workbench slugs were submitted or linked externally, add 301 redirects to the live owner URLs.
 3. For Elementor-rendered posts, edit through Elementor data or wp-admin UI, not only WP REST post content.
 4. Re-check GSC after Google recrawl; do not judge ranking movement on the same day.
+
+## Google Discovery / Recrawl Evidence
+
+Review bundle:
+
+`workbook/reviews/JOB-A2-GOOGLE-RECRAWL-20260511/`
+
+Done:
+
+- Verified `robots.txt` allows public crawling and points to `https://www.maplabkitchen.com/sitemap_index.xml`.
+- Verified all 8 updated URLs are present in Rank Math sitemaps:
+  - homepage in `page-sitemap.xml`
+  - 7 post URLs in `post-sitemap.xml`
+- Verified all 8 URLs return HTTP 200, are not `noindex`, have meta descriptions, and include the Rank Math frontend marker.
+- Submitted all 8 URLs through Rank Math Instant Indexing endpoint:
+  - endpoint: `/wp-json/rankmath/v1/in/submitUrls`
+  - accepted response: `Successfully submitted 8 URLs.`
+
+Boundary:
+
+- Google Search Console URL Inspection API / sitemap API could not be used from the current local credential set: `google-token.json` only has Drive/Sheets scopes, and the configured `mcp-server-gsc` expects a service-account credential (`private_key` + `client_email`) rather than the current OAuth client file.
+- Google's old sitemap ping endpoint is deprecated; do not use it as a submission path.
+- For normal WordPress pages, Google Search Console's "Request Indexing" remains a UI action, while URL Inspection API is for status inspection.

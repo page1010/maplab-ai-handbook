@@ -1,0 +1,13 @@
+{
+  "token_path": "/Users/pagemacmini/.claude/mcp-keys/google-token.json",
+  "exists": true,
+  "account": "",
+  "expiry": "2026-05-11T02:00:04.496658+00:00",
+  "scopes": [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive"
+  ],
+  "has_search_console_scope": false,
+  "gsc_api_action": "skipped",
+  "note": "Current token does not include webmasters/webmasters.readonly scope; URL Inspection API and sitemap submission through GSC are not attempted."
+}

@@ -1,0 +1,90 @@
+[
+  {
+    "url": "https://www.maplabkitchen.com/",
+    "http_status": 200,
+    "content_type": "text/html; charset=UTF-8",
+    "title": "台南外燴推薦｜台南到府外燴、台南派對外燴與企業茶會｜MAPLAB",
+    "canonical": "https://www.maplabkitchen.com/",
+    "robots_meta": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+    "has_description": true,
+    "has_rank_math_marker": true,
+    "indexable_by_page_meta": true
+  },
+  {
+    "url": "https://www.maplabkitchen.com/tainan-catering-guide/",
+    "http_status": 200,
+    "content_type": "text/html; charset=UTF-8",
+    "title": "台南外燴全攻略｜台南到府外燴、台南派對外燴與活動餐點｜MAPLAB",
+    "canonical": "https://www.maplabkitchen.com/tainan-catering-guide/",
+    "robots_meta": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+    "has_description": true,
+    "has_rank_math_marker": true,
+    "indexable_by_page_meta": true
+  },
+  {
+    "url": "https://www.maplabkitchen.com/corporate-catering-tainan/",
+    "http_status": 200,
+    "content_type": "text/html; charset=UTF-8",
+    "title": "台南企業外燴推薦｜會議茶點、開幕茶會與品牌活動規劃｜MAPLAB",
+    "canonical": "https://www.maplabkitchen.com/corporate-catering-tainan/",
+    "robots_meta": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+    "has_description": true,
+    "has_rank_math_marker": true,
+    "indexable_by_page_meta": true
+  },
+  {
+    "url": "https://www.maplabkitchen.com/tainan-corporate-opening-tea-catering/",
+    "http_status": 200,
+    "content_type": "text/html; charset=UTF-8",
+    "title": "台南開幕茶會外燴｜開幕典禮流程與品牌接待餐點｜MAPLAB",
+    "canonical": "https://www.maplabkitchen.com/tainan-corporate-opening-tea-catering/",
+    "robots_meta": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+    "has_description": true,
+    "has_rank_math_marker": true,
+    "indexable_by_page_meta": true
+  },
+  {
+    "url": "https://www.maplabkitchen.com/corporate-tea-party-desserts/",
+    "http_status": 200,
+    "content_type": "text/html; charset=UTF-8",
+    "title": "台南會議茶點外燴｜研討會、講座與企業活動餐點｜MAPLAB",
+    "canonical": "https://www.maplabkitchen.com/corporate-tea-party-desserts/",
+    "robots_meta": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+    "has_description": true,
+    "has_rank_math_marker": true,
+    "indexable_by_page_meta": true
+  },
+  {
+    "url": "https://www.maplabkitchen.com/brand-esg-catering-service/",
+    "http_status": 200,
+    "content_type": "text/html; charset=UTF-8",
+    "title": "台南品牌活動外燴｜發表會、VIP 接待與展覽開幕餐點｜MAPLAB",
+    "canonical": "https://www.maplabkitchen.com/brand-esg-catering-service/",
+    "robots_meta": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+    "has_description": true,
+    "has_rank_math_marker": true,
+    "indexable_by_page_meta": true
+  },
+  {
+    "url": "https://www.maplabkitchen.com/catering-one-year-old-party-tainan/",
+    "http_status": 200,
+    "content_type": "text/html; charset=UTF-8",
+    "title": "台南週歲派對外燴推薦｜菜單、場地、費用完整懶人包 2026",
+    "canonical": "https://www.maplabkitchen.com/catering-one-year-old-party-tainan/",
+    "robots_meta": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+    "has_description": true,
+    "has_rank_math_marker": true,
+    "indexable_by_page_meta": true
+  },
+  {
+    "url": "https://www.maplabkitchen.com/gender-reveal-party-tips/",
+    "http_status": 200,
+    "content_type": "text/html; charset=UTF-8",
+    "title": "性別揭曉派對外燴｜Gender Reveal 餐點與甜點桌規劃｜MAPLAB",
+    "canonical": "https://www.maplabkitchen.com/gender-reveal-party-tips/",
+    "robots_meta": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+    "has_description": true,
+    "has_rank_math_marker": true,
+    "indexable_by_page_meta": true
+  }
+]

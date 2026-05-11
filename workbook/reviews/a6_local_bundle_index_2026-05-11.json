@@ -1,0 +1,93 @@
+{
+  "updated_at": "2026-05-11",
+  "bundles": [
+    {
+      "job_id": "JOB-A6-1077768811-20260506-142404",
+      "files": 9,
+      "bytes": 293887,
+      "has_output_manifest": true,
+      "has_verification_log": true,
+      "commit_policy": "hold_raw_bundle_until_sanitized"
+    },
+    {
+      "job_id": "JOB-A6-1077768811-20260506-154335",
+      "files": 9,
+      "bytes": 695730,
+      "has_output_manifest": true,
+      "has_verification_log": true,
+      "commit_policy": "hold_raw_bundle_until_sanitized"
+    },
+    {
+      "job_id": "JOB-A6-1077768811-20260506-195920",
+      "files": 9,
+      "bytes": 635557,
+      "has_output_manifest": true,
+      "has_verification_log": true,
+      "commit_policy": "hold_raw_bundle_until_sanitized"
+    },
+    {
+      "job_id": "JOB-A6-1077768811-20260506-231020",
+      "files": 9,
+      "bytes": 632571,
+      "has_output_manifest": true,
+      "has_verification_log": true,
+      "commit_policy": "hold_raw_bundle_until_sanitized"
+    },
+    {
+      "job_id": "JOB-A6-MEM-TEST-001",
+      "files": 9,
+      "bytes": 315193,
+      "has_output_manifest": true,
+      "has_verification_log": true,
+      "commit_policy": "hold_raw_bundle_until_sanitized"
+    },
+    {
+      "job_id": "JOB-A6-ROUTE-001",
+      "files": 9,
+      "bytes": 193103,
+      "has_output_manifest": true,
+      "has_verification_log": true,
+      "commit_policy": "hold_raw_bundle_until_sanitized"
+    },
+    {
+      "job_id": "JOB-A6-ROUTE-002",
+      "files": 9,
+      "bytes": 223147,
+      "has_output_manifest": true,
+      "has_verification_log": true,
+      "commit_policy": "hold_raw_bundle_until_sanitized"
+    },
+    {
+      "job_id": "JOB-A6-TEST-001",
+      "files": 9,
+      "bytes": 485465,
+      "has_output_manifest": true,
+      "has_verification_log": true,
+      "commit_policy": "hold_raw_bundle_until_sanitized"
+    },
+    {
+      "job_id": "JOB-A6-TEST-002",
+      "files": 9,
+      "bytes": 191190,
+      "has_output_manifest": true,
+      "has_verification_log": true,
+      "commit_policy": "hold_raw_bundle_until_sanitized"
+    },
+    {
+      "job_id": "JOB-A6-TEST-003",
+      "files": 9,
+      "bytes": 198092,
+      "has_output_manifest": true,
+      "has_verification_log": true,
+      "commit_policy": "hold_raw_bundle_until_sanitized"
+    },
+    {
+      "job_id": "JOB-TEST-001",
+      "files": 8,
+      "bytes": 67880,
+      "has_output_manifest": true,
+      "has_verification_log": true,
+      "commit_policy": "hold_raw_bundle_until_sanitized"
+    }
+  ]
+}

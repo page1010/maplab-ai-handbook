@@ -1,0 +1,63 @@
+{
+  "version": "0.1.0",
+  "updated_at": "2026-05-05",
+  "bundles": [
+    {
+      "bundle_id": "dashboard",
+      "name": "Dashboard Verification",
+      "purpose": "Validate dashboard rendering and task graph navigation.",
+      "required_outputs": [
+        "execution_log.json",
+        "output_manifest.json",
+        "verification_log.json",
+        "diff.md",
+        "screenshots/dashboard.png"
+      ],
+      "checks": [
+        "npm run dev starts",
+        "Dashboard renders task nodes",
+        "Task detail panel opens",
+        "Links open GitHub/local file/Google Sheet",
+        "Agent and status filters react",
+        "T-A6-001 is visible"
+      ]
+    },
+    {
+      "bundle_id": "sheet_writer",
+      "name": "Sheet Writer Verification",
+      "purpose": "Validate writeback to Google Sheets and audit trail creation.",
+      "required_outputs": [
+        "execution_log.json",
+        "sheet_diff.json",
+        "audit_log.json",
+        "verification_log.json",
+        "screenshots/sheet_row.png"
+      ],
+      "checks": [
+        "quote_intake.json validates",
+        "Correct tab append",
+        "row_number and range returned",
+        "Row visible in Google Sheets",
+        "Audit log exists"
+      ]
+    },
+    {
+      "bundle_id": "wordpress_seo",
+      "name": "WordPress / SEO Verification",
+      "purpose": "Validate draft creation and SEO structure without accidental publish.",
+      "required_outputs": [
+        "execution_log.json",
+        "verification_log.json",
+        "output_manifest.json",
+        "screenshots/wordpress_draft.png"
+      ],
+      "checks": [
+        "Draft exists in WordPress",
+        "Title / slug / meta description are correct",
+        "H1 / H2 structure is correct",
+        "Internal links are present",
+        "No publish without Owner approval"
+      ]
+    }
+  ]
+}

@@ -21,5 +21,4 @@ Chrome Agent Commander is now a runtime handoff panel:
 
 ## Reviewer Notes
 
-After this bundle is pushed to GitHub, refresh the side panel once. `TASK_QUEUE.md` should display as fallback instead of a hard missing source because the extension reads module JSON from GitHub raw main.
-
+Post-push Computer Use refresh confirmed `TASK_QUEUE.md` now displays as a fallback source instead of a hard missing source because the extension reads the updated module JSON from GitHub raw main.

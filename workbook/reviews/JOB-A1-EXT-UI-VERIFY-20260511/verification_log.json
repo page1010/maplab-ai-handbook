@@ -2,7 +2,7 @@
   "job_id": "JOB-A1-EXT-UI-VERIFY-20260511",
   "verified_by": "Codex Computer Use",
   "verified_at": "2026-05-11T22:26:25+08:00",
-  "overall_result": "pass_with_followup",
+  "overall_result": "pass",
   "verification_targets": [
     {
       "type": "chrome_extension_path",
@@ -32,9 +32,8 @@
     {
       "type": "source_fallback",
       "expected": "TASK_QUEUE.md should not appear as a hard broken link when workbook/task_index.json is the fallback truth source.",
-      "observed": "Generator was updated to mark TASK_QUEUE.md as fallback_to_workbook_task_index. This appears in generated local modules; side panel raw GitHub will show it after push and refresh.",
-      "result": "pending_post_push_refresh"
+      "observed": "Generator marks TASK_QUEUE.md as fallback_to_workbook_task_index; after commit, push, and Chrome side panel reopen, Computer Use confirmed it displays as a fallback source instead of a hard missing source.",
+      "result": "pass"
     }
   ]
 }
-

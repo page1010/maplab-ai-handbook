@@ -1,0 +1,35 @@
+{
+  "job_id": "JOB-A1-EXT-MD-SYNC-20260512",
+  "verified_by": "Codex Computer Use + local CLI",
+  "verified_at": "2026-05-12T07:45:00+08:00",
+  "targets": [
+    {
+      "type": "static_check",
+      "expected": "popup.js parses as valid JavaScript",
+      "observed": "node --check chrome-extension/popup.js exited 0",
+      "result": "pass"
+    },
+    {
+      "type": "static_check",
+      "expected": "manifest.json parses as valid JSON and version is 5.5.2",
+      "observed": "python3 -m json.tool chrome-extension/manifest.json exited 0; Chrome details page showed 5.5.2",
+      "result": "pass"
+    },
+    {
+      "type": "chrome_extension",
+      "expected": "A2 side panel module loads current role module with hashable sources",
+      "observed": "A2 module showed generated_at 2026-05-12T07:21:23+08:00 and 27 checkable sources",
+      "screenshot": "screenshots/chrome_extension_md_sync_27_of_27.png",
+      "result": "pass"
+    },
+    {
+      "type": "chrome_extension",
+      "expected": "Clicking 檢查 MD 同步 executes and reports source freshness",
+      "observed": "Side panel reported Markdown 已同步｜27/27 sources match module hashes; handoff prompt changed module_source_state to ok",
+      "screenshot": "screenshots/chrome_extension_md_sync_27_of_27.png",
+      "result": "pass"
+    }
+  ],
+  "overall_result": "pass"
+}
+

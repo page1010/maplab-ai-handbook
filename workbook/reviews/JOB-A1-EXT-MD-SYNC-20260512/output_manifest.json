@@ -1,0 +1,44 @@
+{
+  "job_id": "JOB-A1-EXT-MD-SYNC-20260512",
+  "changed_surfaces": [
+    {
+      "surface": "extension_generator",
+      "files": [
+        "tools/ai_workbook/build_extension_task_modules.py"
+      ],
+      "purpose": "Generate source_sha256, source_freshness, relationship hash fields, and refresh rules."
+    },
+    {
+      "surface": "role_modules",
+      "files": [
+        "chrome-extension/task-modules/*.json",
+        "chrome-extension/task-modules/index.json",
+        "chrome-extension/config/task-modules.json"
+      ],
+      "purpose": "Role modules now carry hashable read_first source entries."
+    },
+    {
+      "surface": "extension_ui",
+      "files": [
+        "chrome-extension/popup.html",
+        "chrome-extension/popup.js",
+        "chrome-extension/manifest.json",
+        "chrome-extension/CHANGELOG.md"
+      ],
+      "purpose": "Expose Markdown freshness status, compare hashes, avoid stale GitHub module cache, and bind MV3-safe button handlers."
+    },
+    {
+      "surface": "relationship_artifacts",
+      "files": [
+        "workbook/task_modules/role_module_relationships.csv",
+        "workbook/task_modules/role_module_relationships.xlsx",
+        "workbook/task_modules/role_module_relation_graph.json"
+      ],
+      "purpose": "Preserve source hash and file-size fields in relationship exports."
+    }
+  ],
+  "review_evidence": [
+    "workbook/reviews/JOB-A1-EXT-MD-SYNC-20260512/screenshots/chrome_extension_md_sync_27_of_27.png"
+  ]
+}
+

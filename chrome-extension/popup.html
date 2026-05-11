@@ -85,7 +85,7 @@ hr { border:none; border-top:1px solid #1a2030; }
   <div class="logo">⬡ MAPLAB COMMANDER</div>
   <div class="header-right">
     <span class="overdue-badge" id="overdueCount"></span>
-    <span class="version" id="versionBadge">v5.5.1</span>
+    <span class="version" id="versionBadge">v5.5.2</span>
   </div>
 </div>
 <div class="body">
@@ -148,9 +148,9 @@ hr { border:none; border-top:1px solid #1a2030; }
       <textarea id="promptText" readonly placeholder="選擇角色後顯示專屬召喚 prompt..."></textarea>
     </div>
   </div>
-  <button class="btn-handoff" id="handoffBtn" onclick="copyHandoff()">📦 複製任務模組 Handoff</button>
-  <button class="btn-copy" id="copyBtn" onclick="copyPrompt()">📋 複製目前文字</button>
-  <button class="btn-inject" id="injectBtn" onclick="injectToClaudeTab()">⚡ Legacy: 注入 Claude tab</button>
+  <button class="btn-handoff" id="handoffBtn">📦 複製任務模組 Handoff</button>
+  <button class="btn-copy" id="copyBtn">📋 複製目前文字</button>
+  <button class="btn-inject" id="injectBtn">⚡ Legacy: 注入 Claude tab</button>
   <hr>
   <div class="field">
     <label>GitHub Raw Base URL</label>
@@ -161,9 +161,9 @@ hr { border:none; border-top:1px solid #1a2030; }
     <input type="password" id="githubToken" placeholder="ghp_xxxxxxxxxxxx" />
   </div>
   <div class="btn-row">
-    <button class="btn-refresh" style="flex:1" onclick="loadAll()">↻ 重新抓取</button>
-    <button class="btn-sync" id="syncBtn" onclick="checkSelectedModuleFreshness()">檢查 MD 同步</button>
-    <button class="btn-reload" onclick="reloadExtension()">⟳ 重載 Extension</button>
+    <button class="btn-refresh" id="refreshBtn" style="flex:1">↻ 重新抓取</button>
+    <button class="btn-sync" id="syncBtn">檢查 MD 同步</button>
+    <button class="btn-reload" id="reloadBtn">⟳ 重載 Extension</button>
   </div>
   <div class="save-status" id="saveStatus"></div>
   <div class="links">

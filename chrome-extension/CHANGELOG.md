@@ -1,5 +1,9 @@
 # Chrome Extension Changelog
 
+## v5.5.2 — 2026-05-12
+變更者：A1 Codex
+- **MV3 按鈕綁定修正**：移除 HTML inline `onclick`，改由 `popup.js` 在 `DOMContentLoaded` 用 `addEventListener` 綁定，避免 Chrome Extension CSP 擋住「檢查 MD 同步 / 重新抓取 / 重載 Extension」等動作。
+
 ## v5.5.1 — 2026-05-12
 變更者：A1 Codex
 - **角色模組 raw-first**：`chrome-extension/task-modules/*.json` 優先走 GitHub raw + cache-busting；GitHub Contents API 只作 fallback，避免 token/API 快取讓側邊欄拿到舊 module。

@@ -23,7 +23,7 @@ drive  = build("drive",  "v3", credentials=creds)
 # ── 2. 設定 ───────────────────────────────────────────────────────────────────
 ASSET_LOG_SHEET_ID = "1nlxlMdaLdGEAmOjP70BYspRWqu_eYpsiRyZaujEZkYI"
 ASSET_LOG_TAB      = "工作表1"             # MAPLAB_ASSET_LOG 的實際分頁名稱
-ROOT_FOLDER_ID     = "1L0udpuXLy3vEbHmzBbaLqNVDut2FFpCe"  # 既有 MAPLAB_ASSETS
+ROOT_FOLDER_ID     = "1yVggYKiTkBJe4kd8CPoM3U75km0nVuNy"  # API verified MAPLAB_ASSETS
 ROOT_FOLDER_NAME   = "MAPLAB_ASSETS"      # 僅供 log 顯示，不自動建立新根目錄
 DRY_RUN            = True                 # True = 只列出計畫，不實際複製
 

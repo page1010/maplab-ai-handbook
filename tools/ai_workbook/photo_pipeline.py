@@ -12,7 +12,7 @@ IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".webp", ".heic"}
 ASSET_LOG_SHEET_ID = "1nlxlMdaLdGEAmOjP70BYspRWqu_eYpsiRyZaujEZkYI"
 ASSET_LOG_SHEET_NAME = "工作表1"
 ASSET_LOG_URL = f"https://docs.google.com/spreadsheets/d/{ASSET_LOG_SHEET_ID}/edit"
-MAPLAB_ASSETS_FOLDER_ID = "1L0udpuXLy3vEbHmzBbaLqNVDut2FFpCe"
+MAPLAB_ASSETS_FOLDER_ID = "1yVggYKiTkBJe4kd8CPoM3U75km0nVuNy"
 GOOGLE_TOKEN_PATH = Path.home() / ".claude" / "mcp-keys" / "google-token.json"
 GOOGLE_CREDENTIALS_PATH = Path.home() / ".claude" / "mcp-keys" / "google-credentials.json"
 
@@ -86,7 +86,7 @@ def build_asset_log_snapshot(limit: int = 2000) -> Path:
         "year_counts": dict(year_counts),
         "sample_rows": sample[:50],
         "next_actions": [
-            "Fix scripts/organize_photos_by_category.py tab name from ASSET_LOG to 工作表1.",
+            "Use verified MAPLAB_ASSETS root 1yVggYKiTkBJe4kd8CPoM3U75km0nVuNy; old root 1L0udpuXLy3vEbHmzBbaLqNVDut2FFpCe returns Drive API 404.",
             "Run Drive organization in dry-run mode first.",
             "Use ASSET_LOG category/keywords/seo_name to copy photos into MAPLAB_ASSETS; do not delete originals.",
         ],

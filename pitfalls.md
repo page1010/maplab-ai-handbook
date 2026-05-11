@@ -2,6 +2,13 @@
 
 > Cold-start required. 每次修到重複錯誤，要把「觸發條件 / 根因 / 解法 / 預防」寫回這裡。
 
+## 2026-05-11 — A4 asset root ID drifted across docs and scripts
+
+- 觸發條件：Owner 要求「讓事實說話」，重新核對 A4 相片與素材存放位置。
+- 根因：active docs/scripts 同時殘留三種 `MAPLAB_ASSETS` ID：舊 ID `1L0udpuXLy3vEbHmzBbaLqNVDut2FFpCe`、一個 `O/0` 打錯的 ID、以及現行 ID；dashboard 和部分 credentials doc 仍指向舊 ID。
+- 解法：用 Google Drive API 讀取 folder metadata；確認 `1yVggYKiTkBJe4kd8CPoM3U75km0nVuNy` 是目前 `MAPLAB_ASSETS`，且舊 ID API 回 404。active docs/scripts 統一更新到現行 ID，archive/review output 保留歷史原貌。
+- 預防：任何資源位置更新前，先用 Drive/Sheets API 查 `id/name/parent/trashed`；不能只相信 repo 記錄或 dashboard HTML。
+
 ## 2026-05-11 — A2/A3 workbench built in non-git download copy
 
 - 觸發條件：Owner 發現上方快速瀏覽連結壞掉，並懷疑 repo 紀錄寫壞。

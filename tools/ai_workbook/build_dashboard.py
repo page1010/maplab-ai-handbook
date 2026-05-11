@@ -4,6 +4,7 @@ from pathlib import Path
 from typing import Any, Dict
 
 from .paths import ROOT, WORKBOOK_DIR
+from .photo_pipeline import MAPLAB_ASSETS_FOLDER_ID
 
 
 def build_dashboard() -> Path:
@@ -37,7 +38,8 @@ def _latest_asset_snapshot() -> Path:
 def _render(data: Dict[str, Any]) -> str:
     tasks = data["task_index"].get("tasks", [])
     asset = data["asset_log"]
-    source = asset.get("source", {})
+    source = dict(asset.get("source", {}))
+    source["maplab_assets_folder_id"] = MAPLAB_ASSETS_FOLDER_ID
     return f"""<!doctype html>
 <html lang="zh-Hant">
 <head>

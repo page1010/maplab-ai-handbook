@@ -121,7 +121,7 @@ https://drive.google.com/file/d/{C欄的file_id}/view
 Folder ID: 1jNUnnXPYMEq3GLDiJNC1GFZjQWRvwcCz
 
 ### 歸檔結構（目前）
-MAPLAB_ASSETS/ (root: 1yVggYKiTkBJe4kd8CPoM3U75kmOnVuNy)
+MAPLAB_ASSETS/ (root: 1yVggYKiTkBJe4kd8CPoM3U75km0nVuNy)
   2022/ → catering/ travel/ daily/
   2023/ → catering/ travel/ daily/
   2024-2026/ → 同結構

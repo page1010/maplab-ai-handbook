@@ -69,7 +69,7 @@ scopes=["https://www.googleapis.com/auth/drive.readonly"]
 | **MAPLAB_DATA（根目錄）** | `19RKLsBfNKuoCHVPFzT9D7tJrAdkTSmpt` | 所有 MAPLAB 資料根目錄 |
 | **line_oa_chat_csv** | `1bS77rE0-RcdNpAEI0U0yxPFI5DhkiNFR` | A層對話 CSV（LINE OA 匯出，業務↔客人），格式：傳送者類型/名稱/日期/時間/內容 |
 | 歷史報價單 | `17wM4wldkllDbj0T8Xg_rgY3mM3RgH7LG` | 932份報價（2024+2025+2026），品項提取來源 |
-| MAPLAB_ASSETS | `1L0udpuXLy3vEbHmzBbaLqNVDut2FFpCe` | 活動素材（DST-CKE-001~005） |
+| MAPLAB_ASSETS | `1yVggYKiTkBJe4kd8CPoM3U75km0nVuNy` | 活動素材；2026-05-11 Drive API verified，舊 ID `1L0udpuXLy3vEbHmzBbaLqNVDut2FFpCe` 回 404 |
 | MAPLAB_Items_Photos | `1Z62HUIiVutGNqLJMGyTfBCZ-D5g2vnOT` | 品項照片 |
 | MAPLAB_Proposals | `1uGBCSTLFRVm5ZPh6v10G-tImf2QB5deu` | 提案資料 |
 | MAPLAB_報價單 | `1aJBnL_fAmMDsNUqMPmLo07KWS47bnSBd` | 報價單 |

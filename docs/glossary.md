@@ -53,7 +53,7 @@
 | MAPLAB_DATA（根目錄） | `19RKLsBfNKuoCHVPFzT9D7tJrAdkTSmpt` | 所有資料的根 |
 | **MAPLAB_Proposals** | `1uGBCSTLFRVm5ZPh6v10G-tImf2QB5deu` | generateProposalV2 產出的 Slide 存放處 |
 | MAPLAB_Items_Photos | `1Z62HUIiVutGNqLJMGyTfBCZ-D5g2vnOT` | 品項圖片（2026-04-03 建立） |
-| MAPLAB_ASSETS | `1L0udpuXLy3vEbHmzBbaLqNVDut2FFpCe` | 活動素材 |
+| MAPLAB_ASSETS | `1yVggYKiTkBJe4kd8CPoM3U75km0nVuNy` | 活動素材；2026-05-11 Drive API verified，舊 ID `1L0udpuXLy3vEbHmzBbaLqNVDut2FFpCe` 回 404 |
 
 ### 2.4 GAS Projects（兩個獨立專案，push 前必確認）
 

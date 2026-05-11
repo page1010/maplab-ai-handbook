@@ -269,7 +269,7 @@ seo_name格式：{category}-{description}-{detail}，例：catering-birthday-buf
                                              - ### MAPLAB_ASSETS 資料夾結構（S4 已建立 ✅）
                                           
                                              - ```
-                                               MAPLAB_ASSETS/                          # root: 1yVggYKiTkBJe4kd8CPoM3U75kmOnVuNy
+                                               MAPLAB_ASSETS/                          # root: 1yVggYKiTkBJe4kd8CPoM3U75km0nVuNy
                                                  2022/                                 # 1wp6SXhVTHTEvj1_THT_IXZXpm6L48T4O
                                                    catering/
                                                    travel/

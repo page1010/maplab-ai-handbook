@@ -3,6 +3,28 @@
 本文件記錄 maplab-ai-handbook 的所有重大版本變更。
 格式：版本號 | 日期 | 變更摘要 | 執行 Agent
 
+## v6.4（A2 Rank Math Keyword Recovery）— 2026-05-11
+
+**A1/A2 live 修復：用 Rank Math REST + WP REST 搶回下滑關鍵字權重路徑**
+
+執行 Agent：A1（Codex acting as A2）
+
+1. 新增 `tools/wp_rankmath_recovery.py`：以環境變數讀 WP 認證，執行 Rank Math meta、title、內連、支援段落修復。
+2. 透過 Rank Math REST `/wp-json/rankmath/v1/updateMeta` 更新 8 個 live owner 的 focus keyword / SEO title / meta description。
+3. 修正 live owner keyword ownership：
+   - `/` → 台南外燴推薦 / 台南到府外燴 / 台南派對外燴
+   - `/tainan-catering-guide/` → 台南到府外燴 / 台南派對外燴
+   - `/corporate-catering-tainan/` → 台南企業外燴
+   - `/tainan-corporate-opening-tea-catering/` → 台南開幕茶會 / 開幕茶會流程
+   - `/corporate-tea-party-desserts/` → 台南會議茶點
+   - `/brand-esg-catering-service/` → 台南品牌活動外燴
+   - `/catering-one-year-old-party-tainan/` → 台南週歲派對外燴
+   - `/gender-reveal-party-tips/` → 性別揭曉派對 / Gender Reveal Party
+4. 修復多個 stale internal links，避免權重導向 draft / 404 slug。
+5. 新增 review bundle：`workbook/reviews/JOB-A2-RANKMATH-LIVE3-20260511/`。
+6. 新增 `docs/a2a3/rankmath-keyword-recovery-2026-05-11.md`，記錄 live targets、修復內容、驗證與 Elementor 限制。
+7. `pitfalls.md` 新增 Elementor 頁面 raw content 不等於前台 rendering 的踩坑規則。
+
 ## v6.3（A2/A3 Live Fact Check Correction）— 2026-05-11
 
 **A1 修正：WordPress / Rank Math 以 live interface 為準，不以 repo 紀錄代替現況**

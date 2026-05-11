@@ -36,3 +36,10 @@
 - 根因：A2/A3 workbench 修復時先整理 repo 記錄與 local artifacts，沒有先用 WordPress / Rank Math 接口核對 live site。
 - 解法：新增 live fact check：WP public REST 顯示 6 pages / 57 posts；planned workbench slugs 在 pages/posts 都是 0 match 且前台 404；Rank Math PRO 前台活著，但 analytics/score endpoints 未登入回 401。
 - 預防：任何 WordPress / SEO / Rank Math 任務必須先查 live接口，再讀 repo 紀錄；repo 紀錄只減少斷點，不能作為現況證據。
+
+## 2026-05-11 — Elementor page body ignored WP REST post_content edits
+
+- 觸發條件：`/gender-reveal-party-tips/` 的 Rank Math title / description 已更新，但用 WP REST 追加的正文內連區塊只存在 raw `post_content`，前台沒有渲染。
+- 根因：該頁前台由 Elementor data render，普通 `post_content` 不是實際畫面來源；同時原 Elementor HTML 區塊曾有 `</section` 斷尾，造成 raw content 與 rendered HTML 進一步不一致。
+- 解法：Rank Math meta 可用 Rank Math REST 更新；但 Elementor-rendered 頁的正文、內連與 FAQ 必須走 Elementor data / wp-admin UI / Elementor 正式 API 驗證，不可只看 WP REST raw content。
+- 預防：A2 修頁時同時檢查 `content.raw`、`content.rendered`、前台 HTML 三層；三者不一致時，以前台 HTML 為準。

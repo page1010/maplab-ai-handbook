@@ -1,0 +1,270 @@
+{
+  "job_id": "JOB-A2-RANKMATH-LIVE3-20260511",
+  "started_at": "2026-05-11T20:59:12+08:00",
+  "apply": true,
+  "targets": [
+    {
+      "key": "homepage",
+      "id": 1250,
+      "type": "pages",
+      "link": "https://www.maplabkitchen.com/",
+      "title_update": false,
+      "content_update": false,
+      "rank_math": {
+        "rank_math_focus_keyword": "台南外燴推薦, 台南到府外燴, 台南派對外燴",
+        "rank_math_title": "台南外燴推薦｜台南到府外燴、台南派對外燴與企業茶會｜MAPLAB",
+        "rank_math_description": "MAPLAB Kitchen 提供台南外燴推薦、台南到府外燴、台南派對外燴與企業茶會餐點規劃，依活動場景整理菜單、動線與餐桌配置。"
+      }
+    },
+    {
+      "key": "guide",
+      "id": 683,
+      "type": "posts",
+      "link": "https://www.maplabkitchen.com/tainan-catering-guide/",
+      "title_update": true,
+      "content_update": true,
+      "rank_math": {
+        "rank_math_focus_keyword": "台南到府外燴, 台南派對外燴",
+        "rank_math_title": "台南外燴全攻略｜台南到府外燴、台南派對外燴與活動餐點｜MAPLAB",
+        "rank_math_description": "整理台南到府外燴、台南派對外燴、週歲生日、開幕茶會與企業活動餐點規劃重點，協助你依人數、場地與活動節奏找到合適配置。"
+      }
+    },
+    {
+      "key": "corporate",
+      "id": 586,
+      "type": "posts",
+      "link": "https://www.maplabkitchen.com/corporate-catering-tainan/",
+      "title_update": true,
+      "content_update": true,
+      "rank_math": {
+        "rank_math_focus_keyword": "台南企業外燴",
+        "rank_math_title": "台南企業外燴推薦｜會議茶點、開幕茶會與品牌活動規劃｜MAPLAB",
+        "rank_math_description": "MAPLAB Kitchen 提供台南企業外燴、公司茶會、會議茶點、開幕茶會與品牌活動餐點規劃，協助行政、公關與活動窗口穩定安排現場。"
+      }
+    },
+    {
+      "key": "opening",
+      "id": 1205,
+      "type": "posts",
+      "link": "https://www.maplabkitchen.com/tainan-corporate-opening-tea-catering/",
+      "title_update": true,
+      "content_update": true,
+      "rank_math": {
+        "rank_math_focus_keyword": "台南開幕茶會, 開幕茶會流程",
+        "rank_math_title": "台南開幕茶會外燴｜開幕典禮流程與品牌接待餐點｜MAPLAB",
+        "rank_math_description": "台南開幕茶會外燴規劃，從開幕典禮流程、貴賓接待、茶點配置到取餐動線，協助品牌、診所與公司活動呈現穩定第一印象。"
+      }
+    },
+    {
+      "key": "brand",
+      "id": 945,
+      "type": "posts",
+      "link": "https://www.maplabkitchen.com/brand-esg-catering-service/",
+      "title_update": true,
+      "content_update": true,
+      "rank_math": {
+        "rank_math_focus_keyword": "台南品牌活動外燴",
+        "rank_math_title": "台南品牌活動外燴｜發表會、VIP 接待與展覽開幕餐點｜MAPLAB",
+        "rank_math_description": "台南品牌活動外燴規劃，適合發表會、VIP 接待、賞車活動、建案活動與展覽開幕，依品牌調性安排餐點、飲品與桌面節奏。"
+      }
+    },
+    {
+      "key": "meeting",
+      "id": 924,
+      "type": "posts",
+      "link": "https://www.maplabkitchen.com/corporate-tea-party-desserts/",
+      "title_update": true,
+      "content_update": true,
+      "rank_math": {
+        "rank_math_focus_keyword": "台南會議茶點",
+        "rank_math_title": "台南會議茶點外燴｜研討會、講座與企業活動餐點｜MAPLAB",
+        "rank_math_description": "台南會議茶點外燴適合研討會、學校講座、企業會議與內部訓練，MAPLAB Kitchen 協助規劃好拿取、不中斷交流的餐點與飲品。"
+      }
+    },
+    {
+      "key": "week_one",
+      "id": 498,
+      "type": "posts",
+      "link": "https://www.maplabkitchen.com/catering-one-year-old-party-tainan/",
+      "title_update": false,
+      "content_update": true,
+      "rank_math": {
+        "rank_math_focus_keyword": "台南週歲派對外燴",
+        "rank_math_title": "台南週歲派對外燴推薦｜菜單、場地、費用完整懶人包 2026",
+        "rank_math_description": "整理台南週歲派對外燴、抓周餐點、家庭派對菜單與場地準備重點，協助你把家人聚會、取餐動線與餐桌畫面安排得更穩。"
+      }
+    },
+    {
+      "key": "gender",
+      "id": 332,
+      "type": "posts",
+      "link": "https://www.maplabkitchen.com/gender-reveal-party-tips/",
+      "title_update": true,
+      "content_update": true,
+      "rank_math": {
+        "rank_math_focus_keyword": "性別揭曉派對, Gender Reveal Party",
+        "rank_math_title": "性別揭曉派對外燴｜Gender Reveal 餐點與甜點桌規劃｜MAPLAB",
+        "rank_math_description": "性別揭曉派對外燴可依家庭聚會人數、拍照流程與甜點桌需求規劃餐點。MAPLAB Kitchen 協助整理 Gender Reveal Party 的餐桌與取餐節奏。"
+      }
+    }
+  ],
+  "rankmath_results": [
+    {
+      "key": "homepage",
+      "ok": true,
+      "response": {
+        "slug": true,
+        "schemas": {
+          "schema-23205": {
+            "@type": "Article",
+            "metadata": {
+              "title": "Article",
+              "type": "template",
+              "shortcode": "s-69bcb991ac024",
+              "isPrimary": "1",
+              "name": "%seo_title%",
+              "description": "%seo_description%"
+            },
+            "headline": "%seo_title%",
+            "description": "%seo_description%",
+            "keywords": "%keywords%",
+            "author": {
+              "@type": "Person",
+              "name": "%name%"
+            }
+          },
+          "schema-23207": {
+            "metadata": {
+              "type": "template",
+              "shortcode": "s-ffb7e649-026a-41f2-9aba-8a500b388121",
+              "isPrimary": "",
+              "title": "Service",
+              "reviewLocationShortcode": "[rank_math_rich_snippet]"
+            },
+            "@type": "Service",
+            "name": "%seo_title%",
+            "description": "%seo_description%",
+            "serviceType": "FoodService",
+            "offers": {
+              "@type": "Offer",
+              "availability": "InStock"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "url": "%post_thumbnail%"
+            }
+          }
+        }
+      }
+    },
+    {
+      "key": "guide",
+      "ok": true,
+      "response": {
+        "slug": true,
+        "schemas": []
+      }
+    },
+    {
+      "key": "corporate",
+      "ok": true,
+      "response": {
+        "slug": true,
+        "schemas": []
+      }
+    },
+    {
+      "key": "opening",
+      "ok": true,
+      "response": {
+        "slug": true,
+        "schemas": []
+      }
+    },
+    {
+      "key": "brand",
+      "ok": true,
+      "response": {
+        "slug": true,
+        "schemas": []
+      }
+    },
+    {
+      "key": "meeting",
+      "ok": true,
+      "response": {
+        "slug": true,
+        "schemas": []
+      }
+    },
+    {
+      "key": "week_one",
+      "ok": true,
+      "response": {
+        "slug": true,
+        "schemas": []
+      }
+    },
+    {
+      "key": "gender",
+      "ok": true,
+      "response": {
+        "slug": true,
+        "schemas": []
+      }
+    }
+  ],
+  "wp_update_results": [
+    {
+      "key": "guide",
+      "ok": true,
+      "id": 683,
+      "modified": "2026-05-11T20:59:16",
+      "link": "https://www.maplabkitchen.com/tainan-catering-guide/"
+    },
+    {
+      "key": "corporate",
+      "ok": true,
+      "id": 586,
+      "modified": "2026-05-11T20:59:20",
+      "link": "https://www.maplabkitchen.com/corporate-catering-tainan/"
+    },
+    {
+      "key": "opening",
+      "ok": true,
+      "id": 1205,
+      "modified": "2026-05-11T20:59:24",
+      "link": "https://www.maplabkitchen.com/tainan-corporate-opening-tea-catering/"
+    },
+    {
+      "key": "brand",
+      "ok": true,
+      "id": 945,
+      "modified": "2026-05-11T20:59:27",
+      "link": "https://www.maplabkitchen.com/brand-esg-catering-service/"
+    },
+    {
+      "key": "meeting",
+      "ok": true,
+      "id": 924,
+      "modified": "2026-05-11T20:59:33",
+      "link": "https://www.maplabkitchen.com/corporate-tea-party-desserts/"
+    },
+    {
+      "key": "week_one",
+      "ok": true,
+      "id": 498,
+      "modified": "2026-05-11T20:59:36",
+      "link": "https://www.maplabkitchen.com/catering-one-year-old-party-tainan/"
+    },
+    {
+      "key": "gender",
+      "ok": true,
+      "id": 332,
+      "modified": "2026-05-11T20:59:39",
+      "link": "https://www.maplabkitchen.com/gender-reveal-party-tips/"
+    }
+  ],
+  "errors": [],
+  "finished_at": "2026-05-11T20:59:56+08:00"
+}

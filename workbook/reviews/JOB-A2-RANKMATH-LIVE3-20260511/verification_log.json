@@ -1,0 +1,167 @@
+{
+  "job_id": "JOB-A2-RANKMATH-LIVE3-20260511",
+  "verified_at": "2026-05-11T20:59:43+08:00",
+  "targets": [
+    {
+      "key": "homepage",
+      "link": "https://www.maplabkitchen.com/",
+      "head": {
+        "title": "台南外燴推薦｜台南到府外燴、台南派對外燴與企業茶會｜MAPLAB",
+        "description": "MAPLAB Kitchen 提供台南外燴推薦、台南到府外燴、台南派對外燴與企業茶會餐點規劃，依活動場景整理菜單、動線與餐桌配置。",
+        "canonical": "https://www.maplabkitchen.com/",
+        "h1": "台南外燴｜MAPLAB Kitchen CATERING SERVICE",
+        "has_rank_math": true
+      },
+      "expected_focus_terms_present": {
+        "台南外燴推薦": true,
+        "台南到府外燴": true,
+        "台南派對外燴": true
+      },
+      "expected_links_present": {},
+      "content_marker_present": true
+    },
+    {
+      "key": "guide",
+      "link": "https://www.maplabkitchen.com/tainan-catering-guide/",
+      "head": {
+        "title": "台南外燴全攻略｜台南到府外燴、台南派對外燴與活動餐點｜MAPLAB",
+        "description": "整理台南到府外燴、台南派對外燴、週歲生日、開幕茶會與企業活動餐點規劃重點，協助你依人數、場地與活動節奏找到合適配置。",
+        "canonical": "https://www.maplabkitchen.com/tainan-catering-guide/",
+        "h1": "台南外燴全攻略｜台南到府外燴、台南派對外燴與活動餐點｜MAPLAB",
+        "has_rank_math": true
+      },
+      "expected_focus_terms_present": {
+        "台南到府外燴": true,
+        "台南派對外燴": true
+      },
+      "expected_links_present": {
+        "https://www.maplabkitchen.com/catering-one-year-old-party-tainan/": true,
+        "https://www.maplabkitchen.com/corporate-catering-tainan/": true,
+        "https://www.maplabkitchen.com/tainan-corporate-opening-tea-catering/": true,
+        "https://www.maplabkitchen.com/corporate-tea-party-desserts/": true
+      },
+      "content_marker_present": true
+    },
+    {
+      "key": "corporate",
+      "link": "https://www.maplabkitchen.com/corporate-catering-tainan/",
+      "head": {
+        "title": "台南企業外燴推薦｜會議茶點、開幕茶會與品牌活動規劃｜MAPLAB",
+        "description": "MAPLAB Kitchen 提供台南企業外燴、公司茶會、會議茶點、開幕茶會與品牌活動餐點規劃，協助行政、公關與活動窗口穩定安排現場。",
+        "canonical": "https://www.maplabkitchen.com/corporate-catering-tainan/",
+        "h1": "台南企業外燴推薦｜會議茶點、開幕茶會與品牌活動規劃｜MAPLAB",
+        "has_rank_math": true
+      },
+      "expected_focus_terms_present": {
+        "台南企業外燴": true
+      },
+      "expected_links_present": {
+        "https://www.maplabkitchen.com/corporate-tea-party-desserts/": true,
+        "https://www.maplabkitchen.com/tainan-corporate-opening-tea-catering/": true,
+        "https://www.maplabkitchen.com/brand-esg-catering-service/": true,
+        "https://www.maplabkitchen.com/tainan-launch-event-catering/": true
+      },
+      "content_marker_present": true
+    },
+    {
+      "key": "opening",
+      "link": "https://www.maplabkitchen.com/tainan-corporate-opening-tea-catering/",
+      "head": {
+        "title": "台南開幕茶會外燴｜開幕典禮流程與品牌接待餐點｜MAPLAB",
+        "description": "台南開幕茶會外燴規劃，從開幕典禮流程、貴賓接待、茶點配置到取餐動線，協助品牌、診所與公司活動呈現穩定第一印象。",
+        "canonical": "https://www.maplabkitchen.com/tainan-corporate-opening-tea-catering/",
+        "h1": "台南開幕茶會外燴｜開幕典禮流程與品牌接待餐點｜MAPLAB",
+        "has_rank_math": true
+      },
+      "expected_focus_terms_present": {
+        "台南開幕茶會": true,
+        "開幕茶會流程": true
+      },
+      "expected_links_present": {
+        "https://www.maplabkitchen.com/brand-esg-catering-service/": true,
+        "https://www.maplabkitchen.com/corporate-catering-tainan/": true
+      },
+      "content_marker_present": true
+    },
+    {
+      "key": "brand",
+      "link": "https://www.maplabkitchen.com/brand-esg-catering-service/",
+      "head": {
+        "title": "台南品牌活動外燴｜發表會、VIP 接待與展覽開幕餐點｜MAPLAB",
+        "description": "台南品牌活動外燴規劃，適合發表會、VIP 接待、賞車活動、建案活動與展覽開幕，依品牌調性安排餐點、飲品與桌面節奏。",
+        "canonical": "https://www.maplabkitchen.com/brand-esg-catering-service/",
+        "h1": "台南品牌活動外燴｜發表會、VIP 接待與展覽開幕餐點｜MAPLAB",
+        "has_rank_math": true
+      },
+      "expected_focus_terms_present": {
+        "台南品牌活動外燴": true
+      },
+      "expected_links_present": {
+        "https://www.maplabkitchen.com/tainan-corporate-opening-tea-catering/": true,
+        "https://www.maplabkitchen.com/tainan-launch-event-catering/": true,
+        "https://www.maplabkitchen.com/corporate-tea-party-desserts/": true,
+        "https://www.maplabkitchen.com/corporate-catering-tainan/": true
+      },
+      "content_marker_present": true
+    },
+    {
+      "key": "meeting",
+      "link": "https://www.maplabkitchen.com/corporate-tea-party-desserts/",
+      "head": {
+        "title": "台南會議茶點外燴｜研討會、講座與企業活動餐點｜MAPLAB",
+        "description": "台南會議茶點外燴適合研討會、學校講座、企業會議與內部訓練，MAPLAB Kitchen 協助規劃好拿取、不中斷交流的餐點與飲品。",
+        "canonical": "https://www.maplabkitchen.com/corporate-tea-party-desserts/",
+        "h1": "台南會議茶點外燴｜研討會、講座與企業活動餐點｜MAPLAB",
+        "has_rank_math": true
+      },
+      "expected_focus_terms_present": {
+        "台南會議茶點": true
+      },
+      "expected_links_present": {
+        "https://www.maplabkitchen.com/corporate-catering-tainan/": true,
+        "https://www.maplabkitchen.com/tainan-corporate-opening-tea-catering/": true,
+        "https://www.maplabkitchen.com/brand-esg-catering-service/": true
+      },
+      "content_marker_present": true
+    },
+    {
+      "key": "week_one",
+      "link": "https://www.maplabkitchen.com/catering-one-year-old-party-tainan/",
+      "head": {
+        "title": "台南週歲派對外燴推薦｜菜單、場地、費用完整懶人包 2026",
+        "description": "整理台南週歲派對外燴、抓周餐點、家庭派對菜單與場地準備重點，協助你把家人聚會、取餐動線與餐桌畫面安排得更穩。",
+        "canonical": "https://www.maplabkitchen.com/catering-one-year-old-party-tainan/",
+        "h1": "【2026 最新】台南週歲派對外燴懶人包｜菜單、場地、價格一次搞懂！",
+        "has_rank_math": true
+      },
+      "expected_focus_terms_present": {
+        "台南週歲派對外燴": true
+      },
+      "expected_links_present": {
+        "https://www.maplabkitchen.com/gender-reveal-party-tips/": true,
+        "https://www.maplabkitchen.com/tainan-catering-guide/": true
+      },
+      "content_marker_present": true
+    },
+    {
+      "key": "gender",
+      "link": "https://www.maplabkitchen.com/gender-reveal-party-tips/",
+      "head": {
+        "title": "性別揭曉派對外燴｜Gender Reveal 餐點與甜點桌規劃｜MAPLAB",
+        "description": "性別揭曉派對外燴可依家庭聚會人數、拍照流程與甜點桌需求規劃餐點。MAPLAB Kitchen 協助整理 Gender Reveal Party 的餐桌與取餐節奏。",
+        "canonical": "https://www.maplabkitchen.com/gender-reveal-party-tips/",
+        "h1": "性別揭曉派對外燴｜Gender Reveal 餐點與甜點桌規劃｜MAPLAB",
+        "has_rank_math": true
+      },
+      "expected_focus_terms_present": {
+        "性別揭曉派對": true,
+        "Gender Reveal Party": true
+      },
+      "expected_links_present": {
+        "https://www.maplabkitchen.com/catering-one-year-old-party-tainan/": false,
+        "https://www.maplabkitchen.com/tainan-catering-guide/": false
+      },
+      "content_marker_present": true
+    }
+  ]
+}

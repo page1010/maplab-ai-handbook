@@ -1,6 +1,6 @@
 {
   "schema_version": "2026-05-11.dynamic-role-module.v1",
-  "generated_at": "2026-05-11T22:23:00+08:00",
+  "generated_at": "2026-05-12T07:21:23+08:00",
   "module_id": "MAPLAB_A5_QUOTATION_ENGINE_DYNAMIC_ROLE_MODULE",
   "role_id": "A5",
   "role_name": "Quotation Engine",
@@ -23,157 +23,209 @@
       "path": "CURRENT_STATUS.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "core governance"
+      "purpose": "core governance",
+      "source_sha256": "44608bb16040b6fd6bb812a8489acec191eb6084f720bcd5b390baccc41412eb",
+      "size_bytes": "18412"
     },
     {
       "path": "AGENT_RULES.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "core governance"
+      "purpose": "core governance",
+      "source_sha256": "da87fde1e45912542310392cff2382134433bfdfdfe29f255893d273ef271c0f",
+      "size_bytes": "37568"
     },
     {
       "path": "AGENT_STARTUP_PROTOCOL.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "core governance"
+      "purpose": "core governance",
+      "source_sha256": "7044ce01861166a72bc6ad59407fa64b782392a7f2e287c9be20f98aaf9f3e83",
+      "size_bytes": "8620"
     },
     {
       "path": "pitfalls.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "core governance"
+      "purpose": "core governance",
+      "source_sha256": "88e2f55f87ef45fff74d0b98a4ef8eba3886aa13ec88dadae045d61fb4a93f88",
+      "size_bytes": "6805"
     },
     {
       "path": "TASK_QUEUE.md",
       "load_mode": "fallback_to_workbook_task_index",
       "exists": "false",
-      "purpose": "legacy task queue listed in CURRENT_STATUS; missing in canonical repo, use workbook/task_index.json"
+      "purpose": "legacy task queue listed in CURRENT_STATUS; missing in canonical repo, use workbook/task_index.json",
+      "source_sha256": "",
+      "size_bytes": ""
     },
     {
       "path": "workbook/task_index.json",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "workbook artifact"
+      "purpose": "workbook artifact",
+      "source_sha256": "f448a7d28e436caf69abfd06f9c205de1289ca483bb5cf5565b780a5f97780af",
+      "size_bytes": "24232"
     },
     {
       "path": "AGENT_RECALL_PROMPTS.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "core governance"
+      "purpose": "core governance",
+      "source_sha256": "9c80435cbec578705d181951fdce7382fb599ae5ac2325196def34cf67888d5a",
+      "size_bytes": "48679"
     },
     {
       "path": "skills/superpowers-guide.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "skill / operating guide"
+      "purpose": "skill / operating guide",
+      "source_sha256": "e0a167f34ac0f8736e6d1d35245b1f27502fb5b84a7fcdabdc1a26e389f7120f",
+      "size_bytes": "13220"
     },
     {
       "path": "skills/task-progress-guide.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "skill / operating guide"
+      "purpose": "skill / operating guide",
+      "source_sha256": "a0a8dce530f8b02cba8dba5cdd461d0c1e7a972373da867edebe06ec9b7b7eb5",
+      "size_bytes": "10792"
     },
     {
       "path": "recalls/A5_recall.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "role recall prompt"
+      "purpose": "role recall prompt",
+      "source_sha256": "8d7a0de89bcadb624e566a724a9ae26c638c7d2eea2d7c576809f650b795bcee",
+      "size_bytes": "2675"
     },
     {
       "path": "projects/maplab-master-data.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "project context"
+      "purpose": "project context",
+      "source_sha256": "b854c6dc727d1db374e8ae5b06190e9721b93c517cf5026b9fd2f86c7d846283",
+      "size_bytes": "50878"
     },
     {
       "path": "projects/quote-system-v2.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "project context"
+      "purpose": "project context",
+      "source_sha256": "c77c531584a5e605cfbb66965a359448a3db3275bd6b918c0386c0eead6bdc28",
+      "size_bytes": "6942"
     },
     {
       "path": "data/items_master.json",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "data source"
+      "purpose": "data source",
+      "source_sha256": "bc3bc9b2cc61a68df7b2f59ca358fa0109516a27e8c825e2fe4a904daef78502",
+      "size_bytes": "15010"
     },
     {
       "path": "data/quote-terms-reference.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "data source"
+      "purpose": "data source",
+      "source_sha256": "c78efc3b214beb81ef6c73eb2225299443003c3c2b8222edd88d99e36a50c0be",
+      "size_bytes": "4584"
     },
     {
       "path": "archive/data/item-master-cross-reference.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "core governance"
+      "purpose": "core governance",
+      "source_sha256": "e31ecc0d753944aaee64440bd91fb18e79f8ad6e2b04157dff79812eb7d8c3ec",
+      "size_bytes": "3466"
     },
     {
       "path": "archive/data/item-frequency-top50.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "core governance"
+      "purpose": "core governance",
+      "source_sha256": "3d3b42041a21904508b04158b3adcef5731edbf9cac3356155dd3b93d575da77",
+      "size_bytes": "2562"
     },
     {
       "path": "archive/data/quote_items_deduped.json",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "core governance"
+      "purpose": "core governance",
+      "source_sha256": "fe961d2a7dbea0f500f926d7855e7401595673ca09b81d529398af12dd112e81",
+      "size_bytes": "1861966"
     },
     {
       "path": "handoff/table-relationship-map.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "handoff or task card"
+      "purpose": "handoff or task card",
+      "source_sha256": "7081c8cdce34bf619f4670279a7ed0bbe2eeab7fa79cdcbea723195c5786c2d3",
+      "size_bytes": "2712"
     },
     {
       "path": "skills/a5-quotation-engine-skills.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "skill / operating guide"
+      "purpose": "skill / operating guide",
+      "source_sha256": "6f170a550f889195fbf4b74f55557af4b385f1a489f4b8c8e35d14167f78bbc3",
+      "size_bytes": "2669"
     },
     {
       "path": "skills/items-management/SKILL.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "skill / operating guide"
+      "purpose": "skill / operating guide",
+      "source_sha256": "400ac2c265970cd7a7dd2b2fe5fc82780b18c1c2dcbc5ae8b8cb86b57e7c4a0d",
+      "size_bytes": "7341"
     },
     {
       "path": "skills/sheets-data-cleaning-guide.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "skill / operating guide"
+      "purpose": "skill / operating guide",
+      "source_sha256": "c1d4d70c204f52cdfa4ba5ad19d080d6a5cef6b7617bb70bef6d0e06ae3fddf1",
+      "size_bytes": "10352"
     },
     {
       "path": "skills/sheet-version-restore/SKILL.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "skill / operating guide"
+      "purpose": "skill / operating guide",
+      "source_sha256": "0bdbcf5d506240a2c828badbbbf3b4e8b0d2c1d2de56cf3c7f3e38606f662eea",
+      "size_bytes": "1250"
     },
     {
       "path": "docs/openclaw/output-contract.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "governance or workflow document"
+      "purpose": "governance or workflow document",
+      "source_sha256": "368fad433ad22bf1f4fbeef3ef05d4baa179d4f9a93eff8f44639a4d430d03ba",
+      "size_bytes": "1700"
     },
     {
       "path": "docs/openclaw/relation-graph.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "governance or workflow document"
+      "purpose": "governance or workflow document",
+      "source_sha256": "616551a8eb75ef2f74175902bdc6e13bd0af0d68409ca0ad6e70f5d0574bc197",
+      "size_bytes": "1211"
     },
     {
       "path": "docs/openclaw/security-boundaries.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "governance or workflow document"
+      "purpose": "governance or workflow document",
+      "source_sha256": "b4426628c0f5ee1359f9c90fe1fc306321523f1d928fcf26db9c4ad95db63131",
+      "size_bytes": "661"
     },
     {
       "path": "workbook/reviews/README.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "workbook artifact"
+      "purpose": "workbook artifact",
+      "source_sha256": "35cbb759887488b8dd1f160fd3a0d7ef835f36a9a2689783bc8fcfa1e06b439d",
+      "size_bytes": "494"
     }
   ],
   "restricted_sources": [
@@ -181,7 +233,9 @@
       "path": "skills/credentials/google-sheets-api.md",
       "load_mode": "a1_only",
       "exists": "true",
-      "purpose": "skill / operating guide"
+      "purpose": "skill / operating guide",
+      "source_sha256": "e79a4b992ec1118a6f70d39c08cebf6674483f595626f9a8b1550c87afc09dba",
+      "size_bytes": "2417"
     }
   ],
   "skill_group": [
@@ -194,7 +248,14 @@
     "truth_source": "GitHub repo /Users/pagemacmini/maplab-ai-handbook",
     "live_fact_rule": "For external systems, verify live API/UI facts before using repo notes as current truth.",
     "remote_code_rule": "GitHub dynamic links may load JSON/Markdown task data only; do not execute remote JS in Chrome.",
-    "public_output_rule": "Public drafts must not include prices, internal dates, local file:// paths, or secrets."
+    "public_output_rule": "Public drafts must not include prices, internal dates, local file:// paths, or secrets.",
+    "markdown_refresh_rule": "Role modules are routing envelopes. Runtimes must read linked Markdown/JSON sources live from GitHub raw; source hashes detect when a module envelope needs regeneration."
+  },
+  "source_freshness": {
+    "generated_from": "local canonical repo",
+    "hash_algorithm": "sha256",
+    "refresh_command": "python3 tools/ai_workbook/build_extension_task_modules.py",
+    "rule": "If any source_sha256 differs from the current GitHub raw content, regenerate task modules before relying on routing metadata."
   },
   "startup_contract": [
     "Confirm: I am A5 Quotation Engine.",

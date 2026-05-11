@@ -1,5 +1,11 @@
 # Chrome Extension Changelog
 
+## v5.5 — 2026-05-12
+變更者：A1 Codex
+- **Markdown 同步檢查**：role module 生成時記錄每個必讀來源的 SHA-256，側邊欄可用「檢查 MD 同步」比對 GitHub raw 最新內容。
+- **動態連結語意修正**：handoff prompt 明確標示 role JSON 是 routing envelope，不是來源內容本體；Gemini/Codex/OpenClaw 必須讀最新 Markdown/JSON raw link。
+- **Stale 防呆**：若 `.md` 已改但 module JSON 尚未重建，側邊欄會顯示 stale，提醒先跑 `python3 tools/ai_workbook/build_extension_task_modules.py` 再交辦高風險任務。
+
 ## v5.4 — 2026-05-11
 變更者：A1 Codex
 - **側邊欄改成任務模組入口**：popup 會讀 `chrome-extension/task-modules/index.json` 與各角色 JSON，顯示 runtime target、必讀來源、影響範圍、輸出契約與風險。

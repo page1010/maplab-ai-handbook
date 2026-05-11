@@ -1,4 +1,4 @@
-// MAPLAB Agent Commander v5.4 — popup.js
+// MAPLAB Agent Commander v5.5 — popup.js
 // 角色選擇 + GitHub dynamic role task modules + runtime handoff prompt
 const DEFAULT_BASE = 'https://raw.githubusercontent.com/page1010/maplab-ai-handbook/main';
 const GITHUB_API   = 'https://api.github.com/repos/page1010/maplab-ai-handbook';
@@ -18,6 +18,7 @@ let cachedOverdue = [];
 let cachedRecallPrompts = {};
 let cachedModuleIndex = null;
 let cachedRoleModules = {};
+let cachedFreshness = {};
 
 // === UI helpers ===
 function setStatus(state, text) {
@@ -90,6 +91,17 @@ async function fetchJsonFile(base, path, token) {
 }
 function rawUrl(base, path) {
   return base.replace(/\/$/, '') + '/' + path;
+}
+async function sha256Hex(text) {
+  const bytes = new TextEncoder().encode(text);
+  const digest = await crypto.subtle.digest('SHA-256', bytes);
+  return [...new Uint8Array(digest)].map(b => b.toString(16).padStart(2, '0')).join('');
+}
+function shortHash(hash) {
+  return hash ? hash.slice(0, 10) : 'no-hash';
+}
+function sourceIsHashable(item) {
+  return item?.exists === 'true' && item?.source_sha256 && item?.load_mode !== 'a1_only';
 }
 
 // === Parse CURRENT_STATUS.md ===
@@ -243,12 +255,46 @@ function formatSourceLines(sources, base, limit = 40) {
     const status = item.load_mode === 'fallback_to_workbook_task_index'
       ? 'fallback'
       : item.exists === 'true' ? 'ok' : 'missing';
-    return `- [${status}] ${item.path} (${item.purpose || item.load_mode || 'source'})\n  ${rawUrl(base, item.path)}`;
+    const hash = item.source_sha256 ? ` sha256:${shortHash(item.source_sha256)}` : '';
+    return `- [${status}] ${item.path} (${item.purpose || item.load_mode || 'source'}${hash})\n  ${rawUrl(base, item.path)}`;
   });
   if ((sources || []).length > limit) {
     lines.push(`- ... ${sources.length - limit} more sources in the module JSON`);
   }
   return lines.join('\n');
+}
+function renderFreshnessStatus(role, module) {
+  const box = el('moduleFreshness');
+  if (!box) return;
+  box.className = 'module-freshness';
+  if (!role || !module) {
+    box.textContent = 'Markdown 同步尚未檢查';
+    return;
+  }
+  const result = cachedFreshness[role];
+  if (!result) {
+    const hashable = (module.read_first || []).filter(sourceIsHashable).length;
+    box.textContent = `Markdown 同步尚未檢查｜module: ${module.generated_at || '?'}｜可檢查 ${hashable} 個來源`;
+    return;
+  }
+  if (result.status === 'checking') {
+    box.classList.add('warn');
+    box.textContent = `正在檢查 Markdown 同步… ${result.checked || 0}/${result.total || '?'}`;
+    return;
+  }
+  if (result.status === 'ok') {
+    box.classList.add('ok');
+    box.textContent = `Markdown 已同步｜${result.checked}/${result.total} sources match module hashes`;
+    return;
+  }
+  if (result.status === 'stale') {
+    box.classList.add('warn');
+    const names = result.stale.slice(0, 3).map(s => s.path).join('、');
+    box.textContent = `Markdown 已變更｜${result.stale.length} 個來源和 module hash 不一致：${names}`;
+    return;
+  }
+  box.classList.add('err');
+  box.textContent = `Markdown 檢查失敗｜${result.error || 'unknown error'}`;
 }
 function renderModulePanel(role, module) {
   if (!role) {
@@ -257,6 +303,7 @@ function renderModulePanel(role, module) {
     el('moduleChips').innerHTML = '';
     el('moduleSources').textContent = '—';
     el('moduleAffects').textContent = '—';
+    renderFreshnessStatus(role, module);
     return;
   }
   if (!module) {
@@ -265,6 +312,7 @@ function renderModulePanel(role, module) {
     el('moduleChips').innerHTML = '<span class="module-chip warn">missing module</span>';
     el('moduleSources').textContent = '—';
     el('moduleAffects').textContent = '—';
+    renderFreshnessStatus(role, module);
     return;
   }
   el('moduleTitle').textContent = `${module.role_id}｜${module.department}｜${module.role_name}`;
@@ -274,6 +322,7 @@ function renderModulePanel(role, module) {
   const chips = [
     ...(module.runtime_targets || []).map(t => ({ text: t, warn: false })),
     { text: `risk:${module.risk_level || 'medium'}`, warn: module.risk_level === 'high' },
+    { text: `src:${module.source_freshness?.hash_algorithm || 'sha256'}`, warn: false },
   ];
   el('moduleChips').innerHTML = chips.map(c => `<span class="module-chip${c.warn ? ' warn' : ''}">${escapeHtml(c.text)}</span>`).join('');
   el('moduleSources').innerHTML = (module.read_first || []).slice(0, 8).map(s => {
@@ -281,6 +330,7 @@ function renderModulePanel(role, module) {
     return `${mark} ${escapeHtml(s.path)}`;
   }).join('<br>') || '—';
   el('moduleAffects').innerHTML = (module.affects || []).map(a => `→ ${escapeHtml(a)}`).join('<br>') || '—';
+  renderFreshnessStatus(role, module);
 }
 function buildModuleHandoff(role, module, recallText, parsed, runtime, base) {
   if (!role || !module) {
@@ -293,6 +343,19 @@ function buildModuleHandoff(role, module, recallText, parsed, runtime, base) {
   lines.push(`module_id: ${module.module_id}`);
   lines.push(`canonical_repo: /Users/pagemacmini/maplab-ai-handbook`);
   lines.push(`github_module: ${rawUrl(base, `chrome-extension/task-modules/${role}.json`)}`);
+  lines.push(`module_generated_at: ${module.generated_at || '?'}`);
+  lines.push('');
+  lines.push('## 0. 動態連結與 Markdown 同步規則');
+  lines.push('');
+  lines.push('- 這份 handoff 是 routing envelope，不是來源內容本體。');
+  lines.push('- 請讀下面列出的 GitHub raw Markdown/JSON 連結，以取得最新事實與角色規則。');
+  lines.push('- 如果側邊欄顯示 Markdown 已變更，請先請 A1 跑 `python3 tools/ai_workbook/build_extension_task_modules.py` 重建 module，再接手高風險任務。');
+  const freshness = cachedFreshness[role];
+  if (freshness) {
+    lines.push(`- module_source_state: ${freshness.status}${freshness.stale?.length ? ` (${freshness.stale.length} stale)` : ''}`);
+  } else {
+    lines.push('- module_source_state: not_checked_in_side_panel');
+  }
   lines.push('');
   lines.push('## 1. 身份與任務邊界');
   lines.push('');
@@ -515,6 +578,65 @@ function copyHandoff() {
   }).catch(() => el('promptText').select());
 }
 
+// === Markdown/source freshness ===
+async function checkSelectedModuleFreshness() {
+  const role = el('roleSelect').value;
+  if (!role) return;
+  const module = cachedRoleModules[role];
+  if (!module) return;
+  const d = await chrome.storage.local.get(['githubRawBase','githubToken']);
+  const base  = d.githubRawBase || DEFAULT_BASE;
+  const token = d.githubToken  || '';
+  const sources = [
+    ...(module.read_first || []),
+    ...(module.restricted_sources || []).filter(item => item.load_mode !== 'a1_only'),
+  ].filter(sourceIsHashable);
+  const btn = el('syncBtn');
+  cachedFreshness[role] = { status: 'checking', checked: 0, total: sources.length };
+  renderFreshnessStatus(role, module);
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = '檢查中…';
+  }
+  const stale = [];
+  const errors = [];
+  try {
+    for (const item of sources) {
+      try {
+        const current = await fetchFile(base, item.path, token);
+        const currentHash = await sha256Hex(current);
+        if (currentHash !== item.source_sha256) {
+          stale.push({
+            path: item.path,
+            module_sha256: item.source_sha256,
+            current_sha256: currentHash,
+          });
+        }
+      } catch(e) {
+        errors.push({ path: item.path, error: e.message });
+      }
+      cachedFreshness[role] = { status: 'checking', checked: cachedFreshness[role].checked + 1, total: sources.length };
+      renderFreshnessStatus(role, module);
+    }
+    cachedFreshness[role] = {
+      status: stale.length ? 'stale' : 'ok',
+      checked: sources.length,
+      total: sources.length,
+      stale,
+      errors,
+      checked_at: new Date().toISOString(),
+    };
+  } catch(e) {
+    cachedFreshness[role] = { status: 'error', error: e.message, checked: 0, total: sources.length };
+  }
+  renderFreshnessStatus(role, module);
+  updatePromptDisplay();
+  if (btn) {
+    btn.disabled = false;
+    btn.textContent = '檢查 MD 同步';
+  }
+}
+
 // === Auto-save ===
 async function autoSave() {
   const base  = el('githubRawBase').value.trim() || DEFAULT_BASE;
@@ -529,6 +651,7 @@ async function autoSave() {
 async function loadAll() {
   cachedRecallPrompts = {}; // v5.3: 每次重新抓取都清除 recall 快取，確保拿到最新版
   cachedRoleModules = {};
+  cachedFreshness = {};
   setStatus('loading', '讀取中...');
   el('promptText').value = '';
   const data  = await chrome.storage.local.get(['githubRawBase','githubToken','lastRole','lastRuntime']);

@@ -62,6 +62,9 @@
     "source_policy": {
       "type": "object"
     },
+    "source_freshness": {
+      "type": "object"
+    },
     "startup_contract": {
       "type": "array",
       "items": {

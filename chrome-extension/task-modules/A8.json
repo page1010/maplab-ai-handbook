@@ -1,6 +1,6 @@
 {
   "schema_version": "2026-05-11.dynamic-role-module.v1",
-  "generated_at": "2026-05-11T22:23:00+08:00",
+  "generated_at": "2026-05-12T07:21:23+08:00",
   "module_id": "MAPLAB_A8_CONTENT_REPURPOSING_PIPELINE_DYNAMIC_ROLE_MODULE",
   "role_id": "A8",
   "role_name": "Content Repurposing Pipeline",
@@ -23,121 +23,161 @@
       "path": "CURRENT_STATUS.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "core governance"
+      "purpose": "core governance",
+      "source_sha256": "44608bb16040b6fd6bb812a8489acec191eb6084f720bcd5b390baccc41412eb",
+      "size_bytes": "18412"
     },
     {
       "path": "AGENT_RULES.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "core governance"
+      "purpose": "core governance",
+      "source_sha256": "da87fde1e45912542310392cff2382134433bfdfdfe29f255893d273ef271c0f",
+      "size_bytes": "37568"
     },
     {
       "path": "AGENT_STARTUP_PROTOCOL.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "core governance"
+      "purpose": "core governance",
+      "source_sha256": "7044ce01861166a72bc6ad59407fa64b782392a7f2e287c9be20f98aaf9f3e83",
+      "size_bytes": "8620"
     },
     {
       "path": "pitfalls.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "core governance"
+      "purpose": "core governance",
+      "source_sha256": "88e2f55f87ef45fff74d0b98a4ef8eba3886aa13ec88dadae045d61fb4a93f88",
+      "size_bytes": "6805"
     },
     {
       "path": "TASK_QUEUE.md",
       "load_mode": "fallback_to_workbook_task_index",
       "exists": "false",
-      "purpose": "legacy task queue listed in CURRENT_STATUS; missing in canonical repo, use workbook/task_index.json"
+      "purpose": "legacy task queue listed in CURRENT_STATUS; missing in canonical repo, use workbook/task_index.json",
+      "source_sha256": "",
+      "size_bytes": ""
     },
     {
       "path": "workbook/task_index.json",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "workbook artifact"
+      "purpose": "workbook artifact",
+      "source_sha256": "f448a7d28e436caf69abfd06f9c205de1289ca483bb5cf5565b780a5f97780af",
+      "size_bytes": "24232"
     },
     {
       "path": "AGENT_RECALL_PROMPTS.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "core governance"
+      "purpose": "core governance",
+      "source_sha256": "9c80435cbec578705d181951fdce7382fb599ae5ac2325196def34cf67888d5a",
+      "size_bytes": "48679"
     },
     {
       "path": "skills/superpowers-guide.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "skill / operating guide"
+      "purpose": "skill / operating guide",
+      "source_sha256": "e0a167f34ac0f8736e6d1d35245b1f27502fb5b84a7fcdabdc1a26e389f7120f",
+      "size_bytes": "13220"
     },
     {
       "path": "skills/task-progress-guide.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "skill / operating guide"
+      "purpose": "skill / operating guide",
+      "source_sha256": "a0a8dce530f8b02cba8dba5cdd461d0c1e7a972373da867edebe06ec9b7b7eb5",
+      "size_bytes": "10792"
     },
     {
       "path": "recalls/A8_recall.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "role recall prompt"
+      "purpose": "role recall prompt",
+      "source_sha256": "22596f239d1c25d386574d967f5b7b166a2f81f7a51e4af0c2460a11d3385f0d",
+      "size_bytes": "3450"
     },
     {
       "path": "projects/maplab-pipeline.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "project context"
+      "purpose": "project context",
+      "source_sha256": "f827ec29b28e3e74d3cdd8660884d78b9fd67409ad48bd2e5841ee82703314e3",
+      "size_bytes": "22845"
     },
     {
       "path": "docs/a4/source-of-truth.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "governance or workflow document"
+      "purpose": "governance or workflow document",
+      "source_sha256": "fdc8409320ef5a859c35d9723ee9c4bbc2125abb3a752bd228d7a765a7c5ede0",
+      "size_bytes": "2027"
     },
     {
       "path": "skills/a8-video-pipeline-skills.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "skill / operating guide"
+      "purpose": "skill / operating guide",
+      "source_sha256": "aac57f22620a4a0c92816e61ff34836aa1923ef6566d983f67fe336e2879730b",
+      "size_bytes": "3723"
     },
     {
       "path": "skills/media-limit-workaround.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "skill / operating guide"
+      "purpose": "skill / operating guide",
+      "source_sha256": "c13cf62b13f895d6636df84c80d5050c82ec9f6e139ed6847b312cdc12520b6a",
+      "size_bytes": "5229"
     },
     {
       "path": "skills/next-three-report.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "skill / operating guide"
+      "purpose": "skill / operating guide",
+      "source_sha256": "2b689f59b16dcea417af169a4e339ba0ff7339c74244de236d20b57b4fb30a4a",
+      "size_bytes": "827"
     },
     {
       "path": "skills/brand-voice-guide.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "skill / operating guide"
+      "purpose": "skill / operating guide",
+      "source_sha256": "824dd293f11ddefa8bcef13757ed460ca6fe7e007f9fba5761ce2a00a957b1cf",
+      "size_bytes": "8497"
     },
     {
       "path": "docs/openclaw/output-contract.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "governance or workflow document"
+      "purpose": "governance or workflow document",
+      "source_sha256": "368fad433ad22bf1f4fbeef3ef05d4baa179d4f9a93eff8f44639a4d430d03ba",
+      "size_bytes": "1700"
     },
     {
       "path": "docs/openclaw/relation-graph.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "governance or workflow document"
+      "purpose": "governance or workflow document",
+      "source_sha256": "616551a8eb75ef2f74175902bdc6e13bd0af0d68409ca0ad6e70f5d0574bc197",
+      "size_bytes": "1211"
     },
     {
       "path": "docs/openclaw/security-boundaries.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "governance or workflow document"
+      "purpose": "governance or workflow document",
+      "source_sha256": "b4426628c0f5ee1359f9c90fe1fc306321523f1d928fcf26db9c4ad95db63131",
+      "size_bytes": "661"
     },
     {
       "path": "workbook/reviews/README.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "workbook artifact"
+      "purpose": "workbook artifact",
+      "source_sha256": "35cbb759887488b8dd1f160fd3a0d7ef835f36a9a2689783bc8fcfa1e06b439d",
+      "size_bytes": "494"
     }
   ],
   "restricted_sources": [],
@@ -151,7 +191,14 @@
     "truth_source": "GitHub repo /Users/pagemacmini/maplab-ai-handbook",
     "live_fact_rule": "For external systems, verify live API/UI facts before using repo notes as current truth.",
     "remote_code_rule": "GitHub dynamic links may load JSON/Markdown task data only; do not execute remote JS in Chrome.",
-    "public_output_rule": "Public drafts must not include prices, internal dates, local file:// paths, or secrets."
+    "public_output_rule": "Public drafts must not include prices, internal dates, local file:// paths, or secrets.",
+    "markdown_refresh_rule": "Role modules are routing envelopes. Runtimes must read linked Markdown/JSON sources live from GitHub raw; source hashes detect when a module envelope needs regeneration."
+  },
+  "source_freshness": {
+    "generated_from": "local canonical repo",
+    "hash_algorithm": "sha256",
+    "refresh_command": "python3 tools/ai_workbook/build_extension_task_modules.py",
+    "rule": "If any source_sha256 differs from the current GitHub raw content, regenerate task modules before relying on routing metadata."
   },
   "startup_contract": [
     "Confirm: I am A8 Content Repurposing Pipeline.",

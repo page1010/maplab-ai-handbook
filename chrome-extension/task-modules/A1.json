@@ -1,6 +1,6 @@
 {
   "schema_version": "2026-05-11.dynamic-role-module.v1",
-  "generated_at": "2026-05-11T22:23:00+08:00",
+  "generated_at": "2026-05-12T07:21:23+08:00",
   "module_id": "MAPLAB_A1_SYSTEM_ORCHESTRATOR_DYNAMIC_ROLE_MODULE",
   "role_id": "A1",
   "role_name": "System Orchestrator",
@@ -23,151 +23,201 @@
       "path": "CURRENT_STATUS.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "core governance"
+      "purpose": "core governance",
+      "source_sha256": "44608bb16040b6fd6bb812a8489acec191eb6084f720bcd5b390baccc41412eb",
+      "size_bytes": "18412"
     },
     {
       "path": "AGENT_RULES.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "core governance"
+      "purpose": "core governance",
+      "source_sha256": "da87fde1e45912542310392cff2382134433bfdfdfe29f255893d273ef271c0f",
+      "size_bytes": "37568"
     },
     {
       "path": "AGENT_STARTUP_PROTOCOL.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "core governance"
+      "purpose": "core governance",
+      "source_sha256": "7044ce01861166a72bc6ad59407fa64b782392a7f2e287c9be20f98aaf9f3e83",
+      "size_bytes": "8620"
     },
     {
       "path": "pitfalls.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "core governance"
+      "purpose": "core governance",
+      "source_sha256": "88e2f55f87ef45fff74d0b98a4ef8eba3886aa13ec88dadae045d61fb4a93f88",
+      "size_bytes": "6805"
     },
     {
       "path": "TASK_QUEUE.md",
       "load_mode": "fallback_to_workbook_task_index",
       "exists": "false",
-      "purpose": "legacy task queue listed in CURRENT_STATUS; missing in canonical repo, use workbook/task_index.json"
+      "purpose": "legacy task queue listed in CURRENT_STATUS; missing in canonical repo, use workbook/task_index.json",
+      "source_sha256": "",
+      "size_bytes": ""
     },
     {
       "path": "workbook/task_index.json",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "workbook artifact"
+      "purpose": "workbook artifact",
+      "source_sha256": "f448a7d28e436caf69abfd06f9c205de1289ca483bb5cf5565b780a5f97780af",
+      "size_bytes": "24232"
     },
     {
       "path": "AGENT_RECALL_PROMPTS.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "core governance"
+      "purpose": "core governance",
+      "source_sha256": "9c80435cbec578705d181951fdce7382fb599ae5ac2325196def34cf67888d5a",
+      "size_bytes": "48679"
     },
     {
       "path": "skills/superpowers-guide.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "skill / operating guide"
+      "purpose": "skill / operating guide",
+      "source_sha256": "e0a167f34ac0f8736e6d1d35245b1f27502fb5b84a7fcdabdc1a26e389f7120f",
+      "size_bytes": "13220"
     },
     {
       "path": "skills/task-progress-guide.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "skill / operating guide"
+      "purpose": "skill / operating guide",
+      "source_sha256": "a0a8dce530f8b02cba8dba5cdd461d0c1e7a972373da867edebe06ec9b7b7eb5",
+      "size_bytes": "10792"
     },
     {
       "path": "recalls/A1_recall.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "role recall prompt"
+      "purpose": "role recall prompt",
+      "source_sha256": "62467ddb559d1df9b5756b1e53e8f7218b84199764c45eb0585299381ced28c8",
+      "size_bytes": "4683"
     },
     {
       "path": "projects/v6-architecture.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "project context"
+      "purpose": "project context",
+      "source_sha256": "cd9a9ceaa5706faaa91af8c6a6033219b397a83a59e9abcb5740030f39a8a221",
+      "size_bytes": "7115"
     },
     {
       "path": "docs/openclaw/README.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "governance or workflow document"
+      "purpose": "governance or workflow document",
+      "source_sha256": "653fb9f5b615b6b40156fbe345c63e592356cadd072086771a815867237a7092",
+      "size_bytes": "763"
     },
     {
       "path": "docs/openclaw/closed-loop-playbook.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "governance or workflow document"
+      "purpose": "governance or workflow document",
+      "source_sha256": "396abe3373e68262890accce29f546d5d0f58bee0422d687eab49370f19ab37e",
+      "size_bytes": "913"
     },
     {
       "path": "docs/openclaw/memory-governance.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "governance or workflow document"
+      "purpose": "governance or workflow document",
+      "source_sha256": "b56f5e71aa5140134e243c3dfd593fd74e2a3070a33310a37b7665b24310ce69",
+      "size_bytes": "3627"
     },
     {
       "path": "projects/extension-browser-bridge.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "project context"
+      "purpose": "project context",
+      "source_sha256": "5352c8fbe380e7399250b5b353f4ae89a6849fee4ed8eccb53b70adc600e941a",
+      "size_bytes": "2587"
     },
     {
       "path": "skills/extension-agent-summon-guide.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "skill / operating guide"
+      "purpose": "skill / operating guide",
+      "source_sha256": "9bda0706fc29df6dbd645e717f3f10dc434a893caaf545f4ab2fd15cc5c33675",
+      "size_bytes": "3220"
     },
     {
       "path": "skills/extension-update",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "skill / operating guide"
+      "purpose": "skill / operating guide",
+      "source_sha256": "2a60a5fc1ebf14a1d20eace612cc44c62cd7b8603885524892203c2cc2a0cbbc",
+      "size_bytes": "1439"
     },
     {
       "path": "skills/save-checkpoint/SKILL.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "skill / operating guide"
+      "purpose": "skill / operating guide",
+      "source_sha256": "b63edb5e7328903aff1775e1e8b0bd71f202215c55d53192acfa2af036c8a606",
+      "size_bytes": "2470"
     },
     {
       "path": "skills/first-principles-check/SKILL.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "skill / operating guide"
+      "purpose": "skill / operating guide",
+      "source_sha256": "aad60ebf94fcd8f19d4a9fb7898b1be3dcef458fbb349c40f08043a751053b40",
+      "size_bytes": "11269"
     },
     {
       "path": "skills/pitfalls/SKILL.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "skill / operating guide"
+      "purpose": "skill / operating guide",
+      "source_sha256": "366b6d416f48f2ebc0138b357315cef43aba2947e1bc8f1c74be1852a831a105",
+      "size_bytes": "13823"
     },
     {
       "path": "skills/github-api-workflow-guide.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "skill / operating guide"
+      "purpose": "skill / operating guide",
+      "source_sha256": "13a78f918526d67491228d5c186f30c0c450a5488b3c9acf418924894abef8cc",
+      "size_bytes": "2020"
     },
     {
       "path": "docs/openclaw/output-contract.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "governance or workflow document"
+      "purpose": "governance or workflow document",
+      "source_sha256": "368fad433ad22bf1f4fbeef3ef05d4baa179d4f9a93eff8f44639a4d430d03ba",
+      "size_bytes": "1700"
     },
     {
       "path": "docs/openclaw/relation-graph.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "governance or workflow document"
+      "purpose": "governance or workflow document",
+      "source_sha256": "616551a8eb75ef2f74175902bdc6e13bd0af0d68409ca0ad6e70f5d0574bc197",
+      "size_bytes": "1211"
     },
     {
       "path": "docs/openclaw/security-boundaries.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "governance or workflow document"
+      "purpose": "governance or workflow document",
+      "source_sha256": "b4426628c0f5ee1359f9c90fe1fc306321523f1d928fcf26db9c4ad95db63131",
+      "size_bytes": "661"
     },
     {
       "path": "workbook/reviews/README.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "workbook artifact"
+      "purpose": "workbook artifact",
+      "source_sha256": "35cbb759887488b8dd1f160fd3a0d7ef835f36a9a2689783bc8fcfa1e06b439d",
+      "size_bytes": "494"
     }
   ],
   "restricted_sources": [],
@@ -183,7 +233,14 @@
     "truth_source": "GitHub repo /Users/pagemacmini/maplab-ai-handbook",
     "live_fact_rule": "For external systems, verify live API/UI facts before using repo notes as current truth.",
     "remote_code_rule": "GitHub dynamic links may load JSON/Markdown task data only; do not execute remote JS in Chrome.",
-    "public_output_rule": "Public drafts must not include prices, internal dates, local file:// paths, or secrets."
+    "public_output_rule": "Public drafts must not include prices, internal dates, local file:// paths, or secrets.",
+    "markdown_refresh_rule": "Role modules are routing envelopes. Runtimes must read linked Markdown/JSON sources live from GitHub raw; source hashes detect when a module envelope needs regeneration."
+  },
+  "source_freshness": {
+    "generated_from": "local canonical repo",
+    "hash_algorithm": "sha256",
+    "refresh_command": "python3 tools/ai_workbook/build_extension_task_modules.py",
+    "rule": "If any source_sha256 differs from the current GitHub raw content, regenerate task modules before relying on routing metadata."
   },
   "startup_contract": [
     "Confirm: I am A1 System Orchestrator.",

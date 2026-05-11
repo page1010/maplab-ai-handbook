@@ -1,6 +1,6 @@
 # GitHub Dynamic Role Task Modules
 
-Generated: 2026-05-11T22:23:00+08:00
+Generated: 2026-05-12T07:21:23+08:00
 
 ## Purpose
 
@@ -20,6 +20,13 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - `chrome-extension/config/task-modules.json` — extension config pointer.
 - `workbook/task_modules/role_module_relation_graph.json` — directed impact graph.
 - `workbook/task_modules/role_module_relationships.csv` and `.xlsx` — Excel-readable relationship table.
+
+## Markdown Refresh Model
+
+- Role JSON files are routing envelopes, not frozen copies of the source documents.
+- The Chrome side panel hands Gemini/Codex/OpenClaw GitHub raw links so the runtime reads the latest Markdown/JSON content.
+- Each source entry includes `source_sha256`; the side panel can compare it with current GitHub raw content and warn when a Markdown file changed after module generation.
+- If hashes differ, run `python3 tools/ai_workbook/build_extension_task_modules.py`, commit, push, then reload the side panel.
 
 ## Role Modules
 

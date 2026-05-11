@@ -39,6 +39,10 @@ body { width:430px; background:#0d0f14; color:#e8ecf4; font-family:'JetBrains Mo
 .module-chip.warn { color:#e8a838; border-color:#5a4218; }
 .module-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
 .module-list { max-height:76px; overflow:auto; padding:6px 8px; background:#0a0d12; border:1px solid #1a2030; border-radius:5px; color:#9baab8; font-size:10px; line-height:1.55; }
+.module-freshness { padding:7px 8px; background:#0a0d12; border:1px solid #1a2030; border-radius:5px; color:#7a8a9d; font-size:10px; line-height:1.55; }
+.module-freshness.ok { color:#38e87a; border-color:#1d5a38; }
+.module-freshness.warn { color:#e8a838; border-color:#5a4218; }
+.module-freshness.err { color:#e85538; border-color:#5a2118; }
 .runtime-selector { display:flex; align-items:center; gap:10px; }
 .runtime-selector label { font-size:10px; color:#7a8a9d; text-transform:uppercase; flex-shrink:0; }
 .runtime-select { flex:1; padding:8px 10px; background:#141820; border:1px solid #1e2535; border-radius:5px; color:#9fd1ff; font-family:inherit; font-size:12px; font-weight:700; outline:none; cursor:pointer; }
@@ -58,6 +62,8 @@ body { width:430px; background:#0d0f14; color:#e8ecf4; font-family:'JetBrains Mo
 .btn-inject:hover { background:#2a4a7a; color:#a0c8ff; }
 .btn-refresh { width:100%; padding:8px; background:transparent; border:1px solid #1e2535; border-radius:4px; color:#7a8a9d; font-family:inherit; font-size:11px; cursor:pointer; }
 .btn-refresh:hover { border-color:#e8a838; color:#e8a838; }
+.btn-sync { flex:1; padding:8px; background:transparent; border:1px solid #263145; border-radius:4px; color:#9fd1ff; font-family:inherit; font-size:11px; cursor:pointer; }
+.btn-sync:hover { border-color:#6a9ae8; color:#c8e6ff; }
 .btn-reload { flex:1; padding:8px; background:transparent; border:1px solid #2a3a1a; border-radius:4px; color:#5a8a4a; font-family:inherit; font-size:11px; cursor:pointer; }
 .btn-reload:hover { border-color:#38e87a; color:#38e87a; }
 .btn-bot-fetch { width:100%; padding:11px; background:#1a2a1a; border:1px solid #2a4a2a; border-radius:5px; color:#5a9a5a; font-family:inherit; font-size:12px; font-weight:700; cursor:pointer; }
@@ -79,7 +85,7 @@ hr { border:none; border-top:1px solid #1a2030; }
   <div class="logo">⬡ MAPLAB COMMANDER</div>
   <div class="header-right">
     <span class="overdue-badge" id="overdueCount"></span>
-    <span class="version" id="versionBadge">v5.4</span>
+    <span class="version" id="versionBadge">v5.5</span>
   </div>
 </div>
 <div class="body">
@@ -130,6 +136,7 @@ hr { border:none; border-top:1px solid #1a2030; }
         <div class="module-list" id="moduleAffects">—</div>
       </div>
     </div>
+    <div class="module-freshness" id="moduleFreshness">Markdown 同步尚未檢查</div>
   </div>
   <div>
     <div class="section-label" id="promptLabel">⚡ Runtime Handoff Prompt</div>
@@ -155,6 +162,7 @@ hr { border:none; border-top:1px solid #1a2030; }
   </div>
   <div class="btn-row">
     <button class="btn-refresh" style="flex:1" onclick="loadAll()">↻ 重新抓取</button>
+    <button class="btn-sync" id="syncBtn" onclick="checkSelectedModuleFreshness()">檢查 MD 同步</button>
     <button class="btn-reload" onclick="reloadExtension()">⟳ 重載 Extension</button>
   </div>
   <div class="save-status" id="saveStatus"></div>

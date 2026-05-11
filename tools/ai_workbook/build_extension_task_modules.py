@@ -9,6 +9,7 @@ source of task manifests, role context, relationship maps, and output contracts.
 from __future__ import annotations
 
 import csv
+import hashlib
 import json
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
@@ -139,6 +140,13 @@ class RoleModule:
                 "live_fact_rule": "For external systems, verify live API/UI facts before using repo notes as current truth.",
                 "remote_code_rule": "GitHub dynamic links may load JSON/Markdown task data only; do not execute remote JS in Chrome.",
                 "public_output_rule": "Public drafts must not include prices, internal dates, local file:// paths, or secrets.",
+                "markdown_refresh_rule": "Role modules are routing envelopes. Runtimes must read linked Markdown/JSON sources live from GitHub raw; source hashes detect when a module envelope needs regeneration.",
+            },
+            "source_freshness": {
+                "generated_from": "local canonical repo",
+                "hash_algorithm": "sha256",
+                "refresh_command": "python3 tools/ai_workbook/build_extension_task_modules.py",
+                "rule": "If any source_sha256 differs from the current GitHub raw content, regenerate task modules before relying on routing metadata.",
             },
             "startup_contract": [
                 f"Confirm: I am {self.role_id} {self.role_name}.",
@@ -191,6 +199,8 @@ def as_source_entries(paths: list[str], load_mode: str = "read") -> list[dict[st
         p = ROOT / path
         item_load_mode = load_mode
         purpose = classify_source(path)
+        source_sha256 = file_sha256(p) if p.exists() else ""
+        size_bytes = str(p.stat().st_size) if p.exists() else ""
         if path == "TASK_QUEUE.md" and not p.exists():
             item_load_mode = "fallback_to_workbook_task_index"
             purpose = "legacy task queue listed in CURRENT_STATUS; missing in canonical repo, use workbook/task_index.json"
@@ -200,9 +210,19 @@ def as_source_entries(paths: list[str], load_mode: str = "read") -> list[dict[st
                 "load_mode": item_load_mode,
                 "exists": str(p.exists()).lower(),
                 "purpose": purpose,
+                "source_sha256": source_sha256,
+                "size_bytes": size_bytes,
             }
         )
     return entries
+
+
+def file_sha256(path: Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(1024 * 1024), b""):
+            h.update(chunk)
+    return h.hexdigest()
 
 
 def classify_source(path: str) -> str:
@@ -465,6 +485,7 @@ SCHEMA = {
         "restricted_sources": {"type": "array"},
         "skill_group": {"type": "array", "items": {"type": "string"}},
         "source_policy": {"type": "object"},
+        "source_freshness": {"type": "object"},
         "startup_contract": {"type": "array", "items": {"type": "string"}},
         "output_contract": {"type": "array", "items": {"type": "string"}},
         "writeback": {"type": "object"},
@@ -559,6 +580,8 @@ def build_relationship_rows(modules: list[dict[str, Any]]) -> list[dict[str, Any
                     "relation": "must_read",
                     "load_mode": source["load_mode"],
                     "exists": source["exists"],
+                    "source_sha256": source.get("source_sha256", ""),
+                    "size_bytes": source.get("size_bytes", ""),
                     "runtime_targets": ", ".join(module["runtime_targets"]),
                     "affects": "; ".join(module["affects"]),
                     "risk_level": module["risk_level"],
@@ -575,6 +598,8 @@ def build_relationship_rows(modules: list[dict[str, Any]]) -> list[dict[str, Any
                     "relation": "restricted_reference",
                     "load_mode": source["load_mode"],
                     "exists": source["exists"],
+                    "source_sha256": source.get("source_sha256", ""),
+                    "size_bytes": source.get("size_bytes", ""),
                     "runtime_targets": ", ".join(module["runtime_targets"]),
                     "affects": "; ".join(module["affects"]),
                     "risk_level": module["risk_level"],
@@ -592,6 +617,8 @@ def build_relationship_rows(modules: list[dict[str, Any]]) -> list[dict[str, Any
                     "relation": f"implemented_by:{surface['id']}",
                     "load_mode": "read/modify_by_A1",
                     "exists": str((ROOT / path).exists()).lower(),
+                    "source_sha256": file_sha256(ROOT / path) if (ROOT / path).exists() else "",
+                    "size_bytes": str((ROOT / path).stat().st_size) if (ROOT / path).exists() else "",
                     "runtime_targets": "codex",
                     "affects": surface["impact"],
                     "risk_level": "high" if surface["id"] in {"chrome-extension", "a6-openclaw-runtime"} else "medium",
@@ -625,6 +652,13 @@ def build_doc(modules: list[dict[str, Any]]) -> str:
         "- `chrome-extension/config/task-modules.json` — extension config pointer.",
         "- `workbook/task_modules/role_module_relation_graph.json` — directed impact graph.",
         "- `workbook/task_modules/role_module_relationships.csv` and `.xlsx` — Excel-readable relationship table.",
+        "",
+        "## Markdown Refresh Model",
+        "",
+        "- Role JSON files are routing envelopes, not frozen copies of the source documents.",
+        "- The Chrome side panel hands Gemini/Codex/OpenClaw GitHub raw links so the runtime reads the latest Markdown/JSON content.",
+        "- Each source entry includes `source_sha256`; the side panel can compare it with current GitHub raw content and warn when a Markdown file changed after module generation.",
+        "- If hashes differ, run `python3 tools/ai_workbook/build_extension_task_modules.py`, commit, push, then reload the side panel.",
         "",
         "## Role Modules",
         "",
@@ -700,12 +734,13 @@ Update Chrome extension UI to add:
 2. runtime target selector: Gemini / Codex / OpenClaw / legacy Claude
 3. impact preview panel
 4. one-click copy of platform-neutral handoff pack
+5. Markdown freshness check so changed `.md` files are detected before dispatch
 
 ## Resume Prompt
 
 我是 A1/Codex。請先讀 `CURRENT_STATUS.md`、`pitfalls.md`、`handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md`。
 接著讀 `docs/extension/dynamic-role-task-modules.md` 與 `workbook/task_modules/role_module_relationships.csv`。
-下一步是修改 `chrome-extension/popup.html` / `popup.js`，讓側邊欄可讀 `chrome-extension/task-modules/index.json`，顯示角色模組、影響關係、runtime target，並產生 Gemini/Codex/OpenClaw 共用的 handoff prompt。
+下一步是修改 `chrome-extension/popup.html` / `popup.js`，讓側邊欄可讀 `chrome-extension/task-modules/index.json`，顯示角色模組、影響關係、runtime target、Markdown freshness，並產生 Gemini/Codex/OpenClaw 共用的 handoff prompt。
 """
 
 
@@ -771,6 +806,8 @@ def main() -> None:
             "relation",
             "load_mode",
             "exists",
+            "source_sha256",
+            "size_bytes",
             "runtime_targets",
             "affects",
             "risk_level",

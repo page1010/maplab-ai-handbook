@@ -1,0 +1,56 @@
+{
+  "version": "v1.1",
+  "updated": "2026-05-11",
+  "pages": [
+    {
+      "slug": "opening-event-catering-tainan",
+      "pillar": "corporate",
+      "title": "台南開幕茶會外燴",
+      "target_intent": "診所開幕、品牌開幕、公司開幕、醫美開幕",
+      "audience": "brand owners, office admins, PR, event planners",
+      "source_cases": ["百貨生鮮店開幕茶會", "富邦銀行開幕茶會", "展覽開幕茶會", "小型開幕茶會"],
+      "key_keyword": "台南開幕茶會",
+      "required_sections": ["h1", "activity-types", "person-count", "budget-range", "real-cases", "faq", "cta", "internal-links"]
+    },
+    {
+      "slug": "meeting-refreshment-catering-tainan",
+      "pillar": "corporate",
+      "title": "台南會議茶點外燴",
+      "target_intent": "會議茶點、研討會餐點、學校講座",
+      "audience": "office admins, HR, secretaries, academic organizers",
+      "source_cases": ["科林研發茶會", "成大機械系茶會", "醫學中心國際研討會", "學校講座"],
+      "key_keyword": "台南會議茶點",
+      "required_sections": ["h1", "activity-types", "person-count", "budget-range", "real-cases", "faq", "cta", "internal-links"]
+    },
+    {
+      "slug": "brand-event-catering",
+      "pillar": "corporate",
+      "title": "台南品牌活動外燴",
+      "target_intent": "品牌活動、賞車、建案發表、展覽開幕",
+      "audience": "brand managers, agencies, property teams, car dealers",
+      "source_cases": ["賓士賞車", "Kia Select 原廠精選中古車展", "臺南美術館外燴", "文學館展覽開幕"],
+      "key_keyword": "台南品牌活動外燴",
+      "required_sections": ["h1", "activity-types", "person-count", "budget-range", "real-cases", "faq", "cta", "internal-links"]
+    },
+    {
+      "slug": "catering-corporate-tainan",
+      "pillar": "corporate",
+      "title": "台南企業外燴／公司茶會",
+      "target_intent": "公司春酒、企業茶會、辦公室外燴",
+      "audience": "office admins, HR, PR, marketing, executive assistants",
+      "source_cases": ["科林研發", "中鋼集團", "公司聚餐", "企業茶會"],
+      "key_keyword": "台南企業外燴",
+      "required_sections": ["hero-value-prop", "service-scenarios", "menu-and-budget-guidance", "execution-workflow", "social-proof", "faq", "cta"]
+    },
+    {
+      "slug": "school-event-catering-tainan",
+      "pillar": "corporate",
+      "title": "台南學校活動外燴",
+      "target_intent": "校園活動、講座、畢典、EMBA、校內會議",
+      "audience": "school admins, department organizers, faculty assistants",
+      "source_cases": ["成大管理學院EMBA辦公室", "學校研討會", "EMBA 校友餐敘", "校園活動"],
+      "key_keyword": "台南學校活動外燴",
+      "required_sections": ["h1", "activity-types", "person-count", "budget-range", "real-cases", "faq", "cta", "internal-links"]
+    }
+  ]
+}

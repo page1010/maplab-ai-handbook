@@ -3,6 +3,19 @@
 本文件記錄 maplab-ai-handbook 的所有重大版本變更。
 格式：版本號 | 日期 | 變更摘要 | 執行 Agent
 
+## v6.3（A2/A3 Live Fact Check Correction）— 2026-05-11
+
+**A1 修正：WordPress / Rank Math 以 live interface 為準，不以 repo 紀錄代替現況**
+
+執行 Agent：A1（Codex）
+
+1. 新增 `docs/a2a3/live-wp-rankmath-fact-check-2026-05-11.md`，以 live WordPress REST、Rank Math route discovery、前台 HTML head 為事實來源。
+2. 確認 live WordPress public REST 目前是 6 published pages / 57 published posts，homepage `page_on_front` 是 1250。
+3. 確認 A2/A3 workbench planned slugs（如 `catering-corporate-tainan`、`opening-event-catering-tainan`、`meeting-refreshment-catering-tainan`、`brand-event-catering`、`school-event-catering-tainan`）不是 live WP objects，前台回 404。
+4. 確認 Rank Math PRO 前台輸出存在；Rank Math analytics / score / link endpoints 在未登入狀態回 401。
+5. 新增 `pitfalls.md` 條目：WordPress / SEO / Rank Math 任務必須先查 live interface，再讀 repo 紀錄；repo 紀錄只用來減少斷點。
+6. Owner 判定今日生成圖片不可用後，已清除桌面 A2/A3 工作台 scoped folders 內的圖片衍生物。
+
 ## v6.2（AI Workbook Core + A4 Photo Restart）— 2026-05-05
 
 **A1 治理落地：建立任務閉環核心（model-agnostic）+ 啟動相片分類重啟流程**
@@ -295,7 +308,7 @@ T-A1-002 全部 7 個子任務完成，Phase 4.1 結案。
 T_RULES.md v1.9 → v2.0** — SECTION 0 真正修復（Step 4 加 CURRENT_STATUS FIRST + TASK_QUEUE；新增 Step 5 Startup Check）；新增 SECTION 5 Repo 管控 + Notion 禁令；版本表 v1.8/v1.9 順序修正
 2. **CURRENT_STATUS.md v3.6 → v3.7** — 版本升至 v3.7；Phase 改為 4.1 進行中；T-A1-002 登錄；AGENT_RULES v2.0 決策紀錄
    3. **TASK_QUEUE.md** — T-A1-002 登錄高優先；日期更新
-     
+
       4. 設計原則：
       5. - 召喚 Prompt 必須言行一致（CHANGELOG 說改了就真的要改）
          - - Repo 管控 + Notion 禁令寫入 AGENT_RULES 確保所有 Agent 開工就讀到
@@ -486,12 +499,12 @@ T_RULES.md v1.9 → v2.0** — SECTION 0 真正修復（Step 4 加 CURRENT_STATU
 - skills/troubleshooting-hub.md v1.0 — 新建：Agent 卡住急救手冊，13 個常見症狀診斷表 + 回報流程 + 使用規則
 - - AGENT_STARTUP_PROTOCOL.md v1.1 — 新增「執行中卡住怎麼辦」區段，引導 Agent 查 troubleshooting-hub
   - - skills/superpowers-guide.md v1.3 — MAPLAB ## v2.9 — 2026-03-17g-hub 行 + 詳細區段
-   
+
     - 設計原則：
     - - troubleshooting-hub 只做路由（症狀 → 技能書），不重複寫解法
       - - 找不到解法 → 回報 A1 → A1 補充到 hub → 全員受益
         - - 解決核心問題：Agent 卡住時浪費 context 亂試，改為查表找解法
-         
+
           - ---
 ## v2.7 — 2026-03-17
 
@@ -504,20 +517,20 @@ T_RULES.md v1.9 → v2.0** — SECTION 0 真正修復（Step 4 加 CURRENT_STATU
 - - `projects/gtm-conversion-setup.md` v1.0 — 新建 GTM 轉換事件設定 SOP（LINE 點擊 / 表單送出 / 電話點擊）
   - - 版本紀錄表格修正（v1.1/v1.2 遺失修復 + v2.1 新增）
     - - 相關連結新增 GTM SOP 路徑
-     
+
       - **調整 1 — PMax 問句型標題（小幅測試）：**
       - - 新增標題 1：辦週歲派對，餐點怎麼準備才不手忙腳亂？
         - - 新增標題 2：台南外燴推薦｜質感派對餐桌，不用自己張羅
           - - 追蹤方式：14 天後比較問句型 vs 原有標題 CTR 差異
             - - 目標：CTR 從 0.63% 提升至 1.0–1.5%
-             
+
               - **調整 3 — GTM 轉換事件 SOP：**
               - - 三個事件完整設定步驟：GTM 觸發條件 + Meta Pixel 標籤 + Google Ads 轉換標籤
                 - - 包含驗證方法（Meta Pixel Helper + Google Ads 轉換報表）
                   - - 包含重複 Pixel 處理步驟
                     - - 包含給 A2 SEO Agent / A4 Pipeline Agent / A5 Data Agent 的備註
                       - - 目標：PMax CPA 從 NT$322 降至 NT$200 以下
-                       
+
                         - ---
 
 

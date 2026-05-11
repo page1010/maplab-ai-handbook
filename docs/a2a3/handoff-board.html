@@ -1,0 +1,909 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MAPLAB A2/A3 Handoff Board</title>
+  <style>
+    :root {
+      --bg: #f6f1e8;
+      --card: #ffffff;
+      --line: #e5ddd1;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --accent: #8b5e3c;
+      --accent-2: #2f6f5e;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .wrap { max-width: 1440px; margin: 0 auto; padding: 24px; }
+    .hero {
+      background: linear-gradient(135deg, #fff, #f8f2e8);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+    }
+    .hero-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    h1 { margin: 0 0 8px; font-size: 32px; }
+    .muted { color: var(--muted); }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .toolbar a, .toolbar button, .task-card a, .task-card button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--text);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 14px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .toolbar a:hover, .toolbar button:hover, .task-card a:hover, .task-card button:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .stat {
+      background: rgba(255,255,255,0.8);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .stat .num { display:block; font-size: 28px; font-weight: 700; color: var(--accent); }
+    .section { margin-top: 24px; }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: end;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .section-head input {
+      min-width: 240px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 14px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+      gap: 16px;
+    }
+    .task-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+    .task-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: start;
+    }
+    .task-head h3 { margin: 2px 0 4px; font-size: 22px; }
+    .eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+      font-weight: 700;
+    }
+    .pill {
+      white-space: nowrap;
+      padding: 4px 10px;
+      background: #f3efe7;
+      color: var(--accent);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      font-size: 13px;
+      color: var(--muted);
+      margin: 10px 0 14px;
+    }
+    .task-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .mini-card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      background: #fff;
+    }
+    .mini-card h4 { margin: 0 0 8px; font-size: 16px; }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    textarea {
+      width: 100%;
+      min-height: 212px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.55;
+      resize: vertical;
+      background: #fcfbf8;
+    }
+    .batch {
+      background: linear-gradient(135deg, #fff, #f7fbf8);
+      border-color: #cde5d8;
+    }
+    .batch pre {
+      white-space: pre-wrap;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 12px;
+      overflow: auto;
+    }
+    @media (max-width: 1000px) {
+      .stats, .task-grid { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="hero-top">
+        <div>
+          <div class="eyebrow">MAPLAB A2/A3 Handoff Board</div>
+          <h1>點任務就能交辦，按鈕直接進 OpenClaw</h1>
+          <p class="muted">這不是另一份漂亮文件，而是你今天真的會用的交接面板：看圖文、開資料夾、複製 prompt、直接跑 OpenClaw，或排到夜間 batch。</p>
+        </div>
+        <div class="pill">draft / review only</div>
+      </div>
+
+      <div class="toolbar">
+        <a href="file:///Users/pagemacmini/Desktop/wordpress%20%E7%B4%A0%E6%9D%90%E5%BA%AB/README.md">A2/A3 Workbench README</a>
+        <a href="file:///Users/pagemacmini/Desktop/MAPLAB_A2A3_Workbench/00_open_launchpad.command">Open Launchpad</a>
+        <a href="file:///Users/pagemacmini/Desktop/MAPLAB_A2A3_Workbench/jobs/run_openclaw_dashboard.command">OpenClaw Dashboard</a>
+        <a href="file:///Users/pagemacmini/Desktop/wordpress%20%E7%B4%A0%E6%9D%90%E5%BA%AB/preview.html">WordPress Preview Root</a>
+        <a href="file:///Users/pagemacmini/Desktop/MAPLAB_A2A3_Workbench/04_open_wordpress_materials.command">Open WordPress Materials</a>
+        <a href="file:///Users/pagemacmini/Desktop/MAPLAB_A2A3_Workbench/05_open_wordpress_preview.command">Open WordPress Preview</a>
+        <a href="file:///Users/pagemacmini/Desktop/MAPLAB_A2A3_Workbench/jobs/schedule_nightly_batch.command">Schedule Night Batch</a>
+      </div>
+      <div style="margin-top: 14px;">
+        <input type="search" placeholder="搜尋關鍵字、slug、案例（例如：開幕 / 週歲 / 賓士）" style="width: min(100%, 520px); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; font-size: 14px;">
+      </div>
+
+      <div class="stats">
+        <div class="stat"><span class="num">5</span><span class="muted">工作包對</span></div>
+        <div class="stat"><span class="num">10</span><span class="muted">WordPress / Ads 資料夾</span></div>
+        <div class="stat"><span class="num">1</span><span class="muted">夜間排程命令</span></div>
+        <div class="stat"><span class="num">2</span><span class="muted">可直接執行的模式</span></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>夜間批次</h2>
+          <p class="muted">先把所有資料夾丟進 OpenClaw，再用 cron 排到睡覺時跑。適合做整批草稿 / 素材整合 / tracking 對齊。</p>
+        </div>
+      </div>
+      <div class="task-card batch">
+        <div class="task-head">
+          <div>
+            <div class="eyebrow">Batch / Schedule</div>
+            <h3>MAPLAB A2/A3 Night Batch</h3>
+            <p class="muted">如果你今晚不碰電腦，直接按這個排程。它會讀 `jobs/nightly_batch_prompt.md`，把 8 個 WordPress + 8 個 Ads 包一次排進 OpenClaw cron。</p>
+          </div>
+          <span class="pill">schedule 02:00 Taipei</span>
+        </div>
+        <div class="actions">
+          <a href="file:///Users/pagemacmini/Desktop/MAPLAB_A2A3_Workbench/jobs/schedule_nightly_batch.command">Schedule tonight</a>
+          <a href="file:///Users/pagemacmini/Desktop/MAPLAB_A2A3_Workbench/jobs/run_nightly_batch.command">Run batch now</a>
+          <button onclick="copyPrompt('nightly-batch')">Copy batch prompt</button>
+        </div>
+        <textarea id="nightly-batch" readonly>你是 MAPLAB A2/A3 夜間批次 worker。
+workbench: /Users/pagemacmini/Desktop/wordpress 素材庫
+goal: 依序處理所有 WordPress / Ads 工作包，只產 draft/review，不直接發布。
+
+執行順序：
+- WordPress: /Users/pagemacmini/Desktop/wordpress 素材庫/wordpress/opening-event-catering-tainan
+- Ads: /Users/pagemacmini/Desktop/wordpress 素材庫/ads/opening-event-catering-tainan
+- WordPress: /Users/pagemacmini/Desktop/wordpress 素材庫/wordpress/meeting-refreshment-catering-tainan
+- Ads: /Users/pagemacmini/Desktop/wordpress 素材庫/ads/meeting-refreshment-catering-tainan
+- WordPress: /Users/pagemacmini/Desktop/wordpress 素材庫/wordpress/brand-event-catering
+- Ads: /Users/pagemacmini/Desktop/wordpress 素材庫/ads/brand-event-catering
+- WordPress: /Users/pagemacmini/Desktop/wordpress 素材庫/wordpress/catering-corporate-tainan
+- Ads: /Users/pagemacmini/Desktop/wordpress 素材庫/ads/catering-corporate-tainan
+- WordPress: /Users/pagemacmini/Desktop/wordpress 素材庫/wordpress/school-event-catering-tainan
+- Ads: /Users/pagemacmini/Desktop/wordpress 素材庫/ads/school-event-catering-tainan
+
+規則：
+- 先讀每個資料夾的 brief.md / draft.md / preview.html
+- 只產 review bundle，不要推 main，不要發布 WordPress，不要投放廣告
+- 每個包完成後記錄 execution_log.json 與 review_request.md
+- 若遇到圖片裁切不合理，回報要修哪個 preview-assets，不要直接覆蓋原圖
+</textarea>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>WordPress 工作包</h2>
+          <p class="muted">每個卡片代表一篇文章：先看預覽，再決定要不要跑 OpenClaw。</p>
+        </div>
+      </div>
+      <div class="grid">
+                <article class="task-card" data-search="台南開幕茶會外燴 opening-event-catering-tainan 診所開幕、品牌開幕、公司開幕、醫美開幕 百貨生鮮店開幕茶會 富邦銀行開幕茶會 展覽開幕茶會 小型開幕茶會">
+                  <div class="task-head">
+                    <div>
+                      <div class="eyebrow">WordPress 草稿包</div>
+                      <h3>台南開幕茶會外燴</h3>
+                      <p class="muted">診所開幕、品牌開幕、公司開幕、醫美開幕</p>
+                    </div>
+                    <span class="pill">台南開幕茶會</span>
+                  </div>
+                  <div class="meta">
+                    <span>來源：百貨生鮮店開幕茶會, 富邦銀行開幕茶會, 展覽開幕茶會, 小型開幕茶會</span>
+                    <span>人數：20–150 人</span>
+                    <span>預算：15,000–80,000+</span>
+                  </div>
+                  <div class="task-grid">
+                    <div class="mini-card">
+                      <h4>OpenClaw 工作包</h4>
+                      <p class="muted">只讀這個資料夾，不看整個 Drive。</p>
+                      <div class="actions">
+                        <a href="file:///Users/pagemacmini/Desktop/wordpress%20%E7%B4%A0%E6%9D%90%E5%BA%AB/wordpress/opening-event-catering-tainan">開資料夾</a>
+                        <a href="file:///Users/pagemacmini/Desktop/wordpress%20%E7%B4%A0%E6%9D%90%E5%BA%AB/wordpress/opening-event-catering-tainan/preview.html">開預覽</a>
+                        <a href="file:///Users/pagemacmini/Desktop/MAPLAB_A2A3_Workbench/jobs/run_wp_opening-event-catering-tainan.command">Run now</a>
+                        <a href="file:///Users/pagemacmini/Desktop/MAPLAB_A2A3_Workbench/jobs/schedule_wp_opening-event-catering-tainan.command">Tonight</a>
+                        <button data-copy="wordpress-opening-event-catering-tainan" onclick="copyPrompt('wordpress-opening-event-catering-tainan')">Copy prompt</button>
+                      </div>
+                    </div>
+                    <div class="mini-card">
+                      <h4>WordPress / Rank Math</h4>
+                      <p class="muted">draft.md public-safe + rankmath_payload.json + source_bridge.md internal</p>
+                      <textarea id="wordpress-opening-event-catering-tainan" readonly>你是 MAPLAB A2 WordPress 草稿 worker。
+
+work_package: /Users/pagemacmini/Desktop/wordpress 素材庫/wordpress/opening-event-catering-tainan
+task_kind: wordpress
+goal: 先檢查圖文與 Rank Math，輸出 draft/review，不直接發布。
+
+你必讀：
+- brief.md
+- draft.md
+- seo.md
+- outline.md
+- internal_links.md
+- rankmath_payload.json
+- source_bridge.md
+- preview.html
+
+你要做的事：
+1. 檢查 preview.html 的圖文與圖片插槽是否合理。
+2. 檢查 draft.md 是否符合 H1 / FAQ / CTA / 內連結 / 場景與人數；draft.md 是 public-safe，不得寫價格、內部日期或 file:// 本機路徑。
+3. 必要時微調 draft.md 與 rankmath_payload.json。
+4. 在 review 區寫回 task_request.md、execution_log.json、review_request.md。
+
+限制：
+- 不要發布 WordPress
+- 不要推 main
+- 不要改原始素材
+- 只產 draft / review bundle</textarea>
+                    </div>
+                  </div>
+                </article>
+
+
+                <article class="task-card" data-search="台南會議茶點外燴 meeting-refreshment-catering-tainan 會議茶點、研討會餐點、學校講座 科林研發茶會 成大機械系茶會 醫學中心國際研討會 學校講座">
+                  <div class="task-head">
+                    <div>
+                      <div class="eyebrow">WordPress 草稿包</div>
+                      <h3>台南會議茶點外燴</h3>
+                      <p class="muted">會議茶點、研討會餐點、學校講座</p>
+                    </div>
+                    <span class="pill">台南會議茶點</span>
+                  </div>
+                  <div class="meta">
+                    <span>來源：科林研發茶會, 成大機械系茶會, 醫學中心國際研討會, 學校講座</span>
+                    <span>人數：15–300 人</span>
+                    <span>預算：8,000–90,000</span>
+                  </div>
+                  <div class="task-grid">
+                    <div class="mini-card">
+                      <h4>OpenClaw 工作包</h4>
+                      <p class="muted">只讀這個資料夾，不看整個 Drive。</p>
+                      <div class="actions">
+                        <a href="file:///Users/pagemacmini/Desktop/wordpress%20%E7%B4%A0%E6%9D%90%E5%BA%AB/wordpress/meeting-refreshment-catering-tainan">開資料夾</a>
+                        <a href="file:///Users/pagemacmini/Desktop/wordpress%20%E7%B4%A0%E6%9D%90%E5%BA%AB/wordpress/meeting-refreshment-catering-tainan/preview.html">開預覽</a>
+                        <a href="file:///Users/pagemacmini/Desktop/MAPLAB_A2A3_Workbench/jobs/run_wp_meeting-refreshment-catering-tainan.command">Run now</a>
+                        <a href="file:///Users/pagemacmini/Desktop/MAPLAB_A2A3_Workbench/jobs/schedule_wp_meeting-refreshment-catering-tainan.command">Tonight</a>
+                        <button data-copy="wordpress-meeting-refreshment-catering-tainan" onclick="copyPrompt('wordpress-meeting-refreshment-catering-tainan')">Copy prompt</button>
+                      </div>
+                    </div>
+                    <div class="mini-card">
+                      <h4>WordPress / Rank Math</h4>
+                      <p class="muted">draft.md public-safe + rankmath_payload.json + source_bridge.md internal</p>
+                      <textarea id="wordpress-meeting-refreshment-catering-tainan" readonly>你是 MAPLAB A2 WordPress 草稿 worker。
+
+work_package: /Users/pagemacmini/Desktop/wordpress 素材庫/wordpress/meeting-refreshment-catering-tainan
+task_kind: wordpress
+goal: 先檢查圖文與 Rank Math，輸出 draft/review，不直接發布。
+
+你必讀：
+- brief.md
+- draft.md
+- seo.md
+- outline.md
+- internal_links.md
+- rankmath_payload.json
+- source_bridge.md
+- preview.html
+
+你要做的事：
+1. 檢查 preview.html 的圖文與圖片插槽是否合理。
+2. 檢查 draft.md 是否符合 H1 / FAQ / CTA / 內連結 / 場景與人數；draft.md 是 public-safe，不得寫價格、內部日期或 file:// 本機路徑。
+3. 必要時微調 draft.md 與 rankmath_payload.json。
+4. 在 review 區寫回 task_request.md、execution_log.json、review_request.md。
+
+限制：
+- 不要發布 WordPress
+- 不要推 main
+- 不要改原始素材
+- 只產 draft / review bundle</textarea>
+                    </div>
+                  </div>
+                </article>
+
+
+                <article class="task-card" data-search="台南品牌活動外燴 brand-event-catering 品牌活動、賞車、建案發表、展覽開幕 賓士賞車 Kia Select 原廠精選中古車展 臺南美術館外燴 文學館展覽開幕">
+                  <div class="task-head">
+                    <div>
+                      <div class="eyebrow">WordPress 草稿包</div>
+                      <h3>台南品牌活動外燴</h3>
+                      <p class="muted">品牌活動、賞車、建案發表、展覽開幕</p>
+                    </div>
+                    <span class="pill">台南品牌活動外燴</span>
+                  </div>
+                  <div class="meta">
+                    <span>來源：賓士賞車, Kia Select 原廠精選中古車展, 臺南美術館外燴, 文學館展覽開幕</span>
+                    <span>人數：20–120 人</span>
+                    <span>預算：12,000–70,000</span>
+                  </div>
+                  <div class="task-grid">
+                    <div class="mini-card">
+                      <h4>OpenClaw 工作包</h4>
+                      <p class="muted">只讀這個資料夾，不看整個 Drive。</p>
+                      <div class="actions">
+                        <a href="file:///Users/pagemacmini/Desktop/wordpress%20%E7%B4%A0%E6%9D%90%E5%BA%AB/wordpress/brand-event-catering">開資料夾</a>
+                        <a href="file:///Users/pagemacmini/Desktop/wordpress%20%E7%B4%A0%E6%9D%90%E5%BA%AB/wordpress/brand-event-catering/preview.html">開預覽</a>
+                        <a href="file:///Users/pagemacmini/Desktop/MAPLAB_A2A3_Workbench/jobs/run_wp_brand-event-catering.command">Run now</a>
+                        <a href="file:///Users/pagemacmini/Desktop/MAPLAB_A2A3_Workbench/jobs/schedule_wp_brand-event-catering.command">Tonight</a>
+                        <button data-copy="wordpress-brand-event-catering" onclick="copyPrompt('wordpress-brand-event-catering')">Copy prompt</button>
+                      </div>
+                    </div>
+                    <div class="mini-card">
+                      <h4>WordPress / Rank Math</h4>
+                      <p class="muted">draft.md public-safe + rankmath_payload.json + source_bridge.md internal</p>
+                      <textarea id="wordpress-brand-event-catering" readonly>你是 MAPLAB A2 WordPress 草稿 worker。
+
+work_package: /Users/pagemacmini/Desktop/wordpress 素材庫/wordpress/brand-event-catering
+task_kind: wordpress
+goal: 先檢查圖文與 Rank Math，輸出 draft/review，不直接發布。
+
+你必讀：
+- brief.md
+- draft.md
+- seo.md
+- outline.md
+- internal_links.md
+- rankmath_payload.json
+- source_bridge.md
+- preview.html
+
+你要做的事：
+1. 檢查 preview.html 的圖文與圖片插槽是否合理。
+2. 檢查 draft.md 是否符合 H1 / FAQ / CTA / 內連結 / 場景與人數；draft.md 是 public-safe，不得寫價格、內部日期或 file:// 本機路徑。
+3. 必要時微調 draft.md 與 rankmath_payload.json。
+4. 在 review 區寫回 task_request.md、execution_log.json、review_request.md。
+
+限制：
+- 不要發布 WordPress
+- 不要推 main
+- 不要改原始素材
+- 只產 draft / review bundle</textarea>
+                    </div>
+                  </div>
+                </article>
+
+
+                <article class="task-card" data-search="台南企業外燴／公司茶會 catering-corporate-tainan 公司春酒、企業茶會、辦公室外燴 科林研發 中鋼集團 公司聚餐 企業茶會">
+                  <div class="task-head">
+                    <div>
+                      <div class="eyebrow">WordPress 草稿包</div>
+                      <h3>台南企業外燴／公司茶會</h3>
+                      <p class="muted">公司春酒、企業茶會、辦公室外燴</p>
+                    </div>
+                    <span class="pill">台南企業外燴</span>
+                  </div>
+                  <div class="meta">
+                    <span>來源：科林研發, 中鋼集團, 公司聚餐, 企業茶會</span>
+                    <span>人數：20–200 人</span>
+                    <span>預算：15,000–100,000</span>
+                  </div>
+                  <div class="task-grid">
+                    <div class="mini-card">
+                      <h4>OpenClaw 工作包</h4>
+                      <p class="muted">只讀這個資料夾，不看整個 Drive。</p>
+                      <div class="actions">
+                        <a href="file:///Users/pagemacmini/Desktop/wordpress%20%E7%B4%A0%E6%9D%90%E5%BA%AB/wordpress/catering-corporate-tainan">開資料夾</a>
+                        <a href="file:///Users/pagemacmini/Desktop/wordpress%20%E7%B4%A0%E6%9D%90%E5%BA%AB/wordpress/catering-corporate-tainan/preview.html">開預覽</a>
+                        <a href="file:///Users/pagemacmini/Desktop/MAPLAB_A2A3_Workbench/jobs/run_wp_catering-corporate-tainan.command">Run now</a>
+                        <a href="file:///Users/pagemacmini/Desktop/MAPLAB_A2A3_Workbench/jobs/schedule_wp_catering-corporate-tainan.command">Tonight</a>
+                        <button data-copy="wordpress-catering-corporate-tainan" onclick="copyPrompt('wordpress-catering-corporate-tainan')">Copy prompt</button>
+                      </div>
+                    </div>
+                    <div class="mini-card">
+                      <h4>WordPress / Rank Math</h4>
+                      <p class="muted">draft.md public-safe + rankmath_payload.json + source_bridge.md internal</p>
+                      <textarea id="wordpress-catering-corporate-tainan" readonly>你是 MAPLAB A2 WordPress 草稿 worker。
+
+work_package: /Users/pagemacmini/Desktop/wordpress 素材庫/wordpress/catering-corporate-tainan
+task_kind: wordpress
+goal: 先檢查圖文與 Rank Math，輸出 draft/review，不直接發布。
+
+你必讀：
+- brief.md
+- draft.md
+- seo.md
+- outline.md
+- internal_links.md
+- rankmath_payload.json
+- source_bridge.md
+- preview.html
+
+你要做的事：
+1. 檢查 preview.html 的圖文與圖片插槽是否合理。
+2. 檢查 draft.md 是否符合 H1 / FAQ / CTA / 內連結 / 場景與人數；draft.md 是 public-safe，不得寫價格、內部日期或 file:// 本機路徑。
+3. 必要時微調 draft.md 與 rankmath_payload.json。
+4. 在 review 區寫回 task_request.md、execution_log.json、review_request.md。
+
+限制：
+- 不要發布 WordPress
+- 不要推 main
+- 不要改原始素材
+- 只產 draft / review bundle</textarea>
+                    </div>
+                  </div>
+                </article>
+
+
+                <article class="task-card" data-search="台南學校活動外燴 school-event-catering-tainan 校園活動、講座、畢典、EMBA、校內會議 成大管理學院EMBA辦公室 學校研討會 EMBA 校友餐敘 校園活動">
+                  <div class="task-head">
+                    <div>
+                      <div class="eyebrow">WordPress 草稿包</div>
+                      <h3>台南學校活動外燴</h3>
+                      <p class="muted">校園活動、講座、畢典、EMBA、校內會議</p>
+                    </div>
+                    <span class="pill">台南學校活動外燴</span>
+                  </div>
+                  <div class="meta">
+                    <span>來源：成大管理學院EMBA辦公室, 學校研討會, EMBA 校友餐敘, 校園活動</span>
+                    <span>人數：30–400 人</span>
+                    <span>預算：10,000–80,000</span>
+                  </div>
+                  <div class="task-grid">
+                    <div class="mini-card">
+                      <h4>OpenClaw 工作包</h4>
+                      <p class="muted">只讀這個資料夾，不看整個 Drive。</p>
+                      <div class="actions">
+                        <a href="file:///Users/pagemacmini/Desktop/wordpress%20%E7%B4%A0%E6%9D%90%E5%BA%AB/wordpress/school-event-catering-tainan">開資料夾</a>
+                        <a href="file:///Users/pagemacmini/Desktop/wordpress%20%E7%B4%A0%E6%9D%90%E5%BA%AB/wordpress/school-event-catering-tainan/preview.html">開預覽</a>
+                        <a href="file:///Users/pagemacmini/Desktop/MAPLAB_A2A3_Workbench/jobs/run_wp_school-event-catering-tainan.command">Run now</a>
+                        <a href="file:///Users/pagemacmini/Desktop/MAPLAB_A2A3_Workbench/jobs/schedule_wp_school-event-catering-tainan.command">Tonight</a>
+                        <button data-copy="wordpress-school-event-catering-tainan" onclick="copyPrompt('wordpress-school-event-catering-tainan')">Copy prompt</button>
+                      </div>
+                    </div>
+                    <div class="mini-card">
+                      <h4>WordPress / Rank Math</h4>
+                      <p class="muted">draft.md public-safe + rankmath_payload.json + source_bridge.md internal</p>
+                      <textarea id="wordpress-school-event-catering-tainan" readonly>你是 MAPLAB A2 WordPress 草稿 worker。
+
+work_package: /Users/pagemacmini/Desktop/wordpress 素材庫/wordpress/school-event-catering-tainan
+task_kind: wordpress
+goal: 先檢查圖文與 Rank Math，輸出 draft/review，不直接發布。
+
+你必讀：
+- brief.md
+- draft.md
+- seo.md
+- outline.md
+- internal_links.md
+- rankmath_payload.json
+- source_bridge.md
+- preview.html
+
+你要做的事：
+1. 檢查 preview.html 的圖文與圖片插槽是否合理。
+2. 檢查 draft.md 是否符合 H1 / FAQ / CTA / 內連結 / 場景與人數；draft.md 是 public-safe，不得寫價格、內部日期或 file:// 本機路徑。
+3. 必要時微調 draft.md 與 rankmath_payload.json。
+4. 在 review 區寫回 task_request.md、execution_log.json、review_request.md。
+
+限制：
+- 不要發布 WordPress
+- 不要推 main
+- 不要改原始素材
+- 只產 draft / review bundle</textarea>
+                    </div>
+                  </div>
+                </article>
+                </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>廣告素材包</h2>
+          <p class="muted">每個卡片對應同一個場景的廣告 copy / TA / asset map。可以直接交給 OpenClaw 產草稿。</p>
+        </div>
+      </div>
+      <div class="grid">
+                <article class="task-card" data-search="台南開幕茶會外燴 opening-event-catering-tainan 診所開幕、品牌開幕、公司開幕、醫美開幕 百貨生鮮店開幕茶會 富邦銀行開幕茶會 展覽開幕茶會 小型開幕茶會">
+                  <div class="task-head">
+                    <div>
+                      <div class="eyebrow">廣告素材包</div>
+                      <h3>台南開幕茶會外燴</h3>
+                      <p class="muted">診所開幕、品牌開幕、公司開幕、醫美開幕</p>
+                    </div>
+                    <span class="pill">台南開幕茶會</span>
+                  </div>
+                  <div class="meta">
+                    <span>來源：百貨生鮮店開幕茶會, 富邦銀行開幕茶會, 展覽開幕茶會, 小型開幕茶會</span>
+                    <span>人數：20–150 人</span>
+                    <span>預算：15,000–80,000+</span>
+                  </div>
+                  <div class="task-grid">
+                    <div class="mini-card">
+                      <h4>OpenClaw 工作包</h4>
+                      <p class="muted">只讀這個資料夾，不看整個 Drive。</p>
+                      <div class="actions">
+                        <a href="file:///Users/pagemacmini/Desktop/wordpress%20%E7%B4%A0%E6%9D%90%E5%BA%AB/ads/opening-event-catering-tainan">開資料夾</a>
+                        <a href="file:///Users/pagemacmini/Desktop/wordpress%20%E7%B4%A0%E6%9D%90%E5%BA%AB/ads/opening-event-catering-tainan/preview.html">開預覽</a>
+                        <a href="file:///Users/pagemacmini/Desktop/MAPLAB_A2A3_Workbench/jobs/run_ads_opening-event-catering-tainan.command">Run now</a>
+                        <a href="file:///Users/pagemacmini/Desktop/MAPLAB_A2A3_Workbench/jobs/schedule_ads_opening-event-catering-tainan.command">Tonight</a>
+                        <button data-copy="ads-opening-event-catering-tainan" onclick="copyPrompt('ads-opening-event-catering-tainan')">Copy prompt</button>
+                      </div>
+                    </div>
+                    <div class="mini-card">
+                      <h4>Ad Copy / TA</h4>
+                      <p class="muted">copy.md + ta.md + asset_map.md + source_bridge.md</p>
+                      <textarea id="ads-opening-event-catering-tainan" readonly>你是 MAPLAB A3 廣告 worker。
+
+work_package: /Users/pagemacmini/Desktop/wordpress 素材庫/ads/opening-event-catering-tainan
+task_kind: ads
+goal: 先檢查素材、文案與 TA，輸出 draft/review，不直接發布。
+
+你必讀：
+- brief.md
+- copy.md
+- ta.md
+- asset_map.md
+- source_bridge.md
+- preview.html
+
+你要做的事：
+1. 檢查 preview.html 的圖文是否合理。
+2. 檢查 copy.md 的標題、主文、CTA 是否符合場景。
+3. 必要時微調 copy.md、ta.md、asset_map.md。
+4. 在 review 區寫回 task_request.md、execution_log.json、review_request.md。
+
+限制：
+- 不要發布廣告
+- 不要推 main
+- 不要改原始素材
+- 只產 draft / review bundle</textarea>
+                    </div>
+                  </div>
+                </article>
+
+
+                <article class="task-card" data-search="台南會議茶點外燴 meeting-refreshment-catering-tainan 會議茶點、研討會餐點、學校講座 科林研發茶會 成大機械系茶會 醫學中心國際研討會 學校講座">
+                  <div class="task-head">
+                    <div>
+                      <div class="eyebrow">廣告素材包</div>
+                      <h3>台南會議茶點外燴</h3>
+                      <p class="muted">會議茶點、研討會餐點、學校講座</p>
+                    </div>
+                    <span class="pill">台南會議茶點</span>
+                  </div>
+                  <div class="meta">
+                    <span>來源：科林研發茶會, 成大機械系茶會, 醫學中心國際研討會, 學校講座</span>
+                    <span>人數：15–300 人</span>
+                    <span>預算：8,000–90,000</span>
+                  </div>
+                  <div class="task-grid">
+                    <div class="mini-card">
+                      <h4>OpenClaw 工作包</h4>
+                      <p class="muted">只讀這個資料夾，不看整個 Drive。</p>
+                      <div class="actions">
+                        <a href="file:///Users/pagemacmini/Desktop/wordpress%20%E7%B4%A0%E6%9D%90%E5%BA%AB/ads/meeting-refreshment-catering-tainan">開資料夾</a>
+                        <a href="file:///Users/pagemacmini/Desktop/wordpress%20%E7%B4%A0%E6%9D%90%E5%BA%AB/ads/meeting-refreshment-catering-tainan/preview.html">開預覽</a>
+                        <a href="file:///Users/pagemacmini/Desktop/MAPLAB_A2A3_Workbench/jobs/run_ads_meeting-refreshment-catering-tainan.command">Run now</a>
+                        <a href="file:///Users/pagemacmini/Desktop/MAPLAB_A2A3_Workbench/jobs/schedule_ads_meeting-refreshment-catering-tainan.command">Tonight</a>
+                        <button data-copy="ads-meeting-refreshment-catering-tainan" onclick="copyPrompt('ads-meeting-refreshment-catering-tainan')">Copy prompt</button>
+                      </div>
+                    </div>
+                    <div class="mini-card">
+                      <h4>Ad Copy / TA</h4>
+                      <p class="muted">copy.md + ta.md + asset_map.md + source_bridge.md</p>
+                      <textarea id="ads-meeting-refreshment-catering-tainan" readonly>你是 MAPLAB A3 廣告 worker。
+
+work_package: /Users/pagemacmini/Desktop/wordpress 素材庫/ads/meeting-refreshment-catering-tainan
+task_kind: ads
+goal: 先檢查素材、文案與 TA，輸出 draft/review，不直接發布。
+
+你必讀：
+- brief.md
+- copy.md
+- ta.md
+- asset_map.md
+- source_bridge.md
+- preview.html
+
+你要做的事：
+1. 檢查 preview.html 的圖文是否合理。
+2. 檢查 copy.md 的標題、主文、CTA 是否符合場景。
+3. 必要時微調 copy.md、ta.md、asset_map.md。
+4. 在 review 區寫回 task_request.md、execution_log.json、review_request.md。
+
+限制：
+- 不要發布廣告
+- 不要推 main
+- 不要改原始素材
+- 只產 draft / review bundle</textarea>
+                    </div>
+                  </div>
+                </article>
+
+
+                <article class="task-card" data-search="台南品牌活動外燴 brand-event-catering 品牌活動、賞車、建案發表、展覽開幕 賓士賞車 Kia Select 原廠精選中古車展 臺南美術館外燴 文學館展覽開幕">
+                  <div class="task-head">
+                    <div>
+                      <div class="eyebrow">廣告素材包</div>
+                      <h3>台南品牌活動外燴</h3>
+                      <p class="muted">品牌活動、賞車、建案發表、展覽開幕</p>
+                    </div>
+                    <span class="pill">台南品牌活動外燴</span>
+                  </div>
+                  <div class="meta">
+                    <span>來源：賓士賞車, Kia Select 原廠精選中古車展, 臺南美術館外燴, 文學館展覽開幕</span>
+                    <span>人數：20–120 人</span>
+                    <span>預算：12,000–70,000</span>
+                  </div>
+                  <div class="task-grid">
+                    <div class="mini-card">
+                      <h4>OpenClaw 工作包</h4>
+                      <p class="muted">只讀這個資料夾，不看整個 Drive。</p>
+                      <div class="actions">
+                        <a href="file:///Users/pagemacmini/Desktop/wordpress%20%E7%B4%A0%E6%9D%90%E5%BA%AB/ads/brand-event-catering">開資料夾</a>
+                        <a href="file:///Users/pagemacmini/Desktop/wordpress%20%E7%B4%A0%E6%9D%90%E5%BA%AB/ads/brand-event-catering/preview.html">開預覽</a>
+                        <a href="file:///Users/pagemacmini/Desktop/MAPLAB_A2A3_Workbench/jobs/run_ads_brand-event-catering.command">Run now</a>
+                        <a href="file:///Users/pagemacmini/Desktop/MAPLAB_A2A3_Workbench/jobs/schedule_ads_brand-event-catering.command">Tonight</a>
+                        <button data-copy="ads-brand-event-catering" onclick="copyPrompt('ads-brand-event-catering')">Copy prompt</button>
+                      </div>
+                    </div>
+                    <div class="mini-card">
+                      <h4>Ad Copy / TA</h4>
+                      <p class="muted">copy.md + ta.md + asset_map.md + source_bridge.md</p>
+                      <textarea id="ads-brand-event-catering" readonly>你是 MAPLAB A3 廣告 worker。
+
+work_package: /Users/pagemacmini/Desktop/wordpress 素材庫/ads/brand-event-catering
+task_kind: ads
+goal: 先檢查素材、文案與 TA，輸出 draft/review，不直接發布。
+
+你必讀：
+- brief.md
+- copy.md
+- ta.md
+- asset_map.md
+- source_bridge.md
+- preview.html
+
+你要做的事：
+1. 檢查 preview.html 的圖文是否合理。
+2. 檢查 copy.md 的標題、主文、CTA 是否符合場景。
+3. 必要時微調 copy.md、ta.md、asset_map.md。
+4. 在 review 區寫回 task_request.md、execution_log.json、review_request.md。
+
+限制：
+- 不要發布廣告
+- 不要推 main
+- 不要改原始素材
+- 只產 draft / review bundle</textarea>
+                    </div>
+                  </div>
+                </article>
+
+
+                <article class="task-card" data-search="台南企業外燴／公司茶會 catering-corporate-tainan 公司春酒、企業茶會、辦公室外燴 科林研發 中鋼集團 公司聚餐 企業茶會">
+                  <div class="task-head">
+                    <div>
+                      <div class="eyebrow">廣告素材包</div>
+                      <h3>台南企業外燴／公司茶會</h3>
+                      <p class="muted">公司春酒、企業茶會、辦公室外燴</p>
+                    </div>
+                    <span class="pill">台南企業外燴</span>
+                  </div>
+                  <div class="meta">
+                    <span>來源：科林研發, 中鋼集團, 公司聚餐, 企業茶會</span>
+                    <span>人數：20–200 人</span>
+                    <span>預算：15,000–100,000</span>
+                  </div>
+                  <div class="task-grid">
+                    <div class="mini-card">
+                      <h4>OpenClaw 工作包</h4>
+                      <p class="muted">只讀這個資料夾，不看整個 Drive。</p>
+                      <div class="actions">
+                        <a href="file:///Users/pagemacmini/Desktop/wordpress%20%E7%B4%A0%E6%9D%90%E5%BA%AB/ads/catering-corporate-tainan">開資料夾</a>
+                        <a href="file:///Users/pagemacmini/Desktop/wordpress%20%E7%B4%A0%E6%9D%90%E5%BA%AB/ads/catering-corporate-tainan/preview.html">開預覽</a>
+                        <a href="file:///Users/pagemacmini/Desktop/MAPLAB_A2A3_Workbench/jobs/run_ads_catering-corporate-tainan.command">Run now</a>
+                        <a href="file:///Users/pagemacmini/Desktop/MAPLAB_A2A3_Workbench/jobs/schedule_ads_catering-corporate-tainan.command">Tonight</a>
+                        <button data-copy="ads-catering-corporate-tainan" onclick="copyPrompt('ads-catering-corporate-tainan')">Copy prompt</button>
+                      </div>
+                    </div>
+                    <div class="mini-card">
+                      <h4>Ad Copy / TA</h4>
+                      <p class="muted">copy.md + ta.md + asset_map.md + source_bridge.md</p>
+                      <textarea id="ads-catering-corporate-tainan" readonly>你是 MAPLAB A3 廣告 worker。
+
+work_package: /Users/pagemacmini/Desktop/wordpress 素材庫/ads/catering-corporate-tainan
+task_kind: ads
+goal: 先檢查素材、文案與 TA，輸出 draft/review，不直接發布。
+
+你必讀：
+- brief.md
+- copy.md
+- ta.md
+- asset_map.md
+- source_bridge.md
+- preview.html
+
+你要做的事：
+1. 檢查 preview.html 的圖文是否合理。
+2. 檢查 copy.md 的標題、主文、CTA 是否符合場景。
+3. 必要時微調 copy.md、ta.md、asset_map.md。
+4. 在 review 區寫回 task_request.md、execution_log.json、review_request.md。
+
+限制：
+- 不要發布廣告
+- 不要推 main
+- 不要改原始素材
+- 只產 draft / review bundle</textarea>
+                    </div>
+                  </div>
+                </article>
+
+
+                <article class="task-card" data-search="台南學校活動外燴 school-event-catering-tainan 校園活動、講座、畢典、EMBA、校內會議 成大管理學院EMBA辦公室 學校研討會 EMBA 校友餐敘 校園活動">
+                  <div class="task-head">
+                    <div>
+                      <div class="eyebrow">廣告素材包</div>
+                      <h3>台南學校活動外燴</h3>
+                      <p class="muted">校園活動、講座、畢典、EMBA、校內會議</p>
+                    </div>
+                    <span class="pill">台南學校活動外燴</span>
+                  </div>
+                  <div class="meta">
+                    <span>來源：成大管理學院EMBA辦公室, 學校研討會, EMBA 校友餐敘, 校園活動</span>
+                    <span>人數：30–400 人</span>
+                    <span>預算：10,000–80,000</span>
+                  </div>
+                  <div class="task-grid">
+                    <div class="mini-card">
+                      <h4>OpenClaw 工作包</h4>
+                      <p class="muted">只讀這個資料夾，不看整個 Drive。</p>
+                      <div class="actions">
+                        <a href="file:///Users/pagemacmini/Desktop/wordpress%20%E7%B4%A0%E6%9D%90%E5%BA%AB/ads/school-event-catering-tainan">開資料夾</a>
+                        <a href="file:///Users/pagemacmini/Desktop/wordpress%20%E7%B4%A0%E6%9D%90%E5%BA%AB/ads/school-event-catering-tainan/preview.html">開預覽</a>
+                        <a href="file:///Users/pagemacmini/Desktop/MAPLAB_A2A3_Workbench/jobs/run_ads_school-event-catering-tainan.command">Run now</a>
+                        <a href="file:///Users/pagemacmini/Desktop/MAPLAB_A2A3_Workbench/jobs/schedule_ads_school-event-catering-tainan.command">Tonight</a>
+                        <button data-copy="ads-school-event-catering-tainan" onclick="copyPrompt('ads-school-event-catering-tainan')">Copy prompt</button>
+                      </div>
+                    </div>
+                    <div class="mini-card">
+                      <h4>Ad Copy / TA</h4>
+                      <p class="muted">copy.md + ta.md + asset_map.md + source_bridge.md</p>
+                      <textarea id="ads-school-event-catering-tainan" readonly>你是 MAPLAB A3 廣告 worker。
+
+work_package: /Users/pagemacmini/Desktop/wordpress 素材庫/ads/school-event-catering-tainan
+task_kind: ads
+goal: 先檢查素材、文案與 TA，輸出 draft/review，不直接發布。
+
+你必讀：
+- brief.md
+- copy.md
+- ta.md
+- asset_map.md
+- source_bridge.md
+- preview.html
+
+你要做的事：
+1. 檢查 preview.html 的圖文是否合理。
+2. 檢查 copy.md 的標題、主文、CTA 是否符合場景。
+3. 必要時微調 copy.md、ta.md、asset_map.md。
+4. 在 review 區寫回 task_request.md、execution_log.json、review_request.md。
+
+限制：
+- 不要發布廣告
+- 不要推 main
+- 不要改原始素材
+- 只產 draft / review bundle</textarea>
+                    </div>
+                  </div>
+                </article>
+                </div>
+    </section>
+  </div>
+
+  <script>
+    function copyPrompt(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      navigator.clipboard.writeText(el.value).then(() => {
+        const prev = document.title;
+        document.title = '已複製 ' + id;
+        window.setTimeout(() => document.title = prev, 1200);
+      });
+    }
+
+    const search = document.querySelector('input[type="search"]');
+    if (search) {
+      search.addEventListener('input', () => {
+        const value = search.value.trim().toLowerCase();
+        document.querySelectorAll('.task-card[data-search]').forEach((card) => {
+          const hay = card.getAttribute('data-search') || '';
+          card.style.display = hay.toLowerCase().includes(value) ? '' : 'none';
+        });
+      });
+    }
+  </script>
+</body>
+</html>

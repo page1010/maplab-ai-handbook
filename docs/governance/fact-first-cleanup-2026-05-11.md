@@ -12,7 +12,7 @@ This pass checked the active MAPLAB handbook repo, the stale Downloads copy, A4 
 
 - Official repo: `/Users/pagemacmini/maplab-ai-handbook`
 - Stale/non-git copy: `/Users/pagemacmini/Downloads/maplab-ai-handbook-main`
-- Quarantined stale copy: `/Users/pagemacmini/Downloads/沒用的資料夾/maplab-ai-handbook-main-stale-20260511`
+- Quarantine attempt: this folder was briefly moved to `/Users/pagemacmini/Downloads/沒用的資料夾/maplab-ai-handbook-main-stale-20260511`, then restored because moving an active `cwd` breaks the working session.
 - The Downloads copy has `CURRENT_STATUS.md` v4.0 and no `pitfalls.md`; the official repo has `CURRENT_STATUS.md` v6.0 and `pitfalls.md`.
 - The official repo already documents the Downloads-copy mistake in `pitfalls.md` and `docs/a2a3/workbench-integrity-report.md`.
 
@@ -69,11 +69,11 @@ Live WP public REST verified on 2026-05-11:
 - `workbook/dashboard.html`
 - `pitfalls.md`
 
-## Files Quarantined
+## Quarantine Correction
 
-- Moved `/Users/pagemacmini/Downloads/maplab-ai-handbook-main` to `/Users/pagemacmini/Downloads/沒用的資料夾/maplab-ai-handbook-main-stale-20260511`
-- Reason: it is not a git repo, had stale v4.0 status, no `pitfalls.md`, and previously caused A2/A3 workbench truth-source confusion.
-- Safety: this was a move, not deletion; files remain recoverable from the quarantine folder.
+- The stale Downloads copy should not be physically moved while a Codex session may still use it as `cwd`.
+- Correct handling: leave the folder in place, mark it as non-canonical in repo docs, and only move it after Owner explicitly approves.
+- Current state after correction: `/Users/pagemacmini/Downloads/maplab-ai-handbook-main` is restored.
 
 ## Next Cleanup Queue
 
@@ -81,3 +81,4 @@ Live WP public REST verified on 2026-05-11:
 2. Build an A2/A3 live-owner map before more WordPress drafting.
 3. Update OpenClaw/A6 memory to read this fact-first cleanup before dispatching A2/A4 tasks.
 4. Add a small link/resource checker that fails if active docs/scripts reference a Drive ID that API cannot see.
+5. If cleanup requires moving user-visible folders, ask Owner first and avoid moving the active working directory.

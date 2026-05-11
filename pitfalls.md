@@ -9,6 +9,13 @@
 - 解法：用 Google Drive API 讀取 folder metadata；確認 `1yVggYKiTkBJe4kd8CPoM3U75km0nVuNy` 是目前 `MAPLAB_ASSETS`，且舊 ID API 回 404。active docs/scripts 統一更新到現行 ID，archive/review output 保留歷史原貌。
 - 預防：任何資源位置更新前，先用 Drive/Sheets API 查 `id/name/parent/trashed`；不能只相信 repo 記錄或 dashboard HTML。
 
+## 2026-05-11 — Do not move an active user working directory
+
+- 觸發條件：Owner 發現 `/Users/pagemacmini/Downloads/maplab-ai-handbook-main` 工作目錄缺失。
+- 根因：A1 將非 git 下載副本移到「沒用的資料夾」做隔離；雖然不是刪除，但該路徑正是目前 session 的 `cwd`，等同破壞工作環境。
+- 解法：立即把資料夾原路徑恢復；治理報告改為「標記為非 canonical，不物理搬移」。
+- 預防：清理/隔離任何使用者可見資料夾前，先確認是否為 active `cwd`、桌面入口、同步資料夾或近期工作區；移動前需 Owner 明確批准。
+
 ## 2026-05-11 — A2/A3 workbench built in non-git download copy
 
 - 觸發條件：Owner 發現上方快速瀏覽連結壞掉，並懷疑 repo 紀錄寫壞。

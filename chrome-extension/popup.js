@@ -51,14 +51,18 @@ function formatVersion(version) {
 
 // === GitHub fetch ===
 function authHeaders(token) {
-  const h = { 'Accept': 'application/vnd.github.v3+json' };
+  const h = {
+    'Accept': 'application/vnd.github.v3+json',
+    'Cache-Control': 'no-cache',
+    'Pragma': 'no-cache',
+  };
   if (token) h['Authorization'] = `token ${token}`;
   return h;
 }
 async function fetchCommits(token) {
   try {
     const url = `${GITHUB_API}/commits?per_page=${COMMIT_COUNT}&t=${Date.now()}`;
-    const resp = await fetch(url, { headers: authHeaders(token) });
+    const resp = await fetch(url, { headers: authHeaders(token), cache: 'no-store' });
     if (!resp.ok) return [];
     const data = await resp.json();
     return data.map(c => ({
@@ -73,8 +77,8 @@ async function fetchFile(base, path, token) {
   // Private repo: raw.githubusercontent.com 不支援 Authorization header
   // 有 token 時改用 GitHub Contents API（回傳 base64 內容）
   if (token) {
-    const apiUrl = `${GITHUB_API}/contents/${path}?t=${Date.now()}`;
-    const resp = await fetch(apiUrl, { headers: authHeaders(token) });
+    const apiUrl = `${GITHUB_API}/contents/${path}?ref=main&cb=${Date.now()}`;
+    const resp = await fetch(apiUrl, { headers: authHeaders(token), cache: 'no-store' });
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
     const json = await resp.json();
     const binary = atob(json.content.replace(/\n/g, ''));
@@ -82,7 +86,7 @@ async function fetchFile(base, path, token) {
     return new TextDecoder('utf-8').decode(bytes);
   }
   const url = base.replace(/\/$/, '') + '/' + path + '?t=' + Date.now();
-  const resp = await fetch(url);
+  const resp = await fetch(url, { cache: 'no-store' });
   if (!resp.ok) throw new Error('HTTP ' + resp.status);
   return resp.text();
 }

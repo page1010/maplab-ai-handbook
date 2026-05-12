@@ -12,6 +12,7 @@ if str(ROOT / "tools") not in sys.path:
 from ai_workbook.build_context_pack import build_context_pack
 from ai_workbook.build_dashboard import build_dashboard
 from ai_workbook.create_microtask import create_microtask
+from ai_workbook.asset_case_matcher import build_2025_case_match_report
 from ai_workbook.ingest import ingest_repo
 from ai_workbook.infer_need import infer_needs
 from ai_workbook.parse_task_cards import parse_task_cards
@@ -34,6 +35,10 @@ def main() -> int:
     sub.add_parser("infer")
     sub.add_parser("photo-plan")
     sub.add_parser("asset-snapshot")
+    p_asset_match = sub.add_parser("asset-case-match")
+    p_asset_match.add_argument("--year", default="2025")
+    p_asset_match.add_argument("--limit", type=int, default=120)
+    p_asset_match.add_argument("--date", default="")
     sub.add_parser("dashboard")
 
     args = parser.parse_args()
@@ -42,6 +47,31 @@ def main() -> int:
         ingest = ingest_repo()
         tasks = parse_task_cards()
         print(f"indexed files={ingest['count']} tasks={tasks['count']}")
+        return 0
+
+    if args.cmd == "photo-plan":
+        p = build_photo_classification_plan()
+        write_output(
+            "T-A4-photo-classification-restart",
+            {"plan_path": str(p), "status": "proposed_only"},
+            name="run_log",
+        )
+        print(str(p))
+        return 0
+
+    if args.cmd == "asset-snapshot":
+        p = build_asset_log_snapshot()
+        print(str(p))
+        return 0
+
+    if args.cmd == "asset-case-match":
+        p = build_2025_case_match_report(year=args.year, limit=args.limit, target_date=args.date)
+        print(str(p))
+        return 0
+
+    if args.cmd == "dashboard":
+        p = build_dashboard()
+        print(str(p))
         return 0
 
     tasks = parse_task_cards()["tasks"]
@@ -69,26 +99,6 @@ def main() -> int:
     if args.cmd == "infer":
         payload = infer_needs(tasks)
         print(f"inferred={payload['count']}")
-        return 0
-
-    if args.cmd == "photo-plan":
-        p = build_photo_classification_plan()
-        write_output(
-            "T-A4-photo-classification-restart",
-            {"plan_path": str(p), "status": "proposed_only"},
-            name="run_log",
-        )
-        print(str(p))
-        return 0
-
-    if args.cmd == "asset-snapshot":
-        p = build_asset_log_snapshot()
-        print(str(p))
-        return 0
-
-    if args.cmd == "dashboard":
-        p = build_dashboard()
-        print(str(p))
         return 0
 
     return 1

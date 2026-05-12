@@ -1,0 +1,96 @@
+{
+  "updated_at": "2026-05-12",
+  "source_manifest": "trash/stale-runtime-artifacts/2026-05-12-a6-review-bundles/manifest.json",
+  "status": "raw_a6_bundles_quarantined",
+  "reason": "Old untracked A6/OpenClaw smoke-test bundles were moved out of active workbook/reviews after external reference check.",
+  "bundles": [
+    {
+      "job_id": "JOB-A6-1077768811-20260506-142404",
+      "status": "moved_to_stale_runtime_artifacts",
+      "archive_path": "/Users/pagemacmini/maplab-ai-handbook/trash/stale-runtime-artifacts/2026-05-12-a6-review-bundles/JOB-A6-1077768811-20260506-142404",
+      "files": 9,
+      "bytes": 293887,
+      "commit_policy": "raw_folder_ignored_keep_manifest_only"
+    },
+    {
+      "job_id": "JOB-A6-1077768811-20260506-154335",
+      "status": "moved_to_stale_runtime_artifacts",
+      "archive_path": "/Users/pagemacmini/maplab-ai-handbook/trash/stale-runtime-artifacts/2026-05-12-a6-review-bundles/JOB-A6-1077768811-20260506-154335",
+      "files": 9,
+      "bytes": 695730,
+      "commit_policy": "raw_folder_ignored_keep_manifest_only"
+    },
+    {
+      "job_id": "JOB-A6-1077768811-20260506-195920",
+      "status": "moved_to_stale_runtime_artifacts",
+      "archive_path": "/Users/pagemacmini/maplab-ai-handbook/trash/stale-runtime-artifacts/2026-05-12-a6-review-bundles/JOB-A6-1077768811-20260506-195920",
+      "files": 9,
+      "bytes": 635557,
+      "commit_policy": "raw_folder_ignored_keep_manifest_only"
+    },
+    {
+      "job_id": "JOB-A6-1077768811-20260506-231020",
+      "status": "moved_to_stale_runtime_artifacts",
+      "archive_path": "/Users/pagemacmini/maplab-ai-handbook/trash/stale-runtime-artifacts/2026-05-12-a6-review-bundles/JOB-A6-1077768811-20260506-231020",
+      "files": 9,
+      "bytes": 632571,
+      "commit_policy": "raw_folder_ignored_keep_manifest_only"
+    },
+    {
+      "job_id": "JOB-A6-MEM-TEST-001",
+      "status": "moved_to_stale_runtime_artifacts",
+      "archive_path": "/Users/pagemacmini/maplab-ai-handbook/trash/stale-runtime-artifacts/2026-05-12-a6-review-bundles/JOB-A6-MEM-TEST-001",
+      "files": 9,
+      "bytes": 315193,
+      "commit_policy": "raw_folder_ignored_keep_manifest_only"
+    },
+    {
+      "job_id": "JOB-A6-ROUTE-001",
+      "status": "moved_to_stale_runtime_artifacts",
+      "archive_path": "/Users/pagemacmini/maplab-ai-handbook/trash/stale-runtime-artifacts/2026-05-12-a6-review-bundles/JOB-A6-ROUTE-001",
+      "files": 9,
+      "bytes": 193103,
+      "commit_policy": "raw_folder_ignored_keep_manifest_only"
+    },
+    {
+      "job_id": "JOB-A6-ROUTE-002",
+      "status": "moved_to_stale_runtime_artifacts",
+      "archive_path": "/Users/pagemacmini/maplab-ai-handbook/trash/stale-runtime-artifacts/2026-05-12-a6-review-bundles/JOB-A6-ROUTE-002",
+      "files": 9,
+      "bytes": 223147,
+      "commit_policy": "raw_folder_ignored_keep_manifest_only"
+    },
+    {
+      "job_id": "JOB-A6-TEST-001",
+      "status": "moved_to_stale_runtime_artifacts",
+      "archive_path": "/Users/pagemacmini/maplab-ai-handbook/trash/stale-runtime-artifacts/2026-05-12-a6-review-bundles/JOB-A6-TEST-001",
+      "files": 9,
+      "bytes": 485465,
+      "commit_policy": "raw_folder_ignored_keep_manifest_only"
+    },
+    {
+      "job_id": "JOB-A6-TEST-002",
+      "status": "moved_to_stale_runtime_artifacts",
+      "archive_path": "/Users/pagemacmini/maplab-ai-handbook/trash/stale-runtime-artifacts/2026-05-12-a6-review-bundles/JOB-A6-TEST-002",
+      "files": 9,
+      "bytes": 191190,
+      "commit_policy": "raw_folder_ignored_keep_manifest_only"
+    },
+    {
+      "job_id": "JOB-A6-TEST-003",
+      "status": "moved_to_stale_runtime_artifacts",
+      "archive_path": "/Users/pagemacmini/maplab-ai-handbook/trash/stale-runtime-artifacts/2026-05-12-a6-review-bundles/JOB-A6-TEST-003",
+      "files": 9,
+      "bytes": 198092,
+      "commit_policy": "raw_folder_ignored_keep_manifest_only"
+    },
+    {
+      "job_id": "JOB-TEST-001",
+      "status": "moved_to_stale_runtime_artifacts",
+      "archive_path": "/Users/pagemacmini/maplab-ai-handbook/trash/stale-runtime-artifacts/2026-05-12-a6-review-bundles/JOB-TEST-001",
+      "files": 8,
+      "bytes": 67880,
+      "commit_policy": "raw_folder_ignored_keep_manifest_only"
+    }
+  ]
+}

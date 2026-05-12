@@ -64,3 +64,17 @@
 - 根因：repo 舊文件寫 GSC 已接通，但本機實際 `google-token.json` 只有 Drive/Sheets scope；`mcp-server-gsc` 可列出 `submit_sitemap` / `index_inspect` 工具，但目前憑證是 OAuth client，server 實際要求 service account 的 `private_key` + `client_email`。此外，Google sitemap ping 已 deprecated，Indexing API 也不是一般 WordPress 頁可用的萬用提交。
 - 解法：先用 live HTTP 驗證 sitemap / robots / page indexability，再用 Rank Math Instant Indexing `/wp-json/rankmath/v1/in/submitUrls` 送出 8 個 URL，並把 GSC API 權限不足記錄在 review bundle。
 - 預防：任何「提交 Google / GSC」任務必須分清楚四件事：sitemap 可發現、Rank Math indexing endpoint 是否 accepted、GSC URL Inspection 是否有 scope、Search Console UI Request Indexing 是否已人工點擊；不可把其中一項成功說成全部完成。
+
+## 2026-05-12 — Image recognition is QA, not the primary asset key
+
+- 觸發條件：Owner 要求「搜尋日期+報價單+外燴catering類別的檔案夾+已經seo辨識過文字的sheet，補2025先」。
+- 根因：只看畫面或只看 AI 文字辨識會誤判案例；照片要先和活動事實鏈對上。
+- 解法：先用 Drive metadata 的拍攝日期，交叉 TimeTree 外燴事件、本機報價單 `.gsheet` 日期、ASSET_LOG `year/category/keywords/seo_name`，最後才做視覺 QA。
+- 預防：A2/A3/A6 找圖先跑 `python3 tools/ai_workbook/cli.py asset-case-match --year 2025 --limit 120`，不得直接從網格截圖或未核對圖庫拿圖。
+
+## 2026-05-12 — Stale raw review bundles must leave active evidence area
+
+- 觸發條件：`workbook/reviews/` 混入舊 A6/OpenClaw smoke-test raw bundles，導致 active review evidence 與失準測試混在一起。
+- 根因：raw bundle 曾被保留作除錯證據，但未完成 sanitize / commit policy，後續 dashboard 與 review 視覺上混淆。
+- 解法：無外部 repo 引用、未追蹤、標記 `hold_raw_bundle_until_sanitized` 的 raw bundle 移到 `trash/stale-runtime-artifacts/`，只保留 manifest pointer。
+- 預防：`workbook/reviews/` 只放 active / reviewed / tracked evidence；stale raw bundle 不直接 commit。

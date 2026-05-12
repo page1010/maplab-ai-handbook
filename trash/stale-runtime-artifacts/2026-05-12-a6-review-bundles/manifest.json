@@ -1,0 +1,84 @@
+{
+  "generated_at": "2026-05-12",
+  "reason": "Untracked A6/OpenClaw smoke-test review bundles; external repo references not found by rg; raw bundles held outside formal workbook reviews until sanitized.",
+  "policy": "Keep raw files local and ignored; commit only manifest/README if needed.",
+  "items": [
+    {
+      "job_id": "JOB-A6-1077768811-20260506-142404",
+      "status": "moved_to_stale_runtime_artifacts",
+      "archive_path": "/Users/pagemacmini/maplab-ai-handbook/trash/stale-runtime-artifacts/2026-05-12-a6-review-bundles/JOB-A6-1077768811-20260506-142404",
+      "files": 9,
+      "bytes": 293887
+    },
+    {
+      "job_id": "JOB-A6-1077768811-20260506-154335",
+      "status": "moved_to_stale_runtime_artifacts",
+      "archive_path": "/Users/pagemacmini/maplab-ai-handbook/trash/stale-runtime-artifacts/2026-05-12-a6-review-bundles/JOB-A6-1077768811-20260506-154335",
+      "files": 9,
+      "bytes": 695730
+    },
+    {
+      "job_id": "JOB-A6-1077768811-20260506-195920",
+      "status": "moved_to_stale_runtime_artifacts",
+      "archive_path": "/Users/pagemacmini/maplab-ai-handbook/trash/stale-runtime-artifacts/2026-05-12-a6-review-bundles/JOB-A6-1077768811-20260506-195920",
+      "files": 9,
+      "bytes": 635557
+    },
+    {
+      "job_id": "JOB-A6-1077768811-20260506-231020",
+      "status": "moved_to_stale_runtime_artifacts",
+      "archive_path": "/Users/pagemacmini/maplab-ai-handbook/trash/stale-runtime-artifacts/2026-05-12-a6-review-bundles/JOB-A6-1077768811-20260506-231020",
+      "files": 9,
+      "bytes": 632571
+    },
+    {
+      "job_id": "JOB-A6-MEM-TEST-001",
+      "status": "moved_to_stale_runtime_artifacts",
+      "archive_path": "/Users/pagemacmini/maplab-ai-handbook/trash/stale-runtime-artifacts/2026-05-12-a6-review-bundles/JOB-A6-MEM-TEST-001",
+      "files": 9,
+      "bytes": 315193
+    },
+    {
+      "job_id": "JOB-A6-ROUTE-001",
+      "status": "moved_to_stale_runtime_artifacts",
+      "archive_path": "/Users/pagemacmini/maplab-ai-handbook/trash/stale-runtime-artifacts/2026-05-12-a6-review-bundles/JOB-A6-ROUTE-001",
+      "files": 9,
+      "bytes": 193103
+    },
+    {
+      "job_id": "JOB-A6-ROUTE-002",
+      "status": "moved_to_stale_runtime_artifacts",
+      "archive_path": "/Users/pagemacmini/maplab-ai-handbook/trash/stale-runtime-artifacts/2026-05-12-a6-review-bundles/JOB-A6-ROUTE-002",
+      "files": 9,
+      "bytes": 223147
+    },
+    {
+      "job_id": "JOB-A6-TEST-001",
+      "status": "moved_to_stale_runtime_artifacts",
+      "archive_path": "/Users/pagemacmini/maplab-ai-handbook/trash/stale-runtime-artifacts/2026-05-12-a6-review-bundles/JOB-A6-TEST-001",
+      "files": 9,
+      "bytes": 485465
+    },
+    {
+      "job_id": "JOB-A6-TEST-002",
+      "status": "moved_to_stale_runtime_artifacts",
+      "archive_path": "/Users/pagemacmini/maplab-ai-handbook/trash/stale-runtime-artifacts/2026-05-12-a6-review-bundles/JOB-A6-TEST-002",
+      "files": 9,
+      "bytes": 191190
+    },
+    {
+      "job_id": "JOB-A6-TEST-003",
+      "status": "moved_to_stale_runtime_artifacts",
+      "archive_path": "/Users/pagemacmini/maplab-ai-handbook/trash/stale-runtime-artifacts/2026-05-12-a6-review-bundles/JOB-A6-TEST-003",
+      "files": 9,
+      "bytes": 198092
+    },
+    {
+      "job_id": "JOB-TEST-001",
+      "status": "moved_to_stale_runtime_artifacts",
+      "archive_path": "/Users/pagemacmini/maplab-ai-handbook/trash/stale-runtime-artifacts/2026-05-12-a6-review-bundles/JOB-TEST-001",
+      "files": 8,
+      "bytes": 67880
+    }
+  ]
+}

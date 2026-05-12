@@ -27,3 +27,4 @@ workbook/reviews/
 - Codex writes the bundle.
 - A1 reviews the bundle.
 - Owner decides closure.
+- Raw smoke-test bundles that are stale, untracked, or not safe to commit should be moved to `trash/stale-runtime-artifacts/` with a manifest pointer instead of staying mixed with active review evidence.

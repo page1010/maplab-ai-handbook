@@ -40,3 +40,4 @@ automation/seo_factory/output/
 # Local private asset proofs may contain customer/event names or copied photos
 workbook/outputs/*/T-A4-2025-asset-link-proof/
 workbook/outputs/*/T-A4-2025-asset-case-match/
+workbook/reviews/JOB-2025-CASE-LIBRARY/

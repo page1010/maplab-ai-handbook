@@ -10,6 +10,7 @@ if str(ROOT / "tools") not in sys.path:
     sys.path.insert(0, str(ROOT / "tools"))
 
 from ai_workbook.build_context_pack import build_context_pack
+from ai_workbook.build_2025_case_library import build_2025_desktop_case_library
 from ai_workbook.build_dashboard import build_dashboard
 from ai_workbook.create_microtask import create_microtask
 from ai_workbook.asset_case_matcher import build_2025_case_match_report
@@ -35,6 +36,8 @@ def main() -> int:
     sub.add_parser("infer")
     sub.add_parser("photo-plan")
     sub.add_parser("asset-snapshot")
+    p_case_library = sub.add_parser("case-library-2025")
+    p_case_library.add_argument("--max-assets-per-case", type=int, default=5)
     p_asset_match = sub.add_parser("asset-case-match")
     p_asset_match.add_argument("--year", default="2025")
     p_asset_match.add_argument("--limit", type=int, default=120)
@@ -61,6 +64,11 @@ def main() -> int:
 
     if args.cmd == "asset-snapshot":
         p = build_asset_log_snapshot()
+        print(str(p))
+        return 0
+
+    if args.cmd == "case-library-2025":
+        p = build_2025_desktop_case_library(max_assets_per_case=args.max_assets_per_case)
         print(str(p))
         return 0
 

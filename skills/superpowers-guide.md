@@ -24,6 +24,7 @@ h# Superpowers Skills 導覽手冊 — MAPLAB AI Agent 版
 | 斷線、接手、上次做到哪 | crash-recovery-guide | 進度驗證 + 補齊 |
 | 第一次、新 agent、不知道從哪開始 | AGENT_STARTUP_PROTOCOL.md | 完整 9 步驟 |
 | 照片、相簿、圖片分類、素材 | photo-pipeline-toolkit-guide + a4-photo-asset-skills | 全流程 + 品牌規範 |
+| 真實案例找圖、報價單對圖、ASSET_LOG、2025素材、案例素材 | a4-fact-first-asset-matching | 先用日期+報價單+TimeTree+ASSET_LOG 建事實鏈，再做視覺 QA |
 | GPS、座標、home、shop | gps-daily-subdivision-guide | Haversine 分類 |
 | SEO、排名、關鍵字、GSC、GA | seo-session-checklist + seo-ranking-evaluation-guide | 排名判讀 + 優化 |
 | GTM、Pixel、轉換、追蹤碼 | seo-session-checklist Phase 2 + gtm-conversion-setup | 追蹤設定 |
@@ -133,6 +134,12 @@ h# Superpowers Skills 導覽手冊 — MAPLAB AI Agent 版
 - Takeout JSON metadata 合併、EXIF 讀寫、HEIC 支援
 - 重複偵測（MD5 + perceptual hash）、Gemini Vision 分類、Colab checkpoint
 - 路徑：skills/photo-pipeline-toolkit-guide.md
+
+### a4-fact-first-asset-matching — 事實鏈找圖技能
+- 何時用：A2/A3/A6 要找真實外燴案例照片、補 WordPress/SEO/廣告素材、對齊報價單與 ASSET_LOG
+- 核心：Drive 拍攝日期 → 報價單日期 → TimeTree 外燴事件 → ASSET_LOG keywords/seo_name → 視覺 QA
+- 關鍵規則：圖片辨識只做 QA，不是第一索引鍵；公開稿不得帶價格、電話、地址、本機路徑
+- 路徑：skills/a4-fact-first-asset-matching.md
 
 ### troubleshooting-hub — 卡住急救手冊
 - 何時用：執行中卡住，嘗試 1-2 次修不好

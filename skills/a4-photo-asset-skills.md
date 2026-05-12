@@ -33,7 +33,23 @@
 - 已分類結果：C=4,593（可用）、T=254（待確認）、D=55,737（不用）
 - 上傳到 WordPress 用 Clipboard API 跨 Tab 法（見 gdrive-to-wordpress-upload-guide.md）
 
-**必讀**：skills/photo-pipeline-toolkit-guide.md、skills/gdrive-to-wordpress-upload-guide.md
+**必讀**：skills/photo-pipeline-toolkit-guide.md、skills/a4-fact-first-asset-matching.md、skills/gdrive-to-wordpress-upload-guide.md
+
+---
+
+## 技能 1.5：事實鏈找圖
+
+**場景**：A2/A3/A6 要用真實外燴案例照片，尤其是要對應報價單、SEO 頁、廣告素材或案例段落。
+
+**規則**：
+1. 先用 `a4-fact-first-asset-matching.md` 建立日期、報價單、TimeTree、ASSET_LOG、Drive source file 的證據鏈。
+2. 圖片辨識只能當最後 QA，不可當第一索引鍵。
+3. 任何 public draft 不得帶價格、電話、地址、內部日期或本機路徑。
+
+**CLI**：
+```bash
+python3 tools/ai_workbook/cli.py asset-case-match --year 2025 --limit 120
+```
 
 ---
 

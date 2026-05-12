@@ -148,7 +148,7 @@ BAD_ASSET_TERMS = [
 ]
 
 
-def build_2025_desktop_case_library(max_assets_per_case: int = 5) -> Path:
+def build_2025_desktop_case_library(max_assets_per_case: int = 12) -> Path:
     if not REPORT_PATH.exists():
         raise FileNotFoundError(f"Missing case match report: {REPORT_PATH}")
 
@@ -414,7 +414,7 @@ def _root_gallery_html(cases: List[Dict]) -> str:
     cards = []
     for case in cases:
         previews = []
-        for asset in case["assets"][:5]:
+        for asset in case["assets"]:
             preview = asset.get("local_preview") or asset.get("local_asset")
             if preview:
                 rel = Path(preview).relative_to(DESKTOP_CASE_ROOT)
@@ -429,7 +429,7 @@ def _root_gallery_html(cases: List[Dict]) -> str:
                     f'<a href="{_html_escape(sheet["url"])}">{_html_escape(sheet.get("name") or "quote sheet")}</a>'
                 )
         drive_links = []
-        for asset in case["assets"][:5]:
+        for asset in case["assets"][:12]:
             drive_links.append(
                 f'<a href="{_html_escape(asset.get("drive_url") or "")}">Row {asset.get("asset_log_row")}</a>'
             )

@@ -37,7 +37,7 @@ def main() -> int:
     sub.add_parser("photo-plan")
     sub.add_parser("asset-snapshot")
     p_case_library = sub.add_parser("case-library-2025")
-    p_case_library.add_argument("--max-assets-per-case", type=int, default=5)
+    p_case_library.add_argument("--max-assets-per-case", type=int, default=12)
     p_asset_match = sub.add_parser("asset-case-match")
     p_asset_match.add_argument("--year", default="2025")
     p_asset_match.add_argument("--limit", type=int, default=120)

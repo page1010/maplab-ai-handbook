@@ -31,6 +31,8 @@ from telegram.ext import (
     filters,
 )
 
+from a5_quote_engine import build_a5_quote_prompt, run_a5_local_quote
+
 # ── Config ─────────────────────────────────────────────────────────────────────
 BOT_DIR = Path(__file__).parent
 load_dotenv(BOT_DIR / ".env")
@@ -65,6 +67,8 @@ logging.basicConfig(
     ],
 )
 logger = logging.getLogger("maplab_a6_bot")
+logging.getLogger("httpx").setLevel(logging.WARNING)
+logging.getLogger("telegram").setLevel(logging.WARNING)
 
 START_TIME = datetime.now()
 
@@ -80,7 +84,7 @@ MODE_CHAT = "chat"
 MODE_SEO = "seo"
 
 MODE_LABELS = {
-    MODE_QUOTE: "🧾 報價模式（Claude + GAS + Sheets）",
+    MODE_QUOTE: "🧾 A5 報價模式（雲端 A5 + 本地 Ollama 備援）",
     MODE_CHAT: "💬 聊天模式（Ollama）",
     MODE_SEO: "📝 SEO 模式（Ollama）",
 }
@@ -353,6 +357,53 @@ async def claude_ask(chat_id: int, user_message: str, user_name: str = "", timeo
         return f"⚠️ 呼叫 A6 失敗: {e}"
 
 
+async def a5_cloud_quote_ask(chat_id: int, user_message: str, user_name: str = "", timeout: int = 600) -> str:
+    """Call the cloud CLI path with an A5 quote prompt.
+
+    If this path fails or quota is exhausted, the caller falls back to the local
+    A5 quote engine instead of leaving the Telegram user with a dead end.
+    """
+    history = _get_history(chat_id)
+    full_prompt = build_a5_quote_prompt(
+        user_message=user_message,
+        user_name=user_name,
+        history=history,
+        runtime="cloud-a5",
+    )
+
+    env = os.environ.copy()
+    if CLAUDE_OAUTH_TOKEN:
+        env["CLAUDE_CODE_OAUTH_TOKEN"] = CLAUDE_OAUTH_TOKEN
+    env["PATH"] = "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:" + env.get("PATH", "")
+
+    try:
+        proc = await asyncio.create_subprocess_exec(
+            "claude", "-p", "--dangerously-skip-permissions",
+            full_prompt,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+            env=env,
+            cwd=os.getenv('REPO_PATH', '/Users/pagemacmini/maplab-ai-handbook'),
+        )
+        try:
+            stdout, stderr = await asyncio.wait_for(proc.communicate(), timeout=timeout)
+        except asyncio.TimeoutError:
+            proc.kill()
+            return f"⚠️ A5 雲端報價引擎回應超時（{timeout}秒）"
+        if proc.returncode != 0:
+            err = stderr.decode(errors="replace")[:500].strip()
+            return f"⚠️ A5 雲端報價引擎錯誤: {err or '未知錯誤'}"
+        answer = stdout.decode(errors="replace").strip() or "（A5 雲端報價引擎無回應）"
+        history.append({"role": "user", "content": user_message})
+        history.append({"role": "assistant", "content": answer})
+        _save_conv_history()
+        return answer
+    except FileNotFoundError:
+        return "⚠️ 找不到 claude 命令，改用本地 A5 備援"
+    except Exception as e:
+        return f"⚠️ 呼叫 A5 雲端報價引擎失敗: {e}"
+
+
 # ── Command Handlers ───────────────────────────────────────────────────────────
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -370,6 +421,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         f"/ping — 心跳\n\n"
         f"或直接說：\n"
         f"「報價 王小明 婚禮 80人 預算6萬」\n"
+        f"「A5 幫我先做一版 30人週歲派對 2萬內」\n"
         f"「你幫我把主菜換成素食版本」\n"
         f"「查 王小明」",
         reply_markup=_mode_keyboard(),
@@ -384,13 +436,15 @@ async def help_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text(
         "📋 MAPLAB A6 報價助理指令\n\n"
         f"【模式切換】\n"
-        f"/mode quote — 報價模式（Claude + GAS）\n"
+        f"/mode quote — A5 報價模式（雲端 A5；失敗時本地 Ollama/OpenClaw 備援）\n"
         f"/mode chat — 一般聊天（Ollama）\n"
         f"/mode seo — SEO 助手（Ollama）\n"
         f"目前模式：{MODE_LABELS[_get_mode(chat_id)]}\n\n"
         "【急件報價】\n"
         "報價 [客名] [類型] [人數] [預算]\n"
         "例：報價 王小明 婚禮 80人 預算6萬\n\n"
+        "【本地備援測試】\n"
+        "/localquote [需求] — 直接走本機 Ollama/OpenClaw，不寫 Google Sheet\n\n"
         "【品項修改】\n"
         "你幫我把 [X] 換成 [Y]\n"
         "例：你幫我把主菜換成素食版本\n\n"
@@ -450,6 +504,21 @@ async def reset_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     _conv_history.pop(chat_id, None)
     _save_conv_history()
     await update.message.reply_text("🔄 對話記憶已清除，可開始新案件。")
+
+
+async def localquote_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not is_allowed(update):
+        await deny(update)
+        return
+    args = context.args or []
+    quote_request = " ".join(args).strip()
+    if not quote_request:
+        await update.message.reply_text(
+            "用法：/localquote [報價需求]\n"
+            "例：/localquote 報價 王小明 婚禮 80人 預算6萬"
+        )
+        return
+    await _run_a5_quote_guarded(update, context, f"/localquote {quote_request}")
 
 
 # ── Background Claude runner ───────────────────────────────────────────────────
@@ -561,6 +630,125 @@ async def _heartbeat(bot, chat_id: int, start_time: float, cancel_event: asyncio
         except Exception:
             pass
         await asyncio.sleep(60)
+
+
+def _looks_like_cloud_failure(answer: str) -> bool:
+    lowered = answer.lower()
+    needles = [
+        "⚠️",
+        "quota",
+        "rate limit",
+        "usage limit",
+        "exceeded",
+        "billing",
+        "overloaded",
+        "找不到 claude",
+        "雲端報價引擎錯誤",
+        "雲端報價引擎失敗",
+        "回應超時",
+    ]
+    return any(needle in lowered for needle in needles)
+
+
+async def _run_a5_quote_background(
+    bot,
+    chat_id: int,
+    user_message: str,
+    user_name: str,
+) -> None:
+    async with _claude_semaphore:
+        cancel_event = asyncio.Event()
+        start_time = asyncio.get_event_loop().time()
+        heartbeat_task = asyncio.create_task(
+            _heartbeat(bot, chat_id, start_time, cancel_event)
+        )
+        local_fallback = False
+        force_local = user_message.strip().startswith("/localquote")
+        quote_message = user_message.strip()
+        if force_local:
+            quote_message = quote_message[len("/localquote"):].strip() or user_message
+        try:
+            if force_local:
+                answer = "⚠️ 已依指令直接切到本機 A5 備援。"
+            else:
+                answer = await a5_cloud_quote_ask(chat_id, user_message, user_name)
+            if force_local or _looks_like_cloud_failure(answer):
+                local_fallback = True
+                if force_local:
+                    notice = "🧪 A5 本地備援測試：直接走 Ollama/OpenClaw，不寫 Google Sheet。"
+                else:
+                    notice = "⚠️ A5 雲端路徑不可用，切到本機 Ollama/OpenClaw 備援產草稿。"
+                await bot.send_message(chat_id=chat_id, text=notice)
+                history = list(_get_history(chat_id))
+                result = await asyncio.to_thread(
+                    run_a5_local_quote,
+                    quote_message,
+                    user_name,
+                    history,
+                )
+                answer = result.answer
+                history_ref = _get_history(chat_id)
+                history_ref.append({"role": "user", "content": quote_message})
+                history_ref.append({"role": "assistant", "content": answer})
+                _save_conv_history()
+        finally:
+            cancel_event.set()
+            heartbeat_task.cancel()
+
+        if not local_fallback:
+            form_data = _extract_form_data(answer)
+            if form_data:
+                if form_data.get('action') == 'addItem':
+                    add_result = await asyncio.get_event_loop().run_in_executor(
+                        None, lambda: _trigger_gas_add_item(form_data))
+                    if add_result and add_result.get('success'):
+                        item_id = add_result.get('item_id', '')
+                        answer += f"\n\n✅ 品項已新增 item_id: {item_id}"
+                    else:
+                        error_msg = add_result.get('error', '未知錯誤') if add_result else 'GAS 無回應'
+                        answer += f"\n\n⚠️ 品項新增失敗（{error_msg}）。"
+                else:
+                    gas_result = await asyncio.get_event_loop().run_in_executor(
+                        None, lambda: _trigger_gas_quote_sync(form_data))
+                    if gas_result and gas_result.get('success'):
+                        url = gas_result.get('url', '')
+                        case_id = gas_result.get('caseId', '')
+                        answer += f"\n\n📄 **報價單已自動產出！**\n連結：{url}\n案件編號：{case_id}"
+
+                        slide_result = await asyncio.get_event_loop().run_in_executor(
+                            None, lambda: _trigger_gas_slide_sync())
+                        if slide_result and slide_result.get('success'):
+                            slide_url = slide_result.get('url', '')
+                            answer += f"\n\n📊 **提案簡報已自動產出！**\n連結：{slide_url}"
+                        else:
+                            slide_error = slide_result.get('error', '未知錯誤') if slide_result else 'GAS 無回應'
+                            answer += f"\n\n⚠️ 提案簡報自動產出失敗（{slide_error}）。資料已寫入母版，可手動點選單產出。"
+                    else:
+                        error_msg = gas_result.get('error', '未知錯誤') if gas_result else 'GAS 無回應'
+                        answer += f"\n\n⚠️ 報價單自動產出失敗（{error_msg}）。資料已寫入母版，可手動點選單產出。"
+        else:
+            answer += "\n\n⚠️ 本次為本地備援草稿，沒有自動寫入 Google Sheet 或產生正式報價單。"
+
+        MAX = 4096
+        for i in range(0, len(answer), MAX):
+            await bot.send_message(chat_id=chat_id, text=answer[i:i + MAX])
+        log_and_commit_a6(user_name, user_message, answer)
+
+
+async def _run_a5_quote_guarded(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+    user_message: str,
+) -> None:
+    if _claude_semaphore.locked():
+        await update.message.reply_text("⏳ A5 正在處理上一則報價，請稍候。")
+        return
+    chat_id = update.effective_chat.id
+    user_name = update.effective_user.first_name or "業務"
+    await update.message.reply_text("⏳ A5 報價模式處理中…")
+    asyncio.create_task(
+        _run_a5_quote_background(context.bot, chat_id, user_message, user_name)
+    )
 
 
 async def _run_claude_background(
@@ -724,7 +912,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 
     mode = _get_mode(chat_id)
     if mode == MODE_QUOTE:
-        await _run_claude_guarded(update, context, text)
+        await _run_a5_quote_guarded(update, context, text)
     else:
         await _run_ollama_guarded(update, context, text, mode)
 
@@ -760,6 +948,7 @@ def main() -> None:
     app.add_handler(CommandHandler("mode", mode_cmd))
     app.add_handler(CommandHandler("ping", ping))
     app.add_handler(CommandHandler("reset", reset_cmd))
+    app.add_handler(CommandHandler("localquote", localquote_cmd))
     app.add_handler(MessageHandler(filters.PHOTO, handle_photo))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     app.add_error_handler(on_error)

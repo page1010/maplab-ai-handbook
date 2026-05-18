@@ -78,3 +78,38 @@
 - 根因：raw bundle 曾被保留作除錯證據，但未完成 sanitize / commit policy，後續 dashboard 與 review 視覺上混淆。
 - 解法：無外部 repo 引用、未追蹤、標記 `hold_raw_bundle_until_sanitized` 的 raw bundle 移到 `trash/stale-runtime-artifacts/`，只保留 manifest pointer。
 - 預防：`workbook/reviews/` 只放 active / reviewed / tracked evidence；stale raw bundle 不直接 commit。
+
+## 2026-05-18 — Telegram commands need explicit CommandHandler
+
+- 觸發條件：`/localquote ...` 已寫進 help，但 Telegram Web 發出後 bot 沒進報價流程。
+- 根因：一般文字 handler 使用 `filters.TEXT & ~filters.COMMAND`，斜線命令會被排除；只新增 help 文案不會讓 command 被處理。
+- 解法：為 `/localquote` 加上獨立 `CommandHandler("localquote", localquote_cmd)`，再由 handler 呼叫 A5 本地備援報價流程。
+- 預防：任何新增 Telegram slash command 必須同時檢查 help text、CommandHandler 註冊、Telegram Web 實送測試三件事。
+
+## 2026-05-18 — OpenClaw quote bundles depend on REVIEWS_DIR
+
+- 觸發條件：A5 本地報價 fallback 顯示 `OpenClawAdapter unavailable`，只剩 direct Ollama，沒有 review bundle。
+- 根因：`tools/ai_workbook/openclaw_adapter.py` 匯入 `REVIEWS_DIR`，但 `tools/ai_workbook/paths.py` 沒有定義該常數。
+- 解法：在 `tools/ai_workbook/paths.py` 補上 `REVIEWS_DIR = WORKBOOK_DIR / "reviews"`，讓 A5 Telegram 報價能產生 `workbook/reviews/A5-QUOTE-*` bundle。
+- 預防：新增 OpenClaw adapter 依賴時，先用同一個 bot runtime Python 做 import smoke test，不只用 repo 靜態閱讀判斷。
+
+## 2026-05-18 — Local models need deterministic Chinese money parsing
+
+- 觸發條件：Telegram A5 本地報價把 `預算5萬` 輸出成 `NT$500,000`，`預算4萬` 輸出成 `NT$400,000`。
+- 根因：本地模型對中文單位「萬」不穩，容易把 5 萬誤展成 50 萬；光在 prompt 說明不夠可靠。
+- 解法：進模型前先解析預算與人數，prompt 放硬解析提示；輸出後再以 deterministic postprocess 校正第一個預算欄位，並在 Telegram 回覆加 `金額校正` 註記。
+- 預防：所有本地 A5 報價都要先跑金額、數量、飲食禁忌的 deterministic guard，再讓模型生成草稿。
+
+## 2026-05-18 — Local model terminal control codes leak into Telegram
+
+- 觸發條件：Telegram 報價草稿裡出現 `[K` 之類雜訊。
+- 根因：本地模型或 CLI runtime 的 ANSI control sequence 混入 raw response；如果直接送 Telegram，手機端會看到殘留控制碼。
+- 解法：A5 quote engine 在回覆與 review draft 寫入前先移除 ANSI escape sequences。
+- 預防：所有 Telegram-facing local model output 都要先做 ANSI/control-code sanitize，再送出或存入可讀 review artifact。
+
+## 2026-05-18 — launchd must pin the same local runtime as foreground tests
+
+- 觸發條件：foreground Telegram `/localquote` 約 1 分鐘可回，但 launchd 長駐版只送出心跳，bundle 停在 `task_request.md`。
+- 根因：手動測試時 shell 帶了 `A5_LOCAL_ENGINE=ollama A5_LOCAL_MODEL=llama3.1:latest` 和完整 Homebrew `PATH`；launchd plist 只設定 `PYTHONUNBUFFERED`，因此回到較慢的 `auto` / default model path，且 subprocess 找不到 `ollama` CLI。
+- 解法：在 `bot_a6/com.maplab.a6bot.plist` 明確設定非秘密 runtime 參數：`PATH=/opt/homebrew/bin:...`、`A5_LOCAL_ENGINE=ollama`、`A5_LOCAL_MODEL=llama3.1:latest`、`A5_LOCAL_NUM_PREDICT=650`、`OPENCLAW_AGENT_TIMEOUT_SECONDS=45`。
+- 預防：任何 foreground 成功的 bot runtime 測試，收尾時都要同步檢查 launchd plist / wrapper 是否帶同一組非秘密環境設定與 CLI PATH。

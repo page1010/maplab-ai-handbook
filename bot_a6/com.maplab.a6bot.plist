@@ -51,6 +51,16 @@
     <dict>
         <key>PYTHONUNBUFFERED</key>
         <string>1</string>
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+        <key>A5_LOCAL_ENGINE</key>
+        <string>ollama</string>
+        <key>A5_LOCAL_MODEL</key>
+        <string>llama3.1:latest</string>
+        <key>A5_LOCAL_NUM_PREDICT</key>
+        <string>650</string>
+        <key>OPENCLAW_AGENT_TIMEOUT_SECONDS</key>
+        <string>45</string>
     </dict>
 </dict>
 </plist>

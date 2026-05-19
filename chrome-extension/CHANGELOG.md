@@ -1,5 +1,11 @@
 # Chrome Extension Changelog
 
+## v5.5.3 — 2026-05-19
+變更者：A1 Codex
+- **B1 角色模組重定位**：B1 從 `InnerFlowLab Content` 改為 `Cross-Project Governance Advisor`，側邊欄 handoff 改指向跨專案治理、報告契約、prompt 整理與 pause/resume 輸出。
+- **B1 專案暫停防呆**：移除 B1 module 對 `skills/credentials/substack-api.md` 的必讀依賴，避免暫停中的內容發文專案被誤啟動或要求讀發布憑證。
+- **關聯圖同步**：重建 `chrome-extension/task-modules/*.json`、`index.json`、`docs/extension/dynamic-role-task-modules.md` 與 `workbook/task_modules/*`，讓 Extension / Gemini / Codex / OpenClaw 看到同一份 B1 狀態。
+
 ## v5.5.2 — 2026-05-12
 變更者：A1 Codex
 - **MV3 按鈕綁定修正**：移除 HTML inline `onclick`，改由 `popup.js` 在 `DOMContentLoaded` 用 `addEventListener` 綁定，避免 Chrome Extension CSP 擋住「檢查 MD 同步 / 重新抓取 / 重載 Extension」等動作。

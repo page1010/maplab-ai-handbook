@@ -1,6 +1,8 @@
 # B1 InnerFlowLab 內容產出工作流程 v1.0
 建立：2026-04-24 | 版本：v1.0
 
+> 2026-05-19 A1 更新：本工作流目前為 archived reference。B1 / InnerFlowLab 內容發文專案已暫停；未經 Owner/A1 明確恢復，不得執行 Substack 發文、跨平台同步、token 綁定或對外發布。B1 目前預設角色改為 `projects/b1-cross-project-governance-advisor.md` 定義的跨專案治理顧問。
+
 這份文件是 B1 InnerFlowLab 內容創作的完整 SOP，涵蓋從中文初稿到英文版發布的每個步驟，以及 Canva 封面圖產出流程。
 
 ---

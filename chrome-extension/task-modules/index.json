@@ -1,6 +1,6 @@
 {
   "schema_version": "2026-05-11.dynamic-role-module-index.v1",
-  "generated_at": "2026-05-12T07:21:23+08:00",
+  "generated_at": "2026-05-19T21:24:02+08:00",
   "repository": "page1010/maplab-ai-handbook",
   "canonical_local_repo": "/Users/pagemacmini/maplab-ai-handbook",
   "dynamic_link_policy": "Load JSON/Markdown task data from GitHub; do not execute remote JS.",
@@ -125,9 +125,9 @@
     },
     {
       "role_id": "B1",
-      "module_id": "MAPLAB_B1_INNERFLOWLAB_CONTENT_DYNAMIC_ROLE_MODULE",
-      "role_name": "InnerFlowLab Content",
-      "department": "InnerFlowLab 內容創作",
+      "module_id": "MAPLAB_B1_CROSS_PROJECT_GOVERNANCE_ADVISOR_DYNAMIC_ROLE_MODULE",
+      "role_name": "Cross-Project Governance Advisor",
+      "department": "跨專案治理顧問（InnerFlowLab 暫停）",
       "path": "chrome-extension/task-modules/B1.json",
       "runtime_targets": [
         "gemini",

@@ -120,3 +120,10 @@
 - 根因：`CURRENT_STATUS.md` 知識地圖指向 `projects/line-quote-assistant.md`，但 active repo 沒有該檔，只剩 `trash/projects/line-quote-assistant.md`；接手者會以為文件不存在或跑去非 git Downloads 副本。
 - 解法：補回 active `projects/line-quote-assistant.md`，明確畫出 LINE OA → CONVERSATION_LOG → Case Store → A6 Telegram → A5/GAS 的路徑，並列出現有成果、限制、測試最短路徑。
 - 預防：CURRENT_STATUS 的知識地圖每個 active path 都必須存在；如果文件被移到 trash/archive，要同步改知識地圖或補新的 active handoff。
+
+## 2026-05-19 — Paused roles need explicit module state
+
+- 觸發條件：Owner 用 Chrome Extension 檢查 B1，發現 B1 仍掛在 Extension，但實際需求已從 InnerFlowLab 內容創作轉成跨專案治理建議，且希望建好 prompt 後暫停整個 B1 專案。
+- 根因：角色模組只描述原功能，沒有表達「暫停」「只在明確召喚時啟用」「禁止發布/下單/讀 secrets」等狀態；接手者會以為 B1 仍應推 Substack/API 發文流程。
+- 解法：新增 `projects/b1-cross-project-governance-advisor.md` 與 `workbook/reviews/JOB-B1-CROSS-PROJECT-20260519/`，更新 B1 recall、task card、skill、AGENT_RULES、AGENT_RECALL_PROMPTS，並重建 Chrome Extension B1 module。
+- 預防：任何角色暫停時，必須同步更新 Task Card、Recall、Extension module、CURRENT_STATUS 與 Resume Prompt；不得只在聊天裡說「先暫停」。

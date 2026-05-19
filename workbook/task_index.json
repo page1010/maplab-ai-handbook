@@ -451,26 +451,28 @@
     {
       "task_id": "T-B1-001",
       "owner_agent": "A1",
-      "status": "🔄 進行中（Phase 0 — API 綁定，Owner 設定中）",
-      "last_activity": "",
-      "current_step": "",
+      "status": "💤 暫停（prompt ready；InnerFlowLab 內容發文專案暫停）",
+      "last_activity": "2026-05-19 A1 cross-project governance prompt + pause",
+      "current_step": "B1 已改為跨專案治理顧問 prompt；只有 Owner/A1 明確召喚時啟用。原 Substack / innerflowlab.com / 多平台發文自動化暫停。",
       "blockers": [],
       "done": [
-        "Meta App 建立（App ID: `1340197811549591`）",
-        "隱私政策頁面完成（innerflowlab.com/privacy-policy/）",
-        "App 基本資料補齊（圖示+隱私政策+類別+用戶資料刪除）",
-        "Meta App 建立（App ID: `2394935917598400`）",
-        "隱私政策頁面完成（maplabkitchen.com/privacy-policy/）"
+        "Computer Use 檢查 MAPLAB Agent Commander / B1 module",
+        "Computer Use 檢查 Investment OS dashboard governance/report 現況",
+        "建立 projects/b1-cross-project-governance-advisor.md",
+        "建立 workbook/reviews/JOB-B1-CROSS-PROJECT-20260519/",
+        "更新 B1 recall / skill / task card / Extension module generator"
       ],
-      "next_action": "",
-      "continuation_prompt": "接續 Prompt\n\n```\n我是 A1，接續 T-B1-001。\n上次做到：Phase 0 — 等 Owner 取得 Threads API token。\n請讀 CURRENT_STATUS.md 確認最新狀態，然後繼續下一步。\n```",
+      "next_action": "若 Owner 要接續 Investment OS，先建立 Markdown role handoff card 與 PM Brief Contract；若要恢復 B1 內容發文，另開新 Task Card。",
+      "continuation_prompt": "接續 Prompt\n\n```\n我是 B1 Cross-Project Governance Advisor。\n先讀 CURRENT_STATUS.md、pitfalls.md、handoff/tasks/T-B1-001.md、projects/b1-cross-project-governance-advisor.md。\n上次做到：2026-05-19 已將 B1 改為 paused-but-resumable 跨專案治理顧問 prompt；review bundle 在 workbook/reviews/JOB-B1-CROSS-PROJECT-20260519/。\n下一步：確認本次是跨專案治理 review 還是恢復內容發文。若未明確恢復內容發文，B1 維持暫停。\n```",
       "related_files": [
-        "docs/system-evolution-stories/README.md",
+        "projects/b1-cross-project-governance-advisor.md",
+        "workbook/reviews/JOB-B1-CROSS-PROJECT-20260519/",
         "skills/b1-innerflowlab-skills.md",
-        "skills/experience-log.md"
+        "recalls/B1_recall.md",
+        "chrome-extension/task-modules/B1.json"
       ],
       "task_card_path": "handoff/tasks/T-B1-001.md",
-      "category": "SEO"
+      "category": "GOVERNANCE"
     },
     {
       "task_id": "T-GBP-001",

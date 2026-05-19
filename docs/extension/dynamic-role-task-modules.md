@@ -1,6 +1,6 @@
 # GitHub Dynamic Role Task Modules
 
-Generated: 2026-05-12T07:21:23+08:00
+Generated: 2026-05-19T21:24:02+08:00
 
 ## Purpose
 
@@ -111,13 +111,13 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Affects: A4 assets; A3 social calendar; A2 SEO video titles; YouTube/Shorts publishing queue
 - Module file: `chrome-extension/task-modules/A8.json`
 
-### B1 — InnerFlowLab Content
+### B1 — Cross-Project Governance Advisor
 
-- Department: InnerFlowLab 內容創作
-- Simulation: 英文個人品牌、Substack、innerflowlab.com 與旅遊日誌內容角色。
+- Department: 跨專案治理顧問（InnerFlowLab 暫停）
+- Simulation: 暫停中的 InnerFlowLab 內容專案；可被 Owner/A1 明確召喚為跨專案治理、報告契約與 prompt 顧問。
 - Runtime targets: gemini, codex, openclaw
-- Task types: substack_draft, essay_outline, travel_log, brand_content, content_calendar
-- Affects: InnerFlowLab site; Substack; B1 content workflow; A8 repurposing if reused
+- Task types: cross_project_review, governance_gap_audit, prompt_design, report_contract_review, pause_resume_handoff
+- Affects: Chrome side panel; MAPLAB governance docs; Investment OS governance recommendations; OpenClaw/Telegram report surfaces; B1 content project paused
 - Module file: `chrome-extension/task-modules/B1.json`
 
 ## Relationship Rule

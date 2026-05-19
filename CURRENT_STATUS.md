@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-05-11 A1 fact-first cleanup（正式 repo / A4 Drive / ASSET_LOG / live WP 事實核對；MAPLAB_ASSETS active ID 修正）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-05-19 A1 B1 cross-project governance prompt + pause（B1 從 InnerFlowLab 內容發文改為暫停中的跨專案治理顧問）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -24,6 +24,7 @@
 - 2026-05-11：Sheets API 確認 `MAPLAB_ASSET_LOG` = `1nlxlMdaLdGEAmOjP70BYspRWqu_eYpsiRyZaujEZkYI`，tab `工作表1`，rowCount `36923`。
 - 2026-05-11：WordPress public REST 現況仍為 6 pages / 57 posts；A2/A3 local workbench planned slugs 不可直接視為 live URLs。
 - 2026-05-19：A6 Case Store v0 接線 — LINE inbound 仍以 Sheet `CONVERSATION_LOG` 為原始證據；新增 `bot_a6/case_store.py` 只讀 Sheet、寫本機 SQLite 案件索引，A6 Telegram 新增 `/linecases`、`/case`、`/casequote`，路徑圖補回 `projects/line-quote-assistant.md`。
+- 2026-05-19：B1 已由 InnerFlowLab 內容發文角色改為「暫停中的跨專案治理顧問」；Chrome Extension B1 module 將指向 `projects/b1-cross-project-governance-advisor.md`，review bundle 在 `workbook/reviews/JOB-B1-CROSS-PROJECT-20260519/`。原 Substack / innerflowlab.com / 多平台發文自動化暫停，不得未經 Owner/A1 恢復就執行。
 - 2026-05-11：GitHub sync audit 啟動 — 以 `origin/main` 為備份基準，將 durable docs/scripts/task cards/review index 補齊入庫；`.env`、logs、runtime history、raw A6 review bundles 暫不盲目 commit，先建立 sanitized/index 流程。
 
 ---
@@ -52,6 +53,7 @@
 | T-A6-002 | LINE 對話訓練資料收集計畫 | A6 | 💤 暫停（原計畫拆 Sheet 做訓練資料，04-07 重新規劃方向。等 Owner 決定是否需要 LINE 訓練資料及取得方式。） | handoff/tasks/T-A6-002.md |
 | T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | 💤 暫停（Phase 2 v2.0 完成，等 Owner 確認政策 + A5 欄位補齊）（Q1-Q10 重構完成（真實 CSV 驅動），下一步是 Q7/Q10 政策確認 + Phase 3 上線測試） | handoff/tasks/T-A7-001.md |
 | T-A7-002 | A7 部門 80/20 優先任務清單 | A7 | ⏸️ 阻塞中（任務 6（Q1-Q10 實裝）+ 任務 10（技能書 v2.0）已完成。Phase 3A 剩任務 4（地區判斷）、7（流） | handoff/tasks/T-A7-002.md |
+| T-B1-001 | B1 Cross-Project Governance Advisor Prompt + Project Pause | B1/A1 | 💤 暫停（prompt ready；InnerFlowLab 內容發文專案暫停。跨專案治理 review 需 Owner/A1 明確召喚。） | handoff/tasks/T-B1-001.md |
 | T-GBP-001 | T-GBP-001 | Owner | 🔲 待開始（尚未開始。等 Owner 準備新圖片。） | handoff/tasks/T-GBP-001.md |
 ---
 
@@ -82,8 +84,6 @@
 | A4/A5/全系統 | ⚠️ A1巡查 2026-05-02 14:00午後：8h零新commit（全系統192h+/8天靜止持續）；A4 S11 ~344h/~14.3天Colab崩潰🔴；A5 D23/~560h無commit🔴；GCP帳單15天未處理🔴 — 所有前次警告仍未解除 | Owner 緊急決策（同前次 Blocker 行動項） |
 | A4/A5/全系統 | ⚠️ A1巡查 2026-05-01 22:00晚間：8h零新commit（全系統176h+/7.3天靜止持續）；A4 S11 ~328h/~13.7天Colab崩潰🔴；A5 D22/~544h無commit🔴；GCP帳單14天未處理🔴 — 所有午後警告仍未解除 | Owner 緊急決策（同午後 Blocker 行動項） |
 | A2/A3 | ℹ️ A1巡查 2026-04-30：T-A2A3-001/001-B Google重新索引等待期已逾26天（預計7-14天，早已超過），可進入排名驗證階段 | Owner登入GSC確認索引+排名變化 |
-| B1 | ⚠️ A1巡查 2026-04-30：B1首次活躍04-24至今無正式Task Card（7天仍未建立） | A1建立T-B1-001 Task Card |
-| - | ℹ️ A1巡查 2026-04-25：B1首次活躍（4 commits: sessions/B1/2026-04-24-session-01.md + workflows/B1-content-workflow-v1.md + skills/substack-api.md）— RECALL_PROMPTS已更新B1狀態 | B1需建立正式Task Card |
 | 全系統 | ℹ️ A1巡查 2026-04-19 14:00：Owner 今日提交 fix(framework) v1.2+v1.3 共 3 commits（e8a2aa3/6801266/4958a89）— 規則衝突優先級 + 回應校正標準。各 Agent 下次 session 開始時注意 AGENT_RULES.md 是否有更新。 | 各 Agent 留意 |
 | A5 | T-A5-002: 等 Owner 確認（品項名稱改法、重複品項、I 欄用途） | 見 Task Card |
 | A5 | T-A5-006: 前置 T-A5-005 需先完成 | 見 Task Card |
@@ -150,6 +150,7 @@ OAuth token：`~/.claude/mcp-keys/google-token.json`（drive + spreadsheets scop
 | 報價簡報 | projects/slides-quotation-system.md | A6 Google Slides 報價 |
 | 網站優化 | projects/maplab-kitchen-web-optimization.md | WordPress 技術 |
 | LINE 報價助手 | projects/line-quote-assistant.md | A6/A7 系統架構、三層資料模型 |
+| B1 跨專案治理顧問 | projects/b1-cross-project-governance-advisor.md | B1 暫停狀態、跨專案治理 prompt、Investment OS 對照建議 |
 | A0 操作手冊 | docs/a0-dispatch-operations-manual.md | A0 調度操作手冊 |
 | Drive 根目錄 | MAPLAB_DATA `19RKLsBfNKuoCHVPFzT9D7tJrAdkTSmpt` | 品項圖片: MAPLAB_Items_Photos `1Z62HUIiVutGNqLJMGyTfBCZ-D5g2vnOT`；主試算表: `1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg` |
 | 交接紀錄 | handoff/tasks/T-xxx.md | 各任務斷點 + 接續 prompt |

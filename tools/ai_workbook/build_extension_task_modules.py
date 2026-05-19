@@ -115,7 +115,7 @@ class RoleModule:
 
     @property
     def module_id(self) -> str:
-        safe = self.role_name.upper().replace(" ", "_").replace("/", "_")
+        safe = self.role_name.upper().replace(" ", "_").replace("/", "_").replace("-", "_")
         return f"MAPLAB_{self.role_id}_{safe}_DYNAMIC_ROLE_MODULE"
 
     def to_module(self) -> dict[str, Any]:
@@ -439,18 +439,37 @@ ROLES = [
     ),
     RoleModule(
         "B1",
-        "InnerFlowLab Content",
-        "InnerFlowLab 內容創作",
-        "英文個人品牌、Substack、innerflowlab.com 與旅遊日誌內容角色。",
-        ["substack_draft", "essay_outline", "travel_log", "brand_content", "content_calendar"],
+        "Cross-Project Governance Advisor",
+        "跨專案治理顧問（InnerFlowLab 暫停）",
+        "暫停中的 InnerFlowLab 內容專案；可被 Owner/A1 明確召喚為跨專案治理、報告契約與 prompt 顧問。",
         [
+            "cross_project_review",
+            "governance_gap_audit",
+            "prompt_design",
+            "report_contract_review",
+            "pause_resume_handoff",
+        ],
+        [
+            "projects/b1-cross-project-governance-advisor.md",
+            "handoff/tasks/T-B1-001.md",
             "workflows/B1-content-workflow-v1.md",
             "docs/innerflowlab/brand-design-proposal.md",
             "docs/system-evolution-stories/2026-04-20-innerflowlab-system-setup.md",
         ],
-        ["skills/b1-innerflowlab-skills.md", "skills/credentials/substack-api.md", "skills/brand-voice-guide.md"],
-        output_contract=["draft.md", "editorial_notes.md", "publish_checklist.md", "review_request.md"],
-        affects=["InnerFlowLab site", "Substack", "B1 content workflow", "A8 repurposing if reused"],
+        ["skills/b1-innerflowlab-skills.md", "skills/brand-voice-guide.md"],
+        output_contract=[
+            "cross_project_review.md",
+            "b1_prompt.md",
+            "pause_resume_note.md",
+            "review_request.md",
+        ],
+        affects=[
+            "Chrome side panel",
+            "MAPLAB governance docs",
+            "Investment OS governance recommendations",
+            "OpenClaw/Telegram report surfaces",
+            "B1 content project paused",
+        ],
         risk_level="medium",
     ),
 ]
@@ -505,7 +524,7 @@ def write_json(path: Path, data: Any) -> None:
 def write_csv(path: Path, rows: list[dict[str, Any]], fieldnames: list[str]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer = csv.DictWriter(f, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 

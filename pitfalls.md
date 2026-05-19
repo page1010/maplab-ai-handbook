@@ -127,3 +127,10 @@
 - 根因：角色模組只描述原功能，沒有表達「暫停」「只在明確召喚時啟用」「禁止發布/下單/讀 secrets」等狀態；接手者會以為 B1 仍應推 Substack/API 發文流程。
 - 解法：新增 `projects/b1-cross-project-governance-advisor.md` 與 `workbook/reviews/JOB-B1-CROSS-PROJECT-20260519/`，更新 B1 recall、task card、skill、AGENT_RULES、AGENT_RECALL_PROMPTS，並重建 Chrome Extension B1 module。
 - 預防：任何角色暫停時，必須同步更新 Task Card、Recall、Extension module、CURRENT_STATUS 與 Resume Prompt；不得只在聊天裡說「先暫停」。
+
+## 2026-05-19 — A6 quote mode must not swallow general chat
+
+- 觸發條件：Owner 在 Telegram 問「你現在是跑什麼模型」，A6 回「A5 報價模式處理中」，並切到 A5 本地 fallback。
+- 根因：`/start` 與 `_get_mode()` 預設都把聊天放進 `MODE_QUOTE`，`handle_message()` 又把 quote mode 內的所有文字都丟進 A5，沒有先分辨模型/status/一般對話。
+- 解法：A6 預設改為 `MODE_CHAT`；新增 `/status`、`/model` 與模型狀態意圖偵測；文字路由先處理 runtime/status 問題，再用明確報價意圖才進 A5。
+- 預防：Telegram route 測試至少涵蓋四類：模型/status 問題不進 A5、一般聊天不進 A5、明確「報價 ...」進 A5、Case Store 查詢仍走 `/case`/`查` 路徑。

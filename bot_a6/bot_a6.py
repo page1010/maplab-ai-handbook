@@ -98,7 +98,7 @@ MENU_BUTTON_HELP = "❓ 指令說明"
 
 
 def _get_mode(chat_id: int) -> str:
-    return _chat_modes.get(chat_id, MODE_QUOTE)
+    return _chat_modes.get(chat_id, MODE_CHAT)
 
 
 def _set_mode(chat_id: int, mode: str) -> None:
@@ -112,6 +112,65 @@ def _mode_keyboard() -> ReplyKeyboardMarkup:
         resize_keyboard=True,
         one_time_keyboard=False,
     )
+
+
+def _looks_like_runtime_status_request(text: str) -> bool:
+    stripped = text.strip().lower()
+    compact = "".join(stripped.split())
+    if stripped in {"/status", "/model", "status", "model"}:
+        return True
+    model_needles = ("什麼模型", "哪個模型", "跑什麼", "用什麼模型", "現在跑", "現在是跑", "模型狀態")
+    if "模型" in compact and any(needle in compact for needle in model_needles):
+        return True
+    runtime_needles = ("你現在是跑", "runtime", "ollama", "openclaw")
+    return any(needle in compact for needle in runtime_needles)
+
+
+def _looks_like_quote_request(text: str) -> bool:
+    stripped = text.strip()
+    lowered = stripped.lower()
+    compact = "".join(stripped.split())
+    if not stripped:
+        return False
+    explicit_prefixes = ("報價", "新報價", "估價", "做報價", "開報價", "a5", "A5")
+    if stripped.startswith(explicit_prefixes):
+        return True
+    if stripped.startswith("/localquote"):
+        return True
+    if "你幫我把" in stripped and ("換成" in stripped or "改成" in stripped):
+        return True
+    quote_terms = (
+        "報價", "菜單", "外燴", "餐點", "茶會", "派對", "週歲", "婚禮", "企業",
+        "開幕", "晚宴", "桌菜", "buffet", "預算", "統編",
+    )
+    quantity_terms = ("人", "桌", "份", "盒")
+    has_quote_term = any(term in lowered or term in compact for term in quote_terms)
+    has_quantity = any(term in compact for term in quantity_terms)
+    has_money = any(term in compact for term in ("預算", "萬", "元", "$", "nt", "NT"))
+    return has_quote_term and (has_quantity or has_money)
+
+
+def _runtime_status_text(chat_id: int) -> str:
+    uptime = datetime.now() - START_TIME
+    h, rem = divmod(int(uptime.total_seconds()), 3600)
+    m, s = divmod(rem, 60)
+    a5_engine = os.getenv("A5_LOCAL_ENGINE", "auto")
+    a5_model = os.getenv("A5_LOCAL_MODEL", "llama3.1:latest")
+    openclaw_model = os.getenv("OPENCLAW_MODEL", "qwen2.5:14b")
+    openclaw_dispatch = os.getenv("OPENCLAW_MODEL_DISPATCH", "qwen2.5-coder:7b")
+    return (
+        "🟢 A6 runtime 狀態\n"
+        f"目前模式：{MODE_LABELS[_get_mode(chat_id)]}\n"
+        f"Uptime：{h}h {m}m {s}s\n\n"
+        "模型路徑：\n"
+        f"- 一般聊天：Ollama `{OLLAMA_MODEL_CHAT}`\n"
+        f"- A5 本地報價備援：{a5_engine} `{a5_model}`\n"
+        f"- OpenClaw 預設：`{openclaw_model}`\n"
+        f"- OpenClaw dispatch：`{openclaw_dispatch}`\n\n"
+        "這類模型/狀態問題會直接由 A6 回覆，不會啟動 A5 報價流程。\n"
+        "要報價時請明確輸入「報價 ...」或使用 `/localquote ...`。"
+    )
+
 
 def _load_a6_recall():
     """
@@ -413,15 +472,18 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         await deny(update)
         return
     chat_id = update.effective_chat.id
-    _set_mode(chat_id, MODE_QUOTE)
+    _set_mode(chat_id, MODE_CHAT)
     await update.message.reply_text(
         f"🟢 MAPLAB A6 報價助理 online\n"
         f"時間: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
         f"目前模式：{MODE_LABELS[_get_mode(chat_id)]}\n\n"
+        f"一般問題會直接由 A6 回覆；只有明確輸入「報價 ...」或 `/localquote ...` 才會進 A5。\n\n"
         f"可用指令：\n"
         f"/help — 指令說明\n"
-        f"/ping — 心跳\n\n"
+        f"/ping — 心跳\n"
+        f"/status — runtime / 模型狀態\n\n"
         f"或直接說：\n"
+        f"「你現在是跑什麼模型」\n"
         f"「報價 王小明 婚禮 80人 預算6萬」\n"
         f"「/linecases today」\n"
         f"「/case Penny」\n"
@@ -444,6 +506,7 @@ async def help_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         f"/mode chat — 一般聊天（Ollama）\n"
         f"/mode seo — SEO 助手（Ollama）\n"
         f"目前模式：{MODE_LABELS[_get_mode(chat_id)]}\n\n"
+        "一般問題預設留在 A6；只有明確報價需求才會進 A5。\n\n"
         "【急件報價】\n"
         "報價 [客名] [類型] [人數] [預算]\n"
         "例：報價 王小明 婚禮 80人 預算6萬\n\n"
@@ -462,6 +525,8 @@ async def help_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         "例：查 王小明\n\n"
         "【其他】\n"
         "/ping — 心跳檢查\n"
+        "/status — runtime / 模型狀態\n"
+        "/model — 同 /status\n"
         "/reset — 清除對話記憶（新案件時用）\n\n"
         "💬 也可以直接說中文，A6 會理解"
     )
@@ -501,7 +566,18 @@ async def ping(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text(
         f"🏓 A6 pong — {datetime.now().strftime('%H:%M:%S')}\n"
         f"Uptime: {h}h {m}m {s}s\n"
-        f"允許用戶數: {len(ALLOWED_USER_IDS)}"
+        f"允許用戶數: {len(ALLOWED_USER_IDS)}\n"
+        f"目前模式：{MODE_LABELS[_get_mode(update.effective_chat.id)]}"
+    )
+
+
+async def status_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not is_allowed(update):
+        await deny(update)
+        return
+    await update.message.reply_text(
+        _runtime_status_text(update.effective_chat.id),
+        reply_markup=_mode_keyboard(),
     )
 
 
@@ -1045,15 +1121,20 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         return
 
     stripped = text.strip()
+    if _looks_like_runtime_status_request(stripped):
+        await status_cmd(update, context)
+        return
     if stripped.startswith("查 "):
         await _reply_case_detail(update, stripped[2:].strip())
         return
 
     mode = _get_mode(chat_id)
-    if mode == MODE_QUOTE:
+    if _looks_like_quote_request(stripped):
         await _run_a5_quote_guarded(update, context, text)
+    elif mode == MODE_SEO:
+        await _run_ollama_guarded(update, context, text, MODE_SEO)
     else:
-        await _run_ollama_guarded(update, context, text, mode)
+        await _run_ollama_guarded(update, context, text, MODE_CHAT)
 
 
 async def on_error(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -1086,6 +1167,8 @@ def main() -> None:
     app.add_handler(CommandHandler("help", help_cmd))
     app.add_handler(CommandHandler("mode", mode_cmd))
     app.add_handler(CommandHandler("ping", ping))
+    app.add_handler(CommandHandler("status", status_cmd))
+    app.add_handler(CommandHandler("model", status_cmd))
     app.add_handler(CommandHandler("reset", reset_cmd))
     app.add_handler(CommandHandler("localquote", localquote_cmd))
     app.add_handler(CommandHandler("linecases", linecases_cmd))

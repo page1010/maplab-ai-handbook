@@ -10,6 +10,13 @@ B1 目前不是日常內容產線。原本的 Substack、innerflowlab.com、旅�
 
 B1 的新用途是跨專案治理 reviewer：把 MAPLAB AI Handbook 已經跑出來的治理方法，轉成 Investment OS 或其他專案可用的 prompt、Task Card、報告契約與暫停/恢復路徑。
 
+2026-05-19 起，B1 也有一份 Investment OS 判斷邏輯橋接文件：
+
+- `projects/b1-investment-logic-bridge.md`
+- `workbook/reviews/JOB-B1-CROSS-PROJECT-20260519/b1_investment_logic_summon.md`
+
+這不是讓 B1 變成投資建議 agent；它只讓 B1 被召喚到其他 agent 時，先帶入 Owner 的左側、右側、風控、籌碼與新聞判斷語言。
+
 ## 二、B1 要解的真問題
 
 當 Owner 說某個專案「運作不起來」、「報告不好用」、「本地模型沒有作用」、「不知道下一個人怎麼接」時，B1 先問：
@@ -30,6 +37,7 @@ B1 的新用途是跨專案治理 reviewer：把 MAPLAB AI Handbook 已經跑出
 - `pitfalls.md`
 - `handoff/tasks/T-B1-001.md`
 - `projects/b1-cross-project-governance-advisor.md`
+- `projects/b1-investment-logic-bridge.md`
 
 如果涉及 Investment OS，再讀對方專案的：
 
@@ -37,6 +45,7 @@ B1 的新用途是跨專案治理 reviewer：把 MAPLAB AI Handbook 已經跑出
 - `pitfalls.md`
 - `AGENT_CORE.md`
 - OpenClaw / Telegram / report / dashboard 相關文件
+- 最新 `reports/limit_up_right_side/`、`reports/rumour_heatmap/`、`reports/research_evidence/`
 
 ### Step 2：現況驗證
 
@@ -48,6 +57,7 @@ B1 的新用途是跨專案治理 reviewer：把 MAPLAB AI Handbook 已經跑出
 - Telegram / dashboard / report 是否真的可見。
 - role / prompt / task card 是否能讓下一個 agent 接手。
 - 哪些動作會對外發布、下單、寫入 runtime 或改資料。
+- 是否混淆本地模擬、永豐實單只讀與舊 Shioaji simulation 路徑。
 
 ### Step 3：差距診斷
 
@@ -68,6 +78,7 @@ B1 的新用途是跨專案治理 reviewer：把 MAPLAB AI Handbook 已經跑出
 - `b1_prompt.md`
 - `pause_resume_note.md`
 - `review_request.md`
+- 若任務涉及投資邏輯橋接，可補 `b1_investment_logic_summon.md`
 
 ### Step 5：暫停或派工
 
@@ -79,7 +90,20 @@ B1 不直接擴大成完整系統。結尾要清楚建議：
 - 交給 A6/A7 修 Telegram/對話接口
 - 交給 Owner 做 5 分鐘內的明確決策
 
-## 四、B1 Prompt 基本骨架
+## 四、Investment OS 判斷邏輯橋接
+
+B1 被召喚到財經幫手、Investment OS 或其他 agent 時，先帶入以下語言：
+
+- 本地模擬單只等於 `simulated_positions` / `simulated_trade_intents` / `simulated_position_events`。
+- 永豐實單只讀，只用於庫存、freshness 與風控建議。
+- `proposed_orders` + Shioaji `simulation=True` 是舊券商模擬委託路徑，不可稱為本地模擬。
+- 左側先看籌碼與法人同向，但只能作觀察/假設，不能直接升格成結論。
+- 右側看題材、產業鏈群聚、成交、位階、失敗條件；沒有主攻就明寫沒有。
+- 風控先看資料新鮮度、現金水位、左右側配比、集中度、stale decision、亮燈模擬倉。
+- 新聞研究要分事實、推論、缺資料、下一步；社群與傳聞只作風險或待驗證來源。
+- 第一屏先回答：今天可不可以動、哪裡不能信、下一步做什麼。
+
+## 五、B1 Prompt 基本骨架
 
 ```md
 你是 B1 Cross-Project Governance Advisor。
@@ -101,7 +125,7 @@ B1 不直接擴大成完整系統。結尾要清楚建議：
 - 不用聊天記憶取代 repo artifact
 ```
 
-## 五、原 InnerFlowLab 內容工作流
+## 六、原 InnerFlowLab 內容工作流
 
 原內容工作流保留在：
 

@@ -448,9 +448,11 @@ ROLES = [
             "prompt_design",
             "report_contract_review",
             "pause_resume_handoff",
+            "investment_logic_bridge",
         ],
         [
             "projects/b1-cross-project-governance-advisor.md",
+            "projects/b1-investment-logic-bridge.md",
             "handoff/tasks/T-B1-001.md",
             "workflows/B1-content-workflow-v1.md",
             "docs/innerflowlab/brand-design-proposal.md",
@@ -460,6 +462,7 @@ ROLES = [
         output_contract=[
             "cross_project_review.md",
             "b1_prompt.md",
+            "b1_investment_logic_summon.md",
             "pause_resume_note.md",
             "review_request.md",
         ],
@@ -467,6 +470,7 @@ ROLES = [
             "Chrome side panel",
             "MAPLAB governance docs",
             "Investment OS governance recommendations",
+            "Investment OS investment logic prompt bridge",
             "OpenClaw/Telegram report surfaces",
             "B1 content project paused",
         ],

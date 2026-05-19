@@ -14,6 +14,7 @@ B1 目前不再作為日常 Substack、innerflowlab.com 或多平台發文角色
 - 報告契約：手機可讀、事實/推論分層、可驗證 evidence
 - 接手能力：Resume Prompt、review bundle、下一步
 - 暫停/恢復：專案不用時可以停，但 prompt、路徑、斷點仍可被找到
+- 投資邏輯橋接：若 Owner 召喚 B1 到 Investment OS，先帶入 `projects/b1-investment-logic-bridge.md` 的左側、右側、風控、籌碼、新聞判斷語言
 
 ## Computer Use 觀察事實
 
@@ -24,6 +25,7 @@ B1 目前不再作為日常 Substack、innerflowlab.com 或多平台發文角色
 - B1 模組目前未表達「跨專案顧問」或「暫停」狀態。
 - Investment OS dashboard 在 `http://127.0.0.1:18501/` 可讀 runtime DB、研究、Rumour、Hermes、Telegram 相關狀態；它有強 runtime 和報告資料，但缺少 MAPLAB 這種可複製的角色 handoff envelope。
 - Investment OS repo 已有 `AGENT_CORE.md`、`CURRENT_STATUS.md`、`pitfalls.md`、OpenClaw operator manual 與 report/evidence 目錄；問題不是沒有規則，而是規則未被包成日常可點、可複製、可暫停/接手的角色模組。
+- Investment OS 另有明確投資判斷語言：本地模擬與永豐只讀邊界、左側籌碼、右側題材/位階、Rumour/Research Evidence 與 PM Brief Contract。B1 應讀 `projects/b1-investment-logic-bridge.md` 後再協助其他 agent。
 
 ## 第一性原理判斷
 
@@ -90,6 +92,7 @@ B1 啟用後輸出到 `workbook/reviews/JOB-B1-CROSS-PROJECT-YYYYMMDD/`：
 
 - `cross_project_review.md`：觀察事實、差距、建議路徑
 - `b1_prompt.md`：可直接交給 B1 / Gemini / ChatGPT / OpenClaw 的 prompt
+- `b1_investment_logic_summon.md`：涉及 Investment OS / 財經幫手時，交給其他 agent 的投資邏輯橋接 prompt
 - `pause_resume_note.md`：暫停原因、恢復條件、下次最短路徑
 - `review_request.md`：需要 A1/Owner 檢查或決策的項目
 
@@ -103,6 +106,22 @@ B1 啟用後輸出到 `workbook/reviews/JOB-B1-CROSS-PROJECT-YYYYMMDD/`：
 | Review bundle | 每個 Telegram/report 修正都留下 `reviews/<task_id>/validation_report.md` |
 | Pitfalls 回灌 | 投資語意錯誤、mock/live 混淆、local model 幻覺都要回寫 pitfalls |
 | Extension handoff prompt | 對 Gemini/ChatGPT/OpenClaw 建固定 prompt，不靠聊天記憶 |
+
+## Investment OS 投資邏輯橋接
+
+B1 若被 Owner 召喚去支援財經幫手，不要先做完整財經系統，也不要給買賣建議。先讀：
+
+- `projects/b1-investment-logic-bridge.md`
+- `workbook/reviews/JOB-B1-CROSS-PROJECT-20260519/b1_investment_logic_summon.md`
+
+B1 要帶走的是 Owner 的判斷語言：
+
+- 本地模擬、永豐實單只讀、舊 Shioaji simulation 路徑必須分清楚。
+- 左側是籌碼與法人同向的觀察語言，不是直接結論。
+- 右側是題材、產業鏈、成交、位階與失敗條件的確認語言。
+- 風控先看資料新鮮度、現金水位、左右側配比、集中度、stale decision、亮燈模擬倉。
+- 新聞與傳聞要分事實、推論、缺資料、下一步；社群來源不可作正向 thesis 支撐。
+- 第一屏要回答「今天可不可以動、哪裡不能信、下一步做什麼」。
 
 ## 暫停規則
 

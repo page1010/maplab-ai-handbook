@@ -1,6 +1,6 @@
 {
   "schema_version": "2026-05-11.dynamic-role-module.v1",
-  "generated_at": "2026-05-19T21:24:02+08:00",
+  "generated_at": "2026-05-19T21:59:00+08:00",
   "module_id": "MAPLAB_A6_SALES_RAPID_RESPONSE_DYNAMIC_ROLE_MODULE",
   "role_id": "A6",
   "role_name": "Sales Rapid Response",
@@ -24,8 +24,8 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "dabd8465949ba7df39517ef015df9ca71f2c2aa8961c75932d7dbd5d2002adce",
-      "size_bytes": "19096"
+      "source_sha256": "a2dccb0f093d33f3f586d057ea459109486b113f1e348c9f40669affe020dd11",
+      "size_bytes": "19648"
     },
     {
       "path": "AGENT_RULES.md",
@@ -64,16 +64,16 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "workbook artifact",
-      "source_sha256": "58e3bbe62f214c6ffcdb129474758fd392a94012dc5239fbf014dca286c9937c",
-      "size_bytes": "25010"
+      "source_sha256": "a0a16a764e5db78fa40002dedccfafb5457b5e12d6eee37f9c2cdb14e9821be3",
+      "size_bytes": "25422"
     },
     {
       "path": "AGENT_RECALL_PROMPTS.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "d8072daba6b9afadf3d4dd201883d285d0e96b650c024d4093cb79a0d36c8e71",
-      "size_bytes": "48705"
+      "source_sha256": "c78db4222af3f58e66e42deddb0c14fd6fac1aa470ed30c3ee2303a066241d6e",
+      "size_bytes": "49407"
     },
     {
       "path": "skills/superpowers-guide.md",

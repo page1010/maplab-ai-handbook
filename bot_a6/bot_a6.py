@@ -32,6 +32,7 @@ from telegram.ext import (
 )
 
 from a5_quote_engine import build_a5_quote_prompt, run_a5_local_quote
+from case_store import CaseStore, CaseStoreError, render_case_detail, render_case_list
 
 # ── Config ─────────────────────────────────────────────────────────────────────
 BOT_DIR = Path(__file__).parent
@@ -46,6 +47,7 @@ GAS_QUOTE_URL = os.getenv("GAS_QUOTE_URL", "")
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434")
 OLLAMA_MODEL_CHAT = os.getenv("OLLAMA_MODEL_CHAT", "llama3.1:latest")
 OLLAMA_TIMEOUT_SECONDS = int(os.getenv("OLLAMA_TIMEOUT_SECONDS", "45"))
+CASE_STORE_SYNC_ROWS = int(os.getenv("CASE_STORE_SYNC_ROWS", "600"))
 
 # 白名單：只有這兩人的訊息會被處理
 ALLOWED_USER_IDS: set[int] = {OWNER_USER_ID}
@@ -421,6 +423,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         f"/ping — 心跳\n\n"
         f"或直接說：\n"
         f"「報價 王小明 婚禮 80人 預算6萬」\n"
+        f"「/linecases today」\n"
+        f"「/case Penny」\n"
         f"「A5 幫我先做一版 30人週歲派對 2萬內」\n"
         f"「你幫我把主菜換成素食版本」\n"
         f"「查 王小明」",
@@ -445,6 +449,11 @@ async def help_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         "例：報價 王小明 婚禮 80人 預算6萬\n\n"
         "【本地備援測試】\n"
         "/localquote [需求] — 直接走本機 Ollama/OpenClaw，不寫 Google Sheet\n\n"
+        "【LINE Case Store】\n"
+        "/linecases today — 同步 LINE CONVERSATION_LOG，列出今日案件候選\n"
+        "/linecases [關鍵字] — 搜尋 LINE 案件候選\n"
+        "/case [關鍵字或 case_id] — 查看單一案件脈絡\n"
+        "/casequote [關鍵字或 case_id] — 把案件脈絡交給 A5 報價\n\n"
         "【品項修改】\n"
         "你幫我把 [X] 換成 [Y]\n"
         "例：你幫我把主菜換成素食版本\n\n"
@@ -519,6 +528,102 @@ async def localquote_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         )
         return
     await _run_a5_quote_guarded(update, context, f"/localquote {quote_request}")
+
+
+def _sync_case_store() -> tuple[CaseStore, object]:
+    store = CaseStore.from_env(REPO_PATH)
+    result = store.sync_from_sheet(max_rows=CASE_STORE_SYNC_ROWS)
+    return store, result
+
+
+async def linecases_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not is_allowed(update):
+        await deny(update)
+        return
+    raw_query = " ".join(context.args or []).strip()
+    query = raw_query or "today"
+    await update.message.reply_text("⏳ 正在同步 LINE CONVERSATION_LOG 到 Case Store…")
+    try:
+        store, result = await asyncio.to_thread(_sync_case_store)
+        if query.lower() in {"today", "今天", "今日"}:
+            cases = store.recent_cases(limit=8, today_only=True)
+            body = render_case_list(cases, "今日 LINE 案件候選")
+        elif query.lower() in {"recent", "近期"}:
+            cases = store.recent_cases(limit=8)
+            body = render_case_list(cases, "近期 LINE 案件候選")
+        else:
+            cases = store.search_cases(query, limit=8)
+            body = render_case_list(cases, f"搜尋：{query}")
+        prefix = (
+            f"✅ Case Store 同步完成\n"
+            f"Sheet rows: {result.fetched_rows}｜messages: {result.message_upserts}｜"
+            f"cases: {result.case_upserts}｜latest row: {result.latest_row}\n"
+            f"source: {result.source}\n\n"
+        )
+        await send_long(update, prefix + body)
+    except CaseStoreError as exc:
+        await update.message.reply_text(f"⚠️ Case Store 同步失敗：{exc}")
+    except Exception as exc:
+        logger.exception("linecases_cmd failed")
+        await update.message.reply_text(f"⚠️ Case Store 指令失敗：{exc}")
+
+
+async def case_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not is_allowed(update):
+        await deny(update)
+        return
+    query = " ".join(context.args or []).strip()
+    if not query:
+        await update.message.reply_text("用法：/case [客名、case_id、關鍵字或 LINE user id]")
+        return
+    await _reply_case_detail(update, query)
+
+
+async def _reply_case_detail(update: Update, query: str) -> None:
+    await update.message.reply_text("⏳ 正在讀取 Case Store…")
+    try:
+        store, result = await asyncio.to_thread(_sync_case_store)
+        cases = store.search_cases(query, limit=3)
+        if not cases:
+            await update.message.reply_text(
+                f"找不到案件：{query}\n"
+                f"已同步到 latest row {result.latest_row}。"
+            )
+            return
+        if len(cases) > 1:
+            await send_long(update, render_case_list(cases, f"找到多筆：{query}"))
+            return
+        case = cases[0]
+        messages = store.get_case_messages(case.case_id, limit=14)
+        await send_long(update, render_case_detail(case, messages))
+    except CaseStoreError as exc:
+        await update.message.reply_text(f"⚠️ Case Store 同步失敗：{exc}")
+    except Exception as exc:
+        logger.exception("case_cmd failed")
+        await update.message.reply_text(f"⚠️ Case Store 指令失敗：{exc}")
+
+
+async def casequote_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not is_allowed(update):
+        await deny(update)
+        return
+    query = " ".join(context.args or []).strip()
+    if not query:
+        await update.message.reply_text("用法：/casequote [客名、case_id、關鍵字或 LINE user id]")
+        return
+    await update.message.reply_text("⏳ 正在把 Case Store 案件脈絡交給 A5…")
+    try:
+        store, _result = await asyncio.to_thread(_sync_case_store)
+        case, context_text = store.build_quote_context(query)
+        if not case:
+            await update.message.reply_text(context_text)
+            return
+        await _run_a5_quote_guarded(update, context, f"/localquote {context_text}")
+    except CaseStoreError as exc:
+        await update.message.reply_text(f"⚠️ Case Store 同步失敗：{exc}")
+    except Exception as exc:
+        logger.exception("casequote_cmd failed")
+        await update.message.reply_text(f"⚠️ Case Store 指令失敗：{exc}")
 
 
 # ── Background Claude runner ───────────────────────────────────────────────────
@@ -939,6 +1044,11 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         await help_cmd(update, context)
         return
 
+    stripped = text.strip()
+    if stripped.startswith("查 "):
+        await _reply_case_detail(update, stripped[2:].strip())
+        return
+
     mode = _get_mode(chat_id)
     if mode == MODE_QUOTE:
         await _run_a5_quote_guarded(update, context, text)
@@ -978,6 +1088,9 @@ def main() -> None:
     app.add_handler(CommandHandler("ping", ping))
     app.add_handler(CommandHandler("reset", reset_cmd))
     app.add_handler(CommandHandler("localquote", localquote_cmd))
+    app.add_handler(CommandHandler("linecases", linecases_cmd))
+    app.add_handler(CommandHandler("case", case_cmd))
+    app.add_handler(CommandHandler("casequote", casequote_cmd))
     app.add_handler(MessageHandler(filters.PHOTO, handle_photo))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     app.add_error_handler(on_error)

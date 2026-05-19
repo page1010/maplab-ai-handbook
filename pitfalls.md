@@ -113,3 +113,10 @@
 - 根因：手動測試時 shell 帶了 `A5_LOCAL_ENGINE=ollama A5_LOCAL_MODEL=llama3.1:latest` 和完整 Homebrew `PATH`；launchd plist 只設定 `PYTHONUNBUFFERED`，因此回到較慢的 `auto` / default model path，且 subprocess 找不到 `ollama` CLI。
 - 解法：在 `bot_a6/com.maplab.a6bot.plist` 明確設定非秘密 runtime 參數：`PATH=/opt/homebrew/bin:...`、`A5_LOCAL_ENGINE=ollama`、`A5_LOCAL_MODEL=llama3.1:latest`、`A5_LOCAL_NUM_PREDICT=650`、`OPENCLAW_AGENT_TIMEOUT_SECONDS=45`。
 - 預防：任何 foreground 成功的 bot runtime 測試，收尾時都要同步檢查 launchd plist / wrapper 是否帶同一組非秘密環境設定與 CLI PATH。
+
+## 2026-05-19 — A6 LINE path doc was missing from active repo
+
+- 觸發條件：Owner 要求「把路徑畫好，讓接手工作的找得到」，並詢問 Case Store 要自建還是拉資料。
+- 根因：`CURRENT_STATUS.md` 知識地圖指向 `projects/line-quote-assistant.md`，但 active repo 沒有該檔，只剩 `trash/projects/line-quote-assistant.md`；接手者會以為文件不存在或跑去非 git Downloads 副本。
+- 解法：補回 active `projects/line-quote-assistant.md`，明確畫出 LINE OA → CONVERSATION_LOG → Case Store → A6 Telegram → A5/GAS 的路徑，並列出現有成果、限制、測試最短路徑。
+- 預防：CURRENT_STATUS 的知識地圖每個 active path 都必須存在；如果文件被移到 trash/archive，要同步改知識地圖或補新的 active handoff。

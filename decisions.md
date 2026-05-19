@@ -81,6 +81,8 @@
 - **不要嘗試「補充」webhook 來捕捉業務回覆** — LINE API 根本不支援。
 - **CONVERSATION_LOG 不拆分** — 144 行對效能無影響，拆分只增加複雜度。
 - **doPost 直接寫入 + message.id 去重** — 不用 trigger queue（會造成 race condition）。
+- **Case Store 是索引層，不是新的對話真相源** — 原始訊息仍以 Sheet `CONVERSATION_LOG` 為證據；本機 `data/case-store/a6_case_store.sqlite3` 只保存 row/msg_id 指標、摘要、缺欄位與候選 case_id，可重建，不 commit。
+- **Case Store v0 只讀 LINE inbound** — `/linecases`、`/case`、`/casequote` 先用現有 CONVERSATION_LOG 建候選案件；正式報價仍由 A5/GAS 決定，A6 不因為找到候選案件就自動寫正式 Sheet。
 
 ---
 

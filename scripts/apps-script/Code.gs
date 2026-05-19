@@ -347,8 +347,213 @@ function createQuote(formData) {
     success: true,
     caseId: caseId,
     fileName: newFileName,
+    spreadsheetId: newFile.getId(),
     url: newUrl
   };
+}
+
+// ─────────────────────────────────────────
+// A5 adapter: 一次產出多版報價副本
+// ─────────────────────────────────────────
+
+/**
+ * 由 A6 / Codex runtime 呼叫的安全批次接口。
+ * 不寫 master QUOTE_DRAFT 的品項、公式或欄位結構；只呼叫 createQuote()
+ * 產出獨立副本，再把 A/B/C 菜單與毛利試算填到各自副本。
+ */
+function createQuoteVariants_(body) {
+  var base = body.base || body.formData || {};
+  var variants = body.variants || [];
+  if (!variants || variants.length === 0) {
+    throw new Error('createQuoteVariants 需要 variants 陣列。');
+  }
+
+  var results = [];
+  for (var i = 0; i < variants.length; i++) {
+    var variant = variants[i] || {};
+    var label = variant.label || variant.code || String.fromCharCode(65 + i);
+    var formData = clonePlainObject_(base);
+    var baseClientName = base.clientName || base.customer || 'MAPLAB';
+
+    // 檔名需要區分 A/B/C；副本內 D2 會在 applyQuoteVariantToCopy_ 還原成原客戶名。
+    formData.clientName = baseClientName + '_' + label;
+    formData.customer = formData.clientName;
+    formData.eventName = variant.title || variant.name || base.eventName || '';
+    formData.totalItems = variant.totalItems || calcVariantTotalItems_(variant);
+    formData.dietaryNotes = joinNonEmpty_([
+      base.dietaryNotes,
+      variant.positioning,
+      variant.internalNote
+    ], '｜');
+
+    var created = createQuote(formData);
+    applyQuoteVariantToCopy_(created.spreadsheetId, base, variant, label);
+
+    results.push({
+      label: label,
+      title: variant.title || variant.name || '',
+      caseId: created.caseId,
+      fileName: created.fileName,
+      spreadsheetId: created.spreadsheetId,
+      url: created.url,
+      totalRevenue: toNumber_(variant.totalRevenue),
+      overallMargin: calcMarginDecimal_(variant.totalRevenue, variant.totalCost, variant.overallMargin)
+    });
+  }
+
+  return {
+    generatedAt: Utilities.formatDate(new Date(), 'Asia/Taipei', 'yyyy-MM-dd HH:mm:ss'),
+    count: results.length,
+    quotes: results
+  };
+}
+
+function applyQuoteVariantToCopy_(spreadsheetId, base, variant, label) {
+  if (!spreadsheetId) throw new Error('缺少 spreadsheetId，無法填入方案副本。');
+  var ss = SpreadsheetApp.openById(spreadsheetId);
+  var sheet = ss.getSheetByName('報價單') || ss.getSheetByName(TEMPLATE_SHEET_NAME) || ss.getSheets()[0];
+  var menu = variant.menu || [];
+  var maxMenuRows = 12;
+  var rowsToWrite = Math.min(menu.length, maxMenuRows);
+
+  try { sheet.showRows(7, 13); } catch (e) { Logger.log('showRows skipped: ' + e.message); }
+
+  sheet.getRange('D2').setValue(base.clientName || base.customer || '');
+  sheet.getRange('B3').setValue(base.company || '');
+  sheet.getRange('D5').setValue(variant.title || variant.name || base.eventName || '');
+  sheet.getRange('F5').setValue(variant.totalItems || calcVariantTotalItems_(variant));
+
+  sheet.getRange('D7:D18').clearContent();
+  sheet.getRange('F7:F18').clearContent();
+  sheet.getRange('I7:J18').clearContent();
+
+  if (rowsToWrite > 0) {
+    var names = [];
+    var qtys = [];
+    var costs = [];
+    for (var i = 0; i < rowsToWrite; i++) {
+      var item = menu[i] || {};
+      var qtyText = item.qtyText || joinNonEmpty_([item.qty, item.unit], ' ');
+      var unitCost = toNumber_(item.unitCost || item.cost);
+      var subtotal = item.subtotal !== undefined && item.subtotal !== null && item.subtotal !== ''
+        ? toNumber_(item.subtotal)
+        : toNumber_(item.qty) * unitCost;
+
+      names.push([item.name || item.standardName || item.itemName || '']);
+      qtys.push([qtyText]);
+      costs.push([unitCost || '', subtotal || '']);
+    }
+    sheet.getRange(7, 4, rowsToWrite, 1).setValues(names);
+    sheet.getRange(7, 6, rowsToWrite, 1).setValues(qtys);
+    sheet.getRange(7, 9, rowsToWrite, 2).setValues(costs);
+  }
+
+  var extra = variant.extraServices || {};
+  var foodRevenue = variantAmount_(variant, extra, ['foodRevenue', 'food', 'mealRevenue'], 0);
+  var softDrinkRevenue = variantAmount_(variant, extra, ['softDrinkRevenue', 'softDrinks', 'beverageRevenue'], 0);
+  var alcoholRevenue = variantAmount_(variant, extra, ['alcoholRevenue', 'alcohol', 'barRevenue'], 0);
+  var staffRevenue = variantAmount_(variant, extra, ['staffRevenue', 'staff', 'serviceStaff'], 0);
+  var decorRevenue = variantAmount_(variant, extra, ['decorRevenue', 'decor', 'decorationRevenue'], 0);
+  var transportRevenue = variantAmount_(variant, extra, ['transportRevenue', 'transport', 'equipmentRevenue'], '');
+  var otherRevenue = variantAmount_(variant, extra, ['otherRevenue', 'other'], '');
+  var totalRevenue = variantAmount_(variant, extra, ['totalRevenue', 'total'], 0);
+  var totalCost = variantAmount_(variant, extra, ['totalCost', 'cost'], 0);
+  var foodCost = variantAmount_(variant, extra, ['foodCost'], '');
+  var overallMargin = calcMarginDecimal_(totalRevenue, totalCost, variant.overallMargin);
+
+  sheet.getRange('C22:H28').clearContent();
+  sheet.getRange('C22:F28').setValues([
+    ['餐點', '', foodRevenue || '', variant.foodNote || ''],
+    ['軟性飲料自助區', '', softDrinkRevenue || '', '含品項、杯具、冰塊、補量估算'],
+    ['酒精／行動調酒吧台', '', alcoholRevenue || '', '現場吧台服務；車體進場另確認'],
+    ['服務人員（最多5位）', '', staffRevenue || '', '夜間 2 小時，每位 2,000'],
+    ['叢林風餐檯佈置', '', decorRevenue || '', '限餐檯桌面與餐飲區'],
+    ['運送／特殊設備', '', transportRevenue || '', '依場地動線另確認'],
+    ['其他', '', otherRevenue || '', variant.otherNote || '']
+  ]);
+
+  sheet.getRange('C30').setValue('總金額');
+  sheet.getRange('E30').setValue(totalRevenue || '');
+  sheet.getRange('I29').setValue('估成本小計');
+  sheet.getRange('J29').setValue(totalCost || '');
+  sheet.getRange('I30').setValue('訂單成本');
+  sheet.getRange('J30').setValue(totalCost || '');
+  sheet.getRange('I31').setValue('毛利率');
+  sheet.getRange('J31').setValue(overallMargin || '');
+  sheet.getRange('E22:E30').setNumberFormat('$#,##0');
+  sheet.getRange('I7:J31').setNumberFormat('$#,##0');
+  sheet.getRange('J31').setNumberFormat('0.0%');
+
+  sheet.getRange('K10').setValue('方案定位');
+  sheet.getRange('L10').setValue(variant.positioning || '');
+  sheet.getRange('K11').setValue('酒水備註');
+  sheet.getRange('L11').setValue(variant.alcoholNote || '行動調酒吧台先報，不承諾車體進場。');
+  sheet.getRange('K12').setValue('人員備註');
+  sheet.getRange('L12').setValue(variant.staffNote || '最多 5 位服務人員；更高服務密度需另行安排外部人力。');
+  sheet.getRange('K13').setValue('佈置備註');
+  sheet.getRange('L13').setValue(variant.decorNote || '叢林風範圍限餐檯桌面與餐飲區，大型背板/舞台另估。');
+  sheet.getRange('K14').setValue('餐點成本');
+  sheet.getRange('L14').setValue(foodCost === '' ? '' : 'NT$' + foodCost);
+  sheet.getRange('K15').setValue('產出接口');
+  sheet.getRange('L15').setValue('createQuoteVariants adapter 2026-05-19；master 表格/公式未改');
+
+  SpreadsheetApp.flush();
+}
+
+function clonePlainObject_(obj) {
+  var out = {};
+  obj = obj || {};
+  for (var key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) out[key] = obj[key];
+  }
+  return out;
+}
+
+function joinNonEmpty_(parts, sep) {
+  var kept = [];
+  for (var i = 0; i < parts.length; i++) {
+    if (parts[i] !== undefined && parts[i] !== null && String(parts[i]).trim() !== '') {
+      kept.push(String(parts[i]).trim());
+    }
+  }
+  return kept.join(sep);
+}
+
+function toNumber_(value) {
+  if (value === undefined || value === null || value === '') return 0;
+  var num = Number(String(value).replace(/[$,％%]/g, ''));
+  return isNaN(num) ? 0 : num;
+}
+
+function variantAmount_(variant, extra, keys, fallback) {
+  for (var i = 0; i < keys.length; i++) {
+    if (variant[keys[i]] !== undefined && variant[keys[i]] !== null && variant[keys[i]] !== '') {
+      return toNumber_(variant[keys[i]]);
+    }
+  }
+  for (var j = 0; j < keys.length; j++) {
+    if (extra[keys[j]] !== undefined && extra[keys[j]] !== null && extra[keys[j]] !== '') {
+      return toNumber_(extra[keys[j]]);
+    }
+  }
+  return fallback;
+}
+
+function calcMarginDecimal_(revenue, cost, preset) {
+  if (preset !== undefined && preset !== null && preset !== '') {
+    var presetNum = toNumber_(preset);
+    return presetNum > 1 ? presetNum / 100 : presetNum;
+  }
+  var rev = toNumber_(revenue);
+  if (!rev) return 0;
+  return (rev - toNumber_(cost)) / rev;
+}
+
+function calcVariantTotalItems_(variant) {
+  var menu = variant.menu || [];
+  var total = 0;
+  for (var i = 0; i < menu.length; i++) total += toNumber_(menu[i].qty);
+  return total || '';
 }
 
 // ─────────────────────────────────────────
@@ -614,6 +819,7 @@ function createQuoteFromMaster_() {
       success  : true,
       caseId   : result.caseId,
       fileName : result.fileName,
+      spreadsheetId: result.spreadsheetId,
       url      : result.url
     })).setMimeType(ContentService.MimeType.JSON);
 
@@ -654,6 +860,7 @@ function handleQuoteRequest_(params) {
       success  : true,
       caseId   : result.caseId,
       fileName : result.fileName,
+      spreadsheetId: result.spreadsheetId,
       url      : result.url
     })).setMimeType(ContentService.MimeType.JSON);
 

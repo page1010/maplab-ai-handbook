@@ -524,7 +524,7 @@ async def localquote_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 # ── Background Claude runner ───────────────────────────────────────────────────
 
 def _trigger_gas_quote_sync(form_data: dict) -> Optional[dict]:
-    """POST formData to GAS Web App, return {success, url, caseId} or None"""
+    """POST formData to GAS Web App, supporting createQuote and createQuoteVariants."""
     if not GAS_QUOTE_URL:
         logging.warning("GAS_QUOTE_URL not set, skipping GAS trigger")
         return None
@@ -548,6 +548,30 @@ def _trigger_gas_quote_sync(form_data: dict) -> Optional[dict]:
     except Exception as e:
         logging.error(f"GAS trigger failed: {e}")
         return {"success": False, "error": str(e)}
+
+
+def _format_gas_quote_result(gas_result: dict) -> tuple[str, bool]:
+    """Return (message, is_multi_variant) for GAS quote responses."""
+    result = gas_result.get("result") or {}
+    quotes = result.get("quotes") or []
+    if quotes:
+        lines = ["📄 **報價單已自動產出！**"]
+        for quote in quotes:
+            label = quote.get("label", "")
+            title = quote.get("title", "")
+            total = quote.get("totalRevenue")
+            margin = quote.get("overallMargin")
+            url = quote.get("url", "")
+            total_text = f"NT${total:,.0f}" if isinstance(total, (int, float)) else ""
+            margin_text = f"{margin * 100:.1f}%" if isinstance(margin, (int, float)) else ""
+            name = title if title.startswith(label) else f"{label} {title}".strip()
+            summary = "｜".join(x for x in [name, total_text, margin_text] if x)
+            lines.append(f"{summary}\n{url}")
+        return "\n\n".join(lines), True
+
+    url = gas_result.get("url", "")
+    case_id = gas_result.get("caseId", "")
+    return f"📄 **報價單已自動產出！**\n連結：{url}\n案件編號：{case_id}", False
 
 
 def _trigger_gas_slide_sync() -> Optional[dict]:
@@ -711,18 +735,18 @@ async def _run_a5_quote_background(
                     gas_result = await asyncio.get_event_loop().run_in_executor(
                         None, lambda: _trigger_gas_quote_sync(form_data))
                     if gas_result and gas_result.get('success'):
-                        url = gas_result.get('url', '')
-                        case_id = gas_result.get('caseId', '')
-                        answer += f"\n\n📄 **報價單已自動產出！**\n連結：{url}\n案件編號：{case_id}"
+                        quote_msg, is_multi_variant = _format_gas_quote_result(gas_result)
+                        answer += f"\n\n{quote_msg}"
 
-                        slide_result = await asyncio.get_event_loop().run_in_executor(
-                            None, lambda: _trigger_gas_slide_sync())
-                        if slide_result and slide_result.get('success'):
-                            slide_url = slide_result.get('url', '')
-                            answer += f"\n\n📊 **提案簡報已自動產出！**\n連結：{slide_url}"
-                        else:
-                            slide_error = slide_result.get('error', '未知錯誤') if slide_result else 'GAS 無回應'
-                            answer += f"\n\n⚠️ 提案簡報自動產出失敗（{slide_error}）。資料已寫入母版，可手動點選單產出。"
+                        if not is_multi_variant:
+                            slide_result = await asyncio.get_event_loop().run_in_executor(
+                                None, lambda: _trigger_gas_slide_sync())
+                            if slide_result and slide_result.get('success'):
+                                slide_url = slide_result.get('url', '')
+                                answer += f"\n\n📊 **提案簡報已自動產出！**\n連結：{slide_url}"
+                            else:
+                                slide_error = slide_result.get('error', '未知錯誤') if slide_result else 'GAS 無回應'
+                                answer += f"\n\n⚠️ 提案簡報自動產出失敗（{slide_error}）。資料已寫入母版，可手動點選單產出。"
                     else:
                         error_msg = gas_result.get('error', '未知錯誤') if gas_result else 'GAS 無回應'
                         answer += f"\n\n⚠️ 報價單自動產出失敗（{error_msg}）。資料已寫入母版，可手動點選單產出。"
@@ -787,19 +811,19 @@ async def _run_claude_background(
                 gas_result = await asyncio.get_event_loop().run_in_executor(
                     None, lambda: _trigger_gas_quote_sync(form_data))
                 if gas_result and gas_result.get('success'):
-                    url = gas_result.get('url', '')
-                    case_id = gas_result.get('caseId', '')
-                    answer += f"\n\n📄 **報價單已自動產出！**\n連結：{url}\n案件編號：{case_id}"
+                    quote_msg, is_multi_variant = _format_gas_quote_result(gas_result)
+                    answer += f"\n\n{quote_msg}"
 
-                    # createQuote 成功後，也觸發 Slide
-                    slide_result = await asyncio.get_event_loop().run_in_executor(
-                        None, lambda: _trigger_gas_slide_sync())
-                    if slide_result and slide_result.get('success'):
-                        slide_url = slide_result.get('url', '')
-                        answer += f"\n\n📊 **提案簡報已自動產出！**\n連結：{slide_url}"
-                    else:
-                        slide_error = slide_result.get('error', '未知錯誤') if slide_result else 'GAS 無回應'
-                        answer += f"\n\n⚠️ 提案簡報自動產出失敗（{slide_error}）。資料已寫入母版，可手動點選單產出。"
+                    # 單份 createQuote 成功後才觸發 Slide；多方案報價不讀 master 產簡報。
+                    if not is_multi_variant:
+                        slide_result = await asyncio.get_event_loop().run_in_executor(
+                            None, lambda: _trigger_gas_slide_sync())
+                        if slide_result and slide_result.get('success'):
+                            slide_url = slide_result.get('url', '')
+                            answer += f"\n\n📊 **提案簡報已自動產出！**\n連結：{slide_url}"
+                        else:
+                            slide_error = slide_result.get('error', '未知錯誤') if slide_result else 'GAS 無回應'
+                            answer += f"\n\n⚠️ 提案簡報自動產出失敗（{slide_error}）。資料已寫入母版，可手動點選單產出。"
                 else:
                     error_msg = gas_result.get('error', '未知錯誤') if gas_result else 'GAS 無回應'
                     answer += f"\n\n⚠️ 報價單自動產出失敗（{error_msg}）。資料已寫入母版，可手動點選單產出。"

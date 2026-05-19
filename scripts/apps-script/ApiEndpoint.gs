@@ -5,10 +5,11 @@
 
 /**
  * HTTP POST 入口
- * Body: { "action": "createQuote" | "createSlide" | "addItem", ...params }
+ * Body: { "action": "createQuote" | "createQuoteVariants" | "createSlide" | "addItem", ...params }
  *
  * createQuote 需要：clientName, company, phone, address, eventType, eventDate, location, pax
  * createQuote fromMaster：{ "action": "createQuote", "fromMaster": true } — 從 master QUOTE_DRAFT 讀資料
+ * createQuoteVariants 需要：{ "action": "createQuoteVariants", "base": {...}, "variants": [...] }
  * createSlide 不需要額外參數（讀 QUOTE_DRAFT Sheet）
  * addItem 需要：{ "action": "addItem", "standard_name", "category", "default_cost", "unit" }
  */
@@ -23,6 +24,18 @@ function doPost(e) {
       }
       // handleQuoteRequest_ 已自行回傳 ContentService JSON，直接 return
       return handleQuoteRequest_(body);
+
+    } else if (action === 'createQuoteVariants') {
+      try {
+        var variantsResult = createQuoteVariants_(body);
+        return ContentService
+          .createTextOutput(JSON.stringify({ success: true, result: variantsResult }))
+          .setMimeType(ContentService.MimeType.JSON);
+      } catch (variantErr) {
+        return ContentService
+          .createTextOutput(JSON.stringify({ success: false, error: variantErr.message }))
+          .setMimeType(ContentService.MimeType.JSON);
+      }
 
     } else if (action === 'createSlide') {
       try {

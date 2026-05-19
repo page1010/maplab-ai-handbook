@@ -134,3 +134,10 @@
 - 根因：`/start` 與 `_get_mode()` 預設都把聊天放進 `MODE_QUOTE`，`handle_message()` 又把 quote mode 內的所有文字都丟進 A5，沒有先分辨模型/status/一般對話。
 - 解法：A6 預設改為 `MODE_CHAT`；新增 `/status`、`/model` 與模型狀態意圖偵測；文字路由先處理 runtime/status 問題，再用明確報價意圖才進 A5。
 - 預防：Telegram route 測試至少涵蓋四類：模型/status 問題不進 A5、一般聊天不進 A5、明確「報價 ...」進 A5、Case Store 查詢仍走 `/case`/`查` 路徑。
+
+## 2026-05-19 — A6 chat fallback must not become the default
+
+- 觸發條件：Owner 問 A6 是否真的能對話，指出需求是「平常接 Codex，除非沒有額度才改地端」，不是寫一段狀態文案敷衍。
+- 根因：前一版只修掉誤入 A5，但一般聊天仍直接走 `_run_ollama_guarded()`；也就是 fallback 被當 default，能力自然偏弱。
+- 解法：新增 Codex-first 對話層：普通聊天/SEO 先用 `codex exec --ephemeral -s read-only` 回覆；Codex CLI 不可用、額度/網路失敗或逾時時，才透明通知並 fallback 到本機 Ollama。
+- 預防：A6 對話能力測試要證明 primary engine，而不是只證明有回覆；smoke 至少檢查 `codex_ask()` 實際回應、runtime status 顯示 Codex primary、fallback 通知存在。

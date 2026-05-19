@@ -15,6 +15,7 @@ import logging
 import os
 import subprocess
 import sys
+import tempfile
 import urllib.request
 from collections import deque
 from pathlib import Path
@@ -48,6 +49,10 @@ OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434")
 OLLAMA_MODEL_CHAT = os.getenv("OLLAMA_MODEL_CHAT", "llama3.1:latest")
 OLLAMA_TIMEOUT_SECONDS = int(os.getenv("OLLAMA_TIMEOUT_SECONDS", "45"))
 CASE_STORE_SYNC_ROWS = int(os.getenv("CASE_STORE_SYNC_ROWS", "600"))
+A6_CHAT_PRIMARY = os.getenv("A6_CHAT_PRIMARY", "codex").strip().lower()
+CODEX_BIN = os.getenv("A6_CODEX_BIN", "/Applications/Codex.app/Contents/Resources/codex")
+CODEX_MODEL = os.getenv("A6_CODEX_MODEL", "").strip()
+CODEX_TIMEOUT_SECONDS = int(os.getenv("A6_CODEX_TIMEOUT_SECONDS", "180"))
 
 # 白名單：只有這兩人的訊息會被處理
 ALLOWED_USER_IDS: set[int] = {OWNER_USER_ID}
@@ -87,8 +92,8 @@ MODE_SEO = "seo"
 
 MODE_LABELS = {
     MODE_QUOTE: "🧾 A5 報價模式（雲端 A5 + 本地 Ollama 備援）",
-    MODE_CHAT: "💬 聊天模式（Ollama）",
-    MODE_SEO: "📝 SEO 模式（Ollama）",
+    MODE_CHAT: "💬 聊天模式（Codex 優先；Ollama 備援）",
+    MODE_SEO: "📝 SEO 模式（Codex 優先；Ollama 備援）",
 }
 
 MENU_BUTTON_QUOTE = "🧾 報價模式"
@@ -158,12 +163,14 @@ def _runtime_status_text(chat_id: int) -> str:
     a5_model = os.getenv("A5_LOCAL_MODEL", "llama3.1:latest")
     openclaw_model = os.getenv("OPENCLAW_MODEL", "qwen2.5:14b")
     openclaw_dispatch = os.getenv("OPENCLAW_MODEL_DISPATCH", "qwen2.5-coder:7b")
+    codex_model = CODEX_MODEL or "Codex config default"
     return (
         "🟢 A6 runtime 狀態\n"
         f"目前模式：{MODE_LABELS[_get_mode(chat_id)]}\n"
         f"Uptime：{h}h {m}m {s}s\n\n"
         "模型路徑：\n"
-        f"- 一般聊天：Ollama `{OLLAMA_MODEL_CHAT}`\n"
+        f"- 一般聊天 primary：{A6_CHAT_PRIMARY} `{codex_model}`\n"
+        f"- 一般聊天 fallback：Ollama `{OLLAMA_MODEL_CHAT}`\n"
         f"- A5 本地報價備援：{a5_engine} `{a5_model}`\n"
         f"- OpenClaw 預設：`{openclaw_model}`\n"
         f"- OpenClaw dispatch：`{openclaw_dispatch}`\n\n"
@@ -340,6 +347,59 @@ def _build_ollama_prompt(chat_id: int, user_message: str, mode: str, user_name: 
     return "\n".join(parts)
 
 
+def _build_codex_prompt(chat_id: int, user_message: str, mode: str, user_name: str = "") -> str:
+    history = _get_history(chat_id)
+    if mode == MODE_SEO:
+        task_frame = (
+            "這次是 MAPLAB SEO/內容協作。請輸出可直接拿去修改的建議或草稿，"
+            "但不要聲稱你已發布、已修改網站或已寫入任何外部系統。"
+        )
+    else:
+        task_frame = (
+            "這次是 MAPLAB A6 一般對話。請像可協作的助理一樣回答，"
+            "可以釐清、判斷、整理下一步，但不要把普通聊天轉成報價流程。"
+        )
+
+    parts = [
+        "你是 MAPLAB A6 的 Codex 雲端對話層，透過 Telegram bot 被呼叫。",
+        "你的任務是接住 Owner / Mina 的日常對話、工作協作與短問題。",
+        "",
+        "硬限制：",
+        "- 只輸出 Telegram 要回覆的文字。",
+        "- 不要修改檔案、不要 commit、不要 push、不要操作 Google Sheet / GAS / WordPress。",
+        "- 若資訊不足，直接說需要確認什麼，不要假裝已查證。",
+        "- 若使用者是明確報價需求，A6 外層路由會交給 A5；本層不要自行產正式報價單。",
+        "- 請用繁體中文，簡潔但不要敷衍。",
+        "",
+        task_frame,
+    ]
+    if A6_SYSTEM_PROMPT:
+        parts.extend(["", "## A6 role recall", A6_SYSTEM_PROMPT[:4000]])
+    if history:
+        parts.append("\n## 對話記錄")
+        for msg in history:
+            role_label = f"使用者（{user_name or '業務'}）" if msg["role"] == "user" else "A6"
+            parts.append(f"{role_label}：{msg['content']}")
+        parts.append("## 對話記錄結束")
+    parts.extend(
+        [
+            "",
+            "## 使用者本次訊息",
+            user_message,
+            "",
+            "請直接回覆 Telegram 文字，不要加工具紀錄或內部過程。",
+        ]
+    )
+    return "\n".join(parts)
+
+
+def _short_error(text: str, limit: int = 420) -> str:
+    cleaned = " ".join((text or "").split())
+    if len(cleaned) <= limit:
+        return cleaned
+    return cleaned[: limit - 1] + "…"
+
+
 def _ollama_generate_sync(prompt: str) -> str:
     payload = json.dumps(
         {"model": OLLAMA_MODEL_CHAT, "prompt": prompt, "stream": False},
@@ -356,6 +416,59 @@ def _ollama_generate_sync(prompt: str) -> str:
     return (data.get("response") or "").strip()
 
 
+def _codex_generate_sync(prompt: str) -> str:
+    codex_path = Path(CODEX_BIN)
+    if not codex_path.exists():
+        raise FileNotFoundError(f"找不到 Codex CLI：{CODEX_BIN}")
+
+    output_path = ""
+    with tempfile.NamedTemporaryFile("w", encoding="utf-8", delete=False, suffix=".txt") as fh:
+        output_path = fh.name
+
+    cmd = [
+        str(codex_path),
+        "exec",
+        "--ephemeral",
+        "-C",
+        str(REPO_PATH),
+        "-s",
+        "read-only",
+        "-o",
+        output_path,
+    ]
+    if CODEX_MODEL:
+        cmd.extend(["-m", CODEX_MODEL])
+    cmd.append("-")
+
+    env = os.environ.copy()
+    env["PATH"] = "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:" + env.get("PATH", "")
+    try:
+        proc = subprocess.run(
+            cmd,
+            input=prompt,
+            text=True,
+            capture_output=True,
+            timeout=CODEX_TIMEOUT_SECONDS,
+            cwd=REPO_PATH,
+            env=env,
+        )
+        output_file = Path(output_path)
+        answer = output_file.read_text(encoding="utf-8").strip() if output_file.exists() else ""
+        if proc.returncode != 0:
+            err = _short_error(proc.stderr or proc.stdout or f"exit={proc.returncode}")
+            raise RuntimeError(err)
+        answer = answer or proc.stdout.strip()
+        if not answer:
+            raise RuntimeError("Codex 無回覆")
+        return answer
+    finally:
+        if output_path:
+            try:
+                Path(output_path).unlink(missing_ok=True)
+            except Exception:
+                pass
+
+
 async def ollama_ask(chat_id: int, user_message: str, mode: str, user_name: str = "") -> str:
     prompt = _build_ollama_prompt(chat_id, user_message, mode, user_name)
     try:
@@ -369,6 +482,16 @@ async def ollama_ask(chat_id: int, user_message: str, mode: str, user_name: str 
         return answer
     except Exception as e:
         return f"⚠️ Ollama 呼叫失敗：{e}"
+
+
+async def codex_ask(chat_id: int, user_message: str, mode: str, user_name: str = "") -> str:
+    prompt = _build_codex_prompt(chat_id, user_message, mode, user_name)
+    answer = await asyncio.to_thread(_codex_generate_sync, prompt)
+    history = _get_history(chat_id)
+    history.append({"role": "user", "content": user_message})
+    history.append({"role": "assistant", "content": answer})
+    _save_conv_history()
+    return answer
 
 
 async def claude_ask(chat_id: int, user_message: str, user_name: str = "", timeout: int = 600) -> str:
@@ -477,7 +600,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         f"🟢 MAPLAB A6 報價助理 online\n"
         f"時間: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
         f"目前模式：{MODE_LABELS[_get_mode(chat_id)]}\n\n"
-        f"一般問題會直接由 A6 回覆；只有明確輸入「報價 ...」或 `/localquote ...` 才會進 A5。\n\n"
+        f"一般問題會先由 A6 Codex 回覆；Codex 不可用時才切本機 Ollama。只有明確輸入「報價 ...」或 `/localquote ...` 才會進 A5。\n\n"
         f"可用指令：\n"
         f"/help — 指令說明\n"
         f"/ping — 心跳\n"
@@ -503,10 +626,10 @@ async def help_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         "📋 MAPLAB A6 報價助理指令\n\n"
         f"【模式切換】\n"
         f"/mode quote — A5 報價模式（雲端 A5；失敗時本地 Ollama/OpenClaw 備援）\n"
-        f"/mode chat — 一般聊天（Ollama）\n"
-        f"/mode seo — SEO 助手（Ollama）\n"
+        f"/mode chat — 一般聊天（Codex 優先；Ollama 備援）\n"
+        f"/mode seo — SEO 助手（Codex 優先；Ollama 備援）\n"
         f"目前模式：{MODE_LABELS[_get_mode(chat_id)]}\n\n"
-        "一般問題預設留在 A6；只有明確報價需求才會進 A5。\n\n"
+        "一般問題預設留在 A6 Codex；Codex 不可用時才用本機 Ollama。只有明確報價需求才會進 A5。\n\n"
         "【急件報價】\n"
         "報價 [客名] [類型] [人數] [預算]\n"
         "例：報價 王小明 婚禮 80人 預算6萬\n\n"
@@ -1051,6 +1174,40 @@ async def _run_ollama_background(
         log_and_commit_a6(user_name, user_message, answer)
 
 
+async def _run_cloud_chat_background(
+    bot,
+    chat_id: int,
+    user_message: str,
+    user_name: str,
+    mode: str,
+) -> None:
+    async with _claude_semaphore:
+        answer = ""
+        fallback_reason = ""
+        if A6_CHAT_PRIMARY == "codex":
+            try:
+                answer = await codex_ask(chat_id, user_message, mode, user_name)
+            except Exception as exc:
+                fallback_reason = _short_error(str(exc))
+        else:
+            fallback_reason = f"A6_CHAT_PRIMARY={A6_CHAT_PRIMARY}，目前只支援 codex primary"
+
+        if not answer:
+            await bot.send_message(
+                chat_id=chat_id,
+                text=(
+                    "⚠️ Codex 雲端對話路徑不可用，已切到本機 Ollama 備援。\n"
+                    f"原因：{fallback_reason or '未知'}"
+                ),
+            )
+            answer = await ollama_ask(chat_id, user_message, mode, user_name)
+
+        MAX = 4096
+        for i in range(0, len(answer), MAX):
+            await bot.send_message(chat_id=chat_id, text=answer[i:i + MAX])
+        log_and_commit_a6(user_name, user_message, answer)
+
+
 async def _run_ollama_guarded(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
@@ -1065,6 +1222,23 @@ async def _run_ollama_guarded(
     await update.message.reply_text("⏳ Ollama 處理中…")
     asyncio.create_task(
         _run_ollama_background(context.bot, chat_id, user_message, user_name, mode)
+    )
+
+
+async def _run_cloud_chat_guarded(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+    user_message: str,
+    mode: str,
+) -> None:
+    if _claude_semaphore.locked():
+        await update.message.reply_text("⏳ A6 正在處理上一則，請稍候。")
+        return
+    chat_id = update.effective_chat.id
+    user_name = update.effective_user.first_name or "業務"
+    await update.message.reply_text("⏳ A6 Codex 處理中…")
+    asyncio.create_task(
+        _run_cloud_chat_background(context.bot, chat_id, user_message, user_name, mode)
     )
 
 
@@ -1132,9 +1306,9 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     if _looks_like_quote_request(stripped):
         await _run_a5_quote_guarded(update, context, text)
     elif mode == MODE_SEO:
-        await _run_ollama_guarded(update, context, text, MODE_SEO)
+        await _run_cloud_chat_guarded(update, context, text, MODE_SEO)
     else:
-        await _run_ollama_guarded(update, context, text, MODE_CHAT)
+        await _run_cloud_chat_guarded(update, context, text, MODE_CHAT)
 
 
 async def on_error(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:

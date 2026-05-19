@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-05-19 A6 Telegram route guard（A6 預設回一般聊天，模型/status 問題不再誤入 A5 報價）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-05-19 A6 Codex-first chat（A6 一般聊天/SEO 改為 Codex 優先，失敗才 Ollama 備援）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -25,6 +25,7 @@
 - 2026-05-11：WordPress public REST 現況仍為 6 pages / 57 posts；A2/A3 local workbench planned slugs 不可直接視為 live URLs。
 - 2026-05-19：A6 Case Store v0 接線 — LINE inbound 仍以 Sheet `CONVERSATION_LOG` 為原始證據；新增 `bot_a6/case_store.py` 只讀 Sheet、寫本機 SQLite 案件索引，A6 Telegram 新增 `/linecases`、`/case`、`/casequote`，路徑圖補回 `projects/line-quote-assistant.md`。
 - 2026-05-19：A6 Telegram route guard 修正 — `/start` 預設為一般聊天，`/status` / `/model` 與「你現在是跑什麼模型」直接由 A6 回 runtime/model 狀態；只有明確「報價 ...」、`/localquote ...` 或可判定為外燴報價需求時才進 A5，避免普通對話被 A5 fallback 吞掉。
+- 2026-05-19：A6 一般聊天/SEO 改為 Codex-first — Telegram 普通對話先用本機 `codex exec --ephemeral --sandbox read-only` 呼叫 Codex 雲端對話層；Codex CLI 不可用、額度/網路失敗或逾時時才透明切到本機 Ollama。A5 報價仍沿用明確報價路由，不動 Sheet/GAS/公式。
 - 2026-05-19：B1 已由 InnerFlowLab 內容發文角色改為「暫停中的跨專案治理顧問」；Chrome Extension B1 module 將指向 `projects/b1-cross-project-governance-advisor.md`，review bundle 在 `workbook/reviews/JOB-B1-CROSS-PROJECT-20260519/`。原 Substack / innerflowlab.com / 多平台發文自動化暫停，不得未經 Owner/A1 恢復就執行。
 - 2026-05-19：B1 補上 Investment OS 判斷邏輯橋接：`projects/b1-investment-logic-bridge.md` 與 `workbook/reviews/JOB-B1-CROSS-PROJECT-20260519/b1_investment_logic_summon.md`，讓 Owner 可召喚 B1 到其他 agent 時先帶入左側/右側/風控/籌碼/新聞語言；B1 仍不下單、不建模擬單、不給買賣建議。
 - 2026-05-11：GitHub sync audit 啟動 — 以 `origin/main` 為備份基準，將 durable docs/scripts/task cards/review index 補齊入庫；`.env`、logs、runtime history、raw A6 review bundles 暫不盲目 commit，先建立 sanitized/index 流程。
@@ -51,7 +52,7 @@
 | T-A5-004 | createSlides.gs — Slide 報價簡報自動生成 | A5 | 🔴 CRITICAL（~528h無commit，D22）| handoff/tasks/T-A5-004.md |
 | T-A5-005 | 報價狀態追蹤同步 + Dashboard | A5 | 🔴 CRITICAL（~528h無commit，D22）| handoff/tasks/T-A5-005.md |
 | T-A5-006 | T-A5-006 | A5 | 🔲 待開始（尚未開始。等 T-A5-005 完成後啟動。） | handoff/tasks/T-A5-006.md |
-| T-A6-001 | A6 LINE 業務報價助手系統 | A6 | 🔄 進行中（Case Store v0 已接現有 CONVERSATION_LOG；A6 Telegram route guard 已修正：一般問題不進 A5，明確報價才進 A5。下一步：Owner/Mina 手機實測 /status、模型問題與三個 Case Store 指令） | handoff/tasks/T-A6-001.md |
+| T-A6-001 | A6 LINE 業務報價助手系統 | A6 | 🔄 進行中（Case Store v0 已接現有 CONVERSATION_LOG；A6 Telegram 一般聊天/SEO 已改 Codex 優先、Ollama 備援；明確報價才進 A5。下一步：Owner/Mina 手機實測一般對話、/status、報價與三個 Case Store 指令） | handoff/tasks/T-A6-001.md |
 | T-A6-002 | LINE 對話訓練資料收集計畫 | A6 | 💤 暫停（原計畫拆 Sheet 做訓練資料，04-07 重新規劃方向。等 Owner 決定是否需要 LINE 訓練資料及取得方式。） | handoff/tasks/T-A6-002.md |
 | T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | 💤 暫停（Phase 2 v2.0 完成，等 Owner 確認政策 + A5 欄位補齊）（Q1-Q10 重構完成（真實 CSV 驅動），下一步是 Q7/Q10 政策確認 + Phase 3 上線測試） | handoff/tasks/T-A7-001.md |
 | T-A7-002 | A7 部門 80/20 優先任務清單 | A7 | ⏸️ 阻塞中（任務 6（Q1-Q10 實裝）+ 任務 10（技能書 v2.0）已完成。Phase 3A 剩任務 4（地區判斷）、7（流） | handoff/tasks/T-A7-002.md |

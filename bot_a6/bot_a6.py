@@ -561,12 +561,17 @@ def _format_gas_quote_result(gas_result: dict) -> tuple[str, bool]:
             title = quote.get("title", "")
             total = quote.get("totalRevenue")
             margin = quote.get("overallMargin")
+            food_margin = quote.get("foodMargin")
+            food_cost_ratio = quote.get("foodCostRatio")
             url = quote.get("url", "")
             total_text = f"NT${total:,.0f}" if isinstance(total, (int, float)) else ""
-            margin_text = f"{margin * 100:.1f}%" if isinstance(margin, (int, float)) else ""
+            food_margin_text = f"餐點毛利 {food_margin * 100:.1f}%" if isinstance(food_margin, (int, float)) else ""
+            food_ratio_text = f"食材占比 {food_cost_ratio * 100:.1f}%" if isinstance(food_cost_ratio, (int, float)) else ""
+            overall_text = f"整體毛利 {margin * 100:.1f}%" if isinstance(margin, (int, float)) else ""
             name = title if title.startswith(label) else f"{label} {title}".strip()
-            summary = "｜".join(x for x in [name, total_text, margin_text] if x)
-            lines.append(f"{summary}\n{url}")
+            summary = "｜".join(x for x in [name, total_text] if x)
+            metrics = "｜".join(x for x in [food_margin_text, food_ratio_text, overall_text] if x)
+            lines.append(f"{summary}\n{metrics}\n{url}" if metrics else f"{summary}\n{url}")
         return "\n\n".join(lines), True
 
     url = gas_result.get("url", "")

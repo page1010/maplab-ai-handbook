@@ -396,6 +396,10 @@ function createQuoteVariants_(body) {
       fileName: created.fileName,
       spreadsheetId: created.spreadsheetId,
       url: created.url,
+      foodRevenue: toNumber_(variant.foodRevenue),
+      foodCost: toNumber_(variant.foodCost),
+      foodCostRatio: calcRatioDecimal_(variant.foodCost, variant.foodRevenue),
+      foodMargin: calcMarginDecimal_(variant.foodRevenue, variant.foodCost, variant.foodMargin),
       totalRevenue: toNumber_(variant.totalRevenue),
       overallMargin: calcMarginDecimal_(variant.totalRevenue, variant.totalCost, variant.overallMargin)
     });
@@ -547,6 +551,12 @@ function calcMarginDecimal_(revenue, cost, preset) {
   var rev = toNumber_(revenue);
   if (!rev) return 0;
   return (rev - toNumber_(cost)) / rev;
+}
+
+function calcRatioDecimal_(numerator, denominator) {
+  var denom = toNumber_(denominator);
+  if (!denom) return 0;
+  return toNumber_(numerator) / denom;
 }
 
 function calcVariantTotalItems_(variant) {

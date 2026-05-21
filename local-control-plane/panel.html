@@ -1,35 +1,342 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MAPLAB Local Control Plane</title>
+  <title>MAPLAB Agent Runtime Panel</title>
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 20px; color: #111; }
-    h1 { margin: 0 0 12px; }
-    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .panel { border: 1px solid #ddd; border-radius: 8px; padding: 12px; }
-    .item { border-top: 1px solid #eee; padding: 8px 0; }
-    .item:first-child { border-top: 0; }
-    .tag { display: inline-block; background: #f1f5f9; border-radius: 6px; padding: 2px 8px; margin: 2px; font-size: 12px; }
-    .muted { color: #555; font-size: 13px; }
-    code { background: #f8fafc; padding: 2px 4px; border-radius: 4px; }
+    :root {
+      --bg: #f7f6f1;
+      --surface: #ffffff;
+      --surface-soft: #f1f4f2;
+      --ink: #1d2428;
+      --muted: #607078;
+      --line: #d9ddd8;
+      --green: #0f6b5f;
+      --blue: #285f9f;
+      --amber: #a56012;
+      --red: #a3332a;
+      --shadow: 0 10px 30px rgba(29, 36, 40, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+      line-height: 1.5;
+    }
+
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .shell {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+      gap: 16px;
+      align-items: stretch;
+      margin-bottom: 18px;
+    }
+
+    .title-block, .launcher {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(28px, 3.4vw, 44px);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    h2, h3 {
+      margin: 0;
+      letter-spacing: 0;
+    }
+
+    h2 { font-size: 18px; }
+    h3 { font-size: 15px; }
+
+    p { margin: 8px 0 0; }
+
+    .muted {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .status-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .pill, .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      border-radius: 999px;
+      padding: 3px 9px;
+      border: 1px solid var(--line);
+      background: var(--surface-soft);
+      color: var(--ink);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .pill.strong { border-color: rgba(15, 107, 95, 0.35); color: var(--green); background: #e8f2ee; }
+    .pill.warn { border-color: rgba(165, 96, 18, 0.35); color: var(--amber); background: #fff2df; }
+    .pill.stop { border-color: rgba(163, 51, 42, 0.35); color: var(--red); background: #faebe8; }
+
+    .launcher-grid {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .cmd {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: center;
+      background: #162127;
+      color: #f7fbff;
+      border-radius: 8px;
+      padding: 10px;
+      overflow: hidden;
+    }
+
+    .cmd code {
+      overflow-wrap: anywhere;
+      font-size: 12px;
+      color: inherit;
+      background: transparent;
+    }
+
+    button {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--ink);
+      min-height: 32px;
+      padding: 6px 10px;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    button:hover { border-color: var(--green); color: var(--green); }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid.two { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    section {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 16px;
+      min-width: 0;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 10px;
+    }
+
+    .item {
+      padding: 12px 0;
+      border-top: 1px solid #edf0ec;
+    }
+
+    .item:first-child { border-top: 0; padding-top: 0; }
+    .item:last-child { padding-bottom: 0; }
+
+    .item-title {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+
+    .item-title strong { font-size: 15px; }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .link-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .link-list a, .plain-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 9px 10px;
+      background: #fbfcfa;
+      min-width: 0;
+    }
+
+    .link-list span, .plain-row span { min-width: 0; overflow-wrap: anywhere; }
+    .tiny { font-size: 12px; color: var(--muted); }
+
+    ol, ul {
+      margin: 8px 0 0;
+      padding-left: 20px;
+    }
+
+    li { margin: 4px 0; }
+
+    .timeline {
+      display: grid;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .timeline-row {
+      display: grid;
+      grid-template-columns: 110px minmax(0, 1fr);
+      gap: 12px;
+      border-left: 3px solid var(--green);
+      padding: 2px 0 2px 12px;
+    }
+
+    .callout {
+      border-left: 4px solid var(--amber);
+      background: #fff8ec;
+      padding: 10px 12px;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+
+    .footer {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    @media (max-width: 980px) {
+      header, .grid.two, .grid.three { grid-template-columns: 1fr; }
+      .timeline-row { grid-template-columns: 1fr; gap: 2px; }
+    }
   </style>
 </head>
 <body>
-  <h1>MAPLAB Local Control Plane</h1>
-  <p class="muted">Model-agnostic runtime view for roles, capabilities, and task pipeline contracts.</p>
+  <main class="shell">
+    <header>
+      <div class="title-block">
+        <h1>MAPLAB Agent Runtime Panel</h1>
+        <p>固定入口給 MAPLAB 與 Investment OS 的角色召喚、外部記憶、任務狀態與可視化工作流。這份檔案是 repo 內的持久面板，不是一次性 HTML。</p>
+        <div class="status-line">
+          <span class="pill strong">Canonical repo: /Users/pagemacmini/maplab-ai-handbook</span>
+          <span class="pill">Static HTML: no build</span>
+          <span class="pill warn">Approval before customer-facing action</span>
+          <span class="pill stop">Do not work in Downloads copy</span>
+        </div>
+      </div>
+      <aside class="launcher">
+        <h2>關掉後怎麼重開</h2>
+        <p class="muted">首選：雙擊 repo 根目錄的 <code>open-agent-runtime-panel.command</code>。也可以從桌面捷徑或終端機開啟。</p>
+        <div class="launcher-grid" id="launchers"></div>
+      </aside>
+    </header>
 
-  <div class="row">
-    <section class="panel">
-      <h2>Roles</h2>
-      <div id="roles"></div>
-    </section>
-    <section class="panel">
-      <h2>Pipelines</h2>
-      <div id="pipelines"></div>
-    </section>
-  </div>
+    <div class="grid two">
+      <section>
+        <div class="section-head">
+          <h2>Persistent Surfaces</h2>
+          <span class="tiny">可找回的入口</span>
+        </div>
+        <div id="surfaces"></div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <h2>Continuous Workflow Takeaways</h2>
+          <span class="tiny">2026-05-21 reference scan</span>
+        </div>
+        <div id="takeaways"></div>
+      </section>
+    </div>
+
+    <div class="grid three" style="margin-top:16px;">
+      <section>
+        <div class="section-head">
+          <h2>Agent Profiles</h2>
+          <span class="tiny">召喚時帶入</span>
+        </div>
+        <div id="roles"></div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <h2>Runtime Pipelines</h2>
+          <span class="tiny">任務不再靠聊天猜</span>
+        </div>
+        <div id="pipelines"></div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <h2>Approval Gates</h2>
+          <span class="tiny">避免自動化越界</span>
+        </div>
+        <div id="approval"></div>
+      </section>
+    </div>
+
+    <div class="grid two" style="margin-top:16px;">
+      <section>
+        <div class="section-head">
+          <h2>Project Entry Points</h2>
+          <span class="tiny">MAPLAB / Investment OS</span>
+        </div>
+        <div id="entrypoints"></div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <h2>Next Build Queue</h2>
+          <span class="tiny">最小可行下一步</span>
+        </div>
+        <div id="next"></div>
+      </section>
+    </div>
+
+    <p class="footer">Last updated: 2026-05-21. This panel is local-first and repo-tracked. Use Git history as the version record.</p>
+  </main>
 
   <script src="./panel.js"></script>
 </body>

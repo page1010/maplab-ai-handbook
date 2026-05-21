@@ -1,61 +1,112 @@
 {
-  "version": "0.1.0",
-  "updated_at": "2026-05-05",
+  "version": "0.2.0",
+  "updated_at": "2026-05-21",
   "pipelines": [
     {
-      "pipeline_id": "seo_pillar_weekly",
-      "name": "SEO Pillar Weekly Batch",
+      "pipeline_id": "maplab_a6_quote",
+      "name": "A6 urgent quote route",
       "steps": [
         {
-          "id": "planner",
-          "input_type": "ContentBrief",
-          "output_type": "OutlinePlan"
+          "id": "intake",
+          "input_type": "TelegramOrLineMessage",
+          "output_type": "CaseSummary"
         },
         {
-          "id": "writer",
-          "input_type": "OutlinePlan",
-          "output_type": "DraftArtifact"
+          "id": "route_guard",
+          "input_type": "CaseSummary",
+          "output_type": "RouteDecision"
         },
         {
-          "id": "linker",
-          "input_type": "DraftArtifact",
-          "output_type": "DraftArtifact"
+          "id": "a5_quote",
+          "input_type": "QuoteRequest",
+          "output_type": "QuoteDraft"
         },
         {
-          "id": "schema_builder",
-          "input_type": "DraftArtifact",
-          "output_type": "DraftArtifact"
+          "id": "a7_reply",
+          "input_type": "QuoteFacts",
+          "output_type": "CustomerReplyDraft"
         },
         {
-          "id": "verifier",
-          "input_type": "DraftArtifact",
-          "output_type": "ValidationResult"
+          "id": "approval",
+          "input_type": "CustomerReplyDraft",
+          "output_type": "OwnerMinaApprovedAction"
+        }
+      ]
+    },
+    {
+      "pipeline_id": "investment_os_research",
+      "name": "Investment OS research route",
+      "steps": [
+        {
+          "id": "theme_stage",
+          "input_type": "WorldviewNewsOrScanSeed",
+          "output_type": "ThemeThesis"
         },
         {
-          "id": "wp_draft_publisher",
-          "input_type": "PublishPayload",
-          "output_type": "PublishResult"
+          "id": "fact_check",
+          "input_type": "ThemeThesis",
+          "output_type": "VerifiedFactsAndMissingData"
         },
         {
-          "id": "auditor",
-          "input_type": "PublishResult",
-          "output_type": "AuditReport"
+          "id": "risk_left_right",
+          "input_type": "VerifiedFactsAndMissingData",
+          "output_type": "RiskLeftRightReview"
+        },
+        {
+          "id": "owner_brief",
+          "input_type": "RiskLeftRightReview",
+          "output_type": "OwnerResearchBrief"
+        }
+      ]
+    },
+    {
+      "pipeline_id": "memory_feedback_loop",
+      "name": "External memory feedback loop",
+      "steps": [
+        {
+          "id": "session_end",
+          "input_type": "WorkResult",
+          "output_type": "CommitAndResumePrompt"
+        },
+        {
+          "id": "pitfall_capture",
+          "input_type": "RepeatedFailure",
+          "output_type": "PitfallEntry"
+        },
+        {
+          "id": "role_module_sync",
+          "input_type": "RoleChange",
+          "output_type": "ChromeExtensionModule"
+        },
+        {
+          "id": "panel_refresh",
+          "input_type": "NewSurface",
+          "output_type": "VisibleEntrypoint"
         }
       ]
     }
   ],
   "types": {
-    "ContentBrief": {
-      "required": ["pillar", "target_intent", "audience", "required_sections", "banned_topics"]
+    "CaseSummary": {
+      "required": ["case_id", "source", "customer_need", "missing_fields", "evidence_links"]
     },
-    "DraftArtifact": {
-      "required": ["slug", "title", "body_md", "faq_items", "cta", "meta", "schema_jsonld", "internal_links"]
+    "RouteDecision": {
+      "required": ["mode", "primary_runtime", "fallback_runtime", "reason"]
     },
-    "ValidationResult": {
-      "required": ["pass", "score", "failures", "auto_fixable"]
+    "QuoteDraft": {
+      "required": ["menu_options", "pricing", "margin_notes", "assumptions"]
     },
-    "PublishPayload": {
-      "required": ["status", "content", "meta_fields", "trace_id"]
+    "CustomerReplyDraft": {
+      "required": ["reply_text", "notes_for_owner", "approval_required"]
+    },
+    "OwnerResearchBrief": {
+      "required": ["conclusion", "verified_facts", "model_inference", "missing_data", "action_bucket", "invalidation"]
+    },
+    "PitfallEntry": {
+      "required": ["trigger", "root_cause", "fix", "prevention"]
+    },
+    "VisibleEntrypoint": {
+      "required": ["path", "open_command", "owner_visible_surface", "verification"]
     }
   }
 }

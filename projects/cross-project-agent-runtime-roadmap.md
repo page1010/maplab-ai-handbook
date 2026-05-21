@@ -19,6 +19,7 @@
 3. 所有 agent 行動都要有角色、任務、資料源、權限、輸出契約、approval gate。
 4. MAPLAB 不讓 agent 直接對客戶承諾價格；Investment OS 不讓 agent 下單或建立未授權交易。
 5. 先把常駐 agent 做成可監督的工作台，再考慮 24x7 背景自主。
+6. 可視化介面必須有固定 repo path、重開指令、Finder/桌面入口；不得只產生一次性 HTML。
 
 ## 新功能總覽
 
@@ -28,6 +29,7 @@
 | Tasks / Skills / Schedules 三件套 | Gemini Spark | 報價追蹤、未回覆提醒、案件整理 | 盤後研究、風控提醒、籌碼/新聞 watcher | P0 |
 | Approval Gate | Gemini Spark major-action check | 發送客戶訊息、改 Sheet、產正式報價前確認 | 建模擬單、發 Telegram 建議、改 dashboard 前確認 | P0 |
 | Runtime Activity Panel | Hermes logs / tool progress | A6 到底走 Codex、Ollama、A5 還是 Sheet | 研究到底查了哪些來源、跑了哪些 scripts | P0 |
+| Persistent Visual Launcher | Durable threads + side panel | 關掉後可從 `.command` / README / 桌面捷徑重開 | 投資研究面板與 PM Brief 不再遺失 | P0 |
 | Background Work Queue | Gemini Spark 24x7 | 客戶案件背景整理、缺資料提醒 | 右側掃描、Research Evidence、PM Brief | P1 |
 | Multi-agent Subtasks | Antigravity subagents | A5 算價、A7 修語氣、A6 整理案件 | 風險/左側/右側分工審查同一標的 | P1 |
 | Cost / Model Routing | Gemini/Hermes model management | Codex 額度不足時切 Ollama，且讓 Owner 看得懂 | Flash/GPT/Codex/Ollama 各自負責不同研究層 | P1 |
@@ -143,14 +145,27 @@ flowchart TD
 - `last_result`
 - `next_action`
 
+## 2026-05-21 實作決策：Persistent Visual Panel
+
+Owner 明確指出「之前用 html 的方法不錯，不過關掉後我就找不到了」。因此可視化介面從 P2 桌面化提前到 P0，先做最小可行版本：
+
+- 固定檔案：`local-control-plane/panel.html`
+- 雙擊入口：`open-agent-runtime-panel.command`
+- 終端入口：`scripts/open_agent_runtime_panel.sh open`
+- Finder 定位：`scripts/open_agent_runtime_panel.sh reveal`
+- 本機 server 選項：`scripts/open_agent_runtime_panel.sh serve`
+
+這版刻意不先做大型 GUI framework。理由是現在的痛點不是前端技術，而是「入口會失蹤、狀態不可見、接手者不知道要從哪裡打開」。先用 repo-tracked static panel 解決可見性，再把 A6 runtime JSON 與 Investment OS PM brief 接進來。
+
 ## 優先實作順序
 
 ### P0：先讓常駐能力看得見
 
-1. MAPLAB A6 Runtime Panel：顯示模型、路由、最後錯誤、Owner/Mina 交付狀態。
-2. Investment OS PM Brief Activity Panel：顯示研究任務、資料 freshness、下一步。
-3. Chrome Extension profile wording：讓 A/B 角色都能顯示 Tasks / Skills / Schedules / Approval。
-4. Task schema：先用 Markdown / JSON，不先做大型 UI。
+1. Persistent Visual Panel：固定 `local-control-plane/panel.html` + `.command` launcher，讓 Owner 關掉後找得到。
+2. MAPLAB A6 Runtime Panel：顯示模型、路由、最後錯誤、Owner/Mina 交付狀態。
+3. Investment OS PM Brief Activity Panel：顯示研究任務、資料 freshness、下一步。
+4. Chrome Extension profile wording：讓 A/B 角色都能顯示 Tasks / Skills / Schedules / Approval。
+5. Task schema：先用 Markdown / JSON，不先做大型 UI。
 
 ### P1：再加背景工作
 
@@ -161,7 +176,7 @@ flowchart TD
 
 ### P2：最後再做桌面化
 
-1. Agent Runtime Panel GUI。
+1. Native app / menu bar wrapper。
 2. Profile / memory editor。
 3. Backup / debug dump。
 4. 多專案 unified launcher。

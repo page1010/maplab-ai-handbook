@@ -1,33 +1,87 @@
 {
-  "version": "0.1.0",
-  "updated_at": "2026-05-05",
+  "version": "0.2.0",
+  "updated_at": "2026-05-21",
   "roles": [
+    {
+      "role_id": "A0",
+      "name": "Dispatch Secretary",
+      "purpose": "Cross-system dispatch, Telegram/Chrome/connector entrypoint, handoff to A1 or specialist roles.",
+      "inputs": ["owner_request", "connector_context", "runtime_status"],
+      "outputs": ["dispatch_plan", "handoff_note", "approval_request"],
+      "capabilities": ["dispatch", "handoff", "connector_bridge"],
+      "preferred_runtimes": ["codex", "chrome_extension", "telegram"]
+    },
     {
       "role_id": "A1",
       "name": "System Orchestrator",
-      "purpose": "Dispatch and governance",
+      "purpose": "Governance, version records, runtime panel, task cards, checkpoint, and repo fact checks.",
       "inputs": ["owner_request", "task_card", "runtime_status"],
       "outputs": ["dispatch_plan", "task_update", "audit_log"],
-      "capabilities": ["dispatch", "git_governance", "incident_response"],
-      "preferred_runtimes": ["claude_code", "gpt_codex"]
+      "capabilities": ["git_governance", "runtime_audit", "incident_response"],
+      "preferred_runtimes": ["codex", "claude_code"]
     },
     {
-      "role_id": "SEO_FACTORY",
-      "name": "SEO Content Factory",
-      "purpose": "Pillar-first content pipeline",
-      "inputs": ["content_brief", "keyword_matrix", "link_policy"],
-      "outputs": ["draft_artifact", "validation_result", "publish_payload"],
-      "capabilities": ["planner", "writer", "linker", "schema_builder", "verifier"],
-      "preferred_runtimes": ["ollama", "claude_code", "gpt_codex"]
+      "role_id": "A5",
+      "name": "Quotation Engine",
+      "purpose": "Quote logic, menu mapping, item data, margin guard, and proposal inputs.",
+      "inputs": ["customer_context", "pricing_rules", "items_master", "quote_terms"],
+      "outputs": ["quote_draft", "menu_options", "margin_notes"],
+      "capabilities": ["quote_math", "menu_mapping", "margin_guard"],
+      "preferred_runtimes": ["codex", "gas_sheet", "ollama_fallback"]
     },
     {
       "role_id": "A6",
       "name": "Sales Rapid Response",
-      "purpose": "Quote assistant and immediate response",
-      "inputs": ["customer_context", "pricing_rules", "asset_refs"],
-      "outputs": ["quote_draft", "faq_reply", "handoff_note"],
-      "capabilities": ["quote_generation", "menu_mapping", "customer_reply"],
-      "preferred_runtimes": ["ollama", "claude_code"]
+      "purpose": "Urgent conversation, case summary, Telegram/LINE interface, and route guard.",
+      "inputs": ["telegram_message", "line_case", "pricing_request"],
+      "outputs": ["case_summary", "route_decision", "quote_or_reply_draft"],
+      "capabilities": ["case_store", "telegram_delivery", "quote_routing"],
+      "preferred_runtimes": ["codex_primary", "ollama_fallback", "openclaw_review"]
+    },
+    {
+      "role_id": "A7",
+      "name": "Customer Reply",
+      "purpose": "Customer-ready wording and missing-info questions based on A5/A6 facts.",
+      "inputs": ["quote_facts", "case_summary", "brand_voice"],
+      "outputs": ["customer_reply_draft", "missing_info_questions"],
+      "capabilities": ["reply_tone", "faq", "missing_info_questions"],
+      "preferred_runtimes": ["codex", "gpt"]
+    },
+    {
+      "role_id": "B1",
+      "name": "Investment Logic Bridge",
+      "purpose": "Bridge Investment OS owner persona, left/right/risk logic, and research prompts across agents.",
+      "inputs": ["owner_question", "investment_profile", "research_context"],
+      "outputs": ["research_prompt", "risk_check", "handoff_note"],
+      "capabilities": ["persona_bridge", "risk_language", "research_prompt"],
+      "preferred_runtimes": ["codex", "chrome_extension", "investment_os"]
+    },
+    {
+      "role_id": "RISK",
+      "name": "Risk Master",
+      "purpose": "Regime, exposure, 1R, invalidation, insurance, and black-swan protection.",
+      "inputs": ["portfolio_context", "market_regime", "position_plan"],
+      "outputs": ["risk_brief", "position_guard", "invalidation_plan"],
+      "capabilities": ["regime_check", "position_risk", "invalidation"],
+      "preferred_runtimes": ["investment_os", "codex"]
+    },
+    {
+      "role_id": "LEFT",
+      "name": "Left-Side Manager",
+      "purpose": "Worldview, endgame, expectation gap, catalyst, asymmetric small-position thesis.",
+      "inputs": ["theme_seed", "news_context", "company_context"],
+      "outputs": ["left_side_thesis", "catalyst_map", "failure_conditions"],
+      "capabilities": ["narrative_gap", "catalyst_map", "left_side_guard"],
+      "preferred_runtimes": ["investment_os", "codex"]
+    },
+    {
+      "role_id": "RIGHT",
+      "name": "Right-Side Manager",
+      "purpose": "Market confirmation, breakout, pullback, stage-two structure, add/reduce plan.",
+      "inputs": ["price_structure", "chip_context", "theme_thesis"],
+      "outputs": ["right_side_brief", "action_bucket", "time_exit_rule"],
+      "capabilities": ["right_side_scan", "technical_confirmation", "chip_check"],
+      "preferred_runtimes": ["investment_os", "codex"]
     }
   ]
 }

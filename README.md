@@ -148,14 +148,22 @@ maplab-ai-handbook/
 
 ---
 
-## Local Model-Agnostic Control Plane (New)
+## Persistent Agent Runtime Panel
 
-為了把角色執行從單一模型供應商抽離，新增本地控制面板：
+為了把角色執行從單一模型供應商抽離，並避免一次性 HTML 關掉後找不到，新增可重開的本地控制面板：
 
 - [local-control-plane/README.md](./local-control-plane/README.md)
 - [local-control-plane/panel.html](./local-control-plane/panel.html)
+- [open-agent-runtime-panel.command](./open-agent-runtime-panel.command)
+
+重開方式：
+
+```bash
+/Users/pagemacmini/maplab-ai-handbook/open-agent-runtime-panel.command
+```
 
 此控制面板定義：
-- 角色能力與可接手 runtime（Claude / Ollama / GPT 等）
-- 任務拆解流水線與輸出契約（JSON contract）
-- 後續可接 A6 dispatcher 與 SEO factory 作為閉環執行面
+- 角色能力與可接手 runtime（Codex / Ollama / GPT / Gemini / Chrome Extension）
+- MAPLAB A6 報價路徑、Investment OS 研究路徑、外部記憶回收路徑
+- 任務拆解流水線、輸出契約、Approval Gate 與接手入口
+- 後續可接 A6 dispatcher、Investment OS PM brief 與 Chrome Extension profile 召喚

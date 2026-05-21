@@ -141,3 +141,10 @@
 - 根因：前一版只修掉誤入 A5，但一般聊天仍直接走 `_run_ollama_guarded()`；也就是 fallback 被當 default，能力自然偏弱。
 - 解法：新增 Codex-first 對話層：普通聊天/SEO 先用 `codex exec --ephemeral -s read-only` 回覆；Codex CLI 不可用、額度/網路失敗或逾時時，才透明通知並 fallback 到本機 Ollama。
 - 預防：A6 對話能力測試要證明 primary engine，而不是只證明有回覆；smoke 至少檢查 `codex_ask()` 實際回應、runtime status 顯示 Codex primary、fallback 通知存在。
+
+## 2026-05-21 — One-off HTML panels disappear after close
+
+- 觸發條件：Owner 指出「之前用 html 的方法不錯，不過關掉後我就找不到了」。
+- 根因：可視化介面被當成一次性輸出物，沒有固定 repo path、重開 command、README 入口、桌面/Finder 定位，也沒有把「如何重開」納入交接契約。
+- 解法：將 Agent Runtime Panel 固定在 `local-control-plane/panel.html`，新增 `open-agent-runtime-panel.command` 與 `scripts/open_agent_runtime_panel.sh open|reveal|serve`，並在 README / roadmap 寫明入口。
+- 預防：任何交給 Owner 使用的 HTML/面板，都必須同時具備 tracked file、reopen command、Finder reveal 路徑與 link check；不得只說「打開這個 HTML」。

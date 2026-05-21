@@ -1,5 +1,9 @@
 # Chrome Extension Changelog
 
+## v5.5.4 — 2026-05-21
+變更者：A1 Codex
+- **B1 下拉選單標籤修正**：`popup.html` 的 B1 顯示從舊的 `InnerFlowLab 內容創作` 改為 `跨專案治理顧問（暫停）`，避免側邊欄入口和 B1 module JSON 狀態不一致。
+
 ## v5.5.3 — 2026-05-19
 變更者：A1 Codex
 - **B1 角色模組重定位**：B1 從 `InnerFlowLab Content` 改為 `Cross-Project Governance Advisor`，側邊欄 handoff 改指向跨專案治理、報告契約、prompt 整理與 pause/resume 輸出。

@@ -26,6 +26,7 @@ B1 目前不再作為日常 Substack、innerflowlab.com 或多平台發文角色
 - Investment OS dashboard 在 `http://127.0.0.1:18501/` 可讀 runtime DB、研究、Rumour、Hermes、Telegram 相關狀態；它有強 runtime 和報告資料，但缺少 MAPLAB 這種可複製的角色 handoff envelope。
 - Investment OS repo 已有 `AGENT_CORE.md`、`CURRENT_STATUS.md`、`pitfalls.md`、OpenClaw operator manual 與 report/evidence 目錄；問題不是沒有規則，而是規則未被包成日常可點、可複製、可暫停/接手的角色模組。
 - Investment OS 另有明確投資判斷語言：本地模擬與永豐只讀邊界、左側籌碼、右側題材/位階、Rumour/Research Evidence 與 PM Brief Contract。B1 應讀 `projects/b1-investment-logic-bridge.md` 後再協助其他 agent。
+- 2026-05-21 補充跨專案 runtime 方向：Hermes Desktop 與 Gemini Spark 的可用概念已整理到 `projects/cross-project-agent-runtime-roadmap.md`，作為 MAPLAB + Investment OS 新功能 backlog。
 
 ## 第一性原理判斷
 
@@ -122,6 +123,21 @@ B1 要帶走的是 Owner 的判斷語言：
 - 風控先看資料新鮮度、現金水位、左右側配比、集中度、stale decision、亮燈模擬倉。
 - 新聞與傳聞要分事實、推論、缺資料、下一步；社群來源不可作正向 thesis 支撐。
 - 第一屏要回答「今天可不可以動、哪裡不能信、下一步做什麼」。
+
+## Cross-Project Agent Runtime 新功能方向
+
+B1 若被召喚來規劃新功能，先讀：
+
+- `projects/cross-project-agent-runtime-roadmap.md`
+
+高槓桿方向不是新增更多聊天機器人，而是把兩個專案都整理成：
+
+- Profiles：角色與人格設定。
+- Tasks：可追蹤工作。
+- Skills：工具與能力邊界。
+- Schedules：背景觸發與交付目標。
+- Approval Gate：重大動作前確認。
+- Runtime Panel：最後執行、模型、工具、錯誤、成本、交付狀態可見。
 
 ## 暫停規則
 

@@ -1,23 +1,27 @@
 {
   "schema_version": "2026-05-11.dynamic-role-module.v1",
-  "generated_at": "2026-05-19T21:59:00+08:00",
-  "module_id": "MAPLAB_B1_CROSS_PROJECT_GOVERNANCE_ADVISOR_DYNAMIC_ROLE_MODULE",
+  "generated_at": "2026-05-21T18:57:57+08:00",
+  "module_id": "MAPLAB_B1_INVESTMENT_OS_LOGIC_BRIDGE_ADVISOR_DYNAMIC_ROLE_MODULE",
   "role_id": "B1",
-  "role_name": "Cross-Project Governance Advisor",
-  "department": "跨專案治理顧問（InnerFlowLab 暫停）",
-  "role_simulation": "暫停中的 InnerFlowLab 內容專案；可被 Owner/A1 明確召喚為跨專案治理、報告契約與 prompt 顧問。",
+  "role_name": "Investment OS Logic Bridge Advisor",
+  "department": "投資邏輯橋接顧問（InnerFlowLab 內容暫停）",
+  "role_simulation": "可被 Owner/A1 從 Chrome Extension 召喚，把 Investment OS 的 Owner 投資語言、左右側判斷、公司研究、加減碼、風控與盲點交給其他 agent；原 InnerFlowLab 內容專案暫停。",
   "runtime_targets": [
     "gemini",
     "codex",
     "openclaw"
   ],
   "task_types": [
+    "owner_investment_profile",
+    "investment_logic_bridge",
+    "right_side_research_review",
+    "risk_prompt_coaching",
+    "agent_summon_bridge",
     "cross_project_review",
     "governance_gap_audit",
     "prompt_design",
     "report_contract_review",
-    "pause_resume_handoff",
-    "investment_logic_bridge"
+    "pause_resume_handoff"
   ],
   "read_first": [
     {
@@ -25,8 +29,8 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "a2dccb0f093d33f3f586d057ea459109486b113f1e348c9f40669affe020dd11",
-      "size_bytes": "19648"
+      "source_sha256": "2f15b26e95681e537c694a9d07e83936553d8305b4f554b0a04d672c5a4e3948",
+      "size_bytes": "20351"
     },
     {
       "path": "AGENT_RULES.md",
@@ -49,8 +53,8 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "6b9f17c5157d739ba37fbf81b202950d002462bda2dcd347dc35c1058e6e0c24",
-      "size_bytes": "13174"
+      "source_sha256": "7152243e92feab4e3d6d1ccb859533acae88ca90f27cb4c45322c318065de890",
+      "size_bytes": "14745"
     },
     {
       "path": "TASK_QUEUE.md",
@@ -73,8 +77,8 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "c78db4222af3f58e66e42deddb0c14fd6fac1aa470ed30c3ee2303a066241d6e",
-      "size_bytes": "49407"
+      "source_sha256": "b75722fb918ea44474620cae75b395e19075c625fee4425d393b24eb7bab538c",
+      "size_bytes": "50666"
     },
     {
       "path": "skills/superpowers-guide.md",
@@ -97,8 +101,8 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "role recall prompt",
-      "source_sha256": "757b3005525ab75b38dea5ed748c59d44c584de839df3a5ce9963807cfa56928",
-      "size_bytes": "4213"
+      "source_sha256": "d36a3f0c9a5f26c12369c298704dbc9538e2915fca3ba5cf2bab99a0e164f94e",
+      "size_bytes": "5383"
     },
     {
       "path": "projects/b1-cross-project-governance-advisor.md",
@@ -113,16 +117,32 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "project context",
-      "source_sha256": "87ec6812613b7c60fd92d26c3756f759f67a66aa2af08eea89a219e64909f115",
-      "size_bytes": "10986"
+      "source_sha256": "87076a0256da49d939dd9343474a8dfbda37a08a580d8e43fcb74055a914ecef",
+      "size_bytes": "11567"
+    },
+    {
+      "path": "projects/b1-investment-os-owner-persona-canonical.md",
+      "load_mode": "read",
+      "exists": "true",
+      "purpose": "project context",
+      "source_sha256": "fe7aacd09e9b6d2212848427ba57da42f37d31663af0d18c6f8e18c16b6a51a5",
+      "size_bytes": "17923"
+    },
+    {
+      "path": "projects/b1-investment-os-owner-profile.md",
+      "load_mode": "read",
+      "exists": "true",
+      "purpose": "project context",
+      "source_sha256": "574d5b2bd4b0d023ea54aa330ed19f12b949d359b3e27f021865f6453e59bac8",
+      "size_bytes": "11021"
     },
     {
       "path": "handoff/tasks/T-B1-001.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "handoff or task card",
-      "source_sha256": "24bc9f2e78aba019428787a945564e88f8fb3937b7e065ac0bea281eb87b1bc0",
-      "size_bytes": "4445"
+      "source_sha256": "a44f0bc021215f7d8a96ee8d24c59170323f2c884495aac153fb7fffdc0a95da",
+      "size_bytes": "5655"
     },
     {
       "path": "workflows/B1-content-workflow-v1.md",
@@ -153,8 +173,8 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "skill / operating guide",
-      "source_sha256": "d38493fb57093284934a6bdff2d6ce869ce8b2c8ac50398b8e3034e39fe10852",
-      "size_bytes": "5270"
+      "source_sha256": "15607be6be355470c24ef5e1fd44236e2185dd3cde615a90b974c0c9716b816b",
+      "size_bytes": "6943"
     },
     {
       "path": "skills/brand-voice-guide.md",
@@ -216,7 +236,7 @@
     "rule": "If any source_sha256 differs from the current GitHub raw content, regenerate task modules before relying on routing metadata."
   },
   "startup_contract": [
-    "Confirm: I am B1 Cross-Project Governance Advisor.",
+    "Confirm: I am B1 Investment OS Logic Bridge Advisor.",
     "Read CURRENT_STATUS.md first, then role recall, then only the sources listed in this module.",
     "State the current task, expected output path, affected roles, and unresolved blockers before acting."
   ],
@@ -224,6 +244,7 @@
     "cross_project_review.md",
     "b1_prompt.md",
     "b1_investment_logic_summon.md",
+    "b1_investment_profile_prompt.md",
     "pause_resume_note.md",
     "review_request.md"
   ],
@@ -238,6 +259,7 @@
     "MAPLAB governance docs",
     "Investment OS governance recommendations",
     "Investment OS investment logic prompt bridge",
+    "Investment OS owner profile summon context",
     "OpenClaw/Telegram report surfaces",
     "B1 content project paused"
   ],

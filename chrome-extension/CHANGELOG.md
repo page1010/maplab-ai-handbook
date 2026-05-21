@@ -1,5 +1,12 @@
 # Chrome Extension Changelog
 
+## v5.5.5 — 2026-05-21
+變更者：A1 Codex
+- **B1 投資邏輯橋接入口**：B1 下拉選單改為 `投資邏輯橋接顧問`，不再顯示成單純暫停角色。
+- **Owner 投資人格底稿**：新增 `projects/b1-investment-os-owner-profile.md`，讓 B1 召喚時帶入 Investment OS 的世界觀、選股模式、公司研究、加減碼、盲點與風險提示語氣。
+- **Owner canonical 校正版**：新增 `projects/b1-investment-os-owner-persona-canonical.md`，將 Owner 定義的「多層敘事 x 右側交易 x 左側預期差 x 嚴格風控 x 創業者式複利系統」作為 B1 最高優先召喚底稿。
+- **模組來源同步**：更新 B1 recall、skill、Task Card 與 module builder，讓後續重建 Chrome Extension role module 時維持同一定位。
+
 ## v5.5.4 — 2026-05-21
 變更者：A1 Codex
 - **B1 下拉選單標籤修正**：`popup.html` 的 B1 顯示從舊的 `InnerFlowLab 內容創作` 改為 `跨專案治理顧問（暫停）`，避免側邊欄入口和 B1 module JSON 狀態不一致。

@@ -1,6 +1,6 @@
 # GitHub Dynamic Role Task Modules
 
-Generated: 2026-05-19T21:59:00+08:00
+Generated: 2026-05-21T18:57:57+08:00
 
 ## Purpose
 
@@ -111,13 +111,13 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Affects: A4 assets; A3 social calendar; A2 SEO video titles; YouTube/Shorts publishing queue
 - Module file: `chrome-extension/task-modules/A8.json`
 
-### B1 — Cross-Project Governance Advisor
+### B1 — Investment OS Logic Bridge Advisor
 
-- Department: 跨專案治理顧問（InnerFlowLab 暫停）
-- Simulation: 暫停中的 InnerFlowLab 內容專案；可被 Owner/A1 明確召喚為跨專案治理、報告契約與 prompt 顧問。
+- Department: 投資邏輯橋接顧問（InnerFlowLab 內容暫停）
+- Simulation: 可被 Owner/A1 從 Chrome Extension 召喚，把 Investment OS 的 Owner 投資語言、左右側判斷、公司研究、加減碼、風控與盲點交給其他 agent；原 InnerFlowLab 內容專案暫停。
 - Runtime targets: gemini, codex, openclaw
-- Task types: cross_project_review, governance_gap_audit, prompt_design, report_contract_review, pause_resume_handoff, investment_logic_bridge
-- Affects: Chrome side panel; MAPLAB governance docs; Investment OS governance recommendations; Investment OS investment logic prompt bridge; OpenClaw/Telegram report surfaces; B1 content project paused
+- Task types: owner_investment_profile, investment_logic_bridge, right_side_research_review, risk_prompt_coaching, agent_summon_bridge, cross_project_review, governance_gap_audit, prompt_design, report_contract_review, pause_resume_handoff
+- Affects: Chrome side panel; MAPLAB governance docs; Investment OS governance recommendations; Investment OS investment logic prompt bridge; Investment OS owner profile summon context; OpenClaw/Telegram report surfaces; B1 content project paused
 - Module file: `chrome-extension/task-modules/B1.json`
 
 ## Relationship Rule

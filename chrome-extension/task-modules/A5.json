@@ -1,6 +1,6 @@
 {
   "schema_version": "2026-05-11.dynamic-role-module.v1",
-  "generated_at": "2026-05-19T21:59:00+08:00",
+  "generated_at": "2026-05-21T18:57:57+08:00",
   "module_id": "MAPLAB_A5_QUOTATION_ENGINE_DYNAMIC_ROLE_MODULE",
   "role_id": "A5",
   "role_name": "Quotation Engine",
@@ -24,8 +24,8 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "a2dccb0f093d33f3f586d057ea459109486b113f1e348c9f40669affe020dd11",
-      "size_bytes": "19648"
+      "source_sha256": "2f15b26e95681e537c694a9d07e83936553d8305b4f554b0a04d672c5a4e3948",
+      "size_bytes": "20351"
     },
     {
       "path": "AGENT_RULES.md",
@@ -48,8 +48,8 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "6b9f17c5157d739ba37fbf81b202950d002462bda2dcd347dc35c1058e6e0c24",
-      "size_bytes": "13174"
+      "source_sha256": "7152243e92feab4e3d6d1ccb859533acae88ca90f27cb4c45322c318065de890",
+      "size_bytes": "14745"
     },
     {
       "path": "TASK_QUEUE.md",
@@ -72,8 +72,8 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "c78db4222af3f58e66e42deddb0c14fd6fac1aa470ed30c3ee2303a066241d6e",
-      "size_bytes": "49407"
+      "source_sha256": "b75722fb918ea44474620cae75b395e19075c625fee4425d393b24eb7bab538c",
+      "size_bytes": "50666"
     },
     {
       "path": "skills/superpowers-guide.md",

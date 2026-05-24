@@ -4,6 +4,18 @@
 建立：2026-05-11
 目的：把今天這批 B2B 案例頁的整理方法、使用路徑與交接順序寫成可重複執行的指南。
 
+## 2026-05-24 接續修正
+
+Owner 已確認 Rank Math 退訂後，已設定好的 SEO 欄位先不要再設定。A2 接下來的工作是「案例寫作與素材對齊」，不是 RM 分數優化。
+
+每次開始前先走這個最短路徑：
+
+1. 讀 `CURRENT_STATUS.md` 最新 A2 live fact check。
+2. 讀 `docs/a2a3/live-wordpress-audit.md` 的 Live URL map。
+3. 讀 `docs/a2a3/b2b-case-inventory.md` 的 2026-05-24 live URL 修正。
+4. 用 Owner 提供的照片與場次，填成 `可公開案例名 / 內部核對名 / 場景類型 / live URL / 可用照片` 五欄。
+5. 只補真實案例與內連，不碰 Rank Math、不發布 WordPress。
+
 ## 這份指南在做什麼
 
 這不是要先派給 OpenClaw。
@@ -13,18 +25,28 @@
 
 1. 先看 `docs/a2a3/b2b-case-inventory.md`
 2. 再看 `docs/a2a3/b2b-crosswalk.md`
-3. 再開每個 WordPress 頁面的 `preview.html`
+3. 再查 live URL 是否 200；planned slug 若 404，不要拿來當目標
 4. 檢查草稿、SEO、圖片、案例是否對齊
 5. 只補缺口，不補不存在的泛用入口
 6. 最後才整理成技能或訓練任務
 
 ## 本批優先頁面
 
+- `corporate-catering-tainan`
+- `corporate-tea-party-desserts`
+- `tainan-corporate-opening-tea-catering`
+- `brand-esg-catering-service`
+- `press-conference-catering`
+- `vip-expo-catering-business-meeting`
+
+暫不使用：
 - `catering-corporate-tainan`
+- `meeting-refreshment-catering-tainan`
 - `opening-event-catering-tainan`
 - `brand-event-catering`
-- `meeting-refreshment-catering-tainan`
 - `school-event-catering-tainan`
+
+原因：2026-05-24 前台查詢為 404，屬舊 workbench planned slugs。
 
 ## 每頁必看欄位
 
@@ -97,7 +119,7 @@
 ```text
 job_id: JOB-B2B-TRIAL-001
 task_type: b2b_case_review
-target: /Users/pagemacmini/Desktop/wordpress 素材庫/wordpress/meeting-refreshment-catering-tainan
+target: /Users/pagemacmini/Desktop/wordpress 素材庫/wordpress/corporate-tea-party-desserts
 goal: 讀 draft.md, seo.md, rankmath_payload.json, preview.html，回報是否缺案例、缺圖、或與 inventory / crosswalk 不一致
 rules:
 - only review

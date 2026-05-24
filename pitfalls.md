@@ -2,6 +2,13 @@
 
 > Cold-start required. 每次修到重複錯誤，要把「觸發條件 / 根因 / 解法 / 預防」寫回這裡。
 
+## 2026-05-24 — Planned B2B slugs are not live WordPress URLs
+
+- 觸發條件：Owner 要求 A2 先了解網站是否真的往 To B 經營，並提醒要同步冷啟動存檔，避免下次重查。
+- 根因：舊 task card / local workbench 使用 planned slugs（如 `meeting-refreshment-catering-tainan`、`opening-event-catering-tainan`、`brand-event-catering`），但 live site 實際已發布的是另一組 post slugs；如果下次只讀 repo 舊紀錄，會把 404 當成目標頁。
+- 解法：用 public REST + 前台 HTTP 狀態重查；確認 6 pages / 57 posts、`企業外燴案例` category 15 篇、live To B slugs 為 `corporate-catering-tainan`、`corporate-tea-party-desserts`、`tainan-corporate-opening-tea-catering`、`brand-esg-catering-service`、`press-conference-catering`、`vip-expo-catering-business-meeting`。同步更新 `CURRENT_STATUS.md`、`docs/a2a3/live-wordpress-audit.md`、`b2b-case-inventory.md`、`b2b-workflow-guide.md` 與 task cards。
+- 預防：A2 寫案例前必先查 live URL 200/404，並分開 `可公開案例名 / 內部核對名 / 場景類型 / live URL / 可用照片`；Rank Math 已退訂後，既有設定先保留，不再把 RM 設定當本輪工作。
+
 ## 2026-05-11 — A4 asset root ID drifted across docs and scripts
 
 - 觸發條件：Owner 要求「讓事實說話」，重新核對 A4 相片與素材存放位置。

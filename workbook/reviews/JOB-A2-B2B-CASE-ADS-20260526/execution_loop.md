@@ -119,3 +119,15 @@ Round 001 完成條件：
 - Goal：turn the verified Meta B2B audience seed into a proposal-only landing-page routing plan using existing live WordPress To B posts.
 - Guardrail：do not edit Meta Ads, WordPress, Google Ads, Rank Math, or secrets.
 - Status：accepted as proposal-only planning; next step is Owner review and optional read-only B detail pane reattempt.
+
+## Round 008 Case Draft + Ads Settings
+
+- WordPress draft：`wordpress_case_insert_draft_round_008.md`
+- Ads settings：`ads_landing_settings_round_008.md`
+- Asset manifest：`asset_conversion_manifest_round_008.md`
+- Asset status CSV：`asset_conversion_status_round_008.csv`
+- WebP output folder：`wordpress_assets_round_008/`
+- A2 review：`reports/a2_round_008_review.md`
+- Result：21 short case insert sections, Google Ads / Meta Ads landing-page settings proposal, and 30/30 local WebP review assets.
+- Guardrail：Owner review only; no WordPress publish/update, no Google Ads / Meta Ads edits, no Rank Math work.
+- Status：ready for Owner review. Next step is approval marking: which case sections, external names, and image slots may be inserted or used in ads later.

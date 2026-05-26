@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-05-24 A2 live WordPress B2B fact check（Rank Math 退訂後不再調整既有設定；案例寫作先對 live URLs）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-05-26 A2 Owner 批次案例照片 + Ads landing routing（Rank Math 凍結；案例寫作、Google Ads、Meta Ads 先對 live URLs）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -22,6 +22,7 @@
 - 2026-05-11：正式 repo = `/Users/pagemacmini/maplab-ai-handbook`；`/Users/pagemacmini/Downloads/maplab-ai-handbook-main` 為非 git 下載副本，只能作遷移/歷史參考，不得作為正式工作目錄。
 - 2026-05-11：Drive API 確認 `MAPLAB_ASSETS` active folder = `1yVggYKiTkBJe4kd8CPoM3U75km0nVuNy`，parent = `MAPLAB`；舊 ID `1L0udpuXLy3vEbHmzBbaLqNVDut2FFpCe` API 回 404。
 - 2026-05-11：Sheets API 確認 `MAPLAB_ASSET_LOG` = `1nlxlMdaLdGEAmOjP70BYspRWqu_eYpsiRyZaujEZkYI`，tab `工作表1`，rowCount `36923`。
+- 2026-05-26：A2 Owner 批次照片已進 To B case + ads routing。產出 `workbook/reviews/JOB-A2-B2B-CASE-ADS-20260526/review_request.md`：30 個照片檔已對應到 7 個 live To B landing pages、Google Ads keyword/final URL matrix、Meta 興趣分眾、WebP/裁切/alt/caption/slot 規格與 Antigravity 只讀 access-check prompt。2026-05-26 前台再驗證 7 個 live URLs 皆為 200；5 個舊 planned slugs 皆為 404。Rank Math 既有設定繼續凍結。
 - 2026-05-24：A2 live WordPress / To B 盤點完成 — public REST 仍為 6 pages / 57 posts；但 B2B 主要入口目前是 published posts，不是 pages。category `企業外燴案例` 有 15 篇；live To B URLs 以 `corporate-catering-tainan`、`corporate-tea-party-desserts`、`tainan-corporate-opening-tea-catering`、`brand-esg-catering-service`、`press-conference-catering`、`vip-expo-catering-business-meeting` 為準。planned slugs `catering-corporate-tainan`、`meeting-refreshment-catering-tainan`、`opening-event-catering-tainan`、`brand-event-catering`、`school-event-catering-tainan` 目前前台 404，不可當發文目標。Rank Math 已退訂，既有設定先保留，不再做 RM 設定工作；下一步是 Owner 提供照片與場次後，A2 依 live URL 補 To B 真案例。
 - 2026-05-11：WordPress public REST 現況仍為 6 pages / 57 posts；A2/A3 local workbench planned slugs 不可直接視為 live URLs。
 - 2026-05-19：A6 Case Store v0 接線 — LINE inbound 仍以 Sheet `CONVERSATION_LOG` 為原始證據；新增 `bot_a6/case_store.py` 只讀 Sheet、寫本機 SQLite 案件索引，A6 Telegram 新增 `/linecases`、`/case`、`/casequote`，路徑圖補回 `projects/line-quote-assistant.md`。
@@ -45,7 +46,7 @@
 | T-A2-003-weekly-wp-audit | T-A2-003: 每週全站 WP 內容稽核排程 | A2 | 🔲 待開始（腳本已建好（wp-audit.sh / wp-audit-cron.sh）。待 Owner 用 /schedule 建立） | handoff/tasks/T-A2-003-weekly-wp-audit.md |
 | T-A2-004 | 首頁結構優化 — 配合品牌色票微調 + 轉換路徑整理 | A2 | 🔲 待開始（任務卡建立。A0 已完成對標分析和色票微調。） | handoff/tasks/T-A2-004.md |
 | T-A2-005-local-seo-factory | MAPLAB SEO Factory 地端閉環（Pillar First） | A2（A1治理支援） | 🔄 進行中（7-stage pipeline + schema + weekly batch 建置完成；dry-run 3/3 pass。下一步：WP `--publish` 實測 + 真實 signals 導入） | handoff/tasks/T-A2-005-local-seo-factory.md |
-| T-A2A3-001-B | SEO 場景頁面 + 內連結（從 T-A2A3-001 分拆） | A2/A3 | 🔄 可接續（2026-05-24 live B2B fact check 已同步；Rank Math 設定凍結，下一步等 Owner 提供照片+場次，依 live URL 補 To B 真案例） | handoff/tasks/T-A2A3-001-B.md |
+| T-A2A3-001-B | SEO 場景頁面 + 內連結（從 T-A2A3-001 分拆） | A2/A3 | 🔄 進行中（2026-05-26 Owner 批次照片已對照 live URLs；review bundle 已建，含 Google Ads / Meta Ads landing routing 與 Antigravity access-check prompt；下一步寫案例段，不發布） | handoff/tasks/T-A2A3-001-B.md |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2/A3 | ⏸️ 暫停 RM/GSC 部分（子任務 1-4 完成；Rank Math 已退訂，既有設定先保留；案例寫作改走 T-A2A3-001-B live URL 流程） | handoff/tasks/T-A2A3-001.md |
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | ⏸️ 阻塞中（受眾輪廓分析完成（693筆 Orders）。待執行：嘉義加入廣告地區、興趣條件精簡、策略一冷受眾上線。） | handoff/tasks/T-A3-002.md |
 | T-A4-001 | Phase 4 Gemini 照片分類（2022-2026） | A4 | 🔴 CRITICAL（S11(2024) 🔴 14ed423 04-18 Colab重啟→**~312h/13天**無completion commit（Colab確認崩潰；GCP帳單13天未處理🔴）；S12(2025) ✅ DONE 7,645/7,642；等Owner處理S11） | handoff/tasks/T-A4-001.md |
@@ -71,7 +72,7 @@
 | A2 | T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台 | 見 Task Card |
 | A2 | T-A2-003-weekly-wp-audit: 等 Owner 建立排程 | 見 Task Card |
 | A2 | T-A2-005-local-seo-factory: 等 Owner 提供 WordPress Application Password（先以 dry-run 運行） | 見 Task Card |
-| A2/A3 | T-A2A3-001-B: 等 Owner 提供 To B 案例照片與場次；A2 需先用 live URL map 補案例，不碰 Rank Math | 見 Task Card |
+| A2/A3 | T-A2A3-001-B: WordPress 發布與 Google Ads / Meta Ads 設定變更仍需 Owner approval；Antigravity 只做只讀 access check | 見 Task Card + `workbook/reviews/JOB-A2-B2B-CASE-ADS-20260526/review_request.md` |
 | A2/A3 | T-A2A3-001: RM/GSC 驗證部分暫停；Rank Math 已退訂，已設定內容先保留 | 見 Task Card |
 | A3 | T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） | 見 Task Card |
 | A4 | T-A4-002: 前置 T-A4-001 S11 尚未完成，Phase 1 Colab 解壓不得在 S11 completion 前啟動 | Owner確認S11最新Colab狀態→補completion commit |

@@ -145,6 +145,8 @@ Meta UTM 草案：
 
 ## Antigravity Access Check Prompt
 
+2026-05-26 A2 已先做一次只讀 Chrome access check，結果見 `access_check.md`：WordPress `post=586` 編輯頁可進入，Google Ads account `844-336-3178` 的 `搜尋關鍵字` 頁可進入。Antigravity 下一步不是重做結論，而是把檢查擴到 7 個 live post、Google Ads campaign/ad group/final URL matrix、Meta Ads ad set 層級。
+
 請透過 Chrome Extension 召喚高能力 Google 生態執行助手 Antigravity，使用以下交辦。A2 保持管理方，Antigravity 只做 access check 與回報，不做任何發布、預算、關鍵字、final URL 或 WordPress 儲存動作。
 
 ```text
@@ -156,6 +158,7 @@ Meta UTM 草案：
 3. docs/a2a3/live-wordpress-audit.md
 4. docs/a2a3/b2b-case-inventory.md
 5. workbook/reviews/JOB-A2-B2B-CASE-ADS-20260526/review_request.md
+6. workbook/reviews/JOB-A2-B2B-CASE-ADS-20260526/access_check.md
 
 限制：
 - 不發布 WordPress。
@@ -195,4 +198,3 @@ Meta UTM 草案：
 3. A3/Meta 只在 landing page 與追蹤確認後規劃受眾，不直接上廣告。
 4. A4 或素材管線負責 WebP 轉檔、裁切、alt/caption/description manifest。
 5. Owner review 後才允許任何 WordPress 發布或 Ads 設定變更。
-

@@ -21,7 +21,7 @@ Owner 指令：規劃好了就動起來；讓各角色回報、A2 檢查、下�
 | Meta Ads readonly | A2 Computer Use + Owner Chrome | `reports/meta_ads_owner_chrome_visual_bridge_round_004.md` | Correct Owner Chrome shows account `318634712`, business `215690449213844`, 13 campaign rows | Next packet: ad set targeting / destination URLs for B2B candidates |
 | Meta segmentation | A3 worker | `reports/a3_meta_round_001.md` | Done Round 001 | 保持 `Needs UI Check`，不硬寫 interest |
 | Asset slots | A4 worker | `reports/a4_assets_round_001.md` + `asset_conversion_manifest_round_001.csv` | Done Round 001 | 下一輪照 manifest 處理 P1 圖，不上傳 |
-| Case copy | A2 | `reports/a2_case_copy_round_001.md` | Done Round 001 | 等 Owner review 後才進 WordPress update plan |
+| Case copy / WP draft | A2 | `reports/wp_draft_round_009.md` | WP post `1696` draft saved and reload-verified; images blocked by Chrome file upload permission | Owner review draft; then enable file URL access before image upload |
 
 ## Round 001 Acceptance Criteria
 
@@ -131,3 +131,13 @@ Round 001 完成條件：
 - Result：21 short case insert sections, Google Ads / Meta Ads landing-page settings proposal, and 30/30 local WebP review assets.
 - Guardrail：Owner review only; no WordPress publish/update, no Google Ads / Meta Ads edits, no Rank Math work.
 - Status：ready for Owner review. Next step is approval marking: which case sections, external names, and image slots may be inserted or used in ads later.
+
+## Round 009 WordPress Draft Save
+
+- Report：`reports/wp_draft_round_009.md`
+- WordPress draft edit URL：`https://www.maplabkitchen.com/wp-admin/post.php?post=1696&action=edit`
+- Result：Round 008 的 21 則案例段已實際存入 WordPress 未發布草稿，A2 已重載 edit URL 驗證內容仍存在。
+- Status：`草稿`
+- Guardrail：未發布、未改正式頁、未改 Rank Math、未改 Google Ads / Meta Ads。
+- Image status：`wordpress_assets_round_008/` 30/30 WebP 本機素材已完成，但 Chrome extension file chooser 回 `Not allowed`，30 張預期 uploads URL 仍為 404；需 Owner 開啟 Codex Chrome extension file URL access 後再補實體圖片。
+- Next step：Owner 審 WP 草稿文字；若要補圖，開 file URL access 後 A2 續做 Round 010 image insertion。

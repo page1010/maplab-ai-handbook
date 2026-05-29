@@ -35,6 +35,15 @@
 
 `chrome-extension/popup.js` now populates the role selector from `chrome-extension/task-modules/index.json`, grouped into MAPLAB A roles and Investment OS / Cross-Project B roles. This prevents future module additions from being hidden by stale hardcoded dropdown options.
 
+Follow-up v5.6.0 fixed the missing summon surface Owner found in Chrome:
+
+- Added `召喚任務` textarea.
+- Added `自動選角` routing for A2 / B1 / B2 / B3 / B4.
+- Added `本次召喚任務` into overview and role handoff prompts.
+- Changed task modules to load local packaged JSON first, GitHub raw only as fallback.
+- Added packaged role recall excerpt fallback so local reloads still work before GitHub raw catches up.
+- Repointed `/Users/pagemacmini/Desktop/chrome-extension` from stale v4.7.0 files to the canonical repo folder via symlink; old folder backed up on Desktop as `chrome-extension.stale-v4.7-20260529-212125`.
+
 ## Automation
 
 Created Codex automation:

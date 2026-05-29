@@ -43,6 +43,13 @@ body { width:430px; background:#0d0f14; color:#e8ecf4; font-family:'JetBrains Mo
 .module-freshness.ok { color:#38e87a; border-color:#1d5a38; }
 .module-freshness.warn { color:#e8a838; border-color:#5a4218; }
 .module-freshness.err { color:#e85538; border-color:#5a2118; }
+.task-panel { background:#10141d; border:1px solid #1e2535; border-radius:6px; padding:10px 12px; display:flex; flex-direction:column; gap:8px; }
+.task-input { width:100%; min-height:74px; max-height:130px; padding:9px 10px; background:#0a0d12; border:1px solid #1a2030; border-radius:5px; color:#e8ecf4; font-family:inherit; font-size:12px; line-height:1.65; resize:vertical; outline:none; }
+.task-input:focus { border-color:#e8a838; }
+.task-actions { display:flex; align-items:center; gap:8px; }
+.btn-route { flex:0 0 auto; padding:8px 10px; background:#2b2414; border:1px solid #5a4218; border-radius:4px; color:#e8a838; font-family:inherit; font-size:11px; font-weight:700; cursor:pointer; }
+.btn-route:hover { border-color:#e8a838; color:#f5c15a; }
+.task-route-status { flex:1; font-size:10px; color:#9baab8; line-height:1.5; min-width:0; }
 .runtime-selector { display:flex; align-items:center; gap:10px; }
 .runtime-selector label { font-size:10px; color:#7a8a9d; text-transform:uppercase; flex-shrink:0; }
 .runtime-select { flex:1; padding:8px 10px; background:#141820; border:1px solid #1e2535; border-radius:5px; color:#9fd1ff; font-family:inherit; font-size:12px; font-weight:700; outline:none; cursor:pointer; }
@@ -85,7 +92,7 @@ hr { border:none; border-top:1px solid #1a2030; }
   <div class="logo">⬡ MAPLAB COMMANDER</div>
   <div class="header-right">
     <span class="overdue-badge" id="overdueCount"></span>
-    <span class="version" id="versionBadge">v5.5.6</span>
+    <span class="version" id="versionBadge">v5.6.0</span>
   </div>
 </div>
 <div class="body">
@@ -115,6 +122,14 @@ hr { border:none; border-top:1px solid #1a2030; }
       </select>
     </div>
     <div class="role-status" id="roleStatus"></div>
+  </div>
+  <div class="task-panel">
+    <div class="section-label">召喚任務</div>
+    <textarea class="task-input" id="taskInput" placeholder="例：巡查 Investment OS 現在是否過度建置，列出該繼續、暫停、重構的項目。"></textarea>
+    <div class="task-actions">
+      <button class="btn-route" id="routeBtn">自動選角</button>
+      <div class="task-route-status" id="taskRouteStatus">輸入任務後可自動選 B1-B4 / A2。</div>
+    </div>
   </div>
   <div class="runtime-selector">
     <label>交接目標</label>

@@ -1,4 +1,4 @@
-// MAPLAB Agent Commander v5.5.6 — popup.js
+// MAPLAB Agent Commander v5.6.0 — popup.js
 // 角色選擇 + GitHub dynamic role task modules + runtime handoff prompt
 const DEFAULT_BASE = 'https://raw.githubusercontent.com/page1010/maplab-ai-handbook/main';
 const GITHUB_API   = 'https://api.github.com/repos/page1010/maplab-ai-handbook';
@@ -132,6 +132,13 @@ async function fetchFile(base, path, token) {
 }
 async function fetchJsonFile(base, path, token) {
   if (path.startsWith('chrome-extension/task-modules/')) {
+    const localUrl = chrome.runtime.getURL(path.replace(/^chrome-extension\//, ''));
+    try {
+      const localResp = await fetch(localUrl, { cache: 'no-store' });
+      if (localResp.ok) return JSON.parse(await localResp.text());
+    } catch(e) {
+      // Fall back to GitHub raw below when local packaged data is unavailable.
+    }
     const url = rawUrl(base, path) + '?cb=' + Date.now();
     try {
       const resp = await fetch(url, { cache: 'no-store' });
@@ -193,7 +200,9 @@ async function loadAgentRecall(role, base, token) {
     const md = await fetchFile(base, `recalls/${role}_recall.md`, token);
     cachedRecallPrompts[role] = md.trim();
   } catch(e) {
-    cachedRecallPrompts[role] = `// ${role} recall 載入失敗: ${e.message}`;
+    const module = cachedRoleModules[role] || await loadRoleModule(role, base, token);
+    cachedRecallPrompts[role] = module?.packaged_role_recall_excerpt?.trim()
+      || `// ${role} recall 載入失敗: ${e.message}`;
   }
 }
 async function loadModuleIndex(base, token) {
@@ -229,8 +238,14 @@ function detectOverdueTasks(commits, activeTasks) {
 // === Prompt builders ===
 function buildOverviewPrompt(parsed, overdueWarnings) {
   const lines = [];
+  const requestedTask = getTaskText();
   lines.push(`系統 ${parsed.version} ｜ ${parsed.phase}`);
   lines.push('');
+  if (requestedTask) {
+    lines.push('【本次召喚任務】');
+    lines.push(requestedTask);
+    lines.push('');
+  }
   const critical   = parsed.activeTasks.filter(t => t.status.includes('🔴') || t.status.includes('CRITICAL'));
   const inProgress = parsed.activeTasks.filter(t => t.status.includes('🔄') && !t.status.includes('🔴') && !t.status.includes('CRITICAL'));
   const available  = parsed.activeTasks.filter(t => t.status.includes('🔲'));
@@ -301,6 +316,76 @@ function runtimeInstruction(runtime) {
     ],
   };
   return map[runtime] || map.gemini;
+}
+function getTaskText() {
+  return el('taskInput')?.value.trim() || '';
+}
+function routeScore(text, needles) {
+  return needles.reduce((score, needle) => score + (text.includes(needle) ? 1 : 0), 0);
+}
+function suggestRoleForTask(text) {
+  const t = String(text || '').toLowerCase();
+  const routes = [
+    {
+      role: 'A2',
+      label: 'A2 Ads/SEO/WordPress Patrol',
+      score: routeScore(t, ['seo', 'ads', 'ad ', 'google ads', 'meta', 'wordpress', 'wp', 'rank math', '品牌', '廣告', '網頁', '官網']),
+    },
+    {
+      role: 'B1',
+      label: 'B1 Builder',
+      score: routeScore(t, ['build', 'implement', 'fix', 'bug', '功能', '修', '接', '寫', '改', 'runtime', 'telegram', 'dashboard']),
+    },
+    {
+      role: 'B2',
+      label: 'B2 Reviewer',
+      score: routeScore(t, ['review', 'check', 'error', 'freshness', '錯', '怪', '檢查', '資料流', '不一致', '驗證', '證據', '報告']),
+    },
+    {
+      role: 'B3',
+      label: 'B3 Archivist',
+      score: routeScore(t, ['archive', 'handoff', 'resume', 'version', 'log', '紀錄', '交接', '版本', '存檔', 'task card', 'pitfalls']),
+    },
+    {
+      role: 'B4',
+      label: 'B4 System Patrol',
+      score: routeScore(t, ['patrol', 'fit', '適合', '巡查', '暫停', '重構', '過度', '繼續', '系統', '方向', '還需要']),
+    },
+  ].sort((a, b) => b.score - a.score);
+  if (!t.trim()) return { role: '', label: '請先輸入任務' };
+  const best = routes[0];
+  if (best.score <= 0) return { role: 'B4', label: 'B4 System Patrol' };
+  return best;
+}
+async function hydrateRole(role) {
+  if (!role || (cachedRecallPrompts[role] && cachedRoleModules[role])) return;
+  setStatus('loading', `載入 ${role} 任務模組...`);
+  const d = await chrome.storage.local.get(['githubRawBase','githubToken']);
+  const base  = d.githubRawBase || DEFAULT_BASE;
+  const token = d.githubToken  || '';
+  if (!cachedModuleIndex) await loadModuleIndex(base, token);
+  await loadRoleModule(role, base, token);
+  await loadAgentRecall(role, base, token);
+  setStatus('ok', `${role} 任務模組已載入`);
+}
+async function autoRouteTask() {
+  const result = suggestRoleForTask(getTaskText());
+  const status = el('taskRouteStatus');
+  if (!result.role) {
+    if (status) status.textContent = result.label;
+    return;
+  }
+  const select = el('roleSelect');
+  const exists = [...select.options].some(option => option.value === result.role && !option.disabled);
+  if (!exists) {
+    if (status) status.textContent = `${result.label} 尚未在 module index 中；請先重載 Extension 或檢查 task-modules。`;
+    return;
+  }
+  select.value = result.role;
+  await hydrateRole(result.role);
+  updatePromptDisplay();
+  chrome.storage.local.set({ lastRole: result.role });
+  if (status) status.textContent = `已選 ${result.label}`;
 }
 function formatSourceLines(sources, base, limit = 40) {
   const list = (sources || []).slice(0, limit);
@@ -414,6 +499,15 @@ function buildModuleHandoff(role, module, recallText, parsed, runtime, base) {
   lines.push('');
   lines.push(`你是 ${module.role_id} ${module.department}（${module.role_name}）。`);
   lines.push(module.role_simulation);
+  const requestedTask = getTaskText();
+  if (requestedTask) {
+    lines.push('');
+    lines.push('## 1.1 本次召喚任務');
+    lines.push('');
+    lines.push(requestedTask);
+    lines.push('');
+    lines.push('- 若本次任務與本角色不吻合，先指出應轉交的角色，再繼續可安全完成的部分。');
+  }
   lines.push('');
   runtimeInstruction(runtime).forEach(line => lines.push(`- ${line}`));
   lines.push('');
@@ -707,11 +801,12 @@ async function loadAll() {
   cachedFreshness = {};
   setStatus('loading', '讀取中...');
   el('promptText').value = '';
-  const data  = await chrome.storage.local.get(['githubRawBase','githubToken','lastRole','lastRuntime']);
+  const data  = await chrome.storage.local.get(['githubRawBase','githubToken','lastRole','lastRuntime','lastTask']);
   const base  = data.githubRawBase || DEFAULT_BASE;
   const token = data.githubToken  || '';
 
   if (data.lastRuntime && el('runtimeSelect')) el('runtimeSelect').value = data.lastRuntime;
+  if (data.lastTask && el('taskInput')) el('taskInput').value = data.lastTask;
 
   try {
     const [md, commits] = await Promise.all([
@@ -728,17 +823,15 @@ async function loadAll() {
     // If a role is pre-selected, lazy-load its recall file now
     const selectedRole = el('roleSelect').value;
     if (selectedRole) {
-      await Promise.all([
-        loadAgentRecall(selectedRole, base, token),
-        loadRoleModule(selectedRole, base, token)
-      ]);
+      await loadRoleModule(selectedRole, base, token);
+      await loadAgentRecall(selectedRole, base, token);
     }
 
     updatePromptDisplay();
 
     el('overdueCount').textContent = cachedOverdue.length > 0 ? `⏰ ${cachedOverdue.length}` : '';
     const vb = document.getElementById('versionBadge');
-    if (vb && cachedParsed.version) vb.textContent = formatVersion(cachedParsed.version);
+    if (vb) vb.textContent = formatVersion(chrome.runtime.getManifest?.().version || '5.6.0');
     const moduleCount = cachedModuleIndex?.modules?.length || 0;
     setStatus('ok', `${formatVersion(cachedParsed.version)} ｜ 模組 ${moduleCount} 已載入`);
   } catch(e) {
@@ -749,10 +842,11 @@ async function loadAll() {
 
 // === Init ===
 document.addEventListener('DOMContentLoaded', async () => {
-  const data = await chrome.storage.local.get(['githubRawBase','githubToken','lastRuntime']);
+  const data = await chrome.storage.local.get(['githubRawBase','githubToken','lastRuntime','lastTask']);
   el('githubRawBase').value = data.githubRawBase || DEFAULT_BASE;
   el('githubToken').value   = data.githubToken   || '';
   if (data.lastRuntime && el('runtimeSelect')) el('runtimeSelect').value = data.lastRuntime;
+  if (data.lastTask && el('taskInput')) el('taskInput').value = data.lastTask;
 
   if (data.githubToken) {
     el('saveStatus').textContent = '✓ Token 已記住';
@@ -764,21 +858,19 @@ document.addEventListener('DOMContentLoaded', async () => {
   el('githubToken').addEventListener('blur', autoSave);
   el('githubRawBase').addEventListener('keydown', e => { if(e.key==='Enter') { autoSave(); loadAll(); } });
   el('githubToken').addEventListener('keydown',   e => { if(e.key==='Enter') { autoSave(); loadAll(); } });
+  el('taskInput')?.addEventListener('input', () => {
+    const task = getTaskText();
+    chrome.storage.local.set({ lastTask: task });
+    updatePromptDisplay();
+    const result = suggestRoleForTask(task);
+    const status = el('taskRouteStatus');
+    if (status) status.textContent = result.role ? `建議：${result.label}` : result.label;
+  });
+  el('routeBtn')?.addEventListener('click', autoRouteTask);
 
   el('roleSelect').addEventListener('change', async () => {
     const role = el('roleSelect').value;
-    if (role && (!cachedRecallPrompts[role] || !cachedRoleModules[role])) {
-      setStatus('loading', `載入 ${role} 任務模組...`);
-      const d = await chrome.storage.local.get(['githubRawBase','githubToken']);
-      const base  = d.githubRawBase || DEFAULT_BASE;
-      const token = d.githubToken  || '';
-      if (!cachedModuleIndex) await loadModuleIndex(base, token);
-      await Promise.all([
-        loadAgentRecall(role, base, token),
-        loadRoleModule(role, base, token)
-      ]);
-      setStatus('ok', `${role} 任務模組已載入`);
-    }
+    await hydrateRole(role);
     updatePromptDisplay();
     chrome.storage.local.set({ lastRole: role });
   });

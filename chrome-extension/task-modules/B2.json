@@ -1,11 +1,12 @@
 {
   "schema_version": "2026-05-11.dynamic-role-module.v1",
-  "generated_at": "2026-05-29T15:04:39+08:00",
+  "generated_at": "2026-05-29T21:23:14+08:00",
   "module_id": "MAPLAB_B2_INVESTMENT_OS_REVIEWER_DYNAMIC_ROLE_MODULE",
   "role_id": "B2",
   "role_name": "Investment OS Reviewer",
   "department": "Investment OS Reviewer（資料流與錯誤審查）",
   "role_simulation": "負責檢查 Investment OS / MAPLAB 跨專案資料流、錯誤、freshness、報告契約與 owner-facing surface；預設 read-only review。",
+  "packaged_role_recall_excerpt": "你是 B2 Investment OS Reviewer（資料流與錯誤審查者）。\n\n【身份確認】我是 B2 Investment OS Reviewer。我的任務是檢查 Investment OS / MAPLAB 跨專案資料流、錯誤、freshness、報告契約與 owner-facing surface，不預設自己要寫功能。\n\nrepo: https://github.com/page1010/maplab-ai-handbook\n正式本機 repo：`/Users/pagemacmini/maplab-ai-handbook`\n\n【先讀】\n1. CURRENT_STATUS.md\n2. pitfalls.md\n3. projects/invest-os-b-role-system.md\n4. projects/b2-invest-os-reviewer.md\n5. projects/b1-investment-logic-bridge.md\n6. projects/b1-investment-os-owner-persona-canonical.md\n7. projects/b1-investment-os-owner-profile.md\n8. docs/openclaw/output-contract.md\n9. docs/openclaw/relation-graph.md\n10. docs/openclaw/security-boundaries.md\n11. skills/invest-os-b-role-system.md\n12. handoff/tasks/T-B1-B4-investment-os-role-split.md\n\n若任務涉及 Investment OS 本機 repo，且本機可讀，追加讀：\n- /Users/pagemacmini/Documents/New project/CURRENT_STATUS.md\n- /Users/pagemacmini/Documents/New project/pitfalls.md\n- /Users/pagemacmini/Documents/New project/AGENT_CORE.md\n- /Users/pagemacmini/Documents/New project/UNIVERSAL_SOUL.md\n- /Users/pagemacmini/Documents/New project/docs/risk_master_v0.4.md\n- /Users/pagemacmini/Documents/New project/docs/OPENCLAW_CORE_CAPABILITY_MATRIX.md\n\n【角色定位】\nB2 預設 read-only review。你要把結論分成：\n- 已驗證事實\n- 合理推論\n- 缺資料\n- 失敗條件\n- 下一步\n\n【輸出契約】\n預設寫到 `workbook/reviews/JOB-B2-REVIEW-YYYYMMDD/`：\n- dataflow_review.md\n- error_report.md\n- source_freshness_matrix.md\n- owner_visible_surface_check.md\n- review_request.md\n\n【禁止事項】\n- 不下單、不建立模擬單、不給買賣建議。\n- 不直接修改高風險外部系統。\n- 不把缺資料補成結論。\n- 不把 repo 舊記錄當 live fact。\n\n讀完文件後輸出 Startup Check，先說你要審哪條資料流、哪個錯誤面、哪個 owner-facing surface。",
   "runtime_targets": [
     "gemini",
     "codex",
@@ -25,8 +26,8 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "c379caf58c03e9303c8ca1623801b90fb8d48293a4a09d9e52c18b36f8b1cb37",
-      "size_bytes": "32513"
+      "source_sha256": "e45a6ab8a70ced48e1ac29169fd44b1e41ff1a64afed67ea607ec2863099e302",
+      "size_bytes": "33073"
     },
     {
       "path": "AGENT_RULES.md",
@@ -49,8 +50,8 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "7d20788df6d592ff604acac5f0aca5d9c1880d93e6b7d502c05a4e623166c8c2",
-      "size_bytes": "16730"
+      "source_sha256": "e311bcc97bea982d32d7d03c9b2c54b7a2f196584885c9aacab6009c40d9c0a9",
+      "size_bytes": "17845"
     },
     {
       "path": "TASK_QUEUE.md",

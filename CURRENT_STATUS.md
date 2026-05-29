@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-05-29 B1-B4 Investment OS role family + A2 Ads/SEO/WordPress patrol module wiring 完成（A2 weekly automation `a2-ads-seo-wordpress-patrol` ACTIVE；外部發布、Ads 設定、投資/交易動作皆未執行）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-05-29 Chrome Extension v5.6.0 召喚任務欄位改版完成並已在 Chrome live profile 啟用（新增任務輸入、自動選角、本機 task module/recall fallback 優先；舊 v4.7.0 entry 保留但關閉）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -20,6 +20,7 @@
 ## 最新事實核對
 
 - 2026-05-11：正式 repo = `/Users/pagemacmini/maplab-ai-handbook`；`/Users/pagemacmini/Downloads/maplab-ai-handbook-main` 為非 git 下載副本，只能作遷移/歷史參考，不得作為正式工作目錄。
+- 2026-05-29：Chrome Extension 升級為 v5.6.0 並已在 Chrome live profile 啟用：新增 `召喚任務` 欄位與 `自動選角`，Owner 可先輸入任務，再由 Extension 建議 A2 / B1 / B2 / B3 / B4；handoff prompt 會帶入 `本次召喚任務`。task module 讀取改為本機 extension packaged JSON 優先、GitHub raw fallback；role recall 也有 packaged fallback。已將 `/Users/pagemacmini/Desktop/chrome-extension` 改為指向 canonical repo `/Users/pagemacmini/maplab-ai-handbook/chrome-extension` 的 symlink，舊 Desktop v4.7.0 folder 備份為 `chrome-extension.stale-v4.7-20260529-212125`；Chrome Extensions 頁仍保留舊 v4.7.0 entry 但已關閉。live 驗證需以 Chrome Extensions 頁與 popup 實際畫面為準；舊 Secure Preferences path 或 repo commit 不可單獨當作已啟用證據。
 - 2026-05-29：Investment OS B-role family 建立中：原 B1 投資邏輯橋接拆為 B1 Builder（寫功能）、B2 Reviewer（資料流/錯誤/freshness review）、B3 Archivist（版本與交接紀錄）、B4 System Patrol（系統適配巡查）。原 B1 Investment OS Owner logic 轉為 B1-B4 共用底座；InnerFlowLab 內容發文仍暫停；B1-B4 不下單、不建模擬單、不給買賣建議。
 - 2026-05-29：A2 新增 Ads/SEO/WordPress Patrol 召喚契約與每週定時巡查 automation：`a2-ads-seo-wordpress-patrol` ACTIVE，RRULE `FREQ=WEEKLY;BYDAY=MO;BYHOUR=9;BYMINUTE=0;BYSECOND=0`，cwd `/Users/pagemacmini/maplab-ai-handbook`。召喚後需先確認品牌價值、品牌語氣、品牌顏色/視覺來源、live web 狀態與 MAPLAB + Investment OS 共用文化（證據分層、風險邊界、交接紀律）。A2 可做 read-only 巡查與 safe repo/proposal 修改；WordPress 發布、Google/Meta Ads 設定、Rank Math 付費設定仍需 Owner/A1 批准。
 - 2026-05-27：A2 已用 Owner Chrome 登入態把 Round 008 案例內容實際存入 WordPress 未發布草稿：Post ID `1696`，edit URL `https://www.maplabkitchen.com/wp-admin/post.php?post=1696&action=edit`，title `MAPLAB 企業外燴與活動茶點案例審核草稿 Round 008`，狀態 `草稿`。A2 已重載 edit URL 驗證內容持久化，包含 21 則案例段與圖片 slot/檔名/Alt/Caption；未發布、未改 Rank Math、未改 Google Ads / Meta Ads。Round 009 report：`workbook/reviews/JOB-A2-B2B-CASE-ADS-20260526/reports/wp_draft_round_009.md`。圖片實體尚未插入，因 Chrome extension file chooser 回 `Not allowed`；30 張 WebP 預期 uploads URL 仍為 404，下一步需 Owner 開啟 Codex Chrome extension 的 file URL access 後再補圖。

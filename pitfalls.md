@@ -2,6 +2,13 @@
 
 > Cold-start required. 每次修到重複錯誤，要把「觸發條件 / 根因 / 解法 / 預防」寫回這裡。
 
+## 2026-05-29 — Repo extension update is not live Chrome proof
+
+- 觸發條件：Owner 指出 Chrome Extension 根本沒有「召喚欄位」，並質疑是否回到需要重新下載/重新設定的舊路。
+- 根因：前一輪把 source repo 的 v5.5.6 角色拆分，誤當成 live Chrome extension 已更新；Chrome `Secure Preferences` 可殘留舊 unpacked extension path，但不代表目前 profile 真的啟用。桌面也可能有另一份 stale `chrome-extension` 資料夾，不能在 file chooser 誤選。
+- 解法：v5.6.0 新增 popup 內的 `召喚任務` textarea 與 `自動選角`，並改成 task modules 優先讀 extension 本機 packaged JSON、GitHub raw 只作 fallback；改版路徑是 reload/重新載入 canonical unpacked folder `/Users/pagemacmini/maplab-ai-handbook/chrome-extension`，不是下載新 copy。
+- 預防：任何 Chrome Extension 改版收尾都要分三層驗證：`manifest/popup source` 已改、Chrome Extensions 頁顯示 MAPLAB Agent Commander active、popup/side panel 實際看得到新 UI；未完成第三層前，不得說「Extension 已更新」。
+
 ## 2026-05-24 — Planned B2B slugs are not live WordPress URLs
 
 - 觸發條件：Owner 要求 A2 先了解網站是否真的往 To B 經營，並提醒要同步冷啟動存檔，避免下次重查。

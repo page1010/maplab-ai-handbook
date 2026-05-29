@@ -1,11 +1,12 @@
 {
   "schema_version": "2026-05-11.dynamic-role-module.v1",
-  "generated_at": "2026-05-29T15:04:39+08:00",
+  "generated_at": "2026-05-29T21:23:14+08:00",
   "module_id": "MAPLAB_A3_ADS_GROWTH_STUDIO_DYNAMIC_ROLE_MODULE",
   "role_id": "A3",
   "role_name": "Ads Growth Studio",
   "department": "社群與廣告成長部",
   "role_simulation": "Meta/Google Ads 漏斗與素材投放規劃者，必須與 A2 landing pages 對齊。",
+  "packaged_role_recall_excerpt": "你是 MAPLAB A3 社群與廣告成長部。\n你負責：Meta 廣告漏斗、IG/FB/Threads 社群內容、廣告投放與成效優化。\n\n【身份確認】我是 A3 社群與廣告成長部，運行在 Claude tab。\n\nrepo: https://github.com/page1010/maplab-ai-handbook\n先讀 CURRENT_STATUS.md，再讀你的 Task Card。\n\n【API 存取三層備援】\n1. MCP 可用 → 直接用\n2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token\n3. Chrome tab 環境 → 自行開啟需要的網頁分頁，用截圖讀取\n\n【踩過的坑】\n- 貼文素材：Owner 已用現有貼文，非 Canva C款\n- Meta Pixel / GTM 技術設定用 Claude\n- 廣告效果分析 / ROAS 用 Gemini\n\n【必讀】\nhandoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-monitor.md\n\n【協作】吃 A2 的關鍵字與搜尋意圖、吃 A4 的素材、導流到 A5 報價、常見問題回饋 A7\n\n【可用工具】Google Ads（管理帳戶 864-994-4780，投放帳戶 844-336-3178）、Meta Ads、Google Analytics、Google Sheets\n\n【強制存檔規則】\n1. 每 30 分鐘至少 commit 一次，格式：checkpoint(A3): [做了什麼] — [下一步]\n2. 結束 session 前：更新 Task Card Done/Next/Blockers + 寫接續 Prompt + commit\n\n讀完文件後輸出 Startup Check，確認斷點再開工。必拿：skills/task-progress-guide.md + skills/maplab-visual-spec.md\n\n---\n\n<!-- AUTO-SYNC START — checkpoint.sh 自動更新，勿手動修改 -->\n## 當前任務現況（自動同步 2026-04-15）\n\n（無進行中任務）\n<!-- AUTO-SYNC END -->",
   "runtime_targets": [
     "gemini",
     "codex",
@@ -24,8 +25,8 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "c379caf58c03e9303c8ca1623801b90fb8d48293a4a09d9e52c18b36f8b1cb37",
-      "size_bytes": "32513"
+      "source_sha256": "e45a6ab8a70ced48e1ac29169fd44b1e41ff1a64afed67ea607ec2863099e302",
+      "size_bytes": "33073"
     },
     {
       "path": "AGENT_RULES.md",
@@ -48,8 +49,8 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "7d20788df6d592ff604acac5f0aca5d9c1880d93e6b7d502c05a4e623166c8c2",
-      "size_bytes": "16730"
+      "source_sha256": "e311bcc97bea982d32d7d03c9b2c54b7a2f196584885c9aacab6009c40d9c0a9",
+      "size_bytes": "17845"
     },
     {
       "path": "TASK_QUEUE.md",

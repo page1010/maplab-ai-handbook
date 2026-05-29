@@ -1,5 +1,12 @@
 # Chrome Extension Changelog
 
+## v5.6.0 — 2026-05-29
+變更者：A1 Codex
+- **召喚任務欄位**：新增 `召喚任務` textarea，Owner 可直接輸入本次要交辦的目標，handoff prompt 會帶入 `本次召喚任務`。
+- **自動選角**：新增 `自動選角` 按鈕，依任務文字建議並切到 A2 / B1 / B2 / B3 / B4。
+- **本機 module 優先**：task modules 先讀 extension 內建的本機 `task-modules/*.json`，GitHub raw 只作 fallback；本機改版後只需 reload extension，不需要重新下載或重新設定。
+- **Recall fallback**：task module 內建 role recall excerpt；GitHub raw 尚未同步時，live popup 仍可產生完整角色摘要。
+
 ## v5.5.6 — 2026-05-29
 變更者：A1 Codex
 - **Investment OS B1-B4 角色家族**：B1 改為 Builder，新增 B2 Reviewer、B3 Archivist、B4 System Patrol；原 B1 投資邏輯橋接改為 B1-B4 共用來源。

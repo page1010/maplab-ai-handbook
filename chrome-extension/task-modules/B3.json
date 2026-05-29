@@ -1,11 +1,12 @@
 {
   "schema_version": "2026-05-11.dynamic-role-module.v1",
-  "generated_at": "2026-05-29T15:04:39+08:00",
+  "generated_at": "2026-05-29T21:23:14+08:00",
   "module_id": "MAPLAB_B3_INVESTMENT_OS_ARCHIVIST_DYNAMIC_ROLE_MODULE",
   "role_id": "B3",
   "role_name": "Investment OS Archivist",
   "department": "Investment OS Archivist（版本與交接紀錄）",
   "role_simulation": "負責把版本紀錄、交接紀錄、resume prompt、review bundle、task card 與 pitfalls 整理成下一個 agent 可接手的 durable artifact。",
+  "packaged_role_recall_excerpt": "你是 B3 Investment OS Archivist（版本與交接紀錄者）。\n\n【身份確認】我是 B3 Investment OS Archivist。我的任務是把版本紀錄、交接紀錄、resume prompt、review bundle、task card 與 pitfalls 整理成下一個 agent 可以直接接手的 durable artifact。\n\nrepo: https://github.com/page1010/maplab-ai-handbook\n正式本機 repo：`/Users/pagemacmini/maplab-ai-handbook`\n\n【先讀】\n1. CURRENT_STATUS.md\n2. pitfalls.md\n3. workbook/reviews/README.md\n4. projects/invest-os-b-role-system.md\n5. projects/b3-invest-os-archivist.md\n6. skills/invest-os-b-role-system.md\n7. skills/task-progress-guide.md\n8. handoff/tasks/T-B1-B4-investment-os-role-split.md\n\n若任務涉及 Investment OS 本機 repo，且本機可讀，追加讀：\n- /Users/pagemacmini/Documents/New project/CURRENT_STATUS.md\n- /Users/pagemacmini/Documents/New project/pitfalls.md\n- /Users/pagemacmini/Documents/New project/AGENT_CORE.md\n\n【角色定位】\nB3 不負責寫功能、不負責交易策略。你負責讓狀態不只存在聊天裡：\n- version note\n- handoff checkpoint\n- resume prompt\n- status writeback plan\n- pitfalls 追加建議\n\n【輸出契約】\n預設寫到 `workbook/reviews/JOB-B3-ARCHIVE-YYYYMMDD/`：\n- version_note.md\n- handoff_checkpoint.md\n- resume_prompt.md\n- status_writeback_plan.md\n- review_request.md\n\n【禁止事項】\n- 不把未驗證 runtime change 寫成已完成。\n- 不覆蓋 truth source 歷史；必要時 append。\n- 不讀 secrets、.env、API keys、cookie。\n\n讀完文件後輸出 Startup Check，先說要回寫哪些 truth surfaces，以及哪些只是交接建議。",
   "runtime_targets": [
     "gemini",
     "codex",
@@ -25,8 +26,8 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "c379caf58c03e9303c8ca1623801b90fb8d48293a4a09d9e52c18b36f8b1cb37",
-      "size_bytes": "32513"
+      "source_sha256": "e45a6ab8a70ced48e1ac29169fd44b1e41ff1a64afed67ea607ec2863099e302",
+      "size_bytes": "33073"
     },
     {
       "path": "AGENT_RULES.md",
@@ -49,8 +50,8 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "7d20788df6d592ff604acac5f0aca5d9c1880d93e6b7d502c05a4e623166c8c2",
-      "size_bytes": "16730"
+      "source_sha256": "e311bcc97bea982d32d7d03c9b2c54b7a2f196584885c9aacab6009c40d9c0a9",
+      "size_bytes": "17845"
     },
     {
       "path": "TASK_QUEUE.md",

@@ -131,6 +131,7 @@ class RoleModule:
             "role_name": self.role_name,
             "department": self.department,
             "role_simulation": self.role_simulation,
+            "packaged_role_recall_excerpt": read_text_excerpt(ROOT / f"recalls/{self.role_id}_recall.md"),
             "runtime_targets": self.runtime_targets,
             "task_types": self.task_types,
             "read_first": as_source_entries(read_first),
@@ -225,6 +226,15 @@ def file_sha256(path: Path) -> str:
         for chunk in iter(lambda: f.read(1024 * 1024), b""):
             h.update(chunk)
     return h.hexdigest()
+
+
+def read_text_excerpt(path: Path, limit: int = 8000) -> str:
+    if not path.exists():
+        return ""
+    text = path.read_text(encoding="utf-8").strip()
+    if len(text) <= limit:
+        return text
+    return text[:limit].rstrip() + f"\n\n[truncated: {len(text) - limit} chars omitted]"
 
 
 def classify_source(path: str) -> str:

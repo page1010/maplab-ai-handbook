@@ -1,6 +1,6 @@
 # Extension Agent 召喚技能書 — MAPLAB Agent Commander
 
-版本：v2.0 | 更新：2026-05-29 | 維護者：A1
+版本：v2.1 | 更新：2026-05-29 | 維護者：A1
 
 ## 目的
 
@@ -33,7 +33,11 @@ Extension 預設從：
 
 下拉選單由 `chrome-extension/task-modules/index.json` 動態生成。A 系列是 MAPLAB 角色；B 系列是 Investment OS / cross-project 角色。
 
-### Step 4. 選 runtime target
+### Step 4. 輸入召喚任務
+
+在 `召喚任務` 欄位輸入本次要交辦的目標。若不確定該選哪個角色，按 `自動選角`；Extension 會依任務文字切到 A2 / B1 / B2 / B3 / B4。
+
+### Step 5. 選 runtime target
 
 可選：
 
@@ -42,7 +46,7 @@ Extension 預設從：
 - OpenClaw / A6
 - Claude tab（legacy）
 
-### Step 5. 複製任務模組 Handoff
+### Step 6. 複製任務模組 Handoff
 
 點「複製任務模組 Handoff」。被召喚的 agent 必須先回答：
 
@@ -82,6 +86,8 @@ Extension 預設從：
 ## Markdown Freshness
 
 Extension 可檢查 module JSON 內的 `source_sha256` 是否與 GitHub raw Markdown 相同。
+
+v5.6.0 起 task module 會先讀本機 extension 內建檔案，GitHub raw 只作 fallback。本機 repo 改版後只要 reload 現有 unpacked extension，不需要重新下載或重新設定。Role recall 也會在 module 內保留 fallback excerpt，避免 GitHub raw 尚未同步時出現假的 404。
 
 若顯示 Markdown 已變更：
 

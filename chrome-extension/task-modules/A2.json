@@ -1,11 +1,11 @@
 {
   "schema_version": "2026-05-11.dynamic-role-module.v1",
-  "generated_at": "2026-05-21T18:57:57+08:00",
-  "module_id": "MAPLAB_A2_SEO_GROWTH_UNIT_DYNAMIC_ROLE_MODULE",
+  "generated_at": "2026-05-29T15:04:39+08:00",
+  "module_id": "MAPLAB_A2_ADS_SEO_WORDPRESS_PATROL_DYNAMIC_ROLE_MODULE",
   "role_id": "A2",
-  "role_name": "SEO Growth Unit",
-  "department": "搜尋流量作戰部",
-  "role_simulation": "WordPress/Rank Math/GSC/內容架構 SEO 大師，先查 live facts 再做內容決策。",
+  "role_name": "Ads SEO WordPress Patrol",
+  "department": "搜尋流量作戰部（廣告/SEO/WordPress 巡查）",
+  "role_simulation": "WordPress/SEO/Ads/品牌記憶巡查者。召喚後先確認品牌價值、品牌語氣、品牌顏色與 live web 狀態，再做 read-only 巡查與安全 repo/proposal 修改。",
   "runtime_targets": [
     "gemini",
     "codex",
@@ -13,6 +13,9 @@
   ],
   "task_types": [
     "seo_audit",
+    "ads_seo_wordpress_patrol",
+    "brand_memory_check",
+    "wordpress_live_status",
     "rankmath_recovery",
     "wordpress_draft",
     "internal_linking",
@@ -24,16 +27,16 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "2f15b26e95681e537c694a9d07e83936553d8305b4f554b0a04d672c5a4e3948",
-      "size_bytes": "20351"
+      "source_sha256": "c379caf58c03e9303c8ca1623801b90fb8d48293a4a09d9e52c18b36f8b1cb37",
+      "size_bytes": "32513"
     },
     {
       "path": "AGENT_RULES.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "356dc9ee9c43599551a322d6fa8812ae46852f5b43f6c9af3707f2070c245e90",
-      "size_bytes": "37793"
+      "source_sha256": "cdde4fb459ee56940daabe2b84c1b2a7e24e47a51cd8f00ec8fe0311fb2fc474",
+      "size_bytes": "38719"
     },
     {
       "path": "AGENT_STARTUP_PROTOCOL.md",
@@ -48,8 +51,8 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "7152243e92feab4e3d6d1ccb859533acae88ca90f27cb4c45322c318065de890",
-      "size_bytes": "14745"
+      "source_sha256": "7d20788df6d592ff604acac5f0aca5d9c1880d93e6b7d502c05a4e623166c8c2",
+      "size_bytes": "16730"
     },
     {
       "path": "TASK_QUEUE.md",
@@ -72,8 +75,8 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "b75722fb918ea44474620cae75b395e19075c625fee4425d393b24eb7bab538c",
-      "size_bytes": "50666"
+      "source_sha256": "46e2e5485d0f14a02b26d8399b421ad0e1680822040295d2569fdc6f7525bc16",
+      "size_bytes": "52313"
     },
     {
       "path": "skills/superpowers-guide.md",
@@ -96,8 +99,16 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "role recall prompt",
-      "source_sha256": "53d7f0772f87657465b68130b265ea949ceac57b6bea29b41c55fd22ae399bad",
-      "size_bytes": "1731"
+      "source_sha256": "dfe5ec4395e980d5816ad9b68e9c7b6b88c634c73742655f5a84a8f24adc01dd",
+      "size_bytes": "4049"
+    },
+    {
+      "path": "projects/a2-ads-seo-wordpress-patrol.md",
+      "load_mode": "read",
+      "exists": "true",
+      "purpose": "project context",
+      "source_sha256": "dedf7c52e2e6ee93faca624f70bc0f63049bd6ad01cf1c4023602ae12d12e09d",
+      "size_bytes": "2421"
     },
     {
       "path": "projects/seo-ads-agent.md",
@@ -106,6 +117,14 @@
       "purpose": "project context",
       "source_sha256": "60bea580f0ae4e86fc1c173125ba47650ebd908873293edf537744cf7f442b3b",
       "size_bytes": "35038"
+    },
+    {
+      "path": "handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md",
+      "load_mode": "read",
+      "exists": "true",
+      "purpose": "handoff or task card",
+      "source_sha256": "12ba75e7ae9eb57e17446350305009708aef29e785232586b05f2f5286788aef",
+      "size_bytes": "2398"
     },
     {
       "path": "docs/a2a3/README.md",
@@ -136,8 +155,8 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "governance or workflow document",
-      "source_sha256": "ec16d5d621ccefa51ba3e887a364c60cdf3b03b0daab3f46b3c1c4581cce7e84",
-      "size_bytes": "2543"
+      "source_sha256": "e533fd07ab592d975898fb5d9979dae3b90d0d0d41dae97f9715a452ed087ed5",
+      "size_bytes": "4824"
     },
     {
       "path": "automation/seo_factory/README.md",
@@ -204,6 +223,14 @@
       "size_bytes": "8497"
     },
     {
+      "path": "skills/maplab-visual-spec.md",
+      "load_mode": "read",
+      "exists": "true",
+      "purpose": "skill / operating guide",
+      "source_sha256": "1b31aa9ad1aad14011adc90e7f5e675a926df5be7ccbe9f83f1df46dd8eac13e",
+      "size_bytes": "15171"
+    },
+    {
       "path": "skills/gdrive-to-wordpress-upload-guide.md",
       "load_mode": "read",
       "exists": "true",
@@ -268,6 +295,7 @@
     "skills/page-checker.md",
     "skills/wp-content-audit/SKILL.md",
     "skills/brand-voice-guide.md",
+    "skills/maplab-visual-spec.md",
     "skills/gdrive-to-wordpress-upload-guide.md"
   ],
   "source_policy": {
@@ -284,14 +312,18 @@
     "rule": "If any source_sha256 differs from the current GitHub raw content, regenerate task modules before relying on routing metadata."
   },
   "startup_contract": [
-    "Confirm: I am A2 SEO Growth Unit.",
+    "Confirm: I am A2 Ads SEO WordPress Patrol.",
     "Read CURRENT_STATUS.md first, then role recall, then only the sources listed in this module.",
-    "State the current task, expected output path, affected roles, and unresolved blockers before acting."
+    "State the current task, expected output path, affected roles, and unresolved blockers before acting.",
+    "Before patrol, answer MAPLAB brand value, brand voice, brand color/visual source, live website state source, and shared MAPLAB/Investment OS culture rules.",
+    "Only perform read-only external checks or safe repo/proposal edits unless Owner/A1 approves publishing or ads changes."
   ],
   "output_contract": [
-    "seo_diagnosis.md",
-    "rankmath_change_plan.md",
-    "internal_link_map.json",
+    "ads_seo_wordpress_patrol.md",
+    "brand_memory_check.md",
+    "wordpress_status_matrix.md",
+    "ads_landing_alignment.md",
+    "safe_fix_log.md",
     "review_request.md"
   ],
   "writeback": {
@@ -303,9 +335,11 @@
   "affects": [
     "WordPress pages/posts",
     "Rank Math metadata",
+    "Google Ads / Meta Ads read-only review",
     "A3 ad landing pages",
     "A4 asset needs",
-    "Google indexing workflow"
+    "Google indexing workflow",
+    "Investment OS-style evidence discipline"
   ],
   "forbidden_actions": [
     "Do not publish WordPress content without Owner approval.",

@@ -1,98 +1,97 @@
-# Extension Agent 召喚技能書 — 透過 MAPLAB Agent Commander 啟動 Agent
+# Extension Agent 召喚技能書 — MAPLAB Agent Commander
 
-版本：v1.0 | 建立：2026-03-28 | 維護者：A0
-
----
+版本：v2.0 | 更新：2026-05-29 | 維護者：A1
 
 ## 目的
 
-透過 Chrome Extension（MAPLAB Agent Commander）在任何 Chrome 瀏覽器上召喚 A0-A8 任一角色，讓其在 Claude 側邊欄中以正確身份啟動。
+Chrome Extension（MAPLAB Agent Commander）現在以 dynamic role task modules 為主，不再只從 `AGENT_RECALL_PROMPTS.md` 抽一段 prompt。
 
-Mac mini 和 Windows 都有安裝 Extension，兩邊都能用。
+Extension 會讀：
 
----
+- `chrome-extension/task-modules/index.json`
+- `chrome-extension/task-modules/{role}.json`
+- `CURRENT_STATUS.md`
+- `recalls/{role}_recall.md`
 
-## 召喚步驟（已驗證 2026-03-28）
+召喚結果是一份 platform-neutral runtime handoff，可貼給 Gemini / Codex / OpenClaw / legacy Claude tab。
+
+## 召喚步驟
 
 ### Step 1. 開啟 Extension
-在 Chrome 瀏覽器點擊 MAPLAB Agent Commander 圖示（Side Panel 模式）
+
+在 Chrome 點擊 MAPLAB Agent Commander 圖示。
 
 ### Step 2. 確認 GitHub 連線
-Extension 會從 GitHub 讀取：
-- CURRENT_STATUS.md → 系統版本、進行中任務、Blockers
-- AGENT_RECALL_PROMPTS.md → 各角色 prompt
 
-確認頂部顯示系統版本號（目前 v5.2）。如果沒有，檢查 GitHub Raw Base URL 設定。
+Extension 預設從：
+
+`https://raw.githubusercontent.com/page1010/maplab-ai-handbook/main`
+
+讀取 module index 與 `CURRENT_STATUS.md`。若頂部顯示載入失敗，先檢查 Raw Base URL 或 GitHub token。
 
 ### Step 3. 選角色
-下拉選單選 A0-A8 任一角色。Extension 會：
-1. 從 AGENT_RECALL_PROMPTS.md 讀取該角色的 code block（正則：/## (A\d)[^\n]*\n[\s\S]*?```\n([\s\S]*?)```/g）
-2. 填入 textarea
-3. 從 CURRENT_STATUS.md 篩出該角色的任務顯示在 role-status 區
 
-### Step 4. 複製 Startup Prompt
-點「複製 Startup Prompt」按鈕 → navigator.clipboard.writeText()
+下拉選單由 `chrome-extension/task-modules/index.json` 動態生成。A 系列是 MAPLAB 角色；B 系列是 Investment OS / cross-project 角色。
 
-### Step 5. 貼到 Claude
-- 開新 Claude tab 或側邊欄
-- Ctrl+V / Cmd+V 貼入
-- Claude 會按照 prompt 啟動：讀 CURRENT_STATUS → 讀 AGENT_RULES → 輸出 Startup Check
+### Step 4. 選 runtime target
 
----
+可選：
 
-## 平台差異
+- Gemini 側邊欄
+- Codex / A1
+- OpenClaw / A6
+- Claude tab（legacy）
 
-| 平台 | 使用方式 | 注意事項 |
-|------|---------|---------|
-| Windows Chrome | 側邊欄直接用 | 貼到同一瀏覽器的 Claude 側邊欄 |
-| Mac mini Chrome | 側邊欄直接用 | 貼到 Claude 側邊欄或終端機 Claude Code |
-| A0 Cowork 遠端 | 透過 Chrome Remote Desktop 操作 Windows Extension | 精度限制，大按鈕可點，打字用 CRD 傳送文字 |
+### Step 5. 複製任務模組 Handoff
 
----
+點「複製任務模組 Handoff」。被召喚的 agent 必須先回答：
+
+1. 我是什麼角色。
+2. 我會先讀哪些來源。
+3. 這次產出會影響哪些角色/檔案/系統。
+4. 產出會寫到哪裡。
+5. 有哪些高風險動作需要 Owner/A1 批准。
 
 ## 角色可用清單
 
 | 角色 | Extension 可用 | 正確貼到哪裡 |
 |------|---------------|-------------|
-| A0 | ✅ | Cowork（但 Cowork 有自己的 auto-memory，通常不需要手動召喚）|
-| A1 | ✅ | 終端機 Claude Code |
-| A2 | ✅ | Chrome 側邊欄 |
-| A3 | ✅ | Chrome 側邊欄 |
-| A4 | ✅ | Chrome 側邊欄（搭配 Colab tab）|
-| A5 | ✅ | Chrome 側邊欄（搭配 Google Sheets tab）|
-| A6 | ✅ | Chrome 側邊欄 |
-| A7 | ✅ | Chrome 側邊欄 |
-| A8 | ✅ | Chrome 側邊欄（待建立）|
+| A0 | yes | Cowork / Gemini / Codex |
+| A1 | yes | Codex / OpenClaw |
+| A2 | yes | Ads / SEO / WordPress patrol；可貼 Chrome/Gemini/Codex |
+| A3 | yes | Chrome/Gemini/Codex |
+| A4 | yes | Chrome/Gemini/Codex |
+| A5 | yes | Chrome/Gemini/Codex |
+| A6 | yes | Telegram/OpenClaw/Codex |
+| A7 | yes | Chrome/Gemini/Codex |
+| A8 | yes | Chrome/Gemini/Codex |
+| B1 | yes | Investment OS Builder |
+| B2 | yes | Investment OS Reviewer |
+| B3 | yes | Investment OS Archivist |
+| B4 | yes | Investment OS System Patrol |
 
----
+## B Role Routing
 
-## overdue 偵測
+| 任務 | 召喚 |
+|------|------|
+| 寫功能、修 bug、接 runtime surface | B1 Builder |
+| 查資料流、錯誤、freshness、報告契約 | B2 Reviewer |
+| 寫版本紀錄、交接紀錄、resume prompt | B3 Archivist |
+| 問系統是否還適合、是否要暫停/縮小/重構 | B4 System Patrol |
 
-Extension 會檢查最近 8 筆 commit：
-- 如果任務狀態是 🔄 但最近 commit 都沒有該 Task ID → 顯示 ⏰ 警示徽章
-- 純警示，不影響 prompt
+## Markdown Freshness
 
----
+Extension 可檢查 module JSON 內的 `source_sha256` 是否與 GitHub raw Markdown 相同。
 
-## A0 遠端召喚 SOP（Mac mini → Windows Extension）
+若顯示 Markdown 已變更：
 
-1. Chrome Remote Desktop 連上 DESKTOP-PAGEHOME
-2. 切到有 Extension 的 Chrome 窗口
-3. 點 Extension Side Panel 圖示
-4. 選角色
-5. 點「複製 Startup Prompt」
-6. 點 Claude 側邊欄的「Reply to Claude」
-7. Ctrl+V 貼入（或用 CRD 傳送文字功能）
+1. 請 A1 在正式 repo 執行 `python3 tools/ai_workbook/build_extension_task_modules.py`。
+2. commit / push。
+3. reload Extension。
 
----
+## Guardrails
 
-## 經驗紀錄
-
-### 2026-03-28 首次 Extension 召喚成功
-- Owner 在 Windows 和 Mac mini 都有安裝 Extension
-- Mac mini 的 Extension 可以直接使用（不需要走遠端桌面）
-- AGENT_RECALL_PROMPTS.md 裡 A0-A8 的格式都符合 Extension 正則解析
-
----
-
-*建立者：A0 Cowork Dispatch Secretary | 2026-03-28*
+- GitHub dynamic link 只載入 JSON/Markdown data，不執行 remote JS。
+- Credential docs、secrets、`.env`、API keys 不得貼給外部 runtime。
+- WordPress 發布、Ads 設定、投資下單、broker/runtime 高風險操作都需要 Owner/A1 批准。
+- 召喚 prompt 是 routing envelope；真正 facts 要讀 linked sources。

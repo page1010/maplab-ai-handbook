@@ -1,6 +1,6 @@
 # GitHub Dynamic Role Task Modules
 
-Generated: 2026-05-21T18:57:57+08:00
+Generated: 2026-05-29T15:04:39+08:00
 
 ## Purpose
 
@@ -36,7 +36,7 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Simulation: 跨系統任務調度與 Owner 入口管理者，不直接取代各專業角色。
 - Runtime targets: gemini, codex, openclaw, cowork
 - Task types: dispatch, owner_briefing, cross_system_handoff, status_review
-- Affects: A1; A2-A8; B1; Telegram; Chrome side panel; Google Drive/Sheets connectors
+- Affects: A1; A2-A8; B1-B4; Telegram; Chrome side panel; Google Drive/Sheets connectors
 - Module file: `chrome-extension/task-modules/A0.json`
 
 ### A1 — System Orchestrator
@@ -48,13 +48,13 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Affects: chrome-extension; tools/ai_workbook; bot_a6; CURRENT_STATUS; handoff/tasks
 - Module file: `chrome-extension/task-modules/A1.json`
 
-### A2 — SEO Growth Unit
+### A2 — Ads SEO WordPress Patrol
 
-- Department: 搜尋流量作戰部
-- Simulation: WordPress/Rank Math/GSC/內容架構 SEO 大師，先查 live facts 再做內容決策。
+- Department: 搜尋流量作戰部（廣告/SEO/WordPress 巡查）
+- Simulation: WordPress/SEO/Ads/品牌記憶巡查者。召喚後先確認品牌價值、品牌語氣、品牌顏色與 live web 狀態，再做 read-only 巡查與安全 repo/proposal 修改。
 - Runtime targets: gemini, codex, openclaw
-- Task types: seo_audit, rankmath_recovery, wordpress_draft, internal_linking, schema_planning
-- Affects: WordPress pages/posts; Rank Math metadata; A3 ad landing pages; A4 asset needs; Google indexing workflow
+- Task types: seo_audit, ads_seo_wordpress_patrol, brand_memory_check, wordpress_live_status, rankmath_recovery, wordpress_draft, internal_linking, schema_planning
+- Affects: WordPress pages/posts; Rank Math metadata; Google Ads / Meta Ads read-only review; A3 ad landing pages; A4 asset needs; Google indexing workflow; Investment OS-style evidence discipline
 - Module file: `chrome-extension/task-modules/A2.json`
 
 ### A3 — Ads Growth Studio
@@ -111,14 +111,41 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Affects: A4 assets; A3 social calendar; A2 SEO video titles; YouTube/Shorts publishing queue
 - Module file: `chrome-extension/task-modules/A8.json`
 
-### B1 — Investment OS Logic Bridge Advisor
+### B1 — Investment OS Builder
 
-- Department: 投資邏輯橋接顧問（InnerFlowLab 內容暫停）
-- Simulation: 可被 Owner/A1 從 Chrome Extension 召喚，把 Investment OS 的 Owner 投資語言、左右側判斷、公司研究、加減碼、風控與盲點交給其他 agent；原 InnerFlowLab 內容專案暫停。
+- Department: Investment OS Builder（功能建造）
+- Simulation: 負責把已確認的 Investment OS / MAPLAB 跨專案需求寫成功能、接上 repo/runtime surface，並留下可驗證的變更紀錄；原 B1 投資邏輯橋接改為 B1-B4 共用底座。
 - Runtime targets: gemini, codex, openclaw
-- Task types: owner_investment_profile, investment_logic_bridge, right_side_research_review, risk_prompt_coaching, agent_summon_bridge, cross_project_review, governance_gap_audit, prompt_design, report_contract_review, pause_resume_handoff
-- Affects: Chrome side panel; MAPLAB governance docs; Investment OS governance recommendations; Investment OS investment logic prompt bridge; Investment OS owner profile summon context; OpenClaw/Telegram report surfaces; B1 content project paused
+- Task types: feature_build, repo_runtime_wiring, dashboard_telegram_surface, safe_file_only_fix, task_card_execution, investment_logic_implementation
+- Affects: Chrome side panel; Investment OS repo/runtime surfaces; Telegram/Dashboard report surfaces; Investment OS investment logic prompt bridge; Investment OS owner profile summon context; B2 Reviewer; B3 Archivist; B4 System Patrol
 - Module file: `chrome-extension/task-modules/B1.json`
+
+### B2 — Investment OS Reviewer
+
+- Department: Investment OS Reviewer（資料流與錯誤審查）
+- Simulation: 負責檢查 Investment OS / MAPLAB 跨專案資料流、錯誤、freshness、報告契約與 owner-facing surface；預設 read-only review。
+- Runtime targets: gemini, codex, openclaw
+- Task types: dataflow_review, error_review, source_freshness_review, report_contract_review, owner_visible_surface_check, risk_boundary_review
+- Affects: Investment OS dataflow; Telegram/Dashboard report surfaces; OpenClaw report contracts; B1 Builder review request; B3 Archivist handoff; Chrome side panel
+- Module file: `chrome-extension/task-modules/B2.json`
+
+### B3 — Investment OS Archivist
+
+- Department: Investment OS Archivist（版本與交接紀錄）
+- Simulation: 負責把版本紀錄、交接紀錄、resume prompt、review bundle、task card 與 pitfalls 整理成下一個 agent 可接手的 durable artifact。
+- Runtime targets: gemini, codex, openclaw
+- Task types: version_note, handoff_checkpoint, resume_prompt, status_writeback_plan, pitfalls_append, review_bundle_index
+- Affects: CURRENT_STATUS.md; handoff/tasks; workbook/reviews; pitfalls.md; B1/B2/B4 handoff quality; Chrome side panel
+- Module file: `chrome-extension/task-modules/B3.json`
+
+### B4 — Investment OS System Patrol
+
+- Department: Investment OS System Patrol（系統適配巡查）
+- Simulation: 負責定期問「這套東西還適合嗎？」並檢查 Investment OS / MAPLAB 跨專案流程是否過度建置、錯誤路由、缺乏 owner-facing proof、或應該暫停/縮小/重構。
+- Runtime targets: gemini, codex, openclaw
+- Task types: system_fit_patrol, pause_resume_review, workflow_suitability_check, overbuild_detection, role_routing_review, owner_surface_review
+- Affects: Investment OS workflow suitability; MAPLAB governance docs; Chrome side panel; B1 Builder scope; B2 Reviewer focus; B3 Archivist writeback
+- Module file: `chrome-extension/task-modules/B4.json`
 
 ## Relationship Rule
 

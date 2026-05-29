@@ -6,7 +6,7 @@ Owner request：把網路上 GitHub Chrome Extension 動態連結改成任務模
 ## Scope
 
 - 建立平台中立的 role task module，不再把 Claude tab 注入當唯一入口。
-- 全角色覆蓋：A0, A1, A2, A3, A4, A5, A6, A7, A8, B1。
+- 全角色覆蓋：A0, A1, A2, A3, A4, A5, A6, A7, A8, B1, B2, B3, B4。
 - 輸出指向性關聯圖、Excel/CSV 對照表、程式檔關聯面。
 
 ## Generated Outputs
@@ -14,7 +14,7 @@ Owner request：把網路上 GitHub Chrome Extension 動態連結改成任務模
 - `docs/extension/dynamic-role-task-modules.md`
 - `chrome-extension/config/task-modules.json`
 - `chrome-extension/task-modules/index.json`
-- `chrome-extension/task-modules/{A0..A8,B1}.json`
+- `chrome-extension/task-modules/{role}.json` for every generated role module
 - `workbook/task_modules/role_module_relation_graph.json`
 - `workbook/task_modules/role_module_relationships.csv`
 - `workbook/task_modules/role_module_relationships.xlsx`

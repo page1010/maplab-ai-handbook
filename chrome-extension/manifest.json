@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "MAPLAB Agent Commander",
-  "version": "5.5.2",
+  "version": "5.5.6",
   "description": "角色召喚 + GitHub 任務模組 + Markdown 同步檢查 + Gemini/Codex/OpenClaw handoff。",
   "permissions": ["storage", "activeTab", "scripting", "tabs", "clipboardWrite", "sidePanel"],
   "host_permissions": [

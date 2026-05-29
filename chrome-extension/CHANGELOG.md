@@ -1,5 +1,11 @@
 # Chrome Extension Changelog
 
+## v5.5.6 — 2026-05-29
+變更者：A1 Codex
+- **Investment OS B1-B4 角色家族**：B1 改為 Builder，新增 B2 Reviewer、B3 Archivist、B4 System Patrol；原 B1 投資邏輯橋接改為 B1-B4 共用來源。
+- **A2 Ads/SEO/WordPress Patrol**：A2 module 召喚後必須先確認品牌價值、品牌語氣、品牌顏色/視覺來源、live web 狀態與高風險批准項。
+- **下拉選單改吃 module index**：popup 會用 `chrome-extension/task-modules/index.json` 動態產生 A/B 角色群組，避免新增角色後忘記手動加選項。
+
 ## v5.5.5 — 2026-05-21
 變更者：A1 Codex
 - **B1 投資邏輯橋接入口**：B1 下拉選單改為 `投資邏輯橋接顧問`，不再顯示成單純暫停角色。

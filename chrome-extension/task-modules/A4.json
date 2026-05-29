@@ -1,6 +1,6 @@
 {
   "schema_version": "2026-05-11.dynamic-role-module.v1",
-  "generated_at": "2026-05-21T18:57:57+08:00",
+  "generated_at": "2026-05-29T15:04:39+08:00",
   "module_id": "MAPLAB_A4_PHOTO_ARCHIVE_DYNAMIC_ROLE_MODULE",
   "role_id": "A4",
   "role_name": "Photo Archive",
@@ -24,16 +24,16 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "2f15b26e95681e537c694a9d07e83936553d8305b4f554b0a04d672c5a4e3948",
-      "size_bytes": "20351"
+      "source_sha256": "c379caf58c03e9303c8ca1623801b90fb8d48293a4a09d9e52c18b36f8b1cb37",
+      "size_bytes": "32513"
     },
     {
       "path": "AGENT_RULES.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "356dc9ee9c43599551a322d6fa8812ae46852f5b43f6c9af3707f2070c245e90",
-      "size_bytes": "37793"
+      "source_sha256": "cdde4fb459ee56940daabe2b84c1b2a7e24e47a51cd8f00ec8fe0311fb2fc474",
+      "size_bytes": "38719"
     },
     {
       "path": "AGENT_STARTUP_PROTOCOL.md",
@@ -48,8 +48,8 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "7152243e92feab4e3d6d1ccb859533acae88ca90f27cb4c45322c318065de890",
-      "size_bytes": "14745"
+      "source_sha256": "7d20788df6d592ff604acac5f0aca5d9c1880d93e6b7d502c05a4e623166c8c2",
+      "size_bytes": "16730"
     },
     {
       "path": "TASK_QUEUE.md",
@@ -72,8 +72,8 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "b75722fb918ea44474620cae75b395e19075c625fee4425d393b24eb7bab538c",
-      "size_bytes": "50666"
+      "source_sha256": "46e2e5485d0f14a02b26d8399b421ad0e1680822040295d2569fdc6f7525bc16",
+      "size_bytes": "52313"
     },
     {
       "path": "skills/superpowers-guide.md",

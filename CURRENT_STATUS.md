@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-05-27 A2 Round 009 WordPress draft saved（WP post `1696` 未發布草稿已建立並重載驗證；21 則案例段已進 WP；圖片實體上傳受 Chrome extension file access 阻擋；Rank Math / Ads 未更動）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-05-29 B1-B4 Investment OS role family + A2 Ads/SEO/WordPress patrol module wiring 完成（A2 weekly automation `a2-ads-seo-wordpress-patrol` ACTIVE；外部發布、Ads 設定、投資/交易動作皆未執行）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -20,6 +20,8 @@
 ## 最新事實核對
 
 - 2026-05-11：正式 repo = `/Users/pagemacmini/maplab-ai-handbook`；`/Users/pagemacmini/Downloads/maplab-ai-handbook-main` 為非 git 下載副本，只能作遷移/歷史參考，不得作為正式工作目錄。
+- 2026-05-29：Investment OS B-role family 建立中：原 B1 投資邏輯橋接拆為 B1 Builder（寫功能）、B2 Reviewer（資料流/錯誤/freshness review）、B3 Archivist（版本與交接紀錄）、B4 System Patrol（系統適配巡查）。原 B1 Investment OS Owner logic 轉為 B1-B4 共用底座；InnerFlowLab 內容發文仍暫停；B1-B4 不下單、不建模擬單、不給買賣建議。
+- 2026-05-29：A2 新增 Ads/SEO/WordPress Patrol 召喚契約與每週定時巡查 automation：`a2-ads-seo-wordpress-patrol` ACTIVE，RRULE `FREQ=WEEKLY;BYDAY=MO;BYHOUR=9;BYMINUTE=0;BYSECOND=0`，cwd `/Users/pagemacmini/maplab-ai-handbook`。召喚後需先確認品牌價值、品牌語氣、品牌顏色/視覺來源、live web 狀態與 MAPLAB + Investment OS 共用文化（證據分層、風險邊界、交接紀律）。A2 可做 read-only 巡查與 safe repo/proposal 修改；WordPress 發布、Google/Meta Ads 設定、Rank Math 付費設定仍需 Owner/A1 批准。
 - 2026-05-27：A2 已用 Owner Chrome 登入態把 Round 008 案例內容實際存入 WordPress 未發布草稿：Post ID `1696`，edit URL `https://www.maplabkitchen.com/wp-admin/post.php?post=1696&action=edit`，title `MAPLAB 企業外燴與活動茶點案例審核草稿 Round 008`，狀態 `草稿`。A2 已重載 edit URL 驗證內容持久化，包含 21 則案例段與圖片 slot/檔名/Alt/Caption；未發布、未改 Rank Math、未改 Google Ads / Meta Ads。Round 009 report：`workbook/reviews/JOB-A2-B2B-CASE-ADS-20260526/reports/wp_draft_round_009.md`。圖片實體尚未插入，因 Chrome extension file chooser 回 `Not allowed`；30 張 WebP 預期 uploads URL 仍為 404，下一步需 Owner 開啟 Codex Chrome extension 的 file URL access 後再補圖。
 - 2026-05-26：A2 Round 008 已完成 Owner 審稿包：`workbook/reviews/JOB-A2-B2B-CASE-ADS-20260526/wordpress_case_insert_draft_round_008.md`（21 則 existing live post 案例插入草稿）、`ads_landing_settings_round_008.md`（Google Ads P1 拆組與 Meta landing-page traffic proposal）、`asset_conversion_manifest_round_008.md` / `asset_conversion_status_round_008.csv` / `wordpress_assets_round_008/`（30/30 照片轉 WebP 本機審稿素材）。A2 acceptance review：`reports/a2_round_008_review.md`。未發布 WordPress、未改 Ads、未碰 Rank Math；下一步只等 Owner review 哪些案例段、外部名稱與圖片 slot 可用。
 - 2026-05-11：Drive API 確認 `MAPLAB_ASSETS` active folder = `1yVggYKiTkBJe4kd8CPoM3U75km0nVuNy`，parent = `MAPLAB`；舊 ID `1L0udpuXLy3vEbHmzBbaLqNVDut2FFpCe` API 回 404。
@@ -52,6 +54,7 @@
 | T-A2-003-weekly-wp-audit | T-A2-003: 每週全站 WP 內容稽核排程 | A2 | 🔲 待開始（腳本已建好（wp-audit.sh / wp-audit-cron.sh）。待 Owner 用 /schedule 建立） | handoff/tasks/T-A2-003-weekly-wp-audit.md |
 | T-A2-004 | 首頁結構優化 — 配合品牌色票微調 + 轉換路徑整理 | A2 | 🔲 待開始（任務卡建立。A0 已完成對標分析和色票微調。） | handoff/tasks/T-A2-004.md |
 | T-A2-005-local-seo-factory | MAPLAB SEO Factory 地端閉環（Pillar First） | A2（A1治理支援） | 🔄 進行中（7-stage pipeline + schema + weekly batch 建置完成；dry-run 3/3 pass。下一步：WP `--publish` 實測 + 真實 signals 導入） | handoff/tasks/T-A2-005-local-seo-factory.md |
+| T-A2-006-ads-seo-wordpress-patrol | Ads / SEO / WordPress Patrol | A2/A1 | 🟢 ACTIVE（Chrome Extension A2 module 已帶入 patrol contract；Codex automation `a2-ads-seo-wordpress-patrol` 每週一 09:00 啟用。只允許 read-only external checks 與 safe repo/proposal 修改） | handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md |
 | T-A2A3-001-B | SEO 場景頁面 + 內連結（從 T-A2A3-001 分拆） | A2/A3 | 🔄 進行中（Round 009：WP post `1696` 未發布草稿已存並重載驗證；21 則案例段已進 WP；圖片實體上傳需 Owner 開 Codex Chrome extension file URL access；Ads/RM 未更動） | handoff/tasks/T-A2A3-001-B.md |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2/A3 | ⏸️ 暫停 RM/GSC 部分（子任務 1-4 完成；Rank Math 已退訂，既有設定先保留；案例寫作改走 T-A2A3-001-B live URL 流程） | handoff/tasks/T-A2A3-001.md |
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | ⏸️ 阻塞中（受眾輪廓分析完成（693筆 Orders）。待執行：嘉義加入廣告地區、興趣條件精簡、策略一冷受眾上線。） | handoff/tasks/T-A3-002.md |
@@ -66,6 +69,7 @@
 | T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | 💤 暫停（Phase 2 v2.0 完成，等 Owner 確認政策 + A5 欄位補齊）（Q1-Q10 重構完成（真實 CSV 驅動），下一步是 Q7/Q10 政策確認 + Phase 3 上線測試） | handoff/tasks/T-A7-001.md |
 | T-A7-002 | A7 部門 80/20 優先任務清單 | A7 | ⏸️ 阻塞中（任務 6（Q1-Q10 實裝）+ 任務 10（技能書 v2.0）已完成。Phase 3A 剩任務 4（地區判斷）、7（流） | handoff/tasks/T-A7-002.md |
 | T-B1-001 | B1 Cross-Project Governance Advisor Prompt + Project Pause | B1/A1 | 💤 暫停（prompt ready；已補 Investment OS 投資邏輯橋接；InnerFlowLab 內容發文專案暫停。跨專案治理 / 投資邏輯 bridge 需 Owner/A1 明確召喚。） | handoff/tasks/T-B1-001.md |
+| T-B1-B4-001 | Investment OS B1-B4 Role Split + Chrome Extension Summon | B1-B4/A1 | 🟢 READY（B1 Builder / B2 Reviewer / B3 Archivist / B4 System Patrol 文件與 Chrome Extension modules 已建立；原 B1 logic bridge 改為 shared source context） | handoff/tasks/T-B1-B4-investment-os-role-split.md |
 | T-GBP-001 | T-GBP-001 | Owner | 🔲 待開始（尚未開始。等 Owner 準備新圖片。） | handoff/tasks/T-GBP-001.md |
 ---
 
@@ -118,7 +122,7 @@
 |------|------|------|
 | 🎯 最新狀態（你在這裡） | CURRENT_STATUS.md | 唯一入口，最高優先 |
 | 📋 任務池 | TASK_QUEUE.md | 所有待辦任務清單 |
-| 📖 角色與規則 | AGENT_RULES.md v3.9 | 10 角色定義（A0-A8 + B1）+ 協作規則 + 存檔規則 |
+| 📖 角色與規則 | AGENT_RULES.md v4.0 | 13 角色定義（A0-A8 + B1-B4）+ 協作規則 + 存檔規則 |
 | 🚀 開工 SOP | AGENT_STARTUP_PROTOCOL.md | 啟動流程 + Startup Check 輸出格式 |
 | 📂 任務卡 | handoff/tasks/T-xxx.md | 你認領的任務的詳細狀態 |
 | 🔧 技能路由 | skills/superpowers-guide.md | 開工前查路由表（27 本技能書）|
@@ -160,6 +164,7 @@ OAuth token：`~/.claude/mcp-keys/google-token.json`（drive + spreadsheets scop
 | 品項去重 v2 | data/quote_items_deduped.json | 3,794 唯一品項 |
 | 報價系統 | projects/maplab-master-data.md | A5 報價邏輯 + Sheets 結構 |
 | SEO/廣告 | projects/seo-ads-agent.md | A2/A3 核心文件 + 轉換動作快照 |
+| A2 Ads/SEO/WP Patrol | projects/a2-ads-seo-wordpress-patrol.md | A2 召喚後品牌記憶確認、廣告/SEO/WordPress 巡查契約、高風險邊界 |
 | 照片管線 | projects/maplab-pipeline.md | A4 照片分類流程 + Gemini API |
 | 客服系統 | projects/ai-reply-system.md | A7 回覆系統架構 |
 | 廣告監控 | projects/maplab-ads-monitor.md | A3 ads_agent.py 技術文件 |
@@ -168,6 +173,7 @@ OAuth token：`~/.claude/mcp-keys/google-token.json`（drive + spreadsheets scop
 | LINE 報價助手 | projects/line-quote-assistant.md | A6/A7 系統架構、三層資料模型 |
 | B1 跨專案治理顧問 | projects/b1-cross-project-governance-advisor.md | B1 暫停狀態、跨專案治理 prompt、Investment OS 對照建議 |
 | B1 投資邏輯橋接 | projects/b1-investment-logic-bridge.md | Owner 的 Investment OS 左側/右側/風控/籌碼/新聞判斷語言，供其他 agent 召喚 |
+| Investment OS B role family | projects/invest-os-b-role-system.md | B1-B4 共用角色拆分、Owner logic、startup check、輸出契約 |
 | A0 操作手冊 | docs/a0-dispatch-operations-manual.md | A0 調度操作手冊 |
 | Drive 根目錄 | MAPLAB_DATA `19RKLsBfNKuoCHVPFzT9D7tJrAdkTSmpt` | 品項圖片: MAPLAB_Items_Photos `1Z62HUIiVutGNqLJMGyTfBCZ-D5g2vnOT`；主試算表: `1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg` |
 | 交接紀錄 | handoff/tasks/T-xxx.md | 各任務斷點 + 接續 prompt |

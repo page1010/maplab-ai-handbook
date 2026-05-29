@@ -1,22 +1,23 @@
 {
   "schema_version": "2026-05-11.dynamic-role-module.v1",
   "generated_at": "2026-05-29T15:04:39+08:00",
-  "module_id": "MAPLAB_A7_SERVICE_DESK_DYNAMIC_ROLE_MODULE",
-  "role_id": "A7",
-  "role_name": "Service Desk",
-  "department": "客服與對話轉單部",
-  "role_simulation": "客戶詢問分類、標準回覆、補問流程與 A5/A6 轉單接口。",
+  "module_id": "MAPLAB_B3_INVESTMENT_OS_ARCHIVIST_DYNAMIC_ROLE_MODULE",
+  "role_id": "B3",
+  "role_name": "Investment OS Archivist",
+  "department": "Investment OS Archivist（版本與交接紀錄）",
+  "role_simulation": "負責把版本紀錄、交接紀錄、resume prompt、review bundle、task card 與 pitfalls 整理成下一個 agent 可接手的 durable artifact。",
   "runtime_targets": [
     "gemini",
     "codex",
     "openclaw"
   ],
   "task_types": [
-    "customer_reply",
-    "faq_flow",
-    "lead_qualification",
-    "handoff_to_quote",
-    "reply_training"
+    "version_note",
+    "handoff_checkpoint",
+    "resume_prompt",
+    "status_writeback_plan",
+    "pitfalls_append",
+    "review_bundle_index"
   ],
   "read_first": [
     {
@@ -92,52 +93,60 @@
       "size_bytes": "10792"
     },
     {
-      "path": "recalls/A7_recall.md",
+      "path": "recalls/B3_recall.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "role recall prompt",
-      "source_sha256": "d7eb829ef8b4fde3fb943f193efde0b950cd3ec18cebac901fce37429ec94f1b",
-      "size_bytes": "1592"
+      "source_sha256": "98f9a5616e5203c209dbfdddc580f27895e00567ea56579ebf8ebd92139c40ab",
+      "size_bytes": "1619"
     },
     {
-      "path": "projects/ai-reply-system.md",
+      "path": "projects/invest-os-b-role-system.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "project context",
-      "source_sha256": "3ca92b66b05da306a8a3935e97eaee4f7aa869e2ee0e90b80bc1e2fd06bf9866",
-      "size_bytes": "14094"
+      "source_sha256": "1e271b85ccd644b443078f45f7e9dcc9811a2296ecff3217077921490f699ec8",
+      "size_bytes": "4197"
     },
     {
-      "path": "docs/business-requirements/a6-training-methodology.md",
+      "path": "projects/b3-invest-os-archivist.md",
       "load_mode": "read",
       "exists": "true",
-      "purpose": "governance or workflow document",
-      "source_sha256": "25215fd6e6c3d0163b90fd303137ea0239e4c7cc38a3556fcbaa7101fedaf243",
-      "size_bytes": "7007"
+      "purpose": "project context",
+      "source_sha256": "54f37f9489ff708b7d956c6b35a5c99e033d7529f920a8cf55a1f7edd82673b2",
+      "size_bytes": "1389"
     },
     {
-      "path": "skills/a7-customer-service-skills.md",
+      "path": "handoff/tasks/T-B1-B4-investment-os-role-split.md",
+      "load_mode": "read",
+      "exists": "true",
+      "purpose": "handoff or task card",
+      "source_sha256": "57080fd0fafad3c3d421ef541a8200da3f8021436465d5e6d268c6272878659f",
+      "size_bytes": "2898"
+    },
+    {
+      "path": "workbook/reviews/README.md",
+      "load_mode": "read",
+      "exists": "true",
+      "purpose": "workbook artifact",
+      "source_sha256": "91c65b9321e7f66e9ae0299d9f6832c3e01c8e8e6ef1c54daa3bc7f358691add",
+      "size_bytes": "698"
+    },
+    {
+      "path": "projects/b1-investment-logic-bridge.md",
+      "load_mode": "read",
+      "exists": "true",
+      "purpose": "project context",
+      "source_sha256": "87076a0256da49d939dd9343474a8dfbda37a08a580d8e43fcb74055a914ecef",
+      "size_bytes": "11567"
+    },
+    {
+      "path": "skills/invest-os-b-role-system.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "skill / operating guide",
-      "source_sha256": "f6f7c49f4fa03c4011426d965f4581abf1fbac9b4e9ec5e1b8ce3604ad1320f3",
-      "size_bytes": "6228"
-    },
-    {
-      "path": "skills/brand-voice-guide.md",
-      "load_mode": "read",
-      "exists": "true",
-      "purpose": "skill / operating guide",
-      "source_sha256": "824dd293f11ddefa8bcef13757ed460ca6fe7e007f9fba5761ce2a00a957b1cf",
-      "size_bytes": "8497"
-    },
-    {
-      "path": "skills/a6-safety-boundaries.md",
-      "load_mode": "read",
-      "exists": "true",
-      "purpose": "skill / operating guide",
-      "source_sha256": "282e950ad625209e54474554a955b9701ec4d78c22d761d8948ec04d0404d74e",
-      "size_bytes": "7904"
+      "source_sha256": "9510ccd11d25511de43c4119d303c6e24a3cb209b677f3a491278c3e8a3641fc",
+      "size_bytes": "1751"
     },
     {
       "path": "docs/openclaw/output-contract.md",
@@ -162,30 +171,12 @@
       "purpose": "governance or workflow document",
       "source_sha256": "b4426628c0f5ee1359f9c90fe1fc306321523f1d928fcf26db9c4ad95db63131",
       "size_bytes": "661"
-    },
-    {
-      "path": "workbook/reviews/README.md",
-      "load_mode": "read",
-      "exists": "true",
-      "purpose": "workbook artifact",
-      "source_sha256": "91c65b9321e7f66e9ae0299d9f6832c3e01c8e8e6ef1c54daa3bc7f358691add",
-      "size_bytes": "698"
     }
   ],
-  "restricted_sources": [
-    {
-      "path": "skills/credentials/line-bot.md",
-      "load_mode": "a1_only",
-      "exists": "true",
-      "purpose": "skill / operating guide",
-      "source_sha256": "7bcf0d15d441e53cc7f8f30d69723693a1e2626a6772ad2608537d11b498649b",
-      "size_bytes": "2292"
-    }
-  ],
+  "restricted_sources": [],
   "skill_group": [
-    "skills/a7-customer-service-skills.md",
-    "skills/brand-voice-guide.md",
-    "skills/a6-safety-boundaries.md"
+    "skills/invest-os-b-role-system.md",
+    "skills/task-progress-guide.md"
   ],
   "source_policy": {
     "truth_source": "GitHub repo /Users/pagemacmini/maplab-ai-handbook",
@@ -201,14 +192,15 @@
     "rule": "If any source_sha256 differs from the current GitHub raw content, regenerate task modules before relying on routing metadata."
   },
   "startup_contract": [
-    "Confirm: I am A7 Service Desk.",
+    "Confirm: I am B3 Investment OS Archivist.",
     "Read CURRENT_STATUS.md first, then role recall, then only the sources listed in this module.",
     "State the current task, expected output path, affected roles, and unresolved blockers before acting."
   ],
   "output_contract": [
-    "reply_template.md",
-    "qualification_flow.json",
-    "handoff_note.md",
+    "version_note.md",
+    "handoff_checkpoint.md",
+    "resume_prompt.md",
+    "status_writeback_plan.md",
     "review_request.md"
   ],
   "writeback": {
@@ -218,10 +210,12 @@
     "status_rule": "Update CURRENT_STATUS.md only for major status changes; otherwise write a review bundle or task output first."
   },
   "affects": [
-    "A6 intake",
-    "A5 quote requirements",
-    "LINE/Telegram responses",
-    "A2/A3 FAQ insights"
+    "CURRENT_STATUS.md",
+    "handoff/tasks",
+    "workbook/reviews",
+    "pitfalls.md",
+    "B1/B2/B4 handoff quality",
+    "Chrome side panel"
   ],
   "forbidden_actions": [
     "Do not publish WordPress content without Owner approval.",

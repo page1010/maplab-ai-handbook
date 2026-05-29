@@ -1,4 +1,4 @@
-// MAPLAB Agent Commander v5.5.2 — popup.js
+// MAPLAB Agent Commander v5.5.6 — popup.js
 // 角色選擇 + GitHub dynamic role task modules + runtime handoff prompt
 const DEFAULT_BASE = 'https://raw.githubusercontent.com/page1010/maplab-ai-handbook/main';
 const GITHUB_API   = 'https://api.github.com/repos/page1010/maplab-ai-handbook';
@@ -47,6 +47,46 @@ function truncate(text, max) {
 function formatVersion(version) {
   const value = String(version || '?').trim();
   return value.startsWith('v') ? value : `v${value}`;
+}
+function sortedRoleModules() {
+  return [...(cachedModuleIndex?.modules || [])].sort((a, b) =>
+    String(a.role_id).localeCompare(String(b.role_id), undefined, { numeric: true })
+  );
+}
+function roleOptionLabel(module) {
+  const name = module.department || module.role_name || module.role_id;
+  return `${module.role_id}｜${name}`;
+}
+function appendRoleGroup(select, label, modules) {
+  if (!modules.length) return;
+  const sep = document.createElement('option');
+  sep.disabled = true;
+  sep.value = `__sep_${label}`;
+  sep.textContent = `── ${label} ──`;
+  select.appendChild(sep);
+  modules.forEach(module => {
+    const option = document.createElement('option');
+    option.value = module.role_id;
+    option.textContent = roleOptionLabel(module);
+    select.appendChild(option);
+  });
+}
+function populateRoleSelectFromIndex(preferredRole = '') {
+  const select = el('roleSelect');
+  const modules = sortedRoleModules();
+  if (!select || modules.length === 0) return;
+  const selected = preferredRole || select.value || '';
+  select.textContent = '';
+  select.appendChild(new Option('-- 總覽模式 --', ''));
+  appendRoleGroup(select, 'MAPLAB / A Department', modules.filter(m => String(m.role_id).startsWith('A')));
+  appendRoleGroup(select, 'Investment OS / Cross-Project', modules.filter(m => String(m.role_id).startsWith('B')));
+  appendRoleGroup(
+    select,
+    'Other',
+    modules.filter(m => !String(m.role_id).startsWith('A') && !String(m.role_id).startsWith('B'))
+  );
+  const valid = [...select.options].some(option => option.value === selected && !option.disabled);
+  select.value = valid ? selected : '';
 }
 
 // === GitHub fetch ===
@@ -671,7 +711,6 @@ async function loadAll() {
   const base  = data.githubRawBase || DEFAULT_BASE;
   const token = data.githubToken  || '';
 
-  if (data.lastRole) el('roleSelect').value = data.lastRole;
   if (data.lastRuntime && el('runtimeSelect')) el('runtimeSelect').value = data.lastRuntime;
 
   try {
@@ -684,6 +723,7 @@ async function loadAll() {
     cachedParsed  = parseStatus(md);
     cachedCommits = commits;
     cachedOverdue = detectOverdueTasks(commits, cachedParsed.activeTasks);
+    populateRoleSelectFromIndex(data.lastRole || el('roleSelect').value);
 
     // If a role is pre-selected, lazy-load its recall file now
     const selectedRole = el('roleSelect').value;

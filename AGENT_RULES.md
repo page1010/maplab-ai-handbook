@@ -1,6 +1,6 @@
 # AGENT_RULES.md — MAPLAB AI 全域行為準則
 
-版本：v3.9 | 建立：2026-03-12 | 更新：2026-04-04
+版本：v4.0 | 建立：2026-03-12 | 更新：2026-05-29
 
 ---
 
@@ -39,9 +39,12 @@ Step 6. If the project is unclear or not in AGENT_RULES.md, ask the user. Never 
 | A6 | 業務快反應部隊 | Sales Rapid Response Unit | 急件報價、快速提案簡報、菜單方案整理 | （用 A5 + A4 資料） |
 | A7 | 客服與對話轉單部 | Smart Reply / Service Desk | 客戶詢問分類、標準回覆、對話結構化、導向報價轉單 | projects/ai-reply-system.md |
 | A8 | 影音內容產線 | Content Repurposing Pipeline | 圖文轉影音、多平台影片分發、NotebookLM podcast、Shorts 腳本 | skills/a8-video-pipeline-skills.md |
-| B1 | 跨專案治理顧問（InnerFlowLab 暫停） | Cross-Project Governance Advisor | MAPLAB/Investment OS 治理對照、報告契約、prompt 整理、暫停/接手路徑；原 Substack/網站內容專案暫停 | projects/b1-cross-project-governance-advisor.md / skills/b1-innerflowlab-skills.md |
+| B1 | Investment OS Builder | Builder | 寫功能、接 repo/runtime surface、把已核准的 Investment OS / MAPLAB 跨專案任務落成可驗證變更 | projects/b1-invest-os-builder.md / skills/invest-os-b-role-system.md |
+| B2 | Investment OS Reviewer | Reviewer | 檢查資料流、錯誤、freshness、報告契約、Telegram/Dashboard/DB 一致性 | projects/b2-invest-os-reviewer.md / skills/invest-os-b-role-system.md |
+| B3 | Investment OS Archivist | Archivist | 寫版本紀錄、交接紀錄、resume prompt、review bundle、pitfalls 回寫建議 | projects/b3-invest-os-archivist.md / skills/invest-os-b-role-system.md |
+| B4 | Investment OS System Patrol | System Patrol | 定期問「這套東西還適合嗎？」檢查過度建置、錯誤路由、任務停滯與暫停/重構條件 | projects/b4-invest-os-system-patrol.md / skills/invest-os-b-role-system.md |
 
-> ⚠️ A 系列 = MAPLAB 專案；B 系列原為 InnerFlowLab 專案。B1 目前暫停內容發文，僅在 Owner/A1 明確召喚時作為跨專案治理顧問。A8 影音產線服務兩邊（共用基礎設施）。
+> ⚠️ A 系列 = MAPLAB 專案；B 系列現在是 Investment OS / cross-project role family。原 InnerFlowLab 內容發文專案維持暫停；B1-B4 共享 Investment OS Owner logic，但不下單、不建模擬單、不給買賣建議。A8 影音產線服務兩邊（共用基礎設施）。
 > ⚠️ A1 = Claude Code，透過 Telegram 下指令，不需要在 Claude tab 召喚。
 > ⚠️ Agent 不得將 Notion 視為狀態真相，一切以 GitHub commit 為準。
 > 不確定角色 → 先問用戶，不要假設，不要亂動。
@@ -124,6 +127,11 @@ A7 客服 ──→ A5 送需求
 A8 影音 ←── A4 素材
         ←── A3 社群發布節奏
         ←── A2 SEO 影片標題
+
+B1 Builder ──→ Investment OS 功能建置 / runtime surface
+B2 Reviewer ──→ Investment OS 資料流 / 錯誤 / 報告契約檢查
+B3 Archivist ──→ 版本紀錄 / 交接 / resume prompt
+B4 System Patrol ──→ 系統適配 / 暫停 / 重構建議
 ```
 
 ---

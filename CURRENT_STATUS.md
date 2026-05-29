@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-05-29 Chrome Extension v5.6.0 召喚任務欄位改版完成並已在 Chrome live profile 啟用（新增任務輸入、自動選角、本機 task module/recall fallback 優先；舊 v4.7.0 entry 保留但關閉）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-05-29 Agent summon workflow map 已同步到 MAPLAB + Investment OS（涵蓋 GPT/Codex/Claude/Gemini/NotebookLM/Antigravity/Hermes/OpenClaw/Windows agent、B1-B4/A roles 與 Windows 收盤資料包到 Mac mini 地端模型排程；無外部發布/交易/secret 操作）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -20,6 +20,7 @@
 ## 最新事實核對
 
 - 2026-05-11：正式 repo = `/Users/pagemacmini/maplab-ai-handbook`；`/Users/pagemacmini/Downloads/maplab-ai-handbook-main` 為非 git 下載副本，只能作遷移/歷史參考，不得作為正式工作目錄。
+- 2026-05-29：跨專案 Agent 召喚工作場景流程圖完成：MAPLAB 版 `docs/cross-project-agent-summon-workflow-map.md`，Investment OS 對應版 `/Users/pagemacmini/Documents/New project/docs/AGENT_SUMMON_WORKFLOW_MAP.md`。內容定義 Chrome Extension / Agent Office / Telegram / Codex 入口，GPT、Codex、Claude Code、Claude Chrome tab、Gemini、NotebookLM、Antigravity、Hermes、OpenClaw、local model、Windows agent 的使用場景與 why，並規劃 Windows 收盤後資訊商資料包送 Mac mini 地端模型/Hermes/B2/Codex 研究排程。未讀 secrets、未碰券商/下單/模擬單、未發布。
 - 2026-05-29：Chrome Extension 升級為 v5.6.0 並已在 Chrome live profile 啟用：新增 `召喚任務` 欄位與 `自動選角`，Owner 可先輸入任務，再由 Extension 建議 A2 / B1 / B2 / B3 / B4；handoff prompt 會帶入 `本次召喚任務`。task module 讀取改為本機 extension packaged JSON 優先、GitHub raw fallback；role recall 也有 packaged fallback。已將 `/Users/pagemacmini/Desktop/chrome-extension` 改為指向 canonical repo `/Users/pagemacmini/maplab-ai-handbook/chrome-extension` 的 symlink，舊 Desktop v4.7.0 folder 備份為 `chrome-extension.stale-v4.7-20260529-212125`；Chrome Extensions 頁仍保留舊 v4.7.0 entry 但已關閉。live 驗證需以 Chrome Extensions 頁與 popup 實際畫面為準；舊 Secure Preferences path 或 repo commit 不可單獨當作已啟用證據。
 - 2026-05-29：Investment OS B-role family 建立中：原 B1 投資邏輯橋接拆為 B1 Builder（寫功能）、B2 Reviewer（資料流/錯誤/freshness review）、B3 Archivist（版本與交接紀錄）、B4 System Patrol（系統適配巡查）。原 B1 Investment OS Owner logic 轉為 B1-B4 共用底座；InnerFlowLab 內容發文仍暫停；B1-B4 不下單、不建模擬單、不給買賣建議。
 - 2026-05-29：A2 新增 Ads/SEO/WordPress Patrol 召喚契約與每週定時巡查 automation：`a2-ads-seo-wordpress-patrol` ACTIVE，RRULE `FREQ=WEEKLY;BYDAY=MO;BYHOUR=9;BYMINUTE=0;BYSECOND=0`，cwd `/Users/pagemacmini/maplab-ai-handbook`。召喚後需先確認品牌價值、品牌語氣、品牌顏色/視覺來源、live web 狀態與 MAPLAB + Investment OS 共用文化（證據分層、風險邊界、交接紀律）。A2 可做 read-only 巡查與 safe repo/proposal 修改；WordPress 發布、Google/Meta Ads 設定、Rank Math 付費設定仍需 Owner/A1 批准。
@@ -175,6 +176,7 @@ OAuth token：`~/.claude/mcp-keys/google-token.json`（drive + spreadsheets scop
 | B1 跨專案治理顧問 | projects/b1-cross-project-governance-advisor.md | B1 暫停狀態、跨專案治理 prompt、Investment OS 對照建議 |
 | B1 投資邏輯橋接 | projects/b1-investment-logic-bridge.md | Owner 的 Investment OS 左側/右側/風控/籌碼/新聞判斷語言，供其他 agent 召喚 |
 | Investment OS B role family | projects/invest-os-b-role-system.md | B1-B4 共用角色拆分、Owner logic、startup check、輸出契約 |
+| Cross-project agent summon map | docs/cross-project-agent-summon-workflow-map.md | GPT/Codex/Claude/Gemini/NotebookLM/Antigravity/Hermes/OpenClaw/Windows agent 召喚場景、角色 why、Windows→Mac 收盤資料流 |
 | A0 操作手冊 | docs/a0-dispatch-operations-manual.md | A0 調度操作手冊 |
 | Drive 根目錄 | MAPLAB_DATA `19RKLsBfNKuoCHVPFzT9D7tJrAdkTSmpt` | 品項圖片: MAPLAB_Items_Photos `1Z62HUIiVutGNqLJMGyTfBCZ-D5g2vnOT`；主試算表: `1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg` |
 | 交接紀錄 | handoff/tasks/T-xxx.md | 各任務斷點 + 接續 prompt |

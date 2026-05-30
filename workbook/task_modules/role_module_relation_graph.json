@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-29T21:23:14+08:00",
+  "generated_at": "2026-05-30T23:06:53+08:00",
   "nodes": [
     {
       "id": "task:T-A1-EXT-001",
@@ -272,6 +272,62 @@
       "status": "active",
       "path": "workbook/reviews/README.md",
       "updated_at": "2026-05-29T21:23:14+08:00"
+    },
+    {
+      "id": "task:JOB-B2-REVIEW-20260530",
+      "type": "task",
+      "title": "Investment OS overbuild review",
+      "status": "active",
+      "path": "workbook/reviews/JOB-B2-REVIEW-20260530/review_request.md",
+      "updated_at": "2026-05-30T23:06:53+08:00"
+    },
+    {
+      "id": "review_bundle:JOB-B2-REVIEW-20260530",
+      "type": "review_bundle",
+      "title": "Investment OS overbuild review bundle",
+      "status": "active",
+      "path": "workbook/reviews/JOB-B2-REVIEW-20260530/",
+      "updated_at": "2026-05-30T23:06:53+08:00"
+    },
+    {
+      "id": "output:JOB-B2-REVIEW-20260530:dataflow_review",
+      "type": "output",
+      "title": "dataflow_review.md",
+      "status": "active",
+      "path": "workbook/reviews/JOB-B2-REVIEW-20260530/dataflow_review.md",
+      "updated_at": "2026-05-30T23:06:53+08:00"
+    },
+    {
+      "id": "output:JOB-B2-REVIEW-20260530:error_report",
+      "type": "output",
+      "title": "error_report.md",
+      "status": "active",
+      "path": "workbook/reviews/JOB-B2-REVIEW-20260530/error_report.md",
+      "updated_at": "2026-05-30T23:06:53+08:00"
+    },
+    {
+      "id": "output:JOB-B2-REVIEW-20260530:source_freshness_matrix",
+      "type": "output",
+      "title": "source_freshness_matrix.md",
+      "status": "active",
+      "path": "workbook/reviews/JOB-B2-REVIEW-20260530/source_freshness_matrix.md",
+      "updated_at": "2026-05-30T23:06:53+08:00"
+    },
+    {
+      "id": "output:JOB-B2-REVIEW-20260530:owner_visible_surface_check",
+      "type": "output",
+      "title": "owner_visible_surface_check.md",
+      "status": "active",
+      "path": "workbook/reviews/JOB-B2-REVIEW-20260530/owner_visible_surface_check.md",
+      "updated_at": "2026-05-30T23:06:53+08:00"
+    },
+    {
+      "id": "output:JOB-B2-REVIEW-20260530:review_request",
+      "type": "output",
+      "title": "review_request.md",
+      "status": "active",
+      "path": "workbook/reviews/JOB-B2-REVIEW-20260530/review_request.md",
+      "updated_at": "2026-05-30T23:06:53+08:00"
     },
     {
       "id": "impact:A0:A1",
@@ -4619,6 +4675,90 @@
       "from": "module:B4",
       "to": "impact:B4:B3 Archivist writeback",
       "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:JOB-B2-REVIEW-20260530",
+      "to": "review_bundle:JOB-B2-REVIEW-20260530",
+      "relation": "outputs",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:JOB-B2-REVIEW-20260530",
+      "to": "source:CURRENT_STATUS.md",
+      "relation": "uses",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:JOB-B2-REVIEW-20260530",
+      "to": "source:pitfalls.md",
+      "relation": "uses",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:JOB-B2-REVIEW-20260530",
+      "to": "source:projects/invest-os-b-role-system.md",
+      "relation": "uses",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:JOB-B2-REVIEW-20260530",
+      "to": "source:projects/b2-invest-os-reviewer.md",
+      "relation": "uses",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:JOB-B2-REVIEW-20260530",
+      "to": "source:docs/openclaw/output-contract.md",
+      "relation": "uses",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:JOB-B2-REVIEW-20260530",
+      "to": "source:docs/openclaw/relation-graph.md",
+      "relation": "uses",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:JOB-B2-REVIEW-20260530",
+      "to": "source:docs/openclaw/security-boundaries.md",
+      "relation": "uses",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:JOB-B2-REVIEW-20260530",
+      "to": "source:workbook/reviews/README.md",
+      "relation": "uses",
+      "confidence": 1.0
+    },
+    {
+      "from": "review_bundle:JOB-B2-REVIEW-20260530",
+      "to": "output:JOB-B2-REVIEW-20260530:dataflow_review",
+      "relation": "contains",
+      "confidence": 1.0
+    },
+    {
+      "from": "review_bundle:JOB-B2-REVIEW-20260530",
+      "to": "output:JOB-B2-REVIEW-20260530:error_report",
+      "relation": "contains",
+      "confidence": 1.0
+    },
+    {
+      "from": "review_bundle:JOB-B2-REVIEW-20260530",
+      "to": "output:JOB-B2-REVIEW-20260530:source_freshness_matrix",
+      "relation": "contains",
+      "confidence": 1.0
+    },
+    {
+      "from": "review_bundle:JOB-B2-REVIEW-20260530",
+      "to": "output:JOB-B2-REVIEW-20260530:owner_visible_surface_check",
+      "relation": "contains",
+      "confidence": 1.0
+    },
+    {
+      "from": "review_bundle:JOB-B2-REVIEW-20260530",
+      "to": "output:JOB-B2-REVIEW-20260530:review_request",
+      "relation": "contains",
       "confidence": 1.0
     }
   ]

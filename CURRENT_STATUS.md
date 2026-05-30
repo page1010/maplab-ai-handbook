@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-05-29 Agent summon workflow map 已同步到 MAPLAB + Investment OS（涵蓋 GPT/Codex/Claude/Gemini/NotebookLM/Antigravity/Hermes/OpenClaw/Windows agent、B1-B4/A roles 與 Windows 收盤資料包到 Mac mini 地端模型排程；無外部發布/交易/secret 操作）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-05-30 B4 system patrol review bundle 已寫入 `workbook/reviews/JOB-B4-PATROL-20260530/`；核心 owner-facing surfaces 繼續，實驗邊界暫停/重構，舊 broker-sim 仍維持 archive 狀態｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -42,6 +42,7 @@
 - 2026-05-19：B1 已由 InnerFlowLab 內容發文角色改為「暫停中的跨專案治理顧問」；Chrome Extension B1 module 將指向 `projects/b1-cross-project-governance-advisor.md`，review bundle 在 `workbook/reviews/JOB-B1-CROSS-PROJECT-20260519/`。原 Substack / innerflowlab.com / 多平台發文自動化暫停，不得未經 Owner/A1 恢復就執行。
 - 2026-05-19：B1 補上 Investment OS 判斷邏輯橋接：`projects/b1-investment-logic-bridge.md` 與 `workbook/reviews/JOB-B1-CROSS-PROJECT-20260519/b1_investment_logic_summon.md`，讓 Owner 可召喚 B1 到其他 agent 時先帶入左側/右側/風控/籌碼/新聞語言；B1 仍不下單、不建模擬單、不給買賣建議。
 - 2026-05-11：GitHub sync audit 啟動 — 以 `origin/main` 為備份基準，將 durable docs/scripts/task cards/review index 補齊入庫；`.env`、logs、runtime history、raw A6 review bundles 暫不盲目 commit，先建立 sanitized/index 流程。
+- 2026-05-30：B4 Investment OS System Patrol 完成巡查，review bundle `workbook/reviews/JOB-B4-PATROL-20260530/` 已落檔。結論：核心 owner-facing surfaces（`CURRENT_STATUS.md` / task cards、Chrome Extension 召喚、Agent Office switchboard、Telegram + Mobile Dashboard、B1-B4 role split）繼續；OpenClaw / Hermes 只保留 bounded read-only 路徑；research_method_layer 與其他實驗性擴張維持 draft-only / pause；legacy broker-simulation / InnerFlowLab content path 保持 archive / paused；cloud mirrors / share page / export 必須從 GitHub HEAD 派生，不得當 truth source。
 
 ---
 

@@ -2,6 +2,13 @@
 
 > Cold-start required. 每次修到重複錯誤，要把「觸發條件 / 根因 / 解法 / 預防」寫回這裡。
 
+## 2026-05-30 — B3 archive is not the same thing as the B4 patrol verdict
+
+- 觸發條件：B3 被召喚來做 Investment OS overbuild 的 runtime handoff，輸出內容同時包含 archive、resume prompt、status writeback plan，還會自然想把 `continue / pause / refactor` 一起整理進去。
+- 根因：B3 的職責是把版本紀錄、交接紀錄、review bundle 與 durable artifact 收好，不是替 B4 做最後的系統巡查裁決；如果不切清楚，下一個 agent 會把 provisional 建議誤當成已批准的系統決策。
+- 解法：B3 bundle 只保留 archive / handoff / resume / writeback plan / review request；`continue / pause / refactor` 明確標成 provisional，交 B4 review，再由 Owner 或 B4 升格成 final verdict。
+- 預防：遇到「請列出哪些該繼續、暫停、重構」這類問題，先做角色邊界檢查。B3 先記錄，B4 來裁決；不要讓 archive bundle 變成第二份 patrol report。
+
 ## 2026-05-29 — Repo extension update is not live Chrome proof
 
 - 觸發條件：Owner 指出 Chrome Extension 根本沒有「召喚欄位」，並質疑是否回到需要重新下載/重新設定的舊路。

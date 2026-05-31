@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-05-29 A1 更新 B1-B4 Investment OS role family + A2 Ads/SEO/WordPress patrol
+> 最後更新：2026-05-31 A1 每日巡查（全系統靜止~240h/~10天；A4 S11 ~1032h/~43天Colab崩潰🔴；A5/A6 ~288h/~12天；A2 ~648h/~27天；GCP帳單~43天未處理🔴）
 >
 > 使用方式：選擇角色 → 複製 prompt / module handoff → 貼到 Gemini / Codex / OpenClaw / legacy Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -21,9 +21,9 @@
 | A1 | 系統總管中心 | ✅ Claude Code 常駐 | Telegram bot + 終端機，直接下指令 |
 | A2 | 搜尋流量作戰部 | 🟢 召喚型可用 + patrol（Ads/SEO/WordPress） | SEO / Ads / WordPress / Brand memory |
 | A3 | 社群與廣告成長部 | ✅ T-A3-001 完成（GTM v21 雙平台追蹤上線）；T-A3-002 ⏸️ 阻塞（等廣告週期+Owner操作）| Meta Ads / Social |
-| A4 | 影像資產整理部 | 🔴 CRITICAL（S12✅DONE；S11 補跑 14ed423 04-18 Colab重啟→**~984h/~41天無completion commit，Colab確認崩潰；GCP帳單~41天未處理**）| Photo Archive |
-| A5 | 報價與提案引擎部 | ⚠️ 任務卡狀態待Owner核查（2026-05-19有6個A5 commits：343e1d0/24c985b/6a98eb0/4b53ea8/716f0c2/d22c03c；task card T-A5-002/004/005仍顯示CRITICAL；~240h/~10天無新commit）| Quotation Engine |
-| A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（aa77573 2026-05-19 Codex-first route；~240h/~10天無新活動；LINE webhook等Owner確認 Channel 1654658337）| Sales Rapid Response |
+| A4 | 影像資產整理部 | 🔴 CRITICAL（S12✅DONE；S11 補跑 14ed423 04-18 Colab重啟→**~1032h/~43天無completion commit，Colab確認崩潰；GCP帳單~43天未處理**）| Photo Archive |
+| A5 | 報價與提案引擎部 | ⚠️ 任務卡狀態待Owner核查（2026-05-19有6個A5 commits：343e1d0/24c985b/6a98eb0/4b53ea8/716f0c2/d22c03c；task card T-A5-002/004/005仍顯示CRITICAL；~288h/~12天無新commit）| Quotation Engine |
+| A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（aa77573 2026-05-19 Codex-first route；~288h/~12天無新活動；LINE webhook等Owner確認 Channel 1654658337）| Sales Rapid Response |
 | A7 | 客服與對話轉單部 | 💤 T-A7-001 正式暫停；T-A7-002 ⏸️ 阻塞（等LINE後台權限+Owner政策決策）| Smart Reply |
 | A8 | 影音內容產線 | 🔲 新建，待啟動 | Content Repurposing Pipeline |
 | **B1** | **Investment OS Builder** | **🟢 召喚型可用** | **寫功能 / runtime surface** |
@@ -169,6 +169,8 @@ repo: https://github.com/page1010/maplab-ai-handbook
 9. A6 T-A6-001 🔄 活躍中：5ae9c79（05-04 20:23）新增 ollama chat/seo modes + menu（bot_a6.py +187行）；addItem+模糊比對+多照片+10輪QA全PASS（45b4758 04-18）；Task Card 已由A6自行更新；LINE Developers Console Webhook URL待Owner確認（Channel 1654658337）。
 10. A8 新角色已建立（51070ea 04-19），待啟動任務；B1 🟢 首次活躍（04-24 22:35-23:02 4 commits）— 無正式Task Card，需建立。~240h無新commit。
 11. ✅ 全系統靜止解除：A2 今日（2026-05-04）2 commits（ba4fac6+59f06ce）T-A2-005 SEO Factory；A3/A5/A6/A7/A8/B1 仍無新活動。
+✅ 05-31 每日巡查：0非巡查commit（全系統靜止~240h/~10天，last non-patrol a06d656 2026-05-21）；A4 S11 ~1032h/~43天Colab崩潰🔴；GCP帳單~43天未處理🔴；A5任務卡待Owner核查（~288h/~12天無新commit）；A6 ~288h/~12天無commit；A2 ~648h/~27天無commit；A3/A7/A8/B1仍無活動；所有前次警告持續未解。
+✅ 05-30 晚間巡查：8h零commit；全系統靜止~228h/~9.5天（last non-patrol a06d656 2026-05-21）；A4 S11 ~1020h/~42.5天Colab崩潰🔴；GCP帳單~42.5天未處理🔴；A5任務卡待Owner核查（~276h/~11.5天無新commit）；A6 ~276h/~11.5天無commit；A2 ~636h/~26.5天無commit；A3/A7/A8/B1仍無活動；所有前次警告持續未解。
 ✅ 05-08 晚間巡查：8h零commit；全系統靜止~108h（last non-patrol 5ae9c79 05-04）；A4 S11 ~492h/~20.5天Colab崩潰🔴；A5 D29/~708h無commit🔴；GCP帳單~21.0天未處理🔴；A2/A6 ~108h無commit（T-A2-005/T-A6-001 >48h🔄警告持續）；A3/A7/A8/B1無新活動；B1 Task Card ~14天仍未建立；所有前次警告持續未解。
 ✅ 05-08 午後巡查：8h零commit；全系統靜止~101h；A4 S11 ~485h/~20.2天🔴；A5~701h D29🔴；GCP ~20.7d🔴；A2/A6 ~101h無commit（T-A2-005/T-A6-001 >48h🔄警告持續）；A3/A7/A8/B1無新活動；B1 Task Card ~14天仍未建立；所有前次警告持續未解。
 ✅ 05-08 每日巡查：24h內新commits：0非巡查（全系統靜止~96h，last non-patrol 5ae9c79 05-04）；A4 S11 ~480h/~20天Colab崩潰🔴；A5~696h D29🔴；GCP帳單~20.5天未處理🔴；A2 ~96h無commit（T-A2-005 🔄>48h）；A6 ~96h無commit（T-A6-001 🔄>48h）；B1 Task Card ~14天仍未建立；A3/A7/A8/B1無新活動；所有前次警告持續未解。
@@ -380,7 +382,7 @@ handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-
 
 ## A4｜影像資產整理部（Photo Archive / Asset Library）
 
-**狀態：🔴 S11 CRITICAL（S5✅/S6✅/S12✅DONE 7,645張；S11補跑 14ed423 04-18 Colab重啟→**~972h/~40.5天無completion commit，Colab確認崩潰；GCP帳單~40.5天未處理🔴**；S13待S11處理後啟動）｜T-A4-002 Phase 1 規劃完成(d0b3238)，⚠️ Colab解壓等S11 completion**
+**狀態：🔴 S11 CRITICAL（S5✅/S6✅/S12✅DONE 7,645張；S11補跑 14ed423 04-18 Colab重啟→**~1032h/~43天無completion commit，Colab確認崩潰；GCP帳單~43天未處理🔴**；S13待S11處理後啟動）｜T-A4-002 Phase 1 規劃完成(d0b3238)，⚠️ Colab解壓等S11 completion**
 
 ```
 你是 MAPLAB A4 影像資產整理部。
@@ -439,7 +441,7 @@ projects/maplab-pipeline.md → handoff/handoff-to-A4.md → skills/superpowers-
 
 ## A5｜報價與提案引擎部（Quotation Engine）
 
-**狀態：⚠️ 任務卡待Owner核查 — 2026-05-19 有 6 個 A5 commits（343e1d0/24c985b/6a98eb0/4b53ea8/716f0c2/d22c03c），但 task card T-A5-002/004/005 仍顯示 CRITICAL；~228h/~9.5天無新commit。需 Owner 確認 CRITICAL 是否已解除。**
+**狀態：⚠️ 任務卡待Owner核查 — 2026-05-19 有 6 個 A5 commits（343e1d0/24c985b/6a98eb0/4b53ea8/716f0c2/d22c03c），但 task card T-A5-002/004/005 仍顯示 CRITICAL；~288h/~12天無新commit。需 Owner 確認 CRITICAL 是否已解除。**
 
 ```
 你是 MAPLAB A5 報價與提案引擎部。
@@ -494,7 +496,7 @@ projects/maplab-master-data.md → handoff/handoff-to-A5.md → handoff/field-na
 
 ## A6｜業務快反應部隊（Sales Rapid Response Unit）
 
-**狀態：🔄 T-A6-001 進行中（last aa77573 2026-05-19 Codex-first route；~228h/~9.5天無新commit；LINE Developers Console Webhook URL 仍待 Owner 確認 Channel 1654658337；bot_a6 ✅ 上線 launchd）**
+**狀態：🔄 T-A6-001 進行中（last aa77573 2026-05-19 Codex-first route；~288h/~12天無新commit；LINE Developers Console Webhook URL 仍待 Owner 確認 Channel 1654658337；bot_a6 ✅ 上線 launchd）**
 
 ```
 你是 MAPLAB A6 業務快反應部隊。

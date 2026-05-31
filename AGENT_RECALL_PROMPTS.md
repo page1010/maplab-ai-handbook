@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-05-31 A1 每日巡查（全系統靜止~240h/~10天；A4 S11 ~1032h/~43天Colab崩潰🔴；A5/A6 ~288h/~12天；A2 ~648h/~27天；GCP帳單~43天未處理🔴）
+> 最後更新：2026-05-31 A1 午後巡查（A1+B1今日有效活動；A4 S11 ~1038h/~43.2天Colab崩潰🔴；A5 ~293h/~12.2天；A6 ~281h/~11.7天；⚠️A2數字修正：實際最後commit 696c80b 2026-05-27，~90h/~3.75天（前次巡查誤載~648h已修正）；GCP帳單~43.2天未處理🔴）
 >
 > 使用方式：選擇角色 → 複製 prompt / module handoff → 貼到 Gemini / Codex / OpenClaw / legacy Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令

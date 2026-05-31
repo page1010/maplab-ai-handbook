@@ -72,6 +72,7 @@
 | T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | 💤 暫停（Phase 2 v2.0 完成，等 Owner 確認政策 + A5 欄位補齊）（Q1-Q10 重構完成（真實 CSV 驅動），下一步是 Q7/Q10 政策確認 + Phase 3 上線測試） | handoff/tasks/T-A7-001.md |
 | T-A7-002 | A7 部門 80/20 優先任務清單 | A7 | ⏸️ 阻塞中（任務 6（Q1-Q10 實裝）+ 任務 10（技能書 v2.0）已完成。Phase 3A 剩任務 4（地區判斷）、7（流） | handoff/tasks/T-A7-002.md |
 | T-B1-001 | B1 Cross-Project Governance Advisor Prompt + Project Pause | B1/A1 | 💤 暫停（prompt ready；已補 Investment OS 投資邏輯橋接；InnerFlowLab 內容發文專案暫停。跨專案治理 / 投資邏輯 bridge 需 Owner/A1 明確召喚。） | handoff/tasks/T-B1-001.md |
+| T-A1-SYNC-GUARD-001 | 雲端同步破口修補 + patrol 紀錄瘦身 | A1 | 🔲 待開始（B1 2026-05-31 發現本地 main 積壓未推 commit、verify 假綠燈；修補 verify/checkpoint/patrol 瘦身。高槓桿低成本。） | handoff/tasks/T-A1-SYNC-GUARD-001.md |
 | T-B1-B4-001 | Investment OS B1-B4 Role Split + Chrome Extension Summon | B1-B4/A1 | 🟢 READY（B1 Builder / B2 Reviewer / B3 Archivist / B4 System Patrol 文件與 Chrome Extension modules 已建立；原 B1 logic bridge 改為 shared source context） | handoff/tasks/T-B1-B4-investment-os-role-split.md |
 | T-GBP-001 | T-GBP-001 | Owner | 🔲 待開始（尚未開始。等 Owner 準備新圖片。） | handoff/tasks/T-GBP-001.md |
 ---

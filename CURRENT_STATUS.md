@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-05-30 B4 system patrol review bundle 已寫入 `workbook/reviews/JOB-B4-PATROL-20260530/`；核心 owner-facing surfaces 繼續，實驗邊界暫停/重構，舊 broker-sim 仍維持 archive 狀態｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-05-31 A1 晚間巡查（A1 今日有效活動：T-A1-RTK-001 RTK hook 上線 ✅ Codex 驗收通過 74.8% 省量；T-A1-SYNC-GUARD-001 建立 🔲；A4 S11 ~1053h/~43.9天Colab崩潰🔴；A5 ~309h/~12.9天；A6 ~309h/~12.9天；A2 ~97h/~4天無commit；GCP帳單~43.9天未處理🔴）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -73,6 +73,7 @@
 | T-A7-002 | A7 部門 80/20 優先任務清單 | A7 | ⏸️ 阻塞中（任務 6（Q1-Q10 實裝）+ 任務 10（技能書 v2.0）已完成。Phase 3A 剩任務 4（地區判斷）、7（流） | handoff/tasks/T-A7-002.md |
 | T-B1-001 | B1 Cross-Project Governance Advisor Prompt + Project Pause | B1/A1 | 💤 暫停（prompt ready；已補 Investment OS 投資邏輯橋接；InnerFlowLab 內容發文專案暫停。跨專案治理 / 投資邏輯 bridge 需 Owner/A1 明確召喚。） | handoff/tasks/T-B1-001.md |
 | T-A1-SYNC-GUARD-001 | 雲端同步破口修補 + patrol 紀錄瘦身 | A1 | 🔲 待開始（B1 2026-05-31 發現本地 main 積壓未推 commit、verify 假綠燈；修補 verify/checkpoint/patrol 瘦身。高槓桿低成本。） | handoff/tasks/T-A1-SYNC-GUARD-001.md |
+| T-A1-RTK-001 | RTK Token Proxy 掛載與選擇性上線 | A1 | 🟢 已上線（Codex hook 已掛、裝前/裝後 patrol diff 驗收通過、74.8% token 省量確認；git 排除生效；下週看 rtk gain 決定擴張） | handoff/tasks/T-A1-RTK-001.md |
 | T-B1-B4-001 | Investment OS B1-B4 Role Split + Chrome Extension Summon | B1-B4/A1 | 🟢 READY（B1 Builder / B2 Reviewer / B3 Archivist / B4 System Patrol 文件與 Chrome Extension modules 已建立；原 B1 logic bridge 改為 shared source context） | handoff/tasks/T-B1-B4-investment-os-role-split.md |
 | T-GBP-001 | T-GBP-001 | Owner | 🔲 待開始（尚未開始。等 Owner 準備新圖片。） | handoff/tasks/T-GBP-001.md |
 ---
@@ -93,6 +94,7 @@
 | A4 | ⚠️ A1巡查 2026-05-01午後：T-A4-001 S11 ~320h/~13.3天無completion commit（Colab崩潰）；GCP帳單$3K/月已14天未處理🔴 | Owner立即：①確認S11 Colab狀態→補completion commit；②確認GCP帳單上限 |
 | A5 | ⚠️ A1巡查 2026-05-01午後：T-A5-002/004/005 CRITICAL D22/~536h無commit（last: cfeebd1 2026-04-09）。連續10+巡查Owner無決策回應 | Owner 決策：是否重啟A5 |
 | 全系統 | ⚠️ A1巡查 2026-05-01午後：全系統靜止168h+（7天，上次non-patrol commit B1 2026-04-24）。8h零新commit；A2/A3/A6/A7/A8/B1均無新活動 | Owner確認各Agent狀態；B1需建立正式Task Card |
+| A1/A2/A4/A5/A6/全系統 | ⚠️ A1巡查 2026-05-31 21:00晚間：今日A1有效活動（T-A1-RTK-001 RTK hook上線✅ Codex hook 驗收通過 74.8%省量；T-A1-SYNC-GUARD-001建立🔲）；A2 ~97h/~4天無commit（last 696c80b 2026-05-27，T-A2A3-001-B 🔄>48h持續）；A4 S11 ~1053h/~43.9天Colab崩潰🔴（last 14ed423 2026-04-18）；GCP帳單~43.9天未處理🔴；A5 ~309h/~12.9天無commit（last 2026-05-19 6個commits；task card T-A5-002/004/005仍顯示CRITICAL待Owner核查）；A6 ~309h/~12.9天無commit（last aa77573 2026-05-19）；A3/A7/A8/B1無業務活動；LINE webhook仍等Owner確認（Channel 1654658337）；所有前次警告持續未解 | Owner緊急決策：①確認A4 S11 Colab最終狀態；②確認GCP帳單；③核查A5 2026-05-19 commits是否解除T-A5-002/004/005 CRITICAL；④確認LINE webhook Channel 1654658337 |
 | A2/A4/A5/A6/全系統 | ⚠️ A1巡查 2026-05-31 14:00午後：今日A1+B1有效活動（T-A1-SYNC-GUARD-001建立+B1治理文件更新）；**⚠️ 資料不一致修正**：歷次巡查Blockers自2026-05-28起誤載「A2 ~629h+/~26天+無commit（last ba4fac6 2026-05-04）」，實際最後A2 commit為 696c80b 2026-05-27 20:02（~90h/~3.75天前）；T-A2A3-001-B 🔄 ~90h>48h閾值需注意；A4 S11 ~1038h/~43.2天Colab崩潰🔴（last 14ed423 2026-04-18）；GCP帳單~43.2天未處理🔴；A5 ~293h/~12.2天無commit（last 2026-05-19）；A6 ~281h/~11.7天無commit（last aa77573 2026-05-19）；A3/A7/A8/B1無業務活動；RECALL_PROMPTS header A2數字已修正 | Owner決策：①確認A4 S11 Colab最終狀態；②確認GCP帳單；③核查A5 2026-05-19 commits是否解除T-A5-002/004/005 CRITICAL；④確認LINE webhook Channel 1654658337 |
 | A4/A5/A6/全系統 | ⚠️ A1巡查 2026-05-31 09:00每日：0非巡查commit（全系統靜止~240h/~10天，last non-patrol a06d656 2026-05-21 docs(runtime)）；A4 S11 ~1032h/~43天Colab崩潰🔴（last 14ed423 2026-04-18）；GCP帳單~43天未處理🔴；A5任務卡待Owner核查（2026-05-19有6個A5 commits：343e1d0/24c985b/6a98eb0/4b53ea8/716f0c2/d22c03c；task card T-A5-002/004/005仍顯示CRITICAL；~288h/~12天無新commit）；A6 ~288h/~12天無commit（last aa77573 2026-05-19）；A2 ~648h/~27天無commit（last ba4fac6 2026-05-04）；A3/A7/A8/B1仍無活動；LINE webhook仍等Owner確認（Channel 1654658337）；所有前次警告持續未解 | Owner緊急決策：①確認A4 S11 Colab最終狀態；②確認GCP帳單；③核查A5 2026-05-19 commits是否解除T-A5-002/004/005 CRITICAL；④確認LINE webhook Channel 1654658337 |
 | A4/A5/A6/全系統 | ⚠️ A1巡查 2026-05-30 21:00晚間：8h零新commit（全系統靜止~228h/~9.5天，last non-patrol a06d656 2026-05-21 docs(runtime)）；A4 S11 ~1020h/~42.5天Colab崩潰🔴（last 14ed423 2026-04-18）；GCP帳單~42.5天未處理🔴；A5任務卡待Owner核查（2026-05-19有6個A5 commits：343e1d0/24c985b/6a98eb0/4b53ea8/716f0c2/d22c03c；task card T-A5-002/004/005仍顯示CRITICAL；~276h/~11.5天無新commit）；A6 ~276h/~11.5天無commit（last aa77573 2026-05-19）；A2 ~636h/~26.5天無commit（last ba4fac6 2026-05-04）；A3/A7/A8/B1仍無活動；LINE webhook仍等Owner確認（Channel 1654658337）；所有前次警告持續未解 | Owner緊急決策：①確認A4 S11 Colab最終狀態；②確認GCP帳單；③核查A5 2026-05-19 commits是否解除T-A5-002/004/005 CRITICAL；④確認LINE webhook Channel 1654658337 |

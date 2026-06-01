@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-06-01 A1 午後巡查（B1 今晨 review(b1) 03401e8 景氣燈號39紅燈✅；A2 ~114h/~4.75天無commit；A4 S11 ~1063h/~44.3天Colab崩潰🔴；A5 ~312h/~13天；A6 ~312h/~13天；GCP帳單~44.3天未處理🔴）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-06-01 B1 Builder Investment OS dashboard runtime freshness repair（18501/18502/8501 first-screen fresh；review bundle `workbook/reviews/JOB-B1-BUILDER-20260601/`）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -19,6 +19,7 @@
 
 ## 最新事實核對
 
+- 2026-06-01：B1 Builder 依 MAPLAB B1 runtime handoff 修復 Investment OS Dashboard stale-data closed loop。Investment OS root cause：runtime dashboard copy 舊、launcher 只看 health OK 不替換舊 Streamlit、file watcher disabled、台股 LaunchAgent weekday 寫成 Tue-Sat、18502/8501 tmux-only 不耐久、Dashboard 優先讀舊 command_status。已修 `launch_dashboard.sh`、台股市場 LaunchAgents Mon-Fri、新增 launchd-backed `dashboard-mobile`/`dashboard-local`、更新 Dashboard command-board source priority、補跑 Investment OS runtime jobs 與 no-send browser-backed GPT refresh。驗證：Investment OS `18501/18502/8501` first screen 均顯示 `行情日 2026-06-01`、`AI研究日 2026-06-01`、`Agent板 06/01` 且 stale top-strip dates=0；pytest `23 passed`。MAPLAB B1 bundle：`workbook/reviews/JOB-B1-BUILDER-20260601/`。未讀 secrets、未碰 broker orders、未發 Telegram、未發布 WordPress/Ads/Rank Math。
 - 2026-05-11：正式 repo = `/Users/pagemacmini/maplab-ai-handbook`；`/Users/pagemacmini/Downloads/maplab-ai-handbook-main` 為非 git 下載副本，只能作遷移/歷史參考，不得作為正式工作目錄。
 - 2026-05-29：跨專案 Agent 召喚工作場景流程圖完成：MAPLAB 版 `docs/cross-project-agent-summon-workflow-map.md`，Investment OS 對應版 `/Users/pagemacmini/Documents/New project/docs/AGENT_SUMMON_WORKFLOW_MAP.md`。內容定義 Chrome Extension / Agent Office / Telegram / Codex 入口，GPT、Codex、Claude Code、Claude Chrome tab、Gemini、NotebookLM、Antigravity、Hermes、OpenClaw、local model、Windows agent 的使用場景與 why，並規劃 Windows 收盤後資訊商資料包送 Mac mini 地端模型/Hermes/B2/Codex 研究排程。未讀 secrets、未碰券商/下單/模擬單、未發布。
 - 2026-05-29：Chrome Extension 升級為 v5.6.0 並已在 Chrome live profile 啟用：新增 `召喚任務` 欄位與 `自動選角`，Owner 可先輸入任務，再由 Extension 建議 A2 / B1 / B2 / B3 / B4；handoff prompt 會帶入 `本次召喚任務`。task module 讀取改為本機 extension packaged JSON 優先、GitHub raw fallback；role recall 也有 packaged fallback。已將 `/Users/pagemacmini/Desktop/chrome-extension` 改為指向 canonical repo `/Users/pagemacmini/maplab-ai-handbook/chrome-extension` 的 symlink，舊 Desktop v4.7.0 folder 備份為 `chrome-extension.stale-v4.7-20260529-212125`；Chrome Extensions 頁仍保留舊 v4.7.0 entry 但已關閉。live 驗證需以 Chrome Extensions 頁與 popup 實際畫面為準；舊 Secure Preferences path 或 repo commit 不可單獨當作已啟用證據。

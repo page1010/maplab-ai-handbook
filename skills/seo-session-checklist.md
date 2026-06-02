@@ -12,18 +12,16 @@
 
 ## Phase 1：SEO 健康檢查（每次必做）
 
-### 1.1 Rank Math SEO Performance（30 天）
+### 1.1 Google Search Console 成效檢查（30 天）
 
-到 WordPress > Rank Math SEO > Analytics > SEO Performance，記錄：
+到 Google Search Console > 成效，記錄：
 
 ```
-【SEO Performance 快照 — YYYY-MM-DD】
-Search Traffic:    ___（▲/▼ ___）
-Total Impressions: ___（▲/▼ ___）
-Total Keywords:    ___（▲/▼ ___）
-Total Clicks:      ___（▲/▼ ___）
-CTR:               ___%（▲/▼ ___）
-Average Position:  ___（▲/▼ ___）
+【GSC 成效快照 — YYYY-MM-DD】
+總點擊次數 (Clicks):        ___（▲/▼ ___）
+總曝光次數 (Impressions):   ___（▲/▼ ___）
+平均點閱率 (CTR):           ___%（▲/▼ ___）
+平均排名 (Average Position): ___（▲/▼ ___）
 ```
 
 ### 1.2 關鍵字排名分佈
@@ -51,16 +49,16 @@ Top 3:     ___（▲/▼ ___）
 Excluded:     ___
 ```
 
-### 1.4 SEO 分數分佈
+### 1.4 核對廣告與 SEO 矩陣 (Matrix Sheet)
 
-到 Site Analytics tab，記錄：
+檢查本機的 `ads_seo_matrix_settings.md`：
 
 ```
-【SEO 分數分佈 — YYYY-MM-DD】
-Good:    ___
-Fair:    ___
-Poor:    ___
-No Data: ___
+【Matrix Sheet 對齊狀態 — YYYY-MM-DD】
+是否已建立更新公告 (Patch Notes): ✅/❌
+Live URL 是否皆能正確開啟: ✅/❌
+Google Ads 關鍵字是否與文章相符: ✅/❌
+Meta Ads 受眾設定是否與 TA 一致: ✅/❌
 ```
 
 ### 1.5 內容盤點
@@ -231,3 +229,4 @@ Google 商家: 700 互動 / 433 評論 4.1★ / 4 產品
 |------|------|------|--------|
 | v1.0 | 2026-03-24 | 建立 A2/A3 每次 Session 標準檢查流程 + 首次基準線 | A2 |
 | v1.1 | 2026-04-07 | 新增 SEO 文案禁用詞清單（食安 + 法規紅線，Owner 指令） | A2 |
+| v1.2 | 2026-06-02 | 退訂 Rank Math，SOP 改依賴 GSC 與 Matrix Sheet，新增 Patch Notes 規範 | A2 |

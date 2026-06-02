@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-06-01 A1 晚間巡查（B1 今晨 review(b1) 03401e8 景氣燈號39紅燈✅；A2 ~121h/~5.1天無commit；A4 S11 ~1077h/~44.9天Colab崩潰🔴；A5 ~324h/~13.5天；A6 ~324h/~13.5天；GCP帳單~44.9天未處理🔴）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-06-02 A1 午後巡查（8h零新commit；A2 ~138h/~5.75天無commit（last 696c80b 2026-05-27）；A4 S11 ~1080h/~45天Colab崩潰🔴；A5 ~336h/~14天；A6 ~336h/~14天；GCP帳單~45天未處理🔴）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -94,6 +94,7 @@
 | A4 | ⚠️ A1巡查 2026-05-01午後：T-A4-001 S11 ~320h/~13.3天無completion commit（Colab崩潰）；GCP帳單$3K/月已14天未處理🔴 | Owner立即：①確認S11 Colab狀態→補completion commit；②確認GCP帳單上限 |
 | A5 | ⚠️ A1巡查 2026-05-01午後：T-A5-002/004/005 CRITICAL D22/~536h無commit（last: cfeebd1 2026-04-09）。連續10+巡查Owner無決策回應 | Owner 決策：是否重啟A5 |
 | 全系統 | ⚠️ A1巡查 2026-05-01午後：全系統靜止168h+（7天，上次non-patrol commit B1 2026-04-24）。8h零新commit；A2/A3/A6/A7/A8/B1均無新活動 | Owner確認各Agent狀態；B1需建立正式Task Card |
+| A2/A4/A5/A6/全系統 | ⚠️ A1巡查 2026-06-02 14:00午後：8h零新commit（last non-patrol B1 03401e8 2026-06-01 07:25）；A2 ~138h/~5.75天無commit（last 696c80b 2026-05-27；T-A2A3-001-B 🔄 持續>48h）；A4 S11 ~1080h/~45天Colab崩潰🔴（last 14ed423 2026-04-18）；GCP帳單~45天未處理🔴；A5 ~336h/~14天無commit（task card T-A5-002/004/005仍CRITICAL；需Owner核查）；A6 ~336h/~14天無新活動（last aa77573 2026-05-19）；A3/A7/A8無業務活動；T-A1-SYNC-GUARD-001仍🔲待開始；所有前次警告持續未解 | Owner緊急決策：①確認A4 S11 Colab最終狀態；②確認GCP帳單；③核查A5 2026-05-19 commits是否解除T-A5-002/004/005 CRITICAL；④確認LINE webhook Channel 1654658337 |
 | A2/A4/A5/A6/全系統 | ⚠️ A1巡查 2026-06-01 21:00晚間：8h零新非巡查commit（今日非patrol commit僅B1今晨 03401e8 review(b1) 景氣燈號39紅燈）；A2 ~121h/~5.1天無commit（last 696c80b 2026-05-27；T-A2A3-001-B 🔄 >48h持續）；A4 S11 ~1077h/~44.9天Colab崩潰🔴（last 14ed423 2026-04-18）；GCP帳單~44.9天未處理🔴；A5 ~324h/~13.5天無新commit（task card T-A5-002/004/005仍CRITICAL；需Owner核查）；A6 ~324h/~13.5天無新活動（last aa77573 2026-05-19）；A3/A7/A8無業務活動；T-A1-SYNC-GUARD-001仍🔲待開始；所有前次警告持續未解 | Owner緊急決策：①確認A4 S11 Colab最終狀態；②確認GCP帳單；③核查A5 2026-05-19 commits是否解除T-A5-002/004/005 CRITICAL；④確認LINE webhook Channel 1654658337 |
 | A2/A4/A5/A6/全系統 | ⚠️ A1巡查 2026-06-01 14:00午後：今日8h只有B1 review commit（03401e8 review(b1) 景氣燈號39紅燈 2026-06-01 07:25）；A2 ~114h/~4.75天無commit（last 696c80b 2026-05-27；T-A2A3-001-B 🔄 持續超48h閾值）；A4 S11 ~1063h/~44.3天Colab崩潰🔴（last 14ed423 2026-04-18）；GCP帳單~44.3天未處理🔴；A5 ~312h/~13天無新commit（task card T-A5-002/004/005仍CRITICAL；需Owner核查）；A6 ~312h/~13天無新活動（last aa77573 2026-05-19）；A3/A7/A8無業務活動；T-A1-SYNC-GUARD-001 仍🔲待開始；所有前次警告持續未解 | Owner緊急決策：①確認A4 S11 Colab最終狀態；②確認GCP帳單；③核查A5 2026-05-19 commits是否解除T-A5-002/004/005 CRITICAL；④確認LINE webhook Channel 1654658337 |
 | A1/A2/A4/A5/A6/全系統 | ⚠️ A1巡查 2026-05-31 21:00晚間：今日A1有效活動（T-A1-RTK-001 RTK hook上線✅ Codex hook 驗收通過 74.8%省量；T-A1-SYNC-GUARD-001建立🔲）；A2 ~97h/~4天無commit（last 696c80b 2026-05-27，T-A2A3-001-B 🔄>48h持續）；A4 S11 ~1053h/~43.9天Colab崩潰🔴（last 14ed423 2026-04-18）；GCP帳單~43.9天未處理🔴；A5 ~309h/~12.9天無commit（last 2026-05-19 6個commits；task card T-A5-002/004/005仍顯示CRITICAL待Owner核查）；A6 ~309h/~12.9天無commit（last aa77573 2026-05-19）；A3/A7/A8/B1無業務活動；LINE webhook仍等Owner確認（Channel 1654658337）；所有前次警告持續未解 | Owner緊急決策：①確認A4 S11 Colab最終狀態；②確認GCP帳單；③核查A5 2026-05-19 commits是否解除T-A5-002/004/005 CRITICAL；④確認LINE webhook Channel 1654658337 |

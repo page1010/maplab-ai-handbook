@@ -6,7 +6,7 @@ Owner request：把網路上 GitHub Chrome Extension 動態連結改成任務模
 ## Scope
 
 - 建立平台中立的 role task module，不再把 Claude tab 注入當唯一入口。
-- 全角色覆蓋：A0, A1, A2, A3, A4, A5, A6, A7, A8, B1, B2, B3, B4。
+- 全角色覆蓋：A0, A1, A2, A3, A4, A5, A6, A7, A8, B1, B2, B3, B4, IOS-MOMENTUM, IOS-KOL, IOS-FB, IOS-ALPHA, IOS-BLACKSWAN, IOS-INVENTORY, IOS-MACRO, IOS-CHIP, IOS-LEFT, IOS-RIGHT, IOS-EVIDENCE, IOS-SIM, IOS-FAMILY, IOS-HEDGE, IOS-SURFACE, IOS-HYGIENE。
 - 輸出指向性關聯圖、Excel/CSV 對照表、程式檔關聯面。
 
 ## Generated Outputs

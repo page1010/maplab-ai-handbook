@@ -1,6 +1,6 @@
 # GitHub Dynamic Role Task Modules
 
-Generated: 2026-05-29T21:23:14+08:00
+Generated: 2026-06-03T17:44:38+08:00
 
 ## Purpose
 
@@ -146,6 +146,150 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: system_fit_patrol, pause_resume_review, workflow_suitability_check, overbuild_detection, role_routing_review, owner_surface_review
 - Affects: Investment OS workflow suitability; MAPLAB governance docs; Chrome side panel; B1 Builder scope; B2 Reviewer focus; B3 Archivist writeback
 - Module file: `chrome-extension/task-modules/B4.json`
+
+### IOS-MOMENTUM — Daily Momentum Manager
+
+- Department: 每日動能經理
+- Simulation: 每日漲停、動能、成交量、強勢股與 16:00 籌碼合併的策略 owner。
+- Runtime targets: codex, openclaw, gemini, hermes
+- Task types: momentum_scan, limit_up_review, top3_shortlist, chip_merge, pm_brief_quality
+- Affects: Daily Momentum Telegram PM Brief; Momentum Dashboard section; OpenClaw research dispatch; B2 freshness review; B1 runtime repair
+- Module file: `chrome-extension/task-modules/IOS-MOMENTUM.json`
+
+### IOS-KOL — Influencer Radar Manager
+
+- Department: 網紅雷達經理
+- Simulation: YouTube、Podcast、FB/KOL 與操作筆記抽取的策略 owner。
+- Runtime targets: codex, openclaw, gemini, hermes
+- Task types: kol_digest, youtube_rss, notebooklm_packet, operation_notes, source_quality_review
+- Affects: KOL Telegram digest; KOL shadow Dashboard evidence; NotebookLM/OpenClaw worker packets; B2 report quality review
+- Module file: `chrome-extension/task-modules/IOS-KOL.json`
+
+### IOS-FB — FB Social Intelligence Manager
+
+- Department: FB / 社群情報經理
+- Simulation: FB 與公開社群來源收集、正規化、路由健康與 candidate 品質的策略 owner。
+- Runtime targets: codex, openclaw, gemini, hermes
+- Task types: fb_radar, source_route_health, social_candidate_review, price_proof_manifest
+- Affects: FB Radar evidence; social source route health; B2 low-signal review; B1 route repair
+- Module file: `chrome-extension/task-modules/IOS-FB.json`
+
+### IOS-ALPHA — Cross-Source Alpha Manager
+
+- Department: 阿爾法共振經理
+- Simulation: Reddit、RSS/X、Polymarket、市場異常與 convergence scoring 的策略 owner。
+- Runtime targets: codex, openclaw, gemini, hermes
+- Task types: alpha_convergence, polymarket_watch, cross_source_event, research_task_creation
+- Affects: Alpha Dashboard; convergence phone card; Polymarket hybrid strategy; local model shadow findings
+- Module file: `chrome-extension/task-modules/IOS-ALPHA.json`
+
+### IOS-BLACKSWAN — Black Swan Monitor
+
+- Department: 黑天鵝監控官
+- Simulation: 地緣、VIX、油價、美元、利率、Polymarket tail-risk 與 hedge watch 的風險 owner。
+- Runtime targets: codex, openclaw, gemini, hermes
+- Task types: black_swan_watch, tail_risk_monitor, hedge_signal_review, risk_regime_alert
+- Affects: Black swan alert; hedge playbook; Macro/Risk Dashboard; B2 risk-boundary review
+- Module file: `chrome-extension/task-modules/IOS-BLACKSWAN.json`
+
+### IOS-INVENTORY — Real Position Review Manager
+
+- Department: 庫存審查經理
+- Simulation: 實單持股、股期與真實部位風險控制的 portfolio owner。
+- Runtime targets: codex, openclaw, gemini, hermes
+- Task types: live_position_review, broker_snapshot_freshness, position_research, risk_card
+- Affects: Real position Telegram risk card; Inventory Dashboard; broker-free research handoff; B2 risk review
+- Module file: `chrome-extension/task-modules/IOS-INVENTORY.json`
+
+### IOS-MACRO — Macro Master
+
+- Department: 總經大師
+- Simulation: FRED、BLS、利率、美元、油價、景氣 regime 與台股風險框架的策略 owner。
+- Runtime targets: codex, openclaw, gemini, hermes
+- Task types: macro_regime, fred_bls_review, risk_weather, macro_dashboard
+- Affects: Macro Dashboard; risk weather card; B2 freshness review; B4 regime workflow fit
+- Module file: `chrome-extension/task-modules/IOS-MACRO.json`
+
+### IOS-CHIP — Chip Flow Manager
+
+- Department: 籌碼經理
+- Simulation: 三大法人、融資融券、集保、chip anomaly 與盤後合併的資料 owner。
+- Runtime targets: codex, openclaw, gemini, hermes
+- Task types: chip_refresh, twse_t86, margin_balance, chip_anomaly, after_1600_merge
+- Affects: Chip merge; Momentum/Inventory/Macro downstream cards; B2 dataflow review
+- Module file: `chrome-extension/task-modules/IOS-CHIP.json`
+
+### IOS-LEFT — Left-Side Research Manager
+
+- Department: 左側預期差經理
+- Simulation: 左側研究、公開資訊缺口、敘事早期變化與買前功課問題包的策略 owner。
+- Runtime targets: codex, openclaw, gemini, hermes
+- Task types: left_side_research, expectation_gap, public_fact_questions, research_evidence_packet
+- Affects: Left-side Dashboard; OpenClaw research packet; B2 evidence review
+- Module file: `chrome-extension/task-modules/IOS-LEFT.json`
+
+### IOS-RIGHT — Right-Side Execution Manager
+
+- Department: 右側交易經理
+- Simulation: 右側強勢股、開盤劇本、股期候選與只讀決策卡的策略 owner。
+- Runtime targets: codex, openclaw, gemini, hermes
+- Task types: right_side_shortlist, opening_playbook, stock_future_watch, execution_boundary
+- Affects: Trader Dashboard; opening playbook Telegram; B2 action-boundary review
+- Module file: `chrome-extension/task-modules/IOS-RIGHT.json`
+
+### IOS-EVIDENCE — Research Evidence Manager
+
+- Department: 研究證據經理
+- Simulation: 研究證據矩陣、來源分類、推論標記、缺資料與 OpenClaw/Hermes evidence contract 的 platform owner。
+- Runtime targets: codex, openclaw, gemini, hermes
+- Task types: evidence_matrix, source_quality, fact_inference_split, openclaw_validation
+- Affects: Research Evidence Dashboard; OpenClaw/Hermes evidence packets; B2 review contracts
+- Module file: `chrome-extension/task-modules/IOS-EVIDENCE.json`
+
+### IOS-SIM — Simulation Ledger Manager
+
+- Department: 模擬倉經理
+- Simulation: 本地模擬倉 ledger、ROI、模擬紀錄與 broker simulation wording boundary 的 portfolio owner。
+- Runtime targets: codex, openclaw, gemini, hermes
+- Task types: local_simulation_ledger, roi_review, simulation_boundary, sim_dashboard
+- Affects: Simulation Dashboard; local ledger reports; B2 broker-boundary review
+- Module file: `chrome-extension/task-modules/IOS-SIM.json`
+
+### IOS-FAMILY — Family Fund Manager
+
+- Department: 家族基金經理
+- Simulation: 家族基金、大盤、帳戶層級總覽、資金池與 dashboard account-level proof 的 portfolio owner。
+- Runtime targets: codex, openclaw, gemini, hermes
+- Task types: family_fund_dashboard, account_level_summary, capital_bucket_review, fund_readback
+- Affects: Family fund Dashboard; account-level charts; B2 source separation review
+- Module file: `chrome-extension/task-modules/IOS-FAMILY.json`
+
+### IOS-HEDGE — After-Hours Hedge Manager
+
+- Department: 盤後對沖經理
+- Simulation: 盤後、夜盤、海外期貨、風險對沖觀察與 watch-only hedge playbook 的策略 owner。
+- Runtime targets: codex, openclaw, gemini, hermes
+- Task types: after_hours_watch, hedge_playbook, global_futures_monitor, watch_only_boundary
+- Affects: After-hours hedge brief; Black swan and Macro downstream; B2 risk boundary review
+- Module file: `chrome-extension/task-modules/IOS-HEDGE.json`
+
+### IOS-SURFACE — Surface Contract Steward
+
+- Department: 介面契約守門員
+- Simulation: Telegram、Dashboard、閱讀體驗、色彩安全與 shared renderer defects 的 platform owner。
+- Runtime targets: codex, openclaw, gemini, hermes
+- Task types: telegram_contract, dashboard_readability, surface_renderer_review, runtime_readback
+- Affects: Chrome side panel; Telegram PM Brief format; Dashboard readability; B1 shared renderer fixes
+- Module file: `chrome-extension/task-modules/IOS-SURFACE.json`
+
+### IOS-HYGIENE — System Hygiene Steward
+
+- Department: 系統衛生官
+- Simulation: dirty worktree、stale bundles、duplicated logs、checkpoint drift 與 keep/drop 決策包的 platform owner。
+- Runtime targets: codex, openclaw, gemini, hermes
+- Task types: dirty_worktree_inventory, keep_drop_decision, cleanup_handoff, scheduled_hygiene
+- Affects: dirty worktree inventory; B4 cleanup patrol; B3 archive handoff; B1 cleanup script repair
+- Module file: `chrome-extension/task-modules/IOS-HYGIENE.json`
 
 ## Relationship Rule
 

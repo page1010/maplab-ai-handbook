@@ -1,6 +1,6 @@
 {
   "schema_version": "2026-05-11.dynamic-role-module-index.v1",
-  "generated_at": "2026-05-29T21:23:14+08:00",
+  "generated_at": "2026-06-03T17:44:38+08:00",
   "repository": "page1010/maplab-ai-handbook",
   "canonical_local_repo": "/Users/pagemacmini/maplab-ai-handbook",
   "dynamic_link_policy": "Load JSON/Markdown task data from GitHub; do not execute remote JS.",
@@ -174,6 +174,230 @@
         "openclaw"
       ],
       "risk_level": "medium"
+    },
+    {
+      "role_id": "IOS-MOMENTUM",
+      "module_id": "MAPLAB_IOS-MOMENTUM_DAILY_MOMENTUM_MANAGER_DYNAMIC_ROLE_MODULE",
+      "role_name": "Daily Momentum Manager",
+      "department": "每日動能經理",
+      "path": "chrome-extension/task-modules/IOS-MOMENTUM.json",
+      "runtime_targets": [
+        "codex",
+        "openclaw",
+        "gemini",
+        "hermes"
+      ],
+      "risk_level": "high"
+    },
+    {
+      "role_id": "IOS-KOL",
+      "module_id": "MAPLAB_IOS-KOL_INFLUENCER_RADAR_MANAGER_DYNAMIC_ROLE_MODULE",
+      "role_name": "Influencer Radar Manager",
+      "department": "網紅雷達經理",
+      "path": "chrome-extension/task-modules/IOS-KOL.json",
+      "runtime_targets": [
+        "codex",
+        "openclaw",
+        "gemini",
+        "hermes"
+      ],
+      "risk_level": "medium"
+    },
+    {
+      "role_id": "IOS-FB",
+      "module_id": "MAPLAB_IOS-FB_FB_SOCIAL_INTELLIGENCE_MANAGER_DYNAMIC_ROLE_MODULE",
+      "role_name": "FB Social Intelligence Manager",
+      "department": "FB / 社群情報經理",
+      "path": "chrome-extension/task-modules/IOS-FB.json",
+      "runtime_targets": [
+        "codex",
+        "openclaw",
+        "gemini",
+        "hermes"
+      ],
+      "risk_level": "medium"
+    },
+    {
+      "role_id": "IOS-ALPHA",
+      "module_id": "MAPLAB_IOS-ALPHA_CROSS_SOURCE_ALPHA_MANAGER_DYNAMIC_ROLE_MODULE",
+      "role_name": "Cross-Source Alpha Manager",
+      "department": "阿爾法共振經理",
+      "path": "chrome-extension/task-modules/IOS-ALPHA.json",
+      "runtime_targets": [
+        "codex",
+        "openclaw",
+        "gemini",
+        "hermes"
+      ],
+      "risk_level": "high"
+    },
+    {
+      "role_id": "IOS-BLACKSWAN",
+      "module_id": "MAPLAB_IOS-BLACKSWAN_BLACK_SWAN_MONITOR_DYNAMIC_ROLE_MODULE",
+      "role_name": "Black Swan Monitor",
+      "department": "黑天鵝監控官",
+      "path": "chrome-extension/task-modules/IOS-BLACKSWAN.json",
+      "runtime_targets": [
+        "codex",
+        "openclaw",
+        "gemini",
+        "hermes"
+      ],
+      "risk_level": "high"
+    },
+    {
+      "role_id": "IOS-INVENTORY",
+      "module_id": "MAPLAB_IOS-INVENTORY_REAL_POSITION_REVIEW_MANAGER_DYNAMIC_ROLE_MODULE",
+      "role_name": "Real Position Review Manager",
+      "department": "庫存審查經理",
+      "path": "chrome-extension/task-modules/IOS-INVENTORY.json",
+      "runtime_targets": [
+        "codex",
+        "openclaw",
+        "gemini",
+        "hermes"
+      ],
+      "risk_level": "high"
+    },
+    {
+      "role_id": "IOS-MACRO",
+      "module_id": "MAPLAB_IOS-MACRO_MACRO_MASTER_DYNAMIC_ROLE_MODULE",
+      "role_name": "Macro Master",
+      "department": "總經大師",
+      "path": "chrome-extension/task-modules/IOS-MACRO.json",
+      "runtime_targets": [
+        "codex",
+        "openclaw",
+        "gemini",
+        "hermes"
+      ],
+      "risk_level": "medium"
+    },
+    {
+      "role_id": "IOS-CHIP",
+      "module_id": "MAPLAB_IOS-CHIP_CHIP_FLOW_MANAGER_DYNAMIC_ROLE_MODULE",
+      "role_name": "Chip Flow Manager",
+      "department": "籌碼經理",
+      "path": "chrome-extension/task-modules/IOS-CHIP.json",
+      "runtime_targets": [
+        "codex",
+        "openclaw",
+        "gemini",
+        "hermes"
+      ],
+      "risk_level": "medium"
+    },
+    {
+      "role_id": "IOS-LEFT",
+      "module_id": "MAPLAB_IOS-LEFT_LEFT_SIDE_RESEARCH_MANAGER_DYNAMIC_ROLE_MODULE",
+      "role_name": "Left-Side Research Manager",
+      "department": "左側預期差經理",
+      "path": "chrome-extension/task-modules/IOS-LEFT.json",
+      "runtime_targets": [
+        "codex",
+        "openclaw",
+        "gemini",
+        "hermes"
+      ],
+      "risk_level": "medium"
+    },
+    {
+      "role_id": "IOS-RIGHT",
+      "module_id": "MAPLAB_IOS-RIGHT_RIGHT_SIDE_EXECUTION_MANAGER_DYNAMIC_ROLE_MODULE",
+      "role_name": "Right-Side Execution Manager",
+      "department": "右側交易經理",
+      "path": "chrome-extension/task-modules/IOS-RIGHT.json",
+      "runtime_targets": [
+        "codex",
+        "openclaw",
+        "gemini",
+        "hermes"
+      ],
+      "risk_level": "high"
+    },
+    {
+      "role_id": "IOS-EVIDENCE",
+      "module_id": "MAPLAB_IOS-EVIDENCE_RESEARCH_EVIDENCE_MANAGER_DYNAMIC_ROLE_MODULE",
+      "role_name": "Research Evidence Manager",
+      "department": "研究證據經理",
+      "path": "chrome-extension/task-modules/IOS-EVIDENCE.json",
+      "runtime_targets": [
+        "codex",
+        "openclaw",
+        "gemini",
+        "hermes"
+      ],
+      "risk_level": "medium"
+    },
+    {
+      "role_id": "IOS-SIM",
+      "module_id": "MAPLAB_IOS-SIM_SIMULATION_LEDGER_MANAGER_DYNAMIC_ROLE_MODULE",
+      "role_name": "Simulation Ledger Manager",
+      "department": "模擬倉經理",
+      "path": "chrome-extension/task-modules/IOS-SIM.json",
+      "runtime_targets": [
+        "codex",
+        "openclaw",
+        "gemini",
+        "hermes"
+      ],
+      "risk_level": "medium"
+    },
+    {
+      "role_id": "IOS-FAMILY",
+      "module_id": "MAPLAB_IOS-FAMILY_FAMILY_FUND_MANAGER_DYNAMIC_ROLE_MODULE",
+      "role_name": "Family Fund Manager",
+      "department": "家族基金經理",
+      "path": "chrome-extension/task-modules/IOS-FAMILY.json",
+      "runtime_targets": [
+        "codex",
+        "openclaw",
+        "gemini",
+        "hermes"
+      ],
+      "risk_level": "medium"
+    },
+    {
+      "role_id": "IOS-HEDGE",
+      "module_id": "MAPLAB_IOS-HEDGE_AFTER_HOURS_HEDGE_MANAGER_DYNAMIC_ROLE_MODULE",
+      "role_name": "After-Hours Hedge Manager",
+      "department": "盤後對沖經理",
+      "path": "chrome-extension/task-modules/IOS-HEDGE.json",
+      "runtime_targets": [
+        "codex",
+        "openclaw",
+        "gemini",
+        "hermes"
+      ],
+      "risk_level": "high"
+    },
+    {
+      "role_id": "IOS-SURFACE",
+      "module_id": "MAPLAB_IOS-SURFACE_SURFACE_CONTRACT_STEWARD_DYNAMIC_ROLE_MODULE",
+      "role_name": "Surface Contract Steward",
+      "department": "介面契約守門員",
+      "path": "chrome-extension/task-modules/IOS-SURFACE.json",
+      "runtime_targets": [
+        "codex",
+        "openclaw",
+        "gemini",
+        "hermes"
+      ],
+      "risk_level": "high"
+    },
+    {
+      "role_id": "IOS-HYGIENE",
+      "module_id": "MAPLAB_IOS-HYGIENE_SYSTEM_HYGIENE_STEWARD_DYNAMIC_ROLE_MODULE",
+      "role_name": "System Hygiene Steward",
+      "department": "系統衛生官",
+      "path": "chrome-extension/task-modules/IOS-HYGIENE.json",
+      "runtime_targets": [
+        "codex",
+        "openclaw",
+        "gemini",
+        "hermes"
+      ],
+      "risk_level": "high"
     }
   ]
 }

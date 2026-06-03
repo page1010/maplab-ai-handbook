@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-30T23:06:53+08:00",
+  "generated_at": "2026-06-03T17:44:38+08:00",
   "nodes": [
     {
       "id": "task:T-A1-EXT-001",
@@ -7,7 +7,7 @@
       "title": "GitHub dynamic role modules for Chrome/Gemini/Codex/OpenClaw",
       "status": "active",
       "path": "handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "output:role-module-index",
@@ -15,7 +15,7 @@
       "title": "Role module index",
       "status": "active",
       "path": "chrome-extension/task-modules/index.json",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "output:relationship-table",
@@ -23,7 +23,7 @@
       "title": "Role module relationship table",
       "status": "active",
       "path": "workbook/task_modules/role_module_relationships.csv",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "output:relationship-xlsx",
@@ -31,7 +31,7 @@
       "title": "Role module relationship workbook",
       "status": "active",
       "path": "workbook/task_modules/role_module_relationships.xlsx",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "code:chrome-extension",
@@ -39,7 +39,7 @@
       "title": "chrome-extension",
       "status": "active",
       "path": "chrome-extension/manifest.json, chrome-extension/popup.html, chrome-extension/popup.js, chrome-extension/CHANGELOG.md, chrome-extension/task-modules/index.json, chrome-extension/config/task-modules.json",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "code:ai-workbook",
@@ -47,7 +47,7 @@
       "title": "ai-workbook",
       "status": "active",
       "path": "tools/ai_workbook/cli.py, tools/ai_workbook/build_context_pack.py, tools/ai_workbook/create_microtask.py, tools/ai_workbook/relation_graph.py, tools/ai_workbook/openclaw_adapter.py, workbook/relation_graph.json",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "code:a6-openclaw-runtime",
@@ -55,7 +55,7 @@
       "title": "a6-openclaw-runtime",
       "status": "active",
       "path": "bot_a6/bot_a6.py, bot_a6/openclaw_dispatch.py, docs/openclaw/dispatch-role.md, docs/openclaw/closed-loop-playbook.md, docs/openclaw/memory-governance.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "code:a2a3-workbench",
@@ -63,7 +63,7 @@
       "title": "a2a3-workbench",
       "status": "active",
       "path": "automation/seo_factory/build_a2a3_workbench.py, automation/seo_factory/seo_factory.py, docs/a2a3/handoff-board.html, docs/a2a3/launchpad.html, docs/a2a3/openclaw-dispatch-pack.md, docs/a2a3/rankmath-keyword-recovery-2026-05-11.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "module:A0",
@@ -71,7 +71,7 @@
       "title": "MAPLAB_A0_DISPATCH_SECRETARY_DYNAMIC_ROLE_MODULE",
       "status": "active",
       "path": "chrome-extension/task-modules/A0.json",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "agent:A0",
@@ -79,7 +79,7 @@
       "title": "A0 Dispatch Secretary",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "runtime:gemini",
@@ -87,7 +87,7 @@
       "title": "gemini",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "runtime:codex",
@@ -95,7 +95,7 @@
       "title": "codex",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "runtime:openclaw",
@@ -103,7 +103,7 @@
       "title": "openclaw",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "runtime:cowork",
@@ -111,7 +111,7 @@
       "title": "cowork",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:CURRENT_STATUS.md",
@@ -119,7 +119,7 @@
       "title": "CURRENT_STATUS.md",
       "status": "active",
       "path": "CURRENT_STATUS.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:AGENT_RULES.md",
@@ -127,7 +127,7 @@
       "title": "AGENT_RULES.md",
       "status": "active",
       "path": "AGENT_RULES.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:AGENT_STARTUP_PROTOCOL.md",
@@ -135,7 +135,7 @@
       "title": "AGENT_STARTUP_PROTOCOL.md",
       "status": "active",
       "path": "AGENT_STARTUP_PROTOCOL.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:pitfalls.md",
@@ -143,7 +143,7 @@
       "title": "pitfalls.md",
       "status": "active",
       "path": "pitfalls.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:TASK_QUEUE.md",
@@ -151,7 +151,7 @@
       "title": "TASK_QUEUE.md",
       "status": "missing",
       "path": "TASK_QUEUE.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:workbook/task_index.json",
@@ -159,7 +159,7 @@
       "title": "workbook/task_index.json",
       "status": "active",
       "path": "workbook/task_index.json",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:AGENT_RECALL_PROMPTS.md",
@@ -167,7 +167,7 @@
       "title": "AGENT_RECALL_PROMPTS.md",
       "status": "active",
       "path": "AGENT_RECALL_PROMPTS.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/superpowers-guide.md",
@@ -175,7 +175,7 @@
       "title": "skills/superpowers-guide.md",
       "status": "active",
       "path": "skills/superpowers-guide.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/task-progress-guide.md",
@@ -183,7 +183,7 @@
       "title": "skills/task-progress-guide.md",
       "status": "active",
       "path": "skills/task-progress-guide.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:recalls/A0_recall.md",
@@ -191,7 +191,7 @@
       "title": "recalls/A0_recall.md",
       "status": "active",
       "path": "recalls/A0_recall.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:docs/a0-dispatch-operations-manual.md",
@@ -199,7 +199,7 @@
       "title": "docs/a0-dispatch-operations-manual.md",
       "status": "active",
       "path": "docs/a0-dispatch-operations-manual.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:projects/a0-a1-briefing-protocol.md",
@@ -207,7 +207,7 @@
       "title": "projects/a0-a1-briefing-protocol.md",
       "status": "active",
       "path": "projects/a0-a1-briefing-protocol.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:handoff/a0-briefing.md",
@@ -215,7 +215,7 @@
       "title": "handoff/a0-briefing.md",
       "status": "active",
       "path": "handoff/a0-briefing.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/a0-proactive-dispatch-guide.md",
@@ -223,7 +223,7 @@
       "title": "skills/a0-proactive-dispatch-guide.md",
       "status": "active",
       "path": "skills/a0-proactive-dispatch-guide.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/remote-desktop-agent-bridge.md",
@@ -231,7 +231,7 @@
       "title": "skills/remote-desktop-agent-bridge.md",
       "status": "active",
       "path": "skills/remote-desktop-agent-bridge.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/mcp-usage-guide.md",
@@ -239,7 +239,7 @@
       "title": "skills/mcp-usage-guide.md",
       "status": "active",
       "path": "skills/mcp-usage-guide.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:docs/openclaw/output-contract.md",
@@ -247,7 +247,7 @@
       "title": "docs/openclaw/output-contract.md",
       "status": "active",
       "path": "docs/openclaw/output-contract.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:docs/openclaw/relation-graph.md",
@@ -255,7 +255,7 @@
       "title": "docs/openclaw/relation-graph.md",
       "status": "active",
       "path": "docs/openclaw/relation-graph.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:docs/openclaw/security-boundaries.md",
@@ -263,7 +263,7 @@
       "title": "docs/openclaw/security-boundaries.md",
       "status": "active",
       "path": "docs/openclaw/security-boundaries.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:workbook/reviews/README.md",
@@ -271,63 +271,7 @@
       "title": "workbook/reviews/README.md",
       "status": "active",
       "path": "workbook/reviews/README.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
-    },
-    {
-      "id": "task:JOB-B2-REVIEW-20260530",
-      "type": "task",
-      "title": "Investment OS overbuild review",
-      "status": "active",
-      "path": "workbook/reviews/JOB-B2-REVIEW-20260530/review_request.md",
-      "updated_at": "2026-05-30T23:06:53+08:00"
-    },
-    {
-      "id": "review_bundle:JOB-B2-REVIEW-20260530",
-      "type": "review_bundle",
-      "title": "Investment OS overbuild review bundle",
-      "status": "active",
-      "path": "workbook/reviews/JOB-B2-REVIEW-20260530/",
-      "updated_at": "2026-05-30T23:06:53+08:00"
-    },
-    {
-      "id": "output:JOB-B2-REVIEW-20260530:dataflow_review",
-      "type": "output",
-      "title": "dataflow_review.md",
-      "status": "active",
-      "path": "workbook/reviews/JOB-B2-REVIEW-20260530/dataflow_review.md",
-      "updated_at": "2026-05-30T23:06:53+08:00"
-    },
-    {
-      "id": "output:JOB-B2-REVIEW-20260530:error_report",
-      "type": "output",
-      "title": "error_report.md",
-      "status": "active",
-      "path": "workbook/reviews/JOB-B2-REVIEW-20260530/error_report.md",
-      "updated_at": "2026-05-30T23:06:53+08:00"
-    },
-    {
-      "id": "output:JOB-B2-REVIEW-20260530:source_freshness_matrix",
-      "type": "output",
-      "title": "source_freshness_matrix.md",
-      "status": "active",
-      "path": "workbook/reviews/JOB-B2-REVIEW-20260530/source_freshness_matrix.md",
-      "updated_at": "2026-05-30T23:06:53+08:00"
-    },
-    {
-      "id": "output:JOB-B2-REVIEW-20260530:owner_visible_surface_check",
-      "type": "output",
-      "title": "owner_visible_surface_check.md",
-      "status": "active",
-      "path": "workbook/reviews/JOB-B2-REVIEW-20260530/owner_visible_surface_check.md",
-      "updated_at": "2026-05-30T23:06:53+08:00"
-    },
-    {
-      "id": "output:JOB-B2-REVIEW-20260530:review_request",
-      "type": "output",
-      "title": "review_request.md",
-      "status": "active",
-      "path": "workbook/reviews/JOB-B2-REVIEW-20260530/review_request.md",
-      "updated_at": "2026-05-30T23:06:53+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A0:A1",
@@ -335,7 +279,7 @@
       "title": "A1",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A0:A2-A8",
@@ -343,7 +287,7 @@
       "title": "A2-A8",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A0:B1-B4",
@@ -351,7 +295,7 @@
       "title": "B1-B4",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A0:Telegram",
@@ -359,7 +303,7 @@
       "title": "Telegram",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A0:Chrome side panel",
@@ -367,7 +311,7 @@
       "title": "Chrome side panel",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A0:Google Drive/Sheets connectors",
@@ -375,7 +319,7 @@
       "title": "Google Drive/Sheets connectors",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "module:A1",
@@ -383,7 +327,7 @@
       "title": "MAPLAB_A1_SYSTEM_ORCHESTRATOR_DYNAMIC_ROLE_MODULE",
       "status": "active",
       "path": "chrome-extension/task-modules/A1.json",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "agent:A1",
@@ -391,7 +335,7 @@
       "title": "A1 System Orchestrator",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:recalls/A1_recall.md",
@@ -399,7 +343,7 @@
       "title": "recalls/A1_recall.md",
       "status": "active",
       "path": "recalls/A1_recall.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:projects/v6-architecture.md",
@@ -407,7 +351,7 @@
       "title": "projects/v6-architecture.md",
       "status": "active",
       "path": "projects/v6-architecture.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:docs/openclaw/README.md",
@@ -415,7 +359,7 @@
       "title": "docs/openclaw/README.md",
       "status": "active",
       "path": "docs/openclaw/README.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:docs/openclaw/closed-loop-playbook.md",
@@ -423,7 +367,7 @@
       "title": "docs/openclaw/closed-loop-playbook.md",
       "status": "active",
       "path": "docs/openclaw/closed-loop-playbook.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:docs/openclaw/memory-governance.md",
@@ -431,7 +375,7 @@
       "title": "docs/openclaw/memory-governance.md",
       "status": "active",
       "path": "docs/openclaw/memory-governance.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:projects/extension-browser-bridge.md",
@@ -439,7 +383,7 @@
       "title": "projects/extension-browser-bridge.md",
       "status": "active",
       "path": "projects/extension-browser-bridge.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/extension-agent-summon-guide.md",
@@ -447,7 +391,7 @@
       "title": "skills/extension-agent-summon-guide.md",
       "status": "active",
       "path": "skills/extension-agent-summon-guide.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/extension-update",
@@ -455,7 +399,7 @@
       "title": "skills/extension-update",
       "status": "active",
       "path": "skills/extension-update",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/save-checkpoint/SKILL.md",
@@ -463,7 +407,7 @@
       "title": "skills/save-checkpoint/SKILL.md",
       "status": "active",
       "path": "skills/save-checkpoint/SKILL.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/first-principles-check/SKILL.md",
@@ -471,7 +415,7 @@
       "title": "skills/first-principles-check/SKILL.md",
       "status": "active",
       "path": "skills/first-principles-check/SKILL.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/pitfalls/SKILL.md",
@@ -479,7 +423,7 @@
       "title": "skills/pitfalls/SKILL.md",
       "status": "active",
       "path": "skills/pitfalls/SKILL.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/github-api-workflow-guide.md",
@@ -487,7 +431,7 @@
       "title": "skills/github-api-workflow-guide.md",
       "status": "active",
       "path": "skills/github-api-workflow-guide.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A1:chrome-extension",
@@ -495,7 +439,7 @@
       "title": "chrome-extension",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A1:tools/ai_workbook",
@@ -503,7 +447,7 @@
       "title": "tools/ai_workbook",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A1:bot_a6",
@@ -511,7 +455,7 @@
       "title": "bot_a6",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A1:CURRENT_STATUS",
@@ -519,7 +463,7 @@
       "title": "CURRENT_STATUS",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A1:handoff/tasks",
@@ -527,7 +471,7 @@
       "title": "handoff/tasks",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "module:A2",
@@ -535,7 +479,7 @@
       "title": "MAPLAB_A2_ADS_SEO_WORDPRESS_PATROL_DYNAMIC_ROLE_MODULE",
       "status": "active",
       "path": "chrome-extension/task-modules/A2.json",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "agent:A2",
@@ -543,7 +487,7 @@
       "title": "A2 Ads SEO WordPress Patrol",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:recalls/A2_recall.md",
@@ -551,7 +495,7 @@
       "title": "recalls/A2_recall.md",
       "status": "active",
       "path": "recalls/A2_recall.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:projects/a2-ads-seo-wordpress-patrol.md",
@@ -559,7 +503,7 @@
       "title": "projects/a2-ads-seo-wordpress-patrol.md",
       "status": "active",
       "path": "projects/a2-ads-seo-wordpress-patrol.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:projects/seo-ads-agent.md",
@@ -567,7 +511,7 @@
       "title": "projects/seo-ads-agent.md",
       "status": "active",
       "path": "projects/seo-ads-agent.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md",
@@ -575,7 +519,7 @@
       "title": "handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md",
       "status": "active",
       "path": "handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:docs/a2a3/README.md",
@@ -583,7 +527,7 @@
       "title": "docs/a2a3/README.md",
       "status": "active",
       "path": "docs/a2a3/README.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:docs/a2a3/live-wp-rankmath-fact-check-2026-05-11.md",
@@ -591,7 +535,7 @@
       "title": "docs/a2a3/live-wp-rankmath-fact-check-2026-05-11.md",
       "status": "active",
       "path": "docs/a2a3/live-wp-rankmath-fact-check-2026-05-11.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:docs/a2a3/rankmath-keyword-recovery-2026-05-11.md",
@@ -599,7 +543,7 @@
       "title": "docs/a2a3/rankmath-keyword-recovery-2026-05-11.md",
       "status": "active",
       "path": "docs/a2a3/rankmath-keyword-recovery-2026-05-11.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:docs/a2a3/live-wordpress-audit.md",
@@ -607,7 +551,7 @@
       "title": "docs/a2a3/live-wordpress-audit.md",
       "status": "active",
       "path": "docs/a2a3/live-wordpress-audit.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:automation/seo_factory/README.md",
@@ -615,7 +559,7 @@
       "title": "automation/seo_factory/README.md",
       "status": "active",
       "path": "automation/seo_factory/README.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:automation/seo_factory/config/strategy_matrix_rules.json",
@@ -623,7 +567,7 @@
       "title": "automation/seo_factory/config/strategy_matrix_rules.json",
       "status": "active",
       "path": "automation/seo_factory/config/strategy_matrix_rules.json",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:automation/seo_factory/config/link_policy.json",
@@ -631,7 +575,7 @@
       "title": "automation/seo_factory/config/link_policy.json",
       "status": "active",
       "path": "automation/seo_factory/config/link_policy.json",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/seo-session-checklist.md",
@@ -639,7 +583,7 @@
       "title": "skills/seo-session-checklist.md",
       "status": "active",
       "path": "skills/seo-session-checklist.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/seo-ranking-evaluation-guide.md",
@@ -647,7 +591,7 @@
       "title": "skills/seo-ranking-evaluation-guide.md",
       "status": "active",
       "path": "skills/seo-ranking-evaluation-guide.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/page-checker.md",
@@ -655,7 +599,7 @@
       "title": "skills/page-checker.md",
       "status": "active",
       "path": "skills/page-checker.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/wp-content-audit/SKILL.md",
@@ -663,7 +607,7 @@
       "title": "skills/wp-content-audit/SKILL.md",
       "status": "active",
       "path": "skills/wp-content-audit/SKILL.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/brand-voice-guide.md",
@@ -671,7 +615,7 @@
       "title": "skills/brand-voice-guide.md",
       "status": "active",
       "path": "skills/brand-voice-guide.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/maplab-visual-spec.md",
@@ -679,7 +623,7 @@
       "title": "skills/maplab-visual-spec.md",
       "status": "active",
       "path": "skills/maplab-visual-spec.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/gdrive-to-wordpress-upload-guide.md",
@@ -687,7 +631,7 @@
       "title": "skills/gdrive-to-wordpress-upload-guide.md",
       "status": "active",
       "path": "skills/gdrive-to-wordpress-upload-guide.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/credentials/wordpress-api.md",
@@ -695,7 +639,7 @@
       "title": "skills/credentials/wordpress-api.md",
       "status": "restricted",
       "path": "skills/credentials/wordpress-api.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/credentials/google-search-console-api.md",
@@ -703,7 +647,7 @@
       "title": "skills/credentials/google-search-console-api.md",
       "status": "restricted",
       "path": "skills/credentials/google-search-console-api.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A2:WordPress pages/posts",
@@ -711,7 +655,7 @@
       "title": "WordPress pages/posts",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A2:Rank Math metadata",
@@ -719,7 +663,7 @@
       "title": "Rank Math metadata",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A2:Google Ads / Meta Ads read-only review",
@@ -727,7 +671,7 @@
       "title": "Google Ads / Meta Ads read-only review",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A2:A3 ad landing pages",
@@ -735,7 +679,7 @@
       "title": "A3 ad landing pages",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A2:A4 asset needs",
@@ -743,7 +687,7 @@
       "title": "A4 asset needs",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A2:Google indexing workflow",
@@ -751,7 +695,7 @@
       "title": "Google indexing workflow",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A2:Investment OS-style evidence discipline",
@@ -759,7 +703,7 @@
       "title": "Investment OS-style evidence discipline",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "module:A3",
@@ -767,7 +711,7 @@
       "title": "MAPLAB_A3_ADS_GROWTH_STUDIO_DYNAMIC_ROLE_MODULE",
       "status": "active",
       "path": "chrome-extension/task-modules/A3.json",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "agent:A3",
@@ -775,7 +719,7 @@
       "title": "A3 Ads Growth Studio",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:recalls/A3_recall.md",
@@ -783,7 +727,7 @@
       "title": "recalls/A3_recall.md",
       "status": "active",
       "path": "recalls/A3_recall.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:projects/maplab-ads-monitor.md",
@@ -791,7 +735,7 @@
       "title": "projects/maplab-ads-monitor.md",
       "status": "active",
       "path": "projects/maplab-ads-monitor.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:docs/a2a3/tracking-pack.md",
@@ -799,7 +743,7 @@
       "title": "docs/a2a3/tracking-pack.md",
       "status": "active",
       "path": "docs/a2a3/tracking-pack.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:docs/a2a3/b2b-5x5-matrix.md",
@@ -807,7 +751,7 @@
       "title": "docs/a2a3/b2b-5x5-matrix.md",
       "status": "active",
       "path": "docs/a2a3/b2b-5x5-matrix.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:docs/a2a3/b2b-crosswalk.md",
@@ -815,7 +759,7 @@
       "title": "docs/a2a3/b2b-crosswalk.md",
       "status": "active",
       "path": "docs/a2a3/b2b-crosswalk.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/a3-social-ads-skills.md",
@@ -823,7 +767,7 @@
       "title": "skills/a3-social-ads-skills.md",
       "status": "active",
       "path": "skills/a3-social-ads-skills.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/sheets-tracking-guide.md",
@@ -831,7 +775,7 @@
       "title": "skills/sheets-tracking-guide.md",
       "status": "active",
       "path": "skills/sheets-tracking-guide.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/verification-checklist-guide.md",
@@ -839,7 +783,7 @@
       "title": "skills/verification-checklist-guide.md",
       "status": "active",
       "path": "skills/verification-checklist-guide.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/credentials/meta-ads-api.md",
@@ -847,7 +791,7 @@
       "title": "skills/credentials/meta-ads-api.md",
       "status": "restricted",
       "path": "skills/credentials/meta-ads-api.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/credentials/google-ads-api.md",
@@ -855,7 +799,7 @@
       "title": "skills/credentials/google-ads-api.md",
       "status": "restricted",
       "path": "skills/credentials/google-ads-api.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A3:A2 landing pages",
@@ -863,7 +807,7 @@
       "title": "A2 landing pages",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A3:Meta Ads",
@@ -871,7 +815,7 @@
       "title": "Meta Ads",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A3:Google Ads",
@@ -879,7 +823,7 @@
       "title": "Google Ads",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A3:GTM/Pixel",
@@ -887,7 +831,7 @@
       "title": "GTM/Pixel",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A3:A4 creative asset selection",
@@ -895,7 +839,7 @@
       "title": "A4 creative asset selection",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "module:A4",
@@ -903,7 +847,7 @@
       "title": "MAPLAB_A4_PHOTO_ARCHIVE_DYNAMIC_ROLE_MODULE",
       "status": "active",
       "path": "chrome-extension/task-modules/A4.json",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "agent:A4",
@@ -911,7 +855,7 @@
       "title": "A4 Photo Archive",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:recalls/A4_recall.md",
@@ -919,7 +863,7 @@
       "title": "recalls/A4_recall.md",
       "status": "active",
       "path": "recalls/A4_recall.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:projects/maplab-pipeline.md",
@@ -927,7 +871,7 @@
       "title": "projects/maplab-pipeline.md",
       "status": "active",
       "path": "projects/maplab-pipeline.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:projects/a2-asset-guide.md",
@@ -935,7 +879,7 @@
       "title": "projects/a2-asset-guide.md",
       "status": "active",
       "path": "projects/a2-asset-guide.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:docs/a4/source-of-truth.md",
@@ -943,7 +887,7 @@
       "title": "docs/a4/source-of-truth.md",
       "status": "active",
       "path": "docs/a4/source-of-truth.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:docs/a4/drive-map.md",
@@ -951,7 +895,7 @@
       "title": "docs/a4/drive-map.md",
       "status": "active",
       "path": "docs/a4/drive-map.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:docs/a4/workflow.md",
@@ -959,7 +903,7 @@
       "title": "docs/a4/workflow.md",
       "status": "active",
       "path": "docs/a4/workflow.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/a4-photo-asset-skills.md",
@@ -967,7 +911,7 @@
       "title": "skills/a4-photo-asset-skills.md",
       "status": "active",
       "path": "skills/a4-photo-asset-skills.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/photo-pipeline-toolkit-guide.md",
@@ -975,7 +919,7 @@
       "title": "skills/photo-pipeline-toolkit-guide.md",
       "status": "active",
       "path": "skills/photo-pipeline-toolkit-guide.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/canva-photo-filter/SKILL.md",
@@ -983,7 +927,7 @@
       "title": "skills/canva-photo-filter/SKILL.md",
       "status": "active",
       "path": "skills/canva-photo-filter/SKILL.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/image-convert/SKILL.md",
@@ -991,7 +935,7 @@
       "title": "skills/image-convert/SKILL.md",
       "status": "active",
       "path": "skills/image-convert/SKILL.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/credentials/google-drive-api.md",
@@ -999,7 +943,7 @@
       "title": "skills/credentials/google-drive-api.md",
       "status": "restricted",
       "path": "skills/credentials/google-drive-api.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/credentials/gemini-api.md",
@@ -1007,7 +951,7 @@
       "title": "skills/credentials/gemini-api.md",
       "status": "restricted",
       "path": "skills/credentials/gemini-api.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A4:A2 WordPress images",
@@ -1015,7 +959,7 @@
       "title": "A2 WordPress images",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A4:A3 creative packs",
@@ -1023,7 +967,7 @@
       "title": "A3 creative packs",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A4:A6 proposal materials",
@@ -1031,7 +975,7 @@
       "title": "A6 proposal materials",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A4:A8 video pipeline",
@@ -1039,7 +983,7 @@
       "title": "A8 video pipeline",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A4:Google Drive MAPLAB_ASSETS",
@@ -1047,7 +991,7 @@
       "title": "Google Drive MAPLAB_ASSETS",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "module:A5",
@@ -1055,7 +999,7 @@
       "title": "MAPLAB_A5_QUOTATION_ENGINE_DYNAMIC_ROLE_MODULE",
       "status": "active",
       "path": "chrome-extension/task-modules/A5.json",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "agent:A5",
@@ -1063,7 +1007,7 @@
       "title": "A5 Quotation Engine",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:recalls/A5_recall.md",
@@ -1071,7 +1015,7 @@
       "title": "recalls/A5_recall.md",
       "status": "active",
       "path": "recalls/A5_recall.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:projects/maplab-master-data.md",
@@ -1079,7 +1023,7 @@
       "title": "projects/maplab-master-data.md",
       "status": "active",
       "path": "projects/maplab-master-data.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:projects/quote-system-v2.md",
@@ -1087,7 +1031,7 @@
       "title": "projects/quote-system-v2.md",
       "status": "active",
       "path": "projects/quote-system-v2.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:data/items_master.json",
@@ -1095,7 +1039,7 @@
       "title": "data/items_master.json",
       "status": "active",
       "path": "data/items_master.json",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:data/quote-terms-reference.md",
@@ -1103,7 +1047,7 @@
       "title": "data/quote-terms-reference.md",
       "status": "active",
       "path": "data/quote-terms-reference.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:archive/data/item-master-cross-reference.md",
@@ -1111,7 +1055,7 @@
       "title": "archive/data/item-master-cross-reference.md",
       "status": "active",
       "path": "archive/data/item-master-cross-reference.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:archive/data/item-frequency-top50.md",
@@ -1119,7 +1063,7 @@
       "title": "archive/data/item-frequency-top50.md",
       "status": "active",
       "path": "archive/data/item-frequency-top50.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:archive/data/quote_items_deduped.json",
@@ -1127,7 +1071,7 @@
       "title": "archive/data/quote_items_deduped.json",
       "status": "active",
       "path": "archive/data/quote_items_deduped.json",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:handoff/table-relationship-map.md",
@@ -1135,7 +1079,7 @@
       "title": "handoff/table-relationship-map.md",
       "status": "active",
       "path": "handoff/table-relationship-map.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/a5-quotation-engine-skills.md",
@@ -1143,7 +1087,7 @@
       "title": "skills/a5-quotation-engine-skills.md",
       "status": "active",
       "path": "skills/a5-quotation-engine-skills.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/items-management/SKILL.md",
@@ -1151,7 +1095,7 @@
       "title": "skills/items-management/SKILL.md",
       "status": "active",
       "path": "skills/items-management/SKILL.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/sheets-data-cleaning-guide.md",
@@ -1159,7 +1103,7 @@
       "title": "skills/sheets-data-cleaning-guide.md",
       "status": "active",
       "path": "skills/sheets-data-cleaning-guide.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/sheet-version-restore/SKILL.md",
@@ -1167,7 +1111,7 @@
       "title": "skills/sheet-version-restore/SKILL.md",
       "status": "active",
       "path": "skills/sheet-version-restore/SKILL.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/credentials/google-sheets-api.md",
@@ -1175,7 +1119,7 @@
       "title": "skills/credentials/google-sheets-api.md",
       "status": "restricted",
       "path": "skills/credentials/google-sheets-api.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A5:A6 quote workflow",
@@ -1183,7 +1127,7 @@
       "title": "A6 quote workflow",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A5:A7 customer answers",
@@ -1191,7 +1135,7 @@
       "title": "A7 customer answers",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A5:Google Sheets master data",
@@ -1199,7 +1143,7 @@
       "title": "Google Sheets master data",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A5:Slides quotation system",
@@ -1207,7 +1151,7 @@
       "title": "Slides quotation system",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "module:A6",
@@ -1215,7 +1159,7 @@
       "title": "MAPLAB_A6_SALES_RAPID_RESPONSE_DYNAMIC_ROLE_MODULE",
       "status": "active",
       "path": "chrome-extension/task-modules/A6.json",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "agent:A6",
@@ -1223,7 +1167,7 @@
       "title": "A6 Sales Rapid Response",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:recalls/A6_recall.md",
@@ -1231,7 +1175,7 @@
       "title": "recalls/A6_recall.md",
       "status": "active",
       "path": "recalls/A6_recall.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:projects/line-conversation-training.md",
@@ -1239,7 +1183,7 @@
       "title": "projects/line-conversation-training.md",
       "status": "active",
       "path": "projects/line-conversation-training.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:projects/dual-bot-architecture.md",
@@ -1247,7 +1191,7 @@
       "title": "projects/dual-bot-architecture.md",
       "status": "active",
       "path": "projects/dual-bot-architecture.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:docs/openclaw/dispatch-role.md",
@@ -1255,7 +1199,7 @@
       "title": "docs/openclaw/dispatch-role.md",
       "status": "active",
       "path": "docs/openclaw/dispatch-role.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:docs/openclaw/ads-assistant.md",
@@ -1263,7 +1207,7 @@
       "title": "docs/openclaw/ads-assistant.md",
       "status": "active",
       "path": "docs/openclaw/ads-assistant.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:docs/business-requirements/a6-training-methodology.md",
@@ -1271,7 +1215,7 @@
       "title": "docs/business-requirements/a6-training-methodology.md",
       "status": "active",
       "path": "docs/business-requirements/a6-training-methodology.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:docs/business-requirements/a6-usage-scenarios.md",
@@ -1279,7 +1223,7 @@
       "title": "docs/business-requirements/a6-usage-scenarios.md",
       "status": "active",
       "path": "docs/business-requirements/a6-usage-scenarios.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:bot_a6/openclaw_dispatch.py",
@@ -1287,7 +1231,7 @@
       "title": "bot_a6/openclaw_dispatch.py",
       "status": "active",
       "path": "bot_a6/openclaw_dispatch.py",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/a6-system-operations.md",
@@ -1295,7 +1239,7 @@
       "title": "skills/a6-system-operations.md",
       "status": "active",
       "path": "skills/a6-system-operations.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/a6-sales-rapid-response-skills.md",
@@ -1303,7 +1247,7 @@
       "title": "skills/a6-sales-rapid-response-skills.md",
       "status": "active",
       "path": "skills/a6-sales-rapid-response-skills.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/a6-rapid-quote-sop.md",
@@ -1311,7 +1255,7 @@
       "title": "skills/a6-rapid-quote-sop.md",
       "status": "active",
       "path": "skills/a6-rapid-quote-sop.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/a6-safety-boundaries.md",
@@ -1319,7 +1263,7 @@
       "title": "skills/a6-safety-boundaries.md",
       "status": "active",
       "path": "skills/a6-safety-boundaries.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/a6-telegram-window.md",
@@ -1327,7 +1271,7 @@
       "title": "skills/a6-telegram-window.md",
       "status": "active",
       "path": "skills/a6-telegram-window.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/a6-qa-examples.md",
@@ -1335,7 +1279,7 @@
       "title": "skills/a6-qa-examples.md",
       "status": "active",
       "path": "skills/a6-qa-examples.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/credentials/telegram-bot.md",
@@ -1343,7 +1287,7 @@
       "title": "skills/credentials/telegram-bot.md",
       "status": "restricted",
       "path": "skills/credentials/telegram-bot.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/credentials/line-bot.md",
@@ -1351,7 +1295,7 @@
       "title": "skills/credentials/line-bot.md",
       "status": "restricted",
       "path": "skills/credentials/line-bot.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A6:Telegram bot",
@@ -1359,7 +1303,7 @@
       "title": "Telegram bot",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A6:OpenClaw workspace",
@@ -1367,7 +1311,7 @@
       "title": "OpenClaw workspace",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A6:A5 quote data",
@@ -1375,7 +1319,7 @@
       "title": "A5 quote data",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A6:A4 materials",
@@ -1383,7 +1327,7 @@
       "title": "A4 materials",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A6:A7 reply handoff",
@@ -1391,7 +1335,7 @@
       "title": "A7 reply handoff",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "module:A7",
@@ -1399,7 +1343,7 @@
       "title": "MAPLAB_A7_SERVICE_DESK_DYNAMIC_ROLE_MODULE",
       "status": "active",
       "path": "chrome-extension/task-modules/A7.json",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "agent:A7",
@@ -1407,7 +1351,7 @@
       "title": "A7 Service Desk",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:recalls/A7_recall.md",
@@ -1415,7 +1359,7 @@
       "title": "recalls/A7_recall.md",
       "status": "active",
       "path": "recalls/A7_recall.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:projects/ai-reply-system.md",
@@ -1423,7 +1367,7 @@
       "title": "projects/ai-reply-system.md",
       "status": "active",
       "path": "projects/ai-reply-system.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/a7-customer-service-skills.md",
@@ -1431,7 +1375,7 @@
       "title": "skills/a7-customer-service-skills.md",
       "status": "active",
       "path": "skills/a7-customer-service-skills.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A7:A6 intake",
@@ -1439,7 +1383,7 @@
       "title": "A6 intake",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A7:A5 quote requirements",
@@ -1447,7 +1391,7 @@
       "title": "A5 quote requirements",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A7:LINE/Telegram responses",
@@ -1455,7 +1399,7 @@
       "title": "LINE/Telegram responses",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A7:A2/A3 FAQ insights",
@@ -1463,7 +1407,7 @@
       "title": "A2/A3 FAQ insights",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "module:A8",
@@ -1471,7 +1415,7 @@
       "title": "MAPLAB_A8_CONTENT_REPURPOSING_PIPELINE_DYNAMIC_ROLE_MODULE",
       "status": "active",
       "path": "chrome-extension/task-modules/A8.json",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "agent:A8",
@@ -1479,7 +1423,7 @@
       "title": "A8 Content Repurposing Pipeline",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:recalls/A8_recall.md",
@@ -1487,7 +1431,7 @@
       "title": "recalls/A8_recall.md",
       "status": "active",
       "path": "recalls/A8_recall.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/a8-video-pipeline-skills.md",
@@ -1495,7 +1439,7 @@
       "title": "skills/a8-video-pipeline-skills.md",
       "status": "active",
       "path": "skills/a8-video-pipeline-skills.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/media-limit-workaround.md",
@@ -1503,7 +1447,7 @@
       "title": "skills/media-limit-workaround.md",
       "status": "active",
       "path": "skills/media-limit-workaround.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/next-three-report.md",
@@ -1511,7 +1455,7 @@
       "title": "skills/next-three-report.md",
       "status": "active",
       "path": "skills/next-three-report.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A8:A4 assets",
@@ -1519,7 +1463,7 @@
       "title": "A4 assets",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A8:A3 social calendar",
@@ -1527,7 +1471,7 @@
       "title": "A3 social calendar",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A8:A2 SEO video titles",
@@ -1535,7 +1479,7 @@
       "title": "A2 SEO video titles",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:A8:YouTube/Shorts publishing queue",
@@ -1543,7 +1487,7 @@
       "title": "YouTube/Shorts publishing queue",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "module:B1",
@@ -1551,7 +1495,7 @@
       "title": "MAPLAB_B1_INVESTMENT_OS_BUILDER_DYNAMIC_ROLE_MODULE",
       "status": "active",
       "path": "chrome-extension/task-modules/B1.json",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "agent:B1",
@@ -1559,7 +1503,7 @@
       "title": "B1 Investment OS Builder",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:recalls/B1_recall.md",
@@ -1567,7 +1511,7 @@
       "title": "recalls/B1_recall.md",
       "status": "active",
       "path": "recalls/B1_recall.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:projects/invest-os-b-role-system.md",
@@ -1575,7 +1519,7 @@
       "title": "projects/invest-os-b-role-system.md",
       "status": "active",
       "path": "projects/invest-os-b-role-system.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:projects/b1-invest-os-builder.md",
@@ -1583,7 +1527,7 @@
       "title": "projects/b1-invest-os-builder.md",
       "status": "active",
       "path": "projects/b1-invest-os-builder.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:handoff/tasks/T-B1-B4-investment-os-role-split.md",
@@ -1591,7 +1535,7 @@
       "title": "handoff/tasks/T-B1-B4-investment-os-role-split.md",
       "status": "active",
       "path": "handoff/tasks/T-B1-B4-investment-os-role-split.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:projects/b1-cross-project-governance-advisor.md",
@@ -1599,7 +1543,7 @@
       "title": "projects/b1-cross-project-governance-advisor.md",
       "status": "active",
       "path": "projects/b1-cross-project-governance-advisor.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:projects/b1-investment-logic-bridge.md",
@@ -1607,7 +1551,7 @@
       "title": "projects/b1-investment-logic-bridge.md",
       "status": "active",
       "path": "projects/b1-investment-logic-bridge.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:projects/b1-investment-os-owner-persona-canonical.md",
@@ -1615,7 +1559,7 @@
       "title": "projects/b1-investment-os-owner-persona-canonical.md",
       "status": "active",
       "path": "projects/b1-investment-os-owner-persona-canonical.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:projects/b1-investment-os-owner-profile.md",
@@ -1623,7 +1567,7 @@
       "title": "projects/b1-investment-os-owner-profile.md",
       "status": "active",
       "path": "projects/b1-investment-os-owner-profile.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:handoff/tasks/T-B1-001.md",
@@ -1631,7 +1575,7 @@
       "title": "handoff/tasks/T-B1-001.md",
       "status": "active",
       "path": "handoff/tasks/T-B1-001.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:skills/invest-os-b-role-system.md",
@@ -1639,7 +1583,7 @@
       "title": "skills/invest-os-b-role-system.md",
       "status": "active",
       "path": "skills/invest-os-b-role-system.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:B1:Chrome side panel",
@@ -1647,7 +1591,7 @@
       "title": "Chrome side panel",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:B1:Investment OS repo/runtime surfaces",
@@ -1655,7 +1599,7 @@
       "title": "Investment OS repo/runtime surfaces",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:B1:Telegram/Dashboard report surfaces",
@@ -1663,7 +1607,7 @@
       "title": "Telegram/Dashboard report surfaces",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:B1:Investment OS investment logic prompt bridge",
@@ -1671,7 +1615,7 @@
       "title": "Investment OS investment logic prompt bridge",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:B1:Investment OS owner profile summon context",
@@ -1679,7 +1623,7 @@
       "title": "Investment OS owner profile summon context",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:B1:B2 Reviewer",
@@ -1687,7 +1631,7 @@
       "title": "B2 Reviewer",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:B1:B3 Archivist",
@@ -1695,7 +1639,7 @@
       "title": "B3 Archivist",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:B1:B4 System Patrol",
@@ -1703,7 +1647,7 @@
       "title": "B4 System Patrol",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "module:B2",
@@ -1711,7 +1655,7 @@
       "title": "MAPLAB_B2_INVESTMENT_OS_REVIEWER_DYNAMIC_ROLE_MODULE",
       "status": "active",
       "path": "chrome-extension/task-modules/B2.json",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "agent:B2",
@@ -1719,7 +1663,7 @@
       "title": "B2 Investment OS Reviewer",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:recalls/B2_recall.md",
@@ -1727,7 +1671,7 @@
       "title": "recalls/B2_recall.md",
       "status": "active",
       "path": "recalls/B2_recall.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:projects/b2-invest-os-reviewer.md",
@@ -1735,7 +1679,7 @@
       "title": "projects/b2-invest-os-reviewer.md",
       "status": "active",
       "path": "projects/b2-invest-os-reviewer.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:B2:Investment OS dataflow",
@@ -1743,7 +1687,7 @@
       "title": "Investment OS dataflow",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:B2:Telegram/Dashboard report surfaces",
@@ -1751,7 +1695,7 @@
       "title": "Telegram/Dashboard report surfaces",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:B2:OpenClaw report contracts",
@@ -1759,7 +1703,7 @@
       "title": "OpenClaw report contracts",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:B2:B1 Builder review request",
@@ -1767,7 +1711,7 @@
       "title": "B1 Builder review request",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:B2:B3 Archivist handoff",
@@ -1775,7 +1719,7 @@
       "title": "B3 Archivist handoff",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:B2:Chrome side panel",
@@ -1783,7 +1727,7 @@
       "title": "Chrome side panel",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "module:B3",
@@ -1791,7 +1735,7 @@
       "title": "MAPLAB_B3_INVESTMENT_OS_ARCHIVIST_DYNAMIC_ROLE_MODULE",
       "status": "active",
       "path": "chrome-extension/task-modules/B3.json",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "agent:B3",
@@ -1799,7 +1743,7 @@
       "title": "B3 Investment OS Archivist",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:recalls/B3_recall.md",
@@ -1807,7 +1751,7 @@
       "title": "recalls/B3_recall.md",
       "status": "active",
       "path": "recalls/B3_recall.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:projects/b3-invest-os-archivist.md",
@@ -1815,7 +1759,7 @@
       "title": "projects/b3-invest-os-archivist.md",
       "status": "active",
       "path": "projects/b3-invest-os-archivist.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:B3:CURRENT_STATUS.md",
@@ -1823,7 +1767,7 @@
       "title": "CURRENT_STATUS.md",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:B3:handoff/tasks",
@@ -1831,7 +1775,7 @@
       "title": "handoff/tasks",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:B3:workbook/reviews",
@@ -1839,7 +1783,7 @@
       "title": "workbook/reviews",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:B3:pitfalls.md",
@@ -1847,7 +1791,7 @@
       "title": "pitfalls.md",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:B3:B1/B2/B4 handoff quality",
@@ -1855,7 +1799,7 @@
       "title": "B1/B2/B4 handoff quality",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:B3:Chrome side panel",
@@ -1863,7 +1807,7 @@
       "title": "Chrome side panel",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "module:B4",
@@ -1871,7 +1815,7 @@
       "title": "MAPLAB_B4_INVESTMENT_OS_SYSTEM_PATROL_DYNAMIC_ROLE_MODULE",
       "status": "active",
       "path": "chrome-extension/task-modules/B4.json",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "agent:B4",
@@ -1879,7 +1823,7 @@
       "title": "B4 Investment OS System Patrol",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:recalls/B4_recall.md",
@@ -1887,7 +1831,7 @@
       "title": "recalls/B4_recall.md",
       "status": "active",
       "path": "recalls/B4_recall.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "source:projects/b4-invest-os-system-patrol.md",
@@ -1895,7 +1839,7 @@
       "title": "projects/b4-invest-os-system-patrol.md",
       "status": "active",
       "path": "projects/b4-invest-os-system-patrol.md",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:B4:Investment OS workflow suitability",
@@ -1903,7 +1847,7 @@
       "title": "Investment OS workflow suitability",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:B4:MAPLAB governance docs",
@@ -1911,7 +1855,7 @@
       "title": "MAPLAB governance docs",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:B4:Chrome side panel",
@@ -1919,7 +1863,7 @@
       "title": "Chrome side panel",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:B4:B1 Builder scope",
@@ -1927,7 +1871,7 @@
       "title": "B1 Builder scope",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:B4:B2 Reviewer focus",
@@ -1935,7 +1879,7 @@
       "title": "B2 Reviewer focus",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
     },
     {
       "id": "impact:B4:B3 Archivist writeback",
@@ -1943,7 +1887,751 @@
       "title": "B3 Archivist writeback",
       "status": "active",
       "path": "",
-      "updated_at": "2026-05-29T21:23:14+08:00"
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "module:IOS-MOMENTUM",
+      "type": "task_module",
+      "title": "MAPLAB_IOS-MOMENTUM_DAILY_MOMENTUM_MANAGER_DYNAMIC_ROLE_MODULE",
+      "status": "active",
+      "path": "chrome-extension/task-modules/IOS-MOMENTUM.json",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "agent:IOS-MOMENTUM",
+      "type": "agent",
+      "title": "IOS-MOMENTUM Daily Momentum Manager",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "runtime:hermes",
+      "type": "runtime",
+      "title": "hermes",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "source:recalls/IOS_strategy_role_recall.md",
+      "type": "source_doc",
+      "title": "recalls/IOS_strategy_role_recall.md",
+      "status": "active",
+      "path": "recalls/IOS_strategy_role_recall.md",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "source:projects/invest-os-strategy-role-system.md",
+      "type": "source_doc",
+      "title": "projects/invest-os-strategy-role-system.md",
+      "status": "active",
+      "path": "projects/invest-os-strategy-role-system.md",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-MOMENTUM:Daily Momentum Telegram PM Brief",
+      "type": "impact",
+      "title": "Daily Momentum Telegram PM Brief",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-MOMENTUM:Momentum Dashboard section",
+      "type": "impact",
+      "title": "Momentum Dashboard section",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-MOMENTUM:OpenClaw research dispatch",
+      "type": "impact",
+      "title": "OpenClaw research dispatch",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-MOMENTUM:B2 freshness review",
+      "type": "impact",
+      "title": "B2 freshness review",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-MOMENTUM:B1 runtime repair",
+      "type": "impact",
+      "title": "B1 runtime repair",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "module:IOS-KOL",
+      "type": "task_module",
+      "title": "MAPLAB_IOS-KOL_INFLUENCER_RADAR_MANAGER_DYNAMIC_ROLE_MODULE",
+      "status": "active",
+      "path": "chrome-extension/task-modules/IOS-KOL.json",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "agent:IOS-KOL",
+      "type": "agent",
+      "title": "IOS-KOL Influencer Radar Manager",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-KOL:KOL Telegram digest",
+      "type": "impact",
+      "title": "KOL Telegram digest",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-KOL:KOL shadow Dashboard evidence",
+      "type": "impact",
+      "title": "KOL shadow Dashboard evidence",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-KOL:NotebookLM/OpenClaw worker packets",
+      "type": "impact",
+      "title": "NotebookLM/OpenClaw worker packets",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-KOL:B2 report quality review",
+      "type": "impact",
+      "title": "B2 report quality review",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "module:IOS-FB",
+      "type": "task_module",
+      "title": "MAPLAB_IOS-FB_FB_SOCIAL_INTELLIGENCE_MANAGER_DYNAMIC_ROLE_MODULE",
+      "status": "active",
+      "path": "chrome-extension/task-modules/IOS-FB.json",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "agent:IOS-FB",
+      "type": "agent",
+      "title": "IOS-FB FB Social Intelligence Manager",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-FB:FB Radar evidence",
+      "type": "impact",
+      "title": "FB Radar evidence",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-FB:social source route health",
+      "type": "impact",
+      "title": "social source route health",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-FB:B2 low-signal review",
+      "type": "impact",
+      "title": "B2 low-signal review",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-FB:B1 route repair",
+      "type": "impact",
+      "title": "B1 route repair",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "module:IOS-ALPHA",
+      "type": "task_module",
+      "title": "MAPLAB_IOS-ALPHA_CROSS_SOURCE_ALPHA_MANAGER_DYNAMIC_ROLE_MODULE",
+      "status": "active",
+      "path": "chrome-extension/task-modules/IOS-ALPHA.json",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "agent:IOS-ALPHA",
+      "type": "agent",
+      "title": "IOS-ALPHA Cross-Source Alpha Manager",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-ALPHA:Alpha Dashboard",
+      "type": "impact",
+      "title": "Alpha Dashboard",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-ALPHA:convergence phone card",
+      "type": "impact",
+      "title": "convergence phone card",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-ALPHA:Polymarket hybrid strategy",
+      "type": "impact",
+      "title": "Polymarket hybrid strategy",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-ALPHA:local model shadow findings",
+      "type": "impact",
+      "title": "local model shadow findings",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "module:IOS-BLACKSWAN",
+      "type": "task_module",
+      "title": "MAPLAB_IOS-BLACKSWAN_BLACK_SWAN_MONITOR_DYNAMIC_ROLE_MODULE",
+      "status": "active",
+      "path": "chrome-extension/task-modules/IOS-BLACKSWAN.json",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "agent:IOS-BLACKSWAN",
+      "type": "agent",
+      "title": "IOS-BLACKSWAN Black Swan Monitor",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-BLACKSWAN:Black swan alert",
+      "type": "impact",
+      "title": "Black swan alert",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-BLACKSWAN:hedge playbook",
+      "type": "impact",
+      "title": "hedge playbook",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-BLACKSWAN:Macro/Risk Dashboard",
+      "type": "impact",
+      "title": "Macro/Risk Dashboard",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-BLACKSWAN:B2 risk-boundary review",
+      "type": "impact",
+      "title": "B2 risk-boundary review",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "module:IOS-INVENTORY",
+      "type": "task_module",
+      "title": "MAPLAB_IOS-INVENTORY_REAL_POSITION_REVIEW_MANAGER_DYNAMIC_ROLE_MODULE",
+      "status": "active",
+      "path": "chrome-extension/task-modules/IOS-INVENTORY.json",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "agent:IOS-INVENTORY",
+      "type": "agent",
+      "title": "IOS-INVENTORY Real Position Review Manager",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-INVENTORY:Real position Telegram risk card",
+      "type": "impact",
+      "title": "Real position Telegram risk card",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-INVENTORY:Inventory Dashboard",
+      "type": "impact",
+      "title": "Inventory Dashboard",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-INVENTORY:broker-free research handoff",
+      "type": "impact",
+      "title": "broker-free research handoff",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-INVENTORY:B2 risk review",
+      "type": "impact",
+      "title": "B2 risk review",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "module:IOS-MACRO",
+      "type": "task_module",
+      "title": "MAPLAB_IOS-MACRO_MACRO_MASTER_DYNAMIC_ROLE_MODULE",
+      "status": "active",
+      "path": "chrome-extension/task-modules/IOS-MACRO.json",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "agent:IOS-MACRO",
+      "type": "agent",
+      "title": "IOS-MACRO Macro Master",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-MACRO:Macro Dashboard",
+      "type": "impact",
+      "title": "Macro Dashboard",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-MACRO:risk weather card",
+      "type": "impact",
+      "title": "risk weather card",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-MACRO:B2 freshness review",
+      "type": "impact",
+      "title": "B2 freshness review",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-MACRO:B4 regime workflow fit",
+      "type": "impact",
+      "title": "B4 regime workflow fit",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "module:IOS-CHIP",
+      "type": "task_module",
+      "title": "MAPLAB_IOS-CHIP_CHIP_FLOW_MANAGER_DYNAMIC_ROLE_MODULE",
+      "status": "active",
+      "path": "chrome-extension/task-modules/IOS-CHIP.json",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "agent:IOS-CHIP",
+      "type": "agent",
+      "title": "IOS-CHIP Chip Flow Manager",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-CHIP:Chip merge",
+      "type": "impact",
+      "title": "Chip merge",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-CHIP:Momentum/Inventory/Macro downstream cards",
+      "type": "impact",
+      "title": "Momentum/Inventory/Macro downstream cards",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-CHIP:B2 dataflow review",
+      "type": "impact",
+      "title": "B2 dataflow review",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "module:IOS-LEFT",
+      "type": "task_module",
+      "title": "MAPLAB_IOS-LEFT_LEFT_SIDE_RESEARCH_MANAGER_DYNAMIC_ROLE_MODULE",
+      "status": "active",
+      "path": "chrome-extension/task-modules/IOS-LEFT.json",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "agent:IOS-LEFT",
+      "type": "agent",
+      "title": "IOS-LEFT Left-Side Research Manager",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-LEFT:Left-side Dashboard",
+      "type": "impact",
+      "title": "Left-side Dashboard",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-LEFT:OpenClaw research packet",
+      "type": "impact",
+      "title": "OpenClaw research packet",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-LEFT:B2 evidence review",
+      "type": "impact",
+      "title": "B2 evidence review",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "module:IOS-RIGHT",
+      "type": "task_module",
+      "title": "MAPLAB_IOS-RIGHT_RIGHT_SIDE_EXECUTION_MANAGER_DYNAMIC_ROLE_MODULE",
+      "status": "active",
+      "path": "chrome-extension/task-modules/IOS-RIGHT.json",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "agent:IOS-RIGHT",
+      "type": "agent",
+      "title": "IOS-RIGHT Right-Side Execution Manager",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-RIGHT:Trader Dashboard",
+      "type": "impact",
+      "title": "Trader Dashboard",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-RIGHT:opening playbook Telegram",
+      "type": "impact",
+      "title": "opening playbook Telegram",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-RIGHT:B2 action-boundary review",
+      "type": "impact",
+      "title": "B2 action-boundary review",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "module:IOS-EVIDENCE",
+      "type": "task_module",
+      "title": "MAPLAB_IOS-EVIDENCE_RESEARCH_EVIDENCE_MANAGER_DYNAMIC_ROLE_MODULE",
+      "status": "active",
+      "path": "chrome-extension/task-modules/IOS-EVIDENCE.json",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "agent:IOS-EVIDENCE",
+      "type": "agent",
+      "title": "IOS-EVIDENCE Research Evidence Manager",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-EVIDENCE:Research Evidence Dashboard",
+      "type": "impact",
+      "title": "Research Evidence Dashboard",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-EVIDENCE:OpenClaw/Hermes evidence packets",
+      "type": "impact",
+      "title": "OpenClaw/Hermes evidence packets",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-EVIDENCE:B2 review contracts",
+      "type": "impact",
+      "title": "B2 review contracts",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "module:IOS-SIM",
+      "type": "task_module",
+      "title": "MAPLAB_IOS-SIM_SIMULATION_LEDGER_MANAGER_DYNAMIC_ROLE_MODULE",
+      "status": "active",
+      "path": "chrome-extension/task-modules/IOS-SIM.json",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "agent:IOS-SIM",
+      "type": "agent",
+      "title": "IOS-SIM Simulation Ledger Manager",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-SIM:Simulation Dashboard",
+      "type": "impact",
+      "title": "Simulation Dashboard",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-SIM:local ledger reports",
+      "type": "impact",
+      "title": "local ledger reports",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-SIM:B2 broker-boundary review",
+      "type": "impact",
+      "title": "B2 broker-boundary review",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "module:IOS-FAMILY",
+      "type": "task_module",
+      "title": "MAPLAB_IOS-FAMILY_FAMILY_FUND_MANAGER_DYNAMIC_ROLE_MODULE",
+      "status": "active",
+      "path": "chrome-extension/task-modules/IOS-FAMILY.json",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "agent:IOS-FAMILY",
+      "type": "agent",
+      "title": "IOS-FAMILY Family Fund Manager",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-FAMILY:Family fund Dashboard",
+      "type": "impact",
+      "title": "Family fund Dashboard",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-FAMILY:account-level charts",
+      "type": "impact",
+      "title": "account-level charts",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-FAMILY:B2 source separation review",
+      "type": "impact",
+      "title": "B2 source separation review",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "module:IOS-HEDGE",
+      "type": "task_module",
+      "title": "MAPLAB_IOS-HEDGE_AFTER_HOURS_HEDGE_MANAGER_DYNAMIC_ROLE_MODULE",
+      "status": "active",
+      "path": "chrome-extension/task-modules/IOS-HEDGE.json",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "agent:IOS-HEDGE",
+      "type": "agent",
+      "title": "IOS-HEDGE After-Hours Hedge Manager",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-HEDGE:After-hours hedge brief",
+      "type": "impact",
+      "title": "After-hours hedge brief",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-HEDGE:Black swan and Macro downstream",
+      "type": "impact",
+      "title": "Black swan and Macro downstream",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-HEDGE:B2 risk boundary review",
+      "type": "impact",
+      "title": "B2 risk boundary review",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "module:IOS-SURFACE",
+      "type": "task_module",
+      "title": "MAPLAB_IOS-SURFACE_SURFACE_CONTRACT_STEWARD_DYNAMIC_ROLE_MODULE",
+      "status": "active",
+      "path": "chrome-extension/task-modules/IOS-SURFACE.json",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "agent:IOS-SURFACE",
+      "type": "agent",
+      "title": "IOS-SURFACE Surface Contract Steward",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-SURFACE:Chrome side panel",
+      "type": "impact",
+      "title": "Chrome side panel",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-SURFACE:Telegram PM Brief format",
+      "type": "impact",
+      "title": "Telegram PM Brief format",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-SURFACE:Dashboard readability",
+      "type": "impact",
+      "title": "Dashboard readability",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-SURFACE:B1 shared renderer fixes",
+      "type": "impact",
+      "title": "B1 shared renderer fixes",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "module:IOS-HYGIENE",
+      "type": "task_module",
+      "title": "MAPLAB_IOS-HYGIENE_SYSTEM_HYGIENE_STEWARD_DYNAMIC_ROLE_MODULE",
+      "status": "active",
+      "path": "chrome-extension/task-modules/IOS-HYGIENE.json",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "agent:IOS-HYGIENE",
+      "type": "agent",
+      "title": "IOS-HYGIENE System Hygiene Steward",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-HYGIENE:dirty worktree inventory",
+      "type": "impact",
+      "title": "dirty worktree inventory",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-HYGIENE:B4 cleanup patrol",
+      "type": "impact",
+      "title": "B4 cleanup patrol",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-HYGIENE:B3 archive handoff",
+      "type": "impact",
+      "title": "B3 archive handoff",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
+    },
+    {
+      "id": "impact:IOS-HYGIENE:B1 cleanup script repair",
+      "type": "impact",
+      "title": "B1 cleanup script repair",
+      "status": "active",
+      "path": "",
+      "updated_at": "2026-06-03T17:44:38+08:00"
     }
   ],
   "edges": [
@@ -4678,87 +5366,2463 @@
       "confidence": 1.0
     },
     {
-      "from": "task:JOB-B2-REVIEW-20260530",
-      "to": "review_bundle:JOB-B2-REVIEW-20260530",
-      "relation": "outputs",
+      "from": "task:T-A1-EXT-001",
+      "to": "module:IOS-MOMENTUM",
+      "relation": "defines_module",
       "confidence": 1.0
     },
     {
-      "from": "task:JOB-B2-REVIEW-20260530",
+      "from": "module:IOS-MOMENTUM",
+      "to": "agent:IOS-MOMENTUM",
+      "relation": "activates_role",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MOMENTUM",
+      "to": "runtime:codex",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MOMENTUM",
+      "to": "runtime:openclaw",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MOMENTUM",
+      "to": "runtime:gemini",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MOMENTUM",
+      "to": "runtime:hermes",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MOMENTUM",
       "to": "source:CURRENT_STATUS.md",
-      "relation": "uses",
+      "relation": "must_read",
       "confidence": 1.0
     },
     {
-      "from": "task:JOB-B2-REVIEW-20260530",
+      "from": "module:IOS-MOMENTUM",
+      "to": "source:AGENT_RULES.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MOMENTUM",
+      "to": "source:AGENT_STARTUP_PROTOCOL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MOMENTUM",
       "to": "source:pitfalls.md",
-      "relation": "uses",
+      "relation": "must_read",
       "confidence": 1.0
     },
     {
-      "from": "task:JOB-B2-REVIEW-20260530",
-      "to": "source:projects/invest-os-b-role-system.md",
-      "relation": "uses",
+      "from": "module:IOS-MOMENTUM",
+      "to": "source:TASK_QUEUE.md",
+      "relation": "must_read",
       "confidence": 1.0
     },
     {
-      "from": "task:JOB-B2-REVIEW-20260530",
-      "to": "source:projects/b2-invest-os-reviewer.md",
-      "relation": "uses",
+      "from": "module:IOS-MOMENTUM",
+      "to": "source:workbook/task_index.json",
+      "relation": "must_read",
       "confidence": 1.0
     },
     {
-      "from": "task:JOB-B2-REVIEW-20260530",
+      "from": "module:IOS-MOMENTUM",
+      "to": "source:AGENT_RECALL_PROMPTS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MOMENTUM",
+      "to": "source:skills/superpowers-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MOMENTUM",
+      "to": "source:skills/task-progress-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MOMENTUM",
+      "to": "source:recalls/IOS_strategy_role_recall.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MOMENTUM",
+      "to": "source:projects/invest-os-strategy-role-system.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MOMENTUM",
+      "to": "source:skills/invest-os-b-role-system.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MOMENTUM",
       "to": "source:docs/openclaw/output-contract.md",
-      "relation": "uses",
+      "relation": "must_read",
       "confidence": 1.0
     },
     {
-      "from": "task:JOB-B2-REVIEW-20260530",
+      "from": "module:IOS-MOMENTUM",
       "to": "source:docs/openclaw/relation-graph.md",
-      "relation": "uses",
+      "relation": "must_read",
       "confidence": 1.0
     },
     {
-      "from": "task:JOB-B2-REVIEW-20260530",
+      "from": "module:IOS-MOMENTUM",
       "to": "source:docs/openclaw/security-boundaries.md",
-      "relation": "uses",
+      "relation": "must_read",
       "confidence": 1.0
     },
     {
-      "from": "task:JOB-B2-REVIEW-20260530",
+      "from": "module:IOS-MOMENTUM",
       "to": "source:workbook/reviews/README.md",
-      "relation": "uses",
+      "relation": "must_read",
       "confidence": 1.0
     },
     {
-      "from": "review_bundle:JOB-B2-REVIEW-20260530",
-      "to": "output:JOB-B2-REVIEW-20260530:dataflow_review",
-      "relation": "contains",
+      "from": "module:IOS-MOMENTUM",
+      "to": "impact:IOS-MOMENTUM:Daily Momentum Telegram PM Brief",
+      "relation": "affects",
       "confidence": 1.0
     },
     {
-      "from": "review_bundle:JOB-B2-REVIEW-20260530",
-      "to": "output:JOB-B2-REVIEW-20260530:error_report",
-      "relation": "contains",
+      "from": "module:IOS-MOMENTUM",
+      "to": "impact:IOS-MOMENTUM:Momentum Dashboard section",
+      "relation": "affects",
       "confidence": 1.0
     },
     {
-      "from": "review_bundle:JOB-B2-REVIEW-20260530",
-      "to": "output:JOB-B2-REVIEW-20260530:source_freshness_matrix",
-      "relation": "contains",
+      "from": "module:IOS-MOMENTUM",
+      "to": "impact:IOS-MOMENTUM:OpenClaw research dispatch",
+      "relation": "affects",
       "confidence": 1.0
     },
     {
-      "from": "review_bundle:JOB-B2-REVIEW-20260530",
-      "to": "output:JOB-B2-REVIEW-20260530:owner_visible_surface_check",
-      "relation": "contains",
+      "from": "module:IOS-MOMENTUM",
+      "to": "impact:IOS-MOMENTUM:B2 freshness review",
+      "relation": "affects",
       "confidence": 1.0
     },
     {
-      "from": "review_bundle:JOB-B2-REVIEW-20260530",
-      "to": "output:JOB-B2-REVIEW-20260530:review_request",
-      "relation": "contains",
+      "from": "module:IOS-MOMENTUM",
+      "to": "impact:IOS-MOMENTUM:B1 runtime repair",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:T-A1-EXT-001",
+      "to": "module:IOS-KOL",
+      "relation": "defines_module",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-KOL",
+      "to": "agent:IOS-KOL",
+      "relation": "activates_role",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-KOL",
+      "to": "runtime:codex",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-KOL",
+      "to": "runtime:openclaw",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-KOL",
+      "to": "runtime:gemini",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-KOL",
+      "to": "runtime:hermes",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-KOL",
+      "to": "source:CURRENT_STATUS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-KOL",
+      "to": "source:AGENT_RULES.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-KOL",
+      "to": "source:AGENT_STARTUP_PROTOCOL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-KOL",
+      "to": "source:pitfalls.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-KOL",
+      "to": "source:TASK_QUEUE.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-KOL",
+      "to": "source:workbook/task_index.json",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-KOL",
+      "to": "source:AGENT_RECALL_PROMPTS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-KOL",
+      "to": "source:skills/superpowers-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-KOL",
+      "to": "source:skills/task-progress-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-KOL",
+      "to": "source:recalls/IOS_strategy_role_recall.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-KOL",
+      "to": "source:projects/invest-os-strategy-role-system.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-KOL",
+      "to": "source:skills/invest-os-b-role-system.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-KOL",
+      "to": "source:docs/openclaw/output-contract.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-KOL",
+      "to": "source:docs/openclaw/relation-graph.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-KOL",
+      "to": "source:docs/openclaw/security-boundaries.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-KOL",
+      "to": "source:workbook/reviews/README.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-KOL",
+      "to": "impact:IOS-KOL:KOL Telegram digest",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-KOL",
+      "to": "impact:IOS-KOL:KOL shadow Dashboard evidence",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-KOL",
+      "to": "impact:IOS-KOL:NotebookLM/OpenClaw worker packets",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-KOL",
+      "to": "impact:IOS-KOL:B2 report quality review",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:T-A1-EXT-001",
+      "to": "module:IOS-FB",
+      "relation": "defines_module",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FB",
+      "to": "agent:IOS-FB",
+      "relation": "activates_role",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FB",
+      "to": "runtime:codex",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FB",
+      "to": "runtime:openclaw",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FB",
+      "to": "runtime:gemini",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FB",
+      "to": "runtime:hermes",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FB",
+      "to": "source:CURRENT_STATUS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FB",
+      "to": "source:AGENT_RULES.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FB",
+      "to": "source:AGENT_STARTUP_PROTOCOL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FB",
+      "to": "source:pitfalls.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FB",
+      "to": "source:TASK_QUEUE.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FB",
+      "to": "source:workbook/task_index.json",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FB",
+      "to": "source:AGENT_RECALL_PROMPTS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FB",
+      "to": "source:skills/superpowers-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FB",
+      "to": "source:skills/task-progress-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FB",
+      "to": "source:recalls/IOS_strategy_role_recall.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FB",
+      "to": "source:projects/invest-os-strategy-role-system.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FB",
+      "to": "source:skills/invest-os-b-role-system.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FB",
+      "to": "source:docs/openclaw/output-contract.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FB",
+      "to": "source:docs/openclaw/relation-graph.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FB",
+      "to": "source:docs/openclaw/security-boundaries.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FB",
+      "to": "source:workbook/reviews/README.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FB",
+      "to": "impact:IOS-FB:FB Radar evidence",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FB",
+      "to": "impact:IOS-FB:social source route health",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FB",
+      "to": "impact:IOS-FB:B2 low-signal review",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FB",
+      "to": "impact:IOS-FB:B1 route repair",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:T-A1-EXT-001",
+      "to": "module:IOS-ALPHA",
+      "relation": "defines_module",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-ALPHA",
+      "to": "agent:IOS-ALPHA",
+      "relation": "activates_role",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-ALPHA",
+      "to": "runtime:codex",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-ALPHA",
+      "to": "runtime:openclaw",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-ALPHA",
+      "to": "runtime:gemini",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-ALPHA",
+      "to": "runtime:hermes",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-ALPHA",
+      "to": "source:CURRENT_STATUS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-ALPHA",
+      "to": "source:AGENT_RULES.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-ALPHA",
+      "to": "source:AGENT_STARTUP_PROTOCOL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-ALPHA",
+      "to": "source:pitfalls.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-ALPHA",
+      "to": "source:TASK_QUEUE.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-ALPHA",
+      "to": "source:workbook/task_index.json",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-ALPHA",
+      "to": "source:AGENT_RECALL_PROMPTS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-ALPHA",
+      "to": "source:skills/superpowers-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-ALPHA",
+      "to": "source:skills/task-progress-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-ALPHA",
+      "to": "source:recalls/IOS_strategy_role_recall.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-ALPHA",
+      "to": "source:projects/invest-os-strategy-role-system.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-ALPHA",
+      "to": "source:skills/invest-os-b-role-system.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-ALPHA",
+      "to": "source:docs/openclaw/output-contract.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-ALPHA",
+      "to": "source:docs/openclaw/relation-graph.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-ALPHA",
+      "to": "source:docs/openclaw/security-boundaries.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-ALPHA",
+      "to": "source:workbook/reviews/README.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-ALPHA",
+      "to": "impact:IOS-ALPHA:Alpha Dashboard",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-ALPHA",
+      "to": "impact:IOS-ALPHA:convergence phone card",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-ALPHA",
+      "to": "impact:IOS-ALPHA:Polymarket hybrid strategy",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-ALPHA",
+      "to": "impact:IOS-ALPHA:local model shadow findings",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:T-A1-EXT-001",
+      "to": "module:IOS-BLACKSWAN",
+      "relation": "defines_module",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-BLACKSWAN",
+      "to": "agent:IOS-BLACKSWAN",
+      "relation": "activates_role",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-BLACKSWAN",
+      "to": "runtime:codex",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-BLACKSWAN",
+      "to": "runtime:openclaw",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-BLACKSWAN",
+      "to": "runtime:gemini",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-BLACKSWAN",
+      "to": "runtime:hermes",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-BLACKSWAN",
+      "to": "source:CURRENT_STATUS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-BLACKSWAN",
+      "to": "source:AGENT_RULES.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-BLACKSWAN",
+      "to": "source:AGENT_STARTUP_PROTOCOL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-BLACKSWAN",
+      "to": "source:pitfalls.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-BLACKSWAN",
+      "to": "source:TASK_QUEUE.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-BLACKSWAN",
+      "to": "source:workbook/task_index.json",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-BLACKSWAN",
+      "to": "source:AGENT_RECALL_PROMPTS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-BLACKSWAN",
+      "to": "source:skills/superpowers-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-BLACKSWAN",
+      "to": "source:skills/task-progress-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-BLACKSWAN",
+      "to": "source:recalls/IOS_strategy_role_recall.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-BLACKSWAN",
+      "to": "source:projects/invest-os-strategy-role-system.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-BLACKSWAN",
+      "to": "source:skills/invest-os-b-role-system.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-BLACKSWAN",
+      "to": "source:docs/openclaw/output-contract.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-BLACKSWAN",
+      "to": "source:docs/openclaw/relation-graph.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-BLACKSWAN",
+      "to": "source:docs/openclaw/security-boundaries.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-BLACKSWAN",
+      "to": "source:workbook/reviews/README.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-BLACKSWAN",
+      "to": "impact:IOS-BLACKSWAN:Black swan alert",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-BLACKSWAN",
+      "to": "impact:IOS-BLACKSWAN:hedge playbook",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-BLACKSWAN",
+      "to": "impact:IOS-BLACKSWAN:Macro/Risk Dashboard",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-BLACKSWAN",
+      "to": "impact:IOS-BLACKSWAN:B2 risk-boundary review",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:T-A1-EXT-001",
+      "to": "module:IOS-INVENTORY",
+      "relation": "defines_module",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-INVENTORY",
+      "to": "agent:IOS-INVENTORY",
+      "relation": "activates_role",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-INVENTORY",
+      "to": "runtime:codex",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-INVENTORY",
+      "to": "runtime:openclaw",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-INVENTORY",
+      "to": "runtime:gemini",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-INVENTORY",
+      "to": "runtime:hermes",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-INVENTORY",
+      "to": "source:CURRENT_STATUS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-INVENTORY",
+      "to": "source:AGENT_RULES.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-INVENTORY",
+      "to": "source:AGENT_STARTUP_PROTOCOL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-INVENTORY",
+      "to": "source:pitfalls.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-INVENTORY",
+      "to": "source:TASK_QUEUE.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-INVENTORY",
+      "to": "source:workbook/task_index.json",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-INVENTORY",
+      "to": "source:AGENT_RECALL_PROMPTS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-INVENTORY",
+      "to": "source:skills/superpowers-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-INVENTORY",
+      "to": "source:skills/task-progress-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-INVENTORY",
+      "to": "source:recalls/IOS_strategy_role_recall.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-INVENTORY",
+      "to": "source:projects/invest-os-strategy-role-system.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-INVENTORY",
+      "to": "source:skills/invest-os-b-role-system.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-INVENTORY",
+      "to": "source:docs/openclaw/output-contract.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-INVENTORY",
+      "to": "source:docs/openclaw/relation-graph.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-INVENTORY",
+      "to": "source:docs/openclaw/security-boundaries.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-INVENTORY",
+      "to": "source:workbook/reviews/README.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-INVENTORY",
+      "to": "impact:IOS-INVENTORY:Real position Telegram risk card",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-INVENTORY",
+      "to": "impact:IOS-INVENTORY:Inventory Dashboard",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-INVENTORY",
+      "to": "impact:IOS-INVENTORY:broker-free research handoff",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-INVENTORY",
+      "to": "impact:IOS-INVENTORY:B2 risk review",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:T-A1-EXT-001",
+      "to": "module:IOS-MACRO",
+      "relation": "defines_module",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MACRO",
+      "to": "agent:IOS-MACRO",
+      "relation": "activates_role",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MACRO",
+      "to": "runtime:codex",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MACRO",
+      "to": "runtime:openclaw",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MACRO",
+      "to": "runtime:gemini",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MACRO",
+      "to": "runtime:hermes",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MACRO",
+      "to": "source:CURRENT_STATUS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MACRO",
+      "to": "source:AGENT_RULES.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MACRO",
+      "to": "source:AGENT_STARTUP_PROTOCOL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MACRO",
+      "to": "source:pitfalls.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MACRO",
+      "to": "source:TASK_QUEUE.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MACRO",
+      "to": "source:workbook/task_index.json",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MACRO",
+      "to": "source:AGENT_RECALL_PROMPTS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MACRO",
+      "to": "source:skills/superpowers-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MACRO",
+      "to": "source:skills/task-progress-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MACRO",
+      "to": "source:recalls/IOS_strategy_role_recall.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MACRO",
+      "to": "source:projects/invest-os-strategy-role-system.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MACRO",
+      "to": "source:skills/invest-os-b-role-system.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MACRO",
+      "to": "source:docs/openclaw/output-contract.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MACRO",
+      "to": "source:docs/openclaw/relation-graph.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MACRO",
+      "to": "source:docs/openclaw/security-boundaries.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MACRO",
+      "to": "source:workbook/reviews/README.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MACRO",
+      "to": "impact:IOS-MACRO:Macro Dashboard",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MACRO",
+      "to": "impact:IOS-MACRO:risk weather card",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MACRO",
+      "to": "impact:IOS-MACRO:B2 freshness review",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-MACRO",
+      "to": "impact:IOS-MACRO:B4 regime workflow fit",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:T-A1-EXT-001",
+      "to": "module:IOS-CHIP",
+      "relation": "defines_module",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-CHIP",
+      "to": "agent:IOS-CHIP",
+      "relation": "activates_role",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-CHIP",
+      "to": "runtime:codex",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-CHIP",
+      "to": "runtime:openclaw",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-CHIP",
+      "to": "runtime:gemini",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-CHIP",
+      "to": "runtime:hermes",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-CHIP",
+      "to": "source:CURRENT_STATUS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-CHIP",
+      "to": "source:AGENT_RULES.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-CHIP",
+      "to": "source:AGENT_STARTUP_PROTOCOL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-CHIP",
+      "to": "source:pitfalls.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-CHIP",
+      "to": "source:TASK_QUEUE.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-CHIP",
+      "to": "source:workbook/task_index.json",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-CHIP",
+      "to": "source:AGENT_RECALL_PROMPTS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-CHIP",
+      "to": "source:skills/superpowers-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-CHIP",
+      "to": "source:skills/task-progress-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-CHIP",
+      "to": "source:recalls/IOS_strategy_role_recall.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-CHIP",
+      "to": "source:projects/invest-os-strategy-role-system.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-CHIP",
+      "to": "source:skills/invest-os-b-role-system.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-CHIP",
+      "to": "source:docs/openclaw/output-contract.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-CHIP",
+      "to": "source:docs/openclaw/relation-graph.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-CHIP",
+      "to": "source:docs/openclaw/security-boundaries.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-CHIP",
+      "to": "source:workbook/reviews/README.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-CHIP",
+      "to": "impact:IOS-CHIP:Chip merge",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-CHIP",
+      "to": "impact:IOS-CHIP:Momentum/Inventory/Macro downstream cards",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-CHIP",
+      "to": "impact:IOS-CHIP:B2 dataflow review",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:T-A1-EXT-001",
+      "to": "module:IOS-LEFT",
+      "relation": "defines_module",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-LEFT",
+      "to": "agent:IOS-LEFT",
+      "relation": "activates_role",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-LEFT",
+      "to": "runtime:codex",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-LEFT",
+      "to": "runtime:openclaw",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-LEFT",
+      "to": "runtime:gemini",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-LEFT",
+      "to": "runtime:hermes",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-LEFT",
+      "to": "source:CURRENT_STATUS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-LEFT",
+      "to": "source:AGENT_RULES.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-LEFT",
+      "to": "source:AGENT_STARTUP_PROTOCOL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-LEFT",
+      "to": "source:pitfalls.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-LEFT",
+      "to": "source:TASK_QUEUE.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-LEFT",
+      "to": "source:workbook/task_index.json",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-LEFT",
+      "to": "source:AGENT_RECALL_PROMPTS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-LEFT",
+      "to": "source:skills/superpowers-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-LEFT",
+      "to": "source:skills/task-progress-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-LEFT",
+      "to": "source:recalls/IOS_strategy_role_recall.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-LEFT",
+      "to": "source:projects/invest-os-strategy-role-system.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-LEFT",
+      "to": "source:skills/invest-os-b-role-system.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-LEFT",
+      "to": "source:docs/openclaw/output-contract.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-LEFT",
+      "to": "source:docs/openclaw/relation-graph.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-LEFT",
+      "to": "source:docs/openclaw/security-boundaries.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-LEFT",
+      "to": "source:workbook/reviews/README.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-LEFT",
+      "to": "impact:IOS-LEFT:Left-side Dashboard",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-LEFT",
+      "to": "impact:IOS-LEFT:OpenClaw research packet",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-LEFT",
+      "to": "impact:IOS-LEFT:B2 evidence review",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:T-A1-EXT-001",
+      "to": "module:IOS-RIGHT",
+      "relation": "defines_module",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-RIGHT",
+      "to": "agent:IOS-RIGHT",
+      "relation": "activates_role",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-RIGHT",
+      "to": "runtime:codex",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-RIGHT",
+      "to": "runtime:openclaw",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-RIGHT",
+      "to": "runtime:gemini",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-RIGHT",
+      "to": "runtime:hermes",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-RIGHT",
+      "to": "source:CURRENT_STATUS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-RIGHT",
+      "to": "source:AGENT_RULES.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-RIGHT",
+      "to": "source:AGENT_STARTUP_PROTOCOL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-RIGHT",
+      "to": "source:pitfalls.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-RIGHT",
+      "to": "source:TASK_QUEUE.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-RIGHT",
+      "to": "source:workbook/task_index.json",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-RIGHT",
+      "to": "source:AGENT_RECALL_PROMPTS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-RIGHT",
+      "to": "source:skills/superpowers-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-RIGHT",
+      "to": "source:skills/task-progress-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-RIGHT",
+      "to": "source:recalls/IOS_strategy_role_recall.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-RIGHT",
+      "to": "source:projects/invest-os-strategy-role-system.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-RIGHT",
+      "to": "source:skills/invest-os-b-role-system.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-RIGHT",
+      "to": "source:docs/openclaw/output-contract.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-RIGHT",
+      "to": "source:docs/openclaw/relation-graph.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-RIGHT",
+      "to": "source:docs/openclaw/security-boundaries.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-RIGHT",
+      "to": "source:workbook/reviews/README.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-RIGHT",
+      "to": "impact:IOS-RIGHT:Trader Dashboard",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-RIGHT",
+      "to": "impact:IOS-RIGHT:opening playbook Telegram",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-RIGHT",
+      "to": "impact:IOS-RIGHT:B2 action-boundary review",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:T-A1-EXT-001",
+      "to": "module:IOS-EVIDENCE",
+      "relation": "defines_module",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-EVIDENCE",
+      "to": "agent:IOS-EVIDENCE",
+      "relation": "activates_role",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-EVIDENCE",
+      "to": "runtime:codex",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-EVIDENCE",
+      "to": "runtime:openclaw",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-EVIDENCE",
+      "to": "runtime:gemini",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-EVIDENCE",
+      "to": "runtime:hermes",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-EVIDENCE",
+      "to": "source:CURRENT_STATUS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-EVIDENCE",
+      "to": "source:AGENT_RULES.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-EVIDENCE",
+      "to": "source:AGENT_STARTUP_PROTOCOL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-EVIDENCE",
+      "to": "source:pitfalls.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-EVIDENCE",
+      "to": "source:TASK_QUEUE.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-EVIDENCE",
+      "to": "source:workbook/task_index.json",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-EVIDENCE",
+      "to": "source:AGENT_RECALL_PROMPTS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-EVIDENCE",
+      "to": "source:skills/superpowers-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-EVIDENCE",
+      "to": "source:skills/task-progress-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-EVIDENCE",
+      "to": "source:recalls/IOS_strategy_role_recall.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-EVIDENCE",
+      "to": "source:projects/invest-os-strategy-role-system.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-EVIDENCE",
+      "to": "source:skills/invest-os-b-role-system.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-EVIDENCE",
+      "to": "source:docs/openclaw/output-contract.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-EVIDENCE",
+      "to": "source:docs/openclaw/relation-graph.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-EVIDENCE",
+      "to": "source:docs/openclaw/security-boundaries.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-EVIDENCE",
+      "to": "source:workbook/reviews/README.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-EVIDENCE",
+      "to": "impact:IOS-EVIDENCE:Research Evidence Dashboard",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-EVIDENCE",
+      "to": "impact:IOS-EVIDENCE:OpenClaw/Hermes evidence packets",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-EVIDENCE",
+      "to": "impact:IOS-EVIDENCE:B2 review contracts",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:T-A1-EXT-001",
+      "to": "module:IOS-SIM",
+      "relation": "defines_module",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SIM",
+      "to": "agent:IOS-SIM",
+      "relation": "activates_role",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SIM",
+      "to": "runtime:codex",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SIM",
+      "to": "runtime:openclaw",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SIM",
+      "to": "runtime:gemini",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SIM",
+      "to": "runtime:hermes",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SIM",
+      "to": "source:CURRENT_STATUS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SIM",
+      "to": "source:AGENT_RULES.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SIM",
+      "to": "source:AGENT_STARTUP_PROTOCOL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SIM",
+      "to": "source:pitfalls.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SIM",
+      "to": "source:TASK_QUEUE.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SIM",
+      "to": "source:workbook/task_index.json",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SIM",
+      "to": "source:AGENT_RECALL_PROMPTS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SIM",
+      "to": "source:skills/superpowers-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SIM",
+      "to": "source:skills/task-progress-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SIM",
+      "to": "source:recalls/IOS_strategy_role_recall.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SIM",
+      "to": "source:projects/invest-os-strategy-role-system.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SIM",
+      "to": "source:skills/invest-os-b-role-system.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SIM",
+      "to": "source:docs/openclaw/output-contract.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SIM",
+      "to": "source:docs/openclaw/relation-graph.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SIM",
+      "to": "source:docs/openclaw/security-boundaries.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SIM",
+      "to": "source:workbook/reviews/README.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SIM",
+      "to": "impact:IOS-SIM:Simulation Dashboard",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SIM",
+      "to": "impact:IOS-SIM:local ledger reports",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SIM",
+      "to": "impact:IOS-SIM:B2 broker-boundary review",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:T-A1-EXT-001",
+      "to": "module:IOS-FAMILY",
+      "relation": "defines_module",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FAMILY",
+      "to": "agent:IOS-FAMILY",
+      "relation": "activates_role",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FAMILY",
+      "to": "runtime:codex",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FAMILY",
+      "to": "runtime:openclaw",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FAMILY",
+      "to": "runtime:gemini",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FAMILY",
+      "to": "runtime:hermes",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FAMILY",
+      "to": "source:CURRENT_STATUS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FAMILY",
+      "to": "source:AGENT_RULES.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FAMILY",
+      "to": "source:AGENT_STARTUP_PROTOCOL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FAMILY",
+      "to": "source:pitfalls.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FAMILY",
+      "to": "source:TASK_QUEUE.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FAMILY",
+      "to": "source:workbook/task_index.json",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FAMILY",
+      "to": "source:AGENT_RECALL_PROMPTS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FAMILY",
+      "to": "source:skills/superpowers-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FAMILY",
+      "to": "source:skills/task-progress-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FAMILY",
+      "to": "source:recalls/IOS_strategy_role_recall.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FAMILY",
+      "to": "source:projects/invest-os-strategy-role-system.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FAMILY",
+      "to": "source:skills/invest-os-b-role-system.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FAMILY",
+      "to": "source:docs/openclaw/output-contract.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FAMILY",
+      "to": "source:docs/openclaw/relation-graph.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FAMILY",
+      "to": "source:docs/openclaw/security-boundaries.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FAMILY",
+      "to": "source:workbook/reviews/README.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FAMILY",
+      "to": "impact:IOS-FAMILY:Family fund Dashboard",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FAMILY",
+      "to": "impact:IOS-FAMILY:account-level charts",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-FAMILY",
+      "to": "impact:IOS-FAMILY:B2 source separation review",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:T-A1-EXT-001",
+      "to": "module:IOS-HEDGE",
+      "relation": "defines_module",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HEDGE",
+      "to": "agent:IOS-HEDGE",
+      "relation": "activates_role",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HEDGE",
+      "to": "runtime:codex",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HEDGE",
+      "to": "runtime:openclaw",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HEDGE",
+      "to": "runtime:gemini",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HEDGE",
+      "to": "runtime:hermes",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HEDGE",
+      "to": "source:CURRENT_STATUS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HEDGE",
+      "to": "source:AGENT_RULES.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HEDGE",
+      "to": "source:AGENT_STARTUP_PROTOCOL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HEDGE",
+      "to": "source:pitfalls.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HEDGE",
+      "to": "source:TASK_QUEUE.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HEDGE",
+      "to": "source:workbook/task_index.json",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HEDGE",
+      "to": "source:AGENT_RECALL_PROMPTS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HEDGE",
+      "to": "source:skills/superpowers-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HEDGE",
+      "to": "source:skills/task-progress-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HEDGE",
+      "to": "source:recalls/IOS_strategy_role_recall.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HEDGE",
+      "to": "source:projects/invest-os-strategy-role-system.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HEDGE",
+      "to": "source:skills/invest-os-b-role-system.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HEDGE",
+      "to": "source:docs/openclaw/output-contract.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HEDGE",
+      "to": "source:docs/openclaw/relation-graph.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HEDGE",
+      "to": "source:docs/openclaw/security-boundaries.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HEDGE",
+      "to": "source:workbook/reviews/README.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HEDGE",
+      "to": "impact:IOS-HEDGE:After-hours hedge brief",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HEDGE",
+      "to": "impact:IOS-HEDGE:Black swan and Macro downstream",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HEDGE",
+      "to": "impact:IOS-HEDGE:B2 risk boundary review",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:T-A1-EXT-001",
+      "to": "module:IOS-SURFACE",
+      "relation": "defines_module",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SURFACE",
+      "to": "agent:IOS-SURFACE",
+      "relation": "activates_role",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SURFACE",
+      "to": "runtime:codex",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SURFACE",
+      "to": "runtime:openclaw",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SURFACE",
+      "to": "runtime:gemini",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SURFACE",
+      "to": "runtime:hermes",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SURFACE",
+      "to": "source:CURRENT_STATUS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SURFACE",
+      "to": "source:AGENT_RULES.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SURFACE",
+      "to": "source:AGENT_STARTUP_PROTOCOL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SURFACE",
+      "to": "source:pitfalls.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SURFACE",
+      "to": "source:TASK_QUEUE.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SURFACE",
+      "to": "source:workbook/task_index.json",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SURFACE",
+      "to": "source:AGENT_RECALL_PROMPTS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SURFACE",
+      "to": "source:skills/superpowers-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SURFACE",
+      "to": "source:skills/task-progress-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SURFACE",
+      "to": "source:recalls/IOS_strategy_role_recall.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SURFACE",
+      "to": "source:projects/invest-os-strategy-role-system.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SURFACE",
+      "to": "source:skills/invest-os-b-role-system.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SURFACE",
+      "to": "source:docs/openclaw/output-contract.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SURFACE",
+      "to": "source:docs/openclaw/relation-graph.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SURFACE",
+      "to": "source:docs/openclaw/security-boundaries.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SURFACE",
+      "to": "source:workbook/reviews/README.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SURFACE",
+      "to": "impact:IOS-SURFACE:Chrome side panel",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SURFACE",
+      "to": "impact:IOS-SURFACE:Telegram PM Brief format",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SURFACE",
+      "to": "impact:IOS-SURFACE:Dashboard readability",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-SURFACE",
+      "to": "impact:IOS-SURFACE:B1 shared renderer fixes",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "task:T-A1-EXT-001",
+      "to": "module:IOS-HYGIENE",
+      "relation": "defines_module",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HYGIENE",
+      "to": "agent:IOS-HYGIENE",
+      "relation": "activates_role",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HYGIENE",
+      "to": "runtime:codex",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HYGIENE",
+      "to": "runtime:openclaw",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HYGIENE",
+      "to": "runtime:gemini",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HYGIENE",
+      "to": "runtime:hermes",
+      "relation": "portable_to",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HYGIENE",
+      "to": "source:CURRENT_STATUS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HYGIENE",
+      "to": "source:AGENT_RULES.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HYGIENE",
+      "to": "source:AGENT_STARTUP_PROTOCOL.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HYGIENE",
+      "to": "source:pitfalls.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HYGIENE",
+      "to": "source:TASK_QUEUE.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HYGIENE",
+      "to": "source:workbook/task_index.json",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HYGIENE",
+      "to": "source:AGENT_RECALL_PROMPTS.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HYGIENE",
+      "to": "source:skills/superpowers-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HYGIENE",
+      "to": "source:skills/task-progress-guide.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HYGIENE",
+      "to": "source:recalls/IOS_strategy_role_recall.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HYGIENE",
+      "to": "source:projects/invest-os-strategy-role-system.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HYGIENE",
+      "to": "source:skills/invest-os-b-role-system.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HYGIENE",
+      "to": "source:docs/openclaw/output-contract.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HYGIENE",
+      "to": "source:docs/openclaw/relation-graph.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HYGIENE",
+      "to": "source:docs/openclaw/security-boundaries.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HYGIENE",
+      "to": "source:workbook/reviews/README.md",
+      "relation": "must_read",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HYGIENE",
+      "to": "impact:IOS-HYGIENE:dirty worktree inventory",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HYGIENE",
+      "to": "impact:IOS-HYGIENE:B4 cleanup patrol",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HYGIENE",
+      "to": "impact:IOS-HYGIENE:B3 archive handoff",
+      "relation": "affects",
+      "confidence": 1.0
+    },
+    {
+      "from": "module:IOS-HYGIENE",
+      "to": "impact:IOS-HYGIENE:B1 cleanup script repair",
+      "relation": "affects",
       "confidence": 1.0
     }
   ]

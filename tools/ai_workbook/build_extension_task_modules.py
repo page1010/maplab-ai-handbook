@@ -112,6 +112,7 @@ class RoleModule:
     output_contract: list[str] = field(default_factory=list)
     startup_contract_extra: list[str] = field(default_factory=list)
     affects: list[str] = field(default_factory=list)
+    recall_path: str | None = None
     risk_level: str = "medium"
 
     @property
@@ -120,7 +121,8 @@ class RoleModule:
         return f"MAPLAB_{self.role_id}_{safe}_DYNAMIC_ROLE_MODULE"
 
     def to_module(self) -> dict[str, Any]:
-        read_first = COMMON_READ_FIRST + [f"recalls/{self.role_id}_recall.md"]
+        recall_path = self.recall_path or f"recalls/{self.role_id}_recall.md"
+        read_first = COMMON_READ_FIRST + [recall_path]
         read_first += self.project_docs + self.skills + COMMON_GOVERNANCE
         read_first = dedupe(read_first)
         return {
@@ -131,7 +133,7 @@ class RoleModule:
             "role_name": self.role_name,
             "department": self.department,
             "role_simulation": self.role_simulation,
-            "packaged_role_recall_excerpt": read_text_excerpt(ROOT / f"recalls/{self.role_id}_recall.md"),
+            "packaged_role_recall_excerpt": read_text_excerpt(ROOT / recall_path),
             "runtime_targets": self.runtime_targets,
             "task_types": self.task_types,
             "read_first": as_source_entries(read_first),
@@ -641,6 +643,210 @@ ROLES = [
         risk_level="medium",
     ),
 ]
+
+
+IOS_PROJECT_DOCS = ["projects/invest-os-strategy-role-system.md"]
+IOS_SKILLS = ["skills/invest-os-b-role-system.md", "skills/task-progress-guide.md"]
+IOS_RECALL_PATH = "recalls/IOS_strategy_role_recall.md"
+
+
+def ios_role(
+    role_id: str,
+    role_name: str,
+    department: str,
+    simulation: str,
+    task_types: list[str],
+    output_contract: list[str],
+    affects: list[str],
+    risk_level: str = "medium",
+) -> RoleModule:
+    return RoleModule(
+        role_id,
+        role_name,
+        department,
+        simulation,
+        task_types,
+        IOS_PROJECT_DOCS,
+        IOS_SKILLS,
+        ["codex", "openclaw", "gemini", "hermes"],
+        output_contract=output_contract,
+        startup_contract_extra=[
+            "Use Investment OS local repo as the canonical runtime truth: /Users/pagemacmini/Documents/New project.",
+            "Read Investment OS AGENT_CORE.md, CURRENT_STATUS.md, pitfalls.md, config/investment_os_role_registry.json, and docs/INVESTMENT_OS_ROLE_WORKSPACES.md before acting.",
+            f"Find role_id {role_id} in config/investment_os_role_registry.json and use its required_reads, bad_data_rule, background_jobs, Telegram outputs, Dashboard workspace, and B1-B4 escalation path.",
+            f"Name this session {role_id} {department} when dispatching a dedicated cleanup or audit thread.",
+            "If output quality is bad, inspect the whole strategy loop before asking a shared Telegram/Dashboard owner to patch formatting.",
+        ],
+        affects=affects,
+        recall_path=IOS_RECALL_PATH,
+        risk_level=risk_level,
+    )
+
+
+ROLES.extend(
+    [
+        ios_role(
+            "IOS-MOMENTUM",
+            "Daily Momentum Manager",
+            "每日動能經理",
+            "每日漲停、動能、成交量、強勢股與 16:00 籌碼合併的策略 owner。",
+            ["momentum_scan", "limit_up_review", "top3_shortlist", "chip_merge", "pm_brief_quality"],
+            ["momentum_shortlist.md", "openclaw_research_dispatch.md", "chip_merge_validation.md", "telegram_readback.md", "dashboard_freshness_check.md"],
+            ["Daily Momentum Telegram PM Brief", "Momentum Dashboard section", "OpenClaw research dispatch", "B2 freshness review", "B1 runtime repair"],
+            "high",
+        ),
+        ios_role(
+            "IOS-KOL",
+            "Influencer Radar Manager",
+            "網紅雷達經理",
+            "YouTube、Podcast、FB/KOL 與操作筆記抽取的策略 owner。",
+            ["kol_digest", "youtube_rss", "notebooklm_packet", "operation_notes", "source_quality_review"],
+            ["kol_digest.md", "operation_notes_validation.md", "source_freshness_matrix.md", "telegram_readback.md", "feedback_ledger_update.md"],
+            ["KOL Telegram digest", "KOL shadow Dashboard evidence", "NotebookLM/OpenClaw worker packets", "B2 report quality review"],
+            "medium",
+        ),
+        ios_role(
+            "IOS-FB",
+            "FB Social Intelligence Manager",
+            "FB / 社群情報經理",
+            "FB 與公開社群來源收集、正規化、路由健康與 candidate 品質的策略 owner。",
+            ["fb_radar", "source_route_health", "social_candidate_review", "price_proof_manifest"],
+            ["source_route_health.md", "normalized_quality_report.md", "candidate_review_queue.md", "price_proof_manifest.md"],
+            ["FB Radar evidence", "social source route health", "B2 low-signal review", "B1 route repair"],
+            "medium",
+        ),
+        ios_role(
+            "IOS-ALPHA",
+            "Cross-Source Alpha Manager",
+            "阿爾法共振經理",
+            "Reddit、RSS/X、Polymarket、市場異常與 convergence scoring 的策略 owner。",
+            ["alpha_convergence", "polymarket_watch", "cross_source_event", "research_task_creation"],
+            ["convergence_quality_report.md", "phone_card_readback.md", "shadow_review_sidecar.md", "research_task_queue.md"],
+            ["Alpha Dashboard", "convergence phone card", "Polymarket hybrid strategy", "local model shadow findings"],
+            "high",
+        ),
+        ios_role(
+            "IOS-BLACKSWAN",
+            "Black Swan Monitor",
+            "黑天鵝監控官",
+            "地緣、VIX、油價、美元、利率、Polymarket tail-risk 與 hedge watch 的風險 owner。",
+            ["black_swan_watch", "tail_risk_monitor", "hedge_signal_review", "risk_regime_alert"],
+            ["black_swan_watch.md", "hedge_signal_quality.md", "alert_readback.md", "missing_data_questions.md"],
+            ["Black swan alert", "hedge playbook", "Macro/Risk Dashboard", "B2 risk-boundary review"],
+            "high",
+        ),
+        ios_role(
+            "IOS-INVENTORY",
+            "Real Position Review Manager",
+            "庫存審查經理",
+            "實單持股、股期與真實部位風險控制的 portfolio owner。",
+            ["live_position_review", "broker_snapshot_freshness", "position_research", "risk_card"],
+            ["live_position_review.md", "chip_research_merge.md", "news_source_matrix.md", "risk_action_boundary.md", "telegram_readback.md"],
+            ["Real position Telegram risk card", "Inventory Dashboard", "broker-free research handoff", "B2 risk review"],
+            "high",
+        ),
+        ios_role(
+            "IOS-MACRO",
+            "Macro Master",
+            "總經大師",
+            "FRED、BLS、利率、美元、油價、景氣 regime 與台股風險框架的策略 owner。",
+            ["macro_regime", "fred_bls_review", "risk_weather", "macro_dashboard"],
+            ["macro_regime_card.md", "source_release_check.md", "dashboard_readback.md", "strategy_impact_note.md"],
+            ["Macro Dashboard", "risk weather card", "B2 freshness review", "B4 regime workflow fit"],
+            "medium",
+        ),
+        ios_role(
+            "IOS-CHIP",
+            "Chip Flow Manager",
+            "籌碼經理",
+            "三大法人、融資融券、集保、chip anomaly 與盤後合併的資料 owner。",
+            ["chip_refresh", "twse_t86", "margin_balance", "chip_anomaly", "after_1600_merge"],
+            ["chip_freshness_matrix.md", "chip_anomaly_report.md", "merge_receipt.md", "downstream_role_handoff.md"],
+            ["Chip merge", "Momentum/Inventory/Macro downstream cards", "B2 dataflow review"],
+            "medium",
+        ),
+        ios_role(
+            "IOS-LEFT",
+            "Left-Side Research Manager",
+            "左側預期差經理",
+            "左側研究、公開資訊缺口、敘事早期變化與買前功課問題包的策略 owner。",
+            ["left_side_research", "expectation_gap", "public_fact_questions", "research_evidence_packet"],
+            ["left_side_candidates.md", "public_fact_gap_matrix.md", "openclaw_question_pack.md", "research_task_handoff.md"],
+            ["Left-side Dashboard", "OpenClaw research packet", "B2 evidence review"],
+            "medium",
+        ),
+        ios_role(
+            "IOS-RIGHT",
+            "Right-Side Execution Manager",
+            "右側交易經理",
+            "右側強勢股、開盤劇本、股期候選與只讀決策卡的策略 owner。",
+            ["right_side_shortlist", "opening_playbook", "stock_future_watch", "execution_boundary"],
+            ["right_side_shortlist.md", "opening_playbook.md", "stock_future_watch.md", "risk_boundary_readback.md"],
+            ["Trader Dashboard", "opening playbook Telegram", "B2 action-boundary review"],
+            "high",
+        ),
+        ios_role(
+            "IOS-EVIDENCE",
+            "Research Evidence Manager",
+            "研究證據經理",
+            "研究證據矩陣、來源分類、推論標記、缺資料與 OpenClaw/Hermes evidence contract 的 platform owner。",
+            ["evidence_matrix", "source_quality", "fact_inference_split", "openclaw_validation"],
+            ["evidence_matrix.md", "source_quality_report.md", "fact_inference_split.md", "worker_output_validation.md"],
+            ["Research Evidence Dashboard", "OpenClaw/Hermes evidence packets", "B2 review contracts"],
+            "medium",
+        ),
+        ios_role(
+            "IOS-SIM",
+            "Simulation Ledger Manager",
+            "模擬倉經理",
+            "本地模擬倉 ledger、ROI、模擬紀錄與 broker simulation wording boundary 的 portfolio owner。",
+            ["local_simulation_ledger", "roi_review", "simulation_boundary", "sim_dashboard"],
+            ["simulation_ledger_review.md", "roi_quality_report.md", "boundary_wording_check.md", "dashboard_readback.md"],
+            ["Simulation Dashboard", "local ledger reports", "B2 broker-boundary review"],
+            "medium",
+        ),
+        ios_role(
+            "IOS-FAMILY",
+            "Family Fund Manager",
+            "家族基金經理",
+            "家族基金、大盤、帳戶層級總覽、資金池與 dashboard account-level proof 的 portfolio owner。",
+            ["family_fund_dashboard", "account_level_summary", "capital_bucket_review", "fund_readback"],
+            ["family_fund_summary.md", "account_level_readback.md", "capital_bucket_review.md", "dashboard_freshness_check.md"],
+            ["Family fund Dashboard", "account-level charts", "B2 source separation review"],
+            "medium",
+        ),
+        ios_role(
+            "IOS-HEDGE",
+            "After-Hours Hedge Manager",
+            "盤後對沖經理",
+            "盤後、夜盤、海外期貨、風險對沖觀察與 watch-only hedge playbook 的策略 owner。",
+            ["after_hours_watch", "hedge_playbook", "global_futures_monitor", "watch_only_boundary"],
+            ["after_hours_hedge_watch.md", "global_risk_snapshot.md", "watch_only_boundary.md", "owner_decision_options.md"],
+            ["After-hours hedge brief", "Black swan and Macro downstream", "B2 risk boundary review"],
+            "high",
+        ),
+        ios_role(
+            "IOS-SURFACE",
+            "Surface Contract Steward",
+            "介面契約守門員",
+            "Telegram、Dashboard、閱讀體驗、色彩安全與 shared renderer defects 的 platform owner。",
+            ["telegram_contract", "dashboard_readability", "surface_renderer_review", "runtime_readback"],
+            ["surface_contract_review.md", "readability_check.md", "runtime_readback.md"],
+            ["Chrome side panel", "Telegram PM Brief format", "Dashboard readability", "B1 shared renderer fixes"],
+            "high",
+        ),
+        ios_role(
+            "IOS-HYGIENE",
+            "System Hygiene Steward",
+            "系統衛生官",
+            "dirty worktree、stale bundles、duplicated logs、checkpoint drift 與 keep/drop 決策包的 platform owner。",
+            ["dirty_worktree_inventory", "keep_drop_decision", "cleanup_handoff", "scheduled_hygiene"],
+            ["dirty_worktree_inventory.md", "keep_drop_decision_package.md", "cleanup_handoff_to_B1_B3.md", "patrol_receipt.md"],
+            ["dirty worktree inventory", "B4 cleanup patrol", "B3 archive handoff", "B1 cleanup script repair"],
+            "high",
+        ),
+    ]
+)
 
 
 SCHEMA = {

@@ -80,10 +80,11 @@ function populateRoleSelectFromIndex(preferredRole = '') {
   select.appendChild(new Option('-- 總覽模式 --', ''));
   appendRoleGroup(select, 'MAPLAB / A Department', modules.filter(m => String(m.role_id).startsWith('A')));
   appendRoleGroup(select, 'Investment OS / Cross-Project', modules.filter(m => String(m.role_id).startsWith('B')));
+  appendRoleGroup(select, 'Investment OS / Strategy Owners', modules.filter(m => String(m.role_id).startsWith('IOS-')));
   appendRoleGroup(
     select,
     'Other',
-    modules.filter(m => !String(m.role_id).startsWith('A') && !String(m.role_id).startsWith('B'))
+    modules.filter(m => !String(m.role_id).startsWith('A') && !String(m.role_id).startsWith('B') && !String(m.role_id).startsWith('IOS-'))
   );
   const valid = [...select.options].some(option => option.value === selected && !option.disabled);
   select.value = valid ? selected : '';
@@ -330,6 +331,86 @@ function suggestRoleForTask(text) {
       role: 'A2',
       label: 'A2 Ads/SEO/WordPress Patrol',
       score: routeScore(t, ['seo', 'ads', 'ad ', 'google ads', 'meta', 'wordpress', 'wp', 'rank math', '品牌', '廣告', '網頁', '官網']),
+    },
+    {
+      role: 'IOS-MOMENTUM',
+      label: 'IOS-MOMENTUM 每日動能經理',
+      score: routeScore(t, ['momentum', 'limit up', '漲停', '動能', '強勢', '成交量', 'top3', 'top 3', '股期', '開盤劇本']),
+    },
+    {
+      role: 'IOS-KOL',
+      label: 'IOS-KOL 網紅雷達經理',
+      score: routeScore(t, ['kol', 'influencer', 'youtube', 'podcast', 'notebooklm', '網紅', '操作筆記', '逐字稿', '影片', '頻道']),
+    },
+    {
+      role: 'IOS-FB',
+      label: 'IOS-FB FB / 社群情報經理',
+      score: routeScore(t, ['fb', 'facebook', 'social', '社群', '粉專', '貼文', '留言', 'fb radar']),
+    },
+    {
+      role: 'IOS-ALPHA',
+      label: 'IOS-ALPHA 阿爾法共振經理',
+      score: routeScore(t, ['alpha', 'convergence', 'polymarket', 'reddit', 'rss', '共振', '阿爾法', '事件', '預測市場']),
+    },
+    {
+      role: 'IOS-BLACKSWAN',
+      label: 'IOS-BLACKSWAN 黑天鵝監控官',
+      score: routeScore(t, ['black swan', 'tail risk', 'vix', 'hedge', '黑天鵝', '地緣', '油價', '避險', '崩盤', '戰爭']),
+    },
+    {
+      role: 'IOS-INVENTORY',
+      label: 'IOS-INVENTORY 庫存審查經理',
+      score: routeScore(t, ['inventory', 'position', 'broker', 'holding', '實單', '庫存', '持股', '部位', '保證金', '風控']),
+    },
+    {
+      role: 'IOS-MACRO',
+      label: 'IOS-MACRO 總經大師',
+      score: routeScore(t, ['macro', 'fred', 'bls', 'cpi', 'ppi', '美元', '利率', '總經', '景氣', 'regime', '殖利率']),
+    },
+    {
+      role: 'IOS-CHIP',
+      label: 'IOS-CHIP 籌碼經理',
+      score: routeScore(t, ['chip', 't86', 'margin', '籌碼', '三大法人', '融資', '融券', '集保', '盤後1600', '16:00']),
+    },
+    {
+      role: 'IOS-LEFT',
+      label: 'IOS-LEFT 左側預期差經理',
+      score: routeScore(t, ['left side', '預期差', '左側', '研究問題', '買前功課', '公開資訊']),
+    },
+    {
+      role: 'IOS-RIGHT',
+      label: 'IOS-RIGHT 右側交易經理',
+      score: routeScore(t, ['right side', '右側', '交易劇本', 'shortlist', '突破', '追價', '執行']),
+    },
+    {
+      role: 'IOS-EVIDENCE',
+      label: 'IOS-EVIDENCE 研究證據經理',
+      score: routeScore(t, ['evidence', 'source', 'research evidence', '證據', '來源', '推論', '缺資料', '合理推論', '已驗證事實']),
+    },
+    {
+      role: 'IOS-SIM',
+      label: 'IOS-SIM 模擬倉經理',
+      score: routeScore(t, ['simulation', 'sim ledger', '模擬倉', '模擬單', 'ledger', 'roi', 'shioaji simulation']),
+    },
+    {
+      role: 'IOS-FAMILY',
+      label: 'IOS-FAMILY 家族基金經理',
+      score: routeScore(t, ['family fund', '家族基金', '大盤', '資金池', '總帳戶', 'account level']),
+    },
+    {
+      role: 'IOS-HEDGE',
+      label: 'IOS-HEDGE 盤後對沖經理',
+      score: routeScore(t, ['after hours', 'night session', '盤後', '夜盤', '對沖', '海外期貨', 'hedge playbook']),
+    },
+    {
+      role: 'IOS-SURFACE',
+      label: 'IOS-SURFACE 介面契約守門員',
+      score: routeScore(t, ['surface', 'readability', 'format', 'markdown', '閱讀', '格式', '太刺眼', '顏色', '卡片', 'telegram格式', 'dashboard格式']),
+    },
+    {
+      role: 'IOS-HYGIENE',
+      label: 'IOS-HYGIENE 系統衛生官',
+      score: routeScore(t, ['hygiene', 'cleanup', 'dirty', 'worktree', '清掃', '髒', '髒檔', '要不要留', '要不要丟', 'keep/drop', '定時掃']),
     },
     {
       role: 'B1',

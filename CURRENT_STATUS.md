@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-06-03 A1 每日巡查（24h零新非巡查commit；A2 ~153h/~6.4天無commit（last 696c80b 2026-05-27）；A4 S11 ~1095h/~45.6天Colab崩潰🔴；A5 ~350h/~14.6天；A6 ~350h/~14.6天；GCP帳單~45.8天未處理🔴）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-06-03 A1 午後巡查（WIN role新增✅ 56325ac+29ac7c1；A2 ~158h/~6.6天無commit；A4 S11 ~1100h/~45.8天Colab崩潰🔴；A5 ~355h/~14.8天；A6 ~355h/~14.8天；GCP帳單~46.0天未處理🔴）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -43,6 +43,7 @@
 - 2026-05-19：B1 補上 Investment OS 判斷邏輯橋接：`projects/b1-investment-logic-bridge.md` 與 `workbook/reviews/JOB-B1-CROSS-PROJECT-20260519/b1_investment_logic_summon.md`，讓 Owner 可召喚 B1 到其他 agent 時先帶入左側/右側/風控/籌碼/新聞語言；B1 仍不下單、不建模擬單、不給買賣建議。
 - 2026-05-11：GitHub sync audit 啟動 — 以 `origin/main` 為備份基準，將 durable docs/scripts/task cards/review index 補齊入庫；`.env`、logs、runtime history、raw A6 review bundles 暫不盲目 commit，先建立 sanitized/index 流程。
 - 2026-05-30：B4 Investment OS System Patrol 完成巡查，review bundle `workbook/reviews/JOB-B4-PATROL-20260530/` 已落檔。結論：核心 owner-facing surfaces（`CURRENT_STATUS.md` / task cards、Chrome Extension 召喚、Agent Office switchboard、Telegram + Mobile Dashboard、B1-B4 role split）繼續；OpenClaw / Hermes 只保留 bounded read-only 路徑；research_method_layer 與其他實驗性擴張維持 draft-only / pause；legacy broker-simulation / InnerFlowLab content path 保持 archive / paused；cloud mirrors / share page / export 必須從 GitHub HEAD 派生，不得當 truth source。
+- 2026-06-03：WIN Windows Evidence Collector 角色建立（Investment OS Windows 採集端）：`recalls/WIN_recall.md` + `chrome-extension/popup.html` WIN option + `chrome-extension/task-modules/WIN.json`。WIN 運行於 Windows computer，負責採集 UI / 三竹 / 新聞 / 市場資訊，壓成 packet 放 My Drive\Investment OS\windows_agent_bridge\outbox，等 Mac 端（B2）交叉驗證。不做決策、不下單、不碰 broker order state。repo: page1010/investment-os branch investment-os-v0.1-integrated。
 
 ---
 
@@ -94,6 +95,7 @@
 | A4 | ⚠️ A1巡查 2026-05-01午後：T-A4-001 S11 ~320h/~13.3天無completion commit（Colab崩潰）；GCP帳單$3K/月已14天未處理🔴 | Owner立即：①確認S11 Colab狀態→補completion commit；②確認GCP帳單上限 |
 | A5 | ⚠️ A1巡查 2026-05-01午後：T-A5-002/004/005 CRITICAL D22/~536h無commit（last: cfeebd1 2026-04-09）。連續10+巡查Owner無決策回應 | Owner 決策：是否重啟A5 |
 | 全系統 | ⚠️ A1巡查 2026-05-01午後：全系統靜止168h+（7天，上次non-patrol commit B1 2026-04-24）。8h零新commit；A2/A3/A6/A7/A8/B1均無新活動 | Owner確認各Agent狀態；B1需建立正式Task Card |
+| A2/A4/A5/A6/WIN/全系統 | ⚠️ A1巡查 2026-06-03 14:00午後：今日有效活動：WIN Windows Evidence Collector role 建立（56325ac 08:35 + 29ac7c1 10:34），CURRENT_STATUS + AGENT_RECALL_PROMPTS 已補入WIN；A2 ~158h/~6.6天無commit（last 696c80b 2026-05-27；T-A2A3-001-B 🔄 持續>48h）；A4 S11 ~1100h/~45.8天Colab崩潰🔴（last 14ed423 2026-04-18）；GCP帳單~46.0天未處理🔴；A5 ~355h/~14.8天無新commit（task card T-A5-002/004/005仍CRITICAL）；A6 ~355h/~14.8天無新活動（last aa77573 2026-05-19）；A3/A7/A8無業務活動；T-A1-SYNC-GUARD-001仍🔲待開始；所有前次警告持續未解 | Owner緊急決策：①確認A4 S11 Colab最終狀態；②確認GCP帳單；③核查A5 2026-05-19 commits是否解除T-A5-002/004/005 CRITICAL；④確認LINE webhook Channel 1654658337 |
 | A2/A4/A5/A6/全系統 | ⚠️ A1巡查 2026-06-03 09:00每日：24h零新非巡查commit（last non-patrol 03401e8 review(b1) 2026-06-01）；A2 ~153h/~6.4天無commit（last 696c80b 2026-05-27；T-A2A3-001-B 🔄 持續>48h）；A4 S11 ~1095h/~45.6天Colab崩潰🔴（last 14ed423 2026-04-18）；GCP帳單~45.8天未處理🔴；A5 ~350h/~14.6天無新commit（task card T-A5-002/004/005仍CRITICAL）；A6 ~350h/~14.6天無新活動（last aa77573 2026-05-19）；A3/A7/A8無業務活動；T-A1-SYNC-GUARD-001仍🔲待開始；所有前次警告持續未解 | Owner緊急決策：①確認A4 S11 Colab最終狀態；②確認GCP帳單；③核查A5 2026-05-19 commits是否解除T-A5-002/004/005 CRITICAL；④確認LINE webhook Channel 1654658337 |
 | A2/A4/A5/A6/全系統 | ⚠️ A1巡查 2026-06-02 21:00晚間：8h零新非巡查commit（午後巡查後無業務活動）；A2 ~141h/~5.9天無commit（last 696c80b 2026-05-27；T-A2A3-001-B 🔄 持續>48h）；A4 S11 ~1083h/~45.1天Colab崩潰🔴（last 14ed423 2026-04-18）；GCP帳單~45.3天未處理🔴；A5 ~338h/~14.1天無新commit（task card T-A5-002/004/005仍CRITICAL）；A6 ~338h/~14.1天無新活動（last aa77573 2026-05-19）；A3/A7/A8無業務活動；T-A1-SYNC-GUARD-001仍🔲待開始；所有前次警告持續未解 | Owner緊急決策：①確認A4 S11 Colab最終狀態；②確認GCP帳單；③核查A5 2026-05-19 commits是否解除T-A5-002/004/005 CRITICAL；④確認LINE webhook Channel 1654658337 |
 | A2/A4/A5/A6/全系統 | ⚠️ A1巡查 2026-06-02 14:00午後：8h零新commit（last non-patrol B1 03401e8 2026-06-01 07:25）；A2 ~138h/~5.75天無commit（last 696c80b 2026-05-27；T-A2A3-001-B 🔄 持續>48h）；A4 S11 ~1080h/~45天Colab崩潰🔴（last 14ed423 2026-04-18）；GCP帳單~45天未處理🔴；A5 ~336h/~14天無commit（task card T-A5-002/004/005仍CRITICAL；需Owner核查）；A6 ~336h/~14天無新活動（last aa77573 2026-05-19）；A3/A7/A8無業務活動；T-A1-SYNC-GUARD-001仍🔲待開始；所有前次警告持續未解 | Owner緊急決策：①確認A4 S11 Colab最終狀態；②確認GCP帳單；③核查A5 2026-05-19 commits是否解除T-A5-002/004/005 CRITICAL；④確認LINE webhook Channel 1654658337 |

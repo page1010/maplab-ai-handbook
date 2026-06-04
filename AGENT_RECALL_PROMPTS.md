@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-06-04 A1 午後巡查（8h零新非巡查commit；A2 ~183h/~7.6天無commit（last 696c80b 2026-05-27）；A4 S11 ~1125h/~46.9天Colab崩潰🔴；A5 ~380h/~15.8天；A6 ~380h/~15.8天；GCP帳單~47.0天未處理🔴）
+> 最後更新：2026-06-04 A1 晚間巡查（8h零新非巡查commit；A2 ~193h/~8.0天無commit（last 696c80b 2026-05-27）；A4 S11 ~1133h/~47.2天Colab崩潰🔴；A5 ~388h/~16.2天；A6 ~388h/~16.2天；GCP帳單~47.1天未處理🔴）
 >
 > 使用方式：選擇角色 → 複製 prompt / module handoff → 貼到 Gemini / Codex / OpenClaw / legacy Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -19,11 +19,11 @@
 |------|---------|------|------|
 | A0 | 總調度秘書 | ✅ Cowork 常駐 | 跨系統橋接、調度、桌面控制 |
 | A1 | 系統總管中心 | ✅ Claude Code 常駐 | Telegram bot + 終端機，直接下指令 |
-| A2 | 搜尋流量作戰部 | 🟢 召喚型可用 + patrol（Ads/SEO/WordPress）；last commit 696c80b 2026-05-27（~183h/~7.6天）；T-A2A3-001-B 🔄 >48h持續 | SEO / Ads / WordPress / Brand memory |
+| A2 | 搜尋流量作戰部 | 🟢 召喚型可用 + patrol（Ads/SEO/WordPress）；last commit 696c80b 2026-05-27（~193h/~8.0天）；T-A2A3-001-B 🔄 >48h持續 | SEO / Ads / WordPress / Brand memory |
 | A3 | 社群與廣告成長部 | ✅ T-A3-001 完成（GTM v21 雙平台追蹤上線）；T-A3-002 ⏸️ 阻塞（等廣告週期+Owner操作）| Meta Ads / Social |
-| A4 | 影像資產整理部 | 🔴 CRITICAL（S12✅DONE；S11 補跑 14ed423 04-18 Colab重啟→**~1125h/~46.9天無completion commit，Colab確認崩潰；GCP帳單~47.0天未處理**）| Photo Archive |
-| A5 | 報價與提案引擎部 | ⚠️ 任務卡狀態待Owner核查（2026-05-19有6個A5 commits：343e1d0/24c985b/6a98eb0/4b53ea8/716f0c2/d22c03c；task card T-A5-002/004/005仍顯示CRITICAL；~380h/~15.8天無新commit）| Quotation Engine |
-| A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（aa77573 2026-05-19 Codex-first route；~380h/~15.8天無新活動；LINE webhook等Owner確認 Channel 1654658337）| Sales Rapid Response |
+| A4 | 影像資產整理部 | 🔴 CRITICAL（S12✅DONE；S11 補跑 14ed423 04-18 Colab重啟→**~1133h/~47.2天無completion commit，Colab確認崩潰；GCP帳單~47.1天未處理**）| Photo Archive |
+| A5 | 報價與提案引擎部 | ⚠️ 任務卡狀態待Owner核查（2026-05-19有6個A5 commits：343e1d0/24c985b/6a98eb0/4b53ea8/716f0c2/d22c03c；task card T-A5-002/004/005仍顯示CRITICAL；~388h/~16.2天無新commit）| Quotation Engine |
+| A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（aa77573 2026-05-19 Codex-first route；~388h/~16.2天無新活動；LINE webhook等Owner確認 Channel 1654658337）| Sales Rapid Response |
 | A7 | 客服與對話轉單部 | 💤 T-A7-001 正式暫停；T-A7-002 ⏸️ 阻塞（等LINE後台權限+Owner政策決策）| Smart Reply |
 | A8 | 影音內容產線 | 🔲 新建，待啟動 | Content Repurposing Pipeline |
 | **B1** | **Investment OS Builder** | **🟢 召喚型可用** | **寫功能 / runtime surface** |

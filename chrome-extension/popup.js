@@ -1,4 +1,4 @@
-// MAPLAB Agent Commander v5.6.0 — popup.js
+// MAPLAB Agent Commander v5.6.1 — popup.js
 // 角色選擇 + GitHub dynamic role task modules + runtime handoff prompt
 const DEFAULT_BASE = 'https://raw.githubusercontent.com/page1010/maplab-ai-handbook/main';
 const GITHUB_API   = 'https://api.github.com/repos/page1010/maplab-ai-handbook';
@@ -47,6 +47,29 @@ function truncate(text, max) {
 function formatVersion(version) {
   const value = String(version || '?').trim();
   return value.startsWith('v') ? value : `v${value}`;
+}
+const RUNTIME_TARGETS = {
+  claude_code: 'Claude Code',
+  codex: 'Codex',
+  gpt: 'GPT / ChatGPT',
+  claude_chrome_tab: 'Claude Chrome tab',
+  antigravity: 'Antigravity',
+  gemini: 'Gemini',
+  openclaw: 'OpenClaw',
+  hermes: 'Hermes',
+  gemini_chrome_tab: 'Gemini Chrome tab',
+};
+function normalizeRuntimeTarget(runtime) {
+  const aliases = {
+    claude_tab: 'claude_chrome_tab',
+    gemini_sidebar: 'gemini',
+    gemini_tab: 'gemini_chrome_tab',
+  };
+  const key = aliases[runtime] || runtime;
+  return RUNTIME_TARGETS[key] ? key : 'claude_code';
+}
+function runtimeTargetLabel(runtime) {
+  return RUNTIME_TARGETS[normalizeRuntimeTarget(runtime)];
 }
 function sortedRoleModules() {
   return [...(cachedModuleIndex?.modules || [])].sort((a, b) =>
@@ -299,24 +322,46 @@ function buildSystemSnapshot(parsed) {
   return lines.join('\n');
 }
 function runtimeInstruction(runtime) {
+  const target = normalizeRuntimeTarget(runtime);
   const map = {
-    gemini: [
-      '你正在 Gemini 側邊欄接手 MAPLAB 角色。你可能看不到本機檔案，所以請優先使用下方 GitHub raw URL / repo path 讀取來源。',
-      '如果無法讀取某個來源，請明確列為 blocker，不要用猜的補上下文。',
+    claude_code: [
+      '你正在 Claude Code terminal 接手 MAPLAB 角色。請以 /Users/pagemacmini/maplab-ai-handbook 為正式 repo，先讀 CURRENT_STATUS.md、pitfalls.md 與本角色必讀來源。',
+      '你可以做 repo 整合、腳本修復、驗證與 commit；不要把 Chrome tab 的聊天輸出當成唯一真相。',
     ],
     codex: [
-      '你正在 Codex/A1 執行。請以 /Users/pagemacmini/maplab-ai-handbook 為正式 repo，先讀下方 repo path，再做任何修改。',
+      '你正在 Codex 執行。請以 /Users/pagemacmini/maplab-ai-handbook 為正式 repo，先讀下方 repo path，再做任何修改。',
       '修改後要留下 review bundle、驗證紀錄與 git commit；不要碰未列入 scope 的 runtime log。',
     ],
-    openclaw: [
-      '你正在 OpenClaw/A6 local worker 接手短任務。只做低風險草稿/整理/分析，輸出 review bundle，不直接發布或改正式真相源。',
-      '所有高風險動作需要 Owner/A1 審查。',
+    gpt: [
+      '你正在 GPT / ChatGPT 接手。你是高判斷研究與第二意見 worker，輸出是 evidence/draft，不是最終系統狀態。',
+      '請優先讀 GitHub raw URL；若無法讀本機 repo、UI、API 或附件，明確列為缺資料，不要補猜。',
     ],
-    claude_tab: [
-      '你正在 legacy Claude tab。這只是相容入口，不是主流程；請依任務模組輸出可審查結果，不要直接發布。',
+    claude_chrome_tab: [
+      '你正在 Claude Chrome tab 接手。這是瀏覽器聊天入口，可做長文推理、企劃與審查，但不是 repo 直接執行環境。',
+      '請回傳可貼回 repo 的結構化結果；不得宣稱已改檔、已發布、已驗證 live UI，除非有外部證據路徑。',
+    ],
+    antigravity: [
+      '你正在 Antigravity 接手。你適合做公開網站、Google 生態與瀏覽器可見狀態的 bounded review。',
+      '若沒有 Owner Chrome 登入態，請只處理 public/live URL 或 A2 提供的 visual bridge evidence，不要要求 secrets 或把缺 cookie 當平台壞掉。',
+    ],
+    gemini: [
+      '你正在 Gemini 接手。你適合做 Google 生態資料理解、長上下文整理、表格/文件分析與策略第二意見。',
+      '你可能看不到本機檔案，所以請優先使用下方 GitHub raw URL；如果無法讀取某個來源，請明確列為 blocker。',
+    ],
+    openclaw: [
+      '你正在 OpenClaw 接手。你是 browser/operator worker，負責截圖、讀回、copy/paste 到 ChatGPT/Gemini/NotebookLM 與 UI smoke。',
+      '只做 bounded evidence，不決定策略、不發布、不改正式真相源；所有高風險動作需要 Owner/A1 審查。',
+    ],
+    hermes: [
+      '你正在 Hermes 接手。你是 cold-path 摘要、scaffold、question pack 與低風險整理 worker。',
+      '不要擁有 hot-path Telegram 決策或正式策略結論；輸出要讓 Codex/A1/B 角色可驗證後整合。',
+    ],
+    gemini_chrome_tab: [
+      '你正在 Gemini Chrome tab 接手。這是使用 Owner 瀏覽器登入態的 Gemini web UI / side tab 路徑，適合人工貼上資料與讀回回覆。',
+      '請回傳 raw response、重點摘要與缺資料；不要宣稱已改 repo、已發文、已改 Ads 或已完成外部系統動作。',
     ],
   };
-  return map[runtime] || map.gemini;
+  return map[target] || map.claude_code;
 }
 function getTaskText() {
   return el('taskInput')?.value.trim() || '';
@@ -558,7 +603,8 @@ function buildModuleHandoff(role, module, recallText, parsed, runtime, base) {
   const lines = [];
   lines.push(`# MAPLAB ${module.role_id} Runtime Handoff`);
   lines.push('');
-  lines.push(`runtime_target: ${runtime}`);
+  lines.push(`runtime_target: ${normalizeRuntimeTarget(runtime)}`);
+  lines.push(`runtime_target_label: ${runtimeTargetLabel(runtime)}`);
   lines.push(`module_id: ${module.module_id}`);
   lines.push(`canonical_repo: /Users/pagemacmini/maplab-ai-handbook`);
   lines.push(`github_module: ${rawUrl(base, `chrome-extension/task-modules/${role}.json`)}`);
@@ -703,7 +749,8 @@ async function injectToClaudeTab() {
 // === Display ===
 function updatePromptDisplay() {
   const role = el('roleSelect').value;
-  const runtime = el('runtimeSelect')?.value || 'gemini';
+  const runtime = normalizeRuntimeTarget(el('runtimeSelect')?.value || 'claude_code');
+  if (el('runtimeSelect') && el('runtimeSelect').value !== runtime) el('runtimeSelect').value = runtime;
   const base = el('githubRawBase')?.value.trim() || DEFAULT_BASE;
   if (!role) {
     el('promptBoxLabel').textContent = '總覽模式';
@@ -717,7 +764,7 @@ function updatePromptDisplay() {
     el('roleStatus').innerHTML = '';
   } else {
     const module = cachedRoleModules[role];
-    el('promptBoxLabel').textContent = `${role} → ${runtime} handoff`;
+    el('promptBoxLabel').textContent = `${role} → ${runtimeTargetLabel(runtime)} handoff`;
     el('promptLabel').textContent = `⚡ ${role} Runtime Handoff Prompt`;
     renderModulePanel(role, module);
 
@@ -793,7 +840,7 @@ function copyPrompt() {
 function copyHandoff() {
   const role = el('roleSelect').value;
   const module = cachedRoleModules[role];
-  const runtime = el('runtimeSelect')?.value || 'gemini';
+  const runtime = normalizeRuntimeTarget(el('runtimeSelect')?.value || 'claude_code');
   const base = el('githubRawBase')?.value.trim() || DEFAULT_BASE;
   const text = buildModuleHandoff(role, module, cachedRecallPrompts[role], cachedParsed, runtime, base);
   if (!text || text.startsWith('//')) return;
@@ -886,7 +933,7 @@ async function loadAll() {
   const base  = data.githubRawBase || DEFAULT_BASE;
   const token = data.githubToken  || '';
 
-  if (data.lastRuntime && el('runtimeSelect')) el('runtimeSelect').value = data.lastRuntime;
+  if (data.lastRuntime && el('runtimeSelect')) el('runtimeSelect').value = normalizeRuntimeTarget(data.lastRuntime);
   if (data.lastTask && el('taskInput')) el('taskInput').value = data.lastTask;
 
   try {
@@ -912,7 +959,7 @@ async function loadAll() {
 
     el('overdueCount').textContent = cachedOverdue.length > 0 ? `⏰ ${cachedOverdue.length}` : '';
     const vb = document.getElementById('versionBadge');
-    if (vb) vb.textContent = formatVersion(chrome.runtime.getManifest?.().version || '5.6.0');
+    if (vb) vb.textContent = formatVersion(chrome.runtime.getManifest?.().version || '5.6.1');
     const moduleCount = cachedModuleIndex?.modules?.length || 0;
     setStatus('ok', `${formatVersion(cachedParsed.version)} ｜ 模組 ${moduleCount} 已載入`);
   } catch(e) {
@@ -926,7 +973,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const data = await chrome.storage.local.get(['githubRawBase','githubToken','lastRuntime','lastTask']);
   el('githubRawBase').value = data.githubRawBase || DEFAULT_BASE;
   el('githubToken').value   = data.githubToken   || '';
-  if (data.lastRuntime && el('runtimeSelect')) el('runtimeSelect').value = data.lastRuntime;
+  if (data.lastRuntime && el('runtimeSelect')) el('runtimeSelect').value = normalizeRuntimeTarget(data.lastRuntime);
   if (data.lastTask && el('taskInput')) el('taskInput').value = data.lastTask;
 
   if (data.githubToken) {
@@ -957,7 +1004,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
   el('runtimeSelect').addEventListener('change', () => {
     updatePromptDisplay();
-    chrome.storage.local.set({ lastRuntime: el('runtimeSelect').value });
+    chrome.storage.local.set({ lastRuntime: normalizeRuntimeTarget(el('runtimeSelect').value) });
   });
   el('handoffBtn')?.addEventListener('click', copyHandoff);
   el('copyBtn')?.addEventListener('click', copyPrompt);

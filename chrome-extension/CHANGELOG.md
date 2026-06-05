@@ -1,5 +1,11 @@
 # Chrome Extension Changelog
 
+## v5.6.1 — 2026-06-05
+變更者：A1 Codex
+- **交接目標拆細**：runtime selector 從 4 個粗分類擴充為 Claude Code、Codex、GPT/ChatGPT、Claude Chrome tab、Antigravity、Gemini、OpenClaw、Hermes、Gemini Chrome tab。
+- **Prompt 人話化**：handoff 會輸出 `runtime_target_label`，並依目標加入對應使用邊界，避免把 browser chat、repo runtime、operator worker 與 cold-path worker 混在一起。
+- **舊值相容**：既有 `claude_tab` / `gemini` / `codex` / `openclaw` 儲存值仍可正常載入。
+
 ## v5.6.0 — 2026-05-29
 變更者：A1 Codex
 - **召喚任務欄位**：新增 `召喚任務` textarea，Owner 可直接輸入本次要交辦的目標，handoff prompt 會帶入 `本次召喚任務`。

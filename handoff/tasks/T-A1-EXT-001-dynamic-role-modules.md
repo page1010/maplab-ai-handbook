@@ -1,7 +1,7 @@
 # T-A1-EXT-001 — GitHub Dynamic Role Task Modules
 
 狀態：🔄 in_progress
-Owner request：把網路上 GitHub Chrome Extension 動態連結改成任務模組，讓 Gemini / Codex / OpenClaw 都能接角色、知道讀什麼、影響誰、產出去哪裡。
+Owner request：把網路上 GitHub Chrome Extension 動態連結改成任務模組，讓 Claude Code / Codex / GPT / Claude Chrome tab / Antigravity / Gemini / OpenClaw / Hermes / Gemini Chrome tab 都能接角色、知道讀什麼、影響誰、產出去哪裡。
 
 ## Scope
 
@@ -31,7 +31,7 @@ Owner request：把網路上 GitHub Chrome Extension 動態連結改成任務模
 Update Chrome extension UI to add:
 
 1. role module selector
-2. runtime target selector: Gemini / Codex / OpenClaw / legacy Claude
+2. runtime target selector: Claude Code / Codex / GPT / Claude Chrome tab / Antigravity / Gemini / OpenClaw / Hermes / Gemini Chrome tab
 3. impact preview panel
 4. one-click copy of platform-neutral handoff pack
 5. Markdown freshness check so changed `.md` files are detected before dispatch
@@ -40,4 +40,4 @@ Update Chrome extension UI to add:
 
 我是 A1/Codex。請先讀 `CURRENT_STATUS.md`、`pitfalls.md`、`handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md`。
 接著讀 `docs/extension/dynamic-role-task-modules.md` 與 `workbook/task_modules/role_module_relationships.csv`。
-下一步是修改 `chrome-extension/popup.html` / `popup.js`，讓側邊欄可讀 `chrome-extension/task-modules/index.json`，顯示角色模組、影響關係、runtime target、Markdown freshness，並產生 Gemini/Codex/OpenClaw 共用的 handoff prompt。
+下一步是修改 `chrome-extension/popup.html` / `popup.js`，讓側邊欄可讀 `chrome-extension/task-modules/index.json`，顯示角色模組、影響關係、runtime target、Markdown freshness，並產生跨 Claude Code / Codex / GPT / Claude Chrome tab / Antigravity / Gemini / OpenClaw / Hermes / Gemini Chrome tab 共用的 handoff prompt。

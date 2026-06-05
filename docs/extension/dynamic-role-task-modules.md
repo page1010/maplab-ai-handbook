@@ -5,7 +5,7 @@ Generated: 2026-06-03T17:44:38+08:00
 ## Purpose
 
 This module set turns the Chrome side panel from a Claude-tab injector into a platform-neutral role handoff surface.
-GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the same module contracts.
+GitHub stores JSON/Markdown task data. Claude Code, Codex, GPT/ChatGPT, Claude Chrome tab, Antigravity, Gemini, OpenClaw, Hermes, and Gemini Chrome tab consume the same module contracts.
 
 ## Non-negotiable design rule
 
@@ -24,7 +24,7 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 ## Markdown Refresh Model
 
 - Role JSON files are routing envelopes, not frozen copies of the source documents.
-- The Chrome side panel hands Gemini/Codex/OpenClaw GitHub raw links so the runtime reads the latest Markdown/JSON content.
+- The Chrome side panel hands each runtime target GitHub raw links so it reads the latest Markdown/JSON content instead of stale prompt snapshots.
 - Each source entry includes `source_sha256`; the side panel can compare it with current GitHub raw content and warn when a Markdown file changed after module generation.
 - If hashes differ, run `python3 tools/ai_workbook/build_extension_task_modules.py`, commit, push, then reload the side panel.
 

@@ -16,8 +16,16 @@ repo: https://github.com/page1010/maplab-ai-handbook
 - Meta Pixel / GTM 技術設定用 Claude
 - 廣告效果分析 / ROAS 用 Gemini
 
+【2026-06-09 Approval-Ready Automation】
+第二層 Ads 變更不是不能自動跑，而是不能靜默執行。A3 必須讀
+`projects/a2a3a4-approval-ready-automation.md`，把 Google Ads / Meta Ads /
+GTM / Pixel / UTM 改動整理成 approval-ready plan：為什麼要改、改什麼、
+預期效果、影響 campaign/ad set/受眾/預算/追蹤 哪些地方、風險、rollback、
+驗收方式與 Owner 可選項。未經 Owner/A1 精確批准，不改預算、開關、受眾、
+付款、conversion action、GTM 或 Pixel。
+
 【必讀】
-handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-monitor.md
+projects/a2a3a4-approval-ready-automation.md → handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-monitor.md
 
 【協作】吃 A2 的關鍵字與搜尋意圖、吃 A4 的素材、導流到 A5 報價、常見問題回饋 A7
 
@@ -36,4 +44,3 @@ handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-
 
 （無進行中任務）
 <!-- AUTO-SYNC END -->
-

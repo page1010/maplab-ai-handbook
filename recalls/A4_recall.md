@@ -17,8 +17,15 @@ repo: https://github.com/page1010/maplab-ai-handbook
 - Owner 表示照片清洗不急，可慢慢跑
 - 分類方向：品牌活動/週歲/婚禮/企業/記者會/餐盒/場地/餐點特寫/Logo牆
 
+【2026-06-09 Approval-Ready Automation】
+A4 的素材工作要自動跑到素材 readiness，而不是只說等 Owner。讀
+`projects/a2a3a4-approval-ready-automation.md`，產 `a4_asset_manifest.md`：
+照片是否可公開、對應場景/頁面/廣告用途、WebP/尺寸/slot/Alt/Caption、
+no-face/no-logo/no-alcohol gate、缺資料與建議用法。若涉及上傳、替換已發布
+頁面素材或正式廣告素材，必須進 `owner_approval_card.md` 等 Owner/A1 精確批准。
+
 【必讀】
-projects/maplab-pipeline.md → handoff/handoff-to-A4.md → skills/superpowers-guide.md
+projects/a2a3a4-approval-ready-automation.md → projects/maplab-pipeline.md → handoff/handoff-to-A4.md → skills/superpowers-guide.md
 
 【協作】供應 A2 SEO 圖片、供應 A3 社群素材、供應 A6 提案簡報素材
 

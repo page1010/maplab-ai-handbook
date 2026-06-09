@@ -87,6 +87,26 @@ GSC 關鍵字排名    ──→  文章選題依據
 3. **數據驅動選題** — A2 寫新文章前，先看 A3 的 GSC 數據和 PMax 報告
 4. **Session Log 互通** — 任一方完成任務後，標註影響到對方的變更
 
+### Approval-Ready Automation（A2/A3/A4）
+
+A2/A3/A4 的第二層任務不是「因為需要 Owner 批准所以停止」。正確流程是
+自動跑到 approval-ready plan，整理好：
+
+- 為什麼要改。
+- 現有證據。
+- 準備改什麼。
+- 預期效果。
+- 影響哪些 WordPress page/post、Google Ads、Meta Ads、GTM/Pixel、預算、素材或 CTA。
+- 風險與 rollback。
+- 驗收方式。
+- Owner 可以批准、提問、退回或縮小的選項。
+
+必讀：`projects/a2a3a4-approval-ready-automation.md`。
+
+未經 Owner/A1 精確批准，不得發布 WordPress、修改已發布頁面、改 Google Ads /
+Meta Ads 預算/受眾/開關/付款、改 GTM/Pixel/conversion action、或改 Rank Math
+付費/退訂相關設定。
+
 ---
 
 ## SECTION 1.2 — 跨部門協作關係圖

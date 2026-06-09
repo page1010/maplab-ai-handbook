@@ -32,6 +32,7 @@ Owner 修正第二層自動化定義：正式 WordPress / Google Ads / Meta Ads 
 Owner 可以批准、提問、退回或縮小範圍。
 
 新增協議：`projects/a2a3a4-approval-ready-automation.md`
+Implementation commit：`4988747`
 
 狀態定義：
 

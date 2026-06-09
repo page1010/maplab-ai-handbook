@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-06-01 A1 晚間巡查 + B1 Builder Investment OS dashboard runtime freshness repair（A1 巡查：B1 今晨 review(b1) 03401e8 景氣燈號39紅燈✅；A2 ~121h/~5.1天無commit；A4 S11 ~1077h/~44.9天Colab崩潰🔴；A5 ~324h/~13.5天；A6 ~324h/~13.5天；GCP帳單~44.9天未處理🔴。B1 repair：18501/18502/8501 first-screen fresh；review bundle `workbook/reviews/JOB-B1-BUILDER-20260601/`）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-06-09 A2/A3/A4 approval-ready automation protocol 落地（第二層正式外部變更可自動規劃到可批准狀態；未經 Owner/A1 精確批准前不靜默改 WordPress / Google Ads / Meta Ads / GTM / Pixel / Rank Math / 預算 / 開關）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -19,6 +19,7 @@
 
 ## 最新事實核對
 
+- 2026-06-09：A2/A3/A4 approval-ready automation 規則落地。新增 `projects/a2a3a4-approval-ready-automation.md`，並更新 `AGENT_RULES.md`、`projects/a2-ads-seo-wordpress-patrol.md`、`handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md`、`recalls/A2_recall.md`、`recalls/A3_recall.md`、`recalls/A4_recall.md`。Owner 校正：正式 WordPress / Google Ads / Meta Ads / Rank Math / GTM / Pixel / 預算 / 開關等第二層變更不是不能自動跑，而是要自動整理成 approval-ready plan，說清楚為什麼要改、改什麼、預期效果、影響範圍、風險、rollback、驗收方式與 Owner 可選項；Owner/A1 精確批准後才可進 execution mode。
 - 2026-06-01：B1 Builder 依 MAPLAB B1 runtime handoff 修復 Investment OS Dashboard stale-data closed loop。Investment OS root cause：runtime dashboard copy 舊、launcher 只看 health OK 不替換舊 Streamlit、file watcher disabled、台股 LaunchAgent weekday 寫成 Tue-Sat、18502/8501 tmux-only 不耐久、Dashboard 優先讀舊 command_status。已修 `launch_dashboard.sh`、台股市場 LaunchAgents Mon-Fri、新增 launchd-backed `dashboard-mobile`/`dashboard-local`、更新 Dashboard command-board source priority、補跑 Investment OS runtime jobs 與 no-send browser-backed GPT refresh。驗證：Investment OS `18501/18502/8501` first screen 均顯示 `行情日 2026-06-01`、`AI研究日 2026-06-01`、`Agent板 06/01` 且 stale top-strip dates=0；pytest `23 passed`。MAPLAB B1 bundle：`workbook/reviews/JOB-B1-BUILDER-20260601/`。未讀 secrets、未碰 broker orders、未發 Telegram、未發布 WordPress/Ads/Rank Math。
 - 2026-05-11：正式 repo = `/Users/pagemacmini/maplab-ai-handbook`；`/Users/pagemacmini/Downloads/maplab-ai-handbook-main` 為非 git 下載副本，只能作遷移/歷史參考，不得作為正式工作目錄。
 - 2026-05-29：跨專案 Agent 召喚工作場景流程圖完成：MAPLAB 版 `docs/cross-project-agent-summon-workflow-map.md`，Investment OS 對應版 `/Users/pagemacmini/Documents/New project/docs/AGENT_SUMMON_WORKFLOW_MAP.md`。內容定義 Chrome Extension / Agent Office / Telegram / Codex 入口，GPT、Codex、Claude Code、Claude Chrome tab、Gemini、NotebookLM、Antigravity、Hermes、OpenClaw、local model、Windows agent 的使用場景與 why，並規劃 Windows 收盤後資訊商資料包送 Mac mini 地端模型/Hermes/B2/Codex 研究排程。未讀 secrets、未碰券商/下單/模擬單、未發布。

@@ -34,6 +34,22 @@ A2 可直接做：
 - SEO / Ads / WordPress 的 read-only evidence matrix。
 - 明確標為 proposal 的文案、landing page plan、內連結建議。
 
+## Approval-Ready Automation
+
+A2/A3/A4 的第二層任務不是停止在「需 Owner 批准」。正確輸出是
+approval-ready plan：先自動整理為什麼要改、改什麼、預期效果、影響範圍、
+風險、rollback、驗收方式與 Owner 可選項，讓 Owner 可以直接批准、提問或退回。
+
+必讀協議：`projects/a2a3a4-approval-ready-automation.md`
+
+預設閉環：
+
+1. A4 產素材 readiness / slot / WebP / alt / caption manifest。
+2. A2 產 SEO / WordPress / landing / 內連結 plan。
+3. A3 產 Google Ads / Meta Ads / GTM / Pixel / UTM plan。
+4. A2 整合 `owner_approval_card.md`。
+5. Owner 批准精確範圍後，才進 execution mode。
+
 A2 不可直接做：
 
 - 發布 WordPress。
@@ -52,3 +68,11 @@ A2 不可直接做：
 - `ads_landing_alignment.md`
 - `safe_fix_log.md`
 - `review_request.md`
+
+如果巡查發現需要正式外部變更，還必須補：
+
+- `a4_asset_manifest.md`
+- `a2_seo_wordpress_plan.md`
+- `a3_ads_strategy_plan.md`
+- `owner_approval_card.md`
+- `integration_review.md`

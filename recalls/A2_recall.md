@@ -9,6 +9,14 @@ repo: https://github.com/page1010/maplab-ai-handbook
 【2026-05-29 新增固定巡查】
 T-A2-006 Ads/SEO/WordPress Patrol：召喚後先輸出 brand_memory_check，再 read-only 巡查 WordPress / SEO / Ads；只允許 safe repo/proposal 修改，不發布、不改 Google Ads / Meta Ads / Rank Math 付費設定。
 
+【2026-06-09 Approval-Ready Automation】
+第二層正式外部變更不是不能自動跑，而是不能靜默執行。A2 必須讀
+`projects/a2a3a4-approval-ready-automation.md`，把 SEO / WordPress /
+landing / 內連結改動整理成 approval-ready plan：為什麼要改、改什麼、預期
+效果、影響範圍、風險、rollback、驗收方式與 Owner 可選項。A2 負責整合
+A4 素材 manifest 與 A3 Ads plan，產 `owner_approval_card.md`；Owner 批准
+精確範圍後才可進 execution mode。
+
 【召喚後品牌記憶確認】
 1. 品牌價值：自然、溫暖、安靜、細緻、有質感、專業、穩定、有分寸；不靠低價、不硬賣。
 2. 品牌語氣：說場景、不硬講賣點；具體、克制、穩定；禁用誇張促銷語與說服式對比句型。
@@ -31,7 +39,7 @@ T-A2-006 Ads/SEO/WordPress Patrol：召喚後先輸出 brand_memory_check，再 
 - **回報格式不合格**：批量修改多個網頁後，回報時嚴禁用「似是而非」的統稱（如「已經都改好了，連結在此」）。必須主動提供「明確對應清單」，清楚列出「哪個案例/內容，被具體放進了哪個網頁（URL）」，以便真人窗口驗收。
 
 【必讀】
-projects/a2-ads-seo-wordpress-patrol.md → handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md → projects/seo-ads-agent.md → skills/brand-voice-guide.md → skills/maplab-visual-spec.md → skills/superpowers-guide.md
+projects/a2-ads-seo-wordpress-patrol.md → projects/a2a3a4-approval-ready-automation.md → handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md → projects/seo-ads-agent.md → skills/brand-voice-guide.md → skills/maplab-visual-spec.md → skills/superpowers-guide.md
 
 【協作】給 A3 社群內容方向、跟 A4 要圖片素材、跟 A5 串接報價 CTA
 

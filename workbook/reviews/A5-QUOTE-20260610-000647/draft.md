@@ -1,0 +1,126 @@
+> 金額校正：使用者預算解析為 NT$50,000（來源：預算5萬；萬=10,000）。
+
+Thinking...
+Here's a thinking process to generate the desired response:
+
+1.  **Analyze the Request:**
+    *   **Role:** MAPLAB A5 Quoting and Proposal Engine (This dictates the 
+tone, structure, and required output format).
+    *   **Goal:** Generate a draft quotation/proposal in Markdown format ba
+based on user input.
+    *   **Crucial Constraint:** The response *must* end with a single JSON 
+block following the "組合法" example structure.
+    *   **User Input (The Need):**
+        *   Client Name: 李四
+        *   Event Type: 尾牙 (Year-end party/Galas)
+        *   Headcount: 50人 (50 people)
+        *   Budget: 5萬 (NT$ 50,000)
+        *   Date/Time: 12/31 晚上 (December 31st evening)
+
+2.  **Determine the Proposal Content (Markdown Structure):**
+    *   The proposal needs to be professional and address all the client's 
+requirements (client name, event type, date, headcount, budget).
+    *   Since it's a "draft," I need to categorize potential services (e.g.
+(e.g., Venue/Setup, Catering, Entertainment).
+
+3.  **Drafting the Markdown Proposal:**
+    *   *Title:* Needs to be clear and professional.
+    *   *Salutation:* Address the client (李先生/女士).
+    *   *Summary:* Recap the event details.
+    *   *Proposed Package/Items:* Structure this logically, keeping the 50k
+50k budget in mind. I'll create a sample package that fits a typical corpor
+corporate year-end party structure.
+
+4.  **Constructing the JSON Payload (The Technical Part):**
+    *   *Action:* `createQuote`
+    *   *clientName:* "李四"
+    *   *eventType:* "尾牙/年末晚會"
+    *   *headcount:* 50
+    *   *budget:* 50000 (Assuming NTD or a standard currency format)
+    *   *items:* I need to estimate key services and quantities. For a draf
+draft, specifying major item categories is sufficient.
+
+    *Self-Correction/Refinement for JSON Items:* Instead of listing many sm
+small items, I will list the main components that constitute the event pack
+package, making it actionable.
+
+5.  **Final Review and Assembly:**
+    *   Check markdown formatting (headings, bolding).
+    *   Ensure the JSON is perfectly formatted and placed at the end.
+    *   Verify all constraints are met (Markdown draft + Mandatory JSON blo
+block). (This structure looks good.)
+...done thinking.
+
+# 🗓️ MAPLAB A5 活動報價與提案草稿
+
+**致：** 李四 先生/女士
+**日期：** 2024年[當前月份]
+**專案名稱：** 年末尾牙晚會活動規劃
+**初步參考人次：** 50 位
+**預算範圍參考：** NT$ 50,000
+
+---
+
+### ✨ I. 活動概覽與建議定位
+
+根據您提供的需求（12/31，50位，預算約新台幣 5 萬元），本報價草稿規劃一場溫馨
+且高參與度的「年終慶尾牙晚會」。由於時間點極為關鍵（除夕前夜或跨年夜），活動
+需著重於主題氛圍營造和高品質的互動娛樂，在預算限制下，建議採用「精簡化、提升
+主題感」的模式。
+
+**📅 提案活動日：** 12 月 31 日 (晚上)
+**✅ 人數規模：** 50 位
+**🎯 主題方向：** 「閃耀年終慶典」（Glamorous Year-End Gala）
+
+### ✨ II. 預算分配與建議方案（草稿參考）
+
+我們將費用分為三大核心區塊，以確保在 NT$ 50,000 的預算範圍內提供最佳的活動體
+驗。
+
+| 品項分類 | 細項內容 (建議) | 初步成本佔比 | 考量重點/功能性 |
+| :--- | :--- | :--- | :--- |
+| **A. 場地與佈置** | *小型宴會空間租借* | 30% | 根據預算，優先選擇具備良好
+氛圍燈光和基礎設備的小型餐飲空間或活動室。包含簡易主題裝飾（如：金色、銀色氣
+球拱門）。 |
+| **B. 餐飲服務** | *簡約自助餐點/餐盒* | 35% | 為維持預算，建議採用「輕食套
+餐」或小型自助餐形式，而非傳統正餐，可增加活動時間彈性。包含開場迎賓茶點。 
+|
+| **C. 活動流程與娛樂** | *主持人、簡易互動遊戲* | 35% | 規劃環節：報到指引
+ $\rightarrow$ 開場暖身音樂 $\rightarrow$ 主持人英文/中文串場（2-3小時）$\r
+$\rightarrow$ 小獎勵或表揚。重點在於「流程設計」而非昂貴的表演者。 |
+
+### ✨ III. 詳細費用預估細目 (Draft Estimate)
+
+| 項目名稱 | 規格描述 | 單位數量/份數 | 單價參考 (NTD) | 總計預算佔用 (NTD)
+(NTD) |
+| :--- | :--- | :--- | :--- | :--- |
+| **場地租賃費** | 活動室/宴會廳租借（4小時） | 1 場次 | $X,XXX - Y,YYY$ | 
+$~8,000$ |
+| **餐飲服務** | 精選輕食自助點心 (50人份) | 50 人 | $200/人$ | $10,000$ |
+| **主題佈置與用品** | 主視覺、氣球拱門、背景板等 | 1 套 | N/A | $4,000 - 6
+6,000$ |
+| **活動流程及主持** | 活動規劃設計費、專業主持人（半天） | 1 場次 | N/A | 
+$8,000 - 12,000$ |
+| **【預留彈性金】** | *用於應變或提升遊戲道具* | - | - | ~$12,000 - $18,00
+$18,000 |
+
+***備註：本報價為概念草稿，實際費用需依據最終場地、菜色和活動細節確定。我們
+將在確認需求後提供更精準的報價單。***
+
+---
+【極端重要】根據您的需求輸入產生以下的 JSON 組合法區塊：
+
+```json
+{
+  "action": "createQuote",
+  "clientName": "李四",
+  "eventType": "年終尾牙晚會",
+  "headcount": 50,
+  "budget": 50000,
+  "items": [
+    {"name": "活動場地與佈置", "quantity": 1},
+    {"name": "精選輕食自助餐點 (50人份)", "quantity": 50},
+    {"name": "專業主持人及流程規劃", "quantity": 1}
+  ]
+}
+```

@@ -1,0 +1,138 @@
+> 金額校正：使用者預算解析為 NT$40,000（來源：4萬；萬=10,000）。
+
+Thinking...
+Here's a thinking process to generate the desired output:
+
+1.  **Analyze the Request & Persona:**
+    *   **Persona:** MAPLAB A5 Quoting and Proposal Engine. (Must sound pro
+professional, organized, and ready for formal proposal generation).
+    *   **Output Format:** Markdown draft quote/proposal + a final JSON obj
+object (following a specific schema).
+    *   **Critical Constraint:** The response MUST end with the executable 
+JSON block.
+
+2.  **Extract User Needs (The Variables):**
+    *   *Client:* 台北科技大學 (Taipei University of Science and Technology
+Technology)
+    *   *Event Type:* 研討會 (Seminar/Symposium)
+    *   *Headcount:* 100人 (100 people)
+    *   *Budget:* 4萬 (NT$ 40,000)
+    *   *Date/Time:* 10/10, 早上九點到下午一點 (Oct 10, 9:00 AM - 1:00 PM)
+    *   *Location:* 台北大安區 室內 (Taipei Da'an District, Indoor)
+    *   *Meal Focus:* 主食 (Main meal/Lunch focus is implied due to the tim
+time frame and "主食").
+
+3.  **Structure the Proposal Draft (Markdown):**
+    *   Needs a formal title/header.
+    *   Summarize the event details clearly (Confirmation).
+    *   Propose suitable packages/items based on the needs (Seminar format 
++ Lunch + 100 pax).
+    *   Calculate an estimated cost structure that fits or suggests alignme
+alignment with the 40,000 budget while providing detail.
+
+    *Self-Correction/Detailing:* For a 9 AM - 1 PM seminar, the main meal i
+is likely lunch (noonish). The package should include: Venue/Setup, Coffee 
+Break/AM Snack, Main Meal (Lunch), and potentially materials/A/V support. S
+Since the budget is fixed at $40,000, I need to keep the items cost-effecti
+cost-effective yet high quality.
+
+    *   *Drafting Items:*
+        1.  Venue Rental (Partial day use).
+        2.  AM Refreshments/Coffee Break.
+        3.  Lunch Set Menu (for 100 pax).
+        4.  Basic A/V Setup.
+
+4.  **Generate the JSON Object:**
+    *   `action`: "createQuote"
+    *   `clientName`: "台北科技大學"
+    *   `eventType`: "研討會"
+    *   `headcount`: 100
+    *   `budget`: 40000 (Using the numeric value for currency/integer)
+    *   `items`: Need specific item names and quantities.
+
+    *Mapping Items to JSON:*
+    *   Item 1: Venue Rental / Setup (Quantity: 1 - representing the full s
+service package).
+    *   Item 2: Breakfast Box (Coffee Break) (Quantity: 100).
+    *   Item 3: Lunch Set Meal (主餐) (Quantity: 100).
+
+5.  **Final Review and Polish:** Combine the structured Markdown proposal w
+with the mandated JSON block, ensuring the tone matches a professional "Eng
+"Engine." (The plan looks solid.)
+...done thinking.
+
+## 💻 MAPLAB A5 報價單草稿生成中...
+***
+
+# 【MAPLAB A5】研討會活動提案與報價草案 v1.0
+
+**客戶：** 台北科技大學
+**日期：** 2024年X月X日 (參考)
+**提案活動：** 學術研討會
+**場次人數：** 100 人
+**目標預算區間：** 新台幣 $40,000 元
+
+---
+
+### 📋 一、活動需求確認摘要
+
+| 項目 | 詳細內容 | 備註 |
+| :--- | :--- | :--- |
+| **客戶名稱** | 台北科技大學 (TUT) | |
+| **活動類型** | 學術研討會/講座 | 室內，專業會議場地為主。 |
+| **日期/時段** | 10 月 10 日 / 9:00 AM – 1:00 PM | 包含上午點心及午餐主食時
+間安排。 |
+| **活動人數** | 100 人 (預估) | 基於此人數為套餐設計。 |
+| **需求重點** | 場地租賃、專業布置、完整周餐（著重主食）、設備支援。 |
+
+### ✨ 二、服務方案建議：學術菁英聯誼會套餐 (The Academic Elite Package)
+
+考量到貴單位在上午至中午時段的研討會性質，我們將主打「高效能交流」與「簡約專
+業」，專為學術交流設計最適合且符合預算的餐飲及場地方案。
+
+**📅 建議行程規劃 (9:00 AM - 1:00 PM)：**
+*   **9:00 - 9:30：** 活動報到與暖身時間。
+*   **9:30 - 11:45：** 專業演講/研討環節 (主體活動)。
+*   **11:45 - 12:30：** 午餐餐點供應（重點主食）。
+*   **12:30 - 1:00：** 問答與結案交流。
+
+### 🍎 三、品項報價預估 (針對 $40,000 元預算區間)
+
+| 編號 | 品項名稱/服務內容 | 詳細說明 | 數量 (人次) | 單價預計 (NTD) | 小計
+預計 (NTD) |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **A** | **場地與設備服務費** | 半日會議室租用、PPT投影設備、麥克風系統、桌
+椅佈置。 | 1 場次 | $8,000 - $12,000 | N/A (計入總額) |
+| **B** | **上午點心餐（茶歇）** | 精選咖啡與簡易烘焙點心 (Coffee Break)，提
+升參與者能量。 | 100 人次 | $80 - $120 | N/A (計入總額) |
+| **C** | **午間主食套餐** | 高營養、高飽足感的便餐盒（如：米飯搭配肉類、沙
+拉），確保主食需求。 | 100 人次 | $180 - $250 | N/A (計入總額) |
+| **D** | **服務及周邊雜項** | 場務人員配置、物資備品等行政支持費用。 | 1 套
+組 | 約 $4,000 | N/A (保底預留空間) |
+
+> **💡 【報價說明】**：基於 100 人，若採用高品質的場地與餐飲搭配（C類為核心
+支出），總預估費用將落在 NT$ 35,000 - NT$ 42,000 區間。本草案已針對您 $40,0
+$40,000 的預算目標進行精準配置，建議以**「中高階學術套餐」**執行，確保服務品
+質與效益的最大化。
+
+---
+***（請注意：此為初步報價單草稿，實際費用需根據最終選定的場地及供應商確認。
+）***
+
+---
+
+### 🤖 JSON 數據結構輸出 (極端重要)
+```json
+{
+  "action": "createQuote",
+  "clientName": "台北科技大學",
+  "eventType": "研討會",
+  "headcount": 100,
+  "budget": 40000,
+  "items": [
+    {"name": "會議場地使用費 (半日)", "quantity": 1},
+    {"name": "上午茶歇點心套餐", "quantity": 100},
+    {"name": "午間主食便餐盒", "quantity": 100}
+  ]
+}
+```

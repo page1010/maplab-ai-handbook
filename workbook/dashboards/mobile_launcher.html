@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MAPLAB 戰情啟動器 (Mobile / Tailscale 版)</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6f8; color: #333; margin: 0; padding: 20px; }
+    h1 { color: #1a73e8; }
+    .card { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    a { color: #1a73e8; text-decoration: none; font-weight: bold; }
+    a:hover { text-decoration: underline; }
+    .btn { display: inline-block; padding: 10px 15px; background: #1a73e8; color: white; border-radius: 5px; margin-top: 10px; }
+    .btn:hover { background: #1557b0; color: white; text-decoration: none; }
+    .warning { border-left: 4px solid #f29900; background: #fff8e1; padding: 10px; margin-bottom: 15px; }
+    code { background: #eee; padding: 2px 5px; border-radius: 4px; font-size: 0.9em; }
+  </style>
+</head>
+<body>
+
+  <h1>MAPLAB 戰情啟動器 (Mobile / Tailscale)</h1>
+  
+  <div class="warning">
+    <strong>💡 手機外出連線指南 (Tailscale)</strong><br>
+    目前的系統服務（如 8501 即時面）運行在 Mac 本機，並未對外公開。要在手機上安全連線，請遵循以下步驟：<br>
+    1. 在 Mac 與手機皆下載並安裝 <strong>Tailscale</strong> 應用程式。<br>
+    2. 使用同一個帳號登入雙邊的 Tailscale。<br>
+    3. Tailscale 會配發一組專屬的 <code>100.x.x.x</code> 內部 IP 給你的 Mac。<br>
+    4. 手機開啟 Tailscale VPN 後，打開瀏覽器輸入 <code>http://[Mac的Tailscale-IP]:8501</code> 即可安全存取 Streamlit 戰情面板！<br>
+    5. 本啟動器頁面可直接拖進手機的瀏覽器書籤或儲存為檔案。
+  </div>
+
+  <div class="card">
+    <h2>1. 📱 MAPLAB 角色分派器 (Word 檔)</h2>
+    <p>已經將最新的角色、部門與複製召喚提示詞生成為 Word 檔案。你可以將這個檔案 AirDrop 或同步到手機，用手機原生開啟來複製貼上分派任務。</p>
+    <a href="MAPLAB_Roles.docx" class="btn" download>📥 下載/開啟 MAPLAB_Roles.docx</a>
+  </div>
+
+  <div class="card">
+    <h2>2. 📊 Investment OS 即時面 (Streamlit 8501)</h2>
+    <p>由 Codex 維護，直接讀取 DB 呈現各角色最新動態。<br>
+    <small>（本機直接點選；手機請改用 Tailscale IP 取代 127.0.0.1）</small></p>
+    <a href="http://127.0.0.1:8501/" target="_blank" class="btn">👉 開啟 Streamlit (本機)</a>
+  </div>
+
+  <div class="card">
+    <h2>3. 🗺️ MAPLAB 戰情遊戲板 (HTML 本地全貌)</h2>
+    <p>包含全局總覽、負責人、斷鏈訊號等靜態戰情判斷。</p>
+    <a href="maplab-ops-game-dashboard.html" target="_blank" class="btn">👉 開啟 遊戲板 (HTML)</a>
+  </div>
+
+  <div class="card">
+    <h2>4. 🚀 擴充功能召喚 (Chrome Extension)</h2>
+    <p>Chrome 擴充 <code>popup.html</code> 仍然是你在桌機最方便的召喚入口。它已自動讀取最新 JSON，且會動態保持同步。</p>
+  </div>
+
+</body>
+</html>

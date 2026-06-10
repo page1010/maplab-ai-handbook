@@ -192,7 +192,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 27. A1 worktree 清理完成（576e7df 2026-04-07）：清除全部 29 個 worktree（含 peaceful-yalow / interesting-shaw / pedantic-mendeleev），Mac mini 環境整潔。
 28. A1 大整理（9721cc1+9478c79 2026-04-08）：Sheets 18→12頁（隱藏5個、辦公室改資源速查、Specials虛擬範例SP000、REVISION_LOG精簡、DASHBOARD加Agent警示區）；GitHub 廢棄文件（TASK_POOL/TASK_QUEUE/CURRENT_EXECUTION_BOARD/project_state/AI_WORKFLOW_MAP/SYSTEM_MAP）移入 archive/；data/ 舊快照清理。
 29. 新 Task Card（2026-04-08）：T-A1-V6-P2（🔄業務閉環MVP），T-A1-V6-P3（🔲自動化閉環，等P2），T-GBP-001（🔲GBP產品圖更換，等Owner），T-A5-006（🔲OrderLines 2025重建，等T-A5-005），T-A4-002（🔲pagewu1010 187GB Takeout，等T-A4-001完成）。
-30. checkpoint.sh 行為變更（9bb59aa 2026-04-08）：預設改為 branch 模式（存到 agent/Ax-YYYYMMDD，等 Owner approve 才進 main）；--fast 旗標直接進 main（僅 A1 系統操作使用）；新增 approve.sh（一鍵 merge branch 到 main）。CLAUDE.md 已同步更新說明。
+30. checkpoint.sh 行為變更（2026-06-11）：預設直接 commit & push 到 main branch，因為 Git 擁有歷史與回溯功能，有問題直接回滾即可。加上 --branch 旗標可強制存到 agent/ 獨立分支。CLAUDE.md 已同步更新說明。
 31. cold-start 三件套完成（82a8ddf 2026-04-08）：skills/first-principles-check/SKILL.md 新增（決策前/debug超過3輪必跑）。三件套 = pitfalls/SKILL.md + first-principles-check/SKILL.md + docs/glossary.md，已寫入 CLAUDE.md 冷啟動防呆。
 32. A5 T-A5-002 Phase 5 修復（4301369 2026-04-08）：QUOTE_DRAFT 客戶基本資料統一從 D/E/F 欄讀取（框線內），避免業務填兩次。clasp push 成功。Sheet 選單入口/檔名格式/URL 回傳均已修復（aa06a60）。
 33. 環境整備完成（a2b7dd5 2026-04-09）：① Cloudflare API token 已寫入 `bot/.env`（不進 git）；② 技能書 `skills/credentials/cloudflare-api.md` 建立（含權限對照/curl範例/安全提醒）；③ 桌面 `start-telegram-bot.sh` 已刪除（LaunchAgent 取代，不再需要）；④ bot 重啟指令：`sudo launchctl unload/load ~/Library/LaunchAgents/com.maplab.telegrambot.plist`；⑤ LaunchAgent 架構確認：3個服務開機自啟（com.maplab.telegrambot / com.maplab.a6bot / com.maplab.git-pull）；⑥ `CLAUDE_CODE_AUTO_COMPACT_WINDOW=200000` 已在 `.env`（7d17545）；⑦ bot `/reset` 指令已上線（7a8dec8）。

@@ -46,3 +46,4 @@ Step 5 — 輸出 PROJECT STATUS 摘要
 - API key 是彎路，用 OAuth（Max 免費）
 - Code task 不貼 recall prompt = 白做
 - 不要過度回報，Owner 要結果不是分析
+- ⛔ **不要用程式（如開發 Chrome 擴充功能、寫 HTTP API 橋接器）來解決網頁跨對話框控制。這是極大的彎路。** 正確做法是優先使用系統級的 Computer Use、截圖/錄影分析，或簡單的 AppleScript 模擬鍵盤滑鼠直接控制瀏覽器 UI。禁止再開發或維護複雜的瀏覽器通訊橋接器。

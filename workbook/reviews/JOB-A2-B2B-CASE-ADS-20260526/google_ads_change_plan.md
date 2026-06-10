@@ -1,8 +1,9 @@
 # Google Ads Change Plan
 
-日期：2026-05-26
+日期：2026-06-02
 狀態：proposal only
 來源：`reports/google_ads_chrome_round_001.md`
+本輪執行：2026-06-02 依 `commands/ROUND-002-next.md` 更新（proposal-only）
 
 ## Guardrails
 
@@ -10,6 +11,13 @@
 - 不新增、不暫停、不刪 keyword。
 - 不改 final URL / budget / bid / conversion。
 - 本檔只作 Owner/A3 審核前的結構提案。
+- 不發布 WordPress、不改 Meta Ads 設定、不碰 Rank Math。
+
+## Round 009 Context Sync
+
+- WordPress 未發布草稿 `post=1696` 已存入 21 則案例段（`reports/wp_draft_round_009.md`）。
+- Round 008 影像與投放建議包已完成（`ads_landing_settings_round_008.md`、`asset_conversion_manifest_round_008.md`）。
+- 30 張 WebP 尚未上傳（Chrome extension file URL access 未開啟），因此本提案維持「先規劃 URL routing，再等待素材上線」。
 
 ## Diagnosis
 
@@ -84,3 +92,4 @@ keyword row 的 `最終到達網址` 欄都顯示 `—`。這不等於完全沒�
 - 是否允許拆 ad group。
 - 是否允許設定 ad/ad group final URL 到上述 live URLs。
 - 是否保留低搜尋量 keywords 作長尾測試。
+- 是否在 `post=1696` 圖片補齊前先只做低風險 ad copy 草案，不進實作。

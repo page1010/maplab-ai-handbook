@@ -166,3 +166,1713 @@
 【已完成】6 張 Task Card
 ---
 [ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-05-07 09:00:03] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-05-07 09:00
+
+=== MAPLAB 系統巡查 2026-05-07 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+✅ Token refreshed, new expiry: 2026-05-07T02:00:02.944189+00:00
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [30d ago]
+  ⏸️ T-A2A3-001-B (A2): 等 Google 重新索引，預計 04-11 後可驗證 [40d ago]
+  ⏸️ T-A2A3-001 (A2): 等 Google 重新索引，預計 04-11 後可驗證 [40d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [39d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [39d ago]
+
+【進行中】
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [18d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [18d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [3d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [19d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。剩餘：T-A5-003 熱客招待品項定義  [29d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [28d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [29d ago]
+  ⚠️ T-A6-001 (A6): 已新增 Telegram 模式選單（報價/聊天/SEO）+ Ollama 聊天路由；� [3d ago]
+  ⏳ T-B1-001 (??):  [日期不明]
+
+【暫停/待開始】
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [30d ago]
+  💤 T-A7-001 (A7): 暫停中 [40d ago]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-05-08 09:00:01] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-05-08 09:00
+
+[rotate] bot.log: 5574234 → 162047 bytes (kept last 1000 lines)
+[rotate] launchd_stdout.log: 5574234 → 162047 bytes (kept last 1000 lines)
+[rotate] Rotated 2 file(s).
+=== MAPLAB 系統巡查 2026-05-08 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+✅ Token refreshed, new expiry: 2026-05-08T02:00:01.451289+00:00
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [31d ago]
+  ⏸️ T-A2A3-001-B (A2): 等 Google 重新索引，預計 04-11 後可驗證 [41d ago]
+  ⏸️ T-A2A3-001 (A2): 等 Google 重新索引，預計 04-11 後可驗證 [41d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [39d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [39d ago]
+
+【進行中】
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [19d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [19d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [4d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [19d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。剩餘：T-A5-003 熱客招待品項定義  [29d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [28d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [29d ago]
+  ⚠️ T-A6-001 (A6): 已新增 Telegram 模式選單（報價/聊天/SEO）+ Ollama 聊天路由；� [3d ago]
+  ⏳ T-B1-001 (??):  [日期不明]
+
+【暫停/待開始】
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [30d ago]
+  💤 T-A7-001 (A7): 暫停中 [40d ago]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-05-09 09:00:04] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-05-09 09:00
+
+=== MAPLAB 系統巡查 2026-05-09 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+✅ Token refreshed, new expiry: 2026-05-09T02:00:03.848871+00:00
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [32d ago]
+  ⏸️ T-A2A3-001-B (A2): 等 Google 重新索引，預計 04-11 後可驗證 [42d ago]
+  ⏸️ T-A2A3-001 (A2): 等 Google 重新索引，預計 04-11 後可驗證 [42d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [41d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [41d ago]
+
+【進行中】
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [20d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [20d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [5d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [21d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。剩餘：T-A5-003 熱客招待品項定義  [31d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [30d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [31d ago]
+  ⚠️ T-A6-001 (A6): 已新增 Telegram 模式選單（報價/聊天/SEO）+ Ollama 聊天路由；� [5d ago]
+  ⏳ T-B1-001 (??):  [日期不明]
+
+【暫停/待開始】
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [32d ago]
+  💤 T-A7-001 (A7): 暫停中 [42d ago]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-05-10 09:00:02] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-05-10 09:00
+
+=== MAPLAB 系統巡查 2026-05-10 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+✅ Token refreshed, new expiry: 2026-05-10T02:00:02.058485+00:00
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [33d ago]
+  ⏸️ T-A2A3-001-B (A2): 等 Google 重新索引，預計 04-11 後可驗證 [43d ago]
+  ⏸️ T-A2A3-001 (A2): 等 Google 重新索引，預計 04-11 後可驗證 [43d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [42d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [42d ago]
+
+【進行中】
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [21d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [21d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [6d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [22d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。剩餘：T-A5-003 熱客招待品項定義  [32d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [31d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [32d ago]
+  ⚠️ T-A6-001 (A6): 已新增 Telegram 模式選單（報價/聊天/SEO）+ Ollama 聊天路由；� [6d ago]
+  ⏳ T-B1-001 (??):  [日期不明]
+
+【暫停/待開始】
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [33d ago]
+  💤 T-A7-001 (A7): 暫停中 [43d ago]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-05-11 09:00:04] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-05-11 09:00
+
+=== MAPLAB 系統巡查 2026-05-11 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+✅ Token refreshed, new expiry: 2026-05-11T02:00:04.496658+00:00
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [34d ago]
+  ⏸️ T-A2A3-001-B (A2): 等 Google 重新索引，預計 04-11 後可驗證 [44d ago]
+  ⏸️ T-A2A3-001 (A2): 等 Google 重新索引，預計 04-11 後可驗證 [44d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [43d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [42d ago]
+
+【進行中】
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [22d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [22d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [7d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [23d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。剩餘：T-A5-003 熱客招待品項定義  [32d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [31d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [32d ago]
+  ⚠️ T-A6-001 (A6): 已新增 Telegram 模式選單（報價/聊天/SEO）+ Ollama 聊天路由；� [6d ago]
+  ⏳ T-B1-001 (??):  [日期不明]
+
+【暫停/待開始】
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [33d ago]
+  💤 T-A7-001 (A7): 暫停中 [43d ago]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-05-12 09:00:02] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-05-12 09:00
+
+=== MAPLAB 系統巡查 2026-05-12 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+✅ Token refreshed, new expiry: 2026-05-12T02:00:02.420809+00:00
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [35d ago]
+  ⏸️ T-A2A3-001-B (A2): 等 Google 重新索引，預計 04-11 後可驗證 [45d ago]
+  ⏸️ T-A2A3-001 (A2): 等 Google 重新索引，預計 04-11 後可驗證 [45d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [44d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [43d ago]
+
+【進行中】
+  ❓ T-A1-EXT-001-dynamic-role-modules (A1): 狀態未標記 [日期不明]
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [23d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [23d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [8d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [23d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。剩餘：T-A5-003 熱客招待品項定義  [33d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [32d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [33d ago]
+  ⚠️ T-A6-001 (A6): 已新增 Telegram 模式選單（報價/聊天/SEO）+ Ollama 聊天路由；� [7d ago]
+  ⏳ T-B1-001 (??):  [日期不明]
+
+【暫停/待開始】
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [34d ago]
+  💤 T-A7-001 (A7): 暫停中 [44d ago]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-05-13 09:00:03] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-05-13 09:00
+
+=== MAPLAB 系統巡查 2026-05-13 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+✅ Token refreshed, new expiry: 2026-05-13T02:00:02.872954+00:00
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [36d ago]
+  ⏸️ T-A2A3-001-B (A2): 等 Google 重新索引，預計 04-11 後可驗證 [46d ago]
+  ⏸️ T-A2A3-001 (A2): 等 Google 重新索引，預計 04-11 後可驗證 [46d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [45d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [45d ago]
+
+【進行中】
+  ❓ T-A1-EXT-001-dynamic-role-modules (A1): 狀態未標記 [日期不明]
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [24d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [24d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [9d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [25d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。剩餘：T-A5-003 熱客招待品項定義  [35d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [34d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [35d ago]
+  ⚠️ T-A6-001 (A6): 已新增 Telegram 模式選單（報價/聊天/SEO）+ Ollama 聊天路由；� [9d ago]
+  ⏳ T-B1-001 (??):  [日期不明]
+
+【暫停/待開始】
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [36d ago]
+  💤 T-A7-001 (A7): 暫停中 [46d ago]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-05-14 09:00:04] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-05-14 09:00
+
+=== MAPLAB 系統巡查 2026-05-14 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+✅ Token refreshed, new expiry: 2026-05-14T02:00:03.968664+00:00
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [37d ago]
+  ⏸️ T-A2A3-001-B (A2): 等 Google 重新索引，預計 04-11 後可驗證 [47d ago]
+  ⏸️ T-A2A3-001 (A2): 等 Google 重新索引，預計 04-11 後可驗證 [47d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [46d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [46d ago]
+
+【進行中】
+  ❓ T-A1-EXT-001-dynamic-role-modules (A1): 狀態未標記 [日期不明]
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [25d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [25d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [10d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [26d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。剩餘：T-A5-003 熱客招待品項定義  [36d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [35d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [36d ago]
+  ⚠️ T-A6-001 (A6): 已新增 Telegram 模式選單（報價/聊天/SEO）+ Ollama 聊天路由；� [10d ago]
+  ⏳ T-B1-001 (??):  [日期不明]
+
+【暫停/待開始】
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [37d ago]
+  💤 T-A7-001 (A7): 暫停中 [47d ago]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-05-15 09:00:04] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-05-15 09:00
+
+=== MAPLAB 系統巡查 2026-05-15 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+✅ Token refreshed, new expiry: 2026-05-15T02:00:04.197873+00:00
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [38d ago]
+  ⏸️ T-A2A3-001-B (A2): 等 Google 重新索引，預計 04-11 後可驗證 [48d ago]
+  ⏸️ T-A2A3-001 (A2): 等 Google 重新索引，預計 04-11 後可驗證 [48d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [47d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [47d ago]
+
+【進行中】
+  ❓ T-A1-EXT-001-dynamic-role-modules (A1): 狀態未標記 [日期不明]
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [26d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [26d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [11d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [27d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。剩餘：T-A5-003 熱客招待品項定義  [37d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [36d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [37d ago]
+  ⚠️ T-A6-001 (A6): 已新增 Telegram 模式選單（報價/聊天/SEO）+ Ollama 聊天路由；� [11d ago]
+  ⏳ T-B1-001 (??):  [日期不明]
+
+【暫停/待開始】
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [38d ago]
+  💤 T-A7-001 (A7): 暫停中 [48d ago]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-05-16 09:00:04] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-05-16 09:00
+
+=== MAPLAB 系統巡查 2026-05-16 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+✅ Token refreshed, new expiry: 2026-05-16T02:00:04.583311+00:00
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [38d ago]
+  ⏸️ T-A2A3-001-B (A2): 等 Google 重新索引，預計 04-11 後可驗證 [48d ago]
+  ⏸️ T-A2A3-001 (A2): 等 Google 重新索引，預計 04-11 後可驗證 [48d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [47d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [47d ago]
+
+【進行中】
+  ❓ T-A1-EXT-001-dynamic-role-modules (A1): 狀態未標記 [日期不明]
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [27d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [26d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [11d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [27d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。剩餘：T-A5-003 熱客招待品項定義  [37d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [36d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [37d ago]
+  ⚠️ T-A6-001 (A6): 已新增 Telegram 模式選單（報價/聊天/SEO）+ Ollama 聊天路由；� [11d ago]
+  ⏳ T-B1-001 (??):  [日期不明]
+
+【暫停/待開始】
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [38d ago]
+  💤 T-A7-001 (A7): 暫停中 [48d ago]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-05-17 09:00:02] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-05-17 09:00
+
+=== MAPLAB 系統巡查 2026-05-17 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+HTTP 400: {
+  "error": "invalid_grant",
+  "error_description": "Token has been expired or revoked."
+}
+⛔ Token refresh failed — invalid_grant: refresh token 已失效，需重新授權 (Owner 執行 OAuth flow)
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [40d ago]
+  ⏸️ T-A2A3-001-B (A2): 等 Google 重新索引，預計 04-11 後可驗證 [50d ago]
+  ⏸️ T-A2A3-001 (A2): 等 Google 重新索引，預計 04-11 後可驗證 [50d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [49d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [49d ago]
+
+【進行中】
+  ❓ T-A1-EXT-001-dynamic-role-modules (A1): 狀態未標記 [日期不明]
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [28d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [28d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [13d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [29d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。剩餘：T-A5-003 熱客招待品項定義  [39d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [38d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [39d ago]
+  ⚠️ T-A6-001 (A6): 已新增 Telegram 模式選單（報價/聊天/SEO）+ Ollama 聊天路由；� [13d ago]
+  ⏳ T-B1-001 (??):  [日期不明]
+
+【暫停/待開始】
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [40d ago]
+  💤 T-A7-001 (A7): 暫停中 [50d ago]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-05-18 09:00:02] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-05-18 09:00
+
+=== MAPLAB 系統巡查 2026-05-18 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+HTTP 400: {
+  "error": "invalid_grant",
+  "error_description": "Token has been expired or revoked."
+}
+⛔ Token refresh failed — invalid_grant: refresh token 已失效，需重新授權 (Owner 執行 OAuth flow)
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [41d ago]
+  ⏸️ T-A2A3-001-B (A2): 等 Google 重新索引，預計 04-11 後可驗證 [51d ago]
+  ⏸️ T-A2A3-001 (A2): 等 Google 重新索引，預計 04-11 後可驗證 [51d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [50d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [49d ago]
+
+【進行中】
+  ❓ T-A1-EXT-001-dynamic-role-modules (A1): 狀態未標記 [日期不明]
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [29d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [29d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [14d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [30d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。剩餘：T-A5-003 熱客招待品項定義  [40d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [39d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [40d ago]
+  ⚠️ T-A6-001 (A6): 已新增 Telegram 模式選單（報價/聊天/SEO）+ Ollama 聊天路由；� [14d ago]
+  ⏳ T-B1-001 (??):  [日期不明]
+
+【暫停/待開始】
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [41d ago]
+  💤 T-A7-001 (A7): 暫停中 [50d ago]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-05-19 09:00:02] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-05-19 09:00
+
+=== MAPLAB 系統巡查 2026-05-19 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+HTTP 400: {
+  "error": "invalid_grant",
+  "error_description": "Token has been expired or revoked."
+}
+⛔ Token refresh failed — invalid_grant: refresh token 已失效，需重新授權 (Owner 執行 OAuth flow)
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [42d ago]
+  ⏸️ T-A2A3-001-B (A2): 等 Google 重新索引，預計 04-11 後可驗證 [52d ago]
+  ⏸️ T-A2A3-001 (A2): 等 Google 重新索引，預計 04-11 後可驗證 [52d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [51d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [50d ago]
+
+【進行中】
+  ❓ T-A1-EXT-001-dynamic-role-modules (A1): 狀態未標記 [日期不明]
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [30d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [30d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [15d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [30d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⏳ T-A5-002 (A5): 核心公式已修正、e2e 通過。2026-05-19 已新增不改 master Sheet 的 [0d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [39d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [40d ago]
+  ⚠️ T-A6-001 (A6): 已新增 Telegram 模式選單（報價/聊天/SEO）+ Ollama 聊天路由；� [14d ago]
+  ⏳ T-B1-001 (??):  [日期不明]
+
+【暫停/待開始】
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [41d ago]
+  💤 T-A7-001 (A7): 暫停中 [51d ago]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-05-20 09:00:02] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-05-20 09:00
+
+=== MAPLAB 系統巡查 2026-05-20 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+HTTP 400: {
+  "error": "invalid_grant",
+  "error_description": "Token has been expired or revoked."
+}
+⛔ Token refresh failed — invalid_grant: refresh token 已失效，需重新授權 (Owner 執行 OAuth flow)
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [43d ago]
+  ⏸️ T-A2A3-001-B (A2): 等 Google 重新索引，預計 04-11 後可驗證 [53d ago]
+  ⏸️ T-A2A3-001 (A2): 等 Google 重新索引，預計 04-11 後可驗證 [53d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [52d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [52d ago]
+
+【進行中】
+  ❓ T-A1-EXT-001-dynamic-role-modules (A1): 狀態未標記 [日期不明]
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [31d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [31d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [16d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [32d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⏳ T-A5-002 (A5): 核心公式已修正、e2e 通過。2026-05-19 已新增不改 master Sheet 的 [1d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [41d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [42d ago]
+  ⏳ T-A6-001 (A6): Case Store v0 已接到現有 `CONVERSATION_LOG`；A6 Telegram 新增 `/linecase [1d ago]
+
+【暫停/待開始】
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [43d ago]
+  💤 T-A7-001 (A7): 暫停中 [53d ago]
+  💤 T-B1-001 (??): 暫停中 [日期不明]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-05-21 09:00:02] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-05-21 09:00
+
+=== MAPLAB 系統巡查 2026-05-21 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+HTTP 400: {
+  "error": "invalid_grant",
+  "error_description": "Token has been expired or revoked."
+}
+⛔ Token refresh failed — invalid_grant: refresh token 已失效，需重新授權 (Owner 執行 OAuth flow)
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [44d ago]
+  ⏸️ T-A2A3-001-B (A2): 等 Google 重新索引，預計 04-11 後可驗證 [54d ago]
+  ⏸️ T-A2A3-001 (A2): 等 Google 重新索引，預計 04-11 後可驗證 [54d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [53d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [52d ago]
+
+【進行中】
+  ❓ T-A1-EXT-001-dynamic-role-modules (A1): 狀態未標記 [日期不明]
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [32d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [32d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [17d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [33d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。2026-05-19 已新增不改 master Sheet 的 [2d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [42d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [43d ago]
+  ⚠️ T-A6-001 (A6): Case Store v0 已接到現有 `CONVERSATION_LOG`；A6 Telegram 新增 `/linecase [2d ago]
+
+【暫停/待開始】
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [44d ago]
+  💤 T-A7-001 (A7): 暫停中 [53d ago]
+  💤 T-B1-001 (??): 暫停中 [日期不明]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-05-22 09:00:02] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-05-22 09:00
+
+=== MAPLAB 系統巡查 2026-05-22 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+HTTP 400: {
+  "error": "invalid_grant",
+  "error_description": "Token has been expired or revoked."
+}
+⛔ Token refresh failed — invalid_grant: refresh token 已失效，需重新授權 (Owner 執行 OAuth flow)
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [44d ago]
+  ⏸️ T-A2A3-001-B (A2): 等 Google 重新索引，預計 04-11 後可驗證 [54d ago]
+  ⏸️ T-A2A3-001 (A2): 等 Google 重新索引，預計 04-11 後可驗證 [54d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [53d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [53d ago]
+
+【進行中】
+  ❓ T-A1-EXT-001-dynamic-role-modules (A1): 狀態未標記 [日期不明]
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [33d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [32d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [17d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [33d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。2026-05-19 已新增不改 master Sheet 的 [2d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [42d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [43d ago]
+  ⚠️ T-A6-001 (A6): Case Store v0 已接到現有 `CONVERSATION_LOG`；A6 Telegram 新增 `/linecase [2d ago]
+
+【暫停/待開始】
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [44d ago]
+  💤 T-A7-001 (A7): 暫停中 [54d ago]
+  💤 T-B1-001 (??): 暫停中 [日期不明]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-05-23 09:00:01] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-05-23 09:00
+
+=== MAPLAB 系統巡查 2026-05-23 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+HTTP 400: {
+  "error": "invalid_grant",
+  "error_description": "Token has been expired or revoked."
+}
+⛔ Token refresh failed — invalid_grant: refresh token 已失效，需重新授權 (Owner 執行 OAuth flow)
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [46d ago]
+  ⏸️ T-A2A3-001-B (A2): 等 Google 重新索引，預計 04-11 後可驗證 [56d ago]
+  ⏸️ T-A2A3-001 (A2): 等 Google 重新索引，預計 04-11 後可驗證 [56d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [55d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [55d ago]
+
+【進行中】
+  ❓ T-A1-EXT-001-dynamic-role-modules (A1): 狀態未標記 [日期不明]
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [34d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [34d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [19d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [35d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。2026-05-19 已新增不改 master Sheet 的 [4d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [44d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [45d ago]
+  ⚠️ T-A6-001 (A6): Case Store v0 已接到現有 `CONVERSATION_LOG`；A6 Telegram 新增 `/linecase [4d ago]
+
+【暫停/待開始】
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [46d ago]
+  💤 T-A7-001 (A7): 暫停中 [56d ago]
+  💤 T-B1-001 (??): 暫停中 [日期不明]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-05-24 09:00:00] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-05-24 09:00
+
+=== MAPLAB 系統巡查 2026-05-24 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+HTTP 400: {
+  "error": "invalid_grant",
+  "error_description": "Token has been expired or revoked."
+}
+⛔ Token refresh failed — invalid_grant: refresh token 已失效，需重新授權 (Owner 執行 OAuth flow)
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A2A3-001: RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [47d ago]
+  ⏸️ T-A2A3-001 (A2): RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL [0d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [56d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [56d ago]
+
+【進行中】
+  ❓ T-A1-EXT-001-dynamic-role-modules (A1): 狀態未標記 [日期不明]
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [35d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [35d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [20d ago]
+  ⏳ T-A2A3-001-B (A2): Rank Math 已退訂，已設定好的先不要再設定；下一步是 Owner 提 [0d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [36d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。2026-05-19 已新增不改 master Sheet 的 [5d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [45d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [46d ago]
+  ⚠️ T-A6-001 (A6): Case Store v0 已接到現有 `CONVERSATION_LOG`；A6 Telegram 新增 `/linecase [5d ago]
+
+【暫停/待開始】
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [47d ago]
+  💤 T-A7-001 (A7): 暫停中 [57d ago]
+  💤 T-B1-001 (??): 暫停中 [日期不明]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-05-25 09:00:02] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-05-25 09:00
+
+=== MAPLAB 系統巡查 2026-05-25 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+HTTP 400: {
+  "error": "invalid_grant",
+  "error_description": "Token has been expired or revoked."
+}
+⛔ Token refresh failed — invalid_grant: refresh token 已失效，需重新授權 (Owner 執行 OAuth flow)
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A2A3-001: RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [48d ago]
+  ⏸️ T-A2A3-001 (A2): RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL [1d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [57d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [57d ago]
+
+【進行中】
+  ❓ T-A1-EXT-001-dynamic-role-modules (A1): 狀態未標記 [日期不明]
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [36d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [36d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [21d ago]
+  ⏳ T-A2A3-001-B (A2): Rank Math 已退訂，已設定好的先不要再設定；下一步是 Owner 提 [1d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [37d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。2026-05-19 已新增不改 master Sheet 的 [6d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [46d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [47d ago]
+  ⚠️ T-A6-001 (A6): Case Store v0 已接到現有 `CONVERSATION_LOG`；A6 Telegram 新增 `/linecase [6d ago]
+
+【暫停/待開始】
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [48d ago]
+  💤 T-A7-001 (A7): 暫停中 [58d ago]
+  💤 T-B1-001 (??): 暫停中 [日期不明]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-05-26 09:00:02] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-05-26 09:00
+
+=== MAPLAB 系統巡查 2026-05-26 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+HTTP 400: {
+  "error": "invalid_grant",
+  "error_description": "Token has been expired or revoked."
+}
+⛔ Token refresh failed — invalid_grant: refresh token 已失效，需重新授權 (Owner 執行 OAuth flow)
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A2A3-001: RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [49d ago]
+  ⏸️ T-A2A3-001 (A2): RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL [2d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [58d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [58d ago]
+
+【進行中】
+  ❓ T-A1-EXT-001-dynamic-role-modules (A1): 狀態未標記 [日期不明]
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [37d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [37d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [22d ago]
+  ⚠️ T-A2A3-001-B (A2): Rank Math 已退訂，已設定好的先不要再設定；下一步是 Owner 提 [2d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [38d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。2026-05-19 已新增不改 master Sheet 的 [7d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [47d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [48d ago]
+  ⚠️ T-A6-001 (A6): Case Store v0 已接到現有 `CONVERSATION_LOG`；A6 Telegram 新增 `/linecase [7d ago]
+
+【暫停/待開始】
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [49d ago]
+  💤 T-A7-001 (A7): 暫停中 [59d ago]
+  💤 T-B1-001 (??): 暫停中 [日期不明]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-05-27 09:00:05] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-05-27 09:00
+
+=== MAPLAB 系統巡查 2026-05-27 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+HTTP 400: {
+  "error": "invalid_grant",
+  "error_description": "Token has been expired or revoked."
+}
+⛔ Token refresh failed — invalid_grant: refresh token 已失效，需重新授權 (Owner 執行 OAuth flow)
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A2A3-001: RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [50d ago]
+  ⏸️ T-A2A3-001 (A2): RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL [3d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [59d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [59d ago]
+
+【進行中】
+  ❓ T-A1-EXT-001-dynamic-role-modules (A1): 狀態未標記 [日期不明]
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [38d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [38d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [23d ago]
+  ⏳ T-A2A3-001-B (A2): `workbook/reviews/JOB-A2-B2B-CASE-ADS-20260526/execution_loop.md` 已更新至 R [1d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [39d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。2026-05-19 已新增不改 master Sheet 的 [8d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [48d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [49d ago]
+  ⚠️ T-A6-001 (A6): Case Store v0 已接到現有 `CONVERSATION_LOG`；A6 Telegram 新增 `/linecase [8d ago]
+
+【暫停/待開始】
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [50d ago]
+  💤 T-A7-001 (A7): 暫停中 [60d ago]
+  💤 T-B1-001 (??): 暫停中 [日期不明]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-05-28 09:00:02] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-05-28 09:00
+
+=== MAPLAB 系統巡查 2026-05-28 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+✅ Token refreshed, new expiry: 2026-05-28T02:00:02.636629+00:00
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A2A3-001: RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [50d ago]
+  ⏸️ T-A2A3-001 (A2): RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL [3d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [59d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [59d ago]
+
+【進行中】
+  ❓ T-A1-EXT-001-dynamic-role-modules (A1): 狀態未標記 [日期不明]
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [39d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [38d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [23d ago]
+  ⏳ T-A2A3-001-B (A2): WordPress post `1696` 已建立為未發布草稿並重載驗證：`https://www. [0d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [39d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。2026-05-19 已新增不改 master Sheet 的 [8d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [48d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [49d ago]
+  ⚠️ T-A6-001 (A6): Case Store v0 已接到現有 `CONVERSATION_LOG`；A6 Telegram 新增 `/linecase [8d ago]
+
+【暫停/待開始】
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [50d ago]
+  💤 T-A7-001 (A7): 暫停中 [60d ago]
+  💤 T-B1-001 (??): 暫停中 [日期不明]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-05-29 09:00:01] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-05-29 09:00
+
+=== MAPLAB 系統巡查 2026-05-29 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+✅ Token refreshed, new expiry: 2026-05-29T02:00:00.883576+00:00
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A2A3-001: RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [52d ago]
+  ⏸️ T-A2A3-001 (A2): RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL [5d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [61d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [61d ago]
+
+【進行中】
+  ❓ T-A1-EXT-001-dynamic-role-modules (A1): 狀態未標記 [日期不明]
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [40d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [40d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [25d ago]
+  ⚠️ T-A2A3-001-B (A2): WordPress post `1696` 已建立為未發布草稿並重載驗證：`https://www. [2d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [41d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。2026-05-19 已新增不改 master Sheet 的 [10d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [50d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [51d ago]
+  ⚠️ T-A6-001 (A6): Case Store v0 已接到現有 `CONVERSATION_LOG`；A6 Telegram 新增 `/linecase [10d ago]
+
+【暫停/待開始】
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [52d ago]
+  💤 T-A7-001 (A7): 暫停中 [62d ago]
+  💤 T-B1-001 (??): 暫停中 [日期不明]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-05-30 09:00:05] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-05-30 09:00
+
+=== MAPLAB 系統巡查 2026-05-30 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+✅ Token refreshed, new expiry: 2026-05-30T02:00:05.561909+00:00
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A2A3-001: RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [53d ago]
+  ⏸️ T-A2A3-001 (A2): RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL [5d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [61d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [61d ago]
+
+【進行中】
+  ❓ T-A1-EXT-001-dynamic-role-modules (A1): 狀態未標記 [日期不明]
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [41d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [41d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [25d ago]
+  ❓ T-A2-006-ads-seo-wordpress-patrol (A2): 狀態未標記 [日期不明]
+  ⚠️ T-A2A3-001-B (A2): WordPress post `1696` 已建立為未發布草稿並重載驗證：`https://www. [2d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [41d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。2026-05-19 已新增不改 master Sheet 的 [10d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [50d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [51d ago]
+  ⚠️ T-A6-001 (A6): Case Store v0 已接到現有 `CONVERSATION_LOG`；A6 Telegram 新增 `/linecase [10d ago]
+  ❓ T-B1-B4-investment-os-role-split (??): 狀態未標記 [日期不明]
+
+【暫停/待開始】
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [52d ago]
+  💤 T-A7-001 (A7): 暫停中 [62d ago]
+  💤 T-B1-001 (??): 暫停中 [日期不明]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-05-31 09:00:05] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-05-31 09:00
+
+=== MAPLAB 系統巡查 2026-05-31 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+✅ Token refreshed, new expiry: 2026-05-31T02:00:05.603087+00:00
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A2A3-001: RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [53d ago]
+  ⏸️ T-A2A3-001 (A2): RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL [6d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [62d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [62d ago]
+
+【進行中】
+  ❓ T-A1-EXT-001-dynamic-role-modules (A1): 狀態未標記 [日期不明]
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [42d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [42d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [26d ago]
+  ❓ T-A2-006-ads-seo-wordpress-patrol (A2): 狀態未標記 [日期不明]
+  ⚠️ T-A2A3-001-B (A2): WordPress post `1696` 已建立為未發布草稿並重載驗證：`https://www. [3d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [42d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。2026-05-19 已新增不改 master Sheet 的 [11d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [51d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [52d ago]
+  ⚠️ T-A6-001 (A6): Case Store v0 已接到現有 `CONVERSATION_LOG`；A6 Telegram 新增 `/linecase [11d ago]
+  ❓ T-B1-B4-investment-os-role-split (??): 狀態未標記 [日期不明]
+
+【暫停/待開始】
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [53d ago]
+  💤 T-A7-001 (A7): 暫停中 [63d ago]
+  💤 T-B1-001 (??): 暫停中 [日期不明]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-06-01 09:00:05] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-06-01 09:00
+
+=== MAPLAB 系統巡查 2026-06-01 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+✅ Token refreshed, new expiry: 2026-06-01T02:00:04.890283+00:00
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A2A3-001: RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [55d ago]
+  ⏸️ T-A2A3-001 (A2): RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL [8d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [64d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [64d ago]
+
+【進行中】
+  ❓ T-A1-EXT-001-dynamic-role-modules (A1): 狀態未標記 [日期不明]
+  ❓ T-A1-RTK-001 (A1): 狀態未標記 [日期不明]
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [43d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [43d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [28d ago]
+  ❓ T-A2-006-ads-seo-wordpress-patrol (A2): 狀態未標記 [日期不明]
+  ⚠️ T-A2A3-001-B (A2): WordPress post `1696` 已建立為未發布草稿並重載驗證：`https://www. [5d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [44d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。2026-05-19 已新增不改 master Sheet 的 [13d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [53d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [54d ago]
+  ⚠️ T-A6-001 (A6): Case Store v0 已接到現有 `CONVERSATION_LOG`；A6 Telegram 新增 `/linecase [13d ago]
+  ❓ T-B1-B4-investment-os-role-split (??): 狀態未標記 [日期不明]
+
+【暫停/待開始】
+  🔲 T-A1-SYNC-GUARD-001 (A1): 待開始
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [55d ago]
+  💤 T-A7-001 (A7): 暫停中 [65d ago]
+  💤 T-B1-001 (??): 暫停中 [日期不明]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-06-02 09:00:05] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-06-02 09:00
+
+=== MAPLAB 系統巡查 2026-06-02 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+✅ Token refreshed, new expiry: 2026-06-02T02:00:05.632603+00:00
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A2A3-001: RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [56d ago]
+  ⏸️ T-A2A3-001 (A2): RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL [8d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [64d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [64d ago]
+
+【進行中】
+  ❓ T-A1-EXT-001-dynamic-role-modules (A1): 狀態未標記 [日期不明]
+  ❓ T-A1-RTK-001 (A1): 狀態未標記 [日期不明]
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [44d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [44d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [29d ago]
+  ❓ T-A2-006-ads-seo-wordpress-patrol (A2): 狀態未標記 [日期不明]
+  ⚠️ T-A2A3-001-B (A2): WordPress post `1696` 已建立為未發布草稿並重載驗證：`https://www. [5d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [44d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。2026-05-19 已新增不改 master Sheet 的 [13d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [53d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [54d ago]
+  ⚠️ T-A6-001 (A6): Case Store v0 已接到現有 `CONVERSATION_LOG`；A6 Telegram 新增 `/linecase [13d ago]
+  ❓ T-B1-B4-investment-os-role-split (??): 狀態未標記 [日期不明]
+
+【暫停/待開始】
+  🔲 T-A1-SYNC-GUARD-001 (A1): 待開始
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [55d ago]
+  💤 T-A7-001 (A7): 暫停中 [65d ago]
+  💤 T-B1-001 (??): 暫停中 [日期不明]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-06-03 09:00:05] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-06-03 09:00
+
+=== MAPLAB 系統巡查 2026-06-03 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+✅ Token refreshed, new expiry: 2026-06-03T02:00:06.249209+00:00
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A2A3-001: RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [57d ago]
+  ⏸️ T-A2A3-001 (A2): RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL [10d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [66d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [66d ago]
+
+【進行中】
+  ❓ T-A1-EXT-001-dynamic-role-modules (A1): 狀態未標記 [日期不明]
+  ❓ T-A1-RTK-001 (A1): 狀態未標記 [日期不明]
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [45d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [45d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [30d ago]
+  ❓ T-A2-006-ads-seo-wordpress-patrol (A2): 狀態未標記 [日期不明]
+  ⚠️ T-A2A3-001-B (A2): WordPress post `1696` 已建立為未發布草稿並重載驗證：`https://www. [7d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [46d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。2026-05-19 已新增不改 master Sheet 的 [15d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [55d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [56d ago]
+  ⚠️ T-A6-001 (A6): Case Store v0 已接到現有 `CONVERSATION_LOG`；A6 Telegram 新增 `/linecase [15d ago]
+  ❓ T-B1-B4-investment-os-role-split (??): 狀態未標記 [日期不明]
+
+【暫停/待開始】
+  🔲 T-A1-SYNC-GUARD-001 (A1): 待開始
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [57d ago]
+  💤 T-A7-001 (A7): 暫停中 [67d ago]
+  💤 T-B1-001 (??): 暫停中 [日期不明]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-06-04 09:00:05] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-06-04 09:00
+
+=== MAPLAB 系統巡查 2026-06-04 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+HTTP 400: {
+  "error": "invalid_grant",
+  "error_description": "Token has been expired or revoked."
+}
+⛔ Token refresh failed — invalid_grant: refresh token 已失效，需重新授權 (Owner 執行 OAuth flow)
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A2A3-001: RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [57d ago]
+  ⏸️ T-A2A3-001 (A2): RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL [10d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [66d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [66d ago]
+
+【進行中】
+  ❓ T-A1-EXT-001-dynamic-role-modules (A1): 狀態未標記 [日期不明]
+  ❓ T-A1-RTK-001 (A1): 狀態未標記 [日期不明]
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [46d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [46d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [30d ago]
+  ❓ T-A2-006-ads-seo-wordpress-patrol (A2): 狀態未標記 [日期不明]
+  ⚠️ T-A2A3-001-B (A2): WordPress post `1696` 已建立為未發布草稿並重載驗證：`https://www. [7d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [46d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。2026-05-19 已新增不改 master Sheet 的 [15d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [55d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [56d ago]
+  ⚠️ T-A6-001 (A6): Case Store v0 已接到現有 `CONVERSATION_LOG`；A6 Telegram 新增 `/linecase [15d ago]
+  ❓ T-B1-B4-investment-os-role-split (??): 狀態未標記 [日期不明]
+
+【暫停/待開始】
+  🔲 T-A1-SYNC-GUARD-001 (A1): 待開始
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [57d ago]
+  💤 T-A7-001 (A7): 暫停中 [67d ago]
+  💤 T-B1-001 (??): 暫停中 [日期不明]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-06-05 09:00:05] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-06-05 09:00
+
+=== MAPLAB 系統巡查 2026-06-05 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+HTTP 400: {
+  "error": "invalid_grant",
+  "error_description": "Token has been expired or revoked."
+}
+⛔ Token refresh failed — invalid_grant: refresh token 已失效，需重新授權 (Owner 執行 OAuth flow)
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A2A3-001: RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [58d ago]
+  ⏸️ T-A2A3-001 (A2): RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL [11d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [67d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [67d ago]
+
+【進行中】
+  ❓ T-A1-EXT-001-dynamic-role-modules (A1): 狀態未標記 [日期不明]
+  ❓ T-A1-RTK-001 (A1): 狀態未標記 [日期不明]
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [46d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [46d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [31d ago]
+  ❓ T-A2-006-ads-seo-wordpress-patrol (A2): 狀態未標記 [日期不明]
+  ⚠️ T-A2A3-001-B (A2): WordPress post `1696` 已建立為未發布草稿並重載驗證：`https://www. [8d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [47d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。2026-05-19 已新增不改 master Sheet 的 [16d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [56d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [57d ago]
+  ⚠️ T-A6-001 (A6): Case Store v0 已接到現有 `CONVERSATION_LOG`；A6 Telegram 新增 `/linecase [16d ago]
+  ❓ T-B1-B4-investment-os-role-split (??): 狀態未標記 [日期不明]
+
+【暫停/待開始】
+  🔲 T-A1-SYNC-GUARD-001 (A1): 待開始
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [58d ago]
+  💤 T-A7-001 (A7): 暫停中 [68d ago]
+  💤 T-B1-001 (??): 暫停中 [日期不明]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-06-06 09:00:05] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-06-06 09:00
+
+=== MAPLAB 系統巡查 2026-06-06 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+HTTP 400: {
+  "error": "invalid_grant",
+  "error_description": "Token has been expired or revoked."
+}
+⛔ Token refresh failed — invalid_grant: refresh token 已失效，需重新授權 (Owner 執行 OAuth flow)
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A2A3-001: RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [60d ago]
+  ⏸️ T-A2A3-001 (A2): RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL [12d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [68d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [68d ago]
+
+【進行中】
+  ❓ T-A1-EXT-001-dynamic-role-modules (A1): 狀態未標記 [日期不明]
+  ❓ T-A1-RTK-001 (A1): 狀態未標記 [日期不明]
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [48d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [48d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [32d ago]
+  ❓ T-A2-006-ads-seo-wordpress-patrol (A2): 狀態未標記 [日期不明]
+  ⚠️ T-A2A3-001-B (A2): WordPress post `1696` 已建立為未發布草稿並重載驗證：`https://www. [9d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [48d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。2026-05-19 已新增不改 master Sheet 的 [17d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [57d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [58d ago]
+  ⚠️ T-A6-001 (A6): Case Store v0 已接到現有 `CONVERSATION_LOG`；A6 Telegram 新增 `/linecase [17d ago]
+  ❓ T-B1-B4-investment-os-role-split (??): 狀態未標記 [日期不明]
+
+【暫停/待開始】
+  🔲 T-A1-SYNC-GUARD-001 (A1): 待開始
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [59d ago]
+  💤 T-A7-001 (A7): 暫停中 [69d ago]
+  💤 T-B1-001 (??): 暫停中 [日期不明]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-06-07 09:00:05] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-06-07 09:00
+
+=== MAPLAB 系統巡查 2026-06-07 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+HTTP 400: {
+  "error": "invalid_grant",
+  "error_description": "Token has been expired or revoked."
+}
+⛔ Token refresh failed — invalid_grant: refresh token 已失效，需重新授權 (Owner 執行 OAuth flow)
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A2A3-001: RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [60d ago]
+  ⏸️ T-A2A3-001 (A2): RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL [13d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [69d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [69d ago]
+
+【進行中】
+  ❓ T-A1-EXT-001-dynamic-role-modules (A1): 狀態未標記 [日期不明]
+  ❓ T-A1-RTK-001 (A1): 狀態未標記 [日期不明]
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [49d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [49d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [33d ago]
+  ❓ T-A2-006-ads-seo-wordpress-patrol (A2): 狀態未標記 [日期不明]
+  ⚠️ T-A2A3-001-B (A2): WordPress post `1696` 已建立為未發布草稿並重載驗證：`https://www. [10d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [49d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。2026-05-19 已新增不改 master Sheet 的 [18d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [58d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [59d ago]
+  ⚠️ T-A6-001 (A6): Case Store v0 已接到現有 `CONVERSATION_LOG`；A6 Telegram 新增 `/linecase [18d ago]
+  ❓ T-B1-B4-investment-os-role-split (??): 狀態未標記 [日期不明]
+
+【暫停/待開始】
+  🔲 T-A1-SYNC-GUARD-001 (A1): 待開始
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [60d ago]
+  💤 T-A7-001 (A7): 暫停中 [70d ago]
+  💤 T-B1-001 (??): 暫停中 [日期不明]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-06-08 09:00:05] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-06-08 09:00
+
+=== MAPLAB 系統巡查 2026-06-08 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+HTTP 400: {
+  "error": "invalid_grant",
+  "error_description": "Token has been expired or revoked."
+}
+⛔ Token refresh failed — invalid_grant: refresh token 已失效，需重新授權 (Owner 執行 OAuth flow)
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A2A3-001: RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [61d ago]
+  ⏸️ T-A2A3-001 (A2): RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL [14d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [70d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [70d ago]
+
+【進行中】
+  ❓ T-A1-EXT-001-dynamic-role-modules (A1): 狀態未標記 [日期不明]
+  ❓ T-A1-RTK-001 (A1): 狀態未標記 [日期不明]
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [49d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [49d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [34d ago]
+  ❓ T-A2-006-ads-seo-wordpress-patrol (A2): 狀態未標記 [日期不明]
+  ⚠️ T-A2A3-001-B (A2): WordPress post `1696` 已建立為未發布草稿並重載驗證：`https://www. [11d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [50d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。2026-05-19 已新增不改 master Sheet 的 [19d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [59d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [60d ago]
+  ⚠️ T-A6-001 (A6): Case Store v0 已接到現有 `CONVERSATION_LOG`；A6 Telegram 新增 `/linecase [19d ago]
+  ❓ T-B1-B4-investment-os-role-split (??): 狀態未標記 [日期不明]
+  ❓ T-B1-DASH-001 (??): 狀態未標記 [日期不明]
+
+【暫停/待開始】
+  🔲 T-A1-SYNC-GUARD-001 (A1): 待開始
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [61d ago]
+  💤 T-A7-001 (A7): 暫停中 [71d ago]
+  💤 T-B1-001 (??): 暫停中 [日期不明]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-06-09 09:00:05] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-06-09 09:00
+
+=== MAPLAB 系統巡查 2026-06-09 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+HTTP 400: {
+  "error": "invalid_grant",
+  "error_description": "Token has been expired or revoked."
+}
+⛔ Token refresh failed — invalid_grant: refresh token 已失效，需重新授權 (Owner 執行 OAuth flow)
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A2A3-001: RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [62d ago]
+  ⏸️ T-A2A3-001 (A2): RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL [15d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [71d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [71d ago]
+
+【進行中】
+  ❓ T-A1-EXT-001-dynamic-role-modules (A1): 狀態未標記 [日期不明]
+  ❓ T-A1-RTK-001 (A1): 狀態未標記 [日期不明]
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [50d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [50d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [35d ago]
+  ❓ T-A2-006-ads-seo-wordpress-patrol (A2): 狀態未標記 [日期不明]
+  ⚠️ T-A2A3-001-B (A2): WordPress post `1696` 已建立為未發布草稿並重載驗證：`https://www. [12d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [51d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。2026-05-19 已新增不改 master Sheet 的 [20d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [60d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [61d ago]
+  ⚠️ T-A6-001 (A6): Case Store v0 已接到現有 `CONVERSATION_LOG`；A6 Telegram 新增 `/linecase [20d ago]
+  ❓ T-B1-B4-investment-os-role-split (??): 狀態未標記 [日期不明]
+  ❓ T-B1-DASH-001 (??): 狀態未標記 [日期不明]
+
+【暫停/待開始】
+  🔲 T-A1-SYNC-GUARD-001 (A1): 待開始
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [62d ago]
+  💤 T-A7-001 (A7): 暫停中 [72d ago]
+  💤 T-B1-001 (??): 暫停中 [日期不明]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送
+[2026-06-10 09:00:00] patrol-scheduled 開始
+📋 每日自動巡查 — 2026-06-10 09:00
+
+=== MAPLAB 系統巡查 2026-06-10 09:00 ===
+
+[🔴 EXPIRED] Google OAuth token — auto-refreshing...
+HTTP 400: {
+  "error": "invalid_grant",
+  "error_description": "Token has been expired or revoked."
+}
+⛔ Token refresh failed — invalid_grant: refresh token 已失效，需重新授權 (Owner 執行 OAuth flow)
+
+【Owner 行動項】
+  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
+  → T-A2A3-001: RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL
+  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）
+  → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
+
+【阻塞中 — 等外部條件】
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [64d ago]
+  ⏸️ T-A2A3-001 (A2): RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL [17d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [73d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [73d ago]
+
+【進行中】
+  ❓ T-A1-EXT-001-dynamic-role-modules (A1): 狀態未標記 [日期不明]
+  ❓ T-A1-RTK-001 (A1): 狀態未標記 [日期不明]
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下� [52d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [52d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [37d ago]
+  ❓ T-A2-006-ads-seo-wordpress-patrol (A2): 狀態未標記 [日期不明]
+  ⚠️ T-A2A3-001-B (A2): WordPress post `1696` 已建立為未發布草稿並重載驗證：`https://www. [14d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重� [53d ago]
+  ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。2026-05-19 已新增不改 master Sheet 的 [22d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [62d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [63d ago]
+  ⚠️ T-A6-001 (A6): Case Store v0 已接到現有 `CONVERSATION_LOG`；A6 Telegram 新增 `/linecase [22d ago]
+  ❓ T-B1-B4-investment-os-role-split (??): 狀態未標記 [日期不明]
+  ❓ T-B1-DASH-001 (??): 狀態未標記 [日期不明]
+
+【暫停/待開始】
+  🔲 T-A1-SYNC-GUARD-001 (A1): 待開始
+  🔲 T-A1-V6-P3 (A1): 待開始
+  🔲 T-A2-003-weekly-wp-audit (A2): 待開始
+  🔲 T-A2-004 (A2): 待開始
+  🔲 T-A5-006 (A5): 待開始
+  💤 T-A6-002 (A6): 暫停中 [64d ago]
+  💤 T-A7-001 (A7): 暫停中 [74d ago]
+  💤 T-B1-001 (??): 暫停中 [日期不明]
+  🔲 T-GBP-001 (??): 待開始
+
+【已完成】6 張 Task Card
+---
+[ERROR] 找不到 TELEGRAM_BOT_TOKEN，無法推送

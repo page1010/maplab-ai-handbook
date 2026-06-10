@@ -1,0 +1,199 @@
+
+==================================================
+Round 1: 報價 李晴宜 週歲抓周 20人 15000含10%服務費 12/21 上午11點 台南安南區安和路三段190巷 室內冷氣房 自家畫廊 不要羊 部分長輩不吃牛串燒可以 輕食A
+==================================================
+✅ PASSED: JSON block detected and valid.
+Extracted: {"action": "createQuote", "clientName": "李晴宜", "eventType": "週歲抓周", "headcount": 20, "budget": 15000, "items": [{"name": "輕食A主題餐飲方案 (不含羊肉/長輩友善)", "quantity": 1}, {"name": "室內畫廊風格場地佈置與設備", "quantity": 1}]}
+
+==================================================
+Round 2: 報價 洪炳輝 入厝 30人 3萬含10%服務費 10/25 下午五點半 安南區安興街351巷60號 半戶外車庫 主食B 無禁忌
+==================================================
+❌ FAILED: JSON block missing or invalid.
+--- Output Snippet ---
+> 金額校正：使用者預算解析為 NT$30,000（來源：3萬；萬=10,000）。
+
+Thinking...
+Here's a thinking process to construct the response:
+
+1.  **Analyze the Request and Persona:**
+    *   **Role:** MAPLAB A5 Quoting and Proposal Engine.
+    *   **Output Format:** Markdown Draft Quotation Sheet + Required JSON B
+Block.
+    *   **Crucial Constraint:** The absolute last part *must* be a complete
+complete JSON block adhering to the specified structure (`action`, `clientN
+`clientName`, `eventType`, `headcount`, `budget`, `items`).
+
+2.  **Analyze User Needs (Input Data Extraction):**
+    *   Client Name: 洪炳輝
+    *   Event Type/Occasion: 入厝 (Housewarming)
+    *   Headcount: 30人
+    *   Budget: 3萬 (Assume this is the total budget, including service fee
+fees).
+    *   Service Fee/Adjustment: 含10%服務費 (This confirms the budget struc
+structure).
+    *   Date/Time: 10/25 下午五點半 (October 25th, 5:30 PM)
+    *   Location: 安南區安興街351巷60號
+    *   Venue/Space: 半戶外車庫
+    *   Menu Type: 主食B (Main Course B)
+    *   Dietary Restrictions: 無禁忌
+
+3.  **Structure the Markdown Quotation Draft:**
+    *   Needs to be professional, clear, and structured like a proposal/quo
+proposal/quotation.
+    *   Sections should include: Client Info, Event Details, Quoted Items/S
+Items/Services, Total Cost Summary. (I need to estimate reasonable line ite
+items based on "Main Course B" for 30 people, while staying within the impl
+implied budget structure).
+
+4.  **Develop Line Items (Estimation Logic):**
+    *   Total Budget: NT$ 30,000 (Includes service charge)
+    *   Headcount: 30
+    *   Target Food Cost per person (approx.): $30,000 / 30 = $1,000/person
+$1,000/person.
+    *   Since the cuisine is "主食B" and it's a box/basic setup, I will bre
+break down the cost into several logical components: Menu/Food, Rental/Venu
+Rental/Venue, Decorations/Service Fee (or roll it up).
+
+    *Drafting Items:*
+    *   [Menu] Main Course B Catering Package (for 30 pax) - This is the co
+core item.
+    *   [Rental] Half Outdoor Carport Rental (Venue setup fee).
+    *   [Service] Staff/Setup Service Fee (Sometimes quoted separately, but
+but since the budget includes it, I'll calculate the total package price).
+
+5.  **Construct the Final JSON:**
+    *   `action`: "createQuote"
+    *   `clientName`: "洪炳輝"
+    *   `eventType`: "入厝 (Housewarming)"
+    *   `headcount`: 30
+    *   `budget`: 30000 (Assuming the user provided this as the target budg
+budget)
+    *   `items`: Need to accurately represent the quoted goods/services. I 
+will use general descriptions for the main components.
+
+6.  **Review and Refine:** (Check against constraints: Markdown draft provi
+provided? Yes. JSON block at the very end? Yes. Correct format? Yes.) (Self
+(Self-Correction: Ensure I specify that the prices are estimates, as this i
+is an engine output.)
+...done thinking.
+
+# 🏠 MAPLAB A5 提案與報價草稿單
+
+**專案名稱：** 洪炳輝 入厝宴會餐點方案
+**日期：** 2024年XX月XX日（依您的需求調整）
+**版本：** V1.0
+---
+
+## 📋 基本資訊摘要
+
+*   **客戶名稱：** 洪炳輝 先生/女士
+*   **活動類型：** 入厝 (Housewarming Ceremony)
+*   **出席人數：** 30 人
+*   **提案日期/時間：** 10月25日（星期五）下午 5:30
+*   **活動地點：** 安南區安興街351巷60號
+*   **場地需求：** 半戶外車庫 (適合人潮聚集，提供半室內庇護)
+*   **餐點要求：** 主食B (無禁忌套餐)，包含服務費
+
+---
+
+## 🍲 一、建議方案與項目詳述 (主食 B - 30人份)
+
+根據您的需求，我們建議採用「精緻主食套餐」模式，以確保在預算控制內達到豐盛且
+完整的宴會體驗。
+
+| 品項編號 | 品項名稱 | 說明/內容細節 | 數量 | 單價 (新台幣) | 小計 (新台幣
+) |
+| :---: | :--- | :--- | :---: | :---: | :---: |
+| A-01 | **【核心餐點】** 主食 B 精緻套餐 Catering (主菜/配菜/飯糰) | 包含3
+3層料理，符合無禁忌原則，著重在地風味與飽足感。建議提供單人份盒裝餐點或可自
+助取用區設置。 | 1 套 (x30人) | $850 | $25,500 |
+| B-02 | **【場地租賃】** 半戶外車庫使用權 | 提供活動空間佈置，包含基本桌椅
+及基礎電源支持（長達約3小時）。 | 1 個 | - | $0 |
+| C-03 | **【服務費用】** 場地營運與餐點服務費 (含VAT) | 涵蓋人力配置、現場
+佈置協助、收尾清潔，並符合預算包含的 ១០% 服務費。 | 1 次 | - | $4,500 |
+| **總計** | **(A+B+C)** | | | | **$30,000** |
+
+---
+
+## 💰 二、報價摘要與付款資訊
+
+*   **總預算範圍：** 新台幣 $30,000 元整
+*   **包含服務費比例：** 已包含 ១០% 場地及餐點服務費。
+*   **支付方式建議：** 初期定金（約 30%）與活動當日餘款。
+
+***備註：此報價為初步提案草稿，最終細節內容需依實際物料供應鏈狀況確認。若需
+調整套餐菜色或增加佈置元素，歡迎隨時提出需求。***
+
+---
+<!-- *** 根據要求，絕對必須附上 JSON 區塊 *** -->
+
+```json
+{
+  "action": "createQuote",
+  "clientName": "洪炳輝",
+  "eventType": "入厝 (Housewarming)",
+  "headcount": 30,
+  "budget": 30000,
+  "items": [
+    {"name": "主食 B 精緻套餐 Catering (包含所有餐點規格)", "quantity": 30}
+30},
+    {"name": "半戶外車庫場地使用權與基本佈置", "quantity": 1}
+  ]
+}
+```
+
+---
+本地備援：engine=ollama model=gemma4:latest fallback=False
+review bundle: `/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/A5-QUOTE-20260609-235609`
+--------------------
+
+==================================================
+Round 3: 報價 Gina浥慧 企業開幕 30-40人 12000 11/9 早上十點到下午五點 安平區慶平路440號 室內一樓 茶點為主
+==================================================
+✅ PASSED: JSON block detected and valid.
+Extracted: {"action": "createQuote", "clientName": "Gina浥慧", "eventType": "企業開幕", "headcount": 40, "budget": 12000, "items": [{"name": "精選茶點套餐A (小食組合)", "quantity": 40}, {"name": "專業茶飲自助區", "quantity": 1}]}
+
+==================================================
+Round 4: 外帶 范純禎 11/29 下午兩點半 她自己會叫Lalamove來拿 漢堡排45入 蛋沙拉可頌60入 鹹派3個切8 小圓鬆餅120顆 烤布丁60個 她算15885
+==================================================
+✅ PASSED: JSON block detected and valid.
+Extracted: {"action": "createQuote", "clientName": "范純禎", "eventType": "外帶 (Takeaway)", "headcount": 1, "budget": 15885, "items": [{"name": "漢堡排", "quantity": 45}, {"name": "蛋沙拉可頌", "quantity": 60}, {"name": "鹹派 (切塊)", "quantity": 3}, {"name": "小圓鬆餅", "quantity": 120}, {"name": "烤布丁", "quantity": 60}]}
+
+==================================================
+Round 5: 報價 林韋如 入厝 50人 九萬含服務費車馬 3/9 中午十二點到三點 新營區中正路551巷 戶外 主食B
+==================================================
+✅ PASSED: JSON block detected and valid.
+Extracted: {"action": "createQuote", "clientName": "林韋如", "eventType": "入厝", "headcount": 50, "budget": 90000, "items": [{"name": "戶外自助餐主食B套餐 (主體餐飲)", "quantity": 50}, {"name": "場地佈景與營造裝飾費", "quantity": 1}]}
+
+==================================================
+Round 6: 報價 張雅淳 證婚儀式 70-80人 Candy bar 19800 3/22 下午一點到四點半 王老爹的開心農場 只要甜點不要鹹食
+==================================================
+✅ PASSED: JSON block detected and valid.
+Extracted: {"action": "createQuote", "clientName": "張雅淳", "eventType": "證婚儀式", "headcount": 80, "budget": null, "items": [{"name": "夢幻甜蜜甜點站 Candy Bar 基礎包 (純甜點)", "quantity": 1}]}
+
+==================================================
+Round 7: 報價 台北科技大學 研討會 100人 4萬 10/10 早上九點到下午一點 台北大安區 室內 主食
+==================================================
+✅ PASSED: JSON block detected and valid.
+Extracted: {"action": "createQuote", "clientName": "台北科技大學", "eventType": "研討會", "headcount": 100, "budget": 40000, "items": [{"name": "會議場地使用費 (半日)", "quantity": 1}, {"name": "上午茶歇點心套餐", "quantity": 100}, {"name": "午間主食便餐盒", "quantity": 100}]}
+
+==================================================
+Round 8: 報價 王小明 婚禮 80人 預算6萬
+==================================================
+✅ PASSED: JSON block detected and valid.
+Extracted: {"action": "createQuote", "clientName": "王小明", "eventType": "婚禮", "headcount": 80, "budget": 60000, "items": [{"name": "典雅餐飲方案 (基礎)", "quantity": 80}, {"name": "場地佈置主軸設計", "quantity": 1}, {"name": "新人攝影紀錄服務", "quantity": 1}, {"name": "活動控場及設備支援", "quantity": 1}]}
+
+==================================================
+Round 9: 報價 李四 尾牙 50人 預算5萬 12/31 晚上
+==================================================
+✅ PASSED: JSON block detected and valid.
+Extracted: {"action": "createQuote", "clientName": "李四", "eventType": "年終尾牙晚會", "headcount": 50, "budget": 50000, "items": [{"name": "活動場地與佈置", "quantity": 1}, {"name": "精選輕食自助餐點 (50人份)", "quantity": 50}, {"name": "專業主持人及流程規劃", "quantity": 1}]}
+
+==================================================
+Round 10: 報價 張三 茶會 20人 預算10000 隨便配
+==================================================
+✅ PASSED: JSON block detected and valid.
+Extracted: {"action": "createQuote", "clientName": "張三", "eventType": "茶會", "headcount": 20, "budget": 10000, "items": [{"name": "精選養生茶葉禮盒 (包含20份)", "quantity": 1}, {"name": "主題茶歇點心佈置套餐", "quantity": 1}, {"name": "茶會主題裝飾與花藝布置", "quantity": 1}]}
+
+Test Summary: 9/10 passed, 1 failed.
+⚠️ Model needs prompt optimization.

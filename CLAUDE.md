@@ -100,26 +100,26 @@ git log --oneline -5
 1. 每次完成有意義的變更後，執行：
 
 ```bash
-# 預設：存到 agent branch，等 Owner approve 才進 main（安全模式）
+# 預設：直接 commit & push 到 main branch (因為 Git 擁有歷史與回溯功能，有問題直接回滾即可)
 bash scripts/checkpoint.sh "角色名" "做了什麼"
 
-# --fast：直接進 main（信任模式，適合 A1 本身操作 or Owner 親自確認過的任務）
-bash scripts/checkpoint.sh "角色名" "做了什麼" --fast
+# 加上 --branch：當需要特別進行手動合併審核或建立暫存分支時才使用
+bash scripts/checkpoint.sh "角色名" "做了什麼" --branch
 ```
 
 例如：
 ```bash
-bash scripts/checkpoint.sh "A5" "QUOTE_DRAFT 模板修正"          # 存到 agent/A5-20260408
-bash scripts/checkpoint.sh "A1" "更新 CURRENT_STATUS" --fast    # 直接進 main
+bash scripts/checkpoint.sh "B1" "重構 Browser Bridge"               # 直接進 main
+bash scripts/checkpoint.sh "A5" "QUOTE_DRAFT 模板修正" --branch      # 存到 agent/A5-20260611
 ```
 
-**Owner approve（branch 模式下用）：**
+**Owner approve（若有使用 --branch 模式分支）：**
 ```bash
-bash scripts/approve.sh agent/A5-20260408   # 確認後一鍵 merge 進 main
+bash scripts/approve.sh agent/A5-20260611   # 確認後一鍵 merge 進 main
 ```
 
-⚠️ **何時用 --fast**：A1 自己的系統操作（更新 CURRENT_STATUS/RECALL_PROMPTS/Task Card）  
-⚠️ **何時用預設（branch）**：A5/A6/A7 等業務 Agent 修改 GAS、Sheets、報價邏輯
+⚠️ **預設（直接進 main）**：所有角色的一般開發與變更，皆預設直接 push 進 main，確保完整記錄與存檔。
+⚠️ **--branch 分支模式**：當修改高風險的核心邏輯、重大架構變更或需要團隊人工 code review 時使用。
 
 2. 改 Extension → 必須更新 CHANGELOG
 3. 狀態變了 → 必須更新 RECALL_PROMPTS + CURRENT_STATUS

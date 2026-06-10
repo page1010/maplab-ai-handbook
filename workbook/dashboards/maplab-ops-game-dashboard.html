@@ -1,0 +1,985 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>MAPLAB · Investment OS — Guild Ops Board</title>
+<!--
+  MAPLAB / Investment OS — 遊戲化部門作戰板
+  - 單一檔案、零外部依賴：沒有訂閱、沒有額度、沒有網路也能開。
+  - 資料即真相：所有部門/成員/流程/召喚提示都內嵌在下方 DATA。
+  - 召喚:每個經理都帶一段 recall,可貼進任何 AI agent 對話框叫醒它。
+  - 閉環:每條策略流程都有「降級階梯」,最底層是本地 .py + 誠實降級,永不假裝。
+  build: B1 Investment OS Builder · 2026-06-07
+-->
+<style>
+  :root{
+    --bg:#070b14; --bg2:#0c1322; --panel:#111b2e; --panel2:#16233a;
+    --ink:#e8f0ff; --dim:#8aa0c8; --faint:#5a6e92;
+    --line:#22324f; --line2:#2f4a6e;
+    --neon:#3df0d0; --neon2:#7b9bff; --gold:#ffcf5c; --rose:#ff6b8b; --lime:#9ef06b; --viol:#c08bff;
+    --ok:#3ddc84; --warn:#ffc24b; --bad:#ff5d6c; --idle:#5a6e92;
+    --shadow:0 18px 50px rgba(0,0,0,.55);
+    --r:16px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{
+    background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(123,155,255,.16), transparent 60%),
+      radial-gradient(1000px 500px at 0% 110%, rgba(61,240,208,.12), transparent 60%),
+      var(--bg);
+    color:var(--ink);
+    font-family:"Inter",-apple-system,"PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:"SFMono-Regular",ui-monospace,"JetBrains Mono",Menlo,Consolas,monospace}
+  a{color:var(--neon2);text-decoration:none}
+
+  /* ---------- top bar ---------- */
+  header{
+    position:sticky;top:0;z-index:30;
+    backdrop-filter:blur(10px);
+    background:linear-gradient(180deg, rgba(7,11,20,.92), rgba(7,11,20,.55));
+    border-bottom:1px solid var(--line);
+  }
+  .bar{max-width:1320px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .logo{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.5px}
+  .logo .badge{
+    width:40px;height:40px;border-radius:11px;display:grid;place-items:center;font-size:20px;
+    background:conic-gradient(from 200deg,#3df0d0,#7b9bff,#c08bff,#3df0d0);
+    box-shadow:0 0 0 1px rgba(255,255,255,.15) inset, 0 8px 24px rgba(61,240,208,.3);
+  }
+  .logo small{display:block;font-weight:600;color:var(--dim);font-size:11px;letter-spacing:2px}
+  .grow{flex:1}
+  .kbd{font-size:11px;color:var(--faint);border:1px solid var(--line);border-radius:6px;padding:2px 7px}
+  .pill{font-size:12px;color:var(--dim);border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:6px 12px}
+  .pill b{color:var(--neon)}
+
+  /* ---------- layer filters ---------- */
+  .filters{max-width:1320px;margin:0 auto;padding:16px 20px 4px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .seg{display:flex;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:5px}
+  .seg button{
+    border:0;background:transparent;color:var(--dim);font-weight:700;font-size:13px;
+    padding:7px 14px;border-radius:999px;cursor:pointer;transition:.15s
+  }
+  .seg button.on{color:#06121f;background:linear-gradient(180deg,#7df3df,#3df0d0);box-shadow:0 6px 16px rgba(61,240,208,.3)}
+  .seg button:not(.on):hover{color:var(--ink)}
+  .search{
+    margin-left:auto;display:flex;align-items:center;gap:8px;background:var(--panel);
+    border:1px solid var(--line);border-radius:999px;padding:8px 14px;min-width:230px
+  }
+  .search input{background:transparent;border:0;outline:0;color:var(--ink);font-size:13px;width:100%}
+  .legend{max-width:1320px;margin:0 auto;padding:6px 20px 0;color:var(--faint);font-size:12px;display:flex;gap:16px;flex-wrap:wrap}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .dot{width:8px;height:8px;border-radius:50%}
+
+  /* ---------- grid ---------- */
+  /* ---------- war room (戰情判斷帶) ---------- */
+  .warroom{max-width:1320px;margin:16px auto 0;padding:0 20px}
+  .wr{display:grid;grid-template-columns:1.15fr 1fr 1.1fr;gap:14px;background:linear-gradient(180deg,#0e1830,#0b1322);border:1px solid var(--line);border-radius:18px;padding:16px 18px;position:relative;overflow:hidden}
+  .wr::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,#3df0d0,#7b9bff,#ff6b8b)}
+  .wr h4{margin:0 0 10px;font-size:12px;letter-spacing:1.5px;color:var(--dim);text-transform:uppercase;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .wr .col{min-width:0}
+  .wr .col+.col{border-left:1px solid var(--line);padding-left:16px}
+  .regime{font-size:18px;font-weight:800;margin-bottom:6px;line-height:1.2}
+  .mx{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .mx .m{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:8px;padding:6px 9px}
+  .mx .m .mk{font-size:10.5px;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mx .m .mv{font-size:15px;font-weight:800}
+  .mx .m .md{font-size:9.5px;color:var(--faint)}
+  .shock{display:flex;flex-direction:column;gap:6px}
+  .shock .s{font-size:12px;background:rgba(255,93,108,.08);border:1px solid rgba(255,93,108,.25);border-radius:8px;padding:7px 9px;line-height:1.4}
+  .degraded{font-size:12px;color:var(--warn);background:rgba(255,194,75,.07);border:1px dashed rgba(255,194,75,.35);border-radius:8px;padding:10px;line-height:1.5}
+  .judge{font-size:14.5px;font-weight:800;line-height:1.5}
+  .jbasis{margin:6px 0 0;padding-left:16px}
+  .jbasis li{font-size:12px;color:var(--dim);line-height:1.55}
+  .jmiss li{color:var(--warn)}
+  .fresh{font-size:10px;padding:2px 8px;border-radius:999px;font-weight:800}
+  .f-ok{background:rgba(61,220,132,.16);color:var(--ok)} .f-warn{background:rgba(255,194,75,.16);color:var(--warn)}
+  .f-bad{background:rgba(255,93,108,.16);color:var(--bad)} .f-neutral{background:rgba(123,155,255,.14);color:var(--neon2)}
+  .wrnote{max-width:1320px;margin:7px auto 0;padding:0 20px;color:var(--faint);font-size:11px;line-height:1.5}
+  @media(max-width:820px){.wr{grid-template-columns:1fr}.wr .col+.col{border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:12px}}
+
+  main{max-width:1320px;margin:0 auto;padding:18px 20px 90px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px}
+  .group-h{grid-column:1/-1;display:flex;align-items:center;gap:12px;margin:18px 2px 2px}
+  .group-h h2{margin:0;font-size:14px;letter-spacing:3px;color:var(--dim);text-transform:uppercase}
+  .group-h .ln{flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+
+  /* ---------- card ---------- */
+  .card{
+    position:relative;background:linear-gradient(180deg,var(--panel),var(--bg2));
+    border:1px solid var(--line);border-radius:var(--r);padding:16px;cursor:pointer;
+    transition:transform .15s, border-color .15s, box-shadow .15s; overflow:hidden;
+  }
+  .card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--accent,#3df0d0);opacity:.9}
+  .card:hover{transform:translateY(-4px);border-color:var(--accent,#3df0d0);box-shadow:var(--shadow)}
+  .card .top{display:flex;gap:12px;align-items:flex-start}
+  .ava{
+    width:50px;height:50px;border-radius:13px;display:grid;place-items:center;font-size:26px;flex:none;
+    background:radial-gradient(circle at 30% 25%, rgba(255,255,255,.16), rgba(255,255,255,0) 60%), var(--panel2);
+    border:1px solid var(--line);box-shadow:0 8px 18px rgba(0,0,0,.4)
+  }
+  .ttl{flex:1;min-width:0}
+  .ttl h3{margin:0;font-size:16px;font-weight:800;line-height:1.2}
+  .ttl .en{color:var(--faint);font-size:11px;letter-spacing:.4px;margin-top:2px}
+  .rid{font-size:10px;color:var(--accent,#3df0d0);font-weight:800;letter-spacing:1px;margin-top:6px}
+  .persona{margin:11px 0 12px;color:var(--dim);font-size:12.5px;line-height:1.45;min-height:36px}
+
+  .crewrow{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-bottom:10px}
+  .chip{
+    display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;
+    background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:3px 8px 3px 5px;color:var(--dim)
+  }
+  .chip .q{width:6px;height:6px;border-radius:50%}
+  .meta{display:flex;gap:8px;flex-wrap:wrap;border-top:1px dashed var(--line);padding-top:11px}
+  .tag{font-size:10.5px;color:var(--faint);background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:6px;padding:3px 7px}
+  .tag b{color:var(--dim);font-weight:700}
+  .status{position:absolute;top:14px;right:14px;display:flex;align-items:center;gap:6px;font-size:10.5px;color:var(--dim)}
+  .status .led{width:8px;height:8px;border-radius:50%;box-shadow:0 0 8px currentColor}
+
+  /* ---------- drawer ---------- */
+  .scrim{position:fixed;inset:0;background:rgba(3,6,12,.66);backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:.2s;z-index:40}
+  .scrim.on{opacity:1;pointer-events:auto}
+  .drawer{
+    position:fixed;top:0;right:0;height:100%;width:min(720px,96vw);z-index:50;
+    background:linear-gradient(180deg,var(--bg2),var(--bg));border-left:1px solid var(--line);
+    box-shadow:-30px 0 60px rgba(0,0,0,.6);transform:translateX(102%);transition:transform .26s cubic-bezier(.4,0,.2,1);
+    display:flex;flex-direction:column
+  }
+  .drawer.on{transform:none}
+  .dhead{padding:20px 22px;border-bottom:1px solid var(--line);display:flex;gap:14px;align-items:flex-start}
+  .dhead .ava{width:58px;height:58px;font-size:30px;border-radius:15px}
+  .dclose{margin-left:auto;border:1px solid var(--line);background:var(--panel);color:var(--dim);width:34px;height:34px;border-radius:9px;cursor:pointer;font-size:16px;flex:none}
+  .dclose:hover{color:var(--ink);border-color:var(--accent)}
+  .dbody{overflow:auto;padding:20px 22px 60px}
+  .sec{margin:22px 0 8px;font-size:12px;letter-spacing:2px;color:var(--accent,#3df0d0);font-weight:800;text-transform:uppercase}
+  .sec:first-child{margin-top:4px}
+  .mission{color:var(--ink);font-size:14px;line-height:1.6;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:13px 15px}
+
+  /* flow */
+  .flow{display:flex;flex-direction:column;gap:0}
+  .step{display:flex;gap:13px}
+  .rail{display:flex;flex-direction:column;align-items:center}
+  .node{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-size:14px;flex:none;
+    background:var(--panel2);border:1px solid var(--line);font-weight:800;color:var(--accent)}
+  .pipe{width:2px;flex:1;background:linear-gradient(var(--accent),var(--line));min-height:14px;opacity:.6}
+  .sbody{padding-bottom:16px;flex:1}
+  .sbody h4{margin:4px 0 4px;font-size:14px}
+  .sbody .who{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+  .sbody p{margin:4px 0 0;color:var(--dim);font-size:12.5px;line-height:1.5}
+  .fall{margin-top:7px;font-size:12px;color:var(--warn);background:rgba(255,194,75,.07);border:1px solid rgba(255,194,75,.25);border-radius:8px;padding:7px 10px}
+  .fall b{color:var(--gold)}
+  /* accountability strip + node meta (#2 可追責) */
+  .acct{display:flex;gap:7px;flex-wrap:wrap;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:9px 11px;margin-bottom:12px;font-size:11px;color:var(--faint)}
+  .acct span{display:inline-flex;gap:5px;align-items:center}
+  .acct b{color:var(--dim);font-weight:700}
+  .acct .acct-badge{padding:2px 9px;border-radius:999px;font-weight:800;margin-left:auto}
+  .acct .av{background:rgba(61,220,132,.15);color:var(--ok)}
+  .acct .as{background:rgba(255,194,75,.13);color:var(--warn)}
+  .nlab{font-size:9.5px;font-weight:800;letter-spacing:1px;color:var(--faint);background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:5px;padding:2px 6px;margin-right:2px}
+  .nmeta{font-size:11.5px;margin-top:6px;line-height:1.45;border-radius:7px;padding:5px 9px}
+  .nmeta b{font-weight:700}
+  .nmeta.art{color:var(--neon2);background:rgba(123,155,255,.07);border:1px solid rgba(123,155,255,.2)}
+  .nmeta.art b{color:#a9c0ff}
+  .nmeta.sig{color:var(--rose);background:rgba(255,107,139,.07);border:1px solid rgba(255,107,139,.22)}
+  .nmeta.sig b{color:#ff9bb0}
+
+  /* fallback ladder */
+  .ladder{display:flex;flex-direction:column;gap:7px}
+  .rung{display:flex;gap:10px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+  .rung .lv{font-size:10px;font-weight:800;padding:2px 7px;border-radius:6px;flex:none;margin-top:1px}
+  .rung small{color:var(--dim);font-size:12px;line-height:1.45;display:block}
+  .rung b{color:var(--ink)}
+  .lv-a{background:rgba(61,220,132,.16);color:var(--ok)}
+  .lv-b{background:rgba(123,155,255,.16);color:var(--neon2)}
+  .lv-c{background:rgba(255,194,75,.16);color:var(--warn)}
+  .lv-floor{background:rgba(255,93,108,.15);color:var(--bad)}
+
+  /* crew detail */
+  .crew{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  .member{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:11px}
+  .member .mh{display:flex;align-items:center;gap:8px}
+  .member .em{font-size:20px}
+  .member .nm{font-weight:800;font-size:13px}
+  .member .rl{font-size:10.5px;color:var(--faint)}
+  .member p{margin:7px 0 0;color:var(--dim);font-size:11.5px;line-height:1.4}
+  .bar2{height:6px;border-radius:4px;background:var(--line);margin-top:9px;overflow:hidden}
+  .bar2 i{display:block;height:100%;border-radius:4px}
+  .qlab{display:flex;justify-content:space-between;font-size:10px;color:var(--faint);margin-top:5px}
+
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .kv{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:11px 13px}
+  .kv .k{font-size:10.5px;color:var(--faint);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+  .kv ul{margin:0;padding-left:16px}
+  .kv li{font-size:12.5px;color:var(--dim);line-height:1.6}
+
+  /* summon */
+  .summon{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--accent);border-radius:12px;padding:14px}
+  .summon .srow{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .summon .srow b{font-size:13px}
+  .summon textarea{width:100%;height:128px;background:var(--bg);border:1px solid var(--line);border-radius:9px;color:var(--ink);
+    font-family:ui-monospace,Menlo,monospace;font-size:11.5px;line-height:1.5;padding:11px;resize:vertical}
+  .btn{border:0;border-radius:9px;padding:9px 14px;font-weight:800;font-size:12.5px;cursor:pointer}
+  .btn.go{background:linear-gradient(180deg,#7df3df,#3df0d0);color:#06121f;box-shadow:0 6px 16px rgba(61,240,208,.3)}
+  .btn.gh{background:var(--panel);color:var(--dim);border:1px solid var(--line)}
+  .esc{display:flex;gap:8px;flex-wrap:wrap}
+  .esc .e{font-size:11.5px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:5px 11px;color:var(--dim)}
+  .esc .e b{color:var(--accent)}
+
+  footer{max-width:1320px;margin:0 auto;padding:0 20px 40px;color:var(--faint);font-size:11.5px;line-height:1.6}
+  .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:#0c1322;border:1px solid var(--neon);
+    color:var(--ink);padding:11px 18px;border-radius:11px;font-size:13px;font-weight:700;opacity:0;pointer-events:none;transition:.25s;z-index:80;box-shadow:var(--shadow)}
+  .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+  @media(max-width:620px){.crew,.twocol{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <div class="logo">
+      <div class="badge">🗺️</div>
+      <div>MAPLAB · Investment OS<small>GUILD OPS BOARD — 部門作戰板</small></div>
+    </div>
+    <div class="grow"></div>
+    <span class="pill">部門 <b id="cnt">0</b></span>
+    <span class="pill">閉環floor <b>本地 .py + 誠實降級</b></span>
+    <span class="pill mono">offline-ready</span>
+  </div>
+  <div class="filters">
+    <div class="seg" id="seg">
+      <button data-l="all" class="on">全部</button>
+      <button data-l="strategy">策略</button>
+      <button data-l="portfolio">部位</button>
+      <button data-l="platform">平台</button>
+      <button data-l="maintenance">維運 B1–B4</button>
+      <button data-l="dispatch">調度</button>
+    </div>
+    <div class="search">🔎<input id="q" placeholder="搜尋經理 / 工作 / 成員…"/></div>
+  </div>
+  <div class="legend">
+    <span><span class="dot" style="background:var(--ok)"></span>本地 / 無限額度</span>
+    <span><span class="dot" style="background:var(--neon2)"></span>高額度 (Codex / Antigravity / Gemini)</span>
+    <span><span class="dot" style="background:var(--warn)"></span>計量 (Claude / 外部 GPT / NotebookLM)</span>
+    <span><span class="dot" style="background:var(--idle)"></span>需登入 session (OpenClaw)</span>
+  </div>
+</header>
+
+<section class="warroom" id="warroom"></section>
+<main><div class="grid" id="grid"></div></main>
+<footer id="ft"></footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer"></aside>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   WARROOM — 戰情判斷資料(現在的情況 + 突發 + 判斷)。
+   由 tools/ai_workbook/build_warroom_snapshot.py 讀 DB 後注入 marker 之間。
+   probe 沒跑 → 維持下方 DEGRADED 預設,HTML 仍離線可開(閉環不破)。
+   ============================================================ */
+const WARROOM = /*__WARROOM_START__*/{
+  "generated_at": "2026-06-07 20:18",
+  "db_source": "local sandbox · investment_os.sqlite3 · macro 1846 筆",
+  "now": {
+    "regime": {
+      "label": "平穩 / Risk-On",
+      "tone": "ok",
+      "basis": "波動低、信用利差緊、殖利率曲線未倒掛"
+    },
+    "freshness": {
+      "latest": "2026-05-29",
+      "days": 9,
+      "tone": "warn"
+    },
+    "metrics": [
+      {
+        "k": "VIX 波動率",
+        "v": "15.7",
+        "d": "2026-05-28",
+        "tone": "ok",
+        "hint": "低波動"
+      },
+      {
+        "k": "10Y-2Y 利差",
+        "v": "+0.47",
+        "d": "2026-05-29",
+        "tone": "ok",
+        "hint": "未倒掛"
+      },
+      {
+        "k": "10Y 公債殖利率",
+        "v": "4.45%",
+        "d": "2026-05-28",
+        "tone": "neutral",
+        "hint": ""
+      },
+      {
+        "k": "聯邦基金利率",
+        "v": "3.62%",
+        "d": "2026-05-28",
+        "tone": "neutral",
+        "hint": ""
+      },
+      {
+        "k": "高收益債利差",
+        "v": "2.72%",
+        "d": "2026-05-28",
+        "tone": "ok",
+        "hint": "信用緊"
+      },
+      {
+        "k": "10Y 通膨預期",
+        "v": "2.38%",
+        "d": "2026-05-29",
+        "tone": "ok",
+        "hint": "錨定"
+      },
+      {
+        "k": "失業率",
+        "v": "4.3%",
+        "d": "2026-04-01",
+        "tone": "neutral",
+        "hint": ""
+      },
+      {
+        "k": "S&P 500",
+        "v": "7,580",
+        "d": "2026-05-29",
+        "tone": "neutral",
+        "hint": ""
+      }
+    ]
+  },
+  "shocks": {
+    "tone": "degraded",
+    "freshness": {
+      "latest": "2026-05-19",
+      "days": 19,
+      "tone": "bad"
+    },
+    "items": [],
+    "note": "本地 news_alerts=0、事件曆最新 2026-05-19、risk_alerts 最新 2026-05-22。突發層在生產 DB,設 INVESTMENT_OS_DB_PATH 跑才會亮。"
+  },
+  "judgment": {
+    "headline": "總體平穩、無突發升級訊號(突發層缺料,僅依現在的情況)",
+    "tone": "warn",
+    "confidence": "低 (缺突發層)",
+    "basis": [
+      "VIX 波動率 15.7（低波動）",
+      "10Y-2Y 利差 +0.47（未倒掛）",
+      "高收益債利差 2.72%（信用緊）",
+      "10Y 通膨預期 2.38%（錨定）"
+    ],
+    "missing": [
+      "突發新聞警報 0 筆",
+      "風控決策層無資料"
+    ],
+    "next": "設 INVESTMENT_OS_DB_PATH 指向生產 DB 後重跑,補突發+決策層,信心才升"
+  }
+}/*__WARROOM_END__*/;
+
+/* ============================================================
+   WORKER BENCH — 共用成員池。quota 分級決定誰是主力、誰是備援。
+   q: 'local'(無限) | 'high'(額度多) | 'meter'(計量) | 'session'(需登入)
+   ============================================================ */
+const W = {
+  py:        {em:'🐍', nm:'launchd .py', rl:'本地排程工兵', q:'local',  note:'每10分鐘自動跑的 RSS/抓取/刷新腳本。沒有它就沒有閉環地板。'},
+  local:     {em:'🤖', nm:'Local Model', rl:'地端草稿/抽取', q:'local',  note:'便宜的本地模型:逐字稿清理、抽重點、shadow 草稿。要 B2/Codex 評分後才算數。'},
+  hermes:    {em:'🧊', nm:'Hermes', rl:'冷路徑幕僚長', q:'local',  note:'冷路徑:摘要、問題包、確定性 scaffold、受控 Computer-Use smoke。不碰熱路徑 Telegram。'},
+  openclaw:  {em:'🦾', nm:'OpenClaw', rl:'瀏覽器 operator', q:'session', note:'已登入網頁操作:NotebookLM/ChatGPT/Gemini 複製貼上、截圖、原始證據包。不決定策略。'},
+  codex:     {em:'🟦', nm:'Codex.app', rl:'OpenAI 桌面建造者', q:'high', note:'額度多。寫故事、整合、跑 repo 任務、30 分鐘心跳自動化。'},
+  antigravity:{em:'🪐',nm:'Antigravity', rl:'Google IDE 解法', q:'high', note:'額度多。獨立工作區,語音轉文字/長任務的另一條腿。別盲目打斷它 live run。'},
+  gemini:    {em:'✨', nm:'Gemini', rl:'長上下文研究', q:'high', note:'長文研究與第二意見。輸出在整合驗證前都還是證據。'},
+  gpt:       {em:'🔮', nm:'外部 GPT/Gemini', rl:'高判斷第二意見', q:'meter', note:'計量。高判斷研究與覆核,不是事實直到被整合驗證。'},
+  claude:    {em:'🟧', nm:'Claude (監督)', rl:'監督 / B1 建造', q:'meter', note:'這個對話框。能直接當瀏覽器 operator、寫功能、驗證、確認他人成果。'},
+};
+const QMAP = {local:{c:'var(--ok)',  p:100,t:'無限'},
+              high: {c:'var(--neon2)',p:78, t:'高額度'},
+              meter:{c:'var(--warn)', p:42, t:'計量'},
+              session:{c:'var(--idle)',p:60,t:'需登入'}};
+
+/* small flow-step + fallback ladder builders reused across roles */
+const FLOOR = {lv:'floor', t:'閉環地板',
+  d:'<b>沒訂閱、沒額度、沒網路也要動。</b>本地 .py + DB 快取出最後一次有效資料;模型層全倒時,輸出<b>誠實降級卡</b>(標 DEGRADED / 缺資料 / FAIL),<b>絕不</b>用標題或舊資料假裝完成。'};
+
+/* ============================================================
+   DEPARTMENTS
+   ============================================================ */
+const D = [/*__D_START__*/
+/* ---- 旗艦範例:KOL,完整照 Owner 描述的流程 ---- */
+{
+  id:'IOS-KOL', zh:'網紅雷達經理', en:'Influencer Radar Manager', layer:'strategy',
+  ava:'📡', accent:'#3df0d0', status:'warn',
+  persona:'邊聽 podcast 邊抄筆記的情報員。RSS 一響就動,把一集兩小時影片榨成你三分鐘看完的重點。',
+  mission:'掌管 YouTube / Podcast / FB-KOL / 操作筆記,從「偵測到新來源」一路顧到「Owner 手機上的 digest」。整條 RSS→NotebookLM 管線已實作,真正的痛點是 NotebookLM 那步常沒跑完就靜默降級。',
+  crew:['py','local','openclaw','antigravity','codex'],
+  jobs:['influencer-youtube-rss-poll','influencer-sync-refresh','influencer-hermes-report','kol-shadow-workflow'],
+  dash:'Research / KOL shadow evidence', tg:['KOL digest','操作筆記','單集回饋 deep link'],
+  verified:true, reviewed:'2026-06-07 · B1+真實 artifact(KOL 管線已實作,斷點已標)',
+  flow:[
+    {n:'1',h:'RSS 偵測新集數',who:['py'],p:'launchd 每 10 分鐘跑 influencer-youtube-rss-poll,比對 config/influencer_sources.yml 找新影片/新集。',
+     art:'新集 id list（比對 influencer_sources.yml）',
+     sig:'launchd influencer-youtube-rss-poll 沒跑 / status timeout 554s',
+     fall:'Shorts / 純廣告 / metadata-only → 留在 packet,不進 Telegram。'},
+    {n:'2',h:'通知地端模型',who:['local','hermes'],p:'新集通知 Local Model / Hermes:先抓 yt-dlp 字幕,沒字幕就音訊 ASR,做逐字稿。',
+     art:'逐字稿(yt-dlp 字幕 → 音訊 ASR)',
+     sig:'needs_transcript 卡住 / sync_influencer_agents.py:1106 掉回標題 fallback',
+     fall:'sync 逾時(曾見 554s timeout)→ 不可掉回標題 fallback 假裝;標 needs_transcript。'},
+    {n:'3',h:'NotebookLM / Antigravity 摘要',who:['openclaw','antigravity','claude'],p:'把逐字稿/網址丟 NotebookLM(OpenClaw 驅動)或用 Antigravity 的語音轉文字解法,取帶引用的重點。',
+     art:'notebooklm_raw.md（reviews/KOL-SHADOW-AGENTS-*/）',
+     sig:'★ OpenClaw gateway :18789 down → 此節點斷,整鏈掉 FLOOR(目前實況)',
+     fall:'這是歷史斷點。OpenClaw 沒跑完 → 改用 Claude-in-Chrome 直接驅動已登入 NotebookLM;再不行才退本地摘要。'},
+    {n:'4',h:'地端發 Telegram + 更新 Dashboard',who:['py','local'],p:'format_episode_keypoints_digest 推 Telegram,證據包寫進 data/kol_shadow/ 並更新 Dashboard 的 KOL 區。',
+     art:'Telegram digest + data/kol_shadow/ 證據包 + Dashboard KOL 區',
+     sig:'launch_telegram_operator.sh: Operation not permitted(接收側掛;發送側仍活)',
+     fall:'發送側與接收側分離:即使互動 bot 掛了(launchd not permitted),digest 發送仍活。'},
+  ],
+  ladder:[
+    {lv:'a',t:'理想線',d:'<b>OpenClaw → NotebookLM</b> 取帶引用重點,Codex 整合,地端發 Telegram + Dashboard。'},
+    {lv:'b',t:'額度備援',d:'OpenClaw 沒額度/沒跑完 → <b>Claude-in-Chrome 直接驅動已登入 NotebookLM</b>;或 <b>Antigravity</b> 語音轉文字頂上。'},
+    {lv:'c',t:'本地降級',d:'雲端全滿/離線 → <b>本地 yt-dlp 字幕 + Local Model 摘要</b>,標「未經 NotebookLM 引用核對」。'},
+    FLOOR
+  ],
+  esc:{資料或品質差:'B2',渲染或job修:'B1',劇本存檔:'B3',流程臃腫:'B4'}
+},
+/* ---- 策略層 ---- */
+{ id:'IOS-MOMENTUM', zh:'每日動能經理', en:'Daily Momentum Manager', layer:'strategy', ava:'⚡', accent:'#ffcf5c', status:'ok',
+  persona:'盯漲停板的衝刺隊長。早上掃市場、下午 16:00 併籌碼,收盤前把 Top 3 功課塞進你手機。',
+  mission:'掌管漲停、動能、量能、強勢股迴圈,從市場掃描到 Telegram 與 Dashboard。右側 Top 3 短名單 + OpenClaw/GPT 研究派工 + 16:00 籌碼併單。',
+  crew:['py','codex','gpt','local','openclaw'],
+  jobs:['market-data-refresh','stock-chip-refresh','strong-stock-story-gpt','stock-future-story-gpt'],
+  dash:'Radar / Analyst 動能區', tg:['每日動能 PM brief','Top 3 研究功課','股期開盤 playbook'],
+  flow:[
+    {n:'1',h:'市場 + 籌碼刷新',who:['py'],p:'market-data-refresh / stock-chip-refresh 出漲停與高週轉候選池。',fall:'籌碼非同市場日 → 標「籌碼併單 pending」,不假裝排名完成。'},
+    {n:'2',h:'故事研究派工',who:['codex','gpt','openclaw'],p:'strong-stock-story-gpt 派 OpenClaw/GPT 做個股故事與題材。',fall:'GPT 額度滿 → Codex 接;再不行 Local Model 草稿 + B2 評分。'},
+    {n:'3',h:'16:00 籌碼併單',who:['py'],p:'收盤後把法人/融資券併進候選,定右側 Top 3。',fall:'資料未到 → 顯示暫定排名 + 缺料註記。'},
+    {n:'4',h:'PM brief 出機',who:['py','local'],p:'Telegram 推 PM brief + Top 3 功課,Dashboard 動能區同步。',fall:'渲染缺陷跨多策略 → 轉 IOS-SURFACE。'},
+  ],
+  ladder:[
+    {lv:'a',t:'理想線',d:'本地刷新 → <b>GPT/Codex</b> 故事 → 16:00 併籌碼 → 完整 Top 3 brief。'},
+    {lv:'b',t:'額度備援',d:'外部 GPT 滿 → <b>Codex</b> 接故事;OpenClaw 沒登入 → 跳過派工只出量價籌碼。'},
+    {lv:'c',t:'本地降級',d:'無雲端 → 純本地量價/籌碼排序,故事欄標「未生成」。'}, FLOOR ],
+  esc:{資料差:'B2',改code:'B1',存檔:'B3',停滯或過建:'B4'} },
+
+{ id:'IOS-FB', zh:'FB / 社群情報經理', en:'FB Social Intelligence Manager', layer:'strategy', ava:'📘', accent:'#7b9bff', status:'warn',
+  persona:'潛伏社團的臥底。蒐集、清洗、把低訊號隔離,只有過了品質閘的 reviewed 任務才見光。',
+  mission:'掌管 FB 與公開社群來源蒐集、正規化、路由健康與任務候選品質。登入蒐集安全 + 公開 fallback + 低訊號隔離。',
+  crew:['py','local','openclaw','hermes'],
+  jobs:['fb-radar-production-realtime','fb-logged-in-collection-checkpoint','fb-radar-route-health'],
+  dash:'Alpha / FB Radar evidence', tg:['FB radar reviewed 任務 digest(過閘後)'],
+  flow:[
+    {n:'1',h:'登入/公開蒐集',who:['py','openclaw'],p:'fb-radar-production-realtime 蒐集,登入失敗走 source-router 公開 fallback。',fall:'登入態斷 → 自動退公開路由,標來源等級。'},
+    {n:'2',h:'正規化',who:['py','local'],p:'raw_inbox → normalized,Local Model 抽 ticker 與訊號。',fall:'防詐/課程推銷/常青清單 → 隔離,不進候選。'},
+    {n:'3',h:'品質閘 + 候選佇列',who:['hermes'],p:'價格佐證 manifest + 候選審查佇列,過閘才上 Telegram。',fall:'單來源無 ticker → 不是 model-ready。'},
+  ],
+  ladder:[
+    {lv:'a',t:'理想線',d:'登入蒐集 → 正規化 → 品質閘 → reviewed digest。'},
+    {lv:'b',t:'路由備援',d:'登入斷 → <b>公開來源 fallback</b>,降低信心標記。'},
+    {lv:'c',t:'本地降級',d:'雲端全滿 → 只做本地正規化與隔離,候選佇列暫不推播。'}, FLOOR ],
+  esc:{蒐集差:'B2',腳本或dash修:'B1',歷史交接:'B3',路由不值得:'B4'} },
+
+{ id:'IOS-ALPHA', zh:'阿爾法共振經理', en:'Cross-Source Alpha Manager', layer:'strategy', ava:'🌐', accent:'#c08bff', status:'ok',
+  persona:'把雜訊對齊成事件的指揮。Reddit、RSS/X、Polymarket、異常一起看,只有「共振」才叫你。',
+  mission:'掌管 Reddit、RSS/X、Polymarket、市場異常與收斂評分,作為單一跨來源事件工作流。',
+  crew:['py','gemini','gpt','local'],
+  jobs:['convergence-engine','trump-monitor','market-event-watch'],
+  dash:'Alpha / Convergence Engine', tg:['跨來源手機卡'],
+  flow:[
+    {n:'1',h:'多源監看',who:['py'],p:'convergence-engine + trump-monitor + market-event-watch 並行拉訊號。',fall:'單源掛 → 其餘續跑,標來源缺口。'},
+    {n:'2',h:'收斂評分',who:['py','local'],p:'跨來源對齊事件、打收斂分數。',fall:'分數低於門檻 → 留證據不推播。'},
+    {n:'3',h:'第二意見',who:['gemini','gpt'],p:'高分事件找 Gemini/GPT 覆核脈絡。',fall:'額度滿 → 只出本地收斂卡,標未覆核。'},
+  ],
+  ladder:[
+    {lv:'a',t:'理想線',d:'多源 → 收斂 → <b>Gemini/GPT 覆核</b> → 跨來源手機卡。'},
+    {lv:'b',t:'額度備援',d:'GPT 滿 → <b>Gemini</b> 接覆核(額度多)。'},
+    {lv:'c',t:'本地降級',d:'雲端全滿 → 純本地收斂規則出卡,標「未覆核」。'}, FLOOR ],
+  esc:{資料差:'B2',改code:'B1',存檔:'B3',停滯或過建:'B4'} },
+
+{ id:'IOS-BLACKSWAN', zh:'黑天鵝監控官', en:'Black Swan Monitor', layer:'strategy', ava:'🦢', accent:'#ff6b8b', status:'ok',
+  persona:'永遠在等壞消息的守夜人。地緣、油、利率、匯、VIX、期貨、預測市場一有跳動就拉警報。',
+  mission:'掌管跨資產風險升級:地緣政治、油價、利率、匯率、VIX、期貨與預測市場衝擊。',
+  crew:['py','local','gpt'],
+  jobs:['black-swan-scanner','post-market-risk-control','convergence-engine'],
+  dash:'Risk / Alpha 風險警示區', tg:['黑天鵝升級卡','盤後風控 brief'],
+  verified:true, reviewed:'2026-06-07 · B1+真實 artifact(突發層→戰情判斷)',
+  flow:[
+    {n:'1',h:'跨資產掃描',who:['py'],p:'black-swan-scanner 監看油/利率/匯/VIX/期貨/預測市場。',
+     art:'scripts/black_swan_scanner.py → market_news_alerts / market_event_calendar',
+     sig:'本地 market_news_alerts=0 筆 → 突發層空 → 戰情判斷信心降級(現況)',
+     fall:'單指標源缺 → 其餘續跑,標缺口不假裝全綠。'},
+    {n:'2',h:'閾值升級',who:['py','local'],p:'觸閾值組合 → 生成升級卡,連結 convergence。',
+     art:'risk_alerts table → 黑天鵝升級卡',
+     sig:'risk_alerts 最新 5/22(>14天)→ 視為無新鮮警報',
+     fall:'資料 stale → 標 freshness,不發「現況安全」。'},
+    {n:'3',h:'盤後風控',who:['py'],p:'post-market-risk-control 出盤後 brief。',
+     art:'盤後風控 brief(Telegram)',
+     sig:'與 IOS-HEDGE 共用 job;重複升級 = 去重失效',
+     fall:'與 IOS-HEDGE 共用,避免重複升級。'},
+  ],
+  ladder:[
+    {lv:'a',t:'理想線',d:'掃描 → 閾值 → 升級卡 + 盤後 brief。'},
+    {lv:'b',t:'判讀備援',d:'需脈絡 → <b>GPT</b> 解讀衝擊;額度滿則只出量化警示。'},
+    {lv:'c',t:'本地降級',d:'雲端全滿 → 純閾值規則警報,文字最小化。'}, FLOOR ],
+  esc:{資料差:'B2',改code:'B1',存檔:'B3',停滯或過建:'B4'} },
+
+{ id:'IOS-MACRO', zh:'總經大師', en:'Macro Regime Master', layer:'strategy', ava:'🌍', accent:'#9ef06b', status:'ok',
+  persona:'看央行臉色的老法師。管總經 regime、現金/風險預算,早上一杯咖啡配 morning brief。',
+  mission:'掌管總經 regime、release-aware freshness、現金/風險預算與 Dashboard 總經解讀。',
+  crew:['py','codex','gemini','local'],
+  jobs:['macro-data-refresh','tw-macro-refresh','finance-morning-brief'],
+  dash:'Risk / Macro', tg:['財經晨報總經 brief','總經 freshness 警示'],
+  verified:true, reviewed:'2026-06-07 · B1+真實 artifact(現在的情況→戰情判斷,1846筆)',
+  flow:[
+    {n:'1',h:'總經數據刷新',who:['py'],p:'macro-data-refresh / tw-macro-refresh 拉美台總經(FRED API),綁 release 行事曆。',
+     art:'macro_series table(1846 筆;VIX/利差/通膨預期/失業率…最新 5/29)',
+     sig:'macro-data-refresh launchd 沒跑 / latest date 超過 release 日 → freshness warn',
+     fall:'release 未到 → 標 freshness,不把舊值當今日。'},
+    {n:'2',h:'regime 解讀',who:['codex','gemini'],p:'判 regime、定現金/風險預算。本地規則:VIX 低 + 信用利差緊 + 曲線未倒掛 → Risk-On。',
+     art:'regime 標籤(→ 戰情判斷帶「現在的情況」)',
+     sig:'Codex/Gemini 額度滿 → 退本地規則(標「未經模型」)',
+     fall:'額度滿 → 本地規則出 regime 標籤。'},
+    {n:'3',h:'晨報出機',who:['py','local'],p:'finance-morning-brief 推 Telegram + Dashboard 總經區。',
+     art:'scripts/build_finance_morning_brief.py → Telegram 晨報 + Dashboard Macro 區',
+     sig:'finance-morning-brief launchd 失敗 / 缺料未標 → B2 退件',
+     fall:'缺料 → 晨報標缺口,不補假數。'},
+  ],
+  ladder:[
+    {lv:'a',t:'理想線',d:'數據刷新 → <b>Codex/Gemini</b> 解讀 → 晨報。'},
+    {lv:'b',t:'額度備援',d:'Codex 滿 → <b>Gemini</b>(長上下文)接解讀。'},
+    {lv:'c',t:'本地降級',d:'雲端全滿 → 本地 regime 規則 + 數據表,解讀標「未經模型」。'}, FLOOR ],
+  esc:{資料差:'B2',改code:'B1',存檔:'B3',停滯或過建:'B4'} },
+
+{ id:'IOS-CHIP', zh:'籌碼經理', en:'Chip Flow Manager', layer:'strategy', ava:'🎯', accent:'#3df0d0', status:'idle',
+  persona:'16:00 才上班的籌碼會計。法人、融資券、期貨、處置/注意,一筆都不放過。',
+  mission:'掌管 16:00 籌碼、法人流向、融資券、期貨與處置/注意風險訊號,併單給動能與庫存。',
+  crew:['py','local'],
+  jobs:['stock-chip-refresh','market-data-refresh'],
+  dash:'Analyst / Chip evidence', tg:['給動能/庫存的籌碼併單 brief'],
+  flow:[
+    {n:'1',h:'16:00 籌碼刷新',who:['py'],p:'stock-chip-refresh 抓法人/融資券/期貨/處置注意。',fall:'非同市場日 → 標 pending,不併單。'},
+    {n:'2',h:'併單給下游',who:['py','local'],p:'把籌碼併進 IOS-MOMENTUM / IOS-INVENTORY 的最終卡。',fall:'資料缺 → 下游顯示「籌碼併單 pending」。'},
+  ],
+  ladder:[
+    {lv:'a',t:'理想線',d:'16:00 刷新 → 併單動能/庫存。'},
+    {lv:'c',t:'本地降級',d:'來源延遲 → 用最後有效市場日,明標日期不假裝今日。'}, FLOOR ],
+  esc:{資料差:'B2',改code:'B1',存檔:'B3',停滯或過建:'B4'} },
+
+{ id:'IOS-LEFT', zh:'左側預期差經理', en:'Left-Side Expectation Gap Manager', layer:'strategy', ava:'🧩', accent:'#7b9bff', status:'ok',
+  persona:'在故事還沒紅之前進場的人。找預期差、早期論點,也老實標哪裡會證偽。',
+  mission:'掌管左側敘事、預期差、早期論點形成、證偽與資料缺口。',
+  crew:['py','gpt','local'],
+  jobs:['left-side-narrative-scan','stock-chip-refresh'],
+  dash:'Analyst / 左側敘事', tg:['左側觀察卡'],
+  flow:[
+    {n:'1',h:'左側敘事掃描',who:['py'],p:'left-side-narrative-scan 找早期題材與預期差。',fall:'訊號弱 → 留觀察不出卡。'},
+    {n:'2',h:'論點 + 證偽',who:['gpt','local'],p:'形成論點同時寫明證偽條件與資料缺口。',fall:'額度滿 → 本地草稿,證偽欄必填。'},
+  ],
+  ladder:[
+    {lv:'a',t:'理想線',d:'掃描 → <b>GPT</b> 論點+證偽 → 觀察卡。'},
+    {lv:'c',t:'本地降級',d:'雲端滿 → 本地敘事抽取,標「待覆核」。'}, FLOOR ],
+  esc:{資料差:'B2',改code:'B1',存檔:'B3',停滯或過建:'B4'} },
+
+{ id:'IOS-RIGHT', zh:'右側交易經理', en:'Right-Side Trading Manager', layer:'strategy', ava:'🚀', accent:'#ffcf5c', status:'ok',
+  persona:'等第一根棒子的獵人。stage、突破、族群擴散、追高風險,語言都幫你講清楚。',
+  mission:'掌管 stage、first bar、突破、族群擴散與追高風險語言,服務右側候選。',
+  crew:['py','codex','gpt'],
+  jobs:['strong-stock-story-gpt','limit-up-right-side-scan'],
+  dash:'Radar / 右側交易', tg:['右側短名單卡'],
+  flow:[
+    {n:'1',h:'右側掃描',who:['py'],p:'limit-up-right-side-scan 找 stage/突破/first bar。',fall:'量價未確認 → 標「未觸發」。'},
+    {n:'2',h:'故事 + 追高風險',who:['codex','gpt'],p:'strong-stock-story-gpt 生成題材與追高風險語言。',fall:'額度滿 → Codex 接;再不行只出量價。'},
+  ],
+  ladder:[
+    {lv:'a',t:'理想線',d:'掃描 → <b>GPT/Codex</b> 故事 → 短名單卡。'},
+    {lv:'b',t:'額度備援',d:'GPT 滿 → <b>Codex</b> 接故事。'},
+    {lv:'c',t:'本地降級',d:'雲端滿 → 純量價右側清單。'}, FLOOR ],
+  esc:{資料差:'B2',改code:'B1',存檔:'B3',停滯或過建:'B4'} },
+
+/* ---- 部位層 ---- */
+{ id:'IOS-INVENTORY', zh:'庫存審查經理', en:'Live Inventory Risk Manager', layer:'portfolio', ava:'📦', accent:'#c08bff', status:'ok',
+  persona:'只看不動手的持倉稽核。讀真實部位、查風險與證據新鮮度,絕不碰下單鍵。',
+  mission:'掌管唯讀真實部位研究、風險狀態、證據新鮮度與 Owner 部位卡。不下單、不改單。',
+  crew:['py','gpt','local'],
+  jobs:['live-position-session-refresh','live-position-gpt-research','sync-account','sync-positions'],
+  dash:'Trade / 真實庫存風險', tg:['真實庫存風險卡'],
+  flow:[
+    {n:'1',h:'部位同步(唯讀)',who:['py'],p:'sync-account/sync-positions 唯讀拉真實部位。',fall:'session 過期 → 標「部位 stale」,不顯示確定風險。'},
+    {n:'2',h:'風險研究',who:['gpt','local'],p:'live-position-gpt-research 做個股風險與證據。',fall:'額度滿 → 本地風險指標,研究標未覆核。'},
+    {n:'3',h:'部位卡',who:['py'],p:'出 Owner 部位卡,分事實/推論/缺料。',fall:'絕不把 proposed_orders / simulation=True 講成本地模擬單。'},
+  ],
+  ladder:[
+    {lv:'a',t:'理想線',d:'唯讀同步 → <b>GPT</b> 風險研究 → 部位卡。'},
+    {lv:'c',t:'本地降級',d:'雲端滿 → 本地風險指標卡,標未覆核。'}, FLOOR ],
+  esc:{資料差:'B2',改code:'B1',存檔:'B3',停滯或過建:'B4'} },
+
+{ id:'IOS-SIM', zh:'模擬倉經理', en:'Local Simulation Portfolio Manager', layer:'portfolio', ava:'🎮', accent:'#9ef06b', status:'ok',
+  persona:'管虛擬倉的記帳員。D+ 追蹤、出場規則掃描,把「假單」算得清清楚楚。',
+  mission:'掌管本地模擬帳本、D+ 追蹤、警示歸因與模擬部位生命週期。',
+  crew:['py','local'],
+  jobs:['simulation-position-refresh','simulated-exit-rule-sweep'],
+  dash:'Trader / 模擬帳本', tg:['模擬警示卡'],
+  flow:[
+    {n:'1',h:'模擬帳本刷新',who:['py'],p:'simulation-position-refresh 更新本地模擬部位與 D+ 。',fall:'明確標「本地模擬」,不與真實/Shioaji 混淆。'},
+    {n:'2',h:'出場規則掃描',who:['py','local'],p:'simulated-exit-rule-sweep 觸發出場警示與歸因。',fall:'規則未觸發 → 不發假警示。'},
+  ],
+  ladder:[
+    {lv:'a',t:'理想線',d:'刷新 → 出場掃描 → 模擬警示卡。'}, FLOOR ],
+  esc:{資料差:'B2',改code:'B1',存檔:'B3',停滯或過建:'B4'} },
+
+{ id:'IOS-FAMILY', zh:'家族基金經理', en:'Family Fund Manager', layer:'portfolio', ava:'🏠', accent:'#ffcf5c', status:'ok',
+  persona:'管家裡長線錢的管家。大盤、槓桿 ETF 計畫,跟個股模擬倉分開算。',
+  mission:'掌管家族基金、大盤、槓桿 ETF 計畫追蹤,與個股模擬帳本分流。',
+  crew:['py','local'],
+  jobs:['family-fund-portfolio-summary','leveraged-etf-portfolio'],
+  dash:'Family Fund 頁', tg:['家族基金計畫追蹤摘要'],
+  flow:[
+    {n:'1',h:'計畫彙總',who:['py'],p:'family-fund-portfolio-summary + leveraged-etf-portfolio 出長線計畫進度。',fall:'與模擬倉分開頁面,不混淆。'},
+    {n:'2',h:'摘要出機',who:['py','local'],p:'Telegram 計畫追蹤摘要 + Family Fund 頁。',fall:'缺料 → 標缺口。'},
+  ],
+  ladder:[ {lv:'a',t:'理想線',d:'彙總 → 計畫追蹤摘要。'}, FLOOR ],
+  esc:{資料差:'B2',改code:'B1',存檔:'B3',停滯或過建:'B4'} },
+
+{ id:'IOS-HEDGE', zh:'盤後對沖經理', en:'Post-Market Hedge Manager', layer:'strategy', ava:'🛡️', accent:'#ff6b8b', status:'ok',
+  persona:'收盤後幫你蓋保險的人。弱部位壓縮、beta overlay、CSP/Covered Call 研究邊界。',
+  mission:'掌管盤後風控、弱部位壓縮、beta overlay 覆核、CSP/Covered Call 研究邊界。',
+  crew:['py','gpt','local'],
+  jobs:['post-market-risk-control'],
+  dash:'Risk / 盤後對沖', tg:['盤後對沖覆核卡'],
+  flow:[
+    {n:'1',h:'盤後風控',who:['py'],p:'post-market-risk-control 找弱部位與 beta 暴露。',fall:'與 BLACKSWAN 共用 job,避免重複。'},
+    {n:'2',h:'對沖研究',who:['gpt','local'],p:'CSP/Covered Call 研究(邊界內,只研究不下單)。',fall:'額度滿 → 本地規則建議,標未覆核。'},
+  ],
+  ladder:[
+    {lv:'a',t:'理想線',d:'盤後風控 → <b>GPT</b> 對沖研究 → 覆核卡。'},
+    {lv:'c',t:'本地降級',d:'雲端滿 → 本地壓縮規則,標未覆核;絕不下單。'}, FLOOR ],
+  esc:{資料差:'B2',改code:'B1',存檔:'B3',停滯或過建:'B4'} },
+
+/* ---- 平台層 ---- */
+{ id:'IOS-EVIDENCE', zh:'研究證據經理', en:'Research Evidence Manager', layer:'platform', ava:'🔬', accent:'#7b9bff', status:'ok',
+  persona:'要求出處的事實查核員。來源分級、模型 vs 事實切分,沒證據的話不准上桌。',
+  mission:'掌管來源分級、模型-vs-事實切分、高分覆核與跨策略證據包品質。',
+  crew:['hermes','local','gpt','gemini'],
+  jobs:['ai-hermes-roundtable','research-evidence-updater','shadow-learning-v4'],
+  dash:'Analyst / 研究證據', tg:['策略 owner 要求時才出證據 brief'],
+  flow:[
+    {n:'1',h:'來源分級',who:['hermes','local'],p:'research-evidence-updater 給來源 grade,切模型輸出與事實。',fall:'低分來源 → 留 packet 不上 Telegram。'},
+    {n:'2',h:'圓桌覆核',who:['gpt','gemini'],p:'ai-hermes-roundtable 多模型覆核高分證據。',fall:'額度滿 → 只出本地分級,標未覆核。'},
+  ],
+  ladder:[
+    {lv:'a',t:'理想線',d:'分級 → <b>多模型圓桌</b> 覆核 → 證據包。'},
+    {lv:'b',t:'額度備援',d:'GPT 滿 → <b>Gemini</b> 接覆核。'},
+    {lv:'c',t:'本地降級',d:'雲端滿 → 本地分級,模型欄標未覆核。'}, FLOOR ],
+  esc:{資料差:'B2',改code:'B1',存檔:'B3',停滯或過建:'B4'} },
+
+{ id:'IOS-SURFACE', zh:'介面契約守門員', en:'Surface Contract Steward', layer:'platform', ava:'🎨', accent:'#c08bff', status:'ok',
+  persona:'管配色與可讀性的守門員。共用 Telegram/Dashboard 渲染契約,一個缺陷影響多策略才出手。',
+  mission:'掌管共用 Telegram/Dashboard 閱讀契約、渲染行為、配色可讀性與 runtime 可見性。',
+  crew:['py','claude','local'],
+  jobs:['dashboard-mobile','dashboard-local','telegram-operator'],
+  dash:'所有共用 surface', tg:['僅測試共用渲染時'],
+  flow:[
+    {n:'1',h:'渲染契約守門',who:['py'],p:'dashboard-mobile/local + telegram-operator 維持共用閱讀契約。',fall:'單策略內容問題 → 退回該策略 owner,不在這層改。'},
+    {n:'2',h:'跨策略缺陷修',who:['claude','local'],p:'同渲染缺陷影響多策略時 → 在共用層修配色/可讀性。',fall:'改前先確認真的跨策略,避免越權。'},
+  ],
+  ladder:[
+    {lv:'a',t:'理想線',d:'守門共用契約 → 跨策略缺陷統一修。'},
+    {lv:'c',t:'本地降級',d:'渲染服務掛 → 純文字最小可讀卡,保證能看。'}, FLOOR ],
+  esc:{資料差:'B2',改code:'B1',存檔:'B3',停滯或過建:'B4'} },
+
+{ id:'IOS-HYGIENE', zh:'系統衛生官', en:'System Hygiene Steward', layer:'platform', ava:'🧹', accent:'#9ef06b', status:'ok',
+  persona:'拿掃把清髒檔的清潔隊。髒 worktree、過期 review、重複 log,但下手前一定先 keep/drop 決策。',
+  mission:'掌管髒 worktree、過期 review bundle、重複 log、checkpoint drift 與 keep/drop 決策包。',
+  crew:['py','hermes','local'],
+  jobs:['system-patrol-hourly','worktree-cleanup','agent-command-center status'],
+  dash:'Ops / Hygiene', tg:['需 Owner 行動時才出清理決策包'],
+  flow:[
+    {n:'1',h:'每時巡邏',who:['py'],p:'system-patrol-hourly 找髒 worktree / 過期 bundle / drift。',fall:'發現即記錄,不自動刪。'},
+    {n:'2',h:'keep/drop 決策包',who:['hermes','local'],p:'整理成 keep/drop 包,需 Owner 行動才推 Telegram。',fall:'絕不在沒有明確 keep/drop 決策下批次刪/移檔。'},
+  ],
+  ladder:[
+    {lv:'a',t:'理想線',d:'巡邏 → keep/drop 決策包 → Owner 確認後清。'}, FLOOR ],
+  esc:{資料差:'B2',改code:'B1',存檔:'B3',停滯或過建:'B4'} },
+
+/* ---- 維運 B1–B4 ---- */
+{ id:'B1', zh:'功能建造者', en:'Investment OS Builder', layer:'maintenance', ava:'🔧', accent:'#3df0d0', status:'ok',
+  persona:'木工師傅。把確認過的需求寫成功能、接上 runtime,留下可驗證的變更紀錄。不審全系統、不存檔、不問適配。',
+  mission:'在策略 owner 或 B2 指出修點後,建造或修復 scoped 實作。只改 scope 內檔案,實作後 py_compile / tests / JSON 驗證。',
+  crew:['claude','codex','py'],
+  jobs:['feature_build','repo_runtime_wiring','safe_file_only_fix','task_card_execution'],
+  dash:'workbook/reviews/JOB-B1-*', tg:['builder handoff(交接用)'],
+  flow:[
+    {n:'1',h:'確認 task card',who:['claude'],p:'確認預期輸出、影響哪些 runtime surface、只碰 scope 內檔案。',fall:'不是建造任務 → 指出該轉 B2/B3/B4。'},
+    {n:'2',h:'實作 + 驗證',who:['claude','codex'],p:'寫功能,py_compile / tests / JSON validation / smoke check。',fall:'驗證失敗 → 如實回報,不說「已改好」。'},
+    {n:'3',h:'輸出契約',who:['py'],p:'寫五件套到 workbook/reviews/JOB-B1-BUILDER-YYYYMMDD/。',fall:'runtime surface 重要 → 說明是否已同步驗證,不只說 repo 已改。'},
+  ],
+  ladder:[
+    {lv:'a',t:'理想線',d:'Claude/Codex 建造 → 驗證 → 五件套交接。'},
+    {lv:'b',t:'額度備援',d:'Claude 滿 → <b>Codex</b>(額度多)接建造,Claude 監督確認。'}, FLOOR ],
+  esc:{資料差:'B2',改code:'B1',存檔:'B3',停滯或過建:'B4'} },
+
+{ id:'B2', zh:'審查者', en:'Reviewer', layer:'maintenance', ava:'🔎', accent:'#ffcf5c', status:'ok',
+  persona:'品管。盯資料流、新鮮度、輸出契約與 Owner 面向的 surface,壞了就點名該策略 owner。',
+  mission:'審查單一策略的資料流、freshness、輸出契約與 Owner-facing surface。壞輸出先回策略 owner,渲染缺陷跨多策略才回共用層。',
+  crew:['claude','gpt','local'],
+  jobs:['dataflow_review','freshness_review','output_contract_review'],
+  dash:'workbook/reviews/JOB-B2-*', tg:['審查結論(內部)'],
+  flow:[
+    {n:'1',h:'資料流 + 新鮮度審查',who:['claude'],p:'查來源日期、列數、證據路徑、freshness。',fall:'缺其一 → 降級該卡,不放確定結論。'},
+    {n:'2',h:'路由修點',who:['gpt','local'],p:'壞輸出 → 路由策略 owner;跨策略渲染 → IOS-SURFACE。',fall:'單策略問題不擴大成全系統。'},
+  ],
+  ladder:[ {lv:'a',t:'理想線',d:'審查 → 路由正確修點。'}, FLOOR ],
+  esc:{改code:'B1',存檔:'B3',停滯或過建:'B4'} },
+
+{ id:'B3', zh:'存檔者', en:'Archivist', layer:'maintenance', ava:'📚', accent:'#7b9bff', status:'ok',
+  persona:'圖書館員。版本紀錄、resume prompt、review bundle、pitfalls 回寫,讓下一棒接得上。',
+  mission:'存檔版本紀錄、resume prompt、review bundle 與 pitfalls 回寫。',
+  crew:['claude','py','local'],
+  jobs:['version_notes','resume_prompt','pitfalls_writeback'],
+  dash:'CHANGELOG / recalls / pitfalls', tg:['—'],
+  flow:[
+    {n:'1',h:'版本 + resume',who:['claude','py'],p:'寫版本紀錄、resume prompt、打包 review bundle。',fall:'交接資訊不足 → 標缺口,不假裝完整。'},
+    {n:'2',h:'pitfalls 回寫',who:['local'],p:'把這次教訓回寫 pitfalls,連結相關 recall。',fall:'重複教訓 → 合併不重貼。'},
+  ],
+  ladder:[ {lv:'a',t:'理想線',d:'版本+resume → pitfalls 回寫。'}, FLOOR ],
+  esc:{改code:'B1',審查:'B2',停滯或過建:'B4'} },
+
+{ id:'B4', zh:'系統巡邏', en:'System Patrol', layer:'maintenance', ava:'🚓', accent:'#ff6b8b', status:'ok',
+  persona:'巡警。盯停滯策略、髒 worktree、反覆 drift、過度建造,而且開單交接,不只報告。',
+  mission:'巡邏停滯策略、髒 worktree、反覆漂移與過建流程;產生 handoff 而非只報告。判斷系統是否仍適配、該暫停或重構。',
+  crew:['claude','py','hermes'],
+  jobs:['system-patrol-hourly','drift_detection','overbuild_review'],
+  dash:'Ops / Patrol', tg:['停滯/漂移升級(需行動時)'],
+  flow:[
+    {n:'1',h:'巡邏停滯/漂移',who:['py','claude'],p:'找停滯策略、髒 worktree、反覆 drift、過度建造。',fall:'發現即開 handoff,不只報告。'},
+    {n:'2',h:'適配判斷',who:['claude','hermes'],p:'判系統是否仍適配 → 建議暫停或重構,交接給 B1/B3。',fall:'重大判斷需 Owner/A1 確認。'},
+  ],
+  ladder:[ {lv:'a',t:'理想線',d:'巡邏 → 適配判斷 → 開 handoff。'}, FLOOR ],
+  esc:{改code:'B1',審查:'B2',存檔:'B3'} },
+
+/* ---- 調度 ---- */
+{ id:'A0', zh:'調度秘書', en:'Dispatch Secretary', layer:'dispatch', ava:'🛎️', accent:'#c08bff', status:'ok',
+  persona:'前台總機。任何對話框喊一聲,它判斷該叫哪個經理、配哪個 runtime、帶哪份 recall。額度滿就換一條腿。',
+  mission:'動態角色調度:從 Chrome 擴充/Gemini/Codex/OpenClaw 任一對話框被召喚,路由到正確經理 + runtime,並處理額度互備。',
+  crew:['claude','codex','gemini','openclaw'],
+  jobs:['dynamic-role-modules','summon-routing','quota-failover'],
+  dash:'chrome-extension/task-modules/', tg:['—'],
+  flow:[
+    {n:'1',h:'接召喚',who:['claude'],p:'從任一 AI agent 對話框接到召喚,讀 chrome-extension/task-modules/<ROLE>.json。',fall:'module 過期 → 請 A1 重跑 build_extension_task_modules.py。'},
+    {n:'2',h:'路由 + 配 runtime',who:['codex','gemini','openclaw'],p:'依任務類型路由經理,依額度挑 runtime(額度多的優先當主力)。',fall:'主 runtime 額度滿 → failover 到備援腿,任務不中斷。'},
+  ],
+  ladder:[
+    {lv:'a',t:'理想線',d:'接召喚 → 路由經理 → 配最佳 runtime。'},
+    {lv:'b',t:'額度備援',d:'主 runtime 滿 → <b>切到高額度備援</b>(Codex/Antigravity/Gemini 互為腿)。'},
+    {lv:'c',t:'本地降級',d:'雲端全滿 → 本地 .py + Hermes 冷路徑維持最小調度。'}, FLOOR ],
+  esc:{建造:'B1',審查:'B2',存檔:'B3',巡邏:'B4'} },
+/*__D_END__*/];
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+const GROUPS = [
+  {l:'strategy',  t:'策略部門 · STRATEGY'},
+  {l:'portfolio', t:'部位部門 · PORTFOLIO'},
+  {l:'platform',  t:'平台部門 · PLATFORM'},
+  {l:'maintenance',t:'維運迴圈 · B1–B4'},
+  {l:'dispatch',  t:'調度 · DISPATCH'},
+];
+const grid=document.getElementById('grid');
+let filter='all', query='';
+
+function chip(wid){const w=W[wid];const q=QMAP[w.q];
+  return `<span class="chip"><span class="q" style="background:${q.c}"></span>${w.em}${w.nm}</span>`;}
+
+function statusLed(s){const m={ok:'var(--ok)',warn:'var(--warn)',bad:'var(--bad)',idle:'var(--idle)'};
+  const lab={ok:'運作中',warn:'有斷點',bad:'故障',idle:'待命'};
+  return `<span class="status"><span class="led" style="color:${m[s]||m.idle}"></span>${lab[s]||'待命'}</span>`;}
+
+function card(d){
+  const crew=d.crew.slice(0,4).map(chip).join('')+(d.crew.length>4?`<span class="chip">+${d.crew.length-4}</span>`:'');
+  return `<article class="card" style="--accent:${d.accent}" data-id="${d.id}">
+    ${statusLed(d.status)}
+    <div class="top">
+      <div class="ava">${d.ava}</div>
+      <div class="ttl"><h3>${d.zh}</h3><div class="en">${d.en}</div><div class="rid">${d.id}</div></div>
+    </div>
+    <div class="persona">${d.persona}</div>
+    <div class="crewrow">${crew}</div>
+    <div class="meta">
+      <span class="tag"><b>工作</b> ${d.flow.length} 步流程</span>
+      <span class="tag"><b>Dashboard</b> ${d.dash.split('/')[0].trim()}</span>
+      <span class="tag"><b>Telegram</b> ${d.tg.length} 卡</span>
+    </div>
+  </article>`;
+}
+
+function render(){
+  grid.innerHTML='';
+  let shown=0;
+  GROUPS.forEach(g=>{
+    if(filter!=='all'&&filter!==g.l) return;
+    const items=D.filter(d=>d.layer===g.l).filter(d=>match(d));
+    if(!items.length) return;
+    grid.insertAdjacentHTML('beforeend',`<div class="group-h"><h2>${g.t}</h2><span class="ln"></span></div>`);
+    items.forEach(d=>{grid.insertAdjacentHTML('beforeend',card(d));shown++;});
+  });
+  document.getElementById('cnt').textContent=D.length;
+  if(!shown) grid.innerHTML='<div style="grid-column:1/-1;color:var(--faint);padding:40px;text-align:center">找不到符合的部門</div>';
+  document.querySelectorAll('.card').forEach(c=>c.onclick=()=>openDrawer(c.dataset.id));
+}
+function match(d){
+  if(!query) return true;
+  const hay=(d.id+d.zh+d.en+d.persona+d.mission+d.crew.map(w=>W[w].nm).join('')+d.jobs.join('')).toLowerCase();
+  return hay.includes(query);
+}
+
+/* ---------- drawer ---------- */
+const scrim=document.getElementById('scrim'), drawer=document.getElementById('drawer');
+function memberCard(wid){const w=W[wid];const q=QMAP[w.q];
+  return `<div class="member"><div class="mh"><span class="em">${w.em}</span>
+    <div><div class="nm">${w.nm}</div><div class="rl">${w.rl}</div></div></div>
+    <p>${w.note}</p>
+    <div class="bar2"><i style="width:${q.p}%;background:${q.c}"></i></div>
+    <div class="qlab"><span>${q.t}</span><span>${q.p}%</span></div></div>`;}
+
+function acctStrip(d){
+  const verified = d.verified===true;
+  const reviewed = d.reviewed || '2026-06-07 · B1 scaffold(待 owner 補實步驟)';
+  return `<div class="acct">
+    <span><b>流程內容</b> ${d.zh}（策略 owner）</span>
+    <span><b>寫入板</b> B1</span>
+    <span><b>校對</b> B2</span>
+    <span><b>過淺/過時巡查</b> B4</span>
+    <span class="acct-badge ${verified?'av':'as'}">${verified?'✓ 真實 artifact 已校':'B1 scaffold · 待 owner 補實'}</span>
+    <span style="flex-basis:100%"><b>最後校對</b> ${reviewed}</span>
+  </div>`;
+}
+function flowStep(s,last){
+  return `<div class="step"><div class="rail"><div class="node">${s.n}</div>${last?'':'<div class="pipe"></div>'}</div>
+    <div class="sbody"><h4>${s.h}</h4>
+    <div class="who"><span class="nlab">責任</span>${s.who.map(chip).join('')}</div>
+    <p>${s.p}</p>
+    ${s.art?`<div class="nmeta art">📄 產出 <b>${s.art}</b></div>`:''}
+    ${s.sig?`<div class="nmeta sig">🔌 斷鏈訊號 <b>${s.sig}</b></div>`:''}
+    ${s.fall?`<div class="fall"><b>⤷ 守則：</b>${s.fall}</div>`:''}</div></div>`;
+}
+function rung(r){return `<div class="rung"><span class="lv lv-${r.lv}">${r.lv==='floor'?'FLOOR':'L'+r.lv.toUpperCase()}</span>
+  <small><b>${r.t}</b> — ${r.d}</small></div>`;}
+
+function summonText(d){
+  const crew=d.crew.map(w=>W[w].nm).join(' / ');
+  return `【召喚 ${d.id} ${d.zh}｜${d.en}】
+你現在是 MAPLAB / Investment OS 的「${d.zh}」。
+職責：${d.mission}
+你的部門成員(額度互為備援)：${crew}。
+背景工作：${d.jobs.join(', ')}。
+Surface：Dashboard=${d.dash}；Telegram=${d.tg.join('、')}。
+鐵則：① 每條流程都要閉環，沒訂閱/沒額度/沒網路時走降級階梯，最底層用本地 .py + 誠實降級，絕不用標題或舊資料假裝完成。
+② 缺來源日期/列數/證據/新鮮度就降級該卡，不放確定結論。
+③ 主 runtime 額度滿就 failover 到備援腿，任務不中斷。
+升級路徑：${Object.entries(d.esc).map(([k,v])=>k+'→'+v).join('；')}。
+先回我：你接到的是不是「${d.zh}」該做的事？如果不是，指出該轉給哪個經理。`;
+}
+
+function openDrawer(id){
+  const d=D.find(x=>x.id===id); if(!d) return;
+  drawer.style.setProperty('--accent',d.accent);
+  drawer.innerHTML=`
+   <div class="dhead">
+     <div class="ava" style="--accent:${d.accent}">${d.ava}</div>
+     <div><h3 style="margin:0;font-size:19px">${d.zh}</h3>
+       <div style="color:var(--faint);font-size:12px;margin-top:3px">${d.en} · <span class="rid" style="color:${d.accent}">${d.id}</span></div>
+       <div style="margin-top:8px">${statusLed(d.status)}</div></div>
+     <button class="dclose" onclick="closeDrawer()">✕</button>
+   </div>
+   <div class="dbody">
+     <div class="sec">管轄的策略 · MISSION</div>
+     <div class="mission">${d.mission}</div>
+
+     <div class="sec">工作流程 · STRATEGY FLOW</div>
+     ${acctStrip(d)}
+     <div class="flow">${d.flow.map((s,i)=>flowStep(s,i===d.flow.length-1)).join('')}</div>
+
+     <div class="sec">閉環降級階梯 · FAILSAFE LADDER</div>
+     <div class="ladder">${d.ladder.map(rung).join('')}</div>
+
+     <div class="sec">部門成員 · CREW（額度互為備援）</div>
+     <div class="crew">${d.crew.map(memberCard).join('')}</div>
+
+     <div class="sec">Surface & 升級</div>
+     <div class="twocol">
+       <div class="kv"><div class="k">Telegram 卡</div><ul>${d.tg.map(t=>`<li>${t}</li>`).join('')}</ul></div>
+       <div class="kv"><div class="k">Dashboard 區</div><ul><li>${d.dash}</li></ul>
+         <div class="k" style="margin-top:10px">背景工作</div><ul>${d.jobs.map(j=>`<li class="mono" style="font-size:11px">${j}</li>`).join('')}</ul></div>
+     </div>
+     <div style="margin-top:10px" class="esc">${Object.entries(d.esc).map(([k,v])=>`<span class="e">${k} <b>→ ${v}</b></span>`).join('')}</div>
+
+     <div class="sec">召喚這個經理 · SUMMON</div>
+     <div class="summon">
+       <div class="srow"><span style="font-size:18px">${d.ava}</span><b>貼進任何 AI agent 對話框即可叫醒它</b></div>
+       <textarea id="summonbox" readonly>${summonText(d)}</textarea>
+       <div style="display:flex;gap:8px;margin-top:10px">
+         <button class="btn go" onclick="copySummon()">📋 複製召喚提示</button>
+         <button class="btn gh" onclick="closeDrawer()">關閉</button>
+       </div>
+     </div>
+   </div>`;
+  scrim.classList.add('on'); drawer.classList.add('on');
+}
+function closeDrawer(){scrim.classList.remove('on');drawer.classList.remove('on');}
+function copySummon(){const t=document.getElementById('summonbox');t.select();
+  navigator.clipboard?.writeText(t.value).then(()=>toast('已複製召喚提示 ✓')).catch(()=>{document.execCommand('copy');toast('已複製召喚提示 ✓');});}
+function toast(m){const el=document.getElementById('toast');el.textContent=m;el.classList.add('on');setTimeout(()=>el.classList.remove('on'),1600);}
+scrim.onclick=closeDrawer;
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer();});
+
+/* filters */
+document.getElementById('seg').onclick=e=>{const b=e.target.closest('button');if(!b)return;
+  document.querySelectorAll('#seg button').forEach(x=>x.classList.remove('on'));b.classList.add('on');filter=b.dataset.l;render();};
+document.getElementById('q').oninput=e=>{query=e.target.value.trim().toLowerCase();render();};
+
+/* footer */
+document.getElementById('ft').innerHTML=
+  `MAPLAB · Investment OS — Guild Ops Board · 共 ${D.length} 個部門 / ${Object.keys(W).length} 種共用成員 · `+
+  `單一檔案、零外部依賴(offline-ready)。資料來源:config/investment_os_role_registry.json + relation graph + B1 topology memory。`+
+  `每條策略都有閉環降級階梯,最底層為本地 .py + 誠實降級。Build: B1 Investment OS Builder · 2026-06-07.`;
+
+/* ---------- war room render ---------- */
+function fcls(t){return 'f-'+({ok:'ok',warn:'warn',bad:'bad',neutral:'neutral',degraded:'warn'}[t]||'neutral');}
+function tcol(t){return {ok:'var(--ok)',warn:'var(--warn)',bad:'var(--bad)',neutral:'var(--ink)',degraded:'var(--warn)'}[t]||'var(--ink)';}
+function freshBadge(f){const lab=(f.days==null)?'無資料':(f.days+' 天前');return `<span class="fresh ${fcls(f.tone)}">新鮮度 ${f.latest} · ${lab}</span>`;}
+function renderWarroom(){
+  const w=WARROOM, now=w.now, sh=w.shocks, j=w.judgment;
+  const metrics=(now.metrics||[]).map(m=>`<div class="m"><div class="mk">${m.k}</div><div class="mv" style="color:${tcol(m.tone)}">${m.v}</div><div class="md">${m.d}${m.hint?' · '+m.hint:''}</div></div>`).join('')||'<div class="degraded">無總經資料</div>';
+  const shocks=(sh.items&&sh.items.length)
+     ? `<div class="shock">${sh.items.map(s=>`<div class="s">⚠️ ${s}</div>`).join('')}</div>`
+     : `<div class="degraded">🟡 突發層 DEGRADED — ${sh.note||'無資料'}</div>`;
+  document.getElementById('warroom').innerHTML=`
+   <div class="wr">
+     <div class="col">
+       <h4>🌍 現在的情況 · MACRO REGIME ${freshBadge(now.freshness)}</h4>
+       <div class="regime" style="color:${tcol(now.regime.tone)}">${now.regime.label}</div>
+       <div style="color:var(--dim);font-size:12px;margin-bottom:9px">${now.regime.basis}</div>
+       <div class="mx">${metrics}</div>
+     </div>
+     <div class="col">
+       <h4>🦢 突發情況 · SHOCKS ${freshBadge(sh.freshness)}</h4>
+       ${shocks}
+     </div>
+     <div class="col">
+       <h4>⚖️ 戰情判斷 · CALL <span class="fresh ${fcls(j.tone)}">信心 ${j.confidence}</span></h4>
+       <div class="judge" style="color:${tcol(j.tone)}">${j.headline}</div>
+       ${(j.basis&&j.basis.length)?`<div style="font-size:10.5px;color:var(--faint);margin-top:8px">依據(已驗證)</div><ul class="jbasis">${j.basis.map(b=>`<li>${b}</li>`).join('')}</ul>`:''}
+       ${(j.missing&&j.missing.length)?`<div style="font-size:10.5px;color:var(--faint);margin-top:4px">缺料 → 信心降級</div><ul class="jbasis jmiss">${j.missing.map(b=>`<li>${b}</li>`).join('')}</ul>`:''}
+     </div>
+   </div>
+   <div class="wrnote">資料源:${w.db_source} · 生成:${w.generated_at} · 閉環:snapshot 缺則退預設,HTML 仍離線可開。${j.next?' 下一步:'+j.next:''}</div>`;
+}
+
+renderWarroom();
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "job_id": "A5-QUOTE-20260609-235249",
+  "requested_engine": "ollama-direct",
+  "requested_model": "gemma4:latest",
+  "used_engine": "ollama",
+  "used_model": "gemma4:latest",
+  "fallback_used": false,
+  "started_at": "2026-06-09T15:52:49.047499+00:00",
+  "finished_at": "2026-06-09T15:53:55.915081+00:00",
+  "duration_seconds": 66.867582,
+  "return_code": 0,
+  "command": [
+    "ollama",
+    "run",
+    "gemma4:latest",
+    "你是 MAPLAB A5 報價與提案引擎。\n請根據使用者的需求，產出一份 Markdown 報價單草稿。\n【極端重要】回覆的最後【絕對必須】附上一組合法的 ```json 區塊，不可只回覆「好的」或單一字元。\n\n範例如下：\n```json\n{\n  \"action\": \"createQuote\",\n  \"clientName\": \"客戶名稱\",\n  \"eventType\": \"活動類型\",\n  \"headcount\": 人數數字,\n  \"budget\": 預算數字,\n  \"items\": [\n    {\"name\": \"品項1\", \"quantity\": 數量}\n  ]\n}\n```\n\n使用者的需求：\n報價 李晴宜 週歲抓周 20人 15000含10%服務費 12/21 上午11點 台南安南區安和路三段190巷 室內冷氣房 自家畫廊 不要羊 部分長輩不吃牛串燒可以 輕食A\n\n開始產出草稿與 JSON："
+  ],
+  "command_text": "ollama run gemma4:latest '你是 MAPLAB A5 報價與提案引擎。\n請根據使用者的需求，產出一份 Markdown 報價單草稿。\n【極端重要】回覆的最後【絕對必須】附上一組合法的 ```json 區塊，不可只回覆「好的」或單一字元。\n\n範例如下：\n```json\n{\n  \"action\": \"createQuote\",\n  \"clientName\": \"客戶名稱\",\n  \"eventType\": \"活動類型\",\n  \"headcount\": 人數數字,\n  \"budget\": 預算數字,\n  \"items\": [\n    {\"name\": \"品項1\", \"quantity\": 數量}\n  ]\n}\n```\n\n使用者的需求：\n報價 李晴宜 週歲抓周 20人 15000含10%服務費 12/21 上午11點 台南安南區安和路三段190巷 室內冷氣房 自家畫廊 不要羊 部分長輩不吃牛串燒可以 輕食A\n\n開始產出草稿與 JSON：'",
+  "status": "success"
+}

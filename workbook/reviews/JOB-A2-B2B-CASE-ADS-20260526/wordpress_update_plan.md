@@ -1,12 +1,16 @@
 # WordPress Update Plan
 
-日期：2026-05-26
+日期：2026-06-02
 狀態：proposal only
 來源：
 
 - `reports/a2_case_copy_round_001.md`
 - `reports/a4_assets_round_001.md`
 - `asset_conversion_manifest_round_001.csv`
+- `wordpress_case_insert_draft_round_008.md`
+- `asset_conversion_manifest_round_008.md`
+- `reports/wp_draft_round_009.md`
+本輪執行：2026-06-02 依 `commands/ROUND-002-next.md` 更新（proposal-only）
 
 ## Guardrails
 
@@ -14,6 +18,13 @@
 - 不按 Update / Save / Publish。
 - 不碰 Rank Math focus keyword / schema / paid UI。
 - 只規劃 existing post update，不新增 404 planned slug。
+- 不改 Google Ads / Meta Ads 設定。
+
+## Round 009 Context Sync
+
+- 已有未發布草稿 `post=1696`，內含 21 則案例段與圖片 slot（`reports/wp_draft_round_009.md`）。
+- 本提案改為「existing live URL 更新規劃 + draft 1696 對照審稿」，不新增新 slug、不觸碰 RM。
+- `wordpress_assets_round_008/` 30 張 WebP 尚未上傳，等待 Owner 開啟 Codex Chrome extension file URL access。
 
 ## Update Matrix
 
@@ -70,3 +81,4 @@
 3. Insert only approved case section and image slots.
 4. Preview front-end.
 5. Save/update only after Owner approval.
+6. For draft `post=1696`, upload approved WebP assets only after file URL access is enabled, then re-preview without publishing.

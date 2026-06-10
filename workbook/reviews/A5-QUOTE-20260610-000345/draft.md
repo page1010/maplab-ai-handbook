@@ -1,0 +1,132 @@
+Thinking...
+Here's a thinking process to fulfill the request:
+
+1.  **Analyze the Role and Goal:** The persona is "MAPLAB A5 Quote and Prop
+Proposal Engine." The goal is to generate a Markdown quote draft based on u
+user input, and critically, *must* conclude with a specific JSON structure 
+formatted as a tool call (`action: createQuote`).
+
+2.  **Analyze User Input (The Request):**
+    *   Client Name: 張雅淳
+    *   Event Type: 證婚儀式 (Engagement Ceremony)
+    *   Headcount (Estimate): 70-80人
+    *   Items/Budget Info: Candy bar, 19800 (This seems to be a specific it
+item price or category budget).
+    *   Date/Time: 3/22 下午一點到四點半
+    *   Venue/Location Constraint: 王老爹的開心農場
+    *   Menu Preference: 只要甜點不要鹹食 (Only desserts, no savory snacks)
+snacks).
+
+3.  **Draft the Markdown Quote (Structure and Tone):** The tone should be p
+professional, helpful, and organized. A standard quote format includes:
+    *   Title/Header (Company name/Purpose)
+    *   Client Information
+    *   Event Details (Date, Location, Pax)
+    *   Scope of Work/Proposal Summary
+    *   Detailed Itemized List (Pricing/Notes)
+
+4.  **Populate the Draft Content:**
+    *   *Header:* Professional greeting.
+    *   *Key Data:* Fill in Zhang Ya-chun's details, 70-80 pax, Engagement 
+Ceremony.
+    *   *Service Scope:* Focus on desserts (Candy Bar concept) and suitabil
+suitability for an outdoor/farm setting (Wang Laodian).
+    *   *Pricing:* Use the provided item ($19,800 for Candy Bar), but ackno
+acknowledge it might be an estimate or a base package. Since no other items
+items are listed, I will list "Dessert Package" or "Candy Bar Setup."
+
+5.  **Determine JSON Parameters (Mapping Data):**
+    *   `action`: "createQuote"
+    *   `clientName`: 張雅淳
+    *   `eventType`: 證婚儀式
+    *   `headcount`: 70-80人 -> I must choose a single number or average. U
+Using the range center (approx 75) is safer, but listing the max (80) ensur
+ensures we don't underquote capacity. Let's use 80 for robustness.
+    *   `budget`: Not explicitly given as a total budget, only one item pri
+price ($19,800). I will leave this blank or estimate based on the provided 
+item if required, but since it's unknown, it's best to focus on `items`. (I
+(I will set it to null/estimate placeholder).
+    *   `items`:
+        *   Name: Candy Bar Setup (甜點站)
+        *   Quantity: 1 (Set/Package)
+
+6.  **Final Review and Formatting Check:**
+    *   Is the Markdown draft comprehensive? Yes.
+    *   Does it address all user constraints (Dessert only, Location noted)
+noted)? Yes.
+    *   Does it conclude with the absolute mandatory JSON structure? Yes.
+
+7.  **Generate Output.** (Self-Correction: Ensure the tone remains professi
+professional throughout.)
+...done thinking.
+
+## ✨ MAPLAB A5 | 專屬提案與報價單草稿
+
+**客戶名稱：** 張雅淳小姐
+**活動類型：** 證婚儀式（Candy Bar 甜點派對）
+**備註重點：** 強調「純甜點」主題，適用於戶外農場氛圍。
+
+---
+
+### 🕊️ **一、基本資訊概述 (Proposal Summary)**
+
+| 項目 | 內容描述 |
+| :--- | :--- |
+| **活動名稱** | 張雅淳 - 證婚儀式甜蜜派對 |
+| **日期/時間** | 3月22日（週五）/ 下午 1:00 – 4:30 |
+| **地點參考** | 王老爹的開心農場 (Outdoor/Farm Setting) |
+| **預計人數 (Pax)** | 70 - 80 人 |
+| **主題核心** | 純甜點體驗 (Dessert Only) |
+
+---
+
+### 🍰 **二、服務內容提案細節 (Service Proposal Detail)**
+
+考量至本次活動場地為王老爹的開心農場，且需求限定「只要甜點不要鹹食」，本方案
+將聚焦在打造浪漫且具備互動性的**【概念化甜蜜站】（Candy Bar Setup）**。我們
+規劃一套適合戶外氛圍、視覺吸睛、並且操作流程簡潔的純甜點體驗。
+
+#### **🍹 方案特色亮點：**
+1. **場地適應性高：** 純甜點佈置，不需複雜餐桌擺設，完美契合農場的自然背景。
+
+2. **視覺主題化：** 採用色彩繽紛、充滿幸福感的糖果與甜點擺設，增添派對氣氛。
+
+3. **操作簡便：** 無鹹食供應，專注在多種口味的小份甜品組，適合入場後的輕點消
+飢。
+
+#### **🍓 品項議價與估算 (Itemization)**
+
+| 類別 | 品名/說明 | 數量 (單位) | 單價 (TWD) | 小計 (TWD) |
+| :--- | :--- | :--- | :--- | :--- |
+| **主體服務** | 【夢幻甜蜜甜點站】Candy Bar 基礎包 (含裝飾、餐具及基本流程
+佈置) *限定純甜點* | 1 Set | 19,800 | $19,800 |
+| **升級建議** | 個人化甜點主打品/聯名款蛋糕區加購 | N/A | TBD | - |
+
+*備註：* *此報價為基於現有資料的初步估算，最終價格將依據實際場地勘查、確切人
+次（建議以80人計算）及選用甜點內容深度討論後確定。*
+
+---
+
+### ✅ **三、總結與下一步行動 (Next Steps)**
+
+1. **評估：** $19,800 元為本次「純甜點派對」的基礎投入預算。
+2. **確認需求：** 請您確認此初步報價是否符合您的期望，並告知是否需要增加或調
+整主打甜點類型（例如：是否有偏好某種口味如水果奶油/馬卡龍等）。
+3. **後續流程：** 收到您的回饋後，MAPLAB 將進一步提供詳細的品項菜單選擇及合
+約預定方案。
+
+---
+***請注意：此為草稿報價單，所有價格皆以最終確認內容為準。***
+
+```json
+{
+  "action": "createQuote",
+  "clientName": "張雅淳",
+  "eventType": "證婚儀式",
+  "headcount": 80,
+  "budget": null,
+  "items": [
+    {"name": "夢幻甜蜜甜點站 Candy Bar 基礎包 (純甜點)", "quantity": 1}
+  ]
+}
+```

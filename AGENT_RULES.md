@@ -326,6 +326,10 @@ A1 巡查時發現 agent 未寫接續 Prompt 或超過 30 分鐘無 checkpoint�
 根因：A1 Claude Code 從 v2.0 改到 v4.2 共 4 次版本變更，全部沒寫 CHANGELOG。系統管理員自己不遵守紀錄規則，等於告訴其他 agent 規則可以不守。Mac mini 重啟後，下一個 Claude Code 會從 v2.0 的認知開始，中間所有決策和失敗經驗全部丟失。
 解法：(1) 補齊全部 CHANGELOG (2) 新增 SECTION 2.1 強制存檔規則，A1 也必須遵守 (3) 每次 commit 前強制檢查 CHANGELOG/RECALL_PROMPTS/CURRENT_STATUS 是否需要同步更新。沒有例外。
 
+**錯誤 007 — 用開發 Chrome 擴充功能與 Python HTTP Bridge 來控制瀏覽器（2026-06-11）**
+根因：為了實現跨對話框文字輸入與讀取，耗費大量精力編寫並調試 Chrome 擴充功能、長輪詢 API 與 DOM 元素 Selector，造成架構過度複雜與多處延遲與連線中斷阻塞。
+解法：這是典型的「去走彎路」！能用系統級工具、Mac 系統自帶的 AppleScript、Computer Use、截圖分析與錄影解決的問題，絕對不要寫程式去控制網頁 DOM 與寫 IPC 通訊。後續有瀏覽器控制需求時，優先使用 macOS 系統的 UI 控制或 Computer Use 模擬。
+
 ---
 
 ## SECTION 5 — Repo 管控規則 + Notion 禁令

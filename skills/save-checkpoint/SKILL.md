@@ -52,18 +52,18 @@ Owner 說「存檔」「存一下」「記下來」「先存」或 session 即�
 
 ### Step 3：執行 checkpoint.sh
 ```bash
-# A1 系統操作 → --fast
-bash scripts/checkpoint.sh "角色名" "做了什麼" --fast
-
-# 其他角色業務改動 → 預設 branch 模式
+# 預設直接 commit 到 main branch 並 push 到 remote GitHub
 bash scripts/checkpoint.sh "角色名" "做了什麼"
+
+# 只有在需要特別合併審核的分支時，才使用 --branch
+bash scripts/checkpoint.sh "角色名" "做了什麼" --branch
 ```
 
 ### Step 4：回報
 告訴 Owner：
 - 存了什麼（哪個檔案、什麼內容）
 - commit hash
-- 如果是 branch 模式 → 提醒 Owner 需要 approve
+- 如果是 --branch 模式 → 提醒 Owner 需要執行 approve.sh 合併
 
 ## 注意事項
 - 存檔前先確認 Task Card 的接續點描述夠詳細（下一個 agent 能看懂）

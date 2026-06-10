@@ -1,0 +1,35 @@
+{
+  "bundle_dir": "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/A5-QUOTE-20260518-230511",
+  "files": [
+    {
+      "path": "task_request.md",
+      "bytes": 11537,
+      "sha256": "189cbc50c38c1fa08fb30f78e0e079d756acfae97f8991a83a5138ed4c782447"
+    },
+    {
+      "path": "output.json",
+      "bytes": 36044,
+      "sha256": "fb4bd0637343465595997f639e34a097a99d0b97128af6b101cd7678f2df205f"
+    },
+    {
+      "path": "draft.md",
+      "bytes": 1132,
+      "sha256": "5646d2c9511a6c837a010e074532722e61f8e0cd8b09e129c0481145a2f07b30"
+    },
+    {
+      "path": "execution_log.json",
+      "bytes": 23933,
+      "sha256": "5c3701eb071efeac22ae21d4280d4519ac751c40340431846b21d6871a8d65e6"
+    },
+    {
+      "path": "verification_log.json",
+      "bytes": 546,
+      "sha256": "e0aa82819fdcbb027fcf51aa1a2d327894e49a844e88409fa9edce064ad335e5"
+    },
+    {
+      "path": "review_request.md",
+      "bytes": 434,
+      "sha256": "3e06ebc89a03bb669b4c6bb43f61d60700c8f3e6a073ab44c9227f957fcf99cc"
+    }
+  ]
+}

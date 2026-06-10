@@ -33,7 +33,7 @@ class TaskExecution:
 
 class OpenClawAdapter:
     def __init__(self, default_model: Optional[str] = None) -> None:
-        self.default_model = default_model or os.getenv("MAPLAB_LOCAL_MODEL", "qwen2.5:14b")
+        self.default_model = default_model or os.getenv("MAPLAB_LOCAL_MODEL", "gemma4:latest")
 
     def run_local_task(
         self,

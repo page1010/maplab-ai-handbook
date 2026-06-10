@@ -1,19 +1,19 @@
 #!/bin/bash
 # checkpoint.sh — 一鍵存檔
-# 預設：commit 到 agent branch，等 Owner 執行 approve.sh 才進 main
-# 加 --fast：直接 push 到 main（信任模式，適合 A1 本身操作）
+# 預設：直接 commit & push 到 main branch (因為 Git 擁有歷史追蹤與回溯能力，毋需多餘 branch 安全模式)
+# 加上 --branch：commit 到獨立的 agent branch（若想手動合併或建立暫存工作分支）
 #
 # 用法：
-#   bash scripts/checkpoint.sh "角色名" "做了什麼"           # 預設 branch 模式
-#   bash scripts/checkpoint.sh "角色名" "做了什麼" --fast    # 直接進 main
+#   bash scripts/checkpoint.sh "角色名" "做了什麼"           # 預設直接 commit 到 main 並 push
+#   bash scripts/checkpoint.sh "角色名" "做了什麼" --branch  # 強制使用獨立 agent/ branch 模式
 #
 # 例如：
-#   bash scripts/checkpoint.sh "A5" "修正 QUOTE_DRAFT 公式"
-#   bash scripts/checkpoint.sh "A1" "更新 CURRENT_STATUS" --fast
+#   bash scripts/checkpoint.sh "B1" "重構 Browser Bridge"
+#   bash scripts/checkpoint.sh "A5" "修正 QUOTE_DRAFT 公式" --branch
 
 ROLE="${1:-}"
 MESSAGE="${2:-}"
-FAST_MODE=false
+FAST_MODE=true # 預設直接 commit & push 到 main (因為 Git 管理歷史與回溯，無需多餘 branch)
 REPO_ROOT="/Users/pagemacmini/maplab-ai-handbook"
 TASKS_DIR="$REPO_ROOT/handoff/tasks"
 
@@ -368,14 +368,14 @@ ${sync_content}<!-- AUTO-SYNC END -->"
   fi
 }
 
-# Parse --fast flag（位置不限）
+# Parse flags
 for arg in "$@"; do
-  [ "$arg" = "--fast" ] && FAST_MODE=true
+  [ "$arg" = "--branch" ] && FAST_MODE=false
 done
 
 if [ -z "$ROLE" ] || [ -z "$MESSAGE" ]; then
-  echo "❌ 用法：bash scripts/checkpoint.sh \"角色名\" \"做了什麼\" [--fast]"
-  echo "   角色名：A0 / A1 / A2 / A4 / A5 / A6 / A7 / A8"
+  echo "❌ 用法：bash scripts/checkpoint.sh \"角色名\" \"做了什麼\" [--branch]"
+  echo "   角色名：A0 / A1 / A2 / A4 / A5 / A6 / A7 / A8 / B1 / B2 / B3 / B4"
   exit 1
 fi
 

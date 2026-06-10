@@ -13,6 +13,7 @@ import asyncio
 import json
 import logging
 import os
+import re
 import subprocess
 import sys
 import tempfile
@@ -98,7 +99,7 @@ MODE_LABELS = {
 
 MENU_BUTTON_QUOTE = "🧾 報價模式"
 MENU_BUTTON_CHAT = "💬 一般聊天"
-MENU_BUTTON_SEO = "📝 SEO 草稿"
+MENU_BUTTON_SEO = "📝 召喚a2seo文章編輯"
 MENU_BUTTON_HELP = "❓ 指令說明"
 
 
@@ -135,6 +136,7 @@ def _looks_like_quote_request(text: str) -> bool:
     stripped = text.strip()
     lowered = stripped.lower()
     compact = "".join(stripped.split())
+    compact_lower = compact.lower()
     if not stripped:
         return False
     explicit_prefixes = ("報價", "新報價", "估價", "做報價", "開報價", "a5", "A5")
@@ -152,7 +154,30 @@ def _looks_like_quote_request(text: str) -> bool:
     has_quote_term = any(term in lowered or term in compact for term in quote_terms)
     has_quantity = any(term in compact for term in quantity_terms)
     has_money = any(term in compact for term in ("預算", "萬", "元", "$", "nt", "NT"))
-    return has_quote_term and (has_quantity or has_money)
+
+    catering_terms = (
+        "茶點", "點心", "咖啡", "coffee", "break", "coffee break", "午餐", "餐盒",
+        "便當", "自助bar", "自助吧", "自助餐", "buffet", "用餐", "餐食", "飲料",
+        "外燴", "茶會", "會議餐", "餐點",
+    )
+    event_terms = ("workshop", "會議", "研討會", "活動", "學者", "成大", "大學")
+    schedule_terms = ("早上", "中午", "下午", "晚上", "結束", "準備", "用餐")
+    budget_terms = ("ttl", "預算", "總預算", "總額", "合計", "budget")
+    has_catering_need = any(term in lowered or term in compact_lower for term in catering_terms)
+    has_event_context = any(term in lowered or term in compact for term in event_terms)
+    has_schedule = (
+        any(term in compact for term in schedule_terms)
+        or bool(re.search(r"\d{1,2}[:：]\d{2}", compact))
+        or bool(re.search(r"\d{1,2}/\d{1,2}", compact))
+    )
+    has_budget_number = (
+        any(term in compact_lower for term in budget_terms)
+        and bool(re.search(r"\d{4,7}", compact))
+    )
+    if has_catering_need and (has_budget_number or has_quantity or (has_event_context and has_schedule)):
+        return True
+
+    return has_quote_term and (has_quantity or has_money or has_budget_number)
 
 
 def _runtime_status_text(chat_id: int) -> str:
@@ -931,14 +956,14 @@ def _trigger_gas_add_item(form_data: dict) -> Optional[dict]:
 def _extract_form_data(claude_reply: str) -> Optional[dict]:
     """從 Claude 回覆中找 ```json block，解析 formData"""
     import re
-    match = re.search(r'```json\s*(\{.*?\})\s*```', claude_reply, re.DOTALL)
-    if match:
+    matches = re.finditer(r'```json\s*(\{.*?\})\s*```', claude_reply, re.DOTALL)
+    for match in matches:
         try:
             data = json.loads(match.group(1))
             if 'clientName' in data or 'action' in data:
                 return data
         except json.JSONDecodeError:
-            pass
+            continue
     # fallback: 報價完成特徵關鍵字（任一符合就嘗試觸發 GAS）
     completion_keywords = ['報價完成', 'cells 全部寫入', '報價定稿', '報價總覽', '費用總覽']
     if any(kw in claude_reply for kw in completion_keywords):
@@ -1001,66 +1026,54 @@ async def _run_a5_quote_background(
         if force_local:
             quote_message = quote_message[len("/localquote"):].strip() or user_message
         try:
-            if force_local:
-                answer = "⚠️ 已依指令直接切到本機 A5 備援。"
-            else:
-                answer = await a5_cloud_quote_ask(chat_id, user_message, user_name)
-            if force_local or _looks_like_cloud_failure(answer):
-                local_fallback = True
-                if force_local:
-                    notice = "🧪 A5 本地備援測試：直接走 Ollama/OpenClaw，不寫 Google Sheet。"
-                else:
-                    notice = "⚠️ A5 雲端路徑不可用，切到本機 Ollama/OpenClaw 備援產草稿。"
-                await bot.send_message(chat_id=chat_id, text=notice)
-                history = list(_get_history(chat_id))
-                result = await asyncio.to_thread(
-                    run_a5_local_quote,
-                    quote_message,
-                    user_name,
-                    history,
-                )
-                answer = result.answer
-                history_ref = _get_history(chat_id)
-                history_ref.append({"role": "user", "content": quote_message})
-                history_ref.append({"role": "assistant", "content": answer})
-                _save_conv_history()
+            notice = "🧪 A5 報價模式：使用地端算力 (gemma4:latest)。"
+            await bot.send_message(chat_id=chat_id, text=notice)
+            history = list(_get_history(chat_id))
+            result = await asyncio.to_thread(
+                run_a5_local_quote,
+                quote_message,
+                user_name,
+                history,
+            )
+            answer = result.answer
+            history_ref = _get_history(chat_id)
+            history_ref.append({"role": "user", "content": quote_message})
+            history_ref.append({"role": "assistant", "content": answer})
+            _save_conv_history()
         finally:
             cancel_event.set()
             heartbeat_task.cancel()
 
-        if not local_fallback:
-            form_data = _extract_form_data(answer)
-            if form_data:
-                if form_data.get('action') == 'addItem':
-                    add_result = await asyncio.get_event_loop().run_in_executor(
-                        None, lambda: _trigger_gas_add_item(form_data))
-                    if add_result and add_result.get('success'):
-                        item_id = add_result.get('item_id', '')
-                        answer += f"\n\n✅ 品項已新增 item_id: {item_id}"
-                    else:
-                        error_msg = add_result.get('error', '未知錯誤') if add_result else 'GAS 無回應'
-                        answer += f"\n\n⚠️ 品項新增失敗（{error_msg}）。"
+        form_data = _extract_form_data(answer)
+        if form_data:
+            if form_data.get('action') == 'addItem':
+                add_result = await asyncio.get_event_loop().run_in_executor(
+                    None, lambda: _trigger_gas_add_item(form_data))
+                if add_result and add_result.get('success'):
+                    item_id = add_result.get('item_id', '')
+                    answer += f"\n\n✅ 品項已新增 item_id: {item_id}"
                 else:
-                    gas_result = await asyncio.get_event_loop().run_in_executor(
-                        None, lambda: _trigger_gas_quote_sync(form_data))
-                    if gas_result and gas_result.get('success'):
-                        quote_msg, is_multi_variant = _format_gas_quote_result(gas_result)
-                        answer += f"\n\n{quote_msg}"
+                    error_msg = add_result.get('error', '未知錯誤') if add_result else 'GAS 無回應'
+                    answer += f"\n\n⚠️ 品項新增失敗（{error_msg}）。"
+            else:
+                gas_result = await asyncio.get_event_loop().run_in_executor(
+                    None, lambda: _trigger_gas_quote_sync(form_data))
+                if gas_result and gas_result.get('success'):
+                    quote_msg, is_multi_variant = _format_gas_quote_result(gas_result)
+                    answer += f"\n\n{quote_msg}"
 
-                        if not is_multi_variant:
-                            slide_result = await asyncio.get_event_loop().run_in_executor(
-                                None, lambda: _trigger_gas_slide_sync())
-                            if slide_result and slide_result.get('success'):
-                                slide_url = slide_result.get('url', '')
-                                answer += f"\n\n📊 **提案簡報已自動產出！**\n連結：{slide_url}"
-                            else:
-                                slide_error = slide_result.get('error', '未知錯誤') if slide_result else 'GAS 無回應'
-                                answer += f"\n\n⚠️ 提案簡報自動產出失敗（{slide_error}）。資料已寫入母版，可手動點選單產出。"
-                    else:
-                        error_msg = gas_result.get('error', '未知錯誤') if gas_result else 'GAS 無回應'
-                        answer += f"\n\n⚠️ 報價單自動產出失敗（{error_msg}）。資料已寫入母版，可手動點選單產出。"
-        else:
-            answer += "\n\n⚠️ 本次為本地備援草稿，沒有自動寫入 Google Sheet 或產生正式報價單。"
+                    if not is_multi_variant:
+                        slide_result = await asyncio.get_event_loop().run_in_executor(
+                            None, lambda: _trigger_gas_slide_sync())
+                        if slide_result and slide_result.get('success'):
+                            slide_url = slide_result.get('url', '')
+                            answer += f"\n\n📊 **提案簡報已自動產出！**\n連結：{slide_url}"
+                        else:
+                            slide_error = slide_result.get('error', '未知錯誤') if slide_result else 'GAS 無回應'
+                            answer += f"\n\n⚠️ 提案簡報自動產出失敗（{slide_error}）。資料已寫入母版，可手動點選單產出。"
+                else:
+                    error_msg = gas_result.get('error', '未知錯誤') if gas_result else 'GAS 無回應'
+                    answer += f"\n\n⚠️ 報價單自動產出失敗（{error_msg}）。資料已寫入母版，可手動點選單產出。"
 
         MAX = 4096
         for i in range(0, len(answer), MAX):
@@ -1306,7 +1319,26 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     if _looks_like_quote_request(stripped):
         await _run_a5_quote_guarded(update, context, text)
     elif mode == MODE_SEO:
-        await _run_cloud_chat_guarded(update, context, text, MODE_SEO)
+        if _claude_semaphore.locked():
+            await update.message.reply_text("⏳ A2 正在處理上一則，請稍候。")
+            return
+        await update.message.reply_text("⏳ A2 SEO 編輯器已接手，地端思考中…")
+        
+        async def _run_a2_bg():
+            async with _claude_semaphore:
+                from a2_seo_engine import run_a2_seo_task
+                try:
+                    answer = await asyncio.get_event_loop().run_in_executor(
+                        None, lambda: run_a2_seo_task(text, update.effective_user.first_name)
+                    )
+                except Exception as e:
+                    answer = f"⚠️ A2 執行錯誤: {e}"
+                
+                MAX = 4096
+                for i in range(0, len(answer), MAX):
+                    await context.bot.send_message(chat_id=chat_id, text=answer[i:i + MAX])
+                
+        asyncio.create_task(_run_a2_bg())
     else:
         await _run_cloud_chat_guarded(update, context, text, MODE_CHAT)
 

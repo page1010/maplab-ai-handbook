@@ -48,6 +48,32 @@ def build_a5_quote_prompt(
     prompt_profile = profile or DEFAULT_PROMPT_PROFILE
     docs = _load_support_docs(prompt_profile)
     parsed_facts = _extract_normalized_facts(user_message)
+
+    if runtime == "openclaw/ollama-fallback":
+        # Simplified prompt for local model to prevent context collapse
+        return f"""你是 MAPLAB A5 報價與提案引擎。
+請根據使用者的需求，產出一份 Markdown 報價單草稿。
+【極端重要】回覆的最後【絕對必須】附上一組合法的 ```json 區塊，不可只回覆「好的」或單一字元。
+
+範例如下：
+```json
+{{
+  "action": "createQuote",
+  "clientName": "客戶名稱",
+  "eventType": "活動類型",
+  "headcount": 人數數字,
+  "budget": 預算數字,
+  "items": [
+    {{"name": "品項1", "quantity": 數量}}
+  ]
+}}
+```
+
+使用者的需求：
+{user_message.strip()}
+
+開始產出草稿與 JSON："""
+
     sections = [
         "# MAPLAB A5 Quote Runtime",
         "",
@@ -73,9 +99,23 @@ def build_a5_quote_prompt(
         "請用繁體中文 Markdown，控制在手機可讀長度。輸出固定包含：",
         "1. `A5 報價草稿`：案件摘要、缺漏資訊、建議方案。",
         "2. `建議菜單`：依類別列出品項與數量，優先用已知 MAPLAB 品項。",
-        "3. `金額判斷`：建議報價、車馬/服務/搬運假設、餐點毛利/食材成本佔比、整體毛利，不要偽造正式報價單連結。",
+        "3. `金額判斷`：建議報價、車馬/服務/搬運假設、餐點毛利/食材成本佔比、整體毛利。",
         "4. `業務下一步`：要問客戶或 Owner 的 3-5 件事。",
-        "5. `備援 handoff prompt`：一段可直接交給其他模型續做的短 prompt。",
+        "5. `GAS 觸發 JSON`：最後【必須】以 ```json 包裹一段供 Google Sheet 解析的 JSON 資料。範例如下：",
+        "```json",
+        "{",
+        "  \"action\": \"createQuote\",",
+        "  \"clientName\": \"客戶名稱\",",
+        "  \"eventType\": \"活動類型\",",
+        "  \"headcount\": 人數數字,",
+        "  \"budget\": 預算數字,",
+        "  \"items\": [",
+        "    {\"name\": \"品項1\", \"quantity\": 數量},",
+        "    {\"name\": \"品項2\", \"quantity\": 數量}",
+        "  ]",
+        "}",
+        "```",
+        "若資訊不足，請補齊預設值或留空，但務必輸出此 JSON 區塊。",
         "",
         "## Deterministic parsing hints",
         "以下是進模型前的硬解析提示。若與模型自行推測衝突，優先採用本段，尤其是中文金額單位。",
@@ -105,7 +145,7 @@ def build_a5_quote_prompt(
             user_message.strip(),
             "```",
             "",
-            "請直接產出草稿。若需求已足夠，可給一組推薦方案；若資訊不足，也要先給可用估算與補問清單。",
+            "【極端重要】你的回覆必須是完整的 Markdown 報價單草稿，並且在最後【絕對必須】附上一組合法的 ```json 區塊，不可只回覆「好的」。請立即開始產出草稿與 JSON：",
         ]
     )
     return "\n".join(sections)
@@ -256,24 +296,24 @@ def _run_direct_ollama(prompt: str, model: str) -> str:
     payload = json.dumps(
         {
             "model": model,
-            "prompt": prompt,
+            "messages": [{"role": "user", "content": prompt}],
             "stream": False,
             "options": {
-                "num_ctx": int(os.getenv("A5_LOCAL_NUM_CTX", "4096")),
-                "num_predict": int(os.getenv("A5_LOCAL_NUM_PREDICT", "900")),
+                "num_ctx": int(os.getenv("A5_LOCAL_NUM_CTX", "8192")),
+                "num_predict": int(os.getenv("A5_LOCAL_NUM_PREDICT", "1500")),
             },
         },
         ensure_ascii=False,
     ).encode("utf-8")
     req = urllib.request.Request(
-        f"{os.getenv('OLLAMA_BASE_URL', 'http://127.0.0.1:11434').rstrip('/')}/api/generate",
+        f"{os.getenv('OLLAMA_BASE_URL', 'http://127.0.0.1:11434').rstrip('/')}/api/chat",
         data=payload,
         headers={"Content-Type": "application/json"},
         method="POST",
     )
-    with urllib.request.urlopen(req, timeout=int(os.getenv("A5_LOCAL_TIMEOUT_SECONDS", "90"))) as resp:
-        data = json.loads(resp.read().decode("utf-8", errors="replace"))
-    return (data.get("response") or "").strip() or "⚠️ 本地模型沒有產出內容。"
+    with urllib.request.urlopen(req, timeout=120) as resp:
+        data = json.loads(resp.read().decode())
+        return data.get("message", {}).get("content", "")
 
 
 def _load_support_docs(profile: str = "telegram") -> dict[str, str]:

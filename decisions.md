@@ -141,7 +141,7 @@
 - **兩個獨立 Telegram bot**：A0 知識庫 + A6 業務報價。分開避免干擾。
 
 ### 開發規範
-- **checkpoint.sh 預設走 branch，--fast 直推 main** — 業務邏輯改動需 Owner approve，A1 系統操作用 --fast。
+- **checkpoint.sh 預設直推 main，--branch 走分支模式** — 因為 Git 具有完整的歷史追蹤與回溯復原能力，無須以分支作為主要存檔方式，全部變更皆應記錄存檔到 main branch。
 - **worktree commit 必須 cherry-pick 到 main** — launchd bot 讀 main，worktree 裡的改動系統看不到。
 - **建腳本前先 `ls scripts/`** — 防止重複建立已存在的腳本。
 - **CURRENT_STATUS.md = 所有 agent 的唯一入口** — 與其他文件衝突時以此為準。

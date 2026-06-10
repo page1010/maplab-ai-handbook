@@ -1,0 +1,100 @@
+{
+  "generated_at": "2026-06-07 20:18",
+  "db_source": "local sandbox · investment_os.sqlite3 · macro 1846 筆",
+  "now": {
+    "regime": {
+      "label": "平穩 / Risk-On",
+      "tone": "ok",
+      "basis": "波動低、信用利差緊、殖利率曲線未倒掛"
+    },
+    "freshness": {
+      "latest": "2026-05-29",
+      "days": 9,
+      "tone": "warn"
+    },
+    "metrics": [
+      {
+        "k": "VIX 波動率",
+        "v": "15.7",
+        "d": "2026-05-28",
+        "tone": "ok",
+        "hint": "低波動"
+      },
+      {
+        "k": "10Y-2Y 利差",
+        "v": "+0.47",
+        "d": "2026-05-29",
+        "tone": "ok",
+        "hint": "未倒掛"
+      },
+      {
+        "k": "10Y 公債殖利率",
+        "v": "4.45%",
+        "d": "2026-05-28",
+        "tone": "neutral",
+        "hint": ""
+      },
+      {
+        "k": "聯邦基金利率",
+        "v": "3.62%",
+        "d": "2026-05-28",
+        "tone": "neutral",
+        "hint": ""
+      },
+      {
+        "k": "高收益債利差",
+        "v": "2.72%",
+        "d": "2026-05-28",
+        "tone": "ok",
+        "hint": "信用緊"
+      },
+      {
+        "k": "10Y 通膨預期",
+        "v": "2.38%",
+        "d": "2026-05-29",
+        "tone": "ok",
+        "hint": "錨定"
+      },
+      {
+        "k": "失業率",
+        "v": "4.3%",
+        "d": "2026-04-01",
+        "tone": "neutral",
+        "hint": ""
+      },
+      {
+        "k": "S&P 500",
+        "v": "7,580",
+        "d": "2026-05-29",
+        "tone": "neutral",
+        "hint": ""
+      }
+    ]
+  },
+  "shocks": {
+    "tone": "degraded",
+    "freshness": {
+      "latest": "2026-05-19",
+      "days": 19,
+      "tone": "bad"
+    },
+    "items": [],
+    "note": "本地 news_alerts=0、事件曆最新 2026-05-19、risk_alerts 最新 2026-05-22。突發層在生產 DB,設 INVESTMENT_OS_DB_PATH 跑才會亮。"
+  },
+  "judgment": {
+    "headline": "總體平穩、無突發升級訊號(突發層缺料,僅依現在的情況)",
+    "tone": "warn",
+    "confidence": "低 (缺突發層)",
+    "basis": [
+      "VIX 波動率 15.7（低波動）",
+      "10Y-2Y 利差 +0.47（未倒掛）",
+      "高收益債利差 2.72%（信用緊）",
+      "10Y 通膨預期 2.38%（錨定）"
+    ],
+    "missing": [
+      "突發新聞警報 0 筆",
+      "風控決策層無資料"
+    ],
+    "next": "設 INVESTMENT_OS_DB_PATH 指向生產 DB 後重跑,補突發+決策層,信心才升"
+  }
+}

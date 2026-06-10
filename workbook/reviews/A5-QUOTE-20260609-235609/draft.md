@@ -1,0 +1,131 @@
+> 金額校正：使用者預算解析為 NT$30,000（來源：3萬；萬=10,000）。
+
+Thinking...
+Here's a thinking process to construct the response:
+
+1.  **Analyze the Request and Persona:**
+    *   **Role:** MAPLAB A5 Quoting and Proposal Engine.
+    *   **Output Format:** Markdown Draft Quotation Sheet + Required JSON B
+Block.
+    *   **Crucial Constraint:** The absolute last part *must* be a complete
+complete JSON block adhering to the specified structure (`action`, `clientN
+`clientName`, `eventType`, `headcount`, `budget`, `items`).
+
+2.  **Analyze User Needs (Input Data Extraction):**
+    *   Client Name: 洪炳輝
+    *   Event Type/Occasion: 入厝 (Housewarming)
+    *   Headcount: 30人
+    *   Budget: 3萬 (Assume this is the total budget, including service fee
+fees).
+    *   Service Fee/Adjustment: 含10%服務費 (This confirms the budget struc
+structure).
+    *   Date/Time: 10/25 下午五點半 (October 25th, 5:30 PM)
+    *   Location: 安南區安興街351巷60號
+    *   Venue/Space: 半戶外車庫
+    *   Menu Type: 主食B (Main Course B)
+    *   Dietary Restrictions: 無禁忌
+
+3.  **Structure the Markdown Quotation Draft:**
+    *   Needs to be professional, clear, and structured like a proposal/quo
+proposal/quotation.
+    *   Sections should include: Client Info, Event Details, Quoted Items/S
+Items/Services, Total Cost Summary. (I need to estimate reasonable line ite
+items based on "Main Course B" for 30 people, while staying within the impl
+implied budget structure).
+
+4.  **Develop Line Items (Estimation Logic):**
+    *   Total Budget: NT$ 30,000 (Includes service charge)
+    *   Headcount: 30
+    *   Target Food Cost per person (approx.): $30,000 / 30 = $1,000/person
+$1,000/person.
+    *   Since the cuisine is "主食B" and it's a box/basic setup, I will bre
+break down the cost into several logical components: Menu/Food, Rental/Venu
+Rental/Venue, Decorations/Service Fee (or roll it up).
+
+    *Drafting Items:*
+    *   [Menu] Main Course B Catering Package (for 30 pax) - This is the co
+core item.
+    *   [Rental] Half Outdoor Carport Rental (Venue setup fee).
+    *   [Service] Staff/Setup Service Fee (Sometimes quoted separately, but
+but since the budget includes it, I'll calculate the total package price).
+
+5.  **Construct the Final JSON:**
+    *   `action`: "createQuote"
+    *   `clientName`: "洪炳輝"
+    *   `eventType`: "入厝 (Housewarming)"
+    *   `headcount`: 30
+    *   `budget`: 30000 (Assuming the user provided this as the target budg
+budget)
+    *   `items`: Need to accurately represent the quoted goods/services. I 
+will use general descriptions for the main components.
+
+6.  **Review and Refine:** (Check against constraints: Markdown draft provi
+provided? Yes. JSON block at the very end? Yes. Correct format? Yes.) (Self
+(Self-Correction: Ensure I specify that the prices are estimates, as this i
+is an engine output.)
+...done thinking.
+
+# 🏠 MAPLAB A5 提案與報價草稿單
+
+**專案名稱：** 洪炳輝 入厝宴會餐點方案
+**日期：** 2024年XX月XX日（依您的需求調整）
+**版本：** V1.0
+---
+
+## 📋 基本資訊摘要
+
+*   **客戶名稱：** 洪炳輝 先生/女士
+*   **活動類型：** 入厝 (Housewarming Ceremony)
+*   **出席人數：** 30 人
+*   **提案日期/時間：** 10月25日（星期五）下午 5:30
+*   **活動地點：** 安南區安興街351巷60號
+*   **場地需求：** 半戶外車庫 (適合人潮聚集，提供半室內庇護)
+*   **餐點要求：** 主食B (無禁忌套餐)，包含服務費
+
+---
+
+## 🍲 一、建議方案與項目詳述 (主食 B - 30人份)
+
+根據您的需求，我們建議採用「精緻主食套餐」模式，以確保在預算控制內達到豐盛且
+完整的宴會體驗。
+
+| 品項編號 | 品項名稱 | 說明/內容細節 | 數量 | 單價 (新台幣) | 小計 (新台幣
+) |
+| :---: | :--- | :--- | :---: | :---: | :---: |
+| A-01 | **【核心餐點】** 主食 B 精緻套餐 Catering (主菜/配菜/飯糰) | 包含3
+3層料理，符合無禁忌原則，著重在地風味與飽足感。建議提供單人份盒裝餐點或可自
+助取用區設置。 | 1 套 (x30人) | $850 | $25,500 |
+| B-02 | **【場地租賃】** 半戶外車庫使用權 | 提供活動空間佈置，包含基本桌椅
+及基礎電源支持（長達約3小時）。 | 1 個 | - | $0 |
+| C-03 | **【服務費用】** 場地營運與餐點服務費 (含VAT) | 涵蓋人力配置、現場
+佈置協助、收尾清潔，並符合預算包含的 ១០% 服務費。 | 1 次 | - | $4,500 |
+| **總計** | **(A+B+C)** | | | | **$30,000** |
+
+---
+
+## 💰 二、報價摘要與付款資訊
+
+*   **總預算範圍：** 新台幣 $30,000 元整
+*   **包含服務費比例：** 已包含 ១០% 場地及餐點服務費。
+*   **支付方式建議：** 初期定金（約 30%）與活動當日餘款。
+
+***備註：此報價為初步提案草稿，最終細節內容需依實際物料供應鏈狀況確認。若需
+調整套餐菜色或增加佈置元素，歡迎隨時提出需求。***
+
+---
+<!-- *** 根據要求，絕對必須附上 JSON 區塊 *** -->
+
+```json
+{
+  "action": "createQuote",
+  "clientName": "洪炳輝",
+  "eventType": "入厝 (Housewarming)",
+  "headcount": 30,
+  "budget": 30000,
+  "items": [
+    {"name": "主食 B 精緻套餐 Catering (包含所有餐點規格)", "quantity": 30}
+30},
+    {"name": "半戶外車庫場地使用權與基本佈置", "quantity": 1}
+  ]
+}
+```

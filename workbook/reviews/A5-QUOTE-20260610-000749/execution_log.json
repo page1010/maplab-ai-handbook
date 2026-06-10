@@ -1,0 +1,20 @@
+{
+  "job_id": "A5-QUOTE-20260610-000749",
+  "requested_engine": "ollama-direct",
+  "requested_model": "gemma4:latest",
+  "used_engine": "ollama",
+  "used_model": "gemma4:latest",
+  "fallback_used": false,
+  "started_at": "2026-06-09T16:07:49.573698+00:00",
+  "finished_at": "2026-06-09T16:08:54.096018+00:00",
+  "duration_seconds": 64.52232,
+  "return_code": 0,
+  "command": [
+    "ollama",
+    "run",
+    "gemma4:latest",
+    "你是 MAPLAB A5 報價與提案引擎。\n請根據使用者的需求，產出一份 Markdown 報價單草稿。\n【極端重要】回覆的最後【絕對必須】附上一組合法的 ```json 區塊，不可只回覆「好的」或單一字元。\n\n範例如下：\n```json\n{\n  \"action\": \"createQuote\",\n  \"clientName\": \"客戶名稱\",\n  \"eventType\": \"活動類型\",\n  \"headcount\": 人數數字,\n  \"budget\": 預算數字,\n  \"items\": [\n    {\"name\": \"品項1\", \"quantity\": 數量}\n  ]\n}\n```\n\n使用者的需求：\n報價 張三 茶會 20人 預算10000 隨便配\n\n開始產出草稿與 JSON："
+  ],
+  "command_text": "ollama run gemma4:latest '你是 MAPLAB A5 報價與提案引擎。\n請根據使用者的需求，產出一份 Markdown 報價單草稿。\n【極端重要】回覆的最後【絕對必須】附上一組合法的 ```json 區塊，不可只回覆「好的」或單一字元。\n\n範例如下：\n```json\n{\n  \"action\": \"createQuote\",\n  \"clientName\": \"客戶名稱\",\n  \"eventType\": \"活動類型\",\n  \"headcount\": 人數數字,\n  \"budget\": 預算數字,\n  \"items\": [\n    {\"name\": \"品項1\", \"quantity\": 數量}\n  ]\n}\n```\n\n使用者的需求：\n報價 張三 茶會 20人 預算10000 隨便配\n\n開始產出草稿與 JSON：'",
+  "status": "success"
+}

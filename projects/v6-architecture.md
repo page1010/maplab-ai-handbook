@@ -144,3 +144,4 @@
 | `skills/a7-customer-service-skills.md` | A7 客服技能（8 種對話模式 + Q1-Q10 模板） |
 | `data/a7-reply-templates.md` | Mina 操作版回覆模板庫 |
 | `AGENT_RECALL_PROMPTS.md` | A0 Artifacts 渲染指引 + A1 Sheets 巡查同步 |
+| `docs/openclaw/telegram-multi-agent-router.md` | Telegram 介接多 Agent 路由架構（A6 -> A2/A5/A1） |

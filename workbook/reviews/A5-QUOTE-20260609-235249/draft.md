@@ -1,0 +1,147 @@
+Thinking...
+Here's a thinking process to generate the desired output:
+
+1.  **Analyze the Request:** The user wants me to act as the "MAPLAB A5 Quo
+Quoting and Proposal Engine." My goal is to produce a draft quotation in Ma
+Markdown format based on the user's input, and critically, *must* conclude 
+with a specific JSON structure using the format of a combined method/tool c
+call.
+
+2.  **Analyze the User Input (The Demand):**
+    *   Client Name: 李晴宜
+    *   Event Type: 週歲抓周
+    *   Headcount: 20人
+    *   Budget/Pricing: 15,000 (Includes 10% service fee)
+    *   Date/Time: 12/21 上午11點
+    *   Location: 台南安南區安和路三段190巷 室內冷氣房 自家畫廊
+    *   Dietary Restrictions/Notes: 不要羊 (No mutton), 部分長輩不吃牛串燒可
+以 (Some elderly cannot eat beef skewers, OK).
+    *   Menu Selection: 輕食A
+
+3.  **Determine the Output Structure:**
+    *   Section 1: Title/Introduction (Acting as the Engine).
+    *   Section 2: The Markdown Quotation Draft (Professional format summar
+summarizing all inputs).
+    *   Section 3: The Required JSON Block (`json` code block).
+
+4.  **Drafting the Markdown Quoting Content (Internal Logic & Formatting):*
+Formatting):**
+    *   *Structure:* Needs clear sections for Client, Event details, Scope,
+Scope, Cost, and Notes.
+    *   *Client/Event Info:* Use "李晴宜," "週歲抓周."
+    *   *Logistics:* Use 12/21, 台南地址, 冷氣房/畫廊。
+    *   *Scope/Menu:* Use "輕食A" and ensure the dietary restrictions (不要
+羊, 部分長輩) are highlighted.
+    *   *Budget Calculation:* Total budget is $15,000 (including 10% servic
+service fee).
+
+5.  **Generating the JSON Block (Crucial Step):**
+    *   Review the template:
+        ```json
+        {
+          "action": "createQuote",
+          "clientName": "客戶名稱",
+          "eventType": "活動類型",
+          "headcount": 人數數字,
+          "budget": 預算數字,
+          "items": [
+            {"name": "品項1", "quantity": 數量}
+          ]
+        }
+        ```
+    *   Map the data:
+        *   `action`: "createQuote" (Stays the same)
+        *   `clientName`: "李晴宜"
+        *   `eventType`: "週歲抓周"
+        *   `headcount`: 20
+        *   `budget`: 15000 (The total budget specified)
+        *   `items`: Needs to capture the core service/menu. Since specific
+specific item costs aren't given, I will generalize it based on the menu se
+selection and headcount. A good estimate is to group the entire package int
+into one or two main items. Let's use "輕食A餐點套餐" (Menu A Catering Pack
+Package) and assume a quantity of 20 people.
+
+    *   *Refined JSON:*
+        ```json
+        {
+          "action": "createQuote",
+          "clientName": "李晴宜",
+          "eventType": "週歲抓周",
+          "headcount": 20,
+          "budget": 15000,
+          "items": [
+            {"name": "輕食A餐點套餐 (含服務費)", "quantity": 20}
+          ]
+        }
+        ```
+
+6.  **Final Review:** Ensure the Markdown is polished and that the JSON blo
+block is placed at the very end in the required format. (Self-Correction: T
+The tone must be professional and helpful.)
+...done thinking.
+
+# 💡 MAPLAB A5 報價與提案引擎啟動
+
+根據您的需求，已為您草擬「週歲抓周」活動的詳細報價單。請查閱下方的 Markdown
+Markdown 草稿及系統數據結構化指令（JSON）。
+
+---
+
+## 🎉 李晴宜 週歲抓周活動方案報價單草稿
+
+**【備註】**：本報價單為初步規劃，所有細節仍需與商家確認。
+
+### 📅 活動基本資訊
+
+*   **客戶名稱 (Client)**：李晴宜
+*   **活動類型 (Event Type)**：週歲抓周慶祝活動
+*   **預計人數 (Headcount)**：20 位賓客
+*   **日期/時間 (Date/Time)**：12月21日 (三) / 上午 11:00
+*   **場地類型 (Venue)**：室內冷氣房（自家畫廊）
+*   **場地地址 (Location)**：台南安南區安和路三段190巷
+
+### 📋 活動主題與餐飲規劃
+
+| **項目** | **細項內容** | **說明/備註** |
+| :--- | :--- | :--- |
+| **核心主題** | 週歲抓周慶典 | 設計溫馨、適合兒童節慶的主題氛圍。 |
+| **主餐方案 (Menu)** | 輕食A套餐 | 依據選定的清淡且易消化的菜色，適用於多方
+年齡層的聚會。 |
+| **餐飲備註** | 素食及忌口考量 | ✅ 不含羊肉；✅ 部分長輩不吃牛串燒。食材搭
+配時需留意這些限制。 |
+
+### 💰 預算與報價明細（總計）
+
+| **項目** | **內容說明** | **費用計算依據** | **預估總金額 (TWD)** |
+| :--- | :--- | :--- | :--- |
+| **服務方案包** | 週歲抓周活動餐飲及裝潢基礎套餐 (共 20 人份) | *詳細含件品
+清單待確定* | $15,000.00 |
+| **包含項目** | 餐點、場地使用費、基本裝飾、服務費 | 此金額已涵蓋全部成本及
+ 10% 的服務費用。 | - |
+| **最終預計總額** | - | - | **$15,000.00** |
+
+### ✨ 後續提案重點建議 (Service Proposal)
+
+1.  **餐點配置考量：** 為確保部分長輩和忌口賓客舒適，建議在「輕食A」的基礎上
+，將菜色分組為「主肉選項」、「替代清淡選項」與「純素/蔬食選項」，並以桌卡或
+專人指引，避免食材混淆。
+2.  **場地運用：** 由於場地為自家畫廊及室內冷氣房，建議利用其藝術氛圍，搭配
+主題色調（如奶油白、薄荷綠）的佈置，創造一層溫馨且具有品味的慶典感。
+
+---
+***
+
+### ✅ MAPLAB A5 系統指令區塊 (JSON)
+
+```json
+{
+  "action": "createQuote",
+  "clientName": "李晴宜",
+  "eventType": "週歲抓周",
+  "headcount": 20,
+  "budget": 15000,
+  "items": [
+    {"name": "輕食A餐點套餐 (含服務費)", "quantity": 20}
+  ]
+}
+```

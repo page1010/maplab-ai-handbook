@@ -1,5 +1,11 @@
 # T-B1-B4-001 — Investment OS B1-B4 Role Split + Chrome Extension Summon
 
+## 接續狀態
+- **狀態**: 🔄 進行中
+- **最後活動**: 2026-06-11 48c33b3
+- **接續點**: （checkpoint.sh 自動補建，請 agent 填寫）
+- **阻塞**: 無
+
 建立：2026-05-29
 負責：A1 / B role family
 狀態：🟢 READY

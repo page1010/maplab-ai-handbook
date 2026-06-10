@@ -46,7 +46,7 @@ CONV_HISTORY_FILE = BOT_DIR / "conv_history.json"
 
 # ── Clipboard Server ────────────────────────────────────────────────────────────
 CLIP_FILE = Path("/tmp/maplab_clip.json")
-CLIP_SERVER_PORT = 9876
+CLIP_SERVER_PORT = 9875
 
 # ── Logging ────────────────────────────────────────────────────────────────────
 LOG_FILE = BOT_DIR / "bot.log"

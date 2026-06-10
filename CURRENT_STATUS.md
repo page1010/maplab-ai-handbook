@@ -57,9 +57,9 @@
 | T-A1-EXT-001-dynamic-role-modules | T-A1-EXT-001 — GitHub Dynamic Role Task Modules | A1 |  | handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md |
 | T-A1-RTK-001 | RTK Token Proxy 掛載與選擇性上線 | A1 | 🟢 已上線（Codex hook 已掛、裝前/裝後 patrol diff 驗收通過、git 排除生效） | handoff/tasks/T-A1-RTK-001.md |
 | T-A1-SYNC-GUARD-001 | 雲端同步破口修補 + patrol 紀錄瘦身 | A1 | 🔲 待開始（高槓桿、低成本，建議優先） | handoff/tasks/T-A1-SYNC-GUARD-001.md |
-| T-A1-V6-P2 | T-A1-V6-P2 | A1 | 🔴 CRITICAL（~1271h無commit） | handoff/tasks/T-A1-V6-P2.md |
+| T-A1-V6-P2 | T-A1-V6-P2 | A1 | 🔴 CRITICAL（~1272h無commit） | handoff/tasks/T-A1-V6-P2.md |
 | T-A1-V6-P3 | T-A1-V6-P3 | A1 | 🔲 待開始（尚未開始。等 T-A1-V6-P2 完成後啟動。） | handoff/tasks/T-A1-V6-P3.md |
-| T-A1-V7 | 系統進化 — 單一真相源 + 自動同步 + 瘦身 + 自動技能生成 + 自動壓縮 | A1 | 🔴 CRITICAL（~1271h無commit） | handoff/tasks/T-A1-V7.md |
+| T-A1-V7 | 系統進化 — 單一真相源 + 自動同步 + 瘦身 + 自動技能生成 + 自動壓縮 | A1 | 🔴 CRITICAL（~1272h無commit） | handoff/tasks/T-A1-V7.md |
 | T-A2-002-foodsafety-seo-cleanup | T-A2-002 — 食安 + 法規 SEO 字眼清理 | A2 | ⏸️ 阻塞（Repo 端已清理完成；WordPress 端需 Owner 手動刪除/修改 5 篇文章的食安字眼） | handoff/tasks/T-A2-002-foodsafety-seo-cleanup.md |
 | T-A2-003-weekly-wp-audit | T-A2-003: 每週全站 WP 內容稽核排程 | A2 | 🔲 待開始（腳本已建好（wp-audit.sh / wp-audit-cron.sh）。待 Owner 用 /schedule 建立） | handoff/tasks/T-A2-003-weekly-wp-audit.md |
 | T-A2-004 | 首頁結構優化 — 配合品牌色票微調 + 轉換路徑整理 | A2 | 🔲 待開始（任務卡建立。A0 已完成對標分析和色票微調。） | handoff/tasks/T-A2-004.md |

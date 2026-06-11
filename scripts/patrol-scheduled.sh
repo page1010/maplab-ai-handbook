@@ -11,8 +11,9 @@ LOG_FILE="$LOG_DIR/patrol-scheduled.log"
 # ── 載入 .env ──
 ENV_FILE="$REPO_ROOT/bot/.env"
 if [[ -f "$ENV_FILE" ]]; then
-  # shellcheck disable=SC1090
-  source <(grep -E '^(TELEGRAM_BOT_TOKEN|OWNER_CHAT_ID)=' "$ENV_FILE")
+  # macOS bash 3.2 的 `source <(...)` 不會設定變數（2026-06-11 實測），改直接賦值
+  TELEGRAM_BOT_TOKEN=$(grep -E '^TELEGRAM_BOT_TOKEN=' "$ENV_FILE" | head -1 | cut -d= -f2-)
+  OWNER_CHAT_ID=$(grep -E '^OWNER_CHAT_ID=' "$ENV_FILE" | head -1 | cut -d= -f2-)
 fi
 
 BOT_TOKEN="${TELEGRAM_BOT_TOKEN:-}"
@@ -48,6 +49,9 @@ if [[ -z "$BOT_TOKEN" ]]; then
   exit 1
 fi
 
+# 清掉無效 UTF-8 位元組（Telegram 會 400: strings must be encoded in UTF-8）
+MESSAGE=$(printf '%s' "$MESSAGE" | iconv -f UTF-8 -t UTF-8 -c)
+
 # Telegram 訊息上限 4096 字，超過就截斷
 if [[ ${#MESSAGE} -gt 4000 ]]; then
   MESSAGE="${MESSAGE:0:3990}
@@ -58,8 +62,7 @@ fi
 HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" \
   "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
   -d "chat_id=${CHAT_ID}" \
-  -d "text=${MESSAGE}" \
-  -d "parse_mode=" \
+  --data-urlencode "text=${MESSAGE}" \
   --max-time 30)
 
 if [[ "$HTTP_CODE" == "200" ]]; then

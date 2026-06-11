@@ -33,8 +33,6 @@
 
 > 從上方表格提取狀態非 ✅ 的項目，方便快速掃描。
 
-- 🔄 T-HQ-001 AGENT-HQ 遷移 P2-P6（B1 認領；P1 ✅ repo 已上 GitHub）
-- 🔄 T-A4-003 照片 ALT 管線（36,676 張處理中，B1 認領）
-- 👤 Owner 待辦：`launchctl load ~/Library/LaunchAgents/com.maplab.a4-photo-alt.plist`（啟用每小時自動跑）
-- 👤 Owner 待辦：照片全部處理完後再改 Google Drive 串流（先別改！整理完才離線）
-- 👤 Owner 待辦：`~/.claude/settings.json` 加 additionalDirectories
+- 🔄 T-HQ-001 P5/P6 待做（P1-P4 ✅；B1 認領）
+- 🔄 T-A4-003 照片 ALT 管線（已處理 251/36,676，0 失敗；每小時排程已啟用）
+- 👤 Owner 待辦（唯一一件，要等時機）：照片全部處理完後改 Google Drive「串流檔案」釋出 ~531GB。**現在先不要改**

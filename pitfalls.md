@@ -2,6 +2,22 @@
 
 > Cold-start required. 每次修到重複錯誤，要把「觸發條件 / 根因 / 解法 / 預防」寫回這裡。
 
+## 2026-06-11 — Session 留下的每分鐘 babysitting cron 變成殭屍，癱瘓 Hermes 半天
+
+- 觸發條件：Owner 問「Hermes 有貢獻了嗎可以用了嗎」，調查發現 Hermes 單日 280 個
+  `Response remained truncated` 錯誤，所有產出停擺。
+- 根因：5/23 某個 session 在 Hermes 建了 `auto-allow-gemini` cron（每 1 分鐘用 gemma4
+  看螢幕、自動點 Antigravity/Gemini 的允許按鈕）。Session 結束後沒人清理，job 留著
+  每分鐘失敗一次、空轉 GPU、跟 A6/照片管線搶資源。它同時是資安反模式：盲目自動批准
+  權限對話框。
+- 解法：備份 `~/.hermes/cron/jobs.json` 到 `agent-hq/memory/hermes/` 後
+  `hermes cron remove b468df475c5f`。Owner 明確指令「刪除 auto-allow-gemini」後執行。
+- 預防：(1) 任何 agent 建立的 cron / launchd / hermes job 必須登記到
+  `agent-hq/runtime/REGISTRY.md`，未登記 = 野生 job，B4 patrol 可砍。
+  (2) 為單次 session 建的 babysitting job 必須設次數上限或在 session 結束時移除。
+  (3) 「自動點允許按鈕」類的 job 一律禁止——權限對話框存在的意義就是要人看過。
+  (4) 排查「某 agent 突然壞掉」時先看它的 cron/scheduler 有沒有殭屍任務。
+
 ## 2026-05-30 — B3 archive is not the same thing as the B4 patrol verdict
 
 - 觸發條件：B3 被召喚來做 Investment OS overbuild 的 runtime handoff，輸出內容同時包含 archive、resume prompt、status writeback plan，還會自然想把 `continue / pause / refactor` 一起整理進去。

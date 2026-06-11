@@ -45,3 +45,8 @@ launchctl load ~/Library/LaunchAgents/com.maplab.a4-photo-classify.plist
 ```
 /usr/bin/python3 scripts/a4_photo_classifier.py --status
 ```
+
+## Owner 優先序裁定（2026-06-11）
+
+「我不會一直用也可以等報價」— 照片管線全速跑到完，不需為 A6 報價 / Hermes 讓出 gemma4。
+之後的 session 不要再加節流／降速設計。

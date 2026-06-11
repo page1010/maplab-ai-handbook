@@ -345,6 +345,12 @@ A1 巡查時發現 agent 未寫接續 Prompt 或超過 30 分鐘無 checkpoint�
 - Notion 現存舊資料需清理：保留架構，移除過時狀態，加上「→ 最新狀態請看 GitHub」的引導
 - 清理 Notion 舊資料可列為 A0 或 A1 的支線任務
 
+**Credential 例外（2026-06-11 補充）：**
+- Notion 仍不得作為 Agent 的狀態、進度、任務真相來源；這條不變。
+- 若 Owner 指定帳密/社群帳號存放於 Notion，Notion 只可視為 credential vault / index，由 A0 或 Owner-approved A1/Codex 受控取用。
+- Agent 不得把 Notion 內的密碼、token、cookie、OTP、backup code 貼進 prompt、Chrome side panel、repo、memory、log 或 review bundle。
+- 需要社群登入時，先走 `AGENT_STARTUP_PROTOCOL.md Step 5.5` 與 `skills/credentials/social-accounts.md`；拿不到 credential 或登入態時，輸出 `auth_missing` 與 Owner 5 分鐘行動，不得默默 fallback 到舊資料。
+
 ---
 
 ## SECTION 7 — 全域檢查器（Universal Checker）
@@ -416,6 +422,7 @@ A1 巡查時發現 agent 未寫接續 Prompt 或超過 30 分鐘無 checkpoint�
 | Gemini | skills/credentials/gemini-api.md |
 | Notion | skills/credentials/notion-api.md |
 | Meta Ads | skills/credentials/meta-ads-api.md |
+| Social Accounts / FB / IG / Threads | skills/credentials/social-accounts.md |
 
 ---
 
@@ -473,6 +480,16 @@ Agent 要用鑰匙時：讀技能書 → 按指示取用 → 用完不存。
 - 不自動發布 WP 頁面（只能 draft）
 - repo 維持 private
 
+### 8.6 社群帳號 Credential Bootstrap
+
+社群登入帳密（FB / IG / Threads / 其他平台）屬於 `skills/credentials/social-accounts.md` 管轄。它和 Notion 狀態禁令的關係如下：
+
+- GitHub / CURRENT_STATUS / Task Card 仍是進度真相。
+- Notion 可作為 Owner 管理的 credential vault / index，但只限 A0 或 Owner-approved A1/Codex 受控取用。
+- 首選是使用既有登入態（Owner Chrome、已授權 MCP、已設定的 local credential skill），避免在對話中暴露密碼。
+- 任何 agent 若需要 Owner credential 行動，必須先完成三層阻塞審查：檢查既有登入態、查 `skills/credentials/`、確認是否能由 A0/MCP 取得受控 handoff。三者都不可行才回報 Owner。
+- 回報時只寫 `auth_missing`、試過什麼、為什麼不能繼續、Owner 5 分鐘內要做什麼；不得寫密碼本體或完整 token。
+
 ---
 
 ## SECTION 9 — API 存取三層備援（強制）
@@ -494,6 +511,7 @@ Agent 要用鑰匙時：讀技能書 → 按指示取用 → 用完不存。
 - **MCP 不可用時，必須自動降級到 credential skill（curl + OAuth）**，不能停下來等 Owner 幫忙
 - **Chrome tab 環境的 Agent（A2-A8）需要資料時，自行開啟 GitHub / Google Sheets / GA 等網頁分頁**，不是 Owner 的工作
 - **credential skill 在 skills/credentials/ 資料夾**，每個外部服務一個檔案，記錄取用方法
+- **社群登入/帳密任務先做 Credential Bootstrap**：沒有登入態就輸出 `auth_missing`，不能用舊 corpus 或公開 fallback 假裝任務完成
 - **說「做不到」之前，必須先確認三層都試過**
 
 ### 9.3 身份確認（防止混淆）

@@ -1,6 +1,6 @@
 {
   "schema_version": "2026-05-11.dynamic-role-module.v1",
-  "generated_at": "2026-06-03T17:44:38+08:00",
+  "generated_at": "2026-06-11T13:33:47+08:00",
   "module_id": "MAPLAB_IOS-FB_FB_SOCIAL_INTELLIGENCE_MANAGER_DYNAMIC_ROLE_MODULE",
   "role_id": "IOS-FB",
   "role_name": "FB Social Intelligence Manager",
@@ -25,32 +25,32 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "ff3430c4b21176ca75af822303f57c15c2be1e73435f039cd9cdb84980a03961",
-      "size_bytes": "44028"
+      "source_sha256": "77c6564122d161d586ce3280efaa10cdb8c7dbf649b0cca25aa81cb65e1b79da",
+      "size_bytes": "27922"
     },
     {
       "path": "AGENT_RULES.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "cdde4fb459ee56940daabe2b84c1b2a7e24e47a51cd8f00ec8fe0311fb2fc474",
-      "size_bytes": "38719"
+      "source_sha256": "b492574fdfdc465d4be77a5e90f446c7ee517134ece68dea982f00aecff56237",
+      "size_bytes": "42458"
     },
     {
       "path": "AGENT_STARTUP_PROTOCOL.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "7044ce01861166a72bc6ad59407fa64b782392a7f2e287c9be20f98aaf9f3e83",
-      "size_bytes": "8620"
+      "source_sha256": "d69e11eac9ff6abcbdbb648d6a915c10b466ab57aee8b819c0dab76951ea284b",
+      "size_bytes": "10477"
     },
     {
       "path": "pitfalls.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "b61d5fe13939cd3a99fbab974318639abb1d470881df44a3667851a1f6f0dcea",
-      "size_bytes": "18808"
+      "source_sha256": "384cb0aefeaab9a05c0e7d4d13aeae11629da00b3569808a4454eb3be3f00214",
+      "size_bytes": "19842"
     },
     {
       "path": "TASK_QUEUE.md",
@@ -73,8 +73,8 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "a40fe408ab1bd71a1473fd405e1c26298ede962ccd2a41c79b0348098d8df35e",
-      "size_bytes": "53287"
+      "source_sha256": "3814db94fff4f1ec834a548d07237db46570321ddd1210c9c19878db214073ea",
+      "size_bytes": "55188"
     },
     {
       "path": "skills/superpowers-guide.md",
@@ -149,7 +149,32 @@
       "size_bytes": "698"
     }
   ],
-  "restricted_sources": [],
+  "restricted_sources": [
+    {
+      "path": "skills/credentials/social-accounts.md",
+      "load_mode": "a1_only",
+      "exists": "true",
+      "purpose": "skill / operating guide",
+      "source_sha256": "d6bb7f3a1bca4bbafd7edefb91ccc29230860e47aa277e4897b6a57ebcbcd3c6",
+      "size_bytes": "3366"
+    },
+    {
+      "path": "skills/credentials/notion-api.md",
+      "load_mode": "a1_only",
+      "exists": "true",
+      "purpose": "skill / operating guide",
+      "source_sha256": "5b522b8321938d6610f889cdd59ddc2d63c0dd673cd7c458cebadd807d2aaf17",
+      "size_bytes": "2563"
+    },
+    {
+      "path": "skills/credentials/meta-ads-api.md",
+      "load_mode": "a1_only",
+      "exists": "true",
+      "purpose": "skill / operating guide",
+      "source_sha256": "495a974515a0860a8f479409561a2737bb48a6788b4406ad30c8f2b9097dff82",
+      "size_bytes": "1530"
+    }
+  ],
   "skill_group": [
     "skills/invest-os-b-role-system.md",
     "skills/task-progress-guide.md"
@@ -175,13 +200,17 @@
     "Read Investment OS AGENT_CORE.md, CURRENT_STATUS.md, pitfalls.md, config/investment_os_role_registry.json, and docs/INVESTMENT_OS_ROLE_WORKSPACES.md before acting.",
     "Find role_id IOS-FB in config/investment_os_role_registry.json and use its required_reads, bad_data_rule, background_jobs, Telegram outputs, Dashboard workspace, and B1-B4 escalation path.",
     "Name this session IOS-FB FB / 社群情報經理 when dispatching a dedicated cleanup or audit thread.",
-    "If output quality is bad, inspect the whole strategy loop before asking a shared Telegram/Dashboard owner to patch formatting."
+    "If output quality is bad, inspect the whole strategy loop before asking a shared Telegram/Dashboard owner to patch formatting.",
+    "Before FB/social collection or report generation, run the social credential bootstrap: verify Owner Chrome logged-in route or Owner/A0-approved Notion credential handoff.",
+    "Never read, print, store, or paste social passwords, tokens, cookies, OTP, or backup codes into prompts, repo files, logs, memory, or review bundles.",
+    "If authenticated source access is missing, write source_route_health.md with auth_missing, tried methods, failure reason, and Owner 5-minute action; do not silently downgrade to stale historical corpus or public fallback."
   ],
   "output_contract": [
     "source_route_health.md",
     "normalized_quality_report.md",
     "candidate_review_queue.md",
-    "price_proof_manifest.md"
+    "price_proof_manifest.md",
+    "telegram_dashboard_readback.md"
   ],
   "writeback": {
     "default_review_bundle": "workbook/reviews/JOB-xxx/",

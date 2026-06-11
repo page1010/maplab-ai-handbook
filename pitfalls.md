@@ -169,3 +169,10 @@
 - 根因：可視化介面被當成一次性輸出物，沒有固定 repo path、重開 command、README 入口、桌面/Finder 定位，也沒有把「如何重開」納入交接契約。
 - 解法：將 Agent Runtime Panel 固定在 `local-control-plane/panel.html`，新增 `open-agent-runtime-panel.command` 與 `scripts/open_agent_runtime_panel.sh open|reveal|serve`，並在 README / roadmap 寫明入口。
 - 預防：任何交給 Owner 使用的 HTML/面板，都必須同時具備 tracked file、reopen command、Finder reveal 路徑與 link check；不得只說「打開這個 HTML」。
+
+## 2026-06-11 — FB shadow refresh can be healthy while reports are stale
+
+- 觸發條件：Owner 問「最近都沒有報告」，但 `launchd` / log 顯示 `fb-shadow-refresh` 每日都有 `done`。
+- 根因：排程只跑 `aggregate_fb_local_judgement.py` 與 `build_fb_shadow_review_sample.py`，預設輸入仍是 2026-03-25_to_2026-04-25 historical corpus；它不是 fresh logged-in FB collector，也不是 reviewed Telegram digest sender。IOS-FB 啟動流程也沒有先要求社群帳號 / Notion credential bootstrap。
+- 解法：補 `AGENT_STARTUP_PROTOCOL.md Step 5.5`、`skills/credentials/social-accounts.md`、IOS-FB restricted credential sources，並建立 `workbook/reviews/JOB-IOS-FB-NO-REPORTS-20260611/` 說明 no-report 根因。
+- 預防：查報告中斷時，不只看 process 是否跑過；必須同時檢查 runner 實際輸入日期、是否 fresh collection、是否 quality gate pass、是否 Telegram/Dashboard readback。缺登入時輸出 `auth_missing`，不得用舊 corpus 當今日報告。

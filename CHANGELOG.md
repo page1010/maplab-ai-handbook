@@ -3,6 +3,19 @@
 本文件記錄 maplab-ai-handbook 的所有重大版本變更。
 格式：版本號 | 日期 | 變更摘要 | 執行 Agent
 
+## v6.6（IOS-FB Credential Bootstrap + No-Report Diagnosis）— 2026-06-11
+
+**Codex / IOS-FB 修正：社群帳號 Notion credential route 寫入啟動流程，並查明 FB/social report 中斷原因**
+
+執行 Agent：Codex acting as IOS-FB
+
+1. `AGENT_STARTUP_PROTOCOL.md` 新增 Step 5.5：外部登入 / 社群帳號 Credential Bootstrap。
+2. `AGENT_RULES.md` 補上 Notion credential 例外：Notion 不是狀態真相，但可作 Owner/A0/A1 核准的 credential vault / index。
+3. 新增 `skills/credentials/social-accounts.md`，規範 FB / IG / Threads / 社群登入的安全取用、`auth_missing` 與禁止事項。
+4. 更新 `skills/credentials/notion-api.md`，禁止把 token / 密碼 / cookie / OTP 貼到 prompt、repo、log、memory 或 review bundle。
+5. 更新 IOS-FB dynamic role module，加入 `social-accounts`、`notion-api`、`meta-ads-api` restricted credential references。
+6. 新增 `workbook/reviews/JOB-IOS-FB-NO-REPORTS-20260611/`：確認 `fb-shadow-refresh` 2026-06-03 到 2026-06-11 有跑，但只刷新 2026-03-25_to_2026-04-25 historical shadow sample；production logged-in collector / reviewed Telegram digest 未形成 daily loop，training gate 仍 failed。
+
 ## v6.5（A2 Google Discovery / Rank Math Indexing Evidence）— 2026-05-11
 
 **A1/A2 live 提交證據：把 8 個修復 URL 送進可發現/可重爬流程**

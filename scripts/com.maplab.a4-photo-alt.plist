@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.maplab.a4-photo-alt</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/bin/python3</string>
+        <string>/Users/pagemacmini/maplab-ai-handbook/scripts/a4_photo_alt_pipeline.py</string>
+        <string>--limit</string>
+        <string>60</string>
+    </array>
+    <key>StartInterval</key>
+    <integer>3600</integer>
+    <key>Nice</key>
+    <integer>10</integer>
+    <key>StandardOutPath</key>
+    <string>/Users/pagemacmini/maplab-ai-handbook/logs/a4-photo-alt.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/pagemacmini/maplab-ai-handbook/logs/a4-photo-alt.log</string>
+</dict>
+</plist>

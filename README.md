@@ -140,7 +140,7 @@ maplab-ai-handbook/
 
 ## 10. 唯一資料來源規則
 
-**GitHub 是所有 Agent 的唯一資料來源。** Notion 僅供人類使用（控制台/看板），Agent 不讀 Notion。所有進度、版本、技術文件一律以 GitHub commit 為準。
+**GitHub 是所有 Agent 的唯一狀態真相。** Notion 僅供人類使用（控制台/看板）與 Owner/A0/A1 核准的 credential vault / index；Agent 不得把 Notion 當作進度、版本、任務決策依據。所有進度、版本、技術文件一律以 GitHub commit 為準；任何密碼、token、cookie、OTP 不得寫入 repo、prompt、memory 或 log。
 
 ---
 

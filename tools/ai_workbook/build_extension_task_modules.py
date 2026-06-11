@@ -659,7 +659,19 @@ def ios_role(
     output_contract: list[str],
     affects: list[str],
     risk_level: str = "medium",
+    restricted_sources: list[str] | None = None,
+    startup_contract_extra: list[str] | None = None,
 ) -> RoleModule:
+    base_startup_contract_extra = [
+        "Use Investment OS local repo as the canonical runtime truth: /Users/pagemacmini/Documents/New project.",
+        "Read Investment OS AGENT_CORE.md, CURRENT_STATUS.md, pitfalls.md, config/investment_os_role_registry.json, and docs/INVESTMENT_OS_ROLE_WORKSPACES.md before acting.",
+        f"Find role_id {role_id} in config/investment_os_role_registry.json and use its required_reads, bad_data_rule, background_jobs, Telegram outputs, Dashboard workspace, and B1-B4 escalation path.",
+        f"Name this session {role_id} {department} when dispatching a dedicated cleanup or audit thread.",
+        "If output quality is bad, inspect the whole strategy loop before asking a shared Telegram/Dashboard owner to patch formatting.",
+    ]
+    if startup_contract_extra:
+        base_startup_contract_extra.extend(startup_contract_extra)
+
     return RoleModule(
         role_id,
         role_name,
@@ -669,14 +681,9 @@ def ios_role(
         IOS_PROJECT_DOCS,
         IOS_SKILLS,
         ["codex", "openclaw", "gemini", "hermes"],
+        restricted_sources=restricted_sources or [],
         output_contract=output_contract,
-        startup_contract_extra=[
-            "Use Investment OS local repo as the canonical runtime truth: /Users/pagemacmini/Documents/New project.",
-            "Read Investment OS AGENT_CORE.md, CURRENT_STATUS.md, pitfalls.md, config/investment_os_role_registry.json, and docs/INVESTMENT_OS_ROLE_WORKSPACES.md before acting.",
-            f"Find role_id {role_id} in config/investment_os_role_registry.json and use its required_reads, bad_data_rule, background_jobs, Telegram outputs, Dashboard workspace, and B1-B4 escalation path.",
-            f"Name this session {role_id} {department} when dispatching a dedicated cleanup or audit thread.",
-            "If output quality is bad, inspect the whole strategy loop before asking a shared Telegram/Dashboard owner to patch formatting.",
-        ],
+        startup_contract_extra=base_startup_contract_extra,
         affects=affects,
         recall_path=IOS_RECALL_PATH,
         risk_level=risk_level,
@@ -711,9 +718,19 @@ ROLES.extend(
             "FB / 社群情報經理",
             "FB 與公開社群來源收集、正規化、路由健康與 candidate 品質的策略 owner。",
             ["fb_radar", "source_route_health", "social_candidate_review", "price_proof_manifest"],
-            ["source_route_health.md", "normalized_quality_report.md", "candidate_review_queue.md", "price_proof_manifest.md"],
+            ["source_route_health.md", "normalized_quality_report.md", "candidate_review_queue.md", "price_proof_manifest.md", "telegram_dashboard_readback.md"],
             ["FB Radar evidence", "social source route health", "B2 low-signal review", "B1 route repair"],
             "medium",
+            restricted_sources=[
+                "skills/credentials/social-accounts.md",
+                "skills/credentials/notion-api.md",
+                "skills/credentials/meta-ads-api.md",
+            ],
+            startup_contract_extra=[
+                "Before FB/social collection or report generation, run the social credential bootstrap: verify Owner Chrome logged-in route or Owner/A0-approved Notion credential handoff.",
+                "Never read, print, store, or paste social passwords, tokens, cookies, OTP, or backup codes into prompts, repo files, logs, memory, or review bundles.",
+                "If authenticated source access is missing, write source_route_health.md with auth_missing, tried methods, failure reason, and Owner 5-minute action; do not silently downgrade to stale historical corpus or public fallback.",
+            ],
         ),
         ios_role(
             "IOS-ALPHA",

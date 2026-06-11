@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-06-11 07:16（checkpoint.sh 自動同步）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-06-11 13:31（Codex IOS-FB no-report diagnosis）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -19,6 +19,7 @@
 
 ## 最新事實核對
 
+- 2026-06-11：IOS-FB no-report 診斷完成，review bundle：`workbook/reviews/JOB-IOS-FB-NO-REPORTS-20260611/`。結論：原啟動流程未寫入社群帳號 Notion credential bootstrap；已補 `AGENT_STARTUP_PROTOCOL.md Step 5.5`、`skills/credentials/social-accounts.md`、`AGENT_RULES.md` Notion credential 例外、IOS-FB module restricted credential sources。Investment OS runtime 證據顯示 `com.investmentos.fb-shadow-refresh` 2026-06-03 到 2026-06-11 每日 03:00 有跑，但只刷新 2026-03-25_to_2026-04-25 historical shadow sample；training gate 仍 `FAIL_LOCAL_MODEL_TRAINING_RESPONSE`，reviewed Telegram digest / SQLite / price proof 仍 blocked。下一次 IOS-FB fresh report 必須先驗 Owner Chrome logged-in route 或 A0/Notion credential handoff；缺登入時輸出 `auth_missing`，不得用舊 corpus 假裝今日報告。
 - 2026-06-09：A2/A3/A4 approval-ready automation 規則落地（implementation commit `4988747`）。新增 `projects/a2a3a4-approval-ready-automation.md`，並更新 `AGENT_RULES.md`、`projects/a2-ads-seo-wordpress-patrol.md`、`handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md`、`recalls/A2_recall.md`、`recalls/A3_recall.md`、`recalls/A4_recall.md`。Owner 校正：正式 WordPress / Google Ads / Meta Ads / Rank Math / GTM / Pixel / 預算 / 開關等第二層變更不是不能自動跑，而是要自動整理成 approval-ready plan，說清楚為什麼要改、改什麼、預期效果、影響範圍、風險、rollback、驗收方式與 Owner 可選項；Owner/A1 精確批准後才可進 execution mode。
 - 2026-06-01：B1 Builder 依 MAPLAB B1 runtime handoff 修復 Investment OS Dashboard stale-data closed loop。Investment OS root cause：runtime dashboard copy 舊、launcher 只看 health OK 不替換舊 Streamlit、file watcher disabled、台股 LaunchAgent weekday 寫成 Tue-Sat、18502/8501 tmux-only 不耐久、Dashboard 優先讀舊 command_status。已修 `launch_dashboard.sh`、台股市場 LaunchAgents Mon-Fri、新增 launchd-backed `dashboard-mobile`/`dashboard-local`、更新 Dashboard command-board source priority、補跑 Investment OS runtime jobs 與 no-send browser-backed GPT refresh。驗證：Investment OS `18501/18502/8501` first screen 均顯示 `行情日 2026-06-01`、`AI研究日 2026-06-01`、`Agent板 06/01` 且 stale top-strip dates=0；pytest `23 passed`。MAPLAB B1 bundle：`workbook/reviews/JOB-B1-BUILDER-20260601/`。未讀 secrets、未碰 broker orders、未發 Telegram、未發布 WordPress/Ads/Rank Math。
 - 2026-05-11：正式 repo = `/Users/pagemacmini/maplab-ai-handbook`；`/Users/pagemacmini/Downloads/maplab-ai-handbook-main` 為非 git 下載副本，只能作遷移/歷史參考，不得作為正式工作目錄。

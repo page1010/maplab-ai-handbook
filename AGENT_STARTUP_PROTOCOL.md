@@ -40,6 +40,17 @@
 - 遇到不會的操作 → 先查 skills/troubleshooting-hub.md → 找不到才回報 A1
 - 技能書是工具箱，不是指令集 — 按需取用，不必全讀（task-progress-guide 除外）
 
+### Step 5.5. 外部登入 / 社群帳號 Credential Bootstrap（條件式強制）
+如果任務涉及 FB、IG、Threads、Google、WordPress、LINE、Notion 或任何需要登入的外部服務，必須在 Startup Check 前完成這段檢查：
+
+1. 讀 `AGENT_RULES.md SECTION 8` 與對應 `skills/credentials/*.md`。社群帳號先讀 `skills/credentials/social-accounts.md`。
+2. 區分「狀態真相」與「credential 參考」：GitHub/CURRENT_STATUS 仍是狀態真相；Notion 只可作為 Owner/A0/A1 核准的帳密保管室或人類參考，不可拿來判斷進度。
+3. 優先使用既有登入態：Owner Chrome / 已授權 MCP / 已設定好的本機 credential skill。不得要求 Owner 手動做 agent 自己能檢查的事。
+4. 不得在 prompt、Chrome side panel、repo 文件、memory、log、review bundle 中貼上密碼、token、cookie、OTP 或完整 secret。
+5. 如果缺少登入態或 credential reference，Startup Check 必須寫 `auth_missing`，列出已試方法、為什麼不能繼續、5 分鐘 Owner 行動；同時建立 review bundle。不得默默 fallback 到舊資料、舊樣本或未登入公開結果。
+
+IOS-FB / 社群情報任務特別規則：跑 FB / 社群 collection 或 report 前，先確認「登入來源可用」或「A0/Owner 已提供受控 credential handoff」。若沒有，輸出 `source_route_health.md` 的 `auth_missing`，不要用歷史 corpus 假裝今天有報告。
+
 ### Step 6. 輸出 Startup Check（強制）
 完成以上步驟後，**必須**輸出以下格式，等 owner 確認後才能開始執行：
 
@@ -186,6 +197,7 @@ Handoff Checkpoint
 
 ## 關鍵約束（每次接手前確認）
 - .env 金鑰、token、密碼 **絕對不能** 上傳 GitHub
+- Notion 不可作為 Agent 狀態真相；但可在 Owner/A0/A1 核准下作 credential 保管室參考，且不得把 secret 寫進任何持久檔案
 - Google Photos 原始照片 **只讀不刪**
 - 不修改 main branch schema without changelog
 - GitHub commit 是唯一狀態真相（非 Notion）
@@ -193,6 +205,8 @@ Handoff Checkpoint
 
 ---
 
+*版本：v1.7 | 建立：2026-03-14 | 更新：2026-06-11 | 維護者：A1 Handbook Agent*
+*v1.7 變更：新增 Step 5.5 外部登入 / 社群帳號 Credential Bootstrap，明確 Notion credential 例外、secret 禁止持久化與 auth_missing 報告規則*
 *版本：v1.6 | 建立：2026-03-14 | 更新：2026-03-23 | 維護者：A1 Handbook Agent*
 *v1.5 變更：執行中規則精簡化（詳細內容指向 task-progress-guide）；新增規則 4 自動讀取下階段；「為什麼這樣設計」精簡為 4 列；移除與技能書重複的解釋文字*
 *v1.4 變更：Startup Check 新增 Skills loaded + Questions for Owner 強制欄位；Step 7 盲點分析；執行中規則；臨時任務規則*

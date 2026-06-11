@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-06-10 A1 晚間巡查（7h零新非巡查commit；A2 ~348h/~14.5天無commit（last 696c80b 2026-05-27）；A4 S11 ~1284h/~53.5天Colab崩潰🔴；A5 ~540h/~22.5天；A6 ~540h/~22.5天；GCP帳單~53.5天未處理🔴）
+> 最後更新：2026-06-11 16:00 A1 午後巡查（A4 今日 2 commits 🟢 活躍：照片分類搬移管線 c2dc194 + 地端 gemma4 ALT/SEO管線 36,676張 90fe31c；B1 今日 8 commits T-HQ-001 P1-P4 完成 + Governance v5.0；hermes 殭屍 cron fix a796ed5；A2 ~360h/~15天無commit；A5 ~552h/~23天；A6 ~551h/~23天；GCP帳單~54天未處理🔴）
 >
 > 使用方式：選擇角色 → 複製 prompt / module handoff → 貼到 Gemini / Codex / OpenClaw / legacy Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -383,7 +383,7 @@ handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-
 
 ## A4｜影像資產整理部（Photo Archive / Asset Library）
 
-**狀態：🔴 S11 CRITICAL（S5✅/S6✅/S12✅DONE 7,645張；S11補跑 14ed423 04-18 Colab重啟→**~1032h/~43天無completion commit，Colab確認崩潰；GCP帳單~43天未處理🔴**；S13待S11處理後啟動）｜T-A4-002 Phase 1 規劃完成(d0b3238)，⚠️ Colab解壓等S11 completion**
+**狀態：🔄 活躍（2026-06-11 今日 2 commits：照片分類搬移管線 c2dc194 + 地端 gemma4 ALT/SEO 管線 90fe31c，36,676張中繼資料產出；T-A4-003 照片搬移管線啟動；GCP帳單~54天未處理🔴）**
 
 ```
 你是 MAPLAB A4 影像資產整理部。
@@ -399,21 +399,22 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. Chrome tab 環境 → 自行開啟需要的網頁分頁，用截圖讀取
 
-【斷點 — 2026-05-09 A1午後巡查更新】
+【斷點 — 2026-06-11 A1午後巡查更新】
 T-A4-001 Gemini 照片分類：
   - S1-S4 ✅ 完成
   - S5(2022) ✅ DONE 8,549張（日常5,243/外燴1,221/旅遊2,073）
   - S5.5 GPS ✅ 決策 no_gps（Owner指示跳過）
   - S6(2023) ✅ DONE 8,505張（2026-04-01）
-  - S11(2024) 🔴 14ed423(04-18) 存檔 82.2%+Colab重啟→**~509h/~21.2天無completion commit（Colab 確認崩潰）**
-    → Owner 需立即確認：已完成？ → 補commit；已崩潰？ → 重跑最後批次 → completion commit → 啟動S13
-  - S12(2025) ✅ DONE 7,645張（de4744d 2026-04-15 08:58）
-  - S13(2026) 🔲 等 S11 確認完成後啟動（~4,424 張）
+  - S11(2024) 狀態待確認（14ed423 04-18 存檔 82.2%+Colab重啟；今日有新 A4 commits 但 S11 completion commit 未見）
+  - S12(2025) ✅ DONE 7,645張（de4744d 2026-04-15）
+  - S13(2026) 🔲 等 S11 確認完成後啟動
   - ASSET_LOG 總計：29,864 資料行（2022:8,549 / 2023:8,505 / 2024:10,050 / 2025:7,645）
-  🔴 緊急：Owner 需立即確認 S11 Colab 狀態（~509h/~21.2天 無 completion commit，已確認崩潰）
+T-A4-003 照片分類搬移管線（NEW 2026-06-11）：截圖/家庭/外燴工作+年月分類、保護 named albums、可全量還原（c2dc194）
+地端 gemma4 ALT/SEO 管線：36,676 張中繼資料已產出（90fe31c）
 Photo scan 總量：60,584 files
 Gemini API Key 已更換（舊 key leaked fe49f3e，新 key 記錄於 Notion）
-T-A4-002 pagewu1010 Takeout（187GB）：Phase 1 規劃完成(d0b3238 04-18)；⚠️ Task Card 前置誤標需更正；Colab 解壓不得在 S11 completion 前啟動
+T-A4-002 pagewu1010 Takeout（187GB）：Phase 1 規劃完成(d0b3238 04-18)
+⚠️ GCP帳單：~54天未處理🔴（Owner 仍需處理）
 
 【踩過的坑】
 - 量大（6萬+）必須用 REST API batch 模式

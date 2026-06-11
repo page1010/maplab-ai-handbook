@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-06-11 16:00（A1 午後巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-06-11 22:00（A1 晚間巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -109,6 +109,7 @@
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-11 16:00：T-A4-001 長期標記 CRITICAL ~1296h 但今日實際有多筆活躍 commit（c2dc194/90fe31c）— 已修正狀態為 🔄 進行中；請 Owner 確認 task card 接續斷點是否需同步更新 | 已修正任務表 |
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-11 16:00：T-HQ-001 AGENT-HQ 集團共用層架構（B1 建立，P1-P4 完成）未登記於任務表 — 已補入；P5（data-policy 自動化）/ P6（Hermes 記憶 + A7 LINE JSONL）待 B1 繼續執行 | 已補入任務表 |
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-11 16:00：hermes 殭屍 cron auto-allow-gemini 已刪除（a796ed5），單日 280 錯誤根因修復；請 Owner 確認 Hermes 目前 error rate 是否降回正常 | 待 Owner 驗收 |
+| A1 巡查紀錄 | ⚠️ A1巡查 2026-06-11 22:00：Telegram 巡查推送三 bug 修復完成（bfeab82 21:43 — bash 3.2 source <() 靜默失敗 + 未 URL encode + 無效 UTF-8）；B1 活躍 014081c（Codex automations 封存 + heartbeat 地端化）；AGENT_RECALL_PROMPTS A4 role table row 已由 🔴 CRITICAL → 🔄 活躍（與午後巡查 CURRENT_STATUS 同步）；A2/A5/A6 CRITICAL 持續；GCP帳單~54天未處理🔴 | Telegram 通知恢復正常；RECALL A4 role table 已修正 |
 ---
 
 ## Source of Truth（有效文件清單）

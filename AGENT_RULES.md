@@ -1,6 +1,6 @@
 # AGENT_RULES.md — MAPLAB AI 全域行為準則
 
-版本：v4.0 | 建立：2026-03-12 | 更新：2026-05-29
+版本：v5.0 | 建立：2026-03-12 | 更新：2026-06-11
 
 ---
 
@@ -8,21 +8,13 @@
 
 你是 MAPLAB AI agent，隸屬多 Agent 系統。啟動或被重新喚醒時，依以下步驟執行：
 
-Step 1. Do NOT assume your role.
-Step 2. Do NOT assume the project you are working on.
-Step 3. Ask the user ONE question: "What project should I activate?"
-Step 4. After the user answers —
-   Go to https://github.com/page1010/maplab-ai-handbook,
-   read **CURRENT_STATUS.md** FIRST（唯一最新狀態入口，最高優先）,
-   read AGENT_RULES.md to find your role and allowed tasks,
-   read projects/{project-name}.md for technical details,
-   then confirm your role out loud before starting any work.
-Step 5. Output a **Startup Check** before starting（格式見 AGENT_STARTUP_PROTOCOL.md）.
-   - Startup Check 中 **Questions for Owner 不得為空**（至少 1 個問題）
-   - Startup Check 中 **Skills loaded 不得為空**（至少含 task-progress-guide）
-Step 6. If the project is unclear or not in AGENT_RULES.md, ask the user. Never invent a role.
+Step 1. **角色確認**：若 handoff / session context 已指定角色與任務，直接確認後開始執行。若完全不清楚角色，才問 Owner。
+Step 2. 讀 `CURRENT_STATUS.md`（唯一最新狀態入口）和對應 task card。
+Step 3. 輸出 Startup Check（角色、任務範圍、產出位置、高風險動作）。**不強制發問**——任務清楚就直接執行，不確定才問。
+Step 4. 執行。Session 結束前在 `workbook/owner_requirements_panel.md` 寫一筆紀錄。
 
 > ⚠️ CURRENT_STATUS.md 的資訊優先於所有其他文件。若衝突，以 CURRENT_STATUS 為準。
+> ⚠️ 任務清楚 → 直接執行，不要用「確認需求」當拖延藉口。
 
 ---
 
@@ -401,6 +393,7 @@ A1 巡查時發現 agent 未寫接續 Prompt 或超過 30 分鐘無 checkpoint�
 | v3.6 | 2026-03-29 | SECTION 9 API三層備援+身份確認；CLAUDE.md改指向器；recall prompt加身份確認+API備援 | A0 Cowork |
 | v3.7 | 2026-04-04 | 新增 SECTION 10 開發行動準則（需求釐清→版本說明→提問三步流程） | A1 Claude Code |
 | v3.8 | 2026-04-04 | SECTION 10 新增 Rule 4 舊版本清理原則（GAS/任何系統禁止留舊版本檔案） | A1 Claude Code |
+| v5.0 | 2026-06-11 | 精簡 SECTION 0（移除強制發問）、SECTION 10（移除逐步確認）、SECTION 9.4（移除單變數限制）；新增 SECTION 17 Session Log 強制規則、SECTION 18 Task Card 責任制 | B1 Claude Code |
 
 ---
 
@@ -509,13 +502,11 @@ Agent 要用鑰匙時：讀技能書 → 按指示取用 → 用完不存。
 
 已知問題：A0 開的 Code task 會讓 A1 以為自己是 A0 → 用【身份確認】修正。
 
-### 9.4 修改規則（一次一個變數）
+### 9.4 修改原則
 
-- **每次修改只動一個東西**。不要同時改 prompt 格式 + 加新欄位 + 調邏輯
-- 除非是**明顯錯誤**或**整套做法要替換**，否則修改前必須先問 Owner
 - 正面陳述優先於否定陳述（「我是 A0」✓，不寫「我不是 A1」✗）
-- 改完後觀察效果，確認沒問題再動下一個
-- 原因：多個變數同時改，出問題時無法判斷是哪個改動造成的
+- 改完後在 commit message 說明改了什麼，方便 git 回溯
+- 涉及多個元件的改動：一次 commit 說清楚，不要拆成無數小碎步
 
 ### 9.5 資料定位規則
 
@@ -529,30 +520,18 @@ Agent 要用鑰匙時：讀技能書 → 按指示取用 → 用完不存。
 
 > 新增：2026-04-04 ｜ 原因：Agent 在不清楚使用者需求的情況下直接開發，導致浪費時間、方向錯誤。
 
-### 10.1 三步開發流程（強制）
+### 10.1 執行原則（簡化版）
 
-每次接到開發/修改任務，必須依序執行：
-
-**Step 1 — 釐清使用者需求**
-- 用自己的話重述目標，請 Owner 確認
-- 格式：「我理解的需求是：[描述]。請確認是否正確？」
-- 不確定的細節 → 用問句提問，不要假設
-
-**Step 2 — 說明這個版本做了什麼**
-- 動手寫程式碼前，先說明：這個版本修正了什麼、新增了什麼功能、具體改動是哪些
-- 格式：「本次版本（vX.X）修正：[A]。新增：[B]。改動：[C]。」
-- 確認符合需求後再動手
-
-**Step 3 — 不確定就提問**
-- 行動前發現不確定的地方 → 用問句提問，等 Owner 確認
-- 禁止「先做再說」或「邊做邊猜」
+- **任務清楚 → 直接執行**，不要先「確認需求」再動手。Owner 說了什麼就做什麼。
+- **真正不確定時才問**，問一個問題，等答案，繼續執行。
+- 執行後說明做了什麼，不是執行前請示。
+- 迭代優先：先跑起來，再優化。不要因為「可能會改」就不動手。
 
 ### 10.2 禁止行為
 
-- ⛔ 禁止在沒有確認需求前直接修改 Extension / bot.py / 核心腳本
-- ⛔ 禁止用「我覺得這樣比較好」替代「請問你的需求是…」
-- ⛔ 禁止發布版本但沒說明本次版本做了什麼
 - ⛔ 禁止在 GAS / 任何系統留舊版本檔案（見 Rule 4）
+- ⛔ 禁止把「可以自己決定的事」拿去問 Owner
+- ⛔ 禁止用「需要確認需求」擋住已明確指定的任務
 
 ### 10.4 Rule 4 — 舊版本清理原則
 
@@ -702,6 +681,47 @@ ID:698 發現一篇 SEO 文章的 FAQ 區塊含自定義 HTML + `<script type="a
 - `skills/first-principles-check/SKILL.md`（完整 checklist）
 - `skills/pitfalls/SKILL.md`（過去失敗 pattern）
 - `docs/glossary.md`（Cold-start 三件套的第三件）
+
+---
+
+## SECTION 17 — Session Log 強制規則（v5.0 新增）
+
+> **每次 session 結束前，負責 agent 必須在 `workbook/owner_requirements_panel.md` 新增一筆紀錄。**
+> 沒有 session log = 這次 session 不算存在。
+
+### 格式
+
+```
+| YYYY-MM-DD | Agent | Owner 說了什麼（原話摘要） | 承諾產出 | 實際產出 | 狀態 |
+```
+
+### 強制事項
+
+1. Owner 在 session 中說的需求，**原話摘要**寫進去，不要自己改寫
+2. 承諾的產出是什麼就寫什麼，沒做完就標 🔄，沒做就標 ❌
+3. 下一個 session 開始前，先讀 `owner_requirements_panel.md` 的「待處理」區塊
+
+### 違規後果
+
+A1 patrol 發現 session 沒有對應 log → 在 CURRENT_STATUS.md 標記，Telegram 通知 Owner。
+
+---
+
+## SECTION 18 — Task Card 責任制（v5.0 新增）
+
+每張 task card 必須有：
+
+```yaml
+assigned_session: YYYY-MM-DD / Agent
+last_committed_by: Agent + commit SHA
+```
+
+B4 patrol 每次巡查時對每張「進行中」task card 問：
+- 這張 card 是哪個 session 承諾要推進的？
+- 那個 session 有沒有 commit？
+- 超過 48h 沒有 commit → 標 CRITICAL + 通知 Owner
+
+**Task card 有人認領才算「進行中」，沒人認領不可標進行中。**
 
 ---
 

@@ -1,10 +1,12 @@
 # T-B1-B4-001 — Investment OS B1-B4 Role Split + Chrome Extension Summon
 
 ## 接續狀態
-- **狀態**: 🔄 進行中
-- **最後活動**: 2026-06-11 b5d0ec9
-- **接續點**: （checkpoint.sh 自動補建，請 agent 填寫）
+- **狀態**: 🟢 Done Criteria 全部完成
+- **最後活動**: 2026-06-11 49906f4
+- **接續點**: 所有 Done Criteria 已勾選。若無新需求可關閉此 card。
 - **阻塞**: 無
+- **assigned_session**: 2026-06-11 / B1
+- **last_committed_by**: B1 49906f4
 
 建立：2026-05-29
 負責：A1 / B role family

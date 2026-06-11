@@ -10,6 +10,8 @@
 - **最後活動**: 2026-04-19 08170b7
 - **接續點**: 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下一步：建虛擬測試案例 → A6 跑報價流程 → 驗證寫入。
 - **阻塞**: 等 A6 實際報價測試
+- **assigned_session**: 未認領（CRITICAL ~1279h 無 commit）
+- **last_committed_by**: A1 08170b7（2026-04-19）
 
 ---
 

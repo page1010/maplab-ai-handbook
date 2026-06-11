@@ -156,9 +156,12 @@ def safe_move(src: Path, dst_dir: Path) -> Path:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--limit", type=int, default=200)
+    ap.add_argument("--all", action="store_true", help="一直跑到全部處理完")
     ap.add_argument("--status", action="store_true")
     ap.add_argument("--undo", action="store_true")
     args = ap.parse_args()
+    if args.all:
+        args.limit = 10**9
     conn = db_init()
 
     if args.status:

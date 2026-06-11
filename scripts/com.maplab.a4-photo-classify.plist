@@ -8,11 +8,15 @@
     <array>
         <string>/usr/bin/python3</string>
         <string>/Users/pagemacmini/maplab-ai-handbook/scripts/a4_photo_classifier.py</string>
-        <string>--limit</string>
-        <string>60</string>
+        <string>--all</string>
     </array>
-    <key>StartInterval</key>
-    <integer>3600</integer>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <dict>
+        <key>SuccessfulExit</key>
+        <false/>
+    </dict>
     <key>Nice</key>
     <integer>10</integer>
     <key>StandardOutPath</key>

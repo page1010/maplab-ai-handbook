@@ -121,9 +121,12 @@ def export_csv(conn: sqlite3.Connection) -> Path:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--limit", type=int, default=200)
+    ap.add_argument("--all", action="store_true", help="一直跑到全部處理完")
     ap.add_argument("--status", action="store_true")
     ap.add_argument("--export", action="store_true")
     args = ap.parse_args()
+    if args.all:
+        args.limit = 10**9
 
     conn = db_init()
     if args.status:
@@ -155,7 +158,9 @@ def main() -> None:
         conn.commit()
         count += 1
         if count % 50 == 0:
-            print(f"...{count}/{args.limit}", flush=True)
+            print(f"...{count}", flush=True)
+        if count % 500 == 0:
+            export_csv(conn)  # 長跑時定期同步上雲，斷電不丟進度
 
     if count:
         export_csv(conn)

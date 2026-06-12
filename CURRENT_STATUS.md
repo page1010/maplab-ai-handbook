@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-06-12 16:00（A1 午後巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-06-12 22:00（A1 晚間巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -112,6 +112,7 @@
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-11 22:00：Telegram 巡查推送三 bug 修復完成（bfeab82 21:43 — bash 3.2 source <() 靜默失敗 + 未 URL encode + 無效 UTF-8）；B1 活躍 014081c（Codex automations 封存 + heartbeat 地端化）；AGENT_RECALL_PROMPTS A4 role table row 已由 🔴 CRITICAL → 🔄 活躍（與午後巡查 CURRENT_STATUS 同步）；A2/A5/A6 CRITICAL 持續；GCP帳單~54天未處理🔴 | Telegram 通知恢復正常；RECALL A4 role table 已修正 |
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-12 10:00：過夜無新 commit（符合預期）；GCP帳單升至~55天🔴持續未處理；A2 ~372h/A5+A6 ~564h 無新 commit（CRITICAL 持續）；T-A4-001 前日活躍（c2dc194/90fe31c），今日應續跑；T-HQ-001 P5（data-policy 自動化）/P6（Hermes 記憶+A7 LINE JSONL）待 B1 繼續；所有已知 CRITICAL 無新增異常 | 持續觀察 |
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-12 16:00：午後巡查 0 新 commit（僅晨間巡查 c15f20b）；A4 今日無新 commit 但仍在 48h 內（OK）；B1 T-HQ-001 今日無新 commit，仍在 48h 內（OK）；A2 ~380h/A5+A6 ~572h CRITICAL 持續；GCP帳單 ~55天🔴 持續；無新異常 | 無新異常，持續觀察 |
+| A1 巡查紀錄 | ⚠️ A1巡查 2026-06-12 22:00：晚間巡查 0 新 agent commit（僅午後巡查 038832f）；A4 前日 2 commits（c2dc194/90fe31c 2026-06-11）現 ~35h 無新 commit，仍在 48h 內（OK，明晨若仍無 commit 則需注意）；B1 T-HQ-001 前日 014081c 2026-06-11，~35h 無新 commit，仍在 48h 內；A2 ~388h/A5+A6 ~580h CRITICAL 持續；GCP帳單 ~56天🔴 持續；無新增異常 | A4/B1 接近 48h 臨界值，明晨需重確認；持續觀察 |
 ---
 
 ## Source of Truth（有效文件清單）

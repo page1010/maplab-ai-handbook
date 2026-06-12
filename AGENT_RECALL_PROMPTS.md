@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-06-12 10:00 A1 晨間巡查（過夜無新 commit 符合預期；A4 🔄 活躍（昨日 c2dc194+90fe31c，今日待確認續跑）；A2 ~372h/~15.5天無commit；A5 ~564h/~23.5天；A6 ~564h/~23.5天；GCP帳單~55天未處理🔴；所有已知CRITICAL持續）
+> 最後更新：2026-06-12 16:00 A1 午後巡查（0 新 commit（僅晨間 c15f20b）；A4 🔄 今日無新commit（48h內OK）；B1 T-HQ-001 今日無新commit（48h內OK）；A2 ~380h/~15.8天；A5 ~572h/~23.8天；A6 ~572h/~23.8天；GCP帳單~55天未處理🔴；無新異常）
 >
 > 使用方式：選擇角色 → 複製 prompt / module handoff → 貼到 Gemini / Codex / OpenClaw / legacy Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -170,6 +170,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 9. A6 T-A6-001 🔄 活躍中：5ae9c79（05-04 20:23）新增 ollama chat/seo modes + menu（bot_a6.py +187行）；addItem+模糊比對+多照片+10輪QA全PASS（45b4758 04-18）；Task Card 已由A6自行更新；LINE Developers Console Webhook URL待Owner確認（Channel 1654658337）。
 10. A8 新角色已建立（51070ea 04-19），待啟動任務；B1 🟢 首次活躍（04-24 22:35-23:02 4 commits）— 無正式Task Card，需建立。~240h無新commit。
 11. ✅ 全系統靜止解除：A2 今日（2026-05-04）2 commits（ba4fac6+59f06ce）T-A2-005 SEO Factory；A3/A5/A6/A7/A8/B1 仍無新活動。
+✅ 06-12 午後巡查：8h 0 非巡查commit（僅晨間 c15f20b 自身）；A4 今日無新commit（48h內OK）；B1 T-HQ-001 今日無新commit（48h內OK）；A2 ~380h/~15.8天；A5 ~572h/~23.8天；A6 ~572h/~23.8天；GCP帳單~55天未處理🔴；無新異常；系統狀態與 CURRENT_STATUS 一致。
 ✅ 06-11 晚間巡查：8h 2 commits：bfeab82 Telegram推送三bug修復(bash3.2 source<()+URLencode+UTF-8) 21:43 ✅；014081c B1 Codex automations封存+heartbeat地端化 🟢；A4 🔄 活躍（今日 c2dc194+90fe31c 一致）；RECALL A4 role table row 已由🔴→🔄同步；A2 ~376h/~15.7天無commit；A5 ~568h/~23.7天；A6 ~567h/~23.6天；GCP帳單~54天未處理🔴；所有已知CRITICAL持續未解；系統狀態與 CURRENT_STATUS 一致。
 ✅ 05-31 每日巡查：0非巡查commit（全系統靜止~240h/~10天，last non-patrol a06d656 2026-05-21）；A4 S11 ~1032h/~43天Colab崩潰🔴；GCP帳單~43天未處理🔴；A5任務卡待Owner核查（~288h/~12天無新commit）；A6 ~288h/~12天無commit；A2 ~648h/~27天無commit；A3/A7/A8/B1仍無活動；所有前次警告持續未解。
 ✅ 05-30 晚間巡查：8h零commit；全系統靜止~228h/~9.5天（last non-patrol a06d656 2026-05-21）；A4 S11 ~1020h/~42.5天Colab崩潰🔴；GCP帳單~42.5天未處理🔴；A5任務卡待Owner核查（~276h/~11.5天無新commit）；A6 ~276h/~11.5天無commit；A2 ~636h/~26.5天無commit；A3/A7/A8/B1仍無活動；所有前次警告持續未解。

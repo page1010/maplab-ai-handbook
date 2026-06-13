@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-06-13 16:00 A1 午後巡查（A4 **超 48h → 升 🔴 CRITICAL**（~53h，最後 c2dc194/90fe31c 2026-06-11）；B1 T-HQ-001 ~45h（今晚超標）；A2 ~416h/~17.3天；A5 ~608h/~25.3天；A6 ~608h/~25.3天；GCP帳單~57天🔴；8h 0 非巡查 commit）
+> 最後更新：2026-06-13 22:00 A1 晚間巡查（A4 ~59h 持續 🔴 CRITICAL；**B1 T-HQ-001 超 48h → 升 🔴 CRITICAL**（~51h，最後 014081c 2026-06-11 18:46）；A2 ~422h/~17.6天；A5 ~614h/~25.6天；A6 ~614h/~25.6天；GCP帳單~57天🔴；8h 0 非巡查 commit）
 >
 > 使用方式：選擇角色 → 複製 prompt / module handoff → 貼到 Gemini / Codex / OpenClaw / legacy Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -21,12 +21,12 @@
 | A1 | 系統總管中心 | ✅ Claude Code 常駐 | Telegram bot + 終端機，直接下指令 |
 | A2 | 搜尋流量作戰部 | 🟢 召喚型可用 + patrol（Ads/SEO/WordPress）；last commit 696c80b 2026-05-27（~388h/~16.2天）；T-A2A3-001-B 🔄 >48h持續 | SEO / Ads / WordPress / Brand memory |
 | A3 | 社群與廣告成長部 | ✅ T-A3-001 完成（GTM v21 雙平台追蹤上線）；T-A3-002 ⏸️ 阻塞（等廣告週期+Owner操作）| Meta Ads / Social |
-| A4 | 影像資產整理部 | 🔴 CRITICAL（超 48h：最後 c2dc194/90fe31c 2026-06-11；現 ~53h 無新 commit；GCP帳單~57天未處理🔴）| Photo Archive |
+| A4 | 影像資產整理部 | 🔴 CRITICAL（超 48h：最後 c2dc194/90fe31c 2026-06-11；現 ~59h 無新 commit；GCP帳單~57天未處理🔴）| Photo Archive |
 | A5 | 報價與提案引擎部 | ⚠️ 任務卡狀態待Owner核查（2026-05-19有6個A5 commits：343e1d0/24c985b/6a98eb0/4b53ea8/716f0c2/d22c03c；task card T-A5-002/004/005仍顯示CRITICAL；~580h/~24.2天無新commit）| Quotation Engine |
 | A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（aa77573 2026-05-19 Codex-first route；~580h/~24.2天無新活動；LINE webhook等Owner確認 Channel 1654658337）| Sales Rapid Response |
 | A7 | 客服與對話轉單部 | 💤 T-A7-001 正式暫停；T-A7-002 ⏸️ 阻塞（等LINE後台權限+Owner政策決策）| Smart Reply |
 | A8 | 影音內容產線 | 🔲 新建，待啟動 | Content Repurposing Pipeline |
-| **B1** | **Investment OS Builder** | **🟢 召喚型可用** | **寫功能 / runtime surface** |
+| **B1** | **Investment OS Builder** | **🔴 CRITICAL（T-HQ-001 超 48h：最後 014081c 2026-06-11 18:46，現 ~51h）** | **寫功能 / runtime surface；P5/P6 待執行** |
 | **B2** | **Investment OS Reviewer** | **🟢 召喚型可用** | **資料流 / 錯誤 / freshness review** |
 | **B3** | **Investment OS Archivist** | **🟢 召喚型可用** | **版本紀錄 / 交接 / resume prompt** |
 | **B4** | **Investment OS System Patrol** | **🟢 召喚型可用** | **系統適配巡查 / pause-refactor** |
@@ -170,6 +170,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 9. A6 T-A6-001 🔄 活躍中：5ae9c79（05-04 20:23）新增 ollama chat/seo modes + menu（bot_a6.py +187行）；addItem+模糊比對+多照片+10輪QA全PASS（45b4758 04-18）；Task Card 已由A6自行更新；LINE Developers Console Webhook URL待Owner確認（Channel 1654658337）。
 10. A8 新角色已建立（51070ea 04-19），待啟動任務；B1 🟢 首次活躍（04-24 22:35-23:02 4 commits）— 無正式Task Card，需建立。~240h無新commit。
 11. ✅ 全系統靜止解除：A2 今日（2026-05-04）2 commits（ba4fac6+59f06ce）T-A2-005 SEO Factory；A3/A5/A6/A7/A8/B1 仍無新活動。
+✅ 06-13 晚間巡查：8h 0 非巡查commit（僅午後巡查 b8f2ab8）；**B1 T-HQ-001 超 48h → 升 🔴 CRITICAL**（~51h，最後 014081c 2026-06-11 18:46）；A4 ~59h 持續 CRITICAL；A2 ~422h/~17.6天；A5 ~614h/~25.6天；A6 ~614h/~25.6天；GCP帳單~57天🔴；系統狀態與 CURRENT_STATUS 一致。
 ✅ 06-13 午後巡查：8h 0 非巡查commit（僅晨間巡查 df0e6ce）；A4 **超 48h 門檻（~53h）→ 升為 🔴 CRITICAL**；B1 T-HQ-001 ~45h（014081c 2026-06-11 18:46，今晚超標）；A2 ~416h/~17.3天；A5 ~608h/~25.3天；A6 ~608h/~25.3天；GCP帳單~57天🔴；系統狀態與 CURRENT_STATUS 一致。
 ✅ 06-12 午後巡查：8h 0 非巡查commit（僅晨間 c15f20b 自身）；A4 今日無新commit（48h內OK）；B1 T-HQ-001 今日無新commit（48h內OK）；A2 ~380h/~15.8天；A5 ~572h/~23.8天；A6 ~572h/~23.8天；GCP帳單~55天未處理🔴；無新異常；系統狀態與 CURRENT_STATUS 一致。
 ✅ 06-11 晚間巡查：8h 2 commits：bfeab82 Telegram推送三bug修復(bash3.2 source<()+URLencode+UTF-8) 21:43 ✅；014081c B1 Codex automations封存+heartbeat地端化 🟢；A4 🔄 活躍（今日 c2dc194+90fe31c 一致）；RECALL A4 role table row 已由🔴→🔄同步；A2 ~376h/~15.7天無commit；A5 ~568h/~23.7天；A6 ~567h/~23.6天；GCP帳單~54天未處理🔴；所有已知CRITICAL持續未解；系統狀態與 CURRENT_STATUS 一致。

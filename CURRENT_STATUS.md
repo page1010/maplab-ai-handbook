@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-06-13 08:00（A1 每日巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-06-13 16:00（A1 午後巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -70,7 +70,7 @@
 | T-A2A3-001-B | SEO 場景頁面 + 內連結（從 T-A2A3-001 分拆） | A2/A3 | 🔴 CRITICAL（~360h無commit） | handoff/tasks/T-A2A3-001-B.md |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2/A3 | ⏸️ RM/GSC 部分暫停；案例寫作轉 T-A2A3-001-B（Rank Math 已退訂，已設定好的 SEO 欄位先不要再設定；下一步是依 live URL map 補 To B 真） | handoff/tasks/T-A2A3-001.md |
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | ⏸️ 阻塞中（受眾輪廓分析完成（693筆 Orders）。待執行：嘉義加入廣告地區、興趣條件精簡、策略一冷受眾上線。） | handoff/tasks/T-A3-002.md |
-| T-A4-001 | Phase 4 Gemini 照片分類（2022-2026） | A4 | 🔄 進行中（2026-06-11 今日活躍：照片分類搬移管線 c2dc194 + 地端 gemma4 ALT/SEO管線 90fe31c，36,676張中繼資料產出；T-A4-003 亦啟動） | handoff/tasks/T-A4-001.md |
+| T-A4-001 | Phase 4 Gemini 照片分類（2022-2026） | A4 | 🔴 CRITICAL（~53h 無新 commit；2026-06-11 最後 c2dc194/90fe31c；48h 門檻已超；T-A4-003 照片搬移管線已啟動） | handoff/tasks/T-A4-001.md |
 | T-A4-002 | pagewu1010 帳號 Takeout 解壓 + Gemini Flash 照片資產整合 | A4 |  | handoff/tasks/T-A4-002.md |
 | T-HQ-001 | AGENT-HQ 集團共用層遷移（chrome-extension / governance / panel / runtime symlink 收編） | B1 | 🔄 進行中（P1-P4 ✅；P5 data-policy 自動化、P6 Hermes 記憶 + A7 LINE JSONL 待執行） | handoff/tasks/T-HQ-001.md |
 | T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔴 CRITICAL（~552h無commit） | handoff/tasks/T-A5-002.md |
@@ -114,6 +114,7 @@
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-12 16:00：午後巡查 0 新 commit（僅晨間巡查 c15f20b）；A4 今日無新 commit 但仍在 48h 內（OK）；B1 T-HQ-001 今日無新 commit，仍在 48h 內（OK）；A2 ~380h/A5+A6 ~572h CRITICAL 持續；GCP帳單 ~55天🔴 持續；無新異常 | 無新異常，持續觀察 |
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-12 22:00：晚間巡查 0 新 agent commit（僅午後巡查 038832f）；A4 前日 2 commits（c2dc194/90fe31c 2026-06-11）現 ~35h 無新 commit，仍在 48h 內（OK，明晨若仍無 commit 則需注意）；B1 T-HQ-001 前日 014081c 2026-06-11，~35h 無新 commit，仍在 48h 內；A2 ~388h/A5+A6 ~580h CRITICAL 持續；GCP帳單 ~56天🔴 持續；無新增異常 | A4/B1 接近 48h 臨界值，明晨需重確認；持續觀察 |
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-13 08:00：24h 零非巡查 commit；A4 自 2026-06-11 起無新 commit（前晚估 ~35h，現 ~45h，**今晚將超 48h 門檻**）；B1 T-HQ-001 014081c 2026-06-11 18:46，現 ~37h，今晚亦接近超標；A2 ~408h（~17天）/ A5+A6 ~600h（~25天）CRITICAL 持續；GCP帳單~57天🔴；前晚標記"明晨需重確認"已到期確認：A4/B1 今晚若仍無 commit 須升為 CRITICAL | 今晚 22:00 再確認 A4/B1 狀態；CRITICAL 持續 |
+| A1 巡查紀錄 | ⚠️ A1巡查 2026-06-13 16:00：A4 T-A4-001 **48h 門檻已超（~53h 無 commit，最後 c2dc194/90fe31c 2026-06-11）→ 升為 🔴 CRITICAL**；B1 T-HQ-001 ~45h（014081c 2026-06-11 18:46，今晚約 18:46 後超標）；A2 ~416h/~17.3天 / A5+A6 ~608h/~25.3天 CRITICAL 持續；GCP帳單~57天🔴；8h 內 0 非巡查 commit | A4 已升 CRITICAL；B1 今晚 22:00 需再確認 |
 ---
 
 ## Source of Truth（有效文件清單）

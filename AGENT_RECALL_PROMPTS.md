@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-06-12 22:00 A1 晚間巡查（0 新 agent commit（僅午後巡查 038832f）；A4 🔄 前日 2 commits 2026-06-11（~35h，48h內OK，明晨需重確認）；B1 T-HQ-001 前日 014081c 2026-06-11（~35h，48h內OK）；A2 ~388h/~16.2天；A5 ~580h/~24.2天；A6 ~580h/~24.2天；GCP帳單~56天未處理🔴；無新異常）
+> 最後更新：2026-06-13 08:00 A1 每日巡查（24h 零非巡查 commit；A4 ~45h 無新 commit（今晚將超 48h，⚠️ 前晚"明晨需重確認"已到期）；B1 014081c 2026-06-11（~37h，今晚接近超標）；A2 ~408h/~17天；A5 ~600h/~25天；A6 ~600h/~25天；GCP帳單~57天未處理🔴；無新增異常）
 >
 > 使用方式：選擇角色 → 複製 prompt / module handoff → 貼到 Gemini / Codex / OpenClaw / legacy Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -21,7 +21,7 @@
 | A1 | 系統總管中心 | ✅ Claude Code 常駐 | Telegram bot + 終端機，直接下指令 |
 | A2 | 搜尋流量作戰部 | 🟢 召喚型可用 + patrol（Ads/SEO/WordPress）；last commit 696c80b 2026-05-27（~388h/~16.2天）；T-A2A3-001-B 🔄 >48h持續 | SEO / Ads / WordPress / Brand memory |
 | A3 | 社群與廣告成長部 | ✅ T-A3-001 完成（GTM v21 雙平台追蹤上線）；T-A3-002 ⏸️ 阻塞（等廣告週期+Owner操作）| Meta Ads / Social |
-| A4 | 影像資產整理部 | 🔄 活躍（2026-06-11 前日 2 commits：照片分類搬移管線 c2dc194 + 地端 gemma4 ALT/SEO 管線 36,676張 90fe31c；~35h 無新 commit，48h 內 OK；明晨若仍無 commit 需注意；GCP帳單~56天未處理🔴）| Photo Archive |
+| A4 | 影像資產整理部 | ⚠️ 接近 48h（2026-06-11 最後 2 commits：c2dc194 + 90fe31c；現 ~45h 無新 commit，**今晚（22:00）若仍無 commit 升為 🔴 CRITICAL**；GCP帳單~57天未處理🔴）| Photo Archive |
 | A5 | 報價與提案引擎部 | ⚠️ 任務卡狀態待Owner核查（2026-05-19有6個A5 commits：343e1d0/24c985b/6a98eb0/4b53ea8/716f0c2/d22c03c；task card T-A5-002/004/005仍顯示CRITICAL；~580h/~24.2天無新commit）| Quotation Engine |
 | A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（aa77573 2026-05-19 Codex-first route；~580h/~24.2天無新活動；LINE webhook等Owner確認 Channel 1654658337）| Sales Rapid Response |
 | A7 | 客服與對話轉單部 | 💤 T-A7-001 正式暫停；T-A7-002 ⏸️ 阻塞（等LINE後台權限+Owner政策決策）| Smart Reply |

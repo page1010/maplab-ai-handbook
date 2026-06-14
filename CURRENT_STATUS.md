@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-06-13 22:00（A1 晚間巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-06-14 08:00（A1 晨間巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -70,9 +70,9 @@
 | T-A2A3-001-B | SEO 場景頁面 + 內連結（從 T-A2A3-001 分拆） | A2/A3 | 🔴 CRITICAL（~360h無commit） | handoff/tasks/T-A2A3-001-B.md |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2/A3 | ⏸️ RM/GSC 部分暫停；案例寫作轉 T-A2A3-001-B（Rank Math 已退訂，已設定好的 SEO 欄位先不要再設定；下一步是依 live URL map 補 To B 真） | handoff/tasks/T-A2A3-001.md |
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | ⏸️ 阻塞中（受眾輪廓分析完成（693筆 Orders）。待執行：嘉義加入廣告地區、興趣條件精簡、策略一冷受眾上線。） | handoff/tasks/T-A3-002.md |
-| T-A4-001 | Phase 4 Gemini 照片分類（2022-2026） | A4 | 🔴 CRITICAL（~53h 無新 commit；2026-06-11 最後 c2dc194/90fe31c；48h 門檻已超；T-A4-003 照片搬移管線已啟動） | handoff/tasks/T-A4-001.md |
+| T-A4-001 | Phase 4 Gemini 照片分類（2022-2026） | A4 | 🔴 CRITICAL（~67h 無新 commit；2026-06-11 最後 c2dc194/90fe31c；48h 門檻已超；T-A4-003 照片搬移管線已啟動） | handoff/tasks/T-A4-001.md |
 | T-A4-002 | pagewu1010 帳號 Takeout 解壓 + Gemini Flash 照片資產整合 | A4 |  | handoff/tasks/T-A4-002.md |
-| T-HQ-001 | AGENT-HQ 集團共用層遷移（chrome-extension / governance / panel / runtime symlink 收編） | B1 | 🔴 CRITICAL（~51h 無 commit；最後 014081c 2026-06-11 18:46；P1-P4 ✅；P5/P6 待執行） | handoff/tasks/T-HQ-001.md |
+| T-HQ-001 | AGENT-HQ 集團共用層遷移（chrome-extension / governance / panel / runtime symlink 收編） | B1 | 🔴 CRITICAL（~65h 無 commit；最後 014081c 2026-06-11 18:46；P1-P4 ✅；P5/P6 待執行） | handoff/tasks/T-HQ-001.md |
 | T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔴 CRITICAL（~552h無commit） | handoff/tasks/T-A5-002.md |
 | T-A5-004 | createSlides.gs — Slide 報價簡報自動生成 | A5 | 🔴 CRITICAL（~1512h無commit） | handoff/tasks/T-A5-004.md |
 | T-A5-005 | 報價狀態追蹤同步 + Dashboard | A5 | 🔴 CRITICAL（~1535h無commit） | handoff/tasks/T-A5-005.md |
@@ -116,6 +116,7 @@
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-13 08:00：24h 零非巡查 commit；A4 自 2026-06-11 起無新 commit（前晚估 ~35h，現 ~45h，**今晚將超 48h 門檻**）；B1 T-HQ-001 014081c 2026-06-11 18:46，現 ~37h，今晚亦接近超標；A2 ~408h（~17天）/ A5+A6 ~600h（~25天）CRITICAL 持續；GCP帳單~57天🔴；前晚標記"明晨需重確認"已到期確認：A4/B1 今晚若仍無 commit 須升為 CRITICAL | 今晚 22:00 再確認 A4/B1 狀態；CRITICAL 持續 |
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-13 16:00：A4 T-A4-001 **48h 門檻已超（~53h 無 commit，最後 c2dc194/90fe31c 2026-06-11）→ 升為 🔴 CRITICAL**；B1 T-HQ-001 ~45h（014081c 2026-06-11 18:46，今晚約 18:46 後超標）；A2 ~416h/~17.3天 / A5+A6 ~608h/~25.3天 CRITICAL 持續；GCP帳單~57天🔴；8h 內 0 非巡查 commit | A4 已升 CRITICAL；B1 今晚 22:00 需再確認 |
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-13 22:00：晚間巡查 0 新非巡查 commit；**B1 T-HQ-001 已超 48h（~51h，最後 014081c 2026-06-11 18:46）→ 升為 🔴 CRITICAL**；A4 T-A4-001 ~59h 持續 CRITICAL；A2 ~422h/~17.6天 / A5+A6 ~614h/~25.6天 CRITICAL 持續；GCP帳單~57天🔴；所有 CRITICAL 無新解除 | B1 T-HQ-001 已升 CRITICAL；Owner 請關注 P5/P6 何時可繼續 |
+| A1 巡查紀錄 | ⚠️ A1巡查 2026-06-14 08:00：24h 內 1 新非巡查 commit（9975dd1 2026-06-13 22:48 — docs(guidance) OpenClaw CDP Chrome 修復方向：gateway 正常，問題在 CDP Chrome 自啟失敗，指引供 Codex 執行）；A4 T-A4-001 ~67h 無 commit 持續 CRITICAL；B1 T-HQ-001 ~65h 持續 CRITICAL；A2 ~434h/~18.1天 CRITICAL 持續；A5+A6 ~626h/~26.1天 CRITICAL 持續；GCP帳單~58天🔴；無新增 CRITICAL，所有已知異常持續 | OpenClaw 修復指引已落檔待 Codex 執行；A4/B1/A2/A5/A6 CRITICAL 持續 |
 ---
 
 ## Source of Truth（有效文件清單）

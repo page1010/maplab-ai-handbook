@@ -21,6 +21,7 @@
 
 | 日期 | Agent | Owner 需求（原話摘要） | 承諾產出 | 實際產出 | 狀態 |
 |------|-------|----------------------|---------|---------|------|
+| 2026-06-15 | A0 / Codex | 「根據 Nadella 生態系 / learning loop 貼文反思 MAPLAB 系統架構並巡查，然後上 GitHub 發想哪裡可以加強」 | 1. 冷啟動讀本地真相源 2. 用 learning loop 角度巡查 MAPLAB 架構 3. 產 review bundle 4. 建 GitHub 改善 issue | 1. ✅ 已讀 `CURRENT_STATUS.md` / `pitfalls.md` / A0 模組與相關規則 2. ✅ 重新產 Hermes reaction packet 3. ✅ `workbook/reviews/JOB-A0-ECOSYSTEM-LEARNING-LOOP-20260615/` 已產報告與 issue body 4. ✅ GitHub issue #14 已建立：https://github.com/page1010/maplab-ai-handbook/issues/14 | ✅ 完成 |
 | 2026-06-11 | IOS-FB / Codex | 「你知道要去notion拿社群帳號密碼嗎？不知道寫進去啟動流程 我想知道為什麼最近都沒有報告」 | 1. 把社群帳密 Notion 取用邊界寫入啟動流程 2. 查明最近 FB/社群報告沒出現的原因 3. 留 review bundle | 1. ✅ `AGENT_STARTUP_PROTOCOL.md Step 5.5` + `skills/credentials/social-accounts.md` 2. ✅ 查明 daily job 有跑但只刷舊 historical shadow sample，production collector/digest 未閉環且 training gate failed 3. ✅ `workbook/reviews/JOB-IOS-FB-NO-REPORTS-20260611/` | ✅ 完成 |
 | 2026-06-11 | B1 | 「英文標題的清掉繁體中文是我的session」「你說要接給地端agent不花我額度但沒有做成嗎」 | 1. 封存 6 個英文 Codex automations 2. heartbeat 改地端零額度 | 1. ✅ 移至 ~/.codex/automations_archived-20260611（可還原），不再每小時燒額度、不再生殭屍程序 2. ✅ heartbeat_audit 本是純 Python，plist 已備好待 Owner 載入；另發現 launchd 讀不到 CloudStorage（TCC），照片管線改 session 背景跑 | ✅ 完成 |
 | 2026-06-11 | B1 | 「可以分類一下嗎 截圖 家庭 外燴工作 ＋年月份資料夾 然後已經有資料夾的不要動」 | 照片分類搬移管線 + 保護已有資料夾 | ✅ a4_photo_classifier.py：年度傾倒區 ~98,400 張分三類+年月；named albums/MAPLAB_ASSETS/影片不動；30 張實測通過；10,000 張批次跑中；可 --undo 全還原（T-A4-004） | 🔄 進行中 |

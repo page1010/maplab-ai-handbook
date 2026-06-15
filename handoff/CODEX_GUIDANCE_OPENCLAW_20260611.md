@@ -1,37 +1,45 @@
-# 給 Codex：OpenClaw 修復指引（停止 nohup/launchctl submit 方向）
+# 給 Codex / 任何 agent：OpenClaw 重開機後修復（已驗證正解）
 
-來源：B1 Claude Code，2026-06-11 21:45，Owner 要求轉達系統全貌。
+來源：B1 Claude Code，2026-06-11 起，2026-06-14 修正為實測正解。
 
-## 你在鑽的兔子洞
+## ⚠️ 本文件前一版有錯（叫人修主 Chrome :9222）——那是 runbook 明令別碰的壞路。以下是正解。
 
-你在解「如何讓背景程序脫離 Codex exec runner」（nohup → process group → launchctl submit）。
-**這個問題不需要解。** pitfalls.md 錯誤 007 已記錄過同類彎路：能用系統原生機制就不要自製
-process/IPC hack。
+## 系統全貌（30 秒看懂）
 
-## 系統全貌（你沒看到的部分）
+OpenClaw 有 3 個 browser profile：
+| profile | 是什麼 | 重開機後 |
+|---------|--------|----------|
+| `user-cdp`（舊預設、**壞路**）| attachOnly，接你主 Chrome :9222 | Chrome 148+ 安全限制，預設 profile 開不了 :9222 → 接不到 |
+| `openclaw`（**現行正解**）| OpenClaw 自管的獨立 Chrome :18800，已用 Google SSO 登入 ChatGPT | gateway 會自啟，但**管理的 Chrome 不會自啟** ← 唯一斷點 |
+| `user` | existing-session | 未用 |
 
-1. **OpenClaw gateway 沒有壞**。launchd `ai.openclaw.gateway` 有 `RunAtLoad=true`，
-   重開機後已自動啟動（PID 921, port 18789）。不需要修、不需要重啟、不需要 detach 任何東西。
-2. 真正斷掉的是 **CDP Chrome**：OpenClaw 的 `user-cdp` profile 是 `attachOnly: true`，
-   它只「連接」一個帶 `--remote-debugging-port=9222` 旗標的 Chrome，不自己開。
-3. 停電前那個 Chrome 是某個 session 手動開的——**沒有任何 launchd/login item 負責帶旗標
-   重開它**。這才是根因：關鍵 runtime 依賴沒有開機自啟機制。
+**權威來源：** `/Users/pagemacmini/Documents/New project/docs/runbooks/IOS_MOMENTUM_OPENCLAW_GPT_FASTPATH.md`
+終態決策：「**預設 profile 留在 `openclaw`，不要切回 `user-cdp`**」。
 
-## 正確修法（兩步，不要再多）
+## 重開機後唯一要做的事（一行，不碰主 Chrome）
 
-**Step 1 — 立即恢復**（會關掉現有 Chrome 視窗、自動還原分頁）：
 ```bash
-osascript -e 'quit app "Google Chrome"'; sleep 3
-open -a "Google Chrome" --args --remote-debugging-port=9222 --restore-last-session
-sleep 5; openclaw browser status   # 預期 running: true
+openclaw browser --browser-profile openclaw start
+openclaw browser doctor          # 應全 OK，browser: running
+openclaw browser --browser-profile openclaw tabs   # 列得出 = 好了
 ```
 
-**Step 2 — 根治**：建 `~/Library/LaunchAgents/com.hq.chrome-cdp.plist`（RunAtLoad 帶旗標
-開 Chrome），並登記到 `/Users/pagemacmini/agent-hq/runtime/REGISTRY.md`。
-規則（agent-hq 治理）：未登記的排程 = 野生 job，B4 patrol 可砍。
+gateway（`ai.openclaw.gateway`，RunAtLoad=true）重開機會自己活，**不用重啟它**。
+斷的永遠只是它管理的那個 Chrome :18800 沒被拉起來。
 
-## 禁止事項
+## 禁止 / 別再走的彎路
 
-- 不要用 `launchctl submit`（一次性、不登記、重開機又沒了——跟這次斷掉的原因一模一樣）
-- 不要再做 detached process spawner
-- 注意：launchd 啟動的程序讀不到 `~/Library/CloudStorage`（TCC），今天已踩過（REGISTRY 有記錄）
+- ❌ 不要去開主 Chrome 的 `--remote-debugging-port=9222`（Chrome 148 安全限制，預設 profile 根本開不了；runbook 也說別切回 user-cdp）
+- ❌ 不要 `nohup` / `launchctl submit` 自製 detached spawner（前一個 session 在這上面燒了幾小時，無效）
+- ❌ 不要重啟 gateway 來「修」——gateway 沒壞
+
+## 依賴警告
+
+`openclaw` profile 的命脈是那個 managed Chrome 持續登入 ChatGPT。若哪天登出，
+custom GPT 圓桌（`chatgpt.com/g/...ai-hermes-yuan-zhuo-hui-yi/project`）會抓不到 →
+需 Owner 在 managed profile 用「用 Google 繼續」重新登入（走 Google SSO，不碰密碼/secrets）。
+
+## 開機自啟（根治，待裝）
+
+`~/Library/LaunchAgents/com.openclaw.browser-autostart.plist` 已備好（B1 寫，待 Owner load）：
+重開機後自動跑上面那行 start，省掉手動。登記於 `agent-hq/runtime/REGISTRY.md`。

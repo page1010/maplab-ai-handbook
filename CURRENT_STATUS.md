@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-06-15 13:52（A2 ICC Tainan WordPress draft）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-06-15 22:00（A1 晚間巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -122,6 +122,7 @@
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-14 22:00：晚間巡查 0 新非巡查 commit（僅午後巡查 baeffea）；A4 T-A4-001 ~81h 持續 CRITICAL；B1 T-HQ-001 ~79h 持續 CRITICAL；A2 ~448h/~18.7天 CRITICAL 持續；A5+A6 ~640h/~26.7天 CRITICAL 持續；GCP帳單~58天🔴；所有狀態與 CURRENT_STATUS 一致，無新增異常 | 無新異常，持續觀察 |
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-15 08:00：24h 零非巡查 commit（僅三筆 2026-06-14 patrol commit）；A4 T-A4-001 ~91h 持續 CRITICAL（最後 c2dc194/90fe31c 2026-06-11）；B1 T-HQ-001 ~89h 持續 CRITICAL（最後 014081c 2026-06-11 18:46）；A2 ~458h/~19.1天 CRITICAL 持續；A5+A6 ~650h/~27.1天 CRITICAL 持續；GCP帳單~59天🔴；所有狀態與 CURRENT_STATUS 一致，無新增異常 | 無新異常，持續觀察 |
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-15 16:00：A2 今日 5 commits 活躍（dd9e6b0/0a1690b/da36237 ICC Tainan approval-ready bundle 完成、WordPress draft post 1829 已建；1aae49c/940051d ios-kol 第三層研究手冊新增，**未登記任務表**，建議 Owner 確認是否需建 Task Card）；OpenClaw 修復指引更新（4b228db 正解改為 openclaw managed profile）；A4 T-A4-001 ~99h 無新 commit 持續 🔴 CRITICAL；B1 T-HQ-001 ~93h 持續 🔴 CRITICAL；A5 ~658h/~27.4天 CRITICAL 持續；A6 ~658h/~27.4天 CRITICAL 持續；GCP帳單~59天🔴；所有已知 CRITICAL 無新解除 | ios-kol Task Card 建立待 Owner 確認；A4/B1/A5/A6 CRITICAL 持續觀察 |
+| A1 巡查紀錄 | ⚠️ A1巡查 2026-06-15 22:00：晚間巡查 2 新非巡查 commit（c903bba A0 learning-loop 架構巡查文件新增；7a673e0 修正 evidence note）；A4 T-A4-001 ~105h 無新 commit 持續 🔴 CRITICAL；B1 T-HQ-001 ~99h 持續 🔴 CRITICAL；A2 今日活躍（da36237 ICC Tainan draft built）但午後後無新 commit；A5 ~664h/~27.7天 CRITICAL 持續；A6 ~664h/~27.7天 CRITICAL 持續；GCP帳單~60天🔴；所有狀態與 CURRENT_STATUS 一致，無新增異常 | 無新異常，持續觀察 |
 ---
 
 ## Source of Truth（有效文件清單）

@@ -9,7 +9,7 @@ Scope: Read-only architecture patrol plus GitHub improvement proposal. No WordPr
 
 Owner provided a repost summarizing Satya Nadella's thesis: enterprise advantage in the AI era should not come from picking one frontier model, but from owning a learning loop that compounds human capital and company-owned AI capability. The post was treated as strategic input, not as MAPLAB state evidence.
 
-Public cross-check: Business Insider reported the same core claim on 2026-06-15: Nadella warned against value concentrating in a few models and argued companies need control over their learning systems.
+External source note: this patrol did not rely on an independently verified external article. MAPLAB architecture conclusions below come from local repo evidence and the Owner-provided repost only.
 
 ## Cold-Start Evidence Read
 

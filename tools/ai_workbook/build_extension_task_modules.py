@@ -108,6 +108,7 @@ class RoleModule:
     project_docs: list[str]
     skills: list[str]
     runtime_targets: list[str] = field(default_factory=lambda: ["gemini", "codex", "openclaw"])
+    extra_read_first: list[str] = field(default_factory=list)
     restricted_sources: list[str] = field(default_factory=list)
     output_contract: list[str] = field(default_factory=list)
     startup_contract_extra: list[str] = field(default_factory=list)
@@ -123,7 +124,7 @@ class RoleModule:
     def to_module(self) -> dict[str, Any]:
         recall_path = self.recall_path or f"recalls/{self.role_id}_recall.md"
         read_first = COMMON_READ_FIRST + [recall_path]
-        read_first += self.project_docs + self.skills + COMMON_GOVERNANCE
+        read_first += self.project_docs + self.extra_read_first + self.skills + COMMON_GOVERNANCE
         read_first = dedupe(read_first)
         return {
             "schema_version": "2026-05-11.dynamic-role-module.v1",
@@ -661,6 +662,7 @@ def ios_role(
     risk_level: str = "medium",
     restricted_sources: list[str] | None = None,
     startup_contract_extra: list[str] | None = None,
+    extra_read_first: list[str] | None = None,
 ) -> RoleModule:
     base_startup_contract_extra = [
         "Use Investment OS local repo as the canonical runtime truth: /Users/pagemacmini/Documents/New project.",
@@ -681,6 +683,7 @@ def ios_role(
         IOS_PROJECT_DOCS,
         IOS_SKILLS,
         ["codex", "openclaw", "gemini", "hermes"],
+        extra_read_first=extra_read_first or [],
         restricted_sources=restricted_sources or [],
         output_contract=output_contract,
         startup_contract_extra=base_startup_contract_extra,
@@ -707,10 +710,14 @@ ROLES.extend(
             "Influencer Radar Manager",
             "網紅雷達經理",
             "YouTube、Podcast、FB/KOL 與操作筆記抽取的策略 owner。",
-            ["kol_digest", "youtube_rss", "notebooklm_packet", "operation_notes", "source_quality_review"],
-            ["kol_digest.md", "operation_notes_validation.md", "source_freshness_matrix.md", "telegram_readback.md", "feedback_ledger_update.md"],
+            ["kol_digest", "youtube_rss", "notebooklm_packet", "operation_notes", "source_quality_review", "third_layer_research"],
+            ["kol_digest.md", "operation_notes_validation.md", "source_freshness_matrix.md", "third_layer_numeric_matrix.md", "telegram_readback.md", "feedback_ledger_update.md"],
             ["KOL Telegram digest", "KOL shadow Dashboard evidence", "NotebookLM/OpenClaw worker packets", "B2 report quality review"],
             "medium",
+            startup_contract_extra=[
+                "When KOL/source material includes company-call, supplier-channel, BOM, rack-level, or researcher-only numbers, read docs/ios-kol/third-layer-research-method.md and tag each numeric claim by evidence layer before summarizing.",
+            ],
+            extra_read_first=["docs/ios-kol/third-layer-research-method.md"],
         ),
         ios_role(
             "IOS-FB",
@@ -1074,6 +1081,11 @@ def build_doc(modules: list[dict[str, Any]]) -> str:
         "",
     ]
     for module in modules:
+        role_handbooks = [
+            item["path"]
+            for item in module["read_first"]
+            if item["path"].startswith("docs/ios-kol/")
+        ]
         lines.extend(
             [
                 f"### {module['role_id']} — {module['role_name']}",
@@ -1084,9 +1096,11 @@ def build_doc(modules: list[dict[str, Any]]) -> str:
                 f"- Task types: {', '.join(module['task_types'])}",
                 f"- Affects: {'; '.join(module['affects'])}",
                 f"- Module file: `chrome-extension/task-modules/{module['role_id']}.json`",
-                "",
             ]
         )
+        if role_handbooks:
+            lines.append(f"- Role-specific handbook: {', '.join(f'`{path}`' for path in role_handbooks)}")
+        lines.append("")
     lines.extend(
         [
             "## Relationship Rule",

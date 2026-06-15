@@ -1,9 +1,9 @@
 {
   "generated_at": "2026-06-03T17:44:38+08:00",
   "module_count": 29,
-  "relationship_rows": 590,
-  "graph_nodes": 329,
-  "graph_edges": 865,
+  "relationship_rows": 591,
+  "graph_nodes": 330,
+  "graph_edges": 866,
   "missing_sources": [
     "TASK_QUEUE.md"
   ],

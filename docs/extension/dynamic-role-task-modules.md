@@ -161,9 +161,10 @@ GitHub stores JSON/Markdown task data. Claude Code, Codex, GPT/ChatGPT, Claude C
 - Department: 網紅雷達經理
 - Simulation: YouTube、Podcast、FB/KOL 與操作筆記抽取的策略 owner。
 - Runtime targets: codex, openclaw, gemini, hermes
-- Task types: kol_digest, youtube_rss, notebooklm_packet, operation_notes, source_quality_review
+- Task types: kol_digest, youtube_rss, notebooklm_packet, operation_notes, source_quality_review, third_layer_research
 - Affects: KOL Telegram digest; KOL shadow Dashboard evidence; NotebookLM/OpenClaw worker packets; B2 report quality review
 - Module file: `chrome-extension/task-modules/IOS-KOL.json`
+- Role-specific handbook: `docs/ios-kol/third-layer-research-method.md`
 
 ### IOS-FB — FB Social Intelligence Manager
 

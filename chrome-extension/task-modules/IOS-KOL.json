@@ -18,7 +18,8 @@
     "youtube_rss",
     "notebooklm_packet",
     "operation_notes",
-    "source_quality_review"
+    "source_quality_review",
+    "third_layer_research"
   ],
   "read_first": [
     {
@@ -110,6 +111,14 @@
       "size_bytes": "2819"
     },
     {
+      "path": "docs/ios-kol/third-layer-research-method.md",
+      "load_mode": "read",
+      "exists": "true",
+      "purpose": "governance or workflow document",
+      "source_sha256": "a99881a09b7686bb4a1105aa14762906e21a8024a0a7c025b000752c372e89ab",
+      "size_bytes": "4743"
+    },
+    {
       "path": "skills/invest-os-b-role-system.md",
       "load_mode": "read",
       "exists": "true",
@@ -176,12 +185,14 @@
     "Read Investment OS AGENT_CORE.md, CURRENT_STATUS.md, pitfalls.md, config/investment_os_role_registry.json, and docs/INVESTMENT_OS_ROLE_WORKSPACES.md before acting.",
     "Find role_id IOS-KOL in config/investment_os_role_registry.json and use its required_reads, bad_data_rule, background_jobs, Telegram outputs, Dashboard workspace, and B1-B4 escalation path.",
     "Name this session IOS-KOL 網紅雷達經理 when dispatching a dedicated cleanup or audit thread.",
-    "If output quality is bad, inspect the whole strategy loop before asking a shared Telegram/Dashboard owner to patch formatting."
+    "If output quality is bad, inspect the whole strategy loop before asking a shared Telegram/Dashboard owner to patch formatting.",
+    "When KOL/source material includes company-call, supplier-channel, BOM, rack-level, or researcher-only numbers, read docs/ios-kol/third-layer-research-method.md and tag each numeric claim by evidence layer before summarizing."
   ],
   "output_contract": [
     "kol_digest.md",
     "operation_notes_validation.md",
     "source_freshness_matrix.md",
+    "third_layer_numeric_matrix.md",
     "telegram_readback.md",
     "feedback_ledger_update.md"
   ],

@@ -115,8 +115,8 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "governance or workflow document",
-      "source_sha256": "a99881a09b7686bb4a1105aa14762906e21a8024a0a7c025b000752c372e89ab",
-      "size_bytes": "4743"
+      "source_sha256": "7e8dfe0d1f3c7d2446ce3d8af8362bd245ff955917de0735439ba6dd92b6af7d",
+      "size_bytes": "7006"
     },
     {
       "path": "skills/invest-os-b-role-system.md",

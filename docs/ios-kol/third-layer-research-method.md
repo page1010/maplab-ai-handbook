@@ -97,6 +97,44 @@ Nexperia USD 75B：
 - 清楚標記可信度，不把未公開數字偽裝成官方事實。
 - 把情報轉成投資或產業驗證問題，讓下一次 call、追蹤、Dashboard 或 Telegram digest 有明確方向。
 
+## 影音投影片對照規則
+
+KOL 影片、線上分享會、投資講座與研究員簡報不能只看逐字稿。ASR 只能保留口語內容，常會漏掉投影片表格、標的清單、製程站別、講者切換與分類邊界。當來源是影片時，IOS-KOL 必須把投影片畫面視為第一級證據之一。
+
+最低要求：
+
+1. 抽取影片 frame 或使用 Owner 截圖，建立投影片清單。
+2. 對每張投影片做 OCR、人工讀圖或 vision review。
+3. 用逐字稿時間碼對齊投影片、講者與口語段落。
+4. 將 PDF/memo 的主題與數字接到同一張 evidence matrix。
+5. 定稿前先檢查「音訊提到但投影片沒有」、「投影片有但音訊沒念」、「PDF 有但影片沒有」三種落差。
+
+必備對照欄位：
+
+| 欄位 | 用途 |
+| --- | --- |
+| timestamp | 影片時間點或截圖來源。 |
+| speaker | 講者或研究員。 |
+| slide_title | 投影片標題、右上角主題或章節。 |
+| slide_text | 投影片表格、條列、公司名稱與數字。 |
+| transcript_summary | 同時間逐字稿摘要。 |
+| pdf_match | 是否可回到 PDF/memo 對應段落。 |
+| extracted_companies | 影像、口語或 PDF 出現的標的。 |
+| evidence_layer | official_public / public_compatible / company_call / bom_model / channel_check / anomaly。 |
+| second_layer_reason | 供需、規格、替代、capex 或 BOM 的結構推論。 |
+| third_layer_edge | 轉單、驗證進度、交期、缺貨、稼動率、客戶導入等早期訊號。 |
+| action | 採用、降權、待驗、修正原稿或刪除。 |
+
+衝突處理：
+
+- 公司名稱、表格 mapping、製程站別、供應鏈分類：投影片優先。
+- 研究員的 caveat、語氣、轉折、風險提醒：逐字稿優先。
+- 長段落邏輯、數字脈絡、主題完整性：PDF/memo 優先。
+- 官方規格、財報、公告、營收與產能事實：公開一手來源優先。
+- 若第三層情報與公開資料衝突，不直接刪除；標成 `anomaly` 或 `company_call`，列出待驗問題。
+
 ## 冷啟動提醒
 
 當使用者要求「第二層思考」、「第三層思考」、「對比研究員整理」、「參考並驗證他的數字」、「把格式往產業研究員方向升級」時，IOS-KOL 必須讀本手冊，並在輸出中加入數字驗證矩陣與第三層 Radar。
+
+當使用者提供 KOL 影片、直播截圖、投影片截圖或表示「聽起來重點和筆記不一樣」時，IOS-KOL 必須啟動影音投影片對照規則。不得用純逐字稿直接產最終研究報告。

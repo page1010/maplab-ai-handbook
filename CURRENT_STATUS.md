@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-06-14 22:00（A1 晚間巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-06-15 08:00（A1 晨間巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -119,6 +119,7 @@
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-14 08:00：24h 內 1 新非巡查 commit（9975dd1 2026-06-13 22:48 — docs(guidance) OpenClaw CDP Chrome 修復方向：gateway 正常，問題在 CDP Chrome 自啟失敗，指引供 Codex 執行）；A4 T-A4-001 ~67h 無 commit 持續 CRITICAL；B1 T-HQ-001 ~65h 持續 CRITICAL；A2 ~434h/~18.1天 CRITICAL 持續；A5+A6 ~626h/~26.1天 CRITICAL 持續；GCP帳單~58天🔴；無新增 CRITICAL，所有已知異常持續 | OpenClaw 修復指引已落檔待 Codex 執行；A4/B1/A2/A5/A6 CRITICAL 持續 |
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-14 16:00：午後巡查 0 新 agent commit（僅晨間巡查 60bba92）；A4 T-A4-001 ~75h 無新 commit 持續 CRITICAL；B1 T-HQ-001 ~73h 持續 CRITICAL；A2 ~442h/~18.4天 CRITICAL 持續；A5+A6 ~634h/~26.4天 CRITICAL 持續；GCP帳單~58天🔴；所有狀態與 CURRENT_STATUS 一致，無新增異常 | 無新異常，持續觀察 |
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-14 22:00：晚間巡查 0 新非巡查 commit（僅午後巡查 baeffea）；A4 T-A4-001 ~81h 持續 CRITICAL；B1 T-HQ-001 ~79h 持續 CRITICAL；A2 ~448h/~18.7天 CRITICAL 持續；A5+A6 ~640h/~26.7天 CRITICAL 持續；GCP帳單~58天🔴；所有狀態與 CURRENT_STATUS 一致，無新增異常 | 無新異常，持續觀察 |
+| A1 巡查紀錄 | ⚠️ A1巡查 2026-06-15 08:00：24h 零非巡查 commit（僅三筆 2026-06-14 patrol commit）；A4 T-A4-001 ~91h 持續 CRITICAL（最後 c2dc194/90fe31c 2026-06-11）；B1 T-HQ-001 ~89h 持續 CRITICAL（最後 014081c 2026-06-11 18:46）；A2 ~458h/~19.1天 CRITICAL 持續；A5+A6 ~650h/~27.1天 CRITICAL 持續；GCP帳單~59天🔴；所有狀態與 CURRENT_STATUS 一致，無新增異常 | 無新異常，持續觀察 |
 ---
 
 ## Source of Truth（有效文件清單）

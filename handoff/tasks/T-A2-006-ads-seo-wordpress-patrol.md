@@ -86,6 +86,45 @@ workbook/reviews/JOB-A2A3A4-APPROVAL-READY-YYYYMMDD/
 - 讀 secrets、API keys、cookies。
 - 修改 Rank Math 付費/退訂設定。
 
+## Patrol Run — 2026-06-15 大臺南會展中心 SEO + Ads
+
+Owner 召喚 A2 針對「大臺南會展中心外燴 / 茶點」做 SEO、Google Ads、WordPress 實例結合規劃。
+
+本輪輸出：
+
+- Review bundle: `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/`
+- Status: `proposal_done`
+- Owner approval card: `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/owner_approval_card.md`
+- Drive folder metadata confirmed: `1wTu2cfZVSUMwSb0avEhSAd6sdVZZa2pT`
+- Drive folder title: `0612大台南會展中心-工研院在宅醫療科技推動計畫跨部會工作小組會議`
+- Direct children listed: 22 media files（11 JPG / 3 HEIC / 6 MP4 / 2 MOV）
+
+本輪結論：
+
+- 「大臺南會展中心外燴 / 茶點」適合先做場地型 SEO draft，再以小額 Google Search exact/phrase test 守住高意圖字。
+- Google Ads 不應先重壓泛字；先用場地字與活動情境字，並以便當、團膳、便宜、交通、停車、門票、場租等否定字降低錯市場流量。
+- Meta 不搶關鍵字，先做「MAPLAB = 台南會展中心企業茶點 / 品牌接待」的視覺記憶與再行銷 proposal。
+- 第一個建議 approval 是 `A2-SEO-ICCTN-001`：只建立 WordPress 未發布草稿，slug `icc-tainan-catering`，不發布。
+
+本輪未做：
+
+- 未發布 WordPress。
+- 未上傳媒體。
+- 未改 Google Ads / Meta Ads。
+- 未動 Rank Math / GTM / Pixel / 預算 / 開關。
+- 未讀 secrets、cookies、`.env`。
+
 ## Resume Prompt
 
-我是 A2 Ads / SEO / WordPress Patrol。請先讀 `CURRENT_STATUS.md`、`pitfalls.md`、`handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md`、`projects/a2-ads-seo-wordpress-patrol.md`、`projects/a2a3a4-approval-ready-automation.md`、`projects/seo-ads-agent.md`、`skills/brand-voice-guide.md`、`skills/maplab-visual-spec.md`。先輸出品牌記憶確認，再巡查 WordPress / SEO / Ads。若發現需要正式外部變更，不要停在「需批准」；要產出 approval-ready plan，說清楚為什麼要改、改什麼、預期效果、影響範圍、風險、rollback、驗收方式與 Owner 可選項。未經 Owner/A1 精確批准，不發布、不改 Ads、不改 GTM/Pixel/Rank Math、不動預算或開關。
+我是 A2 Ads / SEO / WordPress Patrol。請先讀 `CURRENT_STATUS.md`、`pitfalls.md`、`handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md`、`projects/a2-ads-seo-wordpress-patrol.md`、`projects/a2a3a4-approval-ready-automation.md`、`projects/seo-ads-agent.md`、`skills/brand-voice-guide.md`、`skills/maplab-visual-spec.md`。
+
+若接續 2026-06-15 大臺南會展中心任務，接著讀：
+
+1. `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/README.md`
+2. `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/owner_approval_card.md`
+3. `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/a4_asset_manifest.md`
+4. `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/a2_seo_wordpress_plan.md`
+5. `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/a3_ads_strategy_plan.md`
+6. `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/integration_review.md`
+
+目前狀態：proposal_done，尚未外部執行。第一個建議 approval 是 `A2-SEO-ICCTN-001`：只建立 WordPress 未發布草稿 `icc-tainan-catering`，不發布。未經 Owner/A1 精確批准，不發布、不改 Ads、不改 GTM/Pixel/Rank Math、不動預算或開關。

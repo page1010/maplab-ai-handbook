@@ -1,7 +1,7 @@
 # A4 Asset Manifest
 
 Date: 2026-06-15
-Status: metadata_only_ready_for_visual_QA
+Status: converted_and_partially_attached_to_published_wp_landing_page
 Source folder: `https://drive.google.com/drive/folders/1wTu2cfZVSUMwSb0avEhSAd6sdVZZa2pT`
 
 ## Folder Readback
@@ -80,6 +80,34 @@ Use only after visual QA:
 
 ## Asset Status
 
-Status: `metadata_only_ready_for_visual_QA`.
+Status: `converted_and_partially_attached_to_published_wp_landing_page`.
 
-No image was downloaded, edited, uploaded, published, or used in ads in this session.
+Conversion output:
+
+- Local output dir: `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/wordpress_assets_icctn_001/`
+- Conversion script: `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/prepare_icctn_assets.sh`
+- Conversion manifest: `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/wordpress_assets_icctn_001/asset_conversion_manifest_icctn_001.csv`
+- Converted still images: 14 WebP files
+- Source still images: 11 JPG + 3 HEIC
+- Videos skipped for this landing page: 6 MP4 + 2 MOV
+
+WordPress applied media:
+
+| Output file | Media ID | Usage |
+|---|---:|---|
+| `maplab-icc-tainan-catering-table-overview-01.webp` | 1833 | Featured image + first image block |
+| `maplab-icc-tainan-catering-table-overview-02.webp` | 1834 | Case section image |
+| `maplab-icc-tainan-corporate-tea-table-03.webp` | 1839 | Event type section image |
+| `maplab-icc-tainan-finger-food-dessert-display-04.webp` | 1840 | Setup section image |
+| `maplab-icc-tainan-dessert-catering-detail-05.webp` | 1841 | Setup section detail image |
+
+Applied media manifest:
+
+- `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/wordpress_assets_icctn_001/wp_selected_media_manifest_icctn_001.csv`
+
+Notes:
+
+- WordPress/image optimizer converted some uploads to `.avif` public URLs while preserving SEO media slug.
+- First full-media upload attempt stalled during WordPress media processing; A2 switched to slug-based media reuse and metadata patch.
+- One additional image upload attempt returned HTTP 503, so published page currently uses 5 images. Remaining converted images stay available for later backfill.
+- No Google Ads / Meta Ads / GTM / Pixel / budget / switch changes were made by A4/A2 during asset work.

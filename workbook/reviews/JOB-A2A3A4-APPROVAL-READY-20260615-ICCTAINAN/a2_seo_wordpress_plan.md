@@ -1,7 +1,7 @@
 # A2 SEO / WordPress Plan
 
 Date: 2026-06-15
-Status: approval_ready_for_unpublished_draft
+Status: published_after_owner_emergency_approval
 
 ## SEO Strategy
 
@@ -41,7 +41,19 @@ Repo evidence:
 
 ## Proposed WordPress Draft
 
-Action type: create unpublished WordPress draft only.
+Original action type: create unpublished WordPress draft only.
+
+Execution update:
+
+- Owner first approved draft creation only.
+- Owner later approved immediate publish as Google Ads landing page.
+- Live URL: `https://www.maplabkitchen.com/icc-tainan-catering/`
+- Post ID: `1829`
+- Status: `publish`
+- Category: `企業外燴案例` ID `170`
+- Featured media: `1833`
+- Inserted images: `1833`, `1834`, `1839`, `1840`, `1841`
+- Verification: authenticated REST raw content `ok=true`
 
 | Field | Proposed value |
 |---|---|
@@ -52,6 +64,14 @@ Action type: create unpublished WordPress draft only.
 | Primary CTA | LINE inquiry |
 | Initial status | Draft / unpublished |
 | Canonical intent | Venue-specific landing page |
+
+Applied SEO meta:
+
+| Field | Applied value |
+|---|---|
+| Focus keywords | `大臺南會展中心外燴, 大臺南會展中心茶點, 大臺南會展中心活動餐點, ICC Tainan catering` |
+| SEO title | `大臺南會展中心活動外燴｜企業茶點與貴賓接待｜MAPLAB` |
+| Meta description | `大臺南會展中心外燴與企業茶點案例。MAPLAB Kitchen 提供台南會展活動餐點、手指食物、飲品與貴賓接待餐桌配置，適合會議、展覽、開幕與品牌活動。` |
 
 ## Draft Page Structure
 

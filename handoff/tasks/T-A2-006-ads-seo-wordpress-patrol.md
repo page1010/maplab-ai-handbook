@@ -99,6 +99,13 @@ workbook/reviews/JOB-A2A3A4-APPROVAL-READY-YYYYMMDD/
 WordPress Application Password，且只能用於批准範圍內的 `status=draft` REST
 操作；secret 本體與衍生 header 不得持久化或回報。
 
+2026-06-15 更新：若 Owner 在同一任務中明確把已建立的草稿升級為「立刻發布」
+作 Google Ads landing page，可將該 post 改為 `publish`，但 A2 必須立即補齊
+案例 Landing Page 強制模板 Gate：正確案例分類、SEO meta、快速導覽、圖片與
+alt/caption、featured image、FAQ block、內連結、LINE CTA、品牌語氣與
+REST/raw-content 驗證。此例外不包含 Google Ads / Meta Ads / GTM / Pixel /
+預算 / 開關，也不包含 Rank Math 付費或退訂設定。
+
 ## Patrol Run — 2026-06-15 大臺南會展中心 SEO + Ads
 
 Owner 召喚 A2 針對「大臺南會展中心外燴 / 茶點」做 SEO、Google Ads、WordPress 實例結合規劃。
@@ -113,6 +120,8 @@ Owner 召喚 A2 針對「大臺南會展中心外燴 / 茶點」做 SEO、Google
 - Direct children listed: 22 media files（11 JPG / 3 HEIC / 6 MP4 / 2 MOV）
 - WordPress unpublished draft created: post `1829`, status `draft`, slug `icc-tainan-catering`
 - Draft edit URL: `https://www.maplabkitchen.com/wp-admin/post.php?post=1829&action=edit`
+- Emergency publish completed after Owner live instruction: public URL `https://www.maplabkitchen.com/icc-tainan-catering/`
+- Published post verification: status `publish`, category `企業外燴案例` ID `170`, featured media `1833`, 5 inserted media IDs `1833/1834/1839/1840/1841`
 
 本輪結論：
 
@@ -159,6 +168,51 @@ WordPress draft edit URL:
 https://www.maplabkitchen.com/wp-admin/post.php?post=1829&action=edit
 ```
 
+### Emergency Publish + Image Backfill — 2026-06-15
+
+Owner 於 Google Ads 設定中要求：
+
+```text
+快發 我同步在設定google ads 差你這個landing page ， 你先發再補照片啦
+```
+
+A2 已依新精確批准將 post `1829` 從 draft 改為 publish，並立刻回補內容與圖片。
+
+結果：
+
+- Public URL: `https://www.maplabkitchen.com/icc-tainan-catering/`
+- Post ID: `1829`
+- Status: `publish`
+- Slug: `icc-tainan-catering`
+- Category: `企業外燴案例` ID `170`
+- Featured media: `1833`
+- Media inserted: `1833`, `1834`, `1839`, `1840`, `1841`
+- Media manifest: `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/wordpress_assets_icctn_001/wp_selected_media_manifest_icctn_001.csv`
+- Publish result: `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/wordpress_fast_publish_result.json`
+- Image attach result: `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/wordpress_image_attach_result.json`
+- Verification script: `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/verify_icctn_wp_post.py`
+- OpenClaw QA result: `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/openclaw_a2_icctn_qa_result.md`
+
+Authenticated REST raw content verification returned `ok=true`:
+
+- `published`: true
+- `case_category_170`: true
+- `featured_media_1833`: true
+- `quick_nav`: true
+- `faq_block`: true
+- `line_cta`: true
+- `case_heading`: true
+- `image_1833` / `1834` / `1839` / `1840` / `1841`: true
+
+Notes:
+
+- Initial full-media upload stalled while WordPress / image optimizer processed media; media `1833` and `1834` had already been created.
+- A2 switched to slug-based media reuse, patched missing alt/caption, and inserted 5 available images.
+- One additional image upload attempt returned HTTP 503, so the page was completed with 5 images instead of waiting on server capacity.
+- OpenClaw browser QA confirmed quick nav, internal links, LINE CTA, FAQ, and all 5 inserted images loaded in DOM. Long-form OpenClaw agent prompt returned `NO_REPLY`, so browser QA was used as the reliable check.
+- A2 did not modify Google Ads / Meta Ads / GTM / Pixel / budget / switches.
+- Rank Math action was limited to post `1829` SEO meta; no paid/subscription setting was touched.
+
 ## Resume Prompt
 
 我是 A2 Ads / SEO / WordPress Patrol。請先讀 `CURRENT_STATUS.md`、`pitfalls.md`、`handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md`、`projects/a2-ads-seo-wordpress-patrol.md`、`projects/a2a3a4-approval-ready-automation.md`、`projects/seo-ads-agent.md`、`skills/brand-voice-guide.md`、`skills/maplab-visual-spec.md`。
@@ -173,5 +227,9 @@ https://www.maplabkitchen.com/wp-admin/post.php?post=1829&action=edit
 6. `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/integration_review.md`
 7. `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/wordpress_draft_content.md`
 8. `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/wordpress_draft_execution.md`
+9. `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/wordpress_fast_publish_result.json`
+10. `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/wordpress_image_attach_result.json`
+11. `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/wordpress_assets_icctn_001/wp_selected_media_manifest_icctn_001.csv`
+12. `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/openclaw_a2_icctn_qa_result.md`
 
-目前狀態：`A2-SEO-ICCTN-001` 已完成 execution。WordPress 未發布草稿已建立：post `1829`，status `draft`，slug `icc-tainan-catering`，edit URL `https://www.maplabkitchen.com/wp-admin/post.php?post=1829&action=edit`。初次 WordPress 執行只檢查 Chrome 登入態後誤判 `auth_missing`，已補正冷啟動：接手者必須先讀 `skills/credentials/wordpress-api.md`，用 Owner-approved Codex 透過 Notion API Keys 保管室取得 WordPress REST API credential route；Notion 只作 credential vault / index，不作狀態真相。不得把 email / Application Password / Basic header / token / cookie / nonce 寫入 repo、memory、log 或 final；不可發布、不改 Ads、不改 GTM/Pixel/Rank Math、不動預算或開關。下一步若 Owner 批准，才可做媒體上傳、內連結調整、Ads landing 設定或發布。
+目前狀態：`A2-SEO-ICCTN-001` 已完成 execution 並在 Owner 緊急批准後發布。WordPress post `1829` 已上線：`https://www.maplabkitchen.com/icc-tainan-catering/`，status `publish`，slug `icc-tainan-catering`，category `企業外燴案例` ID `170`，featured media `1833`，已插入 5 張圖與 SEO alt/caption、快速導覽、FAQ block、內連結與 LINE CTA。OpenClaw browser QA 已完成，結果 `PASS_WITH_NOTES`：前台可開、導覽/FAQ/CTA 可見、5 張插圖 DOM 載入完成；OpenClaw long-form agent prompt 無回覆，已改用 browser QA。接手者仍必須先讀 `skills/credentials/wordpress-api.md`，用 Owner-approved Codex 透過 Notion API Keys 保管室取得 WordPress REST API credential route；Notion 只作 credential vault / index，不作狀態真相。不得把 email / Application Password / Basic header / token / cookie / nonce 寫入 repo、memory、log 或 final；不可改 Google Ads / Meta Ads / GTM / Pixel / 預算 / 開關；Rank Math 僅限此 post SEO meta，不碰付費/退訂設定。下一步可補第 6 張以上圖片，或由 A3 接手 Google Ads final URL / 受眾與否定字驗收。

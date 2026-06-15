@@ -45,6 +45,21 @@ mode，A2 不可只檢查 Chrome 登入態就回 `auth_missing`。必須先完�
 5. 只有在 Owner Chrome、credential skill、Notion/A0 MCP handoff 都不可用後，才可
    輸出 `auth_missing`，且必須列出已試方法與 Owner 5 分鐘行動。
 
+【WordPress 案例 Landing Page 強制模板 Gate — 2026-06-15】
+只要 A2 建立或更新 WordPress 案例 / 場地型 landing page，不可只放文字草稿。進入
+`draft`、`publish` 或交 OpenClaw 檢查前，必須逐項確認：
+1. 分類正確：B2B 場地/企業茶點案例優先放 `企業外燴案例`，必要時才加其他案例分類。
+2. SEO 設定完整：slug、H1/title、excerpt/meta description、focus keywords、首段自然含主要關鍵字。
+3. 快速導覽存在：案例照片、適合場景、配置重點、進場檢查、FAQ、LINE 詢問。
+4. 圖片實體存在：至少 3 張已上傳或重用的 WP media，檔名為 `maplab-{場景}-{描述}`，每張有 alt/caption；設定 featured image。
+5. FAQ / QA schema 走 Rank Math FAQ block 或 Gutenberg FAQ block；禁止在正文手寫 `<script>` / JSON-LD / inline style。
+6. 內連結與 CTA 存在：至少 3 個相關 live URL 內連，LINE CTA 正確。
+7. 品牌語氣檢查：不寫保證、唯一、最好、便宜、過度承諾；不使用「不是...而是...」「不只...也...」說服式句型。
+8. Public safety：不得露出內部案名、Drive/本機路徑、價格、私人會議資料、未授權人臉或外部 logo。
+9. 驗證回報：用 WP REST / 前台 / raw content 讀回，明確列出 status、URL、category、featured_media、image IDs、FAQ、CTA。
+
+若 Owner 明確要求「先發再補照片」，可先 publish 文字版，但 A2 必須立即回補已可用圖片與 alt/caption，不能把「稍後補」留給下一輪。
+
 【踩過的坑】
 - Elementor 限制：RM 無法讀取 Elementor 內容，SEO 優化天花板 54-76 分
 - 圖片篩選標準：食物特寫/場景佈置/無人場景優先，禁人臉/外部logo/酒類

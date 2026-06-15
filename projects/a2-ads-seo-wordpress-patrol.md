@@ -58,6 +58,13 @@ A2 不可直接做：
 - 改 Rank Math 付費/退訂相關設定。
 - 把未驗證 live URL 當作可投放 landing page。
 
+Owner-approved WordPress execution 例外：若 Owner 已精確批准建立或更新未發布草稿，
+A2 必須先讀 `skills/credentials/wordpress-api.md`，再依
+`AGENT_STARTUP_PROTOCOL.md Step 5.5` 與 `AGENT_RULES.md Credential 例外`處理。
+Notion API Keys 保管室可作 credential vault / index，但不可作狀態真相；secret
+本體與衍生 header 不得寫進 repo、memory、log、review bundle 或 final。批准範圍
+以外仍禁止，且 WordPress status 必須維持 `draft`。
+
 ## Output Contract
 
 預設寫到 `workbook/reviews/JOB-A2-ADS-SEO-WP-PATROL-YYYYMMDD/`：

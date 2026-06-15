@@ -2,7 +2,7 @@
 
 Date: 2026-06-15
 Role: A2 Ads SEO WordPress Patrol
-Status: proposal_done
+Status: proposal_done; `A2-SEO-ICCTN-001` execution_done
 Risk level: high
 
 ## Scope
@@ -15,7 +15,14 @@ This bundle turns the 2026-06-15 Owner prompt into an approval-ready plan for:
 - WordPress article routing that uses the new Drive case material.
 - A4 asset readiness handoff from the provided Drive folder.
 
-No external system was modified. No WordPress content was published. No Google Ads, Meta Ads, Rank Math, GTM, Pixel, budget, audience, switch, or payment setting was changed.
+Owner approved `A2-SEO-ICCTN-001`, and A2 created one WordPress unpublished draft only:
+
+- Post ID: `1829`
+- Status: `draft`
+- Slug: `icc-tainan-catering`
+- Edit URL: `https://www.maplabkitchen.com/wp-admin/post.php?post=1829&action=edit`
+
+No WordPress content was published. No media was uploaded. No Google Ads, Meta Ads, Rank Math, GTM, Pixel, budget, audience, switch, or payment setting was changed.
 
 ## Files
 
@@ -25,6 +32,8 @@ No external system was modified. No WordPress content was published. No Google A
 - `a3_ads_strategy_plan.md`
 - `owner_approval_card.md`
 - `integration_review.md`
+- `wordpress_draft_content.md`
+- `wordpress_draft_execution.md`
 
 ## Key Evidence
 
@@ -39,9 +48,9 @@ No external system was modified. No WordPress content was published. No Google A
 
 ## Decision Needed
 
-Owner can approve one or more cards in `owner_approval_card.md`.
+Owner can approve one or more remaining cards in `owner_approval_card.md`.
 
-Recommended first approval is only:
+Completed first approval:
 
 ```text
 批准 A2-SEO-ICCTN-001，只建立 WordPress 未發布草稿，不發布。

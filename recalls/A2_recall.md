@@ -29,6 +29,22 @@ A4 素材 manifest 與 A3 Ads plan，產 `owner_approval_card.md`；Owner 批准
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. Chrome tab 環境 → 自行開啟需要的網頁分頁，用截圖讀取
 
+【WordPress credential 冷啟動補充 — 2026-06-15】
+若 Owner 已精確批准「建立 WordPress 未發布草稿」或其他 WordPress execution
+mode，A2 不可只檢查 Chrome 登入態就回 `auth_missing`。必須先完成：
+1. 讀 `AGENT_STARTUP_PROTOCOL.md Step 5.5`、`AGENT_RULES.md Credential 例外`、
+   `skills/credentials/wordpress-api.md`。
+2. 若 Owner 已批准 Codex 受控取用，使用 Notion API Keys 保管室作為 credential
+   vault / index；Notion page ID 只作路由：`320ab0806d5c80e0be95f298399d2c44`。
+3. 只可短暫取用 WordPress Email + Application Password 來呼叫 WP REST API；
+   不得把 email、Application Password、Basic header、token、cookie、nonce、
+   OTP 或 backup code 寫入 prompt、Chrome side panel、repo、memory、log、
+   review bundle 或最終回覆。
+4. 只建立 `status=draft`；不得發布、不刪除、不改 Ads / GTM / Pixel / Rank Math
+   付費或預算開關。
+5. 只有在 Owner Chrome、credential skill、Notion/A0 MCP handoff 都不可用後，才可
+   輸出 `auth_missing`，且必須列出已試方法與 Owner 5 分鐘行動。
+
 【踩過的坑】
 - Elementor 限制：RM 無法讀取 Elementor 內容，SEO 優化天花板 54-76 分
 - 圖片篩選標準：食物特寫/場景佈置/無人場景優先，禁人臉/外部logo/酒類

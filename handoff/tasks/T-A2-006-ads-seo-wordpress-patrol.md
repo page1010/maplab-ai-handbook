@@ -51,6 +51,14 @@ A2 必須先回答：
 4. WordPress live URL / draft / Ads 狀態來源。
 5. MAPLAB 與 Investment OS 共用文化：證據分層、風險邊界、交接紀律。
 
+若任務進入 Owner-approved WordPress execution mode，A2 還必須先完成 credential
+bootstrap：讀 `AGENT_STARTUP_PROTOCOL.md Step 5.5`、`AGENT_RULES.md Credential
+例外`、`skills/credentials/wordpress-api.md`；再由 Owner-approved Codex 受控使用
+Notion API Keys 保管室作 credential vault / index（page ID：
+`320ab0806d5c80e0be95f298399d2c44`）。Notion 不可作狀態真相，只可作憑證路由；
+不得把 email、Application Password、Basic header、token、cookie、nonce、OTP 或
+backup code 寫進 repo、memory、log、review bundle 或最終回覆。
+
 ## Output Contract
 
 預設寫到 `workbook/reviews/JOB-A2-ADS-SEO-WP-PATROL-YYYYMMDD/`：
@@ -86,6 +94,11 @@ workbook/reviews/JOB-A2A3A4-APPROVAL-READY-YYYYMMDD/
 - 讀 secrets、API keys、cookies。
 - 修改 Rank Math 付費/退訂設定。
 
+例外：Owner 已精確批准 WordPress execution scope 時，A2 可依
+`skills/credentials/wordpress-api.md` 與 Notion credential vault 受控短暫取用
+WordPress Application Password，且只能用於批准範圍內的 `status=draft` REST
+操作；secret 本體與衍生 header 不得持久化或回報。
+
 ## Patrol Run — 2026-06-15 大臺南會展中心 SEO + Ads
 
 Owner 召喚 A2 針對「大臺南會展中心外燴 / 茶點」做 SEO、Google Ads、WordPress 實例結合規劃。
@@ -93,11 +106,13 @@ Owner 召喚 A2 針對「大臺南會展中心外燴 / 茶點」做 SEO、Google
 本輪輸出：
 
 - Review bundle: `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/`
-- Status: `proposal_done`
+- Status: `proposal_done`; `A2-SEO-ICCTN-001` execution_done
 - Owner approval card: `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/owner_approval_card.md`
 - Drive folder metadata confirmed: `1wTu2cfZVSUMwSb0avEhSAd6sdVZZa2pT`
 - Drive folder title: `0612大台南會展中心-工研院在宅醫療科技推動計畫跨部會工作小組會議`
 - Direct children listed: 22 media files（11 JPG / 3 HEIC / 6 MP4 / 2 MOV）
+- WordPress unpublished draft created: post `1829`, status `draft`, slug `icc-tainan-catering`
+- Draft edit URL: `https://www.maplabkitchen.com/wp-admin/post.php?post=1829&action=edit`
 
 本輪結論：
 
@@ -112,7 +127,8 @@ Owner 召喚 A2 針對「大臺南會展中心外燴 / 茶點」做 SEO、Google
 - 未上傳媒體。
 - 未改 Google Ads / Meta Ads。
 - 未動 Rank Math / GTM / Pixel / 預算 / 開關。
-- 未讀 secrets、cookies、`.env`。
+- 未讀 cookies、`.env`。
+- WordPress REST credential 只在 Owner-approved execution scope 內短暫取用；未把 secret 或衍生 header 寫入 repo / memory / review bundle / final。
 
 ### Execution Attempt — 2026-06-15 A2-SEO-ICCTN-001
 
@@ -126,17 +142,21 @@ A2 已先把準備送進 WordPress 的草稿內容落檔：
 
 - `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/wordpress_draft_content.md`
 
-執行結果：`auth_missing`
+執行結果：`execution_done`
 
 - 開啟 `https://www.maplabkitchen.com/wp-admin/post-new.php` 後被導到 `wp-login.php?redirect_to=...&reauth=1`
 - 檢查已開 Chrome tabs，沒有可接手的登入中 WordPress editor/admin tab
-- 未讀 password / cookie / token / `.env` / Notion credential
-- 未建立 post、未發布、未上傳媒體、未改 Ads / Rank Math / GTM / Pixel
+- 初次執行未讀 `skills/credentials/wordpress-api.md` / Notion credential vault，這是不完整的三層阻塞審查
+- 已補讀 `skills/credentials/wordpress-api.md`，並依 Owner 指示由 Notion API Keys 保管室取得 WordPress REST API credential route
+- 已建立 WordPress 未發布草稿：post `1829`，status `draft`，slug `icc-tainan-catering`
+- 已做 authenticated slug check：回傳同一篇 post `1829`，未重複建立
+- 未發布、未上傳媒體、未改 Ads / Rank Math / GTM / Pixel / 預算 / 開關
 
-Owner 5 分鐘行動：
+驗收：
 
 ```text
-在已開啟的 WordPress 登入頁完成登入，然後回：「已登入，繼續建立 A2-SEO-ICCTN-001 未發布草稿。」
+WordPress draft edit URL:
+https://www.maplabkitchen.com/wp-admin/post.php?post=1829&action=edit
 ```
 
 ## Resume Prompt
@@ -154,4 +174,4 @@ Owner 5 分鐘行動：
 7. `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/wordpress_draft_content.md`
 8. `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/wordpress_draft_execution.md`
 
-目前狀態：`A2-SEO-ICCTN-001` 已批准，但 WordPress 執行卡在 `auth_missing`。已開 `wp-admin/post-new.php` 但被導到登入頁；Owner 需完成登入後回「已登入，繼續建立 A2-SEO-ICCTN-001 未發布草稿。」接手者只可建立 WordPress 未發布草稿 `icc-tainan-catering`，不可發布、不改 Ads、不改 GTM/Pixel/Rank Math、不動預算或開關。
+目前狀態：`A2-SEO-ICCTN-001` 已完成 execution。WordPress 未發布草稿已建立：post `1829`，status `draft`，slug `icc-tainan-catering`，edit URL `https://www.maplabkitchen.com/wp-admin/post.php?post=1829&action=edit`。初次 WordPress 執行只檢查 Chrome 登入態後誤判 `auth_missing`，已補正冷啟動：接手者必須先讀 `skills/credentials/wordpress-api.md`，用 Owner-approved Codex 透過 Notion API Keys 保管室取得 WordPress REST API credential route；Notion 只作 credential vault / index，不作狀態真相。不得把 email / Application Password / Basic header / token / cookie / nonce 寫入 repo、memory、log 或 final；不可發布、不改 Ads、不改 GTM/Pixel/Rank Math、不動預算或開關。下一步若 Owner 批准，才可做媒體上傳、內連結調整、Ads landing 設定或發布。

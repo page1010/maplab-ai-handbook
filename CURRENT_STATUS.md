@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-06-15 08:00（A1 晨間巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-06-15 13:52（A2 ICC Tainan WordPress draft）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -19,6 +19,7 @@
 
 ## 最新事實核對
 
+- 2026-06-15：A2 大臺南會展中心 SEO + Ads approval-ready bundle 已完成並執行第一張 Owner approval card `A2-SEO-ICCTN-001`。WordPress 未發布草稿已建立：Post ID `1829`，slug `icc-tainan-catering`，status `draft`，edit URL `https://www.maplabkitchen.com/wp-admin/post.php?post=1829&action=edit`。Review bundle：`workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/`。本次只建立草稿；未發布、未上傳媒體、未改 Google Ads / Meta Ads / Rank Math / GTM / Pixel / 預算 / 開關。A2 冷啟動已補 WordPress credential bootstrap：Owner-approved execution mode 必須先讀 `skills/credentials/wordpress-api.md`，Notion API Keys 保管室只作 credential vault / index，不作狀態真相，secret 不得持久化或回報。
 - 2026-06-11：**午後巡查** — B1 今日共 8 commits（AGENT-HQ v1.0 建立 289a964、Governance v5.0 eac4efa、T-HQ-001 P1-P4 完成 6a23534、A4 ALT首批 8bf0ab0）；A4 今日 2 commits（照片分類搬移管線 c2dc194、地端 gemma4 ALT/SEO 管線 36,676張中繼資料 90fe31c）；hermes 殭屍 cron auto-allow-gemini 刪除（a796ed5），單日 280 錯誤根因修復；T-A4-001 狀態已由 CRITICAL 更正為 🔄 進行中；T-HQ-001 補入任務表；AGENT_RECALL_PROMPTS.md A4 斷點已更新。
 - 2026-06-11：IOS-FB no-report 診斷完成，review bundle：`workbook/reviews/JOB-IOS-FB-NO-REPORTS-20260611/`。結論：原啟動流程未寫入社群帳號 Notion credential bootstrap；已補 `AGENT_STARTUP_PROTOCOL.md Step 5.5`、`skills/credentials/social-accounts.md`、`AGENT_RULES.md` Notion credential 例外、IOS-FB module restricted credential sources。Investment OS runtime 證據顯示 `com.investmentos.fb-shadow-refresh` 2026-06-03 到 2026-06-11 每日 03:00 有跑，但只刷新 2026-03-25_to_2026-04-25 historical shadow sample；training gate 仍 `FAIL_LOCAL_MODEL_TRAINING_RESPONSE`，reviewed Telegram digest / SQLite / price proof 仍 blocked。下一次 IOS-FB fresh report 必須先驗 Owner Chrome logged-in route 或 A0/Notion credential handoff；缺登入時輸出 `auth_missing`，不得用舊 corpus 假裝今日報告。
 - 2026-06-09：A2/A3/A4 approval-ready automation 規則落地（implementation commit `4988747`）。新增 `projects/a2a3a4-approval-ready-automation.md`，並更新 `AGENT_RULES.md`、`projects/a2-ads-seo-wordpress-patrol.md`、`handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md`、`recalls/A2_recall.md`、`recalls/A3_recall.md`、`recalls/A4_recall.md`。Owner 校正：正式 WordPress / Google Ads / Meta Ads / Rank Math / GTM / Pixel / 預算 / 開關等第二層變更不是不能自動跑，而是要自動整理成 approval-ready plan，說清楚為什麼要改、改什麼、預期效果、影響範圍、風險、rollback、驗收方式與 Owner 可選項；Owner/A1 精確批准後才可進 execution mode。
@@ -66,7 +67,7 @@
 | T-A2-003-weekly-wp-audit | T-A2-003: 每週全站 WP 內容稽核排程 | A2 | 🔲 待開始（腳本已建好（wp-audit.sh / wp-audit-cron.sh）。待 Owner 用 /schedule 建立） | handoff/tasks/T-A2-003-weekly-wp-audit.md |
 | T-A2-004 | 首頁結構優化 — 配合品牌色票微調 + 轉換路徑整理 | A2 | 🔲 待開始（任務卡建立。A0 已完成對標分析和色票微調。） | handoff/tasks/T-A2-004.md |
 | T-A2-005-local-seo-factory | T-A2-005：MAPLAB SEO Factory（地端閉環，Pillar First） | A2 | 🔴 CRITICAL（~912h無commit） | handoff/tasks/T-A2-005-local-seo-factory.md |
-| T-A2-006-ads-seo-wordpress-patrol | T-A2-006 — Ads / SEO / WordPress Patrol | A2 |  | handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md |
+| T-A2-006-ads-seo-wordpress-patrol | T-A2-006 — Ads / SEO / WordPress Patrol | A2 | 🟢 ACTIVE（2026-06-15 ICC Tainan approval-ready bundle done；A2-SEO-ICCTN-001 draft post 1829 created） | handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md |
 | T-A2A3-001-B | SEO 場景頁面 + 內連結（從 T-A2A3-001 分拆） | A2/A3 | 🔴 CRITICAL（~360h無commit） | handoff/tasks/T-A2A3-001-B.md |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2/A3 | ⏸️ RM/GSC 部分暫停；案例寫作轉 T-A2A3-001-B（Rank Math 已退訂，已設定好的 SEO 欄位先不要再設定；下一步是依 live URL map 補 To B 真） | handoff/tasks/T-A2A3-001.md |
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | ⏸️ 阻塞中（受眾輪廓分析完成（693筆 Orders）。待執行：嘉義加入廣告地區、興趣條件精簡、策略一冷受眾上線。） | handoff/tasks/T-A3-002.md |

@@ -192,3 +192,10 @@
 - 根因：排程只跑 `aggregate_fb_local_judgement.py` 與 `build_fb_shadow_review_sample.py`，預設輸入仍是 2026-03-25_to_2026-04-25 historical corpus；它不是 fresh logged-in FB collector，也不是 reviewed Telegram digest sender。IOS-FB 啟動流程也沒有先要求社群帳號 / Notion credential bootstrap。
 - 解法：補 `AGENT_STARTUP_PROTOCOL.md Step 5.5`、`skills/credentials/social-accounts.md`、IOS-FB restricted credential sources，並建立 `workbook/reviews/JOB-IOS-FB-NO-REPORTS-20260611/` 說明 no-report 根因。
 - 預防：查報告中斷時，不只看 process 是否跑過；必須同時檢查 runner 實際輸入日期、是否 fresh collection、是否 quality gate pass、是否 Telegram/Dashboard readback。缺登入時輸出 `auth_missing`，不得用舊 corpus 當今日報告。
+
+## 2026-06-15 — WordPress auth_missing is invalid before credential bootstrap
+
+- 觸發條件：Owner 已批准 A2 建立 WordPress 未發布草稿，但 Agent 只檢查 Chrome 登入態，看到 `wp-login.php?reauth=1` 就回 `auth_missing`。
+- 根因：沒有先讀 `skills/credentials/wordpress-api.md`，也沒有依 Owner 指示把 Notion API Keys 保管室當 credential vault / index 使用；三層阻塞審查少跑一層。
+- 解法：A2 冷啟動補明確規則：Owner-approved WordPress execution mode 必須先讀 WordPress credential skill，再用受控 Notion route 取得 REST API 方法；secret 只可短暫用於批准範圍，不能寫進 repo、memory、log、review bundle 或 final。
+- 預防：任何 WordPress / Ads / 社群 / Google 外部登入任務，在輸出 `auth_missing` 前都要列出 Owner Chrome、credential skill、Notion/A0 MCP handoff 三層檢查結果；只要 task scope 已批准，先嘗試可安全執行的 draft/API route。

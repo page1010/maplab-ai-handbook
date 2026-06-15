@@ -114,6 +114,31 @@ Owner 召喚 A2 針對「大臺南會展中心外燴 / 茶點」做 SEO、Google
 - 未動 Rank Math / GTM / Pixel / 預算 / 開關。
 - 未讀 secrets、cookies、`.env`。
 
+### Execution Attempt — 2026-06-15 A2-SEO-ICCTN-001
+
+Owner 已批准：
+
+```text
+批准 A2-SEO-ICCTN-001，只建立 WordPress 未發布草稿，不發布。
+```
+
+A2 已先把準備送進 WordPress 的草稿內容落檔：
+
+- `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/wordpress_draft_content.md`
+
+執行結果：`auth_missing`
+
+- 開啟 `https://www.maplabkitchen.com/wp-admin/post-new.php` 後被導到 `wp-login.php?redirect_to=...&reauth=1`
+- 檢查已開 Chrome tabs，沒有可接手的登入中 WordPress editor/admin tab
+- 未讀 password / cookie / token / `.env` / Notion credential
+- 未建立 post、未發布、未上傳媒體、未改 Ads / Rank Math / GTM / Pixel
+
+Owner 5 分鐘行動：
+
+```text
+在已開啟的 WordPress 登入頁完成登入，然後回：「已登入，繼續建立 A2-SEO-ICCTN-001 未發布草稿。」
+```
+
 ## Resume Prompt
 
 我是 A2 Ads / SEO / WordPress Patrol。請先讀 `CURRENT_STATUS.md`、`pitfalls.md`、`handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md`、`projects/a2-ads-seo-wordpress-patrol.md`、`projects/a2a3a4-approval-ready-automation.md`、`projects/seo-ads-agent.md`、`skills/brand-voice-guide.md`、`skills/maplab-visual-spec.md`。
@@ -126,5 +151,7 @@ Owner 召喚 A2 針對「大臺南會展中心外燴 / 茶點」做 SEO、Google
 4. `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/a2_seo_wordpress_plan.md`
 5. `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/a3_ads_strategy_plan.md`
 6. `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/integration_review.md`
+7. `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/wordpress_draft_content.md`
+8. `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/wordpress_draft_execution.md`
 
-目前狀態：proposal_done，尚未外部執行。第一個建議 approval 是 `A2-SEO-ICCTN-001`：只建立 WordPress 未發布草稿 `icc-tainan-catering`，不發布。未經 Owner/A1 精確批准，不發布、不改 Ads、不改 GTM/Pixel/Rank Math、不動預算或開關。
+目前狀態：`A2-SEO-ICCTN-001` 已批准，但 WordPress 執行卡在 `auth_missing`。已開 `wp-admin/post-new.php` 但被導到登入頁；Owner 需完成登入後回「已登入，繼續建立 A2-SEO-ICCTN-001 未發布草稿。」接手者只可建立 WordPress 未發布草稿 `icc-tainan-catering`，不可發布、不改 Ads、不改 GTM/Pixel/Rank Math、不動預算或開關。

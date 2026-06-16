@@ -37,6 +37,16 @@ $RESULT"
 echo "$MESSAGE" >> "$LOG_FILE"
 echo "---" >> "$LOG_FILE"
 
+# ── Hermes / Codex reaction packet ──
+# 不呼叫 LLM、不吃 Claude、不改外部系統；只把巡查結果轉成 Hermes、
+# Chrome Extension、Codex/A1/B1 可接手的 next-step packet 與面板資料。
+BRIDGE_OUTPUT=$(printf '%s\n' "$MESSAGE" | python3 "$REPO_ROOT/tools/hermes_patrol_bridge.py" --repo "$REPO_ROOT" --stdin --quiet 2>&1) || {
+  echo "[$(date '+%Y-%m-%d %H:%M:%S')] Hermes patrol bridge failed: $BRIDGE_OUTPUT" >> "$LOG_FILE"
+}
+if [[ -n "${BRIDGE_OUTPUT:-}" ]]; then
+  echo "[$(date '+%Y-%m-%d %H:%M:%S')] Hermes patrol bridge: $BRIDGE_OUTPUT" >> "$LOG_FILE"
+fi
+
 # ── 推送到 Telegram ──
 if [[ "$DRY_RUN" == "true" ]]; then
   echo "[dry-run] 以下內容不會推送："

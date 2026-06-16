@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-06-16 08:00（A1 晨間巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-06-16 16:00（A1 午後巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -19,6 +19,7 @@
 
 ## 最新事實核對
 
+- 2026-06-16：A2 ICCTN landing page 圖片 QA 完成並附圖發布（89dcc45：14 張 WebP via WP REST API attach + fast publish；post 1829 live @ `icc-tainan-catering`）；A0 新增 learning-loop reaction ledger + hermes patrol bridge（cc21bad）；T-A1-LEARNING-LOOP-001 P1 完成（reaction ledger / hermes_patrol_bridge.py / workbook/learning_loop/）。
 - 2026-06-15：A2 大臺南會展中心 SEO + Ads approval-ready bundle 已完成，並依 Owner 即時要求把 `A2-SEO-ICCTN-001` 從草稿發布成 Google Ads landing page。WordPress post `1829` 已發布：`https://www.maplabkitchen.com/icc-tainan-catering/`，slug `icc-tainan-catering`，category `企業外燴案例` ID `170`，featured media `1833`，正文含快速導覽、5 張 WP media 圖片（1833/1834/1839/1840/1841）、SEO alt/caption、Rank Math FAQ block、內連結與 LINE CTA；authenticated REST raw content 驗證 `ok=true`。Review bundle：`workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/`。本次未改 Google Ads / Meta Ads / GTM / Pixel / 預算 / 開關；Rank Math 僅更新 post `1829` SEO meta，未碰付費/退訂設定。A2 冷啟動已補 WordPress credential bootstrap 與案例 Landing Page 強制模板 Gate：Owner-approved execution mode 必須先讀 `skills/credentials/wordpress-api.md`，Notion API Keys 保管室只作 credential vault / index，不作狀態真相，secret 不得持久化或回報。
 - 2026-06-11：**午後巡查** — B1 今日共 8 commits（AGENT-HQ v1.0 建立 289a964、Governance v5.0 eac4efa、T-HQ-001 P1-P4 完成 6a23534、A4 ALT首批 8bf0ab0）；A4 今日 2 commits（照片分類搬移管線 c2dc194、地端 gemma4 ALT/SEO 管線 36,676張中繼資料 90fe31c）；hermes 殭屍 cron auto-allow-gemini 刪除（a796ed5），單日 280 錯誤根因修復；T-A4-001 狀態已由 CRITICAL 更正為 🔄 進行中；T-HQ-001 補入任務表；AGENT_RECALL_PROMPTS.md A4 斷點已更新。
 - 2026-06-11：IOS-FB no-report 診斷完成，review bundle：`workbook/reviews/JOB-IOS-FB-NO-REPORTS-20260611/`。結論：原啟動流程未寫入社群帳號 Notion credential bootstrap；已補 `AGENT_STARTUP_PROTOCOL.md Step 5.5`、`skills/credentials/social-accounts.md`、`AGENT_RULES.md` Notion credential 例外、IOS-FB module restricted credential sources。Investment OS runtime 證據顯示 `com.investmentos.fb-shadow-refresh` 2026-06-03 到 2026-06-11 每日 03:00 有跑，但只刷新 2026-03-25_to_2026-04-25 historical shadow sample；training gate 仍 `FAIL_LOCAL_MODEL_TRAINING_RESPONSE`，reviewed Telegram digest / SQLite / price proof 仍 blocked。下一次 IOS-FB fresh report 必須先驗 Owner Chrome logged-in route 或 A0/Notion credential handoff；缺登入時輸出 `auth_missing`，不得用舊 corpus 假裝今日報告。
@@ -59,6 +60,7 @@
 |---------|------|-----------|------|-----------|
 | T-A1-EXT-001-dynamic-role-modules | T-A1-EXT-001 — GitHub Dynamic Role Task Modules | A1 |  | handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md |
 | T-A1-RTK-001 | RTK Token Proxy 掛載與選擇性上線 | A1 | 🟢 已上線（Codex hook 已掛、裝前/裝後 patrol diff 驗收通過、git 排除生效） | handoff/tasks/T-A1-RTK-001.md |
+| T-A1-LEARNING-LOOP-001 | MAPLAB Learning Loop v0 Reaction Ledger | A1/A0 | 🔄 進行中（P1 完成：reaction ledger + hermes_patrol_bridge.py + workbook/learning_loop/；P2 token capital registry / P3 eval harness / P4 closure writer 待做） | handoff/tasks/T-A1-LEARNING-LOOP-001.md |
 | T-A1-SYNC-GUARD-001 | 雲端同步破口修補 + patrol 紀錄瘦身 | A1 | 🔲 待開始（高槓桿、低成本，建議優先） | handoff/tasks/T-A1-SYNC-GUARD-001.md |
 | T-A1-V6-P2 | T-A1-V6-P2 | A1 | 🔴 CRITICAL（~1272h無commit） | handoff/tasks/T-A1-V6-P2.md |
 | T-A1-V6-P3 | T-A1-V6-P3 | A1 | 🔲 待開始（尚未開始。等 T-A1-V6-P2 完成後啟動。） | handoff/tasks/T-A1-V6-P3.md |
@@ -67,7 +69,7 @@
 | T-A2-003-weekly-wp-audit | T-A2-003: 每週全站 WP 內容稽核排程 | A2 | 🔲 待開始（腳本已建好（wp-audit.sh / wp-audit-cron.sh）。待 Owner 用 /schedule 建立） | handoff/tasks/T-A2-003-weekly-wp-audit.md |
 | T-A2-004 | 首頁結構優化 — 配合品牌色票微調 + 轉換路徑整理 | A2 | 🔲 待開始（任務卡建立。A0 已完成對標分析和色票微調。） | handoff/tasks/T-A2-004.md |
 | T-A2-005-local-seo-factory | T-A2-005：MAPLAB SEO Factory（地端閉環，Pillar First） | A2 | 🔴 CRITICAL（~912h無commit） | handoff/tasks/T-A2-005-local-seo-factory.md |
-| T-A2-006-ads-seo-wordpress-patrol | T-A2-006 — Ads / SEO / WordPress Patrol | A2 | 🟢 ACTIVE（2026-06-15 ICC Tainan approval-ready bundle done；A2-SEO-ICCTN-001 draft post 1829 created） | handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md |
+| T-A2-006-ads-seo-wordpress-patrol | T-A2-006 — Ads / SEO / WordPress Patrol | A2 | 🟢 ACTIVE（2026-06-16 ICCTN landing page 圖片 QA 完成 + 14 張 WebP 附圖發布 89dcc45；post 1829 live @ icc-tainan-catering） | handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md |
 | T-A2A3-001-B | SEO 場景頁面 + 內連結（從 T-A2A3-001 分拆） | A2/A3 | 🔴 CRITICAL（~360h無commit） | handoff/tasks/T-A2A3-001-B.md |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2/A3 | ⏸️ RM/GSC 部分暫停；案例寫作轉 T-A2A3-001-B（Rank Math 已退訂，已設定好的 SEO 欄位先不要再設定；下一步是依 live URL map 補 To B 真） | handoff/tasks/T-A2A3-001.md |
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | ⏸️ 阻塞中（受眾輪廓分析完成（693筆 Orders）。待執行：嘉義加入廣告地區、興趣條件精簡、策略一冷受眾上線。） | handoff/tasks/T-A3-002.md |
@@ -123,6 +125,7 @@
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-15 08:00：24h 零非巡查 commit（僅三筆 2026-06-14 patrol commit）；A4 T-A4-001 ~91h 持續 CRITICAL（最後 c2dc194/90fe31c 2026-06-11）；B1 T-HQ-001 ~89h 持續 CRITICAL（最後 014081c 2026-06-11 18:46）；A2 ~458h/~19.1天 CRITICAL 持續；A5+A6 ~650h/~27.1天 CRITICAL 持續；GCP帳單~59天🔴；所有狀態與 CURRENT_STATUS 一致，無新增異常 | 無新異常，持續觀察 |
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-15 16:00：A2 今日 5 commits 活躍（dd9e6b0/0a1690b/da36237 ICC Tainan approval-ready bundle 完成、WordPress draft post 1829 已建；1aae49c/940051d ios-kol 第三層研究手冊新增，**未登記任務表**，建議 Owner 確認是否需建 Task Card）；OpenClaw 修復指引更新（4b228db 正解改為 openclaw managed profile）；A4 T-A4-001 ~99h 無新 commit 持續 🔴 CRITICAL；B1 T-HQ-001 ~93h 持續 🔴 CRITICAL；A5 ~658h/~27.4天 CRITICAL 持續；A6 ~658h/~27.4天 CRITICAL 持續；GCP帳單~59天🔴；所有已知 CRITICAL 無新解除 | ios-kol Task Card 建立待 Owner 確認；A4/B1/A5/A6 CRITICAL 持續觀察 |
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-15 22:00：晚間巡查 2 新非巡查 commit（c903bba A0 learning-loop 架構巡查文件新增；7a673e0 修正 evidence note）；A4 T-A4-001 ~105h 無新 commit 持續 🔴 CRITICAL；B1 T-HQ-001 ~99h 持續 🔴 CRITICAL；A2 今日活躍（da36237 ICC Tainan draft built）但午後後無新 commit；A5 ~664h/~27.7天 CRITICAL 持續；A6 ~664h/~27.7天 CRITICAL 持續；GCP帳單~60天🔴；所有狀態與 CURRENT_STATUS 一致，無新增異常 | 無新異常，持續觀察 |
+| A1 巡查紀錄 | ⚠️ A1巡查 2026-06-16 16:00：8h 2 新非巡查 commit（89dcc45 A2 ICCTN landing page 圖片 QA 完成+14張 WebP 附圖發布🟢；cc21bad A0 learning-loop reaction ledger 建立 + T-A1-LEARNING-LOOP-001 P1 完成🟢）；⚠️ T-A1-LEARNING-LOOP-001 新任務未登記任務表 → 已補入；⚠️ RECALL A2 斷點過時（顯示 draft，實為 published）→ 已更新；A4 T-A4-001 ~123h 無新 commit 持續 🔴 CRITICAL；B1 T-HQ-001 ~117h 持續 🔴 CRITICAL；A5 ~682h/~28.4天 CRITICAL 持續；A6 ~682h/~28.4天 CRITICAL 持續；GCP帳單~61天🔴 持續；系統狀態與 CURRENT_STATUS 一致 | T-A1-LEARNING-LOOP-001 已補入任務表；RECALL A2 斷點已更新 |
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-16 08:00：24h 零新非巡查 commit（所有非巡查 commit 均為 2026-06-15 前日）；A4 T-A4-001 ~115h 無新 commit 持續 🔴 CRITICAL（最後 c2dc194/90fe31c 2026-06-11）；B1 T-HQ-001 ~109h 持續 🔴 CRITICAL（最後 014081c 2026-06-11 18:46）；A2 昨日活躍（da36237 ICC Tainan draft 建立，awaiting Owner approval），今日 0 新 commit（正常）；A5 ~674h/~28.1天 CRITICAL 持續；A6 ~674h/~28.1天 CRITICAL 持續；GCP帳單~61天🔴 持續；ios-kol docs Task Card 建立仍待 Owner 確認（前日午後已記錄）；所有狀態與 CURRENT_STATUS 一致，無新增異常 | 無新異常，持續觀察 |
 ---
 

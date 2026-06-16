@@ -19,7 +19,7 @@
 |------|---------|------|------|
 | A0 | 總調度秘書 | ✅ Cowork 常駐 | 跨系統橋接、調度、桌面控制 |
 | A1 | 系統總管中心 | ✅ Claude Code 常駐 | Telegram bot + 終端機，直接下指令 |
-| A2 | 搜尋流量作戰部 | 🟢 召喚型可用 + patrol（Ads/SEO/WordPress）；last commit da36237 2026-06-15（ICC Tainan draft built，T-A2-006 🟢 ACTIVE）；T-A2A3-001-B 🔴 >48h持續 | SEO / Ads / WordPress / Brand memory |
+| A2 | 搜尋流量作戰部 | 🟢 召喚型可用 + patrol（Ads/SEO/WordPress）；last commit 89dcc45 2026-06-16（ICCTN landing page 圖片 QA 完成+14張 WebP 附圖發布，post 1829 live，T-A2-006 🟢 ACTIVE）；T-A2A3-001-B 🔴 >48h持續 | SEO / Ads / WordPress / Brand memory |
 | A3 | 社群與廣告成長部 | ✅ T-A3-001 完成（GTM v21 雙平台追蹤上線）；T-A3-002 ⏸️ 阻塞（等廣告週期+Owner操作）| Meta Ads / Social |
 | A4 | 影像資產整理部 | 🔴 CRITICAL（超 48h：最後 c2dc194/90fe31c 2026-06-11；現 ~115h 無新 commit；GCP帳單~61天未處理🔴）| Photo Archive |
 | A5 | 報價與提案引擎部 | ⚠️ 任務卡狀態待Owner核查（2026-05-19有6個A5 commits：343e1d0/24c985b/6a98eb0/4b53ea8/716f0c2/d22c03c；task card T-A5-002/004/005仍顯示CRITICAL；~674h/~28.1天無新commit）| Quotation Engine |
@@ -170,6 +170,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 9. A6 T-A6-001 🔄 活躍中：5ae9c79（05-04 20:23）新增 ollama chat/seo modes + menu（bot_a6.py +187行）；addItem+模糊比對+多照片+10輪QA全PASS（45b4758 04-18）；Task Card 已由A6自行更新；LINE Developers Console Webhook URL待Owner確認（Channel 1654658337）。
 10. A8 新角色已建立（51070ea 04-19），待啟動任務；B1 🟢 首次活躍（04-24 22:35-23:02 4 commits）— 無正式Task Card，需建立。~240h無新commit。
 11. ✅ 全系統靜止解除：A2 今日（2026-05-04）2 commits（ba4fac6+59f06ce）T-A2-005 SEO Factory；A3/A5/A6/A7/A8/B1 仍無新活動。
+✅ 06-16 午後巡查：8h 2 新非巡查commit（89dcc45 A2 ICCTN landing page 圖片 QA 完成+14張 WebP 附圖發布🟢；cc21bad A0 learning-loop reaction ledger + hermes_patrol_bridge + T-A1-LEARNING-LOOP-001 P1 完成🟢）；T-A1-LEARNING-LOOP-001 補入任務表；RECALL A2 斷點更新（從 draft → published）；A4 T-A4-001 ~123h 持續 🔴 CRITICAL；B1 T-HQ-001 ~117h 持續 🔴 CRITICAL；A5 ~682h/~28.4天 CRITICAL；A6 ~682h/~28.4天 CRITICAL；GCP帳單~61天🔴；系統狀態與 CURRENT_STATUS 一致。
 ✅ 06-16 晨間巡查：24h 零新非巡查commit（所有非巡查commit均為2026-06-15前日）；A4 T-A4-001 ~115h 持續 🔴 CRITICAL（最後 c2dc194/90fe31c 2026-06-11）；B1 T-HQ-001 ~109h 持續 🔴 CRITICAL（最後 014081c 2026-06-11 18:46）；A2 昨日ICC Tainan draft built（da36237），今日0新commit awaiting Owner approval（正常）；A5 ~674h/~28.1天 CRITICAL；A6 ~674h/~28.1天 CRITICAL；GCP帳單~61天🔴；ios-kol Task Card建立待Owner確認；系統狀態與 CURRENT_STATUS 一致，無新增異常。
 ✅ 06-15 晚間巡查：8h 2 新非巡查commit（c903bba A0 learning-loop架構巡查文件新增；7a673e0 修正evidence note）；A4 T-A4-001 ~105h 持續 🔴 CRITICAL；B1 T-HQ-001 ~99h 持續 🔴 CRITICAL；A2 今日活躍（da36237 ICC Tainan draft built）但午後後無新commit；A5 ~664h/~27.7天 CRITICAL；A6 ~664h/~27.7天 CRITICAL；GCP帳單~60天🔴；系統狀態與 CURRENT_STATUS 一致，無新增異常。
 ✅ 06-15 午後巡查：8h 6 commits（A2 dd9e6b0/0a1690b/da36237 ICC Tainan approval-ready bundle 完成+draft post 1829 建立🟢；1aae49c/940051d ios-kol 第三層研究手冊新增（未登任務表）；4b228db OpenClaw 修復指引更新）；A4 T-A4-001 ~99h 持續 🔴 CRITICAL；B1 T-HQ-001 ~93h 持續 🔴 CRITICAL；A5 ~658h/~27.4天；A6 ~658h/~27.4天；GCP帳單~59天🔴；ios-kol Task Card 建立待 Owner 確認；系統狀態與 CURRENT_STATUS 一致。
@@ -298,7 +299,7 @@ T-A2-001 文章精選圖片補齊：✅ 完成（57/57 獨立配圖，0 重複�
 T-A2A3-001 SEO 關鍵字頁面補足：🔄 子任務1+2完成（FK修正11篇/SEO Title 27篇+Meta Desc 35篇+Alt Text 51篇），子任務3+4+5分拆至 T-A2A3-001-B（同事接手場景頁+內連結）
   子任務2 Phase2 追加：SEO Title 數字優化 36篇完成（687316d 15:37，2026-03-27）— 下一步：T-A2A3-001-B 或 Google Ads
 T-A2-005 MAPLAB SEO Factory 地端閉環：🔄 進行中（2026-05-04 ba4fac6+59f06ce）— 7-stage pipeline + schema + weekly batch 建置完成；dry-run 3/3 pass；ollama live execution test 完成。下一步：WP --publish 實測（需 Owner 提供 WordPress Application Password）
-T-A2-006 Ads/SEO/WordPress Patrol：🟢 ACTIVE（2026-06-15 ICC Tainan approval-ready bundle 完成；WordPress draft post 1829 建立，slug icc-tainan-catering，status draft；review bundle workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/；下一步等 Owner approval 發布）
+T-A2-006 Ads/SEO/WordPress Patrol：🟢 ACTIVE（2026-06-16 ICCTN landing page 圖片 QA 完成+已發布 89dcc45；14 張 WebP via WP REST API attach，post 1829 live @ icc-tainan-catering；review bundle workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/；無阻塞，下一步待 Owner 指派新 patrol 任務）
 seo-ads-agent v2.4 更新：§17 SEO優化執行紀錄 + Elementor限制文件化（分數天花板 54-76）
 Elementor限制：RM 無法讀取 Elementor 內容，SEO 優化有天花板
 

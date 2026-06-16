@@ -2,6 +2,13 @@
 
 > Cold-start required. 每次修到重複錯誤，要把「觸發條件 / 根因 / 解法 / 預防」寫回這裡。
 
+## 2026-06-17 — Extension summon is a file-backed role handoff, not a UI blocker
+
+- 觸發條件：Owner 要求先透過 Chrome Extension 召喚 A2，檢查 prompt / task card / handoff 迴圈；Agent 先把 prompt 給 Owner 看，又在無法打開 `chrome-extension://.../popup.html` 後把問題說成需要 Owner 手動操作。
+- 根因：沒有先讀 `skills/extension-agent-summon-guide.md`。把 Extension 誤解成只能由 UI 操作的頁面，而不是以 `chrome-extension/task-modules/{role}.json`、`workbook/task_modules/*` 與 `popup.js buildModuleHandoff()` 為核心的 file-backed dynamic role module。
+- 解法：遇到 `extension`、`召喚`、`Agent Commander`、`角色通路`、`handoff 交接`，先讀 `skills/extension-agent-summon-guide.md`。若 UI 不可用，改走 file-backed summon：讀 role module JSON、讀 build report、按 handoff 結構放入本次召喚任務，直接交給對應 runtime / subagent，並取得被召喚角色回報。
+- 預防：不得把「我建了 task card」等同「完成角色交接」；交接完成的判準是被召喚角色已收到 handoff、讀卡、回報 Startup Check / 缺口 / 驗收清單。若沒有角色回報，只能說 task card 已建立，不能說已交接。
+
 ## 2026-06-11 — Session 留下的每分鐘 babysitting cron 變成殭屍，癱瘓 Hermes 半天
 
 - 觸發條件：Owner 問「Hermes 有貢獻了嗎可以用了嗎」，調查發現 Hermes 單日 280 個

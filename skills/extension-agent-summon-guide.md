@@ -17,6 +17,23 @@ Extension 會讀：
 
 ## 召喚步驟
 
+### Step 0. Agent 先讀技能，不准卡在 UI
+
+如果 Owner 提到 `extension`、`召喚`、`Agent Commander`、`角色通路`、`handoff`、`A2/A4/A8/B1 交接`，目前負責的 agent 必須先讀本技能書，再決定怎麼召喚角色。
+
+Chrome Extension 是通路與介面，不是唯一可操作表面。若 Codex / OpenClaw / 其他 runtime 不能直接打開 `chrome-extension://.../popup.html`，不得把這當成 blocker，也不得要求 Owner 代替 agent 做本來可由檔案完成的交接。
+
+請改走 file-backed summon：
+
+1. 讀 `chrome-extension/task-modules/index.json`。
+2. 讀 `chrome-extension/task-modules/{role}.json`。
+3. 讀 `workbook/task_modules/role_module_build_report.json`，確認 module 產物存在。
+4. 依 `popup.js` 的 `buildModuleHandoff()` 結構組成 runtime handoff。
+5. 把本次召喚任務放進 `## 1.1 本次召喚任務`。
+6. 直接交給相應 runtime / subagent，並要求它先回覆 Startup Check 與交接驗收。
+
+判準：有沒有完成「角色收到 handoff 並回報」；不是有沒有成功打開 extension popup。
+
 ### Step 1. 開啟 Extension
 
 在 Chrome 點擊 MAPLAB Agent Commander 圖示。

@@ -39,7 +39,7 @@ h# Superpowers Skills 導覽手冊 — MAPLAB AI Agent 版
 | 媒體限制、100張、圖太多 | media-limit-workaround | 繞過限制策略 |
 | 遠端桌面、Windows、跨機器、Colab、DESKTOP-PAGEHOME、Agent 監控 | remote-desktop-agent-bridge | 適用 A0：Chrome Remote Desktop 連接 Windows，監控 A4/A5 等跨機器 Agent |
 | A0 行為、被動、回報、提醒、Owner Action | a0-proactive-dispatch-guide | 適用 A0（每次 session 必拿）：禁止被動回報，行動優先，驗證 Owner Action 狀態 |
-| Extension、召喚、summon、Agent Commander、Side Panel、Chrome 側邊欄 | extension-agent-summon-guide | 適用 A0（主要）、所有角色（參考）：透過 Chrome Extension 召喚 A0-A8，含平台差異 + 遠端召喚 SOP |
+| Extension、召喚、summon、Agent Commander、Side Panel、Chrome 側邊欄、角色通路、handoff 交接 | extension-agent-summon-guide | 適用 A0（主要）、所有角色（參考）：透過 Chrome Extension / file-backed dynamic role module 召喚 A0-A8；若不能開 UI，仍可用 `chrome-extension/task-modules/{role}.json` 組 handoff，不得把 UI 不可開當 blocker |
 | 頁面檢查、WP 發布、SEO 檢查、Landing Page | page-checker | 適用 A2/A3：WP 頁面發布前 10 項強制檢查，含 AI 建議段 |
 | Sheets 修改、覆蓋、Items、QUOTE_DRAFT | check-rules/sheets-data | 適用 A5：修改前必查 6 項，防止覆蓋 Owner 手動資料或改錯工作表 |
 | 視覺、色彩、字體、品牌、設計、IG、社群、Landing Page、CSS | maplab-visual-spec | 適用 A2/A3/A6/A8：7色票+CSS變數、字體規範、影像處理、IG版面系統、設計元素、黃花規則、命名規則 |

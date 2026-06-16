@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-06-15 22:00（A1 晚間巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-06-16 08:00（A1 晨間巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -71,9 +71,9 @@
 | T-A2A3-001-B | SEO 場景頁面 + 內連結（從 T-A2A3-001 分拆） | A2/A3 | 🔴 CRITICAL（~360h無commit） | handoff/tasks/T-A2A3-001-B.md |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2/A3 | ⏸️ RM/GSC 部分暫停；案例寫作轉 T-A2A3-001-B（Rank Math 已退訂，已設定好的 SEO 欄位先不要再設定；下一步是依 live URL map 補 To B 真） | handoff/tasks/T-A2A3-001.md |
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | ⏸️ 阻塞中（受眾輪廓分析完成（693筆 Orders）。待執行：嘉義加入廣告地區、興趣條件精簡、策略一冷受眾上線。） | handoff/tasks/T-A3-002.md |
-| T-A4-001 | Phase 4 Gemini 照片分類（2022-2026） | A4 | 🔴 CRITICAL（~75h 無新 commit；2026-06-11 最後 c2dc194/90fe31c；48h 門檻已超；T-A4-003 照片搬移管線已啟動） | handoff/tasks/T-A4-001.md |
+| T-A4-001 | Phase 4 Gemini 照片分類（2022-2026） | A4 | 🔴 CRITICAL（~115h 無新 commit；2026-06-11 最後 c2dc194/90fe31c；48h 門檻已超；T-A4-003 照片搬移管線已啟動） | handoff/tasks/T-A4-001.md |
 | T-A4-002 | pagewu1010 帳號 Takeout 解壓 + Gemini Flash 照片資產整合 | A4 |  | handoff/tasks/T-A4-002.md |
-| T-HQ-001 | AGENT-HQ 集團共用層遷移（chrome-extension / governance / panel / runtime symlink 收編） | B1 | 🔴 CRITICAL（~73h 無 commit；最後 014081c 2026-06-11 18:46；P1-P4 ✅；P5/P6 待執行） | handoff/tasks/T-HQ-001.md |
+| T-HQ-001 | AGENT-HQ 集團共用層遷移（chrome-extension / governance / panel / runtime symlink 收編） | B1 | 🔴 CRITICAL（~109h 無 commit；最後 014081c 2026-06-11 18:46；P1-P4 ✅；P5/P6 待執行） | handoff/tasks/T-HQ-001.md |
 | T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔴 CRITICAL（~552h無commit） | handoff/tasks/T-A5-002.md |
 | T-A5-004 | createSlides.gs — Slide 報價簡報自動生成 | A5 | 🔴 CRITICAL（~1512h無commit） | handoff/tasks/T-A5-004.md |
 | T-A5-005 | 報價狀態追蹤同步 + Dashboard | A5 | 🔴 CRITICAL（~1535h無commit） | handoff/tasks/T-A5-005.md |
@@ -123,6 +123,7 @@
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-15 08:00：24h 零非巡查 commit（僅三筆 2026-06-14 patrol commit）；A4 T-A4-001 ~91h 持續 CRITICAL（最後 c2dc194/90fe31c 2026-06-11）；B1 T-HQ-001 ~89h 持續 CRITICAL（最後 014081c 2026-06-11 18:46）；A2 ~458h/~19.1天 CRITICAL 持續；A5+A6 ~650h/~27.1天 CRITICAL 持續；GCP帳單~59天🔴；所有狀態與 CURRENT_STATUS 一致，無新增異常 | 無新異常，持續觀察 |
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-15 16:00：A2 今日 5 commits 活躍（dd9e6b0/0a1690b/da36237 ICC Tainan approval-ready bundle 完成、WordPress draft post 1829 已建；1aae49c/940051d ios-kol 第三層研究手冊新增，**未登記任務表**，建議 Owner 確認是否需建 Task Card）；OpenClaw 修復指引更新（4b228db 正解改為 openclaw managed profile）；A4 T-A4-001 ~99h 無新 commit 持續 🔴 CRITICAL；B1 T-HQ-001 ~93h 持續 🔴 CRITICAL；A5 ~658h/~27.4天 CRITICAL 持續；A6 ~658h/~27.4天 CRITICAL 持續；GCP帳單~59天🔴；所有已知 CRITICAL 無新解除 | ios-kol Task Card 建立待 Owner 確認；A4/B1/A5/A6 CRITICAL 持續觀察 |
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-15 22:00：晚間巡查 2 新非巡查 commit（c903bba A0 learning-loop 架構巡查文件新增；7a673e0 修正 evidence note）；A4 T-A4-001 ~105h 無新 commit 持續 🔴 CRITICAL；B1 T-HQ-001 ~99h 持續 🔴 CRITICAL；A2 今日活躍（da36237 ICC Tainan draft built）但午後後無新 commit；A5 ~664h/~27.7天 CRITICAL 持續；A6 ~664h/~27.7天 CRITICAL 持續；GCP帳單~60天🔴；所有狀態與 CURRENT_STATUS 一致，無新增異常 | 無新異常，持續觀察 |
+| A1 巡查紀錄 | ⚠️ A1巡查 2026-06-16 08:00：24h 零新非巡查 commit（所有非巡查 commit 均為 2026-06-15 前日）；A4 T-A4-001 ~115h 無新 commit 持續 🔴 CRITICAL（最後 c2dc194/90fe31c 2026-06-11）；B1 T-HQ-001 ~109h 持續 🔴 CRITICAL（最後 014081c 2026-06-11 18:46）；A2 昨日活躍（da36237 ICC Tainan draft 建立，awaiting Owner approval），今日 0 新 commit（正常）；A5 ~674h/~28.1天 CRITICAL 持續；A6 ~674h/~28.1天 CRITICAL 持續；GCP帳單~61天🔴 持續；ios-kol docs Task Card 建立仍待 Owner 確認（前日午後已記錄）；所有狀態與 CURRENT_STATUS 一致，無新增異常 | 無新異常，持續觀察 |
 ---
 
 ## Source of Truth（有效文件清單）

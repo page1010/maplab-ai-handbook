@@ -1,7 +1,7 @@
 # A8 影音內容產線技能書（Video Pipeline Skills）
 
 > 負責角色：A8 影音內容產線
-> 建立：2026-04-19 | 版本：v2.0（2026-06-17）
+> 建立：2026-04-19 | 版本：v2.1（2026-06-17）
 
 ---
 
@@ -23,8 +23,9 @@ A8 的工作不是「想到影片題目」，而是把 MAPLAB 現有資料夾、
 1. 讀 `CURRENT_STATUS.md`。
 2. 讀本次 task card，例如 `handoff/tasks/T-A8-001-folder-to-video-distribution.md`。
 3. 讀 `recalls/A8_recall.md`、`skills/maplab-visual-spec.md`、`skills/brand-voice-guide.md`。
-4. 確認素材來源與 public-safe case label；資料夾原名若含客戶、專案、內部日期，先標為 internal evidence，不直接上字幕或封面。
-5. 輸出 Startup Check：角色、素材來源、預計輸出、哪些動作需要 approval。
+4. 若任務是短影音，讀本次 bundle 裡的 motion style / reference matrix；沒有就先建立，不得直接套泛用模板。
+5. 確認素材來源與 public-safe case label；資料夾原名若含客戶、專案、內部日期，先標為 internal evidence，不直接上字幕或封面。
+6. 輸出 Startup Check：角色、素材來源、預計輸出、哪些動作需要 approval。
 
 ---
 
@@ -154,14 +155,17 @@ python3 tools/ai_workbook/a8_enhanced_video_draft.py \
   --asset-dir workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/wordpress_assets_icctn_001 \
   --out-dir workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft \
   --title '大臺南會展中心茶點' \
+  --opening-title 'MAPLAB Kitchen' \
+  --opening-subtitle '台南企業會議茶點' \
+  --ending-line '日期 / 人數 / 場地先傳給我們' \
   --case-label '大臺南會展中心企業會議茶點' \
   --limit 5 \
-  --seconds 2.8
+  --seconds 2.4
 ```
 
 產出：
 
-- `a8-short-review-draft.mp4`：1080x1920、字幕、`MAPLAB Kitchen` 浮水印。
+- `a8-short-review-draft.mp4`：1080x1920、固定開場、字幕、柔和轉場、`MAPLAB Kitchen` 浮水印。
 - `a8-short-review-cover.jpg`：封面草稿。
 - `review_draft_manifest.json`：來源、字幕、輸出規格。
 - `review_draft_platform_metadata.md/json`：平台文案草稿。
@@ -170,6 +174,37 @@ python3 tools/ai_workbook/a8_enhanced_video_draft.py \
 
 - 本機審核版不加未授權配樂。正式發布前用 YouTube / TikTok / CapCut / Canva 的授權音樂庫。
 - 這仍是 review draft，不是 final publish asset；需 mobile preview、品牌 QA、privacy check。
+- 左下角分鏡 counter 預設不顯示；只有內部 QA 用 `--show-counter` 才能開。
+
+### Step 4.6：MAPLAB IG Soft v1 視覺規格
+
+A8 不准只做「能輸出影片」。短影音審核版必須先對標 MAPLAB 既有 IG Reels 與 A2 品牌語氣，形成可重複的 motion template。
+
+內部對標先看：
+
+- Owner 提供的 MAPLAB IG profile / Reels grid 截圖。
+- Chrome read-only 可取得時，讀 `https://www.instagram.com/maplabkitchen/reels/` 的可見 Reels link、觀看數、caption / duration metadata。
+- 參考高表現樣本時，只抽樣風格邏輯，不複製素材或客戶內容。
+
+MAPLAB IG Soft v1：
+
+| 區段 | 標準 |
+|---|---|
+| 開場 | 1.4-1.8 秒，暖米色覆膜，`MAPLAB Kitchen`、case/service line、細金線、`SINCE 2016`。 |
+| 場景 | 全版圖片，低干擾字幕，每幕 6-14 字，文字不遮食物主體。 |
+| 轉場 | 預設 `xfade=fade` 0.35 秒；可測 `smoothleft` / `dissolve`，不得用浮誇特效。 |
+| 濾鏡 | 暖、柔、低對比；亮度微升、對比微降、飽和微升、輕銳化。 |
+| 浮水印 | `MAPLAB Kitchen` 低調右下；不得大到搶主體。 |
+| 結尾 | 暖米色 CTA，優先 `日期 / 人數 / 場地先傳給我們`。 |
+| 禁止 | public draft 不得出現 `01/05`、檔名、內部日期、debug label。 |
+
+工具升級判準：
+
+- 本機 ffmpeg + Swift/AppKit：review draft 與固定模板優先。
+- Canva / CapCut / Google Vids：正式配樂、封面與人工美感 polish。
+- Remotion：當 MAPLAB IG Soft 被接受後，再升級為 data-driven React video template。
+- Motion Canvas：只在需要解說型 motion graphics / voice-over 同步時使用。
+- MoviePy：Python prototyping 可用，但目前不取代 ffmpeg pipeline。
 
 ### Step 5：正式組片
 
@@ -243,8 +278,12 @@ Shorts / TikTok / Reels：
 - 9:16, 1080x1920。
 - 60 秒以內；第一輪 MAPLAB 案例建議 12-30 秒。
 - 前 3 秒有具體 hook。
+- 有固定 MAPLAB 開場與結尾，除非 task 明確要求關閉。
+- 場景之間有柔和轉場，不得只有硬切加字幕。
+- public draft 不顯示分鏡 counter / debug label。
 - 沒有價格、內部日期、私人會議資料、QR code、電話、合約、臉部特寫。
 - 字幕可讀，不遮食物主體。
+- 字幕與內文遵守 A2 品牌語氣：自然、溫暖、具體、場景先行，不硬賣。
 - 封面在小尺寸仍看得出主題。
 
 Pinterest：

@@ -13,13 +13,20 @@ Status: draft_not_approved
 
 - Dry-run video: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/dry_run/a8-short-dry-run.mp4`
 - Cover draft: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/dry_run/a8-short-cover.jpg`
+- Review draft v3 video: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft_v3/a8-short-review-draft.mp4`
+- Review draft v3 cover: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft_v3/a8-short-review-cover.jpg`
+- Review draft v3 QA frames: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft_v3/qa_frames/`
+- Motion style spec: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/a8_motion_style_upgrade.md`
 - Platform metadata: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/dry_run/platform_metadata.md`
+- Review draft v3 platform metadata: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft_v3/review_draft_platform_metadata.md`
 - Storyboard: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/storyboard_seed.md`
 
 ## Still Required Before Approval
 
-- Final subtitles and cover text in Google Vids / Canva / CapCut.
-- Final export path.
+- Mobile preview of v3.
+- Licensed music selection in YouTube / TikTok / CapCut / Canva.
+- Final cover polish if Owner wants more IG-native styling.
+- Final export path if v3 is polished in an external editor.
 - Final platform metadata readback.
 
 ## Privacy / Brand Checks
@@ -28,6 +35,8 @@ Status: draft_not_approved
 - [x] No price claim.
 - [x] No local path in public copy.
 - [x] No internal project name in public copy.
+- [x] Public draft v3 hides scene counter / debug label.
+- [x] Public draft v3 has fixed opening, fixed ending, and `xfade` transition.
 - [ ] Final video checked for faces, private meeting material, QR codes, phone numbers, slides, or documents.
 - [ ] Final cover text checked at mobile size.
 
@@ -41,4 +50,4 @@ Status: draft_not_approved
 
 ## Current Status
 
-Not ready for publishing yet. A8 must create the final subtitled video and cover before asking for upload approval.
+Not ready for publishing yet. A8 has a v3 review draft, but still needs Owner mobile review, licensed music / final cover decision, and explicit upload approval.

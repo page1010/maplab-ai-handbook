@@ -1,7 +1,7 @@
 # JOB-A8-FOLDER-TO-SHORTS-20260617
 
 Role: A8 Content Repurposing Pipeline
-Status: dry_run_complete
+Status: review_draft_v3_complete
 Created: 2026-06-17
 
 ## Purpose
@@ -11,7 +11,8 @@ Turn Owner's Reel reference into an A8-run workflow:
 1. Research the reference Reel's production logic.
 2. Use a real MAPLAB folder case as seed material.
 3. Run a local dry-run into a vertical short-video package.
-4. Write the reusable A8 skill and task handoff.
+4. Upgrade the reusable A8 motion style based on MAPLAB's own IG Reels.
+5. Write the reusable A8 skill and task handoff.
 
 ## Key Outputs
 
@@ -19,6 +20,10 @@ Turn Owner's Reel reference into an A8-run workflow:
 - `dry_run/a8-short-dry-run.mp4`
 - `dry_run/a8-short-cover.jpg`
 - `dry_run/platform_metadata.md`
+- `review_draft_v3/a8-short-review-draft.mp4`
+- `review_draft_v3/a8-short-review-cover.jpg`
+- `review_draft_v3/qa_frames/`
+- `a8_motion_style_upgrade.md`
 - `storyboard_seed.md`
 - `publish_approval_card_draft.md`
 - `a8_handoff_prompt.md`

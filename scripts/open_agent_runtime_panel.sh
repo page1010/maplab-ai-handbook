@@ -14,8 +14,12 @@ ensure_hermes_panel() {
   if [[ -f "$HERMES_PANEL" && -f "$REPO/local-control-plane/hermes_status.js" ]]; then
     return 0
   fi
-  if [[ -f "$REPO/logs/patrol-scheduled.log" ]]; then
-    python3 "$REPO/tools/hermes_patrol_bridge.py" --repo "$REPO" --raw-text-file "$REPO/logs/patrol-scheduled.log" --quiet || true
+  local patrol_log="$REPO/logs/runtime/patrol-scheduled.log"
+  if [[ ! -f "$patrol_log" && -f "$REPO/logs/patrol-scheduled.log" ]]; then
+    patrol_log="$REPO/logs/patrol-scheduled.log"
+  fi
+  if [[ -f "$patrol_log" ]]; then
+    python3 "$REPO/tools/hermes_patrol_bridge.py" --repo "$REPO" --raw-text-file "$patrol_log" --quiet || true
   else
     python3 "$REPO/tools/hermes_patrol_bridge.py" --repo "$REPO" --quiet || true
   fi

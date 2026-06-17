@@ -13,9 +13,9 @@
     <key>StartInterval</key>
     <integer>1800</integer>
     <key>StandardOutPath</key>
-    <string>/Users/pagemacmini/maplab-ai-handbook/logs/worktree-cleanup-launchd.log</string>
+    <string>/Users/pagemacmini/maplab-ai-handbook/logs/runtime/worktree-cleanup-launchd.log</string>
     <key>StandardErrorPath</key>
-    <string>/Users/pagemacmini/maplab-ai-handbook/logs/worktree-cleanup-launchd.log</string>
+    <string>/Users/pagemacmini/maplab-ai-handbook/logs/runtime/worktree-cleanup-launchd.log</string>
     <key>RunAtLoad</key>
     <true/>
 </dict>

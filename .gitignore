@@ -34,6 +34,15 @@ scripts/token.json
 
 # System
 .DS_Store
+**/__pycache__/
+*.pyc
+
+# Runtime logs and generated local state
+logs/*.log
+logs/runtime/
+data/a6-photos/
+data/photo_alt_index.db
+data/photo_classify.db
 
 # SEO factory runtime artifacts
 automation/seo_factory/output/

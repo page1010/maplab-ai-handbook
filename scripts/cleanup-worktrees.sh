@@ -23,7 +23,7 @@ WORKTREE_DIR="$REPO_ROOT/.claude/worktrees"
 DRY_RUN=false
 FORCE_ALL=false
 MERGED_ONLY=false
-LOG_FILE="$REPO_ROOT/logs/worktree-cleanup.log"
+LOG_FILE="${MAPLAB_WORKTREE_CLEANUP_LOG:-$REPO_ROOT/logs/runtime/worktree-cleanup.log}"
 
 for arg in "$@"; do
   case "$arg" in

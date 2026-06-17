@@ -5,8 +5,9 @@
 
 set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-LOG_DIR="$REPO_ROOT/logs"
+LOG_DIR="${MAPLAB_RUNTIME_LOG_DIR:-$REPO_ROOT/logs/runtime}"
 LOG_FILE="$LOG_DIR/patrol-scheduled.log"
+mkdir -p "$LOG_DIR"
 
 # ── 載入 .env ──
 ENV_FILE="$REPO_ROOT/bot/.env"

@@ -25,7 +25,7 @@ from collections import deque
 from dataclasses import dataclass
 from pathlib import Path
 from datetime import datetime
-from typing import Optional
+from typing import Any, Optional
 
 from dotenv import load_dotenv
 from telegram import Update
@@ -68,6 +68,9 @@ RUNTIME_BIN_DIRS = [
 TELEGRAM_LOG_DIR = REPO_PATH / "data" / "telegram-logs"
 TELEGRAM_PHOTO_DIR = REPO_PATH / "data" / "telegram-photos"
 CONV_HISTORY_FILE = BOT_DIR / "conv_history.json"
+DISPATCH_DIR = Path(
+    os.getenv("MAPLAB_DISPATCH_DIR", str(REPO_PATH / "workbook" / "telegram-dispatch"))
+)
 
 # ── Clipboard Server ────────────────────────────────────────────────────────────
 CLIP_FILE = Path("/tmp/maplab_clip.json")
@@ -359,6 +362,20 @@ class ModelResult:
     stderr: str = ""
 
 
+@dataclass(frozen=True)
+class DispatchRoute:
+    task_type: str
+    title: str
+    primary_role: str
+    roles: tuple[str, ...]
+    worker: str
+    runtime_target: str
+    task_cards: tuple[str, ...]
+    goal: str
+    data_needed: tuple[str, ...]
+    guardrails: tuple[str, ...]
+
+
 _ANSI_RE = re.compile(r"\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])")
 _CONTROL_RE = re.compile(r"[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]")
 
@@ -497,6 +514,492 @@ def _record_history(chat_id: int, user_message: str, answer: str) -> None:
     history.append({"role": "user", "content": user_message})
     history.append({"role": "assistant", "content": answer})
     _save_conv_history()
+
+
+def _dispatch_catalog() -> dict[str, DispatchRoute]:
+    return {
+        "ads": DispatchRoute(
+            task_type="ads-performance-review",
+            title="投放成效判讀任務",
+            primary_role="A3",
+            roles=("A3", "A2", "A1"),
+            worker="Codex primary; OpenClaw read-only browser proof if logged-in Ads UI is needed",
+            runtime_target="codex/openclaw",
+            task_cards=(
+                "handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md",
+                "projects/maplab-ads-monitor.md",
+                "projects/seo-ads-agent.md",
+            ),
+            goal=(
+                "讀近 7/14/30 天 Google Ads + Meta Ads 成效，拆出花費、曝光、點擊、CTR、"
+                "CPC、轉換、CPA、ROAS，輸出保留/暫停/調整預算與素材下一步。"
+            ),
+            data_needed=(
+                "Google Ads: spend, impressions, clicks, CTR, CPC, conversions, CPA, ROAS by 7/14/30 days",
+                "Meta Ads: spend, impressions, clicks, CTR, CPC, conversions/leads, CPA/ROAS by 7/14/30 days",
+                "Landing-page conversion context from A2 when ad data suggests page or SEO mismatch",
+            ),
+            guardrails=(
+                "read-only first; do not change budget, campaign status, targeting, creative, Pixel, GTM, or landing pages",
+                "if login/API data is missing, report the missing source and the exact 5-minute Owner action",
+                "recommendations must separate verified metrics, inference, and approval-needed changes",
+            ),
+        ),
+        "quote": DispatchRoute(
+            task_type="quote-intake",
+            title="報價/試算派工任務",
+            primary_role="A6",
+            roles=("A6", "A5"),
+            worker="Codex/A6 intake; A5 quote engine or GAS/Sheet when a sheet artifact is required",
+            runtime_target="codex/a6/a5",
+            task_cards=(
+                "handoff/tasks/T-A6-001.md",
+                "handoff/tasks/T-A5-002.md",
+                "projects/line-quote-assistant.md",
+                "projects/maplab-master-data.md",
+            ),
+            goal=(
+                "整理活動需求、品項、數量、預算、毛利/成本口徑與待確認欄位，"
+                "再交給 A6/A5 產出報價草稿或 Sheet payload。"
+            ),
+            data_needed=(
+                "event type, date/time, location, headcount, budget, service fee and logistics assumptions",
+                "menu preferences, dietary restrictions, item mapping, margin/cost risk",
+                "whether the required output is draft text, Sheet payload, or a formal quote link",
+            ),
+            guardrails=(
+                "do not invent a Google Sheet or quote URL",
+                "do not expose internal costs to customers",
+                "if Sheet/GAS write is required, route through A5 and report the real artifact URL only after creation",
+            ),
+        ),
+        "patrol": DispatchRoute(
+            task_type="system-patrol-dispatch",
+            title="系統巡查/任務推進派工",
+            primary_role="A0",
+            roles=("A0", "A1"),
+            worker="Codex/A0/A1; Hermes may consume the packet as a cold-path reaction layer",
+            runtime_target="codex/hermes",
+            task_cards=(
+                "CURRENT_STATUS.md",
+                "pitfalls.md",
+                "TASK_QUEUE.md",
+                "workbook/hermes/patrol/latest.json",
+            ),
+            goal=(
+                "把巡查或任務推進要求拆成已完成、卡住、可由 agent 自解、需 Owner 5 分鐘動作，"
+                "並對 blocker 跑三層阻塞審查。"
+            ),
+            data_needed=(
+                "CURRENT_STATUS.md task table and blockers",
+                "relevant task cards and latest Hermes patrol packet",
+                "exact role owner and next command for each still-open item",
+            ),
+            guardrails=(
+                "do not relay stale blockers without assigning a next owner",
+                "do not ask Owner until false blockers are removed",
+                "write back only scoped status/task-card changes after evidence is checked",
+            ),
+        ),
+        "generic": DispatchRoute(
+            task_type="command-window-dispatch",
+            title="Telegram 外部指揮派工",
+            primary_role="A0",
+            roles=("A0", "A1"),
+            worker="Codex primary; OpenClaw/Hermes can act as intake or read-only worker",
+            runtime_target="codex/openclaw/hermes",
+            task_cards=("CURRENT_STATUS.md", "pitfalls.md", "TASK_QUEUE.md"),
+            goal=(
+                "把 Owner 的 Telegram 指令轉成角色、冷啟動來源、worker、可驗收輸出與回報節點，"
+                "避免只回覆一段建議。"
+            ),
+            data_needed=(
+                "Owner original request",
+                "latest Telegram context if this is a follow-up question",
+                "role module/task-card evidence before execution",
+            ),
+            guardrails=(
+                "do not treat '召喚' as complete until a packet/worker receipt exists",
+                "do not perform live external changes without explicit approval",
+                "if route is ambiguous, create an A0/A1 intake packet instead of pretending completion",
+            ),
+        ),
+    }
+
+
+def _dispatch_norm(text: str) -> str:
+    return re.sub(r"\s+", "", (text or "").lower())
+
+
+def _dispatch_has_any(haystack: str, markers: tuple[str, ...]) -> bool:
+    return any(marker in haystack for marker in markers)
+
+
+def _route_from_dispatch_context(context_text: str) -> Optional[DispatchRoute]:
+    catalog = _dispatch_catalog()
+    context = _dispatch_norm(context_text)
+    if _dispatch_has_any(
+        context,
+        (
+            "投放成效判讀",
+            "googleads",
+            "google廣告",
+            "metaads",
+            "meta廣告",
+            "廣告成效",
+            "roas",
+            "cpc",
+            "cpa",
+        ),
+    ):
+        return catalog["ads"]
+    if _dispatch_has_any(context, ("報價任務", "quote", "試算", "毛利", "競品菜單")):
+        return catalog["quote"]
+    if _dispatch_has_any(context, ("系統巡查", "任務推進", "三層阻塞審查", "taskcard", "任務卡")):
+        return catalog["patrol"]
+    return None
+
+
+def _dispatch_route_for_text(text: str, context_text: str = "") -> Optional[DispatchRoute]:
+    normalized = _dispatch_norm(text)
+    if not normalized:
+        return None
+
+    catalog = _dispatch_catalog()
+    quote_markers = ("報價", "quote", "試算", "毛利", "成本", "競品菜單")
+    ads_markers = (
+        "google廣告",
+        "googleads",
+        "meta廣告",
+        "metaads",
+        "廣告成效",
+        "投放成效",
+        "roas",
+        "cpc",
+        "cpa",
+        "ctr",
+    )
+    patrol_markers = ("巡查", "任務推進", "任務卡", "taskcard", "三層阻塞審查")
+    followup_markers = (
+        "誰做",
+        "召喚了嗎",
+        "召喚了",
+        "派工",
+        "派給",
+        "貼到codex",
+        "丟給codex",
+        "openclaw",
+        "hermes",
+        "不是回覆",
+        "要做",
+        "去做",
+    )
+
+    if _dispatch_has_any(normalized, quote_markers):
+        return catalog["quote"]
+    if _dispatch_has_any(normalized, ads_markers) or (
+        "廣告" in normalized
+        and _dispatch_has_any(normalized, ("成效", "評估", "投放", "meta", "google", "預算"))
+    ):
+        return catalog["ads"]
+    if _dispatch_has_any(normalized, patrol_markers) or ("角色" in normalized and "巡查" in normalized):
+        return catalog["patrol"]
+    if _dispatch_has_any(normalized, followup_markers) or "召喚" in normalized:
+        return _route_from_dispatch_context(context_text) or catalog["generic"]
+    return None
+
+
+def _path_label(path: Path) -> str:
+    try:
+        return str(path.relative_to(REPO_PATH))
+    except ValueError:
+        return str(path)
+
+
+def _dispatch_prompt_for(
+    route: DispatchRoute,
+    dispatch_id: str,
+    owner_text: str,
+    context_text: str = "",
+) -> str:
+    task_cards = "\n".join(f"- {item}" for item in route.task_cards)
+    data_needed = "\n".join(f"- {item}" for item in route.data_needed)
+    guardrails = "\n".join(f"- {item}" for item in route.guardrails)
+    context_block = _trim(context_text or "（無額外 Telegram context）", 2400)
+    return (
+        f"你是 MAPLAB {route.primary_role}，運行在 Codex。\n"
+        f"Telegram 派工 ID: {dispatch_id}\n"
+        f"任務類型: {route.title}\n"
+        f"主責/協作: {', '.join(route.roles)}\n\n"
+        "## Cold Start\n"
+        "1. 先讀 CURRENT_STATUS.md。\n"
+        "2. 再讀 pitfalls.md，尤其是 Telegram command window / artifact substitution / Hermes fallback 相關教訓。\n"
+        "3. 再讀本派工列出的 task cards / docs。\n"
+        "4. 第一句先說：我是 [role]，環境 Codex，任務 [task]。\n\n"
+        "## Owner 原始指令\n"
+        "```text\n"
+        f"{owner_text.strip()}\n"
+        "```\n\n"
+        "## 最近 Telegram context\n"
+        "```text\n"
+        f"{context_block}\n"
+        "```\n\n"
+        "## 必讀來源\n"
+        f"{task_cards}\n\n"
+        "## 本輪目標\n"
+        f"{route.goal}\n\n"
+        "## 需要取得/驗證的資料\n"
+        f"{data_needed}\n\n"
+        "## 邊界\n"
+        f"{guardrails}\n\n"
+        "## 輸出契約\n"
+        "請回報：\n"
+        "1. Startup Check：角色、環境、任務、資料來源。\n"
+        "2. 已做的事：真的讀了哪些檔案/資料或執行了哪些 read-only checks。\n"
+        "3. 結論：分成 verified facts、reasonable inference、missing data、next action。\n"
+        "4. 若需要 Owner：只列 5 分鐘內可完成的具體動作。\n"
+        "5. 若要寫回：列出要改的檔案與理由，未核准不得碰 live external settings。\n"
+    )
+
+
+def _openclaw_dispatch_timeout() -> int:
+    raw = os.getenv("MAPLAB_OPENCLAW_DISPATCH_TIMEOUT", "180").strip()
+    try:
+        return max(15, int(raw))
+    except ValueError:
+        return 180
+
+
+def _openclaw_dispatch_enabled() -> bool:
+    return _truthy_env("MAPLAB_OPENCLAW_DISPATCH_ENABLED", "1")
+
+
+def _write_dispatch_packet(
+    owner_text: str,
+    context_text: str = "",
+    route: Optional[DispatchRoute] = None,
+) -> dict[str, Any]:
+    selected_route = route or _dispatch_route_for_text(owner_text, context_text)
+    if not selected_route:
+        raise ValueError("message does not match a dispatch route")
+
+    ts = datetime.now()
+    dispatch_id = f"TG-DISPATCH-{ts.strftime('%Y%m%d-%H%M%S')}-{selected_route.task_type}"
+    packet_dir = DISPATCH_DIR / dispatch_id
+    packet_dir.mkdir(parents=True, exist_ok=True)
+    prompt = _dispatch_prompt_for(selected_route, dispatch_id, owner_text, context_text)
+    prompt_path = packet_dir / "prompt.md"
+    packet_path = packet_dir / "packet.json"
+    readme_path = packet_dir / "README.md"
+    openclaw_result_path = packet_dir / "openclaw_result.json"
+
+    packet: dict[str, Any] = {
+        "schema_version": "maplab.telegram_dispatch.v1",
+        "dispatch_id": dispatch_id,
+        "created_at": ts.isoformat(timespec="seconds"),
+        "status": "queued_for_codex",
+        "source": {
+            "surface": "telegram",
+            "owner_chat_id": str(OWNER_CHAT_ID),
+            "message": owner_text,
+            "context_excerpt": _trim(context_text, 1200),
+        },
+        "route": {
+            "task_type": selected_route.task_type,
+            "title": selected_route.title,
+            "primary_role": selected_route.primary_role,
+            "roles": list(selected_route.roles),
+            "worker": selected_route.worker,
+            "runtime_target": selected_route.runtime_target,
+            "task_cards": list(selected_route.task_cards),
+            "goal": selected_route.goal,
+            "data_needed": list(selected_route.data_needed),
+            "guardrails": list(selected_route.guardrails),
+        },
+        "artifacts": {
+            "packet": _path_label(packet_path),
+            "prompt": _path_label(prompt_path),
+            "readme": _path_label(readme_path),
+            "openclaw_result": _path_label(openclaw_result_path),
+        },
+        "codex_command": f"codex exec --cd {REPO_PATH} --sandbox workspace-write - < {prompt_path}",
+        "openclaw_command": (
+            "openclaw agent --agent main "
+            f"--session-key agent:main:{dispatch_id} --message <prompt> --timeout {_openclaw_dispatch_timeout()} --json"
+        ),
+    }
+
+    prompt_path.write_text(prompt, encoding="utf-8")
+    packet_path.write_text(json.dumps(packet, ensure_ascii=False, indent=2), encoding="utf-8")
+    readme_path.write_text(
+        "\n".join(
+            [
+                f"# {dispatch_id}",
+                "",
+                f"- status: {packet['status']}",
+                f"- primary_role: {selected_route.primary_role}",
+                f"- roles: {', '.join(selected_route.roles)}",
+                f"- worker: {selected_route.worker}",
+                f"- runtime_target: {selected_route.runtime_target}",
+                f"- prompt: `{_path_label(prompt_path)}`",
+                f"- packet: `{_path_label(packet_path)}`",
+                "",
+                "## Owner Request",
+                "",
+                "```text",
+                owner_text.strip(),
+                "```",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    index_path = DISPATCH_DIR / "index.jsonl"
+    index_path.parent.mkdir(parents=True, exist_ok=True)
+    with index_path.open("a", encoding="utf-8") as f:
+        f.write(
+            json.dumps(
+                {
+                    "dispatch_id": dispatch_id,
+                    "created_at": packet["created_at"],
+                    "status": packet["status"],
+                    "primary_role": selected_route.primary_role,
+                    "task_type": selected_route.task_type,
+                    "prompt": packet["artifacts"]["prompt"],
+                    "packet": packet["artifacts"]["packet"],
+                },
+                ensure_ascii=False,
+            )
+            + "\n"
+        )
+
+    try:
+        CLIP_FILE.parent.mkdir(parents=True, exist_ok=True)
+        CLIP_FILE.write_text(
+            json.dumps(
+                {
+                    "text": prompt,
+                    "ts": ts.strftime("%H:%M:%S"),
+                    "source": "telegram_dispatch",
+                    "dispatch_id": dispatch_id,
+                    "prompt": packet["artifacts"]["prompt"],
+                },
+                ensure_ascii=False,
+            ),
+            encoding="utf-8",
+        )
+    except Exception as exc:
+        logger.warning(f"dispatch clipboard write failed: {exc}")
+
+    return packet
+
+
+def _dispatch_receipt(packet: dict[str, Any]) -> str:
+    route = packet["route"]
+    openclaw_status = "will_start" if _openclaw_dispatch_enabled() else "disabled"
+    return (
+        f"✅ 已建立派工包：{packet['dispatch_id']}\n"
+        "這不是只回覆：已落檔，並寫入 Codex clipboard bridge。\n"
+        f"- 主責：{route['primary_role']}（協作：{', '.join(route['roles'])}）\n"
+        f"- worker：{route['worker']}\n"
+        f"- status：{packet['status']}\n"
+        f"- openclaw_worker：{openclaw_status}\n"
+        f"- packet：{packet['artifacts']['packet']}\n"
+        f"- prompt：{packet['artifacts']['prompt']}\n"
+        "下一步：worker 必須用這個 dispatch_id 回報；沒有 receipt 就不能再說已召喚。"
+    )
+
+
+def _openclaw_visible_text(stdout_text: str) -> str:
+    text = (stdout_text or "").strip()
+    if not text:
+        return ""
+    try:
+        data = json.loads(text)
+    except json.JSONDecodeError:
+        return text
+    payloads = (((data or {}).get("result") or {}).get("payloads") or [])
+    visible = "\n".join(
+        str(payload.get("text") or "").strip()
+        for payload in payloads
+        if str(payload.get("text") or "").strip()
+    )
+    return visible or text
+
+
+async def _run_openclaw_dispatch_background(
+    bot,
+    chat_id: int,
+    packet: dict[str, Any],
+) -> None:
+    if not _openclaw_dispatch_enabled():
+        return
+    openclaw_path = _runtime_which("openclaw")
+    if not openclaw_path:
+        await bot.send_message(chat_id=chat_id, text=f"⚠️ OpenClaw dispatch skipped：找不到 openclaw CLI（{packet['dispatch_id']}）")
+        return
+
+    prompt_path = REPO_PATH / packet["artifacts"]["prompt"]
+    result_path = REPO_PATH / packet["artifacts"]["openclaw_result"]
+    try:
+        prompt = prompt_path.read_text(encoding="utf-8")
+    except Exception as exc:
+        await bot.send_message(chat_id=chat_id, text=f"⚠️ OpenClaw dispatch skipped：讀不到 prompt（{exc}）")
+        return
+
+    env = os.environ.copy()
+    env["PATH"] = _runtime_path(env.get("PATH", ""))
+    cmd = [
+        openclaw_path,
+        "agent",
+        "--agent",
+        "main",
+        "--session-key",
+        f"agent:main:{packet['dispatch_id']}",
+        "--message",
+        prompt,
+        "--timeout",
+        str(_openclaw_dispatch_timeout()),
+        "--json",
+    ]
+    try:
+        proc = await asyncio.create_subprocess_exec(
+            *cmd,
+            cwd=REPO_PATH,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+            env=env,
+        )
+        try:
+            stdout, stderr = await asyncio.wait_for(proc.communicate(), timeout=_openclaw_dispatch_timeout() + 10)
+        except asyncio.TimeoutError:
+            proc.kill()
+            await bot.send_message(chat_id=chat_id, text=f"⚠️ OpenClaw dispatch timeout：{packet['dispatch_id']}")
+            return
+
+        result = {
+            "dispatch_id": packet["dispatch_id"],
+            "returncode": proc.returncode,
+            "stdout": _redact_runtime_secrets(stdout.decode(errors="replace")),
+            "stderr": _redact_runtime_secrets(stderr.decode(errors="replace")),
+            "finished_at": datetime.now().isoformat(timespec="seconds"),
+        }
+        result_path.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
+        if proc.returncode == 0:
+            visible_text = _openclaw_visible_text(result["stdout"])
+            snippet = _trim(visible_text or "OpenClaw returned no visible text", 1600)
+            await bot.send_message(
+                chat_id=chat_id,
+                text=f"🧷 OpenClaw worker 回報：{packet['dispatch_id']}\n{snippet}",
+            )
+        else:
+            diagnostic = _trim((result["stderr"] or result["stdout"] or "unknown error").strip(), 1000)
+            await bot.send_message(
+                chat_id=chat_id,
+                text=f"⚠️ OpenClaw worker 失敗：{packet['dispatch_id']}\n{diagnostic}",
+            )
+    except Exception as exc:
+        safe = _redact_runtime_secrets(str(exc))
+        await bot.send_message(chat_id=chat_id, text=f"⚠️ OpenClaw dispatch exception：{packet['dispatch_id']}\n{safe}")
 
 
 def _looks_like_degraded_hermes_output(text: str) -> bool:
@@ -1023,6 +1526,7 @@ async def help_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         "/refresh — 手動 git pull\n"
         "/ping — 心跳檢查\n"
         "/ask \\[問題\\] — 直接問 Claude（OAuth，免費）\n"
+        "/codex\\_dispatch \\[任務\\] — 建立 Codex/OpenClaw 派工包\n"
         "/runtime — 查看 Claude primary / Hermes fallback 狀態\n"
         "/reset — 生成本階段摘要+待辦，確認後清除對話記錄\n"
         "/help — 本說明\n\n"
@@ -1396,6 +1900,29 @@ async def ask_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await _run_claude_guarded(update, context, chat_id, prompt, "", "/ask", prompt)
 
 
+async def codex_dispatch_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not is_owner(update):
+        await deny(update)
+        return
+    if not context.args:
+        await update.message.reply_text("用法：/codex_dispatch [任務]，例如 /codex_dispatch 請 A3 判讀近 7/14/30 天廣告成效")
+        return
+
+    text = " ".join(context.args)
+    chat_id = update.effective_chat.id
+    context_text = _latest_telegram_log_snippet(limit=3500)
+    try:
+        packet = _write_dispatch_packet(text, context_text)
+    except ValueError:
+        route = _dispatch_catalog()["generic"]
+        packet = _write_dispatch_packet(text, context_text, route=route)
+    receipt = _dispatch_receipt(packet)
+    await update.message.reply_text(receipt)
+    _record_history(chat_id, text, receipt)
+    log_and_commit(text, receipt, "codex-dispatch")
+    asyncio.create_task(_run_openclaw_dispatch_background(context.bot, chat_id, packet))
+
+
 async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Handle photo messages: download image and pass to Claude Code for analysis."""
     if not is_owner(update):
@@ -1440,15 +1967,23 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         await deny(update)
         return
     text = update.message.text or ""
+    chat_id = update.effective_chat.id
     local_answer = _local_runtime_question_answer(text)
     if local_answer:
         await update.message.reply_text(local_answer)
+        _record_history(chat_id, text, local_answer)
         log_and_commit(text, local_answer, "runtime-local")
         return
-    local_answer = _local_dispatch_answer(text)
-    if local_answer:
-        await update.message.reply_text(local_answer)
-        log_and_commit(text, local_answer, "dispatch-local")
+
+    dispatch_context = _latest_telegram_log_snippet(limit=3500)
+    dispatch_route = _dispatch_route_for_text(text, dispatch_context)
+    if dispatch_route:
+        packet = _write_dispatch_packet(text, dispatch_context, route=dispatch_route)
+        receipt = _dispatch_receipt(packet)
+        await update.message.reply_text(receipt)
+        _record_history(chat_id, text, receipt)
+        log_and_commit(text, receipt, "dispatch-local")
+        asyncio.create_task(_run_openclaw_dispatch_background(context.bot, chat_id, packet))
         return
     git_pull_silent()
     try:
@@ -1459,7 +1994,6 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         "以下是目前 MAPLAB 專案狀態摘要（供參考）：\n\n"
         f"{status_snippet}"
     )
-    chat_id = update.effective_chat.id
     await _run_claude_guarded(update, context, chat_id, text, system_extra, "", text)
 
 
@@ -1567,6 +2101,7 @@ def main() -> None:
     app.add_handler(CommandHandler("blocker", blocker))
     app.add_handler(CommandHandler("refresh", refresh))
     app.add_handler(CommandHandler("ask", ask_cmd))
+    app.add_handler(CommandHandler("codex_dispatch", codex_dispatch_cmd))
     app.add_handler(CommandHandler("runtime", runtime_cmd))
     app.add_handler(CommandHandler("reset", reset_cmd))
     app.add_handler(CommandHandler("clip", clip_cmd))

@@ -1,9 +1,16 @@
 import os
+import importlib.util
 from pathlib import Path
+import sys
+from tempfile import TemporaryDirectory
 import unittest
 from unittest.mock import AsyncMock, patch
 
-import bot as maplab_bot
+BOT_MODULE_PATH = Path(__file__).with_name("bot.py")
+BOT_SPEC = importlib.util.spec_from_file_location("maplab_bot_under_test", BOT_MODULE_PATH)
+maplab_bot = importlib.util.module_from_spec(BOT_SPEC)
+sys.modules[BOT_SPEC.name] = maplab_bot
+BOT_SPEC.loader.exec_module(maplab_bot)
 
 
 class FakeHermesProc:
@@ -203,6 +210,50 @@ class HermesFallbackTests(unittest.IsolatedAsyncioTestCase):
         self.assertIn("A2", answer)
         self.assertIn("Google Ads", answer)
         self.assertIn("Meta Ads", answer)
+
+    def test_dispatch_route_uses_previous_ads_context_for_followup(self):
+        route = maplab_bot._dispatch_route_for_text(
+            "所以誰做你召喚了嗎",
+            "P0: 這是投放成效判讀任務。\n召喚：A3 為主責，讀 Google Ads / Meta Ads 成效。",
+        )
+        self.assertIsNotNone(route)
+        self.assertEqual(route.primary_role, "A3")
+        self.assertEqual(route.task_type, "ads-performance-review")
+
+    def test_dispatch_packet_writes_prompt_packet_and_clip_bridge(self):
+        with TemporaryDirectory() as tmp:
+            dispatch_dir = Path(tmp) / "dispatch"
+            clip_file = Path(tmp) / "clip.json"
+            with (
+                patch.object(maplab_bot, "DISPATCH_DIR", dispatch_dir),
+                patch.object(maplab_bot, "CLIP_FILE", clip_file),
+            ):
+                route = maplab_bot._dispatch_route_for_text(
+                    "看Google廣告與Meta廣告評估成效給下一步建議"
+                )
+                packet = maplab_bot._write_dispatch_packet(
+                    "看Google廣告與Meta廣告評估成效給下一步建議",
+                    "",
+                    route=route,
+                )
+                receipt = maplab_bot._dispatch_receipt(packet)
+
+            prompt_path = Path(packet["artifacts"]["prompt"])
+            packet_path = Path(packet["artifacts"]["packet"])
+            self.assertTrue(prompt_path.exists())
+            self.assertTrue(packet_path.exists())
+            self.assertTrue(clip_file.exists())
+            self.assertIn("CURRENT_STATUS.md", prompt_path.read_text(encoding="utf-8"))
+            self.assertIn("pitfalls.md", prompt_path.read_text(encoding="utf-8"))
+            self.assertIn("A3", packet_path.read_text(encoding="utf-8"))
+            self.assertIn("已建立派工包", receipt)
+            self.assertIn("queued_for_codex", receipt)
+            self.assertIn("prompt", receipt)
+
+    def test_openclaw_visible_text_extracts_payload_text(self):
+        raw = '{"result":{"payloads":[{"text":"WORKER_OK","mediaUrl":null}]}}'
+        self.assertEqual(maplab_bot._openclaw_visible_text(raw), "WORKER_OK")
+        self.assertEqual(maplab_bot._openclaw_visible_text("plain text"), "plain text")
 
     def test_exact_reply_contract_detector(self):
         message = "請只回覆 HERMES_GEMMA_STAGED_PROMPT_OK，不要解釋。"

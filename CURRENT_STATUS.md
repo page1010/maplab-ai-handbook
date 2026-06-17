@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-06-17 10:35（A8 影片 v3 審核版完成）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-06-17 11:05（A8 CTA 類別預設 + v4 審核版完成）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -19,7 +19,7 @@
 
 ## 最新事實核對
 
-- 2026-06-17：A8 第一個正式影音任務 `T-A8-001-folder-to-video-distribution` 進入 MAPLAB IG Soft v1。已研究 Owner 提供 IG Reel 的工具化短影音邏輯，並用 Chrome 只讀檢查 MAPLAB `@maplabkitchen` Reels grid，建立 `a8_motion_style_upgrade.md`：固定開場/結尾、柔和 `xfade` 轉場、暖色低對比濾鏡、public draft 預設不顯示左下角分鏡 counter。ICC Tainan 真實案例已產出 v3 審核影片：`workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft_v3/a8-short-review-draft.mp4`（H.264 1080x1920 30fps 13.2s，無未授權音樂）、cover 與 QA frames。已更新 `skills/a8-video-pipeline-skills.md` v2.1、task card、validation report。未上傳 YouTube/TikTok/IG/Pinterest，外部發布仍需 Owner/A1 approval。
+- 2026-06-17：A8 第一個正式影音任務 `T-A8-001-folder-to-video-distribution` 進入 MAPLAB IG Soft v1 + category CTA。已研究 Owner 提供 IG Reel 的工具化短影音邏輯，並用 Chrome 只讀檢查 MAPLAB `@maplabkitchen` Reels grid，建立 `a8_motion_style_upgrade.md`：固定開場/結尾、柔和 `xfade` 轉場、暖色低對比濾鏡、public draft 預設不顯示左下角分鏡 counter。Owner 校正企業茶會 CTA 後，A8 產線改成 `--category` 帶預設 CTA，企業茶會預設為 `台南企業活動、茶會規劃｜官方 LINE 洽詢檔期 @maplab`。ICC Tainan 真實案例已產出 v4 審核影片：`workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft_v4/a8-short-review-draft.mp4`（H.264 1080x1920 30fps 13.2s，無未授權音樂）、cover 與 outro QA frame。已更新 `skills/a8-video-pipeline-skills.md` v2.2、task card、validation report。未上傳 YouTube/TikTok/IG/Pinterest，外部發布仍需 Owner/A1 approval。
 - 2026-06-16：A2 ICCTN landing page 圖片 QA 完成並附圖發布（89dcc45：14 張 WebP via WP REST API attach + fast publish；post 1829 live @ `icc-tainan-catering`）；A0 新增 learning-loop reaction ledger + hermes patrol bridge（cc21bad）；T-A1-LEARNING-LOOP-001 P1 完成（reaction ledger / hermes_patrol_bridge.py / workbook/learning_loop/）。
 - 2026-06-15：A2 大臺南會展中心 SEO + Ads approval-ready bundle 已完成，並依 Owner 即時要求把 `A2-SEO-ICCTN-001` 從草稿發布成 Google Ads landing page。WordPress post `1829` 已發布：`https://www.maplabkitchen.com/icc-tainan-catering/`，slug `icc-tainan-catering`，category `企業外燴案例` ID `170`，featured media `1833`，正文含快速導覽、5 張 WP media 圖片（1833/1834/1839/1840/1841）、SEO alt/caption、Rank Math FAQ block、內連結與 LINE CTA；authenticated REST raw content 驗證 `ok=true`。Review bundle：`workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/`。本次未改 Google Ads / Meta Ads / GTM / Pixel / 預算 / 開關；Rank Math 僅更新 post `1829` SEO meta，未碰付費/退訂設定。A2 冷啟動已補 WordPress credential bootstrap 與案例 Landing Page 強制模板 Gate：Owner-approved execution mode 必須先讀 `skills/credentials/wordpress-api.md`，Notion API Keys 保管室只作 credential vault / index，不作狀態真相，secret 不得持久化或回報。
 - 2026-06-11：**午後巡查** — B1 今日共 8 commits（AGENT-HQ v1.0 建立 289a964、Governance v5.0 eac4efa、T-HQ-001 P1-P4 完成 6a23534、A4 ALT首批 8bf0ab0）；A4 今日 2 commits（照片分類搬移管線 c2dc194、地端 gemma4 ALT/SEO 管線 36,676張中繼資料 90fe31c）；hermes 殭屍 cron auto-allow-gemini 刪除（a796ed5），單日 280 錯誤根因修復；T-A4-001 狀態已由 CRITICAL 更正為 🔄 進行中；T-HQ-001 補入任務表；AGENT_RECALL_PROMPTS.md A4 斷點已更新。
@@ -85,7 +85,7 @@
 | T-A6-002 | LINE 對話訓練資料收集計畫 | A6 | 💤 暫停（原計畫拆 Sheet 做訓練資料，04-07 重新規劃方向。等 Owner 決定是否需要 LINE 訓練資料及取得方式。） | handoff/tasks/T-A6-002.md |
 | T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | 💤 暫停（Phase 2 v2.0 完成，等 Owner 確認政策 + A5 欄位補齊）（Q1-Q10 重構完成（真實 CSV 驅動），下一步是 Q7/Q10 政策確認 + Phase 3 上線測試） | handoff/tasks/T-A7-001.md |
 | T-A7-002 | A7 部門 80/20 優先任務清單 | A7 | ⏸️ 阻塞中（任務 6（Q1-Q10 實裝）+ 任務 10（技能書 v2.0）已完成。Phase 3A 剩任務 4（地區判斷）、7（流） | handoff/tasks/T-A7-002.md |
-| T-A8-001-folder-to-video-distribution | A8 資料夾案例 → 短影音 → YouTube/TikTok/Pinterest 分發包 | A8 | 🔄 ACTIVE（ICC Tainan v3 審核影片已完成：MAPLAB IG Soft v1、固定開場/結尾、xfade、無 counter；下一步 mobile review + licensed music/cover polish + approval card，不得未核准上傳） | handoff/tasks/T-A8-001-folder-to-video-distribution.md |
+| T-A8-001-folder-to-video-distribution | A8 資料夾案例 → 短影音 → YouTube/TikTok/Pinterest 分發包 | A8 | 🔄 ACTIVE（ICC Tainan v4 審核影片已完成：MAPLAB IG Soft v1、固定開場/結尾、xfade、無 counter、category CTA；下一步 mobile review + licensed music/cover polish + approval card，不得未核准上傳） | handoff/tasks/T-A8-001-folder-to-video-distribution.md |
 | T-B1-001 | B1 Cross-Project Governance Advisor Prompt + Project Pause |  | 🟢 召喚型可用（Investment OS 投資邏輯橋接 ready；InnerFlowLab 內容發文專案暫停） | handoff/tasks/T-B1-001.md |
 | T-B1-B4-investment-os-role-split | T-B1-B4-001 — Investment OS B1-B4 Role Split + Chrome Extension Summon |  | 🔄 進行中 | handoff/tasks/T-B1-B4-investment-os-role-split.md |
 | T-B1-DASH-001 | Guild Ops Board 自動同步 + 即時狀態燈 |  | 🟢 READY（已派工，等執行 + 進度檢查） | handoff/tasks/T-B1-DASH-001.md |

@@ -16,6 +16,10 @@ Status: draft_not_approved
 - Review draft v3 video: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft_v3/a8-short-review-draft.mp4`
 - Review draft v3 cover: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft_v3/a8-short-review-cover.jpg`
 - Review draft v3 QA frames: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft_v3/qa_frames/`
+- Review draft v4 video: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft_v4/a8-short-review-draft.mp4`
+- Review draft v4 cover: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft_v4/a8-short-review-cover.jpg`
+- Review draft v4 CTA category: `corporate_tea`
+- Review draft v4 CTA: `台南企業活動、茶會規劃｜官方 LINE 洽詢檔期 @maplab`
 - Motion style spec: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/a8_motion_style_upgrade.md`
 - Platform metadata: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/dry_run/platform_metadata.md`
 - Review draft v3 platform metadata: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft_v3/review_draft_platform_metadata.md`
@@ -37,6 +41,7 @@ Status: draft_not_approved
 - [x] No internal project name in public copy.
 - [x] Public draft v3 hides scene counter / debug label.
 - [x] Public draft v3 has fixed opening, fixed ending, and `xfade` transition.
+- [x] Public draft v4 uses category CTA default and visually inspected outro frame.
 - [ ] Final video checked for faces, private meeting material, QR codes, phone numbers, slides, or documents.
 - [ ] Final cover text checked at mobile size.
 
@@ -50,4 +55,4 @@ Status: draft_not_approved
 
 ## Current Status
 
-Not ready for publishing yet. A8 has a v3 review draft, but still needs Owner mobile review, licensed music / final cover decision, and explicit upload approval.
+Not ready for publishing yet. A8 has a v4 review draft, but still needs Owner mobile review, licensed music / final cover decision, and explicit upload approval.

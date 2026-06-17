@@ -19,8 +19,20 @@ DEFAULT_SCENE_LINES = [
     "好拿取，交流不中斷",
     "休息時間，動線要穩",
     "甜點與飲品分區",
-    "日期、人數、場地先傳給我們",
+    "官方 LINE 洽詢檔期",
 ]
+DEFAULT_CATEGORY = "corporate_tea"
+CATEGORY_CTA_LINES = {
+    "corporate_tea": "台南企業活動、茶會規劃｜官方 LINE 洽詢檔期 @maplab",
+    "opening": "台南開幕茶會、品牌活動｜官方 LINE 洽詢檔期 @maplab",
+    "brand_event": "台南品牌活動、發表會規劃｜官方 LINE 洽詢檔期 @maplab",
+    "wedding": "台南婚禮茶會、婚禮外燴｜官方 LINE 洽詢檔期 @maplab",
+    "birthday": "台南慶生派對、週歲茶點｜官方 LINE 洽詢檔期 @maplab",
+    "private_party": "台南派對餐敘、私宅外燴｜官方 LINE 洽詢檔期 @maplab",
+    "art_wine": "台南藝文活動、品酒茶會｜官方 LINE 洽詢檔期 @maplab",
+    "custom_box": "台南客製餐盒、外帶點心｜官方 LINE 洽詢檔期 @maplab",
+    "general": "台南外燴設計、活動茶點｜官方 LINE 洽詢檔期 @maplab",
+}
 VISUAL_PRESETS = {
     "maplab_ig_soft": "eq=brightness=0.012:contrast=0.94:saturation=1.035:gamma=1.015,unsharp=3:3:0.22",
     "none": "null",
@@ -33,6 +45,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--out-dir", required=True)
     parser.add_argument("--title", required=True)
     parser.add_argument("--case-label", required=True)
+    parser.add_argument("--category", choices=sorted(CATEGORY_CTA_LINES), default=DEFAULT_CATEGORY)
     parser.add_argument("--scene-line", action="append", default=[])
     parser.add_argument("--limit", type=int, default=5)
     parser.add_argument("--seconds", type=float, default=2.8)
@@ -40,7 +53,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--ending-seconds", type=float, default=1.7)
     parser.add_argument("--opening-title", default="MAPLAB Kitchen")
     parser.add_argument("--opening-subtitle", default="")
-    parser.add_argument("--ending-line", default="日期 / 人數 / 場地先傳給我們")
+    parser.add_argument("--ending-line")
     parser.add_argument("--watermark", default="MAPLAB Kitchen")
     parser.add_argument(
         "--transition",
@@ -96,6 +109,15 @@ def scene_lines(args: argparse.Namespace, count: int) -> list[str]:
     if len(lines) < count:
         lines = lines + [lines[-1]] * (count - len(lines))
     return lines[:count]
+
+
+def resolve_category_defaults(args: argparse.Namespace) -> None:
+    if not args.ending_line:
+        args.ending_line = CATEGORY_CTA_LINES[args.category]
+
+
+def frame_cta_line(cta_line: str) -> str:
+    return cta_line.replace("｜", "\n", 1)
 
 
 def render_frames(
@@ -154,7 +176,7 @@ def render_frames(
         render_one(
             images[-1],
             frame,
-            args.ending_line,
+            frame_cta_line(args.ending_line),
             "台南外燴設計顧問｜MAPLAB Kitchen",
             "",
             "outro",
@@ -285,12 +307,16 @@ def write_metadata(out_dir: Path, args: argparse.Namespace, images: list[Path], 
             "description": (
                 "大臺南會展中心企業會議茶點紀錄。"
                 "以好拿取、畫面乾淨、休息時間不打斷交流為主。"
+                f"\n\n{args.ending_line}"
             ),
             "hashtags": ["#台南外燴", "#企業外燴", "#會議茶點", "#MAPLAB", "#Shorts"],
             "music_note": "建議上傳後使用平台授權音樂庫，不在本機嵌入未授權配樂。",
         },
         "tiktok": {
-            "caption": f"{args.case_label}。會議休息時間的茶點配置，重點是好拿取、動線穩。",
+            "caption": (
+                f"{args.case_label}。會議休息時間的茶點配置，"
+                f"重點是好拿取、動線穩。{args.ending_line}"
+            ),
             "hashtags": ["#台南外燴", "#企業茶點", "#活動餐點", "#MAPLAB"],
             "music_note": "建議使用 TikTok app/Studio 授權音源後再發布。",
         },
@@ -298,6 +324,10 @@ def write_metadata(out_dir: Path, args: argparse.Namespace, images: list[Path], 
             "board": "MAPLAB Catering / Corporate Refreshments",
             "pin_title": f"{args.case_label}｜台南企業外燴茶點",
             "pin_description": "大臺南會展中心企業會議茶點與飲品桌面配置參考。",
+        },
+        "cta": {
+            "category": args.category,
+            "line": args.ending_line,
         },
     }
     (out_dir / "review_draft_platform_metadata.json").write_text(
@@ -308,6 +338,8 @@ def write_metadata(out_dir: Path, args: argparse.Namespace, images: list[Path], 
         "# A8 Review Draft Metadata",
         "",
         f"- Case label: {args.case_label}",
+        f"- Category: {args.category}",
+        f"- CTA: {args.ending_line}",
         "- Visual template: MAPLAB IG Soft v1",
         f"- Transition: {args.transition} / {args.transition_seconds}s",
         f"- Opening: {'off' if args.no_opening else 'fixed intro card'}",
@@ -345,6 +377,7 @@ def write_metadata(out_dir: Path, args: argparse.Namespace, images: list[Path], 
 
 def main() -> None:
     args = parse_args()
+    resolve_category_defaults(args)
     asset_dir = Path(args.asset_dir).resolve()
     out_dir = Path(args.out_dir).resolve()
     work_dir = out_dir / "review_draft_work"
@@ -393,6 +426,8 @@ def main() -> None:
         "asset_dir": str(asset_dir),
         "out_dir": str(out_dir),
         "case_label": args.case_label,
+        "category": args.category,
+        "cta_line": args.ending_line,
         "title": args.title,
         "images": [str(image) for image in images],
         "scene_lines": lines,

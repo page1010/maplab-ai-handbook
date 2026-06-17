@@ -2,7 +2,7 @@
 
 Date: 2026-06-17
 Owner: A8 video pipeline
-Status: applied to `review_draft_v3`
+Status: applied to `review_draft_v4`
 
 ## Why v2 Was Not Good Enough
 
@@ -111,9 +111,24 @@ Filter:
 Ending, 1.5-2.0s:
 
 - Warm cream veil.
-- CTA should ask for event basics, not pressure:
-  - `日期 / 人數 / 場地先傳給我們`
-  - `台南外燴設計顧問｜MAPLAB Kitchen`
+- CTA should use a category-specific service + channel line, not an internal intake instruction.
+- Corporate / tea default:
+  - `台南企業活動、茶會規劃｜官方 LINE 洽詢檔期 @maplab`
+- The renderer breaks the `｜` into two visual lines on the outro card.
+
+CTA defaults:
+
+| category | CTA |
+|---|---|
+| `corporate_tea` | `台南企業活動、茶會規劃｜官方 LINE 洽詢檔期 @maplab` |
+| `opening` | `台南開幕茶會、品牌活動｜官方 LINE 洽詢檔期 @maplab` |
+| `brand_event` | `台南品牌活動、發表會規劃｜官方 LINE 洽詢檔期 @maplab` |
+| `wedding` | `台南婚禮茶會、婚禮外燴｜官方 LINE 洽詢檔期 @maplab` |
+| `birthday` | `台南慶生派對、週歲茶點｜官方 LINE 洽詢檔期 @maplab` |
+| `private_party` | `台南派對餐敘、私宅外燴｜官方 LINE 洽詢檔期 @maplab` |
+| `art_wine` | `台南藝文活動、品酒茶會｜官方 LINE 洽詢檔期 @maplab` |
+| `custom_box` | `台南客製餐盒、外帶點心｜官方 LINE 洽詢檔期 @maplab` |
+| `general` | `台南外燴設計、活動茶點｜官方 LINE 洽詢檔期 @maplab` |
 
 Caption voice:
 
@@ -134,4 +149,3 @@ A8 can mark a local review draft as pass only if:
 - Metadata has YouTube Shorts, TikTok, and Pinterest drafts.
 - Music is not embedded locally unless license is verified.
 - Upload/publish still waits for Owner/A1 approval.
-

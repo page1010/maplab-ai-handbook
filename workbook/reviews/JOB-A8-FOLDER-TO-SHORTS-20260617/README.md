@@ -1,7 +1,7 @@
 # JOB-A8-FOLDER-TO-SHORTS-20260617
 
 Role: A8 Content Repurposing Pipeline
-Status: review_draft_v3_complete
+Status: review_draft_v4_complete
 Created: 2026-06-17
 
 ## Purpose
@@ -23,6 +23,9 @@ Turn Owner's Reel reference into an A8-run workflow:
 - `review_draft_v3/a8-short-review-draft.mp4`
 - `review_draft_v3/a8-short-review-cover.jpg`
 - `review_draft_v3/qa_frames/`
+- `review_draft_v4/a8-short-review-draft.mp4`
+- `review_draft_v4/a8-short-review-cover.jpg`
+- `review_draft_v4/qa_frames/`
 - `a8_motion_style_upgrade.md`
 - `storyboard_seed.md`
 - `publish_approval_card_draft.md`

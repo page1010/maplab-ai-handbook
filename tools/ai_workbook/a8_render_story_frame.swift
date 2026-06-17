@@ -147,18 +147,21 @@ if mode == "intro" {
     warmCream.withAlphaComponent(0.86).setFill()
     NSBezierPath(rect: NSRect(origin: .zero, size: canvasSize)).fill()
 
+    let outroTitleFont = font(["PingFangTC-Semibold", "PingFang TC Semibold", "Heiti TC"], size: 43, weight: .semibold)
+    let outroSubtitleFont = font(["PingFangTC-Regular", "PingFang TC", "Heiti TC"], size: 33, weight: .regular)
+
     drawText(
         title,
-        in: NSRect(x: 72, y: canvasSize.height - 430, width: 860, height: 120),
-        font: font(["PingFangTC-Semibold", "PingFang TC Semibold", "Heiti TC"], size: 58, weight: .semibold),
+        in: NSRect(x: 72, y: canvasSize.height - 455, width: 936, height: 190),
+        font: outroTitleFont,
         color: darkBrown,
-        lineSpacing: 8
+        lineSpacing: 12
     )
-    drawBrandRule(y: canvasSize.height - 465, width: 230)
+    drawBrandRule(y: canvasSize.height - 490, width: 230)
     drawText(
         subtitle,
-        in: NSRect(x: 72, y: canvasSize.height - 575, width: 820, height: 110),
-        font: subtitleFont,
+        in: NSRect(x: 72, y: canvasSize.height - 602, width: 820, height: 90),
+        font: outroSubtitleFont,
         color: darkBrown.withAlphaComponent(0.84),
         lineSpacing: 8
     )

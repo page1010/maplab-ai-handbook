@@ -1,7 +1,7 @@
 # A8 Folder-to-Shorts Validation Report
 
 Date: 2026-06-17
-Status: review_draft_v3_complete
+Status: review_draft_v4_complete
 
 ## Commands Run
 
@@ -58,6 +58,28 @@ ffprobe -v error -select_streams v:0 \
   -of json workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft_v3/a8-short-review-draft.mp4
 ```
 
+```bash
+python3 tools/ai_workbook/a8_enhanced_video_draft.py \
+  --asset-dir workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/wordpress_assets_icctn_001 \
+  --out-dir workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft_v4 \
+  --title '台南企業茶點配置' \
+  --category corporate_tea \
+  --opening-title 'MAPLAB Kitchen' \
+  --opening-subtitle '台南企業會議茶點' \
+  --case-label '大臺南會展中心企業會議茶點' \
+  --scene-line '會議中場，取餐要順' \
+  --scene-line '小份量點心，方便交流' \
+  --scene-line '飲品與甜點分區' \
+  --scene-line '桌面乾淨，節奏更穩' \
+  --scene-line '台南活動茶點規劃' \
+  --limit 5 \
+  --seconds 2.4 \
+  --opening-seconds 1.55 \
+  --ending-seconds 1.7 \
+  --transition fade \
+  --transition-seconds 0.35
+```
+
 ## Results
 
 - `a8-short-dry-run.mp4`: H.264, 1080x1920, 12.666667 seconds.
@@ -73,6 +95,8 @@ ffprobe -v error -select_streams v:0 \
 - `review_draft_v3/a8-short-review-draft.mp4`: H.264, 1080x1920, 30 fps, 13.2 seconds, fixed intro/outro, `xfade` transition, hidden counter.
 - `review_draft_v3/a8-short-review-cover.jpg`: generated.
 - `review_draft_v3/qa_frames/`: sampled intro / scene / outro frames for visual QA.
+- `review_draft_v4/a8-short-review-draft.mp4`: H.264, 1080x1920, 30 fps, 13.2 seconds, category `corporate_tea`, CTA `台南企業活動、茶會規劃｜官方 LINE 洽詢檔期 @maplab`.
+- `review_draft_v4/qa_frames/qa-99-outro.jpg`: sampled and visually inspected; CTA renders as two readable lines without clipping.
 
 ## Tool Findings
 
@@ -81,6 +105,7 @@ ffprobe -v error -select_streams v:0 \
 - `yt-dlp` failed with `No module named expat`; not used as the main route.
 - `ffmpeg` is available.
 - `ffmpeg` supports `xfade`; v3 uses crossfade rather than hard concat.
+- v4 uses category CTA defaults from `--category`; `--ending-line` is now only for manual override.
 - `ffmpeg` lacks `drawtext`, so basic local dry-run is image-only.
 - Enhanced review draft uses Swift/AppKit rendered frames to add subtitles and watermark without `drawtext`.
 - Review draft intentionally has no audio; final publishing should use platform-licensed music.
@@ -103,7 +128,7 @@ Local model is not suitable as autonomous final publisher or visual truth source
 
 No external publishing was performed.
 
-v3 is an improved review draft, not a final publish asset. It still needs mobile review and licensed music / final cover polish before upload approval.
+v4 is an improved review draft, not a final publish asset. It still needs mobile review and licensed music / final cover polish before upload approval.
 
 Before upload, A8 must create a publish approval card listing:
 

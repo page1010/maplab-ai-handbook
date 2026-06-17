@@ -1,7 +1,7 @@
 # A8 影音內容產線技能書（Video Pipeline Skills）
 
 > 負責角色：A8 影音內容產線
-> 建立：2026-04-19 | 版本：v2.1（2026-06-17）
+> 建立：2026-04-19 | 版本：v2.2（2026-06-17）
 
 ---
 
@@ -155,9 +155,9 @@ python3 tools/ai_workbook/a8_enhanced_video_draft.py \
   --asset-dir workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/wordpress_assets_icctn_001 \
   --out-dir workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft \
   --title '大臺南會展中心茶點' \
+  --category corporate_tea \
   --opening-title 'MAPLAB Kitchen' \
   --opening-subtitle '台南企業會議茶點' \
-  --ending-line '日期 / 人數 / 場地先傳給我們' \
   --case-label '大臺南會展中心企業會議茶點' \
   --limit 5 \
   --seconds 2.4
@@ -175,6 +175,21 @@ python3 tools/ai_workbook/a8_enhanced_video_draft.py \
 - 本機審核版不加未授權配樂。正式發布前用 YouTube / TikTok / CapCut / Canva 的授權音樂庫。
 - 這仍是 review draft，不是 final publish asset；需 mobile preview、品牌 QA、privacy check。
 - 左下角分鏡 counter 預設不顯示；只有內部 QA 用 `--show-counter` 才能開。
+- CTA 由 `--category` 預設；只有特殊活動才用 `--ending-line` 覆蓋。
+
+CTA 類別預設：
+
+| category | 預設 CTA |
+|---|---|
+| `corporate_tea` | `台南企業活動、茶會規劃｜官方 LINE 洽詢檔期 @maplab` |
+| `opening` | `台南開幕茶會、品牌活動｜官方 LINE 洽詢檔期 @maplab` |
+| `brand_event` | `台南品牌活動、發表會規劃｜官方 LINE 洽詢檔期 @maplab` |
+| `wedding` | `台南婚禮茶會、婚禮外燴｜官方 LINE 洽詢檔期 @maplab` |
+| `birthday` | `台南慶生派對、週歲茶點｜官方 LINE 洽詢檔期 @maplab` |
+| `private_party` | `台南派對餐敘、私宅外燴｜官方 LINE 洽詢檔期 @maplab` |
+| `art_wine` | `台南藝文活動、品酒茶會｜官方 LINE 洽詢檔期 @maplab` |
+| `custom_box` | `台南客製餐盒、外帶點心｜官方 LINE 洽詢檔期 @maplab` |
+| `general` | `台南外燴設計、活動茶點｜官方 LINE 洽詢檔期 @maplab` |
 
 ### Step 4.6：MAPLAB IG Soft v1 視覺規格
 
@@ -195,7 +210,7 @@ MAPLAB IG Soft v1：
 | 轉場 | 預設 `xfade=fade` 0.35 秒；可測 `smoothleft` / `dissolve`，不得用浮誇特效。 |
 | 濾鏡 | 暖、柔、低對比；亮度微升、對比微降、飽和微升、輕銳化。 |
 | 浮水印 | `MAPLAB Kitchen` 低調右下；不得大到搶主體。 |
-| 結尾 | 暖米色 CTA，優先 `日期 / 人數 / 場地先傳給我們`。 |
+| 結尾 | 暖米色 CTA；依 `--category` 帶出固定文案，企業茶會預設為 `台南企業活動、茶會規劃｜官方 LINE 洽詢檔期 @maplab`。 |
 | 禁止 | public draft 不得出現 `01/05`、檔名、內部日期、debug label。 |
 
 工具升級判準：

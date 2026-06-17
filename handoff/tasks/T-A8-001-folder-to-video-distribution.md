@@ -70,6 +70,9 @@ Reason:
 - Owner review found v2 still below standard: visible left-bottom scene counter, no fixed opening/transition system, too little style difference after research.
 - Added MAPLAB IG Soft v1 motion style spec: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/a8_motion_style_upgrade.md`
 - Upgraded review-draft renderer to support fixed intro/outro, hidden counters by default, warm visual preset, and `xfade` transitions.
+- Owner approved the corporate/tea CTA pattern: `台南企業活動、茶會規劃｜官方 LINE 洽詢檔期 @maplab`.
+- Added category-based CTA defaults to `tools/ai_workbook/a8_enhanced_video_draft.py`; `--ending-line` is now manual override only.
+- Rendered v4 review draft with `--category corporate_tea`: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft_v4/a8-short-review-draft.mp4`.
 - Wrote platform/Drive publishing plan: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/youtube_tiktok_drive_pipeline.md`
 - Updated A8 skill: `skills/a8-video-pipeline-skills.md`
 
@@ -81,13 +84,14 @@ Validation:
 - `ffmpeg` exists.
 - This host's `ffmpeg` lacks `drawtext`; enhanced review draft uses Swift/AppKit rendered frames as fallback.
 - `ffmpeg` supports `xfade`; v3 should use crossfade transitions rather than hard concat.
+- v4: H.264, 1080x1920, 30fps, 13.2 seconds; CTA category `corporate_tea`; outro QA frame checked and not clipped.
 - Local model fallback smoke: `ollama list` confirms `gemma4:latest`, `qwen2.5:14b`, `qwen2.5-coder:7b`. `qwen2.5:14b` can draft storyboard / platform copy / risks, but must be validator-gated because it may invent visual details and CLI output may include terminal control codes.
 
 ## A8 Next Actions
 
 1. Read `skills/a8-video-pipeline-skills.md`.
 2. Review `a8_motion_style_upgrade.md` before rendering.
-3. Review `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/dry_run/`, `review_draft/`, `review_draft_v2/`, and latest `review_draft_v3/`.
+3. Review `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/dry_run/`, `review_draft/`, `review_draft_v2/`, `review_draft_v3/`, and latest `review_draft_v4/`.
 4. Review `youtube_tiktok_drive_pipeline.md` and confirm A8 Drive intake / platform approval route.
 5. Use Google Vids / Canva / CapCut or approved AI video tool to add licensed music, motion polish, and final cover text.
 6. Produce final 9:16 mp4 and cover from the accepted review draft.
@@ -144,5 +148,9 @@ tools/ai_workbook/a8_render_story_frame.swift
 要求：預設不顯示 counter；要固定 intro/outro；轉場用 `xfade`；字幕語氣依 A2 品牌語氣；不得未核准上傳。
 workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/youtube_tiktok_drive_pipeline.md
 
-下一步：先確認最新 `review_draft_v3/` 是否通過 MAPLAB IG Soft gate；再用 Google Vids / Canva / CapCut 加授權配樂、動態細修與最終封面，產 final 9:16 mp4 + cover；再產 publish approval card。未經 Owner/A1 approval，不得上傳 YouTube / TikTok / Instagram / Pinterest。
+Owner 已校正企業茶會 CTA，最新 v4 使用 category CTA 預設：
+workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft_v4/a8-short-review-draft.mp4
+CTA: 台南企業活動、茶會規劃｜官方 LINE 洽詢檔期 @maplab
+
+下一步：先確認最新 `review_draft_v4/` 是否通過手機預覽；再用 Google Vids / Canva / CapCut 加授權配樂、動態細修與最終封面，產 final 9:16 mp4 + cover；再產 publish approval card。未經 Owner/A1 approval，不得上傳 YouTube / TikTok / Instagram / Pinterest。
 ```

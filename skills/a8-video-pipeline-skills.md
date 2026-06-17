@@ -145,6 +145,32 @@ python3 tools/ai_workbook/a8_short_video_dry_run.py \
 - 這台 ffmpeg 沒有 `drawtext` filter。dry-run 不壓字幕；字幕與封面文字交給 Google Vids / Canva / CapCut / Pinterest cover 階段。
 - dry-run 不是最終品牌片，只是讓 A8 確認素材順序、比例與平台包能跑通。
 
+### Step 4.5：本機審核版（字幕 + 浮水印）
+
+若本機 `ffmpeg` 沒有 `drawtext`，不能停在 image-only dry-run。改跑審核版產生器：
+
+```bash
+python3 tools/ai_workbook/a8_enhanced_video_draft.py \
+  --asset-dir workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/wordpress_assets_icctn_001 \
+  --out-dir workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft \
+  --title '大臺南會展中心茶點' \
+  --case-label '大臺南會展中心企業會議茶點' \
+  --limit 5 \
+  --seconds 2.8
+```
+
+產出：
+
+- `a8-short-review-draft.mp4`：1080x1920、字幕、`MAPLAB Kitchen` 浮水印。
+- `a8-short-review-cover.jpg`：封面草稿。
+- `review_draft_manifest.json`：來源、字幕、輸出規格。
+- `review_draft_platform_metadata.md/json`：平台文案草稿。
+
+限制：
+
+- 本機審核版不加未授權配樂。正式發布前用 YouTube / TikTok / CapCut / Canva 的授權音樂庫。
+- 這仍是 review draft，不是 final publish asset；需 mobile preview、品牌 QA、privacy check。
+
 ### Step 5：正式組片
 
 正式版本優先用 Google Vids / Canva / CapCut：
@@ -155,6 +181,13 @@ python3 tools/ai_workbook/a8_short_video_dry_run.py \
 4. 字幕不要蓋食物主體；優先上方 1/3 或左下留白。
 5. 匯出 1080x1920 H.264 mp4。
 6. 另存封面 1080x1920 jpg/png。
+
+正式版必要元素：
+
+- 簡短字幕：每幕 6-12 個中文字，不能遮食物主體。
+- 授權配樂：低音量、不要搶過畫面；優先平台授權音樂庫。
+- 浮水印：每幕保留 `MAPLAB Kitchen` 或正式 logo，位置低調。
+- 封面：小尺寸仍可讀，主題需含地區 + 場景。
 
 MAPLAB 短影音腳本模板：
 

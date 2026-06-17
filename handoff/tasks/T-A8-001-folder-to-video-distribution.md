@@ -51,22 +51,27 @@ Reason:
 - Rendered proof video: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/dry_run/a8-short-dry-run.mp4`
 - Rendered cover draft: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/dry_run/a8-short-cover.jpg`
 - Generated platform metadata: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/dry_run/platform_metadata.md`
+- Created enhanced review-draft renderer: `tools/ai_workbook/a8_enhanced_video_draft.py` + `tools/ai_workbook/a8_render_story_frame.swift`
+- Rendered subtitled review draft: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft/a8-short-review-draft.mp4`
+- Rendered review cover: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft/a8-short-review-cover.jpg`
+- Wrote platform/Drive publishing plan: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/youtube_tiktok_drive_pipeline.md`
 - Updated A8 skill: `skills/a8-video-pipeline-skills.md`
 
 Validation:
 
 - Video: H.264, 1080x1920, 12.666667 seconds.
+- Review draft video: H.264, 1080x1920, 14.0 seconds, subtitles + `MAPLAB Kitchen` watermark, no audio.
 - `ffmpeg` exists.
-- This host's `ffmpeg` lacks `drawtext`, so the local dry-run is image-only; subtitles/cover text should be added in Google Vids / Canva / CapCut / Pinterest cover workflow.
+- This host's `ffmpeg` lacks `drawtext`; enhanced review draft uses Swift/AppKit rendered frames as fallback.
 - Local model fallback smoke: `ollama list` confirms `gemma4:latest`, `qwen2.5:14b`, `qwen2.5-coder:7b`. `qwen2.5:14b` can draft storyboard / platform copy / risks, but must be validator-gated because it may invent visual details and CLI output may include terminal control codes.
 
 ## A8 Next Actions
 
 1. Read `skills/a8-video-pipeline-skills.md`.
-2. Review `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/dry_run/`.
-3. Build `storyboard.md` and `publish_approval_card.md` for the ICC Tainan case.
-4. Use Google Vids / Canva / CapCut or approved AI video tool to add subtitle/cover text.
-5. Produce final 9:16 mp4 and cover.
+2. Review `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/dry_run/` and `review_draft/`.
+3. Review `youtube_tiktok_drive_pipeline.md` and confirm A8 Drive intake / platform approval route.
+4. Use Google Vids / Canva / CapCut or approved AI video tool to add licensed music, motion polish, and final cover text.
+5. Produce final 9:16 mp4 and cover from the review draft.
 6. Ask Owner/A1 for upload approval.
 7. After approval, upload / schedule to YouTube Shorts and TikTok, create Pinterest pin/cover, then write `platform_receipts.md`.
 
@@ -105,5 +110,10 @@ workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/dry_run/a8-short-dry-run.mp4
 workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/dry_run/a8-short-cover.jpg
 workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/dry_run/platform_metadata.md
 
-下一步：建立 storyboard.md 與 publish_approval_card.md，用 Google Vids / Canva / CapCut 加字幕與封面文字，產 final 9:16 mp4 + cover。未經 Owner/A1 approval，不得上傳 YouTube / TikTok / Instagram / Pinterest。
+已完成審核版：
+workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft/a8-short-review-draft.mp4
+workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft/a8-short-review-cover.jpg
+workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/youtube_tiktok_drive_pipeline.md
+
+下一步：用 Google Vids / Canva / CapCut 加授權配樂、動態細修與最終封面，產 final 9:16 mp4 + cover；再產 publish approval card。未經 Owner/A1 approval，不得上傳 YouTube / TikTok / Instagram / Pinterest。
 ```

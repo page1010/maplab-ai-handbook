@@ -1,7 +1,7 @@
 # A8 Folder-to-Shorts Validation Report
 
 Date: 2026-06-17
-Status: dry_run_complete
+Status: review_draft_complete
 
 ## Commands Run
 
@@ -20,19 +20,36 @@ python3 tools/ai_workbook/a8_short_video_dry_run.py \
 ffprobe -v error -show_entries stream=width,height,duration,codec_name -show_entries format=duration -of json workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/dry_run/a8-short-dry-run.mp4
 ```
 
+```bash
+python3 tools/ai_workbook/a8_enhanced_video_draft.py \
+  --asset-dir workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/wordpress_assets_icctn_001 \
+  --out-dir workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft \
+  --title 大臺南會展中心茶點 \
+  --case-label 大臺南會展中心企業會議茶點 \
+  --seconds 2.8 \
+  --limit 5
+```
+
 ## Results
 
 - `a8-short-dry-run.mp4`: H.264, 1080x1920, 12.666667 seconds.
 - `a8-short-cover.jpg`: generated from the first frame and visually inspected.
 - `platform_metadata.md/json`: generated.
 - `dry_run_manifest.json`: generated with source image list and text overlay status.
+- `review_draft/a8-short-review-draft.mp4`: H.264, 1080x1920, 14.0 seconds, subtitles + `MAPLAB Kitchen` watermark.
+- `review_draft/a8-short-review-cover.jpg`: generated.
+- `review_draft/review_draft_platform_metadata.md/json`: generated.
+- `review_draft/review_draft_manifest.json`: generated with source image list, scene lines, and no-audio status.
+- `youtube_tiktok_drive_pipeline.md`: generated with Drive intake, tool stack, benchmark, and publishing boundary.
 
 ## Tool Findings
 
 - Chrome readback could inspect the reference Reel metadata.
 - `yt-dlp` failed with `No module named expat`; not used as the main route.
 - `ffmpeg` is available.
-- `ffmpeg` lacks `drawtext`, so local dry-run is image-only. Final subtitle and cover text should be added in Google Vids / Canva / CapCut.
+- `ffmpeg` lacks `drawtext`, so basic local dry-run is image-only.
+- Enhanced review draft uses Swift/AppKit rendered frames to add subtitles and watermark without `drawtext`.
+- Review draft intentionally has no audio; final publishing should use platform-licensed music.
 - Local model availability verified with `ollama list`: `gemma4:latest`, `qwen2.5:14b`, `qwen2.5-coder:7b`.
 - `qwen2.5:14b` smoke could produce storyboard / platform copy / risk fields for this task, but output quality requires validation: CLI output included terminal control codes, and the model inferred visual details not guaranteed by the source manifest.
 

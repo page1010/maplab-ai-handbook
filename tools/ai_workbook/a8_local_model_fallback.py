@@ -44,6 +44,41 @@ UNSUPPORTED_VISUAL_TERMS = [
     "蒸氣",
     "咖啡",
 ]
+AWKWARD_COPY_TERMS = [
+    "取餐要順",
+    "取餐",
+    "順暢",
+    "流暢的取餐",
+    "流暢的取餐動線",
+    "分開",
+    "詳盡",
+    "詳盡的茶點配置",
+    "方便交流",
+    "促進交流",
+    "確保",
+    "輕鬆氛圍",
+    "動線穩",
+    "節奏穩健",
+    "節奏更穩",
+]
+BRAND_REWRITE_MAP = {
+    "會議中場，取餐要順": "茶點動線清楚",
+    "小份量點心，方便交流": "交流節奏不被打斷",
+    "飲品與甜點分區": "飲品甜點分區",
+    "桌面乾淨，節奏更穩": "桌面留白乾淨",
+    "台南活動茶點規劃": "台南企業茶會",
+    "取餐要順": "茶點動線清楚",
+    "取餐": "茶點",
+    "順暢": "清楚",
+    "分開": "分區",
+    "詳盡": "完整",
+    "方便交流": "交流節奏不被打斷",
+    "促進交流": "保留交流節奏",
+    "確保": "讓",
+    "動線穩": "桌面留白乾淨",
+    "節奏穩健": "節奏舒服",
+    "節奏更穩": "節奏舒服",
+}
 
 
 def parse_args() -> argparse.Namespace:
@@ -61,6 +96,19 @@ def load_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def brand_clean(value: Any) -> Any:
+    if isinstance(value, str):
+        cleaned = value
+        for bad, good in BRAND_REWRITE_MAP.items():
+            cleaned = cleaned.replace(bad, good)
+        return cleaned
+    if isinstance(value, list):
+        return [brand_clean(item) for item in value]
+    if isinstance(value, dict):
+        return {key: brand_clean(item) for key, item in value.items()}
+    return value
+
+
 def compact_manifest(manifest: dict[str, Any], metadata: dict[str, Any]) -> dict[str, Any]:
     images = [
         {"id": f"img{index}", "filename": Path(path).name}
@@ -69,19 +117,19 @@ def compact_manifest(manifest: dict[str, Any], metadata: dict[str, Any]) -> dict
     youtube = metadata.get("youtube_shorts", {})
     tiktok = metadata.get("tiktok", {})
     pinterest = metadata.get("pinterest", {})
-    platform_seed = {
+    platform_seed = brand_clean({
         "youtube_title": youtube.get("title"),
         "youtube_description": youtube.get("description"),
         "tiktok_caption": tiktok.get("caption"),
         "pinterest_title": pinterest.get("pin_title"),
         "hashtags": youtube.get("hashtags") or tiktok.get("hashtags") or [],
-    }
+    })
     return {
         "case_label": manifest.get("case_label"),
         "category": manifest.get("category"),
         "title": manifest.get("title"),
         "cta_line": manifest.get("cta_line"),
-        "scene_lines": manifest.get("scene_lines", []),
+        "scene_lines": brand_clean(manifest.get("scene_lines", [])),
         "image_refs": images,
         "visual_template": manifest.get("visual_template"),
         "counter": manifest.get("counter"),
@@ -108,8 +156,16 @@ Stage 1 角色邊界：
 
 Stage 2 MAPLAB 風格：
 - 語氣自然、溫暖、具體、場景先行，不硬賣。
+- 字幕要像 MAPLAB IG 文案，不要像內部流程檢查。
+- 把「取餐要順」這類內部說法改成「茶點動線清楚」「交流節奏不被打斷」這類優雅說法。
+- 可用語感：茶點動線清楚、交流節奏不被打斷、飲品甜點分區、桌面留白乾淨、短暫休息也有畫面。
+- 本案 storyboard subtitle 優先沿用這五句：茶點動線清楚、交流節奏不被打斷、飲品甜點分區、桌面留白乾淨、台南企業茶會。
+- 本案 visual_instruction 優先沿用這五句：桌面配置與留白、小份量甜點特寫、飲品甜點分區、乾淨桌面層次、茶會配置收束。
+- 不要用確保、詳盡、分開、取餐、順暢、促進交流、動線穩、節奏更穩、節奏穩健；這些太像內部流程或硬銷。
 - CTA 使用既定 line，不自行改寫：{case_packet.get("cta_line")}
 - platform_copy 不可空白，必須包含 CTA 原文。
+- 若 platform_copy 不知道怎麼寫，就複製 Case.platform_seed 的同名欄位；絕對不要留空字串。
+- 若 Case.platform_seed 含禁用詞，必須依 JSON schema 範例改寫，不能照抄禁用詞。
 - 每個字串都要短，不能在字串中換行。
 
 Stage 3 輸出硬規則：
@@ -120,6 +176,7 @@ Stage 3 輸出硬規則：
 - source_status 只能是 scene_line 或 manifest。
 - needs_cloud_tool 必須是 true。
 - 不得使用這些未驗證詞：{", ".join(UNSUPPORTED_VISUAL_TERMS)}
+- 不得使用這些不優雅或內部流程詞：{", ".join(AWKWARD_COPY_TERMS)}
 
 JSON schema:
 {{
@@ -135,11 +192,11 @@ JSON schema:
     }}
   ],
   "platform_copy": {{
-    "youtube_title": "",
-    "youtube_description": "",
-    "tiktok_caption": "",
-    "pinterest_title": "",
-    "hashtags": []
+    "youtube_title": "{case_packet.get("case_label")} | 台南企業外燴茶點 #Shorts",
+    "youtube_description": "{case_packet.get("case_label")}。短暫休息也保留交流節奏。{case_packet.get("cta_line")}",
+    "tiktok_caption": "{case_packet.get("case_label")}。茶點動線清楚，桌面留白乾淨。{case_packet.get("cta_line")}",
+    "pinterest_title": "{case_packet.get("case_label")}｜台南企業外燴茶點",
+    "hashtags": ["#台南外燴", "#企業外燴", "#會議茶點", "#MAPLAB", "#Shorts"]
   }},
   "risks": [],
   "needs_cloud_tool": true,
@@ -241,6 +298,9 @@ def validate(obj: dict[str, Any], expected_cta: str) -> dict[str, Any]:
     for marker in PUBLIC_COPY_BLOCKLIST:
         if marker in public_copy:
             errors.append(f"public copy contains blocked marker: {marker}")
+    for term in AWKWARD_COPY_TERMS:
+        if term in public_copy:
+            errors.append(f"public copy contains awkward or off-brand copy: {term}")
 
     storyboard = obj.get("storyboard")
     if not isinstance(storyboard, list) or not storyboard:
@@ -256,6 +316,12 @@ def validate(obj: dict[str, Any], expected_cta: str) -> dict[str, Any]:
             for term in UNSUPPORTED_VISUAL_TERMS:
                 if term in visual_instruction:
                     errors.append(f"scene {index} unsupported visual claim: {term}")
+            scene_public_text = "\n".join(
+                str(scene.get(key) or "") for key in ["subtitle", "visual_instruction"]
+            )
+            for term in AWKWARD_COPY_TERMS:
+                if term in scene_public_text:
+                    errors.append(f"scene {index} awkward or off-brand copy: {term}")
 
     return {
         "valid": not errors,

@@ -76,6 +76,10 @@ Reason:
 - Added validator-gated local fallback runner: `tools/ai_workbook/a8_local_model_fallback.py`.
 - Ran staged local-model prompt training with `qwen2.5:14b`; v2-v5 exposed failure modes, v6 passed.
 - Saved valid local fallback output: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/local_model_fallback_v6/parsed_output.json`.
+- Owner rejected `取餐要順` as off-brand; validator now blocks internal/process wording and brand-cleans prompt seed before local model use.
+- Added end-to-end local video pipeline: `tools/ai_workbook/a8_local_model_video_pipeline.py`.
+- Rendered accepted local-model MP4 v5: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/local_model_video_v5/a8-short-local-model-video.mp4`.
+- Tested Hermes/OpenClaw route status: Hermes CLI exists but gateway is stopped; OpenClaw browser is OK, OpenClaw agent returned `NO_REPLY` for A8 QA, so A8 hot path remains direct Ollama + deterministic local tools.
 - Wrote platform/Drive publishing plan: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/youtube_tiktok_drive_pipeline.md`
 - Updated A8 skill: `skills/a8-video-pipeline-skills.md`
 
@@ -90,6 +94,8 @@ Validation:
 - v4: H.264, 1080x1920, 30fps, 13.2 seconds; CTA category `corporate_tea`; outro QA frame checked and not clipped.
 - Local model fallback smoke: `ollama list` confirms `gemma4:latest`, `qwen2.5:14b`, `qwen2.5-coder:7b`. `qwen2.5:14b` can draft storyboard / platform copy / risks, but must be validator-gated because it may invent visual details and CLI output may include terminal control codes.
 - Local model fallback v6: `qwen2.5:14b` returned valid JSON; validator result `valid=true`, `errors=[]`, `warnings=[]`. Output is usable as A8 draft only, not final public copy.
+- Local model video v5: `qwen2.5:14b` produced scene lines `茶點動線清楚 / 交流節奏不被打斷 / 飲品甜點分區 / 桌面留白乾淨 / 台南企業茶會`; deterministic runner rendered H.264 1080x1920 30fps 13.2s MP4; middle/outro QA frames visually checked.
+- Worker routing: Hermes is not currently a runnable A8 video worker because gateway is stopped; OpenClaw browser is healthy for UI readback/operator work; OpenClaw agent QA returned `NO_REPLY`, so it is not yet a reliable A8 QA worker.
 
 ## A8 Next Actions
 
@@ -97,17 +103,20 @@ Validation:
 2. Review `a8_motion_style_upgrade.md` before rendering.
 3. Review `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/dry_run/`, `review_draft/`, `review_draft_v2/`, `review_draft_v3/`, and latest `review_draft_v4/`.
 4. Review `youtube_tiktok_drive_pipeline.md` and confirm A8 Drive intake / platform approval route.
-5. Use Google Vids / Canva / CapCut or approved AI video tool to add licensed music, motion polish, and final cover text.
-6. Produce final 9:16 mp4 and cover from the accepted review draft.
-7. Ask Owner/A1 for upload approval.
-8. After approval, upload / schedule to YouTube Shorts and TikTok, create Pinterest pin/cover, then write `platform_receipts.md`.
+5. Review `local_model_video_v5/` as the accepted local-model MP4 proof.
+6. Use Google Vids / Canva / CapCut or approved AI video tool to add licensed music, motion polish, and final cover text.
+7. Produce final 9:16 mp4 and cover from the accepted review draft.
+8. Ask Owner/A1 for upload approval.
+9. After approval, upload / schedule to YouTube Shorts and TikTok, create Pinterest pin/cover, then write `platform_receipts.md`.
 
 Optional fallback route:
 
 - If GPT/Gemini quota is unavailable, run `tools/ai_workbook/a8_local_model_fallback.py` with `qwen2.5:14b` for draft storyboard / platform metadata / approval checklist.
+- If the goal is video proof, run `tools/ai_workbook/a8_local_model_video_pipeline.py`; JSON-only fallback is not enough.
 - Do not let local model publish, upload, or make final visual claims.
 - Run cleanup / validation before using local output in public copy.
-- Latest accepted example: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/local_model_fallback_v6/run_report.md`.
+- Latest accepted JSON example: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/local_model_fallback_v6/run_report.md`.
+- Latest accepted video example: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/local_model_video_v5/pipeline_report.md`.
 
 ## Approval Boundaries
 
@@ -162,5 +171,13 @@ tools/ai_workbook/a8_local_model_fallback.py
 workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/local_model_fallback_v6/parsed_output.json
 validator: valid=true, errors=[], warnings=[]
 
-下一步：先確認最新 `review_draft_v4/` 是否通過手機預覽；如 GPT/Gemini 不可用，可先跑地端 fallback 產 storyboard / metadata 草稿，但仍需人工/雲端工具 polish。再用 Google Vids / Canva / CapCut 加授權配樂、動態細修與最終封面，產 final 9:16 mp4 + cover；再產 publish approval card。未經 Owner/A1 approval，不得上傳 YouTube / TikTok / Instagram / Pinterest。
+Owner 指出 `取餐要順` 不優雅，已把內部流程語加入 validator，並完成地端模型到 MP4 的 v5：
+tools/ai_workbook/a8_local_model_video_pipeline.py
+workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/local_model_video_v5/a8-short-local-model-video.mp4
+scene lines: 茶點動線清楚 / 交流節奏不被打斷 / 飲品甜點分區 / 桌面留白乾淨 / 台南企業茶會
+ffprobe: H.264, 1080x1920, 30fps, 13.2s
+
+Hermes/OpenClaw 現況：Hermes CLI 有但 gateway stopped；OpenClaw browser doctor OK，可做 UI readback/operator；OpenClaw agent QA 對 A8 v5 回 `NO_REPLY`，暫不作 A8 文案/影片 QA 主力。
+
+下一步：先確認最新 `local_model_video_v5/` 與 `review_draft_v4/` 是否通過手機預覽；如 GPT/Gemini 不可用，可跑地端 video pipeline 產 MP4 proof，但仍需人工/雲端工具 polish。再用 Google Vids / Canva / CapCut 加授權配樂、動態細修與最終封面，產 final 9:16 mp4 + cover；再產 publish approval card。未經 Owner/A1 approval，不得上傳 YouTube / TikTok / Instagram / Pinterest。
 ```

@@ -1,7 +1,7 @@
 # A8 影音內容產線技能書（Video Pipeline Skills）
 
 > 負責角色：A8 影音內容產線
-> 建立：2026-04-19 | 版本：v2.3（2026-06-17）
+> 建立：2026-04-19 | 版本：v2.4（2026-06-17）
 
 ---
 
@@ -118,6 +118,8 @@ Fallback 判準：
 - `gemma4:latest`：可做第二意見或短 checklist。
 - `qwen2.5-coder:7b`：只用於腳本/JSON/schema/tooling，不作品牌文案主腦。
 - 地端輸出要經 deterministic cleanup：移除 ANSI/control code、檢查 JSON、檢查是否出現未在素材/manifest 中的畫面主張。
+- 只產 JSON 不算 A8 影片備援完成；完成標準是 JSON valid + 本機工具渲染出 MP4 + ffprobe/QA frame 驗證。
+- 禁用內部流程語：`取餐要順`、`取餐`、`順暢`、`分開`、`詳盡`、`方便交流`、`促進交流`、`確保`、`動線穩`、`節奏更穩`、`節奏穩健`。
 
 ### Step 3.6：地端備援 runner
 
@@ -157,6 +159,69 @@ Validator 最低門檻：
 - Validator: `valid=true`, `errors=[]`, `warnings=[]`
 
 地端通過代表「可接給 A8 當草稿」，不代表可直接發布。
+
+### Step 3.7：地端模型到 MP4 的完整鏈路
+
+地端備援不是「模型自己會做影片」。正確定義是：
+
+```text
+Ollama/qwen2.5:14b 產分鏡與平台草稿
+→ validator 擋 off-brand / internal / privacy / missing fields
+→ Python runner 把分鏡交給本機渲染器
+→ Swift/AppKit 產字幕畫面
+→ ffmpeg 串成 1080x1920 H.264 MP4
+→ ffprobe + QA frames 驗證
+```
+
+可重跑命令：
+
+```bash
+python3 tools/ai_workbook/a8_local_model_video_pipeline.py \
+  --manifest workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft_v4/review_draft_manifest.json \
+  --metadata workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft_v4/review_draft_platform_metadata.json \
+  --motion-spec workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/a8_motion_style_upgrade.md \
+  --out-dir workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/local_model_video_v5 \
+  --model qwen2.5:14b \
+  --timeout 300
+```
+
+2026-06-17 accepted local MP4:
+
+- Video: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/local_model_video_v5/a8-short-local-model-video.mp4`
+- Cover: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/local_model_video_v5/a8-short-local-model-cover.jpg`
+- Report: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/local_model_video_v5/pipeline_report.md`
+- Scene lines: `茶點動線清楚` / `交流節奏不被打斷` / `飲品甜點分區` / `桌面留白乾淨` / `台南企業茶會`
+- ffprobe: H.264, 1080x1920, 30fps, 13.2s.
+
+失敗樣式要回收：
+
+| Run | Result | Lesson |
+|---|---|---|
+| v1 | MP4 rendered, copy too process-like | `取餐要順` 類語氣要進 validator。 |
+| v2 | validator failed | 空 platform title 不能進影片。 |
+| v3 | validator failed | `分開` / `取餐` 類詞仍會回流。 |
+| v4 | validator failed | prompt seed 自己含 `動線穩`，要先 brand-clean input。 |
+| v5 | passed | brand-clean input + stricter validator + MP4 render complete. |
+
+### Step 3.8：Hermes / OpenClaw / 地端工具分工
+
+不要把「有 Hermes/OpenClaw」等同「A8 影片工具已接好」。每次要看實測狀態。
+
+2026-06-17 實測：
+
+| Worker | Current status | A8 role |
+|---|---|---|
+| Direct Ollama `qwen2.5:14b` | 可用；v5 已產分鏡並驅動 MP4 render | L1 local draft brain。 |
+| Python/Swift/ffmpeg tool layer | 可用；產 H.264 1080x1920 MP4 | A8 local rendering engine。 |
+| Hermes | CLI exists; gateway stopped; sessions 0; messaging not configured | cold-path reaction / prompt worker，不進 A8 hot path。 |
+| OpenClaw browser | browser doctor OK; openclaw profile running; tabs visible | browser/operator/readback，可做 YouTube Studio、Telegram Web、NotebookLM 這類 UI readback。 |
+| OpenClaw agent | agent turn ran but returned `NO_REPLY` for A8 v5 QA | 暫不作 A8 copy/video QA 主力；先用 deterministic validation。 |
+
+若要讓 Hermes/OpenClaw 參與 A8：
+
+- Hermes：先用它讀 `pipeline_report.md` 產 reaction card，不要讓它直接控制渲染或發布。
+- OpenClaw：優先用 browser profile 做平台頁面 readback、上傳前 UI 檢查、receipt 擷取；發布仍需 Owner/A1 approval。
+- 真正渲染仍以 repo 內 deterministic runner 為準，才可重跑、驗證、commit。
 
 ### Step 4：本機 dry-run
 

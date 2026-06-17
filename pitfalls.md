@@ -2,6 +2,13 @@
 
 > Cold-start required. 每次修到重複錯誤，要把「觸發條件 / 根因 / 解法 / 預防」寫回這裡。
 
+## 2026-06-17 — Telegram `召喚` must create a dispatch receipt, not just routing advice
+
+- 觸發條件：Owner 在 Telegram 問 Google/Meta 廣告成效判讀，`maplab_claude_bot` 回「召喚 A3」與下一步欄位，但沒有建立 task packet、沒有丟給 Codex/OpenClaw，也沒有回 dispatch receipt；Owner 追問「所以誰做你召喚了嗎」。
+- 根因：`bot/bot.py` 的 `_local_dispatch_answer()` 只產文字建議，沒有 file-backed command intake、worker handoff、prompt artifact、OpenClaw/Codex queue 或 receipt。這違反外部 command window 的 P0 驗收：Telegram 指令 → role route → cold-start prompt/context → worker dispatch → progress receipt。
+- 解法：新增 Telegram dispatch route：`/codex_dispatch` 與自然語句派工觸發都要建立 `workbook/telegram-dispatch/TG-DISPATCH-*/packet.json`、`prompt.md`、`README.md`、`index.jsonl`，並寫入 Codex clipboard bridge；回覆必須列 `dispatch_id`、主責角色、worker、status、packet/prompt 路徑，OpenClaw worker 可背景接手。
+- 預防：任何 `召喚`、`派給`、`貼到 Codex`、`誰做`、`不是回覆` 類 Telegram 訊息，不得只回「請 A3/A2/A1 做」。若沒有產生可追蹤 dispatch artifact 或 worker receipt，只能說「尚未派工」，不能說「已召喚」。
+
 ## 2026-06-17 — Extension summon is a file-backed role handoff, not a UI blocker
 
 - 觸發條件：Owner 要求先透過 Chrome Extension 召喚 A2，檢查 prompt / task card / handoff 迴圈；Agent 先把 prompt 給 Owner 看，又在無法打開 `chrome-extension://.../popup.html` 後把問題說成需要 Owner 手動操作。

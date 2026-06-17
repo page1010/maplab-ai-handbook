@@ -4,6 +4,8 @@
 Owner：IOS-KOL Influencer Radar Manager
 用途：KOL 影片、Podcast、公司 call、供應鏈 memo 與操作筆記的產業研究整理規則。
 
+相關流程：`docs/ios-kol/daily-telegram-workflow.md` 定義 IOS-KOL Telegram digest、OpenClaw/ASR worker、RSS 觸發、每日夜盤總經綜合與多 KOL 共識判讀規則。
+
 ## 核心原則
 
 IOS-KOL 的任務不是把公開新聞重寫一遍，而是把訊號分層，保留有 edge 的公司與供應鏈情報，同時避免把未公開驗證的數字誤寫成官方事實。

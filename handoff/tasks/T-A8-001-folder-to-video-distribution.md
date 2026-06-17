@@ -73,6 +73,9 @@ Reason:
 - Owner approved the corporate/tea CTA pattern: `台南企業活動、茶會規劃｜官方 LINE 洽詢檔期 @maplab`.
 - Added category-based CTA defaults to `tools/ai_workbook/a8_enhanced_video_draft.py`; `--ending-line` is now manual override only.
 - Rendered v4 review draft with `--category corporate_tea`: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft_v4/a8-short-review-draft.mp4`.
+- Added validator-gated local fallback runner: `tools/ai_workbook/a8_local_model_fallback.py`.
+- Ran staged local-model prompt training with `qwen2.5:14b`; v2-v5 exposed failure modes, v6 passed.
+- Saved valid local fallback output: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/local_model_fallback_v6/parsed_output.json`.
 - Wrote platform/Drive publishing plan: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/youtube_tiktok_drive_pipeline.md`
 - Updated A8 skill: `skills/a8-video-pipeline-skills.md`
 
@@ -86,6 +89,7 @@ Validation:
 - `ffmpeg` supports `xfade`; v3 should use crossfade transitions rather than hard concat.
 - v4: H.264, 1080x1920, 30fps, 13.2 seconds; CTA category `corporate_tea`; outro QA frame checked and not clipped.
 - Local model fallback smoke: `ollama list` confirms `gemma4:latest`, `qwen2.5:14b`, `qwen2.5-coder:7b`. `qwen2.5:14b` can draft storyboard / platform copy / risks, but must be validator-gated because it may invent visual details and CLI output may include terminal control codes.
+- Local model fallback v6: `qwen2.5:14b` returned valid JSON; validator result `valid=true`, `errors=[]`, `warnings=[]`. Output is usable as A8 draft only, not final public copy.
 
 ## A8 Next Actions
 
@@ -100,9 +104,10 @@ Validation:
 
 Optional fallback route:
 
-- If GPT/Gemini quota is unavailable, use `qwen2.5:14b` only for draft storyboard / platform metadata / approval checklist.
+- If GPT/Gemini quota is unavailable, run `tools/ai_workbook/a8_local_model_fallback.py` with `qwen2.5:14b` for draft storyboard / platform metadata / approval checklist.
 - Do not let local model publish, upload, or make final visual claims.
 - Run cleanup / validation before using local output in public copy.
+- Latest accepted example: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/local_model_fallback_v6/run_report.md`.
 
 ## Approval Boundaries
 
@@ -152,5 +157,10 @@ Owner 已校正企業茶會 CTA，最新 v4 使用 category CTA 預設：
 workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft_v4/a8-short-review-draft.mp4
 CTA: 台南企業活動、茶會規劃｜官方 LINE 洽詢檔期 @maplab
 
-下一步：先確認最新 `review_draft_v4/` 是否通過手機預覽；再用 Google Vids / Canva / CapCut 加授權配樂、動態細修與最終封面，產 final 9:16 mp4 + cover；再產 publish approval card。未經 Owner/A1 approval，不得上傳 YouTube / TikTok / Instagram / Pinterest。
+地端備援已接好並跑過一次：
+tools/ai_workbook/a8_local_model_fallback.py
+workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/local_model_fallback_v6/parsed_output.json
+validator: valid=true, errors=[], warnings=[]
+
+下一步：先確認最新 `review_draft_v4/` 是否通過手機預覽；如 GPT/Gemini 不可用，可先跑地端 fallback 產 storyboard / metadata 草稿，但仍需人工/雲端工具 polish。再用 Google Vids / Canva / CapCut 加授權配樂、動態細修與最終封面，產 final 9:16 mp4 + cover；再產 publish approval card。未經 Owner/A1 approval，不得上傳 YouTube / TikTok / Instagram / Pinterest。
 ```

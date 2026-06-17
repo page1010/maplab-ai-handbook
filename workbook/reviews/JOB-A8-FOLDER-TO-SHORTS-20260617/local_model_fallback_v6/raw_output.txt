@@ -1,0 +1,58 @@
+{
+  "fallback_verdict": "usable_draft",
+  "model_role": "A8_local_backup",
+  "storyboard": [
+    {
+      "scene": 1,
+      "subtitle": "會議中場，取餐要順",
+      "visual_instruction": "流暢的取餐動線展示",
+      "source_status": "scene_line",
+      "risk": "none"
+    },
+    {
+      "scene": 2,
+      "subtitle": "小份量點心，方便交流",
+      "visual_instruction": "桌上點心與輕鬆氛圍",
+      "source_status": "scene_line",
+      "risk": "none"
+    },
+    {
+      "scene": 3,
+      "subtitle": "飲品與甜點分區",
+      "visual_instruction": "清晰的飲食區域分隔",
+      "source_status": "scene_line",
+      "risk": "none"
+    },
+    {
+      "scene": 4,
+      "subtitle": "桌面乾淨，節奏更穩",
+      "visual_instruction": "簡潔有序的桌面上",
+      "source_status": "scene_line",
+      "risk": "none"
+    },
+    {
+      "scene": 5,
+      "subtitle": "台南活動茶點規劃",
+      "visual_instruction": "詳盡的茶點配置展示",
+      "source_status": "scene_line",
+      "risk": "none"
+    }
+  ],
+  "platform_copy": {
+    "youtube_title": "大臺南會展中心企業會議茶點 | 台南企業外燴茶點 #Shorts",
+    "youtube_description": "大臺南會展中心企業會議茶點紀錄。以好拿取、畫面乾淨、休息時間不打斷交流為主。\n台南企業活動、茶會規劃｜官方 LINE 洽詢檔期 @maplab",
+    "tiktok_caption": "大臺南會展中心企業會議茶點。會議休息時間的茶點配置，重點是好拿取、動線穩。台南企業活動、茶會規劃｜官方 LINE 洽詢檔期 @maplab",
+    "pinterest_title": "大臺南會展中心企業會議茶點｜台南企業外燴茶點",
+    "hashtags": [
+      "#台南外燴",
+      "#企業外燴",
+      "#會議茶點",
+      "#MAPLAB",
+      "#Shorts"
+    ]
+  },
+  "risks": [],
+  "needs_cloud_tool": true,
+  "validator_notes": []
+}
+

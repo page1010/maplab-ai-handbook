@@ -1,7 +1,7 @@
 # A8 影音內容產線技能書（Video Pipeline Skills）
 
 > 負責角色：A8 影音內容產線
-> 建立：2026-04-19 | 版本：v2.2（2026-06-17）
+> 建立：2026-04-19 | 版本：v2.3（2026-06-17）
 
 ---
 
@@ -118,6 +118,45 @@ Fallback 判準：
 - `gemma4:latest`：可做第二意見或短 checklist。
 - `qwen2.5-coder:7b`：只用於腳本/JSON/schema/tooling，不作品牌文案主腦。
 - 地端輸出要經 deterministic cleanup：移除 ANSI/control code、檢查 JSON、檢查是否出現未在素材/manifest 中的畫面主張。
+
+### Step 3.6：地端備援 runner
+
+A8 地端模型訓練先採用「短 prompt contract + 多輪 validator 修正」，不是權重 fine-tune。每次跑地端備援都要落檔，讓失敗樣式回收成下一版 prompt / validator。
+
+```bash
+python3 tools/ai_workbook/a8_local_model_fallback.py \
+  --manifest workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft_v4/review_draft_manifest.json \
+  --metadata workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft_v4/review_draft_platform_metadata.json \
+  --motion-spec workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/a8_motion_style_upgrade.md \
+  --out-dir workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/local_model_fallback_v6 \
+  --model qwen2.5:14b \
+  --timeout 240
+```
+
+產出：
+
+- `prompt.md`：送給地端模型的最小任務契約。
+- `raw_output.txt` / `clean_output.txt`：保留原始與清理後輸出。
+- `parsed_output.json`：可讀 JSON 草稿。
+- `validation.json`：validator 結果。
+- `run_report.md`：A8 / Owner 可檢查的回報。
+
+Validator 最低門檻：
+
+- JSON 必須可解析。
+- 必須包含 `fallback_verdict`, `storyboard`, `platform_copy`, `risks`, `needs_cloud_tool`, `validator_notes`。
+- `platform_copy` 不能空白，且必須包含 category CTA 原文。
+- 禁止輸出本機路徑、內部案名、私有專案字串。
+- 禁止宣稱未由 manifest / scene line / image QA 支持的畫面內容。
+- `needs_cloud_tool` 必須維持 `true`，避免地端模型誤判自己能完成最終影片與發布。
+
+2026-06-17 ICC Tainan 實跑結果：
+
+- Model: `qwen2.5:14b`
+- Output: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/local_model_fallback_v6/parsed_output.json`
+- Validator: `valid=true`, `errors=[]`, `warnings=[]`
+
+地端通過代表「可接給 A8 當草稿」，不代表可直接發布。
 
 ### Step 4：本機 dry-run
 

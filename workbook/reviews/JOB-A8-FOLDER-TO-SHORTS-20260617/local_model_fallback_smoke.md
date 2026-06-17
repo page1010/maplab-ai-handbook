@@ -42,6 +42,50 @@ What failed or needs guardrails:
 - The model inferred visual details not guaranteed by the manifest, such as coffee / steam. This is unacceptable for final public copy unless verified by image QA.
 - It returned `needs_cloud_tool=false`, but the actual production workflow still needs Google Vids / Canva / CapCut or similar for final subtitle / cover assembly.
 
+## Runner Integration
+
+Added:
+
+- `tools/ai_workbook/a8_local_model_fallback.py`
+
+Command used for the accepted run:
+
+```bash
+python3 tools/ai_workbook/a8_local_model_fallback.py \
+  --manifest workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft_v4/review_draft_manifest.json \
+  --metadata workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft_v4/review_draft_platform_metadata.json \
+  --motion-spec workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/a8_motion_style_upgrade.md \
+  --out-dir workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/local_model_fallback_v6 \
+  --model qwen2.5:14b \
+  --timeout 240
+```
+
+Accepted output:
+
+- `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/local_model_fallback_v6/parsed_output.json`
+- `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/local_model_fallback_v6/validation.json`
+- `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/local_model_fallback_v6/run_report.md`
+
+Validator result:
+
+```json
+{
+  "valid": true,
+  "errors": [],
+  "warnings": []
+}
+```
+
+Training sequence:
+
+| Run | Result | Lesson |
+|---|---|---|
+| v2 | invalid | JSON-like output contained invalid strings. |
+| v3 | invalid | Schema shape drifted into nested / wrong fields. |
+| v4 | invalid | Unsupported visual claim appeared. |
+| v5 | invalid | Platform copy did not fully satisfy CTA / non-empty copy rule. |
+| v6 | valid | Short prompt contract + JSON mode + stricter validator produced usable draft. |
+
 ## Policy
 
 Use local model for:

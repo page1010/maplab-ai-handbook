@@ -185,6 +185,25 @@ class HermesFallbackTests(unittest.IsolatedAsyncioTestCase):
         self.assertIn("fallback: Hermes/gemma4", answer)
         self.assertIn("我可以做", answer)
 
+    def test_local_dispatch_quote_routes_to_a6_a5(self):
+        answer = maplab_bot._local_dispatch_answer("請處理報價試算，毛利80%，競品菜單")
+        self.assertIn("A6", answer)
+        self.assertIn("A5", answer)
+        self.assertIn("Sheet", answer)
+
+    def test_local_dispatch_patrol_routes_to_a0_a1(self):
+        answer = maplab_bot._local_dispatch_answer("貼各個角色加巡查任務推進")
+        self.assertIn("A0", answer)
+        self.assertIn("A1", answer)
+        self.assertIn("三層阻塞審查", answer)
+
+    def test_local_dispatch_ads_routes_to_a3_a2(self):
+        answer = maplab_bot._local_dispatch_answer("看Google廣告與Meta廣告評估成效給下一步建議")
+        self.assertIn("A3", answer)
+        self.assertIn("A2", answer)
+        self.assertIn("Google Ads", answer)
+        self.assertIn("Meta Ads", answer)
+
     def test_exact_reply_contract_detector(self):
         message = "請只回覆 HERMES_GEMMA_STAGED_PROMPT_OK，不要解釋。"
         self.assertEqual(

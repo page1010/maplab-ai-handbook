@@ -790,6 +790,42 @@ def _local_runtime_question_answer(text: str) -> str:
     )
 
 
+def _local_dispatch_answer(text: str) -> str:
+    normalized = (text or "").strip().lower()
+    if not normalized:
+        return ""
+
+    quote_markers = ("報價", "quote", "試算", "毛利", "成本", "競品菜單")
+    patrol_markers = ("巡查", "任務推進", "任務卡", "角色", "召喚", "推進")
+    ads_markers = ("google廣告", "google ads", "meta廣告", "meta ads", "廣告成效", "roas", "cpc", "cpa")
+
+    if any(marker in normalized for marker in quote_markers):
+        return (
+            "P0: 這是報價任務，A1 不應硬算或假裝已建 Sheet。\n"
+            "召喚：A6 先接需求/OCR/競品品項對應；A5 負責成本表、毛利公式、Google Sheet/報價單產出。\n"
+            "我能先做：整理品項、數量、毛利規則、待確認欄位，產生給 A6/A5 的 task packet。\n"
+            "下一步：把這段轉給 A6；若要試算表連結，A6/A5 需要走 A5 報價引擎或 GAS/Sheet 權限。"
+        )
+
+    if any(marker in normalized for marker in ads_markers):
+        return (
+            "P0: 這是投放成效判讀任務。\n"
+            "召喚：A3 為主責，讀 Google Ads / Meta Ads 成效、預算、CPC/CPA/ROAS；A2 協作落地頁、SEO/內容與轉換頁問題；A1 負責權限與任務卡寫回。\n"
+            "我能先做：列出要抓的欄位與判斷框架，不假裝已登入 Ads Manager。\n"
+            "下一步：請 A3 讀近 7/14/30 天 Google Ads + Meta Ads：花費、曝光、點擊、CTR、CPC、轉換、CPA、ROAS，輸出保留/暫停/調整預算與素材下一步。"
+        )
+
+    if all(marker in normalized for marker in ("角色", "巡查")) or "任務推進" in normalized:
+        return (
+            "P0: 這是系統巡查與任務推進，不是單純聊天。\n"
+            "召喚：A0 做總調度與優先順序；A1 做系統狀態、task card、cold-start truth source 寫回；各角色只處理自己的下一步。\n"
+            "我能先做：把巡查結果分成已完成、卡住、可由 agent 自解、需 Owner 5 分鐘動作，並寫成 task packet。\n"
+            "下一步：A0/A1 先讀 CURRENT_STATUS.md、pitfalls.md、task cards，對每個 blocked 項跑三層阻塞審查，再派給 A2/A3/A5/A6/A7。"
+        )
+
+    return ""
+
+
 async def claude_ask_with_fallback(
     chat_id: int,
     user_message: str,
@@ -1408,6 +1444,11 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     if local_answer:
         await update.message.reply_text(local_answer)
         log_and_commit(text, local_answer, "runtime-local")
+        return
+    local_answer = _local_dispatch_answer(text)
+    if local_answer:
+        await update.message.reply_text(local_answer)
+        log_and_commit(text, local_answer, "dispatch-local")
         return
     git_pull_silent()
     try:

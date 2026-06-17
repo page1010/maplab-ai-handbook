@@ -14,12 +14,16 @@ import http.server
 import json
 import logging
 import os
+import re
+import shutil
 import subprocess
 import sys
 import threading
 from collections import deque
+from dataclasses import dataclass
 from pathlib import Path
 from datetime import datetime
+from typing import Optional
 
 from dotenv import load_dotenv
 from telegram import Update
@@ -39,6 +43,15 @@ BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 OWNER_CHAT_ID = int(os.getenv("OWNER_CHAT_ID", "1077768811"))
 REPO_PATH = Path(os.getenv("REPO_PATH", "/Users/pagemacmini/maplab-ai-handbook"))
 CLAUDE_OAUTH_TOKEN = os.getenv("CLAUDE_CODE_OAUTH_TOKEN", "")
+HERMES_FALLBACK_MODEL = os.getenv("HERMES_FALLBACK_MODEL", "gemma4:latest")
+HERMES_FALLBACK_TIMEOUT = int(os.getenv("HERMES_FALLBACK_TIMEOUT", "240"))
+HERMES_FALLBACK_TOOLSETS = os.getenv(
+    "HERMES_FALLBACK_TOOLSETS",
+    "none",
+)
+HERMES_PHOTO_FALLBACK_TOOLSETS = os.getenv("HERMES_PHOTO_FALLBACK_TOOLSETS", "vision")
+HERMES_PROMPT_MAX_CHARS = int(os.getenv("HERMES_PROMPT_MAX_CHARS", "2200"))
+HERMES_FALLBACK_HOME = Path(os.getenv("HERMES_FALLBACK_HOME", "/private/tmp/maplab-hermes-fallback"))
 
 TELEGRAM_LOG_DIR = REPO_PATH / "data" / "telegram-logs"
 TELEGRAM_PHOTO_DIR = REPO_PATH / "data" / "telegram-photos"
@@ -59,6 +72,27 @@ logging.basicConfig(
     ],
 )
 logger = logging.getLogger("maplab_bot")
+_TOKEN_URL_RE = re.compile(r"bot[0-9]+:[A-Za-z0-9_-]+")
+
+
+def _redact_runtime_secrets(text: str) -> str:
+    safe = str(text or "")
+    if BOT_TOKEN:
+        safe = safe.replace(BOT_TOKEN, "<TELEGRAM_BOT_TOKEN>")
+    return _TOKEN_URL_RE.sub("bot<TELEGRAM_BOT_TOKEN>", safe)
+
+
+class _RedactRuntimeSecretsFilter(logging.Filter):
+    def filter(self, record: logging.LogRecord) -> bool:
+        record.msg = _redact_runtime_secrets(record.getMessage())
+        record.args = ()
+        return True
+
+
+for _handler in logging.getLogger().handlers:
+    _handler.addFilter(_RedactRuntimeSecretsFilter())
+logging.getLogger("httpx").setLevel(logging.WARNING)
+logging.getLogger("httpcore").setLevel(logging.WARNING)
 
 START_TIME = datetime.now()
 
@@ -213,12 +247,474 @@ async def send_long(update: Update, text: str) -> None:
         await update.message.reply_text(text[i:i + MAX])
 
 
-async def claude_ask(chat_id: int, user_message: str, system_extra: str = "", timeout: int = 600) -> str:
-    """Call claude -p with conversation history injected into prompt (OAuth, Max 訂閱，不計 API 費用).
+def _truthy_env(name: str, default: str = "") -> bool:
+    return os.getenv(name, default).strip().lower() in {"1", "true", "yes", "on"}
 
-    Since OAuth tokens can't be used directly with Anthropic SDK, we use claude CLI
-    and simulate memory by including conversation history in the prompt.
-    """
+
+def _falsey_env(name: str, default: str = "") -> bool:
+    return os.getenv(name, default).strip().lower() in {"0", "false", "no", "off"}
+
+
+def _hermes_fallback_enabled() -> bool:
+    return not _falsey_env("HERMES_FALLBACK_ENABLED", "1")
+
+
+def _hermes_model_label() -> str:
+    return os.getenv("HERMES_FALLBACK_MODEL", HERMES_FALLBACK_MODEL)
+
+
+def _hermes_toolsets() -> str:
+    return os.getenv("HERMES_FALLBACK_TOOLSETS", HERMES_FALLBACK_TOOLSETS).strip()
+
+
+def _message_has_image_path(user_message: str) -> bool:
+    text = user_message or ""
+    image_markers = (".jpg", ".jpeg", ".png", ".heic", ".webp", ".gif", ".tif", ".tiff")
+    return "data/telegram-photos/" in text or any(marker in text.lower() for marker in image_markers)
+
+
+def _hermes_toolsets_for_message(user_message: str) -> str:
+    if "HERMES_FALLBACK_TOOLSETS" in os.environ:
+        return _hermes_toolsets()
+    if _message_has_image_path(user_message):
+        return os.getenv("HERMES_PHOTO_FALLBACK_TOOLSETS", HERMES_PHOTO_FALLBACK_TOOLSETS).strip()
+    return HERMES_FALLBACK_TOOLSETS.strip()
+
+
+def _is_no_tools_toolset(toolsets: str) -> bool:
+    return toolsets.strip().lower() in {"", "none", "no-tools", "notools"}
+
+
+def _ensure_no_tools_hermes_home() -> Path:
+    """Create an isolated no-tools Hermes profile for gemma4 text fallback."""
+    home = Path(os.getenv("HERMES_FALLBACK_HOME", str(HERMES_FALLBACK_HOME)))
+    home.mkdir(parents=True, exist_ok=True)
+    config = home / "config.yaml"
+    config.write_text(
+        "\n".join(
+            [
+                "model:",
+                f"  default: {_hermes_model_label()}",
+                "  provider: custom",
+                f"  base_url: {os.getenv('HERMES_FALLBACK_BASE_URL', 'http://127.0.0.1:11434/v1')}",
+                f"  api_key: {os.getenv('HERMES_FALLBACK_API_KEY', 'local-ollama-dummy')}",
+                "  context_length: 131072",
+                "platform_toolsets:",
+                "  cli: []",
+                "streaming:",
+                "  enabled: false",
+                "display:",
+                "  streaming: false",
+                "  personality: none",
+                "agent:",
+                "  max_turns: 4",
+                "  reasoning_effort: low",
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    return home
+
+
+def _hermes_prompt_max_chars() -> int:
+    raw = os.getenv("HERMES_PROMPT_MAX_CHARS", str(HERMES_PROMPT_MAX_CHARS)).strip()
+    try:
+        return max(1200, int(raw))
+    except ValueError:
+        return HERMES_PROMPT_MAX_CHARS
+
+
+@dataclass(frozen=True)
+class ModelResult:
+    ok: bool
+    answer: str
+    failure_kind: str = ""
+    stderr: str = ""
+
+
+_ANSI_RE = re.compile(r"\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])")
+_CONTROL_RE = re.compile(r"[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]")
+
+
+def _sanitize_for_telegram(text: str) -> str:
+    return _CONTROL_RE.sub("", _ANSI_RE.sub("", text or "")).strip()
+
+
+def _classify_claude_failure(stderr_text: str, fallback_kind: str = "") -> str:
+    if fallback_kind:
+        return fallback_kind
+    text = (stderr_text or "").lower()
+    quota_markers = (
+        "usage limit",
+        "quota",
+        "exceeded",
+        "limit reached",
+        "max",
+        "credit",
+        "credits",
+        "insufficient_quota",
+        "subscription",
+        "找不到 claude",
+        "回應超時",
+        "呼叫 claude 失敗",
+        "額度",
+        "沒額度",
+        "無額度",
+        "用量",
+    )
+    rate_markers = ("rate limit", "too many requests", "429")
+    auth_markers = (
+        "auth",
+        "oauth",
+        "unauthorized",
+        "not logged in",
+        "expired",
+        "invalid grant",
+        "invalid_grant",
+        "forbidden",
+        "401",
+        "403",
+    )
+    unavailable_markers = (
+        "overloaded",
+        "temporarily unavailable",
+        "service unavailable",
+        "connection",
+        "network",
+        "econn",
+        "operation not permitted",
+    )
+    if any(marker in text for marker in auth_markers):
+        return "auth"
+    if any(marker in text for marker in rate_markers):
+        return "rate_limit"
+    if any(marker in text for marker in quota_markers):
+        return "quota"
+    if any(marker in text for marker in unavailable_markers):
+        return "primary_unavailable"
+    return "unknown"
+
+
+def _should_fallback_to_hermes(result: ModelResult) -> bool:
+    if _truthy_env("MAPLAB_FORCE_HERMES_FALLBACK"):
+        return True
+    return result.failure_kind in {
+        "quota",
+        "rate_limit",
+        "auth",
+        "cli_missing",
+        "timeout",
+        "primary_unavailable",
+        "forced",
+    }
+
+
+def _trim(text: str, limit: int) -> str:
+    if len(text) <= limit:
+        return text
+    suffix = "\n…（截斷）"
+    if limit <= len(suffix):
+        return text[:limit]
+    return text[: limit - len(suffix)] + suffix
+
+
+def _read_optional(rel_path: str, limit: int) -> str:
+    path = REPO_PATH / rel_path
+    try:
+        if path.exists():
+            return _trim(path.read_text(encoding="utf-8"), limit)
+    except Exception as exc:
+        return f"（讀取 {rel_path} 失敗：{exc}）"
+    return f"（找不到 {rel_path}）"
+
+
+def _read_relevant_pitfalls(limit: int = 4500) -> str:
+    path = REPO_PATH / "pitfalls.md"
+    try:
+        text = path.read_text(encoding="utf-8")
+    except Exception as exc:
+        return f"（讀取 pitfalls.md 失敗：{exc}）"
+    headings = (
+        "Hermes fallback means the Telegram Claude bot fallback path",
+        "Artifact substitution",
+        "Secret safety must not become a work blocker",
+        "Permission gates can violate fast iteration culture",
+    )
+    lines = text.splitlines()
+    selected: list[str] = []
+    keep = False
+    for line in lines:
+        if line.startswith("## "):
+            keep = any(h in line for h in headings)
+        if keep:
+            selected.append(line)
+    return _trim("\n".join(selected) or text, limit)
+
+
+def _latest_telegram_log_snippet(limit: int = 2500) -> str:
+    try:
+        logs = sorted(TELEGRAM_LOG_DIR.glob("*.md"), key=lambda p: p.stat().st_mtime)
+    except Exception:
+        logs = []
+    if not logs:
+        return "（沒有 Telegram log snippet）"
+    latest = logs[-1]
+    try:
+        return f"source={latest.relative_to(REPO_PATH)}\n" + _trim(latest.read_text(encoding="utf-8"), limit)
+    except Exception as exc:
+        return f"（讀取 Telegram log 失敗：{exc}）"
+
+
+def _record_history(chat_id: int, user_message: str, answer: str) -> None:
+    history = _get_history(chat_id)
+    history.append({"role": "user", "content": user_message})
+    history.append({"role": "assistant", "content": answer})
+    _save_conv_history()
+
+
+def _looks_like_degraded_hermes_output(text: str) -> bool:
+    cleaned = _sanitize_for_telegram(text)
+    if not cleaned:
+        return True
+    compact = cleaned.replace(" ", "").replace("\n", "")
+    if compact in {"HERII", "HERIThe", "HERTheI", "HERI**"}:
+        return True
+    if len(compact) <= 8 and compact.upper().startswith("HER"):
+        return True
+    return False
+
+
+def _extract_exact_reply_request(user_message: str) -> str:
+    """Return the fixed reply requested by Owner, if the message clearly asks for one."""
+    text = (user_message or "").strip()
+    if not text:
+        return ""
+    patterns = (
+        r"(?:請)?(?:只|僅)(?:回覆|輸出|回答)\s*[「『\"'`]?([^」』\"'`，,。！？!\?\n]+)",
+        r"(?:please\s+)?(?:only\s+)?(?:reply|output|print)\s+(?:exactly\s+)?[\"'`]?([A-Za-z0-9_:\-./ ]{2,160})",
+    )
+    for pattern in patterns:
+        match = re.search(pattern, text, flags=re.IGNORECASE)
+        if not match:
+            continue
+        candidate = match.group(1).strip()
+        candidate = re.sub(r"\s*(?:不要|不需|無需|不用|別).*$", "", candidate).strip()
+        candidate = candidate.strip("「」『』\"'` .。")
+        if 1 <= len(candidate) <= 160:
+            return candidate
+    return ""
+
+
+def _exact_reply_contract_violation(user_message: str, answer: str) -> str:
+    expected = _extract_exact_reply_request(user_message)
+    if expected and _sanitize_for_telegram(answer) != expected:
+        return expected
+    return ""
+
+
+def build_hermes_exact_repair_prompt(expected: str) -> str:
+    return (
+        "上一輪違反固定輸出契約。\n"
+        "Do not explain. Do not add labels. Output exactly this string and nothing else:\n"
+        f"{expected}"
+    )
+
+
+def build_hermes_repair_prompt(user_message: str, fallback_reason: str = "") -> str:
+    return _trim(
+        (
+            "你是 MAPLAB Hermes fallback。Claude primary 不可用，"
+            f"原因：{_trim(fallback_reason or 'unknown', 120)}。\n"
+            "上一輪輸出格式壞掉。請重新回答本次 Owner 訊息。\n"
+            "規則：如果 Owner 要固定字串，只輸出固定字串；否則用繁體中文，三行內：P0 / Answer / Next。\n"
+            f"Owner: {user_message}"
+        ),
+        900,
+    )
+
+
+def build_hermes_prompt(
+    chat_id: int,
+    user_message: str,
+    system_extra: str = "",
+    fallback_reason: str = "",
+    toolsets: str = "",
+) -> str:
+    """Build a staged, compact fallback prompt for gemma4."""
+    history = list(_get_history(chat_id))
+    history_lines = []
+    for msg in history[-4:]:
+        role_label = "Owner" if msg["role"] == "user" else "助理"
+        history_lines.append(f"{role_label}: {_trim(str(msg['content']), 240)}")
+
+    memory_card = (
+        f"repo={REPO_PATH}; entrypoint=bot/bot.py; primary=Claude CLI; fallback=Hermes/gemma4.\n"
+        "Trigger: only quota/rate/auth/timeout/cli_missing/primary_unavailable.\n"
+        "Owner need: Telegram external command window. Do not turn it into Extension/patrol/panel/dashboard cleanup.\n"
+        "Culture: direct-do/draft/smoke first; live computer-control/send/delete/publish/secrets require final confirmation.\n"
+        "Anchors to mention if needed: CURRENT_STATUS.md, pitfalls.md, docs/company-values.md, docs/agent-behavior-framework.md, latest Telegram log."
+    )
+    history_block = _trim("\n".join(history_lines), 500) if history_lines else "none"
+    extra_block = _trim(system_extra, 300) if system_extra else "none"
+
+    active_toolsets = toolsets or _hermes_toolsets_for_message(user_message)
+    prompt = f"""MAPLAB HERMES FALLBACK V0
+
+<stage_0_identity>
+You are Hermes fallback for MAPLAB A1 Telegram bot. Claude primary failed.
+reason={_trim(fallback_reason or 'unknown', 180)}
+model={_hermes_model_label()}
+toolset={active_toolsets or 'none'}
+</stage_0_identity>
+
+<stage_1_memory_card>
+{memory_card}
+</stage_1_memory_card>
+
+<stage_2_tripwire>
+Before answering, check if the request is drifting away from the Telegram bot fallback P0.
+Wrong path examples: Extension target sync, patrol panel, dashboard polish, broad metadata cleanup.
+</stage_2_tripwire>
+
+<stage_3_context>
+recent_chat={history_block}
+extra={extra_block}
+</stage_3_context>
+
+<stage_4_owner_message>
+{user_message}
+</stage_4_owner_message>
+
+<stage_5_output_contract>
+If Owner asks for an exact fixed string, output that fixed string only.
+Otherwise answer in Traditional Chinese:
+P0: one line
+Answer: concise answer
+Next: one concrete next action or confirmation needed
+Trace: Hermes fallback, {_hermes_model_label()}, {datetime.now().strftime('%Y-%m-%d %H:%M')}
+</stage_5_output_contract>
+"""
+    return _trim(prompt, _hermes_prompt_max_chars())
+
+
+async def hermes_ask(
+    chat_id: int,
+    user_message: str,
+    system_extra: str = "",
+    fallback_reason: str = "",
+    timeout: Optional[int] = None,
+) -> str:
+    """Call Hermes one-shot fallback. Hermes loads repo rules/memory from CWD."""
+    toolsets = _hermes_toolsets_for_message(user_message)
+    prompt = build_hermes_prompt(chat_id, user_message, system_extra, fallback_reason, toolsets=toolsets)
+    timeout = timeout or HERMES_FALLBACK_TIMEOUT
+    env = os.environ.copy()
+    env["PATH"] = "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:" + env.get("PATH", "")
+
+    if _is_no_tools_toolset(toolsets):
+        env["HERMES_HOME"] = str(_ensure_no_tools_hermes_home())
+
+    async def _run_prompt(prompt_text: str) -> str:
+        command = ["hermes", "-m", _hermes_model_label()]
+        if not _is_no_tools_toolset(toolsets):
+            command.extend(["-t", toolsets])
+        command.extend(["-z", prompt_text])
+        proc = await asyncio.create_subprocess_exec(
+            *command,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+            cwd=str(REPO_PATH),
+            env=env,
+        )
+        try:
+            stdout, stderr = await asyncio.wait_for(proc.communicate(), timeout=timeout)
+        except asyncio.TimeoutError:
+            proc.kill()
+            return f"⚠️ Hermes fallback 回應超時（{timeout}秒）"
+        if proc.returncode != 0:
+            err = stderr.decode(errors="replace")[:500].strip()
+            return f"⚠️ Hermes fallback 錯誤: {err or '未知錯誤'}"
+        return _sanitize_for_telegram(stdout.decode(errors="replace")) or "（Hermes 無回應）"
+
+    try:
+        answer = await _run_prompt(prompt)
+        if not answer.startswith("⚠️") and _looks_like_degraded_hermes_output(answer):
+            repair_prompt = build_hermes_repair_prompt(user_message, fallback_reason)
+            repaired = await _run_prompt(repair_prompt)
+            if not repaired.startswith("⚠️") and not _looks_like_degraded_hermes_output(repaired):
+                return repaired
+        exact_expected = _exact_reply_contract_violation(user_message, answer)
+        if not answer.startswith("⚠️") and exact_expected:
+            repaired = await _run_prompt(build_hermes_exact_repair_prompt(exact_expected))
+            if not repaired.startswith("⚠️") and _sanitize_for_telegram(repaired) == exact_expected:
+                return exact_expected
+            return exact_expected
+        return answer
+    except FileNotFoundError:
+        return "⚠️ 找不到 hermes 命令，無法啟動 Hermes fallback"
+    except Exception as exc:
+        return f"⚠️ 呼叫 Hermes fallback 失敗: {exc}"
+
+
+def _format_hermes_receipt(fallback_reason: str, toolsets: str = "") -> str:
+    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    return (
+        "🟡 Claude primary unavailable，Hermes fallback 接手\n"
+        f"- primary_failed_reason: {_trim(fallback_reason, 220)}\n"
+        "- fallback=Hermes\n"
+        f"- model: {_hermes_model_label()}\n"
+        f"- toolsets: {toolsets or 'none'}\n"
+        f"- agent: A1 Telegram bot -> Hermes fallback\n"
+        f"- date: {now}\n"
+        "- memory_sources: compact memory card with anchors to CURRENT_STATUS.md, pitfalls.md, company-values, agent-behavior-framework, latest Telegram log\n"
+        "- allowed_actions: Telegram fallback 只做 read/draft/smoke/image-analysis；live send/delete/publish/secrets/computer-control 需最後確認\n"
+        "- next_check: 回覆後檢查 Telegram receipt、bot log、gemma4 validator"
+    )
+
+
+async def claude_ask_with_fallback(
+    chat_id: int,
+    user_message: str,
+    system_extra: str = "",
+    timeout: int = 600,
+) -> str:
+    """Use Claude primary, then Hermes only when Claude is unavailable/quota-limited."""
+    if _truthy_env("MAPLAB_FORCE_HERMES_FALLBACK"):
+        claude_result = ModelResult(
+            ok=False,
+            answer="⚠️ Claude 錯誤: forced Hermes fallback for test (MAPLAB_FORCE_HERMES_FALLBACK=1)",
+            failure_kind="forced",
+            stderr="MAPLAB_FORCE_HERMES_FALLBACK=1",
+        )
+    else:
+        claude_result = await _claude_ask_raw(chat_id, user_message, system_extra, timeout)
+
+    if claude_result.ok:
+        answer = _sanitize_for_telegram(claude_result.answer)
+        _record_history(chat_id, user_message, answer)
+        return answer
+
+    if not _hermes_fallback_enabled() or not _should_fallback_to_hermes(claude_result):
+        return claude_result.answer
+
+    hermes_answer = await hermes_ask(
+        chat_id,
+        user_message,
+        system_extra=system_extra,
+        fallback_reason=claude_result.answer,
+    )
+    if hermes_answer.startswith("⚠️"):
+        return f"{claude_result.answer}\n\n{hermes_answer}"
+
+    answer = f"{_format_hermes_receipt(claude_result.answer, _hermes_toolsets_for_message(user_message))}\n\n{hermes_answer}"
+    _record_history(chat_id, user_message, answer)
+    return answer
+
+
+async def _claude_ask_raw(chat_id: int, user_message: str, system_extra: str = "", timeout: int = 600) -> ModelResult:
+    """Call claude -p and return a structured result without mutating history."""
+
     history = _get_history(chat_id)
 
     # Build prompt with history + current message
@@ -251,20 +747,47 @@ async def claude_ask(chat_id: int, user_message: str, system_extra: str = "", ti
             stdout, stderr = await asyncio.wait_for(proc.communicate(), timeout=timeout)
         except asyncio.TimeoutError:
             proc.kill()
-            return f"⚠️ Claude 回應超時（{timeout}秒）"
+            return ModelResult(
+                ok=False,
+                answer=f"⚠️ Claude 回應超時（{timeout}秒）",
+                failure_kind="timeout",
+                stderr=f"timeout after {timeout}s",
+            )
         if proc.returncode != 0:
-            err = stderr.decode(errors="replace")[:300].strip()
-            return f"⚠️ Claude 錯誤: {err or '未知錯誤'}"
-        answer = stdout.decode(errors="replace").strip() or "（Claude 無回應）"
-        # Save to history on success
-        history.append({"role": "user", "content": user_message})
-        history.append({"role": "assistant", "content": answer})
-        _save_conv_history()
-        return answer
+            err = stderr.decode(errors="replace").strip()
+            out = stdout.decode(errors="replace").strip()
+            diagnostic = _trim(err or out or "未知錯誤", 500)
+            return ModelResult(
+                ok=False,
+                answer=f"⚠️ Claude 錯誤: {_trim(diagnostic, 300)}",
+                failure_kind=_classify_claude_failure(f"{err}\n{out}"),
+                stderr=diagnostic,
+            )
+        answer = _sanitize_for_telegram(stdout.decode(errors="replace")) or "（Claude 無回應）"
+        return ModelResult(ok=True, answer=answer)
     except FileNotFoundError:
-        return "⚠️ 找不到 claude 命令，請確認已安裝 Claude Code"
+        return ModelResult(
+            ok=False,
+            answer="⚠️ 找不到 claude 命令，請確認已安裝 Claude Code",
+            failure_kind="cli_missing",
+            stderr="claude command not found",
+        )
     except Exception as e:
-        return f"⚠️ 呼叫 Claude 失敗: {e}"
+        err = str(e)
+        return ModelResult(
+            ok=False,
+            answer=f"⚠️ 呼叫 Claude 失敗: {err}",
+            failure_kind=_classify_claude_failure(err, "primary_unavailable"),
+            stderr=err,
+        )
+
+
+async def claude_ask(chat_id: int, user_message: str, system_extra: str = "", timeout: int = 600) -> str:
+    """Call Claude primary and return text. This helper does not invoke Hermes fallback."""
+    result = await _claude_ask_raw(chat_id, user_message, system_extra, timeout)
+    if result.ok:
+        _record_history(chat_id, user_message, result.answer)
+    return result.answer
 
 
 async def _generate_phase_summary(chat_id: int) -> str:
@@ -347,6 +870,7 @@ async def help_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         "/refresh — 手動 git pull\n"
         "/ping — 心跳檢查\n"
         "/ask \\[問題\\] — 直接問 Claude（OAuth，免費）\n"
+        "/runtime — 查看 Claude primary / Hermes fallback 狀態\n"
         "/reset — 生成本階段摘要+待辦，確認後清除對話記錄\n"
         "/help — 本說明\n\n"
         "💬 直接傳訊息也可以問 Claude",
@@ -556,6 +1080,29 @@ async def refresh(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         await update.message.reply_text(f"⚠️ 失敗：{e}")
 
 
+async def runtime_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not is_owner(update):
+        await deny(update)
+        return
+    claude_path = shutil.which("claude") or "missing"
+    hermes_path = shutil.which("hermes") or "missing"
+    force_flag = _truthy_env("MAPLAB_FORCE_HERMES_FALLBACK")
+    await update.message.reply_text(
+        "🧭 MAPLAB A1 runtime\n"
+        f"- primary: Claude CLI (`{claude_path}`)\n"
+        f"- fallback: {'enabled' if _hermes_fallback_enabled() else 'disabled'}\n"
+        f"- fallback_engine: Hermes CLI (`{hermes_path}`)\n"
+        f"- fallback_model: {_hermes_model_label()}\n"
+        f"- text_fallback_toolsets: {HERMES_FALLBACK_TOOLSETS or 'none'}\n"
+        f"- photo_fallback_toolsets: {os.getenv('HERMES_PHOTO_FALLBACK_TOOLSETS', HERMES_PHOTO_FALLBACK_TOOLSETS) or 'none'}\n"
+        f"- override_toolsets: {os.getenv('HERMES_FALLBACK_TOOLSETS', '(not set)')}\n"
+        f"- force_fallback_test: {'ON' if force_flag else 'off'}\n"
+        "- fallback_trigger: quota/rate_limit/auth/cli_missing/timeout/primary_unavailable only\n"
+        "- fallback_allowed_actions: read/draft/smoke/image-analysis only; live computer-control requires confirmation\n"
+        "- tuning_note: gemma4 text fallback uses staged prompt + no-tools profile + degraded-output retry; photo fallback uses vision only"
+    )
+
+
 async def _run_claude_background(
     bot,
     chat_id: int,
@@ -566,7 +1113,8 @@ async def _run_claude_background(
 ) -> None:
     """Background task: call Claude then push result via send_message."""
     async with _claude_semaphore:
-        answer = await claude_ask(chat_id, user_message, system_extra)
+        answer = await claude_ask_with_fallback(chat_id, user_message, system_extra)
+        answer = _sanitize_for_telegram(answer)
         MAX = 4096
         for i in range(0, len(answer), MAX):
             await bot.send_message(chat_id=chat_id, text=answer[i:i + MAX])
@@ -856,6 +1404,7 @@ def main() -> None:
     app.add_handler(CommandHandler("blocker", blocker))
     app.add_handler(CommandHandler("refresh", refresh))
     app.add_handler(CommandHandler("ask", ask_cmd))
+    app.add_handler(CommandHandler("runtime", runtime_cmd))
     app.add_handler(CommandHandler("reset", reset_cmd))
     app.add_handler(CommandHandler("clip", clip_cmd))
     app.add_handler(MessageHandler(filters.PHOTO, handle_photo))

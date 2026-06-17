@@ -1,0 +1,26 @@
+{
+  "asset_dir": "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/wordpress_assets_icctn_001",
+  "out_dir": "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft_v2",
+  "case_label": "大臺南會展中心企業會議茶點",
+  "title": "台南企業會議茶點",
+  "images": [
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/wordpress_assets_icctn_001/maplab-icc-tainan-business-meeting-catering-14.webp",
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/wordpress_assets_icctn_001/maplab-icc-tainan-catering-closeup-07.webp",
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/wordpress_assets_icctn_001/maplab-icc-tainan-catering-table-overview-01.webp",
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/wordpress_assets_icctn_001/maplab-icc-tainan-catering-table-overview-02.webp",
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/wordpress_assets_icctn_001/maplab-icc-tainan-corporate-catering-display-11.webp"
+  ],
+  "scene_lines": [
+    "大臺南會展中心茶點",
+    "會議中場，取餐要順",
+    "小份量點心，方便交流",
+    "飲品與甜點分區",
+    "台南活動茶點規劃"
+  ],
+  "video": "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft_v2/a8-short-review-draft.mp4",
+  "cover": "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/review_draft_v2/a8-short-review-cover.jpg",
+  "watermark": "MAPLAB Kitchen",
+  "subtitle_overlay": "swift_appkit_rendered",
+  "audio": "none_local_draft_add_platform_licensed_music_before_publish",
+  "status": "review_draft_rendered"
+}

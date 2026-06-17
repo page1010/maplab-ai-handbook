@@ -53,6 +53,21 @@
 - 系統的進步是「每一輪都比上一輪更接近真相」，不是「一次到位永遠不錯」。
 - 新資料推翻舊假設時，把舊假設的紀錄改成「已被 X 推翻」並指向新版本。**保留變更脈絡**比只留最終答案更有教育意義。
 
+### 6. 未提交變更要先判讀，不是先清理（2026-06-17 補入）
+
+看到 `git status` 有既有未提交變更時，不得直接把它統稱為「髒 worktree」或當成清理目標。每一批有意義的變更都先視為前一輪 agent / Owner 需求留下的工作證據，依序回答：
+
+1. 需求來源：這個變更原本要滿足哪個 Owner 需求、Task Card、角色召喚或 production 問題？
+2. 可用性：它現在可不可以用？有沒有驗證、測試、live readback 或最小 smoke？
+3. 治理狀態：它是否仍符合現行 `CURRENT_STATUS.md`、task card、approval-ready 邊界？還是已被新版治理、新路由或新 skill 取代？
+4. 處置：有用就補齊證據、測試、文件後做小範圍 commit；半成品就轉成 task card / review bundle；沒用或已被取代就標記 `superseded` / `archived`，寫明日期、原因與替代路徑，不得靜默刪除。
+
+實作含義：
+- 不為了「乾淨」而丟失學習訊號。dirty change 可能是未完成需求、失敗回收，或正在長出的 token capital。
+- 對 generated log / cache / runtime dump 先分出 artifact policy，不把它和人寫的需求變更混在一起判斷。
+- commit 訊息和 handoff 必須說清楚「本次 staged 了什麼、保留了什麼 dirty、為什麼」。
+- 如果看不懂某批變更，先用檔案內容、`git diff`、task card、`workbook/owner_requirements_panel.md` 追需求來源；追不到再標 `needs-owner-context`，不能直接 revert。
+
 ---
 
 ## 實作規範
@@ -108,3 +123,4 @@
 |------|------|------|------|
 | v1.0 | 2026-04-09 | 初版，定義五條核心原則 + 實作規範 + 歷史代價 | Owner 親口指示「寫死給各個工作夥伴」 |
 | v1.1 | 2026-04-18 | 新增「六、主動推進」，引用 agent-behavior-framework.md | Owner 系統性校正：A0/A6 行為不一致 |
+| v1.2 | 2026-06-17 | 新增未提交變更判讀文化：先追需求、可用性、治理狀態，再補強提交或封存標記 | Owner 校正：不是清掉 dirty changes，而是回收成學習與治理訊號 |

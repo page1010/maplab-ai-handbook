@@ -171,6 +171,20 @@ class HermesFallbackTests(unittest.IsolatedAsyncioTestCase):
         self.assertNotIn("123456:ABC_def-ghi", redacted)
         self.assertIn("bot<TELEGRAM_BOT_TOKEN>", redacted)
 
+    def test_runtime_path_includes_user_local_bin(self):
+        runtime_path = maplab_bot._runtime_path("/custom/bin:/usr/bin")
+        parts = runtime_path.split(":")
+        self.assertIn(str(Path.home() / ".local" / "bin"), parts)
+        self.assertLess(parts.index(str(Path.home() / ".local" / "bin")), parts.index("/usr/bin"))
+        self.assertIn("/custom/bin", parts)
+
+    def test_local_runtime_question_answer(self):
+        answer = maplab_bot._local_runtime_question_answer("你現在是什麼模型可以做什麼")
+        self.assertIn("MAPLAB A1 Telegram bot", answer)
+        self.assertIn("primary: Claude CLI", answer)
+        self.assertIn("fallback: Hermes/gemma4", answer)
+        self.assertIn("我可以做", answer)
+
     def test_exact_reply_contract_detector(self):
         message = "請只回覆 HERMES_GEMMA_STAGED_PROMPT_OK，不要解釋。"
         self.assertEqual(
@@ -203,6 +217,54 @@ class HermesFallbackTests(unittest.IsolatedAsyncioTestCase):
 
         self.assertEqual(answer, "HERMES_GEMMA_STAGED_PROMPT_OK")
         self.assertEqual(fake_create.await_count, 2)
+
+    async def test_no_final_response_retries_with_minimal_prompt(self):
+        fake_create = AsyncMock(
+            side_effect=[
+                FakeHermesProc(
+                    "",
+                    "hermes -z: no final response was produced; treating the run as failed.",
+                    returncode=1,
+                ),
+                FakeHermesProc("P0: Hermes fallback alive\nAnswer: 可以處理查詢。\nNext: 請給任務。"),
+            ]
+        )
+        with (
+            patch("asyncio.create_subprocess_exec", fake_create),
+            patch.object(maplab_bot, "_ensure_no_tools_hermes_home", return_value=Path("/tmp/hermes-test")),
+            patch.dict(os.environ, {"HERMES_FALLBACK_TOOLSETS": "none"}, clear=False),
+        ):
+            answer = await maplab_bot.hermes_ask(1011, "你現在是什麼模型可以做什麼")
+
+        self.assertIn("Hermes fallback alive", answer)
+        self.assertEqual(fake_create.await_count, 2)
+
+    async def test_no_final_response_falls_back_to_ollama_direct(self):
+        fake_create = AsyncMock(
+            side_effect=[
+                FakeHermesProc(
+                    "",
+                    "hermes -z: no final response was produced; treating the run as failed.",
+                    returncode=1,
+                ),
+                FakeHermesProc(
+                    "",
+                    "hermes -z: no final response was produced; treating the run as failed.",
+                    returncode=1,
+                ),
+            ]
+        )
+        with (
+            patch("asyncio.create_subprocess_exec", fake_create),
+            patch.object(maplab_bot, "_ensure_no_tools_hermes_home", return_value=Path("/tmp/hermes-test")),
+            patch.object(maplab_bot, "ollama_direct_ask", AsyncMock(return_value="OLLAMA_DIRECT_OK")) as ollama_direct,
+            patch.dict(os.environ, {"HERMES_FALLBACK_TOOLSETS": "none"}, clear=False),
+        ):
+            answer = await maplab_bot.hermes_ask(1012, "你現在是什麼模型可以做什麼")
+
+        self.assertEqual(answer, "OLLAMA_DIRECT_OK")
+        self.assertEqual(fake_create.await_count, 2)
+        ollama_direct.assert_awaited_once()
 
 
 if __name__ == "__main__":

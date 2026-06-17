@@ -19,6 +19,8 @@ import shutil
 import subprocess
 import sys
 import threading
+import urllib.error
+import urllib.request
 from collections import deque
 from dataclasses import dataclass
 from pathlib import Path
@@ -44,7 +46,7 @@ OWNER_CHAT_ID = int(os.getenv("OWNER_CHAT_ID", "1077768811"))
 REPO_PATH = Path(os.getenv("REPO_PATH", "/Users/pagemacmini/maplab-ai-handbook"))
 CLAUDE_OAUTH_TOKEN = os.getenv("CLAUDE_CODE_OAUTH_TOKEN", "")
 HERMES_FALLBACK_MODEL = os.getenv("HERMES_FALLBACK_MODEL", "gemma4:latest")
-HERMES_FALLBACK_TIMEOUT = int(os.getenv("HERMES_FALLBACK_TIMEOUT", "240"))
+HERMES_FALLBACK_TIMEOUT = int(os.getenv("HERMES_FALLBACK_TIMEOUT", "60"))
 HERMES_FALLBACK_TOOLSETS = os.getenv(
     "HERMES_FALLBACK_TOOLSETS",
     "none",
@@ -52,6 +54,16 @@ HERMES_FALLBACK_TOOLSETS = os.getenv(
 HERMES_PHOTO_FALLBACK_TOOLSETS = os.getenv("HERMES_PHOTO_FALLBACK_TOOLSETS", "vision")
 HERMES_PROMPT_MAX_CHARS = int(os.getenv("HERMES_PROMPT_MAX_CHARS", "2200"))
 HERMES_FALLBACK_HOME = Path(os.getenv("HERMES_FALLBACK_HOME", "/private/tmp/maplab-hermes-fallback"))
+OLLAMA_FALLBACK_URL = os.getenv("OLLAMA_FALLBACK_URL", "http://127.0.0.1:11434/api/generate")
+RUNTIME_BIN_DIRS = [
+    str(Path.home() / ".local" / "bin"),
+    "/opt/homebrew/bin",
+    "/usr/local/bin",
+    "/usr/bin",
+    "/bin",
+    "/usr/sbin",
+    "/sbin",
+]
 
 TELEGRAM_LOG_DIR = REPO_PATH / "data" / "telegram-logs"
 TELEGRAM_PHOTO_DIR = REPO_PATH / "data" / "telegram-photos"
@@ -257,6 +269,20 @@ def _falsey_env(name: str, default: str = "") -> bool:
 
 def _hermes_fallback_enabled() -> bool:
     return not _falsey_env("HERMES_FALLBACK_ENABLED", "1")
+
+
+def _runtime_path(base_path: str = "") -> str:
+    seen = set()
+    parts = []
+    for item in [*RUNTIME_BIN_DIRS, *(base_path or os.getenv("PATH", "")).split(":")]:
+        if item and item not in seen:
+            seen.add(item)
+            parts.append(item)
+    return ":".join(parts)
+
+
+def _runtime_which(command: str) -> str:
+    return shutil.which(command, path=_runtime_path()) or ""
 
 
 def _hermes_model_label() -> str:
@@ -534,6 +560,67 @@ def build_hermes_repair_prompt(user_message: str, fallback_reason: str = "") -> 
     )
 
 
+def build_hermes_minimal_prompt(user_message: str, fallback_reason: str = "") -> str:
+    return _trim(
+        (
+            "MAPLAB Hermes fallback. Claude primary failed.\n"
+            f"Reason: {_trim(fallback_reason or 'unknown', 120)}\n"
+            "Answer the Owner in Traditional Chinese. Stay on the Telegram command-window task.\n"
+            "Format exactly 3 lines unless Owner asks for an exact fixed string:\n"
+            "P0: ...\nAnswer: ...\nNext: ...\n"
+            f"Owner: {user_message}"
+        ),
+        700,
+    )
+
+
+def _local_model_prompt(user_message: str, fallback_reason: str = "") -> str:
+    return build_hermes_minimal_prompt(user_message, fallback_reason)
+
+
+def _ollama_generate_sync(prompt: str, timeout: int) -> str:
+    payload = json.dumps(
+        {
+            "model": _hermes_model_label(),
+            "prompt": prompt,
+            "stream": False,
+            "options": {
+                "temperature": 0.2,
+                "num_predict": 220,
+            },
+        }
+    ).encode("utf-8")
+    req = urllib.request.Request(
+        OLLAMA_FALLBACK_URL,
+        data=payload,
+        headers={"Content-Type": "application/json"},
+        method="POST",
+    )
+    with urllib.request.urlopen(req, timeout=timeout) as resp:
+        data = json.loads(resp.read().decode("utf-8"))
+    return _sanitize_for_telegram(data.get("response", ""))
+
+
+async def ollama_direct_ask(
+    user_message: str,
+    fallback_reason: str = "",
+    trigger: str = "",
+    timeout: int = 45,
+) -> str:
+    prompt = _local_model_prompt(user_message, fallback_reason)
+    try:
+        answer = await asyncio.to_thread(_ollama_generate_sync, prompt, timeout)
+    except (urllib.error.URLError, TimeoutError, OSError, json.JSONDecodeError) as exc:
+        return f"⚠️ Ollama direct fallback 錯誤: {_trim(str(exc), 240)}"
+    if not answer:
+        return "⚠️ Ollama direct fallback 無回應"
+    prefix = (
+        "P0: Hermes CLI 未產生可用 final，已用本機 Ollama/gemma4 直連備援。\n"
+        f"Trace: trigger={_trim(trigger or 'hermes_unavailable', 80)}\n"
+    )
+    return prefix + answer
+
+
 def build_hermes_prompt(
     chat_id: int,
     user_message: str,
@@ -610,7 +697,7 @@ async def hermes_ask(
     prompt = build_hermes_prompt(chat_id, user_message, system_extra, fallback_reason, toolsets=toolsets)
     timeout = timeout or HERMES_FALLBACK_TIMEOUT
     env = os.environ.copy()
-    env["PATH"] = "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:" + env.get("PATH", "")
+    env["PATH"] = _runtime_path(env.get("PATH", ""))
 
     if _is_no_tools_toolset(toolsets):
         env["HERMES_HOME"] = str(_ensure_no_tools_hermes_home())
@@ -631,6 +718,7 @@ async def hermes_ask(
             stdout, stderr = await asyncio.wait_for(proc.communicate(), timeout=timeout)
         except asyncio.TimeoutError:
             proc.kill()
+            await proc.wait()
             return f"⚠️ Hermes fallback 回應超時（{timeout}秒）"
         if proc.returncode != 0:
             err = stderr.decode(errors="replace")[:500].strip()
@@ -639,6 +727,17 @@ async def hermes_ask(
 
     try:
         answer = await _run_prompt(prompt)
+        if answer.startswith("⚠️ Hermes fallback 錯誤") and "no final response" in answer:
+            repaired = await _run_prompt(build_hermes_minimal_prompt(user_message, fallback_reason))
+            if not repaired.startswith("⚠️"):
+                return repaired
+            return await ollama_direct_ask(
+                user_message,
+                fallback_reason,
+                trigger=f"{answer}; retry={repaired}",
+            )
+        if answer.startswith("⚠️ Hermes fallback 回應超時"):
+            return await ollama_direct_ask(user_message, fallback_reason, trigger=answer)
         if not answer.startswith("⚠️") and _looks_like_degraded_hermes_output(answer):
             repair_prompt = build_hermes_repair_prompt(user_message, fallback_reason)
             repaired = await _run_prompt(repair_prompt)
@@ -652,7 +751,7 @@ async def hermes_ask(
             return exact_expected
         return answer
     except FileNotFoundError:
-        return "⚠️ 找不到 hermes 命令，無法啟動 Hermes fallback"
+        return await ollama_direct_ask(user_message, fallback_reason, trigger="hermes command not found")
     except Exception as exc:
         return f"⚠️ 呼叫 Hermes fallback 失敗: {exc}"
 
@@ -670,6 +769,24 @@ def _format_hermes_receipt(fallback_reason: str, toolsets: str = "") -> str:
         "- memory_sources: compact memory card with anchors to CURRENT_STATUS.md, pitfalls.md, company-values, agent-behavior-framework, latest Telegram log\n"
         "- allowed_actions: Telegram fallback 只做 read/draft/smoke/image-analysis；live send/delete/publish/secrets/computer-control 需最後確認\n"
         "- next_check: 回覆後檢查 Telegram receipt、bot log、gemma4 validator"
+    )
+
+
+def _local_runtime_question_answer(text: str) -> str:
+    normalized = (text or "").strip().lower()
+    model_question = ("什麼模型" in normalized or "哪個模型" in normalized or "what model" in normalized)
+    capability_question = ("可以做什麼" in normalized or "能做什麼" in normalized or "capabil" in normalized)
+    if not (model_question and capability_question):
+        return ""
+    claude_path = _runtime_which("claude") or "missing"
+    hermes_path = _runtime_which("hermes") or "missing"
+    return (
+        "我是 MAPLAB A1 Telegram bot。\n"
+        f"- primary: Claude CLI ({claude_path})\n"
+        f"- fallback: Hermes/gemma4 ({hermes_path}, model={_hermes_model_label()})\n"
+        "- fallback trigger: Claude quota/rate/auth/timeout/cli_missing/primary_unavailable\n"
+        "- 我可以做：查任務/狀態、整理下一步、草稿、read/draft/smoke、圖片分析、在 Claude 不可用時用本機模型備援。\n"
+        "- 我不能直接做：live send/delete/publish/secrets/computer-control，除非你最後確認。"
     )
 
 
@@ -733,7 +850,7 @@ async def _claude_ask_raw(chat_id: int, user_message: str, system_extra: str = "
     env = os.environ.copy()
     if CLAUDE_OAUTH_TOKEN:
         env["CLAUDE_CODE_OAUTH_TOKEN"] = CLAUDE_OAUTH_TOKEN
-    env["PATH"] = "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:" + env.get("PATH", "")
+    env["PATH"] = _runtime_path(env.get("PATH", ""))
 
     try:
         proc = await asyncio.create_subprocess_exec(
@@ -814,7 +931,7 @@ async def _generate_phase_summary(chat_id: int) -> str:
     env = os.environ.copy()
     if CLAUDE_OAUTH_TOKEN:
         env["CLAUDE_CODE_OAUTH_TOKEN"] = CLAUDE_OAUTH_TOKEN
-    env["PATH"] = "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:" + env.get("PATH", "")
+    env["PATH"] = _runtime_path(env.get("PATH", ""))
 
     try:
         proc = await asyncio.create_subprocess_exec(
@@ -1084,8 +1201,8 @@ async def runtime_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
     if not is_owner(update):
         await deny(update)
         return
-    claude_path = shutil.which("claude") or "missing"
-    hermes_path = shutil.which("hermes") or "missing"
+    claude_path = _runtime_which("claude") or "missing"
+    hermes_path = _runtime_which("hermes") or "missing"
     force_flag = _truthy_env("MAPLAB_FORCE_HERMES_FALLBACK")
     await update.message.reply_text(
         "🧭 MAPLAB A1 runtime\n"
@@ -1287,6 +1404,11 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         await deny(update)
         return
     text = update.message.text or ""
+    local_answer = _local_runtime_question_answer(text)
+    if local_answer:
+        await update.message.reply_text(local_answer)
+        log_and_commit(text, local_answer, "runtime-local")
+        return
     git_pull_silent()
     try:
         status_snippet = read_file("CURRENT_STATUS.md")[:1500]

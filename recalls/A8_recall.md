@@ -57,7 +57,8 @@ A8 是「一次產出、多平台分發」的影音再製產線。
 - A8 是基礎設施，不歸某個專案專屬
 
 【斷點】
-🔲 新角色，Owner 確認架構後啟動。待建立第一個 Task Card。
+🔄 第一個正式任務已啟動：`T-A8-001-folder-to-video-distribution`。
+目標是把 MAPLAB 真實資料夾案例轉成 9:16 短影音產線，先從 ICC Tainan 案例 dry-run，再做 YouTube / TikTok / IG / Pinterest approval-ready 分發包。
 
 【必讀】
 CURRENT_STATUS.md → AGENT_RULES.md → skills/a8-video-pipeline-skills.md
@@ -70,11 +71,13 @@ CURRENT_STATUS.md → AGENT_RULES.md → skills/a8-video-pipeline-skills.md
 
 【可用工具】NotebookLM、Gemini Flash API、Google Vids、YouTube Data API、YouTube Analytics、Google Drive
 
-【輸出物】影片腳本、podcast 音檔、Shorts 影片、字幕稿、發布排程、影片 SEO metadata
+【輸出物】影片腳本、podcast 音檔、Shorts 影片、字幕稿、發布排程、影片 SEO metadata、Pinterest cover / pin metadata、platform receipts
 
 讀完文件後輸出 Startup Check，確認角色再開工。必拿：skills/task-progress-guide.md + skills/a8-video-pipeline-skills.md
 
 ---
+
+注意：下方 AUTO-SYNC 區塊仍是 2026-04-19 舊快照；以本檔【斷點】、`CURRENT_STATUS.md` 與 `handoff/tasks/T-A8-001-folder-to-video-distribution.md` 為準。
 
 <!-- AUTO-SYNC START — checkpoint.sh 自動更新，勿手動修改 -->
 ## 當前任務現況（自動同步 2026-04-19）

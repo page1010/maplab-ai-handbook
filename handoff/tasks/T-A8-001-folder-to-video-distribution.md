@@ -1,0 +1,109 @@
+# T-A8-001 — Folder Case to Short Video Distribution
+
+Owner: A8 影音內容產線
+Status: 🔄 ACTIVE
+Created: 2026-06-17
+Risk: medium
+
+## Owner Request
+
+Owner wants A8 to stop being idle and run a real content production loop:
+
+> 拿我的資料夾實例，取用 AI 工具做成影片，上傳到 TikTok / YouTube，整理封面到 Pinterest。先研究 IG Reel 的底層邏輯，跑看看，再把流程技能寫好。
+
+Reference Reel:
+
+- `https://www.instagram.com/reel/DZp4BxgguqC/?igsh=c3k0NGM1YTB3N2Fz`
+
+## Current Readback
+
+Chrome logged-in read-only inspection could access the Reel metadata:
+
+- Creator: `michelletech2026`
+- Caption/topic: `Using Higgsfield MCP to make a bag`
+- Date shown in metadata: 2026-06-16
+- Public metrics at readback: 25 likes, 5 comments
+- Observed media duration: about 29.6 seconds for the main video
+
+Interpretation:
+
+- The useful pattern is not the exact content; it is a tool-led workflow Reel: show a repeatable AI tool path, package it as a clear outcome, then distribute it with platform-specific metadata.
+- MAPLAB should adapt this into: case folder evidence → public-safe label → storyboard → AI/video assembly → YouTube/TikTok/IG/Pinterest package → approval → publish receipts.
+
+## Seed Case Used for Dry Run
+
+Use this already-reviewed MAPLAB case bundle as the first A8 sample:
+
+- Source bundle: `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/`
+- Asset dir: `workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/wordpress_assets_icctn_001/`
+- Public-safe case label: `大臺南會展中心企業會議茶點`
+- Related live page: `https://www.maplabkitchen.com/icc-tainan-catering/`
+
+Reason:
+
+- It is a real recent case.
+- Images are already converted and partially used on WordPress.
+- A4 manifest already separates public-safe label from internal folder name.
+
+## Work Completed
+
+- Created dry-run script: `tools/ai_workbook/a8_short_video_dry_run.py`
+- Rendered proof video: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/dry_run/a8-short-dry-run.mp4`
+- Rendered cover draft: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/dry_run/a8-short-cover.jpg`
+- Generated platform metadata: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/dry_run/platform_metadata.md`
+- Updated A8 skill: `skills/a8-video-pipeline-skills.md`
+
+Validation:
+
+- Video: H.264, 1080x1920, 12.666667 seconds.
+- `ffmpeg` exists.
+- This host's `ffmpeg` lacks `drawtext`, so the local dry-run is image-only; subtitles/cover text should be added in Google Vids / Canva / CapCut / Pinterest cover workflow.
+- Local model fallback smoke: `ollama list` confirms `gemma4:latest`, `qwen2.5:14b`, `qwen2.5-coder:7b`. `qwen2.5:14b` can draft storyboard / platform copy / risks, but must be validator-gated because it may invent visual details and CLI output may include terminal control codes.
+
+## A8 Next Actions
+
+1. Read `skills/a8-video-pipeline-skills.md`.
+2. Review `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/dry_run/`.
+3. Build `storyboard.md` and `publish_approval_card.md` for the ICC Tainan case.
+4. Use Google Vids / Canva / CapCut or approved AI video tool to add subtitle/cover text.
+5. Produce final 9:16 mp4 and cover.
+6. Ask Owner/A1 for upload approval.
+7. After approval, upload / schedule to YouTube Shorts and TikTok, create Pinterest pin/cover, then write `platform_receipts.md`.
+
+Optional fallback route:
+
+- If GPT/Gemini quota is unavailable, use `qwen2.5:14b` only for draft storyboard / platform metadata / approval checklist.
+- Do not let local model publish, upload, or make final visual claims.
+- Run cleanup / validation before using local output in public copy.
+
+## Approval Boundaries
+
+A8 may directly do:
+
+- Research.
+- Source-folder readback.
+- Local dry-run.
+- Storyboard, metadata, and approval-ready package.
+- Draft work inside Google Vids / Canva / CapCut if no external publishing occurs.
+
+A8 must ask Owner/A1 before:
+
+- Uploading or publishing to YouTube / TikTok / Instagram / Pinterest.
+- Using private photos with clear faces, QR codes, phone numbers, meeting slides, client documents, or internal project labels.
+- Sending files to a third-party AI tool when the file contains private client material.
+
+## Resume Prompt
+
+```text
+你是 MAPLAB A8 影音內容產線。請先讀 CURRENT_STATUS.md、recalls/A8_recall.md、skills/a8-video-pipeline-skills.md、handoff/tasks/T-A8-001-folder-to-video-distribution.md。
+
+本任務是把 MAPLAB 真實資料夾案例轉成可審核短影音產線。第一個 seed case 是 ICC Tainan bundle：
+workbook/reviews/JOB-A2A3A4-APPROVAL-READY-20260615-ICCTAINAN/wordpress_assets_icctn_001/
+
+已完成 dry-run：
+workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/dry_run/a8-short-dry-run.mp4
+workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/dry_run/a8-short-cover.jpg
+workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/dry_run/platform_metadata.md
+
+下一步：建立 storyboard.md 與 publish_approval_card.md，用 Google Vids / Canva / CapCut 加字幕與封面文字，產 final 9:16 mp4 + cover。未經 Owner/A1 approval，不得上傳 YouTube / TikTok / Instagram / Pinterest。
+```

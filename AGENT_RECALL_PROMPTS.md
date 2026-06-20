@@ -25,8 +25,8 @@
 | A5 | 報價與提案引擎部 | ⚠️ 任務卡狀態待Owner核查（2026-05-19有6個A5 commits：343e1d0/24c985b/6a98eb0/4b53ea8/716f0c2/d22c03c；task card T-A5-002/004/005仍顯示CRITICAL；~750h/~31.3天無新commit）| Quotation Engine |
 | A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（aa77573 2026-05-19 Codex-first route；~743h/~31天無新活動；LINE webhook等Owner確認 Channel 1654658337）| Sales Rapid Response |
 | A7 | 客服與對話轉單部 | 💤 T-A7-001 正式暫停；T-A7-002 ⏸️ 阻塞（等LINE後台權限+Owner政策決策）| Smart Reply |
-| A8 | 影音內容產線 | 🔄 T-A8-001 ACTIVE（ICC Tainan v4 審核影片 + 地端模型 v5 MP4 已通過；last commit ab32c8e 2026-06-17 16:46，現 ~71h 無新 commit，超 48h 門檻；下一步 mobile review + 授權配樂 + approval card，未經 Owner/A1 approval 不得上傳） | Content Repurposing Pipeline |
-| **B1** | **Investment OS Builder** | **🔴 CRITICAL（T-HQ-001 超 48h：最後 014081c 2026-06-11 18:46，現 ~213h/~8.9天）** | **寫功能 / runtime surface；P5/P6 待執行** |
+| A8 | 影音內容產線 | 🔄 T-A8-001 ACTIVE（2026-06-20 完成地端動態運鏡整合 local motion v6 + zero-cost pipeline；last commit f9d1c42 2026-06-20 20:56，48h 門檻已解除；下一步審核 local motion POC storyboard → 跑地端動態生成 → approval card，未經 Owner/A1 approval 不得上傳） | Content Repurposing Pipeline |
+| **B1** | **Investment OS Builder** | **🔴 CRITICAL（T-HQ-001 超 48h：最後 014081c 2026-06-11 18:46，現 ~220h/~9.2天；同一 B1 身分另在 Guild Ops Board 專案活躍，2026-06-20 有 2 commits 完成 Role Dispatch Console v0.3）** | **寫功能 / runtime surface；P5/P6 待執行** |
 | **B2** | **Investment OS Reviewer** | **🟢 召喚型可用** | **資料流 / 錯誤 / freshness review** |
 | **B3** | **Investment OS Archivist** | **🟢 召喚型可用** | **版本紀錄 / 交接 / resume prompt** |
 | **B4** | **Investment OS System Patrol** | **🟢 召喚型可用** | **系統適配巡查 / pause-refactor** |

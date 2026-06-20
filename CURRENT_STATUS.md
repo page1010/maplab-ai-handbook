@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-06-20 08:00（A1 每日巡查，遠端：24h 0 新非巡查 commit，系統靜止；T-A8-001（~63h）/T-A1-LEARNING-LOOP-001（~90h）持續超 48h；A4（~209h）/B1（~205h）CRITICAL 持續；GCP帳單~65天🔴；task cards 與本表比對無新增不一致）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-06-20 16:00（A1 午後巡查，遠端：8h 0 新非巡查 commit，系統靜止；T-A8-001（~71h）/T-A1-LEARNING-LOOP-001（~97h）持續超 48h；A4（~216h）/B1（~213h）CRITICAL 持續；GCP帳單~65天🔴；task cards 與本表比對無新增不一致）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -62,7 +62,7 @@
 |---------|------|-----------|------|-----------|
 | T-A1-EXT-001-dynamic-role-modules | T-A1-EXT-001 — GitHub Dynamic Role Task Modules | A1 | 🔄 in_progress（與 task card 同步） | handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md |
 | T-A1-RTK-001 | RTK Token Proxy 掛載與選擇性上線 | A1 | 🟢 已上線（Codex hook 已掛、裝前/裝後 patrol diff 驗收通過、git 排除生效） | handoff/tasks/T-A1-RTK-001.md |
-| T-A1-LEARNING-LOOP-001 | MAPLAB Learning Loop v0 Reaction Ledger | A1/A0 | 🔄 進行中（P1 完成：reaction ledger + hermes_patrol_bridge.py + workbook/learning_loop/；P2 token capital registry / P3 eval harness / P4 closure writer 待做；⚠️ 自 cc21bad 2026-06-16 14:33 起 ~74h 無新 commit，持續超 48h 門檻） | handoff/tasks/T-A1-LEARNING-LOOP-001.md |
+| T-A1-LEARNING-LOOP-001 | MAPLAB Learning Loop v0 Reaction Ledger | A1/A0 | 🔄 進行中（P1 完成：reaction ledger + hermes_patrol_bridge.py + workbook/learning_loop/；P2 token capital registry / P3 eval harness / P4 closure writer 待做；⚠️ 自 cc21bad 2026-06-16 14:33 起 ~97h 無新 commit，持續超 48h 門檻） | handoff/tasks/T-A1-LEARNING-LOOP-001.md |
 | T-A1-SYNC-GUARD-001 | 雲端同步破口修補 + patrol 紀錄瘦身 | A1 | 🔲 待開始（高槓桿、低成本，建議優先） | handoff/tasks/T-A1-SYNC-GUARD-001.md |
 | T-A1-V6-P2 | T-A1-V6-P2 | A1 | 🔴 CRITICAL（~1272h無commit） | handoff/tasks/T-A1-V6-P2.md |
 | T-A1-V6-P3 | T-A1-V6-P3 | A1 | 🔲 待開始（尚未開始。等 T-A1-V6-P2 完成後啟動。） | handoff/tasks/T-A1-V6-P3.md |
@@ -75,9 +75,9 @@
 | T-A2A3-001-B | SEO 場景頁面 + 內連結（從 T-A2A3-001 分拆） | A2/A3 | 🔴 CRITICAL（~360h無commit） | handoff/tasks/T-A2A3-001-B.md |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2/A3 | ⏸️ RM/GSC 部分暫停；案例寫作轉 T-A2A3-001-B（Rank Math 已退訂，已設定好的 SEO 欄位先不要再設定；下一步是依 live URL map 補 To B 真） | handoff/tasks/T-A2A3-001.md |
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | ⏸️ 阻塞中（受眾輪廓分析完成（693筆 Orders）。待執行：嘉義加入廣告地區、興趣條件精簡、策略一冷受眾上線。） | handoff/tasks/T-A3-002.md |
-| T-A4-001 | Phase 4 Gemini 照片分類（2022-2026） | A4 | 🔴 CRITICAL（~115h 無新 commit；2026-06-11 最後 c2dc194/90fe31c；48h 門檻已超；T-A4-003 照片搬移管線已啟動） | handoff/tasks/T-A4-001.md |
+| T-A4-001 | Phase 4 Gemini 照片分類（2022-2026） | A4 | 🔴 CRITICAL（~216h/~9天 無新 commit；2026-06-11 最後 c2dc194/90fe31c；48h 門檻已超；T-A4-003 照片搬移管線已啟動） | handoff/tasks/T-A4-001.md |
 | T-A4-002 | pagewu1010 帳號 Takeout 解壓 + Gemini Flash 照片資產整合 | A4 |  | handoff/tasks/T-A4-002.md |
-| T-HQ-001 | AGENT-HQ 集團共用層遷移（chrome-extension / governance / panel / runtime symlink 收編） | B1 | 🔴 CRITICAL（~109h 無 commit；最後 014081c 2026-06-11 18:46；P1-P4 ✅；P5/P6 待執行） | handoff/tasks/T-HQ-001.md |
+| T-HQ-001 | AGENT-HQ 集團共用層遷移（chrome-extension / governance / panel / runtime symlink 收編） | B1 | 🔴 CRITICAL（~213h/~8.9天 無 commit；最後 014081c 2026-06-11 18:46；P1-P4 ✅；P5/P6 待執行） | handoff/tasks/T-HQ-001.md |
 | T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔴 CRITICAL（~552h無commit） | handoff/tasks/T-A5-002.md |
 | T-A5-004 | createSlides.gs — Slide 報價簡報自動生成 | A5 | 🔴 CRITICAL（~1512h無commit） | handoff/tasks/T-A5-004.md |
 | T-A5-005 | 報價狀態追蹤同步 + Dashboard | A5 | 🔴 CRITICAL（~1535h無commit） | handoff/tasks/T-A5-005.md |
@@ -86,7 +86,7 @@
 | T-A6-002 | LINE 對話訓練資料收集計畫 | A6 | 💤 暫停（原計畫拆 Sheet 做訓練資料，04-07 重新規劃方向。等 Owner 決定是否需要 LINE 訓練資料及取得方式。） | handoff/tasks/T-A6-002.md |
 | T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | 💤 暫停（Phase 2 v2.0 完成，等 Owner 確認政策 + A5 欄位補齊）（Q1-Q10 重構完成（真實 CSV 驅動），下一步是 Q7/Q10 政策確認 + Phase 3 上線測試） | handoff/tasks/T-A7-001.md |
 | T-A7-002 | A7 部門 80/20 優先任務清單 | A7 | ⏸️ 阻塞中（任務 6（Q1-Q10 實裝）+ 任務 10（技能書 v2.0）已完成。Phase 3A 剩任務 4（地區判斷）、7（流） | handoff/tasks/T-A7-002.md |
-| T-A8-001-folder-to-video-distribution | A8 資料夾案例 → 短影音 → YouTube/TikTok/Pinterest 分發包 | A8 | 🔄 ACTIVE，⚠️ 超 48h 無新 commit（最後 ab32c8e 2026-06-17 16:46，現 ~53h）（ICC Tainan v4 審核影片完成；地端模型到 MP4 v5 通過，qwen2.5:14b + Swift/AppKit + ffmpeg 產 1080x1920 MP4；Hermes/OpenClaw 路由已校正；下一步 mobile review + licensed music/cover polish + approval card，不得未核准上傳） | handoff/tasks/T-A8-001-folder-to-video-distribution.md |
+| T-A8-001-folder-to-video-distribution | A8 資料夾案例 → 短影音 → YouTube/TikTok/Pinterest 分發包 | A8 | 🔄 ACTIVE，⚠️ 超 48h 無新 commit（最後 ab32c8e 2026-06-17 16:46，現 ~71h）（ICC Tainan v4 審核影片完成；地端模型到 MP4 v5 通過，qwen2.5:14b + Swift/AppKit + ffmpeg 產 1080x1920 MP4；Hermes/OpenClaw 路由已校正；下一步 mobile review + licensed music/cover polish + approval card，不得未核准上傳） | handoff/tasks/T-A8-001-folder-to-video-distribution.md |
 | T-B1-001 | B1 Cross-Project Governance Advisor Prompt + Project Pause |  | 🟢 召喚型可用（Investment OS 投資邏輯橋接 ready；InnerFlowLab 內容發文專案暫停） | handoff/tasks/T-B1-001.md |
 | T-B1-B4-investment-os-role-split | T-B1-B4-001 — Investment OS B1-B4 Role Split + Chrome Extension Summon |  | 🟢 Done Criteria 全部完成（與 task card 同步，2026-06-19 A1 巡查修正；若無新需求可關閉） | handoff/tasks/T-B1-B4-investment-os-role-split.md |
 | T-B1-DASH-001 | Guild Ops Board 自動同步 + 即時狀態燈 |  | 🟢 READY（已派工，等執行 + 進度檢查） | handoff/tasks/T-B1-DASH-001.md |
@@ -135,6 +135,7 @@
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-19 16:00（午後）：過去 8h 0 新非巡查 commit（最後真實工作 commit 仍為 c29b4b0 2026-06-17 20:07，~44h 前）；🐛 **發現並修正任務表與 task card 狀態不一致**：① `T-B1-B4-investment-os-role-split` task card 已標示「🟢 Done Criteria 全部完成（若無新需求可關閉此 card）」，但 CURRENT_STATUS 任務表誤留 🔄 進行中 — 已修正為 🟢 Done；② `T-A1-EXT-001-dynamic-role-modules` 任務表狀態欄位空白，task card 實為 🔄 in_progress — 已補上。T-A1-LEARNING-LOOP-001 自 cc21bad 06-16 14:33 起 ~74h 無新 commit，持續超 48h（較上次巡查 ~56h 持續增長）；T-A8-001 最後相關 commit ab32c8e 06-17 16:46，現 ~47h，**即將跨過 48h 門檻，下次巡查需確認**；A4 T-A4-001 ~193h/~8天持續 🔴 CRITICAL；B1 T-HQ-001 ~189h/~7.9天持續 🔴 CRITICAL（最後 014081c 2026-06-11 18:46）；A5+A6 ~754h/~31.4天 CRITICAL 持續；GCP帳單~64天🔴 持續未處理 | T-B1-B4 狀態已修正為 🟢 Done（建議 Owner 確認可關閉 card）；T-A1-EXT-001 狀態已補上；T-A8-001 需在下次巡查確認是否跨過 48h |
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-19 22:00（晚間）：過去 8h 0 新非巡查 commit（最後真實工作 commit 仍為 c29b4b0 2026-06-17 20:07，~49h 前）；**追蹤上次巡查標記的 T-A8-001 已確認跨過 48h 門檻 → 升級狀態**：last commit ab32c8e 2026-06-17 16:46，現 ~53h 無新 commit（已在任務表加註 ⚠️ 超 48h）；🐛 **發現並修正 AGENT_RECALL_PROMPTS.md A8 row 嚴重過時**：原文寫「🔲 新建，待啟動」，但 A8 自 06-17 起已有 7 commits 產出 ICC Tainan v4 審核影片 + 地端模型 v5 MP4，已更正為「🔄 ACTIVE + 超 48h」並同步補上 A4(~198-200h)/A5(~750h)/A6(~743h)/B1(~195h) 精確小時數（先前數字為估算遞增，本次用 `git fetch --unshallow` 取得完整歷史後重新精算）。T-A1-LEARNING-LOOP-001 ~79h 持續超 48h；A4 T-A4-001 持續 🔴 CRITICAL；B1 T-HQ-001 持續 🔴 CRITICAL；A5+A6 CRITICAL 持續；GCP帳單~64天🔴 持續未處理（本巡查無新證據可更新，沿用上次數字） | T-A8-001 已升級為超 48h；AGENT_RECALL_PROMPTS A8 row 已修正並同步精確小時數；其餘 CRITICAL 持續觀察 |
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-20 08:00（每日，遠端）：過去 24h **0 新非巡查 commit**（HEAD 仍為 e1ec6eb 06-19 晚間巡查；最後真實工作 commit 仍為 c29b4b0 2026-06-17 20:07，現 ~60h）；用 `git fetch --unshallow` 取得完整歷史精算：T-A8-001 last commit ab32c8e 06-17 16:46，現 **~63h** 持續超 48h；T-A1-LEARNING-LOOP-001 自 cc21bad 06-16 14:33 起現 **~90h** 持續超 48h；A4 T-A4-001 last c2dc194 06-11 15:19，現 **~209h/~8.7天** 持續 🔴 CRITICAL；B1 T-HQ-001 last 014081c 06-11 18:46，現 **~205h/~8.5天** 持續 🔴 CRITICAL；A5+A6 持續 CRITICAL（沿用上次估算 ~754h+10h≈~764h，無新證據可精算）；GCP帳單升至 **~65天** 🔴 持續未處理。已比對 task cards（T-A1-RTK-001/T-B1-DASH-001/T-A1-EXT-001/T-A1-LEARNING-LOOP-001/T-A8-001）狀態欄位與本表一致，**無新增不一致**；AGENT_RECALL_PROMPTS.md 斷點與上次巡查一致，無需更新。系統靜止中，所有已知異常皆為延續，無新增異常。 | 無新增異常，純粹小時數更新；持續觀察 |
+| A1 巡查紀錄 | ⚠️ A1巡查 2026-06-20 16:00（午後，遠端）：過去 8h **0 新非巡查 commit**（HEAD 仍為 0d73270 06-20 晨間巡查；最後真實工作 commit 仍為 c29b4b0 2026-06-17 20:07，現 ~67h）；用 epoch 精算：T-A8-001 last commit ab32c8e 06-17 16:46，現 **~71h** 持續超 48h；T-A1-LEARNING-LOOP-001 自 cc21bad 06-16 14:33 起現 **~97h** 持續超 48h；A4 T-A4-001 last c2dc194 06-11 15:19，現 **~216h/~9天** 持續 🔴 CRITICAL；B1 T-HQ-001 last 014081c 06-11 18:46，現 **~213h/~8.9天** 持續 🔴 CRITICAL；A5+A6 持續 CRITICAL（無新證據可精算，沿用上次估算）；GCP帳單維持 **~65天** 🔴（同日內無新增天數）。已比對 task cards（T-A8-001-folder-to-video-distribution / T-A1-LEARNING-LOOP-001 / T-A1-EXT-001-dynamic-role-modules）內容與本表狀態欄位一致，**無新增不一致**。系統靜止中，所有已知異常皆為延續，無新增異常。 | 無新增異常，純粹小時數更新；持續觀察 |
 ---
 
 ## Source of Truth（有效文件清單）

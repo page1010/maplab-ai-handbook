@@ -19,6 +19,14 @@ Guild Ops Board 目前 `D[]` 為手抄 `New project/config/investment_os_role_re
 - Receipt：`workbook/reviews/JOB-B1-DASH-PERSONIFIED-20260620/validation_report.md`
 - 未做：registry generator、`ops_board_status.json`、全 21 部門 NPC 完整鋪圖。這三項仍留給下輪。
 
+### #0.6 functional role dispatch console（2026-06-20 完成）
+- Owner 追加校正：「可以開始，不用像素風不用花很多心力在 uiux，但要讓功能齊全」。
+- 已完成：保留 v0.2 作戰室地圖作入口，新增 `Role Dispatch Console`。所有 21 個部門都可在名冊選取；任務輸入會依關鍵字建議主責部門；選取後產生可直接貼給 agent 的派工 prompt，明確寫「先找經理、經理不在線才找小弟/備援、小弟只能蒐證/草稿不能最終判斷」。
+- 重要互動：輸入「實單查詢...只讀不送單」會自動路由 `IOS-INVENTORY 庫存審查經理`，且 prompt 主責同步為 IOS-INVENTORY；選 `B4` 會顯示經理未上班 / 先找備援。
+- 驗證：inline script syntax pass；Headless Chrome CDP readback：21 cards、9 visual NPC、21 roster roles、5 route buttons、0 runtime errors；390px mobile 無水平溢出。截圖：`/tmp/maplab_ops_game_dashboard_v03.png`、`/tmp/maplab_ops_game_dashboard_v03_mobile.png`。
+- Receipt：`workbook/reviews/JOB-B1-DASH-FUNCTIONAL-20260620/validation_report.md`
+- 未做：registry generator、`ops_board_status.json`。這兩項仍留給 #1/#2，不在本輪 UI 功能補齊範圍。
+
 ### #1 registry → dashboard 自動同步 generator（主，可派 Codex）
 - 新增 `tools/ai_workbook/build_ops_board.py`：讀 `New project/config/investment_os_role_registry.json`(16 IOS 角色)+ 內嵌的 B1–B4/A0 定義 → 注入 HTML 的 `const D = [...]` 區段。
 - 用 marker 注入：HTML 內以 `/*__D_START__*/ ... /*__D_END__*/` 包住 `D[]`，generator 只替換中間，**不動** CSS/JS/版面。
@@ -34,6 +42,7 @@ Guild Ops Board 目前 `D[]` 為手抄 `New project/config/investment_os_role_re
 - generator 不可破壞 offline-ready：產出仍須單檔可開（status JSON 為選配增益）。
 
 ## 進度檢查點（供 A0/監督輪詢）
+- [x] v0.3 派工台：21 部門名冊 + 任務路由 + 經理/小弟派工 prompt
 - [ ] `tools/ai_workbook/build_ops_board.py` 存在且可跑
 - [ ] `tools/ai_workbook/ops_board_overlay.json` 存在（persona/flow/ladder/crew）
 - [ ] 跑 generator → `git diff` 僅動 `D[]` marker 區段

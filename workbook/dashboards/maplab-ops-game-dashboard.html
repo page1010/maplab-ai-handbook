@@ -104,6 +104,7 @@
   /* ---------- ops game floor (擬人化作戰便利商店) ---------- */
   .gamefloor{max-width:1320px;margin:16px auto 0;padding:0 20px}
   .game-wrap{display:grid;grid-template-columns:310px 1fr;gap:14px;align-items:stretch}
+  .game-main{display:flex;flex-direction:column;gap:14px;min-width:0}
   .today-card,.game-stage{
     background:linear-gradient(180deg,#101b30,#0b1322);
     border:1px solid var(--line);border-radius:18px;box-shadow:0 14px 36px rgba(0,0,0,.34);
@@ -178,8 +179,39 @@
   .dialogue-actions button{border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--dim);font-weight:800;font-size:11.5px;padding:8px 10px;cursor:pointer}
   .dialogue-actions button.primary{border:0;background:linear-gradient(180deg,#7df3df,#3df0d0);color:#06121f}
   .dialogue-actions button:hover{color:var(--ink);border-color:var(--npc,#3df0d0)}
+  .ops-console{
+    background:linear-gradient(180deg,#101b30,#0b1322);
+    border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 14px 36px rgba(0,0,0,.28)
+  }
+  .console-head{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;margin-bottom:12px}
+  .console-head h3{margin:0;font-size:13px;letter-spacing:1.6px;text-transform:uppercase;color:var(--dim)}
+  .console-head p{margin:4px 0 0;color:var(--faint);font-size:11.5px;line-height:1.45}
+  .console-grid{display:grid;grid-template-columns:1fr minmax(330px,.95fr);gap:13px}
+  .console-box{border:1px solid var(--line);background:rgba(255,255,255,.025);border-radius:12px;padding:12px;min-width:0}
+  .console-box h4{margin:0 0 9px;font-size:12px;color:var(--dim);letter-spacing:1.2px;text-transform:uppercase}
+  .task-input{width:100%;min-height:92px;background:var(--bg);border:1px solid var(--line);border-radius:10px;color:var(--ink);font:13px/1.55 inherit;padding:10px 11px;resize:vertical}
+  .role-roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:7px;max-height:270px;overflow:auto;padding-right:2px}
+  .role-btn,.route-btn{
+    width:100%;text-align:left;border:1px solid var(--line);background:rgba(255,255,255,.025);
+    color:var(--dim);border-radius:9px;padding:8px 9px;cursor:pointer;min-height:58px
+  }
+  .role-btn:hover,.route-btn:hover{color:var(--ink);border-color:var(--accent,#3df0d0)}
+  .role-btn.on,.route-btn.on{border-color:var(--accent,#3df0d0);background:rgba(61,240,208,.07);color:var(--ink)}
+  .role-btn strong,.route-btn strong{display:block;color:var(--ink);font-size:12px;line-height:1.25}
+  .role-btn span,.route-btn span{display:block;margin-top:3px;font-size:10.5px;line-height:1.25;color:var(--faint)}
+  .route-list{display:flex;flex-direction:column;gap:7px;margin-top:8px}
+  .role-summary{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}
+  .role-summary .mini{border:1px solid var(--line);border-radius:9px;background:rgba(255,255,255,.025);padding:8px 9px}
+  .role-summary .mini b{display:block;color:var(--faint);font-size:10.5px;margin-bottom:4px}
+  .role-summary .mini span{font-size:12px;color:var(--ink);line-height:1.35}
+  .prompt-box{width:100%;min-height:244px;background:var(--bg);border:1px solid var(--line);border-radius:10px;color:var(--ink);font-family:ui-monospace,Menlo,monospace;font-size:11.5px;line-height:1.5;padding:11px;resize:vertical}
+  .console-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .console-actions button{border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--dim);font-weight:800;font-size:11.5px;padding:8px 10px;cursor:pointer}
+  .console-actions button.primary{border:0;background:linear-gradient(180deg,#7df3df,#3df0d0);color:#06121f}
+  .console-actions button:hover{color:var(--ink);border-color:var(--accent,#3df0d0)}
+  @media(max-width:1100px){.console-grid{grid-template-columns:1fr}.role-roster{max-height:340px}}
   @media(max-width:920px){.game-wrap{grid-template-columns:1fr}.game-stage{min-height:620px}.shop-map{top:88px}.dialogue-panel{left:22px;width:auto}}
-  @media(max-width:620px){.room{opacity:.72}.npc{transform:scale(.9);transform-origin:center}.game-stage{min-height:680px}}
+  @media(max-width:620px){.room{opacity:.72}.npc{transform:scale(.9);transform-origin:center}.game-stage{min-height:680px}.role-summary{grid-template-columns:1fr}}
 
   main{max-width:1320px;margin:0 auto;padding:18px 20px 90px}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px}
@@ -350,13 +382,14 @@
 <section class="gamefloor">
   <div class="game-wrap">
     <aside class="today-card" id="todayCard"></aside>
+    <div class="game-main">
     <section class="game-stage" aria-label="擬人化部門作戰室">
       <div class="game-title">
         <div>
-          <h3>OPS CONVENIENCE STORE · 部門可以被點、被召喚</h3>
+          <h3>ROLE OPS FLOOR · 部門可以被點、被召喚</h3>
           <p>先找經理；經理不在，再找小弟或備援 runtime，且回覆會標「需經理/B2覆核」。</p>
         </div>
-        <span class="stage-badge">v0.2 personified floor</span>
+        <span class="stage-badge">v0.3 role routing</span>
       </div>
       <div class="shop-map" id="shopMap">
         <div class="room" style="left:5%;top:7%;width:27%;height:24%;border-color:rgba(255,207,92,.55)"><b>策略熱食櫃</b><span>動能、總經、KOL、共振</span></div>
@@ -370,6 +403,8 @@
       </div>
       <div class="dialogue-panel" id="npcDialogue"></div>
     </section>
+    <section class="ops-console" id="opsConsole" aria-label="部門任務派工台"></section>
+    </div>
   </div>
 </section>
 <main><div class="grid" id="grid"></div></main>
@@ -937,6 +972,33 @@ const GAME_PEOPLE = [
    fallback:'如果 A0 不在,你可以直接點部門經理,但要自己確認是不是找錯人。'}
 ];
 
+let activeRoleId='IOS-MOMENTUM';
+let taskDraft='幫我判斷這件事該找哪個部門接，列出目前證據、缺口、下一步與需要誰覆核。';
+
+const ROUTE_HINTS = {
+  'IOS-KOL':['網紅','podcast','youtube','rss','逐字稿','字幕','ASR','NotebookLM','重點','共識','KOL'],
+  'IOS-MOMENTUM':['動能','強勢','漲停','量能','Top 3','籌碼','股期','短名單','候選'],
+  'IOS-FB':['fb','facebook','社團','社群','粉專','公開來源','social','Meta'],
+  'IOS-ALPHA':['共振','reddit','polymarket','收斂','跨來源','trump','事件','異常'],
+  'IOS-BLACKSWAN':['黑天鵝','風險升級','地緣','油價','vix','期貨','衝擊','突發'],
+  'IOS-MACRO':['總經','macro','利率','通膨','失業率','VIX','regime','晨報','FRED'],
+  'IOS-CHIP':['籌碼','法人','融資','融券','期貨','處置','注意','16:00'],
+  'IOS-LEFT':['左側','預期差','早期','敘事','證偽','還沒紅'],
+  'IOS-RIGHT':['右側','突破','first bar','stage','追高','族群擴散'],
+  'IOS-INVENTORY':['實單','真實部位','庫存','券商','只讀','broker','Shioaji','保證金','watch'],
+  'IOS-SIM':['模擬','假單','D+','出場','Excel','Sheet','試算表','模擬倉'],
+  'IOS-FAMILY':['家族','基金','ETF','長線','槓桿','大盤'],
+  'IOS-HEDGE':['對沖','盤後','beta','covered call','CSP','弱部位','風控'],
+  'IOS-EVIDENCE':['證據','來源','事實','引用','覆核','查核','分級','真相'],
+  'IOS-SURFACE':['介面','dashboard','telegram','畫面','手機','可讀','渲染','UI'],
+  'IOS-HYGIENE':['髒','worktree','清理','過期','dirty','stale','cleanup','衛生'],
+  'B1':['建造','修功能','寫程式','dashboard','runtime','repo','HTML','前端'],
+  'B2':['審查','驗收','readback','freshness','品管','資料流','測試'],
+  'B3':['存檔','resume','交接','版本','pitfalls','review bundle','紀錄'],
+  'B4':['巡邏','停滯','適配','過度建置','紅燈','patrol','drift'],
+  'A0':['調度','派工','召喚','找誰','路由','dispatch','接給']
+};
+
 /* ============================================================
    RENDER
    ============================================================ */
@@ -1101,6 +1163,165 @@ function roleAccent(role){return (D.find(d=>d.id===role)||{}).accent || 'var(--n
 function dutyLabel(p){return p.duty==='on'?'經理在線':p.duty==='off'?'未上班':'小弟可接,需覆核';}
 function contactLabel(p){return p.duty==='off'?'先找備援':(p.kind==='manager'?'先找我':'備援角色');}
 function toneDot(t){return {ok:'var(--ok)',warn:'var(--warn)',bad:'var(--bad)'}[t]||'var(--idle)';}
+function escText(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function layerText(layer){return (GROUPS.find(g=>g.l===layer)||{}).t || layer;}
+function roleProfile(d){
+  const mapManager=GAME_PEOPLE.find(p=>p.role===d.id&&p.kind==='manager');
+  const mapWorker=GAME_PEOPLE.find(p=>p.role===d.id&&p.kind!=='manager');
+  const duty=mapManager?mapManager.duty:(d.status==='bad'?'off':(d.status==='warn'||d.status==='idle')?'caution':'on');
+  const backups=d.crew.slice(0,4).map(w=>W[w]).filter(Boolean);
+  const backupText=backups.length?backups.map(w=>`${w.nm}（${w.rl}）`).join(' / '):'B1/B2 覆核線';
+  return {
+    duty,
+    manager:mapManager?mapManager.name:d.zh,
+    mapPerson:mapManager||mapWorker,
+    backupText,
+    dutyText:duty==='on'?'經理在線':duty==='off'?'經理未上班 / 先找備援':'可接單但需覆核',
+    rule:duty==='off'
+      ? `先找 ${backupText} 做蒐證或草稿；最後結論等 ${d.zh} 或 B2 覆核。`
+      : `先找 ${d.zh}；小弟只做蒐證、整理、截圖或草稿,最後仍由經理/B2 確認。`
+  };
+}
+function routeHaystack(d){
+  return [
+    d.id,d.zh,d.en,d.persona,d.mission,d.dash,
+    d.jobs.join(' '),d.tg.join(' '),d.crew.map(w=>W[w]?.nm||w).join(' '),
+    (ROUTE_HINTS[d.id]||[]).join(' ')
+  ].join(' ').toLowerCase();
+}
+function routeScore(d,text){
+  const raw=(text||'').trim().toLowerCase();
+  if(!raw) return d.id===activeRoleId?80:(d.id==='A0'?20:0);
+  let score=0;
+  const hints=ROUTE_HINTS[d.id]||[];
+  hints.forEach(k=>{if(raw.includes(k.toLowerCase())) score+=8;});
+  if(raw.includes(d.id.toLowerCase())) score+=10;
+  if(raw.includes(d.zh.slice(0,2).toLowerCase())) score+=4;
+  const tokens=raw.split(/[\s,，。；;、:：()（）\[\]【】\/]+/).filter(t=>t.length>1);
+  const hay=routeHaystack(d);
+  tokens.forEach(t=>{if(hay.includes(t)) score+=2;});
+  return score;
+}
+function routeReason(d,text){
+  const raw=(text||'').toLowerCase();
+  const hit=(ROUTE_HINTS[d.id]||[]).filter(k=>raw.includes(k.toLowerCase())).slice(0,3);
+  if(hit.length) return `命中：${hit.join('、')}`;
+  if(!raw.trim()&&d.id===activeRoleId) return '目前選取的部門';
+  if(!raw.trim()&&d.id==='A0') return '不確定找誰時先找總機';
+  return layerText(d.layer).split(' · ')[0];
+}
+function suggestedRoles(text){
+  const ranked=D.map(d=>({d,score:routeScore(d,text)}))
+    .sort((a,b)=>b.score-a.score||a.d.id.localeCompare(b.d.id));
+  const positive=ranked.filter(x=>x.score>0).slice(0,5).map(x=>x.d);
+  const fallback=['A0',activeRoleId,'B1','B2'].map(id=>D.find(d=>d.id===id)).filter(Boolean);
+  const merged=[...positive,...fallback];
+  return merged.filter((d,i)=>merged.findIndex(x=>x.id===d.id)===i).slice(0,5);
+}
+function buildDispatchPrompt(roleId,taskText){
+  const d=D.find(x=>x.id===roleId)||D.find(x=>x.id==='A0');
+  const p=roleProfile(d);
+  const task=(taskText||'').trim()||'（請在這裡補上你要這個部門做的事）';
+  return `【MAPLAB Guild Ops Board 派工】
+主責部門：${d.id}｜${d.zh}（${d.en}）
+任務：${task}
+
+人話版：
+先找 ${d.zh} 這個經理。${p.dutyText}。
+如果經理不在線或只需要先蒐證,才找小弟/備援：${p.backupText}。
+小弟可以收件、查資料、截圖、整理 evidence、做草稿；不能替經理做最終判斷。
+
+請這個部門回報：
+1. 這是不是 ${d.zh} 該接的事？如果不是,請轉給正確部門。
+2. 目前已知事實 / 合理推論 / 缺資料分開列。
+3. 需要看的 Dashboard / Telegram / 背景工作：${d.dash}；${d.jobs.join(', ')}。
+4. 下一步最小可執行動作,以及誰要覆核。
+5. 若有改檔或 runtime 行為,留下 evidence path / receipt。
+
+邊界：
+- 只營運與整理,不真實下單、不自創交易邏輯、不讀敏感憑證。
+- 缺來源日期、列數、證據或新鮮度時,要標降級,不能假裝完成。
+- 升級路徑：${Object.entries(d.esc).map(([k,v])=>`${k}→${v}`).join('；')}。`;
+}
+function setActiveRole(id,focusMap=false){
+  if(!D.some(d=>d.id===id)) return;
+  activeRoleId=id;
+  if(focusMap){
+    const p=GAME_PEOPLE.find(x=>x.role===id&&x.kind==='manager')||GAME_PEOPLE.find(x=>x.role===id);
+    if(p) selectPerson(p.id,true);
+    else toast('這個部門在名冊中,目前沒有放到地圖上');
+  }
+  renderOpsConsole();
+}
+function updateTaskDraft(v){
+  taskDraft=v;
+  const top=suggestedRoles(v)[0];
+  if(v.trim()&&top) activeRoleId=top.id;
+  renderOpsConsole();
+}
+function copyDispatchPrompt(){
+  const t=document.getElementById('dispatchPrompt');
+  if(!t) return;
+  t.select();
+  navigator.clipboard?.writeText(t.value).then(()=>toast('已複製派工 prompt ✓')).catch(()=>{document.execCommand('copy');toast('已複製派工 prompt ✓');});
+}
+function focusStageRole(roleId){
+  const p=GAME_PEOPLE.find(x=>x.role===roleId&&x.kind==='manager')||GAME_PEOPLE.find(x=>x.role===roleId);
+  if(!p){toast('這個部門可派工,但尚未放到地圖');return;}
+  selectPerson(p.id);
+  document.getElementById('shopMap')?.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function renderOpsConsole(){
+  const el=document.getElementById('opsConsole'); if(!el) return;
+  const active=D.find(d=>d.id===activeRoleId)||D[0];
+  const profile=roleProfile(active);
+  const suggestions=suggestedRoles(taskDraft);
+  el.style.setProperty('--accent',active.accent);
+  el.innerHTML=`
+    <div class="console-head">
+      <div><h3>Role Dispatch Console · 對部門說話</h3>
+        <p>輸入你想做的事,先找經理；經理不在線才找小弟。下方會產出可貼給 agent 的派工 prompt。</p></div>
+      <span class="stage-badge">21 roles ready</span>
+    </div>
+    <div class="console-grid">
+      <div class="console-box">
+        <h4>我要這個部門做什麼</h4>
+        <textarea class="task-input" id="taskText" oninput="updateTaskDraft(this.value)">${escText(taskDraft)}</textarea>
+        <h4 style="margin-top:12px">建議找誰</h4>
+        <div class="route-list">
+          ${suggestions.map(d=>`<button class="route-btn ${d.id===active.id?'on':''}" style="--accent:${d.accent}" onclick="setActiveRole('${d.id}',true)">
+            <strong>${d.ava} ${d.zh}</strong><span>${d.id} · ${routeReason(d,taskDraft)}</span>
+          </button>`).join('')}
+        </div>
+        <h4 style="margin-top:12px">全部部門名冊</h4>
+        <div class="role-roster">
+          ${D.map(d=>{const p=roleProfile(d);return `<button class="role-btn ${d.id===active.id?'on':''}" style="--accent:${d.accent}" onclick="setActiveRole('${d.id}',false)">
+            <strong>${d.ava} ${d.zh}</strong><span>${d.id} · ${p.dutyText}</span>
+          </button>`;}).join('')}
+        </div>
+      </div>
+      <div class="console-box">
+        <h4>目前選取</h4>
+        <div class="mission" style="border-left-color:${active.accent}">${active.ava} <b>${active.zh}</b>：${active.mission}</div>
+        <div class="role-summary">
+          <div class="mini"><b>先找誰</b><span>${profile.manager}（經理）</span></div>
+          <div class="mini"><b>經理不在</b><span>${profile.backupText}</span></div>
+          <div class="mini"><b>責任邊界</b><span>${profile.rule}</span></div>
+          <div class="mini"><b>Surface</b><span>${active.dash}</span></div>
+        </div>
+        <h4 style="margin-top:12px">可直接貼出去的派工 prompt</h4>
+        <textarea class="prompt-box" id="dispatchPrompt" readonly>${escText(buildDispatchPrompt(active.id,taskDraft))}</textarea>
+        <div class="console-actions">
+          <button class="primary" onclick="copyDispatchPrompt()">複製派工 prompt</button>
+          <button onclick="openDrawer(activeRoleId)">看部門卡</button>
+          <button onclick="focusStageRole(activeRoleId)">看地圖角色</button>
+          <button onclick="copyText(summonText(D.find(d=>d.id===activeRoleId)))">複製經理召喚</button>
+        </div>
+      </div>
+    </div>`;
+  const taskEl=document.getElementById('taskText');
+  if(taskEl){taskEl.selectionStart=taskEl.selectionEnd=taskEl.value.length;}
+}
 
 function renderToday(){
   const card=document.getElementById('todayCard');
@@ -1129,8 +1350,9 @@ function renderGame(){
   selectPerson(GAME_PEOPLE[0].id);
 }
 
-function selectPerson(id){
+function selectPerson(id,skipConsole=false){
   const p=GAME_PEOPLE.find(x=>x.id===id)||GAME_PEOPLE[0];
+  activeRoleId=p.role;
   document.querySelectorAll('.npc').forEach(n=>n.classList.toggle('on',n.dataset.person===p.id));
   const d=D.find(x=>x.id===p.role);
   const panel=document.getElementById('npcDialogue');
@@ -1150,6 +1372,7 @@ function selectPerson(id){
       <button onclick="openDrawer('${p.role}')">看部門卡</button>
       <button onclick="copyText(summonText(D.find(d=>d.id==='${p.role}')))">複製召喚經理</button>
     </div>`;
+  if(!skipConsole) renderOpsConsole();
 }
 
 /* filters */
@@ -1161,7 +1384,7 @@ document.getElementById('q').oninput=e=>{query=e.target.value.trim().toLowerCase
 document.getElementById('ft').innerHTML=
   `MAPLAB · Investment OS — Guild Ops Board · 共 ${D.length} 個部門 / ${Object.keys(W).length} 種共用成員 · `+
   `單一檔案、零外部依賴(offline-ready)。資料來源:config/investment_os_role_registry.json + relation graph + B1 topology memory。`+
-  `每條策略都有閉環降級階梯,最底層為本地 .py + 誠實降級。Build: B1 Investment OS Builder · 2026-06-07；Game floor v0.2 · 2026-06-20.`;
+  `每條策略都有閉環降級階梯,最底層為本地 .py + 誠實降級。Build: B1 Investment OS Builder · 2026-06-07；Role dispatch v0.3 · 2026-06-20.`;
 
 /* ---------- war room render ---------- */
 function fcls(t){return 'f-'+({ok:'ok',warn:'warn',bad:'bad',neutral:'neutral',degraded:'warn'}[t]||'neutral');}
@@ -1198,6 +1421,7 @@ function renderWarroom(){
 renderWarroom();
 renderToday();
 renderGame();
+renderOpsConsole();
 render();
 </script>
 </body>

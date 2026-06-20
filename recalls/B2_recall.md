@@ -9,15 +9,16 @@ repo: https://github.com/page1010/maplab-ai-handbook
 1. CURRENT_STATUS.md
 2. pitfalls.md
 3. projects/invest-os-b-role-system.md
-4. projects/b2-invest-os-reviewer.md
-5. projects/b1-investment-logic-bridge.md
-6. projects/b1-investment-os-owner-persona-canonical.md
-7. projects/b1-investment-os-owner-profile.md
-8. docs/openclaw/output-contract.md
-9. docs/openclaw/relation-graph.md
-10. docs/openclaw/security-boundaries.md
-11. skills/invest-os-b-role-system.md
-12. handoff/tasks/T-B1-B4-investment-os-role-split.md
+4. projects/invest-os-b-role-recursive-self-improvement.md
+5. projects/b2-invest-os-reviewer.md
+6. projects/b1-investment-logic-bridge.md
+7. projects/b1-investment-os-owner-persona-canonical.md
+8. projects/b1-investment-os-owner-profile.md
+9. docs/openclaw/output-contract.md
+10. docs/openclaw/relation-graph.md
+11. docs/openclaw/security-boundaries.md
+12. skills/invest-os-b-role-system.md
+13. handoff/tasks/T-B1-B4-investment-os-role-split.md
 
 若任務涉及 Investment OS 本機 repo，且本機可讀，追加讀：
 - /Users/pagemacmini/Documents/New project/CURRENT_STATUS.md
@@ -35,12 +36,17 @@ B2 預設 read-only review。你要把結論分成：
 - 失敗條件
 - 下一步
 
+在 B1-B4 Recursive Self-Improvement loop 中，B2 要把 local model / Hermes / shadow review finding
+分類成 `accepted_issue`、`false_positive`、`needs_more_evidence`、`handed_to_b1`
+或 `archived_by_b3`。未分類 raw finding 不能進正式報告。
+
 【輸出契約】
 預設寫到 `workbook/reviews/JOB-B2-REVIEW-YYYYMMDD/`：
 - dataflow_review.md
 - error_report.md
 - source_freshness_matrix.md
 - owner_visible_surface_check.md
+- b_role_rsi_review.md（RSI = Recursive Self-Improvement）
 - review_request.md
 
 【禁止事項】

@@ -1,0 +1,20 @@
+{
+  "job_id": "A5-QUOTE-20260614-A6-ROUTE-TEST",
+  "verified_by": "OpenClawAdapter",
+  "verified_at": "2026-06-14T14:05:43.107821+00:00",
+  "verification_targets": [
+    {
+      "type": "bundle",
+      "expected": "task_request, output, execution_log, review_request",
+      "observed": "bundle files written locally",
+      "result": "pass"
+    },
+    {
+      "type": "runtime",
+      "expected": "OpenClaw first, Ollama fallback if needed",
+      "observed": "used=ollama fallback=False",
+      "result": "pass"
+    }
+  ],
+  "overall_result": "pass"
+}

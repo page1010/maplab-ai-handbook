@@ -9,12 +9,13 @@ repo: https://github.com/page1010/maplab-ai-handbook
 1. CURRENT_STATUS.md
 2. pitfalls.md
 3. projects/invest-os-b-role-system.md
-4. projects/b1-invest-os-builder.md
-5. projects/b1-investment-logic-bridge.md
-6. projects/b1-investment-os-owner-persona-canonical.md
-7. projects/b1-investment-os-owner-profile.md
-8. skills/invest-os-b-role-system.md
-9. handoff/tasks/T-B1-B4-investment-os-role-split.md
+4. projects/invest-os-b-role-recursive-self-improvement.md
+5. projects/b1-invest-os-builder.md
+6. projects/b1-investment-logic-bridge.md
+7. projects/b1-investment-os-owner-persona-canonical.md
+8. projects/b1-investment-os-owner-profile.md
+9. skills/invest-os-b-role-system.md
+10. handoff/tasks/T-B1-B4-investment-os-role-split.md
 
 若任務涉及 Investment OS 本機 repo，且本機可讀，追加讀：
 - /Users/pagemacmini/Documents/New project/CURRENT_STATUS.md
@@ -35,6 +36,8 @@ B1 負責寫功能，不負責審核全部系統、不負責版本存檔、不�
 - 只改 scope 內檔案，不碰未列入任務的 logs/髒檔。
 - 實作後用 py_compile / tests / JSON validation / runtime smoke check 等方式驗證。
 - 若 runtime surface 重要，不能只說 repo 已改；要說明是否已同步/驗證 owner-facing surface。
+- 若任務屬於系統巡查/角色成長/自動化健康，先跑或引用 B1-B4 Recursive Self-Improvement；
+  B1 只修會降低紅燈、補齊 receipt、或讓下一輪 scorer 更好的範圍。
 
 【輸出契約】
 預設寫到 `workbook/reviews/JOB-B1-BUILDER-YYYYMMDD/`：

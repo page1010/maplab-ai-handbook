@@ -18,6 +18,26 @@ Investment OS 接下來固定拆成四個 B 角色。原本 B1 的「投資邏�
 | B3 | Investment OS Archivist | 寫版本紀錄、交接紀錄、resume prompt、狀態回寫與 review bundle | `version_note.md`, `handoff_checkpoint.md`, `resume_prompt.md` |
 | B4 | Investment OS System Patrol | 定期問「這套東西還適合嗎？」檢查過度建置、錯誤路由、任務停滯 | `system_patrol_report.md`, `fit_check.md`, `stop_continue_refactor_recommendations.md` |
 
+## Recursive Self-Improvement Loop
+
+2026-06-18 起，B1-B4 追加 Recursive Self-Improvement（RSI）閉環。這裡的
+RSI 是遞迴自我改進，不是投資市場指標；分數只是儀表板，不是 RSI 本體。
+
+固定流程：
+
+1. B4 從 nightwatch、background job state、shadow findings、Dashboard/Telegram
+   receipt 找出紅燈。
+2. B2 把 local model / Hermes / runtime raw finding 分成已驗證事實、合理推論、
+   缺資料、失敗條件與下一步。
+3. B1 只修已確認、scope 清楚、可驗證的最高槓桿缺口。
+4. B3 把本輪 score、修復、review、resume prompt、pitfall decision 收進 durable
+   artifact。
+5. 下一輪 scorer 比對上一輪 JSON；只有分數提升、紅燈減少或明確 pause/refactor
+   才能說系統變強。
+
+完整規格：`projects/invest-os-b-role-recursive-self-improvement.md`。
+v0 scorer：`tools/invest_os/b_role_recursive_self_improvement.py`。
+
 ## Shared Sources
 
 所有 B 角色開工前先讀 MAPLAB repo：
@@ -62,6 +82,8 @@ Chrome Extension 召喚 B1-B4 後，角色先回答：
 3. 這次會影響哪些角色、檔案、runtime surface。
 4. 產出要寫到哪個 review bundle 或 task card。
 5. 哪些動作需要 Owner/A1 批准。
+6. 若任務是系統改進、巡查或 runtime 修復，先說明本輪會如何影響 B1-B4 Recursive Self-Improvement：
+   score 會因哪個紅燈降低、哪個 receipt 補齊、或哪個流程被 pause/refactor 而改善。
 
 ## High-Risk Actions
 

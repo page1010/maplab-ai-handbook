@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build MAPLAB dynamic role task modules for Chrome/Gemini/Codex/OpenClaw.
+"""Build MAPLAB dynamic role task modules for Chrome/Gemini/Codex/OpenClaw/Hermes.
 
 This generator deliberately writes data/config artifacts, not executable remote
 Chrome logic. Chrome MV3 blocks remote JS execution, so GitHub is treated as the
@@ -107,7 +107,7 @@ class RoleModule:
     task_types: list[str]
     project_docs: list[str]
     skills: list[str]
-    runtime_targets: list[str] = field(default_factory=lambda: ["gemini", "codex", "openclaw"])
+    runtime_targets: list[str] = field(default_factory=lambda: ["gemini", "codex", "openclaw", "hermes"])
     extra_read_first: list[str] = field(default_factory=list)
     restricted_sources: list[str] = field(default_factory=list)
     output_contract: list[str] = field(default_factory=list)
@@ -269,7 +269,7 @@ ROLES = [
         ["dispatch", "owner_briefing", "cross_system_handoff", "status_review"],
         ["docs/a0-dispatch-operations-manual.md", "projects/a0-a1-briefing-protocol.md", "handoff/a0-briefing.md"],
         ["skills/a0-proactive-dispatch-guide.md", "skills/remote-desktop-agent-bridge.md", "skills/mcp-usage-guide.md"],
-        ["gemini", "codex", "openclaw", "cowork"],
+        ["gemini", "codex", "openclaw", "hermes", "cowork"],
         affects=["A1", "A2-A8", "B1-B4", "Telegram", "Chrome side panel", "Google Drive/Sheets connectors"],
     ),
     RoleModule(
@@ -293,7 +293,7 @@ ROLES = [
             "skills/pitfalls/SKILL.md",
             "skills/github-api-workflow-guide.md",
         ],
-        ["codex", "openclaw", "gemini"],
+        ["codex", "openclaw", "gemini", "hermes"],
         affects=["chrome-extension", "tools/ai_workbook", "bot_a6", "CURRENT_STATUS", "handoff/tasks"],
         risk_level="high",
     ),
@@ -944,7 +944,7 @@ def build_graph(modules: list[dict[str, Any]]) -> dict[str, Any]:
     def edge(src: str, dst: str, relation: str, confidence: float = 1.0) -> None:
         edges.append({"from": src, "to": dst, "relation": relation, "confidence": confidence})
 
-    node("task:T-A1-EXT-001", "task", "GitHub dynamic role modules for Chrome/Gemini/Codex/OpenClaw", str(TASK_CARD_PATH.relative_to(ROOT)))
+    node("task:T-A1-EXT-001", "task", "GitHub dynamic role modules for Chrome/Gemini/Codex/OpenClaw/Hermes", str(TASK_CARD_PATH.relative_to(ROOT)))
     node("output:role-module-index", "output", "Role module index", "chrome-extension/task-modules/index.json")
     node("output:relationship-table", "output", "Role module relationship table", "workbook/task_modules/role_module_relationships.csv")
     node("output:relationship-xlsx", "output", "Role module relationship workbook", "workbook/task_modules/role_module_relationships.xlsx")
@@ -1208,7 +1208,7 @@ def main() -> None:
             "module_schema_path": "chrome-extension/task-modules/task-module.schema.json",
             "relation_graph_path": "workbook/task_modules/role_module_relation_graph.json",
             "relationship_table_path": "workbook/task_modules/role_module_relationships.csv",
-            "default_runtime_targets": ["gemini", "codex", "openclaw"],
+            "default_runtime_targets": ["gemini", "codex", "openclaw", "hermes"],
             "legacy_runtime_targets": ["claude_tab"],
             "load_order": ["index", "role_module", "source_files", "relation_graph", "output_contract"],
             "security_note": "The extension should load data files only. Do not add remote script execution.",

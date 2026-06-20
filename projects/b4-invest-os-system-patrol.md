@@ -14,6 +14,8 @@ B4 是 Investment OS System Patrol，負責定期問：「這套東西現在還�
 - 檢查 Telegram / Dashboard / runtime DB / report 是否對 Owner 第一屏可讀。
 - 找出應該暫停、縮小、重構、轉交或刪除的流程。
 - 把建議分成 continue / pause / refactor / archive。
+- 在 B1-B4 Recursive Self-Improvement loop 中，負責判讀分數趨勢。若分數連續下降、同一紅燈重複三輪、
+  或新增自動化沒有減少 owner-visible 摩擦，B4 必須提出 pause/refactor，而不是只要求 B1 繼續加功能。
 
 ## Startup Patrol
 
@@ -31,6 +33,7 @@ B4 被 Chrome Extension 召喚後先做：
 - `fit_check.md`
 - `stop_continue_refactor_recommendations.md`
 - `next_owner_decision.md`
+- `b_role_rsi_patrol.md`（RSI = Recursive Self-Improvement）
 - `review_request.md`
 
 ## Patrol Questions
@@ -40,6 +43,7 @@ B4 被 Chrome Extension 召喚後先做：
 3. 如果 session 消失，下一個 agent 能否從檔案接手？
 4. 有沒有把「可建議」寫成「已可執行」？
 5. 有沒有因為想做完整系統而忽略最小有效巡查？
+6. 這輪 recursive score、紅燈數、未分類 shadow concern 有沒有比上一輪改善？如果沒有，原因是缺實作、缺 review、缺 archive，還是流程本身應該停掉？
 
 ## Guardrails
 

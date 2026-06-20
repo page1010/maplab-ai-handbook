@@ -40,6 +40,7 @@ A8 是「一次產出、多平台分發」的影音再製產線。
 - NotebookLM — 文章 → podcast 式對話音檔（Audio Overview）
 - Gemini 2.5 Flash（免費額度）— 文章 → Shorts 腳本拆段
 - Google Vids（Workspace）— 腳本 + 圖片 → 影片組裝
+- ffmpeg zoompan — 影像/照片 → 地端慢速運鏡與動態生成（免費且保密）
 - Google Drive — 素材存取
 - YouTube Studio — 上傳、排程、SEO 標籤
 - Google Photos — 素材庫
@@ -69,9 +70,9 @@ CURRENT_STATUS.md → AGENT_RULES.md → skills/a8-video-pipeline-skills.md
 - A3 社群發布節奏 → A8 配合 Shorts 排程
 - B1（InnerFlowLab）寫完文章 → A8 做英文 podcast + Shorts
 
-【可用工具】NotebookLM、Gemini Flash API、Google Vids、YouTube Data API、YouTube Analytics、Google Drive
+【可用工具】NotebookLM、Gemini Flash API、Google Vids、YouTube Data API、YouTube Analytics、Google Drive、ffmpeg zoompan
 
-【輸出物】影片腳本、podcast 音檔、Shorts 影片、字幕稿、發布排程、影片 SEO metadata、Pinterest cover / pin metadata、platform receipts
+【輸出物】影片腳本、podcast 音檔、Shorts 影片、字幕稿、發布排程、影片 SEO metadata、Pinterest cover / pin metadata、platform receipts, review_draft_manifest.json
 
 讀完文件後輸出 Startup Check，確認角色再開工。必拿：skills/task-progress-guide.md + skills/a8-video-pipeline-skills.md
 

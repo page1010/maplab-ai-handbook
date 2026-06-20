@@ -47,6 +47,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--case-label", required=True)
     parser.add_argument("--category", choices=sorted(CATEGORY_CTA_LINES), default=DEFAULT_CATEGORY)
     parser.add_argument("--scene-line", action="append", default=[])
+    parser.add_argument("--scene-motion", action="append", default=[])
     parser.add_argument("--limit", type=int, default=5)
     parser.add_argument("--seconds", type=float, default=2.8)
     parser.add_argument("--opening-seconds", type=float, default=1.55)
@@ -111,6 +112,17 @@ def scene_lines(args: argparse.Namespace, count: int) -> list[str]:
     return lines[:count]
 
 
+def scene_motions(args: argparse.Namespace, count: int) -> list[str]:
+    motions = args.scene_motion or []
+    if not motions:
+        # cycle default motions
+        default_pool = ["dolly_in", "pan_right", "pan_left", "dolly_out"]
+        motions = [default_pool[i % len(default_pool)] for i in range(count)]
+    elif len(motions) < count:
+        motions = motions + [motions[-1]] * (count - len(motions))
+    return motions[:count]
+
+
 def resolve_category_defaults(args: argparse.Namespace) -> None:
     if not args.ending_line:
         args.ending_line = CATEGORY_CTA_LINES[args.category]
@@ -126,13 +138,12 @@ def render_frames(
     out_dir: Path,
     args: argparse.Namespace,
     lines: list[str],
-) -> list[tuple[Path, float, str]]:
+) -> list[tuple[Path, Path, float, str]]:
     frames_dir = out_dir / "frames"
     frames_dir.mkdir(parents=True, exist_ok=True)
-    frames: list[tuple[Path, float, str]] = []
+    frames: list[tuple[Path, Path, float, str]] = []
 
     def render_one(
-        image: Path,
         frame: Path,
         title: str,
         subtitle: str,
@@ -143,7 +154,7 @@ def render_frames(
             [
                 swift_bin,
                 str(SWIFT_RENDERER),
-                str(image),
+                "clear",
                 str(frame),
                 title,
                 subtitle,
@@ -156,59 +167,79 @@ def render_frames(
     if not args.no_opening:
         frame = frames_dir / "frame-00-intro.png"
         render_one(
-            images[0],
             frame,
             args.opening_title,
             args.opening_subtitle or args.case_label,
             "",
             "intro",
         )
-        frames.append((frame, args.opening_seconds, "intro"))
+        frames.append((frame, images[0], args.opening_seconds, "intro"))
 
     for index, image in enumerate(images, start=1):
         frame = frames_dir / f"frame-{index:02d}.png"
         scene_tag = f"{index:02d}/{len(images):02d}" if args.show_counter else ""
-        render_one(image, frame, args.title, lines[index - 1], scene_tag, "scene")
-        frames.append((frame, args.seconds, "scene"))
+        render_one(frame, args.title, lines[index - 1], scene_tag, "scene")
+        frames.append((frame, image, args.seconds, "scene"))
 
     if not args.no_ending:
         frame = frames_dir / f"frame-{len(images) + 1:02d}-outro.png"
         render_one(
-            images[-1],
             frame,
             frame_cta_line(args.ending_line),
             "台南外燴設計顧問｜MAPLAB Kitchen",
             "",
             "outro",
         )
-        frames.append((frame, args.ending_seconds, "outro"))
+        frames.append((frame, images[-1], args.ending_seconds, "outro"))
 
     return frames
 
 
-def make_segment(ffmpeg_bin: str, frame: Path, segment: Path, seconds: float, visual_preset: str) -> None:
-    video_filter = VISUAL_PRESETS[visual_preset]
+def make_segment(
+    ffmpeg_bin: str,
+    bg_image: Path,
+    overlay_png: Path,
+    segment: Path,
+    seconds: float,
+    motion: str,
+    visual_preset: str,
+) -> None:
+    total_frames = int(seconds * 30)
+
+    # Select zoompan filter based on motion type
+    if motion == "dolly_in":
+        zoompan = f"zoompan=z='1.0+0.15*on/{total_frames}':x='(iw-iw/zoom)/2':y='(ih-ih/zoom)/2':d={total_frames}:s=1080x1920:fps=30"
+    elif motion == "dolly_out":
+        zoompan = f"zoompan=z='1.15-0.15*on/{total_frames}':x='(iw-iw/zoom)/2':y='(ih-ih/zoom)/2':d={total_frames}:s=1080x1920:fps=30"
+    elif motion == "pan_right":
+        zoompan = f"zoompan=z=1.15:x='(iw-iw/zoom)*(on/{total_frames})':y='(ih-ih/zoom)/2':d={total_frames}:s=1080x1920:fps=30"
+    elif motion == "pan_left":
+        zoompan = f"zoompan=z=1.15:x='(iw-iw/zoom)*(1-on/{total_frames})':y='(ih-ih/zoom)/2':d={total_frames}:s=1080x1920:fps=30"
+    else: # static or fallback
+        zoompan = f"zoompan=z=1.001:x=0:y=0:d={total_frames}:s=1080x1920:fps=30"
+
+    preset_filter = VISUAL_PRESETS.get(visual_preset, "null")
+
+    # Combine cropping/scaling, zoompan motion, transparent overlay, and color presets in one filter complex
+    filter_complex = (
+        f"[0:v]crop=w='min(iw,ih*9/16)':h='min(ih,iw*16/9)',scale=2160:3840,{zoompan}[panned];"
+        f"[panned][1:v]overlay=0:0[graded];"
+        f"[graded]{preset_filter}[out]"
+    )
+
     run(
         [
             ffmpeg_bin,
             "-y",
-            "-loop",
-            "1",
-            "-t",
-            str(seconds),
-            "-i",
-            str(frame),
-            "-vf",
-            video_filter,
-            "-r",
-            "30",
+            "-i", str(bg_image),
+            "-i", str(overlay_png),
+            "-filter_complex", filter_complex,
+            "-map", "[out]",
+            "-r", "30",
             "-an",
-            "-c:v",
-            "libx264",
-            "-pix_fmt",
-            "yuv420p",
-            "-movflags",
-            "+faststart",
+            "-c:v", "libx264",
+            "-pix_fmt", "yuv420p",
+            "-movflags", "+faststart",
             str(segment),
         ]
     )
@@ -392,14 +423,29 @@ def main() -> None:
 
     images = list_images(asset_dir, args.limit)
     lines = scene_lines(args, len(images))
+    motions = scene_motions(args, len(images))
     frames = render_frames(swift_bin, images, work_dir, args, lines)
 
     segments: list[Path] = []
     durations: list[float] = []
     frame_modes: list[str] = []
-    for index, (frame, duration, mode) in enumerate(frames, start=1):
+    scene_index = 0
+    for index, (overlay_png, bg_image, duration, mode) in enumerate(frames, start=1):
         segment = segments_dir / f"segment-{index:02d}.mp4"
-        make_segment(ffmpeg_bin, frame, segment, duration, args.visual_preset)
+        if mode == "scene":
+            motion = motions[scene_index]
+            scene_index += 1
+        else:
+            motion = "dolly_in"  # Use dolly_in for intro/outro backgrounds
+        make_segment(
+            ffmpeg_bin,
+            bg_image,
+            overlay_png,
+            segment,
+            duration,
+            motion,
+            args.visual_preset,
+        )
         segments.append(segment)
         durations.append(duration)
         frame_modes.append(mode)
@@ -431,6 +477,7 @@ def main() -> None:
         "title": args.title,
         "images": [str(image) for image in images],
         "scene_lines": lines,
+        "scene_motions": motions,
         "frame_modes": frame_modes,
         "video": str(video_path),
         "cover": str(cover_path),

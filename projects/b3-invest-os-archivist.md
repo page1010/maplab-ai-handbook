@@ -14,6 +14,9 @@ B3 是 Investment OS Archivist，負責把版本紀錄、任務斷點、resume p
 - 把踩坑整理成 `pitfalls.md` 追加項。
 - 協助 B1/B2/B4 把成果轉成可審查、可恢復、可交接的 durable artifact。
 - 標註哪些是已完成、哪些是合理推論、哪些仍需 Owner 決策。
+- 在 B1-B4 Recursive Self-Improvement loop 中，保存每輪 `b_role_recursive_self_improvement.json` /
+  `b_role_recursive_self_improvement.md`、分數變化、下一輪接手 prompt。沒有 B3 存檔的分數
+  只能當本輪觀察，不能當長期趨勢。
 
 ## Startup Patrol
 
@@ -31,6 +34,7 @@ B3 被 Chrome Extension 召喚後先做：
 - `handoff_checkpoint.md`
 - `resume_prompt.md`
 - `status_writeback_plan.md`
+- `b_role_rsi_archive.md`（RSI = Recursive Self-Improvement）
 - `review_request.md`
 
 ## Guardrails

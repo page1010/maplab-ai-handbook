@@ -9,12 +9,14 @@
 你是 MAPLAB AI agent，隸屬多 Agent 系統。啟動或被重新喚醒時，依以下步驟執行：
 
 Step 1. **角色確認**：若 handoff / session context 已指定角色與任務，直接確認後開始執行。若完全不清楚角色，才問 Owner。
-Step 2. 讀 `CURRENT_STATUS.md`（唯一最新狀態入口）和對應 task card。
-Step 3. 輸出 Startup Check（角色、任務範圍、產出位置、高風險動作）。**不強制發問**——任務清楚就直接執行，不確定才問。
-Step 4. 執行。Session 結束前在 `workbook/owner_requirements_panel.md` 寫一筆紀錄。
+Step 2. 讀 `docs/company-values.md`、`CURRENT_STATUS.md`（唯一最新狀態入口）和對應 task card。
+Step 3. 輸出 Startup Check（角色、任務範圍、產出位置、高風險動作、測試計畫、receipt 路徑）。**不強制發問**——任務清楚就直接執行，不確定才問。
+Step 4. 執行。任何程式、排程、owner-facing 訊息、Telegram/LINE/Chrome/WordPress/Sheets 行為改動，收尾前必須跑最小可證明測試，並把測試結果寫進 review bundle / validation report / task card / CURRENT_STATUS / handoff checkpoint。
+Step 5. Session 結束前在 `workbook/owner_requirements_panel.md` 寫一筆紀錄，Final 必列 `Tests run`；未測或未留 receipt 不得宣稱完成。
 
 > ⚠️ CURRENT_STATUS.md 的資訊優先於所有其他文件。若衝突，以 CURRENT_STATUS 為準。
 > ⚠️ 任務清楚 → 直接執行，不要用「確認需求」當拖延藉口。
+> ⚠️ 有寫但沒測，等於沒完成；有測但沒 receipt，等於下一個 session 無法信任。
 
 ---
 

@@ -1,0 +1,35 @@
+{
+  "bundle_dir": "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/A5-QUOTE-20260614-A6-ROUTE-TEST",
+  "files": [
+    {
+      "path": "task_request.md",
+      "bytes": 8963,
+      "sha256": "9d586d93370690c35a81bb17a5c0eb0830cfc80ed66b6f83797ca1dab53509f5"
+    },
+    {
+      "path": "output.json",
+      "bytes": 42682,
+      "sha256": "bcfd2841f06523ff5c4ca1a42c446328e23e128fac0b2af329947e6c8c1d62c3"
+    },
+    {
+      "path": "draft.md",
+      "bytes": 2872,
+      "sha256": "8d1c8022ae09066a4ad1d1b3fc3fc939912feb4f6931d00bb3492c628ce2d903"
+    },
+    {
+      "path": "execution_log.json",
+      "bytes": 18567,
+      "sha256": "de82db874e1a1f6df0b3e23ac388fdfb70506e8ee95743c1478d9678d418c010"
+    },
+    {
+      "path": "verification_log.json",
+      "bytes": 553,
+      "sha256": "5531bb3f27a2e54eecf2ed900601de94ad1a3b65b4f95bc7082a3583b6a27db5"
+    },
+    {
+      "path": "review_request.md",
+      "bytes": 446,
+      "sha256": "54b6138affcff331c25fe1252cd084c3cba7f2a894d4fa2382809450c4c15fb1"
+    }
+  ]
+}

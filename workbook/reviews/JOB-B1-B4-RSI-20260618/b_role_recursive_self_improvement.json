@@ -1,0 +1,128 @@
+{
+  "schema_version": "b-role-recursive-self-improvement-v0",
+  "generated_at": "2026-06-18T16:25:42.471809+08:00",
+  "overall_score": 44,
+  "band": "broken",
+  "trend": "baseline",
+  "delta_vs_previous": null,
+  "previous_score": null,
+  "previous_report": null,
+  "role_scores": {
+    "B1": 90,
+    "B2": 56,
+    "B3": 65,
+    "B4": 65
+  },
+  "evidence": {
+    "nightwatch": {
+      "path": "/Users/pagemacmini/.local/share/investmentos-telegram-operator/reports/nightwatch/latest.md",
+      "exists": true,
+      "alert_count": 1,
+      "red_lines": [
+        "| Hermes 投資問題包 | 🔴 過期 | 730h 前(上限 200h)｜invest_question_pack_2026-05-18.md |",
+        "- **Hermes 投資問題包**：730h 前(上限 200h)｜invest_question_pack_2026-05-18.md"
+      ]
+    },
+    "background_jobs": {
+      "path": "/Users/pagemacmini/.local/share/investmentos-telegram-operator/reviews/background_jobs_state.json",
+      "updated_at_utc": "2026-06-18T08:25:27+00:00",
+      "job_count": 18,
+      "bad_jobs": [
+        {
+          "job_id": "live-position-session-refresh",
+          "status": "failed",
+          "last_message": "live_position_session_refresh failed: accounts=3 positions=1 position_snapshot=2026-06-18T05:50:40.343712+00:00 reason=sync_account_live_readonly=sqlite3.OperationalError: database is locked log=/Users/pagemacmini/.local/share/investmentos-"
+        }
+      ]
+    },
+    "shadow_review": {
+      "path": "/Users/pagemacmini/.local/share/investmentos-telegram-operator/reports/shadow/local_model_findings.jsonl",
+      "exists": true,
+      "last_ts": "2026-06-18T16:18:12+08:00",
+      "recent_count_24h": 82,
+      "concern_count_24h": 82,
+      "latest_concern": {
+        "agent": "hermes-reviewer",
+        "agent_id": "hermes-reviewer",
+        "evidence": "The matrix_rows array is empty, which indicates a lack of data to populate the table. This could be due to an error in the input or a deliberate decision not to include any data.",
+        "hostname": "pagedeMac-mini.local",
+        "input_format": "JSON object serialized from structured Builder data.",
+        "next_action": "rerun_with_alt_prompt",
+        "parent_job": "convergence-engine",
+        "parent_run_id": "20260618-161812",
+        "pattern": "P1-self-review",
+        "prev_count": 1257,
+        "schema_version": "local-mutual-v1.1",
+        "ts": "2026-06-18T16:18:12+08:00",
+        "verdict": "concern"
+      }
+    },
+    "bundle_recency": {
+      "B1": {
+        "prefix": "JOB-B1-BUILDER-",
+        "path": "workbook/reviews/JOB-B1-BUILDER-20260611",
+        "age_hours": 183.86299021777776
+      },
+      "B2": {
+        "prefix": "JOB-B2-REVIEW-",
+        "path": "workbook/reviews/JOB-B2-REVIEW-20260530",
+        "age_hours": 439.96247900722227
+      },
+      "B3": {
+        "prefix": "JOB-B3-ARCHIVE-",
+        "path": "workbook/reviews/JOB-B3-ARCHIVE-20260530",
+        "age_hours": 439.9624788025
+      },
+      "B4": {
+        "prefix": "JOB-B4-PATROL-",
+        "path": "workbook/reviews/JOB-B4-PATROL-20260530",
+        "age_hours": 439.9624775344445
+      }
+    }
+  },
+  "penalties": [
+    {
+      "reason": "nightwatch_red_alerts",
+      "points": 12,
+      "count": 1
+    },
+    {
+      "reason": "failed_or_timeout_background_jobs",
+      "points": 8,
+      "count": 1
+    },
+    {
+      "reason": "untriaged_shadow_concerns_24h",
+      "points": 12,
+      "count": 82
+    },
+    {
+      "reason": "b2_receipt_stale_or_missing",
+      "points": 8,
+      "age_hours": 439.96247900722227
+    },
+    {
+      "reason": "b3_receipt_stale_or_missing",
+      "points": 8,
+      "age_hours": 439.9624788025
+    },
+    {
+      "reason": "b4_receipt_stale_or_missing",
+      "points": 8,
+      "age_hours": 439.9624775344445
+    }
+  ],
+  "next_actions": [
+    "B4: treat nightwatch red lines as patrol inputs, not owner-facing conclusions.",
+    "B2: triage latest shadow concerns into accepted_issue / false_positive / needs_more_evidence.",
+    "B1: start with `live-position-session-refresh` because it is currently failed/timeout in background job state.",
+    "B1: repair the highest-impact failed background job before adding new automation.",
+    "B3: archive this run with a resume prompt and write pitfalls only if the same miss repeats.",
+    "B4: rerun the scorer after fixes; require score improvement or fewer red items before calling the loop stronger."
+  ],
+  "boundaries": [
+    "This is not a market signal.",
+    "This does not place, modify, or recommend trades.",
+    "Local model findings require B2 review before formal conclusions."
+  ]
+}

@@ -427,9 +427,9 @@ function applyQuoteVariantToCopy_(spreadsheetId, base, variant, label) {
   sheet.getRange('D5').setValue(variant.title || variant.name || base.eventName || '');
   sheet.getRange('F5').setValue(variant.totalItems || calcVariantTotalItems_(variant));
 
-  sheet.getRange('D7:D18').clearContent();
-  sheet.getRange('F7:F18').clearContent();
-  sheet.getRange('I7:J18').clearContent();
+  sheet.getRange('D7:D20').clearContent();
+  sheet.getRange('F7:F20').clearContent();
+  sheet.getRange('I7:J20').clearContent();
 
   if (rowsToWrite > 0) {
     var names = [];

@@ -1,0 +1,93 @@
+{
+  "action": "createQuoteVariants",
+  "base": {
+    "clientName": "harusiyako",
+    "company": "",
+    "phone": "",
+    "eventType": "Birthday",
+    "eventDate": "2026-06-20",
+    "date": "2026-06-20",
+    "time": "13:00",
+    "location": "台南市永康區東橋七路392號10樓之一",
+    "address": "台南市永康區東橋七路392號10樓之一",
+    "pax": 15,
+    "headcount": 15,
+    "eventName": "15人生日派對正餐桌面餐檯",
+    "depositAmount": 8400,
+    "floorFeeMode": "none",
+    "dietaryNotes": "2026-06-20急件；確認後收50%訂金NT$8,400；服務範圍為餐點與桌面餐檯佈置。"
+  },
+  "variants": [
+    {
+      "label": "A",
+      "title": "A 正餐桌面餐檯版",
+      "positioning": "15人生日派對，正餐主食飽足感；服務範圍為餐點、擺盤與桌面餐檯佈置。",
+      "menu": [
+        {
+          "itemId": "MAIN004",
+          "name": "義式經典拿波里肉醬義大利麵",
+          "qty": 1,
+          "unit": "份",
+          "qtyText": "約15人份",
+          "unitCost": 500,
+          "subtotal": 500
+        },
+        {
+          "itemId": "MAIN009",
+          "name": "鍋炒台南七股虱目魚香腸炒飯",
+          "qty": 1,
+          "unit": "份",
+          "qtyText": "約15人份",
+          "unitCost": 800,
+          "subtotal": 800
+        },
+        {
+          "itemId": "MAIN007",
+          "name": "招牌義式炸雞腿",
+          "qty": 1,
+          "unit": "方格",
+          "qtyText": "1方格",
+          "unitCost": 800,
+          "subtotal": 800
+        },
+        {
+          "itemId": "APP001",
+          "name": "普羅旺斯香料烤澳洲白玉薯塊",
+          "qty": 15,
+          "unit": "份",
+          "qtyText": "15份",
+          "unitCost": 20,
+          "subtotal": 300
+        },
+        {
+          "itemId": "DST013",
+          "name": "布朗尼切小正方/25",
+          "qty": 20,
+          "unit": "片",
+          "qtyText": "20片",
+          "unitCost": 16,
+          "subtotal": 320
+        },
+        {
+          "itemId": "BEV005",
+          "name": "冷泡冰釀烏龍茶_無糖",
+          "qty": 1,
+          "unit": "桶",
+          "qtyText": "1桶",
+          "unitCost": 80,
+          "subtotal": 80
+        }
+      ],
+      "foodCost": 2800,
+      "foodRevenue": 14800,
+      "decorRevenue": 2000,
+      "totalCost": 2800,
+      "totalRevenue": 16800,
+      "foodNote": "15人正餐主食飽足感配置；餐點收入NT$14,800。",
+      "decorNote": "本案服務範圍為桌面餐檯佈置、餐點擺盤與桌面氛圍整理。",
+      "staffNote": "小型室內場，依本案餐檯服務配置。",
+      "alcoholNote": "本案未含酒水吧台。",
+      "internalNote": "急件，需先收50%訂金NT$8,400後保留檔期與備料；對客說明限餐點與桌面餐檯佈置。"
+    }
+  ]
+}

@@ -1,13 +1,13 @@
 # Learning Loop Reaction Ledger Summary
 
-- generated_at: `2026-06-16T14:32:39+08:00`
+- generated_at: `2026-06-20T09:00:03+08:00`
 - ledger: `workbook/learning_loop/reaction_ledger.jsonl`
 - entries_added_this_run: `0`
 - total_entries: `4`
 - open: `4`
 - closed: `0`
 - stale_open_7d: `0`
-- overdue_open: `0`
+- overdue_open: `2`
 
 ## Decisions
 
@@ -24,4 +24,5 @@
 
 ## Overdue Open Reactions
 
-- none
+- google-oauth-reauth-card | assigned_to=A1 | due_at=2026-06-17T14:27:53+08:00 | target=handoff/tasks/T-A1-SYNC-GUARD-001.md
+- long-blocked-three-layer-review | assigned_to=A0/A1 | due_at=2026-06-17T14:27:53+08:00 | target=handoff/tasks/

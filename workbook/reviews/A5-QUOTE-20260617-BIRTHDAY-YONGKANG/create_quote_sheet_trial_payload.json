@@ -1,0 +1,20 @@
+{
+  "action": "createQuote",
+  "clientName": "harusiyako",
+  "customer": "harusiyako",
+  "company": "",
+  "phone": "",
+  "eventType": "Birthday",
+  "eventDate": "2026-06-20",
+  "date": "2026-06-20",
+  "time": "13:00",
+  "location": "台南市永康區東橋七路392號10樓之一",
+  "address": "台南市永康區東橋七路392號10樓之一",
+  "pax": 15,
+  "headcount": 15,
+  "eventName": "15人生日派對正餐桌面餐檯",
+  "totalItems": 39,
+  "depositAmount": 8400,
+  "floorFeeMode": "none",
+  "dietaryNotes": "2026-06-20急件；確認後收50%訂金NT$8,400；服務範圍為餐點與桌面餐檯佈置。"
+}

@@ -177,6 +177,7 @@ Stage 3 輸出硬規則：
 - needs_cloud_tool 必須是 true。
 - 不得使用這些未驗證詞：{", ".join(UNSUPPORTED_VISUAL_TERMS)}
 - 不得使用這些不優雅或內部流程詞：{", ".join(AWKWARD_COPY_TERMS)}
+- 為每個分鏡選擇合適的運鏡 (motion)：dolly_in（近景特寫放大）, dolly_out（近景特寫縮小）, pan_right（長桌左到右平移）, pan_left（長桌右到左平移）, static（無動態）。
 
 JSON schema:
 {{
@@ -187,6 +188,7 @@ JSON schema:
       "scene": 1,
       "subtitle": "短字幕",
       "visual_instruction": "短畫面指示",
+      "motion": "dolly_in | dolly_out | pan_right | pan_left | static",
       "source_status": "scene_line | manifest",
       "risk": "none | needs_review"
     }}
@@ -316,6 +318,12 @@ def validate(obj: dict[str, Any], expected_cta: str) -> dict[str, Any]:
             for term in UNSUPPORTED_VISUAL_TERMS:
                 if term in visual_instruction:
                     errors.append(f"scene {index} unsupported visual claim: {term}")
+            
+            motion = scene.get("motion")
+            valid_motions = {"dolly_in", "dolly_out", "pan_right", "pan_left", "static"}
+            if motion not in valid_motions:
+                errors.append(f"scene {index} motion '{motion}' is invalid")
+
             scene_public_text = "\n".join(
                 str(scene.get(key) or "") for key in ["subtitle", "visual_instruction"]
             )

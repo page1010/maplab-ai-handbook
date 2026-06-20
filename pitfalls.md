@@ -2,12 +2,68 @@
 
 > Cold-start required. 每次修到重複錯誤，要把「觸發條件 / 根因 / 解法 / 預防」寫回這裡。
 
+## 2026-06-18 — Test receipt must be written before claiming completion
+
+- 觸發條件：Agent 回報 IOS-KOL 雷達修正時說已測試、會寫 receipt，但 final 前沒有先把測試紀錄落成 repo artifact；Owner 追問「沒寫嗎」「有寫沒做」並要求把企業文化塞成冷啟動。
+- 根因：把測試當成聊天回報，而不是交付物的一部分；Startup Check 沒先宣告 Test plan / Receipt path，收尾也沒有用 Handoff Checkpoint 檢查 `Tests run` 與 `Receipt`。
+- 解法：新增 `workbook/reviews/JOB-IOS-KOL-RADAR-TEST-20260618/TEST_RECEIPT.md`，記錄 target tests、source/runtime py_compile、live DB preview、yt-dlp smoke、full test file 的 40 passed / 1 unrelated fail。同步更新 `docs/company-values.md`、`AGENT_STARTUP_PROTOCOL.md`、`AGENT_RULES.md`、`CURRENT_STATUS.md`，把測試與 receipt 變成 cold-start 硬規則。
+- 預防：任何會改 owner-facing 行為的任務，Startup Check 必須列 `Test plan` 與 `Receipt path`；final 必列 `Tests run`。若未跑或未落檔，不得宣稱完成，只能標 partial / unverified。
+
+## 2026-06-20 — IOS-KOL changed RSS rows must be cross-checked by source id, not global latest window
+
+- 觸發條件：新增《兆華與股惑仔》Podcast RSS 後，runtime DB 已寫入 `influencer_insights.id=611`，但 owner-facing digest 一開始沒有出現，因為該集發布日是 2026-06-18，前面已有更多 2026-06-20 rows。
+- 根因：RSS sync 完成後呼叫 `build_cross_checks()` 只看全域 latest 20，不看本輪 changed row；新來源若發布時間較舊，會被較新的其他 KOL/RSS rows 擠掉。
+- 解法：`build_cross_checks()` 新增 `source_ids` 參數，`sync_youtube()` / `sync_rss_sources()` 對本輪 changed ids 做 scoped cross-check；測試用 25 筆較新的 BlockTempo rows 回歸驗證，確保核心 KOL podcast RSS 仍會建立 cross-check。
+- 預防：任何新增來源或補 sync，都要驗三層：`influencer_insights` 是否寫入、同一 id 是否有 `influencer_cross_checks`、owner-facing preview 是否渲染。production smoke 必須明確帶 `--db-path`，不得依賴目前工作目錄。
+
+## 2026-06-18 — A6 quote mode must be Sheet-first, and Apps Script Web Apps need redeploy
+
+- 觸發條件：Owner 在 Telegram 傳生日派對截圖與「15 人有主食高毛利、要英文菜單」後，`maplab_a6_bot` 先回 Claude 未知錯誤，再直接切 `gemma4:latest` 本地備援，只產 review bundle，沒有產可檢查的 Google Sheet 報價單。
+- 根因：`bot_a6._run_a5_quote_background()` 雖然有雲端 A5/GAS helper，但實際 hot path 寫死先跑 `run_a5_local_quote()`；本地模型 JSON 品質不穩，A6 又把降級草稿當成完成。第二層問題是 `clasp push` 只更新 Apps Script HEAD，A6 `.env` 使用固定 Web App deployment v11，未 redeploy 時仍跑舊版 `applyQuoteVariantToCopy_()`，導致報價副本 D19/D20 殘留禮盒列。
+- 解法：A6 明確報價訊息先用 deterministic `build_sheet_quote_payload()` 從 `data/items_master.json` 建 `createQuoteVariants` payload 並呼叫 GAS；成功後回 Sheet URL、菜單、總額、成本、毛利率。本地 `/localquote` 僅作測試，不寫 Sheet。GAS 修 `applyQuoteVariantToCopy_()` 清空 D/F/IJ 7:20，並用 `clasp deploy -i <existing deployment id>` 更新 A6 正在使用的 Web App 到新版本。
+- 預防：任何 A6 報價修復驗收必須包含三段：本地 payload smoke、GAS live createQuoteVariants smoke、Google Sheets connector 回讀 `報價單!D2:F31` 與 `I7:J31`。若只看到 `Pushed files` 不算 Web App 已更新；要檢查 `clasp deployments` 並確認 `.env` 使用的 deployment id 已 redeploy。
+
+## 2026-06-18 — Quote trainee agents must not self-certify PASS
+
+- 觸發條件：Owner 要求把 A6/A5 報價成功路徑教給下游 agent；Codex 選 OpenClaw 跑 supervised training。OpenClaw Round 1 自判 `PASS`，但只列 6 個品項、使用泛稱/不存在品項、payload shape 不符；Round 2 仍自判 `PASS`，但把 `variants` 寫成品項陣列、漏 `action/base/totalRevenue/foodCost`，還自創價格與錯誤數量。
+- 根因：下游本地 agent 可以吸收口號式規則，但不會自然遵守 A5 報價的 exactness gate；若讓 trainee 自判完成，會把「看似接近」誤當可用報價。
+- 解法：建立 `workbook/reviews/A6-QUOTE-OPENCLAW-TRAINING-20260618/supervisor_lesson.md`，明確記錄 Round 1/2 失敗、正確 `createQuoteVariants` payload shape、10 個既有 MAPLAB 品名、NT$15,700 / NT$3,140 / 80.0% / 訂金 NT$7,850、客戶安全文案與下次訓練 gate。同步補進 `skills/a5-quotation-engine-skills.md` 的學徒 agent gate。
+- 預防：任何 OpenClaw/Hermes/local model 接手 A5/A6 報價，必須由主管 agent 檢查：`action=createQuoteVariants`、`variants[].menu`、精確品項數、既有 Items 品名、回讀 Sheet 範圍、Telegram Web surface proof。沒有 supervisor readback，不得接受 trainee 的 `PASS`。
+
+## 2026-06-20 — A5 quote trainees need fixed customer templates, not freeform commercial copy
+
+- 觸發條件：A5/A6 報價學徒訓練延續到 Round 3-5。直接 Ollama `qwen2.5:14b` 能產出正確 `createQuoteVariants` payload 與 10 道品項，但自由客戶文案先漏出 `高毛利` 與 `桌椅`，下一輪又把「預收 50% 訂金」改成「一定比例的訂金」。
+- 根因：模型對數字/payload 的 exactness 可被 strict JSON 約束，但商務條款和客戶承諾若交給自由改寫，會自然軟化或過度承諾；自我檢查欄位也可能說 PASS 但文案實際不合格。
+- 解法：Round 5 改用直接 Ollama `qwen2.5:14b`、`temperature=0`、固定客戶模板與 deterministic supervisor gate，通過 10 道品項、`foodCost=3140`、`totalRevenue=15700`、`overallMargin=0.8`、`depositAmount=7850`、`預收 50% 訂金`、桌面簡潔佈置、禁語檢查。
+- 預防：A5/A6 學徒只可產生結構化 payload 或複製核准模板；不得自由改寫 urgent deposit、英文版、佈置承諾等商務條款。OpenClaw/Hermes 未通過相同 gate 前，不得宣稱已訓練堪用。
+
+## 2026-06-17 — A5 quote answers must come from a quote Sheet, not chat math
+
+- 觸發條件：Owner 提供生日派對截圖要求 A5 報價與 80% 以上毛利；Agent 先用聊天手算與自選菜單回覆，沒有先調用既有 Google Sheet 報價副本/QUOTE_DRAFT 試算，也沒有產出可檢查的報價單連結。
+- 根因：讀到 A5 `createQuoteVariants` 與 Items 資料後，把「能算出一組數字」誤當成「完成報價」。沒有先讀 `skills/a6-rapid-quote-sop.md` SECTION 7 與 QUOTE_DRAFT 歷史踩坑，導致混用 GAS adapter、connector 與手算，且沒有遵守 MVP 流程：業務用既有下拉品項在報價 Sheet 裡試算。
+- 解法：先用 Chrome/Owner 登入態或既有 GAS/Drive flow 複製整份 `MAPLAB_外燴系統_v0.1`，只在副本填 D/F 品項與數量、費用與總額欄；使用現有 `Items`/DropdownHelper 的基本品項，不自創菜名；最後讀回 Sheet 計算結果與連結。必要時只在副本補 VLOOKUP/小計公式，不改母版。
+- 預防：任何 A5/A6/Codex 報價任務若要求報價、毛利、試算或報價單，完成標準必須包含 Sheet URL、菜單行、訂單成本、總金額、毛利率的回讀證據。聊天手算只能作草稿，不得當成 A5 報價完成。
+
 ## 2026-06-17 — Telegram `召喚` must create a dispatch receipt, not just routing advice
 
 - 觸發條件：Owner 在 Telegram 問 Google/Meta 廣告成效判讀，`maplab_claude_bot` 回「召喚 A3」與下一步欄位，但沒有建立 task packet、沒有丟給 Codex/OpenClaw，也沒有回 dispatch receipt；Owner 追問「所以誰做你召喚了嗎」。
 - 根因：`bot/bot.py` 的 `_local_dispatch_answer()` 只產文字建議，沒有 file-backed command intake、worker handoff、prompt artifact、OpenClaw/Codex queue 或 receipt。這違反外部 command window 的 P0 驗收：Telegram 指令 → role route → cold-start prompt/context → worker dispatch → progress receipt。
 - 解法：新增 Telegram dispatch route：`/codex_dispatch` 與自然語句派工觸發都要建立 `workbook/telegram-dispatch/TG-DISPATCH-*/packet.json`、`prompt.md`、`README.md`、`index.jsonl`，並寫入 Codex clipboard bridge；回覆必須列 `dispatch_id`、主責角色、worker、status、packet/prompt 路徑，OpenClaw worker 可背景接手。
 - 預防：任何 `召喚`、`派給`、`貼到 Codex`、`誰做`、`不是回覆` 類 Telegram 訊息，不得只回「請 A3/A2/A1 做」。若沒有產生可追蹤 dispatch artifact 或 worker receipt，只能說「尚未派工」，不能說「已召喚」。
+
+## 2026-06-17 — A8 local fallback JSON is not a video, and internal ops wording must be blocked
+
+- 觸發條件：Owner 指出 A8 地端模型只產 JSON 不算影片備援，且字幕 `取餐要順` 聽起來不順、不優雅；同時追問 Hermes/OpenClaw 是否應納入工具鏈。
+- 根因：把「地端模型可產 storyboard/metadata JSON」誤報成「A8 local fallback 可用」，沒有把模型輸出接到本機影片工具與 MP4 驗證；prompt seed 也把 `取餐要順`、`動線穩` 這類內部流程語餵回模型，造成壞文案回流。
+- 解法：新增 `tools/ai_workbook/a8_local_model_video_pipeline.py`，把 `qwen2.5:14b` 輸出接到 Swift/AppKit frame renderer 與 ffmpeg，完成 `local_model_video_v5/a8-short-local-model-video.mp4`；`a8_local_model_fallback.py` 加上 brand-clean seed、off-brand wording blocklist、platform copy validation。Hermes/OpenClaw 也要實測：Hermes gateway stopped 不進 hot path；OpenClaw browser 可做 UI readback，但 agent QA 回 `NO_REPLY`，不能當 A8 主 QA。
+- 預防：A8 地端備援完成標準一律是 JSON valid + MP4 rendered + ffprobe 1080x1920 H.264 + QA frames checked。不得使用 `取餐要順`、`取餐`、`順暢`、`分開`、`詳盡`、`動線穩`、`節奏更穩` 等內部流程語；每次聲稱 Hermes/OpenClaw 可用前要跑 status / doctor / actual worker smoke，不得用工具名代替能力證明。
+
+## 2026-06-17 — IOS-KOL Telegram digest must carry transcript gate and worker status
+
+- 觸發條件：Owner 截圖詢問 TelbotFin/Telegram `網紅單集重點` 是否屬於 IOS-KOL / OpenClaw 責任，並指出期待不是只管游庭皓，而是要有逐字稿、重點整理、格式確認、英文內容翻譯、多 KOL 共識與夜盤總經判讀。
+- 根因：`sync_influencer_agents.py` 的 `influencer_insights` 有 `transcript_status` / `transcript_source`，但 `influencer_cross_checks` 發送層只看 `status=closed` 與 `content_extraction`，沒有在 Telegram render 前明確檢查逐字稿品質與 worker 狀態；操作筆記也可能把 `操作/策略筆記` 這種段落標題當成內容。
+- 解法：runtime `owner_visible_episode_rows()` 改為只讓 `transcript_status=ok` 的 YouTube 內容進正式 `網紅單集重點`，RSS / metadata-only 留待補；Telegram 開頭標明 `IOS-KOL 網紅雷達經理｜團隊指派 OpenClaw/ASR 回報` 與流程 gate；operation note render 濾掉段落標題與 Q/A 殘渣；新增 `docs/ios-kol/daily-telegram-workflow.md` 定義每日流程。
+- 預防：IOS-KOL Telegram-facing output 必須在發送前列出資料層級：RSS metadata / transcript / ASR / summary / format-check / OpenClaw 或 NotebookLM worker 狀態。多 KOL 共識與夜盤總經判讀應走夜間綜合 digest，不要用單集通知假裝完成共識研究。
 
 ## 2026-06-17 — Extension summon is a file-backed role handoff, not a UI blocker
 
@@ -193,6 +249,78 @@
 - 解法：新增 Codex-first 對話層：普通聊天/SEO 先用 `codex exec --ephemeral -s read-only` 回覆；Codex CLI 不可用、額度/網路失敗或逾時時，才透明通知並 fallback 到本機 Ollama。
 - 預防：A6 對話能力測試要證明 primary engine，而不是只證明有回覆；smoke 至少檢查 `codex_ask()` 實際回應、runtime status 顯示 Codex primary、fallback 通知存在。
 
+## 2026-06-14 — Local quote model output is not a Sheet payload
+
+- 觸發條件：Owner 要 A6 測競品菜單截圖，需求是辨識所有品項、做 MAPLAB 雷同品項、毛利/食材成本安全、成本總價 * 5、產試算表連結；gemma4 本地模型回了長篇 Thinking，但沒有合法 JSON。
+- 根因：地端模型即使 prompt 寫「必須 JSON」，仍會輸出推理過程、截斷、漏掉 `createQuoteVariants`；prompt 只能降低風險，不能當資料契約。
+- 解法：A5 quote engine 加 Items catalog prompt、禁止假菜名、移除 Thinking/ANSI，且 JSON 不合法時用 `data/items_master.json` deterministic fallback 產 `createQuoteVariants` payload。成本未知或 0 的品項列 `needsManualCost`，不硬猜。
+- 預防：A6/A5 報價完成標準是「`_extract_form_data()` 讀到合法 JSON，GAS 回 Sheet URL」，不是模型看起來像有回答。競品菜單/雷同品項/成本*5 任務必讀 `skills/a6-local-quote-model-tuning.md`。
+
+## 2026-06-14 — Case Store fallback seed is not live Google Sheets proof
+
+- 觸發條件：A6 `case_store.py today` 顯示 `source=fallback:...conversation_log_seed.json`，若沒特別拔掉 fallback，容易誤以為 A6 已能讀 live `CONVERSATION_LOG`。
+- 根因：`case_store.py` 的 fallback seed 會在 Google Sheets 讀取失敗時接手；本機 Google token 實測回 `invalid_grant: Token has been expired or revoked.`。
+- 解法：live Sheet 驗證時把 `CASE_STORE_FALLBACK_JSON` 指到不存在的路徑再跑，例如 `CASE_STORE_FALLBACK_JSON=/tmp/a6-case-store-missing.json bot/venv/bin/python bot_a6/case_store.py today --rows 20 --limit 1`。只有不靠 fallback 成功，才算 A6 live Case Store 恢復。
+- 預防：報告 A6 Sheet 能力時必分開「GAS Web App 可建報價副本」和「Case Store 可讀 live CONVERSATION_LOG」；兩條使用不同憑證/路徑，不可互相代證。
+
+## 2026-06-14 — Secret safety must not become a work blocker
+
+- 觸發條件：A6 runtime 判斷需要知道 `.env` 裡的非秘密設定或確認 launchd 是否真的帶入 `A5_LOCAL_MODEL`，但 Agent 說「我不會讀 `.env`，因為有 token/secrets」，導致無法判斷 live bot 設定。
+- 根因：把「不要洩漏 secrets」誤解成「不能碰設定檔」。這會讓 Telegram bot、GAS、Sheets、LINE、OAuth 類工作全部卡死。
+- 解法：可以在 Owner 任務範圍內讀取或 source `.env` 來執行/驗證；但不要把 token、OAuth、API key、完整 secret value 印到聊天、log、commit、review bundle。需要展示時只列 key 名、是否存在、前後遮罩或非秘密 runtime 值。
+- 預防：遇到 `.env` 先分三類處理：`runtime config` 可讀可回報、`secret value` 可使用但不外顯、`要修改/輪替 secret` 才需要明確 Owner 確認。不得把安全規則當成不上班的理由。
+
+## 2026-06-15 — Unverified social model claims are not runtime integration plans or work blockers
+
+- 觸發條件：Owner 貼 IG/Threads/新聞截圖，聲稱某模型可控制 Mac、呼叫大量原生工具、或具備新 AI skill。
+- 根因：Agent 把二手社群貼文當成已驗證 source，或反過來把「未驗證」當成不上班理由；兩者都忽略 MAPLAB 的主動推進與三層阻塞審查。
+- 解法：先找 primary source；找不到就標註未驗證，但仍把可用概念拆成既有安全路由：connector、Chrome/OpenClaw、shell/osascript、review bundle、approval-ready packet。read-only、draft、disposable test 直接做。
+- 預防：新 runtime 進 A6 前必須有 review bundle、工具 allowlist、read-only smoke、disposable write test；禁止把「487 tools」整包開給 local model，也禁止因為不能整包接入就停止現有工具可做的工作。
+
+## 2026-06-15 — Permission gates can violate fast iteration culture
+
+- 觸發條件：Agent 為了安全或權限治理，先寫一堆 confirmation gate / do-not-execute 規則，導致可先做的 read-only、draft、test、approval-ready 工作被卡住。
+- 根因：把「production 風險控制」和「日常快速迭代」混在一起；沒有先交付最小可驗證成果，反而先建立會讓大家互相推責的流程。
+- 解法：所有權限規則都要先分層：direct-do 直接做；draft/test 直接產包；live write 才 ask once；external send/publish 才 final confirmation；high-risk 才 owner-override。
+- 預防：寫 skill / recall / SOP 時檢查是否出現「不能做」但沒有「可以先做什麼」。如果沒有 10 分鐘內可執行的 smoke/draft/test 步驟，這份規則會違反 MAPLAB 快速迭代文化。
+
+## 2026-06-15 — Patrol delivery is not a reaction loop
+
+- 觸發條件：每日 Telegram 巡查連續推送同一批阻塞/Owner 行動項，Owner 問「真的有人看結果嗎，還是一直推 30 天 60 天」。
+- 根因：`scripts/patrol.sh` / `scripts/patrol-scheduled.sh` 是可靠的採集與投遞程式，但沒有把結果轉成「誰負責、下一步、是否重複、是否該寫回記憶」的 reaction layer；Telegram 200 OK 被誤看成流程完成。
+- 解法：新增 `tools/hermes_patrol_bridge.py`，每日巡查後產 `workbook/hermes/patrol/latest.json`、`latest.md`、`hermes_prompt.md`、`telegram_decision_card.md` 與 `local-control-plane/hermes.html`。Hermes/Chrome Extension/Codex 讀 packet 後做三層阻塞審查與角色派工。
+- 預防：任何定時巡查都必須分成 collect / deliver / react / dispatch / memory 五層。只有 collect+deliver 不算有人負責；若同一訊息重複 7 天以上，必須產生 direct action、task packet、Owner 5-minute card 或 pitfall 回寫候選。
+
+## 2026-06-15 — Artifact substitution: do not replace the Owner's control problem with nearby system cleanup
+
+- 觸發條件：Owner 說需要「人在外面也可以指揮的窗口」，Agent 卻先去改 Chrome Extension / role module / dashboard / metadata / generator 這類看起來合理、但沒有讓 Owner 立刻更能指揮的周邊物件。
+- 根因：這不是「改錯 Extension」單點錯誤，而是 **artifact substitution**：Agent 把「我看得到、我能改、我能驗證的系統物件」替代成真正需求。真正需求是 Owner 在外面用 Telegram 發一句話，系統能完成 command intake -> role selection -> cold-start prompt/context -> worker dispatch -> progress receipt；周邊同步只讓內部結構更漂亮，沒有打通控制迴路。
+- 深層失誤：
+  1. 把內部一致性當成 Owner utility，忽略 Owner 花的是時間/額度/注意力。
+  2. 沒有先定義「最短可用指揮路徑」與驗收：Telegram 收到指令後，是否能產生 dispatch receipt。
+  3. 用產出物數量證明自己有工作，而不是用 Owner 能力提升證明工作有價值。
+  4. 沒有設 stop rule：當工作不直接改善 command window，就應降級或停止。
+- 解法：任何「外部指揮 / bot / Hermes / dispatch」需求，先寫 5 行 control-loop contract，再動手：
+  1. Owner 在哪裡下令？例如 Telegram。
+  2. 系統如何判斷召喚誰？role router。
+  3. 冷啟動 prompt/context 從哪裡取？repo/task card/role module。
+  4. 交給誰執行？Codex/Hermes/OpenClaw/A-role。
+  5. Owner 看到什麼 receipt？accepted/running/blocked/done + next action。
+- 預防：如果一項工作不能在 1-2 步內回答「這會讓 Owner 在外面多控制什麼？」就不是 P0。Panel、extension、generated metadata、文件同步、dashboard polish 都只能在 command window 最短路徑可跑後做。這條規則要防的是下一次改別的「蘋果以外的東西」，不是只防 Extension。
+
+## 2026-06-15 — Hermes fallback means the Telegram Claude bot fallback path, not patrol or extension cleanup
+
+- 觸發條件：Owner 一開始問 `maplab_claude_bot` 要接 Hermes 當接口，並確認 bot 背後接什麼模型；Agent 先查到 daily patrol 是 deterministic script 後，錯把巡查 reaction/panel/Extension Hermes target 當成主線，沒有先把 `bot/bot.py` 的 Claude primary -> Hermes quota fallback 接起來。
+- 根因：違反第一性原理。真正物件是「Owner 手上的 Telegram 對話欄」，真正能力是「原本能問 Claude、貼圖片、請它控制電腦；Claude 沒額度時 Hermes 接手」。Agent 沒先定義 primary actor / fallback trigger / capability parity / receipt / memory sources，導致做出看似相關但沒有解決入口問題的改動。
+- 解法：任何「把 Claude 能做的事交給 Hermes 備援」需求，先固定 6 件事再動手：
+  1. Bot identity：哪一隻 Telegram bot、launchd label、entrypoint 檔案。
+  2. Primary path：現在呼叫哪個模型或 CLI、是否支援圖片/電腦控制。
+  3. Fallback trigger：只在 quota/rate-limit/auth/CLI missing/timeout 等 primary unavailable 時啟動，不能因為 agent 想省事就繞過 Claude。
+  4. Capability parity：文字、圖片檔案路徑、repo 讀寫、Chrome/OpenClaw/osascript 電腦控制要各自列出 Hermes 能做/不能做。
+  5. Memory boot：Hermes fallback prompt 必讀 `CURRENT_STATUS.md`、`pitfalls.md`、企業文化、近期 Telegram log、相關 Task Card，並先跑第一性原理 5 題。
+  6. Owner receipt：Telegram 必須回 `primary_failed_reason`、`fallback=Hermes`、`model/date/agent`、`memory_sources`、`allowed_actions`、`next_check`。
+- 預防：遇到 Owner 糾正「不是這個意思」時，不得再擴張改其他周邊。先停止實作，回到使用者第一句需求，寫出上述 6 點 contract；contract 對齊後才改 bot。所有改檔還要具名記錄 agent/runtime/model/date，不能只靠 git author 或聊天記憶。
+
 ## 2026-05-21 — One-off HTML panels disappear after close
 
 - 觸發條件：Owner 指出「之前用 html 的方法不錯，不過關掉後我就找不到了」。
@@ -213,3 +341,10 @@
 - 根因：沒有先讀 `skills/credentials/wordpress-api.md`，也沒有依 Owner 指示把 Notion API Keys 保管室當 credential vault / index 使用；三層阻塞審查少跑一層。
 - 解法：A2 冷啟動補明確規則：Owner-approved WordPress execution mode 必須先讀 WordPress credential skill，再用受控 Notion route 取得 REST API 方法；secret 只可短暫用於批准範圍，不能寫進 repo、memory、log、review bundle 或 final。
 - 預防：任何 WordPress / Ads / 社群 / Google 外部登入任務，在輸出 `auth_missing` 前都要列出 Owner Chrome、credential skill、Notion/A0 MCP handoff 三層檢查結果；只要 task scope 已批准，先嘗試可安全執行的 draft/API route。
+
+## 2026-06-18 — IOS-KOL radar must separate digest visibility from transcript confidence
+
+- 觸發條件：Owner 指出網紅雷達只剩游庭皓，理財達人秀與股癌沒有摘要；游庭皓內容又被整理成 Q/A，而不是總經事件摘要。
+- 根因：`sync_influencer_agents.py` 把正式單集重點 gate 寫成只允許 `transcript_status=ok`，metadata-only 與 needs_transcript 全被濾掉；同時格式直接使用 `episode_qna`，讓游庭皓總經逐字稿被包成問答題。runtime 的 `.venv/bin/yt-dlp` wrapper 也失效，導致股癌音訊 fallback 卡在下載階段。
+- 解法：雷達視圖要一個核心 KOL 一列，優先選最新可摘要列；逐字稿列標 `逐字稿摘要`，metadata-only 只能標 `RSS/標題描述摘要（待逐字稿）`，needs_transcript 只能標 `待 ASR/逐字稿`，不得假裝已有內容結論。格式用「發生什麼事 / 可用訊號 / 限制 / 下一步」，禁止 Q/A 殘渣推到 Owner 手機。`yt_dlp_bin()` 必須先跑 `--version` 驗證候選可用，跳過壞 wrapper，子程序環境要移除 `PYTHONHOME`、`PYTHONPATH`、`__PYVENV_LAUNCHER__`。
+- 預防：IOS-KOL Telegram digest 不是只做 transcript gate，也要做 visibility gate。任何被 Owner 指定的核心 KOL 不可整列消失；若沒有內容摘要，必須顯示缺口與下一步 ASR，而不是靜默跳過。下次改 digest 前要用 live DB preview 檢查游庭皓、理財達人秀、股癌三列是否都存在，且沒有 `Q1/A1` 文字。

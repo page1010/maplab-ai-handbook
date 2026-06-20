@@ -58,6 +58,7 @@ scripts/sync_influencer_agents.py --db-path ... --notify-telegram --kol-shadow
 | Source | 用途 |
 | --- | --- |
 | BlockTempo 動區動趨 | 加密、AI、預測市場、地緣政治與風險偏好線索。 |
+| 理財達人秀／兆華與股惑仔 Podcast | 李兆華 SoundOn RSS；作為理財達人秀/李兆華補充來源。進單集雷達時只能標 `Podcast/RSS 摘要（待逐字稿）`，不可冒充逐字稿。 |
 
 待補 sources：
 
@@ -84,7 +85,7 @@ scripts/sync_influencer_agents.py --db-path ... --notify-telegram --kol-shadow
 | --- | --- |
 | transcript | `transcript_status=ok` 才能進正式單集重點。 |
 | metadata | `metadata_only` 只留待補，不發正式重點。 |
-| RSS | RSS 文章不進單集重點，進 seed triage 或夜間綜合。 |
+| RSS | 一般 RSS 文章不進單集重點，進 seed triage 或夜間綜合；核心 KOL podcast RSS 可進單集雷達，但必須標 `Podcast/RSS 摘要（待逐字稿）`。 |
 | content | `content_extraction` 不可為「偵測到新片」或「尚未取得可用內容萃取」。 |
 | Q&A | 必須有 Q1/A1 到至少 Q4/A4，且不是純標題重寫。 |
 | 操作筆記 | 只記節目裡真的提到的操作/策略/處置，不得把 `操作/策略筆記` 標題本身當內容。 |
@@ -100,9 +101,10 @@ scripts/sync_influencer_agents.py --db-path ... --notify-telegram --kol-shadow
 
 08:30 早盤前：
 
-- 抓最新 YouTube RSS。
+- 抓最新 YouTube RSS 與核心 KOL podcast RSS。
 - 若已有 transcript/ASR，整理單集重點。
 - 若只有 metadata，僅列待補，不發正式研究結論。
+- 若是 podcast RSS，只列節目摘要線索與待逐字稿，不寫成完整節目結論。
 
 14:30 盤中/午後：
 
@@ -156,3 +158,8 @@ IOS-KOL 夜盤總經共識雷達 | YYYY-MM-DD HH:MM
 - RSS / metadata-only 不再混進正式單集重點。
 - 操作筆記濾除段落標題與 Q/A 殘渣。
 
+2026-06-20 已在 runtime 補《兆華與股惑仔》SoundOn RSS：
+
+- Castbox app link `http://castbox.fm/app/castbox/feed/1a64de3cc9215d1a2fc86338e14e4d2772edc5a4/track/18dbb6bb4844a5e0675576351dbc7773c16848f4` 驗證為《兆華與股惑仔》，非股癌；穩定 source 使用 SoundOn RSS `https://feeds.soundon.fm/podcasts/91be014b-9f55-4bf3-a910-b232eda82d11.xml`。
+- Runtime source name 為 `理財達人秀／兆華與股惑仔 Podcast`，對應核心 KOL `理財達人秀` visibility gate。
+- `build_cross_checks()` 改支援 `source_ids`，新 podcast row 即使發布日較舊也會被 cross-check，不再被全域 latest 20 擠掉。

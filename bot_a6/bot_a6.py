@@ -14,6 +14,7 @@ import json
 import logging
 import os
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -33,7 +34,7 @@ from telegram.ext import (
     filters,
 )
 
-from a5_quote_engine import build_a5_quote_prompt, run_a5_local_quote
+from a5_quote_engine import build_a5_quote_prompt, build_sheet_quote_payload, run_a5_local_quote
 from case_store import CaseStore, CaseStoreError, render_case_detail, render_case_list
 
 # ── Config ─────────────────────────────────────────────────────────────────────
@@ -54,6 +55,7 @@ A6_CHAT_PRIMARY = os.getenv("A6_CHAT_PRIMARY", "codex").strip().lower()
 CODEX_BIN = os.getenv("A6_CODEX_BIN", "/Applications/Codex.app/Contents/Resources/codex")
 CODEX_MODEL = os.getenv("A6_CODEX_MODEL", "").strip()
 CODEX_TIMEOUT_SECONDS = int(os.getenv("A6_CODEX_TIMEOUT_SECONDS", "180"))
+CLAUDE_BIN = os.getenv("A6_CLAUDE_BIN", "/Users/pagemacmini/.local/bin/claude").strip()
 
 # 白名單：只有這兩人的訊息會被處理
 ALLOWED_USER_IDS: set[int] = {OWNER_USER_ID}
@@ -92,7 +94,7 @@ MODE_CHAT = "chat"
 MODE_SEO = "seo"
 
 MODE_LABELS = {
-    MODE_QUOTE: "🧾 A5 報價模式（雲端 A5 + 本地 Ollama 備援）",
+    MODE_QUOTE: "🧾 A5 報價模式（Sheet-first；雲端/本地備援）",
     MODE_CHAT: "💬 聊天模式（Codex 優先；Ollama 備援）",
     MODE_SEO: "📝 SEO 模式（Codex 優先；Ollama 備援）",
 }
@@ -175,6 +177,15 @@ def _looks_like_quote_request(text: str) -> bool:
         and bool(re.search(r"\d{4,7}", compact))
     )
     if has_catering_need and (has_budget_number or has_quantity or (has_event_context and has_schedule)):
+        return True
+
+    competitor_quote_terms = (
+        "比照", "雷同", "競品", "競爭對手", "同款", "相似品項", "類似品項",
+        "成本*5", "成本×5", "成本x5", "成本乘以5", "毛利", "試算表", "試算",
+        "品項辨識", "菜單辨識",
+    )
+    pricing_terms = ("成本", "毛利", "報價", "試算", "試算表", "品項", "菜單")
+    if any(term in compact for term in competitor_quote_terms) and any(term in compact for term in pricing_terms):
         return True
 
     return has_quote_term and (has_quantity or has_money or has_budget_number)
@@ -425,6 +436,19 @@ def _short_error(text: str, limit: int = 420) -> str:
     return cleaned[: limit - 1] + "…"
 
 
+def _resolve_claude_bin() -> str:
+    candidates = [CLAUDE_BIN, shutil.which("claude"), "/Users/pagemacmini/.local/bin/claude"]
+    for candidate in candidates:
+        if not candidate:
+            continue
+        path = Path(candidate).expanduser()
+        if path.exists() and os.access(path, os.X_OK):
+            return str(path)
+    raise FileNotFoundError(
+        f"找不到 Claude Code CLI；已檢查 A6_CLAUDE_BIN={CLAUDE_BIN!r} 與 PATH"
+    )
+
+
 def _ollama_generate_sync(prompt: str) -> str:
     payload = json.dumps(
         {"model": OLLAMA_MODEL_CHAT, "prompt": prompt, "stream": False},
@@ -536,11 +560,11 @@ async def claude_ask(chat_id: int, user_message: str, user_name: str = "", timeo
     env = os.environ.copy()
     if CLAUDE_OAUTH_TOKEN:
         env["CLAUDE_CODE_OAUTH_TOKEN"] = CLAUDE_OAUTH_TOKEN
-    env["PATH"] = "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:" + env.get("PATH", "")
+    env["PATH"] = "/Users/pagemacmini/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:" + env.get("PATH", "")
 
     try:
         proc = await asyncio.create_subprocess_exec(
-            "claude", "-p", "--dangerously-skip-permissions",
+            _resolve_claude_bin(), "-p", "--dangerously-skip-permissions",
             full_prompt,
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE,
@@ -583,11 +607,11 @@ async def a5_cloud_quote_ask(chat_id: int, user_message: str, user_name: str = "
     env = os.environ.copy()
     if CLAUDE_OAUTH_TOKEN:
         env["CLAUDE_CODE_OAUTH_TOKEN"] = CLAUDE_OAUTH_TOKEN
-    env["PATH"] = "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:" + env.get("PATH", "")
+    env["PATH"] = "/Users/pagemacmini/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:" + env.get("PATH", "")
 
     try:
         proc = await asyncio.create_subprocess_exec(
-            "claude", "-p", "--dangerously-skip-permissions",
+            _resolve_claude_bin(), "-p", "--dangerously-skip-permissions",
             full_prompt,
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE,
@@ -650,7 +674,7 @@ async def help_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text(
         "📋 MAPLAB A6 報價助理指令\n\n"
         f"【模式切換】\n"
-        f"/mode quote — A5 報價模式（雲端 A5；失敗時本地 Ollama/OpenClaw 備援）\n"
+        f"/mode quote — A5 報價模式（Sheet-first；GAS 失敗才雲端/本地備援）\n"
         f"/mode chat — 一般聊天（Codex 優先；Ollama 備援）\n"
         f"/mode seo — SEO 助手（Codex 優先；Ollama 備援）\n"
         f"目前模式：{MODE_LABELS[_get_mode(chat_id)]}\n\n"
@@ -908,6 +932,37 @@ def _format_gas_quote_result(gas_result: dict) -> tuple[str, bool]:
     return f"📄 **報價單已自動產出！**\n連結：{url}\n案件編號：{case_id}", False
 
 
+def _format_sheet_payload_summary(payload: dict) -> str:
+    variant = (payload.get("variants") or [{}])[0]
+    base = payload.get("base") or {}
+    menu = variant.get("menu") or []
+    total = variant.get("totalRevenue") or variant.get("foodRevenue") or 0
+    cost = variant.get("totalCost") or variant.get("foodCost") or 0
+    try:
+        margin = (float(total) - float(cost)) / float(total) if float(total) else 0
+    except (TypeError, ValueError, ZeroDivisionError):
+        margin = 0
+    deposit = base.get("depositAmount")
+    menu_lines = [
+        f"{idx}. {item.get('name', '')} — {item.get('qtyText') or str(item.get('qty', '')) + item.get('unit', '')}"
+        for idx, item in enumerate(menu, start=1)
+    ]
+    lines = [
+        "🧾 A5 Sheet-first 報價試算",
+        f"客戶/案件：{base.get('clientName') or base.get('customer') or '未命名'}",
+        f"日期：{base.get('eventDate') or base.get('date') or '待確認'}｜人數：{base.get('headcount') or base.get('pax') or '待確認'}",
+        "",
+        "菜單：",
+        *menu_lines,
+        "",
+        f"內部試算：總金額 NT${float(total):,.0f}｜訂單成本 NT${float(cost):,.0f}｜毛利率 {margin * 100:.2f}%",
+    ]
+    if deposit:
+        lines.append(f"急件訂金 50%：NT${float(deposit):,.0f}")
+    lines.append("對客戶不要揭露成本與毛利率。")
+    return "\n".join(lines)
+
+
 def _trigger_gas_slide_sync() -> Optional[dict]:
     """POST createSlide action to GAS Web App, return {success, url} or None"""
     if not GAS_QUOTE_URL:
@@ -1020,13 +1075,76 @@ async def _run_a5_quote_background(
         heartbeat_task = asyncio.create_task(
             _heartbeat(bot, chat_id, start_time, cancel_event)
         )
-        local_fallback = False
         force_local = user_message.strip().startswith("/localquote")
         quote_message = user_message.strip()
         if force_local:
             quote_message = quote_message[len("/localquote"):].strip() or user_message
+        sheet_first_error = ""
         try:
-            notice = "🧪 A5 報價模式：使用地端算力 (gemma4:latest)。"
+            if not force_local:
+                sheet_payload = build_sheet_quote_payload(quote_message, user_name=user_name)
+                if sheet_payload:
+                    await bot.send_message(
+                        chat_id=chat_id,
+                        text="🧾 A5 報價模式：已建立 Sheet payload，正在呼叫 GAS 產報價單…",
+                    )
+                    gas_result = await asyncio.get_event_loop().run_in_executor(
+                        None, lambda: _trigger_gas_quote_sync(sheet_payload)
+                    )
+                    if gas_result and gas_result.get("success"):
+                        quote_msg, _is_multi_variant = _format_gas_quote_result(gas_result)
+                        answer = _format_sheet_payload_summary(sheet_payload) + f"\n\n{quote_msg}"
+                        MAX = 4096
+                        for i in range(0, len(answer), MAX):
+                            await bot.send_message(chat_id=chat_id, text=answer[i:i + MAX])
+                        log_and_commit_a6(user_name, user_message, answer)
+                        return
+                    error_msg = gas_result.get("error", "未知錯誤") if gas_result else "GAS 無回應"
+                    sheet_first_error = f"Sheet-first GAS 失敗：{error_msg}"
+                else:
+                    await bot.send_message(
+                        chat_id=chat_id,
+                        text="☁️ A5 報價模式：資料不足以 deterministic 建 Sheet，改請雲端 A5 產 payload…",
+                    )
+                    cloud_answer = await a5_cloud_quote_ask(
+                        chat_id,
+                        quote_message,
+                        user_name,
+                        timeout=int(os.getenv("A5_CLOUD_QUOTE_TIMEOUT_SECONDS", "240")),
+                    )
+                    if not _looks_like_cloud_failure(cloud_answer):
+                        form_data = _extract_form_data(cloud_answer)
+                        if form_data:
+                            gas_result = await asyncio.get_event_loop().run_in_executor(
+                                None, lambda: _trigger_gas_quote_sync(form_data)
+                            )
+                            if gas_result and gas_result.get("success"):
+                                quote_msg, is_multi_variant = _format_gas_quote_result(gas_result)
+                                answer = cloud_answer + f"\n\n{quote_msg}"
+                                if not is_multi_variant:
+                                    slide_result = await asyncio.get_event_loop().run_in_executor(
+                                        None, lambda: _trigger_gas_slide_sync()
+                                    )
+                                    if slide_result and slide_result.get("success"):
+                                        slide_url = slide_result.get("url", "")
+                                        answer += f"\n\n📊 **提案簡報已自動產出！**\n連結：{slide_url}"
+                                MAX = 4096
+                                for i in range(0, len(answer), MAX):
+                                    await bot.send_message(chat_id=chat_id, text=answer[i:i + MAX])
+                                log_and_commit_a6(user_name, user_message, answer)
+                                return
+                            error_msg = gas_result.get("error", "未知錯誤") if gas_result else "GAS 無回應"
+                            sheet_first_error = f"雲端 payload GAS 失敗：{error_msg}"
+                        else:
+                            sheet_first_error = "雲端 A5 未輸出可建 Sheet 的 JSON。"
+                    else:
+                        sheet_first_error = cloud_answer
+
+            notice = "🧪 A5 報價模式：Sheet/雲端路徑不可用，改用地端算力備援。"
+            if sheet_first_error:
+                notice += f"\n原因：{_short_error(sheet_first_error, 180)}"
+            if force_local:
+                notice = "🧪 A5 本地備援測試：不寫 Google Sheet。"
             await bot.send_message(chat_id=chat_id, text=notice)
             history = list(_get_history(chat_id))
             result = await asyncio.to_thread(
@@ -1045,7 +1163,7 @@ async def _run_a5_quote_background(
             heartbeat_task.cancel()
 
         form_data = _extract_form_data(answer)
-        if form_data:
+        if form_data and not force_local:
             if form_data.get('action') == 'addItem':
                 add_result = await asyncio.get_event_loop().run_in_executor(
                     None, lambda: _trigger_gas_add_item(form_data))
@@ -1073,7 +1191,9 @@ async def _run_a5_quote_background(
                             answer += f"\n\n⚠️ 提案簡報自動產出失敗（{slide_error}）。資料已寫入母版，可手動點選單產出。"
                 else:
                     error_msg = gas_result.get('error', '未知錯誤') if gas_result else 'GAS 無回應'
-                    answer += f"\n\n⚠️ 報價單自動產出失敗（{error_msg}）。資料已寫入母版，可手動點選單產出。"
+                    answer += f"\n\n⚠️ 報價單自動產出失敗（{error_msg}）。未確認 Sheet 寫入，請依錯誤檢查 GAS 或改用人工 Sheet。"
+        elif form_data and force_local:
+            answer += "\n\nℹ️ `/localquote` 是本地備援測試模式，已解析出 JSON，但依指令不寫 Google Sheet。"
 
         MAX = 4096
         for i in range(0, len(answer), MAX):
@@ -1148,7 +1268,7 @@ async def _run_claude_background(
                             answer += f"\n\n⚠️ 提案簡報自動產出失敗（{slide_error}）。資料已寫入母版，可手動點選單產出。"
                 else:
                     error_msg = gas_result.get('error', '未知錯誤') if gas_result else 'GAS 無回應'
-                    answer += f"\n\n⚠️ 報價單自動產出失敗（{error_msg}）。資料已寫入母版，可手動點選單產出。"
+                    answer += f"\n\n⚠️ 報價單自動產出失敗（{error_msg}）。未確認 Sheet 寫入，請依錯誤檢查 GAS 或改用人工 Sheet。"
 
         MAX = 4096
         for i in range(0, len(answer), MAX):
@@ -1274,12 +1394,22 @@ async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     caption = update.message.caption or ""
     caption_note = f"\nOwner/業務 附的文字說明：{caption}" if caption else ""
 
-    user_message = (
-        f"收到一張圖片，已存在 {local_path}，請用 Read 工具讀取並分析圖片內容。{caption_note}\n"
-        f"如果是品項/食物照片，辨識品名並協助新增品項（addItem）。"
-        f"如果是截圖/對話截圖，分析內容並回應。"
-    )
-    await _run_claude_guarded(update, context, user_message)
+    if caption and _looks_like_quote_request(caption):
+        user_message = (
+            f"{caption}\n"
+            f"圖片路徑：{local_path}\n"
+            "這是報價圖片/caption 任務。若 caption 已有日期、人數、菜單或毛利需求，"
+            "優先用 caption 建 Sheet；圖片內容作補充，不可只回本地草稿。"
+        )
+        await _run_a5_quote_guarded(update, context, user_message)
+    else:
+        user_message = (
+            f"收到一張圖片，已存在 {local_path}，請用 Read 工具讀取並分析圖片內容。{caption_note}\n"
+            "如果是競品菜單、報價單或對話截圖，請先 OCR 所有文字與品項數量，再分析內容；"
+            "未被明確要求報價前，不要自動新增品項或硬產報價。"
+            "如果是要新增 MAPLAB 自有品項的食物照片，才協助產出 addItem JSON。"
+        )
+        await _run_claude_guarded(update, context, user_message)
 
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:

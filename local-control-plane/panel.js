@@ -96,6 +96,16 @@ const FALLBACK_DATA = {
         { id: "role_module_sync", input_type: "Role change", output_type: "Chrome Extension module" },
         { id: "panel_refresh", input_type: "New surface", output_type: "Visible entrypoint" }
       ]
+    },
+    {
+      pipeline_id: "hermes_patrol_reaction",
+      name: "每日巡查反應路徑",
+      steps: [
+        { id: "collect", input_type: "scripts/patrol.sh output", output_type: "Raw patrol text" },
+        { id: "packet", input_type: "Raw patrol text + task cards", output_type: "workbook/hermes/patrol/latest.json" },
+        { id: "react", input_type: "Hermes packet", output_type: "Role owner + next action + memory candidate" },
+        { id: "dispatch", input_type: "Reaction card", output_type: "Codex/A1/B1 follow-up prompt or Owner 5-minute card" }
+      ]
     }
   ]
 };
@@ -109,6 +119,10 @@ const PANEL_DATA = {
     {
       label: "終端機重開",
       command: "/Users/pagemacmini/maplab-ai-handbook/scripts/open_agent_runtime_panel.sh open"
+    },
+    {
+      label: "Hermes 巡查面板",
+      command: "/Users/pagemacmini/maplab-ai-handbook/scripts/open_agent_runtime_panel.sh hermes"
     },
     {
       label: "Finder 顯示位置",
@@ -144,6 +158,16 @@ const PANEL_DATA = {
         ["A6 bot", "../bot_a6/bot_a6.py"],
         ["Line quote assistant", "../projects/line-quote-assistant.md"],
         ["Current status", "../CURRENT_STATUS.md"]
+      ]
+    },
+    {
+      name: "Hermes Patrol Reaction",
+      status: "Packet + panel",
+      body: "每日巡查先由 bash 採集，再產 Hermes reaction packet；Hermes/Chrome Extension/Codex 讀 packet 做派工、記憶候選與角色下一步。",
+      links: [
+        ["Hermes panel", "./hermes.html"],
+        ["Latest packet", "../workbook/hermes/patrol/latest.md"],
+        ["Hermes prompt", "../workbook/hermes/patrol/hermes_prompt.md"]
       ]
     }
   ],
@@ -213,6 +237,10 @@ const PANEL_DATA = {
     {
       title: "P1: Scheduled digest",
       body: "用 heartbeat/automation 或 launchd 產生 Owner-visible digest，重點是手機看得到而不是背景有跑。"
+    },
+    {
+      title: "P1: Hermes runtime target sync",
+      body: "Chrome Extension 已有 Hermes selector；下一步重建 task modules，讓各角色 JSON 也正式列入 Hermes cold-path target。"
     }
   ]
 };

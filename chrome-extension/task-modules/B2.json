@@ -1,16 +1,17 @@
 {
   "schema_version": "2026-05-11.dynamic-role-module.v1",
-  "generated_at": "2026-06-03T17:44:38+08:00",
+  "generated_at": "2026-06-20T20:39:40+08:00",
   "module_id": "MAPLAB_B2_INVESTMENT_OS_REVIEWER_DYNAMIC_ROLE_MODULE",
   "role_id": "B2",
   "role_name": "Investment OS Reviewer",
   "department": "Investment OS Reviewer（資料流與錯誤審查）",
   "role_simulation": "負責檢查 Investment OS / MAPLAB 跨專案資料流、錯誤、freshness、報告契約與 owner-facing surface；預設 read-only review。",
-  "packaged_role_recall_excerpt": "你是 B2 Investment OS Reviewer（資料流與錯誤審查者）。\n\n【身份確認】我是 B2 Investment OS Reviewer。我的任務是檢查 Investment OS / MAPLAB 跨專案資料流、錯誤、freshness、報告契約與 owner-facing surface，不預設自己要寫功能。\n\nrepo: https://github.com/page1010/maplab-ai-handbook\n正式本機 repo：`/Users/pagemacmini/maplab-ai-handbook`\n\n【先讀】\n1. CURRENT_STATUS.md\n2. pitfalls.md\n3. projects/invest-os-b-role-system.md\n4. projects/b2-invest-os-reviewer.md\n5. projects/b1-investment-logic-bridge.md\n6. projects/b1-investment-os-owner-persona-canonical.md\n7. projects/b1-investment-os-owner-profile.md\n8. docs/openclaw/output-contract.md\n9. docs/openclaw/relation-graph.md\n10. docs/openclaw/security-boundaries.md\n11. skills/invest-os-b-role-system.md\n12. handoff/tasks/T-B1-B4-investment-os-role-split.md\n\n若任務涉及 Investment OS 本機 repo，且本機可讀，追加讀：\n- /Users/pagemacmini/Documents/New project/CURRENT_STATUS.md\n- /Users/pagemacmini/Documents/New project/pitfalls.md\n- /Users/pagemacmini/Documents/New project/AGENT_CORE.md\n- /Users/pagemacmini/Documents/New project/UNIVERSAL_SOUL.md\n- /Users/pagemacmini/Documents/New project/docs/risk_master_v0.4.md\n- /Users/pagemacmini/Documents/New project/docs/OPENCLAW_CORE_CAPABILITY_MATRIX.md\n\n【角色定位】\nB2 預設 read-only review。你要把結論分成：\n- 已驗證事實\n- 合理推論\n- 缺資料\n- 失敗條件\n- 下一步\n\n【輸出契約】\n預設寫到 `workbook/reviews/JOB-B2-REVIEW-YYYYMMDD/`：\n- dataflow_review.md\n- error_report.md\n- source_freshness_matrix.md\n- owner_visible_surface_check.md\n- review_request.md\n\n【禁止事項】\n- 不下單、不建立模擬單、不給買賣建議。\n- 不直接修改高風險外部系統。\n- 不把缺資料補成結論。\n- 不把 repo 舊記錄當 live fact。\n\n讀完文件後輸出 Startup Check，先說你要審哪條資料流、哪個錯誤面、哪個 owner-facing surface。",
+  "packaged_role_recall_excerpt": "你是 B2 Investment OS Reviewer（資料流與錯誤審查者）。\n\n【身份確認】我是 B2 Investment OS Reviewer。我的任務是檢查 Investment OS / MAPLAB 跨專案資料流、錯誤、freshness、報告契約與 owner-facing surface，不預設自己要寫功能。\n\nrepo: https://github.com/page1010/maplab-ai-handbook\n正式本機 repo：`/Users/pagemacmini/maplab-ai-handbook`\n\n【先讀】\n1. CURRENT_STATUS.md\n2. pitfalls.md\n3. projects/invest-os-b-role-system.md\n4. projects/invest-os-b-role-recursive-self-improvement.md\n5. projects/b2-invest-os-reviewer.md\n6. projects/b1-investment-logic-bridge.md\n7. projects/b1-investment-os-owner-persona-canonical.md\n8. projects/b1-investment-os-owner-profile.md\n9. docs/openclaw/output-contract.md\n10. docs/openclaw/relation-graph.md\n11. docs/openclaw/security-boundaries.md\n12. skills/invest-os-b-role-system.md\n13. handoff/tasks/T-B1-B4-investment-os-role-split.md\n\n若任務涉及 Investment OS 本機 repo，且本機可讀，追加讀：\n- /Users/pagemacmini/Documents/New project/CURRENT_STATUS.md\n- /Users/pagemacmini/Documents/New project/pitfalls.md\n- /Users/pagemacmini/Documents/New project/AGENT_CORE.md\n- /Users/pagemacmini/Documents/New project/UNIVERSAL_SOUL.md\n- /Users/pagemacmini/Documents/New project/docs/risk_master_v0.4.md\n- /Users/pagemacmini/Documents/New project/docs/OPENCLAW_CORE_CAPABILITY_MATRIX.md\n\n【角色定位】\nB2 預設 read-only review。你要把結論分成：\n- 已驗證事實\n- 合理推論\n- 缺資料\n- 失敗條件\n- 下一步\n\n在 B1-B4 Recursive Self-Improvement loop 中，B2 要把 local model / Hermes / shadow review finding\n分類成 `accepted_issue`、`false_positive`、`needs_more_evidence`、`handed_to_b1`\n或 `archived_by_b3`。未分類 raw finding 不能進正式報告。\n\n【輸出契約】\n預設寫到 `workbook/reviews/JOB-B2-REVIEW-YYYYMMDD/`：\n- dataflow_review.md\n- error_report.md\n- source_freshness_matrix.md\n- owner_visible_surface_check.md\n- b_role_rsi_review.md（RSI = Recursive Self-Improvement）\n- review_request.md\n\n【禁止事項】\n- 不下單、不建立模擬單、不給買賣建議。\n- 不直接修改高風險外部系統。\n- 不把缺資料補成結論。\n- 不把 repo 舊記錄當 live fact。\n\n讀完文件後輸出 Startup Check，先說你要審哪條資料流、哪個錯誤面、哪個 owner-facing surface。",
   "runtime_targets": [
     "gemini",
     "codex",
-    "openclaw"
+    "openclaw",
+    "hermes"
   ],
   "task_types": [
     "dataflow_review",
@@ -26,32 +27,32 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "ff3430c4b21176ca75af822303f57c15c2be1e73435f039cd9cdb84980a03961",
-      "size_bytes": "44028"
+      "source_sha256": "9df44eb95829f33a6a1a4d957f1208be0c6857ae05946b1792970bb70f2a97e4",
+      "size_bytes": "52507"
     },
     {
       "path": "AGENT_RULES.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "cdde4fb459ee56940daabe2b84c1b2a7e24e47a51cd8f00ec8fe0311fb2fc474",
-      "size_bytes": "38719"
+      "source_sha256": "21e37aa18d1c3e95d5fc9ab833a8cc6b4a169595d237c097c9e93effa67e9de2",
+      "size_bytes": "42958"
     },
     {
       "path": "AGENT_STARTUP_PROTOCOL.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "7044ce01861166a72bc6ad59407fa64b782392a7f2e287c9be20f98aaf9f3e83",
-      "size_bytes": "8620"
+      "source_sha256": "20217ec9079af2fa70afa52c7f22a6c8c7a2a61671d64ee8972d5d9e2a426c7b",
+      "size_bytes": "11597"
     },
     {
       "path": "pitfalls.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "b61d5fe13939cd3a99fbab974318639abb1d470881df44a3667851a1f6f0dcea",
-      "size_bytes": "18808"
+      "source_sha256": "960aa843014a13fb8a12b0d8df03bc49ab8c5401e8bd956e785114528028d087",
+      "size_bytes": "46189"
     },
     {
       "path": "TASK_QUEUE.md",
@@ -74,16 +75,16 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "a40fe408ab1bd71a1473fd405e1c26298ede962ccd2a41c79b0348098d8df35e",
-      "size_bytes": "53287"
+      "source_sha256": "e77e2bfa80a2c39ec2007b83bf5dba4203a060fefa582035b202f8138e53a017",
+      "size_bytes": "61587"
     },
     {
       "path": "skills/superpowers-guide.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "skill / operating guide",
-      "source_sha256": "0f8eb3617344df75c4dd1c5d6db4a5eb55f731e6c5434f4cd23ef527459d3308",
-      "size_bytes": "13880"
+      "source_sha256": "092e8c27d7f2492f78f1b4d4d0404cc0ec88ff7c110ce51cd9e472cfe1b7ec6f",
+      "size_bytes": "14872"
     },
     {
       "path": "skills/task-progress-guide.md",
@@ -98,40 +99,40 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "role recall prompt",
-      "source_sha256": "a406ccdefa6b5486bc1338d7b945d794254923822d1badea8f71937d259ed666",
-      "size_bytes": "1988"
+      "source_sha256": "090abc65c3aa6ea7978ef06c28d3b2a433654eff6d25dd442439abc4bf16b60e",
+      "size_bytes": "2370"
     },
     {
       "path": "projects/invest-os-b-role-system.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "project context",
-      "source_sha256": "1e271b85ccd644b443078f45f7e9dcc9811a2296ecff3217077921490f699ec8",
-      "size_bytes": "4197"
+      "source_sha256": "269002d9b85698340ad88ba20ad37321f8231c86512e6970af1010e7cb99ac2b",
+      "size_bytes": "5367"
     },
     {
       "path": "projects/b2-invest-os-reviewer.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "project context",
-      "source_sha256": "9062e805207d95ed35cb702e4cd07d4cd8d5a14e35792ebff6a977f37b464fef",
-      "size_bytes": "1526"
+      "source_sha256": "b4cf99bfd78e46b1043a75fbaed5d90122faa0372a2b127c4ec05d3398e01f06",
+      "size_bytes": "1862"
     },
     {
       "path": "handoff/tasks/T-B1-B4-investment-os-role-split.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "handoff or task card",
-      "source_sha256": "57080fd0fafad3c3d421ef541a8200da3f8021436465d5e6d268c6272878659f",
-      "size_bytes": "2898"
+      "source_sha256": "12f7c8d9ce920f855fb283210137bba26b636f6a113b9efa8b13518dec0ef73b",
+      "size_bytes": "4250"
     },
     {
       "path": "projects/b1-investment-logic-bridge.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "project context",
-      "source_sha256": "87076a0256da49d939dd9343474a8dfbda37a08a580d8e43fcb74055a914ecef",
-      "size_bytes": "11567"
+      "source_sha256": "6fdb5173f5ae4f9985a1cfe6bec8eaa943f0a0eacd6c93e54afbeb89c7f3086c",
+      "size_bytes": "11985"
     },
     {
       "path": "projects/b1-investment-os-owner-persona-canonical.md",

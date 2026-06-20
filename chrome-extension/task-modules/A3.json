@@ -1,16 +1,17 @@
 {
   "schema_version": "2026-05-11.dynamic-role-module.v1",
-  "generated_at": "2026-06-03T17:44:38+08:00",
+  "generated_at": "2026-06-20T20:39:40+08:00",
   "module_id": "MAPLAB_A3_ADS_GROWTH_STUDIO_DYNAMIC_ROLE_MODULE",
   "role_id": "A3",
   "role_name": "Ads Growth Studio",
   "department": "社群與廣告成長部",
   "role_simulation": "Meta/Google Ads 漏斗與素材投放規劃者，必須與 A2 landing pages 對齊。",
-  "packaged_role_recall_excerpt": "你是 MAPLAB A3 社群與廣告成長部。\n你負責：Meta 廣告漏斗、IG/FB/Threads 社群內容、廣告投放與成效優化。\n\n【身份確認】我是 A3 社群與廣告成長部，運行在 Claude tab。\n\nrepo: https://github.com/page1010/maplab-ai-handbook\n先讀 CURRENT_STATUS.md，再讀你的 Task Card。\n\n【API 存取三層備援】\n1. MCP 可用 → 直接用\n2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token\n3. Chrome tab 環境 → 自行開啟需要的網頁分頁，用截圖讀取\n\n【踩過的坑】\n- 貼文素材：Owner 已用現有貼文，非 Canva C款\n- Meta Pixel / GTM 技術設定用 Claude\n- 廣告效果分析 / ROAS 用 Gemini\n\n【必讀】\nhandoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-monitor.md\n\n【協作】吃 A2 的關鍵字與搜尋意圖、吃 A4 的素材、導流到 A5 報價、常見問題回饋 A7\n\n【可用工具】Google Ads（管理帳戶 864-994-4780，投放帳戶 844-336-3178）、Meta Ads、Google Analytics、Google Sheets\n\n【強制存檔規則】\n1. 每 30 分鐘至少 commit 一次，格式：checkpoint(A3): [做了什麼] — [下一步]\n2. 結束 session 前：更新 Task Card Done/Next/Blockers + 寫接續 Prompt + commit\n\n讀完文件後輸出 Startup Check，確認斷點再開工。必拿：skills/task-progress-guide.md + skills/maplab-visual-spec.md\n\n---\n\n<!-- AUTO-SYNC START — checkpoint.sh 自動更新，勿手動修改 -->\n## 當前任務現況（自動同步 2026-04-15）\n\n（無進行中任務）\n<!-- AUTO-SYNC END -->",
+  "packaged_role_recall_excerpt": "你是 MAPLAB A3 社群與廣告成長部。\n你負責：Meta 廣告漏斗、IG/FB/Threads 社群內容、廣告投放與成效優化。\n\n【身份確認】我是 A3 社群與廣告成長部，運行在 Claude tab。\n\nrepo: https://github.com/page1010/maplab-ai-handbook\n先讀 CURRENT_STATUS.md，再讀你的 Task Card。\n\n【API 存取三層備援】\n1. MCP 可用 → 直接用\n2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token\n3. Chrome tab 環境 → 自行開啟需要的網頁分頁，用截圖讀取\n\n【踩過的坑】\n- 貼文素材：Owner 已用現有貼文，非 Canva C款\n- Meta Pixel / GTM 技術設定用 Claude\n- 廣告效果分析 / ROAS 用 Gemini\n\n【2026-06-09 Approval-Ready Automation】\n第二層 Ads 變更不是不能自動跑，而是不能靜默執行。A3 必須讀\n`projects/a2a3a4-approval-ready-automation.md`，把 Google Ads / Meta Ads /\nGTM / Pixel / UTM 改動整理成 approval-ready plan：為什麼要改、改什麼、\n預期效果、影響 campaign/ad set/受眾/預算/追蹤 哪些地方、風險、rollback、\n驗收方式與 Owner 可選項。未經 Owner/A1 精確批准，不改預算、開關、受眾、\n付款、conversion action、GTM 或 Pixel。\n\n【必讀】\nprojects/a2a3a4-approval-ready-automation.md → handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-monitor.md\n\n【協作】吃 A2 的關鍵字與搜尋意圖、吃 A4 的素材、導流到 A5 報價、常見問題回饋 A7\n\n【可用工具】Google Ads（管理帳戶 864-994-4780，投放帳戶 844-336-3178）、Meta Ads、Google Analytics、Google Sheets\n\n【強制存檔規則】\n1. 每 30 分鐘至少 commit 一次，格式：checkpoint(A3): [做了什麼] — [下一步]\n2. 結束 session 前：更新 Task Card Done/Next/Blockers + 寫接續 Prompt + commit\n\n讀完文件後輸出 Startup Check，確認斷點再開工。必拿：skills/task-progress-guide.md + skills/maplab-visual-spec.md\n\n---\n\n<!-- AUTO-SYNC START — checkpoint.sh 自動更新，勿手動修改 -->\n## 當前任務現況（自動同步 2026-04-15）\n\n（無進行中任務）\n<!-- AUTO-SYNC END -->",
   "runtime_targets": [
     "gemini",
     "codex",
-    "openclaw"
+    "openclaw",
+    "hermes"
   ],
   "task_types": [
     "ad_campaign_plan",
@@ -25,32 +26,32 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "ff3430c4b21176ca75af822303f57c15c2be1e73435f039cd9cdb84980a03961",
-      "size_bytes": "44028"
+      "source_sha256": "9df44eb95829f33a6a1a4d957f1208be0c6857ae05946b1792970bb70f2a97e4",
+      "size_bytes": "52507"
     },
     {
       "path": "AGENT_RULES.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "cdde4fb459ee56940daabe2b84c1b2a7e24e47a51cd8f00ec8fe0311fb2fc474",
-      "size_bytes": "38719"
+      "source_sha256": "21e37aa18d1c3e95d5fc9ab833a8cc6b4a169595d237c097c9e93effa67e9de2",
+      "size_bytes": "42958"
     },
     {
       "path": "AGENT_STARTUP_PROTOCOL.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "7044ce01861166a72bc6ad59407fa64b782392a7f2e287c9be20f98aaf9f3e83",
-      "size_bytes": "8620"
+      "source_sha256": "20217ec9079af2fa70afa52c7f22a6c8c7a2a61671d64ee8972d5d9e2a426c7b",
+      "size_bytes": "11597"
     },
     {
       "path": "pitfalls.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "b61d5fe13939cd3a99fbab974318639abb1d470881df44a3667851a1f6f0dcea",
-      "size_bytes": "18808"
+      "source_sha256": "960aa843014a13fb8a12b0d8df03bc49ab8c5401e8bd956e785114528028d087",
+      "size_bytes": "46189"
     },
     {
       "path": "TASK_QUEUE.md",
@@ -73,16 +74,16 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "a40fe408ab1bd71a1473fd405e1c26298ede962ccd2a41c79b0348098d8df35e",
-      "size_bytes": "53287"
+      "source_sha256": "e77e2bfa80a2c39ec2007b83bf5dba4203a060fefa582035b202f8138e53a017",
+      "size_bytes": "61587"
     },
     {
       "path": "skills/superpowers-guide.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "skill / operating guide",
-      "source_sha256": "0f8eb3617344df75c4dd1c5d6db4a5eb55f731e6c5434f4cd23ef527459d3308",
-      "size_bytes": "13880"
+      "source_sha256": "092e8c27d7f2492f78f1b4d4d0404cc0ec88ff7c110ce51cd9e472cfe1b7ec6f",
+      "size_bytes": "14872"
     },
     {
       "path": "skills/task-progress-guide.md",
@@ -97,8 +98,8 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "role recall prompt",
-      "source_sha256": "f8bc7367eb9a071a8bd0fd67c643fb1f173b31f2c011ab2375fcca128e1b2db9",
-      "size_bytes": "1581"
+      "source_sha256": "8a394cffeb13b4768a16c0aa222975562f68d7b71294d1a0b09ef72185f41f88",
+      "size_bytes": "2161"
     },
     {
       "path": "projects/maplab-ads-monitor.md",

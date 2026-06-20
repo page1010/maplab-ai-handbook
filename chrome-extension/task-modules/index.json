@@ -1,6 +1,6 @@
 {
   "schema_version": "2026-05-11.dynamic-role-module-index.v1",
-  "generated_at": "2026-06-03T17:44:38+08:00",
+  "generated_at": "2026-06-20T20:39:40+08:00",
   "repository": "page1010/maplab-ai-handbook",
   "canonical_local_repo": "/Users/pagemacmini/maplab-ai-handbook",
   "dynamic_link_policy": "Load JSON/Markdown task data from GitHub; do not execute remote JS.",
@@ -15,6 +15,7 @@
         "gemini",
         "codex",
         "openclaw",
+        "hermes",
         "cowork"
       ],
       "risk_level": "medium"
@@ -28,7 +29,8 @@
       "runtime_targets": [
         "codex",
         "openclaw",
-        "gemini"
+        "gemini",
+        "hermes"
       ],
       "risk_level": "high"
     },
@@ -41,7 +43,8 @@
       "runtime_targets": [
         "gemini",
         "codex",
-        "openclaw"
+        "openclaw",
+        "hermes"
       ],
       "risk_level": "high"
     },
@@ -54,7 +57,8 @@
       "runtime_targets": [
         "gemini",
         "codex",
-        "openclaw"
+        "openclaw",
+        "hermes"
       ],
       "risk_level": "high"
     },
@@ -67,7 +71,8 @@
       "runtime_targets": [
         "gemini",
         "codex",
-        "openclaw"
+        "openclaw",
+        "hermes"
       ],
       "risk_level": "medium"
     },
@@ -80,7 +85,8 @@
       "runtime_targets": [
         "gemini",
         "codex",
-        "openclaw"
+        "openclaw",
+        "hermes"
       ],
       "risk_level": "high"
     },
@@ -93,7 +99,8 @@
       "runtime_targets": [
         "gemini",
         "codex",
-        "openclaw"
+        "openclaw",
+        "hermes"
       ],
       "risk_level": "high"
     },
@@ -106,7 +113,8 @@
       "runtime_targets": [
         "gemini",
         "codex",
-        "openclaw"
+        "openclaw",
+        "hermes"
       ],
       "risk_level": "medium"
     },
@@ -119,7 +127,8 @@
       "runtime_targets": [
         "gemini",
         "codex",
-        "openclaw"
+        "openclaw",
+        "hermes"
       ],
       "risk_level": "medium"
     },
@@ -132,7 +141,8 @@
       "runtime_targets": [
         "gemini",
         "codex",
-        "openclaw"
+        "openclaw",
+        "hermes"
       ],
       "risk_level": "high"
     },
@@ -145,7 +155,8 @@
       "runtime_targets": [
         "gemini",
         "codex",
-        "openclaw"
+        "openclaw",
+        "hermes"
       ],
       "risk_level": "medium"
     },
@@ -158,7 +169,8 @@
       "runtime_targets": [
         "gemini",
         "codex",
-        "openclaw"
+        "openclaw",
+        "hermes"
       ],
       "risk_level": "medium"
     },
@@ -171,7 +183,8 @@
       "runtime_targets": [
         "gemini",
         "codex",
-        "openclaw"
+        "openclaw",
+        "hermes"
       ],
       "risk_level": "medium"
     },
@@ -398,17 +411,6 @@
         "hermes"
       ],
       "risk_level": "high"
-    },
-    {
-      "role_id": "WIN",
-      "module_id": "MAPLAB_WIN_WINDOWS_EVIDENCE_COLLECTOR_DYNAMIC_ROLE_MODULE",
-      "role_name": "Windows Evidence Collector",
-      "department": "Windows Evidence Collector（Windows 端證據採集）",
-      "path": "chrome-extension/task-modules/WIN.json",
-      "runtime_targets": [
-        "claude_tab"
-      ],
-      "risk_level": "low"
     }
   ]
 }

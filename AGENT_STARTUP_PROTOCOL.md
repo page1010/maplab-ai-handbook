@@ -15,6 +15,25 @@
 > 不回寫 = 經驗只存在對話裡 = 對話結束就消失 = 下一個 Agent 重新摸索。
 ---
 
+## Step 0. 企業文化與測試 receipt（冷啟動硬規則）
+
+開工前先讀 `docs/company-values.md`。這不是參考文件，是所有 agent 的企業文化契約。
+
+本輪只要會改程式、排程、owner-facing 訊息、Telegram/LINE/Chrome/WordPress/Sheets 行為，Startup Check 必須先寫：
+
+- 預計測什麼：unit test / syntax check / live preview / readback / smoke test / screenshot QA。
+- 測試 receipt 寫在哪裡：review bundle、validation report、task card、CURRENT_STATUS 或 handoff checkpoint。
+
+收尾前必須做到：
+
+- 跑最小可證明測試。
+- 把測試結果落檔。
+- Final 回覆列出 `Tests run`。
+
+> 有寫但沒測，等於沒完成；有測但沒 receipt，等於下一個 session 無法信任。
+
+---
+
 ## 啟動流程（7 步驟）
 
 ### Step 1. 讀 CURRENT_STATUS.md（最高優先）
@@ -61,6 +80,8 @@ Startup Check
 - Active task: [你要做的任務 ID + 名稱]
 - Confirmed progress: [你理解的當前進度]
 - Skills loaded: [從路由表選的技能書，至少 1 本 + task-progress-guide（必拿）]
+- Test plan: [本輪要跑哪些最小測試；若純文件，寫 readback/grep 檢查]
+- Receipt path: [測試或驗證結果要寫到哪個 repo 檔案]
 - Questions for Owner: [至少 1 個問題，確認方向/範圍/優先順序]
 - Risks / ambiguities: [你發現的衝突或不確定]
 - Proposed scope: [你這輪只做什麼、不做什麼]
@@ -68,6 +89,7 @@ Startup Check
 
 **阻擋規則**（不通過 = 不能開始）：
 - Skills loaded 為空 = 不算啟動完成
+- Test plan 或 Receipt path 為空 = 不算啟動完成
 - Questions for Owner 為空 = 不算啟動完成
 - 沒有輸出 Startup Check = 不能直接開始改檔案
 
@@ -152,6 +174,8 @@ Owner 可能交辦不在 Task Card 裡的臨時任務。處理方式：
 Handoff Checkpoint
 - Read: [本輪讀了哪些檔案]
 - Changed: [改了哪些檔案 + 做了什麼]
+- Tests run: [實際跑了哪些測試 / preview / readback；結果是 pass/fail/partial]
+- Receipt: [測試紀錄或 validation report 路徑]
 - Confirmed: [確認了什麼事實或決策]
 - Next: [下一個接手者該做什麼]
 - Blockers: [未解決的阻塞]

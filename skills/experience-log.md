@@ -212,6 +212,115 @@
 - **更好的方向**: 如果 `-c` 不夠穩定（resume 到錯誤的 session），可以用 `--session-id telegram-bot` 固定 session ID
 - **下次怎麼做最快**: 加 `-c` flag 就好，先查 `claude --help` 再動手
 
+### EXP-S010 — A6/A5 地端報價模型要用 deterministic fallback 保底（2026-06-14）
+
+- **日期**: 2026-06-14
+- **Agent**: A0 Dispatch + A5/A6 runtime
+- **類型**: SUCCESS — 地端模型調教
+- **場景**: Owner 要 A6 測競品菜單截圖是否能辨識品項、找 MAPLAB 雷同品項、成本總價 * 5，並產 Google Sheet 試算表連結。
+- **試過什麼**:
+  - 只靠 gemma4 prompt：會輸出 Thinking，800 token 內可能沒有合法 JSON。
+  - prompt 加 Items 清單：可降低假菜名，但仍不能保證產 `createQuoteVariants`。
+  - deterministic fallback：用 `data/items_master.json` 與固定 mapping 產合法 payload。
+- **最終選擇**: prompt 收窄 + sanitize + JSON 檢查 + deterministic `createQuoteVariants` fallback。
+- **為什麼好**: 地端模型可以負責語意/OCR 輔助，但 Sheet payload 由程式保底；這次同一張競品菜單可產 12 項 MAPLAB 雷同品項、成本 NT$5,520、報價 NT$27,600，甜甜圈/烤蔬菜盤列人工補成本。
+- **下次怎麼做最快**: 先讀 `skills/a6-local-quote-model-tuning.md`，不要把 local model raw output 當報價成果；合法 JSON + Sheet URL 才算完成。
+
+### EXP-S011 — Mac 原生工具擴充要先做路由層，不要先換模型（2026-06-15）
+
+- **日期**: 2026-06-15
+- **Agent**: A0 Dispatch
+- **類型**: SUCCESS — 能力評估
+- **場景**: Owner 貼「Mac-1 接 487 個 macOS 原生工具」截圖，詢問是否要擴充地端模型能力。
+- **試過什麼**: 搜尋 Mac-1、487 macOS tools、6.6B、Calendar/Mail/Safari 等 primary source 線索；未找到可信官方 repo/model card。
+- **最終選擇**: 新增並修正 `skills/mac-local-tool-routing/`，把需求拆成 connector、Chrome/OpenClaw、shell/osascript、Codex review bundle 的行動路由；Mac-1 先列 watchlist，但既有工具可做的 read-only/draft/test 工作要先做。
+- **為什麼好**: 即使模型 claim 未驗證，MAPLAB 仍能吸收「Mac 本機工具鏈」的好想法；同時避免把 secrets、寄信、刪檔、發佈權限交給不可審查的模型，也避免 agent 用權限當停工理由。
+- **下次怎麼做最快**: 看到 Mac-native AI 工具 claim 先拿 `mac-local-tool-routing`；找不到 primary source 就禁止 production integration，但要用現有工具推進 read-only smoke、draft payload、disposable test 或 approval-ready packet。
+
+### EXP-F010 — 權限框架寫成停工制度，違反快速迭代文化（2026-06-15）
+
+- **日期**: 2026-06-15
+- **Agent**: A0 Dispatch
+- **類型**: FAILURE — 企業文化違反 / 快速迭代
+- **場景**: Owner 要評估「Mac-1 接 487 個 macOS 原生工具」是否能變成 A6/地端模型能力。我先查不到 primary source，接著新增 `mac-local-tool-routing`，但第一版把重點放在 risk gates / confirmation gates，語氣會讓 agent 把可先做的工作交回 Owner。
+- **違反了什麼文化**:
+  - 違反「主動推進」：沒有先做 read-only smoke、draft payload、disposable test、approval-ready packet。
+  - 違反「快速迭代」：沒有先交付最小可驗證版本，而是先設計一套會拖慢大家的權限制度。
+  - 違反「不做白工」：如果其他 agent 照第一版技能走，會產生等待、轉交、請示，沒有形成可驗證產出。
+- **根因**: 把「未驗證模型不得進 production」錯誤擴張成「Mac 本機工具能力先不要做」；把安全邊界寫成停工邊界，而不是行動分層。
+- **修復**: 立即把 `mac-local-tool-routing` 改成 action-first：direct-do 直接做，draft/approval-ready 先產包，live/external/high-risk 才問最後確認；watchlist 也改成「未驗證不等於 work stoppage」。
+- **下次怎麼做最快**: 遇到新 AI tool claim，先拆成「今天可直接做的 10 分鐘 smoke / draft / disposable test」，做完留 receipt；production integration 另開 review gate，不得讓 gate 擋住最小可行迭代。
+
+### EXP-S012 — 每日巡查要接 reaction layer，不只是 Telegram delivery（2026-06-15）
+
+- **日期**: 2026-06-15
+- **Agent**: A0 Dispatch + A1/Hermes/Codex runtime
+- **類型**: SUCCESS — 系統閉環
+- **場景**: Owner 指出每日巡查可靠推送，但同一批阻塞/Owner 行動項推 30 天 60 天仍沒人處理；需求不是更會通知，而是有人看結果、判斷、提出下一步，並寫回相對角色。
+- **試過什麼**:
+  - 只解釋 Telegram sender 歸 A1 patrol：可回答來源，但沒有解決「誰反應」。
+  - 直接把 Hermes 放進 hot path：會增加不穩定與自動修改風險。
+  - deterministic bridge：用程式把巡查結果、Task Card、Hermes 狀態、Chrome Extension Hermes 路由落差整理成 reaction cards。
+- **最終選擇**: 保持 `scripts/patrol.sh` deterministic；在 `scripts/patrol-scheduled.sh` 後接 `tools/hermes_patrol_bridge.py`，產 `workbook/hermes/patrol/latest.json`、`hermes_prompt.md`、`telegram_decision_card.md`、`local-control-plane/hermes.html`。每張 reaction card 都要有 `owner_role`、`target_task_card`、`next_step_patch_hint`、`codex_followup_prompt`。
+- **為什麼好**: 地端/Hermes 可以定期接手巡查結果，Codex/A1/B1 可按 packet 週期性確認專案進度並往下推；Owner 不必每天看同一段阻塞原文。
+- **下次怎麼做最快**: 先跑 `python3 tools/hermes_patrol_bridge.py --repo /Users/pagemacmini/maplab-ai-handbook`，再開 `local-control-plane/hermes.html`；若 reaction card 指向 task card，就讓 Codex/A1 直接改接續點或產 5-minute Owner card。
+
+### EXP-F011 — Artifact substitution: 用周邊產物替代 Owner 外部指揮問題（2026-06-15）
+
+- **日期**: 2026-06-15
+- **Agent**: A0 Dispatch / Codex
+- **類型**: FAILURE — 需求對齊 / 優先順序 / 錯誤模式
+- **場景**: Owner 說需要一個人在外面也可以指揮的窗口；現有冷啟動 prompt 已可召喚角色，真正缺的是 Telegram 入口能把指令轉成「召喚誰、用哪份 prompt、交給哪個 worker、怎麼回報進度」。
+- **表層錯誤**: 先把 Chrome Extension popup 與 generated role modules 的 Hermes target 對齊。這不是完全沒價值，但它是周邊一致性工作，不是 Owner 當下最需要的 P0。
+- **真正錯誤模式**: artifact substitution。Agent 把「可見、可改、可驗證的內部產物」錯認成「使用者要解決的控制問題」。這次是 Extension；下次可能換成 panel、dashboard、skill、metadata、generator、README、status JSON。若只反省「不該改 Extension」，下次還會去改橘子、錢包或別的東西。
+- **深層根因**:
+  1. 沒有先寫使用者場景：人在外面，只能用 Telegram，下令後要看到 receipt。
+  2. 沒有定義 P0 的驗收：Telegram command -> role route -> cold-start prompt/context -> worker dispatch -> progress receipt。
+  3. 把「系統看起來更一致」誤判成「Owner 能力增加」。
+  4. 忽略額度/注意力成本：Owner 花錢買的是決策與推進，不是 agent 自己覺得乾淨的結構。
+  5. 沒有 stop rule：當工作離 command window 超過一層，就應停下改做 P0。
+- **團隊指引**:
+  - 任何 bot / Hermes / dispatch 需求，先產 control-loop contract，不先做周邊整理。
+  - P0 必須是可操作入口，不是文件、面板或 metadata。
+  - 每個輸出要回答「Owner 在外面現在能多做什麼？」答不出來就是 secondary。
+  - 周邊整理可以做，但必須標為 P2/P3，不能佔用主線。
+- **正確優先順序**:
+  1. P0：Telegram command window，Owner 一句話進來後能選角色/套冷啟動 prompt/交給 Codex 或 Hermes worker/回報 receipt。
+  2. P1：巡查結果轉 reaction cards，寫出 role next-step 與 Codex follow-up。
+  3. P2：Chrome Extension / role module / dashboard metadata 對齊。
+  4. P3：面板視覺與管理體驗。
+- **下次怎麼做最快**: 先實作或設計 Telegram `/dispatch` / 自然語言 command route，最小驗收是 Telegram 回一張 dispatch receipt：`role`、`prompt_source`、`worker`、`status`、`next_check`。只有這條路可跑後，才做 Extension/module/panel 同步。
+
+### EXP-F012 — Hermes fallback 不是泛化 Hermes 建設，而是 `maplab_claude_bot` 的備援路徑（2026-06-15）
+
+- **日期**: 2026-06-15
+- **Agent**: A0 Dispatch / Codex
+- **類型**: FAILURE — 第一性原理 / bot 入口對齊 / 額度備援
+- **Owner 原始需求**: `maplab_claude_bot` 要接給 Hermes 當接口；確認 bot 背後接什麼模型；保留原本和 Claude 對話、貼圖片、請它控制電腦的能力；Hermes 只在 Claude 沒額度或 primary unavailable 時接手，而且要善用長期記憶，能指出 agent 走歪路。
+- **我查到的事實**:
+  - `bot/bot.py` 是 A1 Telegram bot entrypoint。
+  - 文字與貼圖都走 `claude -p --dangerously-skip-permissions`；貼圖會先存到 `data/telegram-photos/`，再把本機檔案路徑交給 Claude 讀。
+  - 現況沒有 Hermes fallback wrapper，也沒有 Telegram 端的 `primary_failed_reason -> fallback=Hermes` receipt。
+  - repo 有 checkpoint / 版本表 / 更新者習慣，但沒有看到全域正在執行的「每次改檔必記 agent/runtime/model/date」enforcement。
+- **我做錯什麼**:
+  1. 把 `scripts/patrol.sh` 的每日巡查問題和 `maplab_claude_bot` 的互動入口問題混在一起。
+  2. 把 Hermes reaction panel、Extension runtime target、metadata sync 當成主線；它們可以有價值，但不能替代 Telegram fallback。
+  3. 沒先回答最小驗收：「Claude 沒額度時，Owner 在 Telegram 貼一張圖，Hermes 是否會接手並回 receipt？」
+  4. 沒在改檔前先做具名打卡，違反 Owner 對 agent/model/date 可追溯的要求。
+- **第一性原理修正**:
+  - 需求的本體是外部 command window，不是 dashboard。
+  - primary 是 Claude CLI；fallback 是 Hermes；trigger 必須是 quota/rate-limit/auth/CLI missing/timeout 這種 primary unavailable，不是任意改路由。
+  - Hermes 的價值不是「另一個聊天模型」，而是 cold-start memory worker：先讀 `CURRENT_STATUS.md`、`pitfalls.md`、企業文化、近期 Telegram log、相關 Task Card，再跑第一性原理檢查，必要時指出使用者或 agent 走錯主線。
+  - 任何電腦控制能力都要保持和 Claude Code 相同的 receipt 與邊界：能讀/能草稿/能操作/需確認分開列，不把 secrets 或 live destructive action 交給不明狀態。
+- **正確實作順序**:
+  1. 在 `bot/bot.py` 加 `claude_ask_with_fallback()`，保留 Claude primary。
+  2. 分類 Claude failure；只有 quota/rate-limit/auth/CLI missing/timeout 啟動 `hermes_ask()`。
+  3. `handle_photo()` 產生同一份圖片路徑 prompt，fallback 時照樣交給 Hermes。
+  4. Hermes prompt 注入 cold-start memory sources 與「先判斷我是不是走歪路」檢查。
+  5. Telegram 回覆 receipt：`primary_failed_reason`、`fallback_engine`、`model`、`date`、`agent`、`memory_sources`、`allowed_actions`。
+  6. 新增 `/model` 或 `/runtime` 讓 Owner 隨時看到 primary/fallback/model/date。
+- **下次怎麼做最快**: 先寫 10 行 control contract 並貼給 Owner確認；確認後只改 `bot/bot.py` 與最小測試，不再先碰 patrol、Extension、panel。改檔前先留下具名打卡：Agent、runtime、model/date、任務、預計改哪些檔。
+
 ### EXP-FEEDBACK-001 — Cowork Dispatch 產品限制（2026-03-28）
 
 - **日期**: 2026-03-28

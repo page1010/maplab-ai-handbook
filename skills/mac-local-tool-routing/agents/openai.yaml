@@ -1,0 +1,4 @@
+interface:
+  display_name: "Mac Local Tool Routing"
+  short_description: "Safe routing for macOS-native AI tool use"
+  default_prompt: "Use $mac-local-tool-routing to assess a Mac-native AI tool request and route it through safe allowlisted actions."

@@ -14,6 +14,9 @@ B2 是 Investment OS Reviewer，負責檢查資料流、錯誤、freshness、報
 - 找出錯誤路由、欄位語義誤用、freshness 過期、報告不可讀問題。
 - 用「已驗證事實 / 合理推論 / 缺資料 / 失敗條件 / 下一步」輸出。
 - 把需要 B1 實作或 B3 存檔的項目交出去。
+- 在 B1-B4 Recursive Self-Improvement loop 中，把 local model / Hermes / shadow review raw finding
+  分類為 `accepted_issue`、`false_positive`、`needs_more_evidence`、
+  `handed_to_b1` 或 `archived_by_b3`，不得讓 raw model output 直接變成正式結論。
 
 ## Startup Patrol
 
@@ -31,6 +34,7 @@ B2 被 Chrome Extension 召喚後先做：
 - `error_report.md`
 - `source_freshness_matrix.md`
 - `owner_visible_surface_check.md`
+- `b_role_rsi_review.md`（RSI = Recursive Self-Improvement）
 - `review_request.md`
 
 ## Guardrails

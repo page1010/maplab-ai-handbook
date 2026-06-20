@@ -10,10 +10,11 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. pitfalls.md
 3. workbook/reviews/README.md
 4. projects/invest-os-b-role-system.md
-5. projects/b3-invest-os-archivist.md
-6. skills/invest-os-b-role-system.md
-7. skills/task-progress-guide.md
-8. handoff/tasks/T-B1-B4-investment-os-role-split.md
+5. projects/invest-os-b-role-recursive-self-improvement.md
+6. projects/b3-invest-os-archivist.md
+7. skills/invest-os-b-role-system.md
+8. skills/task-progress-guide.md
+9. handoff/tasks/T-B1-B4-investment-os-role-split.md
 
 若任務涉及 Investment OS 本機 repo，且本機可讀，追加讀：
 - /Users/pagemacmini/Documents/New project/CURRENT_STATUS.md
@@ -27,6 +28,7 @@ B3 不負責寫功能、不負責交易策略。你負責讓狀態不只存在�
 - resume prompt
 - status writeback plan
 - pitfalls 追加建議
+- B1-B4 Recursive Self-Improvement score archive / trend note / next-run resume prompt
 
 【輸出契約】
 預設寫到 `workbook/reviews/JOB-B3-ARCHIVE-YYYYMMDD/`：
@@ -34,6 +36,7 @@ B3 不負責寫功能、不負責交易策略。你負責讓狀態不只存在�
 - handoff_checkpoint.md
 - resume_prompt.md
 - status_writeback_plan.md
+- b_role_rsi_archive.md（RSI = Recursive Self-Improvement）
 - review_request.md
 
 【禁止事項】

@@ -20,8 +20,15 @@ let watermark = args[5]
 let sceneTag = args.count >= 7 ? args[6] : ""
 let mode = args.count >= 8 ? args[7] : "scene"
 
-guard let sourceImage = NSImage(contentsOf: inputURL) else {
-    die("cannot read image: \(inputURL.path)")
+let isClear = args[1] == "clear" || args[1] == "transparent"
+let sourceImage: NSImage?
+if isClear {
+    sourceImage = nil
+} else {
+    guard let img = NSImage(contentsOf: inputURL) else {
+        die("cannot read image: \(inputURL.path)")
+    }
+    sourceImage = img
 }
 
 let canvasSize = NSSize(width: 1080, height: 1920)
@@ -67,28 +74,33 @@ func drawText(
 
 canvas.lockFocus()
 
-cream.setFill()
-NSBezierPath(rect: NSRect(origin: .zero, size: canvasSize)).fill()
+if let img = sourceImage {
+    cream.setFill()
+    NSBezierPath(rect: NSRect(origin: .zero, size: canvasSize)).fill()
 
-let imageSize = sourceImage.size
-let scale = max(canvasSize.width / imageSize.width, canvasSize.height / imageSize.height)
-let sourceWidth = canvasSize.width / scale
-let sourceHeight = canvasSize.height / scale
-let sourceRect = NSRect(
-    x: max(0, (imageSize.width - sourceWidth) / 2),
-    y: max(0, (imageSize.height - sourceHeight) / 2),
-    width: min(imageSize.width, sourceWidth),
-    height: min(imageSize.height, sourceHeight)
-)
+    let imageSize = img.size
+    let scale = max(canvasSize.width / imageSize.width, canvasSize.height / imageSize.height)
+    let sourceWidth = canvasSize.width / scale
+    let sourceHeight = canvasSize.height / scale
+    let sourceRect = NSRect(
+        x: max(0, (imageSize.width - sourceWidth) / 2),
+        y: max(0, (imageSize.height - sourceHeight) / 2),
+        width: min(imageSize.width, sourceWidth),
+        height: min(imageSize.height, sourceHeight)
+    )
 
-sourceImage.draw(
-    in: NSRect(origin: .zero, size: canvasSize),
-    from: sourceRect,
-    operation: .copy,
-    fraction: 1.0,
-    respectFlipped: true,
-    hints: [.interpolation: NSImageInterpolation.high]
-)
+    img.draw(
+        in: NSRect(origin: .zero, size: canvasSize),
+        from: sourceRect,
+        operation: .copy,
+        fraction: 1.0,
+        respectFlipped: true,
+        hints: [.interpolation: NSImageInterpolation.high]
+    )
+} else {
+    NSColor.clear.setFill()
+    NSBezierPath(rect: NSRect(origin: .zero, size: canvasSize)).fill()
+}
 
 let titleFont = font(["PingFangTC-Semibold", "PingFang TC Semibold", "Heiti TC"], size: 54, weight: .semibold)
 let subtitleFont = font(["PingFangTC-Regular", "PingFang TC", "Heiti TC"], size: 36, weight: .regular)

@@ -3,6 +3,31 @@
 本文件記錄 maplab-ai-handbook 的所有重大版本變更。
 格式：版本號 | 日期 | 變更摘要 | 執行 Agent
 
+## v6.8（A8 Local Motion Styling & Zero-Cost Pipeline）— 2026-06-20
+
+**A8 地端免付費動態運鏡升級：移除 Higgsfield 雲端付費依賴，利用 ffmpeg zoompan 與 Swift 透明字卡實作地端動態短影音管線**
+
+執行 Agent：Antigravity acting as A8
+
+1. 修改 `tools/ai_workbook/a8_render_story_frame.swift`：支援在 transparent background ("clear" 背景) 上繪製字卡與浮水印。
+2. 重構 `tools/ai_workbook/a8_enhanced_video_draft.py`：實現中心 crop 9:16、放大至 2160x3840 以避免 zoompan 抖動、使用 ffmpeg zoompan 濾鏡渲染動態 (dolly_in, dolly_out, pan_right, pan_left)，最後 overlay 透明字卡。修正了 zoompan 影片時長乘數 bug。
+3. 修改 `tools/ai_workbook/a8_local_model_fallback.py` 與 `a8_local_model_video_pipeline.py`：引導地端模型 `qwen2.5:14b` 進行運鏡規劃並傳遞該 motion 列表。
+4. 清理雲端付費依賴：刪除 `skills/a8-higgsfield-integration.md` 與 `higgsfield_poc_plan.md`；新增地端免費版 `skills/a8-local-motion-integration.md` 與 `local_motion_poc_plan.md`。
+5. 同步 Extension 與看板：更新 `recalls/A8_recall.md`、`T-A8-001` 看板，並跑 `build_extension_task_modules.py` 重新編譯擴充功能。
+6. 實跑驗證：產出精準時長為 13.17s 的 H.264 30fps 1080x1920 影片，並拷貝至桌面 `/Users/pagemacmini/Desktop/`。
+
+## v6.7（A8 Higgsfield Integration & Storyboard POC）— 2026-06-20
+
+**A8 影音產線升級：整合 Higgsfield 運鏡與動態影片生成能力，並完成第一個 ICC Tainan 案例 POC Storyboard 企劃**
+
+執行 Agent：Antigravity acting as A8
+
+1. 新增 `skills/a8-higgsfield-integration.md`：建立 A8 Higgsfield 整合技能書，規範動態提示詞、A/B/C 級隱私防護 Gate、每個鏡頭重試上限為 1 次的成本 Gate，以及 `higgsfield_receipt.json` 格式。
+2. 更新 `recalls/A8_recall.md`：在工具鏈與可用工具中併入 Higgsfield，並增加 `higgsfield_receipt.json` 到輸出合約中。
+3. 更新 `chrome-extension/task-modules/A8.json`：將 `higgsfield` 加入 `runtime_targets`、技能書及輸出合約，並跑 `build_extension_task_modules.py` 完成 29 個 extension modules 重新編譯。
+4. 新增 `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/higgsfield_poc_plan.md`：為 ICC Tainan 案例量身打造 4 個鏡頭的 Higgsfield POC 運鏡與動態提示詞，指定 A 級無隱私風險之真實 webp 素材，預估 40-60 credits 預算。
+5. 更新 `handoff/tasks/T-A8-001-folder-to-video-distribution.md`：將 Higgsfield 框架整建登記至 Work Completed，並在 Next Actions 更新 POC Storyboard 執行與驗收步驟。
+
 ## v6.6（IOS-FB Credential Bootstrap + No-Report Diagnosis）— 2026-06-11
 
 **Codex / IOS-FB 修正：社群帳號 Notion credential route 寫入啟動流程，並查明 FB/social report 中斷原因**

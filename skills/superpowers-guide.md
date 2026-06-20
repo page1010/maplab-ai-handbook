@@ -30,6 +30,10 @@ h# Superpowers Skills 導覽手冊 — MAPLAB AI Agent 版
 | GTM、Pixel、轉換、追蹤碼 | seo-session-checklist Phase 2 + gtm-conversion-setup | 追蹤設定 |
 | WordPress、上傳圖片、featured image | gdrive-to-wordpress-upload-guide | 雲端圖片上傳 SOP |
 | 報價、菜單、人數、預算 | a5-quotation-engine-skills | 菜單搭配 + 報價生成 |
+| 競品菜單、雷同品項、成本*5、地端報價模型、createQuoteVariants | a6-local-quote-model-tuning | A6/A5 地端報價調教：Items guard + deterministic JSON fallback |
+| Lottie、text-to-lottie、loading 動畫、icon 動效、splash 短動畫 | lottie-motion-json-guide | 產 Lottie JSON 草稿、驗證、預覽、交付，地端模型只當草稿生成器 |
+| Mac-1、macOS 原生工具、Calendar、Mail、Safari、Finder、osascript、本機工具鏈、487 tools | mac-local-tool-routing | 評估 Mac 原生工具/地端模型擴充：先驗證來源，再走 allowlist + confirmation gates |
+| Hermes、每日巡查、patrol reaction、定期管理、角色下一步、Codex follow-up | hermes-patrol-reaction-loop | 把每日 Telegram 巡查轉成 Hermes/Codex/A1/B1 可接手的 next-step packet 與記憶候選 |
 | 急件、提案、簡報、客戶背景 | a6-sales-rapid-response-skills | 一鍵提案 + 客戶速查 |
 | IG、FB、Threads、社群、貼文 | a3-social-ads-skills + brand-voice-guide | 多平台貼文 + 語氣 |
 | 菜單卡、品牌素材、圖片規範 | a4-photo-asset-skills | 風格統一 + 數位菜單 |

@@ -2,7 +2,7 @@
 
 建立：2026-05-19
 狀態：B1 summon context / Investment OS 判斷邏輯橋接
-更新：2026-05-21
+更新：2026-06-19
 
 ## 用途
 
@@ -16,6 +16,8 @@ B1 在這裡的任務不是給買賣建議，也不是代替 Investment OS 下�
 - `projects/b1-investment-os-owner-profile.md`
 
 canonical 是 Owner 本人校正版；Owner Profile 是整理版與操作版。兩者補足世界觀、選股模式、公司研究方式、加減碼偏好、盲點與風險提示語氣。本文件保留為邏輯橋接與語意邊界。
+
+2026-06-19 起，B1 若收到 Owner 貼入的投資邏輯好文，需同步檢查 `research/logic-vault/`（對話簡稱：`邏輯庫`）。文章不只摘要，必須拆成角色路由、核心價值、量化路徑、資料/訓練需求與系統落地，必要時再轉成 B1 build spec、B2 review gate、B3 archive 與 B4 patrol。
 
 ## 讀取來源
 
@@ -35,6 +37,7 @@ canonical 是 Owner 本人校正版；Owner Profile 是整理版與操作版。�
 - `/Users/pagemacmini/Documents/New project/scripts/decision_orchestrator.py`
 - `projects/b1-investment-os-owner-persona-canonical.md`（2026-05-21 Owner 校正版）
 - `projects/b1-investment-os-owner-profile.md`（2026-05-21 補充）
+- `research/logic-vault/README.md`（2026-06-19 投資邏輯好文收納規格）
 
 若日後 Investment OS 文件更新，B1 必須以該專案 `CURRENT_STATUS.md` 為最高優先，不可只沿用本文件。
 

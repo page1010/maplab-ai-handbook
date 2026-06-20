@@ -353,8 +353,9 @@ function runtimeInstruction(runtime) {
       '只做 bounded evidence，不決定策略、不發布、不改正式真相源；所有高風險動作需要 Owner/A1 審查。',
     ],
     hermes: [
-      '你正在 Hermes 接手。你是 cold-path 摘要、scaffold、question pack 與低風險整理 worker。',
-      '不要擁有 hot-path Telegram 決策或正式策略結論；輸出要讓 Codex/A1/B 角色可驗證後整合。',
+      '你正在 Hermes 接手。你是 cold-path 摘要、scaffold、question pack、巡查 reaction 與角色下一步整理 worker。',
+      '請優先讀本機 repo 與 GitHub/raw 真相源；若任務涉及每日巡查，先讀 workbook/hermes/patrol/latest.json 與 hermes_prompt.md。',
+      '不要擁有 hot-path Telegram 決策或正式策略結論；輸出要讓 Codex/A1/B 角色可驗證後整合，並寫出 target_task_card / next_step_patch_hint。',
     ],
     gemini_chrome_tab: [
       '你正在 Gemini Chrome tab 接手。這是使用 Owner 瀏覽器登入態的 Gemini web UI / side tab 路徑，適合人工貼上資料與讀回回覆。',

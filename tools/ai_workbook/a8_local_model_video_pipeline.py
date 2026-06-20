@@ -102,12 +102,14 @@ def run_local_model(args: argparse.Namespace, fallback_dir: Path) -> dict[str, A
     return load_json(fallback_dir / "parsed_output.json")
 
 
-def storyboard_subtitles(model_output: dict[str, Any]) -> list[str]:
+def storyboard_scenes(model_output: dict[str, Any]) -> tuple[list[str], list[str]]:
     storyboard = model_output.get("storyboard")
     if not isinstance(storyboard, list) or not storyboard:
         raise SystemExit("local model output has no storyboard")
 
     subtitles: list[str] = []
+    motions: list[str] = []
+    valid_motions = {"dolly_in", "dolly_out", "pan_right", "pan_left", "static"}
     for index, scene in enumerate(storyboard, start=1):
         if not isinstance(scene, dict):
             raise SystemExit(f"storyboard scene {index} is not an object")
@@ -118,13 +120,19 @@ def storyboard_subtitles(model_output: dict[str, Any]) -> list[str]:
             if term in subtitle:
                 raise SystemExit(f"off-brand subtitle rejected: {term}")
         subtitles.append(subtitle)
-    return subtitles
+
+        motion = str(scene.get("motion") or "static").strip()
+        if motion not in valid_motions:
+            motion = "static"
+        motions.append(motion)
+    return subtitles, motions
 
 
 def render_video(
     args: argparse.Namespace,
     source_manifest: dict[str, Any],
     subtitles: list[str],
+    motions: list[str],
     render_dir: Path,
 ) -> dict[str, Any]:
     command = [
@@ -159,6 +167,8 @@ def render_video(
     ]
     for subtitle in subtitles:
         command.extend(["--scene-line", subtitle])
+    for motion in motions:
+        command.extend(["--scene-motion", motion])
     output = run(command)
     return json.loads(output)
 
@@ -284,8 +294,8 @@ def main() -> None:
 
     source_manifest = load_json(manifest_path)
     model_output = run_local_model(args, fallback_dir)
-    subtitles = storyboard_subtitles(model_output)
-    render_manifest = render_video(args, source_manifest, subtitles, render_dir)
+    subtitles, motions = storyboard_scenes(model_output)
+    render_manifest = render_video(args, source_manifest, subtitles, motions, render_dir)
 
     rendered_video = Path(render_manifest["video"])
     rendered_cover = Path(render_manifest["cover"])
@@ -310,6 +320,7 @@ def main() -> None:
                 "mcp": "none_attached_direct_ollama_cli",
                 "tools": ["a8_local_model_fallback.py", "a8_enhanced_video_draft.py", "swift", "ffmpeg", "ffprobe"],
                 "scene_lines": subtitles,
+                "scene_motions": motions,
                 "video": str(final_video),
                 "cover": str(final_cover),
                 "probe": probe,

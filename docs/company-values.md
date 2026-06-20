@@ -68,6 +68,22 @@
 - commit 訊息和 handoff 必須說清楚「本次 staged 了什麼、保留了什麼 dirty、為什麼」。
 - 如果看不懂某批變更，先用檔案內容、`git diff`、task card、`workbook/owner_requirements_panel.md` 追需求來源；追不到再標 `needs-owner-context`，不能直接 revert。
 
+### 7. 測試與 receipt 是交付的一部分（2026-06-18 補入）
+
+**有寫但沒測，等於沒完成；有測但沒留下 receipt，等於下一個 session 無法信任。**
+
+任何會改變程式、排程、Telegram/LINE/Chrome/WordPress/Sheets 等 owner-facing 行為的任務，收尾前必須完成：
+
+1. 跑最小可證明測試：unit test、syntax check、live DB preview、readback、smoke test 或截圖 QA，依任務性質選最短但有效的組合。
+2. 把測試結果寫到 repo 可追位置：review bundle、validation report、task card、CURRENT_STATUS 或 handoff checkpoint。只在聊天裡說「測了」不算 receipt。
+3. Final 回覆必須列 `Tests run` 與結果；若沒跑，必須明確寫「未跑」與原因，不能省略。
+4. 測試失敗不得包裝成完成。可以交付 partial，但要標明 failed command、失敗原因、剩餘風險與下一步。
+
+實作含義：
+- 文件更新也要有基本檢查：確認目標檔案存在、冷啟動入口有連到、grep/readback 可找到新規則。
+- runtime/Telegram 類改動至少要有 source + runtime 語法檢查、目標測試、live preview/readback；若不直接發 Telegram，必須說明避免污染正式頻道，並用可重現 preview 代替。
+- 「我等一下會寫 receipt」但未寫就結束，是企業文化違反；下一輪要先補 receipt，再談完成。
+
 ---
 
 ## 實作規範
@@ -78,7 +94,7 @@
 2. 讀 CURRENT_STATUS.md 抓專案最新狀態
 3. 讀對應 recall（recalls/AX_recall.md）抓自己的角色定義
 4. 讀 skills/first-principles-check + skills/pitfalls + docs/glossary.md（cold-start 三件套）
-5. 開工前先輸出 Startup Check，包含：「這次 session 我要做什麼 / 我會把進度存到哪個檔 / 我預期遇到什麼卡點」
+5. 開工前先輸出 Startup Check，包含：「這次 session 我要做什麼 / 我會把進度存到哪個檔 / 我預期遇到什麼卡點 / 本輪預計怎麼測試 / 測試 receipt 會寫在哪裡」
 
 ### Long-running session 中必須做的事
 
@@ -124,3 +140,4 @@
 | v1.0 | 2026-04-09 | 初版，定義五條核心原則 + 實作規範 + 歷史代價 | Owner 親口指示「寫死給各個工作夥伴」 |
 | v1.1 | 2026-04-18 | 新增「六、主動推進」，引用 agent-behavior-framework.md | Owner 系統性校正：A0/A6 行為不一致 |
 | v1.2 | 2026-06-17 | 新增未提交變更判讀文化：先追需求、可用性、治理狀態，再補強提交或封存標記 | Owner 校正：不是清掉 dirty changes，而是回收成學習與治理訊號 |
+| v1.3 | 2026-06-18 | 新增測試與 receipt 硬條款，要求 cold-start 先列測試計畫與 receipt 路徑，收尾必列 Tests run | Owner 校正：有寫沒做、沒測試、沒落檔都違反企業文化 |

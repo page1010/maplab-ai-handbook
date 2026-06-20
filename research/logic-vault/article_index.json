@@ -1,0 +1,37 @@
+{
+  "schema_version": "logic-vault-index-v1",
+  "updated_at": "2026-06-19",
+  "name": "邏輯庫",
+  "articles": [
+    {
+      "id": "LV-20260619-001",
+      "title": "科技股研究：理解變化、產品週期與 channel check 權重",
+      "file": "research/logic-vault/2026-06-19-tech-stock-change-product-cycle-channel-check.md",
+      "source_type": "owner_pasted_article",
+      "source_url": null,
+      "source_status": "unverified_public_origin; owner_provided_text",
+      "primary_roles": [
+        "IOS-MOMENTUM",
+        "IOS-EVIDENCE",
+        "B1"
+      ],
+      "secondary_roles": [
+        "IOS-ALPHA",
+        "IOS-CHIP",
+        "IOS-RIGHT",
+        "IOS-KOL",
+        "B2",
+        "B3",
+        "B4"
+      ],
+      "core_modules": [
+        "change_chain_map",
+        "product_cycle_map",
+        "channel_source_weighting",
+        "structural_vs_inventory_classifier",
+        "long_short_pair_design"
+      ],
+      "status": "integrated_as_logic_card_v0"
+    }
+  ]
+}

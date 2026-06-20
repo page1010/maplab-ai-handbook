@@ -1,9 +1,9 @@
 # T-B1-B4-001 — Investment OS B1-B4 Role Split + Chrome Extension Summon
 
 ## 接續狀態
-- **狀態**: 🟢 Done Criteria 全部完成
-- **最後活動**: 2026-06-11 49906f4
-- **接續點**: 所有 Done Criteria 已勾選。若無新需求可關閉此 card。
+- **狀態**: 🔄 ACTIVE — Recursive Self-Improvement v0 baseline added
+- **最後活動**: 2026-06-18 B1 Recursive Self-Improvement loop v0
+- **接續點**: B1-B4 已不只做角色拆分；新增 RSI-like 成長閉環，下一步是把 scorer 接進排程/Telegram first-screen red item 摘要。
 - **阻塞**: 無
 - **assigned_session**: 2026-06-11 / B1
 - **last_committed_by**: B1 49906f4
@@ -49,6 +49,17 @@ Investment OS 接下來固定有四種角色：
 - [x] 驗證 JSON / Python / popup JS 皆通過。
 - [x] 留下 git commit。
 
+## Active Extension — 2026-06-18 Recursive Self-Improvement
+
+Owner 要求 B1-B4 不只被召喚，而要「像 RSI 一樣」能看出每輪是否更強。B1 v0
+落地方向：
+
+- 新增 `projects/invest-os-b-role-recursive-self-improvement.md`，定義 RSI 是 Recursive Self-Improvement。
+- 新增 `tools/invest_os/b_role_recursive_self_improvement.py`，讀 nightwatch、background job state、
+  local model shadow findings、B1-B4 review bundle recency，輸出 JSON/Markdown。
+- B2/B3/B4 角色文件加入 RSI loop 責任：B2 分類 raw finding，B3 保存趨勢與 resume，B4 判讀 continue / pause / refactor。
+- 驗收標準：下一輪不能只說「有在跑」；必須用 scorer 證明紅燈變少、分數變高、或明確選擇 pause/refactor。
+
 ## Current State — 2026-05-29
 
 - `projects/invest-os-b-role-system.md` 建立 B1-B4 共用底座。
@@ -67,4 +78,4 @@ Investment OS 接下來固定有四種角色：
 
 ## Resume Prompt
 
-我是 A1/Codex，接手 `T-B1-B4-001`。請先讀 `CURRENT_STATUS.md`、`pitfalls.md`、`handoff/tasks/T-B1-B4-investment-os-role-split.md`、`projects/invest-os-b-role-system.md`、`skills/invest-os-b-role-system.md`，再檢查 `tools/ai_workbook/build_extension_task_modules.py` 與 `chrome-extension/popup.js`。下一步是確認 B1-B4 module 是否已重新產生、Chrome Extension 是否可召喚 B1-B4、驗證結果是否已寫入 review/commit。
+我是 B1/Codex，接手 `T-B1-B4-001` 的 Recursive Self-Improvement loop。請先讀 `CURRENT_STATUS.md`、`pitfalls.md`、`handoff/tasks/T-B1-B4-investment-os-role-split.md`、`projects/invest-os-b-role-system.md`、`projects/invest-os-b-role-recursive-self-improvement.md`、`skills/invest-os-b-role-system.md`。下一步先跑 `python3 tools/invest_os/b_role_recursive_self_improvement.py --repo-root /Users/pagemacmini/maplab-ai-handbook --output-dir workbook/reviews/JOB-B1-B4-RSI-YYYYMMDD`，再由 B2 分類 shadow concern、B1 修最高影響紅燈、B3 保存本輪趨勢、B4 判斷 continue / pause / refactor。

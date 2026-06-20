@@ -82,6 +82,9 @@ Reason:
 - Tested Hermes/OpenClaw route status: Hermes CLI exists but gateway is stopped; OpenClaw browser is OK, OpenClaw agent returned `NO_REPLY` for A8 QA, so A8 hot path remains direct Ollama + deterministic local tools.
 - Wrote platform/Drive publishing plan: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/youtube_tiktok_drive_pipeline.md`
 - Updated A8 skill: `skills/a8-video-pipeline-skills.md`
+- Integrated local motion styling and zero-cost guidelines: `skills/a8-local-motion-integration.md`
+- Updated A8 recalls (`recalls/A8_recall.md`) and extension modules (`chrome-extension/task-modules/A8.json`)
+- Planned the ICC Tainan local motion POC storyboard: `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/local_motion_poc_plan.md`
 
 Validation:
 
@@ -92,22 +95,19 @@ Validation:
 - This host's `ffmpeg` lacks `drawtext`; enhanced review draft uses Swift/AppKit rendered frames as fallback.
 - `ffmpeg` supports `xfade`; v3 should use crossfade transitions rather than hard concat.
 - v4: H.264, 1080x1920, 30fps, 13.2 seconds; CTA category `corporate_tea`; outro QA frame checked and not clipped.
-- Local model fallback smoke: `ollama list` confirms `gemma4:latest`, `qwen2.5:14b`, `qwen2.5-coder:7b`. `qwen2.5:14b` can draft storyboard / platform copy / risks, but must be validator-gated because it may invent visual details and CLI output may include terminal control codes.
-- Local model fallback v6: `qwen2.5:14b` returned valid JSON; validator result `valid=true`, `errors=[]`, `warnings=[]`. Output is usable as A8 draft only, not final public copy.
+- Local model fallback smoke: `ollama list` confirms `gemma4:latest`, `qwen2.5:14b`, `qwen2.5-coder:7b`. `qwen2.5:14b` can draft storyboard / platform copy / risks / motion types, but must be validator-gated because it may invent visual details and CLI output may include terminal control codes.
+- Local model fallback v6: `qwen2.5:14b` returned valid JSON with motion field; validator result `valid=true`, `errors=[]`, `warnings=[]`. Output is usable as A8 draft only, not final public copy.
 - Local model video v5: `qwen2.5:14b` produced scene lines `茶點動線清楚 / 交流節奏不被打斷 / 飲品甜點分區 / 桌面留白乾淨 / 台南企業茶會`; deterministic runner rendered H.264 1080x1920 30fps 13.2s MP4; middle/outro QA frames visually checked.
 - Worker routing: Hermes is not currently a runnable A8 video worker because gateway is stopped; OpenClaw browser is healthy for UI readback/operator work; OpenClaw agent QA returned `NO_REPLY`, so it is not yet a reliable A8 QA worker.
 
 ## A8 Next Actions
 
-1. Read `skills/a8-video-pipeline-skills.md`.
-2. Review `a8_motion_style_upgrade.md` before rendering.
-3. Review `workbook/reviews/JOB-A8-FOLDER-TO-SHORTS-20260617/dry_run/`, `review_draft/`, `review_draft_v2/`, `review_draft_v3/`, and latest `review_draft_v4/`.
-4. Review `youtube_tiktok_drive_pipeline.md` and confirm A8 Drive intake / platform approval route.
-5. Review `local_model_video_v5/` as the accepted local-model MP4 proof.
-6. Use Google Vids / Canva / CapCut or approved AI video tool to add licensed music, motion polish, and final cover text.
-7. Produce final 9:16 mp4 and cover from the accepted review draft.
-8. Ask Owner/A1 for upload approval.
-9. After approval, upload / schedule to YouTube Shorts and TikTok, create Pinterest pin/cover, then write `platform_receipts.md`.
+1. Review and approve the Local Motion POC Storyboard Plan (`local_motion_poc_plan.md`).
+2. Run local dynamic video generation using the local model storyboard motions on the 4 selected A-class webp images.
+3. Stitch the clips using the local video pipeline (Swift + ffmpeg zoompan) to create a H.264 1080x1920 30fps 13.2s video.
+4. Finalize the 9:16 mp4 video and cover image, and present the Publish Approval Card for Owner approval.
+5. Ask Owner/A1 for upload approval.
+6. After approval, upload / schedule to YouTube Shorts and TikTok, create Pinterest pin/cover, then write `platform_receipts.md`.
 
 Optional fallback route:
 

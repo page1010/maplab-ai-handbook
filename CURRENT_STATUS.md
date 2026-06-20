@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-06-19 22:00（A1 晚間巡查：8h 0 新非巡查 commit；**T-A8-001 確認跨過 48h 門檻（最後 ab32c8e 06-17 16:46，現 ~53h）**，已升級任務表狀態並修正 AGENT_RECALL_PROMPTS A8 row（原誤留「🔲 新建，待啟動」，已更新為 ACTIVE+超 48h）；A4/B1 hours 已用 unshallow 後完整歷史重新精算）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-06-20 08:00（A1 每日巡查，遠端：24h 0 新非巡查 commit，系統靜止；T-A8-001（~63h）/T-A1-LEARNING-LOOP-001（~90h）持續超 48h；A4（~209h）/B1（~205h）CRITICAL 持續；GCP帳單~65天🔴；task cards 與本表比對無新增不一致）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -134,6 +134,7 @@
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-18 16:00（午後）：過去 8h 0 新非巡查 commit（HEAD 仍為 a8ed17d 06-18 evening check，距今僅 ~1h48m）；🐛 **發現並修正巡查紀錄排序異常**：上一筆 `2026-06-18 22:00` 巡查紀錄被插入在 `2026-06-15 22:00` 與 `2026-06-16 16:00/08:00` 兩筆歷史紀錄之間，破壞表格時間順序（推測為存檔流程插入點計算錯誤，非依檔尾 append）— 已移至正確時間順序（表尾，緊接本筆之前）；內容本身無誤，僅位置調整。其餘狀態無變化：T-A1-LEARNING-LOOP-001 持續超 48h；A4 T-A4-001 / B1 T-HQ-001 持續 🔴 CRITICAL；A5+A6 CRITICAL 持續；GCP帳單~63天🔴 持續未處理；AGENT_RECALL_PROMPTS.md 經比對無新斷點需更新 | 排序異常已修正；建議檢查 checkpoint.sh 對 Blockers 表格的插入邏輯，避免未來再次插入錯誤位置 |
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-19 16:00（午後）：過去 8h 0 新非巡查 commit（最後真實工作 commit 仍為 c29b4b0 2026-06-17 20:07，~44h 前）；🐛 **發現並修正任務表與 task card 狀態不一致**：① `T-B1-B4-investment-os-role-split` task card 已標示「🟢 Done Criteria 全部完成（若無新需求可關閉此 card）」，但 CURRENT_STATUS 任務表誤留 🔄 進行中 — 已修正為 🟢 Done；② `T-A1-EXT-001-dynamic-role-modules` 任務表狀態欄位空白，task card 實為 🔄 in_progress — 已補上。T-A1-LEARNING-LOOP-001 自 cc21bad 06-16 14:33 起 ~74h 無新 commit，持續超 48h（較上次巡查 ~56h 持續增長）；T-A8-001 最後相關 commit ab32c8e 06-17 16:46，現 ~47h，**即將跨過 48h 門檻，下次巡查需確認**；A4 T-A4-001 ~193h/~8天持續 🔴 CRITICAL；B1 T-HQ-001 ~189h/~7.9天持續 🔴 CRITICAL（最後 014081c 2026-06-11 18:46）；A5+A6 ~754h/~31.4天 CRITICAL 持續；GCP帳單~64天🔴 持續未處理 | T-B1-B4 狀態已修正為 🟢 Done（建議 Owner 確認可關閉 card）；T-A1-EXT-001 狀態已補上；T-A8-001 需在下次巡查確認是否跨過 48h |
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-19 22:00（晚間）：過去 8h 0 新非巡查 commit（最後真實工作 commit 仍為 c29b4b0 2026-06-17 20:07，~49h 前）；**追蹤上次巡查標記的 T-A8-001 已確認跨過 48h 門檻 → 升級狀態**：last commit ab32c8e 2026-06-17 16:46，現 ~53h 無新 commit（已在任務表加註 ⚠️ 超 48h）；🐛 **發現並修正 AGENT_RECALL_PROMPTS.md A8 row 嚴重過時**：原文寫「🔲 新建，待啟動」，但 A8 自 06-17 起已有 7 commits 產出 ICC Tainan v4 審核影片 + 地端模型 v5 MP4，已更正為「🔄 ACTIVE + 超 48h」並同步補上 A4(~198-200h)/A5(~750h)/A6(~743h)/B1(~195h) 精確小時數（先前數字為估算遞增，本次用 `git fetch --unshallow` 取得完整歷史後重新精算）。T-A1-LEARNING-LOOP-001 ~79h 持續超 48h；A4 T-A4-001 持續 🔴 CRITICAL；B1 T-HQ-001 持續 🔴 CRITICAL；A5+A6 CRITICAL 持續；GCP帳單~64天🔴 持續未處理（本巡查無新證據可更新，沿用上次數字） | T-A8-001 已升級為超 48h；AGENT_RECALL_PROMPTS A8 row 已修正並同步精確小時數；其餘 CRITICAL 持續觀察 |
+| A1 巡查紀錄 | ⚠️ A1巡查 2026-06-20 08:00（每日，遠端）：過去 24h **0 新非巡查 commit**（HEAD 仍為 e1ec6eb 06-19 晚間巡查；最後真實工作 commit 仍為 c29b4b0 2026-06-17 20:07，現 ~60h）；用 `git fetch --unshallow` 取得完整歷史精算：T-A8-001 last commit ab32c8e 06-17 16:46，現 **~63h** 持續超 48h；T-A1-LEARNING-LOOP-001 自 cc21bad 06-16 14:33 起現 **~90h** 持續超 48h；A4 T-A4-001 last c2dc194 06-11 15:19，現 **~209h/~8.7天** 持續 🔴 CRITICAL；B1 T-HQ-001 last 014081c 06-11 18:46，現 **~205h/~8.5天** 持續 🔴 CRITICAL；A5+A6 持續 CRITICAL（沿用上次估算 ~754h+10h≈~764h，無新證據可精算）；GCP帳單升至 **~65天** 🔴 持續未處理。已比對 task cards（T-A1-RTK-001/T-B1-DASH-001/T-A1-EXT-001/T-A1-LEARNING-LOOP-001/T-A8-001）狀態欄位與本表一致，**無新增不一致**；AGENT_RECALL_PROMPTS.md 斷點與上次巡查一致，無需更新。系統靜止中，所有已知異常皆為延續，無新增異常。 | 無新增異常，純粹小時數更新；持續觀察 |
 ---
 
 ## Source of Truth（有效文件清單）

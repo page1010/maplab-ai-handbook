@@ -12,6 +12,13 @@ Guild Ops Board 目前 `D[]` 為手抄 `New project/config/investment_os_role_re
 
 ## 子任務
 
+### #0.5 personified game-floor prototype（2026-06-20 完成）
+- Owner 新需求：希望 Guild Ops Board 不只是靜態卡片，而是像像素風便利商店/作戰室；各部門角色坐在不同位置，點人出對話框與責任範圍。互動邏輯是先找部門經理，經理沒上班才找小弟或備援 runtime，且小弟只能蒐證/收件，不能做最終裁決。
+- 已完成：`workbook/dashboards/maplab-ops-game-dashboard.html` 新增 `Today Status` 與 `OPS CONVENIENCE STORE` v0.2。包含 6 個區域、9 個 NPC、經理/小弟/off-duty/caution 狀態、可複製任務說法、可打開原部門卡與複製召喚 prompt。
+- 驗證：inline script syntax pass；`git diff --check` pass；Chrome readback：9 NPC / 6 rooms / 21 cards；點 `momentum-openclaw` 顯示「OpenClaw 只蒐證、不決定 Top 3」；mobile 390px readback 無水平溢出。
+- Receipt：`workbook/reviews/JOB-B1-DASH-PERSONIFIED-20260620/validation_report.md`
+- 未做：registry generator、`ops_board_status.json`、全 21 部門 NPC 完整鋪圖。這三項仍留給下輪。
+
 ### #1 registry → dashboard 自動同步 generator（主，可派 Codex）
 - 新增 `tools/ai_workbook/build_ops_board.py`：讀 `New project/config/investment_os_role_registry.json`(16 IOS 角色)+ 內嵌的 B1–B4/A0 定義 → 注入 HTML 的 `const D = [...]` 區段。
 - 用 marker 注入：HTML 內以 `/*__D_START__*/ ... /*__D_END__*/` 包住 `D[]`，generator 只替換中間，**不動** CSS/JS/版面。

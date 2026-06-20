@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-06-20 16:00（A1 午後巡查，遠端：8h 0 新非巡查 commit，系統靜止；T-A8-001（~71h）/T-A1-LEARNING-LOOP-001（~97h）持續超 48h；A4（~216h）/B1（~213h）CRITICAL 持續；GCP帳單~65天🔴；task cards 與本表比對無新增不一致）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-06-20 21:33（B1 Guild Ops Board 擬人化 v0.2：新增可點 NPC 作戰便利商店、經理/小弟/off-duty 對話層與 Today Status；營運狀態沿用 A1 16:00 巡查：8h 0 新非巡查 commit，系統靜止；T-A8-001（~71h）/T-A1-LEARNING-LOOP-001（~97h）持續超 48h；A4（~216h）/B1（~213h）CRITICAL 持續；GCP帳單~65天🔴；task cards 與本表比對無新增不一致）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -19,6 +19,7 @@
 
 ## 最新事實核對
 
+- 2026-06-20：B1 Guild Ops Board 依 Owner 指示完成擬人化遊戲介面 v0.2。`workbook/dashboards/maplab-ops-game-dashboard.html` 保留原本離線單檔與 21 張部門卡，新增 `Today Status` 現況面板與 `OPS CONVENIENCE STORE` 部門作戰便利商店：6 個區域、9 個可點 NPC、經理/小弟/off-duty/caution 狀態、點人出對話框與「可怎麼開口」任務說法。驗證：inline script syntax pass、`git diff --check` pass、Chrome DevTools readback 9 NPC / 6 rooms / 21 cards、桌面與 390px mobile 截圖 pass。Receipt：`workbook/reviews/JOB-B1-DASH-PERSONIFIED-20260620/validation_report.md`。本次未做 T-B1-DASH-001 generator / live status JSON / runtime 接線；下一步若方向確認，再把全 21 部門補齊成 NPC 與接 `ops_board_status.json`。
 - 2026-06-19：B1 建立 Investment OS 投資邏輯好文專區 `邏輯庫`（`research/logic-vault/`）。用途：Owner 之後丟好文時，B1 不只摘要，而是固定拆成角色路由、核心價值、量化拆解、資料/訓練需求與系統落地。第一篇文章卡 `LV-20260619-001` 收錄科技股研究框架：科技股研究重點是理解變化鏈、產品週期、供應鏈 share shift、結構成長 vs 庫存幻覺、channel check 權重與 long/short pair 設計。主責角色為 `IOS-MOMENTUM` + `IOS-EVIDENCE`，B1 建規格，B2 審資料與權重，B3 存檔，B4 巡查是否真的接入每日研究流程。Review bundle：`workbook/reviews/JOB-LOGIC-VAULT-20260619/`。本次未碰 Investment OS runtime、broker、Telegram、dashboard、WordPress 或 Ads。
 - 2026-06-17：Owner 直接修復 Telegram bot `召喚` 派工流程（5 commits 07a5261→c29b4b0，16:48-20:07，author `page` 非 checkpoint.sh 自動存檔，故先前未進本檔）。根因：`bot/bot.py` 的 `_local_dispatch_answer()` 只回文字路由建議（如「召喚 A3」），沒有建立任何 dispatch packet/worker handoff/receipt；Owner 在 Telegram 追問「所以誰做你召喚了嗎」才發現。修復：① hermes runtime fallback 強化（no-final-response 自動 fallback 到 ollama direct）；② 新增 deterministic role dispatch；③ Telegram 自然語句/`/codex_dispatch` 派工會建立 `workbook/telegram-dispatch/TG-DISPATCH-*/{packet.json,prompt.md,README.md}` + `index.jsonl`，並寫入 Codex clipboard bridge，回覆需附 `dispatch_id`/角色/worker/status/路徑；④ `pitfalls.md` 新增規則：沒有可追蹤 dispatch artifact 前不得回「已召喚」，只能說「尚未派工」；⑤ `14e9439` 順手清理 runtime worktree 產物（bot_a6 cache/log/照片、worktree-cleanup 巨大 log，95K+ 行）並補 `.gitignore`。下一步：尚未看到實際 `workbook/telegram-dispatch/TG-DISPATCH-*` 真實派工紀錄（目錄尚未出現於 repo），Owner 下次用 Telegram 召喚時應確認真的產生 dispatch receipt。
 - 2026-06-18：IOS-KOL 網紅雷達 Telegram digest 修正已補測試 receipt，並把「測試與 receipt 是交付的一部分」塞進冷啟動企業文化。Investment OS source + runtime `sync_influencer_agents.py` 已改成核心 KOL visibility gate：游庭皓輸出逐字稿事件摘要，不再 Q/A；理財達人秀若有 RSS/標題描述可摘要，標為 `RSS/標題描述摘要（待逐字稿）`；股癌沒有逐字稿/ASR 時也顯示 `待 ASR/逐字稿` 與下一步，不再靜默消失。測試：`pytest -q tests/test_influencer_sync.py -k 'episode_keypoints_digest or youtube_rss_metadata_poll_creates_owner_visible_title_seed or subprocess_env'` = 4 passed；source/runtime `py_compile` = pass；live DB runtime preview checks `游庭皓/理財達人秀/股癌 present && no Q1/A1` = true；`yt-dlp` 股癌 smoke 讀到 `EP671 | 🌼 | 3045`。Receipt：`workbook/reviews/JOB-IOS-KOL-RADAR-TEST-20260618/TEST_RECEIPT.md`。冷啟動規則已更新 `docs/company-values.md`、`AGENT_STARTUP_PROTOCOL.md`、`AGENT_RULES.md`：Startup Check 必須列 Test plan + Receipt path，Final 必列 Tests run；有寫沒測或沒 receipt 不得宣稱完成。

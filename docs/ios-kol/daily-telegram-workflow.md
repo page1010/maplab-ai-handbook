@@ -167,4 +167,8 @@ IOS-KOL 夜盤總經共識雷達 | YYYY-MM-DD HH:MM
 2026-06-20 接上正式 rubric（Owner 採納）：
 
 - `網紅單集重點` / `IOS-KOL 夜盤總經共識雷達` 文字品質的 Verification（主觀任務）依 `rubrics/telegram-digest-quality.md` 評分；該 rubric 的維度 3（措辭安全）對應本文件 `修正記錄` 已落地的內部流程語禁用，維度 4（資料層級透明）對應上方 `網紅單集重點` gate 表的 transcript/metadata/RSS/Q&A 規則。
-- IOS-KOL 目前在 `handoff/tasks/` 下沒有正式 task card，故先把 verification 連結補在本文件；若日後建立 `T-IOS-KOL-*.md`，應把這行搬過去並沿用 `templates/task-card-template.md` 的格式。
+
+2026-06-21 補正式 task card：
+
+- IOS-KOL 已建立正式 task card `handoff/tasks/T-IOS-KOL-001.md`（依 `templates/task-card-template.md` 格式，含 (A) Goal/Outcome、(B) Definition of Done 五要素、(C) Constraints + Error-handling/Escalation，Owner 角色＝IOS-KOL 網紅雷達經理、Reviewer 角色＝B2）。
+- 本文件的 Verification → rubric 連結與每日運作細節維持在這裡，task card 是入口、不重複展開全部規則；接續狀態、Blockers、接續 Prompt 一律以 `handoff/tasks/T-IOS-KOL-001.md` 為準。

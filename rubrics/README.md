@@ -24,7 +24,7 @@
 
 | 檔案 | 狀態 | 連結的 task card / 文件 |
 |------|------|--------------------------|
-| `rubrics/telegram-digest-quality.md` | ✅ 生效中（Owner 2026-06-20 採納） | `handoff/tasks/T-A1-LEARNING-LOOP-001.md`（A0 patrol Telegram card）、`handoff/tasks/T-A6-001.md`（A6 一般聊天/案件摘要）、`docs/ios-kol/daily-telegram-workflow.md`（IOS-KOL 單集重點/夜盤總經摘要，尚無正式 task card） |
+| `rubrics/telegram-digest-quality.md` | ✅ 生效中（Owner 2026-06-20 採納） | `handoff/tasks/T-A1-LEARNING-LOOP-001.md`（A0 patrol Telegram card）、`handoff/tasks/T-A6-001.md`（A6 一般聊天/案件摘要）、`handoff/tasks/T-IOS-KOL-001.md`（IOS-KOL 單集重點/夜盤總經摘要，運作細節見 `docs/ios-kol/daily-telegram-workflow.md`） |
 
 `rubrics/telegram-digest-quality.md` 取自 `pitfalls.md` 既有的 Telegram
 digest 踩坑紀錄（內部流程語外洩、Q/A 殘渣），示範「具體 do-not 案例」

@@ -5,8 +5,8 @@
 > 踩坑紀錄整理而成。已連結的 task card / 文件：
 > `handoff/tasks/T-A1-LEARNING-LOOP-001.md`（A0 patrol Telegram card）、
 > `handoff/tasks/T-A6-001.md`（A6 一般聊天/案件摘要文字）、
-> `docs/ios-kol/daily-telegram-workflow.md`（IOS-KOL 單集重點/夜盤總經摘要；
-> 該部門尚無 `handoff/tasks/` 正式 task card，先連到此運作文件）。
+> `handoff/tasks/T-IOS-KOL-001.md`（IOS-KOL 單集重點/夜盤總經摘要；運作細節見
+> `docs/ios-kol/daily-telegram-workflow.md`）。
 > 上線前兩週、或維度修改後一週內，仍需依下方「評審打分說明」人工抽查。
 
 ---
@@ -73,3 +73,4 @@ visibility from transcript confidence」）
 |------|----------|--------|
 | 2026-06-21 | 建立範例版本，整理自既有 pitfalls.md 踩坑紀錄 | B1 把 GO/rubric 方法落成 repo 標準模板時建立的示範填法 |
 | 2026-06-20 | 由「範例/未生效」升級為「生效中」；檔名由 `example-telegram-digest-quality.md` 改為 `telegram-digest-quality.md`；連結 T-A1-LEARNING-LOOP-001 / T-A6-001 / IOS-KOL daily-telegram-workflow.md | Owner 拍板正式採納 |
+| 2026-06-21 | IOS-KOL 連結改指向新建的 `handoff/tasks/T-IOS-KOL-001.md`，不再是暫放在 `daily-telegram-workflow.md` | IOS-KOL 正式 task card 已建立 |

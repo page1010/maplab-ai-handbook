@@ -402,7 +402,7 @@ A1 巡查時發現 agent 未寫接續 Prompt 或超過 30 分鐘無 checkpoint�
 | v3.7 | 2026-04-04 | 新增 SECTION 10 開發行動準則（需求釐清→版本說明→提問三步流程） | A1 Claude Code |
 | v3.8 | 2026-04-04 | SECTION 10 新增 Rule 4 舊版本清理原則（GAS/任何系統禁止留舊版本檔案） | A1 Claude Code |
 | v5.0 | 2026-06-11 | 精簡 SECTION 0（移除強制發問）、SECTION 10（移除逐步確認）、SECTION 9.4（移除單變數限制）；新增 SECTION 17 Session Log 強制規則、SECTION 18 Task Card 責任制 | B1 Claude Code |
-| v5.1 | 2026-06-20 | 新增 SECTION 19 無人長跑安全規則（Owner 採納 `docs/governance/unattended-run-safety.md` 七條規則） | B1 Claude Code |
+| v5.1 | 2026-06-20 | 新增 SECTION 19 無人長跑安全規則（Owner 採納 `docs/governance/unattended-run-safety.md` 八條規則） | B1 Claude Code |
 
 ---
 
@@ -847,7 +847,7 @@ B4 patrol 每次巡查時對每張「進行中」task card 問：
 任何 `/go` 類、cron 觸發、background task 等**無人介入跑多輪**的任務，
 不限角色（A0-A8 / B1-B4 皆適用）。
 
-### 七條規則
+### 八條規則
 
 1. **長跑只在 worktree / sandbox 跑可逆工作**，絕不直接對 runtime / production
    環境跑；出錯時要能「丟掉這個環境重來」。

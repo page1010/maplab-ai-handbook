@@ -6,7 +6,7 @@
 
 - 觸發條件：研究一支「AI agent 無人介入連跑 27 小時」的影片（`docs/references/ai-agent-long-running-go-feature-rubric.md`）後，發現 MAPLAB 目前沒有任何規則明確規定 `/go` 類、cron、background task 等無人長跑任務的安全邊界；長跑迴圈若配上既有的高風險操作（例如會清空目錄的 deploy 腳本），一旦無人看管下重複執行，錯誤會被放大成大規模事故。
 - 根因：既有 `AGENT_RULES.md` SECTION 8.5（硬性禁止）與 Guardrails 都是針對「有人在看」的情境寫的，沒有針對「完全無人介入、跑多輪」這個情境另外規定 worktree-only、gated deploy、reviewer HALT 權、token/時間/iteration 上限這幾件事。
-- 解法：Owner 2026-06-20 拍板採納，新增 `AGENT_RULES.md` SECTION 19（無人長跑安全規則）七條規則；完整說明與理由見 `docs/governance/unattended-run-safety.md`；對應任務定義模板見 `templates/go-prompt-template.md`（GO prompt 五要素）與 `templates/rubric-template.md`（主觀任務 rubric）；task card 標準擴充見 `templates/task-card-template.md`。
+- 解法：Owner 2026-06-20 拍板採納，新增 `AGENT_RULES.md` SECTION 19（無人長跑安全規則）八條規則；完整說明與理由見 `docs/governance/unattended-run-safety.md`；對應任務定義模板見 `templates/go-prompt-template.md`（GO prompt 五要素）與 `templates/rubric-template.md`（主觀任務 rubric）；task card 標準擴充見 `templates/task-card-template.md`。
 - 預防：任何 `/go` 類、cron、background task 等無人長跑任務開始前，先確認 constraint（不能碰 runtime/secrets/main）與 error-handling（何時暫停回報）已經寫進該任務的 prompt 或 task card 的 `(C) Constraints + Error-handling / Escalation` 區塊，不能依賴「agent 會自己注意」。
 
 ## 2026-06-18 — Test receipt must be written before claiming completion

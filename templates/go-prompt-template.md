@@ -86,3 +86,15 @@ token/時間/iteration 上限到了（見 `docs/governance/unattended-run-safety
 > - 任何一輪需要寫 Constraint 列出的禁區（例如要改正式 Sheet）。
 > - 跑滿 20 輪或 2 小時，不論是否完成。
 > - 驗證工具本身出錯（例如 GAS API timeout），不能跳過驗證直接判定完成。
+
+**填寫指引（自主/升級判準，Escalation Policy，2026-06-21 新增）**：
+判斷「要不要回頭問 Owner」的標準：
+
+- **可逆 ＋ 低風險 ＋ 在 scope 內** → agent 自己決定、繼續執行，**不准回頭問
+  Owner**（回頭問等於偷懶/下班心態）。
+- **符合任一即必須暫停回報**：不可逆動作、碰 runtime 資料、碰
+  secrets/.env/金錢、push main 或改真相來源、或任務目標本身模糊未定義。
+- **一句話原則**：可逆的自己扛，不可逆的才升級。
+
+見 `AGENT_RULES.md` SECTION 19「自主/升級判準」、
+`docs/governance/unattended-run-safety.md` 同名段落——三處措辭一致。

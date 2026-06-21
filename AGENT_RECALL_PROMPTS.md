@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-06-20 16:00（午後，遠端）A1 巡查（8h 0 新非巡查 commit，系統靜止；T-A8-001 持續超 48h（~71h）；T-A1-LEARNING-LOOP-001 持續超 48h（~97h）；A4 T-A4-001（~216h）/ B1 T-HQ-001（~213h）持續 🔴 CRITICAL；A5+A6 CRITICAL 持續；GCP帳單~65天🔴）
+> 最後更新：2026-06-21 08:05（每日，遠端）A1 巡查（24h 0 新非巡查 commit，HEAD 仍為昨晚 22:54 巡查自己的存檔；T-A8-001 已於昨晚解除 48h 警示，現 ~11h 正常；T-A1-LEARNING-LOOP-001 持續超 48h（~113h）；A4 T-A4-001（~232h/~9.7天）/ B1 T-HQ-001（~229h/~9.5天）持續 🔴 CRITICAL；A5+A6 CRITICAL 持續；GCP帳單估算~66天🔴）
 >
 > 使用方式：選擇角色 → 複製 prompt / module handoff → 貼到 Gemini / Codex / OpenClaw / legacy Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -21,12 +21,12 @@
 | A1 | 系統總管中心 | ✅ Claude Code 常駐 | Telegram bot + 終端機，直接下指令 |
 | A2 | 搜尋流量作戰部 | 🟢 召喚型可用 + patrol（Ads/SEO/WordPress）；last commit 89dcc45 2026-06-16（ICCTN landing page 圖片 QA 完成+14張 WebP 附圖發布，post 1829 live，T-A2-006 🟢 ACTIVE）；T-A2A3-001-B 🔴 >48h持續 | SEO / Ads / WordPress / Brand memory |
 | A3 | 社群與廣告成長部 | ✅ T-A3-001 完成（GTM v21 雙平台追蹤上線）；T-A3-002 ⏸️ 阻塞（等廣告週期+Owner操作）| Meta Ads / Social |
-| A4 | 影像資產整理部 | 🔴 CRITICAL（超 48h：最後 c2dc194/90fe31c 2026-06-11；現 ~216h/~9天 無新 commit；GCP帳單~65天未處理🔴）| Photo Archive |
+| A4 | 影像資產整理部 | 🔴 CRITICAL（超 48h：最後 c2dc194/90fe31c 2026-06-11；現 ~232h/~9.7天 無新 commit；GCP帳單~66天未處理🔴）| Photo Archive |
 | A5 | 報價與提案引擎部 | ⚠️ 任務卡狀態待Owner核查（2026-05-19有6個A5 commits：343e1d0/24c985b/6a98eb0/4b53ea8/716f0c2/d22c03c；task card T-A5-002/004/005仍顯示CRITICAL；~750h/~31.3天無新commit）| Quotation Engine |
 | A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（aa77573 2026-05-19 Codex-first route；~743h/~31天無新活動；LINE webhook等Owner確認 Channel 1654658337）| Sales Rapid Response |
 | A7 | 客服與對話轉單部 | 💤 T-A7-001 正式暫停；T-A7-002 ⏸️ 阻塞（等LINE後台權限+Owner政策決策）| Smart Reply |
 | A8 | 影音內容產線 | 🔄 T-A8-001 ACTIVE（2026-06-20 完成地端動態運鏡整合 local motion v6 + zero-cost pipeline；last commit f9d1c42 2026-06-20 20:56，48h 門檻已解除；下一步審核 local motion POC storyboard → 跑地端動態生成 → approval card，未經 Owner/A1 approval 不得上傳） | Content Repurposing Pipeline |
-| **B1** | **Investment OS Builder** | **🔴 CRITICAL（T-HQ-001 超 48h：最後 014081c 2026-06-11 18:46，現 ~220h/~9.2天；同一 B1 身分另在 Guild Ops Board 專案活躍，2026-06-20 有 2 commits 完成 Role Dispatch Console v0.3）** | **寫功能 / runtime surface；P5/P6 待執行** |
+| **B1** | **Investment OS Builder** | **🔴 CRITICAL（T-HQ-001 超 48h：最後 014081c 2026-06-11 18:46，現 ~229h/~9.5天；同一 B1 身分另在 Guild Ops Board 專案活躍，2026-06-20 有 2 commits 完成 Role Dispatch Console v0.3）** | **寫功能 / runtime surface；P5/P6 待執行** |
 | **B2** | **Investment OS Reviewer** | **🟢 召喚型可用** | **資料流 / 錯誤 / freshness review** |
 | **B3** | **Investment OS Archivist** | **🟢 召喚型可用** | **版本紀錄 / 交接 / resume prompt** |
 | **B4** | **Investment OS System Patrol** | **🟢 召喚型可用** | **系統適配巡查 / pause-refactor** |
@@ -175,6 +175,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 ✅ 06-19 午後巡查（16:00）：8h 0 新非巡查commit（最後真實工作commit仍為c29b4b0 06-17 20:07，~44h前）；🐛 發現並修正CURRENT_STATUS.md任務表與task card狀態不一致：① T-B1-B4-investment-os-role-split task card已標🟢 Done Criteria全部完成，任務表誤留🔄進行中，已修正為🟢 Done；② T-A1-EXT-001狀態欄位空白，task card實為🔄 in_progress，已補上。T-A1-LEARNING-LOOP-001持續超48h（~74h）；T-A8-001最後相關commit ab32c8e 06-17 16:46，現~47h，即將跨過48h門檻，下次巡查需確認；A4 T-A4-001 ~193h/~8天持續🔴CRITICAL；B1 T-HQ-001 ~189h/~7.9天持續🔴CRITICAL；A5+A6 ~754h/~31.4天CRITICAL；GCP帳單~64天🔴持續未處理；系統狀態與CURRENT_STATUS已同步一致。
 ✅ 06-20 午後巡查（16:00，遠端）：8h 0 新非巡查commit，系統靜止（最後真實工作commit仍為c29b4b0 06-17 20:07，~67h前）；用epoch精算：T-A8-001（ab32c8e 06-17 16:46）現~71h持續超48h；T-A1-LEARNING-LOOP-001（cc21bad 06-16 14:33）現~97h持續超48h；A4 T-A4-001（c2dc194 06-11 15:19）現~216h/~9天持續🔴CRITICAL；B1 T-HQ-001（014081c 06-11 18:46）現~213h/~8.9天持續🔴CRITICAL；A5+A6持續CRITICAL（無新證據可精算）；GCP帳單維持~65天🔴（同日內無新增天數）；已比對task cards（T-A8-001-folder-to-video-distribution/T-A1-LEARNING-LOOP-001/T-A1-EXT-001-dynamic-role-modules）與CURRENT_STATUS任務表，無新增不一致；本檔斷點僅小時數更新，無需其他修改。
 ✅ 06-20 每日巡查（08:00，遠端）：24h 0 新非巡查commit，系統靜止（最後真實工作commit仍為c29b4b0 06-17 20:07，~60h前）；用`git fetch --unshallow`取得完整歷史精算：T-A8-001（ab32c8e 06-17 16:46）現~63h持續超48h；T-A1-LEARNING-LOOP-001（cc21bad 06-16 14:33）現~90h持續超48h；A4 T-A4-001（c2dc194 06-11 15:19）現~209h/~8.7天持續🔴CRITICAL；B1 T-HQ-001（014081c 06-11 18:46）現~205h/~8.5天持續🔴CRITICAL；A5+A6持續CRITICAL；GCP帳單~65天🔴持續未處理；已比對task cards（T-A1-RTK-001/T-B1-DASH-001/T-A1-EXT-001/T-A1-LEARNING-LOOP-001/T-A8-001）與CURRENT_STATUS任務表，無新增不一致；本檔斷點無需更新。
+✅ 06-21 每日巡查（08:05，遠端）：24h 0 新非巡查commit，系統靜止（HEAD仍為昨晚22:54巡查自己的09561a8，該次已正確處理當時的f9d1c42/73e3f65/38185cc三筆並解除T-A8-001 48h警示）；🐛 發現並修正本檔頭部「最後更新」摘要過時（停留06-20 16:00午後數字，昨晚22:54巡查只改了表格列未同步頭部）；用`git fetch --unshallow`精算：T-A8-001（f9d1c42 06-20 20:56）現~11h，正常ACTIVE；T-A1-LEARNING-LOOP-001（cc21bad 06-16 14:33）現~113h持續超48h；A4 T-A4-001（c2dc194 06-11 15:19）現~232h/~9.7天持續🔴CRITICAL；B1 T-HQ-001（014081c 06-11 18:46）現~229h/~9.5天持續🔴CRITICAL；A5+A6持續CRITICAL（無新證據）；GCP帳單估算遞增至~66天🔴；已比對task cards（T-A4-001/T-HQ-001/T-A1-LEARNING-LOOP-001/T-A8-001）與CURRENT_STATUS任務表，無新增不一致。
 ✅ 06-16 午後巡查：8h 2 新非巡查commit（89dcc45 A2 ICCTN landing page 圖片 QA 完成+14張 WebP 附圖發布🟢；cc21bad A0 learning-loop reaction ledger + hermes_patrol_bridge + T-A1-LEARNING-LOOP-001 P1 完成🟢）；T-A1-LEARNING-LOOP-001 補入任務表；RECALL A2 斷點更新（從 draft → published）；A4 T-A4-001 ~123h 持續 🔴 CRITICAL；B1 T-HQ-001 ~117h 持續 🔴 CRITICAL；A5 ~682h/~28.4天 CRITICAL；A6 ~682h/~28.4天 CRITICAL；GCP帳單~61天🔴；系統狀態與 CURRENT_STATUS 一致。
 ✅ 06-16 晨間巡查：24h 零新非巡查commit（所有非巡查commit均為2026-06-15前日）；A4 T-A4-001 ~115h 持續 🔴 CRITICAL（最後 c2dc194/90fe31c 2026-06-11）；B1 T-HQ-001 ~109h 持續 🔴 CRITICAL（最後 014081c 2026-06-11 18:46）；A2 昨日ICC Tainan draft built（da36237），今日0新commit awaiting Owner approval（正常）；A5 ~674h/~28.1天 CRITICAL；A6 ~674h/~28.1天 CRITICAL；GCP帳單~61天🔴；ios-kol Task Card建立待Owner確認；系統狀態與 CURRENT_STATUS 一致，無新增異常。
 ✅ 06-15 晚間巡查：8h 2 新非巡查commit（c903bba A0 learning-loop架構巡查文件新增；7a673e0 修正evidence note）；A4 T-A4-001 ~105h 持續 🔴 CRITICAL；B1 T-HQ-001 ~99h 持續 🔴 CRITICAL；A2 今日活躍（da36237 ICC Tainan draft built）但午後後無新commit；A5 ~664h/~27.7天 CRITICAL；A6 ~664h/~27.7天 CRITICAL；GCP帳單~60天🔴；系統狀態與 CURRENT_STATUS 一致，無新增異常。

@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-06-20 22:54（A1 晚間巡查：過去 8h 3 新非巡查 commit（A8 地端動態運鏡整合 f9d1c42 + B1 Guild Ops Board v0.2/v0.3）；**修正 T-A8-001 過時狀態**（任務表/AGENT_RECALL_PROMPTS 仍標超 48h，已解除並補上事實核對）；**記錄存檔流程風險**——本機累積近 3 天未存檔的 06-18～06-19 工作被一次性掃進今晚的 A8 commit，建議各角色完成變更後立即 checkpoint）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-06-21 08:05（A1 每日巡查，遠端：過去 24h 0 新非巡查 commit，HEAD 仍為昨晚巡查自己的 09561a8；昨晚 22:54 巡查已正確記錄並修正當時的 3 筆 commit，本次無新增異常，僅精算 CRITICAL 任務小時數）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -69,7 +69,7 @@
 |---------|------|-----------|------|-----------|
 | T-A1-EXT-001-dynamic-role-modules | T-A1-EXT-001 — GitHub Dynamic Role Task Modules | A1 | 🔄 in_progress（與 task card 同步） | handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md |
 | T-A1-RTK-001 | RTK Token Proxy 掛載與選擇性上線 | A1 | 🟢 已上線（Codex hook 已掛、裝前/裝後 patrol diff 驗收通過、git 排除生效） | handoff/tasks/T-A1-RTK-001.md |
-| T-A1-LEARNING-LOOP-001 | MAPLAB Learning Loop v0 Reaction Ledger | A1/A0 | 🔄 進行中（P1 完成：reaction ledger + hermes_patrol_bridge.py + workbook/learning_loop/；P2 token capital registry / P3 eval harness / P4 closure writer 待做；⚠️ 自 cc21bad 2026-06-16 14:33 起 ~97h 無新 commit，持續超 48h 門檻） | handoff/tasks/T-A1-LEARNING-LOOP-001.md |
+| T-A1-LEARNING-LOOP-001 | MAPLAB Learning Loop v0 Reaction Ledger | A1/A0 | 🔄 進行中（P1 完成：reaction ledger + hermes_patrol_bridge.py + workbook/learning_loop/；P2 token capital registry / P3 eval harness / P4 closure writer 待做；⚠️ 自 cc21bad 2026-06-16 14:33 起 ~113h 無新 commit，持續超 48h 門檻） | handoff/tasks/T-A1-LEARNING-LOOP-001.md |
 | T-A1-SYNC-GUARD-001 | 雲端同步破口修補 + patrol 紀錄瘦身 | A1 | 🔲 待開始（高槓桿、低成本，建議優先） | handoff/tasks/T-A1-SYNC-GUARD-001.md |
 | T-A1-V6-P2 | T-A1-V6-P2 | A1 | 🔴 CRITICAL（~1272h無commit） | handoff/tasks/T-A1-V6-P2.md |
 | T-A1-V6-P3 | T-A1-V6-P3 | A1 | 🔲 待開始（尚未開始。等 T-A1-V6-P2 完成後啟動。） | handoff/tasks/T-A1-V6-P3.md |
@@ -82,9 +82,9 @@
 | T-A2A3-001-B | SEO 場景頁面 + 內連結（從 T-A2A3-001 分拆） | A2/A3 | 🔴 CRITICAL（~360h無commit） | handoff/tasks/T-A2A3-001-B.md |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2/A3 | ⏸️ RM/GSC 部分暫停；案例寫作轉 T-A2A3-001-B（Rank Math 已退訂，已設定好的 SEO 欄位先不要再設定；下一步是依 live URL map 補 To B 真） | handoff/tasks/T-A2A3-001.md |
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | ⏸️ 阻塞中（受眾輪廓分析完成（693筆 Orders）。待執行：嘉義加入廣告地區、興趣條件精簡、策略一冷受眾上線。） | handoff/tasks/T-A3-002.md |
-| T-A4-001 | Phase 4 Gemini 照片分類（2022-2026） | A4 | 🔴 CRITICAL（~216h/~9天 無新 commit；2026-06-11 最後 c2dc194/90fe31c；48h 門檻已超；T-A4-003 照片搬移管線已啟動） | handoff/tasks/T-A4-001.md |
+| T-A4-001 | Phase 4 Gemini 照片分類（2022-2026） | A4 | 🔴 CRITICAL（~232h/~9.7天 無新 commit；2026-06-11 最後 c2dc194/90fe31c；48h 門檻已超；T-A4-003 照片搬移管線已啟動） | handoff/tasks/T-A4-001.md |
 | T-A4-002 | pagewu1010 帳號 Takeout 解壓 + Gemini Flash 照片資產整合 | A4 |  | handoff/tasks/T-A4-002.md |
-| T-HQ-001 | AGENT-HQ 集團共用層遷移（chrome-extension / governance / panel / runtime symlink 收編） | B1 | 🔴 CRITICAL（~213h/~8.9天 無 commit；最後 014081c 2026-06-11 18:46；P1-P4 ✅；P5/P6 待執行） | handoff/tasks/T-HQ-001.md |
+| T-HQ-001 | AGENT-HQ 集團共用層遷移（chrome-extension / governance / panel / runtime symlink 收編） | B1 | 🔴 CRITICAL（~229h/~9.5天 無 commit；最後 014081c 2026-06-11 18:46；P1-P4 ✅；P5/P6 待執行） | handoff/tasks/T-HQ-001.md |
 | T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔴 CRITICAL（~552h無commit） | handoff/tasks/T-A5-002.md |
 | T-A5-004 | createSlides.gs — Slide 報價簡報自動生成 | A5 | 🔴 CRITICAL（~1512h無commit） | handoff/tasks/T-A5-004.md |
 | T-A5-005 | 報價狀態追蹤同步 + Dashboard | A5 | 🔴 CRITICAL（~1535h無commit） | handoff/tasks/T-A5-005.md |
@@ -144,6 +144,7 @@
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-20 08:00（每日，遠端）：過去 24h **0 新非巡查 commit**（HEAD 仍為 e1ec6eb 06-19 晚間巡查；最後真實工作 commit 仍為 c29b4b0 2026-06-17 20:07，現 ~60h）；用 `git fetch --unshallow` 取得完整歷史精算：T-A8-001 last commit ab32c8e 06-17 16:46，現 **~63h** 持續超 48h；T-A1-LEARNING-LOOP-001 自 cc21bad 06-16 14:33 起現 **~90h** 持續超 48h；A4 T-A4-001 last c2dc194 06-11 15:19，現 **~209h/~8.7天** 持續 🔴 CRITICAL；B1 T-HQ-001 last 014081c 06-11 18:46，現 **~205h/~8.5天** 持續 🔴 CRITICAL；A5+A6 持續 CRITICAL（沿用上次估算 ~754h+10h≈~764h，無新證據可精算）；GCP帳單升至 **~65天** 🔴 持續未處理。已比對 task cards（T-A1-RTK-001/T-B1-DASH-001/T-A1-EXT-001/T-A1-LEARNING-LOOP-001/T-A8-001）狀態欄位與本表一致，**無新增不一致**；AGENT_RECALL_PROMPTS.md 斷點與上次巡查一致，無需更新。系統靜止中，所有已知異常皆為延續，無新增異常。 | 無新增異常，純粹小時數更新；持續觀察 |
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-20 16:00（午後，遠端）：過去 8h **0 新非巡查 commit**（HEAD 仍為 0d73270 06-20 晨間巡查；最後真實工作 commit 仍為 c29b4b0 2026-06-17 20:07，現 ~67h）；用 epoch 精算：T-A8-001 last commit ab32c8e 06-17 16:46，現 **~71h** 持續超 48h；T-A1-LEARNING-LOOP-001 自 cc21bad 06-16 14:33 起現 **~97h** 持續超 48h；A4 T-A4-001 last c2dc194 06-11 15:19，現 **~216h/~9天** 持續 🔴 CRITICAL；B1 T-HQ-001 last 014081c 06-11 18:46，現 **~213h/~8.9天** 持續 🔴 CRITICAL；A5+A6 持續 CRITICAL（無新證據可精算，沿用上次估算）；GCP帳單維持 **~65天** 🔴（同日內無新增天數）。已比對 task cards（T-A8-001-folder-to-video-distribution / T-A1-LEARNING-LOOP-001 / T-A1-EXT-001-dynamic-role-modules）內容與本表狀態欄位一致，**無新增不一致**。系統靜止中，所有已知異常皆為延續，無新增異常。 | 無新增異常，純粹小時數更新；持續觀察 |
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-20 22:54（晚間，遠端）：過去 8h **3 新非巡查 commit**（f9d1c42 A8 地端動態運鏡整合 20:56；73e3f65 B1 Guild Ops Board v0.2 21:34；38185cc B1 Role Dispatch Console v0.3 22:56）。B1 兩筆已由 checkpoint.sh 正確同步進「最新事實核對」與任務表，無不一致。⚠️ **發現並修正 T-A8-001 嚴重過時**：任務表/AGENT_RECALL_PROMPTS A8 row 仍標「超 48h 無新 commit，last ab32c8e」，但 f9d1c42 已落地（local motion v6 + zero-cost pipeline），48h 門檻應解除 — 已修正任務表與 RECALL A8 row，並補上「最新事實核對」條目。🐛 **發現存檔流程風險**：f9d1c42 雖標 `checkpoint(A8)`，diff 卻一併帶入 232 個檔案、25K+ 行，混進先前文字已寫入 CURRENT_STATUS 但**從未實際 commit** 的 06-18～06-19 工作（IOS-KOL test receipt、B1 RSI baseline、A6 Telegram 修復、B1 logic-vault）— 代表本機（Mac mini）累積近 3 天未存檔變更，今晚才被一次性掃進去；已在「最新事實核對」記錄並建議所有角色完成變更後立即 checkpoint，避免未存檔變更跨角色累積。其餘：T-A1-LEARNING-LOOP-001 自 cc21bad 06-16 14:33 起現 **~104h** 持續超 48h（無新 commit）；A4 T-A4-001 last c2dc194 06-11，現 **~223h/~9.3天** 持續 🔴 CRITICAL；B1 T-HQ-001 last 014081c 06-11，現 **~220h/~9.2天** 持續 🔴 CRITICAL（注：B1 同一身分在 Guild Ops Board 專案活躍，T-HQ-001 本身仍無新 commit）；A5 持續 CRITICAL；A6 已於 06-18 修正為 🔄 進行中，非 CRITICAL（沿用既有任務表狀態，本次無新證據）；GCP帳單沿用上次估算 ~65天 🔴（遠端環境無法直接核對帳單頁面，僅延續記錄）。 | T-A8-001 任務表 + AGENT_RECALL_PROMPTS A8 row 已修正並解除 48h 警示；已記錄存檔流程風險（多角色未存檔變更累積後被單一 commit 帶走），建議 Owner 提醒各角色即時 checkpoint；其餘 CRITICAL 持續觀察 |
+| A1 巡查紀錄 | ⚠️ A1巡查 2026-06-21 08:05（每日，遠端）：過去 24h **0 新非巡查 commit**（HEAD 仍為昨晚 09561a8，即上一輪晚間巡查自己的存檔；昨晚 22:54 已正確記錄並修正當時的 3 筆 commit f9d1c42/73e3f65/38185cc，本次比對無新增不一致）。用 `git fetch --unshallow` 精算：T-A1-LEARNING-LOOP-001 自 cc21bad 06-16 14:33 起現 **~113h** 持續超 48h；A4 T-A4-001 last c2dc194 06-11 15:19，現 **~232h/~9.7天** 持續 🔴 CRITICAL；B1 T-HQ-001 last 014081c 06-11 18:46，現 **~229h/~9.5天** 持續 🔴 CRITICAL；T-A8-001 last f9d1c42 06-20 20:56，現 **~11h**，遠低於 48h 門檻，狀態正常 ACTIVE；A5+A6 持續 CRITICAL（無新證據可精算，沿用既有記錄）；GCP帳單估算遞增至 **~66天** 🔴（純日曆遞增，遠端環境無法直接核對帳單頁面）。🐛 **發現並修正 AGENT_RECALL_PROMPTS.md 標頭過時**：檔案頂部「最後更新」摘要行仍停留在 06-20 16:00（午後）的舊數字，未被昨晚 22:54 巡查同步更新（該次巡查只改了 A5/A6/B1/A8 表格列，漏了頂部摘要）— 已修正為今日巡查摘要。已比對 task cards（T-A4-001/T-HQ-001/T-A1-LEARNING-LOOP-001/T-A8-001）內容與本表狀態欄位，**無新增不一致**（task card 描述工作進度，CRITICAL 旗標僅代表存檔間隔，兩者不衝突，沿用既有慣例）。 | AGENT_RECALL_PROMPTS.md 頂部摘要已修正；CRITICAL 任務小時數已精算更新；無新增異常 |
 ---
 
 ## Source of Truth（有效文件清單）

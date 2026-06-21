@@ -163,3 +163,8 @@ IOS-KOL 夜盤總經共識雷達 | YYYY-MM-DD HH:MM
 - Castbox app link `http://castbox.fm/app/castbox/feed/1a64de3cc9215d1a2fc86338e14e4d2772edc5a4/track/18dbb6bb4844a5e0675576351dbc7773c16848f4` 驗證為《兆華與股惑仔》，非股癌；穩定 source 使用 SoundOn RSS `https://feeds.soundon.fm/podcasts/91be014b-9f55-4bf3-a910-b232eda82d11.xml`。
 - Runtime source name 為 `理財達人秀／兆華與股惑仔 Podcast`，對應核心 KOL `理財達人秀` visibility gate。
 - `build_cross_checks()` 改支援 `source_ids`，新 podcast row 即使發布日較舊也會被 cross-check，不再被全域 latest 20 擠掉。
+
+2026-06-20 接上正式 rubric（Owner 採納）：
+
+- `網紅單集重點` / `IOS-KOL 夜盤總經共識雷達` 文字品質的 Verification（主觀任務）依 `rubrics/telegram-digest-quality.md` 評分；該 rubric 的維度 3（措辭安全）對應本文件 `修正記錄` 已落地的內部流程語禁用，維度 4（資料層級透明）對應上方 `網紅單集重點` gate 表的 transcript/metadata/RSS/Q&A 規則。
+- IOS-KOL 目前在 `handoff/tasks/` 下沒有正式 task card，故先把 verification 連結補在本文件；若日後建立 `T-IOS-KOL-*.md`，應把這行搬過去並沿用 `templates/task-card-template.md` 的格式。

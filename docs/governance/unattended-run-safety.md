@@ -1,10 +1,9 @@
 # 無人長跑安全規則（Unattended Run Safety）
 
-> **狀態：草案，待 Owner 採納。**
-> 本文件**不**修改 `AGENT_RULES.md` 或 `pitfalls.md`。內容來自
-> `docs/references/ai-agent-long-running-go-feature-rubric.md` 的風險提醒，
-> 在這裡先寫成獨立治理建議，Owner 確認後再決定怎麼併入正式規則
-> （建議納入位置見文末「建議併入位置」）。
+> **狀態：已採納，正式併入 `AGENT_RULES.md` 第 19 節（日期 2026-06-20）。**
+> 本文件本體保留作完整說明、理由與七條規則的詳細展開；正式生效的規則文字
+> 見 `AGENT_RULES.md` **SECTION 19 — 無人長跑安全規則**。`pitfalls.md`
+> 也已補上對應來源條目（2026-06-20 條目）。
 > 適用對象：任何 `/go` 類、cron 觸發、background task 等**無人介入跑多輪**
 > 的任務，不限角色。
 
@@ -90,12 +89,12 @@ approval-ready 提議**，不能直接執行。這跟現有
 - `AGENT_RULES.md` SECTION 16（阻塞審查 SOP）—— HALT（第 3 條）發生後，
   應該照 SECTION 16 的三層審查邏輯處理，不是 HALT 完就結束。
 
-## 建議併入位置（待 Owner 決定）
+## 採納紀錄（2026-06-20）
 
-- 短期：在 `AGENT_RULES.md` 新增一個 SECTION（例如 SECTION 19），引用本文件
-  並列出 7 條規則摘要；本文件保留作完整說明。
-- `pitfalls.md` 可以補一筆條目，註明「無人長跑風險」的來源是這次的影片
-  筆記整理，並指向本文件，方便之後 patrol 時找得到根因。
-- 在採用前，任何 `/go` 類或長 background task 任務的 task card，建議先在
-  `(C) Constraints + Error-handling / Escalation` 區塊手動引用本文件，
-  不必等正式併入 `AGENT_RULES.md` 才能套用。
+- ✅ `AGENT_RULES.md` 新增 **SECTION 19 — 無人長跑安全規則**，引用本文件
+  並列出 7 條規則摘要；本文件保留作完整說明、理由與跟既有規則的對照。
+- ✅ `pitfalls.md` 已補一筆 2026-06-20 條目，註明「無人長跑風險」的來源
+  是這次的影片筆記整理，並指向本文件與 `AGENT_RULES.md` SECTION 19。
+- ✅ `templates/task-card-template.md` 的 `(C) Constraints +
+  Error-handling / Escalation` 區塊已連結本文件；新建 `/go` 類或長
+  background task 任務的 task card，直接引用即可，不必另外複製規則內容。

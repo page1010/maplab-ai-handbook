@@ -34,6 +34,7 @@
 - 跑 `rtk python3 tools/hermes_patrol_bridge.py --repo /Users/pagemacmini/maplab-ai-handbook --raw-text-file logs/patrol-scheduled.log` 後，會更新 ledger 與 summary。
 - Ledger 中不能只有「提醒 Owner」；至少要能分出 direct-do / delegated / owner_5min。
 - 7 天以上未關閉 reaction 必須被 task card 或 `pitfalls.md` 回收，不可只留在 Telegram 訊息。
+- **Verification（主觀任務）**：`workbook/hermes/patrol/telegram_decision_card.md` 的文案品質（資訊密度/格式一致/措辭安全/資料層級透明）依 `rubrics/telegram-digest-quality.md` 評分，不是 agent 自己判斷「看起來還行」。
 
 ## Resume Prompt
 

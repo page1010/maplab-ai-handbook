@@ -20,11 +20,13 @@
 4. 新 rubric 上線前兩週、或維度修改後一週內，照 rubric 裡的「評審打分說明」
    人工抽查，確認 reviewer 判斷跟人眼一致。
 
-## 範例
+## 目前生效中的 rubric
 
-`rubrics/example-telegram-digest-quality.md` 是一份已經填好的範例，
-取自 `pitfalls.md` 既有的 Telegram digest 踩坑紀錄（內部流程語外洩、
-Q/A 殘渣），示範「具體 do-not 案例」該寫到什麼程度。新建 rubric 前可以
-先看這份當參考，不要直接拿來當正式生效的 rubric——它是模板的示範填法，
-正式要不要對 IOS-KOL/A0/A6 的 digest 生效，要 Owner 確認後才能在
-對應 task card 連過去用。
+| 檔案 | 狀態 | 連結的 task card / 文件 |
+|------|------|--------------------------|
+| `rubrics/telegram-digest-quality.md` | ✅ 生效中（Owner 2026-06-20 採納） | `handoff/tasks/T-A1-LEARNING-LOOP-001.md`（A0 patrol Telegram card）、`handoff/tasks/T-A6-001.md`（A6 一般聊天/案件摘要）、`docs/ios-kol/daily-telegram-workflow.md`（IOS-KOL 單集重點/夜盤總經摘要，尚無正式 task card） |
+
+`rubrics/telegram-digest-quality.md` 取自 `pitfalls.md` 既有的 Telegram
+digest 踩坑紀錄（內部流程語外洩、Q/A 殘渣），示範「具體 do-not 案例」
+該寫到什麼程度，同時也是目前唯一正式生效的 rubric。新建 rubric 時可以
+參考它的填法，再依「怎麼建立一份新 rubric」的步驟建自己的檔案。

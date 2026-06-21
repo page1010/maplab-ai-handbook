@@ -402,6 +402,7 @@ A1 巡查時發現 agent 未寫接續 Prompt 或超過 30 分鐘無 checkpoint�
 | v3.7 | 2026-04-04 | 新增 SECTION 10 開發行動準則（需求釐清→版本說明→提問三步流程） | A1 Claude Code |
 | v3.8 | 2026-04-04 | SECTION 10 新增 Rule 4 舊版本清理原則（GAS/任何系統禁止留舊版本檔案） | A1 Claude Code |
 | v5.0 | 2026-06-11 | 精簡 SECTION 0（移除強制發問）、SECTION 10（移除逐步確認）、SECTION 9.4（移除單變數限制）；新增 SECTION 17 Session Log 強制規則、SECTION 18 Task Card 責任制 | B1 Claude Code |
+| v5.1 | 2026-06-20 | 新增 SECTION 19 無人長跑安全規則（Owner 採納 `docs/governance/unattended-run-safety.md` 七條規則） | B1 Claude Code |
 
 ---
 
@@ -828,3 +829,56 @@ B4 patrol 每次巡查時對每張「進行中」task card 問：
 - `skills/a0-proactive-dispatch-guide.md`（A0 主動行動準則 — 本 SOP 的前身，合併使用）
 - `AGENT_RECALL_PROMPTS.md`（各角色 recall prompt — 更新工具清單避免「不知道有工具」）
 - `skills/first-principles-check/SKILL.md`（思考問題用第一性原理，阻塞問題用本 SOP）
+
+---
+
+## SECTION 19 — 無人長跑安全規則（Unattended Run Safety，2026-06-20 Owner 採納）
+
+> 新增原因：`/go` 類、cron、background task 等無人介入跑多輪的任務，
+> 一旦在無人看管下重複執行本來就危險的操作，錯誤會被長跑次數放大，
+> 從一次性小錯變成大規模事故。本規則把「安全氣囊」寫死，不依賴
+> 「agent 會自己注意」。
+> 完整說明、範例與跟既有規則的對照見 `docs/governance/unattended-run-safety.md`；
+> 對應的 GO prompt / rubric 模板見 `templates/go-prompt-template.md`、
+> `templates/rubric-template.md`。
+
+### 適用範圍
+
+任何 `/go` 類、cron 觸發、background task 等**無人介入跑多輪**的任務，
+不限角色（A0-A8 / B1-B4 皆適用）。
+
+### 七條規則
+
+1. **長跑只在 worktree / sandbox 跑可逆工作**，絕不直接對 runtime / production
+   環境跑；出錯時要能「丟掉這個環境重來」。
+2. **部署/執行是另一個需人或 A1 核准的 gated step**，長跑迴圈不能自己決定
+   「做完了就順手部署」。
+3. **Reviewer 要有 HALT 喊停權**：一旦 executor 越過 Constraint 列出的禁區，
+   立刻中止整個長跑，不是記警告後繼續跑。
+4. **Token / 時間 / iteration 上限**：開始前至少定好一個（建議三個都定），
+   到上限就停，不論是否完成，並回報目前進度。
+5. **Append-only 日誌 + Checkpoint**：每輪 append 一筆「改了什麼/結果/下一步」
+   到只能追加的日誌；同時仍遵守 SECTION 2.1 的 30 分鐘 checkpoint 規則，
+   兩者不互相取代。
+6. **高風險面預設唯讀，只能「提議」不能「執行」**：涉及下單、改交易帳務、
+   發布外部內容、改 Ads/WordPress 正式設定等，長跑期間只能讀、只能產出
+   approval-ready 提議。
+7. **驗證需外部客觀**：不能由 executor 自己宣稱完成，要用測試套件、API
+   回讀、screenshot+視覺核對等外部工具；主觀任務改用
+   `templates/rubric-template.md` 建立的 rubric，不能用「兩個模型互相說 OK」
+   當客觀驗證。
+
+### 跟既有規則的關係
+
+- SECTION 8.5（硬性禁止）—— 本節第 1/2/6 條是把硬性禁止具體化到
+  「無人長跑」情境下的執行細節。
+- SECTION 2.1（強制存檔規則）—— 本節第 5 條是補充，不是取代 30 分鐘
+  checkpoint 規則。
+- SECTION 16（阻塞審查 SOP）—— HALT（第 3 條）發生後，照本 SOP 的三層
+  審查邏輯處理，不是 HALT 完就結束。
+
+### 關聯
+- `docs/governance/unattended-run-safety.md`（完整規則、理由與建議併入位置）
+- `templates/go-prompt-template.md`（五要素 GO prompt 模板）
+- `templates/rubric-template.md`（主觀任務的 rubric 模板）
+- `docs/references/ai-agent-long-running-go-feature-rubric.md`（方法來源筆記）

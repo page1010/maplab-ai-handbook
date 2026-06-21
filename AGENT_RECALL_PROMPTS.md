@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-06-21 16:03（午後，遠端）A1 巡查（8h 0 新非巡查 commit，HEAD 仍為今早 362758f 晨間巡查自己的存檔；T-A8-001 現 ~19h 正常；T-A1-LEARNING-LOOP-001 持續超 48h（~121.5h）；A4 T-A4-001（~240.7h/~10.0天）/ B1 T-HQ-001（~237.3h/~9.9天）持續 🔴 CRITICAL；A5+A6 CRITICAL 持續；GCP帳單估算~66天🔴）
+> 最後更新：2026-06-21 22:06（晚間，遠端）A1 巡查（過去 8h 7 新非巡查 commit：治理 SECTION 19 補丁（八條規則 + 升級判準）+ T-IOS-KOL-001 正式 task card 建立，已補入 CURRENT_STATUS 任務表；T-A8-001 現 ~25.1h 正常；T-A1-LEARNING-LOOP-001 持續超 48h（~127.5h）；A4 T-A4-001（~246.8h/~10.3天）/ B1 T-HQ-001（~243.3h/~10.1天）持續 🔴 CRITICAL；A5+A6 CRITICAL 持續；GCP帳單估算~66天🔴）
 >
 > 使用方式：選擇角色 → 複製 prompt / module handoff → 貼到 Gemini / Codex / OpenClaw / legacy Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -21,12 +21,12 @@
 | A1 | 系統總管中心 | ✅ Claude Code 常駐 | Telegram bot + 終端機，直接下指令 |
 | A2 | 搜尋流量作戰部 | 🟢 召喚型可用 + patrol（Ads/SEO/WordPress）；last commit 89dcc45 2026-06-16（ICCTN landing page 圖片 QA 完成+14張 WebP 附圖發布，post 1829 live，T-A2-006 🟢 ACTIVE）；T-A2A3-001-B 🔴 >48h持續 | SEO / Ads / WordPress / Brand memory |
 | A3 | 社群與廣告成長部 | ✅ T-A3-001 完成（GTM v21 雙平台追蹤上線）；T-A3-002 ⏸️ 阻塞（等廣告週期+Owner操作）| Meta Ads / Social |
-| A4 | 影像資產整理部 | 🔴 CRITICAL（超 48h：最後 c2dc194/90fe31c 2026-06-11；現 ~232h/~9.7天 無新 commit；GCP帳單~66天未處理🔴）| Photo Archive |
+| A4 | 影像資產整理部 | 🔴 CRITICAL（超 48h：最後 c2dc194/90fe31c 2026-06-11；現 ~246.8h/~10.3天 無新 commit；GCP帳單~66天未處理🔴）| Photo Archive |
 | A5 | 報價與提案引擎部 | ⚠️ 任務卡狀態待Owner核查（2026-05-19有6個A5 commits：343e1d0/24c985b/6a98eb0/4b53ea8/716f0c2/d22c03c；task card T-A5-002/004/005仍顯示CRITICAL；~750h/~31.3天無新commit）| Quotation Engine |
 | A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（aa77573 2026-05-19 Codex-first route；~743h/~31天無新活動；LINE webhook等Owner確認 Channel 1654658337）| Sales Rapid Response |
 | A7 | 客服與對話轉單部 | 💤 T-A7-001 正式暫停；T-A7-002 ⏸️ 阻塞（等LINE後台權限+Owner政策決策）| Smart Reply |
 | A8 | 影音內容產線 | 🔄 T-A8-001 ACTIVE（2026-06-20 完成地端動態運鏡整合 local motion v6 + zero-cost pipeline；last commit f9d1c42 2026-06-20 20:56，48h 門檻已解除；下一步審核 local motion POC storyboard → 跑地端動態生成 → approval card，未經 Owner/A1 approval 不得上傳） | Content Repurposing Pipeline |
-| **B1** | **Investment OS Builder** | **🔴 CRITICAL（T-HQ-001 超 48h：最後 014081c 2026-06-11 18:46，現 ~229h/~9.5天；同一 B1 身分另在 Guild Ops Board 專案活躍，2026-06-20 有 2 commits 完成 Role Dispatch Console v0.3）** | **寫功能 / runtime surface；P5/P6 待執行** |
+| **B1** | **Investment OS Builder** | **🔴 CRITICAL（T-HQ-001 超 48h：最後 014081c 2026-06-11 18:46，現 ~243.3h/~10.1天；同一 B1 身分另在治理/Guild Ops Board 工作中活躍，2026-06-21 完成 SECTION 19 無人長跑安全規則治理補丁）** | **寫功能 / runtime surface；P5/P6 待執行** |
 | **B2** | **Investment OS Reviewer** | **🟢 召喚型可用** | **資料流 / 錯誤 / freshness review** |
 | **B3** | **Investment OS Archivist** | **🟢 召喚型可用** | **版本紀錄 / 交接 / resume prompt** |
 | **B4** | **Investment OS System Patrol** | **🟢 召喚型可用** | **系統適配巡查 / pause-refactor** |

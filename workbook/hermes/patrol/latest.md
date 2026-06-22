@@ -1,6 +1,6 @@
 # Hermes Patrol Reaction Packet
 
-- generated_at: `2026-06-20T09:00:03+08:00`
+- generated_at: `2026-06-22T09:00:05+08:00`
 - schema: `maplab.hermes_patrol_reaction.v1`
 - repo: `/Users/pagemacmini/maplab-ai-handbook`
 
@@ -20,11 +20,11 @@
 
 ## Counts
 
-- total: `40`
+- total: `41`
 - blocked: `4`
 - active: `13`
 - stale_active: `13`
-- unmarked: `7`
+- unmarked: `8`
 - paused_or_not_started: `8`
 - done: `8`
 - owner_related: `17`
@@ -105,7 +105,7 @@ Codex follow-up prompt:
 
 - owner_role: `A1`
 - target_task_card: `handoff/tasks/`
-- why: 7 task cards have unmarked status, so patrol cannot decide reliably.
+- why: 8 task cards have unmarked status, so patrol cannot decide reliably.
 - next_step: Normalize 接續狀態 blocks from existing task-card evidence.
 - patch_hint: 補狀態、最後活動、接續點、阻塞；缺資料標缺資料，不要腦補。
 
@@ -125,16 +125,12 @@ Codex follow-up prompt:
 ## Raw Patrol Excerpt
 
 ```text
-📋 每日自動巡查 — 2026-06-20 09:00
+📋 每日自動巡查 — 2026-06-22 09:00
 
-=== MAPLAB 系統巡查 2026-06-20 09:00 ===
+=== MAPLAB 系統巡查 2026-06-22 09:00 ===
 
 [🔴 EXPIRED] Google OAuth token — auto-refreshing...
-HTTP 400: {
-  "error": "invalid_grant",
-  "error_description": "Bad Request"
-}
-⛔ Token refresh failed — invalid_grant: refresh token 已失效，需重新授權 (Owner 執行 OAuth flow)
+✅ Token refreshed, new expiry: 2026-06-22T02:00:04.570387+00:00
 
 【Owner 行動項】
   → T-A2-002-foodsafety-seo-cleanup: 等 Owner 操作 WordPress 後台
@@ -143,32 +139,33 @@ HTTP 400: {
   → T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限
 
 【阻塞中 — 等外部條件】
-  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [74d ago]
-  ⏸️ T-A2A3-001 (A2): RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL [27d ago]
-  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [83d ago]
-  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [82d ago]
+  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 操作 WordPress 後台 [76d ago]
+  ⏸️ T-A2A3-001 (A2): RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL [28d ago]
+  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [84d ago]
+  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 [84d ago]
 
 【進行中】
   ❓ T-A1-EXT-001-dynamic-role-modules (A1): 狀態未標記 [日期不明]
-  ⚠️ T-A1-LEARNING-LOOP-001 (A1): 建立 token capital registry，登記可複用 prompt / eval / task packet / sk [4d ago]
+  ⚠️ T-A1-LEARNING-LOOP-001 (A1): 建立 token capital registry，登記可複用 prompt / eval / task packet / sk [6d ago]
   ❓ T-A1-RTK-001 (A1): 狀態未標記 [日期不明]
-  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下?? [62d ago]
-  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [62d ago]
-  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [47d ago]
+  ⚠️ T-A1-V6-P2 (A1): 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下?? [64d ago]
+  ⚠️ T-A1-V7 (A1): Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 [64d ago]
+  ⚠️ T-A2-005-local-seo-factory (A2): 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar [49d ago]
   ❓ T-A2-006-ads-seo-wordpress-patrol (A2): 狀態未標記 [日期不明]
   ❓ T-A2-SEO-CATERING-MATRIX-001 (A2): 狀態未標記 [日期不明]
-  ⚠️ T-A2A3-001-B (A2): WordPress post `1696` 已建立為未發布草稿並重載驗證：`https://www. [24d ago]
-  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重? [63d ago]
+  ⚠️ T-A2A3-001-B (A2): WordPress post `1696` 已建立為未發布草稿並重載驗證：`https://www. [25d ago]
+  ⚠️ T-A4-001 (A4): S11(2024) 🔄 補跑中，10,050/12,213（82.2%），TODO=2,163，Colab 已重? [64d ago]
   ❓ T-A4-002 (A4): 狀態未標記 [日期不明]
-  ⚠️ T-A4-003-photo-alt-pipeline (A4): 等 36,676 張處理完 → Owner 改 Drive 串流 → 釋出 ~433GB [9d ago]
-  ⚠️ T-A4-004-photo-classify (A4): 批次跑完後 `--status` 查進度，續開下一批直到 ~98,400 張完成 [9d ago]
-  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。2026-05-19 已新增不改 master Sheet 的 [31d ago]
-  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [71d ago]
-  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [72d ago]
-  ⏳ T-A6-001 (A6): Case Store v0 已接到現有 `CONVERSATION_LOG`；A6 Telegram 新增 `/linecase [1d ago]
+  ⚠️ T-A4-003-photo-alt-pipeline (A4): 等 36,676 張處理完 → Owner 改 Drive 串流 → 釋出 ~433GB [10d ago]
+  ⚠️ T-A4-004-photo-classify (A4): 批次跑完後 `--status` 查進度，續開下一批直到 ~98,400 張完成 [10d ago]
+  ⚠️ T-A5-002 (A5): 核心公式已修正、e2e 通過。2026-05-19 已新增不改 master Sheet 的 [33d ago]
+  ⚠️ T-A5-004 (A5): Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔 [73d ago]
+  ⚠️ T-A5-005 (A5): 程式碼已寫入 Code.gs（syncQuoteStatus_ / setupSyncTrigger / setupDashboar [74d ago]
+  ⚠️ T-A6-001 (A6): Case Store v0 已接到現有 `CONVERSATION_LOG`；A6 Telegram 新增 `/linecase [3d ago]
   ❓ T-A8-001-folder-to-video-distribution (A8): 狀態未標記 [日期不明]
-  ⏳ T-B1-B4-investment-os-role-split (??): B1-B4 已不只做角色拆分；新增 RSI-like 成長閉環，下一步是把  [1d ago]
+  ⚠️ T-B1-B4-investment-os-role-split (??): B1-B4 已不只做角色拆分；新增 RSI-like 成長閉環，下一步是把  [3d ago]
   ❓ T-B1-DASH-001 (??): 狀態未標記 [日期不明]
+  ⏳ T-IOS-KOL-001 (??): - **接續點**：四個每日時段（02:30/08:30/14:30/21:20）的 Telegram di [1d ago]
 
 【暫停/待開始】
   🔲 T-A1-SYNC-GUARD-001 (A1): 待開始
@@ -176,8 +173,8 @@ HTTP 400: {
   🔲 T-A2-003-weekly-wp-audit (A2): 待開始
   🔲 T-A2-004 (A2): 待開始
   🔲 T-A5-006 (A5): 待開始
-  💤 T-A6-002 (A6): 暫停中 [73d ago]
-  💤 T-A7-001 (A7): 暫停中 [83d ago]
+  💤 T-A6-002 (A6): 暫停中 [75d ago]
+  💤 T-A7-001 (A7): 暫停中 [85d ago]
   💤 T-B1-001 (??): 暫停中 [日期不明]
   🔲 T-GBP-001 (??): 待開始
 

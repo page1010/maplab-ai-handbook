@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-06-22 22:00（A1 晚間巡查，遠端：今日 8 新 commit（997855e A8 video checklist MVP + d2ab73f dashboards + ffb7a8a召喚前言 + 3680098 RECALL更新 + chore commits，全部 rebase push 完成 @ 20:22+0800）；T-A8-001 48h 警示已解除（997855e 今日推送）；A4 ~270.7h / B1 ~267.3h / T-A1-LEARNING-LOOP-001 ~151.5h CRITICAL 持續；T-IOS-KOL-001 ~27.1h 正常）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-06-22（A1）maplab bot Stage 2 push 完成：`/hermes` `/claude` `/model` 切換指令、sticky 冷卻（quota/rate_limit/auth → 300s）、模型標籤（🟢/🟡）、JSONL conv log（`bot/model_switch.py` + `bot/conv_log.py`），commit `4564c5f` push → origin/main｜前次：晚間巡查 22:00 今日 8 commit（T-A8-001 48h 警示解除；A4 ~270.7h / B1 ~267.3h CRITICAL 持續）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 

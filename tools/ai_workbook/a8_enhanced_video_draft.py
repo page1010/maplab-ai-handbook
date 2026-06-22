@@ -14,6 +14,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 SWIFT_RENDERER = ROOT / "tools/ai_workbook/a8_render_story_frame.swift"
 IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".webp"}
+VIDEO_EXTS = {".mov", ".mp4"}
+MEDIA_EXTS = IMAGE_EXTS | VIDEO_EXTS
 DEFAULT_SCENE_LINES = [
     "台南企業會議茶點",
     "好拿取，交流不中斷",
@@ -99,9 +101,9 @@ def run(command: list[str]) -> None:
 
 
 def list_images(asset_dir: Path, limit: int) -> list[Path]:
-    images = sorted(p for p in asset_dir.iterdir() if p.suffix.lower() in IMAGE_EXTS)
+    images = sorted(p for p in asset_dir.iterdir() if p.suffix.lower() in MEDIA_EXTS)
     if not images:
-        raise SystemExit(f"no images found in {asset_dir}")
+        raise SystemExit(f"no media files found in {asset_dir}")
     return images[:limit]
 
 
@@ -205,44 +207,71 @@ def make_segment(
     visual_preset: str,
 ) -> None:
     total_frames = int(seconds * 30)
-
-    # Select zoompan filter based on motion type
-    if motion == "dolly_in":
-        zoompan = f"zoompan=z='1.0+0.15*on/{total_frames}':x='(iw-iw/zoom)/2':y='(ih-ih/zoom)/2':d={total_frames}:s=1080x1920:fps=30"
-    elif motion == "dolly_out":
-        zoompan = f"zoompan=z='1.15-0.15*on/{total_frames}':x='(iw-iw/zoom)/2':y='(ih-ih/zoom)/2':d={total_frames}:s=1080x1920:fps=30"
-    elif motion == "pan_right":
-        zoompan = f"zoompan=z=1.15:x='(iw-iw/zoom)*(on/{total_frames})':y='(ih-ih/zoom)/2':d={total_frames}:s=1080x1920:fps=30"
-    elif motion == "pan_left":
-        zoompan = f"zoompan=z=1.15:x='(iw-iw/zoom)*(1-on/{total_frames})':y='(ih-ih/zoom)/2':d={total_frames}:s=1080x1920:fps=30"
-    else: # static or fallback
-        zoompan = f"zoompan=z=1.001:x=0:y=0:d={total_frames}:s=1080x1920:fps=30"
-
     preset_filter = VISUAL_PRESETS.get(visual_preset, "null")
 
-    # Combine cropping/scaling, zoompan motion, transparent overlay, and color presets in one filter complex
-    filter_complex = (
-        f"[0:v]crop=w='min(iw,ih*9/16)':h='min(ih,iw*16/9)',scale=2160:3840,{zoompan}[panned];"
-        f"[panned][1:v]overlay=0:0[graded];"
-        f"[graded]{preset_filter}[out]"
-    )
+    if bg_image.suffix.lower() in VIDEO_EXTS:
+        # Video input: crop center 9:16, scale to 1080x1920, and trim
+        filter_complex = (
+            f"[0:v]crop=w='min(iw,ih*9/16)':h='min(ih,iw*16/9)',scale=1080:1920[cropped];"
+            f"[cropped][1:v]overlay=0:0[graded];"
+            f"[graded]{preset_filter}[out]"
+        )
+        run(
+            [
+                ffmpeg_bin,
+                "-y",
+                "-ss", "0",
+                "-t", str(seconds),
+                "-i", str(bg_image),
+                "-loop", "1",
+                "-t", str(seconds),
+                "-i", str(overlay_png),
+                "-filter_complex", filter_complex,
+                "-map", "[out]",
+                "-r", "30",
+                "-an",
+                "-c:v", "libx264",
+                "-pix_fmt", "yuv420p",
+                "-movflags", "+faststart",
+                str(segment),
+            ]
+        )
+    else:
+        # Image input: zoompan motion
+        if motion == "dolly_in":
+            zoompan = f"zoompan=z='1.0+0.15*on/{total_frames}':x='(iw-iw/zoom)/2':y='(ih-ih/zoom)/2':d={total_frames}:s=1080x1920:fps=30"
+        elif motion == "dolly_out":
+            zoompan = f"zoompan=z='1.15-0.15*on/{total_frames}':x='(iw-iw/zoom)/2':y='(ih-ih/zoom)/2':d={total_frames}:s=1080x1920:fps=30"
+        elif motion == "pan_right":
+            zoompan = f"zoompan=z=1.15:x='(iw-iw/zoom)*(on/{total_frames})':y='(ih-ih/zoom)/2':d={total_frames}:s=1080x1920:fps=30"
+        elif motion == "pan_left":
+            zoompan = f"zoompan=z=1.15:x='(iw-iw/zoom)*(1-on/{total_frames})':y='(ih-ih/zoom)/2':d={total_frames}:s=1080x1920:fps=30"
+        else: # static or fallback
+            zoompan = f"zoompan=z=1.001:x=0:y=0:d={total_frames}:s=1080x1920:fps=30"
 
-    run(
-        [
-            ffmpeg_bin,
-            "-y",
-            "-i", str(bg_image),
-            "-i", str(overlay_png),
-            "-filter_complex", filter_complex,
-            "-map", "[out]",
-            "-r", "30",
-            "-an",
-            "-c:v", "libx264",
-            "-pix_fmt", "yuv420p",
-            "-movflags", "+faststart",
-            str(segment),
-        ]
-    )
+        # Combine cropping/scaling, zoompan motion, transparent overlay, and color presets in one filter complex
+        filter_complex = (
+            f"[0:v]crop=w='min(iw,ih*9/16)':h='min(ih,iw*16/9)',scale=2160:3840,{zoompan}[panned];"
+            f"[panned][1:v]overlay=0:0[graded];"
+            f"[graded]{preset_filter}[out]"
+        )
+
+        run(
+            [
+                ffmpeg_bin,
+                "-y",
+                "-i", str(bg_image),
+                "-i", str(overlay_png),
+                "-filter_complex", filter_complex,
+                "-map", "[out]",
+                "-r", "30",
+                "-an",
+                "-c:v", "libx264",
+                "-pix_fmt", "yuv420p",
+                "-movflags", "+faststart",
+                str(segment),
+            ]
+        )
 
 
 def concat(ffmpeg_bin: str, segments: list[Path], out_path: Path, concat_file: Path) -> None:

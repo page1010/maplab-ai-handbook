@@ -40,6 +40,7 @@
 - 任何輸出（文件、資料、對話、commit）只要對未來 session 可能有用，就**寫進 repo 找得到的位置**。
 - 寧可記下半成品 + 標註「未驗證」，也不要因為「還沒完美」就憋在 context 裡不存。
 - session 結束 = context 全清空，沒存進 repo 的東西就是消失。
+- → 完整 session 邊界規則（一事一 Session、go-prompt 五要素、context 警戒線）見 `AGENT_CORE.md` #4「Session 邊界規則」子段。
 
 ### 4. 得到一筆有用資訊就紀錄上去
 

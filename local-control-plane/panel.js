@@ -215,7 +215,7 @@ const PANEL_DATA = {
       path: "/Users/pagemacmini/Documents/New project",
       links: [
         ["Local folder", "file:///Users/pagemacmini/Documents/New%20project/"],
-        ["Runtime dashboard", "http://127.0.0.1:18501/"],
+        ["戰情台/角色管理 統一入口", "../workbook/dashboards/mobile_launcher.html"],
         ["B1 canonical bridge", "../projects/b1-investment-os-owner-persona-canonical.md"],
         ["B1 owner profile", "../projects/b1-investment-os-owner-profile.md"]
       ]

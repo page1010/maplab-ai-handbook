@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-06-22 08:04（每日，遠端）A1 巡查（過去 10h 0 新非巡查 commit，系統靜止）；T-A8-001 現 ~35.1h 正常；T-A1-LEARNING-LOOP-001 持續超 48h（~137.5h）；A4 T-A4-001（~256.7h/~10.7天）/ B1 T-HQ-001（~253.3h/~10.6天）持續 🔴 CRITICAL；A5+A6 CRITICAL 持續；GCP帳單估算~67天🔴；無新增異常
+> 最後更新：2026-06-22 16:00（午後，遠端）A1 巡查（過去 8h 0 新非巡查 commit，系統靜止）；⚠️ T-A8-001 現 ~43.1h，今晚 ~20:57 跨 48h 門檻，請 Owner 確認 local motion POC storyboard 審核；T-A1-LEARNING-LOOP-001 持續超 48h（~145.5h）；A4 T-A4-001（~264.7h/~11.0天）/ B1 T-HQ-001（~261.3h/~10.9天）持續 🔴 CRITICAL；A5+A6 CRITICAL 持續；GCP帳單估算~67天🔴；無新增不一致
 >
 > 使用方式：選擇角色 → 複製 prompt / module handoff → 貼到 Gemini / Codex / OpenClaw / legacy Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -25,7 +25,7 @@
 | A5 | 報價與提案引擎部 | ⚠️ 任務卡狀態待Owner核查（2026-05-19有6個A5 commits：343e1d0/24c985b/6a98eb0/4b53ea8/716f0c2/d22c03c；task card T-A5-002/004/005仍顯示CRITICAL；~750h/~31.3天無新commit）| Quotation Engine |
 | A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（aa77573 2026-05-19 Codex-first route；~743h/~31天無新活動；LINE webhook等Owner確認 Channel 1654658337）| Sales Rapid Response |
 | A7 | 客服與對話轉單部 | 💤 T-A7-001 正式暫停；T-A7-002 ⏸️ 阻塞（等LINE後台權限+Owner政策決策）| Smart Reply |
-| A8 | 影音內容產線 | 🔄 T-A8-001 ACTIVE（2026-06-20 完成地端動態運鏡整合 local motion v6 + zero-cost pipeline；last commit f9d1c42 2026-06-20 20:56，48h 門檻已解除；下一步審核 local motion POC storyboard → 跑地端動態生成 → approval card，未經 Owner/A1 approval 不得上傳） | Content Repurposing Pipeline |
+| A8 | 影音內容產線 | 🔄 T-A8-001 ACTIVE（2026-06-20 完成地端動態運鏡整合 local motion v6 + zero-cost pipeline；last commit f9d1c42 2026-06-20 20:56，現 ~43.1h，**今晚 ~20:57 跨 48h 門檻**；下一步審核 local motion POC storyboard → 跑地端動態生成 → approval card，未經 Owner/A1 approval 不得上傳） | Content Repurposing Pipeline |
 | **B1** | **Investment OS Builder** | **🔴 CRITICAL（T-HQ-001 超 48h：最後 014081c 2026-06-11 18:46，現 ~243.3h/~10.1天；同一 B1 身分另在治理/Guild Ops Board 工作中活躍，2026-06-21 完成 SECTION 19 無人長跑安全規則治理補丁）** | **寫功能 / runtime surface；P5/P6 待執行** |
 | **B2** | **Investment OS Reviewer** | **🟢 召喚型可用** | **資料流 / 錯誤 / freshness review** |
 | **B3** | **Investment OS Archivist** | **🟢 召喚型可用** | **版本紀錄 / 交接 / resume prompt** |

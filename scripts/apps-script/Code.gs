@@ -789,6 +789,72 @@ function setupDashboard() {
 }
 
 // ─────────────────────────────────────────
+// T-A5-002 一次性修復：品項名稱對齊 + 重複行清除
+// ─────────────────────────────────────────
+
+/**
+ * 修復 master QUOTE_DRAFT 中的兩個品項名稱問題（T-A5-002 Owner 決策 2026-06-23）：
+ * 1. 「日式章魚燒明太子可頌」→「明太子可頌」（符合 Items standard_name，G 欄可自動帶成本）
+ * 2. 「府城冰梅醬蝦棗」→「台南古早味蝦棗」（符合 Items standard_name，G 欄可自動帶成本）
+ * 3. D7:D20 若有重複品項，保留第一個、清除後出現的同名列（含 F 欄數量）
+ *
+ * 冪等：可重複執行；已正確則跳過。
+ * 可逆：只改 D 欄字串值，不刪列、不改公式結構。若需還原，手動改回原名即可。
+ */
+function fixMasterTemplate_() {
+  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  var sheet = ss.getSheetByName(TEMPLATE_SHEET_NAME);
+  if (!sheet) throw new Error('找不到 QUOTE_DRAFT 分頁');
+
+  var ITEM_ROW_START = 7;   // D7 開始
+  var ITEM_ROW_END   = 20;  // D20 結束
+  var rows = ITEM_ROW_END - ITEM_ROW_START + 1;
+
+  var nameRename = [
+    { from: '日式章魚燒明太子可頌', to: '明太子可頌' },
+    { from: '府城冰梅醬蝦棗',      to: '台南古早味蝦棗' }
+  ];
+
+  var changeLog = [];
+
+  // Step 1：名稱替換（長名 → 與 Items 表一致的短名）
+  var dRange  = sheet.getRange(ITEM_ROW_START, 4, rows, 1);
+  var dValues = dRange.getValues();
+  for (var r = 0; r < rows; r++) {
+    var cell = String(dValues[r][0] || '').trim();
+    for (var m = 0; m < nameRename.length; m++) {
+      if (cell === nameRename[m].from) {
+        dValues[r][0] = nameRename[m].to;
+        changeLog.push('D' + (ITEM_ROW_START + r) + '：' + nameRename[m].from + ' → ' + nameRename[m].to);
+      }
+    }
+  }
+  dRange.setValues(dValues);
+
+  // Step 2：重複品項清除（保留第一次出現的列，清除後續同名列的 D 與 F 欄）
+  var seen = {};
+  dValues = sheet.getRange(ITEM_ROW_START, 4, rows, 1).getValues();
+  for (var r = 0; r < rows; r++) {
+    var name = String(dValues[r][0] || '').trim();
+    if (!name) continue;
+    if (seen[name]) {
+      sheet.getRange(ITEM_ROW_START + r, 4).clearContent();
+      sheet.getRange(ITEM_ROW_START + r, 6).clearContent();
+      changeLog.push('D' + (ITEM_ROW_START + r) + '：重複品項「' + name + '」清除（D + F 欄）');
+    } else {
+      seen[name] = true;
+    }
+  }
+
+  if (changeLog.length === 0) {
+    Logger.log('fixMasterTemplate_: 無需修改，master QUOTE_DRAFT 已是正確狀態。');
+  } else {
+    changeLog.forEach(function(line) { Logger.log(line); });
+    Logger.log('fixMasterTemplate_ 完成，共修改 ' + changeLog.length + ' 處。');
+  }
+}
+
+// ─────────────────────────────────────────
 // fromMaster 模式：從 master QUOTE_DRAFT 讀取已有資料，組 formData 後走正常流程
 // ─────────────────────────────────────────
 

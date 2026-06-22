@@ -1,0 +1,16 @@
+{
+  "root_drive_url": "https://drive.google.com/drive/folders/1pKfGSOZXBpG7qXcJrW5T7aoHX4nqB1Tt",
+  "source": "上層 orchestrator 用 Drive 連接器抓取後貼入的種子快照；本檔之後應由 Drive API 自動產生/覆寫，不再手動維護",
+  "snapshot_at": "2026-06-22",
+  "note": "只收『已完成影片』的事件子資料夾（每個=一支影片/案子）。根目錄下散落的原始素材（HEIC/MOV/MP4）不在此 dump 範圍內，屬素材池，不是已完成影片的版本。",
+  "folders": [
+    {"folder_id": "11DmVdYMoygUlZwHglnR-eFTG9u-gGsGY", "raw_name": "0621歡樂時光-性別派對", "modified_time": null},
+    {"folder_id": "1KoC_rBsbVhR7OsKbw64pMxruzA3jqjY0", "raw_name": "20260621說事實木地板開幕", "modified_time": null},
+    {"folder_id": "15t40fU7OE_0LiHQExMVfBNiwjhecxwi2", "raw_name": "0621說事實木地板開幕", "modified_time": null},
+    {"folder_id": "1A_OOrIm9ATvqc_D2E_NY7T8LnQ2DTJKX", "raw_name": "20260614富信飯店-社工公會會議", "modified_time": null},
+    {"folder_id": "1rkCIgvVgWb4sUc9TwXbMRTPB0EUv8ndx", "raw_name": "20260614-醞舞流舞蹈教室開幕", "modified_time": null},
+    {"folder_id": "1Y7Byb1L2sgbMdirVH0udYNJHxfrFaKBg", "raw_name": "20260613遊艇氣泡水", "modified_time": null},
+    {"folder_id": "1bb5_Sb_BFsNU5EgHwBhsresrqks6dAeW", "raw_name": "20260613建案百慶擎川", "modified_time": null},
+    {"folder_id": "1wTu2cfZVSUMwSb0avEhSAd6sdVZZa2pT", "raw_name": "0612大台南會展中心-工研院在宅醫療科技推動計畫跨部會工作小組會議", "modified_time": null}
+  ]
+}

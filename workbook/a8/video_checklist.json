@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "last_scan_at": "2026-06-22T02:48:44+00:00",
+  "videos": [
+    {
+      "video_id": "20260621_歡樂時光性別派對",
+      "event_name_display": "歡樂時光-性別派對",
+      "normalized_date": "20260621",
+      "completion_status": "unknown",
+      "status_notes": "",
+      "versions": [
+        {
+          "folder_id": "11DmVdYMoygUlZwHglnR-eFTG9u-gGsGY",
+          "raw_name": "0621歡樂時光-性別派對",
+          "raw_date_token": "0621",
+          "modified_time": null,
+          "first_seen_scan": "2026-06-22T02:48:44+00:00",
+          "last_seen_scan": "2026-06-22T02:48:44+00:00"
+        }
+      ]
+    },
+    {
+      "video_id": "20260621_說事實木地板開幕",
+      "event_name_display": "說事實木地板開幕",
+      "normalized_date": "20260621",
+      "completion_status": "unknown",
+      "status_notes": "",
+      "versions": [
+        {
+          "folder_id": "1KoC_rBsbVhR7OsKbw64pMxruzA3jqjY0",
+          "raw_name": "20260621說事實木地板開幕",
+          "raw_date_token": "20260621",
+          "modified_time": null,
+          "first_seen_scan": "2026-06-22T02:48:44+00:00",
+          "last_seen_scan": "2026-06-22T02:48:44+00:00"
+        },
+        {
+          "folder_id": "15t40fU7OE_0LiHQExMVfBNiwjhecxwi2",
+          "raw_name": "0621說事實木地板開幕",
+          "raw_date_token": "0621",
+          "modified_time": null,
+          "first_seen_scan": "2026-06-22T02:48:44+00:00",
+          "last_seen_scan": "2026-06-22T02:48:44+00:00"
+        }
+      ]
+    },
+    {
+      "video_id": "20260614_富信飯店社工公會會議",
+      "event_name_display": "富信飯店-社工公會會議",
+      "normalized_date": "20260614",
+      "completion_status": "unknown",
+      "status_notes": "",
+      "versions": [
+        {
+          "folder_id": "1A_OOrIm9ATvqc_D2E_NY7T8LnQ2DTJKX",
+          "raw_name": "20260614富信飯店-社工公會會議",
+          "raw_date_token": "20260614",
+          "modified_time": null,
+          "first_seen_scan": "2026-06-22T02:48:44+00:00",
+          "last_seen_scan": "2026-06-22T02:48:44+00:00"
+        }
+      ]
+    },
+    {
+      "video_id": "20260614_醞舞流舞蹈教室開幕",
+      "event_name_display": "醞舞流舞蹈教室開幕",
+      "normalized_date": "20260614",
+      "completion_status": "unknown",
+      "status_notes": "",
+      "versions": [
+        {
+          "folder_id": "1rkCIgvVgWb4sUc9TwXbMRTPB0EUv8ndx",
+          "raw_name": "20260614-醞舞流舞蹈教室開幕",
+          "raw_date_token": "20260614",
+          "modified_time": null,
+          "first_seen_scan": "2026-06-22T02:48:44+00:00",
+          "last_seen_scan": "2026-06-22T02:48:44+00:00"
+        }
+      ]
+    },
+    {
+      "video_id": "20260613_遊艇氣泡水",
+      "event_name_display": "遊艇氣泡水",
+      "normalized_date": "20260613",
+      "completion_status": "unknown",
+      "status_notes": "",
+      "versions": [
+        {
+          "folder_id": "1Y7Byb1L2sgbMdirVH0udYNJHxfrFaKBg",
+          "raw_name": "20260613遊艇氣泡水",
+          "raw_date_token": "20260613",
+          "modified_time": null,
+          "first_seen_scan": "2026-06-22T02:48:44+00:00",
+          "last_seen_scan": "2026-06-22T02:48:44+00:00"
+        }
+      ]
+    },
+    {
+      "video_id": "20260613_建案百慶擎川",
+      "event_name_display": "建案百慶擎川",
+      "normalized_date": "20260613",
+      "completion_status": "unknown",
+      "status_notes": "",
+      "versions": [
+        {
+          "folder_id": "1bb5_Sb_BFsNU5EgHwBhsresrqks6dAeW",
+          "raw_name": "20260613建案百慶擎川",
+          "raw_date_token": "20260613",
+          "modified_time": null,
+          "first_seen_scan": "2026-06-22T02:48:44+00:00",
+          "last_seen_scan": "2026-06-22T02:48:44+00:00"
+        }
+      ]
+    },
+    {
+      "video_id": "20260612_大台南會展中心工研院在宅醫療科技推動計畫跨部會工作小組會議",
+      "event_name_display": "大台南會展中心-工研院在宅醫療科技推動計畫跨部會工作小組會議",
+      "normalized_date": "20260612",
+      "completion_status": "unknown",
+      "status_notes": "",
+      "versions": [
+        {
+          "folder_id": "1wTu2cfZVSUMwSb0avEhSAd6sdVZZa2pT",
+          "raw_name": "0612大台南會展中心-工研院在宅醫療科技推動計畫跨部會工作小組會議",
+          "raw_date_token": "0612",
+          "modified_time": null,
+          "first_seen_scan": "2026-06-22T02:48:44+00:00",
+          "last_seen_scan": "2026-06-22T02:48:44+00:00"
+        }
+      ]
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-06-21 22:06（晚間，遠端）A1 巡查（過去 8h 7 新非巡查 commit：治理 SECTION 19 補丁（八條規則 + 升級判準）+ T-IOS-KOL-001 正式 task card 建立，已補入 CURRENT_STATUS 任務表；T-A8-001 現 ~25.1h 正常；T-A1-LEARNING-LOOP-001 持續超 48h（~127.5h）；A4 T-A4-001（~246.8h/~10.3天）/ B1 T-HQ-001（~243.3h/~10.1天）持續 🔴 CRITICAL；A5+A6 CRITICAL 持續；GCP帳單估算~66天🔴）
+> 最後更新：2026-06-22 08:04（每日，遠端）A1 巡查（過去 10h 0 新非巡查 commit，系統靜止）；T-A8-001 現 ~35.1h 正常；T-A1-LEARNING-LOOP-001 持續超 48h（~137.5h）；A4 T-A4-001（~256.7h/~10.7天）/ B1 T-HQ-001（~253.3h/~10.6天）持續 🔴 CRITICAL；A5+A6 CRITICAL 持續；GCP帳單估算~67天🔴；無新增異常
 >
 > 使用方式：選擇角色 → 複製 prompt / module handoff → 貼到 Gemini / Codex / OpenClaw / legacy Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令

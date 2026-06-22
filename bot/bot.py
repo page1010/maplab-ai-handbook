@@ -39,6 +39,10 @@ from telegram.ext import (
 
 # ── Config ─────────────────────────────────────────────────────────────────────
 BOT_DIR = Path(__file__).parent
+if str(BOT_DIR) not in sys.path:
+    sys.path.insert(0, str(BOT_DIR))
+from model_switch import ModelSwitchState, HERMES_STICKY_COOLDOWN_SECS
+from conv_log import log_exchange as _log_exchange_jsonl
 load_dotenv(BOT_DIR / ".env")
 
 BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
@@ -363,6 +367,16 @@ class ModelResult:
 
 
 @dataclass(frozen=True)
+class ModelAnswer:
+    text: str
+    model: str
+    failure_kind: str = ""
+
+
+_switch = ModelSwitchState()
+
+
+@dataclass(frozen=True)
 class DispatchRoute:
     task_type: str
     title: str
@@ -450,6 +464,7 @@ def _should_fallback_to_hermes(result: ModelResult) -> bool:
         "timeout",
         "primary_unavailable",
         "forced",
+        "sticky_hermes",
     }
 
 
@@ -1334,25 +1349,38 @@ async def claude_ask_with_fallback(
     user_message: str,
     system_extra: str = "",
     timeout: int = 600,
-) -> str:
-    """Use Claude primary, then Hermes only when Claude is unavailable/quota-limited."""
-    if _truthy_env("MAPLAB_FORCE_HERMES_FALLBACK"):
+) -> ModelAnswer:
+    """Use Claude primary, then Hermes only when Claude is unavailable/quota-limited.
+    Returns ModelAnswer with .text (display string) and .model (which model answered)."""
+
+    # Sticky cooldown or forced env var: skip Claude entirely this request
+    if _truthy_env("MAPLAB_FORCE_HERMES_FALLBACK") or _switch.should_skip_claude():
+        if _truthy_env("MAPLAB_FORCE_HERMES_FALLBACK"):
+            skip_reason = "⚠️ Claude 跳過: MAPLAB_FORCE_HERMES_FALLBACK=1"
+            skip_kind = "forced"
+        else:
+            skip_reason = "⚠️ Claude 跳過: Hermes 冷卻中（quota/rate_limit/auth 失敗後自動切）"
+            skip_kind = "sticky_hermes"
         claude_result = ModelResult(
             ok=False,
-            answer="⚠️ Claude 錯誤: forced Hermes fallback for test (MAPLAB_FORCE_HERMES_FALLBACK=1)",
-            failure_kind="forced",
-            stderr="MAPLAB_FORCE_HERMES_FALLBACK=1",
+            answer=skip_reason,
+            failure_kind=skip_kind,
+            stderr=skip_kind,
         )
     else:
         claude_result = await _claude_ask_raw(chat_id, user_message, system_extra, timeout)
 
     if claude_result.ok:
         answer = _sanitize_for_telegram(claude_result.answer)
-        _record_history(chat_id, user_message, answer)
-        return answer
+        labeled = f"🟢 [Claude]\n{answer}"
+        _record_history(chat_id, user_message, labeled)
+        return ModelAnswer(text=labeled, model="Claude")
+
+    # Record failure for sticky cooldown (only triggers on quota/rate_limit/auth)
+    _switch.mark_claude_failure(claude_result.failure_kind)
 
     if not _hermes_fallback_enabled() or not _should_fallback_to_hermes(claude_result):
-        return claude_result.answer
+        return ModelAnswer(text=claude_result.answer, model="Claude", failure_kind=claude_result.failure_kind)
 
     hermes_answer = await hermes_ask(
         chat_id,
@@ -1361,11 +1389,14 @@ async def claude_ask_with_fallback(
         fallback_reason=claude_result.answer,
     )
     if hermes_answer.startswith("⚠️"):
-        return f"{claude_result.answer}\n\n{hermes_answer}"
+        text = f"{claude_result.answer}\n\n{hermes_answer}"
+        return ModelAnswer(text=text, model="Hermes/error", failure_kind=claude_result.failure_kind)
 
-    answer = f"{_format_hermes_receipt(claude_result.answer, _hermes_toolsets_for_message(user_message))}\n\n{hermes_answer}"
+    toolsets = _hermes_toolsets_for_message(user_message)
+    answer = f"{_format_hermes_receipt(claude_result.answer, toolsets)}\n\n{hermes_answer}"
     _record_history(chat_id, user_message, answer)
-    return answer
+    model_label = f"Hermes/{_hermes_model_label()}"
+    return ModelAnswer(text=answer, model=model_label, failure_kind=claude_result.failure_kind)
 
 
 async def _claude_ask_raw(chat_id: int, user_message: str, system_extra: str = "", timeout: int = 600) -> ModelResult:
@@ -1528,9 +1559,13 @@ async def help_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         "/ask \\[問題\\] — 直接問 Claude（OAuth，免費）\n"
         "/codex\\_dispatch \\[任務\\] — 建立 Codex/OpenClaw 派工包\n"
         "/runtime — 查看 Claude primary / Hermes fallback 狀態\n"
+        "/hermes — 強制切換到 Hermes/gemma4 模式\n"
+        "/claude — 切回 Claude primary 模式\n"
+        "/model — 查看目前使用的模型與切換狀態\n"
         "/reset — 生成本階段摘要+待辦，確認後清除對話記錄\n"
         "/help — 本說明\n\n"
-        "💬 直接傳訊息也可以問 Claude",
+        "💬 直接傳訊息也可以問 Claude\n"
+        "每則回覆標示模型：🟢 \\[Claude\\] 或 🟡 Hermes receipt",
         parse_mode="MarkdownV2",
     )
 
@@ -1760,6 +1795,62 @@ async def runtime_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
     )
 
 
+async def hermes_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Force all messages to use Hermes/gemma4 (skip Claude entirely)."""
+    if not is_owner(update):
+        await deny(update)
+        return
+    _switch.force_hermes()
+    model = _hermes_model_label()
+    await update.message.reply_text(
+        f"🟡 已強制切換到 Hermes/{model} 模式\n"
+        "- 所有訊息跳過 Claude，直走 Hermes\n"
+        "- /claude 切回 Claude primary\n"
+        "- /model 查看目前狀態"
+    )
+
+
+async def claude_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Resume Claude primary (clear sticky state and manual override)."""
+    if not is_owner(update):
+        await deny(update)
+        return
+    _switch.force_claude()
+    await update.message.reply_text(
+        "🟢 已切回 Claude primary 模式\n"
+        f"- quota/rate_limit/auth 失敗後自動切 Hermes（冷卻 {HERMES_STICKY_COOLDOWN_SECS}s）\n"
+        "- /hermes 可手動強制切 Hermes"
+    )
+
+
+async def model_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Show or change the active model. /model [name] changes Hermes model in memory."""
+    if not is_owner(update):
+        await deny(update)
+        return
+    if context.args:
+        new_model = context.args[0]
+        os.environ["HERMES_FALLBACK_MODEL"] = new_model
+        await update.message.reply_text(
+            f"✅ Hermes 模型已改為：{new_model}\n"
+            "注意：僅本次執行期間有效，重啟後恢復 .env 設定。"
+        )
+        return
+    model = _hermes_model_label()
+    claude_path = _runtime_which("claude") or "missing"
+    hermes_path = _runtime_which("hermes") or "missing"
+    await update.message.reply_text(
+        f"🧭 目前模型狀態\n"
+        f"- {_switch.status_line()}\n"
+        f"- active_label: {_switch.active_label(model)}\n"
+        f"- hermes_model: {model}\n"
+        f"- claude_cli: {claude_path}\n"
+        f"- hermes_cli: {hermes_path}\n"
+        f"- sticky_cooldown_secs: {HERMES_STICKY_COOLDOWN_SECS}\n\n"
+        "指令：/hermes 強制 Hermes | /claude 切回 Claude | /model [name] 改 Hermes 模型"
+    )
+
+
 async def _run_claude_background(
     bot,
     chat_id: int,
@@ -1770,12 +1861,17 @@ async def _run_claude_background(
 ) -> None:
     """Background task: call Claude then push result via send_message."""
     async with _claude_semaphore:
-        answer = await claude_ask_with_fallback(chat_id, user_message, system_extra)
-        answer = _sanitize_for_telegram(answer)
+        model_answer = await claude_ask_with_fallback(chat_id, user_message, system_extra)
+        text = _sanitize_for_telegram(model_answer.text)
         MAX = 4096
-        for i in range(0, len(answer), MAX):
-            await bot.send_message(chat_id=chat_id, text=answer[i:i + MAX])
-        log_and_commit(log_user_msg, answer, log_label)
+        for i in range(0, len(text), MAX):
+            await bot.send_message(chat_id=chat_id, text=text[i:i + MAX])
+        log_and_commit(log_user_msg, text, log_label)
+        _log_exchange_jsonl(
+            REPO_PATH, chat_id, log_user_msg, text,
+            model=model_answer.model,
+            failure_kind=model_answer.failure_kind or None,
+        )
 
 
 async def _run_claude_guarded(
@@ -2103,6 +2199,9 @@ def main() -> None:
     app.add_handler(CommandHandler("ask", ask_cmd))
     app.add_handler(CommandHandler("codex_dispatch", codex_dispatch_cmd))
     app.add_handler(CommandHandler("runtime", runtime_cmd))
+    app.add_handler(CommandHandler("hermes", hermes_cmd))
+    app.add_handler(CommandHandler("claude", claude_cmd))
+    app.add_handler(CommandHandler("model", model_cmd))
     app.add_handler(CommandHandler("reset", reset_cmd))
     app.add_handler(CommandHandler("clip", clip_cmd))
     app.add_handler(MessageHandler(filters.PHOTO, handle_photo))

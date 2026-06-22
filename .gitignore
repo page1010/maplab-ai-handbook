@@ -9,6 +9,7 @@ cookies.txt
 
 # Telegram logs - may contain sensitive info from conversations
 data/telegram-logs/
+data/telegram-conv/
 archive/raw/telegram-logs/
 data/a6-logs/
 data/case-store/

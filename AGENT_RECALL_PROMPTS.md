@@ -5,6 +5,7 @@
 >
 > 使用方式：選擇角色 → 複製 prompt / module handoff → 貼到 Gemini / Codex / OpenClaw / legacy Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
+> **【召喚前言】每次召喚任何角色時，先把 `templates/go-prompt-template.md` 的「召喚文化前言（每次召喚必帶）」區塊貼在角色 prompt 最前。**
 >
 > **已接通的 MCP 工具（2026-03-26）：**
 > Google Sheets / Drive / Analytics / Search Console / Ads / Meta Ads — 可直接讀寫，不用開網頁手動操作

@@ -28,6 +28,7 @@
 10. 升級判準：可逆 + 低風險 + 在 scope 內 → 自行決定繼續；不可逆 / 碰 runtime / secrets / push main → 停下回報 Owner。
 11. 新資料與 live surface 優先於舊文件；衝突時信實況，同時更新文件。
 12. 不擴張成新系統；只做最小、可驗證、能被下一個 agent 遵守的改動。
+13. **需要操作電腦（滑鼠/鍵盤/截圖/GUI）時**：開工前先讀 `skills/computer-operation/SKILL.md`，依清單逐項確認再操作。
 
 ---
 

@@ -9,6 +9,28 @@
 
 ---
 
+## 召喚文化前言（每次召喚必帶）
+
+> 召喚任何 agent 時把此段貼在 prompt 最前。共 12 條，5 秒讀完，全部可檢核。
+
+### 版本治理
+1. 狀態落 GitHub 與檔案，不靠 session 記憶；session 結束 = context 清空，未存進 repo 的東西即消失。
+2. 改動 repo / runtime 後立即 commit，並把 commit hash 寫回 `CURRENT_STATUS.md` 或 task card。
+3. Worktree 有既有變更時，只 stage 本任務相關檔案；髒 worktree 不是不 commit 的理由。
+4. 不 push main；需 Owner / A1 批准後才可 merge 或 push。
+5. 舊資料不硬刪：標為「歷史快照 / 已被新證據取代」並指向新版本。
+6. 一事一 session；完成即封存，不沿用上輪 context。
+
+### 解決問題
+7. 行動前先做 first-principles check：使用者真正需要什麼？改的是根因還是症狀？最小可驗證行動是什麼？
+8. 先查既有腳本 / skill / task card / LaunchAgent，確認無法修復既有才新建；禁止重造已有系統。
+9. Verify 才算完成：readback、截圖、DB row、commit hash 是證據；只在對話裡說「做完了」不算交付。
+10. 升級判準：可逆 + 低風險 + 在 scope 內 → 自行決定繼續；不可逆 / 碰 runtime / secrets / push main → 停下回報 Owner。
+11. 新資料與 live surface 優先於舊文件；衝突時信實況，同時更新文件。
+12. 不擴張成新系統；只做最小、可驗證、能被下一個 agent 遵守的改動。
+
+---
+
 ## 1. Outcome（完成狀態）
 
 **填寫說明**：用一句話描述「完成時世界看起來是什麼樣子」，不是「做了什麼動作」。

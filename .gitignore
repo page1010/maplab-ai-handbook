@@ -52,3 +52,7 @@ automation/seo_factory/output/
 workbook/outputs/*/T-A4-2025-asset-link-proof/
 workbook/outputs/*/T-A4-2025-asset-case-match/
 workbook/reviews/JOB-2025-CASE-LIBRARY/
+
+# LINE training artifacts — de-identified but local-only, never push (see docs/data-locations.md)
+workbook/a6-training/
+data/line_booking_pairs.csv

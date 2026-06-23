@@ -794,20 +794,23 @@ function setupDashboard() {
 
 /**
  * 修復 master QUOTE_DRAFT 中的兩個品項名稱問題（T-A5-002 Owner 決策 2026-06-23）：
- * 1. 「日式章魚燒明太子可頌」→「明太子可頌」（符合 Items standard_name，G 欄可自動帶成本）
- * 2. 「府城冰梅醬蝦棗」→「台南古早味蝦棗」（符合 Items standard_name，G 欄可自動帶成本）
- * 3. D7:D20 若有重複品項，保留第一個、清除後出現的同名列（含 F 欄數量）
+ * 1. 「日式章魚燒明太子可頌」→「明太子可頌」（符合 Items standard_name）
+ * 2. 「府城冰梅醬蝦棗」→「台南古早味蝦棗」（符合 Items standard_name）
+ * 3. D7:D20 若有重複品項，保留第一個、用 clearContent() 清除後出現的（含 F 欄）
  *
- * 冪等：可重複執行；已正確則跳過。
- * 可逆：只改 D 欄字串值，不刪列、不改公式結構。若需還原，手動改回原名即可。
+ * 冪等：可重複執行，已正確則跳過。
+ * 容錯：每步 try/catch，出錯記 Logger 後繼續，不留半成品。
+ * 驗證繞過：改名用逐格 clearDataValidations→setValue→setDataValidation，
+ *   避免 setValues() 對整個 range 批次觸發 dropdown 驗證錯誤。
+ *   clearContent() 清除重複行不寫入值，不觸發驗證。
  */
 function fixMasterTemplate() {
   var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
   var sheet = ss.getSheetByName(TEMPLATE_SHEET_NAME);
   if (!sheet) throw new Error('找不到 QUOTE_DRAFT 分頁');
 
-  var ITEM_ROW_START = 7;   // D7 開始
-  var ITEM_ROW_END   = 20;  // D20 結束
+  var ITEM_ROW_START = 7;
+  var ITEM_ROW_END   = 20;
   var rows = ITEM_ROW_END - ITEM_ROW_START + 1;
 
   var nameRename = [
@@ -816,41 +819,54 @@ function fixMasterTemplate() {
   ];
 
   var changeLog = [];
+  var errorLog  = [];
 
-  // Step 1：名稱替換（長名 → 與 Items 表一致的短名）
-  var dRange  = sheet.getRange(ITEM_ROW_START, 4, rows, 1);
-  var dValues = dRange.getValues();
+  // Step 1：逐格改名 — clearDataValidations → setValue → 還原驗證
+  var dValues = sheet.getRange(ITEM_ROW_START, 4, rows, 1).getValues();
   for (var r = 0; r < rows; r++) {
-    var cell = String(dValues[r][0] || '').trim();
+    var cellValue = String(dValues[r][0] || '').trim();
     for (var m = 0; m < nameRename.length; m++) {
-      if (cell === nameRename[m].from) {
-        dValues[r][0] = nameRename[m].to;
-        changeLog.push('D' + (ITEM_ROW_START + r) + '：' + nameRename[m].from + ' → ' + nameRename[m].to);
+      if (cellValue === nameRename[m].from) {
+        try {
+          var cellRef       = sheet.getRange(ITEM_ROW_START + r, 4);
+          var savedValidation = cellRef.getDataValidation();
+          if (savedValidation) cellRef.clearDataValidations();
+          cellRef.setValue(nameRename[m].to);
+          if (savedValidation) cellRef.setDataValidation(savedValidation);
+          changeLog.push('D' + (ITEM_ROW_START + r) + ': ' + nameRename[m].from + ' → ' + nameRename[m].to);
+        } catch (e) {
+          errorLog.push('D' + (ITEM_ROW_START + r) + ' 改名失敗: ' + e.message);
+        }
+        break;
       }
     }
   }
-  dRange.setValues(dValues);
 
-  // Step 2：重複品項清除（保留第一次出現的列，清除後續同名列的 D 與 F 欄）
+  // Step 2：重複品項清除 — 重讀確保 Step 1 已落地，clearContent 不觸發驗證
   var seen = {};
   dValues = sheet.getRange(ITEM_ROW_START, 4, rows, 1).getValues();
   for (var r = 0; r < rows; r++) {
     var name = String(dValues[r][0] || '').trim();
     if (!name) continue;
     if (seen[name]) {
-      sheet.getRange(ITEM_ROW_START + r, 4).clearContent();
-      sheet.getRange(ITEM_ROW_START + r, 6).clearContent();
-      changeLog.push('D' + (ITEM_ROW_START + r) + '：重複品項「' + name + '」清除（D + F 欄）');
+      try {
+        sheet.getRange(ITEM_ROW_START + r, 4).clearContent();
+        sheet.getRange(ITEM_ROW_START + r, 6).clearContent();
+        changeLog.push('D' + (ITEM_ROW_START + r) + ': 重複品項「' + name + '」已清除（D + F）');
+      } catch (e) {
+        errorLog.push('D' + (ITEM_ROW_START + r) + ' 重複清除失敗: ' + e.message);
+      }
     } else {
       seen[name] = true;
     }
   }
 
+  errorLog.forEach(function(e) { Logger.log('[ERROR] ' + e); });
   if (changeLog.length === 0) {
-    Logger.log('fixMasterTemplate: 無需修改，master QUOTE_DRAFT 已是正確狀態。');
+    Logger.log('fixMasterTemplate: 無需修改，已是正確狀態。');
   } else {
     changeLog.forEach(function(line) { Logger.log(line); });
-    Logger.log('fixMasterTemplate 完成，共修改 ' + changeLog.length + ' 處。');
+    Logger.log('fixMasterTemplate 完成：' + changeLog.length + ' 處修改，' + errorLog.length + ' 個錯誤。');
   }
 }
 

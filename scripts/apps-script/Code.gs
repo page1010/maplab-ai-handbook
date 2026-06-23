@@ -801,7 +801,7 @@ function setupDashboard() {
  * 冪等：可重複執行；已正確則跳過。
  * 可逆：只改 D 欄字串值，不刪列、不改公式結構。若需還原，手動改回原名即可。
  */
-function fixMasterTemplate_() {
+function fixMasterTemplate() {
   var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
   var sheet = ss.getSheetByName(TEMPLATE_SHEET_NAME);
   if (!sheet) throw new Error('找不到 QUOTE_DRAFT 分頁');
@@ -847,10 +847,10 @@ function fixMasterTemplate_() {
   }
 
   if (changeLog.length === 0) {
-    Logger.log('fixMasterTemplate_: 無需修改，master QUOTE_DRAFT 已是正確狀態。');
+    Logger.log('fixMasterTemplate: 無需修改，master QUOTE_DRAFT 已是正確狀態。');
   } else {
     changeLog.forEach(function(line) { Logger.log(line); });
-    Logger.log('fixMasterTemplate_ 完成，共修改 ' + changeLog.length + ' 處。');
+    Logger.log('fixMasterTemplate 完成，共修改 ' + changeLog.length + ' 處。');
   }
 }
 

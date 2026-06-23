@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-06-23 08:00（每日，遠端）A1 巡查（3 新 commit：42a63bf computer-operation skill + 4564c5f bot Stage 2 Claude↔Hermes + e1b4414 status，均 06-22 22:23-22:24 +0800，已反映在 CURRENT_STATUS）；⚠️ T-IOS-KOL-001 逼近 48h（last 1c58113 06-21 18:55，~37.1h，今日 ~18:55 跨門檻）；T-A1-LEARNING-LOOP-001 持續超 48h（~161.5h）；A4 T-A4-001（~280.7h/~11.7天）/ B1 T-HQ-001（~277.2h/~11.6天）持續 🔴 CRITICAL；T-A8-001 ~21.2h 正常 ACTIVE；A5+A6 CRITICAL 持續；GCP帳單估算~68天🔴；無新增不一致
+> 最後更新：2026-06-23 16:00（午後，遠端）A1 巡查：🟢 A5 新活動 — T-A5-002（`3209fba` 07:22 +0800）+ T-A5-005（`5ab7434` 07:01 +0800）均今日 GAS clasp push，CRITICAL 計時器已重置（~8.6h/~9.0h）；⚠️ T-IOS-KOL-001 ~45.1h 逼近 48h（今晚 ~18:55 跨門檻）；T-A1-LEARNING-LOOP-001 持續超 48h（~169.5h）；A4 T-A4-001（~288.7h/~12.0天）/ B1 T-HQ-001（~285.2h/~11.9天）持續 🔴 CRITICAL；T-A8-001 ~29.2h 正常 ACTIVE；T-A5-004 🔴 CRITICAL 持續；A6 CRITICAL 持續；GCP帳單~68天🔴
 >
 > 使用方式：選擇角色 → 複製 prompt / module handoff → 貼到 Gemini / Codex / OpenClaw / legacy Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -22,12 +22,12 @@
 | A1 | 系統總管中心 | ✅ Claude Code 常駐 | Telegram bot + 終端機，直接下指令 |
 | A2 | 搜尋流量作戰部 | 🟢 召喚型可用 + patrol（Ads/SEO/WordPress）；last commit 89dcc45 2026-06-16（ICCTN landing page 圖片 QA 完成+14張 WebP 附圖發布，post 1829 live，T-A2-006 🟢 ACTIVE）；T-A2A3-001-B 🔴 >48h持續 | SEO / Ads / WordPress / Brand memory |
 | A3 | 社群與廣告成長部 | ✅ T-A3-001 完成（GTM v21 雙平台追蹤上線）；T-A3-002 ⏸️ 阻塞（等廣告週期+Owner操作）| Meta Ads / Social |
-| A4 | 影像資產整理部 | 🔴 CRITICAL（超 48h：最後 c2dc194/90fe31c 2026-06-11；現 ~280.7h/~11.7天 無新 commit；GCP帳單~68天未處理🔴）| Photo Archive |
-| A5 | 報價與提案引擎部 | ⚠️ 任務卡狀態待Owner核查（2026-05-19有6個A5 commits：343e1d0/24c985b/6a98eb0/4b53ea8/716f0c2/d22c03c；task card T-A5-002/004/005仍顯示CRITICAL；~750h/~31.3天無新commit）| Quotation Engine |
+| A4 | 影像資產整理部 | 🔴 CRITICAL（超 48h：最後 c2dc194/90fe31c 2026-06-11；現 ~288.7h/~12.0天 無新 commit；GCP帳單~68天未處理🔴）| Photo Archive |
+| A5 | 報價與提案引擎部 | 🔄 T-A5-002 + T-A5-005 新活動（2026-06-23 07:01-07:22 +0800：`5ab7434` clasp push T-A5-005 sync functions + `3209fba` fixMasterTemplate_ GAS fn，均 awaiting Owner；CRITICAL 48h 計時器已重置，現 ~8.6h/~9.0h）；T-A5-004 🔴 CRITICAL（~1512h+，無新 commit）| Quotation Engine |
 | A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（aa77573 2026-05-19 Codex-first route；~743h/~31天無新活動；LINE webhook等Owner確認 Channel 1654658337）| Sales Rapid Response |
 | A7 | 客服與對話轉單部 | 💤 T-A7-001 正式暫停；T-A7-002 ⏸️ 阻塞（等LINE後台權限+Owner政策決策）| Smart Reply |
-| A8 | 影音內容產線 | 🔄 T-A8-001 ACTIVE（2026-06-22 10:49 `997855e` video checklist MVP（completed-videos tracker + iteration rubric + scan script）；**48h 警示解除（~21.2h，遠低於門檻）**；前次：f9d1c42 06-20 local motion v6 + zero-cost pipeline；下一步審核 local motion POC storyboard → 跑地端動態生成 → approval card，未經 Owner/A1 approval 不得上傳） | Content Repurposing Pipeline |
-| **B1** | **Investment OS Builder** | **🔴 CRITICAL（T-HQ-001 超 48h：最後 014081c 2026-06-11 18:46，現 ~277.2h/~11.6天；同一 B1 身分另在治理/Guild Ops Board 工作中活躍，2026-06-21 完成 SECTION 19 無人長跑安全規則治理補丁）** | **寫功能 / runtime surface；P5/P6 待執行** |
+| A8 | 影音內容產線 | 🔄 T-A8-001 ACTIVE（2026-06-22 10:49 `997855e` video checklist MVP（completed-videos tracker + iteration rubric + scan script）；**~29.2h，遠低於 48h 門檻**；前次：f9d1c42 06-20 local motion v6 + zero-cost pipeline；下一步審核 local motion POC storyboard → 跑地端動態生成 → approval card，未經 Owner/A1 approval 不得上傳） | Content Repurposing Pipeline |
+| **B1** | **Investment OS Builder** | **🔴 CRITICAL（T-HQ-001 超 48h：最後 014081c 2026-06-11 18:46，現 ~285.2h/~11.9天；同一 B1 身分另在治理/Guild Ops Board 工作中活躍，2026-06-21 完成 SECTION 19 無人長跑安全規則治理補丁）** | **寫功能 / runtime surface；P5/P6 待執行** |
 | **B2** | **Investment OS Reviewer** | **🟢 召喚型可用** | **資料流 / 錯誤 / freshness review** |
 | **B3** | **Investment OS Archivist** | **🟢 召喚型可用** | **版本紀錄 / 交接 / resume prompt** |
 | **B4** | **Investment OS System Patrol** | **🟢 召喚型可用** | **系統適配巡查 / pause-refactor** |

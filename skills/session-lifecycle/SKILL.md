@@ -84,5 +84,54 @@ bash scripts/verify-commit-on-main.sh  # 確認上次 commit 已在 main
 
 ---
 
+## § 資源衛生 — 任務結束即清理（2026-06-24 強制，所有角色）
+
+> **背景**：Owner 觀察到 Claude app 吃 ~20 GB RAM、同名 session 重複開、Chrome tab 不關，是反覆出現的系統問題根源。
+
+### 規則 R1：任務完成即關閉 session，不留 idle
+
+- 任務完成、Handoff Checkpoint 寫完、checkpoint.sh 跑完後，**主動結束 session**，不要讓 Claude 視窗留在 idle 狀態。
+- idle session = 佔 RAM 且製造假「進行中」訊號，下次 patrol 會誤判系統狀態。
+
+### 規則 R2：不重複開同名 session
+
+- 開新 session 前先確認**同名任務是否已有進行中 session**（Claude Desktop / Cowork Project 清單）。
+- 如果舊 session 還在：**先關舊的，再開新的**，或直接在舊 session 繼續。
+- 重複開同名 session = RAM double、context 分裂、兩個 AI 互相覆蓋狀態。
+
+### 規則 R3：自己開的 Chrome 分頁/視窗，任務結束前關掉
+
+- 任何 agent 為了執行任務開的 Chrome 分頁（OpenClaw / 巡查 / 截圖 / GA / GSC 等），**收工前自己關閉**。
+- 不要把關分頁的工作丟給 Owner。
+- 詳細規範見 `AGENT_RULES.md` §「資源衛生 — Chrome / 瀏覽器 session 用完即關」。
+- ⚠️ 例外：Owner 自己開的分頁不碰，但可以提醒「這個分頁是否還需要？」
+
+### 規則 R4：禁止 keep-awake hack
+
+- 不在 Chrome 開影音/倒數頁面讓螢幕/機器保持喚醒。
+- 這台 Mac mini 是專職 agent 機，休眠/鎖定已由系統設定控制，不需要 hack。
+- 「保持喚醒」類分頁發現即關。
+
+### 規則 R5：長跑 / 背景 session 必須有明確結束條件
+
+- 背景 session（如：Hermes patrol、定時巡檢、Codex monitor）必須在 Task Card 或 CURRENT_STATUS.md 寫明：
+  1. **結束條件**（任務 X 完成 / Owner 下指令 / 特定日期）
+  2. **交班觸發**（context 滿了誰來接、接手 prompt 在哪）
+- 沒有結束條件的背景 session = 幽靈任務，下次 A1 巡檢時列入清理清單。
+
+### 快速 Checklist（任務結束前掃一遍）
+
+```
+[ ] checkpoint.sh 已跑（最後一次 commit 落地）
+[ ] CURRENT_STATUS.md 已更新
+[ ] Handoff Checkpoint 已輸出（或 task complete 已標記）
+[ ] 我開的 Chrome 分頁已關
+[ ] 沒有留著 idle 的同名 session
+[ ] 背景 session 有寫結束條件（若有）
+```
+
+---
+
 > 核心原則：下一個接手的 AI 從 GitHub + CURRENT_STATUS.md 就能完整還原系統狀態。
 > 任何只存在於對話裡的資訊 = 遺失的資訊。
+> 任何留著的 idle session = 消耗資源且污染系統狀態的噪音。

@@ -38,6 +38,7 @@ COMMON_READ_FIRST = [
     "AGENT_RECALL_PROMPTS.md",
     "skills/superpowers-guide.md",
     "skills/task-progress-guide.md",
+    "skills/session-lifecycle/SKILL.md",
 ]
 
 COMMON_GOVERNANCE = [

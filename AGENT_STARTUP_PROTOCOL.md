@@ -54,6 +54,7 @@
 
 **Superpowers 規則**：
 - **必拿**：skills/task-progress-guide.md — 所有任務都必須讀，不可跳過
+- **必讀**：skills/session-lifecycle/SKILL.md — session 開關、Chrome tab 清理、禁止 keep-awake，全角色共用
 - Agent 產出的文字（commit message、Task Card、CHANGELOG）必須由 Agent 自己撰寫
 - GitHub 操作使用網頁版介面（非 CLI），搭配 skills/github-api-workflow-guide.md
 - 遇到不會的操作 → 先查 skills/troubleshooting-hub.md → 找不到才回報 A1
@@ -195,6 +196,20 @@ Handoff Checkpoint
 
 ### Step E. 回報 owner
 完成摘要 + 需要 owner 決策的事項。
+
+### Step E.5. Session 資源清理（強制，2026-06-24）
+
+任務完成、回報 owner 後，執行以下清理，**不留 idle session**：
+
+```
+[ ] checkpoint.sh 已跑最後一次
+[ ] 我開的 Chrome 分頁已關（不關 Owner 自己的分頁）
+[ ] 沒有留著同名 idle session
+[ ] 背景 session 已寫結束條件或交班 prompt（若有）
+```
+
+詳細規則：`skills/session-lifecycle/SKILL.md` §「資源衛生」  
+Chrome tab 規範：`AGENT_RULES.md` §「資源衛生 — Chrome / 瀏覽器 session 用完即關」
 
 ### Step F. 經驗回寫（必填）
 任務結束時回答：

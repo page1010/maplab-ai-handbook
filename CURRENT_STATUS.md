@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-06-22（A1）maplab bot Stage 2 push 完成：`/hermes` `/claude` `/model` 切換指令、sticky 冷卻（quota/rate_limit/auth → 300s）、模型標籤（🟢/🟡）、JSONL conv log（`bot/model_switch.py` + `bot/conv_log.py`），commit `4564c5f` push → origin/main｜前次：晚間巡查 22:00 今日 8 commit（T-A8-001 48h 警示解除；A4 ~270.7h / B1 ~267.3h CRITICAL 持續）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-06-24（B1）SESSION LIFECYCLE SKILL 落地：`skills/session-lifecycle/SKILL.md` 強化五條資源衛生規則（idle 關閉、禁重複同名 session、Chrome tab 任務結束即關、禁 keep-awake hack、背景 session 需寫結束條件）；wire 進 `AGENT_STARTUP_PROTOCOL.md` Step 5 必讀 + Step E.5 收尾 checklist；`COMMON_READ_FIRST` 新增此 skill（30 個 extension module 全部帶入）；`CLAUDE.md` trigger 已更新至 RAM/idle/重複 session 等新訊號。前次：2026-06-22（A1）maplab bot Stage 2 push 完成：`/hermes` `/claude` `/model` 切換指令、sticky 冷卻（quota/rate_limit/auth → 300s）、模型標籤（🟢/🟡）、JSONL conv log（`bot/model_switch.py` + `bot/conv_log.py`），commit `4564c5f` push → origin/main｜前次：晚間巡查 22:00 今日 8 commit（T-A8-001 48h 警示解除；A4 ~270.7h / B1 ~267.3h CRITICAL 持續）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -19,6 +19,7 @@
 
 ## 最新事實核對
 
+- 2026-06-24：**[GOVERNANCE] Session Lifecycle Skill 落地** — `skills/session-lifecycle/SKILL.md` 新增 §「資源衛生」五條強制規則：R1 任務完成即關閉 session（不留 idle）、R2 不重複開同名 session、R3 自己開的 Chrome 分頁任務結束前關掉、R4 禁止 keep-awake hack、R5 長跑/背景 session 必須有明確結束條件。`AGENT_STARTUP_PROTOCOL.md` Step 5 新增「必讀」entry、Step E.5 新增收尾 Checklist；`tools/ai_workbook/build_extension_task_modules.py` COMMON_READ_FIRST 新增此 skill（30 個 chrome extension task module 全帶入）；`CLAUDE.md` 技能索引 trigger 更新（RAM 偏高 / idle session / 重複開同名任務）。根因：Owner 觀察到 Claude app ~20GB RAM / 重複同名 session / Chrome tab 不關是反覆系統問題。commit 636ffa6（IOS-SELL）先行，本次為獨立 session-lifecycle commit。
 - 2026-06-22：A1 精煉「召喚文化前言（Summon Culture Preamble）」—— 從 `OPERATING_CULTURE.md`、`company-values.md`、`agent-behavior-framework.md`、`first-principles-check/SKILL.md` 提取版本治理（6 條）+ 解決問題（6 條）共 12 條可檢核祈使句，灌入 `templates/go-prompt-template.md` 開頭新增區塊「召喚任何 agent 時把此段貼在 prompt 最前」。純新增，無刪改既有行。commit `55c3d5d`（本地未 push，branch: a8/video-checklist-mvp）。
 - 2026-06-22：✅ Push 完成（origin/main HEAD: `3680098`）。包含 7 commits（rebase 後 hash 更新）：a8 checklist、dashboards、文化指向（原 ea50182→rebased d410ec0）、召喚前言（ffb7a8a）、AGENT_RECALL 召喚前言說明（3680098）。rebase 墊底 aa7d948（A1 巡查），autostash 保護 working tree 完整。
 - 2026-06-22：A1 補文化原則「一事一 Session（Context hygiene）」＋ AGENT_RECALL 召喚前言說明（每次召喚必帶 go-prompt-template.md 文化前言區塊）。

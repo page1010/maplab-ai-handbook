@@ -1,6 +1,6 @@
 {
   "schema_version": "2026-05-11.dynamic-role-module.v1",
-  "generated_at": "2026-06-24T23:16:10+08:00",
+  "generated_at": "2026-06-24T23:19:31+08:00",
   "module_id": "MAPLAB_IOS-ALPHA_CROSS_SOURCE_ALPHA_MANAGER_DYNAMIC_ROLE_MODULE",
   "role_id": "IOS-ALPHA",
   "role_name": "Cross-Source Alpha Manager",
@@ -41,8 +41,8 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "20217ec9079af2fa70afa52c7f22a6c8c7a2a61671d64ee8972d5d9e2a426c7b",
-      "size_bytes": "11597"
+      "source_sha256": "0598bc33ec7b77c111e578cb432ee900c3829b815ba9a2bfb380fdac0d1d81f3",
+      "size_bytes": "12260"
     },
     {
       "path": "pitfalls.md",
@@ -91,6 +91,14 @@
       "purpose": "skill / operating guide",
       "source_sha256": "a0a8dce530f8b02cba8dba5cdd461d0c1e7a972373da867edebe06ec9b7b7eb5",
       "size_bytes": "10792"
+    },
+    {
+      "path": "skills/session-lifecycle/SKILL.md",
+      "load_mode": "read",
+      "exists": "true",
+      "purpose": "skill / operating guide",
+      "source_sha256": "bc19020bb67d94ec1e928a39daabe1ef598267674251989f852639928412c849",
+      "size_bytes": "5252"
     },
     {
       "path": "recalls/IOS_strategy_role_recall.md",

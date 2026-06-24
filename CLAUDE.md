@@ -59,7 +59,7 @@ git log --oneline -5
 | A0 調度派遣 | `skills/a0-proactive-dispatch-guide.md` |
 | 阻塞審查 / 任務上報 Owner 前 / 巡檢 | `AGENT_RULES.md` Section 16 + `skills/a0-proactive-dispatch-guide.md` |
 | API 認證問題 | `skills/credentials/` 目錄下對應技能書 |
-| Session 交接 / context 滿 | `skills/session-handoff.md` + `skills/session-lifecycle/` |
+| Session 交接 / context 滿 / RAM 偏高 / idle session / 重複開同名任務 | `skills/session-handoff.md` + `skills/session-lifecycle/` |
 | 存檔流程 | `skills/save-checkpoint/SKILL.md` |
 | Sheets 資料清理 | `skills/sheets-data-cleaning-guide.md` |
 | Extension 更新 | `skills/extension-update/` |

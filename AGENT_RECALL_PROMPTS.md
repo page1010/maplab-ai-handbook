@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-06-24 08:00（每日，遠端）A1 巡查：⚠️ T-A8-001 逼近 48h（~45.2h，last `997855e` 06-22 10:49，今日約 10:49 將跨 48h，建議 Owner 確認 local motion POC storyboard）；⚠️ T-IOS-KOL-001 持續超 48h（~61.1h，last 1c58113 2026-06-21 18:55，建議 Owner 確認 IOS-KOL sources 或指派繼續）；T-A5-002（~24.6h）/ T-A5-005（~25.0h）awaiting Owner；T-A1-LEARNING-LOOP-001 持續超 48h（~185.5h）；A4 T-A4-001（~304.7h/~12.7天）/ B1 T-HQ-001（~301.2h/~12.5天）持續 🔴 CRITICAL；T-A5-004 🔴 CRITICAL 持續；A6 CRITICAL 持續；GCP帳單~70天🔴
+> 最後更新：2026-06-24 14:00（午後，遠端）A1 巡查：⚠️ T-A8-001 已跨過 48h（~51.2h，last `997855e` 06-22 10:49，今日 10:49 確認跨越，建議 Owner 確認 local motion POC storyboard）；⚠️ T-IOS-KOL-001 持續超 48h（~67.1h，last 1c58113 2026-06-21 18:55，建議 Owner 確認 IOS-KOL sources 或指派繼續）；T-A5-002（~30.6h）/ T-A5-005（~31.0h）awaiting Owner；T-A1-LEARNING-LOOP-001 持續超 48h（~191.4h）；A4 T-A4-001（~310.7h/~12.9天）/ B1 T-HQ-001（~307.2h/~12.8天）持續 🔴 CRITICAL；T-A5-004 🔴 CRITICAL 持續；A6 CRITICAL 持續；GCP帳單~70天🔴
 >
 > 使用方式：選擇角色 → 複製 prompt / module handoff → 貼到 Gemini / Codex / OpenClaw / legacy Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -26,7 +26,7 @@
 | A5 | 報價與提案引擎部 | 🔄 T-A5-002 + T-A5-005 新活動（2026-06-23 07:01-07:22 +0800：`5ab7434` clasp push T-A5-005 sync functions + `3209fba` fixMasterTemplate_ GAS fn，均 awaiting Owner；CRITICAL 48h 計時器已重置，現 ~25.0h/~24.6h）；T-A5-004 🔴 CRITICAL（~1528h+，無新 commit）| Quotation Engine |
 | A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（aa77573 2026-05-19 Codex-first route；~743h/~31天無新活動；LINE webhook等Owner確認 Channel 1654658337）| Sales Rapid Response |
 | A7 | 客服與對話轉單部 | 💤 T-A7-001 正式暫停；T-A7-002 ⏸️ 阻塞（等LINE後台權限+Owner政策決策）| Smart Reply |
-| A8 | 影音內容產線 | ⚠️ T-A8-001 逼近 48h（2026-06-22 10:49 `997855e` video checklist MVP；**~45.2h，今日約 10:49 將跨 48h 門檻**；前次：f9d1c42 06-20 local motion v6 + zero-cost pipeline；下一步：審核 local motion POC storyboard → 地端動態生成 → 9:16 mp4/cover → Publish Approval Card，未經 Owner/A1 approval 不得上傳） | Content Repurposing Pipeline |
+| A8 | 影音內容產線 | ⚠️ T-A8-001 已跨過 48h（2026-06-22 10:49 `997855e` video checklist MVP；**~51.2h，今日 10:49 確認跨越**；前次：f9d1c42 06-20 local motion v6 + zero-cost pipeline；下一步：審核 local motion POC storyboard → 地端動態生成 → 9:16 mp4/cover → Publish Approval Card，未經 Owner/A1 approval 不得上傳） | Content Repurposing Pipeline |
 | **B1** | **Investment OS Builder** | **🔴 CRITICAL（T-HQ-001 超 48h：最後 014081c 2026-06-11 18:46，現 ~301.2h/~12.5天；同一 B1 身分另在治理/Guild Ops Board 工作中活躍，2026-06-21 完成 SECTION 19 無人長跑安全規則治理補丁）** | **寫功能 / runtime surface；P5/P6 待執行** |
 | **B2** | **Investment OS Reviewer** | **🟢 召喚型可用** | **資料流 / 錯誤 / freshness review** |
 | **B3** | **Investment OS Archivist** | **🟢 召喚型可用** | **版本紀錄 / 交接 / resume prompt** |

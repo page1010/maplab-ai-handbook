@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-06-25 08:05（每日，遠端）A1 巡查：🆕 ⚠️ **T-A5-002（~48.7h）/ T-A5-005（~49.1h）已跨過 48h 門檻**（awaiting Owner，今晨 07:01-07:22 跨越已確認）；⚠️ T-A8-001 持續超 48h（~69.3h，last `997855e` 06-22 10:49）；⚠️ T-IOS-KOL-001 持續超 48h（~85.2h，last 1c58113 2026-06-21 18:55）；T-A1-LEARNING-LOOP-001 持續超 48h（~209.5h）；A4 T-A4-001（~328.8h/~13.7天）/ B1 T-HQ-001（~325.3h/~13.6天）持續 🔴 CRITICAL；T-A5-004 🔴 CRITICAL 持續；A6 CRITICAL 持續；GCP帳單~71天🔴
+> 最後更新：2026-06-25 16:05（午後，遠端）A1 巡查：🟢 **T-HQ-001 CRITICAL 解除 + P1-P6 全完成**（`1a2d752` 08:25 +0800；IOS-SELL 角色新建）；🟢 **T-A8-001 48h 解除**（last `1a2d752`，~7.7h）；⚠️ T-A5-002（~56.7h）/ T-A5-005（~57.1h）持續超 48h（awaiting Owner）；⚠️ T-IOS-KOL-001（~93.2h）/ T-A1-LEARNING-LOOP-001（~217.5h）持續超 48h；A4 T-A4-001（~336.8h/~14.0天）持續 🔴 CRITICAL；T-A5-004 🔴 CRITICAL 持續；A6 CRITICAL 持續；GCP帳單~71天🔴
 >
 > 使用方式：選擇角色 → 複製 prompt / module handoff → 貼到 Gemini / Codex / OpenClaw / legacy Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -26,8 +26,8 @@
 | A5 | 報價與提案引擎部 | ⚠️ T-A5-002 + T-A5-005 均已跨過 48h 門檻（2026-06-23 07:01-07:22 +0800：`5ab7434` clasp push T-A5-005 + `3209fba` fixMasterTemplate_，均 awaiting Owner；現 **~49.1h/~48.7h**，今晨 08:05 確認超標）；T-A5-004 🔴 CRITICAL（~1536h+，無新 commit）| Quotation Engine |
 | A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（aa77573 2026-05-19 Codex-first route；~743h/~31天無新活動；LINE webhook等Owner確認 Channel 1654658337）| Sales Rapid Response |
 | A7 | 客服與對話轉單部 | 💤 T-A7-001 正式暫停；T-A7-002 ⏸️ 阻塞（等LINE後台權限+Owner政策決策）| Smart Reply |
-| A8 | 影音內容產線 | ⚠️ T-A8-001 持續超 48h（2026-06-22 10:49 `997855e` video checklist MVP；**~69.3h，持續**；前次：f9d1c42 06-20 local motion v6 + zero-cost pipeline；下一步：審核 local motion POC storyboard → 地端動態生成 → 9:16 mp4/cover → Publish Approval Card，未經 Owner/A1 approval 不得上傳） | Content Repurposing Pipeline |
-| **B1** | **Investment OS Builder** | **🔴 CRITICAL（T-HQ-001 超 48h：最後 014081c 2026-06-11 18:46，現 ~325.3h/~13.6天；同一 B1 身分另在治理/Guild Ops Board 工作中活躍，2026-06-21 完成 SECTION 19 無人長跑安全規則治理補丁）** | **寫功能 / runtime surface；P5/P6 待執行** |
+| A8 | 影音內容產線 | 🔄 ACTIVE（2026-06-25 08:25 `1a2d752` squash merge a8/video-checklist-mvp 進 main，48h 計時器重置（~7.7h）；前次：997855e 06-22 10:49 video checklist MVP；下一步：審核 local motion POC storyboard → 地端動態生成 → 9:16 mp4/cover → Publish Approval Card，未經 Owner/A1 approval 不得上傳） | Content Repurposing Pipeline |
+| **B1** | **Investment OS Builder** | **🟢 T-HQ-001 P1-P6 全完成（2026-06-25 08:25 `1a2d752` squash merge：IOS-SELL 角色 + session-lifecycle + PII cleanup + Chrome Extension 模組重建）；CRITICAL 解除，計時器重置（~7.7h）；建議 Owner 確認可關閉 T-HQ-001** | **寫功能 / runtime surface** |
 | **B2** | **Investment OS Reviewer** | **🟢 召喚型可用** | **資料流 / 錯誤 / freshness review** |
 | **B3** | **Investment OS Archivist** | **🟢 召喚型可用** | **版本紀錄 / 交接 / resume prompt** |
 | **B4** | **Investment OS System Patrol** | **🟢 召喚型可用** | **系統適配巡查 / pause-refactor** |

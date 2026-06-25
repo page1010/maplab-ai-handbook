@@ -2,6 +2,20 @@
 
 > Cold-start required. 每次修到重複錯誤，要把「觸發條件 / 根因 / 解法 / 預防」寫回這裡。
 
+## 2026-06-26 — [Culture Loop] Reaction ledger open reactions 超期 9 天仍無 receipt
+
+- 觸發條件：culture_loop_runner dry-run 對 reaction_ledger.jsonl 4 筆 open reactions 做獨立評分，全部 evidence_quality=1/5、pltr_readiness=false；due_at 均超過 9 天（2026-06-17）。reaction 的 evidence_path 指向 `hermes/patrol/latest.json`（patrol 觀察輸出），不是 task 完成 receipt。
+- 根因：patrol 偵測後的 reaction 只記錄「應該做什麼」，沒有追蹤「是否真的做了」並附上可驗證的 commit / receipt / readback。reaction 在 ledger 裡成為永久 open，不會被 patrol 自動關閉，且 culture loop 也沒有在偵測到超期時觸發升級。
+- 解法：(1) culture_loop_runner 的 escalation 條件加上「reaction 超期 7 天且 evidence_quality <= 2」自動升 escalation_queue；(2) 本次對 google-oauth-reauth-card 和 long-blocked-three-layer-review 各產出一筆 escalation，要求 Owner/Claude 補 receipt 或關閉；(3) 規則 append 到本 pitfalls 作為下次 cold-start 提示。
+- 預防：patrol 偵測到的問題若 9 天後仍 open，必須關閉為 false_alarm 或轉成有接續點的 task card；不得只在 reaction_ledger 裡寫「待處理」。任何 reaction 必須在 7 天內有可追蹤的 action（commit / task card / receipt），否則自動升 escalation_queue。
+
+## 2026-06-26 — [Culture Loop] 地端模型評分過於慷慨：prompt 不夠嚴格
+
+- 觸發條件：culture_loop_runner --mode full 呼叫 qwen2.5:14b 對 4 個 open reactions 評分，模型回傳 evidence_quality=5/5 和 pltr_readiness=true，但 dry-run mock 正確評出 evidence_quality=1/5、pltr_readiness=false。dry-run 準確，full mode 的地端模型過度樂觀。
+- 根因：verifier prompt 說「只看硬證據」，但沒有給模型一個 negative example 示範「什麼叫做 evidence_quality=1」；模型看到「有 evidence_path 存在」就給滿分，沒有去問「evidence_path 裡的內容是不是 task 完成的 receipt」。
+- 解法：(1) verifier prompt 加上明確的 negative example：「evidence_path 指向 patrol output 不是 receipt → evidence_quality=1；evidence_path 指向包含 commit hash 的 review bundle → evidence_quality=4」；(2) 加上 `temperature=0` 強制確定性輸出（已在程式碼中設定）；(3) 下次 full run 後對比 dry-run mock 和 real Ollama 的分差，超過 2 分就 flag 為 verifier calibration 問題。
+- 預防：地端模型做獨立評分時，必須提供至少一個 positive（evidence=4）和一個 negative（evidence=1）的 reference example；評分後與 mock baseline 對比，分差 > 2 自動升 escalation 並 flag 為 verifier 需再校準。
+
 ## 2026-06-20 — Unattended long-running tasks need hardcoded constraint/error-handling, not "agent will notice"
 
 - 觸發條件：研究一支「AI agent 無人介入連跑 27 小時」的影片（`docs/references/ai-agent-long-running-go-feature-rubric.md`）後，發現 MAPLAB 目前沒有任何規則明確規定 `/go` 類、cron、background task 等無人長跑任務的安全邊界；長跑迴圈若配上既有的高風險操作（例如會清空目錄的 deploy 腳本），一旦無人看管下重複執行，錯誤會被放大成大規模事故。

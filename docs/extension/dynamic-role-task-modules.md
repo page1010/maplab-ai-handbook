@@ -1,6 +1,6 @@
 # GitHub Dynamic Role Task Modules
 
-Generated: 2026-06-24T22:53:32+08:00
+Generated: 2026-06-24T23:34:59+08:00
 
 ## Purpose
 
@@ -291,6 +291,15 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: dirty_worktree_inventory, keep_drop_decision, cleanup_handoff, scheduled_hygiene
 - Affects: dirty worktree inventory; B4 cleanup patrol; B3 archive handoff; B1 cleanup script repair
 - Module file: `chrome-extension/task-modules/IOS-HYGIENE.json`
+
+### IOS-SELL — Position Sentinel
+
+- Department: 實單哨兵
+- Simulation: 監控 Owner 實際持倉，計算 RSI/MACD/MA 技術指標，三指標同時出現賣出訊號時透過 Telegram 通知 Owner。不下單、不模擬單、不給主觀買賣建議。
+- Runtime targets: codex, openclaw, gemini, hermes
+- Task types: position_scan, rsi_check, macd_check, ma_cross_check, sell_alert_dispatch
+- Affects: Telegram sell-signal alert; B1 indicator pipeline repair; B2 signal quality review; B3 alert archive
+- Module file: `chrome-extension/task-modules/IOS-SELL.json`
 
 ## Relationship Rule
 

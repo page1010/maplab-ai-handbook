@@ -1,10 +1,14 @@
 {
-  "generated_at": "2026-06-24T22:53:32+08:00",
-  "module_count": 29,
-  "relationship_rows": 594,
-  "graph_nodes": 332,
-  "graph_edges": 882,
-  "missing_sources": [],
+  "generated_at": "2026-06-24T23:34:59+08:00",
+  "module_count": 30,
+  "relationship_rows": 645,
+  "graph_nodes": 345,
+  "graph_edges": 943,
+  "missing_sources": [
+    "broker_api",
+    "proposed_orders",
+    "simulation_orders"
+  ],
   "outputs": [
     "docs/extension/dynamic-role-task-modules.md",
     "chrome-extension/config/task-modules.json",

@@ -1,8 +1,10 @@
 """
 parse_line_booking_pairs.py
 ---
-純檔名 metadata 解析：不讀任何對話內容，不寫入外接硬碟。
-輸出 data/line_booking_pairs.csv。
+純檔名 metadata 解析：不讀任何對話內容。
+輸出路徑由 LINE_BOOKING_DATA_PATH 環境變數控制，預設寫到外接硬碟。
+個資不進 repo：data/line_booking_pairs.csv 已移到 /Volumes/MacExternal/maplab-data/
+並列入 .gitignore（2026-06-25 Owner 治理決策）。
 """
 
 import os, json, csv, re
@@ -11,7 +13,11 @@ from collections import defaultdict
 
 LINE_DIR = "/Volumes/MacExternal/外接硬碟 讀取專用/line_oa_chat_csv_260622_213421/"
 TIMETREE_JSON = "/Users/pagemacmini/maplab-ai-handbook/data/timetree_events_2022_2026.json"
-OUTPUT_CSV = "/Users/pagemacmini/maplab-ai-handbook/data/line_booking_pairs.csv"
+# 個資輸出到外接硬碟，不寫 repo；可用環境變數覆蓋
+OUTPUT_CSV = os.environ.get(
+    "LINE_BOOKING_DATA_PATH",
+    "/Volumes/MacExternal/maplab-data/line_booking_pairs.csv",
+)
 
 MATCH_WINDOW_DAYS = 14   # end_date ±14 天
 MIN_OVERLAP_CHARS = 2    # 名字重疊≥2字才標 likely_true_positive

@@ -7,6 +7,9 @@ cookies.txt
 **/.env.local
 **/.env.*.local
 
+# 個資資料 — 存放於外接硬碟，不進 repo（2026-06-25 Owner 治理決策）
+data/line_booking_pairs.csv
+
 # Telegram logs - may contain sensitive info from conversations
 data/telegram-logs/
 data/telegram-conv/

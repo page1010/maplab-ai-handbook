@@ -1,6 +1,6 @@
 {
   "schema_version": "2026-05-11.dynamic-role-module.v1",
-  "generated_at": "2026-06-20T20:39:40+08:00",
+  "generated_at": "2026-06-24T23:19:31+08:00",
   "module_id": "MAPLAB_IOS-LEFT_LEFT_SIDE_RESEARCH_MANAGER_DYNAMIC_ROLE_MODULE",
   "role_id": "IOS-LEFT",
   "role_name": "Left-Side Research Manager",
@@ -25,40 +25,40 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "9df44eb95829f33a6a1a4d957f1208be0c6857ae05946b1792970bb70f2a97e4",
-      "size_bytes": "52507"
+      "source_sha256": "8769fca4c0ea1a18eb46df4872ad524160d9a809b051416166765ca2f9958d51",
+      "size_bytes": "73250"
     },
     {
       "path": "AGENT_RULES.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "21e37aa18d1c3e95d5fc9ab833a8cc6b4a169595d237c097c9e93effa67e9de2",
-      "size_bytes": "42958"
+      "source_sha256": "a99f620c512bae2a0c46115114b2e8cfda932020584f4870fbe8af7fa5225acd",
+      "size_bytes": "47470"
     },
     {
       "path": "AGENT_STARTUP_PROTOCOL.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "20217ec9079af2fa70afa52c7f22a6c8c7a2a61671d64ee8972d5d9e2a426c7b",
-      "size_bytes": "11597"
+      "source_sha256": "0598bc33ec7b77c111e578cb432ee900c3829b815ba9a2bfb380fdac0d1d81f3",
+      "size_bytes": "12260"
     },
     {
       "path": "pitfalls.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "960aa843014a13fb8a12b0d8df03bc49ab8c5401e8bd956e785114528028d087",
-      "size_bytes": "46189"
+      "source_sha256": "85e6dbccaa510e2772d205f366fbf381e5c57d1f919e72662dbfbae1c3e9db24",
+      "size_bytes": "47784"
     },
     {
       "path": "TASK_QUEUE.md",
-      "load_mode": "fallback_to_workbook_task_index",
-      "exists": "false",
-      "purpose": "legacy task queue listed in CURRENT_STATUS; missing in canonical repo, use workbook/task_index.json",
-      "source_sha256": "",
-      "size_bytes": ""
+      "load_mode": "read",
+      "exists": "true",
+      "purpose": "core governance",
+      "source_sha256": "b38bc2af32dceebeac0644b23d51ae2452eb5f0a21eca9ed08e1c8ebfeb29169",
+      "size_bytes": "1792"
     },
     {
       "path": "workbook/task_index.json",
@@ -73,8 +73,8 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "e77e2bfa80a2c39ec2007b83bf5dba4203a060fefa582035b202f8138e53a017",
-      "size_bytes": "61587"
+      "source_sha256": "200d44296ab5832d725ec47d500001fa95045f78a8e67e8fa0ace3922001525e",
+      "size_bytes": "64554"
     },
     {
       "path": "skills/superpowers-guide.md",
@@ -91,6 +91,14 @@
       "purpose": "skill / operating guide",
       "source_sha256": "a0a8dce530f8b02cba8dba5cdd461d0c1e7a972373da867edebe06ec9b7b7eb5",
       "size_bytes": "10792"
+    },
+    {
+      "path": "skills/session-lifecycle/SKILL.md",
+      "load_mode": "read",
+      "exists": "true",
+      "purpose": "skill / operating guide",
+      "source_sha256": "bc19020bb67d94ec1e928a39daabe1ef598267674251989f852639928412c849",
+      "size_bytes": "5252"
     },
     {
       "path": "recalls/IOS_strategy_role_recall.md",

@@ -892,3 +892,17 @@ B4 patrol 每次巡查時對每張「進行中」task card 問：
 - `templates/go-prompt-template.md`（五要素 GO prompt 模板）
 - `templates/rubric-template.md`（主觀任務的 rubric 模板）
 - `docs/references/ai-agent-long-running-go-feature-rubric.md`（方法來源筆記）
+
+---
+
+## 資源衛生 — Chrome / 瀏覽器 session 用完即關（2026-06-23 Owner 立）
+
+**規則**：任何 agent 為了某個任務開的 Chrome 分頁 / 瀏覽器 session，**任務一結束就關掉**，不要累積。長開的分頁（尤其影音、保持喚醒、重型 web app）會吃滿記憶體、把系統推進 swap。
+
+**緣由**：2026-06-23 記憶體偏緊（swap ~71%），最大宗是 Chrome ~3.2GB，含一個早已不需要的 YouTube「保持喚醒」分頁（顯示器休眠已設永不，那分頁純浪費）。
+
+**怎麼做**：
+- 用完的 OpenClaw / 巡查 / 截圖用分頁，收工即關。
+- 「保持喚醒」類 hack 不再使用（這台是專職 agent 機，休眠/鎖定已關）。
+- orchestrator 不擅自關 Owner 的工作分頁；但會提醒、並在自己開的分頁用完後請求關閉。
+- 搭配每 2 小時 `memory-watch` 排程：偏緊時點名元兇。

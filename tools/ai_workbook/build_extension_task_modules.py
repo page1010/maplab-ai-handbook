@@ -38,6 +38,7 @@ COMMON_READ_FIRST = [
     "AGENT_RECALL_PROMPTS.md",
     "skills/superpowers-guide.md",
     "skills/task-progress-guide.md",
+    "skills/session-lifecycle/SKILL.md",
 ]
 
 COMMON_GOVERNANCE = [
@@ -663,6 +664,7 @@ def ios_role(
     restricted_sources: list[str] | None = None,
     startup_contract_extra: list[str] | None = None,
     extra_read_first: list[str] | None = None,
+    recall_path: str | None = None,
 ) -> RoleModule:
     base_startup_contract_extra = [
         "Use Investment OS local repo as the canonical runtime truth: /Users/pagemacmini/Documents/New project.",
@@ -688,7 +690,7 @@ def ios_role(
         output_contract=output_contract,
         startup_contract_extra=base_startup_contract_extra,
         affects=affects,
-        recall_path=IOS_RECALL_PATH,
+        recall_path=recall_path or IOS_RECALL_PATH,
         risk_level=risk_level,
     )
 
@@ -868,6 +870,25 @@ ROLES.extend(
             ["dirty_worktree_inventory.md", "keep_drop_decision_package.md", "cleanup_handoff_to_B1_B3.md", "patrol_receipt.md"],
             ["dirty worktree inventory", "B4 cleanup patrol", "B3 archive handoff", "B1 cleanup script repair"],
             "high",
+        ),
+        ios_role(
+            "IOS-SELL",
+            "Position Sentinel",
+            "實單哨兵",
+            "監控 Owner 實際持倉，計算 RSI/MACD/MA 技術指標，三指標同時出現賣出訊號時透過 Telegram 通知 Owner。不下單、不模擬單、不給主觀買賣建議。",
+            ["position_scan", "rsi_check", "macd_check", "ma_cross_check", "sell_alert_dispatch"],
+            ["signal_report.md", "position_scan_summary.md", "review_request.md"],
+            ["Telegram sell-signal alert", "B1 indicator pipeline repair", "B2 signal quality review", "B3 alert archive"],
+            "low",
+            restricted_sources=["broker_api", "proposed_orders", "simulation_orders"],
+            startup_contract_extra=[
+                "Read projects/ios-sell-signal-monitor.md for indicator specs and trigger logic.",
+                "Only notify — do NOT place orders, create simulation orders, or give subjective buy/sell advice.",
+                "SELL_ALERT triggers only when RSI reversal AND MACD death cross AND MA death cross are ALL true simultaneously.",
+                "Output results to workbook/reviews/JOB-IOS-SELL-YYYYMMDD/ and send Telegram alert.",
+            ],
+            extra_read_first=["projects/ios-sell-signal-monitor.md", "skills/ios-sell-signal-monitor.md"],
+            recall_path="recalls/IOS-SELL_recall.md",
         ),
     ]
 )

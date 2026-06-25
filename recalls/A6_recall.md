@@ -26,6 +26,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 5. `skills/a6-system-operations.md` — **系統操作手冊**（createQuote 怎麼用、generateProposalV2 怎麼用、Items 表怎麼查、每個 cell 是什麼）
 6. `skills/a6-safety-boundaries.md` — **安全框架**（硬限 8 條 / 確認點 9 條 / 自動 11 條 / 品項規則 / Slide pre-check / 錯誤處理）
 7. `skills/a6-qa-examples.md` — **QA 範例庫**（待建，每個活動類型 2-3 組真實對話 + 操作記錄）
+8. `docs/data-locations.md` — **訓練資料路徑 + PII 政策**（LINE CSV 位置、去識別化產物路徑、報價單副本位置；接訓練任務前必讀）
 
 讀完後輸出 Startup Check：「我是 A6，讀完操作手冊 + 安全框架。準備接 Mina 指令。」
 

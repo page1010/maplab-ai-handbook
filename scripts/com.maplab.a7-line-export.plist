@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.maplab.a7-line-export</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/bin/python3</string>
+        <string>/Users/pagemacmini/maplab-ai-handbook/scripts/export_a7_line_jsonl.py</string>
+        <string>--inputs-only</string>
+    </array>
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>23</integer>
+        <key>Minute</key>
+        <integer>50</integer>
+    </dict>
+    <key>StandardOutPath</key>
+    <string>/Users/pagemacmini/maplab-ai-handbook/logs/a7_line_export_launchd.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/pagemacmini/maplab-ai-handbook/logs/a7_line_export_launchd.log</string>
+    <key>RunAtLoad</key>
+    <false/>
+</dict>
+</plist>

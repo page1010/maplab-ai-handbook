@@ -85,6 +85,34 @@
 - runtime/Telegram 類改動至少要有 source + runtime 語法檢查、目標測試、live preview/readback；若不直接發 Telegram，必須說明避免污染正式頻道，並用可重現 preview 代替。
 - 「我等一下會寫 receipt」但未寫就結束，是企業文化違反；下一輪要先補 receipt，再談完成。
 
+### 8. Claude token 使用原則 — 優先開發，不燒在重複維護（2026-06-25 Owner 決策）
+
+> **背景**：Claude 是高成本工具。先前把 Claude 排程用於重複性巡查/封存/監控，Owner 已明確取消。這條是原因的正式記錄。
+
+**Claude（高成本 token）的正確使用：**
+- ✅ 開發新功能、設計架構、調試複雜問題、優化系統
+- ✅ 寫清楚的 SOP / runbook / 交接 prompt，讓地端模型能接手
+- ✅ 驗收地端模型輸出，只在例外情況介入
+- ❌ 重複性維護/巡查/監控/封存 — **這些交給地端模型**
+
+**地端模型（Ollama、Codex-local 等）的正確使用：**
+- ✅ routine 排程（日誌輪替、狀態巡查、定時封存）
+- ✅ 任何「固定步驟 + 已知格式」的 batch job
+- ❌ 不要用 Claude 排程來驅動這些；用 launchd → 呼叫地端模型，Claude 不參與
+
+**Claude 角色定位 = 好老師/協調者：**
+1. 用清楚的 SOP + runbook + 交接 prompt 把工作**教給地端模型**
+2. 地端模型跑 routine 任務並落檔
+3. Claude 只在例外（品質下降、格式異常、需要判斷的決策點）時介入閉環
+
+**長期目標記住：**
+> 可驗證、可觀測、能自我維持、會複利的系統。不是短期瞎忙。每次用 Claude token 問自己：這個動作讓系統長期更自主，還是只解決今天的問題？
+
+**延伸閱讀：**
+- `skills/session-lifecycle/SKILL.md` §「資源衛生」— session/Chrome/RAM 管理
+- `AGENT_RULES.md` §「資源衛生」— Chrome browser session 規則
+- `scripts/hermes_memory_sop.md` — 地端 Hermes 記憶提供者 SOP（本地模型接手 FAQ）
+
 ---
 
 ## 實作規範

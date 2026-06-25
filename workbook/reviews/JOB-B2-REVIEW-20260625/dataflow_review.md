@@ -12,7 +12,7 @@
 ### DB 狀態
 - Investment OS SQLite（`~/.local/share/investmentos-telegram-operator/data/investment_os.sqlite3`）目前可讀
 - `api_error_logs: 0 rows`——當前無 API 錯誤
-- 2026-06-18 RSI 報告的 `live-position-session-refresh` DB locked 錯誤（OperationalError: database is locked）在本次查證時**已恢復**：DB 可正常存取
+- **live-position-session-refresh 仍失敗**：lock file 殘留（0 bytes，mtime=2026-06-23 13:50），job 不在 background_jobs_state.json 7 個 jobs 中，最後成功 sync=2026-05-26T05:50（30天前）；err log 確認後續失敗因 ENOSPC（磁碟滿），DB 本身可讀但 pipeline 已停止調度
 - `positions: 93 rows`（歷史持倉）、`account_snapshots: 124 rows`、`simulated_positions: 32 rows open`
 
 ### 資料層活躍度（本次直接查 DB）
@@ -61,7 +61,7 @@
 | 4 | shadow_findings | tradingview-heatmap 重複 dispatch | 🟡 Med | B1 去重 |
 | 5 | DB | `market_signals: 0 rows` | 🟡 Med | B1 確認 signal writer 是否在跑 |
 | 6 | DB | `agent_outputs: 0 rows` / `evidence_items: 0 rows` | 🟡 Med | B4 fit check（可能設計就不寫） |
-| 7 | RSI 2026-06-18 | `live-position-session-refresh` 曾 DB locked | 🟢 Low | 本次查證已恢復，B3 存檔後關閉 |
+| 7 | RSI 2026-06-18 + 2026-06-25 | `live-position-session-refresh` 雙重失敗（DB lock + ENOSPC）| 🔴 High | B1 修復：刪 lock file、確認磁碟空間、重啟 launchd job |
 | 8 | shadow_findings | 15 個 dead code jobs（orphan-dispatcher）| 🟡 Med | B1 清理 dead jobs |
 
 ---
@@ -104,9 +104,13 @@
 - `market_signals: 0`——市場信號沒有入庫，可能 market signal writer 未跑
 - Hermes 問題包 ~900h 過期——問題包本身是唯讀文件，影響有限，但如果 Hermes cold-path 依賴它，信號品質會降
 
-**Cleared / False Positive：**
-- live-position-session-refresh DB lock：已恢復，本次標 **false_positive（已自癒）**
-- 82 筆 shadow concerns 原始檔案清空：已 retroactive triage，8 筆 accepted，7 筆 needs more evidence
+**Routes to B1（需 Owner/B1 實際修復）：**
+- live-position-session-refresh：**diagnosed=failed**，路由 B1（刪 lock file + 確認磁碟空間 + 重啟 plist）
+
+**Cleared / Retroactive Triage：**
+- 82 筆 shadow concerns（runtime local_model_findings.jsonl 1759 筆，2026-06-18 window=82 筆）：
+  全部來自 convergence-engine/P1-self-review，模式：(a) 69 筆空 matrix_rows → `false_positive`（無資料時 Hermes 正確報 concern，但問題在上游資料源乾，不是 Hermes bug）；(b) 12 筆 all-zero / identical scores → `false_positive`（同上）；(c) 1 筆 Hermes timeout → `accepted_issue`（B1 action：加 timeout retry）
+  **根本 accepted_issue**：convergence-engine 資料源（Polymarket/Reddit/RSS）持續 0 筆，B1 需驗 API 是否仍有效
 
 ---
 

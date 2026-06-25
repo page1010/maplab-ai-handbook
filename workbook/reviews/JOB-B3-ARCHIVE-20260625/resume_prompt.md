@@ -23,9 +23,9 @@ B4 上次 receipt：JOB-B4-PATROL-20260625/fit_check.md
 RSI 估算分數：55（degraded；需重跑 scorer 取精確值）
 
 已清算項目（不要重做）：
-- live-position-session-refresh DB lock → false_positive（已自癒）
-- 82 shadow concerns → retroactive triage 完成（8 accepted, 7 needs_more_evidence）
-- IOS-KOL B2 review → pass
+- live-position-session-refresh → diagnosed=FAILED（lock file 殘留，ENOSPC crash，最後 sync 2026-05-26）→ 已路由 B1，不是自癒
+- 82 shadow concerns（convergence-engine 2026-06-18）→ retroactive triage：69+12 false_positive（無資料時正常 concern），1 accepted（Hermes timeout）
+- IOS-KOL B2 review → pass（687 insights，436 cross-checks）
 
 待做（優先順序）：
 1. Hermes 投資問題包重建（B1，High）

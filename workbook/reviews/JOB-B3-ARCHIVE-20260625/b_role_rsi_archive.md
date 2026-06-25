@@ -47,7 +47,7 @@ B3 Archivist | 2026-06-25 | 本輪 RSI 循環存檔
 
 | 決定 | 日期 | 依據 | 影響 |
 |------|------|------|------|
-| live-position-session-refresh DB lock = 自癒 | 2026-06-25 | DB 本次查證 0 api_error_logs，可正常讀寫 | 不需 B1 介入；B4 從 CRITICAL 清單移除 |
+| live-position-session-refresh = diagnosed failed | 2026-06-25 | lock file 殘留 2026-06-23，job 不在 state，ENOSPC crash，最後 sync 2026-05-26 | 路由 B1；B4 維持 🔴 直到 B1 確認修復 |
 | 82 shadow concerns 原始檔案清空 = 可接受 | 2026-06-25 | local_model_findings.jsonl 被 rotate；retroactive triage 無 critical 項 | B3 存檔即可；下次 shadow scan 重建 |
 | IOS-KOL 核心 pipeline = continue | 2026-06-25 | 687 insights + 436 cross-checks + gate 邏輯已修 | 繼續 4 時段 digest；英文源補充列中優 |
 | B2-B4 維護交給地端模型 | 2026-06-25 | 本次 runbook 已建 | 下次 B2-B4 maintenance 由 qwen2.5 跑，Claude 只看 escalation |

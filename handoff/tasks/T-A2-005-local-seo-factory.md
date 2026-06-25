@@ -9,7 +9,7 @@
 - **狀態**: ⏸️ 暫停 (blocked-on-owner: 等 Owner 提供 WordPress Application Password; 非當前優先, 2026-06-25 by A0)
 - **最後活動**: 2026-05-04 local-seo-factory-initial
 - **接續點**: 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar dry-run 可產生 draft payload。下一步：接 WordPress 實站憑證做 `--publish` 驗證 + 把 56 篇歸屬表餵入 Linker。
-- **阻塞**: WordPress 寫入憑證與測試站檢核流程待 Owner 確認
+- **阻塞**: 已有解法 — WP App Password 在 Notion 保管室, 依 skills/secrets-from-notion-vault.md runtime 取用建草稿(發布仍人工); 剩測試站檢核流程
 
 ---
 

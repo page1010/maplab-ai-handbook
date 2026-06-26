@@ -120,14 +120,20 @@ def classify_stage(customer_text: str, business_text: str) -> str:
         # Expanded from batch review (GAP-3)
         "走廊", "擺椅子", "鑰匙", "示意圖",
         "幾張桌", "停車", "進場時間", "抵達時間",
+        # Round 2: S_PENDING recovery — venue/logistics bt signals
+        "擺設", "哨點", "一起進", "帶你們", "可以租借",
     ]
     if any(k in bt for k in _S6_KEYWORDS):
         return "S6_PREDAY"
-    # Timing keywords may appear in customer text (Row 20: customer asks "幾點到")
-    if any(k in both for k in ["幾點到", "明天見", "到了唷", "我們到了"]):
+    # Timing keywords + S6-specific phrases may appear in either side
+    if any(k in both for k in ["幾點到", "明天見", "到了唷", "我們到了", "車號", "帶你們進來"]):
         return "S6_PREDAY"
     # Customer gives venue/logistics info
-    if any(k in ct for k in ["桌子", "走廊", "擺椅子", "椅子", "鑰匙", "示意圖"]):
+    if any(k in ct for k in [
+        "桌子", "走廊", "擺椅子", "椅子", "鑰匙", "示意圖",
+        # Round 2: ct S6 signals (customer provides entry/setup info)
+        "帶你們進來", "測量", "提前擺設", "去帶你們",
+    ]):
         return "S6_PREDAY"
     # Pickup time coordination — only when customer is NOT still asking (GAP-5)
     _customer_still_asking = any(k in ct for k in ["請問", "有嗎", "可以嗎", "詢問", "有提供", "請問一下"])
@@ -178,6 +184,9 @@ def classify_stage(customer_text: str, business_text: str) -> str:
     if any(k in both for k in [
         "換品項", "換成", "改成", "替換", "換掉", "調整品項",
         "幾隻", "一組幾", "可以加", "寶寶水", "飲料選項",
+        # Round 2: S_PENDING recovery — portion/addon/flavor patterns
+        "多加", "餐具", "口味", "返潮", "品項直接打",
+        "幾道菜", "幾個點心", "個點心", "一人幾道",
     ]):
         return "S3_MENU_ADJUST"
 

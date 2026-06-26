@@ -231,6 +231,51 @@ ls -la path/to/file 是唯一可靠的存在性檢查。
 
 ---
 
+---
+
+## P14: Heuristic Stage 分類器「慷慨偏差」— 正向匹配 + 缺否定條件
+> 來源：2026-06-26 A6 culture loop 第一輪批改，42 筆樣本，精準度 52.4%
+
+**症狀**：keyword 正向匹配 stage classifier 傾向高報（over-classify），尤其是「中間 stage」（S3_QUOTE_SEND、S0_OPENING、S3_BUDGET_CONFIRM）。
+
+**三個根因**：
+1. **無否定條件**：「即使客人說 X，如果業務行為仍是 Y → 不標 Z」這類約束完全缺失
+2. **未善用業務 reply**：業務問什麼比客人說什麼更能確定當前 stage
+3. **Stage 互斥未排序**：多個 stage 同時 match 時沒有明確優先級
+
+**具體錯誤模式**：
+- `S0_OPENING` 觸發條件：業務說「您好」→ 但若客人已問具體日期/檔期 → 應為 S1_INQUIRY
+- `S3_QUOTE_SEND` vs `S3_QUOTE_INTRO`：傳費用「範圍」=INTRO；傳具體菜單/照片=SEND
+- `S3_BUDGET_CONFIRM`：業務仍問「日期是哪天」→ 還在 S2_DATA，即使客人提了預算
+- `S_PENDING 32.6%`：多數可分類，業務 reply 的「走廊/椅子/鑰匙/尺寸/當日」= S6_PREDAY
+
+**修正原則**：
+1. 在 S0_OPENING 前加「客人訊息無實質詢問」的否定條件檢查
+2. QUOTE_INTRO 優先於 QUOTE_SEND（先確認是否為框架介紹）
+3. BUDGET_CONFIRM 需同時滿足「客人提金額 AND 業務不再問基本資料」
+4. S6 keyword 清單補：走廊/椅子/鑰匙/示意圖/幾張桌/隔天過去
+
+**蒸餾報告**：`workbook/reviews/A6-TRAINING-20260625/culture_loop_distill.md`
+
+---
+
+## P15: 訓練資料 PII 遮蔽「殘留」— 姓名比電話更難遮完
+> 來源：2026-06-26 A6 Sheet 批改，Row 35 發現「姓名：麥琬如」未遮蔽
+
+**問題**：`mask_pii()` 只能遮蔽「已知 contact_name 清單」（來自 line_booking_pairs.csv）中的姓名。  
+CSV 對話中，客人在 S4_BOOKING_ASK 回覆建檔請求時「直接輸入自己姓名」，而此姓名可能不在 booking pairs 清單中。
+
+**觸發場景**：客人在 LINE 對話裡打「姓名：XXX」→ 此人不在 booking pairs confirmed 清單 → 未遮蔽
+
+**防範措施**：
+- 在 Sheet 輸出前加「第二層 PII scan」（`sheet_mask()` 函式）：比 pipeline 更激進
+- 加 regex：`姓名[：:]\s*[^\n\[（(]{2,10}` → `姓名：[姓名]`
+- 或：在 pipeline 端對「姓名：XXX」格式加專用 regex
+
+**現狀**：Sheet 已手動修補；`line_oa_csv_parser.py` 的 pipeline 未更新，待下次重跑時修正。
+
+---
+
 ## 關聯
 
 - `AGENT_RULES.md`（基礎治理規則，SECTION 10/11）

@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-06-26 16:00（午後，遠端）A1 巡查：0 新非巡查 commit；🟢 **T-HQ-001 Done / T-A8-001 ACTIVE**（~31.6h）；⚠️ T-A5-002（~80.6h）/ T-A5-005（~81.0h）持續超 48h（awaiting Owner）；⚠️ T-IOS-KOL-001（~117.1h）/ T-A1-LEARNING-LOOP-001（~241.5h）持續超 48h；A4 T-A4-001（~360.7h/~15.0天）持續 🔴 CRITICAL；T-A5-004 🔴 CRITICAL 持續；GCP帳單~72天🔴
+> 最後更新：2026-06-26 22:00（晚間，遠端）A1 巡查：1 新非巡查 commit（4dfd0a8 A6 stage-labeling rubric）；🟢 **A6 活躍**（4dfd0a8 ~1.7h）；🟢 **T-HQ-001 Done / T-A8-001 ACTIVE**（~37.6h）；⚠️ T-A5-002（~86.6h）/ T-A5-005（~87.0h）持續超 48h（awaiting Owner）；⚠️ T-IOS-KOL-001（~123.1h）/ T-A1-LEARNING-LOOP-001（~247.5h）持續超 48h；A4 T-A4-001（~366.7h/~15.3天）持續 🔴 CRITICAL；T-A5-004 🔴 CRITICAL 持續；GCP帳單~72天🔴
 >
 > 使用方式：選擇角色 → 複製 prompt / module handoff → 貼到 Gemini / Codex / OpenClaw / legacy Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -24,7 +24,7 @@
 | A3 | 社群與廣告成長部 | ✅ T-A3-001 完成（GTM v21 雙平台追蹤上線）；T-A3-002 ⏸️ 阻塞（等廣告週期+Owner操作）| Meta Ads / Social |
 | A4 | 影像資產整理部 | 🔴 CRITICAL（超 48h：最後 c2dc194/90fe31c 2026-06-11；現 ~360.7h/~15.0天 無新 commit；GCP帳單~72天未處理🔴）| Photo Archive |
 | A5 | 報價與提案引擎部 | ⚠️ T-A5-002 + T-A5-005 均超 48h 門檻（2026-06-23 07:01-07:22 +0800：`5ab7434` clasp push T-A5-005 + `3209fba` fixMasterTemplate_，均 awaiting Owner；現 **~81.0h/~80.6h**，2026-06-26 16:00 更新）；T-A5-004 🔴 CRITICAL（~1560h+，無新 commit）| Quotation Engine |
-| A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（aa77573 2026-05-19 Codex-first route；~743h/~31天無新活動；LINE webhook等Owner確認 Channel 1654658337）| Sales Rapid Response |
+| A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（4dfd0a8 2026-06-26 20:21 stage-labeling rubric + A6.json 第 8 技能書；~1.7h；LINE webhook等Owner確認 Channel 1654658337）| Sales Rapid Response |
 | A7 | 客服與對話轉單部 | 💤 T-A7-001 正式暫停；T-A7-002 ⏸️ 阻塞（等LINE後台權限+Owner政策決策）| Smart Reply |
 | A8 | 影音內容產線 | 🔄 ACTIVE（2026-06-25 08:25 `1a2d752` squash merge a8/video-checklist-mvp 進 main，現 ~31.6h，遠低於 48h 門檻；前次：997855e 06-22 10:49 video checklist MVP；下一步：審核 local motion POC storyboard → 地端動態生成 → 9:16 mp4/cover → Publish Approval Card，未經 Owner/A1 approval 不得上傳） | Content Repurposing Pipeline |
 | **B1** | **Investment OS Builder** | **🟢 T-HQ-001 P1-P6 全完成（2026-06-25 08:25 `1a2d752` squash merge：IOS-SELL 角色 + session-lifecycle + PII cleanup + Chrome Extension 模組重建）；CRITICAL 解除，計時器 ~23.6h；建議 Owner 確認可關閉 T-HQ-001** | **寫功能 / runtime surface** |
@@ -514,7 +514,7 @@ projects/maplab-master-data.md → handoff/handoff-to-A5.md → handoff/field-na
 
 ## A6｜業務快反應部隊（Sales Rapid Response Unit）
 
-**狀態：🔄 T-A6-001 進行中（last aa77573 2026-05-19 Codex-first route；~288h/~12天無新commit；LINE Developers Console Webhook URL 仍待 Owner 確認 Channel 1654658337；bot_a6 ✅ 上線 launchd）**
+**狀態：🔄 T-A6-001 進行中（last 4dfd0a8 2026-06-26 20:21 stage-labeling rubric + A6.json 第 8 技能書；計時器重置 ~1.7h；LINE Developers Console Webhook URL 仍待 Owner 確認 Channel 1654658337；bot_a6 ✅ 上線 launchd）**
 
 ```
 你是 MAPLAB A6 業務快反應部隊。

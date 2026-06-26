@@ -484,8 +484,8 @@ function getPersonalTerms() {
   return [
     '匯款資訊如下：',
     '中國信託822 / 西台南分行',
-    '帳號：222510859464',
-    '戶名：莊貴棻',
+    '帳號：[收款資訊另提供]'  // 請由 Owner 設定於 GAS PropertiesService，不寫死於 public repo,
+    '戶名：[收款資訊另提供]'  // 請由 Owner 設定於 GAS PropertiesService，不寫死於 public repo,
     '匯款後，再麻煩提供後五碼對帳。如需收據請提前告知，當日會附上。',
     '',
     '（1）已保留檔期，預約付訂後取消，欲收取訂金50%作為成本取消費',

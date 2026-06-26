@@ -102,8 +102,8 @@ function getBankInfoBlock(version) {
     return [
       '▶匯款資訊',
       '中國信託 822 / 西台南分行',
-      '戶名：莊貴棻',
-      '帳號：222510859464',
+      '戶名：[收款資訊另提供]'  // 請由 Owner 設定於 GAS PropertiesService，不寫死於 public repo,
+      '帳號：[收款資訊另提供]'  // 請由 Owner 設定於 GAS PropertiesService，不寫死於 public repo,
       '匯款後，請提供後五碼對帳。'
     ].join('\n');
   }

@@ -57,5 +57,8 @@ workbook/outputs/*/T-A4-2025-asset-case-match/
 workbook/reviews/JOB-2025-CASE-LIBRARY/
 
 # LINE training artifacts — de-identified but local-only, never push (see docs/data-locations.md)
-workbook/a6-training/
+# Only ignore the actual data directories/files; allow Python scripts + design docs
+workbook/a6-training/generated_local/
+workbook/a6-training/qa_examples_deidentified.json
+workbook/a6-training/training_pairs_raw.json
 data/line_booking_pairs.csv

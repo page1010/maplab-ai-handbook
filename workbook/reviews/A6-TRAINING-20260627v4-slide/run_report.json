@@ -1,0 +1,61 @@
+{
+  "run_date": "2026-06-26",
+  "source_script": "line_oa_csv_parser.py",
+  "csv_dir_label": "line_oa_chat_csv_260622_213421 (external drive, read-only)",
+  "total_csv_files": 500,
+  "empty_or_failed_files": 25,
+  "pairs_extracted": 3503,
+  "pairs_kept": 3503,
+  "auto_reply_filter": "excluded 自動回應訊息 rows",
+  "seed_samples": 126,
+  "total_training_samples": 3629,
+  "stage_distribution": {
+    "S3_QUOTE_SEND": 1247,
+    "S6_PREDAY": 522,
+    "S_PENDING": 276,
+    "S3_BUDGET_CONFIRM": 263,
+    "S2_DATA": 243,
+    "S3_QUOTE_INTRO": 235,
+    "S3_MENU_ADJUST": 156,
+    "S1_INQUIRY": 143,
+    "S4_PAYMENT_INFO": 142,
+    "S4_BOOKING_ASK": 79,
+    "S5_PAYMENT_ACK": 71,
+    "S0_OPENING": 50,
+    "S5_PAYMENT": 41,
+    "S2_DIETARY_ASK": 35
+  },
+  "split_distribution": {
+    "train": 2924,
+    "validation": 323,
+    "test": 382
+  },
+  "source_distribution": {
+    "training_pairs_raw": 58,
+    "qa_examples_deidentified": 68,
+    "line_oa_csv": 3503
+  },
+  "answer_side_gap": {
+    "current_booking_pairs_have_answer_text": false,
+    "line_webhook_has_business_replies": false,
+    "status": "needs_LINE_OA_Manager_export_or_human_labels",
+    "sparse_stages": [],
+    "recommended_sources": [
+      "LINE OA Manager full conversation CSV export with speaker=Account rows",
+      "Mina/Owner human labels for missing target replies",
+      "A5/GAS/Sheet quote facts joined as context, not gold reply wording"
+    ]
+  },
+  "pii_policy": {
+    "raw_pii_in_commit": false,
+    "training_jsonl_gitignored": true,
+    "masking_applied": [
+      "姓名",
+      "電話",
+      "email",
+      "url",
+      "日期",
+      "地址"
+    ]
+  }
+}

@@ -249,11 +249,49 @@ def _parse_rows(path: Path) -> list[dict]:
         return []
 
 
-def extract_pairs(path: Path) -> list[tuple[str, str, str, list[str]]]:
+def classify_stage_with_context(
+    customer_text: str,
+    business_text: str,
+    prev_turns: list[tuple[str, str]] | None = None,
+) -> str:
     """
-    Returns list of (customer_text, business_text, conv_hash, extra_mask_names).
-    Accumulates consecutive User messages → first real Account reply (non-auto).
-    Auto-reply rows reset the user buffer without forming a pair.
+    Context-aware stage classification using sliding window.
+    If current pair classifies as S_PENDING, walk backward through prev_turns
+    (up to 3) looking for an inheritable specific late-stage.
+    """
+    result = classify_stage(customer_text, business_text)
+    if result != "S_PENDING" or not prev_turns:
+        return result
+
+    # Only inherit stages that naturally span multiple short acks.
+    # Exclude S1/S2 — an ack after an inquiry is still ambiguous.
+    INHERITABLE = {
+        "S6_PREDAY",
+        "S4_PAYMENT_INFO",
+        "S4_BOOKING_ASK",
+        "S5_PAYMENT",
+        "S5_PAYMENT_ACK",
+        "S3_MENU_ADJUST",
+        "S3_QUOTE_SEND",
+        "S3_BUDGET_CONFIRM",
+    }
+
+    for prev_ct, prev_bt in reversed(prev_turns[-3:]):
+        prev_stage = classify_stage(prev_ct, prev_bt)
+        if prev_stage in INHERITABLE:
+            return prev_stage
+
+    return "S_PENDING"
+
+
+def extract_pairs(
+    path: Path,
+    window: int = 3,
+) -> list[tuple[str, str, str, list[str], list[tuple[str, str]]]]:
+    """
+    Returns list of (customer_text, business_text, conv_hash, extra_mask_names, prev_turns).
+    prev_turns: last `window` (ct, bt) raw pairs from this conversation (for context-aware
+    classify_stage_with_context).
     """
     rows = _parse_rows(path)
     if not rows:
@@ -264,7 +302,8 @@ def extract_pairs(path: Path) -> list[tuple[str, str, str, list[str]]]:
 
     user_buffer: list[str] = []
     user_names: set[str] = set()
-    pairs: list[tuple[str, str, str, list[str]]] = []
+    pair_history: list[tuple[str, str]] = []
+    pairs: list[tuple[str, str, str, list[str], list[tuple[str, str]]]] = []
 
     for row in rows:
         s_type = (row.get("傳送者類型") or "").strip()
@@ -291,7 +330,9 @@ def extract_pairs(path: Path) -> list[tuple[str, str, str, list[str]]]:
                 extra: list[str] = list(user_names)
                 if file_name:
                     extra.append(file_name)
-                pairs.append((customer_text, content, conv_hash, extra))
+                prev_turns_snapshot = list(pair_history[-window:])
+                pairs.append((customer_text, content, conv_hash, extra, prev_turns_snapshot))
+                pair_history.append((customer_text, content))
                 user_buffer = []
                 user_names = set()
             # Account→Account sequence (Mina sends multiple msgs): skip
@@ -303,13 +344,26 @@ def extract_pairs(path: Path) -> list[tuple[str, str, str, list[str]]]:
 # Full CSV pipeline
 # ---------------------------------------------------------------------------
 
+def _llm_classify(ct_masked: str, bt_masked: str, prev_turns_masked: list[tuple[str, str]]) -> str:
+    """Call local Ollama qwen2.5:14b for stage when keyword fails (S_PENDING fallback)."""
+    try:
+        from llm_stage_classifier import classify_with_llm
+        return classify_with_llm({"ct": ct_masked, "bt": bt_masked, "prev_turns": prev_turns_masked})
+    except Exception:
+        return "S_PENDING"
+
+
 def run_csv_pipeline(
     csv_dir: Path,
     base_mask_tokens: tuple[str, ...],
     limit: int | None = None,
     verbose: bool = False,
+    use_llm: bool = False,
 ) -> tuple[list[dict], dict]:
-    """Process all CSV files. Returns (samples, stats)."""
+    """Process all CSV files. Returns (samples, stats).
+    use_llm=True: call Ollama qwen2.5:14b for residual S_PENDING after sliding window.
+    Adds ~2.5s per S_PENDING sample; only enable when LLM throughput is acceptable.
+    """
     csv_files = sorted(csv_dir.glob("*.csv"))
     if limit is not None:
         csv_files = csv_files[:limit]
@@ -332,12 +386,21 @@ def run_csv_pipeline(
 
         pairs_extracted += len(pairs)
 
-        for customer_text, business_text, conv_hash, extra_names in pairs:
+        for customer_text, business_text, conv_hash, extra_names, prev_turns in pairs:
             # File-specific masks: per-file customer names + shared base tokens
             file_masks = tuple(
                 list(base_mask_tokens) + [n for n in extra_names if len(n) >= 2]
             )
-            stage = classify_stage(customer_text, business_text)
+            stage = classify_stage_with_context(customer_text, business_text, prev_turns)
+            # LLM fallback for residual S_PENDING (opt-in via use_llm flag)
+            if stage == "S_PENDING" and use_llm:
+                ct_m = scaffold.mask_pii(customer_text, file_masks)
+                bt_m = scaffold.mask_pii(business_text, file_masks)
+                ctx_m = [
+                    (scaffold.mask_pii(pc, file_masks), scaffold.mask_pii(pb, file_masks))
+                    for pc, pb in prev_turns[-2:]
+                ]
+                stage = _llm_classify(ct_m, bt_m, ctx_m)
             sample = scaffold.build_sample(
                 source_kind="line_oa_csv",
                 source_ref=conv_hash,
@@ -386,6 +449,10 @@ def main(argv: list[str] | None = None) -> int:
         "--report-dir", type=Path, default=None,
         help="write non-PII stats JSON here (committable path)"
     )
+    parser.add_argument(
+        "--llm-fallback", action="store_true",
+        help="call local Ollama qwen2.5:14b for residual S_PENDING after sliding window (adds ~2.5s/sample)"
+    )
     args = parser.parse_args(argv)
 
     # 1. Booking index (provides mask_tokens from contact_name column)
@@ -407,6 +474,7 @@ def main(argv: list[str] | None = None) -> int:
         base_mask_tokens=mask_tokens,
         limit=args.limit,
         verbose=args.verbose,
+        use_llm=args.llm_fallback,
     )
     print(
         f"CSV pipeline done: {csv_stats['pairs_kept']} pairs kept "

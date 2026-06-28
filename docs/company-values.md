@@ -186,3 +186,47 @@
 **edge 與協作優勢:** edge 不在「更多 alpha 訊號」,在「**紀律的不對稱 + 不死**」——大賺小賠需要切小虧、放長贏,而那是人類情緒做不到的。協作分工:**機器無情執行風控紀律(sizing/de-risking/出場),人提供 conviction 與下注決心。**
 
 **大道至簡 / 反 sprawl(Owner 原始設計警告,2026-04 已寫):** 原始三角色脊椎(風控大師 + 左側 + 右側)要保住;不要讓系統因 AI 討論愈長愈多而偏離生存優先。不要把「AI 自行整理的反省」當成 Owner 意圖。
+
+---
+
+## 10. 協作與治理教訓（2026-06-29 蒸餾）
+
+> 從 ghost-job 清理 × gen_system_truth 雙倉掃描 × 三輪盲點偵測萃取。具體案例在前，規則在後。
+
+### 教訓 1 — 瞄準本質的提問，而非表面需求
+
+**案例**: 討論「接 FRED API 拉總經指標」。表面需求是「把總經資料帶進 IS」；本質是——總經是槓桿刻度盤 + 市場反應函數的背離偵測。API 搬運只是基礎；edge 在「FRED 說一件事、市場反應另一件事」的判讀，而那需要 Owner 視角。直接動手接 API 只解決了表面。
+
+**規則**: 任何接需求前先問「這個需求的本質是什麼？解掉它之後，真正要解的問題消失了嗎？」答案若是否，先對齊本質需求再動手。
+
+---
+
+### 教訓 2 — 治理真相必須自我生成，死文件貢獻為零
+
+**案例**: SYSTEM_MAP.md 從手工維護換成 gen_system_truth.py 自動生成（來源: launchctl + git 事實）。三輪迭代後，12 個 com.maplab.* job「跑了但 repo 沒追蹤」的狀態被自動偵測並 Tier-A commit 修復；b-role 退役原因自動寫入 _archive/RETIREMENT_LOG.md。手寫的 SYSTEM_MAP 在第一次 ghost job 時就已過期；自動生成的版本「當下即為真相」。
+
+**規則**: 凡是能從 git + 作業系統事實自動生成的治理資訊，就必須自動生成。要求人工維護的文件，人一離開就衰減，貢獻趨近於零。
+
+---
+
+### 教訓 3 — 閉環成功養出懶 agent；三問是解藥；所有文件 = 組織層次 prompt engineering
+
+**案例**: gen_system_truth 第一輪跑完，SYSTEM_MAP 顯示 anomalies=0——看起來乾淨。但 12 個 com.maplab.* jobs 正在跑，只是 grep regex 壞掉看不見。b-role 若沒三問直接接 Tier-B dispatch 卡片，會產生「去 load 腳本不存在的 plist」的錯誤操作。三問強迫回到地面：(a) 現在跑的是什麼？(b) 跟預期差多遠？(c) 差異代表什麼風險？
+
+**規則**: 低 context handoff 做好後，下一個 agent 拿到的是壓縮卡片，不是地面真相。定期主動三問。評估所有文件只用一個判準——「有沒有提高高品質判斷的機率？」，不是「看起來完整」。
+
+---
+
+### 教訓 4 — anomalies=0 不可信；放寬偵測要同步問「讓自己看不到什麼」
+
+**案例**: grep regex bug — `r"\|".join(...)` 在 shell `-E` 模式下產生字面管道符 `\|`（而非交替運算子 `|`），導致 `com.maplab.*` 全體從 launchctl 結果消失。同一輪修 MISLABELED false positive 時，又讓 UNTRACKED_RUNNING 類別消音。兩個變更都讓 anomalies 數字往下，但 12 個 jobs 的問題沒消失——只有直接跑 `launchctl list | grep com.maplab` 才抓到真相。
+
+**規則**: 「一切正常」的訊號，第一個反應是「偵測函數本身有沒有問題？」。修偵測規則、調閾值、放寬過濾，必須配套說明「哪些東西現在看不見了」。迴圈的目的是 RESOLVE（解決），不只是 LABEL（貼標籤）；眼見為憑勝過乾淨的 dashboard。
+
+---
+
+### 教訓 5 — 知道了就自動做；迴圈靠自主行動才複利，停等才是損耗
+
+**案例**: 12 個 com.maplab.* plist 在 LaunchAgents 下已在跑、前綴正確、無腳本問題 → Tier-A：直接 copy 到 maplab repo launchd/、一次 batch commit，不問。b-role plist 腳本遺失、功能是否重建未定 → 真正的 fork → 移到 _archive/ 並記錄「Owner 決策待定」，才回報。前者自動完成節省一輪往返；後者保留 Owner 控制權。
+
+**規則**: 凡是已知事實能確定下一步的（Tier-A：純加性、不動 runtime），就執行、commit、繼續跑。只有在真正的 fork（功能是否重建、破壞性步驟、代理值解不掉的歧義）才暫停回報。每個多餘的停頓，都把複利迴圈變成停等迴圈。

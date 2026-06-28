@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-06-28（A1）午後巡查 16:00：0 新非巡查 commit（8h 內無工作進展）；⚠️ **T-A8-001 持續超 48h**（~79.6h，last `1a2d752` 06-25 08:25）；⚠️ T-A5-002（~128.6h）/ T-A5-005（~129.0h）持續超 48h（awaiting Owner）；⚠️ T-IOS-KOL-001 ~165.1h / T-A1-LEARNING-LOOP-001 ~289.5h 持續超 48h；A4 ~408.7h/~17.0天 CRITICAL 持續；GCP帳單~74天🔴；A6 T-A6-001 ~43.6h 逼近 48h 閾值（last 4dfd0a8 06-26 20:21，若今晚無 commit 下次巡查需升旗）｜前次：晨間巡查 2026-06-28 08:04｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-06-28（A1）晚間巡查 22:00：0 新非巡查 commit（8h 內無工作進展）；⚠️ **T-A8-001 持續超 48h**（~85.6h，last `1a2d752` 06-25 08:25）；⚠️ T-A5-002（~134.6h）/ T-A5-005（~135.0h）持續超 48h（awaiting Owner）；⚠️ T-IOS-KOL-001 ~171.1h / T-A1-LEARNING-LOOP-001 ~295.5h 持續超 48h；A4 ~414.7h/~17.3天 CRITICAL 持續；GCP帳單~74天🔴；⚠️ **A6 T-A6-001 已超 48h 門檻（~49.6h，last 4dfd0a8 06-26 20:21，請 Owner 確認後續方向）**｜前次：午後巡查 2026-06-28 16:00｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -122,6 +122,7 @@
 | A5 | T-A5-002: 等 Owner 確認（品項名稱改法、重複品項、I 欄用途） | 見 Task Card |
 | A5 | T-A5-006: 前置 T-A5-005 需先完成 | 見 Task Card |
 | A6 | T-A6-001: Telegram 報價 hot path 已修成 Sheet-first；剩餘限制是 LINE webhook 只含客戶→OA 訊息，若要完整雙向訓練資料，需 LINE OA Manager CSV 匯出或其他正式來源。 | 見 Task Card |
+| A1 巡查紀錄 | ⚠️ A1巡查 2026-06-28 22:00：**A6 T-A6-001 已超 48h 門檻**（~49.6h，last commit `4dfd0a8` 2026-06-26 20:21 stage-labeling rubric）；0 新非巡查 commit（8h 靜止）；T-A8-001（~85.6h）/ T-A5-002（~134.6h）/ T-A5-005（~135.0h）/ T-IOS-KOL-001（~171.1h）/ T-A1-LEARNING-LOOP-001（~295.5h）/ A4（~414.7h/~17.3天）持續超 48h；GCP帳單~74天🔴 持續；所有已知 CRITICAL 無新解除。請 Owner 確認 A6 下一步動作方向。 | A6 已升旗；持續觀察 |
 | A6 | T-A6-002: 等 Owner 決定方向 | 見 Task Card |
 | A7 | T-A7-001: Q7 試吃政策需 Owner 決定、Q10 取消/改期政策需 Owner 決定、A5 外送費級距未建立 | 見 Task Card |
 | A7 | T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 | 見 Task Card |

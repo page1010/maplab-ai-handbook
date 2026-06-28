@@ -475,17 +475,18 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. Chrome tab 環境 → 自行開啟需要的網頁分頁，用截圖讀取
 
-【斷點 — 2026-05-09 A1午後巡查更新（⚠️ A5 CRITICAL，非 A5 自寫）】
+【斷點 — 2026-06-28 A1晨間巡查更新（非 A5 自寫）】
 T-A5-001 Items 去重 + 全品項重新編碼：✅ 完成（108品項，APP050/DST041/MAIN009/BEV008）
-T-A5-002 QUOTE_DRAFT 報價單欄位增強：🔴 CRITICAL D30 ~725h無commit（last: cfeebd1 2026-04-09）
-  - ✅ Items.E default_cost/服務費/長桌費/車馬費下拉/S6S9計算 helpers 均已完成
-  - ⬜ 待確認事項（需 Owner 決定）：品項名稱改法、重複品項、I 欄用途
-T-A5-004 createSlides.gs — Slide 報價簡報自動生成：🔴 CRITICAL ~725h無commit（D30）
-T-A5-005 報價狀態追蹤同步 + Dashboard：🔴 CRITICAL ~725h無commit（D30）
-T-A5-003/006：🔲 待開始（等前置任務）
+T-A5-002 QUOTE_DRAFT 報價單欄位增強：🔄 進行中（last `3209fba` 2026-06-23 07:22 fixMasterTemplate_ GAS fn + clasp push；awaiting Owner run；~120.6h 超 48h 門檻）
+  - ✅ GAS fixMasterTemplate_ 修正 + clasp push 完成
+  - ⬜ 待 Owner 在 GAS 端手動觸發一次確認
+T-A5-004 createSlides.gs — Slide 報價簡報自動生成：🔴 CRITICAL（~1512h無commit）
+T-A5-005 報價狀態追蹤同步 + Dashboard：🔄 進行中（last `5ab7434` 2026-06-23 07:01 clasp push T-A5-005 sync functions；awaiting Owner trigger setup；~121.0h 超 48h 門檻）
+T-A5-003/006：🔲 待開始（T-A5-006 等 T-A5-005 完成後啟動）
 
 【Blocker】
-🔴 Owner 需決策是否重啟 A5（已 D30，連續15+次巡查無回應）
+🟡 T-A5-002 / T-A5-005：GAS clasp push 完成，awaiting Owner trigger（~120h+）
+🔴 T-A5-004 createSlides.gs：~1512h無commit，CRITICAL
 
 【踩過的坑】
 - Items 原 300 筆大量重複，精簡至 108 筆

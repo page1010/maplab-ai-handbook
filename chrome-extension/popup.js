@@ -670,18 +670,43 @@ function buildModuleHandoff(role, module, recallText, parsed, runtime, base) {
     ? `- \`${IS_ROOT_LOCAL}/SYSTEM_MAP.md\` 底段 governance health（gen_system_truth.py 每日覆寫）`
     : `- ${IS_RAW}/SYSTEM_MAP.md — 底段 governance health section`);
   lines.push('');
-  lines.push('**Step 8 — 跨 repo 入口（MAPLAB 側）**');
-  lines.push(`- maplab CURRENT_STATUS：${rawUrl(base, 'CURRENT_STATUS.md')}`);
-  lines.push(`- 跨 repo 派工地圖：${rawUrl(base, 'docs/cross-project-agent-summon-workflow-map.md')}`);
+  lines.push('**Step 8 — 跨 repo 入口（MAPLAB 側）— 三條任一可達**');
   lines.push('');
-  lines.push('### 30 秒 Live 健康快照');
+  lines.push('本機（host/worktree）:');
+  lines.push(`  - \`${ML_ROOT_LOCAL}/CURRENT_STATUS.md\``);
+  lines.push(`  - \`${ML_ROOT_LOCAL}/docs/cross-project-agent-summon-workflow-map.md\``);
   lines.push('');
-  // PLACEHOLDER: live health snapshot cannot be fetched from inside the Chrome extension
-  lines.push('<!-- PLACEHOLDER: Extension 無法直接執行 launchctl 或讀 Telegram readback。');
-  lines.push('     若接手 Claude Code / Codex，請在接手前執行：');
-  lines.push(`     launchctl list | grep -E "com.investmentos|com.maplab" | grep -v "^-" # 確認哪些 job 在跑`);
-  lines.push(`     cat ${IS_ROOT_LOCAL}/state/governance_health.json | python3 -m json.tool | head -30`);
-  lines.push('     如有最新 Telegram readback，請一併貼入 session 開頭。 -->');
+  lines.push('沙箱 / Web（maplab public raw）:');
+  lines.push(`  - ${rawUrl(base, 'CURRENT_STATUS.md')}`);
+  lines.push(`  - ${rawUrl(base, 'docs/cross-project-agent-summon-workflow-map.md')}`);
+  lines.push('');
+  lines.push('IS repo 離線 mirror（sync_cross_project_mirror.sh 每日同步）:');
+  lines.push(isLocalRuntime
+    ? `  - \`${IS_ROOT_LOCAL}/docs/cross-project/maplab_current_status.md\``
+    : `  - ${IS_RAW}/docs/cross-project/maplab_current_status.md`);
+  lines.push(isLocalRuntime
+    ? `  - \`${IS_ROOT_LOCAL}/docs/cross-project/maplab_role_registry.json\` （角色 registry）`
+    : `  - ${IS_RAW}/docs/cross-project/maplab_role_registry.json （角色 registry）`);
+  lines.push(isLocalRuntime
+    ? `  - \`${IS_ROOT_LOCAL}/docs/cross-project/maplab_agent_summon_map.md\``
+    : `  - ${IS_RAW}/docs/cross-project/maplab_agent_summon_map.md`);
+  lines.push('');
+  lines.push('### 30 秒 Live 健康快照（每 15 分鐘自動更新）');
+  lines.push('');
+  lines.push('⚠️ 快照新鮮度 = `generated_at`。「此刻」鐵證需 host `launchctl list | grep investmentos`');
+  lines.push('');
+  lines.push(isLocalRuntime
+    ? `讀快照：\`cat ${IS_ROOT_LOCAL}/state/live_health.json\``
+    : `快照路徑（IS repo）：${IS_RAW}/state/live_health.json`);
+  lines.push('');
+  lines.push('快照欄位：');
+  lines.push('  - `jobs`: 關鍵 launchd job PID + last_exit（telegram-operator / exposure-ledger / dashboard / convergence-engine 等）');
+  lines.push('  - `escalation_critical_count`: 目前開啟 CRITICAL 升級數');
+  lines.push('  - `exposure_ledger_last_run`: 最後跑帳時間（`calc_exposure_ledger.py`）');
+  lines.push('  - `telegram_readback`: 最近 telegram job 完成狀態 + exit_code');
+  lines.push('');
+  lines.push('若需真即時 PID 確認（接手高風險任務前）：');
+  lines.push(`  \`launchctl list | grep -E "com.investmentos|com.maplab" | grep -v "^-"\``);
   lines.push('');
   lines.push('### 產出要求（全貌綜述，非逐題）');
   lines.push('');

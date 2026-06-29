@@ -729,6 +729,14 @@ function buildModuleHandoff(role, module, recallText, parsed, runtime, base) {
   lines.push('  你準備做什麼（具體到檔案/腳本層級）；');
   lines.push('  你讀不到或不確定的部分（明確列缺口，不要補猜）。');
   lines.push('');
+  lines.push('**E — 費曼複述（交接必備產物）**');
+  lines.push('  用人話把整個系統講清楚，像講給一個聰明但沒看過這專案的人聽（12 歲能懂的程度）。');
+  lines.push('  規則：');
+  lines.push('  - 不准堆砌術語（launchd、escalation、Tier-B 等必須轉化成白話）');
+  lines.push('  - 限 150 字以內，必須包含：它做什麼、誰在用、為什麼現在重要');
+  lines.push('  - 若寫不出來，明確標「理解漏洞：____ 段讀了但說不清楚」');
+  lines.push('  用途：(a) 暴露理解漏洞；(b) 兩個 agent 的費曼複述一旦分歧，指向文件哪段寫爛了。');
+  lines.push('');
   lines.push('### 結尾自問');
   lines.push('');
   lines.push('輸出完四段後，問自己：');

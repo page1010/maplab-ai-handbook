@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-06-29（A1）每日巡查 00:07 UTC：0 新非巡查 commit（24h 無工作進展，全系統靜止）；⚠️ **T-A8-001 持續超 48h**（~95.6h，last `1a2d752` 06-25 08:25）；⚠️ T-A5-002（~144.6h）/ T-A5-005（~145.0h）持續超 48h（awaiting Owner）；⚠️ T-IOS-KOL-001 ~181.1h / T-A1-LEARNING-LOOP-001 ~305.5h 持續超 48h；A4 ~424.7h/~17.7天 CRITICAL 持續；GCP帳單~75天🔴；⚠️ **A6 T-A6-001 持續超 48h（~59.6h，last 4dfd0a8 06-26 20:21，請 Owner 確認後續方向）**｜前次：晚間巡查 2026-06-28 22:00｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-06-29（A1）午後巡查 16:00 TST：8h 0 新非巡查 commit（全系統靜止）；⚠️ **T-A8-001 持續超 48h**（~103.6h，last `1a2d752` 06-25 08:25）；⚠️ T-A5-002（~152.6h）/ T-A5-005（~153.0h）持續超 48h（awaiting Owner）；⚠️ T-IOS-KOL-001 ~189.1h / T-A1-LEARNING-LOOP-001 ~313.5h 持續超 48h；A4 ~432.7h/~18.0天 CRITICAL 持續；GCP帳單~75天🔴；⚠️ **A6 T-A6-001 持續超 48h（~67.6h，last 4dfd0a8 06-26 20:21，請 Owner 確認後續方向）**；AGENT_RECALL_PROMPTS.md A4 斷點（06-11→06-29）已更新｜前次：每日巡查 2026-06-29 00:07 UTC｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -124,6 +124,7 @@
 | A6 | T-A6-001: Telegram 報價 hot path 已修成 Sheet-first；剩餘限制是 LINE webhook 只含客戶→OA 訊息，若要完整雙向訓練資料，需 LINE OA Manager CSV 匯出或其他正式來源。 | 見 Task Card |
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-28 22:00：**A6 T-A6-001 已超 48h 門檻**（~49.6h，last commit `4dfd0a8` 2026-06-26 20:21 stage-labeling rubric）；0 新非巡查 commit（8h 靜止）；T-A8-001（~85.6h）/ T-A5-002（~134.6h）/ T-A5-005（~135.0h）/ T-IOS-KOL-001（~171.1h）/ T-A1-LEARNING-LOOP-001（~295.5h）/ A4（~414.7h/~17.3天）持續超 48h；GCP帳單~74天🔴 持續；所有已知 CRITICAL 無新解除。請 Owner 確認 A6 下一步動作方向。 | A6 已升旗；持續觀察 |
 | A1 巡查紀錄 | ⚠️ A1巡查 2026-06-29 00:07 UTC（每日）：0 新非巡查 commit（24h 全系統靜止）；所有已知異常持續未解：A6 T-A6-001（~59.6h）/ T-A8-001（~95.6h）/ T-A5-002（~144.6h）/ T-A5-005（~145.0h）/ T-IOS-KOL-001（~181.1h）/ T-A1-LEARNING-LOOP-001（~305.5h）/ A4（~424.7h/~17.7天）持續超 48h；GCP帳單~75天🔴 持續；請 Owner 確認 A6 後續方向 + A8 storyboard 審核。 | 持續觀察 |
+| A1 巡查紀錄 | ⚠️ A1巡查 2026-06-29 16:00（午後，遠端）：8h **0 新非巡查 commit**（HEAD 仍為 9da31cd 今早每日巡查；全系統靜止）；精算：A6 T-A6-001（last 4dfd0a8 06-26 20:21）現 **~67.6h** 持續超 48h；T-A8-001（last 1a2d752 06-25 08:25）現 **~103.6h** 持續超 48h；T-A5-002（last 3209fba 06-23 07:22）現 **~152.6h** 持續超 48h；T-A5-005（last 5ab7434 06-23 07:01）現 **~153.0h** 持續超 48h；T-IOS-KOL-001（last 1c58113 06-21 18:55）現 **~189.1h** 持續超 48h；T-A1-LEARNING-LOOP-001（last cc21bad 06-16 14:33）現 **~313.5h** 持續超 48h；A4 T-A4-001（last c2dc194 06-11 15:19）現 **~432.7h/~18.0天** 持續 🔴 CRITICAL；GCP帳單 **~75天** 🔴 持續未處理；已比對「當前進行中任務」表與 AGENT_RECALL_PROMPTS.md 斷點，無新增不一致；**AGENT_RECALL_PROMPTS.md A4 斷點日期（06-11→06-29）已更新**；所有已知異常為延續，無新增異常。 | 持續觀察 |
 | A6 | T-A6-002: 等 Owner 決定方向 | 見 Task Card |
 | A7 | T-A7-001: Q7 試吃政策需 Owner 決定、Q10 取消/改期政策需 Owner 決定、A5 外送費級距未建立 | 見 Task Card |
 | A7 | T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 9 需 Owner 政策決策（Q7 試吃 + Q10 取消改期）；任務 5/8 需 TimeTree 權限 | 見 Task Card |

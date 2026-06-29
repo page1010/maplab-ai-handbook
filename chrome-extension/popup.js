@@ -601,15 +601,115 @@ function buildModuleHandoff(role, module, recallText, parsed, runtime, base) {
   if (!role || !module) {
     return buildOverviewPrompt(parsed || { version: '?', phase: '?', activeTasks: [], blockers: [] }, cachedOverdue);
   }
+  const rt = normalizeRuntimeTarget(runtime);
+  const isLocalRuntime = rt === 'claude_code' || rt === 'codex';
+  const IS_ROOT_LOCAL = '/Users/pagemacmini/Documents/New project';
+  const ML_ROOT_LOCAL = '/Users/pagemacmini/maplab-ai-handbook';
+  const IS_RAW = 'https://raw.githubusercontent.com/page1010/investment-os/main';
+  // frontier: top 5 commits from cachedCommits (fetched at load time from GitHub)
+  const frontierCommits = (cachedCommits || []).slice(0, 5);
+  const frontierStr = frontierCommits.length
+    ? frontierCommits.map(c => `  - ${c.sha} ${c.date} ${c.message.substring(0, 60)}`).join('\n')
+    : '  - [需先點 "重新抓取" 載入最新 commit]';
+
   const lines = [];
   lines.push(`# MAPLAB ${module.role_id} Runtime Handoff`);
   lines.push('');
-  lines.push(`runtime_target: ${normalizeRuntimeTarget(runtime)}`);
+  lines.push(`runtime_target: ${rt}`);
   lines.push(`runtime_target_label: ${runtimeTargetLabel(runtime)}`);
   lines.push(`module_id: ${module.module_id}`);
-  lines.push(`canonical_repo: /Users/pagemacmini/maplab-ai-handbook`);
+  lines.push(`canonical_repo: ${ML_ROOT_LOCAL}`);
   lines.push(`github_module: ${rawUrl(base, `chrome-extension/task-modules/${role}.json`)}`);
   lines.push(`module_generated_at: ${module.generated_at || '?'}`);
+  lines.push('');
+  lines.push('## 全貌理解框架 — 先讀完，再接手（不是答題，是理解到能接手）');
+  lines.push('');
+  lines.push('### 目標');
+  lines.push('召喚你的目的是讓你達到「能接手」的理解深度，不是解答單一問題。');
+  lines.push('請按以下路線依序閱讀，在每個節點建立認知再繼續，不要跳步。');
+  lines.push('');
+  lines.push('### 定向路線（依序）');
+  lines.push('');
+  lines.push('**Step 1 — 系統全貌地圖**');
+  lines.push(isLocalRuntime
+    ? `- \`${IS_ROOT_LOCAL}/SYSTEM_MAP.md\` — 視覺化系統架構，1 分鐘掌握全局`
+    : `- ${IS_RAW}/SYSTEM_MAP.md — 視覺化系統架構，1 分鐘掌握全局`);
+  lines.push('');
+  lines.push('**Step 2 — Frontier（git 前沿，最近動了什麼）**');
+  lines.push(`- 最新 5 筆 commit（Extension 載入時從 GitHub 抓取）：`);
+  lines.push(frontierStr);
+  lines.push(isLocalRuntime
+    ? `- 完整 git 前沿：\`git log --oneline -15\`（在 ${IS_ROOT_LOCAL}）`
+    : '- 如可存取 repo，用 git log 確認最新 commit；如不可，以下方 CURRENT_STATUS.md 為準');
+  lines.push('');
+  lines.push('**Step 3 — 即時系統狀態**');
+  lines.push(isLocalRuntime
+    ? `- \`${IS_ROOT_LOCAL}/CURRENT_STATUS.md\` — 唯一最新狀態入口，優先於所有文件`
+    : `- ${IS_RAW}/CURRENT_STATUS.md — 唯一最新狀態入口`);
+  lines.push('');
+  lines.push('**Step 4 — 作業文化與協作規則**');
+  lines.push(isLocalRuntime
+    ? `- \`${IS_ROOT_LOCAL}/docs/OPERATING_CULTURE.md\``
+    : `- ${IS_RAW}/docs/OPERATING_CULTURE.md`);
+  lines.push('');
+  lines.push('**Step 5 — 治理閉環 + 演化通道**');
+  lines.push(isLocalRuntime
+    ? `- \`${IS_ROOT_LOCAL}/docs/agent_governance/SELF_HEALING_LOOP_BINDING_SPEC.md\``
+    : `- ${IS_RAW}/docs/agent_governance/SELF_HEALING_LOOP_BINDING_SPEC.md`);
+  lines.push(isLocalRuntime
+    ? `- \`${IS_ROOT_LOCAL}/docs/EVOLUTION_CHANNEL.md\``
+    : `- ${IS_RAW}/docs/EVOLUTION_CHANNEL.md`);
+  lines.push('');
+  lines.push('**Step 6 — 已知陷阱（必讀，防止重蹈）**');
+  lines.push(isLocalRuntime
+    ? `- \`${IS_ROOT_LOCAL}/pitfalls.md\``
+    : `- ${IS_RAW}/pitfalls.md`);
+  lines.push('');
+  lines.push('**Step 7 — 治理真相機 output**');
+  lines.push(isLocalRuntime
+    ? `- \`${IS_ROOT_LOCAL}/SYSTEM_MAP.md\` 底段 governance health（gen_system_truth.py 每日覆寫）`
+    : `- ${IS_RAW}/SYSTEM_MAP.md — 底段 governance health section`);
+  lines.push('');
+  lines.push('**Step 8 — 跨 repo 入口（MAPLAB 側）**');
+  lines.push(`- maplab CURRENT_STATUS：${rawUrl(base, 'CURRENT_STATUS.md')}`);
+  lines.push(`- 跨 repo 派工地圖：${rawUrl(base, 'docs/cross-project-agent-summon-workflow-map.md')}`);
+  lines.push('');
+  lines.push('### 30 秒 Live 健康快照');
+  lines.push('');
+  // PLACEHOLDER: live health snapshot cannot be fetched from inside the Chrome extension
+  lines.push('<!-- PLACEHOLDER: Extension 無法直接執行 launchctl 或讀 Telegram readback。');
+  lines.push('     若接手 Claude Code / Codex，請在接手前執行：');
+  lines.push(`     launchctl list | grep -E "com.investmentos|com.maplab" | grep -v "^-" # 確認哪些 job 在跑`);
+  lines.push(`     cat ${IS_ROOT_LOCAL}/state/governance_health.json | python3 -m json.tool | head -30`);
+  lines.push('     如有最新 Telegram readback，請一併貼入 session 開頭。 -->');
+  lines.push('');
+  lines.push('### 產出要求（全貌綜述，非逐題）');
+  lines.push('');
+  lines.push('讀完定向路線後，輸出以下四段，不是逐題回答：');
+  lines.push('');
+  lines.push('**A — 系統為何存在 + 角色分工**');
+  lines.push('  這個系統解決什麼問題，A/B/IOS 各部門的分工邊界在哪，你這個角色在哪個節點。');
+  lines.push('');
+  lines.push('**B — 活著 vs 沒建 + 生存層 + Frontier**');
+  lines.push('  哪些功能真正在跑（launchd 活著），哪些只是設計文件（未建）；');
+  lines.push('  生存閘門（SOP1-4 + blackswan + sentinel）現狀；');
+  lines.push('  最近 frontier 改了什麼（Step 2 + Step 3）。');
+  lines.push('');
+  lines.push('**C — 治理 + 迴圈 + 文化核心**');
+  lines.push('  gen_system_truth 閉環目前工作狀態（anomalies 數量/最新 dispatch）；');
+  lines.push('  evolution channel 最新 patch；');
+  lines.push('  1 條這次召喚最相關的文化規則（OPERATING_CULTURE.md）。');
+  lines.push('');
+  lines.push('**D — 接手下一步 + 理解邊界**');
+  lines.push('  你準備做什麼（具體到檔案/腳本層級）；');
+  lines.push('  你讀不到或不確定的部分（明確列缺口，不要補猜）。');
+  lines.push('');
+  lines.push('### 結尾自問');
+  lines.push('');
+  lines.push('輸出完四段後，問自己：');
+  lines.push('> 「這次召喚還缺什麼線索能讓我理解更完整？請列出 1-3 個具體問題或需要補充的資料。」');
+  lines.push('');
+  lines.push('---');
   lines.push('');
   lines.push('## 0. 動態連結與 Markdown 同步規則');
   lines.push('');

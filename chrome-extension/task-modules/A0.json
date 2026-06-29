@@ -1,6 +1,6 @@
 {
   "schema_version": "2026-05-11.dynamic-role-module.v1",
-  "generated_at": "2026-06-24T23:19:31+08:00",
+  "generated_at": "2026-06-29T08:45:19+08:00",
   "module_id": "MAPLAB_A0_DISPATCH_SECRETARY_DYNAMIC_ROLE_MODULE",
   "role_id": "A0",
   "role_name": "Dispatch Secretary",
@@ -26,8 +26,8 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "8769fca4c0ea1a18eb46df4872ad524160d9a809b051416166765ca2f9958d51",
-      "size_bytes": "73250"
+      "source_sha256": "b998e5c360b77d23cc4d73a75bea74b8ff0696bca09d10a09fee7a4f528b4529",
+      "size_bytes": "92413"
     },
     {
       "path": "AGENT_RULES.md",
@@ -74,8 +74,8 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "200d44296ab5832d725ec47d500001fa95045f78a8e67e8fa0ace3922001525e",
-      "size_bytes": "64554"
+      "source_sha256": "38aa5c999ae323cd30ffe683b2eea5334da126d3cbe6d2aa1a06d6b8dc6fcb11",
+      "size_bytes": "64596"
     },
     {
       "path": "skills/superpowers-guide.md",

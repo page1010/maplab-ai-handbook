@@ -890,6 +890,25 @@ ROLES.extend(
             extra_read_first=["projects/ios-sell-signal-monitor.md", "skills/ios-sell-signal-monitor.md"],
             recall_path="recalls/IOS-SELL_recall.md",
         ),
+        RoleModule(
+            "WIN",
+            "Windows Evidence Collector",
+            "Windows Evidence Collector（Windows 端證據採集）",
+            "運行在 Windows computer，把 Owner 指定的 Windows UI / 三竹 / 新聞 / 市場資訊，整理成 Mac Investment OS 可驗證的 read-only packet，交給 Mac 端交叉驗證。",
+            ["evidence_collection", "market_data_brief", "windows_ui_capture", "news_brief", "packet_delivery"],
+            [],
+            [],
+            runtime_targets=["claude_chrome_tab"],
+            affects=["data/windows_agent_bridge/inbox", "B2 cross-validation"],
+            startup_contract_extra=[
+                "Read docs/WINDOWS_AGENT_BRIDGE_PROTOCOL.md for packet format and outbox path.",
+                "WIN only does evidence collection — no decisions, no orders, no broker state.",
+                "Compress 10+ raw items to 1-3 Owner actions; write sample_too_small if insufficient.",
+                "All conclusions must wait for Mac-side cross-validation before being treated as fact.",
+            ],
+            recall_path="recalls/WIN_recall.md",
+            risk_level="low",
+        ),
     ]
 )
 
@@ -1284,7 +1303,25 @@ def main() -> None:
             ],
         },
     )
-    print(json.dumps({"modules": len(modules), "rows": len(rows), "missing_sources": missing}, ensure_ascii=False, indent=2))
+    # Consistency check: roles hardcoded in popup.html roleSelect vs index.json
+    # Roles missing from index will disappear when JS rebuilds the dropdown from the index.
+    import re as _re
+    popup_path = ROOT / "chrome-extension" / "popup.html"
+    index_ids = {m["role_id"] for m in modules}
+    popup_role_ids: set[str] = set()
+    if popup_path.exists():
+        html = popup_path.read_text(encoding="utf-8")
+        # Extract only the roleSelect block (between id="roleSelect" and the next </select>)
+        role_block_match = _re.search(r'id="roleSelect"[^>]*>(.*?)</select>', html, _re.DOTALL)
+        if role_block_match:
+            popup_role_ids = set(_re.findall(r'<option value="([^"]+)"', role_block_match.group(1))) - {""}
+    popup_missing_from_index = sorted(popup_role_ids - index_ids)
+    consistency: dict[str, object] = {"ok": not popup_missing_from_index}
+    if popup_missing_from_index:
+        consistency["popup_hardcoded_missing_from_index"] = popup_missing_from_index
+        consistency["note"] = "These roles are hardcoded in popup.html roleSelect but absent from index.json — they will vanish after JS init. Re-run this script after adding them to ROLES."
+
+    print(json.dumps({"modules": len(modules), "rows": len(rows), "missing_sources": missing, "popup_consistency": consistency}, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":

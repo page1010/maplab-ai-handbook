@@ -1,6 +1,6 @@
 # GitHub Dynamic Role Task Modules
 
-Generated: 2026-06-24T22:53:32+08:00
+Generated: 2026-06-29T08:45:19+08:00
 
 ## Purpose
 
@@ -291,6 +291,24 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: dirty_worktree_inventory, keep_drop_decision, cleanup_handoff, scheduled_hygiene
 - Affects: dirty worktree inventory; B4 cleanup patrol; B3 archive handoff; B1 cleanup script repair
 - Module file: `chrome-extension/task-modules/IOS-HYGIENE.json`
+
+### IOS-SELL — Position Sentinel
+
+- Department: 實單哨兵
+- Simulation: 監控 Owner 實際持倉，計算 RSI/MACD/MA 技術指標，三指標同時出現賣出訊號時透過 Telegram 通知 Owner。不下單、不模擬單、不給主觀買賣建議。
+- Runtime targets: codex, openclaw, gemini, hermes
+- Task types: position_scan, rsi_check, macd_check, ma_cross_check, sell_alert_dispatch
+- Affects: Telegram sell-signal alert; B1 indicator pipeline repair; B2 signal quality review; B3 alert archive
+- Module file: `chrome-extension/task-modules/IOS-SELL.json`
+
+### WIN — Windows Evidence Collector
+
+- Department: Windows Evidence Collector（Windows 端證據採集）
+- Simulation: 運行在 Windows computer，把 Owner 指定的 Windows UI / 三竹 / 新聞 / 市場資訊，整理成 Mac Investment OS 可驗證的 read-only packet，交給 Mac 端交叉驗證。
+- Runtime targets: claude_chrome_tab
+- Task types: evidence_collection, market_data_brief, windows_ui_capture, news_brief, packet_delivery
+- Affects: data/windows_agent_bridge/inbox; B2 cross-validation
+- Module file: `chrome-extension/task-modules/WIN.json`
 
 ## Relationship Rule
 

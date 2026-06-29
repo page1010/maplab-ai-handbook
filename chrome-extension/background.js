@@ -1,14 +1,18 @@
-// background.js
+// background.js — MV3 compatible
+// Bot bridge polls http://127.0.0.1:9876/poll for commands and dispatches them to the active tab.
+// MV3 service workers are ephemeral; chrome.alarms wakes the worker every 30s so polling never
+// silently stops when Chrome recycles the worker.
 
-const POLL_INTERVAL_MS = 2000;
 const SERVER_URL = "http://127.0.0.1:9876/poll";
 const RESULT_URL = "http://127.0.0.1:9876/result";
+const ALARM_NAME = "bot-bridge-keepalive";
+const ALARM_PERIOD_MINUTES = 0.5; // 30 seconds — minimum reliable period for MV3 alarms
 
 function isRestrictedUrl(url) {
   if (!url) return true;
-  return url.startsWith("chrome://") || 
-         url.startsWith("chrome-extension://") || 
-         url.startsWith("about:") || 
+  return url.startsWith("chrome://") ||
+         url.startsWith("chrome-extension://") ||
+         url.startsWith("about:") ||
          url.startsWith("edge://") ||
          url.startsWith("devtools://");
 }
@@ -20,21 +24,21 @@ function findTargetTab(callback) {
       callback(tabs[0]);
       return;
     }
-    
+
     // 2. Try active tab in any window
     chrome.tabs.query({active: true}, (tabs) => {
       if (tabs && tabs.length > 0 && !isRestrictedUrl(tabs[0].url)) {
         callback(tabs[0]);
         return;
       }
-      
+
       // 3. Query all tabs and find one matching chat systems
       chrome.tabs.query({}, (allTabs) => {
         if (!allTabs || allTabs.length === 0) {
           callback(null);
           return;
         }
-        
+
         const chatPatterns = [
           "claude.ai",
           "gemini.google.com",
@@ -43,8 +47,7 @@ function findTargetTab(callback) {
           "chat.openai.com",
           "maplabkitchen.com"
         ];
-        
-        // Find the first tab matching one of these patterns
+
         for (const pattern of chatPatterns) {
           const found = allTabs.find(t => t.url && t.url.toLowerCase().includes(pattern));
           if (found) {
@@ -53,7 +56,7 @@ function findTargetTab(callback) {
             return;
           }
         }
-        
+
         // 4. Fallback to any non-restricted web tab
         const webTab = allTabs.find(t => t.url && !isRestrictedUrl(t.url));
         if (webTab) {
@@ -73,22 +76,21 @@ function sendMessageToTab(tab, data) {
     sendResult(data.command_id, false, "No active or available browser tabs found.");
     return;
   }
-  
+
   const tabId = tab.id;
-  
+
   if (isRestrictedUrl(tab.url)) {
     console.error("Cannot control restricted URL:", tab.url);
     sendResult(data.command_id, false, `Cannot control restricted page: ${tab.url}. Please open or switch to a chat tab (e.g., Claude, Gemini, AI Studio).`);
     return;
   }
-  
+
   console.log(`Sending action '${data.action}' to tab ID ${tabId} (${tab.url})`);
   chrome.tabs.sendMessage(tabId, data, (response) => {
     if (chrome.runtime.lastError) {
       const errMsg = chrome.runtime.lastError.message;
       console.log(`Message failed (${errMsg}), trying to dynamically inject content.js...`);
-      
-      // Inject content script dynamically
+
       chrome.scripting.executeScript({
         target: { tabId: tabId },
         files: ["content.js"]
@@ -98,8 +100,6 @@ function sendMessageToTab(tab, data) {
           sendResult(data.command_id, false, `Failed to inject content script into ${tab.url}: ${chrome.runtime.lastError.message}`);
         } else {
           console.log("Successfully injected content.js, retrying message...");
-          
-          // Retry sending message after script injection
           chrome.tabs.sendMessage(tabId, data, (retryResponse) => {
             if (chrome.runtime.lastError) {
               console.error("Retry failed:", chrome.runtime.lastError.message);
@@ -118,33 +118,42 @@ function sendMessageToTab(tab, data) {
   });
 }
 
-async function pollServer() {
-  let waitTime = 1000; // default poll interval of 1s when idle
+async function pollOnce() {
   try {
     const response = await fetch(SERVER_URL);
     if (response.ok) {
       const data = await response.json();
       if (data && data.command_id) {
         console.log("Received command from server:", data);
-        
         findTargetTab((tab) => {
           sendMessageToTab(tab, data);
         });
-        
-        // Command found, query again quickly to check for any queued commands
-        waitTime = 100;
+        return true; // command found — caller should poll again quickly
       }
-    } else {
-      // Server returned error (e.g. 502/503), wait 2s
-      waitTime = 2000;
     }
-  } catch (err) {
-    // Server probably offline, wait 5s to avoid CPU spinning
-    waitTime = 5000;
+  } catch {
+    // server offline — normal when ccbot is not running
   }
-  
-  // Schedule next poll sequentially to avoid overlapping requests
-  setTimeout(pollServer, waitTime);
+  return false;
+}
+
+// Poll in a burst for up to 25 seconds (safely inside the 30s SW idle window).
+// The alarm fires every 30s to restart the burst, ensuring no silent gap.
+let burstActive = false;
+
+async function pollBurst() {
+  if (burstActive) return;
+  burstActive = true;
+  try {
+    const deadline = Date.now() + 25000;
+    while (Date.now() < deadline) {
+      const found = await pollOnce();
+      const wait = found ? 100 : 2000;
+      await new Promise(r => setTimeout(r, wait));
+    }
+  } finally {
+    burstActive = false;
+  }
 }
 
 async function sendResult(commandId, success, resultData) {
@@ -163,8 +172,13 @@ async function sendResult(commandId, success, resultData) {
   }
 }
 
-function startPolling() {
-  pollServer();
-}
+// Alarm wakes the service worker every 30s; each wake starts a fresh 25s burst.
+chrome.alarms.create(ALARM_NAME, { periodInMinutes: ALARM_PERIOD_MINUTES });
+chrome.alarms.onAlarm.addListener((alarm) => {
+  if (alarm.name === ALARM_NAME) {
+    pollBurst();
+  }
+});
 
-startPolling();
+// Start immediately on service worker startup (install, update, browser launch).
+pollBurst();

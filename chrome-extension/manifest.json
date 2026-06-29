@@ -3,7 +3,7 @@
   "name": "MAPLAB Agent Commander",
   "version": "5.6.1",
   "description": "角色召喚 + GitHub 任務模組 + Markdown 同步檢查 + multi-runtime handoff targets。",
-  "permissions": ["storage", "activeTab", "scripting", "tabs", "clipboardWrite", "sidePanel"],
+  "permissions": ["storage", "activeTab", "scripting", "tabs", "clipboardWrite", "sidePanel", "alarms"],
   "host_permissions": [
     "https://claude.ai/*",
     "https://raw.githubusercontent.com/*",

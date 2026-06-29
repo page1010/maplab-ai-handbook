@@ -1,6 +1,6 @@
 {
   "schema_version": "2026-05-11.dynamic-role-module-index.v1",
-  "generated_at": "2026-06-24T23:19:31+08:00",
+  "generated_at": "2026-06-29T08:45:19+08:00",
   "repository": "page1010/maplab-ai-handbook",
   "canonical_local_repo": "/Users/pagemacmini/maplab-ai-handbook",
   "dynamic_link_policy": "Load JSON/Markdown task data from GitHub; do not execute remote JS.",
@@ -423,6 +423,17 @@
         "openclaw",
         "gemini",
         "hermes"
+      ],
+      "risk_level": "low"
+    },
+    {
+      "role_id": "WIN",
+      "module_id": "MAPLAB_WIN_WINDOWS_EVIDENCE_COLLECTOR_DYNAMIC_ROLE_MODULE",
+      "role_name": "Windows Evidence Collector",
+      "department": "Windows Evidence Collector（Windows 端證據採集）",
+      "path": "chrome-extension/task-modules/WIN.json",
+      "runtime_targets": [
+        "claude_chrome_tab"
       ],
       "risk_level": "low"
     }

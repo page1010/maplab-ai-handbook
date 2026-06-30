@@ -152,13 +152,18 @@
 - `maplab-birthday-party-dessert-table.png`（生日派對）
 - `maplab-corporate-event-tea-party.png`（企業茶會）
 
-### Alt Text 格式
-`MAPLAB Kitchen {場景}｜{具體描述，含長尾關鍵字}`
+### Alt Text 格式（單一標準，2026-06-30 統一）
+`台南{場景}外燴—{現場具體描述}`
+
+> 採 MAPLAB Alt-Text 單一標準（A 式）。舊式 `MAPLAB Kitchen {場景}｜{描述}`（B 式）已**作廢**。
+> 規則：地點「台南」固定前置→場景關鍵字對齊頁面主關鍵字→品類詞「外燴」→全形破折號→具體名詞描述（≤約 30 中文字，1–2 關鍵字、不堆疊）。
+> 品牌名不進 alt 開頭，品牌曝光交給檔名 `maplab-{場景}-{描述}.webp` / caption / title / featured image。
+> 純裝飾或與 caption 重複的圖用 `alt=""`。標準全文見 `recalls/A2_recall.md` §D 與 `skills/maplab-visual-spec.md`。
 
 範例：
-- `MAPLAB Kitchen 外燴自助餐派對佈置｜精緻餐點擺盤與木質層架展示`
-- `MAPLAB Kitchen 婚禮甜點桌｜客製化翻糖蛋糕與馬卡龍塔佈置`
-- `MAPLAB Kitchen 企業茶會外燴｜商務活動精緻手作點心`
+- `台南自助餐派對外燴—餐點擺盤與木質層架陳列`
+- `台南婚禮外燴—甜點桌翻糖蛋糕與馬卡龍塔佈置`
+- `台南企業茶會外燴—商務活動手作點心與飲品分區`
 
 ## 圖片選擇規範
 

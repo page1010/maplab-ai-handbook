@@ -15,7 +15,7 @@
 - ✅ 使用：食物特寫、場景佈置、無人場景、品牌 Logo 牆
 - ❌ 禁止：人臉（含兒童）、非 MAPLAB logo、酒類廣告圖、模糊/低解析度
 - 命名格式：`maplab-{場景關鍵字}-{內容描述}.png`
-- Alt text：`MAPLAB Kitchen {場景}｜{具體描述含長尾關鍵字}`
+- Alt text（2026-06-30 統一）：`台南{場景}外燴—{現場具體描述}`（舊式 `MAPLAB Kitchen {場景}｜{描述}` 已作廢；品牌名移檔名/caption；標準見 `recalls/A2_recall.md` §D）
 - 圖片尺寸建議：
   - WordPress 精選圖：1200×630px
   - IG 貼文：1080×1080px

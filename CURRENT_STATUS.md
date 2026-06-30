@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-06-30（A1）午後巡查 TST：8h 0 新非巡查 commit（全系統靜止第 4 日，自 4dfd0a8 2026-06-26 20:21 起）；⚠️ **T-A8-001 持續超 48h**（~131.5h/~5.5天，last `1a2d752` 06-25 08:25）；⚠️ T-A5-002（~180.5h）/ T-A5-005（~180.9h）持續超 48h（awaiting Owner）；⚠️ T-IOS-KOL-001 ~217.0h / T-A1-LEARNING-LOOP-001 ~341.4h 持續超 48h；A4 ~460.6h/~19.2天 CRITICAL 持續；GCP帳單~76天🔴；⚠️ **A6 T-A6-001 持續超 48h（~95.6h，last 4dfd0a8 06-26 20:21，請 Owner 確認後續方向）**；AGENT_RECALL_PROMPTS.md A4/A5/A6/A8 小時數已更新｜前次：日間巡查 2026-06-30 08:10 TST｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-06-30（A1）晚間巡查 TST：8h 0 新非巡查 commit（全系統靜止第 4 日，自 4dfd0a8 2026-06-26 20:21 起）；⚠️ **T-A8-001 持續超 48h**（~139.5h/~5.8天，last `1a2d752` 06-25 08:25）；⚠️ T-A5-002（~188.5h）/ T-A5-005（~188.9h）持續超 48h（awaiting Owner）；⚠️ T-IOS-KOL-001 ~225.0h / T-A1-LEARNING-LOOP-001 ~349.4h 持續超 48h；A4 ~468.6h/~19.5天 CRITICAL 持續；GCP帳單~76天🔴；⚠️ **A6 T-A6-001 持續超 48h（~103.6h，last 4dfd0a8 06-26 20:21，請 Owner 確認後續方向）**；AGENT_RECALL_PROMPTS.md A4/A5/A6/A8 小時數已更新｜前次：午後巡查 2026-06-30 TST｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 

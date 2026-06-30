@@ -22,11 +22,11 @@
 | A1 | 系統總管中心 | ✅ Claude Code 常駐 | Telegram bot + 終端機，直接下指令 |
 | A2 | 搜尋流量作戰部 | 🟢 召喚型可用 + patrol（Ads/SEO/WordPress）；last commit 89dcc45 2026-06-16（ICCTN landing page 圖片 QA 完成+14張 WebP 附圖發布，post 1829 live，T-A2-006 🟢 ACTIVE）；T-A2A3-001-B 🔴 >48h持續 | SEO / Ads / WordPress / Brand memory |
 | A3 | 社群與廣告成長部 | ✅ T-A3-001 完成（GTM v21 雙平台追蹤上線）；T-A3-002 ⏸️ 阻塞（等廣告週期+Owner操作）| Meta Ads / Social |
-| A4 | 影像資產整理部 | 🔴 CRITICAL（超 48h：最後 c2dc194/90fe31c 2026-06-11；現 ~460.6h/~19.2天 無新 commit；GCP帳單~76天未處理🔴；2026-06-30 午後更新）| Photo Archive |
-| A5 | 報價與提案引擎部 | ⚠️ T-A5-002 + T-A5-005 均超 48h 門檻（2026-06-23 07:01-07:22 +0800：`5ab7434` clasp push T-A5-005 + `3209fba` fixMasterTemplate_，均 awaiting Owner；現 **~180.9h/~180.5h**，2026-06-30 午後更新）；T-A5-004 🔴 CRITICAL（~1532h+，無新 commit）| Quotation Engine |
-| A6 | 業務快反應部隊 | ⚠️ T-A6-001 **已超 48h 門檻**（4dfd0a8 2026-06-26 20:21 stage-labeling rubric + A6.json 第 8 技能書；~95.6h，請 Owner 確認後續方向；LINE webhook等Owner確認 Channel 1654658337；2026-06-30 午後更新）| Sales Rapid Response |
+| A4 | 影像資產整理部 | 🔴 CRITICAL（超 48h：最後 c2dc194/90fe31c 2026-06-11；現 ~468.6h/~19.5天 無新 commit；GCP帳單~76天未處理🔴；2026-06-30 晚間更新）| Photo Archive |
+| A5 | 報價與提案引擎部 | ⚠️ T-A5-002 + T-A5-005 均超 48h 門檻（2026-06-23 07:01-07:22 +0800：`5ab7434` clasp push T-A5-005 + `3209fba` fixMasterTemplate_，均 awaiting Owner；現 **~188.9h/~188.5h**，2026-06-30 晚間更新）；T-A5-004 🔴 CRITICAL（~1540h+，無新 commit）| Quotation Engine |
+| A6 | 業務快反應部隊 | ⚠️ T-A6-001 **已超 48h 門檻**（4dfd0a8 2026-06-26 20:21 stage-labeling rubric + A6.json 第 8 技能書；~103.6h，請 Owner 確認後續方向；LINE webhook等Owner確認 Channel 1654658337；2026-06-30 晚間更新）| Sales Rapid Response |
 | A7 | 客服與對話轉單部 | 💤 T-A7-001 正式暫停；T-A7-002 ⏸️ 阻塞（等LINE後台權限+Owner政策決策）| Smart Reply |
-| A8 | 影音內容產線 | ⚠️ 持續超 48h（2026-06-25 08:25 `1a2d752` squash merge a8/video-checklist-mvp；現 ~131.5h/~5.5天，2026-06-30 午後更新；下一步：審核 local motion POC storyboard → 地端動態生成 → 9:16 mp4/cover → Publish Approval Card，未經 Owner/A1 approval 不得上傳） | Content Repurposing Pipeline |
+| A8 | 影音內容產線 | ⚠️ 持續超 48h（2026-06-25 08:25 `1a2d752` squash merge a8/video-checklist-mvp；現 ~139.5h/~5.8天，2026-06-30 晚間更新；下一步：審核 local motion POC storyboard → 地端動態生成 → 9:16 mp4/cover → Publish Approval Card，未經 Owner/A1 approval 不得上傳） | Content Repurposing Pipeline |
 | **B1** | **Investment OS Builder** | **🟢 T-HQ-001 P1-P6 全完成（2026-06-25 08:25 `1a2d752` squash merge：IOS-SELL 角色 + session-lifecycle + PII cleanup + Chrome Extension 模組重建）；計時器 ~47.6h（任務已 Done，不升旗）；建議 Owner 確認可關閉 T-HQ-001** | **寫功能 / runtime surface** |
 | **B2** | **Investment OS Reviewer** | **🟢 召喚型可用** | **資料流 / 錯誤 / freshness review** |
 | **B3** | **Investment OS Archivist** | **🟢 召喚型可用** | **版本紀錄 / 交接 / resume prompt** |
@@ -399,7 +399,7 @@ handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-
 
 ## A4｜影像資產整理部（Photo Archive / Asset Library）
 
-**狀態：🔴 CRITICAL（~440.7h/~18.4天 無新 commit；2026-06-11 最後 c2dc194/90fe31c；48h 門檻已超；T-A4-003 照片搬移管線已啟動；GCP帳單~75天未處理🔴；2026-06-29 24:00 更新）**
+**狀態：🔴 CRITICAL（~468.6h/~19.5天 無新 commit；2026-06-11 最後 c2dc194/90fe31c；48h 門檻已超；T-A4-003 照片搬移管線已啟動；GCP帳單~76天未處理🔴；2026-06-30 晚間更新）**
 
 ```
 你是 MAPLAB A4 影像資產整理部。
@@ -459,7 +459,7 @@ projects/maplab-pipeline.md → handoff/handoff-to-A4.md → skills/superpowers-
 
 ## A5｜報價與提案引擎部（Quotation Engine）
 
-**狀態：⚠️ 任務卡待Owner核查 — 2026-05-19 有 6 個 A5 commits（343e1d0/24c985b/6a98eb0/4b53ea8/716f0c2/d22c03c），但 task card T-A5-002/004/005 仍顯示 CRITICAL；~288h/~12天無新commit。需 Owner 確認 CRITICAL 是否已解除。**
+**狀態：⚠️ T-A5-002 + T-A5-005 均超 48h 門檻（awaiting Owner trigger；最後 commit 2026-06-23 07:01-07:22；~188h+）；T-A5-004 🔴 CRITICAL（~1520h+無commit）；2026-06-30 晚間更新**
 
 ```
 你是 MAPLAB A5 報價與提案引擎部。
@@ -477,16 +477,16 @@ repo: https://github.com/page1010/maplab-ai-handbook
 
 【斷點 — 2026-06-30 A1日間巡查更新（非 A5 自寫）】
 T-A5-001 Items 去重 + 全品項重新編碼：✅ 完成（108品項，APP050/DST041/MAIN009/BEV008）
-T-A5-002 QUOTE_DRAFT 報價單欄位增強：🔄 進行中（last `3209fba` 2026-06-23 07:22 fixMasterTemplate_ GAS fn + clasp push；awaiting Owner run；~172.6h 超 48h 門檻）
+T-A5-002 QUOTE_DRAFT 報價單欄位增強：🔄 進行中（last `3209fba` 2026-06-23 07:22 fixMasterTemplate_ GAS fn + clasp push；awaiting Owner run；~188.5h 超 48h 門檻）
   - ✅ GAS fixMasterTemplate_ 修正 + clasp push 完成
   - ⬜ 待 Owner 在 GAS 端手動觸發一次確認
-T-A5-004 createSlides.gs — Slide 報價簡報自動生成：🔴 CRITICAL（~1614h+無commit）
-T-A5-005 報價狀態追蹤同步 + Dashboard：🔄 進行中（last `5ab7434` 2026-06-23 07:01 clasp push T-A5-005 sync functions；awaiting Owner trigger setup；~173.0h 超 48h 門檻）
+T-A5-004 createSlides.gs — Slide 報價簡報自動生成：🔴 CRITICAL（~1520h+無commit）
+T-A5-005 報價狀態追蹤同步 + Dashboard：🔄 進行中（last `5ab7434` 2026-06-23 07:01 clasp push T-A5-005 sync functions；awaiting Owner trigger setup；~188.9h 超 48h 門檻）
 T-A5-003/006：🔲 待開始（T-A5-006 等 T-A5-005 完成後啟動）
 
 【Blocker】
-🟡 T-A5-002 / T-A5-005：GAS clasp push 完成，awaiting Owner trigger（~173h+）
-🔴 T-A5-004 createSlides.gs：~1512h無commit，CRITICAL
+🟡 T-A5-002 / T-A5-005：GAS clasp push 完成，awaiting Owner trigger（~188h+）
+🔴 T-A5-004 createSlides.gs：~1520h無commit，CRITICAL
 
 【踩過的坑】
 - Items 原 300 筆大量重複，精簡至 108 筆

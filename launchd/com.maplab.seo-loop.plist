@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.maplab.seo-loop</string>
+
+  <!--
+    MAPLAB SEO 自走 Loop — 每日 10:00 台北時間自動跑一個 GAP 草稿。
+    步驟 1: 挑 GAP (seo_gap_picker.py)
+    步驟 2: Codex 起草 + agy 審查 (seo_draft_runner.py)
+    步驟 3: QA scan (seo_qa_checker.py)
+    步驟 4: HTML preview render → 寫 escalation → 停住 (seo_preview_render.py)
+    步驟 5+: 等 A0/Claude 視覺確認 + Owner approval 後才手動觸發發布
+
+    HARD: 不碰 A6/bot_a6，不 push，不自動發布到 WP，不讀 secrets。
+    接在既有 escalation 閉環：state/seo_escalation_queue.jsonl
+
+    手動跑:
+      /usr/bin/python3 scripts/seo_loop_orchestrator.py
+
+    Log:
+      state/seo_loop_run.jsonl
+      workbook/outputs/seo-gap-drafts/
+      workbook/outputs/previews/
+      state/seo_escalation_queue.jsonl
+
+    Owner 視覺閘門流程:
+      1. 開啟 workbook/outputs/previews/<gap>-preview.html 看排版
+      2. 確認 agy 審查報告無遺漏
+      3. 更新 state/seo_escalation_queue.jsonl status=approved
+      4. 手動執行 WP REST 發布腳本（需 Owner approval card）
+  -->
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/bin/python3</string>
+    <string>/Users/pagemacmini/maplab-ai-handbook/scripts/seo_loop_orchestrator.py</string>
+  </array>
+
+  <key>WorkingDirectory</key>
+  <string>/Users/pagemacmini/maplab-ai-handbook</string>
+
+  <!-- 每日 10:00 台北時間 (UTC+8 = UTC 02:00) -->
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>2</integer>
+    <key>Minute</key>
+    <integer>0</integer>
+  </dict>
+
+  <key>StandardOutPath</key>
+  <string>/Users/pagemacmini/maplab-ai-handbook/state/seo_loop_stdout.log</string>
+
+  <key>StandardErrorPath</key>
+  <string>/Users/pagemacmini/maplab-ai-handbook/state/seo_loop_stderr.log</string>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+    <key>HOME</key>
+    <string>/Users/pagemacmini</string>
+  </dict>
+
+  <!-- 失敗後 60 秒重試一次 -->
+  <key>ThrottleInterval</key>
+  <integer>60</integer>
+</dict>
+</plist>

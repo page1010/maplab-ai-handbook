@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.maplab.a6-gym</string>
+
+  <!--
+    MAPLAB A6 經驗 Gym — 每日 23:00 台北時間跑一輪 Ollama 可用率評測。
+    不燒 Claude；用本地 qwen2.5:14b 模型評測。
+
+    步驟:
+    1. 從 candidates.json 取高信心配對（confidence >= 70）
+    2. 呼叫 Ollama (qwen2.5:14b) 產出建議回覆
+    3. 比對真實員工 target 回覆（長度比、結構要素、字元重疊）
+    4. 算可用率，append state/a6_gym_log.jsonl
+
+    HARD: 不碰 bot_a6/ 與任何 A6 生產程式/sheet，不發訊息，不下單。
+    Claude 只定期抽驗 state/a6_gym_log.jsonl 看趨勢。
+
+    手動跑（快速測試 5 筆）:
+      /Users/pagemacmini/maplab-ai-handbook/bot/venv/bin/python3 \
+        scripts/a6_gym_runner.py 5
+
+    Log:
+      state/a6_gym_log.jsonl
+
+    可用率定義:
+    - 長度比 0.3–4.0 × target
+    - 結構要素 >= 2（問候/提問/關鍵詞/收尾/聯絡）
+    - 字元 bigram 重疊 >= 12%
+    目標基線: > 20%（首輪量測基線）
+  -->
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/pagemacmini/maplab-ai-handbook/bot/venv/bin/python3</string>
+    <string>/Users/pagemacmini/maplab-ai-handbook/scripts/a6_gym_runner.py</string>
+    <string>10</string>
+  </array>
+
+  <key>WorkingDirectory</key>
+  <string>/Users/pagemacmini/maplab-ai-handbook</string>
+
+  <!-- 每日 23:00 台北時間 (UTC+8 = UTC 15:00) -->
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>15</integer>
+    <key>Minute</key>
+    <integer>0</integer>
+  </dict>
+
+  <key>StandardOutPath</key>
+  <string>/Users/pagemacmini/maplab-ai-handbook/state/a6_gym_stdout.log</string>
+
+  <key>StandardErrorPath</key>
+  <string>/Users/pagemacmini/maplab-ai-handbook/state/a6_gym_stderr.log</string>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+    <key>HOME</key>
+    <string>/Users/pagemacmini</string>
+  </dict>
+
+  <key>ThrottleInterval</key>
+  <integer>300</integer>
+</dict>
+</plist>

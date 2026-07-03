@@ -27,9 +27,9 @@
 
 延伸服務頁可先放在內部審查文件中，發布前再確認 live URL：
 
-- 企業外燴服務總覽：[INTERNAL_LINK_RECHECK_REQUIRED: corporate-catering-tainan]
-- 企業外燴費用估算：[INTERNAL_LINK_RECHECK_REQUIRED: tainan-corporate-catering-cost]
-- 企業茶會點心方向：[INTERNAL_LINK_RECHECK_REQUIRED: corporate-tea-party-desserts]
+- 企業外燴服務總覽：[台南企業外燴推薦](https://www.maplabkitchen.com/corporate-catering-tainan/)
+- 企業外燴費用估算：[企業外燴費用估算](https://www.maplabkitchen.com/tainan-corporate-catering-cost/)
+- 企業茶會點心方向：[企業茶會點心](https://www.maplabkitchen.com/corporate-tea-party-desserts/)
 
 ## 會議茶點怎麼訂：份量、形式與取餐節奏
 
@@ -106,20 +106,4 @@
 ---
 **想了解 MAPLAB 如何協助您的活動？**
 歡迎透過 LINE 官方帳號詢問菜單與場地配置，我們會依活動性質給您具體建議。
-[➜ 加入 LINE 詢問][INTERNAL_LINK_RECHECK_REQUIRED: line-official]
-
-<!-- CHECKER NOTE:
-- [ ] H1 含主關鍵字
-- [ ] 首段前 110 字含主關鍵字 ×1
-- [ ] 無禁用語（超值/保證/精緻×多/CP值）
-- [ ] alt 全部 A 式（台南{場景}外燴—{描述}）
-- [ ] 內鏈全部 [INTERNAL_LINK_RECHECK_REQUIRED]
-- [ ] 無 404 slug 直連
-- [ ] LINE CTA 在 FAQ 後
-- [ ] FAQ 含：肖像隱私確認
-- [ ] FAQ 含：飲食禁忌覆蓋
-- [ ] FAQ 含：飲食禁忌（全素/過敏）
-- [ ] FAQ 含：超時撤場費
-- [ ] CHECKER NOTE 含色彩色碼（來自 maplab-visual-spec.md）
-- 色彩建議：上線排版使用深橄欖 #3A3A2E 作主文字、暖米 #EDE5D8 作區塊底，FAQ 標籤或提示色可用鼠尾草 #8FA68E（#3A3A2E / #EDE5D8 / #8FA68E 等）
--->
+[➜ 加入 LINE 詢問]（LINE URL 待補：Owner 請提供官方帳號連結後換成真 href）

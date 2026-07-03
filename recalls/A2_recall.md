@@ -103,6 +103,9 @@ mode，A2 不可只檢查 Chrome 登入態就回 `auth_missing`。**單一入口
 【溝通規則 — 回報 Owner 時必守】
 對人說話用「人看得懂的標題/名稱」當主詞，內部代碼（GAP-N / post ID / slug）只放括號附註。完整原則見 `docs/OPERATING_CULTURE.md`。
 
+【發布閘門 — 強制】
+任何 SEO 文章從草稿進 WordPress 之前，必須先完整跑 `docs/seo-publish-checklist.md`。閘門須由產出者以外的角色執行（獨立驗證）。可自動化項目由 `scripts/seo_publish_gate.py` 執行；人眼項目須明確確認後才能放行。缺陷棘輪原則：抓到缺陷即回填清單，見 `docs/OPERATING_CULTURE.md` 原則 2。
+
 【必讀】
 projects/a2-ads-seo-wordpress-patrol.md → projects/a2a3a4-approval-ready-automation.md → handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md → projects/seo-ads-agent.md → skills/brand-voice-guide.md → skills/maplab-visual-spec.md → skills/superpowers-guide.md
 

@@ -24,6 +24,35 @@
 
 > **TOC 標籤統一用「快速索引」**（Owner 2026-06-15 指定）。舊批量文章用「📋 本文目錄」，掃站時逐步遷移成「快速索引」。
 
+## 1.5 SEO 草稿交稿必填欄位（2026-07-03 缺陷棘輪新增）
+
+> **生成階段就要填完，不能省。** 欄位空白 = 草稿不合格，不得進 `docs/seo-publish-checklist.md` 閘門。
+
+| 欄位 | 要求 | 說明 |
+|---|---|---|
+| **核准版字數** | 整數（含空格前後正文總字元數） | `seo_publish_gate.py` A-1 用來計算 ratio |
+| **核准版前 500 字 SHA256（前 16 碼）** | 16 位 hex 字串 | 生成者在交稿 front-matter 填入，閘門比對 |
+| **已解析內鏈表** | `slug → live URL / 待確認 / 404禁連` 逐行列出 | 所有 `INTERNAL_LINK_RECHECK_REQUIRED` 在交稿時就要解析狀態，不允許以「生成後再查」為由留白 |
+| **精選圖 WP media ID** | 整數，或明確填 `待補（Owner 指定後補）` | 發布時 `featured_media ≠ 0` 是 C-1 的閘門條件；若此時無法提供，Owner 必須明確知道 |
+| **真實 LINE URL** | 完整 href（非 `/【待填】`） | CTA `href` 必須在草稿交稿時填入；不知道就問 Owner，不能留佔位 |
+
+**實作方式（選擇一種）：**
+- 在草稿 `.md` 檔頭加 YAML front-matter：
+  ```yaml
+  ---
+  approved_char_count: 3220
+  approved_fp_500: "a1b2c3d4e5f60001"
+  internal_links:
+    corporate-catering-tainan: "https://www.maplabkitchen.com/corporate-catering-tainan/"
+    tainan-corporate-catering-cost: "待確認（REST 尚未驗證）"
+    line-official: "https://lin.ee/xxxxx"
+  featured_media_id: 924
+  ---
+  ```
+- 或在交稿 message 開頭用標準化表格列出，方便獨立閘門跑者核對。
+
+---
+
 ## 2. 品牌語氣（硬規則，違反即不合格）
 
 - 禁說服式對比句型：**「不是…而是…」「不僅…更…」「不需要…而是…」「雖然不…但…」**（`brand-voice-guide.md` 第4點）。正向描述空間、節奏、感受。

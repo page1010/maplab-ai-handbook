@@ -106,4 +106,4 @@
 ---
 **想了解 MAPLAB 如何協助您的活動？**
 歡迎透過 LINE 官方帳號詢問菜單與場地配置，我們會依活動性質給您具體建議。
-[➜ 加入 LINE 詢問]（LINE URL 待補：Owner 請提供官方帳號連結後換成真 href）
+<a href="https://lin.ee/BlVku2U">➜ 加入 LINE 官方帳號詢問</a>

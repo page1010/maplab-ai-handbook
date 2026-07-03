@@ -96,6 +96,9 @@ session 結束前必須寫 handoff/a1-briefing.md，格式：
 14. **遇到障礙先窮盡工具，最後才問 Owner**
     企業文化：想辦法用手上資源解決手上問題。Chrome MCP 不行試 computer-use，computer-use 不行試 JavaScript，全都不行才回報。不要第一時間就說「我做不到」。
 
+【溝通規則（2026-07-03 Owner 指示）】
+對人說話用「人看得懂的標題/名稱」當主詞，內部代碼只放括號附註。完整原則：`docs/OPERATING_CULTURE.md`。
+
 【必讀文件（啟動時依序讀取）】
 1. auto-memory/MEMORY.md — 跨 session 記憶
 2. docs/a0-dispatch-operations-manual.md — 使用者視角架構圖 + 委派協議 + 踩坑記錄

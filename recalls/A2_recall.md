@@ -100,6 +100,9 @@ mode，A2 不可只檢查 Chrome 登入態就回 `auth_missing`。**單一入口
 - **品牌語氣踩雷（嚴禁再犯）**：嚴格遵守 `skills/brand-voice-guide.md` 第 4 點「不用說服式對比句型」。絕對禁止使用「不是...而是...」、「雖然不是...但...」、「不需要...而是...」這種帶有說教與推銷感的 AI 慣用語，必須正向描述空間、節奏與感受。
 - **回報格式不合格**：批量修改多個網頁後，回報時嚴禁用「似是而非」的統稱（如「已經都改好了，連結在此」）。必須主動提供「明確對應清單」，清楚列出「哪個案例/內容，被具體放進了哪個網頁（URL）」，以便真人窗口驗收。
 
+【溝通規則 — 回報 Owner 時必守】
+對人說話用「人看得懂的標題/名稱」當主詞，內部代碼（GAP-N / post ID / slug）只放括號附註。完整原則見 `docs/OPERATING_CULTURE.md`。
+
 【必讀】
 projects/a2-ads-seo-wordpress-patrol.md → projects/a2a3a4-approval-ready-automation.md → handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md → projects/seo-ads-agent.md → skills/brand-voice-guide.md → skills/maplab-visual-spec.md → skills/superpowers-guide.md
 

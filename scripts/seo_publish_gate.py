@@ -102,8 +102,9 @@ ABSOLUTE_WORDS: list[str] = ["一定", "保證", "最適合", "絕對", "唯一"
 # 佔位字串 patterns
 PLACEHOLDER_PATTERNS: list[str] = [
     r"\[INTERNAL_LINK_RECHECK_REQUIRED[^\]]*\]",
-    r'href="/【待填[^"]*】"',
-    r'href="\[待填[^"]*\]"',
+    r'href="/【待填[^"]*】"',   # /【待填：slug】
+    r'href="【[^"]*】"',        # 【填入 LINE Official URL】等全形括號佔位
+    r'href="\[待填[^"]*\]"',   # [待填...] ASCII括號
     r'href="#"',
 ]
 
@@ -168,6 +169,11 @@ def find_lines(text: str, pattern: str) -> list[str]:
     return results
 
 
+def strip_html_comments(text: str) -> str:
+    """移除 HTML 注解區塊（<!-- ... -->），避免 E 類檢查掃到注解範例詞。"""
+    return re.sub(r"<!--.*?-->", "", text, flags=re.DOTALL)
+
+
 def extract_headings(text: str) -> list[str]:
     """從 markdown 或 HTML 中抓出所有 H2/H3 標題文字。"""
     md_heads = re.findall(r"^#{2,3}\s+(.+)", text, re.MULTILINE)
@@ -218,10 +224,11 @@ def check_a3_checker_note(draft: str) -> CheckResult:
 
 
 def check_b1_placeholders(draft: str) -> CheckResult:
-    """B-1: 無 INTERNAL_LINK_RECHECK_REQUIRED 佔位"""
+    """B-1: 無 INTERNAL_LINK_RECHECK_REQUIRED 佔位（先移除 HTML 注解，避免 CHECKER NOTE 中的提示詞觸發假陽性）"""
+    clean = strip_html_comments(draft)
     lines: list[str] = []
     for pat in PLACEHOLDER_PATTERNS[:1]:  # B-1 專跑 INTERNAL_LINK 佔位
-        lines.extend(find_lines(draft, pat))
+        lines.extend(find_lines(clean, pat))
     passed = len(lines) == 0
     desc = f"無 INTERNAL_LINK 佔位字串" + ("" if passed else f"（找到 {len(lines)} 處）")
     return CheckResult("B-1", passed, desc, lines)
@@ -249,14 +256,15 @@ def check_b3_cta_href(draft: str) -> CheckResult:
 
 
 def check_e1_banned_words(draft: str) -> CheckResult:
-    """E-1: 無禁用詞"""
+    """E-1: 無禁用詞（先移除 HTML 注解，避免掃到範例詞）"""
+    clean = strip_html_comments(draft)
     found: list[str] = []
     for word in BANNED_WORDS:
-        if word in draft:
-            lines = find_lines(draft, re.escape(word))
+        if word in clean:
+            lines = find_lines(clean, re.escape(word))
             found.extend(lines)
     for word, max_count in BANNED_WORD_MAX_OCCURRENCES.items():
-        count = draft.count(word)
+        count = clean.count(word)
         if count > max_count:
             found.append(f'「{word}」出現 {count} 次（上限 {max_count}）')
     passed = len(found) == 0
@@ -265,20 +273,27 @@ def check_e1_banned_words(draft: str) -> CheckResult:
 
 
 def check_e2_persuasion_patterns(draft: str) -> CheckResult:
-    """E-2: 無說服式對比句型"""
+    """E-2: 無說服式對比句型（先移除 HTML 注解）"""
+    clean = strip_html_comments(draft)
     found: list[str] = []
     for pat in PERSUASION_PATTERNS:
-        found.extend(find_lines(draft, pat))
+        found.extend(find_lines(clean, pat))
     passed = len(found) == 0
     desc = "無說服式對比句型" + ("" if passed else f"（找到 {len(found)} 處）")
     return CheckResult("E-2", passed, desc, found)
 
 
 def check_e3_absolute_words(draft: str) -> CheckResult:
-    """E-3: 無把話說死的詞"""
+    """E-3: 無把話說死的詞（先移除 HTML 注解；「不一定」中的「一定」用 negative lookbehind 排除）"""
+    clean = strip_html_comments(draft)
     found: list[str] = []
     for word in ABSOLUTE_WORDS:
-        found.extend(find_lines(draft, re.escape(word)))
+        # 「一定」特別處理：只抓前面不是「不」的情況
+        if word == "一定":
+            pat = r"(?<!不)一定"
+        else:
+            pat = re.escape(word)
+        found.extend(find_lines(clean, pat))
     passed = len(found) == 0
     desc = "無絕對化用詞" + ("" if passed else f"（找到 {len(found)} 處）")
     return CheckResult("E-3", passed, desc, found)

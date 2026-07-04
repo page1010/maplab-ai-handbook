@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-07-04 午後 14:00 TST（06:00 UTC，遠端）A1 午後巡查：8h 0 新非巡查 commit（全系統靜止第 8 日，~185.6h 自 4dfd0a8 06-26 20:21）；⚠️ **T-A8-001 持續超 48h**（`1a2d752` 06-25 08:25，~221.6h/~9.2天，建議 Owner 確認 storyboard 審核）；⚠️ T-A5-002（~270.6h）/ T-A5-005（~271.0h）持續超 48h（awaiting Owner）；⚠️ T-IOS-KOL-001（~307.1h）/ T-A1-LEARNING-LOOP-001（~431.5h）持續超 48h；A4 T-A4-001（~550.7h/~22.9天）持續 🔴 CRITICAL；T-A5-004 🔴 CRITICAL 持續；GCP帳單~79天🔴；⚠️ **A6 T-A6-001 持續超 48h**（~185.6h，last 4dfd0a8 06-26 20:21，請 Owner 確認後續方向）；AGENT_RECALL_PROMPTS.md A4/A5/A6/A8 小時數午後更新
+> 最後更新：2026-07-04 晚間 22:00 TST（14:00 UTC，遠端）A1 晚間巡查：8h 0 新非巡查 commit（全系統靜止 ~193.6h/~8.1天，自 4dfd0a8 06-26 20:21）；⚠️ **T-A8-001 持續超 48h**（`1a2d752` 06-25 08:25，~229.6h/~9.6天，建議 Owner 確認 storyboard 審核）；⚠️ T-A5-002（~278.6h）/ T-A5-005（~279.0h）持續超 48h（awaiting Owner）；⚠️ T-IOS-KOL-001（~315.1h）/ T-A1-LEARNING-LOOP-001（~439.5h）持續超 48h；A4 T-A4-001（~558.7h/~23.3天）持續 🔴 CRITICAL；T-A5-004 🔴 CRITICAL 持續；GCP帳單~79天🔴；⚠️ **A6 T-A6-001 持續超 48h**（~193.6h，last 4dfd0a8 06-26 20:21，請 Owner 確認後續方向）；AGENT_RECALL_PROMPTS.md A4/A5/A6/A8 小時數晚間更新
 >
 > 使用方式：選擇角色 → 複製 prompt / module handoff → 貼到 Gemini / Codex / OpenClaw / legacy Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -22,11 +22,11 @@
 | A1 | 系統總管中心 | ✅ Claude Code 常駐 | Telegram bot + 終端機，直接下指令 |
 | A2 | 搜尋流量作戰部 | 🟢 召喚型可用 + patrol（Ads/SEO/WordPress）；last commit 89dcc45 2026-06-16（ICCTN landing page 圖片 QA 完成+14張 WebP 附圖發布，post 1829 live，T-A2-006 🟢 ACTIVE）；T-A2A3-001-B 🔴 >48h持續 | SEO / Ads / WordPress / Brand memory |
 | A3 | 社群與廣告成長部 | ✅ T-A3-001 完成（GTM v21 雙平台追蹤上線）；T-A3-002 ⏸️ 阻塞（等廣告週期+Owner操作）| Meta Ads / Social |
-| A4 | 影像資產整理部 | 🔴 CRITICAL（超 48h：最後 c2dc194/90fe31c 2026-06-11；現 ~550.7h/~22.9天 無新 commit；GCP帳單~79天未處理🔴；2026-07-04 午後更新）| Photo Archive |
-| A5 | 報價與提案引擎部 | ⚠️ T-A5-002 + T-A5-005 均超 48h 門檻（2026-06-23 07:01-07:22 +0800：`5ab7434` clasp push T-A5-005 + `3209fba` fixMasterTemplate_，均 awaiting Owner；現 **~271.0h/~270.6h**，2026-07-04 午後更新）；T-A5-004 🔴 CRITICAL（~1606h+，無新 commit）| Quotation Engine |
-| A6 | 業務快反應部隊 | ⚠️ T-A6-001 **已超 48h 門檻**（4dfd0a8 2026-06-26 20:21 stage-labeling rubric + A6.json 第 8 技能書；~185.6h，請 Owner 確認後續方向；LINE webhook等Owner確認 Channel 1654658337；2026-07-04 午後更新）| Sales Rapid Response |
+| A4 | 影像資產整理部 | 🔴 CRITICAL（超 48h：最後 c2dc194/90fe31c 2026-06-11；現 ~558.7h/~23.3天 無新 commit；GCP帳單~79天未處理🔴；2026-07-04 晚間更新）| Photo Archive |
+| A5 | 報價與提案引擎部 | ⚠️ T-A5-002 + T-A5-005 均超 48h 門檻（2026-06-23 07:01-07:22 +0800：`5ab7434` clasp push T-A5-005 + `3209fba` fixMasterTemplate_，均 awaiting Owner；現 **~279.0h/~278.6h**，2026-07-04 晚間更新）；T-A5-004 🔴 CRITICAL（~1606h+，無新 commit）| Quotation Engine |
+| A6 | 業務快反應部隊 | ⚠️ T-A6-001 **已超 48h 門檻**（4dfd0a8 2026-06-26 20:21 stage-labeling rubric + A6.json 第 8 技能書；~193.6h，請 Owner 確認後續方向；LINE webhook等Owner確認 Channel 1654658337；2026-07-04 晚間更新）| Sales Rapid Response |
 | A7 | 客服與對話轉單部 | 💤 T-A7-001 正式暫停；T-A7-002 ⏸️ 阻塞（等LINE後台權限+Owner政策決策）| Smart Reply |
-| A8 | 影音內容產線 | ⚠️ 持續超 48h（2026-06-25 08:25 `1a2d752` squash merge a8/video-checklist-mvp；現 ~221.6h/~9.2天，2026-07-04 午後更新；下一步：審核 local motion POC storyboard → 地端動態生成 → 9:16 mp4/cover → Publish Approval Card，未經 Owner/A1 approval 不得上傳） | Content Repurposing Pipeline |
+| A8 | 影音內容產線 | ⚠️ 持續超 48h（2026-06-25 08:25 `1a2d752` squash merge a8/video-checklist-mvp；現 ~229.6h/~9.6天，2026-07-04 晚間更新；下一步：審核 local motion POC storyboard → 地端動態生成 → 9:16 mp4/cover → Publish Approval Card，未經 Owner/A1 approval 不得上傳） | Content Repurposing Pipeline |
 | **B1** | **Investment OS Builder** | **🟢 T-HQ-001 P1-P6 全完成（2026-06-25 08:25 `1a2d752` squash merge：IOS-SELL 角色 + session-lifecycle + PII cleanup + Chrome Extension 模組重建）；計時器 ~47.6h（任務已 Done，不升旗）；建議 Owner 確認可關閉 T-HQ-001** | **寫功能 / runtime surface** |
 | **B2** | **Investment OS Reviewer** | **🟢 召喚型可用** | **資料流 / 錯誤 / freshness review** |
 | **B3** | **Investment OS Archivist** | **🟢 召喚型可用** | **版本紀錄 / 交接 / resume prompt** |

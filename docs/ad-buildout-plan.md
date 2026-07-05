@@ -1,6 +1,6 @@
 # Meta 受眾 + 素材 + 佈局 Buildout 計畫
 
-版本：v1.0-draft | 建立：2026-07-05 | 狀態：**Owner 已定案方向，待執行審核**
+版本：v1.1 | 建立：2026-07-05 | 更新：2026-07-05 | 狀態：**Owner 已清障，進入執行準備**
 隸屬：`docs/ad-funnel-battle-plan.md` 延伸執行層（§6）
 維護：A2
 
@@ -12,7 +12,7 @@
 
 | 缺口類型 | 現況 | 缺什麼 |
 |---|---|---|
-| Meta 溫層 retarget | 完全空白（最痛缺口） | ThruPlay≥50% 受眾 → 現在就能建；網站訪客 → 需確認 Pixel 狀態 |
+| Meta 溫層 retarget | 完全空白（最痛缺口） | ThruPlay≥50% 受眾 → 現在就能建；網站訪客 → ✅ Pixel 已確認，可建 |
 | Meta B 端冷受眾 | 全是 C 端（週歲/高收入媽媽） | 開幕/會議/公關/VIP/藝文各情境的職業受眾包未建 |
 | Meta C 端受眾擴充 | 週歲/家庭已跑 | 入厝/長輩壽宴 + 對應 Lookalike 未建 |
 | 溫層素材（案例 proof） | 幾乎沒有 | 用真實案例（富信/會展/入厝）做的「我做過這個」視覺 — **全漏斗最缺** |
@@ -32,8 +32,8 @@
 | `warm-thruplay-50pct` | ThruPlay ≥ 50%（看完一半以上影片） | Meta 現有影片互動資料 | 30 天 | 最強意圖信號，現在就能建 |
 | `warm-fb-page-engaged` | 粉專互動者（按讚/留言/分享/傳訊/點選 CTA）| FB 粉專互動 | 30 天 | 覆蓋曾跟品牌有過互動的人 |
 | `warm-ig-engaged` | IG 帳號互動者（同上） | IG 互動 | 30 天 | 特別涵蓋看過 reels 互動的人 |
-| `warm-website-visitors` | 網站訪客（任何頁面） | Meta Pixel | 30 天 | ⚠️ **需先確認 Pixel 已裝**（見 §4） |
-| `warm-landing-visitors` | 特定 landing 訪客（依情境） | Meta Pixel + UTM | 14 天 | 比全站訪客更精準；需 Pixel + UTM |
+| `warm-website-visitors` | 網站訪客（任何頁面） | Meta Pixel | 30 天 | ✅ **可建**（Pixel 已確認安裝） |
+| `warm-landing-visitors` | 特定 landing 訪客（依情境） | Meta Pixel + UTM | 14 天 | ✅ **可建**（Pixel 已確認；需搭 UTM 參數） |
 
 **各溫層受眾的 Lookalike（建完 Custom Audience 後自動可建）：**
 - `lal-thruplay-1pct`、`lal-fb-engaged-1pct`、`lal-website-1pct`（1% 最像，3% 覆蓋廣）
@@ -57,10 +57,15 @@
 
 ### 🟡 P2：C 端擴充（補週歲/家庭以外的場景）
 
+> **Owner 定案 cluster 預設（2026-07-05）**：婚禮線開；性別派對併入慶生線；遊艇先不做。
+
 | 情境 | 受眾包名稱 | 定向方式 | 說明 |
 |---|---|---|---|
 | 入厝宴客 | `cold-c-housewarming` | 生命里程碑：新屋主；興趣：室內裝潢/喬遷 | 搭配說事實木地板/醞舞流開幕案例照 |
 | 長輩壽宴 | `cold-c-senior-party` | 年齡 40-60（子女輩）；興趣：長輩照護/家庭聚餐/生日宴 | 文案對子女說話，不對長輩說 |
+| **婚禮外燴** ✅ 開 | `cold-c-wedding` | 生命里程碑：訂婚/結婚；年齡 25-40；興趣：婚禮籌備/婚紗攝影/婚宴 | 已有 `maplab-outdoor-wedding-catering-venue.webp` 可用；戶外婚禮場景差異化強 |
+| **慶生（含性別派對）** | `cold-c-birthday` | 現跑冷層延伸；性別派對受眾隨 birthday 定向一起涵蓋 | 性別派對不獨立受眾包，語氣友善即可，受眾定向沒有差異化必要 |
+| **遊艇外燴** ❌ 先不做 | — | — | 受眾規模太小、無對應 landing；此版本排除，待日後評估 |
 | Lookalike 擴充 | `lal-c-birthday-1pct` | 現有週歲/家庭成交客為種子 | 最快有 Lookalike 的 C 端來源 |
 
 ---
@@ -128,6 +133,9 @@
 | B4 VIP/建案 | `cold-b-vip` | 看過 VIP/建案頁 | `台南建案外燴`、`台南 VIP 接待外燴` | `vip-expo-catering-business-meeting` | `b4-vip` |
 | C1 週歲/慶生 | 現跑冷層（繼續）| 現有影片互動者 | `台南周歲外燴`、`台南慶生外燴推薦` | 週歲 landing（確認 slug）| `c1-birthday` |
 | C2 入厝 | `cold-c-housewarming` | 看過入厝相關頁 | `台南入厝外燴` | 入厝 landing（待確認）| `c2-housewarming` |
+| C3 婚禮 ✅ 開 | `cold-c-wedding` | ThruPlay + 看過婚禮頁 | `台南戶外婚禮外燴`、`台南婚禮茶點` | `outdoor-wedding-catering-venue` | `c3-wedding` |
+| C1 性別派對 | ↪ 併入 `cold-c-birthday` | 同慶生線定向，不獨立 | — | 同慶生 landing | `c1-birthday` |
+| 遊艇外燴 | ❌ 不做 | — | — | — | — |
 
 ### 橋接層：UTM + LINE 詢價
 
@@ -166,7 +174,7 @@
 
 | # | 前置條件 | 狀態 | 說明 |
 |---|---|---|---|
-| (a) | **Meta Pixel 確認已裝於 maplabkitchen.com** | ⚠️ **待確認** | 網站 retarget（`warm-website-visitors`）的前提；若未裝，温層只能靠影片互動受眾，覆蓋範圍較小。確認方式：Chrome DevTools → Network → 搜尋 `facebook.com/tr`；或 Meta Events Manager 查實時事件 |
+| (a) | **Meta Pixel 確認已裝於 maplabkitchen.com** | ✅ **已確認安裝（2026-07-05 Owner 清障）** | `warm-website-visitors` 和 `warm-landing-visitors` 均已解鎖，可直接建立 |
 | (b) | **Meta Ads 連接器或 Owner 手動建受眾/廣告** | ⚠️ **待 Owner 決定** | 實際建受眾包、新增廣告活動需要 Meta Business Manager 操作權限。選項：(1) Owner 授權 Adspirer/Meta Ads MCP 連接器（目前顯示需授權）；(2) A2 給精確設定，Owner 自行在後台建立 |
 | (c) | **ThruPlay retarget 現在就能建** | ✅ **無前置** | `warm-thruplay-50pct` 不需 Pixel，用 Meta 現有影片觀看紀錄建立，今天就能操作 |
 | (d) | **A4 真實案例圖片處理（去臉 + webp）** | ⚠️ **待 A4** | 富信飯店 + 工研院案例圖需 A4 跑 HEIC→webp + needs_face_crop 處理，才能進廣告素材 |
@@ -179,3 +187,4 @@
 | 版本 | 日期 | 變更 | 來源 |
 |---|---|---|---|
 | v1.0-draft | 2026-07-05 | 初版：受眾/素材/佈局三層 buildout 草案 | Owner 定案方向，A2 填入 |
+| v1.1 | 2026-07-05 | Pixel ✅ 已確認→解鎖網站 retarget；cluster 預設：婚禮線開、性別派對併慶生、遊艇不做 | Owner 清障 |

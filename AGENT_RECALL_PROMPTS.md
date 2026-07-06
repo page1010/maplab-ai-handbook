@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-06-27 08:00（每日，遠端）A1 巡查：3 新非巡查 commit（9499928 PII 清除✅；7bf6431 LINE booking baseline；133e6c4 A6 culture loop v4）；⚠️ **T-A8-001 今日 08:25 跨 48h 門檻**（`1a2d752` 06-25 08:25，~47.6h，建議 Owner 確認 storyboard 審核）；⚠️ T-A5-002（~96.6h）/ T-A5-005（~97.0h）持續超 48h（awaiting Owner）；⚠️ T-IOS-KOL-001（~133.1h）/ T-A1-LEARNING-LOOP-001（~257.5h）持續超 48h；A4 T-A4-001（~376.7h/~15.7天）持續 🔴 CRITICAL；T-A5-004 🔴 CRITICAL 持續；GCP帳單~73天🔴
+> 最後更新：2026-07-06 午後 16:00 TST（08:00 UTC，遠端）A1 午後巡查：8h 0 新非巡查 commit（全系統靜止 ~235.6h/~9.8天，自 4dfd0a8 06-26 20:21）；⚠️ **T-A8-001 持續超 48h**（`1a2d752` 06-25 08:25，~271.6h/~11.3天，建議 Owner 確認 storyboard 審核）；⚠️ T-A5-002（~320.6h）/ T-A5-005（~321.0h）持續超 48h（awaiting Owner）；⚠️ T-IOS-KOL-001（~357.1h）/ T-A1-LEARNING-LOOP-001（~481.5h）持續超 48h；A4 T-A4-001（~600.7h/~25.0天）持續 🔴 CRITICAL；T-A5-004 🔴 CRITICAL 持續；GCP帳單~81天🔴；⚠️ **A6 T-A6-001 持續超 48h**（~235.6h，last 4dfd0a8 06-26 20:21，請 Owner 確認後續方向）；AGENT_RECALL_PROMPTS.md A4/A5/A6/A8 小時數更新
 >
 > 使用方式：選擇角色 → 複製 prompt / module handoff → 貼到 Gemini / Codex / OpenClaw / legacy Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -22,11 +22,11 @@
 | A1 | 系統總管中心 | ✅ Claude Code 常駐 | Telegram bot + 終端機，直接下指令 |
 | A2 | 搜尋流量作戰部 | 🟢 召喚型可用 + patrol（Ads/SEO/WordPress）；last commit 89dcc45 2026-06-16（ICCTN landing page 圖片 QA 完成+14張 WebP 附圖發布，post 1829 live，T-A2-006 🟢 ACTIVE）；T-A2A3-001-B 🔴 >48h持續 | SEO / Ads / WordPress / Brand memory |
 | A3 | 社群與廣告成長部 | ✅ T-A3-001 完成（GTM v21 雙平台追蹤上線）；T-A3-002 ⏸️ 阻塞（等廣告週期+Owner操作）| Meta Ads / Social |
-| A4 | 影像資產整理部 | 🔴 CRITICAL（超 48h：最後 c2dc194/90fe31c 2026-06-11；現 ~376.7h/~15.7天 無新 commit；GCP帳單~73天未處理🔴）| Photo Archive |
-| A5 | 報價與提案引擎部 | ⚠️ T-A5-002 + T-A5-005 均超 48h 門檻（2026-06-23 07:01-07:22 +0800：`5ab7434` clasp push T-A5-005 + `3209fba` fixMasterTemplate_，均 awaiting Owner；現 **~97.0h/~96.6h**，2026-06-27 08:00 更新）；T-A5-004 🔴 CRITICAL（~1560h+，無新 commit）| Quotation Engine |
-| A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（4dfd0a8 2026-06-26 20:21 stage-labeling rubric + A6.json 第 8 技能書；~1.7h；LINE webhook等Owner確認 Channel 1654658337）| Sales Rapid Response |
+| A4 | 影像資產整理部 | 🔴 CRITICAL（超 48h：最後 c2dc194/90fe31c 2026-06-11；現 ~606.7h/~25.3天 無新 commit；GCP帳單~81天未處理🔴；2026-07-06 晚間更新）| Photo Archive |
+| A5 | 報價與提案引擎部 | ⚠️ T-A5-002 + T-A5-005 均超 48h 門檻（2026-06-23 07:01-07:22 +0800：`5ab7434` clasp push T-A5-005 + `3209fba` fixMasterTemplate_，均 awaiting Owner；現 **~327.0h/~326.6h**，2026-07-06 晚間更新）；T-A5-004 🔴 CRITICAL（~1668h+，無新 commit）；T-A5-007 🔲 待 Codex 認領（`6cefd13` 2026-07-06 建卡，A5→Codex 移交）| Quotation Engine |
+| A6 | 業務快反應部隊 | ⚠️ T-A6-001 **已超 48h 門檻**（4dfd0a8 2026-06-26 20:21 stage-labeling rubric + A6.json 第 8 技能書；~241.6h，請 Owner 確認後續方向；LINE webhook等Owner確認 Channel 1654658337；2026-07-06 晚間更新）| Sales Rapid Response |
 | A7 | 客服與對話轉單部 | 💤 T-A7-001 正式暫停；T-A7-002 ⏸️ 阻塞（等LINE後台權限+Owner政策決策）| Smart Reply |
-| A8 | 影音內容產線 | ⚠️ 已跨過 48h 門檻（2026-06-25 08:25 `1a2d752` squash merge a8/video-checklist-mvp，今日 08:25 跨 48h，現 ~47.6h；下一步：審核 local motion POC storyboard → 地端動態生成 → 9:16 mp4/cover → Publish Approval Card，未經 Owner/A1 approval 不得上傳） | Content Repurposing Pipeline |
+| A8 | 影音內容產線 | ⚠️ 持續超 48h（2026-06-25 08:25 `1a2d752` squash merge a8/video-checklist-mvp；現 ~277.6h/~11.6天，2026-07-06 晚間更新；下一步：審核 local motion POC storyboard → 地端動態生成 → 9:16 mp4/cover → Publish Approval Card，未經 Owner/A1 approval 不得上傳） | Content Repurposing Pipeline |
 | **B1** | **Investment OS Builder** | **🟢 T-HQ-001 P1-P6 全完成（2026-06-25 08:25 `1a2d752` squash merge：IOS-SELL 角色 + session-lifecycle + PII cleanup + Chrome Extension 模組重建）；計時器 ~47.6h（任務已 Done，不升旗）；建議 Owner 確認可關閉 T-HQ-001** | **寫功能 / runtime surface** |
 | **B2** | **Investment OS Reviewer** | **🟢 召喚型可用** | **資料流 / 錯誤 / freshness review** |
 | **B3** | **Investment OS Archivist** | **🟢 召喚型可用** | **版本紀錄 / 交接 / resume prompt** |
@@ -399,7 +399,7 @@ handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-
 
 ## A4｜影像資產整理部（Photo Archive / Asset Library）
 
-**狀態：🔴 CRITICAL（~185h 無新 commit；2026-06-11 最後 c2dc194/90fe31c；48h 門檻已超；T-A4-003 照片搬移管線已啟動；GCP帳單~64天未處理🔴）**
+**狀態：🔴 CRITICAL（~600.7h/~25.0天 無新 commit；2026-06-11 最後 c2dc194/90fe31c；48h 門檻已超；T-A4-003 照片搬移管線已啟動；GCP帳單~81天未處理🔴；2026-07-06 午後更新）**
 
 ```
 你是 MAPLAB A4 影像資產整理部。
@@ -415,7 +415,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. Chrome tab 環境 → 自行開啟需要的網頁分頁，用截圖讀取
 
-【斷點 — 2026-06-11 A1午後巡查更新】
+【斷點 — 2026-06-30 A1日間巡查更新】
 T-A4-001 Gemini 照片分類：
   - S1-S4 ✅ 完成
   - S5(2022) ✅ DONE 8,549張（日常5,243/外燴1,221/旅遊2,073）
@@ -430,7 +430,7 @@ T-A4-003 照片分類搬移管線（NEW 2026-06-11）：截圖/家庭/外燴工�
 Photo scan 總量：60,584 files
 Gemini API Key 已更換（舊 key leaked fe49f3e，新 key 記錄於 Notion）
 T-A4-002 pagewu1010 Takeout（187GB）：Phase 1 規劃完成(d0b3238 04-18)
-⚠️ GCP帳單：~54天未處理🔴（Owner 仍需處理）
+⚠️ GCP帳單：~81天未處理🔴（Owner 仍需處理；2026-07-06 午後）
 
 【踩過的坑】
 - 量大（6萬+）必須用 REST API batch 模式
@@ -459,7 +459,7 @@ projects/maplab-pipeline.md → handoff/handoff-to-A4.md → skills/superpowers-
 
 ## A5｜報價與提案引擎部（Quotation Engine）
 
-**狀態：⚠️ 任務卡待Owner核查 — 2026-05-19 有 6 個 A5 commits（343e1d0/24c985b/6a98eb0/4b53ea8/716f0c2/d22c03c），但 task card T-A5-002/004/005 仍顯示 CRITICAL；~288h/~12天無新commit。需 Owner 確認 CRITICAL 是否已解除。**
+**狀態：⚠️ T-A5-002 + T-A5-005 均超 48h 門檻（awaiting Owner trigger；最後 commit 2026-06-23 07:01-07:22；~320.6h/~321.0h）；T-A5-004 🔴 CRITICAL（~1662h+無commit）；2026-07-06 午後更新**
 
 ```
 你是 MAPLAB A5 報價與提案引擎部。
@@ -475,17 +475,18 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. Chrome tab 環境 → 自行開啟需要的網頁分頁，用截圖讀取
 
-【斷點 — 2026-05-09 A1午後巡查更新（⚠️ A5 CRITICAL，非 A5 自寫）】
+【斷點 — 2026-07-06 A1午後巡查更新（非 A5 自寫）】
 T-A5-001 Items 去重 + 全品項重新編碼：✅ 完成（108品項，APP050/DST041/MAIN009/BEV008）
-T-A5-002 QUOTE_DRAFT 報價單欄位增強：🔴 CRITICAL D30 ~725h無commit（last: cfeebd1 2026-04-09）
-  - ✅ Items.E default_cost/服務費/長桌費/車馬費下拉/S6S9計算 helpers 均已完成
-  - ⬜ 待確認事項（需 Owner 決定）：品項名稱改法、重複品項、I 欄用途
-T-A5-004 createSlides.gs — Slide 報價簡報自動生成：🔴 CRITICAL ~725h無commit（D30）
-T-A5-005 報價狀態追蹤同步 + Dashboard：🔴 CRITICAL ~725h無commit（D30）
-T-A5-003/006：🔲 待開始（等前置任務）
+T-A5-002 QUOTE_DRAFT 報價單欄位增強：🔄 進行中（last `3209fba` 2026-06-23 07:22 fixMasterTemplate_ GAS fn + clasp push；awaiting Owner run；~320.6h 超 48h 門檻）
+  - ✅ GAS fixMasterTemplate_ 修正 + clasp push 完成
+  - ⬜ 待 Owner 在 GAS 端手動觸發一次確認
+T-A5-004 createSlides.gs — Slide 報價簡報自動生成：🔴 CRITICAL（~1662h+無commit）
+T-A5-005 報價狀態追蹤同步 + Dashboard：🔄 進行中（last `5ab7434` 2026-06-23 07:01 clasp push T-A5-005 sync functions；awaiting Owner trigger setup；~321.0h 超 48h 門檻）
+T-A5-003/006：🔲 待開始（T-A5-006 等 T-A5-005 完成後啟動）
 
 【Blocker】
-🔴 Owner 需決策是否重啟 A5（已 D30，連續15+次巡查無回應）
+🟡 T-A5-002 / T-A5-005：GAS clasp push 完成，awaiting Owner trigger（~320.6h+）
+🔴 T-A5-004 createSlides.gs：~1662h無commit，CRITICAL
 
 【踩過的坑】
 - Items 原 300 筆大量重複，精簡至 108 筆
@@ -514,7 +515,7 @@ projects/maplab-master-data.md → handoff/handoff-to-A5.md → handoff/field-na
 
 ## A6｜業務快反應部隊（Sales Rapid Response Unit）
 
-**狀態：🔄 T-A6-001 進行中（last 4dfd0a8 2026-06-26 20:21 stage-labeling rubric + A6.json 第 8 技能書；計時器重置 ~1.7h；LINE Developers Console Webhook URL 仍待 Owner 確認 Channel 1654658337；bot_a6 ✅ 上線 launchd）**
+**狀態：⚠️ T-A6-001 進行中（last 4dfd0a8 2026-06-26 20:21 stage-labeling rubric + A6.json 第 8 技能書；現 ~235.6h 超 48h 門檻（awaiting Owner 方向確認）；LINE Developers Console Webhook URL 仍待 Owner 確認 Channel 1654658337；bot_a6 ✅ 上線 launchd；2026-07-06 午後更新）**
 
 ```
 你是 MAPLAB A6 業務快反應部隊。
@@ -543,16 +544,17 @@ repo: https://github.com/page1010/maplab-ai-handbook
 4. 進件建立 — 在 SALES_INTAKE 自動建一筆案件（case_id = CASE-YYYYMMDD-NNN）
 5. 查報價 — 「查XXX的報價」→ 找 QUOTE_WORKBENCH
 
-【斷點 — 2026-05-04 21:00 A1晚間巡查更新】
-T-A6-001 🔄 進行中（A6 今日活躍）：
-05-04 20:23 新增：5ae9c79 feat(a6): add ollama chat/seo modes with menu while preserving quote pipeline
-  → bot_a6/bot_a6.py（+187行）：ollama 本地 LLM chat 模式 + SEO 模式 + 互動 menu，報價 pipeline 保留
-  → .env.example 更新；T-A6-001.md Task Card 已更新（A6 自行補寫）
-04-18 進展：addItem action 分流修復（b042d93）；QA 10輪測試 Round 1 addItem PASS 🎉（45b4758）；OAuth token自動刷新（532febf）。
-e2e round 5 全通過里程碑 🎉（04-11 06ce9c6）：quote + slide + heartbeat all verified；auto-trigger Slide after createQuote（b118095）；fromMaster mode（b82df34）。
-⚠️ GAS 鐵律（780d43c）：禁止推測 endpoint/部署狀態 — 未明確確認=失敗，不可推測已部署。
-Owner確認：LINE Developers Console Webhook URL是否已填入（Channel 1654658337）→若已填入請在Task Card移除阻塞標記。
-下一步：QA 抽考 Round 2-10 繼續 → 結尾頁/無圖垂直置中 → T-A6-001 結案。
+【斷點 — 2026-07-06 A1每日巡查更新】
+T-A6-001 🔄 進行中（⚠️ 已超 48h 門檻，~227.6h，awaiting Owner）：
+06-26 20:21 最新：4dfd0a8 feat(a6): 召喚術上線 rubric — a6-stage-labeling-rubric.md + A6.json 第 8 技能書
+06-18 大更新：Telegram 報價 hot path 修復成 Sheet-first + GAS clasp push @12 驗證；live smoke v3 NT$15,700 / 毛利 80%。
+  → bot_a6/a5_quote_engine.py 新增 deterministic build_sheet_quote_payload()
+  → GAS Code.gs applyQuoteVariantToCopy_() 修 D/F/IJ 7:20 避免 D19/D20 殘留
+  → OpenClaw 學徒訓練完成但未通過獨立放行（supervisor_lesson.md）
+06-27 02:14 A1 A6 culture loop v4（133e6c4）：sliding window + Ollama LLM fallback；S_PENDING 34.3%→9.0%
+⚠️ 阻塞：LINE OA 雙向訓練資料仍待 Owner 提供正式來源（LINE OA Manager CSV 或其他）。
+Owner確認：A6 下一步動作方向 + LINE Webhook Channel 1654658337 確認。
+下一步：Owner 決策 A6 方向 → LINE 訓練資料補齊 → T-A6-001 結案（或暫停）。
 
 【必讀】
 1. projects/line-quote-assistant.md ← 使用者需求 v1.0（Owner 確認），A6/A7 架構聖經
@@ -620,7 +622,7 @@ projects/ai-reply-system.md → skills/superpowers-guide.md
 
 ## A8｜影音內容產線（Content Repurposing Pipeline）
 
-**狀態：🔄 ACTIVE — T-A8-001 folder case to short video distribution**
+**狀態：⚠️ T-A8-001 持續超 48h（~271.6h/~11.3天，last `1a2d752` 06-25 08:25，awaiting Owner storyboard review；2026-07-06 午後更新）**
 
 ```
 你是 MAPLAB A8 影音內容產線（Content Repurposing Pipeline）。
@@ -644,9 +646,17 @@ repo: https://github.com/page1010/maplab-ai-handbook
 
 【工具鏈】NotebookLM、Gemini 2.5 Flash（免費額度）、Google Vids、YouTube Studio、Google Drive
 
-【斷點】
-🔄 第一個正式任務已啟動：`T-A8-001-folder-to-video-distribution`。
-目標是把 MAPLAB 真實資料夾案例轉成 9:16 短影音產線，先從 ICC Tainan 案例 dry-run，再做 YouTube / TikTok / IG / Pinterest approval-ready 分發包。
+【斷點 — 2026-07-06 A1每日巡查更新】
+T-A8-001 🔄 ACTIVE（⚠️ 已超 48h，~263.6h/~11.0天，awaiting Owner storyboard review）：
+06-25 08:25 最新：1a2d752 squash merge a8/video-checklist-mvp — completed-videos tracker + iteration rubric + scan script
+06-20 20:56 地端動態運鏡整合（f9d1c42）：ffmpeg zoompan dolly_in/out/pan_left/pan_right/static，零成本地端模擬動態運鏡。
+MAPLAB IG Soft v1 style（暖色/低對比/柔和 xfade）+ 企業茶會 CTA 固定模板已就位。
+目標是把 MAPLAB 真實資料夾案例轉成 9:16 短影音產線（ICC Tainan dry-run → YouTube/TikTok/IG/Pinterest approval-ready）。
+⚠️ 下一步（需 Owner 審核後才可繼續）：
+1. Owner 審核 local motion POC storyboard
+2. 4 張 A-class webp 跑地端動態生成
+3. Swift+ffmpeg zoompan 拼接 → 完成 9:16 mp4/cover
+4. Publish Approval Card → Owner/A1 核准後才可上傳 YouTube/TikTok/IG/Pinterest
 
 【必讀】
 CURRENT_STATUS.md → AGENT_RULES.md → skills/a8-video-pipeline-skills.md

@@ -229,3 +229,5 @@ Traceback (most recent call last):
   File "/Users/pagemacmini/maplab-ai-handbook/bot/venv/lib/python3.9/site-packages/telegram/request/_httpxrequest.py", line 317, in do_request
     raise NetworkError(f"httpx.{err.__class__.__name__}: {err}") from err
 telegram.error.NetworkError: httpx.ConnectError: [Errno 8] nodename nor servname provided, or not known
+Python(53909) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Python(53910) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.

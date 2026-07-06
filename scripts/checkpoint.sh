@@ -368,6 +368,46 @@ ${sync_content}<!-- AUTO-SYNC END -->"
   fi
 }
 
+# === recall ↔ task-module 一致性檢查（非阻塞警告） ===
+# 偵測「改了 recalls/Ax_recall.md 但沒重生 chrome-extension/task-modules/Ax.json」
+# 比對時忽略 <!-- AUTO-SYNC --> 動態區塊，只看穩定慣例/LOCK 內容是否漂移。
+_check_recall_module_consistency() {
+  local recalls_dir="$REPO_ROOT/recalls"
+  local module_dir="$REPO_ROOT/chrome-extension/task-modules"
+  [ -d "$recalls_dir" ] && [ -d "$module_dir" ] || return 0
+  command -v python3 >/dev/null 2>&1 || return 0
+
+  python3 - "$recalls_dir" "$module_dir" <<'PY'
+import sys, json, re, glob, os
+recalls_dir, module_dir = sys.argv[1], sys.argv[2]
+
+def strip_autosync(t):
+    t = re.sub(r'<!-- AUTO-SYNC START.*?<!-- AUTO-SYNC END -->', '', t, flags=re.S)
+    return t.strip()
+
+stale = []
+for rp in sorted(glob.glob(os.path.join(recalls_dir, '*_recall.md'))):
+    role = os.path.basename(rp)[:-len('_recall.md')]
+    mp = os.path.join(module_dir, role + '.json')
+    if not os.path.exists(mp):
+        continue
+    try:
+        recall = strip_autosync(open(rp, encoding='utf-8').read())
+        mod = json.load(open(mp, encoding='utf-8'))
+        excerpt = strip_autosync(mod.get('packaged_role_recall_excerpt', ''))
+    except Exception:
+        continue
+    if recall != excerpt:
+        stale.append(role)
+
+if stale:
+    print("⚠️  recall↔module 不一致（召喚會帶到舊內容）：" + ", ".join(stale))
+    print("   修法：python3 tools/ai_workbook/build_extension_task_modules.py 重生 task modules 後再 checkpoint。")
+else:
+    print("✅ recall↔task-module 一致性檢查通過。")
+PY
+}
+
 # Parse flags
 for arg in "$@"; do
   [ "$arg" = "--branch" ] && FAST_MODE=false
@@ -405,6 +445,10 @@ fi
 
 echo "📋 變更清單："
 git status --short
+echo ""
+
+# recall ↔ task-module 一致性檢查（非阻塞）
+_check_recall_module_consistency
 echo ""
 
 # ============================================================

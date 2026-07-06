@@ -47,6 +47,8 @@ logs/runtime/
 data/a6-photos/
 data/photo_alt_index.db
 data/photo_classify.db
+data/s11_2024_resume.db
+state/s11_2024_missing_cache.json
 
 # SEO factory runtime artifacts
 automation/seo_factory/output/

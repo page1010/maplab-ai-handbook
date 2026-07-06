@@ -1,0 +1,8 @@
+[2026-07-06T23:46:49] resume run start: missing_total=3941 already_done_this_run=0 todo=3941 limit=3
+[2026-07-06T23:48:05] appended final batch of 3 rows to Sheet
+[2026-07-06T23:48:05] run done: processed 3 this invocation
+[2026-07-06T23:53:34] drive folder images=13980 already_valid_in_sheet=10582 missing=3409
+[2026-07-06T23:53:46] resume run start: missing_total=3409 already_done_this_run=3 todo=3409 limit=5
+[2026-07-06T23:55:50] appended final batch of 5 rows to Sheet
+[2026-07-06T23:55:50] run done: processed 5 this invocation
+[2026-07-06T23:56:05] resume run start: missing_total=3409 already_done_this_run=8 todo=3404 limit=1000000000

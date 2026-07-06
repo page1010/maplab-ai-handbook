@@ -277,6 +277,29 @@ def sheet_append_rows(rows: list[list[str]]) -> None:
         resp.read()
 
 
+def _flush_pending(conn: sqlite3.Connection, pending_rows: list[list[str]], label: str) -> list[list[str]]:
+    """Append pending_rows to the Sheet. Network failures here must NOT kill
+    the whole run (2026-07-07 incident: an uncaught append error during a
+    transient network outage crashed the entire background job). On failure,
+    log and keep the rows in pending_rows so the next flush point retries
+    them instead of losing/leaving them stuck unappended forever."""
+    if not pending_rows:
+        return pending_rows
+    try:
+        sheet_append_rows(pending_rows)
+    except Exception as e:  # noqa: BLE001 - transient network/API failure, retry later
+        log(f"APPEND FAILED ({label}, {len(pending_rows)} rows), will retry next flush: {e}")
+        return pending_rows
+    ids = [r[2] for r in pending_rows]
+    conn.execute(
+        f"UPDATE classified SET appended=1 WHERE file_id IN ({','.join('?' * len(ids))})",
+        ids,
+    )
+    conn.commit()
+    log(f"appended {label} batch of {len(pending_rows)} rows to Sheet")
+    return []
+
+
 def run(limit: int) -> None:
     conn = db_init()
     missing = compute_missing()
@@ -284,8 +307,21 @@ def run(limit: int) -> None:
     todo = [f for f in missing if f["id"] not in done_ids]
     log(f"resume run start: missing_total={len(missing)} already_done_this_run={len(done_ids)} todo={len(todo)} limit={limit}")
 
+    # Flush anything classified-but-not-yet-appended from a prior crashed run
+    # before starting new work, so successful classifications never get
+    # silently stranded in SQLite.
+    stranded = conn.execute(
+        "SELECT file_id, name, category, keywords, alt_text, seo_name FROM classified "
+        "WHERE error IS NULL AND appended=0"
+    ).fetchall()
+    if stranded:
+        log(f"found {len(stranded)} classified-but-unappended rows from a prior run, flushing first")
+        rows = [["2024", name, fid, cat, kw, alt, seo] for fid, name, cat, kw, alt, seo in stranded]
+        _flush_pending(conn, rows, "recovery")
+
     pending_rows: list[list[str]] = []
     processed_count = 0
+    consecutive_failures = 0
     for f in todo[:limit]:
         file_id, name = f["id"], f["name"]
         try:
@@ -300,7 +336,35 @@ def run(limit: int) -> None:
             pending_rows.append(
                 ["2024", name, file_id, result["category"], result["keywords"], result["alt_text"], result["seo_name"]]
             )
+            consecutive_failures = 0
         except Exception as e:  # noqa: BLE001 - log and keep going, don't kill the whole batch
+            consecutive_failures += 1
+            # 2026-07-07 incident: a network outage caused thousands of
+            # instant-fail attempts (DNS errors return immediately, no
+            # timeout wait) that permanently marked almost the entire
+            # remaining backlog as "error" in seconds. If failures are
+            # coming back-to-back this fast, it's very likely a systemic
+            # outage, not a bad file — pause and retry the SAME file
+            # instead of burning through the whole todo list as failures.
+            if consecutive_failures >= 5:
+                log(f"{consecutive_failures} consecutive failures (last: {e}) — pausing 60s, assuming network/API outage, will retry {name}")
+                time.sleep(60)
+                consecutive_failures = 0
+                try:
+                    access_token = get_access_token()
+                    img_bytes = drive_download_bytes(file_id, access_token)
+                    result = classify_with_ollama(img_bytes)
+                    conn.execute(
+                        "INSERT OR REPLACE INTO classified VALUES (?,?,?,?,?,?,0,NULL,datetime('now'))",
+                        (file_id, name, result["category"], result["keywords"], result["alt_text"], result["seo_name"]),
+                    )
+                    conn.commit()
+                    pending_rows.append(
+                        ["2024", name, file_id, result["category"], result["keywords"], result["alt_text"], result["seo_name"]]
+                    )
+                    continue
+                except Exception as e2:  # noqa: BLE001 - genuinely give up on this one file
+                    e = e2
             conn.execute(
                 "INSERT OR REPLACE INTO classified VALUES (?,?,NULL,NULL,NULL,NULL,0,?,datetime('now'))",
                 (file_id, name, str(e)[:300]),
@@ -310,28 +374,12 @@ def run(limit: int) -> None:
 
         processed_count += 1
         if len(pending_rows) >= BATCH_APPEND_SIZE:
-            sheet_append_rows(pending_rows)
-            ids = [r[2] for r in pending_rows]
-            conn.execute(
-                f"UPDATE classified SET appended=1 WHERE file_id IN ({','.join('?' * len(ids))})",
-                ids,
-            )
-            conn.commit()
-            log(f"appended batch of {len(pending_rows)} rows to Sheet")
-            pending_rows = []
+            pending_rows = _flush_pending(conn, pending_rows, "regular")
 
         if processed_count % 100 == 0:
             log(f"progress: {processed_count}/{min(limit, len(todo))}")
 
-    if pending_rows:
-        sheet_append_rows(pending_rows)
-        ids = [r[2] for r in pending_rows]
-        conn.execute(
-            f"UPDATE classified SET appended=1 WHERE file_id IN ({','.join('?' * len(ids))})",
-            ids,
-        )
-        conn.commit()
-        log(f"appended final batch of {len(pending_rows)} rows to Sheet")
+    _flush_pending(conn, pending_rows, "final")
 
     log(f"run done: processed {processed_count} this invocation")
 

@@ -1,11 +1,18 @@
 #!/usr/bin/env python3
 """
-weekly_eval_compounding.py — 每週 eval 複利 Routine
+weekly_eval_compounding.py — 每週 eval 複利 Routine  v1.1
 
-分工：
-  Codex  = maker  （重跑 gate/checklist eval → 寫 digest → 更新 baseline + STATE）
-  agy    = reviewer（可選：對 Codex digest 的 [DELTA] 做交叉驗證）
-  Claude = 只在有 delta 時被叫醒（最終蒸餾 + Owner 核可）
+分工（Owner 指示 2026-07-06）：
+  Codex  = maker      機械執行：跑 gate eval、比對 baseline、寫 raw digest、更新 STATE
+  agy    = quality reviewer  實質品質工作：驗 regression 真偽、蒸餾 NEW_PASS 規則、
+                              過濾 false alarm、輸出 Owner 可直接批准的規則文字
+  Claude = 例外定案    只在 agy 確認 delta 後被叫醒，把 agy 規則草案定案進 skill/checklist
+  Owner  = 核可        批准蒸餾規則進 checklist/skill；其餘安靜
+
+「多用 agy 額度」原則：
+  - agy reviewer 是常態化步驟（有 delta 就跑），不是可選
+  - agy 輸出結構化的 Owner Approval Package，不是一行 verdict
+  - Claude 只看 agy 整理好的 package，不看 Codex 原始 dump
 
 HARD: 別碰外燴系統/A6；不 push remote；不讀 secrets；輸出只到 workbook/outputs/。
 """
@@ -96,23 +103,63 @@ CURRENT_STATUS.md：已追加
 ────────────────────────────────────────────────
 """
 
-AGY_REVIEWER_PROMPT_TEMPLATE = """
-你是獨立評分者，負責複核下方 Codex 產出的 eval digest 是否正確判斷了 [DELTA]。
+AGY_QUALITY_REVIEW_PROMPT = """
+你是 maplab-ai-handbook eval 的品質複核者（agy quality reviewer）。
+你的工作是：把 Codex 機械跑出的 eval raw digest 轉化成 Owner 可直接批准的規則草案。
+避免逐字稿式堆料——Owner 只需要看簡潔的判斷 + 行動清單。
 
-任務：
-1. 確認 [REGRESSION] 標記是否合理（不是 false alarm）
-2. 確認 [NEW_PASS] 標記對應的規則是否值得蒸餾進 skill
-3. 若有誤判，明確說明哪條是誤判及理由
+HARD-RULES（不可覆蓋）：
+- 別碰外燴系統（Drive 試算表）
+- 別碰 A6 / bot_a6
+- 不 push remote
+- 不讀 secrets
 
-只回覆：
-REVIEWER_OK: <delta 摘要認可>
-或
-REVIEWER_DISPUTE: <哪條有誤 + 理由>
+你的輸入：Codex eval raw digest（見下方）。
 
-Digest 內容如下：
----
+你需要完成三項品質工作：
+
+─── 品質工作 1：REGRESSION 驗真偽 ───
+對每個 [REGRESSION] 條目：
+a. 判斷是否為真退步（True Regression）或 false alarm（環境差異/測試資料問題）
+b. 若為真退步：診斷可能原因（script 邏輯、test fixture 變更、還是 gate 規則太嚴？）
+c. 若為 false alarm：說明為什麼，建議從 delta 移除
+
+─── 品質工作 2：NEW_PASS 蒸餾規則 ───
+對每個 [NEW_PASS] 條目：
+a. 確認這次通過是穩定的（不是偶然）
+b. 提取可蒸餾的規則文字（直接可貼進 docs/seo-publish-checklist.md 或 skills/wp-article-standard.md 的格式）
+c. 建議沉澱形式：清單條目 / 腳本 check / 模板必填欄位（對應缺陷棘輪三軌）
+
+─── 品質工作 3：Owner Approval Package ───
+產出一份簡潔的 Owner 批准清單（重點：不要堆料，Owner 看 2 分鐘就能決定）：
+
+## Owner Approval Package — {date}
+
+### 需 Owner 決定（1 分鐘掃一眼）
+
+**真退步需調查（{regression_count} 條）**
+| # | 案例 / Check | 診斷 | 建議行動 |
+|---|---|---|---|
+| 1 | ... | ... | ... |
+
+**可蒸餾新規則（{newpass_count} 條）**
+| # | 規則文字（可直接貼入 checklist）| 沉澱形式 | 信心度 |
+|---|---|---|---|
+| 1 | ... | 清單條目 / 腳本 / 模板 | 高/中/低 |
+
+### agy 複核結論
+- 真退步：X 條（已過濾 false alarm Y 條）
+- 可蒸餾：Z 條（信心度高 / 中 / 低 各幾條）
+- 建議 Claude 定案：[是，delta 實質；否，可安靜]
+
+### 行動指令（若 Owner 批准）
+```
+# 蒸餾新規則（複製貼入對應檔案）
+[具體條文]
+```
+
+─── Codex raw digest 如下 ───
 {digest}
----
 """
 
 
@@ -180,34 +227,67 @@ def run_codex_maker() -> tuple[bool, str]:
     return True, out
 
 
-def run_agy_reviewer(digest: str) -> str:
-    """Run agy as independent reviewer. Returns reviewer verdict."""
-    print("[eval] Running agy reviewer…")
-    prompt = AGY_REVIEWER_PROMPT_TEMPLATE.format(digest=digest[:3000])
-    rc, out, err = run([AGY, "--print", prompt], timeout=120)
+def count_tag(text: str, tag: str) -> int:
+    return text.count(tag)
+
+
+def run_agy_quality_review(digest: str) -> tuple[str, Path]:
+    """
+    agy 做完整品質複核（多用 agy 額度原則）。
+    回傳 (review_text, review_file_path)。
+    review_file 寫到 eval-digests/{TODAY}-agy-review.md。
+    """
+    print("[eval] Running agy quality review (substantive)…")
+    regression_count = count_tag(digest, "[REGRESSION]")
+    newpass_count    = count_tag(digest, "[NEW_PASS]")
+    prompt = AGY_QUALITY_REVIEW_PROMPT.format(
+        date=TODAY,
+        regression_count=regression_count,
+        newpass_count=newpass_count,
+        digest=digest[:4000],
+    )
+    # agy --print: non-interactive, prints to stdout
+    rc, out, err = run([AGY, "--print", prompt], timeout=240)
+    review_path = DIGESTS / f"{TODAY}-agy-review.md"
     if rc != 0:
-        print(f"[eval] agy reviewer exit {rc}, skipping")
-        return "REVIEWER_SKIP"
-    verdict = out.strip()
-    print(f"[eval] agy verdict: {verdict[:200]}")
-    log({"step": "agy_reviewer", "verdict": verdict[:500]})
-    return verdict
+        print(f"[eval] agy quality review exit {rc}")
+        review_text = f"[agy review failed — rc={rc}]\n{err[:400]}"
+        log({"step": "agy_quality_review", "rc": rc, "error": err[:300]})
+    else:
+        review_text = out.strip()
+        log({"step": "agy_quality_review", "rc": rc, "chars": len(review_text)})
+        print(f"[eval] agy quality review done ({len(review_text)} chars)")
+    # Always write to file so orchestrator can check it
+    DIGESTS.mkdir(parents=True, exist_ok=True)
+    review_path.write_text(review_text, encoding="utf-8")
+    return review_text, review_path
 
 
-def notify_owner(digest: str, agy_verdict: str) -> None:
-    """Send Telegram only when delta is confirmed."""
+def agy_recommends_claude(review_text: str) -> bool:
+    """Check whether agy's review says Claude should be invoked."""
+    return "建議 Claude 定案：[是" in review_text or "建議 Claude 定案: [是" in review_text
+
+
+def notify_owner(digest: str, agy_review: str) -> None:
+    """Send Telegram with agy's Owner Approval Package (not raw Codex dump)."""
+    # Extract just the Owner Approval Package section from agy review
+    pkg_marker = "## Owner Approval Package"
+    if pkg_marker in agy_review:
+        pkg = agy_review[agy_review.index(pkg_marker):][:1200]
+    else:
+        pkg = agy_review[:1200]
+
     lines = [
-        "⚠️ *maplab weekly eval — DELTA detected*",
+        "⚠️ *maplab weekly eval — DELTA confirmed by agy*",
         f"日期：{TODAY}",
         "",
-        "eval digest 摘要（前 600 字）：",
+        "─── agy Owner Approval Package ───",
         "```",
-        digest[:600],
+        pkg,
         "```",
         "",
-        f"agy 複核：{agy_verdict[:200]}",
-        "",
-        "👉 請 Owner 審核 `workbook/outputs/eval-digests/` + 核可蒸餾規則。",
+        "📁 完整 review：`workbook/outputs/eval-digests/`",
+        "👉 Owner 核可後告知 Claude 蒸餾規則進 skill/checklist。",
     ]
     send_telegram("\n".join(lines))
 
@@ -216,36 +296,40 @@ def main() -> int:
     print(f"[eval] weekly_eval_compounding.py START — {TODAY}")
     DIGESTS.mkdir(parents=True, exist_ok=True)
 
-    # 1. Run Codex maker
-    ok, codex_out = run_codex_maker()
+    # Step 1 — Codex maker: 機械執行 gate eval + write raw digest + update STATE
+    ok, _ = run_codex_maker()
     if not ok:
-        notify_owner("[Codex maker failed — check state/weekly_eval_run.jsonl]", "MAKER_FAILED")
+        send_telegram(f"⚠️ maplab weekly eval MAKER FAILED {TODAY} — check state/weekly_eval_run.jsonl")
         return 1
 
-    # 2. Read digest produced by Codex
+    # Step 2 — Read Codex raw digest
     digest_path = DIGESTS / f"{TODAY}.md"
     digest = read_digest(digest_path)
-
     if not digest:
-        print("[eval] Digest file not found after Codex run — possibly Codex wrote elsewhere")
+        print("[eval] Digest not found after Codex run")
         log({"step": "digest_read", "found": False})
         return 1
-
     log({"step": "digest_read", "found": True, "has_delta": has_delta(digest)})
 
-    # 3. Check for delta
+    # Step 3 — No delta → silent exit
     if not has_delta(digest):
-        print(f"[eval] NO_DELTA — eval stable. No notification sent.")
+        print("[eval] NO_DELTA — eval stable. Silent exit.")
         return 0
 
-    print(f"[eval] DELTA detected — running agy reviewer…")
+    # Step 4 — agy quality review（有 delta 必跑，多用 agy 額度原則）
+    # agy 承擔：驗 regression 真偽 + 蒸餾 NEW_PASS 規則 + 產 Owner Approval Package
+    print("[eval] DELTA detected — running agy quality review…")
+    agy_review, review_file = run_agy_quality_review(digest)
+    print(f"[eval] agy review written to {review_file}")
 
-    # 4. agy cross-check
-    agy_verdict = run_agy_reviewer(digest)
-
-    # 5. Notify Owner only on confirmed delta (don't suppress even if agy disputes — Owner should see)
-    notify_owner(digest, agy_verdict)
-    print(f"[eval] DONE — delta notified to Owner")
+    # Step 5 — Notify Owner with agy's structured package（不是 Codex 原始 dump）
+    # Claude 只在 agy 確認 delta 實質時才需要介入；Owner 收 agy package 就夠做初步判斷
+    notify_owner(digest, agy_review)
+    if agy_recommends_claude(agy_review):
+        print("[eval] agy recommends Claude distillation — Owner will invoke Claude to finalize rules")
+    else:
+        print("[eval] agy says delta is minor/false alarm — Claude not strictly needed")
+    print("[eval] DONE")
     return 0
 
 

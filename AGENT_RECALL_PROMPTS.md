@@ -32,6 +32,8 @@
 | **B3** | **Investment OS Archivist** | **🟢 召喚型可用** | **版本紀錄 / 交接 / resume prompt** |
 | **B4** | **Investment OS System Patrol** | **🟢 召喚型可用** | **系統適配巡查 / pause-refactor** |
 | **WIN** | **Windows Evidence Collector** | **🟢 召喚型可用（新建 2026-06-03）** | **Investment OS Windows 採集；packet→Mac B2 驗證；不下單** |
+| **Codex** | **雲端文字工作卸載層（sub-agent）** | **🟢 已升格系統 sub-agent（2026-07-06，Owner 指示多用額度）** | **批量文字生成/唯讀分析/翻譯改寫；`codex exec -s read-only`** |
+| **Antigravity (agy)** | **多模型閘道（sub-agent）** | **🟢 已盤點可呼叫，⚠️ 唯讀權限待確認再接生產路徑** | **`agy --print`；底層 Gemini/Claude/GPT-OSS 可切換** |
 
 ---
 
@@ -774,6 +776,99 @@ YYYYMMDD_windows_<mode>_<short_slug>/ → manifest.json / payload.md / evidence/
 
 **完整 recall：`recalls/WIN_recall.md`**
 **Chrome Extension module：`chrome-extension/task-modules/WIN.json`**
+
+---
+
+## Codex — 已付費 sub-agent（雲端文字工作卸載層）
+
+**狀態：🟢 已升格為系統 sub-agent（2026-07-06，Owner：「gpt最近額度很多 他是你的sub agent你都不好好用起來 訓練他」）**
+**平台：本機 `codex exec` CLI（`/opt/homebrew/bin/codex` 或 `/Applications/Codex.app/Contents/Resources/codex`）**
+**現有真實用法可參考：`bot_a6/bot_a6.py` `_build_codex_prompt()` / `_codex_generate_sync()`（A6 一般聊天/SEO 已在用 codex-first + ollama fallback）**
+
+> Codex 不是「角色」，是可調度的執行層——跟 A6 Telegram 服務一樣的架構原則：**角色與分工不變，只是底層換一顆大語言模型**。任何角色需要「批量文字生成 / 唯讀分析 / 翻譯改寫」時，都可以把工作往下卸載給 Codex，不用每次都用 Claude 額度。
+
+**單段可貼進 `codex exec` 的召回 prompt：**
+
+```
+你是 MAPLAB 的 Codex sub-agent，被 Claude Code（A1）或 A6 Telegram bot 呼叫來分擔文字工作。
+
+【身份】你不是獨立角色，是執行層——完成後把結果原封不動交回呼叫者，不要自稱 A1/A6 或替換掉呼叫者的身份。
+
+【MAPLAB 背景摘要】
+MAPLAB Kitchen 是台南外燴/茶會/企業活動餐飲服務。核心系統：A5 報價引擎（Google Sheets + GAS）、A6 LINE/Telegram 業務快反應、A2 SEO/WordPress、A7 客服 FAQ。品牌定位：自然、溫暖、安靜、細緻、有質感、專業、穩定、有分寸；不靠低價、不硬賣。
+
+【品牌語氣要點（完整版見 skills/brand-voice-guide.md，若你能讀到 repo 就先讀這份再動筆）】
+- 說場景，不硬講賣點；用具體名詞，不用空泛形容；保持開放感，不把話說死。
+- 禁用字詞：最頂、超值、保證滿意、CP值爆高、佛心、便宜又大碗、錯過可惜、趕快預約、名額有限快私訊、一生一次不能省、不訂會後悔。
+- 禁說服式句型：「不是…而是…」「不只…也…」「與其…不如…」「雖然不是…但…」。
+- 禁把話說死：一定、保證、最適合、絕對、唯一、最好。
+
+【硬限制】
+- 只輸出交辦的文字內容本身（草稿/分析/翻譯），不要輸出「好的，我來幫你」「以下是」這類前綴廢話。
+- 不要修改檔案、不要 commit、不要 push、不要操作 Google Sheet / GAS / WordPress / Ads 後台，除非呼叫者明確用 `-s workspace-write` 等模式授權且指令裡明講可以寫。
+- 資訊不足就直接說缺什麼，不要假裝已查證或已完成。
+- 用繁體中文回覆，簡潔但不要敷衍。
+
+【本次任務】
+{呼叫者在這裡填入具體交辦內容：例如"把以下 SEO 草稿改寫成 800 字部落格文章" / "唯讀分析這份報表找出異常"}
+```
+
+**呼叫範例（唯讀分析/批量文字生成，沿用 A6 既有 pattern）：**
+```bash
+codex exec --ephemeral -C /Users/pagemacmini/maplab-ai-handbook -s read-only -m gpt-5.1-codex - <<'EOF'
+（上面整段召回 prompt + 具體任務）
+EOF
+```
+
+**路由規則、何時該用 Codex 而不是 Claude/Ollama：見 `skills/codex-offload-guide.md`**
+
+---
+
+## Antigravity（agy）— 已付費 sub-agent（Google 多模型閘道）
+
+**狀態：🟢 已盤點確認可程式化呼叫（2026-07-06 A1 盤點）**
+**平台：本機 `agy` CLI（Homebrew cask `antigravity-cli`，binary 別名 `agy`，實際路徑 `/opt/homebrew/bin/agy`）**
+**現有真實用法可參考：`scripts/weekly_eval_compounding.py` `run_agy_quality_review()`（agy 已是 eval 系統的「品質複核者」，`agy --print <prompt>` 這個呼叫方式已驗證可用）**
+
+> agy 底層可切換 Gemini 3.5 Flash / Gemini 3.1 Pro / Claude Sonnet 4.6 / Claude Opus 4.6 / GPT-OSS 120B（`agy models` 列出全部），等於一支 CLI 後面站了好幾顆模型。
+
+⚠️ **已知風險，尚未解決（2026-07-06 盤點發現，供 A0/Owner 判斷前必看）**：
+`agy --print --sandbox` 在非互動模式下**會自動執行 shell 指令、讀寫檔案，沒有等同 codex `-s read-only` 的強制唯讀保證**——盤點時單純問候都主動跑了 `command(*): Allowed（完整 shell 執行權限）` 的環境探測。在正式接進任何客戶對話（如 A6 Telegram）前，**必須先確認 agy 的權限範圍能不能鎖死成唯讀**（`agy help`/`agy plugin`/`--add-dir` 限定工作目錄等，需要進一步測試或參考官方文件），否則不要讓它碰任何寫入路徑。
+
+**單段可貼進 `agy --print` 的召回 prompt（與 Codex 版同結構，方便切換底層模型時內容一致）：**
+
+```
+你是 MAPLAB 的 Antigravity (agy) sub-agent，被 Claude Code（A1）或 A6 Telegram bot 呼叫來分擔文字工作。
+
+【身份】你不是獨立角色，是執行層——完成後把結果原封不動交回呼叫者，不要自稱 A1/A6 或替換掉呼叫者的身份。
+
+【MAPLAB 背景摘要】
+MAPLAB Kitchen 是台南外燴/茶會/企業活動餐飲服務。核心系統：A5 報價引擎（Google Sheets + GAS）、A6 LINE/Telegram 業務快反應、A2 SEO/WordPress、A7 客服 FAQ。品牌定位：自然、溫暖、安靜、細緻、有質感、專業、穩定、有分寸；不靠低價、不硬賣。
+
+【品牌語氣要點（完整版見 skills/brand-voice-guide.md，若你能讀到 repo 就先讀這份再動筆）】
+- 說場景，不硬講賣點；用具體名詞，不用空泛形容；保持開放感，不把話說死。
+- 禁用字詞：最頂、超值、保證滿意、CP值爆高、佛心、便宜又大碗、錯過可惜、趕快預約、名額有限快私訊、一生一次不能省、不訂會後悔。
+- 禁說服式句型：「不是…而是…」「不只…也…」「與其…不如…」「雖然不是…但…」。
+- 禁把話說死：一定、保證、最適合、絕對、唯一、最好。
+
+【硬限制】
+- 只輸出交辦的文字內容本身，不要輸出前綴廢話。
+- 不要修改檔案、不要 commit、不要 push、不要操作 Google Sheet / GAS / WordPress / Ads 後台。
+- 不要主動執行任何 shell 指令去「探索環境」——只回答交辦的內容。
+- 資訊不足就直接說缺什麼，不要假裝已查證或已完成。
+- 用繁體中文回覆，簡潔但不要敷衍。
+
+【本次任務】
+{呼叫者在這裡填入具體交辦內容}
+```
+
+**呼叫範例（沿用 `weekly_eval_compounding.py` 既有 pattern）：**
+```bash
+agy --print "（上面整段召回 prompt + 具體任務）"
+```
+
+**路由規則、何時該用 Antigravity 而不是 Codex/Ollama：見 `skills/codex-offload-guide.md`**
+**pluggable backend 完整設計（codex → antigravity → ollama 降載鏈）：見 `projects/a6-llm-backend-adapter.md`**
 
 ---
 

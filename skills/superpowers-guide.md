@@ -1,5 +1,8 @@
-h# Superpowers Skills 導覽手冊 — MAPLAB AI Agent 版
-版本：v2.4 | 建立：2026-03-14 | 更新：2026-03-29
+# Superpowers Skills 導覽手冊 — MAPLAB AI Agent 版
+版本：v2.6 | 建立：2026-03-14 | 更新：2026-07-07
+
+> ⚠️ 內化對照：本手冊是「目錄」，obra/superpowers 的精華在「執法機制」（技能 TDD、1% 觸發規則、
+> 完成禁語表、description 規範）。逐項對照與落地順序見 `docs/superpowers-internalization-map.md`（2026-07-07）。
 
 > 完整互動版：https://www.notion.so/Superpowers-Skills-320ab0806d5c807c95c7d8d633a7e5c5
 > 原始 Repo：https://github.com/obra/superpowers

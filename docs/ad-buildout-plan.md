@@ -133,7 +133,7 @@
 | B4 VIP/建案 | `cold-b-vip` | 看過 VIP/建案頁 | `台南建案外燴`、`台南 VIP 接待外燴` | `vip-expo-catering-business-meeting` | `b4-vip` |
 | C1 週歲/慶生 | 現跑冷層（繼續）| 現有影片互動者 | `台南周歲外燴`、`台南慶生外燴推薦` | 週歲 landing（確認 slug）| `c1-birthday` |
 | C2 入厝 | `cold-c-housewarming` | 看過入厝相關頁 | `台南入厝外燴` | 入厝 landing（待確認）| `c2-housewarming` |
-| C3 婚禮 ✅ 開 | `cold-c-wedding` | ThruPlay + 看過婚禮頁 | `台南戶外婚禮外燴`、`台南婚禮茶點` | `outdoor-wedding-catering-venue` | `c3-wedding` |
+| C3 婚禮 ✅ 開 | `cold-c-wedding` | ThruPlay + 看過婚禮頁 | `台南戶外婚禮外燴`、`台南婚禮茶點` | `tainan-outdoor-wedding-catering`（2026-07-07 修正：原寫的 outdoor-wedding-catering-venue 為 404，非真實 slug） | `c3-wedding` |
 | C1 性別派對 | ↪ 併入 `cold-c-birthday` | 同慶生線定向，不獨立 | — | 同慶生 landing | `c1-birthday` |
 | 遊艇外燴 | ❌ 不做 | — | — | — | — |
 

@@ -73,7 +73,7 @@
 ### 1. 婚禮 / 證婚 landing — ✅ 開（其實早就存在，非新建）
 
 **修正認知**：`docs/seo-keyword-map.md` 已列 5 個婚禮 slug 為 `live_referenced`；2026-07-07 WP REST 全站掃描確認「台南證婚派對外燴」「台南戶外婚禮外燴」等多篇文章 live。`東門教會證婚` 案例不需要「找 landing」，而是回填進既有頁面補案例證據。
-**決策**：受眾包 `cold-c-wedding`（生命里程碑：訂婚/結婚，年齡25-40），熱層字詞「台南戶外婚禮外燴」「台南婚禮茶點」，主 landing 建議整合到 `outdoor-wedding-catering-venue`。三人小組提醒：既有婚禮頁偏多、有互搶風險，新素材/廣告流量導向單一主 landing，不要再開新 slug。
+**決策**：受眾包 `cold-c-wedding`（生命里程碑：訂婚/結婚，年齡25-40），熱層字詞「台南戶外婚禮外燴」「台南婚禮茶點」，主 landing 建議整合到 `tainan-outdoor-wedding-catering`（已修正原誤寫的 outdoor-wedding-catering-venue，該 slug 回404）。三人小組提醒：既有婚禮頁偏多、有互搶風險，新素材/廣告流量導向單一主 landing，不要再開新 slug。
 
 ### 2. 派對（性別揭曉派對）landing — ✅ 併入慶生線，不獨立
 

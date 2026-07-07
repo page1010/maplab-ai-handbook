@@ -163,7 +163,7 @@ utm_term=[keyword]（Google 搜尋專用）
 
 > ⚠️ C 端 C2/C3 的 landing slug 需確認是否 live；若為 planned_404 則冷/溫層廣告 CTA 先導向 LINE 詢價，不導 404 頁。
 >
-> **2026-07-07 補充（婚禮/性別派對/遊艇 3 個 landing 缺口，已由 Owner 07-05 定案 + SEO 三人小組 07-07 覆核確認，見 §7）**：這 3 項不在本表原始 8 情境內，是 `docs/real-cases-to-seo-matrix.md` 後續案例分類時提出的缺口，決策記錄在 `docs/ad-buildout-plan.md` P2 段：**婚禮線開**（landing 其實早已存在，見 `docs/seo-keyword-map.md` 5 個 live 婚禮 slug，2026-07-07 A2 WP REST 全站掃描亦確認多篇 live；受眾包 `cold-c-wedding`，熱層字詞「台南戶外婚禮外燴」等，landing 建議整合到單一主頁 `outdoor-wedding-catering-venue`，不要再零散開新 slug）；**性別派對併入 `cold-c-birthday`（C1 慶生）**，不獨立受眾包但慶生 landing 內應有一個小節/案例圖承接 message-match；**遊艇外燴不建 landing、不投廣告**，案例照改作 B4 VIP/公關的廣告輪播素材使用。
+> **2026-07-07 補充（婚禮/性別派對/遊艇 3 個 landing 缺口，已由 Owner 07-05 定案 + SEO 三人小組 07-07 覆核確認，見 §7）**：這 3 項不在本表原始 8 情境內，是 `docs/real-cases-to-seo-matrix.md` 後續案例分類時提出的缺口，決策記錄在 `docs/ad-buildout-plan.md` P2 段：**婚禮線開**（landing 其實早已存在，見 `docs/seo-keyword-map.md` 5 個 live 婚禮 slug，2026-07-07 A2 WP REST 全站掃描亦確認多篇 live；受眾包 `cold-c-wedding`，熱層字詞「台南戶外婚禮外燴」等，landing 建議整合到單一主頁 `tainan-outdoor-wedding-catering`（已修正原誤寫的 outdoor-wedding-catering-venue，該 slug 回404），不要再零散開新 slug）；**性別派對併入 `cold-c-birthday`（C1 慶生）**，不獨立受眾包但慶生 landing 內應有一個小節/案例圖承接 message-match；**遊艇外燴不建 landing、不投廣告**，案例照改作 B4 VIP/公關的廣告輪播素材使用。
 
 ---
 

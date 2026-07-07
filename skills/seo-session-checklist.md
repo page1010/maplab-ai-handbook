@@ -49,13 +49,17 @@ Top 3:     ___（▲/▼ ___）
 Excluded:     ___
 ```
 
-### 1.4 核對廣告與 SEO 矩陣 (Matrix Sheet)
+### 1.4 核對廣告與 SEO 矩陣
 
-檢查本機的 `ads_seo_matrix_settings.md`：
+> ⚠️ 2026-07-07 修正：本節原本引用 `ads_seo_matrix_settings.md`，這個檔案從未被建立過，是懸空參照。實際的廣告×SEO矩陣資料在下面三份文件，直接查這些，不要再找不存在的檔案：
+
+檢查以下三份文件是否對齊：
+- `docs/ad-funnel-battle-plan.md`（廣告漏斗策略、8情境對照表、B3試跑計畫）
+- `docs/ad-buildout-plan.md`（Meta 受眾/素材/佈局執行細節）
+- `docs/seo-keyword-map.md`（SEO 關鍵字地圖，含各群組 Pillar/Child 對齊狀態）
 
 ```
-【Matrix Sheet 對齊狀態 — YYYY-MM-DD】
-是否已建立更新公告 (Patch Notes): ✅/❌
+【矩陣對齊狀態 — YYYY-MM-DD】
 Live URL 是否皆能正確開啟: ✅/❌
 Google Ads 關鍵字是否與文章相符: ✅/❌
 Meta Ads 受眾設定是否與 TA 一致: ✅/❌

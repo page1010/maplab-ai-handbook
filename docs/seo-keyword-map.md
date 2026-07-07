@@ -1,7 +1,7 @@
 # MAPLAB SEO 關鍵字／內容地圖（Canonical 單一真相）
 
 > **用途：寫任何 SEO 文章「前」必讀的真相層。** 先讀本圖 → 挑 GAP / 確認沒有互搶 → 按計畫寫，不再每次從頭抓全站。
-> 維護：A2 SEO & Ads ｜ 建立：2026-06-30 ｜ 對齊：`recalls/A2_recall.md`（Conventions Lock v1）、`projects/seo-ads-agent.md`、`workbook/reviews/JOB-A2-SEO-CATERING-COMPETITOR-MATRIX-20260617/article_matrix_seed.md`
+> 維護：A2 SEO & Ads ｜ 建立：2026-06-30 ｜ 最後更新：2026-07-07（婚禮/會議茶點/週歲群組正式標記 Pillar/Child，見各群組表格）｜ 對齊：`recalls/A2_recall.md`（Conventions Lock v1）、`projects/seo-ads-agent.md`、`workbook/reviews/JOB-A2-SEO-CATERING-COMPETITOR-MATRIX-20260617/article_matrix_seed.md`
 > 與其他文件衝突時：**live WP REST > 本圖 > 其他 repo 紀錄**。
 
 ---
@@ -90,29 +90,36 @@
 | `tainan-opening-houseparty-catering` | 台南開幕/house party 外燴 | live_referenced |
 | `press-conference-catering` | 記者會茶點外燴 | live_referenced |
 
-### 會議茶點
-| Slug | 主關鍵字 | 證據 |
-|---|---|---|
-| `corporate-tea-party-desserts` (924) | 企業茶會點心外燴 | ✅ verified |
-| `corporate-tea-party-catering-tips` | 企業茶會外燴 tips | live_referenced ⚠️ 與上互搶 |
-| `tainan-corporate-tea-catering` | 台南企業茶點外燴 | live_referenced ⚠️ 與上互搶 |
+### 會議茶點 — Pillar/Child 已定案（2026-07-07 SEO 三人小組覆核）
 
-### 週歲 / 彌月 / gender reveal
-| Slug | 主關鍵字 | 證據 |
-|---|---|---|
-| `catering-one-year-old-party-tainan` (498) | 台南週歲派對外燴 | ✅ verified |
-| `tainan-full-moon-baby-catering` | 台南彌月外燴 | live_referenced |
-| `gender-reveal-party-tips` | 性別揭曉派對 | live_referenced |
+| Slug | 角色 | 主關鍵字 | 證據 |
+|---|---|---|---|
+| `corporate-tea-party-desserts` (924) | **★ Pillar** | 企業茶會點心外燴 | ✅ verified；B3 廣告漏斗主 landing |
+| `corporate-tea-party-catering-tips` | Child（tips 子意圖） | 企業茶會外燴 tips | live_referenced，內容轉「操作技巧」角度，內鏈回 924 |
+| `tainan-corporate-tea-catering` | Child（在地子意圖） | 台南企業茶點外燴 | live_referenced，內容強化「台南在地」角度，內鏈回 924 |
 
-### 婚禮（⚠️ 群內互搶高）
-| Slug | 主關鍵字 | 證據 |
-|---|---|---|
-| `wedding-catering-vs-banquet-tainan` | 婚禮外燴 vs 婚宴 | live_referenced |
-| `tainan-wedding-welcome-canapes` | 台南婚禮迎賓點心/canapes | live_referenced |
-| `tainan-wedding-celebration-party-catering` | 台南婚禮派對外燴 | live_referenced |
-| `tainan-small-wedding-catering` | 台南小型婚禮外燴 | live_referenced |
-| `tainan-outdoor-wedding-catering` | 台南戶外婚禮外燴 | live_referenced |
-| `tainan-wedding-catering-cost` | 台南婚禮外燴費用 | live_referenced ⚠️ cost 互搶 |
+> 決策：保留 924 當 pillar，其餘兩篇轉子意圖（tips / 在地）並內鏈支援，不合併、不 301。
+
+### 週歲 / 彌月 / gender reveal — Pillar/Child 已定案（2026-07-07）
+
+| Slug | 角色 | 主關鍵字 | 證據 |
+|---|---|---|---|
+| `catering-one-year-old-party-tainan` (498) | **★ Pillar**（週歲/性別派對共用） | 台南週歲派對外燴 | ✅ verified；已補「性別揭曉派對外燴」H2 段落草稿，見 `workbook/outputs/seo-gap-drafts/gender-reveal-section-catering-one-year-old-party-tainan.md` |
+| `tainan-full-moon-baby-catering` | 獨立主題（彌月，非週歲） | 台南彌月外燴 | live_referenced，主題不同不合併 |
+| `gender-reveal-party-tips` | Child（獨立 SEO 頁保留，廣告受眾不拆） | 性別揭曉派對 | live_referenced；07-07 決策：**不獨立 Meta 受眾包**，併入 `cold-c-birthday`；SEO 頁本身保留 |
+
+### 婚禮 — Pillar/Child 已定案（2026-07-07 SEO 三人小組覆核，原「⚠️ 群內互搶高」已解決）
+
+| Slug | 角色 | 主關鍵字 | 證據 |
+|---|---|---|---|
+| `tainan-outdoor-wedding-catering` (1215) | **★ Pillar** | 台南戶外婚禮外燴 | ✅ verified_public（2026-07-07 REST 現查）；對上 Meta 廣告 `cold-c-wedding` 熱層字詞；草稿見 `workbook/outputs/seo-gap-drafts/wedding-pillar-consolidation-tainan-outdoor-wedding-catering.md` |
+| `wedding-catering-vs-banquet-tainan` (238) | Child（決策比較型） | 婚禮外燴 vs 婚宴 | ✅ verified_public |
+| `tainan-wedding-welcome-canapes` (1217) | Child（菜單子項型） | 台南婚禮迎賓點心/canapes | ✅ verified_public |
+| `tainan-wedding-celebration-party-catering` (1220) | Child（形式區隔型） | 台南婚禮派對外燴 | ✅ verified_public |
+| `tainan-small-wedding-catering` (1213) | Child（規模區隔型） | 台南小型婚禮外燴 | ✅ verified_public |
+| `tainan-wedding-catering-cost` (1218) | Child（費用型，維持獨立不合併） | 台南婚禮外燴費用 | ✅ verified_public |
+
+> 決策：pillar 頁補開場段落 + 文末 cluster 連結區塊（5 篇子頁一次到位，不新開 slug）。⚠️ 修正：廣告文件（`ad-funnel-battle-plan.md`/`ad-buildout-plan.md`）原寫的 landing slug `outdoor-wedding-catering-venue` 經 REST 查證回 404，實際應為 `tainan-outdoor-wedding-catering`，待廣告文件同步修正。
 
 ### 派對 / 家庭 / 其他活動
 | Slug | 主關鍵字 | 證據 |

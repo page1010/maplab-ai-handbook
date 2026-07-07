@@ -135,3 +135,4 @@
 |---|---|---|---|
 | v0.1-draft | 2026-07-03 | 初版草案：4 格 × 5 cluster 對應，素材部分待 A0 審 | Owner 指定骨架，A2 填入 |
 | v0.2 | 2026-07-03 | 新增「實跑教訓」：PMax 已停用 + 多角化不投廣告已被實跑驗證 | Owner 帳號截圖 + 對話指示 |
+| v0.3 | 2026-07-07 | SEO 三人小組（Claude+Codex+Antigravity）覆核本矩陣框架，無異議；評審重點落在 B3 執行細節與 landing 決策，已整合進 `docs/ad-funnel-battle-plan.md` §5/§7，本文件四象限框架維持不變 | 三人小組評審，見 `workbook/reviews/JOB-A2-SEO-TRIO-REVIEW-20260707/` |

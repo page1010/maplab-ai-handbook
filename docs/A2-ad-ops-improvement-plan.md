@@ -149,3 +149,4 @@ Meta Marketing API 批量盤點 / 重組 / 寫入
 | 版本 | 日期 | 變更 | 來源 |
 |---|---|---|---|
 | v0.1-draft | 2026-07-03 | 初版草案 | Owner 親口指示骨架，A2 填入 |
+| v0.2 | 2026-07-07 | SEO 三人小組覆核：Phase 2 廣告發布閘門補充「矩陣對齊」需含 SEO cannibalization 檢查（Codex 提醒婚禮/企業茶會已有多篇相近頁，新 landing/廣告導流前需先定 pillar 頁，避免分散權重）；5-Phase 路徑本身無異議 | 三人小組評審，見 `workbook/reviews/JOB-A2-SEO-TRIO-REVIEW-20260707/` |

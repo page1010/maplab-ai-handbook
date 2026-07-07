@@ -162,6 +162,8 @@ utm_term=[keyword]（Google 搜尋專用）
 | **C3 壽宴** | 50+ 年齡受眾 + 家庭關係者（子女輩） | 看過壽宴/長輩宴客頁 | `台南壽宴外燴`、`台南長輩宴客外燴` | 壽宴 landing（確認 slug） | 同 C1 | `c3-birthday-feast` |
 
 > ⚠️ C 端 C2/C3 的 landing slug 需確認是否 live；若為 planned_404 則冷/溫層廣告 CTA 先導向 LINE 詢價，不導 404 頁。
+>
+> **2026-07-07 補充（婚禮/性別派對/遊艇 3 個 landing 缺口，已由 Owner 07-05 定案 + SEO 三人小組 07-07 覆核確認，見 §7）**：這 3 項不在本表原始 8 情境內，是 `docs/real-cases-to-seo-matrix.md` 後續案例分類時提出的缺口，決策記錄在 `docs/ad-buildout-plan.md` P2 段：**婚禮線開**（landing 其實早已存在，見 `docs/seo-keyword-map.md` 5 個 live 婚禮 slug，2026-07-07 A2 WP REST 全站掃描亦確認多篇 live；受眾包 `cold-c-wedding`，熱層字詞「台南戶外婚禮外燴」等，landing 建議整合到單一主頁 `outdoor-wedding-catering-venue`，不要再零散開新 slug）；**性別派對併入 `cold-c-birthday`（C1 慶生）**，不獨立受眾包但慶生 landing 內應有一個小節/案例圖承接 message-match；**遊艇外燴不建 landing、不投廣告**，案例照改作 B4 VIP/公關的廣告輪播素材使用。
 
 ---
 
@@ -173,23 +175,34 @@ utm_term=[keyword]（Google 搜尋專用）
 - Google 已在收割：`台南茶會點心推薦`、`台南點心外燴` 已在搜尋字詞報告中出現
 - B 端詢價金額 > C 端，CPL 值更高
 
-**兩週試跑計畫：**
+**試跑計畫（2026-07-07 SEO 三人小組覆核後修訂，日預算 Owner 定案 NT$100/天，非草案的 150）：**
+
+> Codex + Antigravity 唯讀評審一致認為：NT$100/天若均分給 `cold-b-meeting-corp` + `cold-b-meeting-edu` 兩包（各 NT$50/天）太薄，訊號會被稀釋；且原案「2 週看熱層詢價率 > 3% 決定要不要複製結構」在這個預算量級下，詢價筆數基期太小、百分比容易失真。已按評審意見修訂如下（見 §7 評審紀要）。
 
 ```
-Week 1：
-  ├── 冷層（Meta）：建 B3-HR 冷受眾包，Lookalike HR/行政職業，預算 NT$150/天
+Week 1-2（延長為 3-4 週試跑，非原案 2 週）：
+  ├── 冷層（Meta）：NT$100/天**集中投放 `cold-b-meeting-corp`**（企業HR/行政），
+  │       `cold-b-meeting-edu`（教育/研究單位）暫緩，待 corp 線先跑出訊號再考慮加開
+  │       （原因：corp 轉換意圖與預算充足度都明顯高於 edu，且 edu 與 B5 會展/政府會議線受眾重疊，
+  │       一開始就分兩包會讓兩邊訊號都不夠判讀）
   │       素材：maplab-corporate-forum-cathay-wealth-management-hero.webp
   │       文案：「200 人財富管理論壇的茶點，從詢價到進場 5 天」
   │       CTA：→ hr-admin-meeting-catering-guide-tainan（帶 UTM）
   │
+  ├── 溫層（Meta）：**Day 1 就開始建**，不要等到原案的 Week 2 —— Pixel 已確認安裝、
+  │       ThruPlay 受眾現有資料可用，溫層受眾池要及早開始累積，晚建等於白白流失早期訪客
+  │
   └── 熱層（Google）：Campaign4 加關鍵字「台南茶會點心推薦」「台南會議茶點外燴」
           桌機出價 +25%，手機出價 -20%
 
-Week 2：
-  ├── 溫層補齊：建 B3-HR 溫受眾（看過 landing ≥ 30 秒），輪播案例圖 + 費用頁 CTA
-  └── 數據評估：ThruPlay 成本 / 溫層 CTR / Google 搜尋詢價轉換率 / UTM 來源分布
-        ↓ 若溫層 CTR > 2%、熱層詢價 > 3% → 複製結構到 B1/B2/B4/B5
-        ↓ 若未達標 → 調整素材或文案，不要動受眾結構
+第 3-4 週：數據評估（分階段 KPI，不再只看單一「詢價率 > 3%」門檻）
+  ├── 冷層看：link CTR / CPC / landing page view（不是 ThruPlay —— ThruPlay 適合影片素材，
+  │       B3 這波若以靜態圖/輪播為主，ThruPlay 不是合適的冷層 KPI）
+  ├── 溫層看：link CTR > 2%、加 LINE 好友數、廣告頻率是否過高（避免騷擾）
+  └── 熱層看：qualified LINE 詢價「筆數」+ CPL（不是只看百分比 —— 這個預算量級下，
+        1 筆詢價就可能讓百分比失真，筆數 + CPL 一起看才有意義）
+        ↓ 訊號夠清楚 → 複製結構到 B1/B2/B4/B5（含 corp/edu 拆分策略一併檢討）
+        ↓ 未達標 → 調整素材或文案，不要動受眾結構
 ```
 
 **UTM 示例：**
@@ -198,11 +211,13 @@ https://www.maplabkitchen.com/hr-admin-meeting-catering-guide-tainan/
 ?utm_source=meta&utm_medium=paid_social&utm_campaign=b3-hr-tea&utm_content=forum-hero-v1
 ```
 
+**Landing page 規格（2026-07-07 Owner 指示）**：不限定用 Elementor 製作，只要符合 `skills/brand-voice-guide.md`（語氣）+ `skills/maplab-visual-spec.md`（7 色票，婚禮/週歲場景用裸粉`#D9C4B8`+暖米`#EDE5D8`）即可，工具不設限。
+
 **FDE 啟動前置條件（待 A0/Owner 定案）：**
 - [ ] Meta 帳號 318634712 受眾包建立權限確認
 - [ ] Google Ads Campaign4 出價調整授權
 - [ ] UTM 追蹤 Google Analytics 事件確認有收到（GA4 實時報告核對）
-- [ ] B3 冷層日預算上限 Owner 確認（草案 NT$150/天）
+- [x] B3 冷層日預算上限 **已定案 NT$100/天**（2026-07-07 Owner；集中投放 corp 線，見上方修訂試跑計畫）
 - [ ] WP 1992 精選圖補上（C-1 缺陷，Owner 瀏覽器 session 處理）
 
 ---
@@ -219,8 +234,29 @@ Phase 4     UTM 閉環 → TimeTree 成交數據接入 → 戰情中心統一視
 
 ---
 
+## 7. SEO 三人小組評審制度（2026-07-07 建立）
+
+Owner 指示：SEO/廣告矩陣類決策，設成三人小組審查，透過 Chrome extension prompt 召喚子 session：
+
+| 席位 | 角色 | 權限 | 召喚方式 |
+|---|---|---|---|
+| **Claude（A2）** | 決策 / 整合 / 執行改動 | 讀寫（唯一能改檔案的席位） | 本體 |
+| **Codex** | 唯讀評審 | 唯讀（`codex exec --ephemeral -s read-only`） | `AGENT_RECALL_PROMPTS.md` §Codex 召回 prompt 前綴 |
+| **Antigravity (agy)** | 唯讀評審 | 唯讀（`agy --print`，**不給 `--add-dir`/repo 存取**，從 repo 外的中立目錄呼叫，因 agy 尚無確認過的強制唯讀 sandbox，見 `AGENT_RECALL_PROMPTS.md` §Antigravity 風險註記） | `AGENT_RECALL_PROMPTS.md` §Antigravity 召回 prompt 前綴 |
+
+**運作方式**：
+1. Claude 準備評審包（背景摘要 + 具體問題），存到 `workbook/reviews/JOB-A2-SEO-*-REVIEW-*/review_packet.md`。
+2. 分別呼叫 Codex（`-s read-only`，可給 repo 唯讀存取）與 Antigravity（**不給 repo 存取**，評審包內容直接貼進 prompt，自帶所有需要的背景，不需要它探索檔案系統）。
+3. Claude 彙整兩位唯讀評審的意見，結合自己的判斷做出最終決策，寫回矩陣文件。**任何檔案改動只能由 Claude 執行**，Codex/Antigravity 的輸出只是文字意見，不會也不應該自己動手改。
+4. 評審紀要（兩位的原話摘要 + 分歧點 + Claude 的整合決策與理由）留存在同一個 `workbook/reviews/` 資料夾，並在對應矩陣文件的變更紀錄註明本輪評審。
+
+**首次實跑（2026-07-07）**：`workbook/reviews/JOB-A2-SEO-TRIO-REVIEW-20260707/`，評審對象是本文件 + `docs/ansoff-mot-audience-matrix.md` + `docs/A2-ad-ops-improvement-plan.md` + `docs/real-cases-to-seo-matrix.md`；三個問題：矩陣盲點/風險、B3 試跑方案（NT$100/天）合理性、3 個 landing 缺口的專業意見。結論已整合進本文件 §5、§4 註記。
+
+---
+
 ## 變更紀錄
 
 | 版本 | 日期 | 變更 | 來源 |
 |---|---|---|---|
 | v0.1-draft | 2026-07-03 | 初版草案：現況 + 核心洞察 + 六大做法 + 8 情境表 + FDE B3 | Owner 截圖 + 對話指示，A2 整理 |
+| v0.2 | 2026-07-07 | 建立 SEO 三人小組評審制度（§7）；B3 日預算定案 NT$100/天（原案150）並依評審意見修訂試跑配置（集中投corp線、溫層Day1建立、KPI分階段、試跑期延長為3-4週）；landing不限Elementor + 品牌語氣色票規格；婚禮/性別派對/遊艇 3 個 landing 缺口決策補充註記（§4） | Owner 指示三人小組 + Codex/Antigravity 唯讀評審 + Claude 整合決策 |

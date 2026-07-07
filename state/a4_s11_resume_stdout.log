@@ -3463,3 +3463,5 @@ urllib.error.URLError: <urlopen error [Errno 8] nodename nor servname provided, 
 [2026-07-07T02:04:58] found 7 classified-but-unappended rows from a prior run, flushing first
 [2026-07-07T02:04:58] Google OAuth token refreshed
 [2026-07-07T02:05:01] appended recovery batch of 7 rows to Sheet
+[2026-07-07T02:15:45] appended regular batch of 20 rows to Sheet
+[2026-07-07T02:24:02] appended regular batch of 20 rows to Sheet

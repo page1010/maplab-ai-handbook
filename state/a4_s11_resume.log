@@ -3423,3 +3423,61 @@
 [2026-07-07T02:04:58] found 7 classified-but-unappended rows from a prior run, flushing first
 [2026-07-07T02:04:58] Google OAuth token refreshed
 [2026-07-07T02:05:01] appended recovery batch of 7 rows to Sheet
+[2026-07-07T02:15:45] appended regular batch of 20 rows to Sheet
+[2026-07-07T02:24:02] appended regular batch of 20 rows to Sheet
+[2026-07-07T02:33:32] FAIL IMG_4273.HEIC (1iTZZUGzBvMcP48VOl8nvpPLeIL8FzrAJ): timed out
+[2026-07-07T02:36:33] FAIL IMG_4323.HEIC (18vqwiYK2Qovc7SqhG1XHpQlecGIcx5X1): timed out
+[2026-07-07T02:43:58] appended regular batch of 20 rows to Sheet
+[2026-07-07T03:04:12] Google OAuth token refreshed
+[2026-07-07T03:07:09] appended regular batch of 20 rows to Sheet
+[2026-07-07T03:20:29] FAIL IMG_4346.HEIC (1aEnrqAlXnkQEa8z_89bPquzMuG6G91f6): timed out
+[2026-07-07T03:31:07] progress: 100/3377
+[2026-07-07T03:32:25] appended regular batch of 20 rows to Sheet
+[2026-07-07T03:43:07] appended regular batch of 20 rows to Sheet
+[2026-07-07T03:51:58] appended regular batch of 20 rows to Sheet
+[2026-07-07T04:02:26] Google OAuth token refreshed
+[2026-07-07T04:02:28] appended regular batch of 20 rows to Sheet
+[2026-07-07T04:10:49] appended regular batch of 20 rows to Sheet
+[2026-07-07T04:20:12] progress: 200/3377
+[2026-07-07T04:21:33] appended regular batch of 20 rows to Sheet
+[2026-07-07T04:29:57] appended regular batch of 20 rows to Sheet
+[2026-07-07T04:40:31] appended regular batch of 20 rows to Sheet
+[2026-07-07T04:48:42] appended regular batch of 20 rows to Sheet
+[2026-07-07T04:59:46] appended regular batch of 20 rows to Sheet
+[2026-07-07T05:00:37] Google OAuth token refreshed
+[2026-07-07T05:07:05] progress: 300/3377
+[2026-07-07T05:08:25] appended regular batch of 20 rows to Sheet
+[2026-07-07T05:19:01] appended regular batch of 20 rows to Sheet
+[2026-07-07T05:27:32] appended regular batch of 20 rows to Sheet
+[2026-07-07T05:38:26] appended regular batch of 20 rows to Sheet
+[2026-07-07T05:46:55] appended regular batch of 20 rows to Sheet
+[2026-07-07T05:56:50] progress: 400/3377
+[2026-07-07T05:58:09] appended regular batch of 20 rows to Sheet
+[2026-07-07T05:58:57] Google OAuth token refreshed
+[2026-07-07T06:06:33] appended regular batch of 20 rows to Sheet
+[2026-07-07T06:17:09] appended regular batch of 20 rows to Sheet
+[2026-07-07T06:25:35] appended regular batch of 20 rows to Sheet
+[2026-07-07T06:34:41] appended regular batch of 20 rows to Sheet
+[2026-07-07T06:43:33] progress: 500/3377
+[2026-07-07T06:44:58] appended regular batch of 20 rows to Sheet
+[2026-07-07T06:54:00] appended regular batch of 20 rows to Sheet
+[2026-07-07T06:57:28] Google OAuth token refreshed
+[2026-07-07T07:04:19] appended regular batch of 20 rows to Sheet
+[2026-07-07T07:13:16] appended regular batch of 20 rows to Sheet
+[2026-07-07T07:23:29] appended regular batch of 20 rows to Sheet
+[2026-07-07T07:30:37] progress: 600/3377
+[2026-07-07T07:32:08] appended regular batch of 20 rows to Sheet
+[2026-07-07T07:42:36] appended regular batch of 20 rows to Sheet
+[2026-07-07T07:51:20] appended regular batch of 20 rows to Sheet
+[2026-07-07T07:55:43] Google OAuth token refreshed
+[2026-07-07T08:02:15] appended regular batch of 20 rows to Sheet
+[2026-07-07T08:10:51] appended regular batch of 20 rows to Sheet
+[2026-07-07T08:19:13] progress: 700/3377
+[2026-07-07T08:20:39] appended regular batch of 20 rows to Sheet
+[2026-07-07T08:29:26] appended regular batch of 20 rows to Sheet
+[2026-07-07T08:36:27] FAIL IMG_5873(1).HEIC (1jovlm46ZVSRR1ahTuGvx76pQZJ7Fl9_s): timed out
+[2026-07-07T08:52:32] appended regular batch of 20 rows to Sheet
+[2026-07-07T08:54:00] Google OAuth token refreshed
+[2026-07-07T09:02:17] FAIL IMG_5870(1).HEIC (1AcqDgmZhRw65DmXkzHbzHb1vBIpE-llV): timed out
+[2026-07-07T09:15:11] appended regular batch of 20 rows to Sheet
+[2026-07-07T09:18:39] FAIL IMG_5913(2).HEIC (1fzcPw6bohtpoSAvu_l6G9bJJAOwjDAjV): timed out

@@ -19,6 +19,7 @@
 
 ## 最新事實核對
 
+- 2026-07-07：**[A2] T-A2-002 WordPress 58 篇既有文章回溯掃描完成** — Owner 授權後跑 `scripts/wp-audit.sh --all`（唯讀，未動任何文章）。結果：1 篇（post 698「台南外燴菜單推薦」）含「無麩質」FAQ 答案（正文 + 手刻 JSON-LD 各一次），其餘 57 篇乾淨，待 Owner 決定改法。**同時修正 2026-07-06 對帳的錯誤結論**：昨天說「T-A2-005 pipeline 的 `seo_publish_gate.py`/`seo_qa_checker.py` 已把無麩質/ESG/SDG 做成自動 gate」——實際核對後這是錯的，那兩支腳本的禁用詞清單管的是行銷語氣（超值/CP值等），跟食安字眼是兩份完全不同的清單，`seo_qa_checker.py` 裡的「無麩質」只出現在「飲食禁忌」必寫項目檢查（意思相反，不是禁用詞）。**新產出內容目前並沒有自動擋住食安用詞**，這件事沒有結構性解決。另外附帶發現 5 篇文章（450/541/879/924/994）有手刻 JSON-LD schema 技術債，不在本次範圍，先記錄。詳見 `handoff/tasks/T-A2-002-foodsafety-seo-cleanup.md`。
 - 2026-07-07 02:04：**[A4] S11(2024) 補跑當機一次 + 已修復 + 已重啟** — 00:10 Mac mini 網路短暫斷線（DNS 解析失敗），腳本原本只包住單張分類的例外處理，沒包住批次寫回 Sheet 的呼叫，斷網期間數千次嘗試瞬間失敗（DNS 錯誤不等 timeout）把剩餘清單幾乎整批標成 `error`，最後在某次批次 append 因同一錯誤丟出未捕捉例外，整個背景進程當掉（PID 4169 消失，這就是 A0 巡檢看到「llama-server 不在了、free 81%」的原因）。**資料無遺失**——所有 error 標記的檔案本來就會在下次執行時自動重跑。已修復 `scripts/a4_s11_2024_resume_classifier.py`：① 批次寫回包 try/except，失敗只記 log 不當機；② 啟動時自動補寫「已分類但因當機沒寫回 Sheet」的殘留列（本次 7 筆）；③ 連續 5 次失敗視為疑似斷線，暫停 60 秒再重試，不再讓瞬斷網路血洗整批。確認網路恢復後已用同指令重啟，PID 10941，todo=3,377（全部是可安全重跑的舊 error，非壞檔），重啟後已驗證吞吐恢復正常。詳見 `handoff/tasks/T-A4-001.md`。
 - 2026-07-06 23:56：**[A4] S11(2024) 本機補跑實際啟動** — Owner 授權後，A4 用 `scripts/a4_s11_2024_resume_classifier.py`（本機 Ollama gemma4 vision，取代 Colab+Gemini）啟動背景補跑，nohup 脫離 session。**過程中發現任務卡記錄的「缺 2,163 張」已過時且不完整**：實測 Drive 2024 資料夾現有 13,980 張圖片（比 04 月估計的 12,213 多），且 ASSET_LOG 尾端（2025 資料之後）藏有一段剛好 2,163 列的「補跑殘留」——應是先前某次 Colab/Gemini 重啟嘗試的結果，從未同步回任務卡，其中僅 541 筆有效、1,622 筆是失敗的 `error` 佔位列。修正後真正缺口為 **3,404 張**，預估本機補跑 ~23.6 小時（約 07-08 完成），進度：`tail -f state/a4_s11_resume.log`。詳見 `handoff/tasks/T-A4-001.md`「2026-07-06 A4 執行紀錄」。舊 error 列未刪除，建議另開清理任務。
 - 2026-07-06：**[GOVERNANCE] Codex 升格為系統 sub-agent + Antigravity（agy）盤點 + A6 底層模型可插拔設計** — Owner 指示善用已付費的 Codex/Antigravity 額度，比照「換底層模型、角色分工不變」的架構原則。Codex 召回 prompt 已新增至 `AGENT_RECALL_PROMPTS.md`「## Codex」；Antigravity CLI（`agy`，Homebrew cask `antigravity-cli`）盤點確認可用 `agy --print` 非互動呼叫，已有「## Antigravity (agy)」召回 prompt，但**唯讀權限未確認**（觀察到會主動執行 shell 指令），接生產路徑前需先驗證。路由規則見 `skills/codex-offload-guide.md`；A6 Telegram 服務 codex→antigravity→ollama 三層降載鏈設計（Ollama 降為冷備援，因常駐 RSS ~9-14GB 是今日 RAM 警報來源之一）見 `projects/a6-llm-backend-adapter.md` + 骨架 `bot_a6/llm_backend_adapter.py`——**本輪僅設計 + 骨架，未接線到線上 `bot_a6.py`**，待 A0 彙報 Owner 核准後才實施。
@@ -85,7 +86,7 @@
 | T-A1-V6-P2 | T-A1-V6-P2 | A1 | 🔴 CRITICAL（~1272h無commit） | handoff/tasks/T-A1-V6-P2.md |
 | T-A1-V6-P3 | T-A1-V6-P3 | A1 | 🔲 待開始（尚未開始。等 T-A1-V6-P2 完成後啟動。） | handoff/tasks/T-A1-V6-P3.md |
 | T-A1-V7 | 系統進化 — 單一真相源 + 自動同步 + 瘦身 + 自動技能生成 + 自動壓縮 | A1 | 🔴 CRITICAL（~1272h無commit） | handoff/tasks/T-A1-V7.md |
-| T-A2-002-foodsafety-seo-cleanup | T-A2-002 — 食安 + 法規 SEO 字眼清理 | A2 | ⏸️ 阻塞（非過時，2026-07-06 對帳：repo 已清理完成，T-A2-005 新內容已有自動禁用詞 gate；但 57 篇既有 WP 文章從未實際回溯掃描，`scripts/wp-audit.sh` 已寫好只是沒人跑） | handoff/tasks/T-A2-002-foodsafety-seo-cleanup.md |
+| T-A2-002-foodsafety-seo-cleanup | T-A2-002 — 食安 + 法規 SEO 字眼清理 | A2 | ⏸️ 阻塞（2026-07-07 A2 已完成 58 篇既有文章回溯掃描：1 篇 post 698 含「無麩質」待 Owner 決定改法，其餘乾淨；等 Owner 一句話） | handoff/tasks/T-A2-002-foodsafety-seo-cleanup.md |
 | T-A2-003-weekly-wp-audit | T-A2-003: 每週全站 WP 內容稽核排程 | A2 | 🔲 待開始（腳本已建好（wp-audit.sh / wp-audit-cron.sh）。待 Owner 用 /schedule 建立） | handoff/tasks/T-A2-003-weekly-wp-audit.md |
 | T-A2-004 | 首頁結構優化 — 配合品牌色票微調 + 轉換路徑整理 | A2 | 🔲 待開始（任務卡建立。A0 已完成對標分析和色票微調。） | handoff/tasks/T-A2-004.md |
 | T-A2-005-local-seo-factory | T-A2-005：MAPLAB SEO Factory（地端閉環，Pillar First） | A2 | 🔴 CRITICAL（~912h無commit） | handoff/tasks/T-A2-005-local-seo-factory.md |
@@ -121,7 +122,7 @@
 |------|------|------|
 | A1 | T-A1-V6-P2: 等 A6 實際報價測試 | 見 Task Card |
 | A1 | T-A1-V6-P3: 前置 T-A1-V6-P2 需先完成 | 見 Task Card |
-| A2 | T-A2-002-foodsafety-seo-cleanup: **非過時**（2026-07-06 對帳，見 Task Card）— repo 已清乾淨，T-A2-005 的自動 gate 已擋住未來新內容，但既有 57 篇 WP 文章從未實際跑過 `scripts/wp-audit.sh` 回溯掃描。等 Owner 一句話授權 A2 直接跑一次（不需等 T-A2-003 排程） | 見 Task Card |
+| A2 | T-A2-002-foodsafety-seo-cleanup: 2026-07-07 回溯掃描完成（58 篇），post 698 含「無麩質」FAQ 答案（正文+JSON-LD各一次）待 Owner 決定改法；5 篇（450/541/879/924/994）另有手刻 JSON-LD schema 技術債，不在本次範圍 | 見 Task Card |
 | A2 | T-A2-003-weekly-wp-audit: 等 Owner 建立排程 | 見 Task Card |
 | A2 | T-A2-005-local-seo-factory: WordPress 寫入憑證與測試站檢核流程待 Owner 確認 | 見 Task Card |
 | A2/A3 | T-A2A3-001-B: WordPress 圖片實體插入未完成，因 Chrome extension file chooser 回 `Not allowed`；需 Owner 開啟 Codex Chrome extension 的 file URL access 後再重試。WordPress 發布、Google Ads / Meta Ads 設定變更仍需 Owner approval。舊 planned slugs 不能當 live URL。 | 見 Task Card |

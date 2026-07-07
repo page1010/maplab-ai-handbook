@@ -1630,9 +1630,12 @@ async def patrol(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         await deny(update)
         return
     git_pull_silent()
+    cmd = ["bash", str(REPO_PATH / "scripts" / "patrol.sh")]
+    if context.args and context.args[0].lower() in ("full", "--full"):
+        cmd.append("--full")
     try:
         result = subprocess.run(
-            ["bash", str(REPO_PATH / "scripts" / "patrol.sh")],
+            cmd,
             cwd=REPO_PATH,
             capture_output=True,
             text=True,

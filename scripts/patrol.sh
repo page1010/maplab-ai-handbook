@@ -1,9 +1,14 @@
 #!/usr/bin/env bash
 # patrol.sh — 掃描 Task Card 接續狀態，輸出 Owner 決策佇列
-# 用法：bash scripts/patrol.sh
+# 用法：bash scripts/patrol.sh            → Owner 摘要版（預設；最多 3 件行動項 + 一行統計）
+#       bash scripts/patrol.sh --full     → 完整清單（原始格式，給 A1/工程用）
+# 設計原則（2026-07-07 Owner feedback）：報告要能行動，不要清單轟炸；
+# 與上次巡查相同且無 Owner 行動項 → 一行帶過。
 # 整合入口：Telegram bot /patrol 指令
 
 set -euo pipefail
+FULL_MODE=0
+[[ "${1:-}" == "--full" ]] && FULL_MODE=1
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 TASKS_DIR="$REPO_ROOT/handoff/tasks"
 
@@ -14,7 +19,7 @@ days_since() {
   local date_str="$1"
   # 接受 YYYY-MM-DD 格式
   local then_ts
-  then_ts=$(date -j -f "%Y-%m-%d" "$date_str" +%s 2>/dev/null || echo 0)
+  then_ts=$(date -j -f "%Y-%m-%d" "$date_str" +%s 2>/dev/null || date -d "$date_str" +%s 2>/dev/null || echo 0)
   if [[ "$then_ts" == "0" ]]; then
     echo "?"
     return
@@ -57,9 +62,10 @@ for card in "$TASKS_DIR"/T-*.md; do
     done_tasks+=("  ✅ $filename ($agent): 已完成")
   elif echo "$status" | grep -q '⏸️\|阻塞'; then
     blocked+=("  ⏸️ $filename ($agent): $blocker [$age_label]")
-    # 阻塞中有 Owner 字樣 → 加入 Owner 行動項
+    # 阻塞中有 Owner 字樣 → 加入 Owner 行動項（前綴天數供排序，? 視為 -1 排最後）
     if echo "$blocker" | grep -qi 'Owner'; then
-      owner_actions+=("  → $filename: $blocker")
+      sort_days="$days_ago"; [[ "$sort_days" == "?" ]] && sort_days=-1
+      owner_actions+=("${sort_days}|$filename|$blocker")
     fi
   elif echo "$status" | grep -q '💤\|暫停'; then
     paused+=("  💤 $filename ($agent): 暫停中 [$age_label]")
@@ -150,39 +156,80 @@ PYEOF
     esac
 }
 
-# ── 輸出 ──
-echo "=== MAPLAB 系統巡查 $(date '+%Y-%m-%d %H:%M') ==="
-echo ""
-
-# Token 檢查
-check_token_expiry
-echo ""
-
+# ── Owner 行動項排序（卡最久的在前）──
+declare -a owner_sorted=()
 if [[ ${#owner_actions[@]} -gt 0 ]]; then
-  echo "【Owner 行動項】"
-  printf '%s\n' "${owner_actions[@]}"
-  echo ""
+  while IFS= read -r line; do owner_sorted+=("$line"); done < <(printf '%s\n' "${owner_actions[@]}" | sort -t'|' -k1,1nr)
 fi
 
-if [[ ${#blocked[@]} -gt 0 ]]; then
-  echo "【阻塞中 — 等外部條件】"
-  printf '%s\n' "${blocked[@]}"
+# 進行中超過 48h 的數量
+stale_count=0
+for a in ${active[@]+"${active[@]}"}; do
+  [[ "$a" == *"⚠️"* ]] && stale_count=$((stale_count+1))
+done
+
+# Token 狀態（只在異常時進摘要；OK 就沉默）
+token_line=$(check_token_expiry)
+token_alert=""
+echo "$token_line" | grep -qE "🔴|🟡|⚠️|⛔" && token_alert="$token_line"
+
+# ── 完整模式（原始格式，工程用）──
+if [[ "$FULL_MODE" == "1" ]]; then
+  echo "=== MAPLAB 系統巡查（完整）$(date '+%Y-%m-%d %H:%M') ==="
   echo ""
+  echo "$token_line"
+  echo ""
+  if [[ ${#owner_sorted[@]} -gt 0 ]]; then
+    echo "【Owner 行動項】"
+    for entry in "${owner_sorted[@]}"; do
+      IFS='|' read -r d f b <<< "$entry"
+      echo "  → $f: $b [${d}d]"
+    done
+    echo ""
+  fi
+  [[ ${#blocked[@]} -gt 0 ]] && { echo "【阻塞中 — 等外部條件】"; printf '%s\n' "${blocked[@]}"; echo ""; }
+  [[ ${#active[@]} -gt 0 ]] && { echo "【進行中】"; printf '%s\n' "${active[@]}"; echo ""; }
+  [[ ${#paused[@]} -gt 0 ]] && { echo "【暫停/待開始】"; printf '%s\n' "${paused[@]}"; echo ""; }
+  echo "【已完成】${#done_tasks[@]} 張 Task Card"
+  [[ ${#done_tasks[@]} -le 5 ]] && printf '%s\n' ${done_tasks[@]+"${done_tasks[@]}"}
+  exit 0
 fi
 
-if [[ ${#active[@]} -gt 0 ]]; then
-  echo "【進行中】"
-  printf '%s\n' "${active[@]}"
-  echo ""
+# ── 摘要模式（預設，Owner 看的）──
+SUMMARY=""
+
+if [[ -n "$token_alert" ]]; then
+  SUMMARY+="$token_alert"$'\n\n'
 fi
 
-if [[ ${#paused[@]} -gt 0 ]]; then
-  echo "【暫停/待開始】"
-  printf '%s\n' "${paused[@]}"
-  echo ""
+if [[ ${#owner_sorted[@]} -gt 0 ]]; then
+  SUMMARY+="【今天只需要你做這幾件】"$'\n'
+  i=0
+  for entry in "${owner_sorted[@]}"; do
+    i=$((i+1)); [[ $i -gt 3 ]] && break
+    IFS='|' read -r d f b <<< "$entry"
+    age=""; [[ "$d" != "-1" ]] && age="（卡 ${d} 天）"
+    SUMMARY+="  ${i}. ${f}${age}：${b}"$'\n'
+  done
+  extra=$(( ${#owner_sorted[@]} - 3 ))
+  [[ $extra -gt 0 ]] && SUMMARY+="  …另有 ${extra} 件較不急（/patrol full 看全部）"$'\n'
+  SUMMARY+=$'\n'
 fi
 
-echo "【已完成】${#done_tasks[@]} 張 Task Card"
-if [[ ${#done_tasks[@]} -le 5 ]]; then
-  printf '%s\n' "${done_tasks[@]}"
+SUMMARY+="其他：進行中 ${#active[@]}（⚠️超48h ${stale_count}）｜阻塞 ${#blocked[@]}｜暫停/待開始 ${#paused[@]}｜完成 ${#done_tasks[@]}"
+
+# ── 去重：跟上次巡查一模一樣且無行動項 → 一行帶過 ──
+SNAP_FILE="$HOME/.maplab_patrol_snapshot"
+snap_now=$(echo "$SUMMARY" | md5 2>/dev/null || echo "$SUMMARY" | md5sum | cut -d' ' -f1)
+snap_prev=$(cat "$SNAP_FILE" 2>/dev/null || echo "")
+echo "$snap_now" > "$SNAP_FILE"
+
+echo "=== MAPLAB 巡查 $(date '+%m-%d %H:%M') ==="
+if [[ "$snap_now" == "$snap_prev" && ${#owner_sorted[@]} -eq 0 && -z "$token_alert" ]]; then
+  echo "✅ all clear，與上次巡查相同，無需你動作。"
+elif [[ "$snap_now" == "$snap_prev" ]]; then
+  echo "（與上次巡查相同，以下為重複提醒）"
+  echo "$SUMMARY"
+else
+  echo "$SUMMARY"
 fi

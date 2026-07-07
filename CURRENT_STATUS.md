@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-07-07（A1，遠端 Claude Code）每日巡查：A4 補跑 ACTIVE（`44b3f7c`+`286e911` 07-07 02:07+07-06 23:58，PID 10941 運行中）；⚠️ A2 commits `f8d53bd`+`f2afc11`（2026-07-05 22:37 Meta 廣告素材/佈局計畫）先前 3 次巡查遺漏，已補記；A6 ~252h / A8 ~288h / A5 ~337h / IOS-KOL ~373h / LEARNING-LOOP ~497h 持續超 48h；GCP 帳單~82天🔴 未結案。完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`｜巡查封存 `archive/CURRENT_STATUS_patrol_log_archive_2026-07-06.md`
+最後更新：2026-07-07 午後（A1，遠端 Claude Code）午後巡查：✅ A2 今日 4 新 commit（`5a83f0f` SEO 三人小組執行、`ab49e18` 三人小組制度、`23a2e49` F-1 gate、`5261670` wp-audit）；✅ B1 今日 2 新 commit（`13f1719` IS 全功能檢討、`32b3afb` 跨專案治理科技樹）；⚠️ A7 AGENT_RECALL 顯示 💤 暫停 與 CURRENT_STATUS 🔄 進行中不一致，已補正；A6 ~260h / A8 ~296h / A5 ~345h / IOS-KOL ~381h / LEARNING-LOOP ~505h 持續超 48h；GCP 帳單~83天🔴 未結案。完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`｜巡查封存 `archive/CURRENT_STATUS_patrol_log_archive_2026-07-06.md`
 
 ---
 
@@ -139,7 +139,7 @@
 | A5 | T-A5-007: 待 Codex 認領（Owner 指示 A5→Codex 管理；前置診斷已完成，成本結構未被改壞，見 2026-07-06 A1 對帳） | 見 Task Card |
 | A6 | T-A6-001: Telegram 報價 hot path 已修成 Sheet-first；剩餘限制是 LINE webhook 只含客戶→OA 訊息，若要完整雙向訓練資料，需 LINE OA Manager CSV 匯出或其他正式來源；LINE Developers Console Webhook URL 待 Owner 確認填入（見下方「A6 Webhook 資訊」） | 見 Task Card |
 | A7 | T-A7-001/T-A7-002: Q7 試吃 + Q10 取消/改期政策**已由 Owner 於 2026-07-06 確認並落地**，非阻塞；剩餘僅 A5 外送費級距未建立 + Phase 3 上線測試 | 見 Task Card |
-| A1 巡查紀錄（最新） | 2026-07-07（A1，遠端）每日巡查：✅ A4 補跑 ACTIVE（`44b3f7c`+`286e911` 07-07 02:07+07-06 23:58，S11 PID 10941 運行中，已從 CRITICAL 恢復）；⚠️ A2 commits `f8d53bd`+`f2afc11`（2026-07-05 22:37 Meta 廣告素材/佈局計畫）先前 3 次巡查遺漏，CURRENT_STATUS 未記錄——非阻塞但補登供追蹤；A6 ~252h / A8 ~288h / A5-002/005 ~337h / IOS-KOL ~373h / LEARNING-LOOP ~497h 持續超 48h；GCP帳單~82天🔴 尚無可驗操作記錄。 | 下次巡查請延續此基準，不要再逐筆疊加巡查列，改為更新這一列 |
+| A1 巡查紀錄（最新） | ⚠️ A1巡查 2026-07-07 午後：✅ A2 今日 4 新 commit（`5261670`+`23a2e49`+`ab49e18`+`5a83f0f`，SEO 三人小組制度+執行+F-1 gate+wp-audit）均已寫入 CURRENT_STATUS；✅ B1 今日 2 新 commit（`13f1719` IS 全功能檢討+`32b3afb` 跨專案治理科技樹，唯讀診斷，未動 runtime）均已寫入 CURRENT_STATUS；⚠️ A7 狀態不一致：tasks 表 🔄 進行中 vs AGENT_RECALL_PROMPTS 顯示 💤 暫停——已補正 AGENT_RECALL_PROMPTS；⚠️ AGENT_RECALL_PROMPTS A2 last commit 過時（07-05），已更新為 07-07；A4 PID 10941 遠端無法驗，待本機確認；A6 ~260h / A8 ~296h / A5 ~345h / IOS-KOL ~381h / LEARNING-LOOP ~505h 持續超 48h；GCP帳單~83天🔴 | 下次巡查延續此基準，更新這一列 |
 
 ### A6 Webhook 資訊（2026-07-06 挖出，供 A0 向 Owner 引導）
 

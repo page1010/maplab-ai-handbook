@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-07-07 08:00 TST（00:00 UTC，遠端）A1 每日巡查：✅ A4 T-A4-001 **CRITICAL→ACTIVE**（`44b3f7c`+`286e911` 07-07/07-06，S11 補跑 PID 10941 運行中）；⚠️ A2 `f8d53bd`+`f2afc11`（07-05 Meta 廣告素材）補登，A2 last commit 更新；⚠️ T-A8-001 持續超 48h（~287.6h/~12.0天）；⚠️ T-A5-002/T-A5-005（~337.0h）持續超 48h；⚠️ T-IOS-KOL-001（~372.9h）/ T-A1-LEARNING-LOOP-001（~497.4h）持續超 48h；⚠️ A6 T-A6-001（~251.6h）持續超 48h；GCP帳單~82天🔴；T-A5-004 🔴 CRITICAL 持續
+> 最後更新：2026-07-07 16:00 TST（08:00 UTC，遠端）A1 午後巡查：✅ A2 今日 4 新 commit（last: `5a83f0f` SEO 三人小組執行）已更新；✅ B1 今日 2 新 commit（`13f1719`+`32b3afb` IS 全功能檢討+跨專案治理科技樹）已更新；⚠️ A7 狀態不一致已補正（💤 暫停→🔄 進行中）；A6 ~260h / A8 ~296h / A5 ~345h / IOS-KOL ~381h / LEARNING-LOOP ~505h 持續超 48h；GCP帳單~83天🔴
 >
 > 使用方式：選擇角色 → 複製 prompt / module handoff → 貼到 Gemini / Codex / OpenClaw / legacy Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -20,14 +20,14 @@
 |------|---------|------|------|
 | A0 | 總調度秘書 | ✅ Cowork 常駐 | 跨系統橋接、調度、桌面控制 |
 | A1 | 系統總管中心 | ✅ Claude Code 常駐 | Telegram bot + 終端機，直接下指令 |
-| A2 | 搜尋流量作戰部 | 🟢 召喚型可用 + patrol（Ads/SEO/WordPress）；last commit f8d53bd 2026-07-05（Meta Pixel 清障 + HR/會議線廣告素材 v1，33.4h ago，未超 48h）；T-A2A3-001-B 🔴 >48h持續 | SEO / Ads / WordPress / Brand memory |
+| A2 | 搜尋流量作戰部 | 🟢 召喚型可用 + patrol（Ads/SEO/WordPress）；last commit `5a83f0f` 2026-07-07（SEO 三人小組執行：婚禮pillar草稿+B3操作稿+cannibalization定案）；T-A2A3-001-B 🔴 >368h持續 | SEO / Ads / WordPress / Brand memory |
 | A3 | 社群與廣告成長部 | ✅ T-A3-001 完成（GTM v21 雙平台追蹤上線）；T-A3-002 ⏸️ 阻塞（等廣告週期+Owner操作）| Meta Ads / Social |
 | A4 | 影像資產整理部 | 🔄 ACTIVE（**CRITICAL 解除**：`44b3f7c` 07-07 02:07 S11 修復重啟 + `286e911` 07-06 23:58 補跑啟動；PID 10941 本機 Ollama 補跑 todo=3,377 中；`tail -f state/a4_s11_resume.log`；GCP帳單~82天未處理🔴）| Photo Archive |
 | A5 | 報價與提案引擎部 | ⚠️ T-A5-002 + T-A5-005 均超 48h 門檻（2026-06-23 07:01-07:22 +0800：`5ab7434` clasp push T-A5-005 + `3209fba` fixMasterTemplate_，均 awaiting Owner；現 **~337.0h**，2026-07-07 更新）；T-A5-004 🔴 CRITICAL（~1680h+，無新 commit）；T-A5-007 🔲 待 Codex 認領（`6cefd13` 2026-07-06 建卡，A5→Codex 移交）| Quotation Engine |
 | A6 | 業務快反應部隊 | ⚠️ T-A6-001 **已超 48h 門檻**（4dfd0a8 2026-06-26 20:21 stage-labeling rubric + A6.json 第 8 技能書；~251.6h，請 Owner 確認後續方向；LINE webhook等Owner確認 Channel 1654658337；2026-07-07 更新）| Sales Rapid Response |
-| A7 | 客服與對話轉單部 | 💤 T-A7-001 正式暫停；T-A7-002 ⏸️ 阻塞（等LINE後台權限+Owner政策決策）| Smart Reply |
+| A7 | 客服與對話轉單部 | 🔄 T-A7-001 進行中（Q7試吃+Q10取消改期政策 2026-07-06 落地，剩 A5 外送費級距 + Phase 3 上線測試）；T-A7-002 ⏸️ 阻塞（Phase 3A 剩任務 4 地區判斷 + 任務 7 流程圖同步）| Smart Reply |
 | A8 | 影音內容產線 | ⚠️ 持續超 48h（2026-06-25 08:25 `1a2d752` squash merge a8/video-checklist-mvp；現 ~287.6h/~12.0天，2026-07-07 更新；下一步：審核 local motion POC storyboard → 地端動態生成 → 9:16 mp4/cover → Publish Approval Card，未經 Owner/A1 approval 不得上傳） | Content Repurposing Pipeline |
-| **B1** | **Investment OS Builder** | **🟢 T-HQ-001 P1-P6 全完成（2026-06-25 08:25 `1a2d752` squash merge：IOS-SELL 角色 + session-lifecycle + PII cleanup + Chrome Extension 模組重建）；計時器 ~47.6h（任務已 Done，不升旗）；建議 Owner 確認可關閉 T-HQ-001** | **寫功能 / runtime surface** |
+| **B1** | **Investment OS Builder** | **🟢 T-HQ-001 P1-P6 全完成；✅ 2026-07-07 新工作：`13f1719` IS 全功能檢討+Goal-Signal-Decision-Review 方案、`32b3afb` 跨專案治理科技樹+P0 根因診斷（TCC 授權問題，唯讀，未動 runtime）；建議 Owner 確認可關閉 T-HQ-001** | **寫功能 / runtime surface** |
 | **B2** | **Investment OS Reviewer** | **🟢 召喚型可用** | **資料流 / 錯誤 / freshness review** |
 | **B3** | **Investment OS Archivist** | **🟢 召喚型可用** | **版本紀錄 / 交接 / resume prompt** |
 | **B4** | **Investment OS System Patrol** | **🟢 召喚型可用** | **系統適配巡查 / pause-refactor** |

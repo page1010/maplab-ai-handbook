@@ -1,5 +1,11 @@
 # T-A1-EXT-001 — GitHub Dynamic Role Task Modules
 
+## 接續狀態
+- **狀態**: 🔄 進行中
+- **最後活動**: 2026-07-07 ee83af3
+- **接續點**: （checkpoint.sh 自動補建，請 agent 填寫）
+- **阻塞**: 無
+
 狀態：🔄 in_progress
 Owner request：把網路上 GitHub Chrome Extension 動態連結改成任務模組，讓 Gemini / Codex / OpenClaw 都能接角色、知道讀什麼、影響誰、產出去哪裡。
 

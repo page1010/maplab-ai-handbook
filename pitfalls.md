@@ -375,3 +375,10 @@
 - 根因：`_looks_like_runtime_status_request()` 把 `ollama`、`openclaw`、`runtime` 當成全句任意命中，只要長句中提到模型名就直接走 status route；這把「詢問模型訓練/工作流可搬移性」誤判成「查 runtime 狀態」。
 - 解法：status route 只接受明確 `/status`、`/model`、短模型/status 問句或短 runtime/status phrases；新增 `/takeover` 接手包，並讓非報價圖片回可接手路徑，不再走舊 Claude CLI 裸錯；`/localquote` 遇到 footer-only 或 JSON-heavy 時改用 deterministic Sheet-first 摘要保底。
 - 預防：A6 Telegram route guard 測試至少包含：短句「你現在是跑什麼模型」要進 status；長句提到 `ollama`/`模型` 但問工作流不能進 status；`/takeover` 必須回 copyable 接手包；`/localquote 15人有主食高毛利 要英文菜單` 不得只回本地 footer。最終仍要用 Chrome Telegram Web readback，不可只信本機函式測試。
+
+## 2026-07-08 — 部門進度做完了，Owner 卻完全沒收到：Task Card 沒寫、patrol 已完成被消音
+
+- 觸發條件：Owner 問「多人確認的 SEO 部門進度一直沒有回報」——實際查證，2026-07-07 SEO 三人小組派工的 4 項交付物（婚禮 pillar 整合草稿、慶生 gender-reveal 段落、B3 操作稿、cannibalization 定案表）全部已完成並 commit（`5a83f0f`），但 Owner 從未被主動告知。
+- 根因（兩層）：① 完成過程只用 session 內部 task list 追蹤進度，沒有建立/更新 `handoff/tasks/T-*.md`；Owner 唯一會被主動推播的管道 `scripts/patrol-scheduled.sh`（透過 Telegram sendMessage）只掃描 `handoff/tasks/T-*.md` 裡 `- **狀態**:` 這個固定 bullet 格式欄位，沒進這個檔案 = 對 Owner 不存在。② 即使有正確格式的 Task Card，`scripts/patrol.sh` 舊版邏輯「已完成」區塊只在總數 ≤5 張時才列出檔名，超過就只顯示數字——系統長期運作下已完成 Task Card 遠超過 5 張，所以完成項目從未被實際點名過，只是被算進一個沒人看的數字。額外發現：`handoff/tasks/T-A2-SEO-CATERING-MATRIX-001.md` 用 `**Status**: X`（無 `- ` 前綴、英文欄名）而非 patrol.sh 期待的 `- **狀態**: X`，導致該卡在巡查中一直被歸類成「狀態未標記」，是同一類「格式跟解析器對不上」問題的另一個活例。
+- 解法：① 新增 `scripts/notify_owner.sh`，用既有 A1 bot Telegram 憑證即時推播；② `scripts/checkpoint.sh` 新增 `--notify` flag，里程碑完成時呼叫即時推播，不必等每日 patrol；③ `scripts/patrol.sh` 的「已完成」區塊改成超過 5 張時仍列出最近異動的 3 張，不再整批消音；④ 補建 `handoff/tasks/T-A2-007-seo-trio-review-20260707.md`（正確格式，✅ 已完成）；⑤ SOP 寫進 `AGENT_RULES.md` SECTION 20，明定 WHO/WHAT 管道/HOW OFTEN。
+- 預防：任何完成一個 Owner 明確派工的多步驟任務，**在同一次 checkpoint 裡就要決定要不要 `--notify`**，不要假設「有 commit 就等於有回報」——commit 只進 git 歷史，不會主動出現在 Owner 眼前。新建 Task Card 一律用既有的 `- **狀態**:` bullet 格式（照抄 `handoff/tasks/T-A2-001.md` 的接續狀態區塊），不要自創格式，否則巡查工具解析不到、等於沒寫。

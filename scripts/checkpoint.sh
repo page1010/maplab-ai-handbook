@@ -4,12 +4,18 @@
 # 加上 --branch：commit 到獨立的 agent branch（若想手動合併或建立暫存工作分支）
 #
 # 用法：
-#   bash scripts/checkpoint.sh "角色名" "做了什麼"           # 預設直接 commit 到 main 並 push
-#   bash scripts/checkpoint.sh "角色名" "做了什麼" --branch  # 強制使用獨立 agent/ branch 模式
+#   bash scripts/checkpoint.sh "角色名" "做了什麼"             # 預設直接 commit 到 main 並 push
+#   bash scripts/checkpoint.sh "角色名" "做了什麼" --branch    # 強制使用獨立 agent/ branch 模式
+#   bash scripts/checkpoint.sh "角色名" "做了什麼" --notify    # 額外即時推送 Telegram 給 Owner（里程碑用）
 #
 # 例如：
 #   bash scripts/checkpoint.sh "B1" "重構 Browser Bridge"
 #   bash scripts/checkpoint.sh "A5" "修正 QUOTE_DRAFT 公式" --branch
+#   bash scripts/checkpoint.sh "A2" "SEO 三人小組派工全部執行完成" --notify
+#
+# --notify 用途（2026-07-08 新增）：daily patrol-scheduled.sh 只是每日 backstop，
+# 且「已完成」區塊超過 5 張卡就只顯示數字、不點名——多步驟派工完成時若沒人手動加
+# --notify，Owner 永遠不會被主動告知。規則見 AGENT_RULES.md SECTION 20。
 
 ROLE="${1:-}"
 MESSAGE="${2:-}"
@@ -409,8 +415,10 @@ PY
 }
 
 # Parse flags
+DO_NOTIFY=false
 for arg in "$@"; do
   [ "$arg" = "--branch" ] && FAST_MODE=false
+  [ "$arg" = "--notify" ] && DO_NOTIFY=true
 done
 
 if [ -z "$ROLE" ] || [ -z "$MESSAGE" ]; then
@@ -516,6 +524,14 @@ if [ "$FAST_MODE" = true ]; then
 
   # === 自動同步 CURRENT_STATUS.md ===
   _sync_current_status
+
+  # === 里程碑即時通知 Owner（--notify）===
+  if [ "$DO_NOTIFY" = true ]; then
+    echo ""
+    echo "📣 推送里程碑通知給 Owner..."
+    bash "$WORKTREE_DIR/scripts/notify_owner.sh" "✅ [$ROLE] $MESSAGE
+commit: $SHORT" || echo "⚠️  通知推送失敗，不影響 checkpoint 本身；請人工確認 bot/.env 或手動補推。"
+  fi
 
   echo ""
   echo "======================================"

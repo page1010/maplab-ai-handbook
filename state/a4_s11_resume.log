@@ -3769,3 +3769,72 @@
 [2026-07-07T22:06:00] FAIL IMG_8053.PNG (124tItkPEzUSyOCHc8JjEt7ZxhrJGQUi-): no JSON in model output: 
 [2026-07-07T22:09:31] FAIL IMG_8033.HEIC (1X3YBlDlRCTbm_n75nE4C4LP6ZY0NpAb6): timed out
 [2026-07-07T22:22:47] FAIL IMG_8061.PNG (1i1L1spfMbejn3Ia41qzaaYduknnelqSg): no JSON in model output: 
+[2026-07-07T22:24:25] appended regular batch of 20 rows to Sheet
+[2026-07-07T22:25:57] progress: 2200/3377
+[2026-07-07T22:33:15] appended regular batch of 20 rows to Sheet
+[2026-07-07T22:35:52] Google OAuth token refreshed
+[2026-07-07T22:43:40] appended regular batch of 20 rows to Sheet
+[2026-07-07T22:52:48] appended regular batch of 20 rows to Sheet
+[2026-07-07T22:55:39] FAIL IMG_8108.PNG (1yRM9vSI_i7gYKGdHBDXG0Z7rAo4xGWVc): no JSON in model output: 
+[2026-07-07T22:57:12] FAIL IMG_8114.PNG (1UbLY7_YeH-_6ofqfd4R6LM8eQic7-_GA): no JSON in model output: ```json
+{
+  "category": "日常",
+  "keywords": [
+    "智慧型手機",
+    "日曆",
+    "應用程式",
+    "生活介面",
+    "排程"
+  ],
+[2026-07-07T23:04:49] FAIL IMG_8143.PNG (15r0qJZHNCD98TKAHOHZsbGN07ZZs1NQ8): no JSON in model output: 
+[2026-07-07T23:05:18] appended regular batch of 20 rows to Sheet
+[2026-07-07T23:14:36] appended regular batch of 20 rows to Sheet
+[2026-07-07T23:14:36] progress: 2300/3377
+[2026-07-07T23:26:01] appended regular batch of 20 rows to Sheet
+[2026-07-07T23:31:53] FAIL IMG_8281.PNG (1yK5BBXqEniHZKr-AeigzBuiPHdoOOiRd): no JSON in model output: 
+[2026-07-07T23:34:07] Google OAuth token refreshed
+[2026-07-07T23:35:33] appended regular batch of 20 rows to Sheet
+[2026-07-07T23:38:39] FAIL IMG_8248.PNG (1UgYVISZQj3GkzhnwRe_CWVBun2CSpIxW): no JSON in model output: ```json
+{
+  "category": "外燴",
+  "keywords": [
+    "甜點自助餐",
+    "糕點",
+    "外燴佈置",
+    "甜食擺盤"
+  ],
+  
+[2026-07-07T23:44:45] FAIL IMG_8209.HEIC (1SwAEDeHNS1tBefYlzZnbkM8qWDlFe58H): no JSON in model output: 
+[2026-07-07T23:45:17] FAIL IMG_8280.PNG (1XhcLGPNw6DrMJRNj2tJO2k9zHZiyjPPO): no JSON in model output: ```json
+{
+"category":"日常",
+
+[2026-07-07T23:48:49] appended regular batch of 20 rows to Sheet
+[2026-07-07T23:50:13] FAIL IMG_8259.JPG (1B6p_17fA_FnudwR094pSWmPv9YrZdwa1): no JSON in model output: ```json
+{
+"category":"
+[2026-07-07T23:52:03] FAIL IMG_8211.HEIC (1QX200arKuDg56f50X5anj_6w4lhE14Ko): no JSON in model output: ```json
+{
+  "category": "日常",
+  "keywords": [
+    "城市",
+    "街景",
+    "建築物
+[2026-07-07T23:54:52] FAIL IMG_8290.PNG (1nM99ozB6JBSBA2H_LOj-KzYM0jXYUfWT): no JSON in model output: ```json
+{
+"category":"外燴",
+"keywords":["餐點
+[2026-07-07T23:56:40] FAIL IMG_8289.PNG (1XJn--tpuEsWnbVSOMUjTuSc8lpwZ05U-): no JSON in model output: 
+[2026-07-07T23:57:12] FAIL IMG_8326.PNG (1E0yHSy3XRF7R-Ji_W3gVA80v4jNk1mjn): no JSON in model output: ```json
+{
+  "category": "外燴",
+  "keywords": [
+    "菜單",
+    "飯類",
+    "美食",
+    "餐點"
+  ],
+  "alt
+[2026-07-08T00:01:17] appended regular batch of 20 rows to Sheet
+[2026-07-08T00:07:39] progress: 2400/3377
+[2026-07-08T00:11:48] appended regular batch of 20 rows to Sheet

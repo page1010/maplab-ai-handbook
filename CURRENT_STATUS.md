@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-07-07 晚間（A1，遠端 Claude Code）晚間巡查：✅ B1/A1 午後後續 6 commits（`0695ece` G1/G3落地+封坑驗證+1%觸發規則+Self-Healing拍板部署、`79baf31` R0治本執行、`1448f3a` Superpowers內化、`b8c3950` Fable5參照筆記、`8006242` A1橋接修復，均已在最新事實核對晚間I-IV補記）；✅ 今日共 3 PR merged（#15/#16/#17，治理/模型分層）；A6 ~265h / A8 ~301h / A5 ~350h / IOS-KOL ~386h / LEARNING-LOOP ~510h 持續超 48h；GCP 帳單~83天🔴 未結案；Self-Healing Loop 已在 IS 上線（首輪 live 驗證通過）。完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`｜巡查封存 `archive/CURRENT_STATUS_patrol_log_archive_2026-07-06.md`
+最後更新：2026-07-07 22:24（checkpoint.sh 自動同步）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -19,6 +19,7 @@
 
 ## 最新事實核對
 
+- 2026-07-08：**[A6+GOVERNANCE] A6 bot 401 期間健檢（結論：無影響）+ SEO 部門進度回報迴路修好** — Owner 兩項派工。**(1) A6 健檢**：交叉比對 `bot_a6/conv_history_a6.json` + `data/a6-logs/2026-07-07.md`（真實時間戳），昨晚 22:12 A1 token 修復前後 A6 無對話紀錄，沒有訊息被吞證據；查證 A6 是否受 A1 同一個 401 影響 → **沒有**，`claude_ask()`/`_run_claude_guarded()`（用到 `CLAUDE_CODE_OAUTH_TOKEN`）在目前路由裡完全是 dead code（quote→A5本地引擎、聊天→Codex→Ollama、SEO→本地引擎，皆不呼叫 Claude CLI）；Codex-first 降級透明度程式碼確認合格；報價路由誤判部分是昨晚已修好的舊發現（e5ab867），非新問題。`bot_a6/.env` 殘留過期 token 註解但不影響行為（dead code），列為非急件清理項。詳見 `handoff/tasks/T-A6-001.md` 2026-07-08 checkpoint。**(2) SEO 進度回報迴路根因+修復**：查證 SEO 三人小組 4 項交付物（婚禮pillar/gender-reveal/B3操作稿/cannibalization）**全部已完成**（commit `5a83f0f`），但因為只用 session 內部 task list 追蹤、未寫 `handoff/tasks/T-*.md`，導致唯一會主動推 Telegram 的 `patrol-scheduled.sh` 掃描不到；另外 `patrol.sh` 舊版「已完成」區塊超過 5 張只顯示數字不點名，即使補了 Task Card 也會被消音。**已修**：新增 `scripts/notify_owner.sh`（即時 Telegram 推播）、`checkpoint.sh` 新增 `--notify` flag、`patrol.sh` 已完成區塊改列最近異動 3 張、補建 `handoff/tasks/T-A2-007-seo-trio-review-20260707.md`、SOP 寫入 `AGENT_RULES.md` SECTION 20（WHO=完成任務的角色自己、WHAT CHANNEL=`--notify` 即時+patrol 稽核雙層、HOW OFTEN=里程碑當下立即）。教訓入 `pitfalls.md` 2026-07-08 條目。
 - 2026-07-07（晚間 V）：**[A1] Telegram→Claude Code 橋接真修復 — 診斷腳本測錯 .env 的假訊號** — Owner 把新 `CLAUDE_CODE_OAUTH_TOKEN` 存進 repo 根目錄 `.env`，`scripts/diagnose_a1_claude_bridge.sh` 跑出 4/4 PASS、`claude -p` 手動實測也成功，但用 Chrome 開 Telegram Web 自己送測試訊息（Owner 提示「你可以自我檢查並找出問題」）才發現 bot 實際仍回 `401 Failed to authenticate`。**根因**：`bot/bot.py` 讀的是 `bot/.env`（`load_dotenv(BOT_DIR / ".env")`），不是 repo 根目錄 `.env`；`bot/.env` 裡的 token 那行自 2026-04-09 上次過期後就被註解掉，從未恢復。診斷腳本的 `ENVF` 卻硬寫死指向根目錄 `.env`，造成「根目錄有新 token」被誤判成「bot 也有」。**已修復**：① 把新 token 實際寫入 `bot/.env`（原本註解的行）；② 修正 `diagnose_a1_claude_bridge.sh` 的 `ENVF` 指向 `bot/.env`，新增根目錄/`bot/.env` token 交叉比對檢查；③ 重啟 bot 後用 Telegram Web 送真實訊息驗證，bot 正確回覆（Claude Sonnet 4.6 primary，非 Hermes/gemma4 fallback）。教訓已寫入 `pitfalls.md`：驗收 bot/service 修好與否，最終判準是「透過它真正對外的介面跑一次端到端」，腳本/CLI 直測只能證明「元件本身沒壞」，證明不了「元件真的被接上了」。
 - 2026-07-07（晚間 IV）：**[跨專案治理] Owner 拍板執行 — Self-Healing Loop 上線 + G1/G3 落地** — ① **Self-Healing 三項核准並部署**（spec 升 v1.2-approved）：`com.investmentos.self-healing-loop` hourly launchd 上線（named runner `ios-selfheal`，namer validate ok，順手補登 12 個從未註冊的既有 job），首輪 live 驗證：scan 開卡（risk floor Level 3 生效、路由 codex）、verify 覆查 drift 未清除正確保持 open；**已知供料缺口**：shadow_findings.jsonl 寫入端自 06-02 斷供（= nightwatch 0-alerts 盲區根因候選），loop 健康、帳本恢復即全速，排查斷供待開任務。② **G1 技能 TDD（欄位版）**：兩邊 pitfalls 頭部新增「封坑驗證」+「當時的合理化」欄；`generate-skill.sh` 加 RED 情境+封坑驗證（補齊前 unverified）；覆蓋率由 IS `gen_system_truth.py` 每日量進 SYSTEM_MAP §6，**機器基線：IS 1/229、MAPLAB 0/47（0%）**。③ **G3 誠實更正+補強**：`Skills loaded` 必填欄+阻擋規則其實早已存在（先前誤判為缺），實際缺口是 1% 規則——已補 go-prompt 前言 #14 + AGENT_STARTUP_PROTOCOL 阻擋規則（任務中遇新類型動作必重查索引）。④ 附帶修復：repo 版 gen_system_truth.py 缺 `from __future__ import annotations` 在 Python 3.9 下崩潰，已修並同步 runtime。IS commit 見該 repo（本地不 push）。
 - 2026-07-07（晚間 III）：**[跨專案治理] 外部參照第三方印證 — Fable 5 複利架構筆記** — BlockTempo 自我改進 agent 文（@0xCodez）四層架構對照：前三層（原語/編排/記憶）我們已有等價物且記憶層更厚，第四層自我改進正是本日診斷的最弱層——**與 superpowers 對照獨立指向同兩個洞（Verify 缺失、Consult 被動），視為交叉驗證結論**。可偷：①「驗證覆蓋率」量化指標（現值 0/190 pitfalls），併入 G1 巡查輸出；② 五階段記憶成熟度標尺（Fail→Investigate→Verify→Distill→Consult，我們卡第 3 階門口）。do_not_copy：Routines 雲排程（Mac mini 24/7 即等價且個資不出機）、/goal 機制（= Self-Healing Loop，缺拍板不缺設計）。本參照不產生新任務。筆記：`docs/references/fable5-self-improving-agent-compounding-notes.md`。
@@ -90,76 +91,67 @@
 
 | Task ID | 任務 | 負責 Agent | 狀態 | Task Card |
 |---------|------|-----------|------|-----------|
-| T-A1-EXT-001-dynamic-role-modules | T-A1-EXT-001 — GitHub Dynamic Role Task Modules | A1 | 🔄 in_progress（與 task card 同步） | handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md |
+| T-A1-EXT-001-dynamic-role-modules | T-A1-EXT-001 — GitHub Dynamic Role Task Modules | A1 | 🔄 進行中 | handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md |
+| T-A1-LEARNING-LOOP-001 | MAPLAB Learning Loop v0 Reaction Ledger | A1 | 🔄 進行中（P1 reaction ledger 已落地；P2 token capital registry / P3 eval harness 待做）（建立 token capital registry，登記可複用 prompt / eval / task packet ） | handoff/tasks/T-A1-LEARNING-LOOP-001.md |
 | T-A1-RTK-001 | RTK Token Proxy 掛載與選擇性上線 | A1 | 🟢 已上線（Codex hook 已掛、裝前/裝後 patrol diff 驗收通過、git 排除生效） | handoff/tasks/T-A1-RTK-001.md |
-| T-A1-LEARNING-LOOP-001 | MAPLAB Learning Loop v0 Reaction Ledger | A1/A0 | 🔄 進行中（P1 完成：reaction ledger + hermes_patrol_bridge.py + workbook/learning_loop/；P2 token capital registry / P3 eval harness / P4 closure writer 待做；⚠️ 自 cc21bad 2026-06-16 14:33 起 ~127.5h 無新 commit，持續超 48h 門檻） | handoff/tasks/T-A1-LEARNING-LOOP-001.md |
 | T-A1-SYNC-GUARD-001 | 雲端同步破口修補 + patrol 紀錄瘦身 | A1 | 🔲 待開始（高槓桿、低成本，建議優先） | handoff/tasks/T-A1-SYNC-GUARD-001.md |
-| T-A1-V6-P2 | T-A1-V6-P2 | A1 | 🔴 CRITICAL（~1272h無commit） | handoff/tasks/T-A1-V6-P2.md |
+| T-A1-V6-P2 | T-A1-V6-P2 | A1 | 🔄 進行中（4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下一步：建虛擬測試案例 →） | handoff/tasks/T-A1-V6-P2.md |
 | T-A1-V6-P3 | T-A1-V6-P3 | A1 | 🔲 待開始（尚未開始。等 T-A1-V6-P2 完成後啟動。） | handoff/tasks/T-A1-V6-P3.md |
-| T-A1-V7 | 系統進化 — 單一真相源 + 自動同步 + 瘦身 + 自動技能生成 + 自動壓縮 | A1 | 🔴 CRITICAL（~1272h無commit） | handoff/tasks/T-A1-V7.md |
-| T-A2-002-foodsafety-seo-cleanup | T-A2-002 — 食安 + 法規 SEO 字眼清理 | A2 | ⏸️ 阻塞（回溯掃描 + 根因修復皆完成：58 篇既有文章掃描完，`seo_publish_gate.py` 新增 F-1 gate 擋新內容；只剩 post 698 待 Owner 決定改法） | handoff/tasks/T-A2-002-foodsafety-seo-cleanup.md |
+| T-A1-V7 | 系統進化 — 單一真相源 + 自動同步 + 瘦身 + 自動技能生成 + 自動壓縮 | A1 | 🔄 進行中（Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 ReMe）為加分項。） | handoff/tasks/T-A1-V7.md |
+| T-A2-002-foodsafety-seo-cleanup | T-A2-002 — 食安 + 法規 SEO 字眼清理 | A2 | ⏸️ 阻塞（回溯掃描 + 根因結構性修復已完成，只剩等 Owner 決定 post 698 怎麼改）（58 篇既有文章已全數掃描完成；新產出內容的自動防護缺口已用 F-1 gate 補上（見下方「2026-07-07 根因） | handoff/tasks/T-A2-002-foodsafety-seo-cleanup.md |
 | T-A2-003-weekly-wp-audit | T-A2-003: 每週全站 WP 內容稽核排程 | A2 | 🔲 待開始（腳本已建好（wp-audit.sh / wp-audit-cron.sh）。待 Owner 用 /schedule 建立） | handoff/tasks/T-A2-003-weekly-wp-audit.md |
 | T-A2-004 | 首頁結構優化 — 配合品牌色票微調 + 轉換路徑整理 | A2 | 🔲 待開始（任務卡建立。A0 已完成對標分析和色票微調。） | handoff/tasks/T-A2-004.md |
-| T-A2-005-local-seo-factory | T-A2-005：MAPLAB SEO Factory（地端閉環，Pillar First） | A2 | 🔴 CRITICAL（~912h無commit） | handoff/tasks/T-A2-005-local-seo-factory.md |
-| T-A2-006-ads-seo-wordpress-patrol | T-A2-006 — Ads / SEO / WordPress Patrol | A2 | 🟢 ACTIVE（2026-06-16 ICCTN landing page 圖片 QA 完成 + 14 張 WebP 附圖發布 89dcc45；post 1829 live @ icc-tainan-catering） | handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md |
-| T-A2A3-001-B | SEO 場景頁面 + 內連結（從 T-A2A3-001 分拆） | A2/A3 | 🔴 CRITICAL（~360h無commit） | handoff/tasks/T-A2A3-001-B.md |
+| T-A2-005-local-seo-factory | T-A2-005：MAPLAB SEO Factory（地端閉環，Pillar First） | A2 | 🔴 CRITICAL（~1535h無commit） | handoff/tasks/T-A2-005-local-seo-factory.md |
+| T-A2-006-ads-seo-wordpress-patrol | T-A2-006 — Ads / SEO / WordPress Patrol | A2 |  | handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md |
+| T-A2-SEO-CATERING-MATRIX-001 | Foreign Catering SEO Benchmark -> MAPLAB Article Matrix | A2 |  | handoff/tasks/T-A2-SEO-CATERING-MATRIX-001.md |
+| T-A2A3-001-B | SEO 場景頁面 + 內連結（從 T-A2A3-001 分拆） | A2/A3 | 🔴 CRITICAL（~983h無commit） | handoff/tasks/T-A2A3-001-B.md |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2/A3 | ⏸️ RM/GSC 部分暫停；案例寫作轉 T-A2A3-001-B（Rank Math 已退訂，已設定好的 SEO 欄位先不要再設定；下一步是依 live URL map 補 To B 真） | handoff/tasks/T-A2A3-001.md |
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | ⏸️ 阻塞中（受眾輪廓分析完成（693筆 Orders）。待執行：嘉義加入廣告地區、興趣條件精簡、策略一冷受眾上線。） | handoff/tasks/T-A3-002.md |
-| T-A4-001 | Phase 4 Gemini 照片分類（2022-2026） | A4 | 🔄 本機補跑中，已重啟一次（00:10 網路短斷曾當機，已修腳本韌性 + 斷點重啟，PID 10941，2026-07-07 02:04 起）；`tail -f state/a4_s11_resume.log` 查進度；詳見 Task Card「00:10 事故 + 修復 + 已重啟」 | handoff/tasks/T-A4-001.md |
+| T-A4-001 | Phase 4 Gemini 照片分類（2022-2026） | A4 | 🔄 進行中（S11/2024 補跑執行中）（補跑進行中（PID 10941，2026-07-07 02:04 重啟）。00:10 曾因網路短斷當機一次，已修復腳本韌） | handoff/tasks/T-A4-001.md |
 | T-A4-002 | pagewu1010 帳號 Takeout 解壓 + Gemini Flash 照片資產整合 | A4 |  | handoff/tasks/T-A4-002.md |
-| T-HQ-001 | AGENT-HQ 集團共用層遷移（chrome-extension / governance / panel / runtime symlink 收編） | B1 | 🟢 Done（2026-06-25 08:25 `1a2d752` squash merge：P5 session-lifecycle 全 Extension 落地 + P6 IOS-SELL 角色新建 + PII cleanup ✅；P1-P6 全完成；CRITICAL 解除，計時器重置 ~7.7h；建議 Owner 確認可關閉此 card） | handoff/tasks/T-HQ-001.md |
-| T-IOS-KOL-001 | IOS-KOL 網紅雷達 Daily Telegram Digest | IOS-KOL | 🔄 進行中（2026-06-21 正式 task card 建立，取代 daily-telegram-workflow.md 暫放連結；核心 KOL visibility gate + scoped cross-check + rubric 已接上；下一步補「待補 sources」：英文KOL/英文新聞、總經資料、台股對照） | handoff/tasks/T-IOS-KOL-001.md |
-| T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5→Codex | 🔄 進行中（3 個舊 Owner 決策問題已於 06-23 落地非阻塞；唯一剩餘動作 `fixMasterTemplate()` 待執行，已併入 T-A5-007 交 Codex） | handoff/tasks/T-A5-002.md |
-| T-A5-004 | createSlides.gs — Slide 報價簡報自動生成 | A5 | 🟢 功能穩定（核心功能已可用，Owner 可直接出 Slide 提案；~1500h+ 無 commit 是沒事做不是壞掉，2026-07-06 對帳澄清） | handoff/tasks/T-A5-004.md |
-| T-A5-005 | 報價狀態追蹤同步 + Dashboard | A5→Codex | 🔄 進行中（clasp push 已完成，等執行 setupSyncTrigger/setupDashboard，已併入 T-A5-007 交 Codex） | handoff/tasks/T-A5-005.md |
+| T-A4-003-photo-alt-pipeline | T-A4-003 — 照片 ALT/SEO 管線（地端 gemma4）+ Drive 改串流釋空間 | A4 | 🔴 CRITICAL（~623h無commit） | handoff/tasks/T-A4-003-photo-alt-pipeline.md |
+| T-A4-004-photo-classify | T-A4-004 — 照片分類搬移：截圖/家庭/外燴工作 + 年月資料夾 | A4 | 🔴 CRITICAL（~623h無commit） | handoff/tasks/T-A4-004-photo-classify.md |
+| T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔴 CRITICAL（~335h無commit） | handoff/tasks/T-A5-002.md |
+| T-A5-004 | createSlides.gs — Slide 報價簡報自動生成 | A5 | 🟢 功能穩定（核心功能已可用且無需再動；~1500h+ 無 commit 是「沒事做」不是「壞掉」— 2026-07-06 A1 對帳澄清：先前 CURRENT_STATUS.md 任務表把「久無 commit」誤標為 🔴 CRITICAL，已改為反映實際狀態） | handoff/tasks/T-A5-004.md |
+| T-A5-005 | 報價狀態追蹤同步 + Dashboard | A5 | 🔴 CRITICAL（~335h無commit） | handoff/tasks/T-A5-005.md |
 | T-A5-006 | T-A5-006 | A5 | 🔲 待開始（尚未開始。等 T-A5-005 完成後啟動。） | handoff/tasks/T-A5-006.md |
-| T-A5-007 | A5 報價系統移交 Codex 管理 | Codex | 🔲 待 Codex 認領（2026-07-06 遠端 Claude 建卡，commit `6cefd13`；Owner 指示 A5→Codex；Codex 認領後執行 fixMasterTemplate + trigger setup；前置診斷已完成） | handoff/tasks/T-A5-007-codex-takeover.md |
-| T-A6-001 | A6 LINE 業務報價助手系統 | A6 | 🔄 進行中（last 4dfd0a8 2026-06-26 20:21 召喚術上線 rubric；⚠️ ~252h 超 48h，awaiting Owner 確認方向；LINE 雙向訓練資料仍待來源） | handoff/tasks/T-A6-001.md |
+| T-A5-007-codex-takeover | T-A5-007 — A5 報價系統移交 Codex 管理 | A5 | 🔲 待 Codex 認領(Owner 2026-07-06 口頭指示:「把 A5 接給 Codex 管理」)（Codex 讀本卡「診斷結論」→ 執行「交接後第一批工作」） | handoff/tasks/T-A5-007-codex-takeover.md |
+| T-A6-001 | A6 LINE 業務報價助手系統 | A6 | 🔴 CRITICAL（~455h無commit） | handoff/tasks/T-A6-001.md |
 | T-A6-002 | LINE 對話訓練資料收集計畫 | A6 | 💤 暫停（原計畫拆 Sheet 做訓練資料，04-07 重新規劃方向。等 Owner 決定是否需要 LINE 訓練資料及取得方式。） | handoff/tasks/T-A6-002.md |
-| T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | 🔄 進行中（Q7 試吃 + Q10 取消/改期 Owner 政策已於 2026-07-06 落地並寫入 `data/a7-reply-templates.md`；剩 A5 外送費級距 + Phase 3 上線測試） | handoff/tasks/T-A7-001.md |
-| T-A7-002 | A7 部門 80/20 優先任務清單 | A7 | ⏸️ 阻塞中（任務 6/9/10 已完成，任務 9 政策確認已於 2026-07-06 解除。Phase 3A 剩任務 4（地區判斷）、7（流程圖同步）） | handoff/tasks/T-A7-002.md |
-| T-A8-001-folder-to-video-distribution | A8 資料夾案例 → 短影音 → YouTube/TikTok/Pinterest 分發包 | A8 | 🔄 ACTIVE（2026-06-25 08:25 `1a2d752` squash merge a8/video-checklist-mvp 進 main，48h 計時器重置（~7.7h）；前次：997855e 06-22 10:49 video checklist MVP（completed-videos tracker + iteration rubric + scan script）；下一步：審核 local motion POC storyboard → 跑地端動態生成 → 完成 9:16 mp4/cover → Publish Approval Card，不得未經 Owner/A1 核准上傳） | handoff/tasks/T-A8-001-folder-to-video-distribution.md |
+| T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | 🔄 進行中（Owner 政策已於 2026-07-06 落地，剩 A5 外送費級距 + Phase 3 上線測試）（Q7/Q10 政策已解除阻塞（見下）；下一步是 A5 外送費級距 + Phase 3 上線測試） | handoff/tasks/T-A7-001.md |
+| T-A7-002 | A7 部門 80/20 優先任務清單 | A7 | ⏸️ 阻塞中（任務 9 已解除，其餘阻塞未變）（任務 6（Q1-Q10 實裝）+ 任務 9（Owner 政策確認）+ 任務 10（技能書 v2.0）已完成。Phase ） | handoff/tasks/T-A7-002.md |
+| T-A8-001-folder-to-video-distribution | T-A8-001 — Folder Case to Short Video Distribution | A8 |  | handoff/tasks/T-A8-001-folder-to-video-distribution.md |
 | T-B1-001 | B1 Cross-Project Governance Advisor Prompt + Project Pause |  | 🟢 召喚型可用（Investment OS 投資邏輯橋接 ready；InnerFlowLab 內容發文專案暫停） | handoff/tasks/T-B1-001.md |
-| T-B1-B4-investment-os-role-split | T-B1-B4-001 — Investment OS B1-B4 Role Split + Chrome Extension Summon |  | 🟢 Done Criteria 全部完成（與 task card 同步，2026-06-19 A1 巡查修正；若無新需求可關閉） | handoff/tasks/T-B1-B4-investment-os-role-split.md |
+| T-B1-B4-investment-os-role-split | T-B1-B4-001 — Investment OS B1-B4 Role Split + Chrome Extension Summon |  | 🔴 CRITICAL（~455h無commit） | handoff/tasks/T-B1-B4-investment-os-role-split.md |
 | T-B1-DASH-001 | Guild Ops Board 自動同步 + 即時狀態燈 |  | 🟢 READY（已派工，等執行 + 進度檢查） | handoff/tasks/T-B1-DASH-001.md |
 | T-GBP-001 | T-GBP-001 | Owner | 🔲 待開始（尚未開始。等 Owner 準備新圖片。） | handoff/tasks/T-GBP-001.md |
+| T-HQ-001 | AGENT-HQ 集團共用層遷移 |  | ⏳ 代碼已交付，等 Owner 啟用（P1-P5 腳本完成，P6 腳本完成，Owner 動作仍 pending）（Owner 執行下列三個 `launchctl load` + `hermes memory setup` 指令即完成） | handoff/tasks/T-HQ-001.md |
+| T-IOS-KOL-001 | IOS-KOL 網紅雷達 Daily Telegram Digest |  | 🔴 CRITICAL（~407h無commit） | handoff/tasks/T-IOS-KOL-001.md |
 ---
 
 ## Blockers（只列未解決的）
-
-> 2026-07-06 A1 整理：本區塊原本累積 66 筆重複「A1 巡查紀錄」列（每次巡查都新增而非更新），已封存至 `archive/CURRENT_STATUS_patrol_log_archive_2026-07-06.md`，只留最新一筆 + 真實未解阻塞。
 
 | 對象 | 問題 | 行動 |
 |------|------|------|
 | A1 | T-A1-V6-P2: 等 A6 實際報價測試 | 見 Task Card |
 | A1 | T-A1-V6-P3: 前置 T-A1-V6-P2 需先完成 | 見 Task Card |
-| A2 | T-A2-002-foodsafety-seo-cleanup: 2026-07-07 回溯掃描完成（58 篇），post 698 含「無麩質」FAQ 答案（正文+JSON-LD各一次）待 Owner 決定改法；5 篇（450/541/879/924/994）另有手刻 JSON-LD schema 技術債，不在本次範圍 | 見 Task Card |
+| A2 | T-A2-002-foodsafety-seo-cleanup: 等 Owner 決定 post 698 的「無麩質或低糖選項」FAQ 答案要不要改（A2 唯讀掃描，未動任何文章） | 見 Task Card |
 | A2 | T-A2-003-weekly-wp-audit: 等 Owner 建立排程 | 見 Task Card |
 | A2 | T-A2-005-local-seo-factory: WordPress 寫入憑證與測試站檢核流程待 Owner 確認 | 見 Task Card |
 | A2/A3 | T-A2A3-001-B: WordPress 圖片實體插入未完成，因 Chrome extension file chooser 回 `Not allowed`；需 Owner 開啟 Codex Chrome extension 的 file URL access 後再重試。WordPress 發布、Google Ads / Meta Ads 設定變更仍需 Owner approval。舊 planned slugs 不能當 live URL。 | 見 Task Card |
 | A2/A3 | T-A2A3-001: RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL | 見 Task Card |
 | A3 | T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） | 見 Task Card |
-| A4 | T-A4-001: S11(2024) 本機 Ollama vision 補跑進行中（00:10 曾因網路短斷當機一次，已修腳本韌性 + 斷點重啟，非阻塞，僅記錄追蹤方式） | `tail -f state/a4_s11_resume.log` / Task Card「2026-07-07 00:10 事故 + 修復 + 已重啟」 |
-| A5 | T-A5-002: 3 個舊問題（品項名稱改法/重複品項/I 欄用途）**已由 Owner 於 2026-06-23 確認並落地，非阻塞**；唯一剩餘動作是跑一次 `fixMasterTemplate()`，已併入 T-A5-007 交接給 Codex | 見 Task Card T-A5-007 |
+| A4 | T-A4-003-photo-alt-pipeline: launchd 排程需 Owner 跑一次 `launchctl load`（見下） | 見 Task Card |
+| A5 | T-A5-002: Owner 到 GAS 編輯器執行一次 `fixMasterTemplate_()` → 驗收 QUOTE_DRAFT G 欄 N/A 消失、無重複行 | 見 Task Card |
+| A5 | T-A5-005: Owner 手動操作（5 分鐘）： | 見 Task Card |
 | A5 | T-A5-006: 前置 T-A5-005 需先完成 | 見 Task Card |
-| A5 | T-A5-007: 待 Codex 認領（Owner 指示 A5→Codex 管理；前置診斷已完成，成本結構未被改壞，見 2026-07-06 A1 對帳） | 見 Task Card |
-| A6 | T-A6-001: Telegram 報價 hot path 已修成 Sheet-first；剩餘限制是 LINE webhook 只含客戶→OA 訊息，若要完整雙向訓練資料，需 LINE OA Manager CSV 匯出或其他正式來源；LINE Developers Console Webhook URL 待 Owner 確認填入（見下方「A6 Webhook 資訊」） | 見 Task Card |
-| A7 | T-A7-001/T-A7-002: Q7 試吃 + Q10 取消/改期政策**已由 Owner 於 2026-07-06 確認並落地**，非阻塞；剩餘僅 A5 外送費級距未建立 + Phase 3 上線測試 | 見 Task Card |
-| A1 巡查紀錄（最新） | ✅ A1巡查 2026-07-07 晚間：午後後 B1/A1 新增 6 commits（`0695ece` G1/G3落地+Self-Healing拍板部署、`8006242` A1 Telegram橋接修復、R0/Superpowers/Fable5，均已寫入最新事實核對晚間I-IV）；今日 3 PR merged（#15/#16/#17）；A2/B1/A1 今日工作與 CURRENT_STATUS 一致，無新增不一致；Self-Healing Loop IS 上線首輪驗證通過；A4 PID 10941 遠端無法驗，待本機確認；A6 ~265h / A8 ~301h / A5 ~350h / IOS-KOL ~386h / LEARNING-LOOP ~510h 持續超 48h；GCP帳單~83天🔴 | 下次巡查延續此基準，更新這一列 |
-
-### A6 Webhook 資訊（2026-07-06 挖出，供 A0 向 Owner 引導）
-
-- **LINE Developers Console**：https://developers.line.biz/console/channel/1654658337/basics（Messaging API 頁籤）
-- **Webhook URL**：`https://script.google.com/macros/s/AKfycbz_zA_tG2fxNRlvrRMsJyMAzbnpNC-IL8oKqc5h94kyhExsIOuuo7LujbrSuZGK_eap/exec`
-- **操作**：貼入 Webhook URL 欄位 → 點 Update → 點 Verify → 看到 `200 OK` 即通
-- **手機實測清單**（`handoff/tasks/T-A6-001.md` 驗收標準，尚未打勾）：
-  - [ ] Telegram `/linecases today` → 手機列出今日案件候選
-  - [ ] Telegram `/case 客名` → 手機顯示案件摘要與近期 LINE 訊息
-  - [ ] Telegram `/casequote 客名` → 手機收到 A5 本機備援報價草稿
-  - [ ] SALES_INTAKE 手動填一筆 → A6 輸出報價草稿
-  - [ ] 業務修改報價 → REVISION_LOG 有記錄
-  - [ ] 實測情境：一般聊天、`/status`、問模型、`報價 王小明 婚禮 80人 預算6萬`、`/linecases today`、`/case Penny`、`/casequote Penny`
-
+| A6 | T-A6-001: LINE webhook 已可看到 inbound 同步，但它只含客戶→OA 訊息；若要完整雙向訓練資料，需 LINE OA Manager CSV 匯出或其他正式來源。 | 見 Task Card |
+| A6 | T-A6-002: 等 Owner 決定方向 | 見 Task Card |
+| A7 | T-A7-001: A5 外送費級距未建立（其餘阻塞已解除，見 Blockers） | 見 Task Card |
+| A7 | T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 5/8 需 TimeTree 權限（任務 9 已解除） | 見 Task Card |
+| Owner | T-GBP-001: 等 Owner 準備新圖片 | 見 Task Card |
+|  | T-HQ-001: Owner pending（非 B1 blocking） | 見 Task Card |
+|  | T-IOS-KOL-001: - **阻塞**：無。 | 見 Task Card |
 ---
 
 ## Source of Truth（有效文件清單）

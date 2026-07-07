@@ -906,3 +906,51 @@ B4 patrol 每次巡查時對每張「進行中」task card 問：
 - 「保持喚醒」類 hack 不再使用（這台是專職 agent 機，休眠/鎖定已關）。
 - orchestrator 不擅自關 Owner 的工作分頁；但會提醒、並在自己開的分頁用完後請求關閉。
 - 搭配每 2 小時 `memory-watch` 排程：偏緊時點名元兇。
+
+---
+
+## SECTION 20 — 部門進度回報 SOP（2026-07-08 Owner 指定）
+
+> **新增原因**：SEO 三人小組（婚禮 pillar / 慶生 gender-reveal / B3 操作稿 / cannibalization
+> 定案，2026-07-07）4 項派工全部完成並已 commit，但 Owner 完全沒收到回報。追查發現：
+> 完成過程只用了 session 內部 task list 追蹤，沒有寫進 `handoff/tasks/T-*.md`；而
+> `scripts/patrol-scheduled.sh`（唯一會主動推 Telegram 給 Owner 的機制）只掃描
+> `handoff/tasks/T-*.md` 裡 `- **狀態**:` 這個 bullet 格式欄位——沒進這個檔案格式，
+> 工作做完等於對 Owner 不存在。且即使有寫 Task Card，`patrol.sh` 原本「已完成」區塊
+> 超過 5 張就只顯示總數、不點名，多步驟派工完成一樣會被算進數字裡但從未被唱名。
+
+### WHO（誰負責回報）
+
+**完成任務的那個角色自己負責**，不是 A0/A1 事後去追。任何角色（A2-A8、B1-B4、Claude
+主 session）完成一個 Owner 明確派工的多步驟任務、或把 Task Card 狀態從 🔄 進行中改成
+✅ 已完成時，該角色必須在同一次 checkpoint 裡把回報做完，不能留給下一個 session。
+
+### WHAT（用什麼管道）
+
+兩層，缺一不可：
+
+1. **即時層（主要）**：`bash scripts/checkpoint.sh "<角色>" "<訊息>" --notify`
+   會呼叫 `scripts/notify_owner.sh`，用 A1 bot 既有 Telegram 憑證（`bot/.env` 的
+   `TELEGRAM_BOT_TOKEN` / `OWNER_CHAT_ID`）立即推一則訊息給 Owner。這是新的預設
+   動作——**里程碑完成不可只 commit 不 --notify**。
+2. **稽核層（backstop）**：`handoff/tasks/T-*.md` 必須照既有格式寫
+   `- **狀態**: ✅ 已完成`（不是自訂格式、不是只寫在 session 內部 task list），
+   讓 `scripts/patrol.sh` / `patrol-scheduled.sh` 的每日巡查能抓到。這一層是保險，
+   不是取代即時層——即時通知失敗時（例如 bot token 過期），巡查層還能在 24 小時內
+   把漏掉的完成項目再次浮現。
+
+### HOW OFTEN（多久回報一次）
+
+- 里程碑完成（多步驟派工結束、Owner 明確要求的產出交付）→ **當下立即**（--notify）。
+- 一般小型 commit（單一小修正、非 Owner 直接派工）→ 不必每次都 --notify，正常
+  checkpoint 即可，靠稽核層的每日 patrol 帶到。
+- 判斷標準：**這個完成 Owner 會想馬上知道嗎？** 會 → 加 `--notify`。不確定 →
+  加，成本很低（一則 Telegram 訊息），漏報的成本遠高於誤報。
+
+### 關聯
+
+- SECTION 2.1（強制存檔規則）— 本節是既有 checkpoint 流程的擴充，不是取代。
+- SECTION 18（Task Card 責任制）— 本節補上「完成後要唱名」這一環。
+- `pitfalls.md` 2026-07-08 條目 — 完整根因記錄。
+- `scripts/notify_owner.sh`、`scripts/patrol.sh`（已完成區塊改列最近 3 張，不再被
+  >5 張的計數消音）。

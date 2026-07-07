@@ -74,30 +74,30 @@ repo: https://github.com/page1010/maplab-ai-handbook
 （Sheets ID: 1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg）。
 
 <!-- AUTO-SYNC START — checkpoint.sh 自動更新，勿手動修改 -->
-## 當前任務現況（自動同步 2026-06-27）
+## 當前任務現況（自動同步 2026-07-07）
 
 **T-A1-EXT-001-dynamic-role-modules** T-A1-EXT-001 — GitHub Dynamic Role Task Modules
 - 狀態: 🔄 進行中
 - 接續點: （checkpoint.sh 自動補建，請 agent 填寫）
 - 阻塞: 無
-- 最後活動: 2026-06-27 10baf3c
+- 最後活動: 2026-07-07 ee83af3
 
 **T-A1-LEARNING-LOOP-001** MAPLAB Learning Loop v0 Reaction Ledger
 - 狀態: 🔄 進行中（P1 reaction ledger 已落地；P2 token capital registry / P3 eval harness 待做）
 - 接續點: 建立 token capital registry，登記可複用 prompt / eval / task packet / skill / pitfall；接著做 ledger closure/eval harness。
 - 阻塞: 無。Google OAuth reauth 是 `google-oauth-reauth-card` 的獨立 Owner 5 分鐘 action，不阻塞 ledger 機制。
-- 最後活動: 2026-06-27 10baf3c
+- 最後活動: 2026-07-07 ee83af3
 
 **T-A1-V6-P2** （無描述）
 - 狀態: 🔄 進行中
 - 接續點: 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下一步：建虛擬測試案例 → A6 跑報價流程 → 驗證寫入。
 - 阻塞: 等 A6 實際報價測試
-- 最後活動: 2026-06-27 10baf3c
+- 最後活動: 2026-07-07 ee83af3
 
 **T-A1-V7** 系統進化 — 單一真相源 + 自動同步 + 瘦身 + 自動技能生成 + 自動壓縮
 - 狀態: 🔄 進行中
 - 接續點: Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 ReMe）為加分項。
 - 阻塞: 無
-- 最後活動: 2026-06-27 10baf3c
+- 最後活動: 2026-07-07 ee83af3
 
 <!-- AUTO-SYNC END -->

@@ -185,4 +185,13 @@ fi
 echo "【已完成】${#done_tasks[@]} 張 Task Card"
 if [[ ${#done_tasks[@]} -le 5 ]]; then
   printf '%s\n' "${done_tasks[@]}"
+else
+  # 2026-07-08：超過 5 張時，改列「最近修改的 3 張」而非整批消音，
+  # 避免多步驟派工完成後被算進總數但從沒被點名過（見 AGENT_RULES.md SECTION 20）。
+  echo "  （最近異動 3 張，其餘見 handoff/tasks/）"
+  ls -t "$TASKS_DIR"/T-*.md 2>/dev/null | while read -r card; do
+    filename=$(basename "$card" .md)
+    status=$(grep -m1 '^\- \*\*狀態\*\*' "$card" 2>/dev/null | sed 's/.*\*\*: //' || echo "")
+    echo "$status" | grep -q '✅' && echo "  ✅ $filename"
+  done | head -3
 fi

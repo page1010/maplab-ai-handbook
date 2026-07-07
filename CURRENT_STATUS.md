@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-07-06（A0/A1，本機 Claude Code）Owner 決策落地 + 系統對帳：合併 main/origin 分歧（`4d2142e`，兩邊互不衝突除 CURRENT_STATUS.md 本身）；A5 對帳（T-A5-002/004/005 已閉環可報價，非 CRITICAL，唯一剩餘動作交 T-A5-007 給 Codex）；A5 成本結構唯讀排查完成，**未發現可疑改動**；A7 Q7/Q10 政策落地（不提供試吃；颱風等外力可改期不收費，客戶單方取消酌收備料材料費）；A2 T-A2-002 判定非過時（回溯掃描仍未執行）；A4 S11 重啟評估完成（建議本機 Ollama 路徑，見 Task Card）；A6 Webhook URL 已挖出供 Owner 確認。GCP 帳單：Owner 2026-07-06 稱已關額度，**A0 驗證中**（尚未在 repo 內找到操作證據，見 GCP 帳單事故記錄 `docs/system-evolution-stories/2026-04-18-gcp-billing-gemini-api.md`）。66 筆重複巡查列已封存至 `archive/CURRENT_STATUS_patrol_log_archive_2026-07-06.md`｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-07-07（A1，遠端 Claude Code）每日巡查：A4 補跑 ACTIVE（`44b3f7c`+`286e911` 07-07 02:07+07-06 23:58，PID 10941 運行中）；⚠️ A2 commits `f8d53bd`+`f2afc11`（2026-07-05 22:37 Meta 廣告素材/佈局計畫）先前 3 次巡查遺漏，已補記；A6 ~252h / A8 ~288h / A5 ~337h / IOS-KOL ~373h / LEARNING-LOOP ~497h 持續超 48h；GCP 帳單~82天🔴 未結案。完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`｜巡查封存 `archive/CURRENT_STATUS_patrol_log_archive_2026-07-06.md`
 
 ---
 
@@ -102,7 +102,7 @@
 | T-A5-005 | 報價狀態追蹤同步 + Dashboard | A5→Codex | 🔄 進行中（clasp push 已完成，等執行 setupSyncTrigger/setupDashboard，已併入 T-A5-007 交 Codex） | handoff/tasks/T-A5-005.md |
 | T-A5-006 | T-A5-006 | A5 | 🔲 待開始（尚未開始。等 T-A5-005 完成後啟動。） | handoff/tasks/T-A5-006.md |
 | T-A5-007 | A5 報價系統移交 Codex 管理 | Codex | 🔲 待 Codex 認領（2026-07-06 遠端 Claude 建卡，commit `6cefd13`；Owner 指示 A5→Codex；Codex 認領後執行 fixMasterTemplate + trigger setup；前置診斷已完成） | handoff/tasks/T-A5-007-codex-takeover.md |
-| T-A6-001 | A6 LINE 業務報價助手系統 | A6 | 🔄 進行中（last 4dfd0a8 2026-06-26 20:21 召喚術上線 rubric；⚠️ ~95.6h 超 48h，awaiting Owner 確認方向；LINE 雙向訓練資料仍待來源） | handoff/tasks/T-A6-001.md |
+| T-A6-001 | A6 LINE 業務報價助手系統 | A6 | 🔄 進行中（last 4dfd0a8 2026-06-26 20:21 召喚術上線 rubric；⚠️ ~252h 超 48h，awaiting Owner 確認方向；LINE 雙向訓練資料仍待來源） | handoff/tasks/T-A6-001.md |
 | T-A6-002 | LINE 對話訓練資料收集計畫 | A6 | 💤 暫停（原計畫拆 Sheet 做訓練資料，04-07 重新規劃方向。等 Owner 決定是否需要 LINE 訓練資料及取得方式。） | handoff/tasks/T-A6-002.md |
 | T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | 🔄 進行中（Q7 試吃 + Q10 取消/改期 Owner 政策已於 2026-07-06 落地並寫入 `data/a7-reply-templates.md`；剩 A5 外送費級距 + Phase 3 上線測試） | handoff/tasks/T-A7-001.md |
 | T-A7-002 | A7 部門 80/20 優先任務清單 | A7 | ⏸️ 阻塞中（任務 6/9/10 已完成，任務 9 政策確認已於 2026-07-06 解除。Phase 3A 剩任務 4（地區判斷）、7（流程圖同步）） | handoff/tasks/T-A7-002.md |
@@ -133,7 +133,7 @@
 | A5 | T-A5-007: 待 Codex 認領（Owner 指示 A5→Codex 管理；前置診斷已完成，成本結構未被改壞，見 2026-07-06 A1 對帳） | 見 Task Card |
 | A6 | T-A6-001: Telegram 報價 hot path 已修成 Sheet-first；剩餘限制是 LINE webhook 只含客戶→OA 訊息，若要完整雙向訓練資料，需 LINE OA Manager CSV 匯出或其他正式來源；LINE Developers Console Webhook URL 待 Owner 確認填入（見下方「A6 Webhook 資訊」） | 見 Task Card |
 | A7 | T-A7-001/T-A7-002: Q7 試吃 + Q10 取消/改期政策**已由 Owner 於 2026-07-06 確認並落地**，非阻塞；剩餘僅 A5 外送費級距未建立 + Phase 3 上線測試 | 見 Task Card |
-| A1 巡查紀錄（最新） | 2026-07-06（A0/A1，本機）：完成 main/origin 分歧合併（origin 領先 30 commit、本機領先 23 commit，於 `4d2142e` 合併並 push；兩個 worktree `amazing-roentgen-995183`/`dazzling-engelbart-367e02` 皆已是 main 祖先，無未合併 commit）；A5 對帳（T-A5-002/004/005/007）、A5 成本結構唯讀排查（無可疑改動）、A7 政策落地（Q7/Q10）、A2 T-A2-002 時效判定（非過時）、A4 S11 重啟評估（建議本機 Ollama 路徑）、A6 Webhook 資訊已挖出，詳見對應 Task Card。 | 本次對帳結論已寫回各 Task Card；下次巡查請延續此基準，不要再逐筆疊加巡查列，改為更新這一列 |
+| A1 巡查紀錄（最新） | 2026-07-07（A1，遠端）每日巡查：✅ A4 補跑 ACTIVE（`44b3f7c`+`286e911` 07-07 02:07+07-06 23:58，S11 PID 10941 運行中，已從 CRITICAL 恢復）；⚠️ A2 commits `f8d53bd`+`f2afc11`（2026-07-05 22:37 Meta 廣告素材/佈局計畫）先前 3 次巡查遺漏，CURRENT_STATUS 未記錄——非阻塞但補登供追蹤；A6 ~252h / A8 ~288h / A5-002/005 ~337h / IOS-KOL ~373h / LEARNING-LOOP ~497h 持續超 48h；GCP帳單~82天🔴 尚無可驗操作記錄。 | 下次巡查請延續此基準，不要再逐筆疊加巡查列，改為更新這一列 |
 
 ### A6 Webhook 資訊（2026-07-06 挖出，供 A0 向 Owner 引導）
 

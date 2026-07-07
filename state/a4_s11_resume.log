@@ -3481,3 +3481,80 @@
 [2026-07-07T09:02:17] FAIL IMG_5870(1).HEIC (1AcqDgmZhRw65DmXkzHbzHb1vBIpE-llV): timed out
 [2026-07-07T09:15:11] appended regular batch of 20 rows to Sheet
 [2026-07-07T09:18:39] FAIL IMG_5913(2).HEIC (1fzcPw6bohtpoSAvu_l6G9bJJAOwjDAjV): timed out
+[2026-07-07T09:34:45] appended regular batch of 20 rows to Sheet
+[2026-07-07T09:40:37] progress: 800/3377
+[2026-07-07T09:44:59] appended regular batch of 20 rows to Sheet
+[2026-07-07T09:54:06] appended regular batch of 20 rows to Sheet
+[2026-07-07T09:58:14] Google OAuth token refreshed
+[2026-07-07T10:03:11] appended regular batch of 20 rows to Sheet
+[2026-07-07T10:13:10] appended regular batch of 20 rows to Sheet
+[2026-07-07T10:22:30] appended regular batch of 20 rows to Sheet
+[2026-07-07T10:30:33] progress: 900/3377
+[2026-07-07T10:31:28] FAIL IMG_6093(1).HEIC (1zBwJMiwoGmvD_kTHDg_nlCZDBDyi63Wl): no JSON in model output: ```json
+{
+  "category": "旅遊",
+  "keywords": [
+    "海景",
+    "日落",
+    "遊艇",
+    "戶外活動"
+  ],
+  "alt_text": "在遊艇上欣賞壯麗的日落海景，享受寧靜的戶外時光。",
+  "seo_name": "travel-yacht-sunset-ocean"
+[2026-07-07T10:33:43] appended regular batch of 20 rows to Sheet
+[2026-07-07T10:44:09] appended regular batch of 20 rows to Sheet
+[2026-07-07T10:53:03] appended regular batch of 20 rows to Sheet
+[2026-07-07T10:56:34] Google OAuth token refreshed
+[2026-07-07T11:02:36] appended regular batch of 20 rows to Sheet
+[2026-07-07T11:12:54] appended regular batch of 20 rows to Sheet
+[2026-07-07T11:18:37] progress: 1000/3377
+[2026-07-07T11:22:12] appended regular batch of 20 rows to Sheet
+[2026-07-07T11:32:13] appended regular batch of 20 rows to Sheet
+[2026-07-07T11:41:19] appended regular batch of 20 rows to Sheet
+[2026-07-07T11:52:05] appended regular batch of 20 rows to Sheet
+[2026-07-07T11:54:50] Google OAuth token refreshed
+[2026-07-07T12:01:26] appended regular batch of 20 rows to Sheet
+[2026-07-07T12:08:53] progress: 1100/3377
+[2026-07-07T12:12:00] appended regular batch of 20 rows to Sheet
+[2026-07-07T12:13:48] FAIL IMG_6276(1).HEIC (1fprBCp7c8ZThlv-BHVduHS0CVW0GGt6L): no JSON in model output: ```json
+{
+"category":"日常",
+"keywords":["自拍","女性","夜景","戶外","人像"],
+"alt_text":"一位女性在户外绿植和串灯下拍摄的时尚自拍照。","seo_name":"daily-woman-selfie
+[2026-07-07T12:21:47] appended regular batch of 20 rows to Sheet
+[2026-07-07T12:32:13] appended regular batch of 20 rows to Sheet
+[2026-07-07T12:41:43] appended regular batch of 20 rows to Sheet
+[2026-07-07T12:52:18] appended regular batch of 20 rows to Sheet
+[2026-07-07T12:53:13] Google OAuth token refreshed
+[2026-07-07T12:57:57] progress: 1200/3377
+[2026-07-07T13:03:30] appended regular batch of 20 rows to Sheet
+[2026-07-07T13:12:23] appended regular batch of 20 rows to Sheet
+[2026-07-07T13:14:58] FAIL IMG_6434.HEIC (1oWfY-NwP3nUxQgLFcFf7m9CMEgaLElQD): no JSON in model output: ```json
+{
+"category":"日常",
+"keywords":["家庭","小孩","自拍","戶外","人物"],
+"alt_text":"一家人在
+[2026-07-07T13:23:35] appended regular batch of 20 rows to Sheet
+[2026-07-07T13:32:54] appended regular batch of 20 rows to Sheet
+[2026-07-07T13:36:25] FAIL IMG_6491(1).HEIC (1V5dp4zZf3aKv0Q7C6iBRc2qfeYknIwxm): <urlopen error [Errno 8] nodename nor servname provided, or not known>
+[2026-07-07T13:36:25] FAIL IMG_6479.HEIC (1RrVMJRBlaVfWGmclC5Ep5cs2GTTw3rkE): <urlopen error [Errno 8] nodename nor servname provided, or not known>
+[2026-07-07T13:36:25] FAIL IMG_6487(1).HEIC (1CLLVkRPWlWLCJcIqoetd_yeqcJk9rZx-): <urlopen error [Errno 8] nodename nor servname provided, or not known>
+[2026-07-07T13:36:25] FAIL IMG_6488(1).HEIC (1YGOrmJ3-KfPLN25eh_s_qaJ8VsFv6TV2): <urlopen error [Errno 8] nodename nor servname provided, or not known>
+[2026-07-07T13:36:25] 5 consecutive failures (last: <urlopen error [Errno 8] nodename nor servname provided, or not known>) — pausing 60s, assuming network/API outage, will retry IMG_6493(1).HEIC
+[2026-07-07T13:44:36] appended regular batch of 20 rows to Sheet
+[2026-07-07T13:48:11] progress: 1300/3377
+[2026-07-07T13:51:38] Google OAuth token refreshed
+[2026-07-07T13:53:27] FAIL IMG_5701.HEIC (1L0jtR0z2EwcbjHmN_72H2qHOlozPUwND): no JSON in model output: 
+[2026-07-07T13:53:54] appended regular batch of 20 rows to Sheet
+[2026-07-07T14:04:48] appended regular batch of 20 rows to Sheet
+[2026-07-07T14:06:43] FAIL IMG_5724.HEIC (13QUgJsqNz07USshVV3sQ2_S23NTvFR3_): no JSON in model output: ```json
+{
+  "category": "日常",
+  
+[2026-07-07T14:14:34] appended regular batch of 20 rows to Sheet
+[2026-07-07T14:25:35] appended regular batch of 20 rows to Sheet
+[2026-07-07T14:40:38] appended regular batch of 20 rows to Sheet
+[2026-07-07T14:46:03] progress: 1400/3377
+[2026-07-07T14:50:04] Google OAuth token refreshed
+[2026-07-07T14:55:25] FAIL IMG_5820(1).HEIC (1h9wRpUOVLXBQQC3RfihCiRt74iSRuJi1): timed out
+[2026-07-07T14:59:04] FAIL IMG_5828(1).HEIC (1oFP2C1bYEDc570F9Dbl8XVKQpLxrBIGm): timed out

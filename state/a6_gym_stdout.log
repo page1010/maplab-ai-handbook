@@ -93,3 +93,4 @@
   ✗ [S3_QUOTE_SEND] gen=113ch/tgt=48ch overlap=0.09 struct=4
   ✗ [S3_QUOTE_SEND] gen=112ch/tgt=48ch overlap=0.08 struct=5
 {"rate": 0.0, "rate_pct": "0.0%", "total": 10, "usable": 0}
+[A6 Gym] Ollama model: qwen2.5:14b, batch: 10

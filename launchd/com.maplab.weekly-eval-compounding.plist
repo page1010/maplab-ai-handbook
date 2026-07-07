@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.maplab.weekly-eval-compounding</string>
+
+  <!--
+    MAPLAB 每週 eval 複利 Routine — 每週一 09:00 台北時間自動跑。
+    分工：
+      Codex  = maker  （重跑 gate/checklist eval → 寫 digest → 更新 baseline + STATE）
+      agy    = reviewer（對 Codex digest 的 [DELTA] 做交叉驗證）
+      Claude = 只在有 delta 時被叫醒（最終蒸餾 + Owner 核可）
+
+    HARD: 別碰外燴系統/A6；不 push remote；不讀 secrets；
+          輸出只到 workbook/outputs/eval-digests/ + state/。
+
+    手動跑:
+      /usr/bin/python3 /Users/pagemacmini/maplab-ai-handbook/scripts/weekly_eval_compounding.py
+
+    Log:
+      state/weekly_eval_run.jsonl
+      workbook/outputs/eval-digests/YYYY-MM-DD.md
+      state/eval_baseline.json
+  -->
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/bin/python3</string>
+    <string>/Users/pagemacmini/maplab-ai-handbook/scripts/weekly_eval_compounding.py</string>
+  </array>
+
+  <key>WorkingDirectory</key>
+  <string>/Users/pagemacmini/maplab-ai-handbook</string>
+
+  <!-- 每週一 09:00 台北時間 (UTC+8 → UTC 01:00, Weekday 1=Monday) -->
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Weekday</key>
+    <integer>1</integer>
+    <key>Hour</key>
+    <integer>1</integer>
+    <key>Minute</key>
+    <integer>0</integer>
+  </dict>
+
+  <key>StandardOutPath</key>
+  <string>/Users/pagemacmini/maplab-ai-handbook/state/weekly_eval_stdout.log</string>
+
+  <key>StandardErrorPath</key>
+  <string>/Users/pagemacmini/maplab-ai-handbook/state/weekly_eval_stderr.log</string>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+    <key>HOME</key>
+    <string>/Users/pagemacmini</string>
+  </dict>
+
+  <!-- 上次失敗後不立即重試，等到下次排程 -->
+  <key>ThrottleInterval</key>
+  <integer>3600</integer>
+</dict>
+</plist>

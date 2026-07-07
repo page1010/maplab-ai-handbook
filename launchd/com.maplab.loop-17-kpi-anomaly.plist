@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.maplab.loop-17-kpi-anomaly</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/pagemacmini/maplab-ai-handbook/scripts/loop_17_kpi_anomaly.sh</string>
+  </array>
+
+  <!-- 每日 08:00 執行 -->
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>8</integer>
+    <key>Minute</key>
+    <integer>0</integer>
+  </dict>
+
+  <key>StandardOutPath</key>
+  <string>/Users/pagemacmini/maplab-ai-handbook/state/loop_17_stdout.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/pagemacmini/maplab-ai-handbook/state/loop_17_stderr.log</string>
+
+  <key>WorkingDirectory</key>
+  <string>/Users/pagemacmini/maplab-ai-handbook</string>
+
+  <key>RunAtLoad</key>
+  <false/>
+</dict>
+</plist>

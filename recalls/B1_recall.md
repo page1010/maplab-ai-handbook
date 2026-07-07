@@ -58,12 +58,7 @@ B1 負責寫功能，不負責審核全部系統、不負責版本存檔、不�
 讀完文件後輸出 Startup Check，確認本次是否真的是功能建造任務；如果不是，指出應轉給 B2/B3/B4 哪一位。
 
 <!-- AUTO-SYNC START — checkpoint.sh 自動更新，勿手動修改 -->
-## 當前任務現況（自動同步 2026-06-11）
+## 當前任務現況（自動同步 2026-07-07）
 
-**T-B1-B4-investment-os-role-split** T-B1-B4-001 — Investment OS B1-B4 Role Split + Chrome Extension Summon
-- 狀態: 🔄 進行中
-- 接續點: （checkpoint.sh 自動補建，請 agent 填寫）
-- 阻塞: 無
-- 最後活動: 2026-06-11 b5d0ec9
-
+（無進行中任務）
 <!-- AUTO-SYNC END -->

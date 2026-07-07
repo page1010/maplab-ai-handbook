@@ -3558,3 +3558,214 @@
 [2026-07-07T14:50:04] Google OAuth token refreshed
 [2026-07-07T14:55:25] FAIL IMG_5820(1).HEIC (1h9wRpUOVLXBQQC3RfihCiRt74iSRuJi1): timed out
 [2026-07-07T14:59:04] FAIL IMG_5828(1).HEIC (1oFP2C1bYEDc570F9Dbl8XVKQpLxrBIGm): timed out
+[2026-07-07T15:06:48] appended regular batch of 20 rows to Sheet
+[2026-07-07T15:12:03] FAIL IMG_5839.HEIC (1Gm7pjM7qZjCnipg7iq8XTzk4LW6tzMbB): timed out
+[2026-07-07T15:27:36] appended regular batch of 20 rows to Sheet
+[2026-07-07T15:38:14] appended regular batch of 20 rows to Sheet
+[2026-07-07T15:47:01] appended regular batch of 20 rows to Sheet
+[2026-07-07T15:48:07] Google OAuth token refreshed
+[2026-07-07T15:58:26] appended regular batch of 20 rows to Sheet
+[2026-07-07T15:59:47] progress: 1500/3377
+[2026-07-07T16:07:09] appended regular batch of 20 rows to Sheet
+[2026-07-07T16:18:06] appended regular batch of 20 rows to Sheet
+[2026-07-07T16:27:06] appended regular batch of 20 rows to Sheet
+[2026-07-07T16:38:28] appended regular batch of 20 rows to Sheet
+[2026-07-07T16:46:23] Google OAuth token refreshed
+[2026-07-07T16:47:20] appended regular batch of 20 rows to Sheet
+[2026-07-07T16:49:00] progress: 1600/3377
+[2026-07-07T16:58:27] appended regular batch of 20 rows to Sheet
+[2026-07-07T17:07:19] appended regular batch of 20 rows to Sheet
+[2026-07-07T17:07:58] FAIL IMG_0861(1).HEIC (1GvcdYSvzkU5BHWsOWHdc0HFRbUWDzLmM): no JSON in model output: ```json
+{
+"category":"外
+[2026-07-07T17:18:57] appended regular batch of 20 rows to Sheet
+[2026-07-07T17:27:55] appended regular batch of 20 rows to Sheet
+[2026-07-07T17:38:31] appended regular batch of 20 rows to Sheet
+[2026-07-07T17:39:24] progress: 1700/3377
+[2026-07-07T17:44:34] Google OAuth token refreshed
+[2026-07-07T17:47:11] appended regular batch of 20 rows to Sheet
+[2026-07-07T17:58:27] appended regular batch of 20 rows to Sheet
+[2026-07-07T18:07:43] FAIL IMG_8764.PNG (17zf21ud4NC6nKSP-GmvkXr8JsNUsf4-X): no JSON in model output: ```json
+{
+"category":"外燴",
+"keywords":["甜點","自助餐","蛋糕","擺盤","餐桌佈置"],
+"alt_text":"精美的甜
+[2026-07-07T18:08:24] appended regular batch of 20 rows to Sheet
+[2026-07-07T18:19:22] appended regular batch of 20 rows to Sheet
+[2026-07-07T18:20:44] FAIL IMG_8699.PNG (1FyKFzsaqHmrgrmZcKv11wM4sr_FRTFSN): no JSON in model output: ```json
+{
+  "category": "外燴",
+  "keywords": [
+    "菜單規劃",
+[2026-07-07T18:27:44] FAIL IMG_8717.PNG (1Q59KJY_1fRYkUf8AvC-UoqH5GYZ9Vs80): no JSON in model output: 
+[2026-07-07T18:29:14] progress: 1800/3377
+[2026-07-07T18:30:55] appended regular batch of 20 rows to Sheet
+[2026-07-07T18:39:55] appended regular batch of 20 rows to Sheet
+[2026-07-07T18:42:56] Google OAuth token refreshed
+[2026-07-07T18:45:41] FAIL IMG_8733.PNG (1klBcB0jwf7YsVDeHv3XtPvvesHG7Tism): no JSON in model output: 
+[2026-07-07T18:47:06] FAIL IMG_8759.PNG (1Bt6agtocnWjhkEvLnESCghqVVFuWy9-D): no JSON in model output: 請提供照片，我才能為您進行分類分析。
+[2026-07-07T18:50:54] FAIL IMG_8764(1).PNG (1pTq72ZawnAaa6VQtTpxklwd4RU4x-sas): no JSON in model output: ```json
+{
+"category":"外燴",
+"keywords":["自助餐","甜點","擺盤","活動外燴"],
+"alt_text":"一張豐盛的自助餐桌佈置，包含多樣化的甜點、糕
+[2026-07-07T18:52:06] appended regular batch of 20 rows to Sheet
+[2026-07-07T18:53:52] FAIL IMG_8770.PNG (1IjDrXG6B9-EwiDCKxwtjleWZaoy3oQjW): no JSON in model output: 
+[2026-07-07T19:01:28] appended regular batch of 20 rows to Sheet
+[2026-07-07T19:07:03] FAIL IMG_8769.PNG (1gZ2G2tbK4ibS_VU-RwzgiGIm1Nz6MKHr): no JSON in model output: ```json
+{
+"category":"外燴",
+"keywords":["菜單規劃","生日派對","食材清單","餐點準備"],
+"alt_text":"詳細的生日派
+[2026-07-07T19:12:58] appended regular batch of 20 rows to Sheet
+[2026-07-07T19:18:52] progress: 1900/3377
+[2026-07-07T19:21:26] appended regular batch of 20 rows to Sheet
+[2026-07-07T19:31:58] FAIL IMG_8862.PNG (1HU7mDSRO8e80E__iX5FK0tyiFcKTt2-Q): no JSON in model output: 
+[2026-07-07T19:32:29] FAIL IMG_8807.PNG (1IMPSEiWZs-4gqiQlurTH0w9GsviHzNAC): no JSON in model output: ```json
+{
+  "category": "外燴",
+  "keywords": [
+    "蒸點",
+    "小籠包",
+    "早餐",
+    "亞洲美食",
+    "餐點擺盤"
+  ],
+  "alt_text": "兩份誘人的蒸點，搭配清淡的食材，適合作為健康輕食。",
+[2026-07-07T19:32:59] FAIL IMG_8881.PNG (10bmdD255phP4lP-hwG5dhE4AT-d6rHbz): no JSON in model output: ```json
+{
+  "category": "外燴",
+  "keywords": [
+    "餐點",
+    "擺盤",
+    "食材",
+    "美食"
+  ],
+  "alt_text": "精緻的餐點擺盤，色彩豐富，適合用於外燴展示。",
+  "seo_name": "catering-plated-meal"
+[2026-07-07T19:33:29] appended regular batch of 20 rows to Sheet
+[2026-07-07T19:40:48] FAIL IMG_8866.HEIC (1vyNZhQ0MBUCXKU9RmDwPv8T2rRe_Cw36): no JSON in model output: ```json
+{
+  "category": "旅遊",
+  "keywords": [
+    "海灘",
+    "沙子遊戲",
+    "家庭出遊",
+    "童趣"
+  ],
+  "alt_text": "小孩在海邊玩沙，享受美好的親子時光與自然景觀。",
+  "seo_name": "travel-beach-sand-play-
+[2026-07-07T19:41:10] Google OAuth token refreshed
+[2026-07-07T19:42:06] FAIL IMG_8873.PNG (1yIm7j8FazSMCF-6Wqk3w1OX8n3oClvYL): no JSON in model output: ```json
+{
+"category":"外燴",
+"keywords":["糕點","點心","烘焙","餐盒","下午茶"],
+"alt_
+[2026-07-07T19:43:25] appended regular batch of 20 rows to Sheet
+[2026-07-07T19:44:20] FAIL IMG_8876.PNG (1k4hg9cY-x2t_UBgcQ6-Tm-ZpHwdMDnVT): no JSON in model output: 
+[2026-07-07T19:45:44] FAIL IMG_8878.PNG (1xuvJJed3RZja4mjTT262lX2NzTRfRGrs): no JSON in model output: ```json
+{
+[2026-07-07T19:46:14] FAIL IMG_8877.PNG (10fyVsTv7-kvR8Mka_3sVuQzzTkjNEzLK): no JSON in model output: ```json
+{
+"category":"外燴",
+
+[2026-07-07T19:47:35] FAIL IMG_8874.PNG (1rZnHovAq_5Velp3w0wnC2dS2RofOSuGu): no JSON in model output: ```
+[2026-07-07T19:53:07] FAIL IMG_8896.PNG (1t2IDhoYvc1ZDflHKbVEyL6KQZ8_SRBR9): no JSON in model output: ```json
+{
+  "category": "外燴",
+  "keywords": [
+    "餐點",
+    "擺盤",
+    "精緻料理",
+    "食材"
+  ],
+  "alt_text": "一份專業且精美的餐點擺盤
+[2026-07-07T19:57:13] appended regular batch of 20 rows to Sheet
+[2026-07-07T20:05:47] FAIL IMG_8913.PNG (10FLXG3Fje2bThsJigulcPx4rBarkfTCf): no JSON in model output: ```json
+{
+  "category": "外燴",
+  "keywords": [
+    "生日蛋糕",
+    
+[2026-07-07T20:06:17] FAIL IMG_8912.PNG (1vhjzUjmkJKYMg4zmyaJ5gEE7Eu5g8pSw): no JSON in model output: 
+[2026-07-07T20:07:52] appended regular batch of 20 rows to Sheet
+[2026-07-07T20:08:32] FAIL IMG_8909.PNG (1-n9PPnR-uyoHP6bvKYZ8DW1MAohafiNV): no JSON in model output: ```json
+{
+"category":"外燴",
+"keywords":["熟食","餐點擺盤","食物展示","廚房用品","烘焙"],
+"alt_text":"一組精美的熟食餐點，適合用於外燴或家庭聚會
+[2026-07-07T20:09:03] progress: 2000/3377
+[2026-07-07T20:19:08] appended regular batch of 20 rows to Sheet
+[2026-07-07T20:21:43] FAIL IMG_8948.PNG (1ORz5myHZa-EvZe0GFs0r0hrHSFVVpWkj): no JSON in model output: 
+[2026-07-07T20:22:14] FAIL IMG_8949.PNG (1eBOXX3VMZz1yYBoPaABcpL5Bm-Jv0gHc): no JSON in model output: 
+[2026-07-07T20:23:09] FAIL IMG_8006.PNG (14R_MT9ycMMFka0wHAKLu70yDUbWM3pZm): <urlopen error [Errno 8] nodename nor servname provided, or not known>
+[2026-07-07T20:23:09] FAIL IMG_7931.HEIC (1fkAlz5jhCF8_OnuOjESkZecx99KrM7qI): <urlopen error [Errno 8] nodename nor servname provided, or not known>
+[2026-07-07T20:23:09] FAIL IMG_2146.HEIC (1WWFze6GAiAbagP9iNhvAreNc6CP9-5fe): <urlopen error [Errno 8] nodename nor servname provided, or not known>
+[2026-07-07T20:23:09] FAIL IMG_2144.HEIC (1rvhAm_T-3UTS7jd7H2qb_Z_WaZEWGKVZ): <urlopen error [Errno 8] nodename nor servname provided, or not known>
+[2026-07-07T20:23:09] 5 consecutive failures (last: <urlopen error [Errno 8] nodename nor servname provided, or not known>) — pausing 60s, assuming network/API outage, will retry IMG_7937.HEIC
+[2026-07-07T20:32:13] appended regular batch of 20 rows to Sheet
+[2026-07-07T20:32:43] FAIL IMG_2148.HEIC (1AyDLO8Y6zBsz2-N5qZrqLS5G9etgpx6q): no JSON in model output: ```json
+{
+"category": "日常",
+"keywords": [
+"顯微鏡",
+"科技展示",
+"企業活動",
+"專業設備"
+],
+"alt_text": "展出ZEISS先進顯微鏡解決方案的專業技術展示區。",
+"seo_name": "daily-life-professional
+[2026-07-07T20:34:32] FAIL IMG_7983.PNG (11uOI1BzhEFfVacrB_mFI4GG41ZrdNeZX): no JSON in model output: 
+[2026-07-07T20:39:26] Google OAuth token refreshed
+[2026-07-07T20:42:00] appended regular batch of 20 rows to Sheet
+[2026-07-07T20:52:36] appended regular batch of 20 rows to Sheet
+[2026-07-07T20:53:37] FAIL IMG_7943.PNG (1VWOmfWc7uul7eHYOhH-I0XBRX5333L_x): no JSON in model output: ```json
+{
+  "category": "外燴",
+  "keywords": [
+    "企業活動",
+    "外場餐點",
+    "活動邀請函",
+    "流程規劃",
+    "大會"
+  ],
+  "alt_text": "記錄企業外場活動的正式邀約與詳細流程規劃。",
+
+[2026-07-07T20:58:52] progress: 2100/3377
+[2026-07-07T20:59:22] FAIL IMG_8008.PNG (1ekrTaIrLRF6E9ZB_rpXCnSFKZrSdmGZH): no JSON in model output: 
+[2026-07-07T21:00:19] FAIL IMG_8011.PNG (1iRH683b4ZzKV3YexCFAggVxEnDnAF15e): no JSON in model output: ```json
+{
+"category":"日常",
+"keywords
+[2026-07-07T21:03:22] appended regular batch of 20 rows to Sheet
+[2026-07-07T21:05:59] FAIL IMG_8007.PNG (19-gzP7TdRY7A8WkrHmFlla71ytTM3Q1Z): no JSON in model output: ```json
+{
+  "category": "外燴",
+  "keywords": [
+    "擺盤",
+    "小點心",
+    "外燴餐點",
+    "自助餐",
+    "派對佈置"
+  ],
+  "alt_text": "精美外燴小點心擺盤，包含起司、沙拉及開胃菜。",
+  "seo_name":
+[2026-07-07T21:13:32] FAIL IMG_7979.PNG (1WxuRmcgLV12IM434FW9RGvDMZoB5njah): no JSON in model output: ```json
+{
+"category": "旅遊",
+"keywords": [
+"山景",
+"蜿蜒道路",
+"寵物出遊",
+"自然風景",
+"戶
+[2026-07-07T21:15:39] appended regular batch of 20 rows to Sheet
+[2026-07-07T21:23:26] FAIL IMG_8022(1).HEIC (1atkJWCwhloOOuFb0QZlEMYzFdtlyv0p5): timed out
+[2026-07-07T21:32:23] appended regular batch of 20 rows to Sheet
+[2026-07-07T21:37:45] Google OAuth token refreshed
+[2026-07-07T21:53:02] FAIL IMG_8057.PNG (1iCpQ_Z_hGDPDB0sK9HQdZEjghV4PUf4o): timed out
+[2026-07-07T21:56:03] FAIL IMG_8048.HEIC (1pMFQcFx4N-7dATjSE3dQpMoRIz_qjYvT): timed out
+[2026-07-07T21:59:48] appended regular batch of 20 rows to Sheet
+[2026-07-07T22:06:00] FAIL IMG_8053.PNG (124tItkPEzUSyOCHc8JjEt7ZxhrJGQUi-): no JSON in model output: 
+[2026-07-07T22:09:31] FAIL IMG_8033.HEIC (1X3YBlDlRCTbm_n75nE4C4LP6ZY0NpAb6): timed out
+[2026-07-07T22:22:47] FAIL IMG_8061.PNG (1i1L1spfMbejn3Ia41qzaaYduknnelqSg): no JSON in model output: 

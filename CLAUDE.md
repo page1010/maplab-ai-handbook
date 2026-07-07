@@ -41,10 +41,13 @@ git log --oneline -5
 
 ---
 
-## 技能索引（60 個技能，不預讀，按觸發條件搜尋）
+## 技能索引（63 個技能，不預讀，按觸發條件搜尋）
 
 | 觸發條件 | 技能路徑 |
 |---------|---------|
+| Loop-15 SOP 偏移捕手（A1 巡檢升級） | `skills/loop-15-sop-drift-catcher.md` + `scripts/loop_15_sop_drift.sh` |
+| Loop-02 頁面品質關卡（A2 Search Console） | `skills/loop-02-page-quality-gate.md` + `scripts/loop_02_page_quality.sh` |
+| Loop-17 KPI 異常監看（A6 報價轉換率） | `skills/loop-17-kpi-anomaly-watcher.md` + `scripts/loop_17_kpi_anomaly.sh` |
 | GAS/Sheets/clasp 任務開始前 | `skills/pitfalls/SKILL.md` ⚠️ 必讀 |
 | 設計決策前 / debug 超過 3 輪 | `skills/first-principles-check/SKILL.md` |
 | 任務進度回報格式 | `skills/task-progress-guide.md` |

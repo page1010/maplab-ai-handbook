@@ -1,0 +1,12 @@
+{
+  "created": "2026-07-07",
+  "observation_period_days": 14,
+  "status": "initializing",
+  "metrics": {
+    "quote_conversion_rate": {"baseline": null, "threshold_pct": 20},
+    "quote_response_time_hours": {"baseline": null, "threshold_hours": 4},
+    "daily_quote_count": {"baseline": null, "threshold_pct": 40},
+    "high_tier_rate": {"baseline": null, "threshold_pct": 10}
+  },
+  "note": "需 Claude Code 呼叫 Sheets MCP 填入實際基線值"
+}

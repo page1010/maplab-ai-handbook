@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.maplab.loop-02-page-quality</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/pagemacmini/maplab-ai-handbook/scripts/loop_02_page_quality.sh</string>
+  </array>
+
+  <!-- 每週一 09:00 執行 -->
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Weekday</key>
+    <integer>1</integer>
+    <key>Hour</key>
+    <integer>9</integer>
+    <key>Minute</key>
+    <integer>0</integer>
+  </dict>
+
+  <key>StandardOutPath</key>
+  <string>/Users/pagemacmini/maplab-ai-handbook/state/loop_02_stdout.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/pagemacmini/maplab-ai-handbook/state/loop_02_stderr.log</string>
+
+  <key>WorkingDirectory</key>
+  <string>/Users/pagemacmini/maplab-ai-handbook</string>
+
+  <key>RunAtLoad</key>
+  <false/>
+</dict>
+</plist>

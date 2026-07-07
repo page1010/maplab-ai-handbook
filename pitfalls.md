@@ -1,6 +1,12 @@
 # pitfalls.md
 
-> Cold-start required. 每次修到重複錯誤，要把「觸發條件 / 根因 / 解法 / 預防」寫回這裡。
+> Cold-start required. 每次修到重複錯誤，要把「觸發條件 / 根因 / 解法 / 預防 / **封坑驗證**」寫回這裡。
+>
+> **封坑驗證（2026-07-07 起新增，G1 技能 TDD）**：一條可執行指令或具體情境，證明有此規則後坑真的進不去
+> （例：`bash scripts/xxx.sh` 應回 PASS、`grep ... | wc -l` 應為 0）。寫不出驗證方式的條目視同 `unverified`。
+> 覆蓋率由 IS `gen_system_truth.py` 每日統計進 SYSTEM_MAP §6（基線 2026-07-07：MAPLAB 0/47、IS 1/229）。
+> 選填欄「當時的合理化」：記下當時給自己的藉口，累積成紅旗清單。
+> 依據：superpowers「NO SKILL WITHOUT A FAILING TEST FIRST」；我們的記憶鏈缺的正是 Verify 階。
 
 ## 2026-06-20 — Unattended long-running tasks need hardcoded constraint/error-handling, not "agent will notice"
 

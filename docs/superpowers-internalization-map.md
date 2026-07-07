@@ -106,13 +106,13 @@ Chrome Extension 30 個 task module 的 description 同理需檢視。
 
 ## 4. 落地順序（併入科技樹 R1/R2，不另開軌道）
 
-| 順序 | 項目 | 動作 | 工作量 |
+| 順序 | 項目 | 動作 | 狀態 |
 |---|---|---|---|
-| 1 | G3 觸發紀律 | AGENT_STARTUP_PROTOCOL 加 `Skills loaded` 必填欄 + go-prompt 前言 1% 規則 | ~30 min |
-| 2 | G2 禁語表 | company-values 補五步+禁語；巡查 grep 規則 | ~1 h |
-| 3 | G1 技能 TDD | pitfall/skill 模板加 `封坑驗證` 欄；generate-skill.sh 加 RED 情境 | ~2 h |
-| 4 | G4 description | 路由表說明欄漸進改寫 | 漸進 |
-| 5 | 五 rationalization 欄 | pitfall 模板選填欄 | 順手 |
+| 1 | G3 觸發紀律 | ~~加 `Skills loaded` 必填欄~~（**更正：此欄+阻擋規則早已存在**，AGENT_STARTUP_PROTOCOL Step 6——我先前誤判為缺）；實際缺口是「1% 規則＋任務中重查」，已補進 go-prompt 前言 #14 + 協議阻擋規則 | ✅ 2026-07-07 |
+| 2 | G2 禁語表 | company-values 補五步+禁語；巡查 grep 規則 | 🔲 待做 |
+| 3 | G1 技能 TDD | 兩邊 pitfalls 頭部加 `封坑驗證`+`當時的合理化` 欄；generate-skill.sh 加 RED 情境+封坑驗證（補齊前 unverified）；覆蓋率由 IS `gen_system_truth.py` 每日量進 SYSTEM_MAP §6，**機器量測基線：IS 1/229、MAPLAB 0/47（0%）** | ✅ 2026-07-07（欄位版；真 session 壓力測試版待 Evolution Channel 接正式 DB） |
+| 4 | G4 description | 路由表說明欄漸進改寫；generate-skill.sh 提示已加 | 🔶 漸進 |
+| 5 | Rationalization 欄 | pitfall 模板選填欄「當時的合理化」 | ✅ 2026-07-07 |
 
 執行前提：G1 的完整版（壓力測試跑真 session）等 Evolution Channel 接正式 DB 後再上，
 先做欄位版——**帳本先、機制跟上**。

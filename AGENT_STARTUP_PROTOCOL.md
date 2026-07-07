@@ -90,6 +90,7 @@ Startup Check
 
 **阻擋規則**（不通過 = 不能開始）：
 - Skills loaded 為空 = 不算啟動完成
+- **1% 觸發規則（2026-07-07）**：不只啟動時——任務中每遇到新類型動作（GAS/Sheets/WP/照片/報價/clasp…），只要有 1% 機率某技能書適用，動手前必回 `CLAUDE.md` 索引重查一次並載入。「這一步很簡單」「先看看再說」是繞過紀律的紅旗
 - Test plan 或 Receipt path 為空 = 不算啟動完成
 - Questions for Owner 為空 = 不算啟動完成
 - 沒有輸出 Startup Check = 不能直接開始改檔案

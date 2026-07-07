@@ -49,15 +49,24 @@ ${PROBLEM}
 ## 解法
 ${SOLUTION}
 
+## RED 情境（G1 技能 TDD — 必填後才可轉正）
+<!-- 沒有這本技能書時，agent 會怎麼掉進坑？描述具體壓力情境與當時的合理化藉口。 -->
+（待補：unverified）
+
+## 封坑驗證（G1 — 必填後才可轉正）
+<!-- 一條可執行指令或具體情境，證明讀了此技能後坑真的進不去。例：grep ... 應為 0。 -->
+（待補：unverified）
+
 ## 背景
 - 來源 commit: ${COMMIT}
 - 生成日期: ${TODAY}
-- 類型: 自動生成（可人工精修）
+- 類型: 自動生成（可人工精修；RED 情境與封坑驗證補齊前視同 unverified 草稿）
 EOF
 
 echo "✅ 技能檔已生成：$SKILL_FILE"
 echo ""
 echo "📝 建議後續："
 echo "   1. 檢查內容是否正確"
-echo "   2. 補充更多細節或範例"
-echo "   3. 在 CLAUDE.md 技能索引表加入觸發條件"
+echo "   2. 補齊「RED 情境」與「封坑驗證」（G1 技能 TDD；補齊前是 unverified 草稿）"
+echo "   3. 補充更多細節或範例"
+echo "   4. 在 CLAUDE.md 技能索引表加入觸發條件（說明欄只寫觸發症狀，不寫流程摘要）"

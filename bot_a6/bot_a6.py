@@ -102,6 +102,7 @@ MODE_LABELS = {
 MENU_BUTTON_QUOTE = "🧾 報價模式"
 MENU_BUTTON_CHAT = "💬 一般聊天"
 MENU_BUTTON_SEO = "📝 召喚a2seo文章編輯"
+MENU_BUTTON_TAKEOVER = "🧭 接手包"
 MENU_BUTTON_HELP = "❓ 指令說明"
 
 
@@ -116,7 +117,7 @@ def _set_mode(chat_id: int, mode: str) -> None:
 
 def _mode_keyboard() -> ReplyKeyboardMarkup:
     return ReplyKeyboardMarkup(
-        [[MENU_BUTTON_QUOTE, MENU_BUTTON_CHAT], [MENU_BUTTON_SEO, MENU_BUTTON_HELP]],
+        [[MENU_BUTTON_QUOTE, MENU_BUTTON_CHAT], [MENU_BUTTON_SEO, MENU_BUTTON_TAKEOVER], [MENU_BUTTON_HELP]],
         resize_keyboard=True,
         one_time_keyboard=False,
     )
@@ -127,11 +128,35 @@ def _looks_like_runtime_status_request(text: str) -> bool:
     compact = "".join(stripped.split())
     if stripped in {"/status", "/model", "status", "model"}:
         return True
-    model_needles = ("什麼模型", "哪個模型", "跑什麼", "用什麼模型", "現在跑", "現在是跑", "模型狀態")
-    if "模型" in compact and any(needle in compact for needle in model_needles):
+    if not compact:
+        return False
+
+    model_needles = ("什麼模型", "哪個模型", "跑什麼模型", "用什麼模型", "現在跑什麼", "現在是跑什麼", "模型狀態")
+    if any(needle in compact for needle in model_needles):
         return True
-    runtime_needles = ("你現在是跑", "runtime", "ollama", "openclaw")
-    return any(needle in compact for needle in runtime_needles)
+    explicit_runtime_status = (
+        "runtime狀態", "a6runtime狀態", "ollama狀態", "openclaw狀態", "codex狀態",
+        "你現在是跑", "現在是跑", "現在跑",
+    )
+    if any(needle in compact for needle in explicit_runtime_status) and len(compact) <= 48:
+        return True
+    return False
+
+
+def _looks_like_takeover_request(text: str) -> bool:
+    stripped = text.strip().lower()
+    compact = "".join(stripped.split())
+    return stripped in {"/takeover", "/handoff", "takeover", "handoff"} or compact in {
+        "接手",
+        "接手包",
+        "接過來",
+        "交接",
+        "交接包",
+        "codex接手",
+        "讓codex接手",
+        "聊天窗口接手",
+        "聊天窗口接過來",
+    }
 
 
 def _looks_like_quote_request(text: str) -> bool:
@@ -213,6 +238,43 @@ def _runtime_status_text(chat_id: int) -> str:
         "這類模型/狀態問題會直接由 A6 回覆，不會啟動 A5 報價流程。\n"
         "要報價時請明確輸入「報價 ...」或使用 `/localquote ...`。"
     )
+
+
+def _render_takeover_packet(chat_id: int) -> str:
+    history = list(_get_history(chat_id))[-10:]
+    lines = [
+        "🧭 A6 接手包",
+        f"repo：{REPO_PATH}",
+        "runtime：launchd `com.maplab.a6bot` / `bot_a6/bot_a6.py`",
+        f"目前模式：{MODE_LABELS[_get_mode(chat_id)]}",
+        "",
+        "可直接交給 Codex 的開場：",
+        "```text",
+        "我是 MAPLAB A6 接手代理，環境 Mac mini / Telegram bot runtime，任務是延續這個 A6 對話窗口。",
+        "先讀 CURRENT_STATUS.md、handoff/tasks/T-A6-001.md、pitfalls.md、bot_a6/bot_a6.py。",
+        "不要讀出或外顯 secrets；Chrome Telegram Web 是 owner-facing 最終驗收。",
+        "先判斷本則訊息屬於 chat / status / quote / case / takeover，再做最小可逆動作。",
+    ]
+    if history:
+        lines.append("")
+        lines.append("最近 local memory（最多 10 則，不等於 Telegram 全量）：")
+        for idx, msg in enumerate(history, start=1):
+            role = "使用者" if msg.get("role") == "user" else "A6"
+            content = _short_error(str(msg.get("content", "")).strip(), 260)
+            if content:
+                lines.append(f"{idx}. {role}: {content}")
+    else:
+        lines.append("")
+        lines.append("最近 local memory：目前沒有可讀文字紀錄；請以 Chrome Telegram 可見畫面為準。")
+    lines.extend(
+        [
+            "```",
+            "",
+            "下一步：若要讓真人/下一個代理接管，直接貼上面那段；若仍在此 bot 內處理，請直接輸入需求。",
+            "常用指令：/status /mode chat /mode quote /localquote /linecases /case /casequote /takeover",
+        ]
+    )
+    return "\n".join(lines)
 
 
 def _load_a6_recall():
@@ -653,7 +715,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         f"可用指令：\n"
         f"/help — 指令說明\n"
         f"/ping — 心跳\n"
-        f"/status — runtime / 模型狀態\n\n"
+        f"/status — runtime / 模型狀態\n"
+        f"/takeover — 產生 Codex/下一位代理可直接接手的摘要包\n\n"
         f"或直接說：\n"
         f"「你現在是跑什麼模型」\n"
         f"「報價 王小明 婚禮 80人 預算6萬」\n"
@@ -699,6 +762,7 @@ async def help_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         "/ping — 心跳檢查\n"
         "/status — runtime / 模型狀態\n"
         "/model — 同 /status\n"
+        "/takeover — 產生 Codex/下一位代理可直接接手的摘要包\n"
         "/reset — 清除對話記憶（新案件時用）\n\n"
         "💬 也可以直接說中文，A6 會理解"
     )
@@ -751,6 +815,13 @@ async def status_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None
         _runtime_status_text(update.effective_chat.id),
         reply_markup=_mode_keyboard(),
     )
+
+
+async def takeover_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if not is_allowed(update):
+        await deny(update)
+        return
+    await send_long(update, _render_takeover_packet(update.effective_chat.id))
 
 
 async def reset_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -963,6 +1034,59 @@ def _format_sheet_payload_summary(payload: dict) -> str:
     return "\n".join(lines)
 
 
+def _local_quote_body(answer: str) -> str:
+    body = (answer or "").strip()
+    if "\n---\n" in body:
+        body = body.split("\n---\n", 1)[0].strip()
+    body = re.sub(r"```json\s*.*?\s*```", "", body, flags=re.DOTALL).strip()
+    return body
+
+
+def _is_mobile_unfriendly_quote_answer(answer: str) -> bool:
+    return len(answer or "") > 3400 and "```json" in (answer or "")
+
+
+def _prepare_local_quote_answer(
+    quote_message: str,
+    answer: str,
+    sheet_payload: Optional[dict],
+    sheet_first_error: str,
+    force_local: bool,
+) -> str:
+    payload = sheet_payload
+    if not payload and force_local:
+        payload = build_sheet_quote_payload(quote_message)
+    if not payload:
+        return answer
+
+    body = _local_quote_body(answer)
+    should_compact = force_local or not body or len(body) < 80 or _is_mobile_unfriendly_quote_answer(answer)
+    if not should_compact:
+        return answer
+
+    lines = [_format_sheet_payload_summary(payload)]
+    if force_local:
+        lines.append("ℹ️ `/localquote` 是本地備援測試模式；已用 deterministic Sheet payload 摘要呈現，不寫 Google Sheet。")
+    elif sheet_first_error:
+        lines.append(f"⚠️ 未產 Google Sheet：{_short_error(sheet_first_error, 220)}")
+        lines.append("ℹ️ 地端模型完整草稿已省略；此訊息保留可用報價摘要，避免 Telegram 被 JSON 淹沒。")
+    if body and len(body) <= 900:
+        lines.append(f"地端補充：\n{body}")
+    return "\n\n".join(lines)
+
+
+def _photo_handoff_text(local_path: Path, caption: str = "") -> str:
+    caption_line = f"\ncaption：{caption.strip()}" if caption.strip() else ""
+    return (
+        "📷 圖片已保存，但 A6 的非報價圖片理解路徑目前不再走舊 Claude CLI，避免回傳裸錯。\n"
+        f"圖片路徑：`{local_path}`{caption_line}\n\n"
+        "接手方式：\n"
+        "1. 若要報價，請重傳/回覆時加 caption「報價 ...」或直接貼 OCR/菜單文字。\n"
+        "2. 若要人工或 Codex 接管這張圖，輸入 `/takeover` 取得接手包，並把上方圖片路徑一起交給下一個代理。\n"
+        "3. 若只是一般聊天，直接把你想問的文字貼上即可。"
+    )
+
+
 def _trigger_gas_slide_sync() -> Optional[dict]:
     """POST createSlide action to GAS Web App, return {success, url} or None"""
     if not GAS_QUOTE_URL:
@@ -1080,6 +1204,7 @@ async def _run_a5_quote_background(
         if force_local:
             quote_message = quote_message[len("/localquote"):].strip() or user_message
         sheet_first_error = ""
+        sheet_payload: Optional[dict] = None
         try:
             if not force_local:
                 sheet_payload = build_sheet_quote_payload(quote_message, user_name=user_name)
@@ -1153,7 +1278,13 @@ async def _run_a5_quote_background(
                 user_name,
                 history,
             )
-            answer = result.answer
+            answer = _prepare_local_quote_answer(
+                quote_message=quote_message,
+                answer=result.answer,
+                sheet_payload=sheet_payload,
+                sheet_first_error=sheet_first_error,
+                force_local=force_local,
+            )
             history_ref = _get_history(chat_id)
             history_ref.append({"role": "user", "content": quote_message})
             history_ref.append({"role": "assistant", "content": answer})
@@ -1392,7 +1523,6 @@ async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     logger.info(f"A6 photo saved: {local_path}")
 
     caption = update.message.caption or ""
-    caption_note = f"\nOwner/業務 附的文字說明：{caption}" if caption else ""
 
     if caption and _looks_like_quote_request(caption):
         user_message = (
@@ -1403,13 +1533,7 @@ async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
         )
         await _run_a5_quote_guarded(update, context, user_message)
     else:
-        user_message = (
-            f"收到一張圖片，已存在 {local_path}，請用 Read 工具讀取並分析圖片內容。{caption_note}\n"
-            "如果是競品菜單、報價單或對話截圖，請先 OCR 所有文字與品項數量，再分析內容；"
-            "未被明確要求報價前，不要自動新增品項或硬產報價。"
-            "如果是要新增 MAPLAB 自有品項的食物照片，才協助產出 addItem JSON。"
-        )
-        await _run_claude_guarded(update, context, user_message)
+        await update.message.reply_text(_photo_handoff_text(local_path, caption), reply_markup=_mode_keyboard())
 
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -1436,8 +1560,14 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     if text == MENU_BUTTON_HELP:
         await help_cmd(update, context)
         return
+    if text == MENU_BUTTON_TAKEOVER:
+        await takeover_cmd(update, context)
+        return
 
     stripped = text.strip()
+    if _looks_like_takeover_request(stripped):
+        await takeover_cmd(update, context)
+        return
     if _looks_like_runtime_status_request(stripped):
         await status_cmd(update, context)
         return
@@ -1505,6 +1635,8 @@ def main() -> None:
     app.add_handler(CommandHandler("ping", ping))
     app.add_handler(CommandHandler("status", status_cmd))
     app.add_handler(CommandHandler("model", status_cmd))
+    app.add_handler(CommandHandler("takeover", takeover_cmd))
+    app.add_handler(CommandHandler("handoff", takeover_cmd))
     app.add_handler(CommandHandler("reset", reset_cmd))
     app.add_handler(CommandHandler("localquote", localquote_cmd))
     app.add_handler(CommandHandler("linecases", linecases_cmd))

@@ -368,3 +368,10 @@
 - 根因：`bot/bot.py` 用 `load_dotenv(BOT_DIR / ".env")` 讀的是 **`bot/.env`**，不是 repo 根目錄 `.env`。`bot/.env` 裡的 `CLAUDE_CODE_OAUTH_TOKEN=` 那行早在 2026-04-09（上一次 token 過期）就被註解掉並寫著「(removed 2026-04-09, expired 401)」。診斷腳本的 `ENVF` 卻硬寫死指向 repo 根目錄 `.env`，於是「repo 根目錄 .env 有新 token」被誤判成「bot 也有新 token」——診斷全綠，bot 卻仍在讀一個沒有 token 的檔案。
 - 解法：① 修正 `scripts/diagnose_a1_claude_bridge.sh` 的 `ENVF` 指向 `bot/.env`（bot 真正讀的檔案），另外保留 `ROOT_ENVF` 只用於交叉比對；② 新增一項檢查：repo 根目錄 `.env` 與 `bot/.env` 的 `CLAUDE_CODE_OAUTH_TOKEN` 是否一致，不一致直接判 FAIL 並提示「只更新根目錄無效，務必同步寫入 bot/.env」；③ 把新 token 實際寫入 `bot/.env`（取消註解該行）並重啟 bot；④ 用 Chrome 開 Telegram Web 送真實訊息、看真實回覆，而不是只信任腳本輸出或本機 `claude -p` 測試——兩者測的是「憑證本身有效」，不是「bot 讀到的是同一份憑證」。
 - 預防：任何「repo 有兩份看起來同名的設定檔（根目錄 vs 子目錄）」的系統，修 bug 或換憑證時必須先確認「runtime 實際讀哪一個路徑」（搜 `load_dotenv`／`os.getenv` 的呼叫點），不能假設「專案根目錄的 `.env` 就是唯一入口」。驗收一個 bot/service 是否修好，最終判準是「透過它真正對外的介面（這裡是 Telegram Web 對話）跑一次端到端」，腳本/CLI 直測只能證明「元件本身沒壞」，證明不了「元件真的被接上了」。
+
+## 2026-07-07 — A6 status routing must not match model keywords inside broad questions
+
+- 觸發條件：Owner 在 Chrome Telegram 問 A6「我在這裡請你報價 有訓練到ollama 嗎 有一天出地端專用迷你模型的做法的時候可以把工作流拿給他用嗎？」，A6 卻回 `A6 runtime 狀態`，沒有回答訓練/工作流問題。
+- 根因：`_looks_like_runtime_status_request()` 把 `ollama`、`openclaw`、`runtime` 當成全句任意命中，只要長句中提到模型名就直接走 status route；這把「詢問模型訓練/工作流可搬移性」誤判成「查 runtime 狀態」。
+- 解法：status route 只接受明確 `/status`、`/model`、短模型/status 問句或短 runtime/status phrases；新增 `/takeover` 接手包，並讓非報價圖片回可接手路徑，不再走舊 Claude CLI 裸錯；`/localquote` 遇到 footer-only 或 JSON-heavy 時改用 deterministic Sheet-first 摘要保底。
+- 預防：A6 Telegram route guard 測試至少包含：短句「你現在是跑什麼模型」要進 status；長句提到 `ollama`/`模型` 但問工作流不能進 status；`/takeover` 必須回 copyable 接手包；`/localquote 15人有主食高毛利 要英文菜單` 不得只回本地 footer。最終仍要用 Chrome Telegram Web readback，不可只信本機函式測試。

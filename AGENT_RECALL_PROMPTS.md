@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-07-07 16:00 TST（08:00 UTC，遠端）A1 午後巡查：✅ A2 今日 4 新 commit（last: `5a83f0f` SEO 三人小組執行）已更新；✅ B1 今日 2 新 commit（`13f1719`+`32b3afb` IS 全功能檢討+跨專案治理科技樹）已更新；⚠️ A7 狀態不一致已補正（💤 暫停→🔄 進行中）；A6 ~260h / A8 ~296h / A5 ~345h / IOS-KOL ~381h / LEARNING-LOOP ~505h 持續超 48h；GCP帳單~83天🔴
+> 最後更新：2026-07-07 晚間 TST（遠端）A1 晚間巡查：✅ B1 後續 `0695ece` G1/G3落地+封坑驗證欄+1%觸發規則+Self-Healing拍板部署 已更新；✅ A1 `8006242` Telegram橋接修復 PR#17 merged；A6 ~265h / A8 ~301h / A5 ~350h / IOS-KOL ~386h / LEARNING-LOOP ~510h 持續超 48h；GCP帳單~83天🔴
 >
 > 使用方式：選擇角色 → 複製 prompt / module handoff → 貼到 Gemini / Codex / OpenClaw / legacy Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -27,7 +27,7 @@
 | A6 | 業務快反應部隊 | ⚠️ T-A6-001 **已超 48h 門檻**（4dfd0a8 2026-06-26 20:21 stage-labeling rubric + A6.json 第 8 技能書；~251.6h，請 Owner 確認後續方向；LINE webhook等Owner確認 Channel 1654658337；2026-07-07 更新）| Sales Rapid Response |
 | A7 | 客服與對話轉單部 | 🔄 T-A7-001 進行中（Q7試吃+Q10取消改期政策 2026-07-06 落地，剩 A5 外送費級距 + Phase 3 上線測試）；T-A7-002 ⏸️ 阻塞（Phase 3A 剩任務 4 地區判斷 + 任務 7 流程圖同步）| Smart Reply |
 | A8 | 影音內容產線 | ⚠️ 持續超 48h（2026-06-25 08:25 `1a2d752` squash merge a8/video-checklist-mvp；現 ~287.6h/~12.0天，2026-07-07 更新；下一步：審核 local motion POC storyboard → 地端動態生成 → 9:16 mp4/cover → Publish Approval Card，未經 Owner/A1 approval 不得上傳） | Content Repurposing Pipeline |
-| **B1** | **Investment OS Builder** | **🟢 T-HQ-001 P1-P6 全完成；✅ 2026-07-07 新工作：`13f1719` IS 全功能檢討+Goal-Signal-Decision-Review 方案、`32b3afb` 跨專案治理科技樹+P0 根因診斷（TCC 授權問題，唯讀，未動 runtime）；建議 Owner 確認可關閉 T-HQ-001** | **寫功能 / runtime surface** |
+| **B1** | **Investment OS Builder** | **🟢 T-HQ-001 P1-P6 全完成；✅ 2026-07-07 新工作：`13f1719` IS 全功能檢討+Goal-Signal-Decision-Review 方案、`32b3afb` 跨專案治理科技樹+P0 根因診斷（TCC，唯讀）、`0695ece` G1/G3落地+封坑驗證欄+1%觸發規則+Self-Healing拍板部署記錄；建議 Owner 確認可關閉 T-HQ-001** | **寫功能 / runtime surface** |
 | **B2** | **Investment OS Reviewer** | **🟢 召喚型可用** | **資料流 / 錯誤 / freshness review** |
 | **B3** | **Investment OS Archivist** | **🟢 召喚型可用** | **版本紀錄 / 交接 / resume prompt** |
 | **B4** | **Investment OS System Patrol** | **🟢 召喚型可用** | **系統適配巡查 / pause-refactor** |

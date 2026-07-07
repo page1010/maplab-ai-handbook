@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-07-07 午後（A1，遠端 Claude Code）午後巡查：✅ A2 今日 4 新 commit（`5a83f0f` SEO 三人小組執行、`ab49e18` 三人小組制度、`23a2e49` F-1 gate、`5261670` wp-audit）；✅ B1 今日 2 新 commit（`13f1719` IS 全功能檢討、`32b3afb` 跨專案治理科技樹）；⚠️ A7 AGENT_RECALL 顯示 💤 暫停 與 CURRENT_STATUS 🔄 進行中不一致，已補正；A6 ~260h / A8 ~296h / A5 ~345h / IOS-KOL ~381h / LEARNING-LOOP ~505h 持續超 48h；GCP 帳單~83天🔴 未結案。完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`｜巡查封存 `archive/CURRENT_STATUS_patrol_log_archive_2026-07-06.md`
+最後更新：2026-07-07 晚間（A1，遠端 Claude Code）晚間巡查：✅ B1/A1 午後後續 6 commits（`0695ece` G1/G3落地+封坑驗證+1%觸發規則+Self-Healing拍板部署、`79baf31` R0治本執行、`1448f3a` Superpowers內化、`b8c3950` Fable5參照筆記、`8006242` A1橋接修復，均已在最新事實核對晚間I-IV補記）；✅ 今日共 3 PR merged（#15/#16/#17，治理/模型分層）；A6 ~265h / A8 ~301h / A5 ~350h / IOS-KOL ~386h / LEARNING-LOOP ~510h 持續超 48h；GCP 帳單~83天🔴 未結案；Self-Healing Loop 已在 IS 上線（首輪 live 驗證通過）。完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`｜巡查封存 `archive/CURRENT_STATUS_patrol_log_archive_2026-07-06.md`
 
 ---
 
@@ -145,7 +145,7 @@
 | A5 | T-A5-007: 待 Codex 認領（Owner 指示 A5→Codex 管理；前置診斷已完成，成本結構未被改壞，見 2026-07-06 A1 對帳） | 見 Task Card |
 | A6 | T-A6-001: Telegram 報價 hot path 已修成 Sheet-first；剩餘限制是 LINE webhook 只含客戶→OA 訊息，若要完整雙向訓練資料，需 LINE OA Manager CSV 匯出或其他正式來源；LINE Developers Console Webhook URL 待 Owner 確認填入（見下方「A6 Webhook 資訊」） | 見 Task Card |
 | A7 | T-A7-001/T-A7-002: Q7 試吃 + Q10 取消/改期政策**已由 Owner 於 2026-07-06 確認並落地**，非阻塞；剩餘僅 A5 外送費級距未建立 + Phase 3 上線測試 | 見 Task Card |
-| A1 巡查紀錄（最新） | ⚠️ A1巡查 2026-07-07 午後：✅ A2 今日 4 新 commit（`5261670`+`23a2e49`+`ab49e18`+`5a83f0f`，SEO 三人小組制度+執行+F-1 gate+wp-audit）均已寫入 CURRENT_STATUS；✅ B1 今日 2 新 commit（`13f1719` IS 全功能檢討+`32b3afb` 跨專案治理科技樹，唯讀診斷，未動 runtime）均已寫入 CURRENT_STATUS；⚠️ A7 狀態不一致：tasks 表 🔄 進行中 vs AGENT_RECALL_PROMPTS 顯示 💤 暫停——已補正 AGENT_RECALL_PROMPTS；⚠️ AGENT_RECALL_PROMPTS A2 last commit 過時（07-05），已更新為 07-07；A4 PID 10941 遠端無法驗，待本機確認；A6 ~260h / A8 ~296h / A5 ~345h / IOS-KOL ~381h / LEARNING-LOOP ~505h 持續超 48h；GCP帳單~83天🔴 | 下次巡查延續此基準，更新這一列 |
+| A1 巡查紀錄（最新） | ✅ A1巡查 2026-07-07 晚間：午後後 B1/A1 新增 6 commits（`0695ece` G1/G3落地+Self-Healing拍板部署、`8006242` A1 Telegram橋接修復、R0/Superpowers/Fable5，均已寫入最新事實核對晚間I-IV）；今日 3 PR merged（#15/#16/#17）；A2/B1/A1 今日工作與 CURRENT_STATUS 一致，無新增不一致；Self-Healing Loop IS 上線首輪驗證通過；A4 PID 10941 遠端無法驗，待本機確認；A6 ~265h / A8 ~301h / A5 ~350h / IOS-KOL ~386h / LEARNING-LOOP ~510h 持續超 48h；GCP帳單~83天🔴 | 下次巡查延續此基準，更新這一列 |
 
 ### A6 Webhook 資訊（2026-07-06 挖出，供 A0 向 Owner 引導）
 

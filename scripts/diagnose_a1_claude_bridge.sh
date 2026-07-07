@@ -5,7 +5,12 @@
 # (也可由 A0 Cowork 開 Code task 代跑,輸出全部可安全轉述,不印 secrets)
 
 REPO="$HOME/maplab-ai-handbook"
-ENVF="$REPO/.env"
+# 2026-07-07 修復：bot.py 實際讀的是 bot/.env（BOT_DIR / ".env"），不是 repo 根目錄
+# .env。先前這裡指錯檔案，導致「repo 根目錄 .env 有新 token」被誤判成「bot 也有新
+# token」，造成診斷 4/4 PASS 但 bot 實際仍 401（token 只寫到 repo 根目錄 .env，
+# bot/.env 裡的 CLAUDE_CODE_OAUTH_TOKEN 那行還被註解掉）。
+ENVF="$REPO/bot/.env"
+ROOT_ENVF="$REPO/.env"
 PASS=0; FAIL=0
 ok(){ echo "✅ $1"; PASS=$((PASS+1)); }
 bad(){ echo "❌ $1"; FAIL=$((FAIL+1)); }
@@ -25,6 +30,19 @@ if [ -f "$ENVF" ] && grep -q "^CLAUDE_CODE_OAUTH_TOKEN=" "$ENVF"; then
   ok "CLAUDE_CODE_OAUTH_TOKEN 存在(長度 ${TLEN})"
 else
   bad "CLAUDE_CODE_OAUTH_TOKEN 不在 .env → 修復:claude setup-token 產新 token 寫入 .env"
+fi
+
+# 2.5 交叉檢查:repo 根目錄 .env 與 bot/.env 的 token 是否不一致
+# （這正是 2026-07-07 的實際故障模式：Owner 把新 token 存進根目錄 .env，
+#  但 bot 只讀 bot/.env，兩邊沒同步，診斷卻誤判成功）
+if [ -f "$ROOT_ENVF" ] && grep -q "^CLAUDE_CODE_OAUTH_TOKEN=" "$ROOT_ENVF"; then
+  ROOT_TOKEN=$(grep "^CLAUDE_CODE_OAUTH_TOKEN=" "$ROOT_ENVF" | head -1 | cut -d= -f2-)
+  BOT_TOKEN=$(grep "^CLAUDE_CODE_OAUTH_TOKEN=" "$ENVF" 2>/dev/null | head -1 | cut -d= -f2-)
+  if [ "$ROOT_TOKEN" != "$BOT_TOKEN" ]; then
+    bad "repo 根目錄 .env 與 bot/.env 的 CLAUDE_CODE_OAUTH_TOKEN 不一致 → 只更新根目錄 .env 對 bot 無效，務必同步寫入 bot/.env"
+  else
+    ok "repo 根目錄 .env 與 bot/.env 的 token 一致"
+  fi
 fi
 
 # 3. claude CLI

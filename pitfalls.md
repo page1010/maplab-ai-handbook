@@ -361,3 +361,10 @@
 - 根因：`sync_influencer_agents.py` 把正式單集重點 gate 寫成只允許 `transcript_status=ok`，metadata-only 與 needs_transcript 全被濾掉；同時格式直接使用 `episode_qna`，讓游庭皓總經逐字稿被包成問答題。runtime 的 `.venv/bin/yt-dlp` wrapper 也失效，導致股癌音訊 fallback 卡在下載階段。
 - 解法：雷達視圖要一個核心 KOL 一列，優先選最新可摘要列；逐字稿列標 `逐字稿摘要`，metadata-only 只能標 `RSS/標題描述摘要（待逐字稿）`，needs_transcript 只能標 `待 ASR/逐字稿`，不得假裝已有內容結論。格式用「發生什麼事 / 可用訊號 / 限制 / 下一步」，禁止 Q/A 殘渣推到 Owner 手機。`yt_dlp_bin()` 必須先跑 `--version` 驗證候選可用，跳過壞 wrapper，子程序環境要移除 `PYTHONHOME`、`PYTHONPATH`、`__PYVENV_LAUNCHER__`。
 - 預防：IOS-KOL Telegram digest 不是只做 transcript gate，也要做 visibility gate。任何被 Owner 指定的核心 KOL 不可整列消失；若沒有內容摘要，必須顯示缺口與下一步 ASR，而不是靜默跳過。下次改 digest 前要用 live DB preview 檢查游庭皓、理財達人秀、股癌三列是否都存在，且沒有 `Q1/A1` 文字。
+
+## 2026-07-07 — 診斷腳本測錯 .env，讓「已修復」變成假訊號
+
+- 觸發條件：Owner 把新的 `CLAUDE_CODE_OAUTH_TOKEN` 存進 repo 根目錄 `.env`；`scripts/diagnose_a1_claude_bridge.sh` 跑出 4/4 PASS，`claude -p` 手動實測也成功；重啟 bot 後回報「等 Owner Telegram 實測」。Owner 追問「telegram web 在chrome 上你可以自我檢查並找出問題與做的正確與否的迴圈」，用 Chrome 開 Telegram Web 自己送測試訊息，才發現 bot 實際回覆仍是 `Failed to authenticate. API Error: 401`。
+- 根因：`bot/bot.py` 用 `load_dotenv(BOT_DIR / ".env")` 讀的是 **`bot/.env`**，不是 repo 根目錄 `.env`。`bot/.env` 裡的 `CLAUDE_CODE_OAUTH_TOKEN=` 那行早在 2026-04-09（上一次 token 過期）就被註解掉並寫著「(removed 2026-04-09, expired 401)」。診斷腳本的 `ENVF` 卻硬寫死指向 repo 根目錄 `.env`，於是「repo 根目錄 .env 有新 token」被誤判成「bot 也有新 token」——診斷全綠，bot 卻仍在讀一個沒有 token 的檔案。
+- 解法：① 修正 `scripts/diagnose_a1_claude_bridge.sh` 的 `ENVF` 指向 `bot/.env`（bot 真正讀的檔案），另外保留 `ROOT_ENVF` 只用於交叉比對；② 新增一項檢查：repo 根目錄 `.env` 與 `bot/.env` 的 `CLAUDE_CODE_OAUTH_TOKEN` 是否一致，不一致直接判 FAIL 並提示「只更新根目錄無效，務必同步寫入 bot/.env」；③ 把新 token 實際寫入 `bot/.env`（取消註解該行）並重啟 bot；④ 用 Chrome 開 Telegram Web 送真實訊息、看真實回覆，而不是只信任腳本輸出或本機 `claude -p` 測試——兩者測的是「憑證本身有效」，不是「bot 讀到的是同一份憑證」。
+- 預防：任何「repo 有兩份看起來同名的設定檔（根目錄 vs 子目錄）」的系統，修 bug 或換憑證時必須先確認「runtime 實際讀哪一個路徑」（搜 `load_dotenv`／`os.getenv` 的呼叫點），不能假設「專案根目錄的 `.env` 就是唯一入口」。驗收一個 bot/service 是否修好，最終判準是「透過它真正對外的介面（這裡是 Telegram Web 對話）跑一次端到端」，腳本/CLI 直測只能證明「元件本身沒壞」，證明不了「元件真的被接上了」。

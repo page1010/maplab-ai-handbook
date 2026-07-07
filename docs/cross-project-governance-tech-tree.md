@@ -8,6 +8,26 @@
 
 ---
 
+## ⚡ 2026-07-07 晚間更新（Owner 拍板後已執行 + 兩處誤診更正）
+
+**已執行（證據見 IS repo commit `e30c2062`，本地未 push）：**
+1. **R0 治本完成**：IS repo 遷出 `~/Documents` → `/Users/pagemacmini/investment-os`（舊路徑 symlink 相容）。
+   治理真相機復活：`gen_system_truth done anomalies=0`，SYSTEM_MAP.md 07-07 17:36 重生（8 天來首次）；
+   cross-project-mirror 17:37 恢復同步。科技樹 T0 的 🔴 節點升級為 ✅。
+2. **Evolution Channel 三表首次建立**：診斷升級——不是「積壓未量測」，而是 `research_runs`/`postmortems`/
+   `strategy_patches` **從未建表**（迴圈只存在於設計文件）。已建 `scripts/evolution_channel_schema.sql` +
+   demo DB 全閉環冒煙（propose→B1 accept，decider gate 驗證只認 Owner/B1）。接正式 DB 待核准。
+
+**誤診更正（認錯不糾結，文化 #31）：**
+- ~~nightwatch 停擺~~ → **nightwatch 每天在跑但天天 0 alerts**，同期 CRITICAL 累積至 30 筆。
+  問題從「死亡」改判「守夜人盲區」，待排查其檢查範圍是否涵蓋 escalation queue。
+- ~~live_health 靜默死亡~~ → **寫入器活著**（runtime 每 15 分更新），死的是 repo 副本 mirror
+  （TCC 擋 Documents 寫入，pitfalls 早有記載）。遷移後應自癒，07-08 驗證。
+- 本次最大教訓不變且更強：**pitfalls 早寫了「launchd 不得讀寫 ~/Documents」，plist 照樣違規**——
+  規則存在於散文就等於不存在，必須有 plist lint 機器 gate（已入 IS pitfalls 錯誤 190）。
+
+---
+
 ## 0. 費曼複述（150 字白話版）
 
 這是一家一人公司，老闆有兩盤生意：外燴接單（MAPLAB）和自己的投資研究（Investment OS）。

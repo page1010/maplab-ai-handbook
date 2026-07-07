@@ -1,9 +1,9 @@
 # T-A2-002 — 食安 + 法規 SEO 字眼清理
 
 ## 接續狀態
-- **狀態**: ⏸️ 阻塞（回溯掃描已完成，等 Owner 決定怎麼處理 1 篇真的踩到食安字眼的文章）
-- **最後活動**: 2026-07-07（A2 — 執行 `scripts/wp-audit.sh --all` 全站回溯掃描，找到 1 篇真食安風險）
-- **接續點**: 58 篇既有文章已全數掃描完成，1 篇（post 698）含「無麩質」字眼需 Owner 決定改法，詳見下方「2026-07-07 A2 回溯掃描結果」
+- **狀態**: ⏸️ 阻塞（回溯掃描 + 根因結構性修復已完成，只剩等 Owner 決定 post 698 怎麼改）
+- **最後活動**: 2026-07-07（A2 — 根因修復：`seo_publish_gate.py` 新增 F-1 食安/法規紅線用詞 gate，之後新內容會自動被擋，不會再重複今天發現的問題）
+- **接續點**: 58 篇既有文章已全數掃描完成；新產出內容的自動防護缺口已用 F-1 gate 補上（見下方「2026-07-07 根因修復」）；只剩 post 698 待 Owner 決定改法
 - **阻塞**: 等 Owner 決定 post 698 的「無麩質或低糖選項」FAQ 答案要不要改（A2 唯讀掃描，未動任何文章）
 
 ### 2026-07-06 A1 對帳結論（回應 Owner 質疑「是不是回溯了、SEO 討論是不是已經到更後面」）
@@ -22,6 +22,17 @@
 | 1 | 台南外燴菜單推薦｜20道客製化餐點設計靈感｜MAPLAB Kitchen（post 698） | https://www.maplabkitchen.com/tainan-custom-catering-menu/ | 「無麩質」出現 2 次——一次在可見 FAQ 正文，一次在文章內手刻的 JSON-LD FAQPage schema（同一句話重複），原句：「有，請在洽詢時告知需求，我們會協助設計包含**素食、無麩質**或低糖選項的菜單。」 | 🔴 高（食安紅線，廚房環境無法排除交叉污染，標榜此詞可能引發乳糜瀉患者過敏，屬 T-A2-002 建卡時定義的最高優先風險） | 改為「素食或其他飲食限制」之類的中性說法，不承諾「無麩質」；由於同一句話在正文與 JSON-LD 各出現一次，兩處都要改，否則搜尋引擎 rich snippet 還是會顯示含「無麩質」的舊版答案 |
 
 **其餘 57 篇**：無「無麩質/Gluten-free/ESG 認證/SDG/醫療級/第三方認證」任何一個字眼，乾淨。
+
+### 2026-07-07 根因修復（Owner 已授權方向：結構性解決重複問題）
+
+回應「新內容沒有食安字眼自動防護」這個發現，直接在 `scripts/seo_publish_gate.py` 補上獨立的食安/法規 gate，不跟品牌語氣禁用詞混在一起：
+
+- 新增 `FOOD_SAFETY_BANNED_WORDS`（無麩質/ESG 認證/SDG/醫療級/第三方認證）+ `FOOD_SAFETY_BANNED_PATTERNS`（`gluten[\s-]?free`，大小寫/連字號皆擋），來源沿用 T-A2-002 建卡時的定義，**獨立於** `BANNED_WORDS`（品牌語氣，超值/CP值/佛心等）。
+- 新增 `check_f1_food_safety_words()`，check id `F-1`，錯誤訊息與 E-1 分開：「無食安/法規紅線用詞...非行銷語氣問題，需 Owner 確認改法，勿直接刪詞了事」。
+- 掛進 `run_gate()` 的 `all_checks`，category 為新的 `compliance`（跟 `brand` 分開），CLI `--check compliance` 可單獨跑。
+- `docs/seo-publish-checklist.md` 新增「F. 食安 / 法規紅線」章節 + 版本記錄 v1.1。
+- 測試：`scripts/test_seo_publish_gate.py`，6 組情境、12 項斷言全過，涵蓋：中文「無麩質」、英文大小寫/連字號變體（Gluten-Free / gluten free / GLUTENFREE）、其餘 4 個食安/法規詞、乾淨草稿應 PASS、**F-1 與 E-1 互不誤判**（純行銷語氣違規不會被 F-1 擋、純食安詞違規不會被 E-1 擋，證明兩份清單真的分開）。
+- **post 698 本身這次沒有動**，仍等 Owner 確認改法後才處理；這次只修「以後新內容不會再犯同樣的錯」。
 
 **附帶發現（不在 T-A2-002 範圍內，屬技術 SEO 債，一併記錄供之後排入 T-A2-003 或另開任務）**：5 篇文章（post 450、541、879、924、994）的 content 裡混著手刻 `<script type="application/ld+json">` FAQ schema，同時應該還有 Rank Math 自動產生的 schema，兩邊可能重複／衝突，建議之後統一改用 Rank Math 的 FAQ block，不要在正文手寫 `<script>`。這不是本次任務要處理的範圍，先記錄，不動手。
 
@@ -63,7 +74,8 @@
 | 5 | 建立清理紀錄 feedback/2026-04-07-seo-foodsafety-cleanup.md | ✅ 完成 |
 | 6 | checkpoint.sh | ✅ 完成 |
 | 7 | WordPress 58 篇既有文章回溯掃描（`scripts/wp-audit.sh --all`） | ✅ 完成（2026-07-07 A2）— 1 篇（post 698）含「無麩質」，其餘乾淨 |
-| 8 | ⚠️ post 698「無麩質」FAQ 答案改法確認（需 Owner 決定）| 🔴 待 Owner 處理 |
+| 8 | 根因修復：`seo_publish_gate.py` 新增 F-1 食安/法規紅線用詞 gate（獨立於 E-1 品牌語氣） | ✅ 完成（2026-07-07 A2）— 測試 `test_seo_publish_gate.py` 12 項斷言全過 |
+| 9 | ⚠️ post 698「無麩質」FAQ 答案改法確認（需 Owner 決定）| 🔴 待 Owner 處理 |
 
 ---
 
@@ -113,3 +125,4 @@
 |------|------|------|
 | v1.0 | 2026-04-07 | 建立，A2 執行 Repo 掃描 + 建立治理規則 |
 | v1.1 | 2026-07-07 | A2 執行 WordPress 58 篇既有文章回溯掃描，找到 1 篇（post 698）真食安風險；修正前一天誤判「T-A2-005 pipeline 已自動擋住食安用詞」的錯誤結論 |
+| v1.2 | 2026-07-07 | 根因修復：`seo_publish_gate.py` 新增獨立的 F-1 食安/法規紅線用詞 gate + `docs/seo-publish-checklist.md` F 章節 + 測試，之後新內容會自動被擋 |

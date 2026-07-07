@@ -81,11 +81,30 @@ DEFAULT_404_SLUGS: list[str] = [
 ]
 
 # 禁用詞清單（來源：skills/brand-voice-guide.md §三）
+# 這是「行銷語氣」禁用詞，跟下面的「食安/法規」禁用詞是兩份完全不同的清單，
+# 不要混在一起——2026-07-07 對帳時發現這兩個範疇曾被誤認為同一份清單。
 BANNED_WORDS: list[str] = [
     "超值", "保證滿意", "CP值", "佛心", "便宜又大碗",
     "錯過可惜", "名額有限", "一生一次", "不訂會後悔",
 ]
 BANNED_WORD_MAX_OCCURRENCES = {"精緻": 2}  # 出現超過 N 次才算違規
+
+# 食安 / 法規紅線用詞清單（來源：T-A2-002 — handoff/tasks/T-A2-002-foodsafety-seo-cleanup.md）
+# 獨立於上面的品牌語氣禁用詞：這份管的是「講了會有食安通報/法規風險」的字眼，
+# 不是語氣問題。2026-07-07 A2 回溯掃描 58 篇既有 WordPress 文章時發現，這份風險
+# 從未被自動擋在新內容產出的關卡上（seo_qa_checker.py 的「飲食禁忌」是必寫項目
+# 檢查，意思相反，不是禁用詞），因此在此補上結構性防護。
+# - 無麩質/Gluten-free：廚房環境無法排除交叉污染，標榜此詞可能引發乳糜瀉患者
+#   過敏 → 食安通報、業務過失訴訟。
+# - ESG 認證/SDG/醫療級/第三方認證：屬有法規強制力或需第三方驗證的專有名詞，
+#   MAPLAB 目前無相關認證，宣稱使用可能構成不實廣告。
+FOOD_SAFETY_BANNED_WORDS: list[str] = [
+    "無麩質", "ESG 認證", "SDG", "醫療級", "第三方認證",
+]
+# 英文變體用 regex（大小寫、連字號/空白皆需擋下：gluten-free / Gluten Free / GLUTENFREE）
+FOOD_SAFETY_BANNED_PATTERNS: list[str] = [
+    r"gluten[\s-]?free",
+]
 
 # 說服式對比句型 regex（來源：brand-voice-guide.md 第 4 點）
 PERSUASION_PATTERNS: list[str] = [
@@ -160,11 +179,11 @@ def sha256_prefix(text: str, n: int = 500) -> str:
     return hashlib.sha256(segment.encode()).hexdigest()[:16]
 
 
-def find_lines(text: str, pattern: str) -> list[str]:
+def find_lines(text: str, pattern: str, flags: int = 0) -> list[str]:
     """回傳 text 中符合 regex pattern 的行（含行號）。"""
     results = []
     for i, line in enumerate(text.splitlines(), 1):
-        if re.search(pattern, line):
+        if re.search(pattern, line, flags):
             results.append(f"line {i}: {line.strip()[:120]}")
     return results
 
@@ -299,6 +318,22 @@ def check_e3_absolute_words(draft: str) -> CheckResult:
     return CheckResult("E-3", passed, desc, found)
 
 
+def check_f1_food_safety_words(draft: str) -> CheckResult:
+    """F-1: 無食安/法規紅線用詞（獨立於 E-1 的品牌語氣禁用詞，來源見
+    FOOD_SAFETY_BANNED_WORDS 註解 / T-A2-002）。先移除 HTML 注解避免掃到
+    範例詞。"""
+    clean = strip_html_comments(draft)
+    found: list[str] = []
+    for word in FOOD_SAFETY_BANNED_WORDS:
+        if word in clean:
+            found.extend(find_lines(clean, re.escape(word)))
+    for pat in FOOD_SAFETY_BANNED_PATTERNS:
+        found.extend(find_lines(clean, pat, flags=re.IGNORECASE))
+    passed = len(found) == 0
+    desc = "無食安/法規紅線用詞" + ("" if passed else f"（找到 {len(found)} 處食安/法規風險用詞，非行銷語氣問題，需 Owner 確認改法，勿直接刪詞了事）")
+    return CheckResult("F-1", passed, desc, found)
+
+
 # ── WP REST checks（需憑證，選用）─────────────────────────────────────────────
 
 def check_c1_featured_image_wp(post_id: int, wp_base: str, auth: str) -> CheckResult:
@@ -343,6 +378,7 @@ def run_gate(
         ("brand",       lambda: check_e1_banned_words(draft)),
         ("brand",       lambda: check_e2_persuasion_patterns(draft)),
         ("brand",       lambda: check_e3_absolute_words(draft)),
+        ("compliance",  lambda: check_f1_food_safety_words(draft)),
     ]
 
     if wp_post_id:
@@ -371,7 +407,7 @@ def main() -> None:
     parser.add_argument("--approved", type=Path, help="核准版文件路徑（.md 或 .html）")
     parser.add_argument("--draft",    type=Path, help="待發布 draft 路徑（.html）")
     parser.add_argument("--wp-post-id", type=int, help="WP post ID（啟用 WP REST 檢查）")
-    parser.add_argument("--check", choices=["fingerprint", "links", "assets", "brand"],
+    parser.add_argument("--check", choices=["fingerprint", "links", "assets", "brand", "compliance"],
                         help="只跑特定類別")
     args = parser.parse_args()
 

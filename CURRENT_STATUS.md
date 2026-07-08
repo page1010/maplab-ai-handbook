@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-07-08 16:00（A1 午後巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-07-08 22:00（A1 晚間巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -133,6 +133,7 @@
 
 ⚠️ A1巡查 2026-07-08 08:00：T-A4-001 S11/2024 補跑預計完成時間已過（07-07 02:04 重啟 + ~23.6h = 07-08 01:34），截至本次巡查仍無 completion checkpoint；Owner 請確認 Mac mini PID 10941 狀態（completed/still running/crashed again）；若完成請補 `checkpoint.sh "A4" "S11/2024 補跑完成"` 並更新 T-A4-001 task card。
 ⚠️ A1巡查 2026-07-08 16:00（午後）：🔴 升級警告 — T-A4-001 已達預計完成時間後 ~14h（08:00 首次警告後再過 8h 仍零回應）。Mac mini PID 10941 存亡不明，可能 ①正常完成但未補 checkpoint ②再次崩潰 ③仍在跑（異常慢）。8h 內無任何 A2-A8 agent commit（正常，無 Owner 派工）。建議 Owner 最優先確認 A4 Mac mini 狀態。
+⚠️ A1巡查 2026-07-08 22:00（晚間）：🔴 T-A4-001 三連警告 — 預計完成 07-08 01:34，截至晚間巡查已逾 ~20h 仍無 completion checkpoint（08:00 首警 → 16:00 升級 → 22:00 三連，全程零回應）。零回應模式與兩種高可能情境吻合：① PID 10941 再次崩潰未被重啟 ② 完成但未補 checkpoint。Owner 最優先動作：`tail -n 20 state/a4_s11_resume.log` 確認 Mac mini 狀態；若完成請補 `checkpoint.sh "A4" "S11/2024 補跑完成"` 並更新 T-A4-001。晚間 8h（16:00-22:00）無 A2-A8 新 commit，其餘 🔄 任務（A6/A7）狀態無新異常。
 
 | 對象 | 問題 | 行動 |
 |------|------|------|

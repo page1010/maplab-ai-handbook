@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-07-07 晚間 TST（遠端）A1 晚間巡查：✅ B1 後續 `0695ece` G1/G3落地+封坑驗證欄+1%觸發規則+Self-Healing拍板部署 已更新；✅ A1 `8006242` Telegram橋接修復 PR#17 merged；A6 ~265h / A8 ~301h / A5 ~350h / IOS-KOL ~386h / LEARNING-LOOP ~510h 持續超 48h；GCP帳單~83天🔴
+> 最後更新：2026-07-08 08:00 TST（遠端）A1 每日巡查：✅ A6 recall 更新（last `e5ab867` 07-07 + `ed63f97` 07-08，已解除舊 06-26 stale reference）；⚠️ T-A4-001 預計 07-08 01:34 完成但無 completion checkpoint，Owner 請確認 Mac mini PID 10941；A5 ~361h / A8 ~312h / IOS-KOL ~408h 持續超 48h；GCP帳單~83天🔴
 >
 > 使用方式：選擇角色 → 複製 prompt / module handoff → 貼到 Gemini / Codex / OpenClaw / legacy Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -22,11 +22,11 @@
 | A1 | 系統總管中心 | ✅ Claude Code 常駐 | Telegram bot + 終端機，直接下指令 |
 | A2 | 搜尋流量作戰部 | 🟢 召喚型可用 + patrol（Ads/SEO/WordPress）；last commit `5a83f0f` 2026-07-07（SEO 三人小組執行：婚禮pillar草稿+B3操作稿+cannibalization定案）；T-A2A3-001-B 🔴 >368h持續 | SEO / Ads / WordPress / Brand memory |
 | A3 | 社群與廣告成長部 | ✅ T-A3-001 完成（GTM v21 雙平台追蹤上線）；T-A3-002 ⏸️ 阻塞（等廣告週期+Owner操作）| Meta Ads / Social |
-| A4 | 影像資產整理部 | 🔄 ACTIVE（**CRITICAL 解除**：`44b3f7c` 07-07 02:07 S11 修復重啟 + `286e911` 07-06 23:58 補跑啟動；PID 10941 本機 Ollama 補跑 todo=3,377 中；`tail -f state/a4_s11_resume.log`；GCP帳單~82天未處理🔴）| Photo Archive |
-| A5 | 報價與提案引擎部 | ⚠️ T-A5-002 + T-A5-005 均超 48h 門檻（2026-06-23 07:01-07:22 +0800：`5ab7434` clasp push T-A5-005 + `3209fba` fixMasterTemplate_，均 awaiting Owner；現 **~337.0h**，2026-07-07 更新）；T-A5-004 🔴 CRITICAL（~1680h+，無新 commit）；T-A5-007 🔲 待 Codex 認領（`6cefd13` 2026-07-06 建卡，A5→Codex 移交）| Quotation Engine |
-| A6 | 業務快反應部隊 | ⚠️ T-A6-001 **已超 48h 門檻**（4dfd0a8 2026-06-26 20:21 stage-labeling rubric + A6.json 第 8 技能書；~251.6h，請 Owner 確認後續方向；LINE webhook等Owner確認 Channel 1654658337；2026-07-07 更新）| Sales Rapid Response |
+| A4 | 影像資產整理部 | 🔄 ACTIVE（**CRITICAL 解除**：`44b3f7c` 07-07 02:07 S11 修復重啟 + `286e911` 07-06 23:58 補跑啟動；PID 10941 本機 Ollama 補跑 todo=3,377，**預計 07-08 01:34 完成**；截至 07-08 巡查無 completion checkpoint，Owner 請確認 Mac mini 狀態；GCP帳單~83天未處理🔴）| Photo Archive |
+| A5 | 報價與提案引擎部 | ⚠️ T-A5-002 + T-A5-005 均超 48h 門檻（2026-06-23 07:01-07:22 +0800：`5ab7434` clasp push T-A5-005 + `3209fba` fixMasterTemplate_，均 awaiting Owner；現 **~361h**，2026-07-08 更新）；T-A5-004 🔴 CRITICAL（~1680h+，無新 commit）；T-A5-007 🔲 待 Codex 認領（`6cefd13` 2026-07-06 建卡，A5→Codex 移交）| Quotation Engine |
+| A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（last commits `e5ab867` 07-07 fix(a6) Telegram routing + `ed63f97` 07-08 A6 401健檢(無影響)+SEO迴路修好；bot_a6 ✅ 上線 launchd；LINE webhook 等 Owner 確認 Channel 1654658337；2026-07-08 更新）| Sales Rapid Response |
 | A7 | 客服與對話轉單部 | 🔄 T-A7-001 進行中（Q7試吃+Q10取消改期政策 2026-07-06 落地，剩 A5 外送費級距 + Phase 3 上線測試）；T-A7-002 ⏸️ 阻塞（Phase 3A 剩任務 4 地區判斷 + 任務 7 流程圖同步）| Smart Reply |
-| A8 | 影音內容產線 | ⚠️ 持續超 48h（2026-06-25 08:25 `1a2d752` squash merge a8/video-checklist-mvp；現 ~287.6h/~12.0天，2026-07-07 更新；下一步：審核 local motion POC storyboard → 地端動態生成 → 9:16 mp4/cover → Publish Approval Card，未經 Owner/A1 approval 不得上傳） | Content Repurposing Pipeline |
+| A8 | 影音內容產線 | ⚠️ 持續超 48h（2026-06-25 08:25 `1a2d752` squash merge a8/video-checklist-mvp；現 **~312h/~13.0天**，2026-07-08 更新；下一步：審核 local motion POC storyboard → 地端動態生成 → 9:16 mp4/cover → Publish Approval Card，未經 Owner/A1 approval 不得上傳） | Content Repurposing Pipeline |
 | **B1** | **Investment OS Builder** | **🟢 T-HQ-001 P1-P6 全完成；✅ 2026-07-07 新工作：`13f1719` IS 全功能檢討+Goal-Signal-Decision-Review 方案、`32b3afb` 跨專案治理科技樹+P0 根因診斷（TCC，唯讀）、`0695ece` G1/G3落地+封坑驗證欄+1%觸發規則+Self-Healing拍板部署記錄；建議 Owner 確認可關閉 T-HQ-001** | **寫功能 / runtime surface** |
 | **B2** | **Investment OS Reviewer** | **🟢 召喚型可用** | **資料流 / 錯誤 / freshness review** |
 | **B3** | **Investment OS Archivist** | **🟢 召喚型可用** | **版本紀錄 / 交接 / resume prompt** |
@@ -517,7 +517,7 @@ projects/maplab-master-data.md → handoff/handoff-to-A5.md → handoff/field-na
 
 ## A6｜業務快反應部隊（Sales Rapid Response Unit）
 
-**狀態：⚠️ T-A6-001 進行中（last 4dfd0a8 2026-06-26 20:21 stage-labeling rubric + A6.json 第 8 技能書；現 ~235.6h 超 48h 門檻（awaiting Owner 方向確認）；LINE Developers Console Webhook URL 仍待 Owner 確認 Channel 1654658337；bot_a6 ✅ 上線 launchd；2026-07-06 午後更新）**
+**狀態：🔄 T-A6-001 進行中（last `e5ab867` 2026-07-07 fix(a6) Telegram routing tighten + `ed63f97` 2026-07-08 A6 401健檢(結論:無影響,dead code)+SEO進度回報迴路修好；bot_a6 ✅ 上線 launchd；LINE Developers Console Webhook URL 仍待 Owner 確認 Channel 1654658337；2026-07-08 A1每日巡查更新）**
 
 ```
 你是 MAPLAB A6 業務快反應部隊。
@@ -546,16 +546,18 @@ repo: https://github.com/page1010/maplab-ai-handbook
 4. 進件建立 — 在 SALES_INTAKE 自動建一筆案件（case_id = CASE-YYYYMMDD-NNN）
 5. 查報價 — 「查XXX的報價」→ 找 QUOTE_WORKBENCH
 
-【斷點 — 2026-07-06 A1每日巡查更新】
-T-A6-001 🔄 進行中（⚠️ 已超 48h 門檻，~227.6h，awaiting Owner）：
-06-26 20:21 最新：4dfd0a8 feat(a6): 召喚術上線 rubric — a6-stage-labeling-rubric.md + A6.json 第 8 技能書
+【斷點 — 2026-07-08 A1每日巡查更新】
+T-A6-001 🔄 進行中（有新活動，bot 正常運行）：
+07-07 fix(a6) `e5ab867`：收緊 Telegram 路由（takeover handoff 優化）
+07-08 `ed63f97`：A6 401 健檢（結論：無影響，claude_ask()/codex路由皆 dead code）+ SEO 進度回報迴路根因修復，新增 notify_owner.sh + checkpoint --notify flag
+07-06 大更新：Codex-first 聊天路由、三層降載鏈設計（骨架未接線）、A6 LLM backend adapter spec
+06-26 20:21：4dfd0a8 feat(a6): 召喚術上線 rubric — a6-stage-labeling-rubric.md + A6.json 第 8 技能書
 06-18 大更新：Telegram 報價 hot path 修復成 Sheet-first + GAS clasp push @12 驗證；live smoke v3 NT$15,700 / 毛利 80%。
   → bot_a6/a5_quote_engine.py 新增 deterministic build_sheet_quote_payload()
   → GAS Code.gs applyQuoteVariantToCopy_() 修 D/F/IJ 7:20 避免 D19/D20 殘留
   → OpenClaw 學徒訓練完成但未通過獨立放行（supervisor_lesson.md）
-06-27 02:14 A1 A6 culture loop v4（133e6c4）：sliding window + Ollama LLM fallback；S_PENDING 34.3%→9.0%
 ⚠️ 阻塞：LINE OA 雙向訓練資料仍待 Owner 提供正式來源（LINE OA Manager CSV 或其他）。
-Owner確認：A6 下一步動作方向 + LINE Webhook Channel 1654658337 確認。
+Owner確認：LINE Webhook Channel 1654658337 確認。
 下一步：Owner 決策 A6 方向 → LINE 訓練資料補齊 → T-A6-001 結案（或暫停）。
 
 【必讀】

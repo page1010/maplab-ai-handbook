@@ -112,3 +112,41 @@
   ✗ [S3_QUOTE_SEND] gen=0ch/tgt=48ch overlap=0.00 struct=0
   ✗ [S3_QUOTE_SEND] gen=0ch/tgt=48ch overlap=0.00 struct=0
 {"rate": 0.0, "rate_pct": "0.0%", "total": 10, "usable": 0}
+[A6 Gym] Ollama model: qwen2.5:14b, batch: 10
+
+[A6 Gym] 第一輪完成
+  總樣本 : 10
+  可用   : 1
+  可用率 : 10.0%
+  Log    : /Users/pagemacmini/maplab-ai-handbook/state/a6_gym_log.jsonl
+
+  ✗ [S3_QUOTE_SEND] gen=150ch/tgt=48ch overlap=0.08 struct=4
+  ✗ [S3_QUOTE_SEND] gen=141ch/tgt=48ch overlap=0.08 struct=5
+  ✗ [S3_QUOTE_SEND] gen=108ch/tgt=48ch overlap=0.12 struct=4
+  ✗ [S3_QUOTE_SEND] gen=120ch/tgt=48ch overlap=0.10 struct=4
+  ✗ [S3_QUOTE_SEND] gen=183ch/tgt=48ch overlap=0.08 struct=4
+  ✓ [S3_QUOTE_SEND] gen=116ch/tgt=48ch overlap=0.12 struct=5
+  ✗ [S3_QUOTE_SEND] gen=161ch/tgt=48ch overlap=0.09 struct=4
+  ✗ [S3_QUOTE_SEND] gen=0ch/tgt=48ch overlap=0.00 struct=0
+  ✗ [S3_QUOTE_SEND] gen=0ch/tgt=48ch overlap=0.00 struct=0
+  ✗ [S3_QUOTE_SEND] gen=0ch/tgt=48ch overlap=0.00 struct=0
+{"rate": 0.1, "rate_pct": "10.0%", "total": 10, "usable": 1}
+[A6 Gym] Ollama model: qwen2.5:14b, batch: 10
+
+[A6 Gym] 第一輪完成
+  總樣本 : 10
+  可用   : 2
+  可用率 : 20.0%
+  Log    : /Users/pagemacmini/maplab-ai-handbook/state/a6_gym_log.jsonl
+
+  ✓ [S3_QUOTE_SEND] gen=131ch/tgt=48ch overlap=0.12 struct=5
+  ✗ [S3_QUOTE_SEND] gen=185ch/tgt=48ch overlap=0.07 struct=4
+  ✗ [S3_QUOTE_SEND] gen=122ch/tgt=48ch overlap=0.07 struct=3
+  ✗ [S3_QUOTE_SEND] gen=136ch/tgt=48ch overlap=0.05 struct=4
+  ✗ [S3_QUOTE_SEND] gen=129ch/tgt=48ch overlap=0.09 struct=4
+  ✗ [S3_QUOTE_SEND] gen=128ch/tgt=48ch overlap=0.08 struct=3
+  ✗ [S3_QUOTE_SEND] gen=182ch/tgt=48ch overlap=0.06 struct=5
+  ✗ [S3_QUOTE_SEND] gen=120ch/tgt=48ch overlap=0.10 struct=5
+  ✗ [S3_QUOTE_SEND] gen=0ch/tgt=48ch overlap=0.00 struct=0
+  ✓ [S3_QUOTE_SEND] gen=100ch/tgt=48ch overlap=0.14 struct=4
+{"rate": 0.2, "rate_pct": "20.0%", "total": 10, "usable": 2}

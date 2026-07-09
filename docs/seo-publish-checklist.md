@@ -41,8 +41,11 @@
 | C-1 | WP 草稿有設定 Featured Image（精選圖） | 🤖 | WP REST `featured_media ≠ 0` |
 | C-2 | 至少一個真實案例錨（WP media ID 可查，非 stock / 佔位圖） | 👁 | 至少 1 張已上傳且視覺核對的自有照片 |
 | C-3 | 所有圖片 alt 符合 A 式格式（`台南{場景}外燴—{描述}`） | 🤖 | `grep -E 'alt="台南.{2,10}外燴—'` 數量 = img 數量 |
+| C-4 | 頁面是 Elementor 建的 → 正文/內連/FAQ 改動走 Elementor data 或 wp-admin UI，不能只改 WP REST `post_content` | 👁 | 2026-05-11 踩坑：Elementor 頁前台由 Elementor data render，raw `post_content` 編輯不會反映到前台。判斷方式：WP REST 抓 `content.rendered` 跟實際前台畫面比對，不一致就是 Elementor 頁 |
 
 > **本次觸發缺陷（2026-07-03）**：HTML body 交付時未附帶精選圖或任何已上傳 media，如果 Owner 直接發布，精選圖欄位為空，GSC 可能降低卡片點擊率。
+
+> **2026-07-07 決策**：**新建 landing page 不強制用 Elementor**，以品牌語氣+品牌色為準即可（三人小組評審共識，見 `docs/ad-funnel-battle-plan.md` §5）。C-4 只在「頁面本來就是 Elementor 建的既有頁」才適用，不代表新頁面要改用 Elementor。
 
 ---
 
@@ -99,3 +102,4 @@ FAIL → 列出缺陷清單 → 修復 → 重跑閘門
 |---|---|---|---|
 | v1.0 | 2026-07-03 | A-1 ~ A-3, B-1 ~ B-4, C-1 ~ C-3, D-1 ~ D-4, E-1 ~ E-4 | 內容忠實度未核對；佔位連結未解析；精選圖未附帶 |
 | v1.1 | 2026-07-07 | F-1（食安/法規紅線用詞，獨立於 E-1 品牌語氣禁用詞） | T-A2-002 回溯掃描發現既有文章（post 698）含「無麩質」，且此風險從未被自動擋在新內容產出關卡上 |
+| v1.2 | 2026-07-09 | C-4（Elementor 頁改動路徑） | 週度技能複利：把 2026-05-11 舊踩坑（Elementor raw content 不等於前台）與 2026-07-07 新決策（新頁不強制 Elementor）一併折進閘門，避免同一坑重複踩 |

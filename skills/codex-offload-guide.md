@@ -19,7 +19,7 @@
 - 任何會寫入 repo（commit/push）、Google Sheets、GAS、WordPress、Google/Meta Ads 後台的操作
 - 需要跨系統工具鏈的任務（例如同時要讀 Sheet + 呼叫 GAS + 寫 Drive）
 - 牽涉報價成本/毛利計算（A5 核心公式，屬於「寫入」等級的信任，不外包）
-- 需要 MCP 工具（Google Sheets/Drive/Ads 等）現場讀寫的任務——Codex/Antigravity 的 sandbox 呼叫方式不帶 MCP 連線
+- 需要 MCP 工具（Google Sheets/Drive/Ads 等）現場讀寫的任務——**目前**我們沒有把這些 MCP 註冊給 Codex（見第六節，這是設定問題不是架構限制，但註冊前要先過權限審查）
 - 任何客戶個資/憑證會經過 prompt 的場景
 
 判斷口訣：**只出一段文字 = 可以卸載；會動到系統狀態 = 留給 Claude/本體角色。**
@@ -68,3 +68,27 @@ Ollama（`gemma4:latest` 等本地模型）維持「末位冷備援」角色：C
 2. Codex/Antigravity 是 Owner 已付費、額度充足的雲端資源，本來就該優先用滿，不需要每個任務都佔本機資源跑 Ollama。
 
 完整降載鏈設計（codex → antigravity → ollama）與風險評估見 `projects/a6-llm-backend-adapter.md`；本次僅完成設計文件 + adapter 骨架，尚未接進線上 A6 Telegram 服務。
+
+---
+
+## 六、Codex CLI 版本盤點（2026-07-09，`codex --version`/`--help`/`mcp list`/`features list`/`doctor` 實測）
+
+當時版本：`codex-cli 0.142.0`（`codex doctor` 顯示有 0.143.0 可更新，非急件）。
+
+### 值得利用的新能力
+
+- **`--output-schema <FILE>`**（`codex exec` 選項）：可指定 JSON Schema 限制 Codex 最終回覆格式，跟我們自己 Workflow 工具的 `agent(..., {schema})` 是同一個模式——**未來 offload 任務要結構化資料時，優先用這個，不要再靠 prompt 裡寫「請輸出 JSON」土法煉鋼**。
+- **`codex exec resume --last`** / **`codex exec review`**：exec 模式現在支援續接上次 session（省重講一次上下文）與非互動 code review。目前 offload guide 只教一次性 `--ephemeral` 呼叫，**多輪任務可以改用 `resume --last`** 省 token。
+- **`-i/--image <FILE>...`**（exec 也支援）：可在非互動呼叫時附圖片——A4/A6 有圖片相關任務要 offload 給 Codex 時可以直接用，不必先轉文字描述。
+- **`--oss --local-provider ollama`**（`codex exec`/`codex` 都支援）：Codex CLI **原生內建**「改跑本地 Ollama/LM Studio 模型」的能力（例：`codex exec --oss --local-provider ollama -m qwen2.5:14b ...`）。這跟 `projects/a6-llm-backend-adapter.md` 想自己刻的「可插拔底層模型」目標高度重疊——**未來若要做 codex→ollama 降級鏈，優先評估直接用 Codex 原生 `--oss` 參數，而不是維護我們自己的 adapter 骨架**，除非有原生參數做不到的需求。
+- **`--json`**：exec 事件輸出改 JSONL，方便程式解析（例如未來想在 bot_a6 裡結構化讀 Codex 進度，而不是只 tail 一段字串）。
+
+### 更正一項舊假設：Codex 其實「能」接 MCP
+
+第一節「不適合卸載」原本寫「Codex/Antigravity 的 sandbox 呼叫方式不帶 MCP 連線」——**這句不精確**。實測 `codex mcp list` 顯示 Codex CLI 本身有 `codex mcp add/list/get/remove/login/logout` 整組指令，目前已註冊 3 個 MCP server：`node_repl`（瀏覽器操作用）、`github`（`api.githubcopilot.com/mcp`，bearer token 已生效）、`notion`（未登入）。**沒有註冊 Google Sheets/Drive/Ads 之類我們會用到的 MCP**，所以現況下 Codex 仍碰不到我們的報價/Sheet 系統——但這是「沒註冊」的設定問題，不是「架構上做不到」。若未來想讓 Codex 直接讀寫 Google Sheets，路徑是 `codex mcp add`，不是重新設計；但**在把任何寫入型 MCP（Sheets/Drive/Ads）註冊給 Codex 之前，必須先過一輪跟 Section 8 權限治理一樣的審查**，不能因為技術上可行就直接開。
+
+`features list` 額外確認 Codex 目前 stable 啟用中的能力：`browser_use`/`browser_use_external`（會瀏覽網頁）、`computer_use`（電腦操作）、`multi_agent`（多代理）、`plugins`/`plugin_sharing`（外掛生態）、`memories`（experimental，跨 session 記憶）——這些目前都還沒被我們的 offload 流程用到，先記錄，不代表要馬上採用。
+
+## 七、Codex 必須遵守 Superpowers 技能路由（2026-07-09 Owner 指定）
+
+召喚 Codex 執行任何任務前，Codex 端必須先查 `skills/superpowers-guide.md` 的路由表，找到對應技能書並遵守——跟我們自己所有角色開工前查技能索引的義務相同，不因為 Codex 是外部 sub-agent 就豁免。已寫入 `AGENT_RECALL_PROMPTS.md`「## Codex」召回 prompt 的強制條款。

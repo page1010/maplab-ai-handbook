@@ -89,3 +89,16 @@ A0 每次 session 開始時必拿此技能。在以下場景強制應用：
 
 *建立原因：2026-03-27 Owner 反饋 A0 過度回報、等待指令、不主動嘗試解決問題。*
 *2026-04-17 追加準則 4：Owner 反饋 A0/A1 照單全收阻塞理由，未扮演主管角色審核和推動。*
+
+---
+
+### 準則 5（2026-07-09 追加）：做完≠回報完，主動推播才算數
+
+**踩坑**：2026-07-07 SEO 三人小組派工的 4 項交付物全部完成並 commit，但只用 session 內部 task list 追蹤進度，沒寫進 `handoff/tasks/T-*.md` 正式格式；唯一會主動推 Telegram 給 Owner 的 `patrol-scheduled.sh` 因此掃描不到，Owner 完全不知道部門已經做完。事後查證發現這不是單一失誤，是結構洞：`patrol.sh` 舊版邏輯「已完成」區塊超過 5 張 Task Card 就只顯示總數不點名——就算補了 Task Card，完成也不會被主動看見。完整根因見 `pitfalls.md` 2026-07-08 條目。
+
+**規則**：
+1. 任何多步驟派工完成，**在同一次 checkpoint 裡**用 `bash scripts/checkpoint.sh "<角色>" "<訊息>" --notify` 立即推播 Telegram 給 Owner，不要假設「有 commit 就等於 Owner 會看到」。
+2. Task Card 一律用 `handoff/tasks/T-A2-001.md` 那種既有 `- **狀態**: ✅ 已完成` bullet 格式，不要自創格式或只放在 session 內部 task list——巡查工具靠這個格式解析，格式不對等於沒寫。
+3. 判斷要不要 `--notify` 的口訣：**這個完成 Owner 會想馬上知道嗎？會 → 加；不確定 → 也加**，漏報成本遠高於誤報成本。
+
+完整 SOP 見 `AGENT_RULES.md` SECTION 20；工具見 `scripts/notify_owner.sh`。

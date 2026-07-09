@@ -382,3 +382,10 @@
 - 根因（兩層）：① 完成過程只用 session 內部 task list 追蹤進度，沒有建立/更新 `handoff/tasks/T-*.md`；Owner 唯一會被主動推播的管道 `scripts/patrol-scheduled.sh`（透過 Telegram sendMessage）只掃描 `handoff/tasks/T-*.md` 裡 `- **狀態**:` 這個固定 bullet 格式欄位，沒進這個檔案 = 對 Owner 不存在。② 即使有正確格式的 Task Card，`scripts/patrol.sh` 舊版邏輯「已完成」區塊只在總數 ≤5 張時才列出檔名，超過就只顯示數字——系統長期運作下已完成 Task Card 遠超過 5 張，所以完成項目從未被實際點名過，只是被算進一個沒人看的數字。額外發現：`handoff/tasks/T-A2-SEO-CATERING-MATRIX-001.md` 用 `**Status**: X`（無 `- ` 前綴、英文欄名）而非 patrol.sh 期待的 `- **狀態**: X`，導致該卡在巡查中一直被歸類成「狀態未標記」，是同一類「格式跟解析器對不上」問題的另一個活例。
 - 解法：① 新增 `scripts/notify_owner.sh`，用既有 A1 bot Telegram 憑證即時推播；② `scripts/checkpoint.sh` 新增 `--notify` flag，里程碑完成時呼叫即時推播，不必等每日 patrol；③ `scripts/patrol.sh` 的「已完成」區塊改成超過 5 張時仍列出最近異動的 3 張，不再整批消音；④ 補建 `handoff/tasks/T-A2-007-seo-trio-review-20260707.md`（正確格式，✅ 已完成）；⑤ SOP 寫進 `AGENT_RULES.md` SECTION 20，明定 WHO/WHAT 管道/HOW OFTEN。
 - 預防：任何完成一個 Owner 明確派工的多步驟任務，**在同一次 checkpoint 裡就要決定要不要 `--notify`**，不要假設「有 commit 就等於有回報」——commit 只進 git 歷史，不會主動出現在 Owner 眼前。新建 Task Card 一律用既有的 `- **狀態**:` bullet 格式（照抄 `handoff/tasks/T-A2-001.md` 的接續狀態區塊），不要自創格式，否則巡查工具解析不到、等於沒寫。
+
+## 2026-07-09 — 同一張 Task Card 藏兩個「狀態」欄位，且互相矛盾（第三個活例）
+
+- 觸發條件：驗收 T-A4-001（S11/2024 補跑）時發現，這張卡在檔案上半部只有「最後活動/接續點/阻塞」，完全沒有「狀態」欄位；`scripts/patrol.sh` 的 `grep -m1` 因此往下抓到檔案中段一段 2026-04-15 遺留的舊格式區塊（`Task ID`/`任務名稱` 那組），把早已過時的「🔄 進行中（S11/2024 補跑執行中）」當成現況——這是繼 `T-A2-SEO-CATERING-MATRIX-001.md`（`**Status**:` 英文無 bullet 格式）、`T-A2-007` 補建（session task list 沒寫進 Task Card）之後，第三個「Task Card 格式跟巡查解析器對不上」的活例。
+- 根因：Task Card 是活文件，多次 checkpoint 疊代後，舊格式區塊沒有被清掉或 reconcile，導致同一張卡同時存在「新格式的接續狀態區塊」與「舊格式的基本資訊區塊」，兩者的狀態/日期互相矛盾，`grep -m1` 只認第一個匹配，維護者卻常常只更新看起來像「主要」的那個區塊。
+- 解法：本次直接在頂部補上正確的 `- **狀態**:` 欄位（`grep -m1` 保證抓到這個），並在舊區塊原位置留一行說明性註記（不刪除舊的 Task ID/建立日期等基本資訊，只移除會誤導的重複狀態欄位）。
+- 預防：任何 Task Card 被 patrol.sh 標成「狀態未標記」或狀態內容看起來明顯過時/矛盾時，**不要只加新區塊了事，要順手搜整份檔案有沒有第二個 `- **狀態**:` 或 `**Status**:`**，兩個都要 reconcile 成同一份事實，否則下次改了新區塊、巡查工具還是抓到舊區塊。建議：Task Card 只允許一個「狀態」欄位，格式一律照抄 `handoff/tasks/T-A2-001.md`。

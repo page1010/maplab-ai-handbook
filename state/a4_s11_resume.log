@@ -3838,3 +3838,186 @@
 [2026-07-08T00:01:17] appended regular batch of 20 rows to Sheet
 [2026-07-08T00:07:39] progress: 2400/3377
 [2026-07-08T00:11:48] appended regular batch of 20 rows to Sheet
+[2026-07-08T00:21:33] appended regular batch of 20 rows to Sheet
+[2026-07-08T00:28:20] FAIL IMG_8362.HEIC (1cOn1nj7UzyvxY-h6bGHKgRNNHu6nEwlc): no JSON in model output: ```json
+{
+"category":"日常","keywords":["餐廳外觀","店面招牌","商業建築","品牌設計"],
+"alt_
+[2026-07-08T00:30:40] FAIL IMG_8364.PNG (1rzTWYUVZi8yJzu929Z_0BHjaFUGqgYAd): no JSON in model output: 
+[2026-07-08T00:33:01] appended regular batch of 20 rows to Sheet
+[2026-07-08T00:37:56] FAIL IMG_8374.PNG (1nPyA6TbA1oKvbYqxloiLUHXsBkGcbG-v): no JSON in model output: ```json
+{
+[2026-07-08T00:38:26] FAIL IMG_8375.PNG (1MzGtbQSQwljean83OIkbmjzG1AGyxxdG): no JSON in model output: ```json
+{
+  "category": "外燴|日常",
+  "keywords": [
+    "戶外餐點",
+    "庭院佈置",
+    "家庭聚會",
+    "餐桌擺設"
+  ],
+  "alt_text": "戶外庭園的餐桌布置，適合舉辦小型家庭派對
+[2026-07-08T00:44:49] appended regular batch of 20 rows to Sheet
+[2026-07-08T00:50:48] FAIL IMG_9730.PNG (1jqlhX8y1wJr3oSNgFz58NfcZqIejZfuq): no JSON in model output: ```json
+{
+  "category": "外燴",
+  "keywords": [
+    "餐點",
+    "擺盤",
+    "自助餐",
+    "派對佈置",
+    "美食"
+  ],
+  "alt_text": "精美擺設的生日主題自助餐桌，色彩豐富，適合宴會場合。",
+  "seo_
+[2026-07-08T00:53:46] appended regular batch of 20 rows to Sheet
+[2026-07-08T00:56:21] progress: 2500/3377
+[2026-07-08T01:04:34] appended regular batch of 20 rows to Sheet
+[2026-07-08T01:13:18] appended regular batch of 20 rows to Sheet
+[2026-07-08T01:15:36] Google OAuth token refreshed
+[2026-07-08T01:24:12] appended regular batch of 20 rows to Sheet
+[2026-07-08T01:32:45] appended regular batch of 20 rows to Sheet
+[2026-07-08T01:42:48] appended regular batch of 20 rows to Sheet
+[2026-07-08T01:45:49] progress: 2600/3377
+[2026-07-08T01:51:58] appended regular batch of 20 rows to Sheet
+[2026-07-08T02:02:37] appended regular batch of 20 rows to Sheet
+[2026-07-08T02:11:38] appended regular batch of 20 rows to Sheet
+[2026-07-08T02:13:52] Google OAuth token refreshed
+[2026-07-08T02:15:16] FAIL IMG_9637.HEIC (1Ke37gHPPvtknAyv7vw5hZV8IvONCm5r0): no JSON in model output: 
+[2026-07-08T02:21:04] appended regular batch of 20 rows to Sheet
+[2026-07-08T02:33:12] FAIL IMG_9709.HEIC (1tXJ1T9HhYUHw71oK6jWgh5INlYEALE6T): timed out
+[2026-07-08T02:36:14] FAIL IMG_8119.jpg (1GcbbLN6RVCQyVfwDHWIpoFLOQAgz87uJ): timed out
+[2026-07-08T02:38:40] FAIL IMG_9692.PNG (1xxAEnPyPA1jx_ovPn6ZMa-G3V6i0QQ8N): no JSON in model output: ```json
+{
+  "category": "外燴",
+  "keywords": [
+    "甜點",
+    "外燴餐桌",
+    "擺盤",
+
+[2026-07-08T02:39:23] appended regular batch of 20 rows to Sheet
+[2026-07-08T02:41:03] progress: 2700/3377
+[2026-07-08T02:59:39] appended regular batch of 20 rows to Sheet
+[2026-07-08T03:08:00] FAIL IMG_9716.HEIC (1gv-XmLbbB8EruzEM8-S0lDXtJoaBtH-d): timed out
+[2026-07-08T03:13:53] Google OAuth token refreshed
+[2026-07-08T03:20:51] FAIL sclassic 2024-11-17 104332.457.JPG (10FNrwrayb5mKYJdTAerf-DxEzhp4bChL): timed out
+[2026-07-08T03:26:26] appended regular batch of 20 rows to Sheet
+[2026-07-08T03:40:30] appended regular batch of 20 rows to Sheet
+[2026-07-08T03:49:04] appended regular batch of 20 rows to Sheet
+[2026-07-08T03:59:31] appended regular batch of 20 rows to Sheet
+[2026-07-08T03:59:31] progress: 2800/3377
+[2026-07-08T04:08:15] appended regular batch of 20 rows to Sheet
+[2026-07-08T04:12:03] Google OAuth token refreshed
+[2026-07-08T04:18:45] appended regular batch of 20 rows to Sheet
+[2026-07-08T04:27:28] appended regular batch of 20 rows to Sheet
+[2026-07-08T04:37:57] appended regular batch of 20 rows to Sheet
+[2026-07-08T04:46:30] appended regular batch of 20 rows to Sheet
+[2026-07-08T04:46:30] progress: 2900/3377
+[2026-07-08T04:55:17] FAIL IMG_8951.PNG (1b1ExzoE1x-JwgNIZOqaHW1flKsD76wTl): no JSON in model output: 
+[2026-07-08T04:58:06] appended regular batch of 20 rows to Sheet
+[2026-07-08T05:06:40] appended regular batch of 20 rows to Sheet
+[2026-07-08T05:10:25] Google OAuth token refreshed
+[2026-07-08T05:17:19] appended regular batch of 20 rows to Sheet
+[2026-07-08T05:26:00] appended regular batch of 20 rows to Sheet
+[2026-07-08T05:35:57] progress: 3000/3377
+[2026-07-08T05:36:24] appended regular batch of 20 rows to Sheet
+[2026-07-08T05:40:36] FAIL IMG_9067.PNG (1Ky1AoWClQtTFu43esIaZ24EpvlE2M3OQ): no JSON in model output: 
+[2026-07-08T05:45:14] appended regular batch of 20 rows to Sheet
+[2026-07-08T05:47:22] FAIL IMG_9087.PNG (1G-LzjaqDM9UGGyFYFHEhXCalr8Lhtj-j): no JSON in model output: 
+[2026-07-08T05:50:05] FAIL IMG_9080.PNG (1Qn7tK0vNtlxabByXnyPk9C7pYiWCmf-y): no JSON in model output: 
+[2026-07-08T05:51:35] FAIL IMG_9077.PNG (1kYeZliBnBKEnJKlpUdFSv-fhYbw5PzEb): no JSON in model output: ```json
+{
+  "category": "日常",
+  "keywords": [
+    "玫瑰花",
+    "單枝花",
+    "植物特寫",
+    "自然美景"
+  ],
+  "alt_text": "一朵深紅色的玫瑰花，搭配綠葉的極簡風格特寫照片。",
+  "seo_name": "daily-flower-
+[2026-07-08T05:56:58] FAIL IMG_9076.PNG (1YnzUPwDkt6TzkUvt6T-uriu73hRkIKMd): no JSON in model output: ```json
+{
+"category":"日常",
+"keywords":["粉底液","化妝品","美容","24K","精華"],
+"alt_text":"展示一款24K純金光透精華粉底液的產品照片，用於美妝分享。",
+"seo_name":"daily-
+[2026-07-08T05:57:28] FAIL IMG_9099.JPG (1UVQZ_6fkkBEzLofrvkZ2OJCSnEOOaSFE): no JSON in model output: 
+[2026-07-08T05:57:58] FAIL IMG_9098.PNG (1-yzAM1UqufhZ8RGIVHzd3jTi0A1H5bWP): no JSON in model output: 
+[2026-07-08T05:58:50] FAIL IMG_9103.PNG (1Q5JTUHPBI3fDGsIOVlxqLEXilNDzYR2u): no JSON in model output: ```json
+{
+"category":"外燴",
+"keywords":["餐點","擺盤","食材","廚房"],
+"alt_text":"精美餐點擺盤與食材準備的專業廚房
+[2026-07-08T05:59:19] appended regular batch of 20 rows to Sheet
+[2026-07-08T06:01:08] FAIL IMG_9100.JPG (1YABs4lUT8bYgTfFOw-n7cSDwU_EglqxW): no JSON in model output: ```json
+{
+"category":"外燴",
+"keywords":["繽紛","食材","擺盤","餐桌佈置","色彩搭配"],
+"alt_text":"充滿活力與色彩的餐點佈置，適合派對或
+[2026-07-08T06:02:29] FAIL IMG_9096.PNG (1gEBShjZsMNZ21OUqIS11PtnOz5AVocaV): no JSON in model output: ```json
+{
+"category": "外燴",
+"keywords": [
+"餐桌佈置",
+"
+[2026-07-08T06:04:13] FAIL IMG_9106.PNG (1t84cu0z9FQFq-Q30Ve_CgTwYHZUNOrBX): no JSON in model output: 
+[2026-07-08T06:08:43] Google OAuth token refreshed
+[2026-07-08T06:10:00] appended regular batch of 20 rows to Sheet
+[2026-07-08T06:20:20] appended regular batch of 20 rows to Sheet
+[2026-07-08T06:23:50] progress: 3100/3377
+[2026-07-08T06:29:25] FAIL IMG_9159.PNG (1AyM7zaaGXv6dLiwjwkFL752MgF3O-qUV): no JSON in model output: ```json
+{
+"category":"日常",
+"keywords":["黑色","背景","空白","攝影"],
+"alt_text":"一張純黑色的空白圖片，
+[2026-07-08T06:29:51] appended regular batch of 20 rows to Sheet
+[2026-07-08T06:36:27] FAIL IMG_9158.PNG (1YQs8Suoc6X9sG7E_OCpRpq2IyjQ4uXSG): no JSON in model output: 
+[2026-07-08T06:40:56] appended regular batch of 20 rows to Sheet
+[2026-07-08T06:50:06] appended regular batch of 20 rows to Sheet
+[2026-07-08T07:00:27] appended regular batch of 20 rows to Sheet
+[2026-07-08T07:07:00] Google OAuth token refreshed
+[2026-07-08T07:09:31] appended regular batch of 20 rows to Sheet
+[2026-07-08T07:13:51] progress: 3200/3377
+[2026-07-08T07:19:36] appended regular batch of 20 rows to Sheet
+[2026-07-08T07:28:29] appended regular batch of 20 rows to Sheet
+[2026-07-08T07:38:59] appended regular batch of 20 rows to Sheet
+[2026-07-08T07:41:17] FAIL B4673845-8D85-4BAC-A0A1-C5BEC33E1FDB.jpg (1lvkG4iJPuJoKFAOxOgnFByobmzGWtjQq): no JSON in model output: 
+[2026-07-08T07:48:22] appended regular batch of 20 rows to Sheet
+[2026-07-08T07:58:13] FAIL IMG_9288.HEIC (1W1_lTuVqgt15MXvaOOiuCWTdCFpXxu94): no JSON in model output: 
+[2026-07-08T07:59:35] appended regular batch of 20 rows to Sheet
+[2026-07-08T08:01:16] progress: 3300/3377
+[2026-07-08T08:05:06] Google OAuth token refreshed
+[2026-07-08T08:08:37] appended regular batch of 20 rows to Sheet
+[2026-07-08T08:19:00] appended regular batch of 20 rows to Sheet
+[2026-07-08T08:27:54] appended regular batch of 20 rows to Sheet
+[2026-07-08T08:48:17] appended final batch of 19 rows to Sheet
+[2026-07-08T08:48:17] run done: processed 3375 this invocation
+[2026-07-09T22:04:58] resume run start: missing_total=3409 already_done_this_run=3314 todo=98 limit=1000000000
+[2026-07-09T22:04:58] resume run start: missing_total=3409 already_done_this_run=3314 todo=98 limit=1000000000
+[2026-07-09T22:11:08] FAIL IMG_5701.HEIC (1L0jtR0z2EwcbjHmN_72H2qHOlozPUwND): no JSON in model output: ```json
+{
+"category":"旅遊",
+"keywords":["海邊","戶外","旅遊","
+[2026-07-09T22:11:08] FAIL IMG_5701.HEIC (1L0jtR0z2EwcbjHmN_72H2qHOlozPUwND): no JSON in model output: ```json
+{
+"category":"旅遊",
+"keywords":["海邊","戶外","旅遊","
+[2026-07-09T22:11:39] FAIL IMG_5724.HEIC (13QUgJsqNz07USshVV3sQ2_S23NTvFR3_): no JSON in model output: 
+[2026-07-09T22:11:39] FAIL IMG_5724.HEIC (13QUgJsqNz07USshVV3sQ2_S23NTvFR3_): no JSON in model output: 
+[2026-07-09T22:13:53] FAIL IMG_8764.PNG (17zf21ud4NC6nKSP-GmvkXr8JsNUsf4-X): no JSON in model output: ```json
+{
+"category":"外燴",
+"keywords":["自助餐","甜點","麵包","派對佈置","餐
+[2026-07-09T22:13:53] FAIL IMG_8764.PNG (17zf21ud4NC6nKSP-GmvkXr8JsNUsf4-X): no JSON in model output: ```json
+{
+"category":"外燴",
+"keywords":["自助餐","甜點","麵包","派對佈置","餐
+[2026-07-09T22:14:23] FAIL IMG_8699.PNG (1FyKFzsaqHmrgrmZcKv11wM4sr_FRTFSN): no JSON in model output: ```json
+{
+"category":"外燴",
+"keywords":["廚房規劃","食材清單","餐具擺設","外燴準備
+[2026-07-09T22:14:23] FAIL IMG_8699.PNG (1FyKFzsaqHmrgrmZcKv11wM4sr_FRTFSN): no JSON in model output: ```json
+{
+"category":"外燴",
+"keywords":["廚房規劃","食材清單","餐具擺設","外燴準備

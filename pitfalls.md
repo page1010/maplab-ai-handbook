@@ -389,3 +389,11 @@
 - 根因：Task Card 是活文件，多次 checkpoint 疊代後，舊格式區塊沒有被清掉或 reconcile，導致同一張卡同時存在「新格式的接續狀態區塊」與「舊格式的基本資訊區塊」，兩者的狀態/日期互相矛盾，`grep -m1` 只認第一個匹配，維護者卻常常只更新看起來像「主要」的那個區塊。
 - 解法：本次直接在頂部補上正確的 `- **狀態**:` 欄位（`grep -m1` 保證抓到這個），並在舊區塊原位置留一行說明性註記（不刪除舊的 Task ID/建立日期等基本資訊，只移除會誤導的重複狀態欄位）。
 - 預防：任何 Task Card 被 patrol.sh 標成「狀態未標記」或狀態內容看起來明顯過時/矛盾時，**不要只加新區塊了事，要順手搜整份檔案有沒有第二個 `- **狀態**:` 或 `**Status**:`**，兩個都要 reconcile 成同一份事實，否則下次改了新區塊、巡查工具還是抓到舊區塊。建議：Task Card 只允許一個「狀態」欄位，格式一律照抄 `handoff/tasks/T-A2-001.md`。
+
+## 2026-07-10 — llama-server 多模態呼叫連續幾次後會退化成空輸出，與 prompt/圖片內容無關
+
+- 觸發條件：寫 GBP 照片評分腳本（`scripts/gbp_photo_scoring.py`）呼叫本機 `gemma4:latest` vision 評分，多次呼叫後開始回 `{"response": "", "done_reason": "length"}`（eval_count 打滿 num_predict 但完全沒有可見文字）。一開始誤判是 prompt schema 太複雜（欄位數/英文enum/數字評分）觸發，逐欄位刪減後仍失敗；最後用**同一組已知成功的 prompt+圖片重測**，發現這次也失敗——證實跟 prompt 內容或圖片內容無關，是 llama-server process 本身在多次多模態呼叫後進入退化狀態（`-np 1` 單 slot + `--context-shift` 的已知風險模式）。
+- 根因：`ollama` 背後起的 `llama-server`（`--no-mmap --flash-attn auto -c 4096 -np 1 --context-shift`）在連續處理多張圖片後，KV cache 或 context-shift 狀態會劣化到只輸出空/退化 token，且不會回傳任何 error，只會用 `done_reason: length` 偽裝成「正常跑完但沒東西可講」，非常容易被誤判成「這張圖片/這個 prompt 有問題」而浪費時間 debug 錯方向。
+- 解法：`score_with_ollama()` 改成失敗即 `ollama stop <model>` 重啟 process + 等待 3 秒再重試（最多 3 次），比照 `scripts/a4_s11_2024_resume_classifier.py` 既有的「連續失敗視為疑似斷線、暫停重試」模式。
+- 預防：本機 Ollama vision 批次任務若開始出現空回應，**先重啟模型 process 再重跑同一筆**確認是否為此退化模式，不要先入為主往 prompt schema 找根因；批次腳本一律內建重試+重啟邏輯，不要假設單次呼叫必成功。
+- 封坑驗證：`bash -c "for i in 1 2 3; do curl -s http://localhost:11434/api/generate -d '{\"model\":\"gemma4:latest\",\"prompt\":\"test\",\"stream\":false}' | python3 -c 'import json,sys; d=json.load(sys.stdin); print(len(d[\"response\"])>0)'; done"` 應全部印出 `True`；`scripts/gbp_photo_scoring.py` 對 56 張照片跑完後 `state/gbp_photo_scoring_report.json` 的 `results` 陣列裡 `error` 欄位為 null 的筆數應 ≥ 50（容許少數重試後仍失敗）。

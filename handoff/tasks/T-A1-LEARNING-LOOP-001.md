@@ -2,7 +2,7 @@
 
 ## 接續狀態
 - **狀態**: 🔄 進行中（P1 reaction ledger 已落地；P2 token capital registry / P3 eval harness 待做）
-- **最後活動**: 2026-07-10 ad82724
+- **最後活動**: 2026-07-10 2ebced0
 - **接續點**: 建立 token capital registry，登記可複用 prompt / eval / task packet / skill / pitfall；接著做 ledger closure/eval harness。
 - **阻塞**: 無。Google OAuth reauth 是 `google-oauth-reauth-card` 的獨立 Owner 5 分鐘 action，不阻塞 ledger 機制。
 - **assigned_session**: 2026-06-16 / A0 Dispatch Secretary + Codex

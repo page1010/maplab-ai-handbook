@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-07-10 14:56（checkpoint.sh 自動同步）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-07-10 午後（A1 午後巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -19,6 +19,7 @@
 
 ## 最新事實核對
 
+- 2026-07-10：**[A1 午後巡查]** 今日 A1 共 18+ commits（A0 委派全面落地）：①GBP 照片評分完成（moondream+qwen2.5 兩步驟，37/56 張有效，Top20+WP1992×5 精選落檔）②A0 委派 4 JOB 全落檔（JOB-CODEX-WEDDING-PILLAR/B3-ADCOPY/CONTENT-AUDIT/AGY-SECOND-READ）③weekly_eval_compounding 驗證（476/495 PASS，NO_DELTA）④nightwatch 盲區修復（shadow_findings 顯式檢查+patrol 自健檢）⑤B5 影子系統章程草稿建立⑥fable-mindset.md 落地（10 條工作思維+AGENT_RULES Section21+全角色 RECALL 注入）。T-A4-001 ✅ 完成確認無誤；T-A7-001 🔴 ~103h 無 commit（07-06 政策落地後停滯，Phase 3 未啟動，需 Owner 關注）。AGENT_RECALL_PROMPTS.md A4 row stale（仍顯示 ESCALATED）→ 已於本次巡查修正。零 A2-A8 新 commit（無 Owner 派工，正常）。
 - 2026-07-10：**[A1 執行 A0 委派]** A0 GUI session 卡 AskUserQuestion >1天；items 1-6 已 commit，item 7 照片評分交 A1。①A0 recall superpowers 補注入②T-A4-001 七連警告解除（Task Card ✅，patrol 已對齊）③Codex 通路驗證+指南更新④Loop-02/15/17 基線確認⑤GBP 照片評分（2026maplab外燴紀錄 6 夾）⑥總回報。GBP 解鎖任務執行中。
 - 2026-07-10：**[A1 每日巡查]** 過去 24h 共 3 commits（`e838bf7` A0 checkpoint、`efd3771` A1 晚間 patrol、`467b57f` A1 午後 patrol），零 A2-A8 agent commit（無 Owner 派工，正常）。T-A4-001 S11(2024) ✅ 已完成驗收（2026-07-09，七連警告已解除，GBP 照片評分 🔓 解鎖）。其餘 🔄 進行中任務（A6/A7）無新異常。Agent 狀態與 CURRENT_STATUS 一致，無新 SOP 偏移。
 - 2026-07-09：**[A0綜合] 記憶體警報解除+S11驗收完成+排程補課+Codex能力盤點+技能複利** — Owner 綜合派工（A0 額度中斷數小時剛恢復後）。**①記憶體**：llama-server 14.2GB 是昨晚 23:00 `com.maplab.a6-gym` 排程（已跑完）留下的 `qwen2.5:14b`，非 S11 用的模型；已 `ollama stop` 釋放，PhysMem unused 187MB→6GB。**②S11驗收**：主進程已於 07-08 08:48:17 完成（`run done: processed 3375`），3,314/3,409 張已分類並寫回 Sheet，98 筆殘留失敗（成因已從網路瞬斷轉為 Ollama vision 輸出非JSON/timeout 的內容層問題）；另起補跑收斂到 85 筆仍在背景跑（邊際遞減，不阻塞）。**判定 S11 完成，GBP 照片評分解鎖**。驗收過程發現 T-A4-001.md 本身就是「Task Card 狀態欄位跟 patrol.sh 解析器對不上」的第三個活例（頂部區塊缺狀態欄位，patrol 誤讀中段一段 2026-04-15 的過期文字），已修正並補上 `pitfalls.md` 記錄，另外 4 張卡（T-A2-001/002/007/A3-001）疑似同類但未壞，已 spawn 背景任務全面稽核。**③排程補課**：git log 確認 `patrol(a1)` 與 `seo-loop` 在整段額度中斷期間cadence 完全沒斷（6h/24h 節奏不變），沒有真正漏跑的排程；`weekly-eval-compounding` 只是還沒到第一次觸發時間（07-06 09:22 才裝、錯過當週 07-06 09:00 那次），非中斷造成，已在④手動跑掉技能複利部分。**④Codex 盤點**：`codex-cli 0.142.0`，新發現 `--output-schema`（結構化輸出）、`exec resume --last`（session 續接省 token）、`-i/--image`（非互動可附圖）、`--oss --local-provider ollama`（Codex 原生支援跑本地模型，跟我們自己設計的 `a6-llm-backend-adapter.md` 高度重疊，未來優先評估用原生參數）；並更正舊指南一句不精確描述——Codex 其實有 `mcp add/list` 可接 MCP（目前只註冊了 github/notion，沒有 Sheets/Drive），寫入 `skills/codex-offload-guide.md` §六。**⑤Superpowers 義務**：Codex 召回 prompt 新增「開工前查 `skills/superpowers-guide.md` 路由表」強制條款。**⑥技能複利**：`weekly_eval_compounding.py` 是 gate-eval 迴歸測試專用（Codex maker+agy reviewer），跟「把本週教訓滾進技能書」用途不同，未執行；改由本人直接把 3 條本週教訓蒸餾進對應技能書：`skills/credentials/claude-oauth.md`（.env 路徑陷阱，含 A6 一併補上）、`skills/a0-proactive-dispatch-guide.md`（準則5：做完≠回報完）、`docs/seo-publish-checklist.md`（C-4：Elementor 頁改動路徑+新頁不強制 Elementor）。
@@ -107,13 +108,13 @@
 | T-A2-005-local-seo-factory | T-A2-005：MAPLAB SEO Factory（地端閉環，Pillar First） | A2 | 🔴 CRITICAL（~1608h無commit） | handoff/tasks/T-A2-005-local-seo-factory.md |
 | T-A2-006-ads-seo-wordpress-patrol | T-A2-006 — Ads / SEO / WordPress Patrol | A2 |  | handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md |
 | T-A2-SEO-CATERING-MATRIX-001 | Foreign Catering SEO Benchmark -> MAPLAB Article Matrix | A2 |  | handoff/tasks/T-A2-SEO-CATERING-MATRIX-001.md |
-| T-A2A3-001-B | SEO 場景頁面 + 內連結（從 T-A2A3-001 分拆） | A2/A3 | 🔴 CRITICAL（~1055h無commit） | handoff/tasks/T-A2A3-001-B.md |
+| T-A2A3-001-B | SEO 場景頁面 + 內連結（從 T-A2A3-001 分拆） | A2/A3 | 🔴 CRITICAL（~1056h無commit） | handoff/tasks/T-A2A3-001-B.md |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2/A3 | ⏸️ RM/GSC 部分暫停；案例寫作轉 T-A2A3-001-B（Rank Math 已退訂，已設定好的 SEO 欄位先不要再設定；下一步是依 live URL map 補 To B 真） | handoff/tasks/T-A2A3-001.md |
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | ⏸️ 阻塞中（受眾輪廓分析完成（693筆 Orders）。待執行：嘉義加入廣告地區、興趣條件精簡、策略一冷受眾上線。） | handoff/tasks/T-A3-002.md |
 | T-A4-002 | pagewu1010 帳號 Takeout 解壓 + Gemini Flash 照片資產整合 | A4 |  | handoff/tasks/T-A4-002.md |
-| T-A4-003-photo-alt-pipeline | T-A4-003 — 照片 ALT/SEO 管線（地端 gemma4）+ Drive 改串流釋空間 | A4 | 🔴 CRITICAL（~695h無commit） | handoff/tasks/T-A4-003-photo-alt-pipeline.md |
-| T-A4-004-photo-classify | T-A4-004 — 照片分類搬移：截圖/家庭/外燴工作 + 年月資料夾 | A4 | 🔴 CRITICAL（~695h無commit） | handoff/tasks/T-A4-004-photo-classify.md |
-| T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔴 CRITICAL（~407h無commit） | handoff/tasks/T-A5-002.md |
+| T-A4-003-photo-alt-pipeline | T-A4-003 — 照片 ALT/SEO 管線（地端 gemma4）+ Drive 改串流釋空間 | A4 | 🔴 CRITICAL（~696h無commit） | handoff/tasks/T-A4-003-photo-alt-pipeline.md |
+| T-A4-004-photo-classify | T-A4-004 — 照片分類搬移：截圖/家庭/外燴工作 + 年月資料夾 | A4 | 🔴 CRITICAL（~696h無commit） | handoff/tasks/T-A4-004-photo-classify.md |
+| T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔴 CRITICAL（~408h無commit） | handoff/tasks/T-A5-002.md |
 | T-A5-004 | createSlides.gs — Slide 報價簡報自動生成 | A5 | 🟢 功能穩定（核心功能已可用且無需再動；~1500h+ 無 commit 是「沒事做」不是「壞掉」— 2026-07-06 A1 對帳澄清：先前 CURRENT_STATUS.md 任務表把「久無 commit」誤標為 🔴 CRITICAL，已改為反映實際狀態） | handoff/tasks/T-A5-004.md |
 | T-A5-005 | 報價狀態追蹤同步 + Dashboard | A5 | 🔴 CRITICAL（~407h無commit） | handoff/tasks/T-A5-005.md |
 | T-A5-006 | T-A5-006 | A5 | 🔲 待開始（尚未開始。等 T-A5-005 完成後啟動。） | handoff/tasks/T-A5-006.md |

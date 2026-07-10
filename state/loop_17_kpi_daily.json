@@ -1,6 +1,11 @@
 {
   "date": "2026-07-10",
   "status": "observation_period",
+  "baseline_established": "2026-07-10",
+  "orders_2026_total": 6,
+  "orders_2026_ytd": ["ORD-2026-001","ORD-2026-002","ORD-2026-003","ORD-2026-004","ORD-2026-005","ORD-2026-006"],
+  "monthly_avg_7day_baseline": null,
+  "conversion_rate_baseline": null,
   "anomalies": [],
-  "note": "基線建立中，需 Sheets MCP 數據"
+  "note": "觀察期建立。2026 YTD 共 6 筆訂單（01月/03月/04月/04月/05月/07月）。需累積 7 天日常數據後才能計算滾動基線與偏差警報。Loop 腳本功能正常（2026-07-10 dry-run pass）。Loop-02 GSC 依賴 service account 憑證（非 OAuth），本環境無法直接呼叫，需補 GCS 認證後啟用。"
 }

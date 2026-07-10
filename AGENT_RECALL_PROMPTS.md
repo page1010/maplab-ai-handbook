@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-07-09 22:00 TST（遠端）A1 晚間巡查：🔴 T-A4-001 六連警告 — 預計 07-08 01:34 完成後 ~44.5h 仍無 completion checkpoint（07-08 08:00/16:00/22:00 + 07-09 08:00/16:00/22:00 六警全程零回應），Owner 最優先確認 Mac mini 狀態（`tail -n 20 state/a4_s11_resume.log`）；A5 ~391h / A8 ~342h / IOS-KOL ~468h 持續超 48h；GCP帳單~84天🔴；8h 無 A2-A8 新 commit（僅午後巡查 commit）
+> 最後更新：2026-07-10 午後 TST（遠端）A1 午後巡查：T-A4-001 ✅ 完成（07-09 22:56 run done，七連警告解除，GBP 評分 🔄 解鎖）；T-A7-001 🔴 ~103h 無 commit（Phase 3 未啟動，需 Owner 關注）；T-A5-002 ~408h / T-IOS-KOL ~479h 持續 CRITICAL；今日 A1 18+ commits（GBP評分完成+B5章程草稿+nightwatch修復+fable-mindset落地+A0委派4JOB落檔）；零 A2-A8 新 commit（正常）
 >
 > 使用方式：選擇角色 → 複製 prompt / module handoff → 貼到 Gemini / Codex / OpenClaw / legacy Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -22,7 +22,7 @@
 | A1 | 系統總管中心 | ✅ Claude Code 常駐 | Telegram bot + 終端機，直接下指令 |
 | A2 | 搜尋流量作戰部 | 🟢 召喚型可用 + patrol（Ads/SEO/WordPress）；last commit `5a83f0f` 2026-07-07（SEO 三人小組執行：婚禮pillar草稿+B3操作稿+cannibalization定案）；T-A2A3-001-B 🔴 >368h持續 | SEO / Ads / WordPress / Brand memory |
 | A3 | 社群與廣告成長部 | ✅ T-A3-001 完成（GTM v21 雙平台追蹤上線）；T-A3-002 ⏸️ 阻塞（等廣告週期+Owner操作）| Meta Ads / Social |
-| A4 | 影像資產整理部 | 🔴 ESCALATED（`44b3f7c` 07-07 02:07 S11 修復重啟 + `286e911` 07-06 23:58 補跑啟動；PID 10941 本機 Ollama 補跑 todo=3,377，**預計 07-08 01:34 完成**；截至 07-09 22:00 晚間巡查仍無 completion checkpoint（已達預計完成後 ~44.5h，**六連警告** 07-08 08:00/16:00/22:00 + 07-09 08:00/16:00/22:00 全程零回應）；Owner 最優先確認：`tail -n 20 state/a4_s11_resume.log`；①完成未補 checkpoint ②再次崩潰 ③仍在跑；GCP帳單~84天未處理🔴）| Photo Archive |
+| A4 | 影像資產整理部 | ✅ T-A4-001 S11(2024) 完成（07-09 22:56 run done，3,314/3,409 分類，GBP 照片評分 🔄 解鎖；2026-07-10 午後巡查確認；下一步：T-A4-003/004 待 Owner 派工）| Photo Archive |
 | A5 | 報價與提案引擎部 | ⚠️ T-A5-002 + T-A5-005 均超 48h 門檻（2026-06-23 07:01-07:22 +0800：`5ab7434` clasp push T-A5-005 + `3209fba` fixMasterTemplate_，均 awaiting Owner；現 **~361h**，2026-07-08 更新）；T-A5-004 🔴 CRITICAL（~1680h+，無新 commit）；T-A5-007 🔲 待 Codex 認領（`6cefd13` 2026-07-06 建卡，A5→Codex 移交）| Quotation Engine |
 | A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（last commits `e5ab867` 07-07 fix(a6) Telegram routing + `ed63f97` 07-08 A6 401健檢(無影響)+SEO迴路修好；bot_a6 ✅ 上線 launchd；LINE webhook 等 Owner 確認 Channel 1654658337；2026-07-08 更新）| Sales Rapid Response |
 | A7 | 客服與對話轉單部 | 🔄 T-A7-001 進行中（Q7試吃+Q10取消改期政策 2026-07-06 落地，剩 A5 外送費級距 + Phase 3 上線測試）；T-A7-002 ⏸️ 阻塞（Phase 3A 剩任務 4 地區判斷 + 任務 7 流程圖同步）| Smart Reply |

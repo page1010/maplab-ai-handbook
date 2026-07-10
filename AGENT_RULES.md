@@ -37,6 +37,7 @@ Step 5. Session 結束前在 `workbook/owner_requirements_panel.md` 寫一筆紀
 | B2 | Investment OS Reviewer | Reviewer | 檢查資料流、錯誤、freshness、報告契約、Telegram/Dashboard/DB 一致性 | projects/b2-invest-os-reviewer.md / skills/invest-os-b-role-system.md |
 | B3 | Investment OS Archivist | Archivist | 寫版本紀錄、交接紀錄、resume prompt、review bundle、pitfalls 回寫建議 | projects/b3-invest-os-archivist.md / skills/invest-os-b-role-system.md |
 | B4 | Investment OS System Patrol | System Patrol | 定期問「這套東西還適合嗎？」檢查過度建置、錯誤路由、任務停滯與暫停/重構條件 | projects/b4-invest-os-system-patrol.md / skills/invest-os-b-role-system.md |
+| B5 | 影子系統總管 | Shadow System & Capability Distillation Manager | ①全體 Recall Prompt 版本品質管理 ②複利輸出能力盤點蒸餾評分 ③每月地端模型教材包打包 | projects/b5-shadow-capability-distillation.md |
 
 > ⚠️ A 系列 = MAPLAB 專案；B 系列現在是 Investment OS / cross-project role family。原 InnerFlowLab 內容發文專案維持暫停；B1-B4 共享 Investment OS Owner logic，但不下單、不建模擬單、不給買賣建議。A8 影音產線服務兩邊（共用基礎設施）。
 > ⚠️ A1 = Claude Code，透過 Telegram 下指令，不需要在 Claude tab 召喚。

@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-07-10 晚間（A1 晚間巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-07-11（A1 B5 建立）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -19,6 +19,7 @@
 
 ## 最新事實核對
 
+- 2026-07-11：**[A1 B5建立]** Owner 拍板「b5通過」→ A1 執行全套 B5 配套建立（A0 委派）。①`projects/b5-shadow-capability-distillation.md` 狀態改「✅ Owner 核准 2026-07-10」②`AGENT_RULES.md` Section 1 角色表加入 B5（三項職責：recall prompt 版本品質 / 能力盤點蒸餾評分 / 每月地端教材包）③`AGENT_RECALL_PROMPTS.md` 新增 `## B5` 段落（含 superpowers + fable-mindset 條款）④`recalls/B5_recall.md` 建立 ⑤**B5首輪執行**：召回品質審查 2026-Q3（`reports/recall-quality/recall_quality_2026-Q3.md`，發現全 17 個 recall 0個有 fable-mindset 注入，A5/A7 recall 🔴 ~85天過時）；首次蒸餾評分（`reports/capability-inventory/inventory_2026-07.md`，14 項評分≥4 的可打包項目）；教材包目錄骨架 `packages/local-model-teaching/2026-07/` + 打包腳本 `scripts/b5-pack-teaching-package.sh` ⑥CURRENT_STATUS/AGENT_RECALL_PROMPTS 同步更新。
 - 2026-07-10：**[A1 午後巡查]** 今日 A1 共 18+ commits（A0 委派全面落地）：①GBP 照片評分完成（moondream+qwen2.5 兩步驟，37/56 張有效，Top20+WP1992×5 精選落檔）②A0 委派 4 JOB 全落檔（JOB-CODEX-WEDDING-PILLAR/B3-ADCOPY/CONTENT-AUDIT/AGY-SECOND-READ）③weekly_eval_compounding 驗證（476/495 PASS，NO_DELTA）④nightwatch 盲區修復（shadow_findings 顯式檢查+patrol 自健檢）⑤B5 影子系統章程草稿建立⑥fable-mindset.md 落地（10 條工作思維+AGENT_RULES Section21+全角色 RECALL 注入）。T-A4-001 ✅ 完成確認無誤；T-A7-001 🔴 ~103h 無 commit（07-06 政策落地後停滯，Phase 3 未啟動，需 Owner 關注）。AGENT_RECALL_PROMPTS.md A4 row stale（仍顯示 ESCALATED）→ 已於本次巡查修正。零 A2-A8 新 commit（無 Owner 派工，正常）。
 - 2026-07-10：**[A1 執行 A0 委派]** A0 GUI session 卡 AskUserQuestion >1天；items 1-6 已 commit，item 7 照片評分交 A1。①A0 recall superpowers 補注入②T-A4-001 七連警告解除（Task Card ✅，patrol 已對齊）③Codex 通路驗證+指南更新④Loop-02/15/17 基線確認⑤GBP 照片評分（2026maplab外燴紀錄 6 夾）⑥總回報。GBP 解鎖任務執行中。
 - 2026-07-10：**[A1 每日巡查]** 過去 24h 共 3 commits（`e838bf7` A0 checkpoint、`efd3771` A1 晚間 patrol、`467b57f` A1 午後 patrol），零 A2-A8 agent commit（無 Owner 派工，正常）。T-A4-001 S11(2024) ✅ 已完成驗收（2026-07-09，七連警告已解除，GBP 照片評分 🔓 解鎖）。其餘 🔄 進行中任務（A6/A7）無新異常。Agent 狀態與 CURRENT_STATUS 一致，無新 SOP 偏移。
@@ -112,9 +113,9 @@
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2/A3 | ⏸️ RM/GSC 部分暫停；案例寫作轉 T-A2A3-001-B（Rank Math 已退訂，已設定好的 SEO 欄位先不要再設定；下一步是依 live URL map 補 To B 真） | handoff/tasks/T-A2A3-001.md |
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | ⏸️ 阻塞中（受眾輪廓分析完成（693筆 Orders）。待執行：嘉義加入廣告地區、興趣條件精簡、策略一冷受眾上線。） | handoff/tasks/T-A3-002.md |
 | T-A4-002 | pagewu1010 帳號 Takeout 解壓 + Gemini Flash 照片資產整合 | A4 |  | handoff/tasks/T-A4-002.md |
-| T-A4-003-photo-alt-pipeline | T-A4-003 — 照片 ALT/SEO 管線（地端 gemma4）+ Drive 改串流釋空間 | A4 | 🔴 CRITICAL（~696h無commit） | handoff/tasks/T-A4-003-photo-alt-pipeline.md |
-| T-A4-004-photo-classify | T-A4-004 — 照片分類搬移：截圖/家庭/外燴工作 + 年月資料夾 | A4 | 🔴 CRITICAL（~696h無commit） | handoff/tasks/T-A4-004-photo-classify.md |
-| T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔴 CRITICAL（~408h無commit） | handoff/tasks/T-A5-002.md |
+| T-A4-003-photo-alt-pipeline | T-A4-003 — 照片 ALT/SEO 管線（地端 gemma4）+ Drive 改串流釋空間 | A4 | 🔴 CRITICAL（~695h無commit） | handoff/tasks/T-A4-003-photo-alt-pipeline.md |
+| T-A4-004-photo-classify | T-A4-004 — 照片分類搬移：截圖/家庭/外燴工作 + 年月資料夾 | A4 | 🔴 CRITICAL（~695h無commit） | handoff/tasks/T-A4-004-photo-classify.md |
+| T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔴 CRITICAL（~407h無commit） | handoff/tasks/T-A5-002.md |
 | T-A5-004 | createSlides.gs — Slide 報價簡報自動生成 | A5 | 🟢 功能穩定（核心功能已可用且無需再動；~1500h+ 無 commit 是「沒事做」不是「壞掉」— 2026-07-06 A1 對帳澄清：先前 CURRENT_STATUS.md 任務表把「久無 commit」誤標為 🔴 CRITICAL，已改為反映實際狀態） | handoff/tasks/T-A5-004.md |
 | T-A5-005 | 報價狀態追蹤同步 + Dashboard | A5 | 🔴 CRITICAL（~407h無commit） | handoff/tasks/T-A5-005.md |
 | T-A5-006 | T-A5-006 | A5 | 🔲 待開始（尚未開始。等 T-A5-005 完成後啟動。） | handoff/tasks/T-A5-006.md |
@@ -126,6 +127,7 @@
 | T-A8-001-folder-to-video-distribution | T-A8-001 — Folder Case to Short Video Distribution | A8 |  | handoff/tasks/T-A8-001-folder-to-video-distribution.md |
 | T-B1-001 | B1 Cross-Project Governance Advisor Prompt + Project Pause |  | 🟢 召喚型可用（Investment OS 投資邏輯橋接 ready；InnerFlowLab 內容發文專案暫停） | handoff/tasks/T-B1-001.md |
 | T-B1-B4-investment-os-role-split | T-B1-B4-001 — Investment OS B1-B4 Role Split + Chrome Extension Summon |  | 🔴 CRITICAL（~527h無commit） | handoff/tasks/T-B1-B4-investment-os-role-split.md |
+| T-B5-001 | B5 影子系統 — 首次蒸餾執行（Q3 品質審查 + 首次能力評分 + 教材包骨架） | B5 | 🟢 首次執行完成（2026-07-11 A1 代理）：recall_quality_2026-Q3.md + inventory_2026-07.md + packages/local-model-teaching/2026-07/ 骨架已建立。發現 A5/A7 recall 🔴 85天過時、全體 recall 0個有 fable-mindset 注入。下一步：Owner 確認教材包 → 執行 b5-pack-teaching-package.sh） | handoff/tasks/T-A1-V7.md |
 | T-B1-DASH-001 | Guild Ops Board 自動同步 + 即時狀態燈 |  | 🟢 READY（已派工，等執行 + 進度檢查） | handoff/tasks/T-B1-DASH-001.md |
 | T-GBP-001 | T-GBP-001 | Owner | 🔲 待開始（尚未開始。等 Owner 準備新圖片。） | handoff/tasks/T-GBP-001.md |
 | T-HQ-001 | AGENT-HQ 集團共用層遷移 |  | ⏳ 代碼已交付，等 Owner 啟用（P1-P5 腳本完成，P6 腳本完成，Owner 動作仍 pending）（Owner 執行下列三個 `launchctl load` + `hermes memory setup` 指令即完成） | handoff/tasks/T-HQ-001.md |

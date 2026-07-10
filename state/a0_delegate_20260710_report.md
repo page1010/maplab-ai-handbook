@@ -378,3 +378,70 @@ Total scan scope: 55 files（4/4 新 JOB 全在掃描範圍內）
 | B5 角色 | 核准 `projects/b5-shadow-capability-distillation.md` 或提意見 | ⭐ 中 |
 | shadow_findings.jsonl 供料斷供 | ✅ 已修（2026-07-10 A1 完成） | — |
 
+---
+
+## A0 委派回報（B5 建立批）— 2026-07-11
+
+**觸發：** Owner 原話「b5通過」
+**執行方：** A1 系統總管（代理 B5 首輪執行）
+**完成時間：** 2026-07-11
+
+---
+
+### 執行確認（逐項）
+
+**1. 章程狀態 ✅**
+- `projects/b5-shadow-capability-distillation.md` 狀態改「✅ Owner 核准 2026-07-10」
+
+**2. AGENT_RULES.md 角色表 ✅**
+- Section 1 B4 行之後加入 B5（三項職責）
+
+**3. AGENT_RECALL_PROMPTS.md ## B5 段落 ✅**
+- 位置：B1-B4 之後、WIN 之前
+- 含 superpowers + fable-mindset 條款、斷點、完整 recall 指向
+
+**4. recalls/B5_recall.md ✅**
+- 完整召回 prompt，含三項職責、斷點、輸出物
+
+---
+
+### B5 首輪執行結果
+
+**① 召回品質審查 2026-Q3 ✅**
+產出：`reports/recall-quality/recall_quality_2026-Q3.md`
+
+🔴 **緊急發現**：
+- 全 17 個 recall 文件 **0 個**有 fable-mindset 注入（AGENT_RECALL_PROMPTS.md 有注入，但獨立 recalls/*.md 全部缺失）
+- **A5 recall 過時 ~85 天**（最後 commit 2026-04-17），T-A5-002/004/005 CRITICAL 狀態未反映
+- **A7 recall 過時 ~85 天**（最後 commit 2026-04-17），T-A7-001 🔴 Phase 3 未啟動未反映
+
+⚠️ 中等發現：A4 recall 未更新 T-A4-001 ✅ 完成；A6_recall_compact.md 重複待刪
+
+**② 首次蒸餾評分 ✅**
+產出：`reports/capability-inventory/inventory_2026-07.md`
+
+Top 8 可直接打包（評分 5，無需改寫）：
+- `docs/fable-mindset.md`（工作思維 10 條）
+- `skills/task-progress-guide.md`（進度格式）
+- `skills/brand-voice-guide.md`（品牌語氣）
+- `skills/first-principles-check/SKILL.md`（決策框架）
+- `skills/a6-safety-boundaries.md`（安全邊界）
+- `skills/session-handoff.md`（Session 交接格式）
+- pitfalls.md 6 條通用行為規則
+- `workbook/reviews/JOB-A1-ALT-TEXT-STANDARD-20260630`（圖片標準）
+
+**③ 教材包骨架建立 ✅**
+- 目錄：`packages/local-model-teaching/2026-07/`（recall_prompts/ top_jobs/ eval_cases/）
+- 打包腳本：`scripts/b5-pack-teaching-package.sh`（可執行，每月第一個週一跑）
+
+---
+
+### Owner 需決策的事項
+
+| 優先 | 事項 | 建議 |
+|------|------|------|
+| P0 | A5/A7 recall 過時 85 天 | 授權 A1 更新（10 分鐘） |
+| P0 | 全體 recall 缺 fable-mindset 注入 | 授權 A1 批次補注入（30 分鐘） |
+| P1 | B5 首次完整教材包打包 | 確認評分 → `bash scripts/b5-pack-teaching-package.sh 2026-07` |
+| P2 | B5 定期執行節奏確認 | 建議每月第一個週一蒸餾；每季召回審查 |
+

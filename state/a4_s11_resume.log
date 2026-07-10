@@ -4021,3 +4021,203 @@
 {
 "category":"外燴",
 "keywords":["廚房規劃","食材清單","餐具擺設","外燴準備
+[2026-07-09T22:15:04] FAIL IMG_8717.PNG (1Q59KJY_1fRYkUf8AvC-UoqH5GYZ9Vs80): no JSON in model output: ```json
+{
+  "category": "外燴",
+  "keywords": [
+    "餐點",
+    "外燴",
+    "擺盤",
+    "活動",
+    "自助餐"
+  ],
+  "alt_text": "精美外燴餐點擺盤，適合各種活動派對的
+[2026-07-09T22:16:50] appended regular batch of 20 rows to Sheet
+[2026-07-09T22:20:27] FAIL IMG_8862.PNG (1HU7mDSRO8e80E__iX5FK0tyiFcKTt2-Q): no JSON in model output: 
+[2026-07-09T22:20:57] FAIL IMG_8807.PNG (1IMPSEiWZs-4gqiQlurTH0w9GsviHzNAC): no JSON in model output: ```json
+{
+  "category": "外燴",
+  "keywords": [
+    "點心",
+    "麵包",
+    "餐
+[2026-07-09T22:22:21] FAIL IMG_8873.PNG (1yIm7j8FazSMCF-6Wqk3w1OX8n3oClvYL): no JSON in model output: ```json
+{
+"category":"外燴",
+"keywords":["糕點","可頌","
+[2026-07-09T22:23:20] FAIL IMG_8878.PNG (1xuvJJed3RZja4mjTT262lX2NzTRfRGrs): no JSON in model output: ```json
+{
+"category":"外燴",
+"keywords":["慶祝","酒水","聚會","餐點","歡樂"],
+"alt_text":"一場值得慶祝的場合，桌上擺放著豐富的酒水與美食。",
+"seo_name":"catering-celebration-wine-
+[2026-07-09T22:24:15] FAIL IMG_8874.PNG (1rZnHovAq_5Velp3w0wnC2dS2RofOSuGu): no JSON in model output: ```json
+{
+"category":"
+[2026-07-09T22:24:44] FAIL IMG_8896.PNG (1t2IDhoYvc1ZDflHKbVEyL6KQZ8_SRBR9): no JSON in model output: ```json
+{
+"category": "外燴",
+"keywords": ["餐點
+[2026-07-09T22:25:14] FAIL IMG_8913.PNG (10FLXG3Fje2bThsJigulcPx4rBarkfTCf): no JSON in model output: ```json
+{
+"category":"外燴",
+"keywords":["蛋糕","點心","擺盤","甜點","外燴"],
+"alt_text":"精美多樣的蛋糕與點心擺盤，適合生日派對或活動餐點。","seo_name":"catering-dess
+[2026-07-09T22:26:13] FAIL IMG_8909.PNG (1-n9PPnR-uyoHP6bvKYZ8DW1MAohafiNV): no JSON in model output: ```json
+{
+"category":"外燴",
+"keywords":["玉米","小食","野餐","擺盤","點心"],
+"alt_text":"一份充滿野趣的玉米小食點
+[2026-07-09T22:26:43] FAIL IMG_8948.PNG (1ORz5myHZa-EvZe0GFs0r0hrHSFVVpWkj): no JSON in model output: ```json
+{
+  "category": "外燴",
+  "keywords": [
+    "餐點",
+    "擺盤",
+    "食材",
+    "料理",
+    "美食"
+  ],
+  "alt_text": "精美餐點的擺盤展示，適合
+[2026-07-09T22:27:13] FAIL IMG_8949.PNG (1eBOXX3VMZz1yYBoPaABcpL5Bm-Jv0gHc): no JSON in model output: 
+[2026-07-09T22:29:45] FAIL IMG_7983.PNG (11uOI1BzhEFfVacrB_mFI4GG41ZrdNeZX): no JSON in model output: ```json
+{
+"category":"外燴",
+"keywords":["開胃菜","點心","麵包","香草","擺盤"],
+"alt_text":"
+[2026-07-09T22:30:15] FAIL IMG_7943.PNG (1VWOmfWc7uul7eHYOhH-I0XBRX5333L_x): no JSON in model output: 
+[2026-07-09T22:30:46] FAIL IMG_8008.PNG (1ekrTaIrLRF6E9ZB_rpXCnSFKZrSdmGZH): no JSON in model output: 
+[2026-07-09T22:31:15] FAIL IMG_8011.PNG (1iRH683b4ZzKV3YexCFAggVxEnDnAF15e): no JSON in model output: ```json
+{
+"category":"日常",
+"keywords":["聊天記錄","日程安排","日期排程","訊息傳遞"],
+"alt_text":"聊天記錄顯示了多個排定的日期和
+[2026-07-09T22:33:54] FAIL IMG_8053.PNG (124tItkPEzUSyOCHc8JjEt7ZxhrJGQUi-): no JSON in model output: ```json
+{
+  "category": "外燴",
+  "keywords": [
+
+[2026-07-09T22:34:46] FAIL IMG_8061.PNG (1i1L1spfMbejn3Ia41qzaaYduknnelqSg): no JSON in model output: ```json
+{
+"category":"外燴",
+"keywords":["婚宴","自助餐","甜點","水果沙拉","外燴預訂"],
+"alt_text":"婚宴自助餐的菜單與甜點擺盤確認，包含多種精緻小點。",
+"seo_name":"catering-wedding-
+[2026-07-09T22:35:15] FAIL IMG_8108.PNG (1yRM9vSI_i7gYKGdHBDXG0Z7rAo4xGWVc): no JSON in model output: 
+[2026-07-09T22:36:36] FAIL IMG_8143.PNG (15r0qJZHNCD98TKAHOHZsbGN07ZZs1NQ8): no JSON in model output: ```json
+{
+"category":"日常",
+"keywords":["自拍","交友軟體","日常分享","個人生活"],
+"alt
+[2026-07-09T22:37:06] FAIL IMG_8281.PNG (1yK5BBXqEniHZKr-AeigzBuiPHdoOOiRd): no JSON in model output: 
+[2026-07-09T22:37:45] appended regular batch of 20 rows to Sheet
+[2026-07-09T22:39:53] FAIL IMG_8209.HEIC (1SwAEDeHNS1tBefYlzZnbkM8qWDlFe58H): no JSON in model output: ```json
+{
+"category":"日常",
+"keywords":["夜景","燈光","Bokeh","模糊","都市"],
+"alt_text":"模糊的
+[2026-07-09T22:40:44] FAIL IMG_8280.PNG (1XhcLGPNw6DrMJRNj2tJO2k9zHZiyjPPO): no JSON in model output: 
+[2026-07-09T22:41:14] FAIL IMG_8259.JPG (1B6p_17fA_FnudwR094pSWmPv9YrZdwa1): no JSON in model output: ```json
+{
+"category":"日常",
+"keywords":["藍色背景","抽象畫作","簡約設計","藝術感"],
+"alt_text":"深藍色底紋搭配白色線條的抽象藝術風格照片，極具空間感。",
+"seo
+[2026-07-09T22:42:14] FAIL IMG_8290.PNG (1nM99ozB6JBSBA2H_LOj-KzYM0jXYUfWT): no JSON in model output: ```json
+{
+  "category": "日常",
+  "keywords": [
+    "家庭",
+    "餐桌",
+
+[2026-07-09T22:43:18] FAIL IMG_8326.PNG (1E0yHSy3XRF7R-Ji_W3gVA80v4jNk1mjn): no JSON in model output: ```json
+{
+  "category": "外燴",
+  "keywords": [
+    "菜單",
+    "餐點",
+    "菜色",
+    "烤雞腿"
+  ],
+  "alt_text": "MAPLAB Kitchen的詳細餐點菜單，包含各種主食
+[2026-07-09T22:44:16] FAIL IMG_8364.PNG (1rzTWYUVZi8yJzu929Z_0BHjaFUGqgYAd): no JSON in model output: ```json
+{
+  "category": "外燴",
+  "keywords": [
+    "餐點",
+    "擺盤",
+    "宴會",
+    "食材",
+    "美食"
+  ],
+  "alt_text": "精美
+[2026-07-09T22:45:41] FAIL IMG_9730.PNG (1jqlhX8y1wJr3oSNgFz58NfcZqIejZfuq): no JSON in model output: 
+[2026-07-09T22:46:11] FAIL IMG_9637.HEIC (1Ke37gHPPvtknAyv7vw5hZV8IvONCm5r0): no JSON in model output: 
+[2026-07-09T22:48:46] FAIL IMG_8951.PNG (1b1ExzoE1x-JwgNIZOqaHW1flKsD76wTl): no JSON in model output: ```json
+{
+"category":
+[2026-07-09T22:49:16] FAIL IMG_9067.PNG (1Ky1AoWClQtTFu43esIaZ24EpvlE2M3OQ): no JSON in model output: ```json
+{
+  "category": "日常",
+  "keywords": [
+    "奶粉",
+    "嬰兒用品",
+    "母乳替代",
+    "育兒日常",
+    "寶寶營養"
+  ],
+  "alt_text": "Elevit
+[2026-07-09T22:50:20] FAIL IMG_9080.PNG (1Qn7tK0vNtlxabByXnyPk9C7pYiWCmf-y): no JSON in model output: ```json
+{
+"category": "外燴",
+"keywords": ["餐點", "擺盤", "自助餐", "美食", "宴會"],
+"alt_text": "色彩豐富的豐盛自助餐佈置，適合家庭聚會或大型活動。",
+"seo_name": "catering-buffet-setup-
+[2026-07-09T22:51:18] FAIL IMG_9076.PNG (1YnzUPwDkt6TzkUvt6T-uriu73hRkIKMd): no JSON in model output: ```json
+{
+"category":"日常",
+"keywords":["化妝品","精華粉底","美妝用品","24K"],
+"alt_text":"展示一款24
+[2026-07-09T22:51:47] FAIL IMG_9099.JPG (1UVQZ_6fkkBEzLofrvkZ2OJCSnEOOaSFE): no JSON in model output: ```json
+{
+"category":"日常",
+"keywords":["抽象","彩色","條紋","色彩搭配"],
+"alt_text":"七色橫
+[2026-07-09T22:52:17] FAIL IMG_9098.PNG (1-yzAM1UqufhZ8RGIVHzd3jTi0A1H5bWP): no JSON in model output: ```json
+{
+"category": "日常",
+"keywords": [
+"居家風格",
+"餐桌佈置",
+"現代廚房",
+"家庭生活
+[2026-07-09T22:53:44] FAIL IMG_9096.PNG (1gEBShjZsMNZ21OUqIS11PtnOz5AVocaV): no JSON in model output: ```json
+{
+  "category": "外燴",
+  "keywords": [
+    "餐桌佈置",
+    "布料搭配",
+    "外燴場景",
+    "暖色調擺設"
+  ],
+  "alt_text": "利用不同材質的布料，營造溫馨且具有層次的
+[2026-07-09T22:54:40] FAIL IMG_9159.PNG (1AyM7zaaGXv6dLiwjwkFL752MgF3O-qUV): no JSON in model output: ```json
+{
+  "category": "日常",
+  "keywords": [
+    "黑色",
+    "空白",
+    "背景",
+    "無內容"
+  ],
+  "alt_text": "一張純黑色的照片，沒有可識別的內容或主體。",
+  "seo_name": "daily-placeholder-
+[2026-07-09T22:55:10] FAIL IMG_9158.PNG (1YQs8Suoc6X9sG7E_OCpRpq2IyjQ4uXSG): no JSON in model output: 
+[2026-07-09T22:56:29] FAIL IMG_9288.HEIC (1W1_lTuVqgt15MXvaOOiuCWTdCFpXxu94): no JSON in model output: ```json
+{
+"category":"日常",
+"keywords":["人物","室內","衣物","生活日常","自拍"],
+"alt_text":"一個人在室內的日常生活場景，背景有掛著的衣物和儲藏空間。",
+"seo_
+[2026-07-09T22:56:32] appended final batch of 16 rows to Sheet
+[2026-07-09T22:56:32] run done: processed 98 this invocation

@@ -344,10 +344,37 @@ Total scan scope: 55 files（4/4 新 JOB 全在掃描範圍內）
 
 ---
 
+---
+
+### ⑦ convergence-engine Hermes reviewer 修復 + shadow_findings.jsonl 供料恢復 ✅
+
+**問題：** shadow_findings.jsonl 自 2026-06-02 停供（921h/38天）。nightwatch 今日修好後正確報 1 alert。
+
+**根因（A0 診斷已接近正確，實際差一層）：**
+- A0 說「根因 = Hermes reviewer ValueError」— 部分正確：reviewer 的 ValueError 確實在 Jun 1 首次出現，但 ValueError 已被 except Exception 捕捉，不是 crash 原因
+- 實際根因：`shadow_findings.jsonl` 是由 Codex 排程 automation（`system-patrol-hourly`、`heartbeat-watchdog`）寫入，這些 automations 於 Jun 2 停止供料、Jun 11 正式封存，且無任何機制接管
+- convergence-engine 的 shadow review hook 寫入的是 `local_model_findings.jsonl`（1.8MB 仍在更新），但 nightwatch 把兩個檔案分開檢查後才發現 shadow_findings.jsonl 的缺口
+
+**修復（2026-07-10 16:22 完成）：**
+1. `run_convergence_engine.py`：新增 `_append_shadow_finding()`，每輪跑完後寫一筆 patrol-style 條目到 `shadow_findings.jsonl`，接管 Codex automation 的供料職責
+2. `shadow_review_hook.py`：`_parse_first_json_object()` 加入 markdown code fence 去除（`_strip_code_fence`），減少模型回覆帶 ` ```json ` 包裝時的 reviewer_error
+3. `docs/pitfalls.md`：新增 2026-07-10 監控盲區教訓
+
+**驗證：**
+- `shadow_findings.jsonl` 新增條目 `ts: 2026-07-10T16:22:32+08:00`，`patrol: convergence-engine`
+- nightwatch 再跑：**1 alert → 0 alerts（全部 🟢）**
+- investment-os repo commit: `a88119c9`
+
+**代碼狀態：**
+- 修改已同步到 runtime (`/Users/pagemacmini/.local/share/investmentos-telegram-operator/`)
+- 下一輪 launchd 自動觸發的 convergence-engine 也會維持供料
+
+---
+
 ### 本批 Owner 待決
 
 | 項目 | 待決事項 | 優先 |
 |------|---------|------|
 | B5 角色 | 核准 `projects/b5-shadow-capability-distillation.md` 或提意見 | ⭐ 中 |
-| shadow_findings.jsonl 供料斷供 | 是否開任務修 convergence-engine Hermes reviewer | ⭐ 中 |
+| shadow_findings.jsonl 供料斷供 | ✅ 已修（2026-07-10 A1 完成） | — |
 

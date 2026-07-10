@@ -1,6 +1,19 @@
 # Codex / Antigravity 卸載指南
 
-版本：v1.0 | 建立：2026-07-06 | 觸發：任何角色在動筆前，先判斷這份工作是不是能卸載給已付費的 sub-agent（Codex / Antigravity），不要每次都用 Claude 額度。
+版本：v1.1 | 建立：2026-07-06 | 更新：2026-07-10 | 觸發：任何角色在動筆前，先判斷這份工作是不是能卸載給已付費的 sub-agent（Codex / Antigravity），不要每次都用 Claude 額度。
+
+---
+
+## ⛔ 強制落檔規則（違反即為治理錯誤，2026-07-10 Owner 核准）
+
+**所有 Codex / Antigravity 呼叫的輸出必須落檔，禁止用完即丟。**
+
+- 輸出目錄：`workbook/reviews/JOB-<TOOL>-<SLUG>-<YYYYMMDD>/` 或對應任務的指定目錄
+- 每個 JOB 目錄至少包含：`output.md`（原始輸出）+ `README.md`（呼叫目的、prompt 摘要、使用方式）
+- 輸出落檔後才能被 `weekly_eval_compounding.py` 的複利迴圈掃到；沒有落檔 = 沒有複利
+- **不得以「暫時用用」「只是試試」為由跳過落檔**；若確定沒有保留價值，落檔後自行歸入 `trash/` 或加 `_DISCARD` 後綴，但過程必須有 artifact
+
+---
 
 > 背景：Owner 2026-07-06 原話「gpt最近額度很多誒 他是你的sub agent你都不好好用起來 訓練他」「我指的是codex antigravity我都有付費 允許的話 幫我把telegram上的服務分過去給他們做」。
 > Codex、Antigravity（`agy`）不是獨立角色，是可調度的執行層——跟 A6 Telegram 服務的底層模型可插拔設計是同一個原則：**角色與分工不變，只是換掉底層跑的大語言模型**。完整 pluggable backend 設計見 `projects/a6-llm-backend-adapter.md`。

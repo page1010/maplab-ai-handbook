@@ -292,3 +292,62 @@ Total scan scope: 55 files（4/4 新 JOB 全在掃描範圍內）
 **false positive 處理建議（backlog，本輪不阻塞）：**
 審計型 output.md（如 CONTENT-AUDIT）引用禁用詞是設計行為，非違規。建議未來在 CODEX_MAKER_PROMPT 的完成條件中加入「JOB-*-CONTENT-AUDIT 類型跳過 E1/E2/E3，或加 `<!-- gate-skip: E1 E2 E3 reason=audit-quotes -->` 標頭」豁免機制。
 
+
+---
+
+## A0 委派第二批（2026-07-10 下午）— A1 執行回報
+
+**執行時間：** 2026-07-10 14:30–15:10  
+**委派原因：** A0 自主派工（複利迴圈 — 回報後自己修理）
+
+---
+
+### 任務一：nightwatch Investment OS 守夜人修復
+
+**問題（根因更正）：**
+- nightwatch 從未真正停擺。「06-02 停擺」是 TCC 阻擋 `cross-project-mirror` → repo 副本凍結在 06-02 → 07-07 三人小組審查時誤讀為停擺。
+- 真正的問題：nightwatch CHECKS 使用 `reports/shadow/*` glob，會找到最新的 `local_model_findings.jsonl`（每日更新），從而掩蓋 `shadow_findings.jsonl`（06-02 後停供）失鮮的盲區。
+- `shadow_findings.jsonl` 停供根因：convergence-engine 的 Hermes reviewer 自 06-02 開始持續失敗（`ValueError: no JSON object in reviewer response`），寫入中斷。
+
+**修復：**
+1. `investment-os/scripts/system_nightwatch.py`（repo + runtime 同步）：
+   - 移除 glob `reports/shadow/*`
+   - 新增 `影子教練巡查 shadow_findings.jsonl`（file, 48h 上限）
+   - 新增 `本地模型影子 local_model_findings.jsonl`（file, 72h 上限）
+2. 實測：手動跑一輪，結果 `1 alert — shadow_findings.jsonl 921h 前(上限 48h)` ✅ 正確偵測
+3. `maplab-ai-handbook/scripts/patrol.sh`：新增「投資 OS 守夜人」自健檢區塊（防 nightwatch 自身死掉無人知）
+4. `projects/investment-os-functional-audit-2026-07-07.md` Phase 0 欄位更新為 ✅ 完成
+
+**待解（不在本批範圍）：** shadow_findings.jsonl 供料停止需修 Hermes reviewer，另建任務。
+
+**證據：** 今日 nightwatch 報告 `nightwatch_2026-07-10.md` 第二版：`1 alert`；patrol.sh 測試輸出：`🔴 nightwatch 今日有警示：影子教練巡查 shadow_findings.jsonl：921h 前`。
+
+---
+
+### 任務二：影子系統專責角色
+
+**搜索結論：**
+- MAPLAB `AGENT_RULES.md` 角色表中無任何角色專責「能力蒸餾」或 recall prompt 品質維護
+- `B2` 是 Investment OS Reviewer（IS 專屬），不涵蓋 MAPLAB 域
+- 現有能力蒸餾機制：`skills/auto/`（幾乎空）、`pitfalls.md`（190+ 條但 0 封坑驗證）、`weekly_eval_compounding.py`（gate-eval 迴歸，非蒸餾）
+
+**新角色章程：**
+- 新建 `projects/b5-shadow-capability-distillation.md`（**待 Owner 核准**）
+- 角色名：**B5 — 影子系統總管（Shadow System & Capability Distillation Manager）**
+- 三項職責：① 全體 recall prompt 版本與品質管理 ② 複利輸出能力盤點（蒸餾評分 1-5）③ 每月打包「地端模型教材包」（recall prompts + top JOB 輸出 + eval 案例 + pitfalls 蒸餾版）
+- 設計原則：雲端高智能 Claude 累積知識 → B5 固態化 → Ollama 地端模型低成本繼承
+- 狀態：草稿，**等 Owner 一句話：「B5 角色通過，A1 建立配套文件」即可執行**
+
+**附帶修復：Telegram bot A1 召回注入**
+- `bot/bot.py` 新增 `_build_system_prompt()` 函式，啟動時讀 `AGENT_RECALL_PROMPTS.md` 的 A1 code block（截至阻塞審查規則，共 23 行）+ CURRENT_STATUS.md 最新 3 條事實
+- 實測：bot 重啟（14:54:39 `Starting MAPLAB A1 遠端終端`），啟動 log 無 recall 載入錯誤，`Bot running` 確認 ✅
+
+---
+
+### 本批 Owner 待決
+
+| 項目 | 待決事項 | 優先 |
+|------|---------|------|
+| B5 角色 | 核准 `projects/b5-shadow-capability-distillation.md` 或提意見 | ⭐ 中 |
+| shadow_findings.jsonl 供料斷供 | 是否開任務修 convergence-engine Hermes reviewer | ⭐ 中 |
+

@@ -1,0 +1,14 @@
+Push 成功（commit `3337051`）。任務 6 全部完成。
+
+---
+
+**完成摘要：**
+
+**6a** — `docs/fable-mindset.md` 建立（218 行）：10 條 Fable 工作思維原則，每條附 MAPLAB 真實場景（A4 崩潰案例、A6 token/clasp 案例、A5 80/20 報價案例等），最後有「使用方式」快速索引。
+
+**6b** — `AGENT_RULES.md SECTION 21` 新增：「人話拆解標準」文化條款，含術語→人話對照表、四段式回報格式範例（問題→成因→解法→選項）、違反後果、與其他 Section 的關聯。
+
+**6c** — `AGENT_RECALL_PROMPTS.md` 全角色加入 `docs/fable-mindset.md` 引用，共 18 處：
+- 13 處：標準 ⚠️ 行（A0–B4 全角色）
+- 2 處：Codex/Antigravity 特殊格式（附「讀不到 repo 時由呼叫者貼入」說明）
+- 3 處：A2/A4/A7 列表型必讀路徑（在路徑鏈末尾加 `→ docs/fable-mindset.md`）

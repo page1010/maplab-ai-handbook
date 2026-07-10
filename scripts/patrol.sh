@@ -193,5 +193,23 @@ else
     filename=$(basename "$card" .md)
     status=$(grep -m1 '^\- \*\*狀態\*\*' "$card" 2>/dev/null | sed 's/.*\*\*: //' || echo "")
     echo "$status" | grep -q '✅' && echo "  ✅ $filename"
-  done | head -3
+  done | head -3 || true
+fi
+
+# ── Investment OS nightwatch 自健檢 ──
+NIGHTWATCH_LATEST="$HOME/.local/share/investmentos-telegram-operator/reports/nightwatch/nightwatch_$(date '+%Y-%m-%d').md"
+echo ""
+echo "【投資 OS 守夜人】"
+if [[ -f "$NIGHTWATCH_LATEST" ]]; then
+  ALERT_COUNT=$(grep -c '^🔴\|^- \*\*' "$NIGHTWATCH_LATEST" 2>/dev/null || echo "0")
+  ALERTS=$(grep '🔴 需要處理' -A 99 "$NIGHTWATCH_LATEST" 2>/dev/null | tail -n +2 | head -5 || true)
+  if [[ -n "$ALERTS" && "$ALERTS" != "---" ]]; then
+    echo "🔴 nightwatch 今日有警示："
+    echo "$ALERTS" | sed 's/^/  /'
+  else
+    echo "🟢 nightwatch 今日正常（今日報告已產生，0 警示）"
+  fi
+else
+  echo "🔴 nightwatch 今日報告缺失（預期路徑：$NIGHTWATCH_LATEST）"
+  echo "   → 守夜人可能未執行，請檢查 launchctl list | grep nightwatch"
 fi

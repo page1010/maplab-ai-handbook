@@ -124,13 +124,80 @@ _conv_history: dict[int, deque] = {}
 # Pending reset confirmations: chat_id → generated summary text
 _pending_reset: dict[int, str] = {}
 
-ANTHROPIC_SYSTEM_PROMPT = (
-    "【A1 Telegram Bot 前端 → A1 Claude Code 處理】\n"
-    "以下是從 Telegram 轉發的 Owner 對話，請以 A1 系統總管身份協助回答。\n"
-    "MAPLAB 婚禮/活動攝影工作室 AI 系統（v5.3，Phase 5）。\n"
-    "Agents：A0=Cowork 總調度秘書（桌面控制）、A1=系統總管（Claude Code + Telegram bot）、A2=SEO、A3=廣告、A4=照片分類、A5=報價、A7=客服 FAQ。\n"
-    "請用繁體中文簡潔回答。"
-)
+def _build_system_prompt() -> str:
+    """Build system prompt by injecting A1 recall section from AGENT_RECALL_PROMPTS.md.
+
+    Extracts the code-block content under '## A1｜系統總管中心' and appends a brief
+    snapshot of the latest 3 CURRENT_STATUS facts. Falls back to static prompt on error.
+    """
+    recall_text = ""
+    try:
+        recall_file = REPO_PATH / "AGENT_RECALL_PROMPTS.md"
+        if recall_file.exists():
+            raw = recall_file.read_text(encoding="utf-8")
+            # Extract the code block under the A1 section heading
+            in_a1 = False
+            in_block = False
+            block_lines: list[str] = []
+            for line in raw.splitlines():
+                if "## A1｜系統總管中心" in line:
+                    in_a1 = True
+                    continue
+                if in_a1 and line.strip().startswith("## "):
+                    break  # next section
+                if in_a1 and line.strip() == "```" and not in_block:
+                    in_block = True
+                    continue
+                if in_a1 and in_block and line.strip() == "```":
+                    break
+                if in_a1 and in_block:
+                    # Stop before the 斷點 section (breakpoint info is stale; status comes from CURRENT_STATUS)
+                    if line.startswith("【斷點"):
+                        break
+                    block_lines.append(line)
+            if block_lines:
+                recall_text = "\n".join(block_lines).strip()
+    except Exception as e:  # noqa: BLE001
+        import logging as _log
+        _log.getLogger(__name__).warning(f"[bot] recall load failed: {e}")
+
+    status_snippet = ""
+    try:
+        status_file = REPO_PATH / "CURRENT_STATUS.md"
+        if status_file.exists():
+            lines = status_file.read_text(encoding="utf-8").splitlines()
+            # Grab up to 3 "最新事實核對" bullet lines (lines starting with "- 2026-")
+            facts: list[str] = []
+            for line in lines:
+                if line.startswith("- 2026-") and len(facts) < 3:
+                    # Trim to ~120 chars to keep prompt compact
+                    facts.append(line[:120] + ("…" if len(line) > 120 else ""))
+            if facts:
+                status_snippet = "\n\n【最新系統狀態（截錄自 CURRENT_STATUS.md）】\n" + "\n".join(facts)
+    except Exception:  # noqa: BLE001
+        pass
+
+    if recall_text:
+        return (
+            "【A1 Telegram Bot 前端 → A1 Claude Code 處理】\n"
+            "以下是從 Telegram 轉發的 Owner 對話，請以 A1 系統總管身份協助回答。請用繁體中文簡潔回答。\n\n"
+            "=== A1 召回檔（AGENT_RECALL_PROMPTS.md ## A1 段落）===\n"
+            + recall_text
+            + status_snippet
+        )
+    # Fallback: static prompt (pre-2026-07-10 behaviour)
+    return (
+        "【A1 Telegram Bot 前端 → A1 Claude Code 處理】\n"
+        "以下是從 Telegram 轉發的 Owner 對話，請以 A1 系統總管身份協助回答。\n"
+        "MAPLAB 婚禮/活動攝影工作室 AI 系統（v6.0，Phase 6）。\n"
+        "Agents：A0=Cowork 總調度秘書（桌面控制）、A1=系統總管（Claude Code + Telegram bot）、"
+        "A2=SEO、A3=廣告、A4=照片分類、A5=報價、A7=客服 FAQ。\n"
+        "請用繁體中文簡潔回答。"
+        + status_snippet
+    )
+
+
+ANTHROPIC_SYSTEM_PROMPT = _build_system_prompt()
 
 
 def _load_conv_history() -> None:

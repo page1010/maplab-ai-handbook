@@ -92,7 +92,7 @@ def _call_ollama_once(img_b64: str) -> str:
         return json.loads(resp.read())["response"]
 
 
-def score_with_ollama(img_b64: str, retries: int = 3) -> dict:
+def score_with_ollama(img_b64: str, retries: int = 6) -> dict:
     """llama-server 在連續多模態呼叫後會偶發性退化成空輸出（done_reason=length 但 response=''），
     與 prompt 內容/圖片內容無關（同一組合重測會從成功變失敗）。用 ollama stop 重啟模型 process 後重試可恢復。"""
     last_err = None
@@ -107,7 +107,7 @@ def score_with_ollama(img_b64: str, retries: int = 3) -> dict:
             last_err = str(e)
         log(f"  retry {attempt + 1}/{retries} after: {last_err} — restarting model")
         subprocess.run(["ollama", "stop", MODEL], capture_output=True, timeout=30)
-        time.sleep(3)
+        time.sleep(6)
     raise ValueError(f"failed after {retries} retries: {last_err}")
 
 

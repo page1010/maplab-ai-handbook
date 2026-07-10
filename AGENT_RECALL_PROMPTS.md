@@ -129,6 +129,7 @@ Artifacts 是互動式確認面板，不是資料真相（真相在 Sheets + Git
 
 repo: https://github.com/page1010/maplab-ai-handbook
 先讀 CURRENT_STATUS.md，再讀 TASK_QUEUE.md。
+⚠️ 每次 recall 必讀 `skills/superpowers-guide.md` 路由表，找到對應任務的技能書並遵守其內容。
 ```
 
 ---

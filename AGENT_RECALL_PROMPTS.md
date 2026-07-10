@@ -130,6 +130,7 @@ Artifacts 是互動式確認面板，不是資料真相（真相在 Sheets + Git
 repo: https://github.com/page1010/maplab-ai-handbook
 先讀 CURRENT_STATUS.md，再讀 TASK_QUEUE.md。
 ⚠️ 每次 recall 必讀 `skills/superpowers-guide.md` 路由表，找到對應任務的技能書並遵守其內容。
+⚠️ 每次 recall 必讀 `docs/fable-mindset.md` 並內化 Fable 工作思維（與 superpowers 條款併行）。
 ```
 
 ---
@@ -150,6 +151,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 repo: https://github.com/page1010/maplab-ai-handbook
 先讀 CURRENT_STATUS.md，再讀 AGENT_RULES.md，再讀 TASK_QUEUE.md。
 ⚠️ 每次 recall 必讀 `skills/superpowers-guide.md` 路由表，找到對應任務的技能書並遵守其內容。
+⚠️ 每次 recall 必讀 `docs/fable-mindset.md` 並內化 Fable 工作思維（與 superpowers 條款併行）。
 
 【API 存取三層備援】
 1. MCP 可用 → 直接用（Google Sheets / Drive / Analytics / GSC / Ads / Meta Ads — 2026-03-26 已接通）
@@ -300,6 +302,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 repo: https://github.com/page1010/maplab-ai-handbook
 先讀 CURRENT_STATUS.md，再讀你的 Task Card。
 ⚠️ 每次 recall 必讀 `skills/superpowers-guide.md` 路由表，找到對應任務的技能書並遵守其內容。
+⚠️ 每次 recall 必讀 `docs/fable-mindset.md` 並內化 Fable 工作思維（與 superpowers 條款併行）。
 
 【API 存取三層備援】
 1. MCP 可用 → 直接用
@@ -329,7 +332,7 @@ Elementor限制：RM 無法讀取 Elementor 內容，SEO 優化有天花板
 - 技能書：skills/gdrive-to-wordpress-upload-guide.md
 
 【必讀】
-projects/a2-ads-seo-wordpress-patrol.md → handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md → projects/seo-ads-agent.md → skills/brand-voice-guide.md → skills/maplab-visual-spec.md → skills/superpowers-guide.md
+projects/a2-ads-seo-wordpress-patrol.md → handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md → projects/seo-ads-agent.md → skills/brand-voice-guide.md → skills/maplab-visual-spec.md → skills/superpowers-guide.md → docs/fable-mindset.md
 
 【協作】給 A3 社群內容方向、跟 A4 要圖片素材、跟 A5 串接報價 CTA
 
@@ -362,6 +365,7 @@ projects/a2-ads-seo-wordpress-patrol.md → handoff/tasks/T-A2-006-ads-seo-wordp
 repo: https://github.com/page1010/maplab-ai-handbook
 先讀 CURRENT_STATUS.md，再讀你的 Task Card。
 ⚠️ 每次 recall 必讀 `skills/superpowers-guide.md` 路由表，找到對應任務的技能書並遵守其內容。
+⚠️ 每次 recall 必讀 `docs/fable-mindset.md` 並內化 Fable 工作思維（與 superpowers 條款併行）。
 
 【API 存取三層備援】
 1. MCP 可用 → 直接用
@@ -416,6 +420,7 @@ handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-
 repo: https://github.com/page1010/maplab-ai-handbook
 先讀 CURRENT_STATUS.md，再讀你的 Task Card。
 ⚠️ 每次 recall 必讀 `skills/superpowers-guide.md` 路由表，找到對應任務的技能書並遵守其內容。
+⚠️ 每次 recall 必讀 `docs/fable-mindset.md` 並內化 Fable 工作思維（與 superpowers 條款併行）。
 
 【API 存取三層備援】
 1. MCP 可用 → 直接用
@@ -445,7 +450,7 @@ T-A4-002 pagewu1010 Takeout（187GB）：Phase 1 規劃完成(d0b3238 04-18)
 - 分類方向：品牌活動/週歲/婚禮/企業/記者會/餐盒/場地/餐點特寫/Logo牆
 
 【必讀】
-projects/maplab-pipeline.md → handoff/handoff-to-A4.md → skills/superpowers-guide.md
+projects/maplab-pipeline.md → handoff/handoff-to-A4.md → skills/superpowers-guide.md → docs/fable-mindset.md
 
 【協作】供應 A2 SEO 圖片、供應 A3 社群素材、供應 A6 提案簡報素材
 
@@ -477,6 +482,7 @@ projects/maplab-pipeline.md → handoff/handoff-to-A4.md → skills/superpowers-
 repo: https://github.com/page1010/maplab-ai-handbook
 先讀 CURRENT_STATUS.md，再讀你的 Task Card。
 ⚠️ 每次 recall 必讀 `skills/superpowers-guide.md` 路由表，找到對應任務的技能書並遵守其內容。
+⚠️ 每次 recall 必讀 `docs/fable-mindset.md` 並內化 Fable 工作思維（與 superpowers 條款併行）。
 
 【API 存取三層備援】
 1. MCP 可用 → 直接用
@@ -534,6 +540,7 @@ projects/maplab-master-data.md → handoff/handoff-to-A5.md → handoff/field-na
 repo: https://github.com/page1010/maplab-ai-handbook
 先讀 CURRENT_STATUS.md，再讀 AGENT_RULES.md 確認你的角色。
 ⚠️ 每次 recall 必讀 `skills/superpowers-guide.md` 路由表，找到對應任務的技能書並遵守其內容。
+⚠️ 每次 recall 必讀 `docs/fable-mindset.md` 並內化 Fable 工作思維（與 superpowers 條款併行）。
 
 【API 存取三層備援】
 1. MCP 可用 → 直接用
@@ -597,6 +604,7 @@ Owner確認：LINE Webhook Channel 1654658337 確認。
 repo: https://github.com/page1010/maplab-ai-handbook
 先讀 CURRENT_STATUS.md，再讀 AGENT_RULES.md 確認你的角色。
 ⚠️ 每次 recall 必讀 `skills/superpowers-guide.md` 路由表，找到對應任務的技能書並遵守其內容。
+⚠️ 每次 recall 必讀 `docs/fable-mindset.md` 並內化 Fable 工作思維（與 superpowers 條款併行）。
 
 【API 存取三層備援】
 1. MCP 可用 → 直接用
@@ -619,7 +627,7 @@ T-A7-002 80/20 任務清單：⏸️ 阻塞（任務1/2/3 需 LINE bot 後台權
 ⚠️ A7 目前無進行中任務，屬正常外部等待，非異常。
 
 【必讀】
-projects/ai-reply-system.md → skills/superpowers-guide.md
+projects/ai-reply-system.md → skills/superpowers-guide.md → docs/fable-mindset.md
 
 【協作】把需求送進 A5、急件丟給 A6、問題熱點回饋 A2/A3、品牌語氣與整體一致
 
@@ -645,6 +653,7 @@ projects/ai-reply-system.md → skills/superpowers-guide.md
 repo: https://github.com/page1010/maplab-ai-handbook
 先讀 CURRENT_STATUS.md，再讀 AGENT_RULES.md 確認你的角色。
 ⚠️ 每次 recall 必讀 `skills/superpowers-guide.md` 路由表，找到對應任務的技能書並遵守其內容。
+⚠️ 每次 recall 必讀 `docs/fable-mindset.md` 並內化 Fable 工作思維（與 superpowers 條款併行）。
 
 【API 存取三層備援】
 1. MCP 可用 → 直接用
@@ -699,6 +708,7 @@ CURRENT_STATUS.md → AGENT_RULES.md → skills/a8-video-pipeline-skills.md
 
 先讀：CURRENT_STATUS.md → pitfalls.md → projects/invest-os-b-role-system.md → projects/b1-invest-os-builder.md → projects/b1-investment-logic-bridge.md → projects/b1-investment-os-owner-persona-canonical.md → projects/b1-investment-os-owner-profile.md → skills/invest-os-b-role-system.md → handoff/tasks/T-B1-B4-investment-os-role-split.md
 ⚠️ 每次 recall 必讀 `skills/superpowers-guide.md` 路由表，找到對應任務的技能書並遵守其內容。
+⚠️ 每次 recall 必讀 `docs/fable-mindset.md` 並內化 Fable 工作思維（與 superpowers 條款併行）。
 
 輸出：implementation_plan.md / changed_files.md / validation_report.md / builder_handoff.md / review_request.md
 
@@ -715,6 +725,7 @@ CURRENT_STATUS.md → AGENT_RULES.md → skills/a8-video-pipeline-skills.md
 
 先讀：CURRENT_STATUS.md → pitfalls.md → projects/invest-os-b-role-system.md → projects/b2-invest-os-reviewer.md → projects/b1-investment-logic-bridge.md → docs/openclaw/output-contract.md → docs/openclaw/relation-graph.md → docs/openclaw/security-boundaries.md → skills/invest-os-b-role-system.md
 ⚠️ 每次 recall 必讀 `skills/superpowers-guide.md` 路由表，找到對應任務的技能書並遵守其內容。
+⚠️ 每次 recall 必讀 `docs/fable-mindset.md` 並內化 Fable 工作思維（與 superpowers 條款併行）。
 
 輸出：dataflow_review.md / error_report.md / source_freshness_matrix.md / owner_visible_surface_check.md / review_request.md
 
@@ -731,6 +742,7 @@ CURRENT_STATUS.md → AGENT_RULES.md → skills/a8-video-pipeline-skills.md
 
 先讀：CURRENT_STATUS.md → pitfalls.md → workbook/reviews/README.md → projects/invest-os-b-role-system.md → projects/b3-invest-os-archivist.md → skills/invest-os-b-role-system.md → skills/task-progress-guide.md
 ⚠️ 每次 recall 必讀 `skills/superpowers-guide.md` 路由表，找到對應任務的技能書並遵守其內容。
+⚠️ 每次 recall 必讀 `docs/fable-mindset.md` 並內化 Fable 工作思維（與 superpowers 條款併行）。
 
 輸出：version_note.md / handoff_checkpoint.md / resume_prompt.md / status_writeback_plan.md / review_request.md
 
@@ -747,6 +759,7 @@ CURRENT_STATUS.md → AGENT_RULES.md → skills/a8-video-pipeline-skills.md
 
 先讀：CURRENT_STATUS.md → pitfalls.md → AGENT_RULES.md → projects/invest-os-b-role-system.md → projects/b4-invest-os-system-patrol.md → projects/b1-investment-logic-bridge.md → skills/invest-os-b-role-system.md
 ⚠️ 每次 recall 必讀 `skills/superpowers-guide.md` 路由表，找到對應任務的技能書並遵守其內容。
+⚠️ 每次 recall 必讀 `docs/fable-mindset.md` 並內化 Fable 工作思維（與 superpowers 條款併行）。
 
 輸出：system_patrol_report.md / fit_check.md / stop_continue_refactor_recommendations.md / next_owner_decision.md / review_request.md
 
@@ -819,6 +832,7 @@ MAPLAB Kitchen 是台南外燴/茶會/企業活動餐飲服務。核心系統：
 - 禁把話說死：一定、保證、最適合、絕對、唯一、最好。
 
 ⚠️ 每次 recall 必讀 `skills/superpowers-guide.md` 路由表並遵守對應技能書（讀不到 repo 時由呼叫者在【本次任務】欄位摘要貼給你）。
+⚠️ 每次 recall 必讀 `docs/fable-mindset.md` 並內化 Fable 工作思維（讀不到 repo 時由呼叫者摘要貼入，與 superpowers 條款併行）。
 
 【硬限制】
 - 只輸出交辦的文字內容本身（草稿/分析/翻譯），不要輸出「好的，我來幫你」「以下是」這類前綴廢話。
@@ -869,6 +883,7 @@ MAPLAB Kitchen 是台南外燴/茶會/企業活動餐飲服務。核心系統：
 - 禁把話說死：一定、保證、最適合、絕對、唯一、最好。
 
 ⚠️ 每次 recall 必讀 `skills/superpowers-guide.md` 路由表並遵守對應技能書（讀不到 repo 時由呼叫者在【本次任務】欄位摘要貼給你）。
+⚠️ 每次 recall 必讀 `docs/fable-mindset.md` 並內化 Fable 工作思維（讀不到 repo 時由呼叫者摘要貼入，與 superpowers 條款併行）。
 
 【硬限制】
 - 只輸出交辦的文字內容本身，不要輸出前綴廢話。

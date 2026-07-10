@@ -954,3 +954,51 @@ B4 patrol 每次巡查時對每張「進行中」task card 問：
 - `pitfalls.md` 2026-07-08 條目 — 完整根因記錄。
 - `scripts/notify_owner.sh`、`scripts/patrol.sh`（已完成區塊改列最近 3 張，不再被
   >5 張的計數消音）。
+
+---
+
+## SECTION 21 — 人話拆解標準（Fable Culture Clause，2026-07-10 Owner 指定）
+
+> **新增原因**：系統運行以來發現技術術語在 Owner 可見訊息中裸出，造成決策延遲——Owner 需要理解問題本質才能做選擇，不需要記住技術細節。本節確立所有 agent 對 Owner 溝通的最低格式標準。完整工作思維見 `docs/fable-mindset.md`（Fable 10 條原則 + MAPLAB 實例）。
+
+### 規則一：技術術語必附人話
+
+任何 agent 在 Owner 可見的位置（Telegram 推送、CURRENT_STATUS.md、Task Card 結論、巡查摘要）使用技術術語時，**必須在術語後附一句人話或生活譬喻**，讓 Owner 不需要查資料就能理解。
+
+**❌ 不可接受**：「webhook endpoint 驗證失敗導致 POST request 返回 403」
+**✅ 標準格式**：「webhook 驗證失敗（LINE 的訊息想找我們，但我們家門口的對講機沒設定好，被拒在門外）」
+
+| 技術術語 | 可用的人話替換 |
+|--------|------------|
+| API token 過期 | 通行證過期，系統不讓進 |
+| Colab session timeout | 計時器到了，像網咖電腦自動關機 |
+| clasp push conflict | 兩份文件同時被改，存檔時互相打架 |
+| rate limit exceeded | 問 Google 太頻繁，被請去冷靜 2 分鐘 |
+| 401 / 403 / 429 HTTP status | 沒權限進去 / 被擋在門口 / 太常敲門被忽略 |
+
+### 規則二：問題回報四段式
+
+任何 agent 向 Owner 回報問題，一律使用以下四段式結構，缺一不可：
+
+1. **問題**：現象描述（具體、可驗證，帶時間戳或 commit hash）
+2. **成因**：推測或確認的根因（標示信心程度：確認/推測/不確定）
+3. **解法**：至少一個可行方向（agent 已驗證或高信心的優先）
+4. **選項**：給 Owner 兩到三個決策路徑（A/B/C），讓 Owner 選，不要替 Owner 決定
+
+**範例**：
+- **問題**：A4 Colab 自 07-08 01:34 後 44.5h 無 checkpoint（六連警）。
+- **成因**：推測 Colab 12h runtime 上限到了 session 自動斷線（信心 80%）；或 GCP 配額耗盡（信心 20%）。
+- **解法**：地端 Ollama 接續跑可繞過 Colab 限制；重啟 Colab 最快但配額問題下會再失敗。
+- **選項**：A. 你去 Colab 確認（我給你查指令）；B. 我現在啟動 Ollama fallback；C. 先暫停 A4，擇日再處理。
+
+### 違反後果
+
+- Telegram 推送、CURRENT_STATUS 更新、Task Card 結論若包含裸露技術術語，視為回報不完整。
+- A1 巡查時發現其他 agent 有裸露術語，應在下次 checkpoint 補上人話說明。
+
+### 關聯
+
+- `docs/fable-mindset.md` — 完整 10 條工作思維（含 MAPLAB 實例，原則 ⑨⑩ 為本節來源）
+- SECTION 16（阻塞審查 SOP）— 本節是 Section 16「解完推動系統」的溝通面補充
+- SECTION 10（開發行動準則）— 管開發行為；本節管對 Owner 的溝通格式
+- SECTION 20（部門進度回報 SOP）— 管回報時機；本節管回報格式

@@ -148,6 +148,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 
 repo: https://github.com/page1010/maplab-ai-handbook
 先讀 CURRENT_STATUS.md，再讀 AGENT_RULES.md，再讀 TASK_QUEUE.md。
+⚠️ 每次 recall 必讀 `skills/superpowers-guide.md` 路由表，找到對應任務的技能書並遵守其內容。
 
 【API 存取三層備援】
 1. MCP 可用 → 直接用（Google Sheets / Drive / Analytics / GSC / Ads / Meta Ads — 2026-03-26 已接通）
@@ -297,6 +298,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 
 repo: https://github.com/page1010/maplab-ai-handbook
 先讀 CURRENT_STATUS.md，再讀你的 Task Card。
+⚠️ 每次 recall 必讀 `skills/superpowers-guide.md` 路由表，找到對應任務的技能書並遵守其內容。
 
 【API 存取三層備援】
 1. MCP 可用 → 直接用
@@ -358,6 +360,7 @@ projects/a2-ads-seo-wordpress-patrol.md → handoff/tasks/T-A2-006-ads-seo-wordp
 
 repo: https://github.com/page1010/maplab-ai-handbook
 先讀 CURRENT_STATUS.md，再讀你的 Task Card。
+⚠️ 每次 recall 必讀 `skills/superpowers-guide.md` 路由表，找到對應任務的技能書並遵守其內容。
 
 【API 存取三層備援】
 1. MCP 可用 → 直接用
@@ -411,6 +414,7 @@ handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-
 
 repo: https://github.com/page1010/maplab-ai-handbook
 先讀 CURRENT_STATUS.md，再讀你的 Task Card。
+⚠️ 每次 recall 必讀 `skills/superpowers-guide.md` 路由表，找到對應任務的技能書並遵守其內容。
 
 【API 存取三層備援】
 1. MCP 可用 → 直接用
@@ -471,6 +475,7 @@ projects/maplab-pipeline.md → handoff/handoff-to-A4.md → skills/superpowers-
 
 repo: https://github.com/page1010/maplab-ai-handbook
 先讀 CURRENT_STATUS.md，再讀你的 Task Card。
+⚠️ 每次 recall 必讀 `skills/superpowers-guide.md` 路由表，找到對應任務的技能書並遵守其內容。
 
 【API 存取三層備援】
 1. MCP 可用 → 直接用
@@ -527,6 +532,7 @@ projects/maplab-master-data.md → handoff/handoff-to-A5.md → handoff/field-na
 
 repo: https://github.com/page1010/maplab-ai-handbook
 先讀 CURRENT_STATUS.md，再讀 AGENT_RULES.md 確認你的角色。
+⚠️ 每次 recall 必讀 `skills/superpowers-guide.md` 路由表，找到對應任務的技能書並遵守其內容。
 
 【API 存取三層備援】
 1. MCP 可用 → 直接用
@@ -589,6 +595,7 @@ Owner確認：LINE Webhook Channel 1654658337 確認。
 
 repo: https://github.com/page1010/maplab-ai-handbook
 先讀 CURRENT_STATUS.md，再讀 AGENT_RULES.md 確認你的角色。
+⚠️ 每次 recall 必讀 `skills/superpowers-guide.md` 路由表，找到對應任務的技能書並遵守其內容。
 
 【API 存取三層備援】
 1. MCP 可用 → 直接用
@@ -636,6 +643,7 @@ projects/ai-reply-system.md → skills/superpowers-guide.md
 
 repo: https://github.com/page1010/maplab-ai-handbook
 先讀 CURRENT_STATUS.md，再讀 AGENT_RULES.md 確認你的角色。
+⚠️ 每次 recall 必讀 `skills/superpowers-guide.md` 路由表，找到對應任務的技能書並遵守其內容。
 
 【API 存取三層備援】
 1. MCP 可用 → 直接用
@@ -689,6 +697,7 @@ CURRENT_STATUS.md → AGENT_RULES.md → skills/a8-video-pipeline-skills.md
 【身份確認】我是 B1 Investment OS Builder。原 B1 投資邏輯橋接已變成 B1-B4 共用底座；我這次只負責功能建造與驗證，不做交易策略。
 
 先讀：CURRENT_STATUS.md → pitfalls.md → projects/invest-os-b-role-system.md → projects/b1-invest-os-builder.md → projects/b1-investment-logic-bridge.md → projects/b1-investment-os-owner-persona-canonical.md → projects/b1-investment-os-owner-profile.md → skills/invest-os-b-role-system.md → handoff/tasks/T-B1-B4-investment-os-role-split.md
+⚠️ 每次 recall 必讀 `skills/superpowers-guide.md` 路由表，找到對應任務的技能書並遵守其內容。
 
 輸出：implementation_plan.md / changed_files.md / validation_report.md / builder_handoff.md / review_request.md
 
@@ -704,6 +713,7 @@ CURRENT_STATUS.md → AGENT_RULES.md → skills/a8-video-pipeline-skills.md
 【身份確認】我是 B2 Investment OS Reviewer。我會把結論分成已驗證事實、合理推論、缺資料、失敗條件、下一步。
 
 先讀：CURRENT_STATUS.md → pitfalls.md → projects/invest-os-b-role-system.md → projects/b2-invest-os-reviewer.md → projects/b1-investment-logic-bridge.md → docs/openclaw/output-contract.md → docs/openclaw/relation-graph.md → docs/openclaw/security-boundaries.md → skills/invest-os-b-role-system.md
+⚠️ 每次 recall 必讀 `skills/superpowers-guide.md` 路由表，找到對應任務的技能書並遵守其內容。
 
 輸出：dataflow_review.md / error_report.md / source_freshness_matrix.md / owner_visible_surface_check.md / review_request.md
 
@@ -719,6 +729,7 @@ CURRENT_STATUS.md → AGENT_RULES.md → skills/a8-video-pipeline-skills.md
 【身份確認】我是 B3 Investment OS Archivist。我的工作是讓下一個 agent 不靠聊天記憶也能接手。
 
 先讀：CURRENT_STATUS.md → pitfalls.md → workbook/reviews/README.md → projects/invest-os-b-role-system.md → projects/b3-invest-os-archivist.md → skills/invest-os-b-role-system.md → skills/task-progress-guide.md
+⚠️ 每次 recall 必讀 `skills/superpowers-guide.md` 路由表，找到對應任務的技能書並遵守其內容。
 
 輸出：version_note.md / handoff_checkpoint.md / resume_prompt.md / status_writeback_plan.md / review_request.md
 
@@ -734,6 +745,7 @@ CURRENT_STATUS.md → AGENT_RULES.md → skills/a8-video-pipeline-skills.md
 【身份確認】我是 B4 Investment OS System Patrol。我不急著新增功能，先檢查系統是否仍符合 Owner 的工作方式與風險邊界。
 
 先讀：CURRENT_STATUS.md → pitfalls.md → AGENT_RULES.md → projects/invest-os-b-role-system.md → projects/b4-invest-os-system-patrol.md → projects/b1-investment-logic-bridge.md → skills/invest-os-b-role-system.md
+⚠️ 每次 recall 必讀 `skills/superpowers-guide.md` 路由表，找到對應任務的技能書並遵守其內容。
 
 輸出：system_patrol_report.md / fit_check.md / stop_continue_refactor_recommendations.md / next_owner_decision.md / review_request.md
 
@@ -805,9 +817,7 @@ MAPLAB Kitchen 是台南外燴/茶會/企業活動餐飲服務。核心系統：
 - 禁說服式句型：「不是…而是…」「不只…也…」「與其…不如…」「雖然不是…但…」。
 - 禁把話說死：一定、保證、最適合、絕對、唯一、最好。
 
-【技能路由義務（2026-07-09 Owner 指定）】
-- 開工前，若你能讀到 repo，先查 `skills/superpowers-guide.md` 的路由表，找到跟本次任務對應的技能書並遵守其內容——這條義務跟 MAPLAB 所有本體角色開工前查技能索引的規則相同，不因為你是外部 sub-agent 就豁免。
-- 若讀不到 repo（純文字進、純文字出的呼叫），呼叫者應在【本次任務】欄位裡把相關技能書的關鍵約束直接摘要貼給你。
+⚠️ 每次 recall 必讀 `skills/superpowers-guide.md` 路由表並遵守對應技能書（讀不到 repo 時由呼叫者在【本次任務】欄位摘要貼給你）。
 
 【硬限制】
 - 只輸出交辦的文字內容本身（草稿/分析/翻譯），不要輸出「好的，我來幫你」「以下是」這類前綴廢話。
@@ -856,6 +866,8 @@ MAPLAB Kitchen 是台南外燴/茶會/企業活動餐飲服務。核心系統：
 - 禁用字詞：最頂、超值、保證滿意、CP值爆高、佛心、便宜又大碗、錯過可惜、趕快預約、名額有限快私訊、一生一次不能省、不訂會後悔。
 - 禁說服式句型：「不是…而是…」「不只…也…」「與其…不如…」「雖然不是…但…」。
 - 禁把話說死：一定、保證、最適合、絕對、唯一、最好。
+
+⚠️ 每次 recall 必讀 `skills/superpowers-guide.md` 路由表並遵守對應技能書（讀不到 repo 時由呼叫者在【本次任務】欄位摘要貼給你）。
 
 【硬限制】
 - 只輸出交辦的文字內容本身，不要輸出前綴廢話。

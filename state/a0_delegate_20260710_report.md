@@ -64,26 +64,26 @@
 
 **Top 5 WP1992 企業茶會精選：**
 
-| 優先 | 檔名 | 夾名 | 分數 | 推薦理由 |
-|------|------|------|------|---------|
-| ★★★ | IMG_1396.HEIC | 20260614富信飯店-社工公會會議 | 8/10 | venue+food 均 2 分，真實會議場地，最符合企業茶會 |
-| ★★★ | IMG_1400.HEIC | 20260621說事實木地板開幕 | 8/10 | venue+food 均 2 分，模型標注「適合企業活動」 |
-| ★★ | IMG_1408.HEIC | 20260621說事實木地板開幕 | 8/10 | 自助餐佈置，場地布置得體 |
-| ★★ | IMG_1411.HEIC | 20260621說事實木地板開幕 | 8/10 | 法式早餐風格，模型標注「適合企業活動」 |
-| ★★ | IMG_1413.HEIC | 20260621說事實木地板開幕 | 8/10 | 糕點擺盤，場景布置適中 |
+| 優先 | 檔名 | 夾名 | 分數 | Drive 連結 |
+|------|------|------|------|-----------|
+| ★★★ | IMG_1396.HEIC | 20260614富信飯店-社工公會會議 | 8/10 | https://drive.google.com/file/d/1ahWLEgEY8CkXkDNmA2USz4rzRv0CzYfv/view |
+| ★★★ | IMG_1400.HEIC | 20260621說事實木地板開幕 | 8/10 | https://drive.google.com/file/d/1AbixvFOYJzFYEKH70YHKpiTT6Fq2_2U-/view |
+| ★★ | IMG_1408.HEIC | 20260621說事實木地板開幕 | 8/10 | https://drive.google.com/file/d/1QIszV1OrQwLaaD2qCB8_-uvZpjHb-jnZ/view |
+| ★★ | IMG_1411.HEIC | 20260621說事實木地板開幕 | 8/10 | https://drive.google.com/file/d/1vI0gEKUcZcVcuG_dsWCTsyvOcaBhtXHe/view |
+| ★★ | IMG_1413.HEIC | 20260621說事實木地板開幕 | 8/10 | https://drive.google.com/file/d/1aNt8U47JaNj80TwmMJliW6c9kuxC30zA/view |
 
 **技術備注：**
-- gemma4:latest 無視覺編碼器 → 改用 moondream:1.8b + qwen2.5:14b 兩步驟
+- gemma4:latest **有**視覺編碼器（`mmproj` 已掛載，曾多次拿到準確描述），真正問題是本機 `llama-server` 多模態呼叫間歇性退化成空輸出，與 prompt/圖片內容無關，疑似 GPU/Neural Engine 資源競爭（`mediaanalysisd` 佔用 100%+ CPU 時觀察到）；moondream+qwen2.5 兩步驟繞開此問題但非「gemma4 沒有視覺能力」的定論。詳見 `pitfalls.md` 2026-07-10 條目。
 - sips `--resampleLongSide` → 修正為 `--resampleHeightWidthMax`
-- Drive 分享連結待 MCP 認證後補齊
+- Drive 分享連結已補齊（見上表）：用本機 Google Drive for Desktop 的 `com.google.drivefs.item-id#S` extended attribute 取得真實 file ID，不需 Drive API/MCP 存取權限（`xattr -p "com.google.drivefs.item-id#S" <本機路徑>`）
 
 ---
 
 ## 待辦（Owner 確認後執行）
 
-1. **Drive 分享連結：** Google Drive MCP auth 修復後，補取 WP1992 5 張的分享連結
-2. **未同步夾補跑：** `0702中興工程` + `20260627東門教會證婚` 開啟 Drive 離線同步後重跑評分
-3. **GSC service account：** Loop-02 需補 GSC service account JSON 憑證，見 `skills/credentials/`
+1. ~~Drive 分享連結~~ ✅ 已補齊（見上表，改用本機 xattr 方法，不需等 MCP 修復）
+2. **未同步夾補跑：** `0702中興工程` + `20260627東門教會證婚` 本機掛載目錄確認為 0 個檔案（非只是「未同步」——若 Drive 端確實有照片，需 Owner 檢查該資料夾的 Drive for Desktop 同步設定；若 Drive 端也是空的，代表尚未上傳）
+3. **GSC service account：** Loop-02 需補 GSC service account JSON key（非 OAuth client），步驟：① GCP 建 Service Account 並開通 Search Console API ② search.google.com/search-console 把該 email 加為 maplab.com.tw 使用者 ③ 下載 key 存 `~/.claude/mcp-keys/` 並更新 `~/.claude/.mcp.json` 的 `GOOGLE_APPLICATION_CREDENTIALS`
 4. **T-A4-003/004：** 720h+ 無 commit，需 Owner 確認優先順序
 
 ---

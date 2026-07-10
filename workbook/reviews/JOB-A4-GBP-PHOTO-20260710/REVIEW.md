@@ -59,31 +59,34 @@
 - **分數：** 8/10（食物 2 + 場地 2 + 構圖 2 + 品牌 2）
 - **描述：** 照片呈現了精緻的自助餐佈置，場地裝飾華麗，光線自然
 - **推薦理由：** 唯一 food_display + venue_setup 均滿分，且為真實會議場地（富信飯店），最符合企業茶會氛圍
-- **本機路徑：** `2026maplab外燴紀錄/20260614富信飯店-社工公會會議/IMG_1396.HEIC`
+- **Drive 連結：** https://drive.google.com/file/d/1ahWLEgEY8CkXkDNmA2USz4rzRv0CzYfv/view
 
 ### 2. `IMG_1400.HEIC` — 20260621說事實木地板開幕 ★★★
 - **分數：** 8/10（食物 2 + 場地 2 + 構圖 2 + 品牌 2）
 - **描述：** 精緻的美食擺盤和優雅的場地佈置，適合企業活動
 - **推薦理由：** food_display + venue_setup 均滿分，模型直接標注「適合企業活動」
-- **本機路徑：** `2026maplab外燴紀錄/20260621說事實木地板開幕/IMG_1400.HEIC`
+- **Drive 連結：** https://drive.google.com/file/d/1AbixvFOYJzFYEKH70YHKpiTT6Fq2_2U-/view
 
 ### 3. `IMG_1408.HEIC` — 20260621說事實木地板開幕 ★★
 - **分數：** 8/10（食物 2 + 場地 1 + 構圖 2 + 品牌 2）
 - **描述：** 精緻的自助餐佈置，食物擺盤吸引人，場地布置得體
-- **本機路徑：** `2026maplab外燴紀錄/20260621說事實木地板開幕/IMG_1408.HEIC`
+- **Drive 連結：** https://drive.google.com/file/d/1QIszV1OrQwLaaD2qCB8_-uvZpjHb-jnZ/view
 
 ### 4. `IMG_1411.HEIC` — 20260621說事實木地板開幕 ★★
 - **分數：** 8/10（食物 2 + 場地 1 + 構圖 2 + 品牌 2）
 - **描述：** 精緻的法式早餐，適合企業活動使用
 - **推薦理由：** 模型直接標注「適合企業活動」，法式早餐風格符合茶會質感
-- **本機路徑：** `2026maplab外燴紀錄/20260621說事實木地板開幕/IMG_1411.HEIC`
+- **Drive 連結：** https://drive.google.com/file/d/1vI0gEKUcZcVcuG_dsWCTsyvOcaBhtXHe/view
 
 ### 5. `IMG_1413.HEIC` — 20260621說事實木地板開幕 ★★
 - **分數：** 8/10（食物 2 + 場地 1 + 構圖 2 + 品牌 2）
 - **描述：** 精緻的糕點擺盤，場景布置適中，構圖和光線良好
-- **本機路徑：** `2026maplab外燴紀錄/20260621說事實木地板開幕/IMG_1413.HEIC`
+- **Drive 連結：** https://drive.google.com/file/d/1aNt8U47JaNj80TwmMJliW6c9kuxC30zA/view
 
-> ⚠️ Drive 分享連結需 Google Drive MCP 認證後取得（本次 MCP auth 失敗，以本機路徑替代）
+> ✅ 2026-07-10 補充（A1 二次確認）：Drive MCP 認證仍失敗（`Authentication not ready`），但改用本機 Google Drive for
+> Desktop 掛載目錄的 extended attribute 直接取得真實 Drive file ID，不需要 Drive API 存取權限：
+> `xattr -p "com.google.drivefs.item-id#S" <本機檔案路徑>`（注意屬性名稱含 `#S` 後綴，省略會報 `No such xattr`）。
+> 上方 5 個連結已用此方法取得並可直接點開。
 
 ---
 
@@ -91,8 +94,9 @@
 
 ### 評分流程變更
 - 原設計：`gemma4:latest` 直接視覺評分
-- 實際：`gemma4:latest` 不含視覺編碼器（Ollama 安裝版本）→ 改用 moondream:1.8b + qwen2.5:14b 兩步驟
+- 實際：改用 moondream:1.8b + qwen2.5:14b 兩步驟，分數更完整可用
 - moondream: 圖像描述（英文）→ qwen2.5: 依描述評分（繁中 JSON）
+- ⚠️ **修正（A1 二次確認）**：`gemma4:latest` **有**視覺編碼器（`ollama ps` 可見掛載的 `mmproj` 檔案，且直接呼叫 `/api/generate` + `images` 參數多次拿到過準確描述真實照片內容的回應，如「精緻擺放的迷你點心與甜點」）。真正的問題是本機這套 `llama-server`（`ollama` 背後啟動的 `--no-jinja --chat-template chatml -np 1 --context-shift` 設定）在連續多模態呼叫後會**間歇性**退化成空輸出（`done_reason: length` 但 `response` 為空字串），與 prompt 內容、圖片內容皆無關聯（同一組合重測會從成功變失敗，`ollama stop` 或整個重啟 `ollama serve` 都不保證恢復），推測與本機 GPU/Neural Engine 資源競爭有關（觀察到 `mediaanalysisd` 在失敗期間佔用 100%+ CPU）。moondream+qwen2.5 兩步驟能繞開這個問題，可能是因為 moondream 的視覺推論路徑更輕量穩定，但這不代表 gemma4 vision 架構上失能，是本機推論環境的可靠性問題，非模型能力問題。詳見 `pitfalls.md` 2026-07-10 條目。
 
 ### sips 指令修正
 - 原腳本 `--resampleLongSide` 為無效旗標

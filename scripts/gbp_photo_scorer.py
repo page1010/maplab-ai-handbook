@@ -17,30 +17,35 @@ TARGET_FOLDERS = [
 ]
 OUTPUT_DIR = "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A4-GBP-PHOTO-20260710"
 OLLAMA_URL = "http://localhost:11434/api/generate"
+VISION_MODEL = "moondream:1.8b"
+SCORE_MODEL = "qwen2.5:14b"
 
-PROMPT = """你是 MAPLAB Kitchen 的 GBP（Google Business Profile）照片評分師。
-請評估這張照片對 GBP 的適用性，使用繁體中文回答。
+VISION_PROMPT = "Describe this photo in detail: what food is shown, how is it plated/arranged, what is the venue/table setup, how is the lighting and composition, are there any faces visible?"
+
+SCORE_PROMPT_TPL = """你是 MAPLAB Kitchen 的 GBP（Google Business Profile）照片評分師。
+根據以下照片描述，評估對 GBP 的適用性，使用繁體中文回答。
+
+照片描述：{description}
 
 評分標準（總分 10 分，各 2 分）：
-1. 食物特寫/擺盤：食物是否清晰可見、擺盤精緻
-2. 場地佈置：是否展示活動場地、桌面布置
-3. 構圖清晰：照片是否清晰、光線良好、角度佳
-4. 品牌質感：是否呈現 MAPLAB 的專業、溫暖、細緻感
-5. 無正面人臉：扣分如果有清晰正面人臉（背影/側臉OK）
+1. food_display：食物/擺盤是否清晰可見精緻（0-2）
+2. venue_setup：是否展示活動場地佈置（0-2）
+3. composition：構圖清晰、光線良好（0-2）
+4. brand_quality：是否呈現專業溫暖細緻感（0-2）
+5. no_face_penalty：若有清晰正面人臉扣2分（0 or -2）
 
-請回答格式（JSON）：
-{
-  "total_score": <0-10的整數>,
+只回答JSON，不要其他文字：
+{{
+  "total_score": <整數>,
   "food_display": <0-2>,
   "venue_setup": <0-2>,
   "composition": <0-2>,
   "brand_quality": <0-2>,
   "no_face_penalty": <0 or -2>,
-  "description": "<一句話描述照片主要內容>",
-  "gbp_suitable": <true/false>,
-  "wp1992_candidate": <true/false, 若適合企業茶會/會議場景則true>
-}
-只回答JSON，不要其他文字。"""
+  "description": "<一句話繁體中文描述>",
+  "gbp_suitable": <true/false, 6分以上true>,
+  "wp1992_candidate": <true/false, 適合企業茶會/會議場景則true>
+}}"""
 
 
 def heic_to_jpeg(heic_path, tmpdir):
@@ -49,7 +54,7 @@ def heic_to_jpeg(heic_path, tmpdir):
     out_path = os.path.join(tmpdir, basename + ".jpg")
     result = subprocess.run(
         ["sips", "-s", "format", "jpeg", "-s", "formatOptions", "60",
-         "--resampleLongSide", "800", heic_path, "--out", out_path],
+         "--resampleHeightWidthMax", "800", heic_path, "--out", out_path],
         capture_output=True, text=True, timeout=30
     )
     if result.returncode == 0 and os.path.exists(out_path):
@@ -57,35 +62,41 @@ def heic_to_jpeg(heic_path, tmpdir):
     return None
 
 
+def _ollama_call(model, prompt, img_b64=None, timeout=90, num_predict=300):
+    payload = {"model": model, "prompt": prompt, "stream": False,
+               "options": {"temperature": 0.1, "num_predict": num_predict}}
+    if img_b64:
+        payload["images"] = [img_b64]
+    req = urllib.request.Request(
+        OLLAMA_URL, data=json.dumps(payload).encode(),
+        headers={"Content-Type": "application/json"}, method="POST"
+    )
+    with urllib.request.urlopen(req, timeout=timeout) as resp:
+        return json.loads(resp.read()).get("response", "")
+
+
 def score_image(img_path):
-    """Send image to Ollama gemma4 for GBP scoring"""
+    """Two-step: moondream describes → qwen2.5 scores as JSON"""
     with open(img_path, "rb") as f:
         img_b64 = base64.b64encode(f.read()).decode()
 
-    payload = {
-        "model": "gemma4:latest",
-        "prompt": PROMPT,
-        "images": [img_b64],
-        "stream": False,
-        "options": {"temperature": 0.1, "num_predict": 256}
-    }
-    req = urllib.request.Request(
-        OLLAMA_URL,
-        data=json.dumps(payload).encode(),
-        headers={"Content-Type": "application/json"},
-        method="POST"
-    )
     try:
-        with urllib.request.urlopen(req, timeout=60) as resp:
-            result = json.loads(resp.read())
-            response_text = result.get("response", "")
-            # Extract JSON from response
-            start = response_text.find("{")
-            end = response_text.rfind("}") + 1
-            if start >= 0 and end > start:
-                return json.loads(response_text[start:end])
+        description = _ollama_call(VISION_MODEL, VISION_PROMPT, img_b64=img_b64, timeout=60, num_predict=200)
+        if not description.strip():
+            return None
     except Exception as e:
-        print(f"  Error scoring {img_path}: {e}", file=sys.stderr)
+        print(f"  [vision err] {e}", file=sys.stderr)
+        return None
+
+    try:
+        score_prompt = SCORE_PROMPT_TPL.format(description=description.strip())
+        score_text = _ollama_call(SCORE_MODEL, score_prompt, timeout=60, num_predict=300)
+        start = score_text.find("{")
+        end = score_text.rfind("}") + 1
+        if start >= 0 and end > start:
+            return json.loads(score_text[start:end])
+    except Exception as e:
+        print(f"  [score err] {e}", file=sys.stderr)
     return None
 
 

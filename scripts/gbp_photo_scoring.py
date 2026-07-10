@@ -36,10 +36,11 @@ OLLAMA_URL = "http://localhost:11434/api/generate"
 STATE_DIR = Path(__file__).resolve().parent.parent / "state"
 SAMPLE_CAP_PER_FOLDER = 100
 
-PROMPT = """你是MAPLAB Kitchen的圖片評分助手，幫Google商家檔案挑精選圖。請分析這張照片並回傳JSON格式：
-{"評分":"高|中|低","主體":"食物特寫|擺盤|場地佈置|人物合照|其他",
- "說明":"適用性描述30字內，需提及構圖是否清晰、是否有清楚正臉、是否適合企業茶會情境"}
-評分規則：食物特寫/擺盤/場地佈置給高分；人物正臉清楚入鏡或晃動模糊給低分
+PROMPT = """你是MAPLAB Kitchen的照片分類助手。請分析這張照片並回傳JSON格式：
+{"評分":"高|中|低","標籤":["3-5個中文關鍵詞"],
+ "說明":"適用性描述30字內","類型":"english-lowercase-hyphenated"}
+評分規則：擺盤精緻=高；普通=中；模糊雜亂或有清楚正臉入鏡=低
+類型格式：{評分}-{subject}-{detail}，subject從 food/plating/venue/group/other 選一個，例：high-plating-dessert-buffet
 僅回傳JSON，不要其他文字。"""
 
 SCORE_MAP = {"高": 3, "中": 2, "低": 1}
@@ -141,6 +142,7 @@ def main():
                 b64 = load_thumbnail_b64(img_path)
                 parsed = score_with_ollama(b64)
                 label = parsed.get("評分", "")
+                subject_type = str(parsed.get("類型", "")).split("-")[1] if "-" in str(parsed.get("類型", "")) else ""
                 results.append({
                     "folder": folder_name,
                     "filename": img_path.name,
@@ -148,10 +150,12 @@ def main():
                     "drive_link": drive_link(img_path),
                     "score_label": label,
                     "score": SCORE_MAP.get(label, 0),
-                    "subject": parsed.get("主體"),
+                    "tags": parsed.get("標籤"),
+                    "subject_type": subject_type,
                     "reason": parsed.get("說明"),
+                    "seo_type": parsed.get("類型"),
                 })
-                log(f"  {img_path.name}: {label} / {parsed.get('主體')}")
+                log(f"  {img_path.name}: {label} / {subject_type}")
             except Exception as e:
                 log(f"FAIL {img_path.name}: {e}")
                 results.append({

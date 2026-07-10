@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-07-10 午後（A1 午後巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-07-10 晚間（A1 晚間巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -130,3 +130,9 @@
 | T-GBP-001 | T-GBP-001 | Owner | 🔲 待開始（尚未開始。等 Owner 準備新圖片。） | handoff/tasks/T-GBP-001.md |
 | T-HQ-001 | AGENT-HQ 集團共用層遷移 |  | ⏳ 代碼已交付，等 Owner 啟用（P1-P5 腳本完成，P6 腳本完成，Owner 動作仍 pending）（Owner 執行下列三個 `launchctl load` + `hermes memory setup` 指令即完成） | handoff/tasks/T-HQ-001.md |
 | T-IOS-KOL-001 | IOS-KOL 網紅雷達 Daily Telegram Digest |  | 🔴 CRITICAL（~479h無commit） | handoff/tasks/T-IOS-KOL-001.md |
+
+---
+
+## Blockers / 巡查警告
+
+⚠️ A1巡查 2026-07-10 22:00：T-A7-001 ~107h 無 commit（最後工作 commit `f6fdaac` 2026-07-07 patrol），Phase 3 上線測試未啟動。Owner 需決定是否授權 A7 開始 Phase 3。

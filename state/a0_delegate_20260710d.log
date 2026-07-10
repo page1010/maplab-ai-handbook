@@ -1,0 +1,43 @@
+全部完成，commit `7426049` 已推。以下是結構化回報：
+
+---
+
+## A0 委派兩任務執行完報
+
+### 任務一：nightwatch 修復（Investment OS Phase 1）
+
+**根因更正（「06-02 停擺」是誤診）：**
+- nightwatch **從未停擺**，每天 08:00 都在跑（報告連續到今日）
+- 07-07 三人小組評審看到的是 repo 副本舊（TCC 阻擋 cross-project-mirror），誤判為守夜人停擺
+- **真正問題**：nightwatch CHECKS 用 glob `reports/shadow/*`，撿到每日更新的 `local_model_findings.jsonl`，**掩蓋**了 `shadow_findings.jsonl`（921h 失鮮）的盲區
+
+**修復清單（都已落地）：**
+| 修復項 | 檔案 | 效果 |
+|--------|------|------|
+| 加顯式 `shadow_findings.jsonl` 48h 檢查 | `investment-os/scripts/system_nightwatch.py`（repo+runtime 同步） | 手動跑一輪 → 正確偵測 `🔴 921h 過期` |
+| patrol 自健檢 | `scripts/patrol.sh` 新增「投資 OS 守夜人」區塊 | 每次 patrol 自動檢查今日報告是否產生 |
+| Phase 0 ✅ 標記 | `projects/investment-os-functional-audit-2026-07-07.md` | 保存誤診更正 + 待解事項 |
+
+**待解（不阻塞）：** `shadow_findings.jsonl` 供料停止根因是 convergence-engine Hermes reviewer 失敗（`ValueError: no JSON object`），需另建 Investment OS 任務卡。
+
+---
+
+### 任務二：影子系統專責角色
+
+**搜索結論：** 目前 MAPLAB repo 無任何角色專責「能力蒸餾」或 recall prompt 品質，`skills/auto/` 幾乎空，`pitfalls.md` 190+ 條但 0 封坑驗證，地端模型沒有系統性繼承機制。
+
+**起草：B5 — 影子系統總管（待 Owner 核准）**
+- 章程位置：`projects/b5-shadow-capability-distillation.md`
+- 三職責：① 全體 recall prompt 版本/品質季審 ② 複利輸出蒸餾評分 ③ 每月「地端模型教材包」打包
+- 目標：Claude 雲端累積 → B5 固態化 → Ollama 地端低成本繼承
+- **Owner 一句話即啟動**：「B5 角色通過，A1 建立配套文件」
+
+**附帶修復：Telegram bot A1 召回注入**
+- 新增 `_build_system_prompt()` 函式，bot 啟動時讀 AGENT_RECALL_PROMPTS.md 的 A1 section（23 行，截至阻塞審查規則）+ CURRENT_STATUS.md 最新 3 條事實
+- 實測：bot 重啟後 `Bot running` ✅，無 recall 載入錯誤
+
+---
+
+**Owner 待決（2 項）：**
+1. B5 角色章程核准（`projects/b5-shadow-capability-distillation.md`）
+2. 是否開任務修 convergence-engine Hermes reviewer（恢復 shadow_findings.jsonl 供料，讓 Self-Healing Loop 有完整掃描輸入）

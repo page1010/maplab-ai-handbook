@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-07-10 晚間 TST（遠端）A1 晚間巡查：T-A7-001 🔴 ~107h 無 commit（Phase 3 未啟動，需 Owner 關注）；T-A4-001 ✅ 完成確認；convergence-engine shadow_findings.jsonl 供料已恢復；零 A2-A8 新 commit（正常，無 Owner 派工）；其餘 CRITICAL 任務無新異常
+> 最後更新：2026-07-11 08:00 TST（遠端）A1 每日巡查：T-A7-001 🔴 ~132h 無 commit（Phase 3 未啟動，超 48h 閾值 2.75x，需 Owner 關注）；T-A6-001 🔴 ~84h 無 commit；B5 影子系統本日建立完成（正面進展）；零 A2-A8 新 commit（正常，無 Owner 派工）；其餘 CRITICAL 任務無新異常
 >
 > 使用方式：選擇角色 → 複製 prompt / module handoff → 貼到 Gemini / Codex / OpenClaw / legacy Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -25,7 +25,7 @@
 | A4 | 影像資產整理部 | ✅ T-A4-001 S11(2024) 完成（07-09 22:56 run done，3,314/3,409 分類，GBP 照片評分 🔄 解鎖；2026-07-10 午後巡查確認；下一步：T-A4-003/004 待 Owner 派工）| Photo Archive |
 | A5 | 報價與提案引擎部 | ⚠️ T-A5-002 + T-A5-005 均超 48h 門檻（2026-06-23 07:01-07:22 +0800：`5ab7434` clasp push T-A5-005 + `3209fba` fixMasterTemplate_，均 awaiting Owner；現 **~361h**，2026-07-08 更新）；T-A5-004 🔴 CRITICAL（~1680h+，無新 commit）；T-A5-007 🔲 待 Codex 認領（`6cefd13` 2026-07-06 建卡，A5→Codex 移交）| Quotation Engine |
 | A6 | 業務快反應部隊 | 🔄 T-A6-001 進行中（last commits `e5ab867` 07-07 fix(a6) Telegram routing + `ed63f97` 07-08 A6 401健檢(無影響)+SEO迴路修好；bot_a6 ✅ 上線 launchd；LINE webhook 等 Owner 確認 Channel 1654658337；2026-07-08 更新）| Sales Rapid Response |
-| A7 | 客服與對話轉單部 | 🔴 T-A7-001 CRITICAL（~107h 無 commit，2026-07-10 晚間巡查；last commit `f6fdaac` 2026-07-07 patrol；Q7試吃+Q10取消改期政策 2026-07-06 落地，剩 A5 外送費級距 + Phase 3 上線測試，Phase 3 未啟動，需 Owner 關注）；T-A7-002 ⏸️ 阻塞（Phase 3A 剩任務 4 地區判斷 + 任務 7 流程圖同步）| Smart Reply |
+| A7 | 客服與對話轉單部 | 🔴 T-A7-001 CRITICAL（~132h 無 commit，2026-07-11 每日巡查；last commit `f6fdaac` 2026-07-07 patrol；A1 已完成三層審查逾時處置；Q7試吃+Q10取消改期政策 2026-07-06 落地，剩 A5 外送費級距 + Phase 3 上線測試，Phase 3 未啟動，需 Owner 關注）；T-A7-002 ⏸️ 阻塞（Phase 3A 剩任務 4 地區判斷 + 任務 7 流程圖同步）| Smart Reply |
 | A8 | 影音內容產線 | ⚠️ 持續超 48h（2026-06-25 08:25 `1a2d752` squash merge a8/video-checklist-mvp；現 **~312h/~13.0天**，2026-07-08 更新；下一步：審核 local motion POC storyboard → 地端動態生成 → 9:16 mp4/cover → Publish Approval Card，未經 Owner/A1 approval 不得上傳） | Content Repurposing Pipeline |
 | **B1** | **Investment OS Builder** | **🟢 T-HQ-001 P1-P6 全完成；✅ 2026-07-07 新工作：`13f1719` IS 全功能檢討+Goal-Signal-Decision-Review 方案、`32b3afb` 跨專案治理科技樹+P0 根因診斷（TCC，唯讀）、`0695ece` G1/G3落地+封坑驗證欄+1%觸發規則+Self-Healing拍板部署記錄；建議 Owner 確認可關閉 T-HQ-001** | **寫功能 / runtime surface** |
 | **B2** | **Investment OS Reviewer** | **🟢 召喚型可用** | **資料流 / 錯誤 / freshness review** |

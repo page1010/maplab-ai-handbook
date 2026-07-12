@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-07-12 22:00（A1 午後巡查更新）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-07-12 23:30（A1 Fable5交棒任務執行）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -19,6 +19,7 @@
 
 ## 最新事實核對
 
+- 2026-07-12：**[A1 Fable5交棒任務] 系統方向指引 + 複利計畫巡查落地** — Owner 交棒任務：①`docs/fable5-direction-and-guidance.md` 建立（北極星/三個結構性風險/方向優先序/決策文化）②`skills/compounding-patrol-prompt.md` 建立（複利計畫巡查完整 prompt 本體，可直接餵 `claude -p`）③`chrome-extension/task-modules/COMPOUNDING-PATROL.json` 建立（Extension 模組，按既有格式接線）④`AGENT_RULES.md` Section 22 新增（複利計畫巡查為每週例行，執行入口 skills/compounding-patrol-prompt.md）⑤`state/a0_delegate_20260712_report.md` 例會格式 append。CURRENT_STATUS merge conflict（upstream 22:00 vs stash 14:01）已解（取 22:00 版本）。
 - 2026-07-12：**[A0 跨專案] IS Phase B 走查完成 + A1 bot 修復** — A0 今日執行三 Phase：① IS 全貌地圖閱讀 ② 全角色走查（量尺文件 + 17 角色評分 + 半導體修正覆盤 + 規則引擎草稿 + 通知方案）③ Codex/agy 派工實驗（6 個 JOB 落檔）。共 4 commits（`3a7bb9c`/`61bbd8a`/`0e7dc76`/`dd23864`，14:01 +0800）。**[A1]** bot.py openclaw_command 佔位符修正（`d953951` 08:13 +0800）。零 A2-A8 新 commit（無 Owner 派工，正常）。
 - 2026-07-11：**[A1 B5建立]** Owner 拍板「b5通過」→ A1 執行全套 B5 配套建立（A0 委派）。①`projects/b5-shadow-capability-distillation.md` 狀態改「✅ Owner 核准 2026-07-10」②`AGENT_RULES.md` Section 1 角色表加入 B5（三項職責：recall prompt 版本品質 / 能力盤點蒸餾評分 / 每月地端教材包）③`AGENT_RECALL_PROMPTS.md` 新增 `## B5` 段落（含 superpowers + fable-mindset 條款）④`recalls/B5_recall.md` 建立 ⑤**B5首輪執行**：召回品質審查 2026-Q3（`reports/recall-quality/recall_quality_2026-Q3.md`，發現全 17 個 recall 0個有 fable-mindset 注入，A5/A7 recall 🔴 ~85天過時）；首次蒸餾評分（`reports/capability-inventory/inventory_2026-07.md`，14 項評分≥4 的可打包項目）；教材包目錄骨架 `packages/local-model-teaching/2026-07/` + 打包腳本 `scripts/b5-pack-teaching-package.sh` ⑥CURRENT_STATUS/AGENT_RECALL_PROMPTS 同步更新。
 - 2026-07-10：**[A1 午後巡查]** 今日 A1 共 18+ commits（A0 委派全面落地）：①GBP 照片評分完成（moondream+qwen2.5 兩步驟，37/56 張有效，Top20+WP1992×5 精選落檔）②A0 委派 4 JOB 全落檔（JOB-CODEX-WEDDING-PILLAR/B3-ADCOPY/CONTENT-AUDIT/AGY-SECOND-READ）③weekly_eval_compounding 驗證（476/495 PASS，NO_DELTA）④nightwatch 盲區修復（shadow_findings 顯式檢查+patrol 自健檢）⑤B5 影子系統章程草稿建立⑥fable-mindset.md 落地（10 條工作思維+AGENT_RULES Section21+全角色 RECALL 注入）。T-A4-001 ✅ 完成確認無誤；T-A7-001 🔴 ~103h 無 commit（07-06 政策落地後停滯，Phase 3 未啟動，需 Owner 關注）。AGENT_RECALL_PROMPTS.md A4 row stale（仍顯示 ESCALATED）→ 已於本次巡查修正。零 A2-A8 新 commit（無 Owner 派工，正常）。
@@ -107,14 +108,14 @@
 | T-A2-002-foodsafety-seo-cleanup | T-A2-002 — 食安 + 法規 SEO 字眼清理 | A2 | ⏸️ 阻塞（回溯掃描 + 根因結構性修復已完成，只剩等 Owner 決定 post 698 怎麼改）（58 篇既有文章已全數掃描完成；新產出內容的自動防護缺口已用 F-1 gate 補上（見下方「2026-07-07 根因） | handoff/tasks/T-A2-002-foodsafety-seo-cleanup.md |
 | T-A2-003-weekly-wp-audit | T-A2-003: 每週全站 WP 內容稽核排程 | A2 | 🔲 待開始（腳本已建好（wp-audit.sh / wp-audit-cron.sh）。待 Owner 用 /schedule 建立） | handoff/tasks/T-A2-003-weekly-wp-audit.md |
 | T-A2-004 | 首頁結構優化 — 配合品牌色票微調 + 轉換路徑整理 | A2 | 🔲 待開始（任務卡建立。A0 已完成對標分析和色票微調。） | handoff/tasks/T-A2-004.md |
-| T-A2-005-local-seo-factory | T-A2-005：MAPLAB SEO Factory（地端閉環，Pillar First） | A2 | 🔴 CRITICAL（~1656h無commit） | handoff/tasks/T-A2-005-local-seo-factory.md |
+| T-A2-005-local-seo-factory | T-A2-005：MAPLAB SEO Factory（地端閉環，Pillar First） | A2 | 🔴 CRITICAL（~1655h無commit） | handoff/tasks/T-A2-005-local-seo-factory.md |
 | T-A2-006-ads-seo-wordpress-patrol | T-A2-006 — Ads / SEO / WordPress Patrol | A2 |  | handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md |
 | T-A2-SEO-CATERING-MATRIX-001 | Foreign Catering SEO Benchmark -> MAPLAB Article Matrix | A2 |  | handoff/tasks/T-A2-SEO-CATERING-MATRIX-001.md |
-| T-A2A3-001-B | SEO 場景頁面 + 內連結（從 T-A2A3-001 分拆） | A2/A3 | 🔴 CRITICAL（~1104h無commit） | handoff/tasks/T-A2A3-001-B.md |
+| T-A2A3-001-B | SEO 場景頁面 + 內連結（從 T-A2A3-001 分拆） | A2/A3 | 🔴 CRITICAL（~1103h無commit） | handoff/tasks/T-A2A3-001-B.md |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2/A3 | ⏸️ RM/GSC 部分暫停；案例寫作轉 T-A2A3-001-B（Rank Math 已退訂，已設定好的 SEO 欄位先不要再設定；下一步是依 live URL map 補 To B 真） | handoff/tasks/T-A2A3-001.md |
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | ⏸️ 阻塞中（受眾輪廓分析完成（693筆 Orders）。待執行：嘉義加入廣告地區、興趣條件精簡、策略一冷受眾上線。） | handoff/tasks/T-A3-002.md |
 | T-A4-002 | pagewu1010 帳號 Takeout 解壓 + Gemini Flash 照片資產整合 | A4 |  | handoff/tasks/T-A4-002.md |
-| T-A4-003-photo-alt-pipeline | T-A4-003 — 照片 ALT/SEO 管線（地端 gemma4）+ Drive 改串流釋空間 | A4 | 🔴 CRITICAL（~744h無commit） | handoff/tasks/T-A4-003-photo-alt-pipeline.md |
+| T-A4-003-photo-alt-pipeline | T-A4-003 — 照片 ALT/SEO 管線（地端 gemma4）+ Drive 改串流釋空間 | A4 | 🔴 CRITICAL（~743h無commit） | handoff/tasks/T-A4-003-photo-alt-pipeline.md |
 | T-A4-004-photo-classify | T-A4-004 — 照片分類搬移：截圖/家庭/外燴工作 + 年月資料夾 | A4 | 🔴 CRITICAL（~743h無commit） | handoff/tasks/T-A4-004-photo-classify.md |
 | T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔴 CRITICAL（~455h無commit） | handoff/tasks/T-A5-002.md |
 | T-A5-004 | createSlides.gs — Slide 報價簡報自動生成 | A5 | 🟢 功能穩定（核心功能已可用且無需再動；~1500h+ 無 commit 是「沒事做」不是「壞掉」— 2026-07-06 A1 對帳澄清：先前 CURRENT_STATUS.md 任務表把「久無 commit」誤標為 🔴 CRITICAL，已改為反映實際狀態） | handoff/tasks/T-A5-004.md |

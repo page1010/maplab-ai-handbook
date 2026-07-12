@@ -1003,3 +1003,35 @@ B4 patrol 每次巡查時對每張「進行中」task card 問：
 - SECTION 16（阻塞審查 SOP）— 本節是 Section 16「解完推動系統」的溝通面補充
 - SECTION 10（開發行動準則）— 管開發行為；本節管對 Owner 的溝通格式
 - SECTION 20（部門進度回報 SOP）— 管回報時機；本節管回報格式
+
+---
+
+## SECTION 22 — 複利計畫巡查（週例，2026-07-12 A0/Fable5 交棒任務落地）
+
+**定義**：每週一次全系統複利迴圈健檢。衡量標準不是忙碌量，是複利迴圈是否轉了一圈。
+
+**執行規則**：
+- **頻率**：每週例行（建議週一 09:00）
+- **執行者**：A1 系統總管（或 A0 委派）
+- **唯一入口**：`skills/compounding-patrol-prompt.md`（完整 prompt + 自動化接線方式）
+- **Chrome Extension**：`chrome-extension/task-modules/COMPOUNDING-PATROL.json`
+
+**五步驟強制執行**（詳見 prompt 本體）：
+1. 全貌掃描（CURRENT_STATUS + TASK_QUEUE + system-panorama + 上次巡查報告）
+2. 五問檢視（業務閉環 / 三類消音 / 複利四環 / 資源浪費 / Owner 待決清單）
+3. 修正行動（直接修 + TASK_QUEUE 提案 + owner-action-queue 更新）
+4. 沉澱教訓（pitfalls + panorama 增量更新）
+5. 例會格式回報 + `checkpoint.sh --notify`
+
+**三類消音強制掃描**（每次必查）：
+- 消音 1：做完沒人知道（里程碑未 --notify）
+- 消音 2：拍板沒人推進（Owner 決策未建 Task Card）
+- 消音 3：宣稱未驗證（✅ 無 receipt）
+
+**方向參照**：`docs/fable5-direction-and-guidance.md`（北極星 + 三個結構性風險 + 方向優先序）
+
+### 關聯
+- `skills/compounding-patrol-prompt.md` — 複利計畫巡查完整 prompt（單一真相源）
+- `docs/fable5-direction-and-guidance.md` — 系統方向指引（本節的「為什麼」）
+- `docs/fable-mindset.md` — Fable 工作思維框架
+- SECTION 20（部門進度回報 SOP）— 每日/里程碑回報；本節管每週全局複利巡查

@@ -207,3 +207,52 @@ Mail 原型已設計，不啟用，等 Owner 核准。前置需確認：gmail.se
 ---
 
 *A0/A1 派工全部完成 | 執行時間：2026-07-12 | 下一步：Owner 回來後確認 B6 優先清單*
+
+---
+
+## A0/Fable5 交棒任務 — 系統修正方向與複利計畫巡查
+
+> 執行者：A1 | 執行時間：2026-07-12 23:30 | Owner 原話：「在結束 fable5 之前先給我們整個系統寫下往哪個方向的修正與指引…讓我們系統反覆可以去檢視全貌並優化然後向複利迴圈前進，把這個 prompt 變成自動化並留存一個在我的 chrome extension 外掛，叫做複利計畫巡查」
+
+### 本次交付物
+
+| 產出物 | 路徑 | 說明 |
+|--------|------|------|
+| 系統方向指引 | `docs/fable5-direction-and-guidance.md` | 北極星 + 三個結構性風險 + 方向優先序 + 決策文化 |
+| 複利計畫巡查 prompt | `skills/compounding-patrol-prompt.md` | 單一真相源，可直接餵 claude -p，含五步驟完整流程 |
+| Chrome Extension 模組 | `chrome-extension/task-modules/COMPOUNDING-PATROL.json` | 按既有模組格式，可從 Extension 直接複製 prompt |
+| AGENT_RULES Section 22 | `AGENT_RULES.md` 末尾 | 複利計畫巡查正式成為每週例行治理規則 |
+
+### 核心設計決策
+
+**北極星（一句話）**：每輪工作後，系統要比之前「更容易持續進步」——衡量標準是複利迴圈是否轉了一圈，不是忙碌量。
+
+**三個永久防守的結構性風險**：
+1. **狀態腐化**（文件與現實漂移）→ A1 每日巡查必做 CURRENT_STATUS ↔ Task Card 交叉比對
+2. **三類消音**（做完沒人知道/拍板沒人推進/宣稱未驗證）→ 每週複利計畫巡查強制掃描
+3. **單點依賴**（A0 額度/OAuth token/單一派工通路）→ 雙線備援清單維持可用
+
+**方向優先序**：
+1. 現金流業務閉環（A5+A6+A7 真正被真實客人使用）— **最高優先**
+2. B3 廣告試跑「可複製結構」再放大
+3. Investment OS 規則引擎上線（不給建議只觸發規則）
+4. B5 每月蒸餾，向地端模型遷移能力
+
+**複利計畫巡查五步驟**（完整 prompt：`skills/compounding-patrol-prompt.md`）：
+1. 全貌掃描（3 分鐘重建全局狀態）
+2. 五問檢視（業務閉環/三類消音/複利四環/資源浪費/Owner 待決）
+3. 修正行動（直接修 + TASK_QUEUE 提案 + owner-action-queue）
+4. 沉澱教訓（pitfalls + panorama 增量更新）
+5. 例會格式回報 + `checkpoint.sh --notify`
+
+### Owner 使用方式
+
+**每週啟動**：從 Chrome Extension 選「複利計畫巡查」模組 → 複製 prompt → 貼到 Claude Code terminal
+
+**自動化**：`skills/compounding-patrol-prompt.md` 中已附 cron/launchd 接線指令（每週一 09:00）
+
+**歷史參照**：所有巡查報告落檔 `state/compounding-patrol-YYYY-MM-DD.md`，可追溯每週複利迴圈健康狀態
+
+---
+
+*Fable5 交棒任務完成 | A1 執行 | 2026-07-12 23:30*

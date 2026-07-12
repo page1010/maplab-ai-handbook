@@ -1,0 +1,29 @@
+全部完成。commit `61bbd8a` 已 push main。以下是執行摘要：
+
+---
+
+## 三 Phase 執行完畢
+
+### Phase A — 全貌地圖 ✅
+`docs/system-panorama-2026-07-12.md` 已產出。每個角色（A1-A8/B1-B5/Codex/Antigravity）一節，含定位、現有任務、實際運作狀態、斷點、推進方向。
+
+**關鍵發現：5 件 Owner 5 分鐘可解的動作**：
+1. 授權 Mina 用 A7 模板庫（Phase 3 立即上線）
+2. GAS 執行 `setupSyncTrigger` + `setupDashboard`（A5 Dashboard）
+3. 兩個 `launchctl load`（A4 照片管線自動化）
+4. 告知外送費級距（A7 Q5 + A5）
+5. B3 廣告按操作稿啟動
+
+### Phase B — 使用者視角走查 ✅
+- **A5 報價**：GAS 核心正常，缺 Dashboard 設定（Owner 動作）
+- **A6 Telegram**：PID 正常，報價路由 Sheet-first 確認，LINE Webhook URL 未填是最大缺口
+- **A7 FAQ**：Q1-Q10 模板全部可用，Phase 3 等 Owner 一句話授權 Mina
+- **A2 SEO Factory**：骨架存在，缺 WP 寫入憑證
+- **A4 照片**：腳本正常，launchd 未 load
+
+### Phase C — Codex/Antigravity 角色適配 ✅
+實測 4 種任務類型，關鍵結論已寫入 `skills/codex-offload-guide.md` 九、角色適配表：
+- **純文字生成 → agy**（~5s，比 Codex 快 4x）
+- **讀 repo 診斷 → Codex**（唯一能讀本機檔案）
+
+實際派工 3 件積壓工作，6 個 JOB 目錄落檔：Task Card 狀態補標（Codex）+ SEO 關鍵字矩陣草稿（agy）+ ALT 批次測試（agy）。

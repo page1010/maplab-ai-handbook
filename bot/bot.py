@@ -907,7 +907,7 @@ def _write_dispatch_packet(
         "codex_command": f"codex exec --cd {REPO_PATH} --sandbox workspace-write - < {prompt_path}",
         "openclaw_command": (
             "openclaw agent --agent main "
-            f"--session-key agent:main:{dispatch_id} --message <prompt> --timeout {_openclaw_dispatch_timeout()} --json"
+            f"--session-key agent:main:{dispatch_id} --message \"$(cat {prompt_path})\" --timeout {_openclaw_dispatch_timeout()} --json"
         ),
     }
 

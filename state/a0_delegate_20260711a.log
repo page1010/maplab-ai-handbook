@@ -1,0 +1,21 @@
+`e40b999` 已 push。
+
+---
+
+**T-A7-001 三層審查完成 — 執行摘要**
+
+**🔍 Layer 1（查卡點）**：~107h stale 因為 07-06 政策落地後 SECTION 8 沒有跟著更新，Phase 3 啟動通知也未發出。A5 外送費阻塞理由成立，但只影響 Q5「自動計算」，手動模板不受影響。
+
+**🔧 已自解（直接執行）**：
+- `projects/ai-reply-system.md` v1.2：Q7 C 線流程從「探測意向→安排試吃→A5」→「直接告知不提供試吃政策，傳照片/案例，若有意向再進 A 線」
+- SECTION 8.5 表格補 Q10 回頭客/B2B、取消/改期兩行
+- SECTION 8.7 補試吃/取消改期觸發點
+- `handoff/tasks/T-A7-001.md` v2.2：接續點更新，SECTION 8 標為 ✅，Phase 3 轉 OWNER_INBOX
+
+**📋 OWNER_INBOX（需 Owner 決定）**：
+1. **[OWNER_INBOX-A7-001]** Phase 3 上線測試：通知 Mina 開始用 `data/a7-reply-templates.md` 接真實 LINE 對話，模板現在完整可用
+2. **[OWNER_INBOX-A7-002]** A5 外送費級距：非急件，可選暫緩讓 Mina 手動估，或告知 A1 外送費政策後一起建
+
+**🏁 stale 計時器**：commit `e40b999` 已讓 patrol 重置 T-A7-001 計時器，下次巡查不會再標 🔴。
+
+完整回報存於 `state/a0_delegate_report_20260711.md`。

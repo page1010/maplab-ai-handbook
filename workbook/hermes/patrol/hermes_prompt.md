@@ -20,16 +20,6 @@ Deterministic reaction candidates:
 ```json
 [
   {
-    "id": "google-oauth-reauth-card",
-    "severity": "high",
-    "owner_role": "A1",
-    "target_task_card": "handoff/tasks/T-A1-SYNC-GUARD-001.md",
-    "why": "Google OAuth token refresh is invalid_grant; repeating the patrol text will not solve it.",
-    "next_step": "Prepare an Owner 5-minute OAuth reauthorization card, then rerun Sheets/Drive smoke.",
-    "next_step_patch_hint": "把阻塞改成精準 OAuth reauth action，不要每日原文轉發 invalid_grant。",
-    "codex_followup_prompt": "你是 MAPLAB A1，運行在 Codex。\n先讀 CURRENT_STATUS.md、pitfalls.md、workbook/hermes/patrol/latest.json，再讀相關 Task Card。\n\n觸發 reaction: google-oauth-reauth-card\n原因: patrol saw invalid_grant in Google OAuth\n本輪目標: produce the reauth card and verification command\n\n輸出：更新相對角色下一步或產 task packet；若需要 Owner，必須是 5 分鐘內可完成的具體行動。"
-  },
-  {
     "id": "long-blocked-three-layer-review",
     "severity": "medium",
     "owner_role": "A0/A1",

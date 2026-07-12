@@ -1,0 +1,48 @@
+{
+  "schema_version": "maplab.telegram_dispatch.v1",
+  "dispatch_id": "TG-DISPATCH-20260712-121235-quote-intake",
+  "created_at": "2026-07-12T12:12:35",
+  "status": "queued_for_codex",
+  "source": {
+    "surface": "telegram",
+    "owner_chat_id": "1077768811",
+    "message": "不要提到無麩質和低糖選項\n\n外送費級距找實際案例高雄嘉義標題報價單推算後給我報告和答案\n\ntimetree開chrome 自動google登入\n\nwordpress 與廣告後台數據分析與討論，跟我開會建議方向，討論後執行，之前應該有一些文章是針對關鍵字矩陣規劃，請你先找素材是不是中斷了",
+    "context_excerpt": "source=data/telegram-logs/2026-07-12.md\n# Telegram 對話紀錄 — 2026-07-12\n\n> 自動產生，供 agent 恢復記憶用\n\n## 2026-07-12 08:10:59 `[dispatch-local]`\n**Owner：** 我人在外面大概一個禮拜無法用電腦1. 你可以在有額度的時候把每個角色任務定位，都以使用者角度試著使用看看，並分析現在斷點及推進方向嗎？明顯需要修改整理的都把他做好。2.你可以去測試codex antigravity 可以用什麼角色或分派什麼任務把他們額度也妥善利用嗎？3.我們目的是不要浪費我花錢的算力，並在第一性原理下，盡可能優先了解專案全貌，再穩定的推進版本，所以身為監督的你讀完全貌是最重要的。然後要想辦法辨識出其他人的錯誤與需要做的改進與調整。讓大家都動起來定期跟我回報 格式以角色 任務名 要達到什麼目的 有優化什麼功能 做了什麼研究得到的結論，我們一天討論一次方向開個會\n\n**Bot：** ✅ 已建立派工包：TG-DISPATCH-20260712-081057-command-window-dispatch\n這不是只回覆：已落檔，並寫入 Codex clipboard bridge。\n- 主責：A0（協作：A0, A1）\n- worker：Codex primary; OpenClaw/Hermes can act as intake or read-only worker\n- status：queued_for_codex\n- openclaw_worker：will_start\n- packet：workbook/telegram-dispatch/TG-DISPATCH-20260712-081057-command-window-dispatch/packet.json\n- prompt：workbook/telegram-dispatch/TG-DISPATCH-20260712-081057-command-window-dispatch/prompt.md\n下一步：worker 必須用這個 dispatch_id 回報；沒有 receipt 就不能再說已召喚。\n\n---\n\n## 2026-07-12 08:14:44\n**Owner：** 你那個prompt.md是 hello world 需要動態指向的話要記得去調整與修正\n\n**Bot：** 🟢 [Claude]\nPush 成功。\n\n---\n\n**已修正兩個問題：**\n\n1. **`bot.py` L908-910** — `openclaw_command` 的字面 `<prompt>` 改為 `\"$(cat {prompt_path})\"` ，下次生成的 dispatch packe\n…（截斷）"
+  },
+  "route": {
+    "task_type": "quote-intake",
+    "title": "報價/試算派工任務",
+    "primary_role": "A6",
+    "roles": [
+      "A6",
+      "A5"
+    ],
+    "worker": "Codex/A6 intake; A5 quote engine or GAS/Sheet when a sheet artifact is required",
+    "runtime_target": "codex/a6/a5",
+    "task_cards": [
+      "handoff/tasks/T-A6-001.md",
+      "handoff/tasks/T-A5-002.md",
+      "projects/line-quote-assistant.md",
+      "projects/maplab-master-data.md"
+    ],
+    "goal": "整理活動需求、品項、數量、預算、毛利/成本口徑與待確認欄位，再交給 A6/A5 產出報價草稿或 Sheet payload。",
+    "data_needed": [
+      "event type, date/time, location, headcount, budget, service fee and logistics assumptions",
+      "menu preferences, dietary restrictions, item mapping, margin/cost risk",
+      "whether the required output is draft text, Sheet payload, or a formal quote link"
+    ],
+    "guardrails": [
+      "do not invent a Google Sheet or quote URL",
+      "do not expose internal costs to customers",
+      "if Sheet/GAS write is required, route through A5 and report the real artifact URL only after creation"
+    ]
+  },
+  "artifacts": {
+    "packet": "workbook/telegram-dispatch/TG-DISPATCH-20260712-121235-quote-intake/packet.json",
+    "prompt": "workbook/telegram-dispatch/TG-DISPATCH-20260712-121235-quote-intake/prompt.md",
+    "readme": "workbook/telegram-dispatch/TG-DISPATCH-20260712-121235-quote-intake/README.md",
+    "openclaw_result": "workbook/telegram-dispatch/TG-DISPATCH-20260712-121235-quote-intake/openclaw_result.json"
+  },
+  "codex_command": "codex exec --cd /Users/pagemacmini/maplab-ai-handbook --sandbox workspace-write - < /Users/pagemacmini/maplab-ai-handbook/workbook/telegram-dispatch/TG-DISPATCH-20260712-121235-quote-intake/prompt.md",
+  "openclaw_command": "openclaw agent --agent main --session-key agent:main:TG-DISPATCH-20260712-121235-quote-intake --message <prompt> --timeout 180 --json"
+}

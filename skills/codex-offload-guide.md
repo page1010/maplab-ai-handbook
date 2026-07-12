@@ -139,3 +139,28 @@ Wall time **~13.9s**（跟通路①同量級，差異在雜訊誤差範圍內，
 - 通路①（直接 CLI）**適合 A1 自己的一次性 offload**：不用額外 import 別的角色模組，缺點是輸出需要自己加 `-o` 或過濾雜訊。
 - 通路②（A6 exposed function）**只有在需要 A6 既有的 prompt 模板/對話歷史/逾時保護時才有優勢**，例如要模擬「A6 在跟業務對話」的情境；純粹當作「幫我找一顆 codex 額度」的用途沒有必要繞這條路。
 - **建議**：A1 offload 用通路①，並比照通路②的做法加 `-o <tmpfile>` 避免 stdout 雜訊；只有明確要重現 A6 對話情境或測試 A6 本體邏輯時才用通路②。
+
+---
+
+## 九、角色適配表（2026-07-12 實測更新）
+
+> 依據：A0 派工四種任務類型對比實驗（JOB-CODEX/AGY-TASK1/TASK2-20260712）
+
+| 任務類型 | 預設派 | 備用 | 理由 |
+|---------|--------|------|------|
+| 批量文字生成（ALT text / FAQ 草稿 / 產品描述 / 翻譯改寫） | **agy** | Codex | agy ~5-10s，品質達標，JSON 格式正確；Codex 同品質但耗時 ~14s+ |
+| 唯讀 repo 分析（Task Card 狀態掃描 / 程式碼診斷 / 配置審查） | **Codex** | — | Codex 實際讀取 repo 檔案，evidence 有根據；agy 無法讀 repo，遇到缺乏證據的場景給 unknown |
+| 定性品質審查（eval 評分 / 長文審閱 / SEO 品質複核） | **agy** | Codex | agy 速度快、模型選擇彈性（Gemini/Claude/GPT）；適合 weekly_eval_compounding.py 這類場景 |
+| 結構化資料生成（需要 JSON Schema 約束輸出） | **Codex** | agy | Codex 支援 `--output-schema <FILE>`，比 prompt 裡寫「請輸出 JSON」更可靠 |
+
+### 速度基準（2026-07-12 實測）
+| 工具 | 純文字任務 | 需讀 repo（5 檔）|
+|------|-----------|----------------|
+| agy | ~5-10s | 無法（不讀 repo）|
+| Codex | ~14-20s（ephemeral）| ~60-80s（含 sandbox 讀檔）|
+
+### 口訣
+- **只出一段文字 + 不需 repo = agy**
+- **需讀 repo 檔案診斷 = Codex**
+- **需要嚴格 JSON Schema = Codex（`--output-schema`）**
+- **eval 品質複核 = agy（彈性模型選擇）**

@@ -113,4 +113,97 @@ Owner 一週不在電腦前，A0 受命完成三個 Phase：
 
 ---
 
-*產出物：docs/system-panorama-2026-07-12.md / skills/codex-offload-guide.md（更新）/ workbook/reviews/JOB-* × 6 個目錄*
+## Phase B — Investment OS 全角色價值走查（擴充）
+
+> 完整執行 log：`state/a0_delegate_20260712b.log`
+> 量尺文件：`projects/investment-os-value-definition.md`
+> 紅線：不下單、不給個股買賣建議；所有建議設計為「Owner 規則觸發 → 三選項通知」
+
+### B1. 第一性思考：Investment OS 到底要帶來什麼
+
+Investment OS 存在的唯一理由：**讓 Owner 每天回答 5 個問題的速度從 30 分鐘 → 3 分鐘**
+
+五大核心交付：
+1. 今日可動性判斷
+2. 風控閘門狀態（集中度/槓桿/現金）
+3. 世界觀錨定（終局假設 1-2 個）
+4. 訊號新鮮度保證（過期不上介面）
+5. Owner 決策紀錄（觀察/等待/排除都算決策）
+
+**最大發現**：20 個輸出，沒有一個服務四層篩選第一層（世界觀/終局框架）。這是系統的根本盲點，不是功能缺失，而是方向缺失。
+
+### B2. 全角色走查（17 個角色）
+
+完整評分表見 `state/a0_delegate_20260712b.log` 第二節。
+
+**最高優先（直接服務風控閘門）：**
+- IOS-SENTINEL ⭐⭐⭐⭐⭐：技術三重賣出警示，半導體修正最直接適用
+- IOS-INVENTORY ⭐⭐⭐⭐⭐：持倉風控卡，實倉第一道守門員
+
+**需修復（停擺 49-54 天）：**
+- IOS-LEFT（~49天停更）/ IOS-RIGHT（~54天停更）：廣度/右側訊號斷供
+
+**需新建：**
+- IOS-THESIS：四層篩選第一層（世界觀/終局框架），建議 `projects/investment-os-thesis-registry.md`，每季一份
+
+### B3. 半導體修正案例覆盤（2026-07）
+
+**事前可偵測的訊號 vs 實際發出狀況：**
+
+| 訊號 | 理論可偵測 | 實際 | 原因 |
+|------|---------|------|------|
+| 集中度警示（82.7%） | ✅ | ⚠️ 部分 | exposure_ledger 有標 CRITICAL，但無三選項通知閉環 |
+| 廣度惡化 | ✅ | ❌ | IOS-LEFT 停更 49 天 |
+| 籌碼鬆動 | ✅ | ❓ | IOS-CHIP 狀態待查 |
+| 新聞密度 | ✅ | ❌ | shadow_findings 自 2026-06-02 斷供 |
+
+**根本問題**：功能存在，資料管道斷鏈。唯一確實發出的警告是 exposure_ledger CRITICAL 標記，但沒有「警示 → 通知 Owner 選行動」的閉環。
+
+### B4. 規則引擎草稿（5 條，等 Owner 核准後才實裝）
+
+| Rule | 觸發條件 | 通知格式 |
+|------|---------|---------|
+| R-01 | US tech 曝險 > X% + 技術面兩個指標轉負 | 降部位/對沖研究/觀察 三選項 |
+| R-02 | Firstrade 槓桿 > 1.8x + 制度轉 C/D | 降槓桿/補現金/靜觀 三選項 |
+| R-03 | 外資連 3 日賣超 + 廣度下降 | 觀察/降一碼/保持 三選項 |
+| R-04 | 任一持倉達 1R 止損線 | 執行止損/縮手/持有 三選項 |
+| R-05 | 帳戶 30 天回撤 > 15% | 緊急通知（無選項，立即查看） |
+
+**Owner 需確認 4 個參數**：`threshold_A`（集中度門檻）/ `leverage_threshold`（槓桿門檻）/ `1R_pct`（止損%）/ `drawdown_30d_pct`（急性警示%）
+
+### B5. 通知管道評估
+
+| 方案 | 成本 | 優先 |
+|------|------|------|
+| Telegram 緊急前綴 🚨 分類 | 30min | 立即 |
+| 規則觸發 Mail（pagewu1010@gmail.com） | ~2-4h B1 | 規則引擎核准後 |
+| Dashboard Investment OS 首頁 tab | ~4h B1 | 第三步 |
+
+Mail 原型已設計，不啟用，等 Owner 核准。前置需確認：gmail.send OAuth scope 或 App Password。
+
+### B6. 系統修復優先排序（Owner 看完後的行動清單）
+
+| 優先 | 任務 | 解鎖 |
+|------|------|------|
+| P1 | 確認 R-01 到 R-05 的 4 個參數 | 規則引擎才能實裝 |
+| P1 | B4 確認 IOS-CHIP / IOS-MOMENTUM 是否每日有真實 Telegram 輸出 | 釐清「決策資訊幻覺」 |
+| P2 | B1 修復 shadow_findings.jsonl 供料（convergence-engine JSON 解析） | IOS-ALPHA / 新聞密度恢復 |
+| P2 | B1 修復 FRED API key（pitfall #184） | IOS-MACRO 可信 |
+| P3 | 建立 IOS-THESIS（終局假設管理員） | 四層篩選第一層補齊 |
+| P4 | 規則觸發 Mail 原型實裝 | Owner 出門也能收到警示 |
+
+---
+
+## 全派工產出物清單
+
+| 產出物 | 路徑 | 用途 |
+|--------|------|------|
+| 系統全貌地圖 | `docs/system-panorama-2026-07-12.md` | Owner 回來後第一份讀物（含 Investment OS 第十六節） |
+| Investment OS 量尺 | `projects/investment-os-value-definition.md` | 後續所有角色決策的量尺 |
+| Phase B 執行 log | `state/a0_delegate_20260712b.log` | 完整走查/覆盤/通知設計 |
+| Codex/agy 適配表 | `skills/codex-offload-guide.md`（更新） | 路由標準 |
+| Codex/agy 派工作品 | `workbook/reviews/JOB-* × 6 個目錄` | Task Card 補標 + SEO 矩陣 + ALT text |
+
+---
+
+*A0/A1 派工全部完成 | 執行時間：2026-07-12 | 下一步：Owner 回來後確認 B6 優先清單*

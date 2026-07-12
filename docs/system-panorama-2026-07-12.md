@@ -400,5 +400,89 @@ Claude 的付費輔助執行層，適合批量文字生成、唯讀分析、翻�
 
 ---
 
+## 十六、Investment OS — 全角色價值定位（Phase B 擴充，2026-07-12）
+
+> Phase B 第一性思考完整版：`projects/investment-os-value-definition.md`
+> 詳細覆盤與規則引擎：`state/a0_delegate_20260712b.log`
+> 紅線：本節全程不下單、不給個股買賣建議
+
+### Investment OS 存在的唯一理由
+
+讓 Owner 每天回答 5 個問題的速度從 30 分鐘 → 3 分鐘：
+
+| # | 核心交付 | 主要角色 |
+|---|---------|---------|
+| 1 | 今日可動性判斷 | IOS-MACRO + IOS-MOMENTUM |
+| 2 | 風控閘門狀態（集中度/槓桿/現金） | IOS-SENTINEL + IOS-INVENTORY + IOS-HEDGE |
+| 3 | 世界觀錨定（終局假設 1-2 個） | IOS-THESIS（缺，需建）+ IOS-LEFT |
+| 4 | 訊號新鮮度保證（過期不上介面） | IOS-EVIDENCE + 所有角色 bad_data_rule |
+| 5 | Owner 決策紀錄（觀察/等待/排除都算） | IOS-SIM + 未來 decision_log |
+
+### 角色定位速覽（17 個角色）
+
+| 角色 | 投資者決策價值 | 判定 |
+|------|-------------|------|
+| IOS-SENTINEL | ⭐⭐⭐⭐⭐ | 保留（最高優先） |
+| IOS-INVENTORY | ⭐⭐⭐⭐⭐ | 保留（最高優先） |
+| IOS-MACRO | ⭐⭐⭐⭐ | 保留（修復 FRED API 前置） |
+| IOS-CHIP | ⭐⭐⭐⭐ | 保留（優先維持） |
+| IOS-HEDGE | ⭐⭐⭐⭐ | 保留（新增規則引擎對接） |
+| IOS-MOMENTUM | ⭐⭐⭐ | 保留（修復輸出驗證，目前有「決策資訊幻覺」風險） |
+| IOS-RIGHT | ⭐⭐⭐ | 保留（修復，54 天停更） |
+| IOS-LEFT | ⭐⭐⭐ | 保留（修復，49 天停更） |
+| IOS-SIM | ⭐⭐⭐ | 保留 |
+| IOS-BLACKSWAN | ⭐⭐⭐ | 保留（補充行業集中度觸發路徑） |
+| IOS-EVIDENCE | ⭐⭐⭐ | 保留（品管層） |
+| IOS-ALPHA | ⭐⭐ | 保留（修復 shadow_findings 供料） |
+| IOS-FAMILY | ⭐⭐ | 保留（獨立範圍） |
+| IOS-KOL | ⭐⭐ | 保留（降級：radar_only） |
+| IOS-FB | ⭐ | 保留（低頻，quarantine-first） |
+| IOS-SURFACE | ⭐ | 保留（基礎設施） |
+| IOS-HYGIENE | ⭐ | 保留（基礎設施） |
+| **IOS-THESIS** | （缺） | **新建：四層篩選第一層補齊** |
+
+### 最大系統缺口
+
+**世界觀/終局框架層完全空白**：20 個角色無一服務四層篩選第一層。系統只能追逐事件，無法回答「半導體這個終局假設還站不站得住腳」。
+
+建議：建立 `projects/investment-os-thesis-registry.md`（每季一份，Owner 填寫，不進日報節奏）。
+
+### 半導體修正案例（2026-07）關鍵結論
+
+| 時機 | 實際狀況 | 根因 |
+|------|---------|------|
+| 事前唯一發出的警告 | exposure_ledger 82.7% CRITICAL（2026-07-01） | 集中度閘門存在，但無通知閉環 |
+| 廣度/籌碼/新聞密度 | ❌ 未觸發 | 三個系統各自停更 49-54 天 |
+| 技術三重賣出 | 狀態未知（合理靜默或需查 launchd） | SENTINEL 邏輯正確，資料新鮮度待查 |
+
+**主要問題**：功能存在，資料管道斷鏈。集中度警示已發，但沒有「CRITICAL + 資料停更 → 自動通知 Owner」的聯動。
+
+### 降部位規則引擎（等 Owner 核准後實裝）
+
+5 條規則草稿已完成（見 `state/a0_delegate_20260712b.log` 第三節）：
+- **R-01**：集中度 > X% + 技術指標轉負 → 三選項通知（降部位/對沖研究/觀察）
+- **R-02**：Firstrade 槓桿 > 1.8x + 制度轉 C/D → 三選項通知
+- **R-03**：外資連 3 日賣超 + 廣度下降 → 三選項通知
+- **R-04**：個股達 1R 止損線 → 三選項通知
+- **R-05**：帳戶淨值 30 天回撤 > 15% → 緊急通知
+
+Owner 需確認 4 個參數：`threshold_A` / `leverage_threshold` / `1R_pct` / `drawdown_30d_pct`
+
+### 通知管道設計（Telegram + Dashboard + Mail）
+
+| 方案 | 成本 | 建議 |
+|------|------|------|
+| Telegram 前綴分類（🚨 緊急） | ~30min | 立即做 |
+| 規則觸發 Mail（Gmail API/SMTP） | ~2-4h B1 | 規則引擎核准後第二步 |
+| Dashboard Investment OS 首頁 tab | ~4h B1 | 第三步（等前兩項驗證） |
+
+Mail 原型已設計（不啟用，等 Owner 核准）：
+- 收件人：pagewu1010@gmail.com
+- Subject：`[Investment OS 警示] R-XX 觸發 — [摘要]，請選擇行動`
+- Body：三選項格式 + 後果說明
+
+---
+
 *本文件 Phase B 使用者視角走查結論已嵌入各角色節*
+*Phase B Investment OS 全角色走查結論見第十六節 + `state/a0_delegate_20260712b.log`*
 *Phase C Codex/Antigravity 派工結論見 `skills/codex-offload-guide.md`（角色適配表）和 `state/a0_delegate_20260712_report.md`*

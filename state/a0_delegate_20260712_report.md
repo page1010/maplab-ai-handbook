@@ -256,3 +256,93 @@ Mail 原型已設計，不啟用，等 Owner 核准。前置需確認：gmail.se
 ---
 
 *Fable5 交棒任務完成 | A1 執行 | 2026-07-12 23:30*
+
+---
+
+## A1 執行報告 — 備援召喚機制 + 考試流程落地（2026-07-13 01:00）
+
+> 執行者：A1 | 觸發：Owner 原話「codex antigravity as sub-agent 要善用他們額度，並避免你休息大家都休息，再一次次溝通中也調教他們可以當成備援，透過他們召喚A0A1B1出來，並有一個考試流程確認能力與系統全貌認知，也要考你自己的延伸session，就是下個接手的部分」
+
+### 任務一：備援召喚機制
+
+**6 份備援 Recall 建立完成**：
+
+| 角色 | Codex 版 | Antigravity 版 |
+|------|---------|--------------|
+| A0 | `distill/backup-recalls/A0-codex-backup-recall.md` | `distill/backup-recalls/A0-antigravity-backup-recall.md` |
+| A1 | `distill/backup-recalls/A1-codex-backup-recall.md` | `distill/backup-recalls/A1-antigravity-backup-recall.md` |
+| B1 | `distill/backup-recalls/B1-codex-backup-recall.md` | `distill/backup-recalls/B1-antigravity-backup-recall.md` |
+
+每份 recall 均包含：角色身份 + 系統全貌摘要 + 紅線 + fable-mindset 精要 + 誠實的能力邊界聲明 + 備援能做/不能做清單 + 待 Claude 恢復後執行清單格式。
+
+**額度中斷接管程序**：`docs/quota-outage-failover-runbook.md`
+
+四個 Level：A0 中斷 → A1 接管 → Codex 備援巡查 → agy 快速問答 → 純本機自救。含一行觸發指令（Owner 可直接複製使用）。
+
+---
+
+### 任務二：考試流程
+
+**考卷建立**：`exams/role-certification/` 下 A0/A1/B1 各一份（10 題 + 答案 + 評分標準，及格線 8/10）
+
+**實測結果**（詳見 `exams/role-certification/results/A1-exam-test-results-20260713.md`）：
+
+| 考生 | Round 1 | 調教 | Round 2 | 結果 |
+|------|---------|------|---------|------|
+| Codex | 9/10 ✅ | 不需要 | — | PASSED |
+| agy | 2/10 ❌ | 補充 LaunchAgents + OAuth 端對端驗收 | 8/10 ✅ | PASSED（調教後） |
+
+**關鍵洞察**：
+- agy 沒有備援 recall = 靠通用知識 = 2/10（失敗）；加了 recall = 8/10（通過）→ **recall 是 agy 備援的生命線**
+- Codex 能讀 repo，不需 recall 也能通過；但 Q3 仍有 A6 Webhook 阻塞誤解（讀到舊描述）
+- 「一次次溝通調教」的實物：Round 1→2 的 +6 分差距就是 Owner 說的調教迴路
+
+---
+
+### 任務三：繼任者考試
+
+**A0 繼任考試**：`exams/a0-succession-exam.md`（8 題，及格線 6/8）
+
+- 含標準答案（`exams/a0-succession-exam-answers.md`，獨立存放）
+- 含不及格處置（補讀 → 重考 → 記錄）
+- 含結果記錄格式
+
+**AGENT_STARTUP_PROTOCOL.md 更新**（v1.8）：
+- 新增 A0 繼任考試強制規則
+- 阻擋規則：未通過不得派工
+
+---
+
+### Owner 使用方式（一行啟動備援）
+
+```bash
+# Claude 額度中斷時 — 召喚 A1 Codex 備援巡查（約 60-90 秒）
+codex exec -s read-only --print \
+  --cwd /Users/pagemacmini/maplab-ai-handbook \
+  "$(cat distill/backup-recalls/A1-codex-backup-recall.md) 任務：立即備援巡查，輸出 3 件最緊急問題 + Owner 優先行動清單"
+
+# agy 快速問答
+agy --print "$(cat /Users/pagemacmini/maplab-ai-handbook/distill/backup-recalls/A1-antigravity-backup-recall.md) Owner 問：[問題]"
+```
+
+---
+
+### 本次交付物清單
+
+| 產出物 | 路徑 |
+|--------|------|
+| A0 Codex 備援 recall | `distill/backup-recalls/A0-codex-backup-recall.md` |
+| A0 agy 備援 recall | `distill/backup-recalls/A0-antigravity-backup-recall.md` |
+| A1 Codex 備援 recall | `distill/backup-recalls/A1-codex-backup-recall.md` |
+| A1 agy 備援 recall（調教後 v1.1）| `distill/backup-recalls/A1-antigravity-backup-recall.md` |
+| B1 Codex 備援 recall | `distill/backup-recalls/B1-codex-backup-recall.md` |
+| B1 agy 備援 recall | `distill/backup-recalls/B1-antigravity-backup-recall.md` |
+| 額度中斷接管程序 | `docs/quota-outage-failover-runbook.md` |
+| A0 認證考卷 + 答案 | `exams/role-certification/A0-exam.md` / `A0-exam-answers.md` |
+| A1 認證考卷 + 答案 | `exams/role-certification/A1-exam.md` / `A1-exam-answers.md` |
+| B1 認證考卷 + 答案 | `exams/role-certification/B1-exam.md` / `B1-exam-answers.md` |
+| 實測成績（兩輪） | `exams/role-certification/results/A1-exam-test-results-20260713.md` |
+| A0 繼任考試 + 答案 | `exams/a0-succession-exam.md` / `a0-succession-exam-answers.md` |
+| AGENT_STARTUP_PROTOCOL v1.8 | 新增 A0 繼任考試強制規則 |
+
+*A1 執行完畢 | 2026-07-13 01:00 | 下一步：Owner 確認後，可定期跑考卷驗證備援 agent 仍達標*

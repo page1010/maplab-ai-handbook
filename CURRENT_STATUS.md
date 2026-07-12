@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-07-12 13:43（checkpoint.sh 自動同步）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-07-12 22:00（A1 午後巡查更新）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -19,6 +19,7 @@
 
 ## 最新事實核對
 
+- 2026-07-12：**[A0 跨專案] IS Phase B 走查完成 + A1 bot 修復** — A0 今日執行三 Phase：① IS 全貌地圖閱讀 ② 全角色走查（量尺文件 + 17 角色評分 + 半導體修正覆盤 + 規則引擎草稿 + 通知方案）③ Codex/agy 派工實驗（6 個 JOB 落檔）。共 4 commits（`3a7bb9c`/`61bbd8a`/`0e7dc76`/`dd23864`，14:01 +0800）。**[A1]** bot.py openclaw_command 佔位符修正（`d953951` 08:13 +0800）。零 A2-A8 新 commit（無 Owner 派工，正常）。
 - 2026-07-11：**[A1 B5建立]** Owner 拍板「b5通過」→ A1 執行全套 B5 配套建立（A0 委派）。①`projects/b5-shadow-capability-distillation.md` 狀態改「✅ Owner 核准 2026-07-10」②`AGENT_RULES.md` Section 1 角色表加入 B5（三項職責：recall prompt 版本品質 / 能力盤點蒸餾評分 / 每月地端教材包）③`AGENT_RECALL_PROMPTS.md` 新增 `## B5` 段落（含 superpowers + fable-mindset 條款）④`recalls/B5_recall.md` 建立 ⑤**B5首輪執行**：召回品質審查 2026-Q3（`reports/recall-quality/recall_quality_2026-Q3.md`，發現全 17 個 recall 0個有 fable-mindset 注入，A5/A7 recall 🔴 ~85天過時）；首次蒸餾評分（`reports/capability-inventory/inventory_2026-07.md`，14 項評分≥4 的可打包項目）；教材包目錄骨架 `packages/local-model-teaching/2026-07/` + 打包腳本 `scripts/b5-pack-teaching-package.sh` ⑥CURRENT_STATUS/AGENT_RECALL_PROMPTS 同步更新。
 - 2026-07-10：**[A1 午後巡查]** 今日 A1 共 18+ commits（A0 委派全面落地）：①GBP 照片評分完成（moondream+qwen2.5 兩步驟，37/56 張有效，Top20+WP1992×5 精選落檔）②A0 委派 4 JOB 全落檔（JOB-CODEX-WEDDING-PILLAR/B3-ADCOPY/CONTENT-AUDIT/AGY-SECOND-READ）③weekly_eval_compounding 驗證（476/495 PASS，NO_DELTA）④nightwatch 盲區修復（shadow_findings 顯式檢查+patrol 自健檢）⑤B5 影子系統章程草稿建立⑥fable-mindset.md 落地（10 條工作思維+AGENT_RULES Section21+全角色 RECALL 注入）。T-A4-001 ✅ 完成確認無誤；T-A7-001 🔴 ~103h 無 commit（07-06 政策落地後停滯，Phase 3 未啟動，需 Owner 關注）。AGENT_RECALL_PROMPTS.md A4 row stale（仍顯示 ESCALATED）→ 已於本次巡查修正。零 A2-A8 新 commit（無 Owner 派工，正常）。
 - 2026-07-10：**[A1 執行 A0 委派]** A0 GUI session 卡 AskUserQuestion >1天；items 1-6 已 commit，item 7 照片評分交 A1。①A0 recall superpowers 補注入②T-A4-001 七連警告解除（Task Card ✅，patrol 已對齊）③Codex 通路驗證+指南更新④Loop-02/15/17 基線確認⑤GBP 照片評分（2026maplab外燴紀錄 6 夾）⑥總回報。GBP 解鎖任務執行中。
@@ -120,7 +121,7 @@
 | T-A5-005 | 報價狀態追蹤同步 + Dashboard | A5 | 🔴 CRITICAL（~455h無commit） | handoff/tasks/T-A5-005.md |
 | T-A5-006 | T-A5-006 | A5 | 🔲 待開始（尚未開始。等 T-A5-005 完成後啟動。） | handoff/tasks/T-A5-006.md |
 | T-A5-007-codex-takeover | T-A5-007 — A5 報價系統移交 Codex 管理 | A5 | 🔲 待 Codex 認領(Owner 2026-07-06 口頭指示:「把 A5 接給 Codex 管理」)（Codex 讀本卡「診斷結論」→ 執行「交接後第一批工作」） | handoff/tasks/T-A5-007-codex-takeover.md |
-| T-A6-001 | A6 LINE 業務報價助手系統 | A6 | 🔴 CRITICAL（~95h無commit） | handoff/tasks/T-A6-001.md |
+| T-A6-001 | A6 LINE 業務報價助手系統 | A6 | 🔴 CRITICAL（~132h無commit，2026-07-12 午後巡查更新） | handoff/tasks/T-A6-001.md |
 | T-A6-002 | LINE 對話訓練資料收集計畫 | A6 | 💤 暫停（原計畫拆 Sheet 做訓練資料，04-07 重新規劃方向。等 Owner 決定是否需要 LINE 訓練資料及取得方式。） | handoff/tasks/T-A6-002.md |
 | T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | 🔄 進行中（模板庫完整，Phase 3 上線測試 NOW-ready，唯一技術阻塞：A5 外送費 Q5 自動計算）（模板庫 + SECTION 8 全部對齊 Owner 政策；Phase 3 = Mina 開始用 `data/a7-re） | handoff/tasks/T-A7-001.md |
 | T-A7-002 | A7 部門 80/20 優先任務清單 | A7 | ⏸️ 阻塞中（任務 9 已解除，其餘阻塞未變）（任務 6（Q1-Q10 實裝）+ 任務 9（Owner 政策確認）+ 任務 10（技能書 v2.0）已完成。Phase ） | handoff/tasks/T-A7-002.md |
@@ -156,3 +157,4 @@
 | Owner | T-GBP-001: 等 Owner 準備新圖片 | 見 Task Card |
 |  | T-HQ-001: Owner pending（非 B1 blocking） | 見 Task Card |
 |  | T-IOS-KOL-001: - **阻塞**：無。 | 見 Task Card |
+| ⚠️ A1巡查 2026-07-12 22:00 | T-A7-001 🔴 ~180h 無 commit（Phase 3 未啟動，**連續第 5 天警告**，需 Owner 緊急關注）；T-A6-001 🔴 ~132h 無 commit（超閾值 2.75x，持續惡化） | 待 Owner 決策 |

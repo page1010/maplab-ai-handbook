@@ -159,3 +159,4 @@
 |  | T-HQ-001: Owner pending（非 B1 blocking） | 見 Task Card |
 |  | T-IOS-KOL-001: - **阻塞**：無。 | 見 Task Card |
 | ⚠️ A1巡查 2026-07-12 22:00 | T-A7-001 🔴 ~180h 無 commit（Phase 3 未啟動，**連續第 5 天警告**，需 Owner 緊急關注）；T-A6-001 🔴 ~132h 無 commit（超閾值 2.75x，持續惡化） | 待 Owner 決策 |
+| ⚠️ A1巡查 2026-07-12 23:30 | **晚間巡查**：T-A7-001 🔴 ~182h 無 commit（Phase 3 仍未啟動，**第 5 天末**，累計 6 次警告；last commit `f6fdaac` 07-07 patrol）；T-A6-001 🔴 ~134h 無 commit（超閾值 2.8x，bot_a6 上線 launchd 但 LINE webhook 仍等 Owner 確認）；今日正向：A1 Fable5交棒任務完成（方向指引+複利巡查 prompt+Extension 模組+AGENT_RULES S22）；A0 IS Phase B 走查完成（4 commits）；零 A2-A8 新 commit（正常，無 Owner 派工） | 待 Owner 決策 |

@@ -160,3 +160,4 @@
 |  | T-IOS-KOL-001: - **阻塞**：無。 | 見 Task Card |
 | ⚠️ A1巡查 2026-07-12 22:00 | T-A7-001 🔴 ~180h 無 commit（Phase 3 未啟動，**連續第 5 天警告**，需 Owner 緊急關注）；T-A6-001 🔴 ~132h 無 commit（超閾值 2.75x，持續惡化） | 待 Owner 決策 |
 | ⚠️ A1巡查 2026-07-12 23:30 | **晚間巡查**：T-A7-001 🔴 ~182h 無 commit（Phase 3 仍未啟動，**第 5 天末**，累計 6 次警告；last commit `f6fdaac` 07-07 patrol）；T-A6-001 🔴 ~134h 無 commit（超閾值 2.8x，bot_a6 上線 launchd 但 LINE webhook 仍等 Owner 確認）；今日正向：A1 Fable5交棒任務完成（方向指引+複利巡查 prompt+Extension 模組+AGENT_RULES S22）；A0 IS Phase B 走查完成（4 commits）；零 A2-A8 新 commit（正常，無 Owner 派工） | 待 Owner 決策 |
+| ⚠️ A1巡查 2026-07-13 08:00 | **每日巡查**：T-A7-001 🔴 ~194h 無 commit（Phase 3 仍未啟動，**第 8 天，累計 7 次警告，Owner 緊急決策急需**；last commit `f6fdaac` 07-07）；T-A6-001 🔴 ~146h 無 commit（bot_a6 launchd 已上線，阻塞點：LINE webhook Owner 確認）；正向：A1 備援召喚機制+考試流程落地（`31c7db6`：6份backup recalls/failover runbook/3份角色認證考卷/AGENT_STARTUP_PROTOCOL v1.8）；A0 IS Phase B 走查完成；A7 recall 斷點已更新（修正 04-20 過時狀態）；零 A2-A8 commit（正常，無 Owner 派工） | 待 Owner 決策 |

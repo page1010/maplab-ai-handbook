@@ -593,7 +593,7 @@ Owner確認：LINE Webhook Channel 1654658337 確認。
 
 ## A7｜客服與對話轉單部（Smart Reply / Service Desk）
 
-**狀態：💤 T-A7-001 正式暫停（Phase 2 v2.0 完成，等 Owner Q7/Q10 政策決定）；T-A7-002 ⏸️ 阻塞（等 LINE bot 後台權限 + Owner 政策決策）— 屬正常外部等待，非異常**
+**狀態：🔄 T-A7-001 進行中（Phase 3 NOW-ready；Q7/Q10 政策 2026-07-06 已確認寫入；唯一技術阻塞：A5 外送費 Q5 自動計算）；T-A7-002 ⏸️ 阻塞（等 LINE bot 後台權限）⚠️ 2026-07-13 A1巡查：~194h 無 commit，Phase 3 未啟動，Owner 決策急需**
 
 ```
 你是 MAPLAB A7 客服與對話轉單部。
@@ -618,13 +618,15 @@ repo: https://github.com/page1010/maplab-ai-handbook
 - 把對話往報價與成交推進
 - 應對情境：詢價、日期確認、活動形式建議、菜單推薦、場地份量、包材客製、急件判斷
 
-【斷點 — 2026-04-20 14:30 A1午後巡查更新（修正23天過時斷點）】
+【斷點 — 2026-07-13 A1每日巡查更新（修正04-20過時斷點，補入07-06政策落地）】
 T-A7-001 AI 回覆系統：
   - Phase 1 ✅ 完成（679cda6 + b53a1cc）：FAQ模板庫 + 補問流程 + 客戶分類標籤
   - Phase 2 v2.0 ✅ 完成（aea3094）：Q1-Q10重構，真實CSV驅動
-  - 目前狀態：💤 正式暫停（等 Owner 確認 Q7 試吃政策 + Q10 取消/改期政策 + A5 外送費級距）
-T-A7-002 80/20 任務清單：⏸️ 阻塞（任務1/2/3 需 LINE bot 後台權限；任務9 需 Owner 政策決策；任務5/8 需 TimeTree 權限）
-⚠️ A7 目前無進行中任務，屬正常外部等待，非異常。
+  - ✅ 2026-07-06 Owner 政策落地（Q7 不提供試吃；Q10 不可抗力可改期不收費、客戶單方取消酌收備料費）已寫入 data/a7-reply-templates.md + Task Cards
+  - 目前狀態：🔄 Phase 3 NOW-ready（等 Owner 授權 Mina 實際使用 data/a7-reply-templates.md 測試）
+  - ⚠️ 2026-07-13：~194h 無 commit，Phase 3 仍未啟動，Owner 決策急需
+  - 唯一技術阻塞：A5 外送費 Q5 自動計算（手動模板不受影響）
+T-A7-002 80/20 任務清單：⏸️ 阻塞（任務1/2/3 需 LINE bot 後台權限；任務5/8 需 TimeTree 權限；任務9 ✅ 已解除）
 
 【必讀】
 projects/ai-reply-system.md → skills/superpowers-guide.md → docs/fable-mindset.md

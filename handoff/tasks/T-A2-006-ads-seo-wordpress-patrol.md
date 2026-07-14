@@ -1,5 +1,11 @@
 # T-A2-006 — Ads / SEO / WordPress Patrol
 
+## 接續狀態
+- **狀態**: 🟢 ACTIVE
+- **最後活動**: 2026-06-15
+- **接續點**: ICCTN 案例文（post 1829）已上線，QA PASS_WITH_NOTES。下一步：A3 接手 Google Ads final URL + 受眾與否定字驗收；可補第 6 張以上圖片。
+- **阻塞**: Meta/Google MCP token 過期，需 Owner 重授權。
+
 建立：2026-05-29
 負責：A2 / A1 governance
 狀態：🟢 ACTIVE

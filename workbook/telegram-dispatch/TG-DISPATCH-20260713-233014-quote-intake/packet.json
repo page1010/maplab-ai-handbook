@@ -1,0 +1,48 @@
+{
+  "schema_version": "maplab.telegram_dispatch.v1",
+  "dispatch_id": "TG-DISPATCH-20260713-233014-quote-intake",
+  "created_at": "2026-07-13T23:30:14",
+  "status": "queued_for_codex",
+  "source": {
+    "surface": "telegram",
+    "owner_chat_id": "1077768811",
+    "message": "r06 InnerFlowLab 停止專案了 應該是investment os 不是外燴系統設計 外燴系統指的是A5建好的sheet+A6調用使用心得優化，模擬場景則是由A7的實際業務對話資產做模擬報價",
+    "context_excerpt": "source=data/telegram-logs/2026-07-13.md\n# Telegram 對話紀錄 — 2026-07-13\n\n> 自動產生，供 agent 恢復記憶用\n\n## 2026-07-13 09:24:39\n**Owner：** We’re extending Claude Fable 5 access on all paid plans, as well as our increased Claude Code rate limits, through July 19. 1. 確認一下dispatch session 為什麼我連不上2.把跟我們系統治理有關的相同任務，開10組需求，針對“最有價值”的角色與場景優化，1.系統治理/使用者需求分析 2.seo優化 3.網頁與品牌語氣對照能力 4.資料庫外燴系統調用 5.investment os全貌 ，發給fable vs opus ,只用文字留下推理過程，先不要開始著手動作用治理準則優化，做5輪\n\n**Bot：** 🟢 [Claude]\n狀況確認了。整理兩件事的完整回報。\n\n---\n\n## 1. Dispatch 連不上 — 根本原因\n\n**三個問題同時存在：**\n\n| 問題 | 狀態 | 根因 |\n|------|------|------|\n| Hermes CLI | `cli_path: null` | Hermes 沒有安裝或找不到路徑，dispatch 無法被執行 |\n| OpenClaw worker | \"will_start\" 但從未啟動 | Packet 建立後沒有進程去消費它，只是 queued 沒人執行 |\n| Google OAuth | `owner_reauth_needed: true` | Token 已過期，MCP 工具鏈（Sheets/Drive）被擋 |\n\n**白話：** Dispatch 是「把信投進信箱」但「沒有郵差」。Packet 存在，Hermes 不存在。除非有人手動跑 openclaw 指令，dispatch session 不會自動啟動。\n\n**Owner 回來後需要做的：**\n1. 確認 Hermes CLI 是否安裝：`which hermes` 或 `ls /usr/local/bin/hermes`\n2. Google OAuth 重新授權（5分鐘，MCP 才能恢復）\n\n---\n\n## 2. 10組需求 × Fable vs Opus — 5輪推理\n\n> 以下僅推理，不動任何檔案。Fable = Sonnet 4.6（額度延到7/19），Opus = Opus 4.7。\n\n---\n\n### 第1輪：初始分配（直覺掃描）\n\n| # | 主題 | 需求描述 | 初判模型 | 理由 |\n|---|------|-----\n…（截斷）"
+  },
+  "route": {
+    "task_type": "quote-intake",
+    "title": "報價/試算派工任務",
+    "primary_role": "A6",
+    "roles": [
+      "A6",
+      "A5"
+    ],
+    "worker": "Codex/A6 intake; A5 quote engine or GAS/Sheet when a sheet artifact is required",
+    "runtime_target": "codex/a6/a5",
+    "task_cards": [
+      "handoff/tasks/T-A6-001.md",
+      "handoff/tasks/T-A5-002.md",
+      "projects/line-quote-assistant.md",
+      "projects/maplab-master-data.md"
+    ],
+    "goal": "整理活動需求、品項、數量、預算、毛利/成本口徑與待確認欄位，再交給 A6/A5 產出報價草稿或 Sheet payload。",
+    "data_needed": [
+      "event type, date/time, location, headcount, budget, service fee and logistics assumptions",
+      "menu preferences, dietary restrictions, item mapping, margin/cost risk",
+      "whether the required output is draft text, Sheet payload, or a formal quote link"
+    ],
+    "guardrails": [
+      "do not invent a Google Sheet or quote URL",
+      "do not expose internal costs to customers",
+      "if Sheet/GAS write is required, route through A5 and report the real artifact URL only after creation"
+    ]
+  },
+  "artifacts": {
+    "packet": "workbook/telegram-dispatch/TG-DISPATCH-20260713-233014-quote-intake/packet.json",
+    "prompt": "workbook/telegram-dispatch/TG-DISPATCH-20260713-233014-quote-intake/prompt.md",
+    "readme": "workbook/telegram-dispatch/TG-DISPATCH-20260713-233014-quote-intake/README.md",
+    "openclaw_result": "workbook/telegram-dispatch/TG-DISPATCH-20260713-233014-quote-intake/openclaw_result.json"
+  },
+  "codex_command": "codex exec --cd /Users/pagemacmini/maplab-ai-handbook --sandbox workspace-write - < /Users/pagemacmini/maplab-ai-handbook/workbook/telegram-dispatch/TG-DISPATCH-20260713-233014-quote-intake/prompt.md",
+  "openclaw_command": "openclaw agent --agent main --session-key agent:main:TG-DISPATCH-20260713-233014-quote-intake --message <prompt> --timeout 180 --json"
+}

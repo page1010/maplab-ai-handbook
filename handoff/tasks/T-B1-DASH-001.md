@@ -1,5 +1,11 @@
 # T-B1-DASH-001: Guild Ops Board 自動同步 + 即時狀態燈
 
+## 接續狀態
+- **狀態**: 🟢 READY（已派工，等 Codex 執行）
+- **最後活動**: 2026-06-20
+- **接續點**: Game dashboard v0.2 完成（9 NPC / 6 rooms / 21 cards，驗收通過）。尚未完成：registry generator、`ops_board_status.json`、全 21 部門 NPC 鋪圖。
+- **阻塞**: 無
+
 - **負責**: B1 建造 / 可派 Codex 執行(repo owner)；A0 調度；B2 收驗
 - **建立日期**: 2026-06-07
 - **狀態**: 🟢 READY（已派工，等執行 + 進度檢查）

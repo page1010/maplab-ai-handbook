@@ -1,5 +1,11 @@
 # T-A2-SEO-CATERING-MATRIX-001 - Foreign Catering SEO Benchmark -> MAPLAB Article Matrix
 
+## 接續狀態
+- **狀態**: 🔄 進行中
+- **最後活動**: 2026-06-17
+- **接續點**: 競品分析工作包已建立於 `workbook/reviews/JOB-A2-SEO-CATERING-COMPETITOR-MATRIX-20260617/`；文章矩陣撰寫尚未開始。
+- **阻塞**: WP 寫入憑證需 Owner 確認（路徑：`skills/credentials/wordpress-api.md`）
+
 **Status**: 🔄 進行中
 **Owner**: A2 / Claude
 **Created**: 2026-06-17

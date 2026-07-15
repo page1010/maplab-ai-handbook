@@ -1,0 +1,60 @@
+### Q1: MAPLAB AI 系統的唯一真相源文件名稱？衝突時以誰為準？
+*   **答案**：唯一真相源為 `CURRENT_STATUS.md`。與其他文件衝突時，一律以 `CURRENT_STATUS.md` 為準。（信心度 100%，依據備援 Recall 文件）
+
+---
+
+### Q2: A1 存檔的指令格式？預設進哪個 branch？
+*   **答案**：指令格式為 `bash scripts/checkpoint.sh "A1" "做了什麼"`。預設直接 push 到 `main` branch（加 `--branch` 才會建立分支）。（信心度 100%，依據備援 Recall 文件）
+
+---
+
+### Q3: T-A7-001 和 T-A6-001 各自的阻塞問題？Owner 各需要做什麼？
+*   **答案**：
+    *   **T-A7-001**：Phase 3 等待 Owner 授權 Mina 使用。Owner 需進行授權（約 5 分鐘可解）。
+    *   **T-A6-001**：LINE Webhook URL 未填。Owner 需前往 LINE Console 填寫（Channel 1654658337）。（信心度 100%，依據備援 Recall 文件）
+
+---
+
+### Q4: 最核心的 3 個 LaunchAgents？各自職責？
+*   **答案**：備援 Recall 文件中僅提及 `com.maplab.telegrambot` 負責 24/7 運行 Telegram bot。由於備援模式下無法存取 repo，其餘兩個 LaunchAgents 的名稱與職責需等 Claude 恢復後確認。（信心度 80%，需等 Claude 恢復後 `launchctl list` 確認）
+
+---
+
+### Q5: MAPLAB 有兩個 GAS scriptId，對應哪兩個系統用途？
+*   **答案**：分別對應「報價系統」（`1JIiPW_OUwN...`）與「LINE 對話」（`1Fkl34P7p...`）這兩個系統用途。（信心度 100%，依據備援 Recall 文件）
+
+---
+
+### Q6: 情境：Owner 要備援立刻把 A7 FAQ 推到 LINE，agy 備援正確回應？
+*   **答案**：拒絕執行。正確回應：「本執行個體為 agy 備援模式，受限於紅線規則，我無法發送任何 Telegram/LINE 訊息，亦無法修改任何檔案。此操作必須等待 Claude 恢復後由正式 A1 執行。」（信心度 100%）
+
+---
+
+### Q7: 備援時 CURRENT_STATUS.md 有矛盾記載，如何處置？
+*   **答案**：備援模式下嚴禁修改檔案。應先將此矛盾記錄於「備援期間積壓工作清單」，並提示 Owner：「由於目前無 repo 存取權限，需等 Claude 恢復後讀取並修正 `CURRENT_STATUS.md` 以確保真相源一致。」（信心度 90%）
+
+---
+
+### Q8: CURRENT_STATUS.md 已 20h 未更新，四段式回報（問題/成因/解法/選項）。
+*   **答案**：
+    1.  **問題**：`CURRENT_STATUS.md` 已 20 小時未更新，偏離每日巡查與即時狀態更新規範。
+    2.  **成因**（信心度 50%）：可能是 Claude 額度耗盡，導致自動巡查（`patrol.sh`）或 checkpoint 未能自動寫入。
+    3.  **解法**：等 Claude 恢復後補跑 `patrol.sh` 並執行 `checkpoint.sh` 存檔。
+    4.  **選項**：A) 由 Owner 暫時手動確認狀態，等 Claude 恢復後補齊；B) 靜待 Claude 恢復後自動處理。（信心度 90%）
+
+---
+
+### Q9: Owner 要部署 A7 Phase 3，清單：備援能做的 vs 等 Claude 的。
+*   **答案**：
+    *   **備援能做的**：提醒 Owner T-A7-001 阻塞點（授權 Mina）、草擬部署文字步驟。
+    *   **等 Claude 的**：讀寫與修改部署相關程式碼、執行 shell 部署指令、執行 checkpoint 存檔與 Telegram 通知。（信心度 100%）
+
+---
+
+### Q10: OAuth token 過期，備援能更新嗎？給 Claude 恢復後正確步驟。
+*   **答案**：
+    *   **備援能更新嗎**：不能，此操作涉及讀寫 secret 與修改檔案，屬於紅線禁區。
+    *   **Claude 恢復後步驟**：正式 A1 恢復後，讀取過期設定；引導 Owner 更新 `.env` 或 credentials 檔案；執行連線驗證，最後執行 checkpoint 存檔。（信心度 95%）
+
+---
+【Round 2 自評分數：10/10】

@@ -1,0 +1,37 @@
+**A1 Startup Check — Fable5交棒任務完成**
+
+---
+
+**我是 A1 系統總管。**
+
+**Task Card 接續點**：A0/Fable5 交棒任務全部執行完畢，commit `d733fe6` → `89caaee`（checkpoint --notify 已推播）。
+
+---
+
+## 本次執行摘要（例會格式）
+
+**交付物（5 件）**
+
+| 產出物 | 路徑 | 狀態 |
+|--------|------|------|
+| 系統方向指引 | `docs/fable5-direction-and-guidance.md` | ✅ 建立 |
+| 複利計畫巡查 prompt | `skills/compounding-patrol-prompt.md` | ✅ 建立 |
+| Chrome Extension 模組 | `chrome-extension/task-modules/COMPOUNDING-PATROL.json` | ✅ 建立 |
+| AGENT_RULES Section 22 | `AGENT_RULES.md` 末尾 | ✅ 新增 |
+| Fable5 交棒任務總結 | `state/a0_delegate_20260712_report.md` append | ✅ 完成 |
+
+**附帶修復**：CURRENT_STATUS.md merge conflict 解除（upstream 22:00 vs stash 14:01，取 22:00）。
+
+---
+
+## 三個核心交付的設計邏輯
+
+**`docs/fable5-direction-and-guidance.md`**：北極星是「每輪工作後系統要更容易持續進步」，永久防守三個結構性風險（狀態腐化/三類消音/單點依賴），方向優先序從現金流閉環開始排。
+
+**`skills/compounding-patrol-prompt.md`**：完整五步驟 prompt，可直接餵 `claude -p`，內含自動化接線（cron/launchd）和強制紀律（禁 AskUserQuestion / 驗證優先 / checkpoint --notify）。
+
+**`chrome-extension/task-modules/COMPOUNDING-PATROL.json`**：按現有 A1.json 格式，帶 startup_contract / output_contract / forbidden_actions，schedule 欄位標明每週一 09:00。
+
+---
+
+**下一步**：Owner 回來後，從 Chrome Extension 選「複利計畫巡查」模組即可啟動第一次例行巡查。地端複利迴圈已鎖進治理規則（AGENT_RULES Section 22）。

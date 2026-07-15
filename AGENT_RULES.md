@@ -37,6 +37,7 @@ Step 5. Session 結束前在 `workbook/owner_requirements_panel.md` 寫一筆紀
 | B2 | Investment OS Reviewer | Reviewer | 檢查資料流、錯誤、freshness、報告契約、Telegram/Dashboard/DB 一致性 | projects/b2-invest-os-reviewer.md / skills/invest-os-b-role-system.md |
 | B3 | Investment OS Archivist | Archivist | 寫版本紀錄、交接紀錄、resume prompt、review bundle、pitfalls 回寫建議 | projects/b3-invest-os-archivist.md / skills/invest-os-b-role-system.md |
 | B4 | Investment OS System Patrol | System Patrol | 定期問「這套東西還適合嗎？」檢查過度建置、錯誤路由、任務停滯與暫停/重構條件 | projects/b4-invest-os-system-patrol.md / skills/invest-os-b-role-system.md |
+| B5 | 影子系統總管 | Shadow System & Capability Distillation Manager | ①全體 Recall Prompt 版本品質管理 ②複利輸出能力盤點蒸餾評分 ③每月地端模型教材包打包 | projects/b5-shadow-capability-distillation.md |
 
 > ⚠️ A 系列 = MAPLAB 專案；B 系列現在是 Investment OS / cross-project role family。原 InnerFlowLab 內容發文專案維持暫停；B1-B4 共享 Investment OS Owner logic，但不下單、不建模擬單、不給買賣建議。A8 影音產線服務兩邊（共用基礎設施）。
 > ⚠️ A1 = Claude Code，透過 Telegram 下指令，不需要在 Claude tab 召喚。
@@ -954,3 +955,83 @@ B4 patrol 每次巡查時對每張「進行中」task card 問：
 - `pitfalls.md` 2026-07-08 條目 — 完整根因記錄。
 - `scripts/notify_owner.sh`、`scripts/patrol.sh`（已完成區塊改列最近 3 張，不再被
   >5 張的計數消音）。
+
+---
+
+## SECTION 21 — 人話拆解標準（Fable Culture Clause，2026-07-10 Owner 指定）
+
+> **新增原因**：系統運行以來發現技術術語在 Owner 可見訊息中裸出，造成決策延遲——Owner 需要理解問題本質才能做選擇，不需要記住技術細節。本節確立所有 agent 對 Owner 溝通的最低格式標準。完整工作思維見 `docs/fable-mindset.md`（Fable 10 條原則 + MAPLAB 實例）。
+
+### 規則一：技術術語必附人話
+
+任何 agent 在 Owner 可見的位置（Telegram 推送、CURRENT_STATUS.md、Task Card 結論、巡查摘要）使用技術術語時，**必須在術語後附一句人話或生活譬喻**，讓 Owner 不需要查資料就能理解。
+
+**❌ 不可接受**：「webhook endpoint 驗證失敗導致 POST request 返回 403」
+**✅ 標準格式**：「webhook 驗證失敗（LINE 的訊息想找我們，但我們家門口的對講機沒設定好，被拒在門外）」
+
+| 技術術語 | 可用的人話替換 |
+|--------|------------|
+| API token 過期 | 通行證過期，系統不讓進 |
+| Colab session timeout | 計時器到了，像網咖電腦自動關機 |
+| clasp push conflict | 兩份文件同時被改，存檔時互相打架 |
+| rate limit exceeded | 問 Google 太頻繁，被請去冷靜 2 分鐘 |
+| 401 / 403 / 429 HTTP status | 沒權限進去 / 被擋在門口 / 太常敲門被忽略 |
+
+### 規則二：問題回報四段式
+
+任何 agent 向 Owner 回報問題，一律使用以下四段式結構，缺一不可：
+
+1. **問題**：現象描述（具體、可驗證，帶時間戳或 commit hash）
+2. **成因**：推測或確認的根因（標示信心程度：確認/推測/不確定）
+3. **解法**：至少一個可行方向（agent 已驗證或高信心的優先）
+4. **選項**：給 Owner 兩到三個決策路徑（A/B/C），讓 Owner 選，不要替 Owner 決定
+
+**範例**：
+- **問題**：A4 Colab 自 07-08 01:34 後 44.5h 無 checkpoint（六連警）。
+- **成因**：推測 Colab 12h runtime 上限到了 session 自動斷線（信心 80%）；或 GCP 配額耗盡（信心 20%）。
+- **解法**：地端 Ollama 接續跑可繞過 Colab 限制；重啟 Colab 最快但配額問題下會再失敗。
+- **選項**：A. 你去 Colab 確認（我給你查指令）；B. 我現在啟動 Ollama fallback；C. 先暫停 A4，擇日再處理。
+
+### 違反後果
+
+- Telegram 推送、CURRENT_STATUS 更新、Task Card 結論若包含裸露技術術語，視為回報不完整。
+- A1 巡查時發現其他 agent 有裸露術語，應在下次 checkpoint 補上人話說明。
+
+### 關聯
+
+- `docs/fable-mindset.md` — 完整 10 條工作思維（含 MAPLAB 實例，原則 ⑨⑩ 為本節來源）
+- SECTION 16（阻塞審查 SOP）— 本節是 Section 16「解完推動系統」的溝通面補充
+- SECTION 10（開發行動準則）— 管開發行為；本節管對 Owner 的溝通格式
+- SECTION 20（部門進度回報 SOP）— 管回報時機；本節管回報格式
+
+---
+
+## SECTION 22 — 複利計畫巡查（週例，2026-07-12 A0/Fable5 交棒任務落地）
+
+**定義**：每週一次全系統複利迴圈健檢。衡量標準不是忙碌量，是複利迴圈是否轉了一圈。
+
+**執行規則**：
+- **頻率**：每週例行（建議週一 09:00）
+- **執行者**：A1 系統總管（或 A0 委派）
+- **唯一入口**：`skills/compounding-patrol-prompt.md`（完整 prompt + 自動化接線方式）
+- **Chrome Extension**：`chrome-extension/task-modules/COMPOUNDING-PATROL.json`
+
+**五步驟強制執行**（詳見 prompt 本體）：
+1. 全貌掃描（CURRENT_STATUS + TASK_QUEUE + system-panorama + 上次巡查報告）
+2. 五問檢視（業務閉環 / 三類消音 / 複利四環 / 資源浪費 / Owner 待決清單）
+3. 修正行動（直接修 + TASK_QUEUE 提案 + owner-action-queue 更新）
+4. 沉澱教訓（pitfalls + panorama 增量更新）
+5. 例會格式回報 + `checkpoint.sh --notify`
+
+**三類消音強制掃描**（每次必查）：
+- 消音 1：做完沒人知道（里程碑未 --notify）
+- 消音 2：拍板沒人推進（Owner 決策未建 Task Card）
+- 消音 3：宣稱未驗證（✅ 無 receipt）
+
+**方向參照**：`docs/fable5-direction-and-guidance.md`（北極星 + 三個結構性風險 + 方向優先序）
+
+### 關聯
+- `skills/compounding-patrol-prompt.md` — 複利計畫巡查完整 prompt（單一真相源）
+- `docs/fable5-direction-and-guidance.md` — 系統方向指引（本節的「為什麼」）
+- `docs/fable-mindset.md` — Fable 工作思維框架
+- SECTION 20（部門進度回報 SOP）— 每日/里程碑回報；本節管每週全局複利巡查

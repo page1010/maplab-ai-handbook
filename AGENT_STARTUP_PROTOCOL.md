@@ -245,6 +245,36 @@ Chrome tab 規範：`AGENT_RULES.md` §「資源衛生 — Chrome / 瀏覽器 se
 
 ---
 
+## A0 繼任考試（強制，2026-07-13 新增）
+
+**每個新 A0 session 接手前必須通過本考試，才能開始正式派工。**
+
+```
+⛔ 阻擋規則：新 A0 未通過繼任考試 → 不得執行任何派工或寫入操作
+```
+
+**考試入口**：`exams/a0-succession-exam.md`
+**標準答案**：`exams/a0-succession-exam-answers.md`（獨立存放）
+**及格線**：6/8 分
+**不及格處置**：補讀對應文件 → 重考 → 記錄兩輪成績到 `state/a0-succession-exam-results.md`
+
+**考試流程（新 A0 必讀必做）**：
+1. 讀 `CURRENT_STATUS.md` + `docs/fable5-direction-and-guidance.md` + `AGENT_RECALL_PROMPTS.md`
+2. 回答 `exams/a0-succession-exam.md` 全部 8 題
+3. 對照答案自評分數
+4. ≥ 6/8：輸出 Startup Check，開始派工
+5. < 6/8：補讀 → 重考 → 記錄結果 → 再輸出 Startup Check
+
+**成績記錄格式**（結果存 `state/a0-succession-exam-results.md`）：
+```
+## [日期 HH:MM] 新 A0 session
+第一輪：X/8 | 不及格題：Q[N] | 重考：Y/8 | 上崗：[Y/N]
+```
+
+---
+
+*版本：v1.8 | 建立：2026-03-14 | 更新：2026-07-13 | 維護者：A1 Handbook Agent*
+*v1.8 變更：新增 A0 繼任考試強制規則（exams/a0-succession-exam.md），及格線 6/8，不及格不得上崗*
 *版本：v1.7 | 建立：2026-03-14 | 更新：2026-06-11 | 維護者：A1 Handbook Agent*
 *v1.7 變更：新增 Step 5.5 外部登入 / 社群帳號 Credential Bootstrap，明確 Notion credential 例外、secret 禁止持久化與 auth_missing 報告規則*
 *版本：v1.6 | 建立：2026-03-14 | 更新：2026-03-23 | 維護者：A1 Handbook Agent*

@@ -97,7 +97,7 @@ Owner 四層篩選框架的**第一層**（世界觀與終局資格——這個�
 
 | Phase | 內容 | 產出 | 前置條件 |
 |---|---|---|---|
-| **Phase 0** | 恢復 nightwatch / freshness gate，範圍窄：只回答「哪些資料真的新、哪些 job 只是 exit=0、哪些輸出不可用」 | `reports/nightwatch/latest.md` 恢復每日更新；順便排查錯誤184同類的「job成功但資料未更新」靜默失敗 | 無（可立即開始） |
+| **Phase 0** ✅ | 恢復 nightwatch / freshness gate，範圍窄：只回答「哪些資料真的新、哪些 job 只是 exit=0、哪些輸出不可用」 | ✅ 2026-07-10 A1 執行完成：(1) 根因更正——nightwatch 從未停擺，06-02 「停擺」是 TCC 阻擋 cross-project-mirror 導致 repo 副本舊、評審誤讀；(2) 修復 blind spot：CHECKS 新增 `shadow_findings.jsonl` 顯式 48h 檢查（修前 glob 遮蔽，shadow_findings.jsonl 921h 失鮮卻顯示 🟢）；(3) 實測驗收：手動跑 nightwatch 確認 1 alert（shadow_findings.jsonl 921h 過期）；(4) 防再犯：MAPLAB patrol.sh 新增每日「投資 OS 守夜人」自健檢區塊。待解：shadow_findings.jsonl 供料停止的根因是 convergence-engine 的 Hermes reviewer 失敗（`ValueError: no JSON object`），需另建任務排查。 | 無（可立即開始） |
 | **Phase 1** | 一頁式 `investment_goals.md`：本季曝險目標、最大回撤、1-2個thesis、證實/證偽條件（三分類：風控/thesis/流程） | `investment_goals.md` v0 | Phase 0 完成（資料可信後才有意義設目標） |
 | **Phase 2** | 只接 2 個 pilot：財經早報 + 曝險帳本加 goal/freshness 對照，**不要一次改20個輸出** | 財經早報/曝險帳本新增「本季目標對照」區塊 | Phase 1 完成 |
 | **Phase 3** | 補世界觀/終局層：做成「thesis registry + evidence ladder」，**不是每日長文** | 新的 thesis registry 文件（一次性/低頻更新，不進日報節奏） | 可與 Phase 2 並行 |

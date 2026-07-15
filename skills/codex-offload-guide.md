@@ -1,6 +1,19 @@
 # Codex / Antigravity 卸載指南
 
-版本：v1.0 | 建立：2026-07-06 | 觸發：任何角色在動筆前，先判斷這份工作是不是能卸載給已付費的 sub-agent（Codex / Antigravity），不要每次都用 Claude 額度。
+版本：v1.1 | 建立：2026-07-06 | 更新：2026-07-10 | 觸發：任何角色在動筆前，先判斷這份工作是不是能卸載給已付費的 sub-agent（Codex / Antigravity），不要每次都用 Claude 額度。
+
+---
+
+## ⛔ 強制落檔規則（違反即為治理錯誤，2026-07-10 Owner 核准）
+
+**所有 Codex / Antigravity 呼叫的輸出必須落檔，禁止用完即丟。**
+
+- 輸出目錄：`workbook/reviews/JOB-<TOOL>-<SLUG>-<YYYYMMDD>/` 或對應任務的指定目錄
+- 每個 JOB 目錄至少包含：`output.md`（原始輸出）+ `README.md`（呼叫目的、prompt 摘要、使用方式）
+- 輸出落檔後才能被 `weekly_eval_compounding.py` 的複利迴圈掃到；沒有落檔 = 沒有複利
+- **不得以「暫時用用」「只是試試」為由跳過落檔**；若確定沒有保留價值，落檔後自行歸入 `trash/` 或加 `_DISCARD` 後綴，但過程必須有 artifact
+
+---
 
 > 背景：Owner 2026-07-06 原話「gpt最近額度很多誒 他是你的sub agent你都不好好用起來 訓練他」「我指的是codex antigravity我都有付費 允許的話 幫我把telegram上的服務分過去給他們做」。
 > Codex、Antigravity（`agy`）不是獨立角色，是可調度的執行層——跟 A6 Telegram 服務的底層模型可插拔設計是同一個原則：**角色與分工不變，只是換掉底層跑的大語言模型**。完整 pluggable backend 設計見 `projects/a6-llm-backend-adapter.md`。
@@ -31,7 +44,7 @@
 沿用 `bot_a6/bot_a6.py` `_codex_generate_sync()` 已驗證的呼叫方式：
 
 ```bash
-codex exec --ephemeral -C /Users/pagemacmini/maplab-ai-handbook -s read-only -m gpt-5.1-codex - <<'EOF'
+codex exec --ephemeral -C /Users/pagemacmini/maplab-ai-handbook -s read-only - <<'EOF'
 （AGENT_RECALL_PROMPTS.md「## Codex」段落的召回 prompt + 具體任務）
 EOF
 ```
@@ -41,6 +54,7 @@ EOF
 - `-s read-only`：唯讀 sandbox，不能寫檔案——這是目前唯一驗證過對 Codex 有效的權限鎖。
 - `-C <repo path>`：限定工作目錄，避免 Codex 誤讀到其他 repo。
 - `-o <output file>`：A6 的實作額外把輸出導到暫存檔再讀回，避免 stdout 被其他訊息污染（見 `_codex_generate_sync`）。
+- ⚠️ **不要加 `-m gpt-5.1-codex`**（2026-07-10 實測修正）：這個帳號目前是 ChatGPT plan 登入，`gpt-5.1-codex` 回 `400 The 'gpt-5.1-codex' model is not supported when using Codex with a ChatGPT account`。不帶 `-m` 讓它用預設模型（目前實測是 `gpt-5.5`）即可正常回應。舊文件/舊 commit 若還留著 `-m gpt-5.1-codex` 範例，視為過期，改用不帶 `-m` 的版本。
 
 ## 三、Antigravity（agy）呼叫範例
 
@@ -92,3 +106,61 @@ Ollama（`gemma4:latest` 等本地模型）維持「末位冷備援」角色：C
 ## 七、Codex 必須遵守 Superpowers 技能路由（2026-07-09 Owner 指定）
 
 召喚 Codex 執行任何任務前，Codex 端必須先查 `skills/superpowers-guide.md` 的路由表，找到對應技能書並遵守——跟我們自己所有角色開工前查技能索引的義務相同，不因為 Codex 是外部 sub-agent 就豁免。已寫入 `AGENT_RECALL_PROMPTS.md`「## Codex」召回 prompt 的強制條款。
+
+## 八、兩條召喚通路實測對比（2026-07-10 A1 實測）
+
+Owner 提出的問題：「你本來有直接呼叫的技能，調用 A6 也可以，確認能不能用這個通路召喚與召喚效果」。實測了兩條通路，結論是**兩條通路底層是同一顆 CLI，A6 不是獨立服務端點**，差別只在呼叫方式包了多少東西。
+
+### 通路①：直接 CLI（本文件第二節的用法）
+```bash
+codex exec --ephemeral -C /Users/pagemacmini/maplab-ai-handbook -s read-only - <<'EOF'
+（Codex 召回 prompt + 具體任務）
+EOF
+```
+實測：模型 `gpt-5.5`（預設），wall time **~14.7s**，回覆正常但 stdout 混了 session header/token 用量等雜訊，需要自己過濾或改用 `-o <tmpfile>`。使用二進位 `/opt/homebrew/bin/codex`（npm 裝，`codex-cli 0.142.0`）。
+
+### 通路②：經 A6 暴露的可程式化入口
+`bot_a6/bot_a6.py` 的 `_codex_generate_sync()` / `codex_ask()` 不是網路服務，是一個可以直接 `import bot_a6` 呼叫的 Python function（不需要 bot 在跑、不需要 Telegram），本質上執行同一支 `codex exec --ephemeral -s read-only` 指令，差別是：
+- 用 `-o <tmpfile>` 導出乾淨輸出（無 header 雜訊，直接拿到答案本身）
+- 內建 `_build_codex_prompt()` 模板，自動帶入 A6 角色 recall + 對話歷史 + chat/seo 模式框架
+- 預設用 `/Applications/Codex.app/Contents/Resources/codex`（桌面版 App 內建二進位，`codex-cli 0.142.5`，跟通路①用的 homebrew CLI `0.142.0` 版本略有差異但同屬 codex-cli）
+- 有 `A6_CODEX_TIMEOUT_SECONDS`（預設180s）與例外處理包裝
+
+實測呼叫方式（不需啟動 bot，直接在 `bot_a6/` 目錄用 `bot/venv/bin/python3` import）：
+```python
+import bot_a6
+prompt = bot_a6._build_codex_prompt(chat_id=..., user_message="...", mode="chat", user_name="...")
+answer = bot_a6._codex_generate_sync(prompt)
+```
+Wall time **~13.9s**（跟通路①同量級，差異在雜訊誤差範圍內，不是實質效能差異）。
+
+### 結論
+- **沒有「調用 A6 比較快/比較有能力」這回事**——A6 沒有自己養一份獨立的 Codex 額度或服務，兩條路最終都落到同一支本機 `codex exec` CLI，延遲相近。
+- 通路①（直接 CLI）**適合 A1 自己的一次性 offload**：不用額外 import 別的角色模組，缺點是輸出需要自己加 `-o` 或過濾雜訊。
+- 通路②（A6 exposed function）**只有在需要 A6 既有的 prompt 模板/對話歷史/逾時保護時才有優勢**，例如要模擬「A6 在跟業務對話」的情境；純粹當作「幫我找一顆 codex 額度」的用途沒有必要繞這條路。
+- **建議**：A1 offload 用通路①，並比照通路②的做法加 `-o <tmpfile>` 避免 stdout 雜訊；只有明確要重現 A6 對話情境或測試 A6 本體邏輯時才用通路②。
+
+---
+
+## 九、角色適配表（2026-07-12 實測更新）
+
+> 依據：A0 派工四種任務類型對比實驗（JOB-CODEX/AGY-TASK1/TASK2-20260712）
+
+| 任務類型 | 預設派 | 備用 | 理由 |
+|---------|--------|------|------|
+| 批量文字生成（ALT text / FAQ 草稿 / 產品描述 / 翻譯改寫） | **agy** | Codex | agy ~5-10s，品質達標，JSON 格式正確；Codex 同品質但耗時 ~14s+ |
+| 唯讀 repo 分析（Task Card 狀態掃描 / 程式碼診斷 / 配置審查） | **Codex** | — | Codex 實際讀取 repo 檔案，evidence 有根據；agy 無法讀 repo，遇到缺乏證據的場景給 unknown |
+| 定性品質審查（eval 評分 / 長文審閱 / SEO 品質複核） | **agy** | Codex | agy 速度快、模型選擇彈性（Gemini/Claude/GPT）；適合 weekly_eval_compounding.py 這類場景 |
+| 結構化資料生成（需要 JSON Schema 約束輸出） | **Codex** | agy | Codex 支援 `--output-schema <FILE>`，比 prompt 裡寫「請輸出 JSON」更可靠 |
+
+### 速度基準（2026-07-12 實測）
+| 工具 | 純文字任務 | 需讀 repo（5 檔）|
+|------|-----------|----------------|
+| agy | ~5-10s | 無法（不讀 repo）|
+| Codex | ~14-20s（ephemeral）| ~60-80s（含 sandbox 讀檔）|
+
+### 口訣
+- **只出一段文字 + 不需 repo = agy**
+- **需讀 repo 檔案診斷 = Codex**
+- **需要嚴格 JSON Schema = Codex（`--output-schema`）**
+- **eval 品質複核 = agy（彈性模型選擇）**

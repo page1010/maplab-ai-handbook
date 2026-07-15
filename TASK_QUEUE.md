@@ -1,7 +1,16 @@
 # TASK_QUEUE.md — 開放任務軌道（防吃案）
 
 > 用途：每個開放迴圈都在這裡，有狀態+下一步+成果路徑。每階段結尾更新。對齊 Owner 治理偏好（PROJECT STATE UPDATE）。
-> 最後更新：2026-06-23（orchestrator）
+> 最後更新：2026-07-10（A1 執行 A0 委派）
+
+## 🔵 2026-07-10 A0 委派批次（Owner 已核，A1 執行）
+
+| JOB ID | 工具 | 任務 | 輸出目錄 | 狀態 |
+|---|---|---|---|---|
+| JOB-CODEX-WEDDING-PILLAR-20260710 | Codex | 婚禮 pillar 終稿潤飾（brand-voice-guide 校訂） | `workbook/reviews/JOB-CODEX-WEDDING-PILLAR-20260710/` | ✅ 落檔 |
+| JOB-CODEX-B3-ADCOPY-20260710 | Codex | B3 廣告素材文案初稿（Week1 corp, NT$100/日） | `workbook/reviews/JOB-CODEX-B3-ADCOPY-20260710/` | ✅ 落檔 |
+| JOB-CODEX-CONTENT-AUDIT-20260710 | Codex | 57 篇舊文內鏈+語氣批量分析（唯讀） | `workbook/reviews/JOB-CODEX-CONTENT-AUDIT-20260710/` | ✅ 落檔 |
+| JOB-AGY-SECOND-READ-20260710 | agy | SEO 矩陣覆核 + IS 優化方案二讀 | `workbook/reviews/JOB-AGY-SECOND-READ-20260710/` | ✅ 落檔 |
 
 ## 🔵 Codex 跑中（worktree 隔離，未 push，未碰 runtime/secrets）
 | 任務 | worktree / 分支 | 輸出 | 驗收 |

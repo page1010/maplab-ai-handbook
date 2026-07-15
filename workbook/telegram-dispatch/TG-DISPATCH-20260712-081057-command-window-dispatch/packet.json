@@ -1,0 +1,47 @@
+{
+  "schema_version": "maplab.telegram_dispatch.v1",
+  "dispatch_id": "TG-DISPATCH-20260712-081057-command-window-dispatch",
+  "created_at": "2026-07-12T08:10:57",
+  "status": "queued_for_codex",
+  "source": {
+    "surface": "telegram",
+    "owner_chat_id": "1077768811",
+    "message": "我人在外面大概一個禮拜無法用電腦1. 你可以在有額度的時候把每個角色任務定位，都以使用者角度試著使用看看，並分析現在斷點及推進方向嗎？明顯需要修改整理的都把他做好。2.你可以去測試codex antigravity 可以用什麼角色或分派什麼任務把他們額度也妥善利用嗎？3.我們目的是不要浪費我花錢的算力，並在第一性原理下，盡可能優先了解專案全貌，再穩定的推進版本，所以身為監督的你讀完全貌是最重要的。然後要想辦法辨識出其他人的錯誤與需要做的改進與調整。讓大家都動起來定期跟我回報 格式以角色 任務名 要達到什麼目的 有優化什麼功能 做了什麼研究得到的結論，我們一天討論一次方向開個會",
+    "context_excerpt": "source=data/telegram-logs/2026-07-10.md\n# Telegram 對話紀錄 — 2026-07-10\n\n> 自動產生，供 agent 恢復記憶用\n\n## 2026-07-10 11:40:49\n**Owner：** A0驗收測試第1輪：請回報你目前的runtime狀態與最近一次commit hash\n\n**Bot：** 🟢 [Claude]\n## A0 驗收測試第 1 輪回報\n\n**Runtime 狀態：**\n- 角色：A1 系統總管（Claude Code terminal）\n- 模型：Claude Sonnet 4.6（primary，正常運行）\n- 平台：Mac mini / zsh / darwin 25.2.0\n- 系統版本：v6.0 / Phase 6\n\n**最近一次 commit：**\n```\nbed7dad — checkpoint(A1): A0委派總回報完成：4個JOB落檔+weekly_eval實跑驗證(476/495 PASS, NO_DELTA, 4JOB全掃到)+治理修補+總報告append\n```\n\n**日期：** 2026-07-10\n**狀態：** Active，無異常，等待 A0 驗收第 2 輪指令。\n\n---\n\n## 2026-07-10 11:41:34\n**Owner：** A0驗收測試第1輪：回報runtime狀態與最新commit hash\n\n**Bot：** 🟢 [Claude]\n## A0 驗收測試第 1 輪回報\n\n**Runtime 狀態：**\n- 角色：A1 系統總管（Claude Code terminal）\n- 模型：Claude Sonnet 4.6（primary，正常運行）\n- 平台：Mac mini / zsh / darwin 25.2.0\n- 系統版本：v6.0 / Phase 6 — Active\n\n**最新 commit hash：**\n```\nbed7dad — checkpoint(A1): A0委派總回報完成：4個JOB落檔+weekly_eval實跑驗證(476/495 PASS, NO_DELTA, 4JOB全掃到)+治理修補+總報告append\n```\n\n等待 A0 驗收第 2 輪指令。\n\n---\n\n## 2026-07-10 11:42:37\n**Owner：** A0驗收第2輪：不開Code task，直接回答 你的召回prompt裡superpowers-guide條款是哪一行？引用原文\n\n**Bot：** 🟢 [Claude]\n**A0 驗收第 2 輪回報**\n\n不讀檔直接回答：**我沒有把 AGENT_RECALL_PROMPTS.md 的 superpowers-guide 條款原文記在 context 裡**，無\n…（截斷）"
+  },
+  "route": {
+    "task_type": "command-window-dispatch",
+    "title": "Telegram 外部指揮派工",
+    "primary_role": "A0",
+    "roles": [
+      "A0",
+      "A1"
+    ],
+    "worker": "Codex primary; OpenClaw/Hermes can act as intake or read-only worker",
+    "runtime_target": "codex/openclaw/hermes",
+    "task_cards": [
+      "CURRENT_STATUS.md",
+      "pitfalls.md",
+      "TASK_QUEUE.md"
+    ],
+    "goal": "把 Owner 的 Telegram 指令轉成角色、冷啟動來源、worker、可驗收輸出與回報節點，避免只回覆一段建議。",
+    "data_needed": [
+      "Owner original request",
+      "latest Telegram context if this is a follow-up question",
+      "role module/task-card evidence before execution"
+    ],
+    "guardrails": [
+      "do not treat '召喚' as complete until a packet/worker receipt exists",
+      "do not perform live external changes without explicit approval",
+      "if route is ambiguous, create an A0/A1 intake packet instead of pretending completion"
+    ]
+  },
+  "artifacts": {
+    "packet": "workbook/telegram-dispatch/TG-DISPATCH-20260712-081057-command-window-dispatch/packet.json",
+    "prompt": "workbook/telegram-dispatch/TG-DISPATCH-20260712-081057-command-window-dispatch/prompt.md",
+    "readme": "workbook/telegram-dispatch/TG-DISPATCH-20260712-081057-command-window-dispatch/README.md",
+    "openclaw_result": "workbook/telegram-dispatch/TG-DISPATCH-20260712-081057-command-window-dispatch/openclaw_result.json"
+  },
+  "codex_command": "codex exec --cd /Users/pagemacmini/maplab-ai-handbook --sandbox workspace-write - < /Users/pagemacmini/maplab-ai-handbook/workbook/telegram-dispatch/TG-DISPATCH-20260712-081057-command-window-dispatch/prompt.md",
+  "openclaw_command": "openclaw agent --agent main --session-key agent:main:TG-DISPATCH-20260712-081057-command-window-dispatch --message \"$(cat /Users/pagemacmini/maplab-ai-handbook/workbook/telegram-dispatch/TG-DISPATCH-20260712-081057-command-window-dispatch/prompt.md)\" --timeout 180 --json"
+}

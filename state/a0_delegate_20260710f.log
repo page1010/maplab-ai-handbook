@@ -1,0 +1,55 @@
+存檔完成，commit `8ef8360`，已推送 Telegram 通知 Owner。
+
+---
+
+## A1 Startup Check — 2026-07-11
+
+**身份**：A1 系統總管，運行在 Claude Code terminal / Mac mini
+
+**Fable 思維底層已內化**（① 先對齊再執行 ③ 驗證優先 ⑤ 每個結論帶證據鏈 ④ 阻塞三層審查）
+
+---
+
+## 已完成任務（B5 建立全套 — Owner 核准「b5通過」）
+
+### 1. 章程狀態 ✅
+`projects/b5-shadow-capability-distillation.md` → 狀態改「✅ Owner 核准 2026-07-10」
+
+### 2. AGENT_RULES.md 角色表加入 B5 ✅
+Section 1 B4 之後新增 B5 行（三項職責：①recall prompt 版本品質 ②能力盤點蒸餾評分 ③每月地端教材包）
+
+### 3. AGENT_RECALL_PROMPTS.md 新增 ## B5 段落 ✅
+位置：B1-B4 之後、WIN 之前；含 superpowers + fable-mindset 條款
+
+### 4. recalls/B5_recall.md 建立 ✅
+完整召回 prompt，含三項職責、斷點、輸出物路徑
+
+### 5. B5 首輪執行完成 ✅
+
+**① 召回品質審查 2026-Q3** → `reports/recall-quality/recall_quality_2026-Q3.md`
+
+🔴 **緊急發現（需 Owner 授權 A1 修復）**：
+- 全 17 個 recall 文件 **0 個**有 fable-mindset 注入
+- **A5 / A7 recall 各過時 ~85 天**（2026-04-17 最後更新），CRITICAL 狀態未反映
+
+**② 首次蒸餾評分** → `reports/capability-inventory/inventory_2026-07.md`
+
+Top 8 評分 5（可直接打包，無需改寫）：`fable-mindset.md`、`task-progress-guide.md`、`brand-voice-guide.md`、`first-principles-check/SKILL.md`、`a6-safety-boundaries.md`、`session-handoff.md`、pitfalls 6 條通用規則、JOB-A1-ALT-TEXT-STANDARD
+
+**③ 教材包目錄骨架 + 打包腳本** → `packages/local-model-teaching/2026-07/` + `scripts/b5-pack-teaching-package.sh` ✅
+
+### 6. 同步更新 ✅
+CURRENT_STATUS.md（B5 事實記錄 + T-B5-001 任務條目）、state/a0_delegate_20260710_report.md（append B5 回報段落）
+
+### 7. 存檔 ✅
+commit `8ef8360`，已 push main，已 Telegram 通知 Owner
+
+---
+
+## Owner 需決策
+
+| 優先 | 事項 |
+|------|------|
+| P0 | 授權 A1 更新 A5/A7 recall（過時 85 天，10 分鐘） |
+| P0 | 授權 A1 批次替所有 recall 加 fable-mindset 注入（30 分鐘） |
+| P1 | 確認蒸餾評分 → `bash scripts/b5-pack-teaching-package.sh 2026-07` 完整打包 |

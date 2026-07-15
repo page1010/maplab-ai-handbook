@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-07-09 22:00（A1 晚間巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-07-15 16:00（A1 午後巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -19,6 +19,12 @@
 
 ## 最新事實核對
 
+- 2026-07-12：**[A1 Fable5交棒任務] 系統方向指引 + 複利計畫巡查落地** — Owner 交棒任務：①`docs/fable5-direction-and-guidance.md` 建立（北極星/三個結構性風險/方向優先序/決策文化）②`skills/compounding-patrol-prompt.md` 建立（複利計畫巡查完整 prompt 本體，可直接餵 `claude -p`）③`chrome-extension/task-modules/COMPOUNDING-PATROL.json` 建立（Extension 模組，按既有格式接線）④`AGENT_RULES.md` Section 22 新增（複利計畫巡查為每週例行，執行入口 skills/compounding-patrol-prompt.md）⑤`state/a0_delegate_20260712_report.md` 例會格式 append。CURRENT_STATUS merge conflict（upstream 22:00 vs stash 14:01）已解（取 22:00 版本）。
+- 2026-07-12：**[A0 跨專案] IS Phase B 走查完成 + A1 bot 修復** — A0 今日執行三 Phase：① IS 全貌地圖閱讀 ② 全角色走查（量尺文件 + 17 角色評分 + 半導體修正覆盤 + 規則引擎草稿 + 通知方案）③ Codex/agy 派工實驗（6 個 JOB 落檔）。共 4 commits（`3a7bb9c`/`61bbd8a`/`0e7dc76`/`dd23864`，14:01 +0800）。**[A1]** bot.py openclaw_command 佔位符修正（`d953951` 08:13 +0800）。零 A2-A8 新 commit（無 Owner 派工，正常）。
+- 2026-07-11：**[A1 B5建立]** Owner 拍板「b5通過」→ A1 執行全套 B5 配套建立（A0 委派）。①`projects/b5-shadow-capability-distillation.md` 狀態改「✅ Owner 核准 2026-07-10」②`AGENT_RULES.md` Section 1 角色表加入 B5（三項職責：recall prompt 版本品質 / 能力盤點蒸餾評分 / 每月地端教材包）③`AGENT_RECALL_PROMPTS.md` 新增 `## B5` 段落（含 superpowers + fable-mindset 條款）④`recalls/B5_recall.md` 建立 ⑤**B5首輪執行**：召回品質審查 2026-Q3（`reports/recall-quality/recall_quality_2026-Q3.md`，發現全 17 個 recall 0個有 fable-mindset 注入，A5/A7 recall 🔴 ~85天過時）；首次蒸餾評分（`reports/capability-inventory/inventory_2026-07.md`，14 項評分≥4 的可打包項目）；教材包目錄骨架 `packages/local-model-teaching/2026-07/` + 打包腳本 `scripts/b5-pack-teaching-package.sh` ⑥CURRENT_STATUS/AGENT_RECALL_PROMPTS 同步更新。
+- 2026-07-10：**[A1 午後巡查]** 今日 A1 共 18+ commits（A0 委派全面落地）：①GBP 照片評分完成（moondream+qwen2.5 兩步驟，37/56 張有效，Top20+WP1992×5 精選落檔）②A0 委派 4 JOB 全落檔（JOB-CODEX-WEDDING-PILLAR/B3-ADCOPY/CONTENT-AUDIT/AGY-SECOND-READ）③weekly_eval_compounding 驗證（476/495 PASS，NO_DELTA）④nightwatch 盲區修復（shadow_findings 顯式檢查+patrol 自健檢）⑤B5 影子系統章程草稿建立⑥fable-mindset.md 落地（10 條工作思維+AGENT_RULES Section21+全角色 RECALL 注入）。T-A4-001 ✅ 完成確認無誤；T-A7-001 🔴 ~103h 無 commit（07-06 政策落地後停滯，Phase 3 未啟動，需 Owner 關注）。AGENT_RECALL_PROMPTS.md A4 row stale（仍顯示 ESCALATED）→ 已於本次巡查修正。零 A2-A8 新 commit（無 Owner 派工，正常）。
+- 2026-07-10：**[A1 執行 A0 委派]** A0 GUI session 卡 AskUserQuestion >1天；items 1-6 已 commit，item 7 照片評分交 A1。①A0 recall superpowers 補注入②T-A4-001 七連警告解除（Task Card ✅，patrol 已對齊）③Codex 通路驗證+指南更新④Loop-02/15/17 基線確認⑤GBP 照片評分（2026maplab外燴紀錄 6 夾）⑥總回報。GBP 解鎖任務執行中。
+- 2026-07-10：**[A1 每日巡查]** 過去 24h 共 3 commits（`e838bf7` A0 checkpoint、`efd3771` A1 晚間 patrol、`467b57f` A1 午後 patrol），零 A2-A8 agent commit（無 Owner 派工，正常）。T-A4-001 S11(2024) ✅ 已完成驗收（2026-07-09，七連警告已解除，GBP 照片評分 🔓 解鎖）。其餘 🔄 進行中任務（A6/A7）無新異常。Agent 狀態與 CURRENT_STATUS 一致，無新 SOP 偏移。
 - 2026-07-09：**[A0綜合] 記憶體警報解除+S11驗收完成+排程補課+Codex能力盤點+技能複利** — Owner 綜合派工（A0 額度中斷數小時剛恢復後）。**①記憶體**：llama-server 14.2GB 是昨晚 23:00 `com.maplab.a6-gym` 排程（已跑完）留下的 `qwen2.5:14b`，非 S11 用的模型；已 `ollama stop` 釋放，PhysMem unused 187MB→6GB。**②S11驗收**：主進程已於 07-08 08:48:17 完成（`run done: processed 3375`），3,314/3,409 張已分類並寫回 Sheet，98 筆殘留失敗（成因已從網路瞬斷轉為 Ollama vision 輸出非JSON/timeout 的內容層問題）；另起補跑收斂到 85 筆仍在背景跑（邊際遞減，不阻塞）。**判定 S11 完成，GBP 照片評分解鎖**。驗收過程發現 T-A4-001.md 本身就是「Task Card 狀態欄位跟 patrol.sh 解析器對不上」的第三個活例（頂部區塊缺狀態欄位，patrol 誤讀中段一段 2026-04-15 的過期文字），已修正並補上 `pitfalls.md` 記錄，另外 4 張卡（T-A2-001/002/007/A3-001）疑似同類但未壞，已 spawn 背景任務全面稽核。**③排程補課**：git log 確認 `patrol(a1)` 與 `seo-loop` 在整段額度中斷期間cadence 完全沒斷（6h/24h 節奏不變），沒有真正漏跑的排程；`weekly-eval-compounding` 只是還沒到第一次觸發時間（07-06 09:22 才裝、錯過當週 07-06 09:00 那次），非中斷造成，已在④手動跑掉技能複利部分。**④Codex 盤點**：`codex-cli 0.142.0`，新發現 `--output-schema`（結構化輸出）、`exec resume --last`（session 續接省 token）、`-i/--image`（非互動可附圖）、`--oss --local-provider ollama`（Codex 原生支援跑本地模型，跟我們自己設計的 `a6-llm-backend-adapter.md` 高度重疊，未來優先評估用原生參數）；並更正舊指南一句不精確描述——Codex 其實有 `mcp add/list` 可接 MCP（目前只註冊了 github/notion，沒有 Sheets/Drive），寫入 `skills/codex-offload-guide.md` §六。**⑤Superpowers 義務**：Codex 召回 prompt 新增「開工前查 `skills/superpowers-guide.md` 路由表」強制條款。**⑥技能複利**：`weekly_eval_compounding.py` 是 gate-eval 迴歸測試專用（Codex maker+agy reviewer），跟「把本週教訓滾進技能書」用途不同，未執行；改由本人直接把 3 條本週教訓蒸餾進對應技能書：`skills/credentials/claude-oauth.md`（.env 路徑陷阱，含 A6 一併補上）、`skills/a0-proactive-dispatch-guide.md`（準則5：做完≠回報完）、`docs/seo-publish-checklist.md`（C-4：Elementor 頁改動路徑+新頁不強制 Elementor）。
 - 2026-07-08：**[A6+GOVERNANCE] A6 bot 401 期間健檢（結論：無影響）+ SEO 部門進度回報迴路修好** — Owner 兩項派工。**(1) A6 健檢**：交叉比對 `bot_a6/conv_history_a6.json` + `data/a6-logs/2026-07-07.md`（真實時間戳），昨晚 22:12 A1 token 修復前後 A6 無對話紀錄，沒有訊息被吞證據；查證 A6 是否受 A1 同一個 401 影響 → **沒有**，`claude_ask()`/`_run_claude_guarded()`（用到 `CLAUDE_CODE_OAUTH_TOKEN`）在目前路由裡完全是 dead code（quote→A5本地引擎、聊天→Codex→Ollama、SEO→本地引擎，皆不呼叫 Claude CLI）；Codex-first 降級透明度程式碼確認合格；報價路由誤判部分是昨晚已修好的舊發現（e5ab867），非新問題。`bot_a6/.env` 殘留過期 token 註解但不影響行為（dead code），列為非急件清理項。詳見 `handoff/tasks/T-A6-001.md` 2026-07-08 checkpoint。**(2) SEO 進度回報迴路根因+修復**：查證 SEO 三人小組 4 項交付物（婚禮pillar/gender-reveal/B3操作稿/cannibalization）**全部已完成**（commit `5a83f0f`），但因為只用 session 內部 task list 追蹤、未寫 `handoff/tasks/T-*.md`，導致唯一會主動推 Telegram 的 `patrol-scheduled.sh` 掃描不到；另外 `patrol.sh` 舊版「已完成」區塊超過 5 張只顯示數字不點名，即使補了 Task Card 也會被消音。**已修**：新增 `scripts/notify_owner.sh`（即時 Telegram 推播）、`checkpoint.sh` 新增 `--notify` flag、`patrol.sh` 已完成區塊改列最近異動 3 張、補建 `handoff/tasks/T-A2-007-seo-trio-review-20260707.md`、SOP 寫入 `AGENT_RULES.md` SECTION 20（WHO=完成任務的角色自己、WHAT CHANNEL=`--notify` 即時+patrol 稽核雙層、HOW OFTEN=里程碑當下立即）。教訓入 `pitfalls.md` 2026-07-08 條目。
 - 2026-07-07（晚間 V）：**[A1] Telegram→Claude Code 橋接真修復 — 診斷腳本測錯 .env 的假訊號** — Owner 把新 `CLAUDE_CODE_OAUTH_TOKEN` 存進 repo 根目錄 `.env`，`scripts/diagnose_a1_claude_bridge.sh` 跑出 4/4 PASS、`claude -p` 手動實測也成功，但用 Chrome 開 Telegram Web 自己送測試訊息（Owner 提示「你可以自我檢查並找出問題」）才發現 bot 實際仍回 `401 Failed to authenticate`。**根因**：`bot/bot.py` 讀的是 `bot/.env`（`load_dotenv(BOT_DIR / ".env")`），不是 repo 根目錄 `.env`；`bot/.env` 裡的 token 那行自 2026-04-09 上次過期後就被註解掉，從未恢復。診斷腳本的 `ENVF` 卻硬寫死指向根目錄 `.env`，造成「根目錄有新 token」被誤判成「bot 也有」。**已修復**：① 把新 token 實際寫入 `bot/.env`（原本註解的行）；② 修正 `diagnose_a1_claude_bridge.sh` 的 `ENVF` 指向 `bot/.env`，新增根目錄/`bot/.env` token 交叉比對檢查；③ 重啟 bot 後用 Telegram Web 送真實訊息驗證，bot 正確回覆（Claude Sonnet 4.6 primary，非 Hermes/gemma4 fallback）。教訓已寫入 `pitfalls.md`：驗收 bot/service 修好與否，最終判準是「透過它真正對外的介面跑一次端到端」，腳本/CLI 直測只能證明「元件本身沒壞」，證明不了「元件真的被接上了」。
@@ -93,51 +99,43 @@
 | Task ID | 任務 | 負責 Agent | 狀態 | Task Card |
 |---------|------|-----------|------|-----------|
 | T-A1-EXT-001-dynamic-role-modules | T-A1-EXT-001 — GitHub Dynamic Role Task Modules | A1 | 🔄 進行中 | handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md |
-| T-A1-LEARNING-LOOP-001 | MAPLAB Learning Loop v0 Reaction Ledger | A1 | 🔄 進行中（P1 reaction ledger 已落地；P2 token capital registry / P3 eval harness 待做）（建立 token capital registry，登記可複用 prompt / eva） | handoff/tasks/T-A1-LEARNING-LOOP-001.md |
+| T-A1-LEARNING-LOOP-001 | MAPLAB Learning Loop v0 Reaction Ledger | A1 | 🔄 進行中（P1 reaction ledger 已落地；P2 token capital registry / P3 eval harness 待做）（建立 token capital registry，登記可複用 prompt / eval / task packet ） | handoff/tasks/T-A1-LEARNING-LOOP-001.md |
 | T-A1-RTK-001 | RTK Token Proxy 掛載與選擇性上線 | A1 | 🟢 已上線（Codex hook 已掛、裝前/裝後 patrol diff 驗收通過、git 排除生效） | handoff/tasks/T-A1-RTK-001.md |
 | T-A1-SYNC-GUARD-001 | 雲端同步破口修補 + patrol 紀錄瘦身 | A1 | 🔲 待開始（高槓桿、低成本，建議優先） | handoff/tasks/T-A1-SYNC-GUARD-001.md |
-| T-A1-V6-P2 | T-A1-V6-P2 | A1 | 🔄 進行中（4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG ） | handoff/tasks/T-A1-V6-P2.md |
+| T-A1-V6-P2 | T-A1-V6-P2 | A1 | 🔄 進行中（4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下一步：建虛擬測試案例 →） | handoff/tasks/T-A1-V6-P2.md |
 | T-A1-V6-P3 | T-A1-V6-P3 | A1 | 🔲 待開始（尚未開始。等 T-A1-V6-P2 完成後啟動。） | handoff/tasks/T-A1-V6-P3.md |
-| T-A1-V7 | 系統進化 — 單一真相源 + 自動同步 + 瘦身 + 自動技能生成 + 自動壓縮 | A1 | 🔄 進行中（Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Ph） | handoff/tasks/T-A1-V7.md |
-| T-A2-002-foodsafety-seo-cleanup | T-A2-002 — 食安 + 法規 SEO 字眼清理 | A2 | ⏸️ 阻塞（回溯掃描 + 根因結構性修復已完成，只剩等 Owner 決定 post 698 怎麼改）（58 篇既有文章已全數掃描完成；新產出內容的） | handoff/tasks/T-A2-002-foodsafety-seo-cleanup.md |
-| T-A2-003-weekly-wp-audit | T-A2-003: 每週全站 WP 內容稽核排程 | A2 | 🔲 待開始（腳本已建好（wp-audit.sh / wp-audit-cron.sh）。待 Ow） | handoff/tasks/T-A2-003-weekly-wp-audit.md |
+| T-A1-V7 | 系統進化 — 單一真相源 + 自動同步 + 瘦身 + 自動技能生成 + 自動壓縮 | A1 | 🔄 進行中（Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 ReMe）為加分項。） | handoff/tasks/T-A1-V7.md |
+| T-A2-002-foodsafety-seo-cleanup | T-A2-002 — 食安 + 法規 SEO 字眼清理 | A2 | ⏸️ 阻塞（回溯掃描 + 根因結構性修復已完成，只剩等 Owner 決定 post 698 怎麼改）（58 篇既有文章已全數掃描完成；新產出內容的自動防護缺口已用 F-1 gate 補上（見下方「2026-07-07 根因） | handoff/tasks/T-A2-002-foodsafety-seo-cleanup.md |
+| T-A2-003-weekly-wp-audit | T-A2-003: 每週全站 WP 內容稽核排程 | A2 | 🔲 待開始（腳本已建好（wp-audit.sh / wp-audit-cron.sh）。待 Owner 用 /schedule 建立） | handoff/tasks/T-A2-003-weekly-wp-audit.md |
 | T-A2-004 | 首頁結構優化 — 配合品牌色票微調 + 轉換路徑整理 | A2 | 🔲 待開始（任務卡建立。A0 已完成對標分析和色票微調。） | handoff/tasks/T-A2-004.md |
-| T-A2-005-local-seo-factory | T-A2-005：MAPLAB SEO Factory（地端閉環，Pillar First） | A2 | 🔴 CRITICAL（~1560h無commit） | handoff/tasks/T-A2-005-local-seo-factory.md |
+| T-A2-005-local-seo-factory | T-A2-005：MAPLAB SEO Factory（地端閉環，Pillar First） | A2 | 🔴 CRITICAL（~1680h無commit） | handoff/tasks/T-A2-005-local-seo-factory.md |
 | T-A2-006-ads-seo-wordpress-patrol | T-A2-006 — Ads / SEO / WordPress Patrol | A2 |  | handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md |
 | T-A2-SEO-CATERING-MATRIX-001 | Foreign Catering SEO Benchmark -> MAPLAB Article Matrix | A2 |  | handoff/tasks/T-A2-SEO-CATERING-MATRIX-001.md |
-| T-A2A3-001-B | SEO 場景頁面 + 內連結（從 T-A2A3-001 分拆） | A2/A3 | 🔴 CRITICAL（~1008h無commit） | handoff/tasks/T-A2A3-001-B.md |
-| T-A2A3-001 | SEO 關鍵字頁面補足 | A2/A3 | ⏸️ RM/GSC 部分暫停；案例寫作轉 T-A2A3-001-B（Rank Math 已退訂，已設定好的 SEO 欄位先不要再） | handoff/tasks/T-A2A3-001.md |
-| T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | ⏸️ 阻塞中（受眾輪廓分析完成（693筆 Orders）。待執行：�） | handoff/tasks/T-A3-002.md |
-| T-A4-001 | Phase 4 Gemini 照片分類（2022-2026） | A4 | 🔄 進行中（S11/2024 補跑執行中）（補跑進行中（PID 10941，2026-07-07 02:04 重啟）。0） | handoff/tasks/T-A4-001.md |
+| T-A2A3-001-B | SEO 場景頁面 + 內連結（從 T-A2A3-001 分拆） | A2/A3 | 🔴 CRITICAL（~1128h無commit） | handoff/tasks/T-A2A3-001-B.md |
+| T-A2A3-001 | SEO 關鍵字頁面補足 | A2/A3 | ⏸️ RM/GSC 部分暫停；案例寫作轉 T-A2A3-001-B（Rank Math 已退訂，已設定好的 SEO 欄位先不要再設定；下一步是依 live URL map 補 To B 真） | handoff/tasks/T-A2A3-001.md |
+| T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | ⏸️ 阻塞中（受眾輪廓分析完成（693筆 Orders）。待執行：嘉義加入廣告地區、興趣條件精簡、策略一冷受眾上線。） | handoff/tasks/T-A3-002.md |
 | T-A4-002 | pagewu1010 帳號 Takeout 解壓 + Gemini Flash 照片資產整合 | A4 |  | handoff/tasks/T-A4-002.md |
-| T-A4-003-photo-alt-pipeline | T-A4-003 — 照片 ALT/SEO 管線（地端 gemma4）+ Drive 改串流釋空間 | A4 | 🔴 CRITICAL（~647h無commit） | handoff/tasks/T-A4-003-photo-alt-pipeline.md |
-| T-A4-004-photo-classify | T-A4-004 — 照片分類搬移：截圖/家庭/外燴工作 + 年月資料夾 | A4 | 🔴 CRITICAL（~647h無commit） | handoff/tasks/T-A4-004-photo-classify.md |
-| T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔴 CRITICAL（~359h無commit） | handoff/tasks/T-A5-002.md |
+| T-A4-003-photo-alt-pipeline | T-A4-003 — 照片 ALT/SEO 管線（地端 gemma4）+ Drive 改串流釋空間 | A4 | 🔴 CRITICAL（~767h無commit） | handoff/tasks/T-A4-003-photo-alt-pipeline.md |
+| T-A4-004-photo-classify | T-A4-004 — 照片分類搬移：截圖/家庭/外燴工作 + 年月資料夾 | A4 | 🔴 CRITICAL（~767h無commit） | handoff/tasks/T-A4-004-photo-classify.md |
+| T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔴 CRITICAL（~479h無commit） | handoff/tasks/T-A5-002.md |
 | T-A5-004 | createSlides.gs — Slide 報價簡報自動生成 | A5 | 🟢 功能穩定（核心功能已可用且無需再動；~1500h+ 無 commit 是「沒事做」不是「壞掉」— 2026-07-06 A1 對帳澄清：先前 CURRENT_STATUS.md 任務表把「久無 commit」誤標為 🔴 CRITICAL，已改為反映實際狀態） | handoff/tasks/T-A5-004.md |
-| T-A5-005 | 報價狀態追蹤同步 + Dashboard | A5 | 🔴 CRITICAL（~359h無commit） | handoff/tasks/T-A5-005.md |
+| T-A5-005 | 報價狀態追蹤同步 + Dashboard | A5 | 🔴 CRITICAL（~479h無commit） | handoff/tasks/T-A5-005.md |
 | T-A5-006 | T-A5-006 | A5 | 🔲 待開始（尚未開始。等 T-A5-005 完成後啟動。） | handoff/tasks/T-A5-006.md |
-| T-A5-007-codex-takeover | T-A5-007 — A5 報價系統移交 Codex 管理 | A5 | 🔲 待 Codex 認領(Owner 2026-07-06 口頭指示:「把 A5 接給 Codex 管理」)（Codex 讀本卡「診斷結論」→ 執行「交接後第�） | handoff/tasks/T-A5-007-codex-takeover.md |
-| T-A6-001 | A6 LINE 業務報價助手系統 | A6 | 🔄 進行中（Case Store v0 已接到現有 `CONVERSATION_LOG`；A6 Telegr） | handoff/tasks/T-A6-001.md |
-| T-A6-002 | LINE 對話訓練資料收集計畫 | A6 | 💤 暫停（原計畫拆 Sheet 做訓練資料，04-07 重新規劃方�） | handoff/tasks/T-A6-002.md |
-| T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | 🔄 進行中（Owner 政策已於 2026-07-06 落地，剩 A5 外送費級距 + Phase 3 上線測試）（Q7/Q10 政策已解除阻塞（見下）；下一步是 A5 �） | handoff/tasks/T-A7-001.md |
-| T-A7-002 | A7 部門 80/20 優先任務清單 | A7 | ⏸️ 阻塞中（任務 9 已解除，其餘阻塞未變）（任務 6（Q1-Q10 實裝）+ 任務 9（Owner 政策確認�） | handoff/tasks/T-A7-002.md |
+| T-A5-007-codex-takeover | T-A5-007 — A5 報價系統移交 Codex 管理 | A5 | 🔲 待 Codex 認領(Owner 2026-07-06 口頭指示:「把 A5 接給 Codex 管理」)（Codex 讀本卡「診斷結論」→ 執行「交接後第一批工作」） | handoff/tasks/T-A5-007-codex-takeover.md |
+| T-A6-001 | A6 LINE 業務報價助手系統 | A6 | 🔴 CRITICAL（~119h無commit） | handoff/tasks/T-A6-001.md |
+| T-A6-002 | LINE 對話訓練資料收集計畫 | A6 | 💤 暫停（原計畫拆 Sheet 做訓練資料，04-07 重新規劃方向。等 Owner 決定是否需要 LINE 訓練資料及取得方式。） | handoff/tasks/T-A6-002.md |
+| T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | 🔄 進行中（模板庫完整，Phase 3 上線測試 NOW-ready，唯一技術阻塞：A5 外送費 Q5 自動計算）（模板庫 + SECTION 8 全部對齊 Owner 政策；Phase 3 = Mina 開始用 `data/a7-re） | handoff/tasks/T-A7-001.md |
+| T-A7-002 | A7 部門 80/20 優先任務清單 | A7 | ⏸️ 阻塞中（任務 9 已解除，其餘阻塞未變）（任務 6（Q1-Q10 實裝）+ 任務 9（Owner 政策確認）+ 任務 10（技能書 v2.0）已完成。Phase ） | handoff/tasks/T-A7-002.md |
 | T-A8-001-folder-to-video-distribution | T-A8-001 — Folder Case to Short Video Distribution | A8 |  | handoff/tasks/T-A8-001-folder-to-video-distribution.md |
 | T-B1-001 | B1 Cross-Project Governance Advisor Prompt + Project Pause |  | 🟢 召喚型可用（Investment OS 投資邏輯橋接 ready；InnerFlowLab 內容發文專案暫停） | handoff/tasks/T-B1-001.md |
-| T-B1-B4-investment-os-role-split | T-B1-B4-001 — Investment OS B1-B4 Role Split + Chrome Extension Summon |  | 🔴 CRITICAL（~479h無commit） | handoff/tasks/T-B1-B4-investment-os-role-split.md |
+| T-B1-B4-investment-os-role-split | T-B1-B4-001 — Investment OS B1-B4 Role Split + Chrome Extension Summon |  | 🔴 CRITICAL（~599h無commit） | handoff/tasks/T-B1-B4-investment-os-role-split.md |
 | T-B1-DASH-001 | Guild Ops Board 自動同步 + 即時狀態燈 |  | 🟢 READY（已派工，等執行 + 進度檢查） | handoff/tasks/T-B1-DASH-001.md |
 | T-GBP-001 | T-GBP-001 | Owner | 🔲 待開始（尚未開始。等 Owner 準備新圖片。） | handoff/tasks/T-GBP-001.md |
-| T-HQ-001 | AGENT-HQ 集團共用層遷移 |  | ⏳ 代碼已交付，等 Owner 啟用（P1-P5 腳本完成，P6 腳本完成，Owner 動作仍 pending）（Owner 執行下列三個 `launchctl load` + `hermes memory s） | handoff/tasks/T-HQ-001.md |
-| T-IOS-KOL-001 | IOS-KOL 網紅雷達 Daily Telegram Digest |  | 🔴 CRITICAL（~431h無commit） | handoff/tasks/T-IOS-KOL-001.md |
+| T-HQ-001 | AGENT-HQ 集團共用層遷移 |  | ⏳ 代碼已交付，等 Owner 啟用（P1-P5 腳本完成，P6 腳本完成，Owner 動作仍 pending）（Owner 執行下列三個 `launchctl load` + `hermes memory setup` 指令即完成） | handoff/tasks/T-HQ-001.md |
+| T-IOS-KOL-001 | IOS-KOL 網紅雷達 Daily Telegram Digest |  | 🔴 CRITICAL（~551h無commit） | handoff/tasks/T-IOS-KOL-001.md |
 ---
 
 ## Blockers（只列未解決的）
-
-⚠️ A1巡查 2026-07-08 08:00：T-A4-001 S11/2024 補跑預計完成時間已過（07-07 02:04 重啟 + ~23.6h = 07-08 01:34），截至本次巡查仍無 completion checkpoint；Owner 請確認 Mac mini PID 10941 狀態（completed/still running/crashed again）；若完成請補 `checkpoint.sh "A4" "S11/2024 補跑完成"` 並更新 T-A4-001 task card。
-⚠️ A1巡查 2026-07-08 16:00（午後）：🔴 升級警告 — T-A4-001 已達預計完成時間後 ~14h（08:00 首次警告後再過 8h 仍零回應）。Mac mini PID 10941 存亡不明，可能 ①正常完成但未補 checkpoint ②再次崩潰 ③仍在跑（異常慢）。8h 內無任何 A2-A8 agent commit（正常，無 Owner 派工）。建議 Owner 最優先確認 A4 Mac mini 狀態。
-⚠️ A1巡查 2026-07-09 22:00（晚間）：🔴 T-A4-001 六連警告 — 預計完成 07-08 01:34，截至本次巡查已逾 ~44.5h 仍無 completion checkpoint（07-08 08:00/16:00/22:00 + 07-09 08:00/16:00/22:00 六警全程零回應）。情境仍為：① PID 10941 再次崩潰未重啟 ② 完成但未補 checkpoint。Owner 最優先動作：`tail -n 20 state/a4_s11_resume.log` 確認 Mac mini 狀態；若完成請補 `checkpoint.sh "A4" "S11/2024 補跑完成"` 並更新 T-A4-001。晚間 8h（07-09 16:00→22:00）無 A2-A8 新 commit，其餘 🔄 任務（A6/A7）狀態無新異常。
-⚠️ A1巡查 2026-07-09 16:00（午後）：🔴 T-A4-001 五連警告 — 預計完成 07-08 01:34，截至本次巡查已逾 ~38.5h 仍無 completion checkpoint（07-08 08:00/16:00/22:00 + 07-09 08:00/16:00 五警全程零回應）。情境仍為：① PID 10941 再次崩潰未重啟 ② 完成但未補 checkpoint。Owner 最優先動作：`tail -n 20 state/a4_s11_resume.log` 確認 Mac mini 狀態；若完成請補 `checkpoint.sh "A4" "S11/2024 補跑完成"` 並更新 T-A4-001。8h（07-09 08:00→16:00）無 A2-A8 新 commit，其餘 🔄 任務（A6/A7）狀態無新異常。
-⚠️ A1巡查 2026-07-09 08:00（每日）：🔴 T-A4-001 四連警告 — 預計完成 07-08 01:34，截至本次巡查已逾 ~30h 仍無 completion checkpoint（07-08 三警 08:00/16:00/22:00 + 本次 07-09 08:00，全程零回應）。情境仍為：① PID 10941 再次崩潰未重啟 ② 完成但未補 checkpoint。Owner 最優先動作：`tail -n 20 state/a4_s11_resume.log` 確認 Mac mini 狀態；若完成請補 `checkpoint.sh "A4" "S11/2024 補跑完成"` 並更新 T-A4-001。24h（07-08 08:00 → 07-09 08:00）無 A2-A8 新 commit，其餘 🔄 任務（A6/A7）狀態無新異常。
-⚠️ A1巡查 2026-07-08 22:00（晚間）：🔴 T-A4-001 三連警告 — 預計完成 07-08 01:34，截至晚間巡查已逾 ~20h 仍無 completion checkpoint（08:00 首警 → 16:00 升級 → 22:00 三連，全程零回應）。零回應模式與兩種高可能情境吻合：① PID 10941 再次崩潰未被重啟 ② 完成但未補 checkpoint。Owner 最優先動作：`tail -n 20 state/a4_s11_resume.log` 確認 Mac mini 狀態；若完成請補 `checkpoint.sh "A4" "S11/2024 補跑完成"` 並更新 T-A4-001。晚間 8h（16:00-22:00）無 A2-A8 新 commit，其餘 🔄 任務（A6/A7）狀態無新異常。
 
 | 對象 | 問題 | 行動 |
 |------|------|------|
@@ -155,76 +153,18 @@
 | A5 | T-A5-006: 前置 T-A5-005 需先完成 | 見 Task Card |
 | A6 | T-A6-001: LINE webhook 已可看到 inbound 同步，但它只含客戶→OA 訊息；若要完整雙向訓練資料，需 LINE OA Manager CSV 匯出或其他正式來源。 | 見 Task Card |
 | A6 | T-A6-002: 等 Owner 決定方向 | 見 Task Card |
-| A7 | T-A7-001: A5 外送費級距未建立（其餘阻塞已解除，見 Blockers） | 見 Task Card |
+| A7 | T-A7-001: A5 外送費級距未建立（僅影響 Q5 自動計算；手動模板不受影響） | 見 Task Card |
 | A7 | T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 5/8 需 TimeTree 權限（任務 9 已解除） | 見 Task Card |
 | Owner | T-GBP-001: 等 Owner 準備新圖片 | 見 Task Card |
 |  | T-HQ-001: Owner pending（非 B1 blocking） | 見 Task Card |
 |  | T-IOS-KOL-001: - **阻塞**：無。 | 見 Task Card |
----
-
-## Source of Truth（有效文件清單）
-
-> Agent 只需讀以下文件。其他文件僅供參考，不作為執行依據。
-
-| 用途 | 檔案 | 說明 |
-|------|------|------|
-| 🎯 最新狀態（你在這裡） | CURRENT_STATUS.md | 唯一入口，最高優先 |
-| 🧭 企業文化 / 測試 receipt | docs/company-values.md | Cold-start 必讀；定義主動回報、增量存檔、測試與 receipt 硬規則 |
-| 📋 任務池 | TASK_QUEUE.md | 所有待辦任務清單 |
-| 📖 角色與規則 | AGENT_RULES.md v4.0 | 13 角色定義（A0-A8 + B1-B4）+ 協作規則 + 存檔規則 |
-| 🚀 開工 SOP | AGENT_STARTUP_PROTOCOL.md | 啟動流程 + Startup Check 輸出格式 |
-| 📂 任務卡 | handoff/tasks/T-xxx.md | 你認領的任務的詳細狀態 |
-| 🔧 技能路由 | skills/superpowers-guide.md | 開工前查路由表（27 本技能書）|
-| 🎯 角色召喚 | AGENT_RECALL_PROMPTS.md | 各角色專屬 prompt + 斷點 + 可用工具 |
-| 🗣️ 品牌語氣 | skills/brand-voice-guide.md | 對外文字必讀：禁用語、平台微調、受眾語氣 |
-
----
-
-## 可用 MCP 工具（2026-03-26 接通）
-
-> Agent 可直接使用以下工具讀寫外部服務，不需要開網頁手動操作。
-
-| 工具 | 用途 | 給哪些角色 |
-|------|------|----------|
-| NotebookLM | 文章→podcast 音檔（Audio Overview）| A8 |
-| Gemini Flash | 照片分類/alt text/Shorts 腳本 | A4, A8 |
-| Google Vids | 腳本+圖片→影片組裝 | A8 |
-| YouTube Studio | 影片上傳/排程/SEO | A8 |
-| Google Sheets | 讀寫試算表（品項/報價/追蹤表）| A5, A2, A3, 全員 |
-| Google Drive | 檔案存取/上傳/管理 | A4, A6, 全員 |
-| Google Analytics | 流量數據/報表 | A2, A3 |
-| Google Search Console | 搜尋排名/關鍵字 | A2 |
-| Google Ads | 廣告數據（唯讀）| A3 |
-| Meta Ads | Facebook/IG 廣告數據+管理 | A3 |
-
-OAuth token：`~/.claude/mcp-keys/google-token.json`（drive + spreadsheets scope）
-
----
-
-## 知識地圖（資料在哪裡）
-
-> 找不到資料？查這張表。
-
-| 類別 | 路徑 | 內容 |
-|------|------|------|
-| 客戶/活動資料 | data/timetree_events_2022_2026.json | 746 筆外燴事件（含客戶名、日期、活動類型）|
-| 品項資料 | data/item-master-cross-reference.md | 108 品項對照表（APP/DST/MAIN/BEV）|
-| 品項頻率 | data/item-frequency-top50.md | 399 筆歷史訂單品項分析 |
-| 品項去重 v2 | data/quote_items_deduped.json | 3,794 唯一品項 |
-| 報價系統 | projects/maplab-master-data.md | A5 報價邏輯 + Sheets 結構 |
-| SEO/廣告 | projects/seo-ads-agent.md | A2/A3 核心文件 + 轉換動作快照 |
-| A2 Ads/SEO/WP Patrol | projects/a2-ads-seo-wordpress-patrol.md | A2 召喚後品牌記憶確認、廣告/SEO/WordPress 巡查契約、高風險邊界 |
-| 照片管線 | projects/maplab-pipeline.md | A4 照片分類流程 + Gemini API |
-| 客服系統 | projects/ai-reply-system.md | A7 回覆系統架構 |
-| 廣告監控 | projects/maplab-ads-monitor.md | A3 ads_agent.py 技術文件 |
-| 報價簡報 | projects/slides-quotation-system.md | A6 Google Slides 報價 |
-| 網站優化 | projects/maplab-kitchen-web-optimization.md | WordPress 技術 |
-| LINE 報價助手 | projects/line-quote-assistant.md | A6/A7 系統架構、三層資料模型 |
-| B1 跨專案治理顧問 | projects/b1-cross-project-governance-advisor.md | B1 暫停狀態、跨專案治理 prompt、Investment OS 對照建議 |
-| B1 投資邏輯橋接 | projects/b1-investment-logic-bridge.md | Owner 的 Investment OS 左側/右側/風控/籌碼/新聞判斷語言，供其他 agent 召喚 |
-| Investment OS B role family | projects/invest-os-b-role-system.md | B1-B4 共用角色拆分、Owner logic、startup check、輸出契約 |
-| Cross-project agent summon map | docs/cross-project-agent-summon-workflow-map.md | GPT/Codex/Claude/Gemini/NotebookLM/Antigravity/Hermes/OpenClaw/Windows agent 召喚場景、角色 why、Windows→Mac 收盤資料流 |
-| A0 操作手冊 | docs/a0-dispatch-operations-manual.md | A0 調度操作手冊 |
-| Drive 根目錄 | MAPLAB_DATA `19RKLsBfNKuoCHVPFzT9D7tJrAdkTSmpt` | 品項圖片: MAPLAB_Items_Photos `1Z62HUIiVutGNqLJMGyTfBCZ-D5g2vnOT`；主試算表: `1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg` |
-| 交接紀錄 | handoff/tasks/T-xxx.md | 各任務斷點 + 接續 prompt |
-| 歷史狀態 | archive/CURRENT_STATUS_2026-04-11_full.md | 2026-04-11 前完整巡查記錄 |
+| ⚠️ A1巡查 2026-07-12 22:00 | T-A7-001 🔴 ~180h 無 commit（Phase 3 未啟動，**連續第 5 天警告**，需 Owner 緊急關注）；T-A6-001 🔴 ~132h 無 commit（超閾值 2.75x，持續惡化） | 待 Owner 決策 |
+| ⚠️ A1巡查 2026-07-12 23:30 | **晚間巡查**：T-A7-001 🔴 ~182h 無 commit（Phase 3 仍未啟動，**第 5 天末**，累計 6 次警告；last commit `f6fdaac` 07-07 patrol）；T-A6-001 🔴 ~134h 無 commit（超閾值 2.8x，bot_a6 上線 launchd 但 LINE webhook 仍等 Owner 確認）；今日正向：A1 Fable5交棒任務完成（方向指引+複利巡查 prompt+Extension 模組+AGENT_RULES S22）；A0 IS Phase B 走查完成（4 commits）；零 A2-A8 新 commit（正常，無 Owner 派工） | 待 Owner 決策 |
+| ⚠️ A1巡查 2026-07-13 08:00 | **每日巡查**：T-A7-001 🔴 ~194h 無 commit（Phase 3 仍未啟動，**第 8 天，累計 7 次警告，Owner 緊急決策急需**；last commit `f6fdaac` 07-07）；T-A6-001 🔴 ~146h 無 commit（bot_a6 launchd 已上線，阻塞點：LINE webhook Owner 確認）；正向：A1 備援召喚機制+考試流程落地（`31c7db6`：6份backup recalls/failover runbook/3份角色認證考卷/AGENT_STARTUP_PROTOCOL v1.8）；A0 IS Phase B 走查完成；A7 recall 斷點已更新（修正 04-20 過時狀態）；零 A2-A8 commit（正常，無 Owner 派工） | 待 Owner 決策 |
+| ⚠️ A1巡查 2026-07-13 16:08 | **午後巡查**：T-A7-001 🔴 ~202h 無 commit（Phase 3 仍未啟動，**累計第 8 次警告，已逾 8 天，Owner 決策急需**；last commit `f6fdaac` 07-07）；T-A6-001 🔴 ~154h 無 commit（bot_a6 launchd 線上，唯一阻塞：LINE webhook Channel 1654658337 等 Owner 確認）；過去 8h 零 A2-A8 新 commit（正常，無 Owner 派工）；AGENT_RECALL_PROMPTS.md A6/A7 斷點同步更新 | 待 Owner 決策 |
+| ⚠️ A1巡查 2026-07-13 22:00 | **晚間巡查**：T-A7-001 🔴 ~208h 無 commit（Phase 3 仍未啟動，**累計第 9 次警告，逾 8.7 天，Owner 決策急需**；last commit `f6fdaac` 07-07）；T-A6-001 🔴 ~160h 無 commit（bot_a6 launchd 線上，唯一阻塞：LINE webhook Channel 1654658337 等 Owner 確認）；今日 8h 零 A2-A8 新 commit（正常，無 Owner 派工）；無新增異常 | 待 Owner 決策 |
+| ⚠️ A1巡查 2026-07-14 08:00 | **每日巡查**：T-A7-001 🔴 ~218h 無 commit（Phase 3 仍未啟動，**累計第 10 次警告，逾 9.1 天，Owner 決策急需**；last commit `f6fdaac` 07-07）；T-A6-001 🔴 ~170h 無 commit（bot_a6 launchd 線上，唯一阻塞：LINE webhook Channel 1654658337 等 Owner 確認）；過去 24h 零 A2-A8 新 commit（正常，無 Owner 派工）；系統狀態與 CURRENT_STATUS 一致，無新增異常 | 待 Owner 決策 |
+| ⚠️ A1巡查 2026-07-14 16:00 | **午後巡查**：T-A7-001 🔴 ~226h 無 commit（Phase 3 仍未啟動，**累計第 11 次警告，逾 9.4 天，Owner 決策急需**；last commit `f6fdaac` 07-07）；T-A6-001 🔴 ~178h 無 commit（bot_a6 launchd 線上，唯一阻塞：LINE webhook Channel 1654658337 等 Owner 確認）；過去 8h 零 A2-A8 新 commit（正常，無 Owner 派工）；系統狀態與 CURRENT_STATUS 一致，無新增異常 | 待 Owner 決策 |
+| ⚠️ A1巡查 2026-07-14 22:00 | **晚間巡查**：T-A7-001 🔴 ~232h 無 commit（Phase 3 仍未啟動，**累計第 12 次警告，逾 9.7 天，Owner 決策急需**；last commit `f6fdaac` 07-07）；T-A6-001 🔴 ~184h 無 commit（bot_a6 launchd 線上，唯一阻塞：LINE webhook Channel 1654658337 等 Owner 確認）；今日 8h 零 A2-A8 新 commit（正常，無 Owner 派工）；Agent 狀態與 CURRENT_STATUS 一致，無新增異常；AGENT_RECALL_PROMPTS.md A6/A7 斷點同步更新 | 待 Owner 決策 |
+| ⚠️ A1巡查 2026-07-15 08:00 | **每日巡查**：T-A7-001 🔴 ~242h 無 commit（Phase 3 仍未啟動，**累計第 13 次警告，逾 10.1 天，Owner 決策急需**；last commit `f6fdaac` 07-07）；T-A6-001 🔴 ~194h 無 commit（bot_a6 launchd 線上，唯一阻塞：LINE webhook Channel 1654658337 等 Owner 確認）；過去 10h 零 A2-A8 新 commit（正常，無 Owner 派工）；系統狀態與 CURRENT_STATUS 一致，無新增異常 | 待 Owner 決策 |
+| ⚠️ A1巡查 2026-07-15 16:00 | **午後巡查**：T-A7-001 🔴 ~250h 無 commit（Phase 3 仍未啟動，**累計第 14 次警告，逾 10.4 天，Owner 決策急需**；last commit `f6fdaac` 07-07）；T-A6-001 🔴 ~202h 無 commit（bot_a6 launchd 線上，唯一阻塞：LINE webhook Channel 1654658337 等 Owner 確認）；過去 8h 零 A2-A8 新 commit（正常，無 Owner 派工）；系統狀態與 CURRENT_STATUS 一致，無新增異常 | 待 Owner 決策 |

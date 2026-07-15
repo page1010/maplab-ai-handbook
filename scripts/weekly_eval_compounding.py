@@ -56,8 +56,11 @@ GOAL（高槓桿版）:
 
 完成條件（全部滿足才算完成）:
 1. 用 `python3 scripts/seo_publish_gate.py --check fingerprint --approved <file> --draft /dev/null`
-   等（逐條 check）對 workbook/outputs/seo-gap-drafts/ 裡所有 .md 跑一遍
+   等（逐條 check）對以下兩個目錄裡所有 .md 跑一遍：
+   - workbook/outputs/seo-gap-drafts/（SEO 草稿）
+   - workbook/reviews/（Codex/Antigravity 輸出落檔，僅掃 output.md 和 draft*.md，跳過 README/validation_report/supervisor_lesson 等技術檔）
    ─ 每個 check: A1/A2/A3/B1/B2/B3/E1/E2/E3（C1 跳過，因需 WP credentials，標記 SKIP-WP）
+   ─ workbook/reviews/ 若無符合條件的 .md（無 output.md / draft*.md），標記「無新評審草稿」跳過，不算 SKIP
 2. 讀 state/eval_baseline.json（如不存在，建立空的初始 baseline）
 3. 計算 delta：
    - 新過（上次 FAIL 這次 PASS）→ 標 [NEW_PASS]

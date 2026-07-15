@@ -1,5 +1,11 @@
 # T-A8-001 — Folder Case to Short Video Distribution
 
+## 接續狀態
+- **狀態**: 🔄 ACTIVE
+- **最後活動**: 2026-06-17
+- **接續點**: 任務已建立，Owner 要求 A8 從「閒置」轉為真實內容產線；IG Reel 底層邏輯研究 + 流程技能書尚未完成。
+- **阻塞**: 無（可自主執行）
+
 Owner: A8 影音內容產線
 Status: 🔄 ACTIVE
 Created: 2026-06-17

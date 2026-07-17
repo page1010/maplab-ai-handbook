@@ -50,20 +50,35 @@
 
 **腳本**：`scripts/local_dispatch_backup.sh`
 
-**備份範圍**（三個 repo）：
+### 雙目的地設計（2026-07-18 升級）
+
+| 層 | 目的地 | 策略 | 保留 |
+|---|--------|------|------|
+| 內接碟（快取層） | `~/maplab_backup/YYYYMMDD/` | rsync + `--delete`（快照） | 7 天輪替 |
+| 外接碟（長期層） | `/Volumes/MacExternal/MAPLAB_BACKUP/dispatch-sessions/` | rsync -a（累加，絕不 `--delete`） | 永久保留 |
+
+**內接碟備份範圍**（三個 repo）：
 - `~/maplab-ai-handbook` → `~/maplab_backup/YYYYMMDD/maplab-ai-handbook/`
 - `~/agent-hq` → `~/maplab_backup/YYYYMMDD/agent-hq/`
 - `/Users/pagemacmini/Documents/New project/` → `~/maplab_backup/YYYYMMDD/new-project/`
 
+**外接碟備份範圍**（A0 dispatch sessions）：
+- 來源：`~/Library/Application Support/Claude/local-agent-mode-sessions/`
+- 目的地：`/Volumes/MacExternal/MAPLAB_BACKUP/dispatch-sessions/`
+
 **排除**：`.git`, `__pycache__`, `*.pyc`, `.DS_Store`, `node_modules`, `.venv`
 
 **INDEX 重生**：
-- 走訪三個 repo（os.walk 邏輯）
-- 輸出 `state/dispatch_backup_index.json`（含 path / size / mtime）
+- 內接碟：走訪三個 repo（os.walk）→ `state/dispatch_backup_index.json`（含 path / size / mtime）
+- 外接碟：走訪 dispatch-sessions/（os.walk）→ `dispatch-sessions/INDEX.md`（Markdown 表格，最新 200 筆）
 
-**保留**：7 天（自動刪除 7 天前的備份目錄）
+**backup.log**：每次完成追加一行到 `dispatch-sessions/backup.log`
 
-**告警**：rsync 來源找不到時推 Telegram
+**告警邏輯**：
+- 內接碟 rsync 來源找不到 → Telegram 警告
+- 外接碟未掛載或不可寫 → 只記 log，**不告警**（外接碟可能正常拔走）
+
+**保留**：內接碟 7 天（自動刪除）；外接碟永久累加
 
 ---
 
@@ -133,6 +148,12 @@ Cowork 排程 session 需要 Desktop Commander MCP，工具不可用時整個排
 **雙保險原則**：Cowork 端排程仍保留，launchd 為第一層。Desktop Commander 恢復後自然成雙重覆蓋。
 
 **Ollama 去抖邏輯**：Ollama 運行時 RAM 消耗較高屬正常，門檻從 20% 降至 12%，避免誤報。
+
+**dispatch-backup 雙目的地設計（2026-07-18）**：
+- 發現 Cowork 原排程停止後，外接碟備份停留在 07-17（74 小時斷檔）。
+- 修補方案：launchd 備份腳本加外接碟段，採「累加、絕不 --delete」策略，確保歷史永久保留。
+- 外接碟未掛載屬正常情況（Owner 拔走屬預期），不推 Telegram 告警，只記 log。
+- 實測（2026-07-18）：769 個 jsonl，129.7MB，INDEX.md 時間戳已更新。
 
 ---
 

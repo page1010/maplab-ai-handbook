@@ -1,0 +1,16 @@
+[2026-07-18 03:00:00] === dispatch backup 20260718 start ===
+[2026-07-18 03:00:03] ✅ rsync maplab-ai-handbook done
+[2026-07-18 03:00:03] ✅ rsync agent-hq done
+[2026-07-18 03:00:06] ✅ rsync new-project done
+[2026-07-18 03:00:06] rebuilding INDEX...
+[2026-07-18 03:00:06] ✅ INDEX rebuilt → /Users/pagemacmini/maplab-ai-handbook/state/dispatch_backup_index.json
+[2026-07-18 03:00:06] === dispatch backup done ===
+[2026-07-18 03:09:01] === dispatch backup 20260718 start ===
+[2026-07-18 03:09:02] ✅ rsync maplab-ai-handbook done
+[2026-07-18 03:09:02] ✅ rsync agent-hq done
+[2026-07-18 03:09:02] ✅ rsync new-project done
+[2026-07-18 03:09:02] rebuilding INDEX...
+[2026-07-18 03:09:02] ✅ INDEX rebuilt → /Users/pagemacmini/maplab-ai-handbook/state/dispatch_backup_index.json
+[2026-07-18 03:09:02] === dispatch backup done ===
+[2026-07-18 03:09:02] 外接碟已掛載，累加備份 → /Volumes/MacExternal/MAPLAB_BACKUP/dispatch-sessions
+[2026-07-18 03:09:04] ✅ 外接碟備份完成 → /Volumes/MacExternal/MAPLAB_BACKUP/dispatch-sessions

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.maplab.memory-watch</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/pagemacmini/maplab-ai-handbook/scripts/local_memory_watch.sh</string>
+    </array>
+    <key>StartInterval</key>
+    <integer>7200</integer>
+    <key>StandardOutPath</key>
+    <string>/Users/pagemacmini/maplab-ai-handbook/logs/memory_watch_launchd.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/pagemacmini/maplab-ai-handbook/logs/memory_watch_launchd.log</string>
+    <key>RunAtLoad</key>
+    <false/>
+</dict>
+</plist>

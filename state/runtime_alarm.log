@@ -1,0 +1,4 @@
+[2026-07-17 14:09:05] === runtime alarm check ===
+[2026-07-17 14:09:05] 🚨 [runtime-alarm] 1 筆 open CRITICAL:
+  • [exposure_ledger] 跨帳戶合併 US 曝險 82.7% gross (股 77.0% + 選擇權 5.7%) | regime=UNKNOWN | 建議留意 — regime 未知，保守 (deadline: 2026-07-17)
+[2026-07-17 14:09:06] 推播已觸發

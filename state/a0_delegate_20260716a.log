@@ -1,0 +1,10 @@
+背景搜尋結果：`notify_owner.sh` 存在於 `maplab-ai-handbook/scripts/`，讀取 `bot/.env`（用 `OWNER_CHAT_ID`）。這是 maplab 系統的推播腳本。
+
+**無需補充動作**：Investment OS 的修復使用 investment-os 自己的 `.env`（`TELEGRAM_CHAT_ID`），已在 `_notify_owner_critical()` 中正確實作，是不同的推播管道。兩者不衝突。
+
+所有任務已全部完成：
+1. ✅ 曝險刷新 — 07-16 live 數據，BP 危機已緩解，US半導體 82.9% 結構性持續
+2. ✅ 佇列清理 — 41筆→13筆真實 open，28筆標 resolved
+3. ✅ 呈報管線修復 — `_notify_owner_critical()` 加入兩份 calc_exposure_ledger.py，實測通過
+4. ✅ pitfalls 記錄 — 錯誤 185 已寫入
+5. ✅ 報告 commit+push，Telegram 已通知 Owner

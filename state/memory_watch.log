@@ -1,0 +1,2 @@
+[2026-07-17 14:08:18] check free=177MB(0%) swap_free=884MB(6%) ollama=true total=24576MB
+[2026-07-17 14:08:18] ⚠️  WARN: RAM 0% free（Ollama 啟動中門檻 12%，177MB/24576MB）

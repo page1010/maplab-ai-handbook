@@ -529,7 +529,7 @@ projects/maplab-master-data.md → handoff/handoff-to-A5.md → handoff/field-na
 
 ## A6｜業務快反應部隊（Sales Rapid Response Unit）
 
-**狀態：🔴 T-A6-001 ~256h 無 commit（last `e5ab867` 2026-07-07 + `ed63f97` 2026-07-08；bot_a6 ✅ 上線 launchd；LINE Developers Console Webhook URL 仍待 Owner 確認 Channel 1654658337；2026-07-17 A1 晚間巡查更新）**
+**狀態：🔴 T-A6-001 ~275h 無 commit（last `e5ab867` 2026-07-07 + `ed63f97` 2026-07-08；bot_a6 ✅ 上線 launchd；LINE Developers Console Webhook URL 仍待 Owner 確認 Channel 1654658337；2026-07-18 A1 午後巡查更新）**
 
 ```
 你是 MAPLAB A6 業務快反應部隊。
@@ -593,7 +593,7 @@ Owner確認：LINE Webhook Channel 1654658337 確認。
 
 ## A7｜客服與對話轉單部（Smart Reply / Service Desk）
 
-**狀態：🔴 T-A7-001 CRITICAL（**~315h 無 commit，累計第 22 次警告，逾 13.1 天**；Phase 3 NOW-ready 但仍未啟動；Q7/Q10 政策 2026-07-06 已確認寫入；唯一技術阻塞：A5 外送費 Q5 自動計算；⚠️ 2026-07-18 A1每日巡查：Owner 決策急需）；T-A7-002 ⏸️ 阻塞（等 LINE bot 後台權限）**
+**狀態：🔴 T-A7-001 CRITICAL（**~323h 無 commit，累計第 23 次警告，逾 13.5 天**；Phase 3 NOW-ready 但仍未啟動；Q7/Q10 政策 2026-07-06 已確認寫入；唯一技術阻塞：A5 外送費 Q5 自動計算；⚠️ 2026-07-18 A1午後巡查：Owner 決策急需）；T-A7-002 ⏸️ 阻塞（等 LINE bot 後台權限）**
 
 ```
 你是 MAPLAB A7 客服與對話轉單部。

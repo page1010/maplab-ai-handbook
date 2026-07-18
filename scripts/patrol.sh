@@ -196,20 +196,68 @@ else
   done | head -3 || true
 fi
 
-# ── Investment OS nightwatch 自健檢 ──
+# ── Investment OS nightwatch 自健檢 + IS-HS 健康分數 ──
 NIGHTWATCH_LATEST="$HOME/.local/share/investmentos-telegram-operator/reports/nightwatch/nightwatch_$(date '+%Y-%m-%d').md"
+ESCALATION_QUEUE="$HOME/Documents/New project/state/runtime_escalation_queue.jsonl"
+IS_HS_LOG="$HOME/maplab-ai-handbook/state/is_health_trend.jsonl"
 echo ""
-echo "【投資 OS 守夜人】"
+echo "【投資 OS 守夜人 + IS-HS】"
+
+# nightwatch 新鮮度檢查
 if [[ -f "$NIGHTWATCH_LATEST" ]]; then
-  ALERT_COUNT=$(grep -c '^🔴\|^- \*\*' "$NIGHTWATCH_LATEST" 2>/dev/null || echo "0")
   ALERTS=$(grep '🔴 需要處理' -A 99 "$NIGHTWATCH_LATEST" 2>/dev/null | tail -n +2 | head -5 || true)
   if [[ -n "$ALERTS" && "$ALERTS" != "---" ]]; then
-    echo "🔴 nightwatch 今日有警示："
-    echo "$ALERTS" | sed 's/^/  /'
+    echo "  🔴 nightwatch 今日有警示："
+    echo "$ALERTS" | sed 's/^/    /'
+    FRESH_SCORE=50
   else
-    echo "🟢 nightwatch 今日正常（今日報告已產生，0 警示）"
+    echo "  🟢 nightwatch 今日正常（0 警示）"
+    FRESH_SCORE=100
   fi
 else
-  echo "🔴 nightwatch 今日報告缺失（預期路徑：$NIGHTWATCH_LATEST）"
-  echo "   → 守夜人可能未執行，請檢查 launchctl list | grep nightwatch"
+  echo "  🔴 nightwatch 今日報告缺失 → 請檢查 launchctl list | grep nightwatch"
+  FRESH_SCORE=0
+fi
+
+# escalation_queue 逾期警報檢查
+if [[ -f "$ESCALATION_QUEUE" ]]; then
+  TODAY=$(date '+%Y-%m-%d')
+  OPEN_COUNT=$(python3 -c "
+import json, sys
+q=open('$ESCALATION_QUEUE')
+count=0
+for line in q:
+    try:
+        r=json.loads(line.strip())
+        if r.get('status')=='open' and not r.get('escalated',False):
+            count+=1
+    except: pass
+print(count)
+" 2>/dev/null || echo "?")
+  if [[ "$OPEN_COUNT" != "0" && "$OPEN_COUNT" != "?" ]]; then
+    echo "  🔴 escalation_queue: ${OPEN_COUNT} 條 open+未推播（見 projects/investment-os-continuous-iteration-plan.md ④）"
+    ESCAL_SCORE=0
+  else
+    echo "  🟢 escalation_queue: 無逾期未推警報"
+    ESCAL_SCORE=100
+  fi
+else
+  echo "  ⚪ escalation_queue 路徑不可讀"
+  ESCAL_SCORE=50
+fi
+
+# IS-HS 計算（簡化版：資料新鮮度 50% + 警報通暢度 50%）
+IS_HS=$(( (FRESH_SCORE + ESCAL_SCORE) / 2 ))
+if [[ $IS_HS -ge 70 ]]; then
+  HS_LABEL="🟢"
+elif [[ $IS_HS -ge 40 ]]; then
+  HS_LABEL="🟡"
+else
+  HS_LABEL="🔴"
+fi
+echo "  ${HS_LABEL} IS-HS: ${IS_HS}/100（新鮮度=${FRESH_SCORE}% 警報通暢度=${ESCAL_SCORE}%）"
+
+# 記錄趨勢
+if [[ -n "$IS_HS_LOG" ]]; then
+  echo "{\"date\":\"$(date '+%Y-%m-%d %H:%M')\",\"is_hs\":${IS_HS},\"freshness\":${FRESH_SCORE},\"escalation\":${ESCAL_SCORE}}" >> "$IS_HS_LOG" 2>/dev/null || true
 fi

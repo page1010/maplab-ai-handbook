@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-07-17 22:00 TST（遠端）A1 晚間巡查：T-A7-001 🔴 **~304h 無 commit**（Phase 3 仍未啟動，**累計第 21 次警告，逾 12.7 天，Owner 決策急需**；last commit `f6fdaac` 07-07）；T-A6-001 🔴 ~256h 無 commit（bot_a6 launchd 線上，阻塞：LINE webhook 等 Owner 確認）；零 A2-A8 新 commit（正常，無 Owner 派工）
+> 最後更新：2026-07-18 08:00 TST（遠端）A1 每日巡查：T-A7-001 🔴 **~315h 無 commit**（Phase 3 仍未啟動，**累計第 22 次警告，逾 13.1 天，Owner 決策急需**；last commit `f6fdaac` 07-07）；T-A6-001 🔴 ~267h 無 commit（bot_a6 launchd 線上，阻塞：LINE webhook 等 Owner 確認）；零 A2-A8 新 commit（正常，無 Owner 派工）
 >
 > 使用方式：選擇角色 → 複製 prompt / module handoff → 貼到 Gemini / Codex / OpenClaw / legacy Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -24,8 +24,8 @@
 | A3 | 社群與廣告成長部 | ✅ T-A3-001 完成（GTM v21 雙平台追蹤上線）；T-A3-002 ⏸️ 阻塞（等廣告週期+Owner操作）| Meta Ads / Social |
 | A4 | 影像資產整理部 | ✅ T-A4-001 S11(2024) 完成（07-09 22:56 run done，3,314/3,409 分類，GBP 照片評分 🔄 解鎖；2026-07-10 午後巡查確認；下一步：T-A4-003/004 待 Owner 派工）| Photo Archive |
 | A5 | 報價與提案引擎部 | ⚠️ T-A5-002 + T-A5-005 均超 48h 門檻（2026-06-23 07:01-07:22 +0800：`5ab7434` clasp push T-A5-005 + `3209fba` fixMasterTemplate_，均 awaiting Owner；現 **~472h**，2026-07-12 每日巡查更新）；T-A5-004 🔴 CRITICAL（~1732h+，無新 commit）；T-A5-007 🔲 待 Codex 認領（`6cefd13` 2026-07-06 建卡，A5→Codex 移交）| Quotation Engine |
-| A6 | 業務快反應部隊 | 🔴 T-A6-001 **~256h 無 commit**（last commits `e5ab867` 07-07 + `ed63f97` 07-08；bot_a6 ✅ 上線 launchd；LINE webhook 等 Owner 確認 Channel 1654658337；超 48h 閾值 **~5.3x**；2026-07-17 晚間巡查更新）| Sales Rapid Response |
-| A7 | 客服與對話轉單部 | 🔴 T-A7-001 CRITICAL（**~304h 無 commit，累計第 21 次警告，逾 12.7 天**，2026-07-17 晚間巡查；last commit `f6fdaac` 2026-07-07 patrol；A1 已完成三層審查逾時處置；Q7試吃+Q10取消改期政策 2026-07-06 落地，剩 A5 外送費級距 + Phase 3 上線測試，Phase 3 **仍未啟動，Owner 決策急需**）；T-A7-002 ⏸️ 阻塞（Phase 3A 剩任務 4 地區判斷 + 任務 7 流程圖同步）| Smart Reply |
+| A6 | 業務快反應部隊 | 🔴 T-A6-001 **~267h 無 commit**（last commits `e5ab867` 07-07 + `ed63f97` 07-08；bot_a6 ✅ 上線 launchd；LINE webhook 等 Owner 確認 Channel 1654658337；超 48h 閾值 **~5.6x**；2026-07-18 每日巡查更新）| Sales Rapid Response |
+| A7 | 客服與對話轉單部 | 🔴 T-A7-001 CRITICAL（**~315h 無 commit，累計第 22 次警告，逾 13.1 天**，2026-07-18 每日巡查；last commit `f6fdaac` 2026-07-07 patrol；A1 已完成三層審查逾時處置；Q7試吃+Q10取消改期政策 2026-07-06 落地，剩 A5 外送費級距 + Phase 3 上線測試，Phase 3 **仍未啟動，Owner 決策急需**）；T-A7-002 ⏸️ 阻塞（Phase 3A 剩任務 4 地區判斷 + 任務 7 流程圖同步）| Smart Reply |
 | A8 | 影音內容產線 | ⚠️ 持續超 48h（2026-06-25 08:25 `1a2d752` squash merge a8/video-checklist-mvp；現 **~312h/~13.0天**，2026-07-08 更新；下一步：審核 local motion POC storyboard → 地端動態生成 → 9:16 mp4/cover → Publish Approval Card，未經 Owner/A1 approval 不得上傳） | Content Repurposing Pipeline |
 | **B1** | **Investment OS Builder** | **🟢 T-HQ-001 P1-P6 全完成；✅ 2026-07-07 新工作：`13f1719` IS 全功能檢討+Goal-Signal-Decision-Review 方案、`32b3afb` 跨專案治理科技樹+P0 根因診斷（TCC，唯讀）、`0695ece` G1/G3落地+封坑驗證欄+1%觸發規則+Self-Healing拍板部署記錄；建議 Owner 確認可關閉 T-HQ-001** | **寫功能 / runtime surface** |
 | **B2** | **Investment OS Reviewer** | **🟢 召喚型可用** | **資料流 / 錯誤 / freshness review** |
@@ -593,7 +593,7 @@ Owner確認：LINE Webhook Channel 1654658337 確認。
 
 ## A7｜客服與對話轉單部（Smart Reply / Service Desk）
 
-**狀態：🔴 T-A7-001 CRITICAL（**~304h 無 commit，累計第 21 次警告，逾 12.7 天**；Phase 3 NOW-ready 但仍未啟動；Q7/Q10 政策 2026-07-06 已確認寫入；唯一技術阻塞：A5 外送費 Q5 自動計算；⚠️ 2026-07-17 A1晚間巡查：Owner 決策急需）；T-A7-002 ⏸️ 阻塞（等 LINE bot 後台權限）**
+**狀態：🔴 T-A7-001 CRITICAL（**~315h 無 commit，累計第 22 次警告，逾 13.1 天**；Phase 3 NOW-ready 但仍未啟動；Q7/Q10 政策 2026-07-06 已確認寫入；唯一技術阻塞：A5 外送費 Q5 自動計算；⚠️ 2026-07-18 A1每日巡查：Owner 決策急需）；T-A7-002 ⏸️ 阻塞（等 LINE bot 後台權限）**
 
 ```
 你是 MAPLAB A7 客服與對話轉單部。
@@ -624,7 +624,7 @@ T-A7-001 AI 回覆系統：
   - Phase 2 v2.0 ✅ 完成（aea3094）：Q1-Q10重構，真實CSV驅動
   - ✅ 2026-07-06 Owner 政策落地（Q7 不提供試吃；Q10 不可抗力可改期不收費、客戶單方取消酌收備料費）已寫入 data/a7-reply-templates.md + Task Cards
   - 目前狀態：🔄 Phase 3 NOW-ready（等 Owner 授權 Mina 實際使用 data/a7-reply-templates.md 測試）
-  - ⚠️ 2026-07-17（晚間）：~304h 無 commit（累計第 21 次警告，逾 12.7 天），Phase 3 仍未啟動，Owner 決策急需
+  - ⚠️ 2026-07-18（每日）：~315h 無 commit（累計第 22 次警告，逾 13.1 天），Phase 3 仍未啟動，Owner 決策急需
   - 唯一技術阻塞：A5 外送費 Q5 自動計算（手動模板不受影響）
 T-A7-002 80/20 任務清單：⏸️ 阻塞（任務1/2/3 需 LINE bot 後台權限；任務5/8 需 TimeTree 權限；任務9 ✅ 已解除）
 

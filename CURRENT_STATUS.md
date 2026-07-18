@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-07-17 22:00（A1 晚間巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-07-18 08:00（A1 每日巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -178,3 +178,4 @@
 | ✅ A0派工 2026-07-17 14:10 | **監控排程去依賴化完成**：3 腳本（local_memory_watch/runtime_alarm/dispatch_backup）+ 3 launchd plist（每2h/每日08:30/每日03:00）裝載並實測；memory-watch log落地+Telegram推播✅；runtime-alarm 1筆CRITICAL推播✅（US曝險82.7% deadline今日）；`docs/local-monitoring-runbook.md` 完成；系統 RAM free=177MB(0%) 屬真實低記憶體告警；T-A7-001 🔴 ~292h；T-A6-001 🔴 ~244h | DONE — 見 state/a0_delegate_20260717_report.md |
 | ⚠️ A1巡查 2026-07-17 16:00 | **午後巡查**：T-A7-001 🔴 ~298h 無 commit（Phase 3 仍未啟動，**累計第 20 次警告，逾 12.4 天，Owner 決策急需**；last commit `f6fdaac` 07-07）；T-A6-001 🔴 ~250h 無 commit（bot_a6 launchd 線上，唯一阻塞：LINE webhook Channel 1654658337 等 Owner 確認）；今日正向：A1 A0派工監控去依賴化完成（`cab2c28`：3腳本+3 launchd plist，14:10）；過去 8h 零 A2-A8 新 commit（正常，無 Owner 派工）；系統狀態與 CURRENT_STATUS 一致，無新增異常 | 待 Owner 決策 |
 | ⚠️ A1巡查 2026-07-17 22:00 | **晚間巡查**：T-A7-001 🔴 ~304h 無 commit（Phase 3 仍未啟動，**累計第 21 次警告，逾 12.7 天，Owner 決策急需**；last commit `f6fdaac` 07-07）；T-A6-001 🔴 ~256h 無 commit（bot_a6 launchd 線上，唯一阻塞：LINE webhook Channel 1654658337 等 Owner 確認）；今日 8h 零 A2-A8 新 commit（正常，無 Owner 派工）；Agent 狀態與 CURRENT_STATUS 一致，無新增異常；AGENT_RECALL_PROMPTS.md A6/A7 斷點同步更新 | 待 Owner 決策 |
+| ⚠️ A1巡查 2026-07-18 08:00 | **每日巡查**：T-A7-001 🔴 ~315h 無 commit（Phase 3 仍未啟動，**累計第 22 次警告，逾 13.1 天，Owner 決策急需**；last commit `f6fdaac` 07-07）；T-A6-001 🔴 ~267h 無 commit（bot_a6 launchd 線上，唯一阻塞：LINE webhook Channel 1654658337 等 Owner 確認）；正向：A1 `42f8cae` 外接碟備份修補完成（03:09）；過去 10h 零 A2-A8 新 commit（正常，無 Owner 派工）；系統狀態與 CURRENT_STATUS 一致，無新增異常；AGENT_RECALL_PROMPTS.md A6/A7 斷點同步更新 | 待 Owner 決策 |

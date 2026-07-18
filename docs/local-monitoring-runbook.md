@@ -149,6 +149,13 @@ Cowork 排程 session 需要 Desktop Commander MCP，工具不可用時整個排
 
 **Ollama 去抖邏輯**：Ollama 運行時 RAM 消耗較高屬正常，門檻從 20% 降至 12%，避免誤報。
 
+**Ollama KEEP_ALIVE = 5m（2026-07-18 A0 派工調優）**：
+- **問題**：24h 內 7 次 RAM 0% 警告，Ollama 大模型（gemma4 9.6GB / qwen2.5:14b 9.0GB）載入後長期佔記憶體，swap 常年 90%+。
+- **解法**：設 `OLLAMA_KEEP_ALIVE=5m`，模型使用完畢 5 分鐘即自動卸載釋放記憶體。
+- **落點**：`launchctl setenv OLLAMA_KEEP_ALIVE 5m`（當前 session），持久化見 `~/Library/LaunchAgents/com.maplab.ollama-keep-alive.plist`（每次登入自動執行）。
+- **對 A6 影響**：下次呼叫 Ollama 若模型已卸載，有 5-30 秒冷啟動延遲（正常，可接受）。
+- **觀察**：memory_watch.log 未來 24h 警告次數應下降；patrol 隔日核對。
+
 **dispatch-backup 雙目的地設計（2026-07-18）**：
 - 發現 Cowork 原排程停止後，外接碟備份停留在 07-17（74 小時斷檔）。
 - 修補方案：launchd 備份腳本加外接碟段，採「累加、絕不 --delete」策略，確保歷史永久保留。

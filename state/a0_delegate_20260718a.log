@@ -1,0 +1,8 @@
+完成，commit `42f8cae` 已 push。
+
+**驗收結果**：
+- 外接碟段正常執行：`rsync -a`（無 `--delete`）同步 769 個 jsonl，129.7MB
+- `INDEX.md` 時間戳更新為 2026-07-18 03:09，`backup.log` 新增一行
+- 外接碟未掛載時只記 log，不推 Telegram 告警
+- 內接碟段維持不動（7 天輪替快照）
+- `docs/local-monitoring-runbook.md` 補記雙目的地設計（雙層架構表格 + 決策原因）

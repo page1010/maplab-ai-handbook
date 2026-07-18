@@ -12,3 +12,9 @@
 [2026-07-18 00:08:16] ⚠️  WARN: RAM 11% free（Ollama 啟動中門檻 12%，2833MB/24576MB）
 [2026-07-18 02:08:17] check free=4971MB(20%) swap_free=1559MB(11%) ollama=true total=24576MB
 [2026-07-18 02:08:17] ✅ OK
+[2026-07-18 04:08:17] check free=3733MB(15%) swap_free=662MB(4%) ollama=true total=24576MB
+[2026-07-18 04:08:17] ⚠️  WARN: Swap 剩 4%（662MB/13312MB）+ RAM free 15% — 雙重壓力
+[2026-07-18 06:08:18] check free=1669MB(6%) swap_free=1486MB(11%) ollama=true total=24576MB
+[2026-07-18 06:08:18] ⚠️  WARN: RAM 6% free（Ollama 啟動中門檻 12%，1669MB/24576MB）
+[2026-07-18 08:08:20] check free=2464MB(10%) swap_free=1236MB(10%) ollama=true total=24576MB
+[2026-07-18 08:08:20] ⚠️  WARN: RAM 10% free（Ollama 啟動中門檻 12%，2464MB/24576MB）

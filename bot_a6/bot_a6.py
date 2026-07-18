@@ -513,7 +513,7 @@ def _resolve_claude_bin() -> str:
 
 def _ollama_generate_sync(prompt: str) -> str:
     payload = json.dumps(
-        {"model": OLLAMA_MODEL_CHAT, "prompt": prompt, "stream": False},
+        {"model": OLLAMA_MODEL_CHAT, "prompt": prompt, "stream": False, "keep_alive": "5m"},
         ensure_ascii=False,
     ).encode("utf-8")
     req = urllib.request.Request(

@@ -112,15 +112,15 @@
 | T-A2-002-foodsafety-seo-cleanup | T-A2-002 — 食安 + 法規 SEO 字眼清理 | A2 | ⏸️ 阻塞（回溯掃描 + 根因結構性修復已完成，只剩等 Owner 決定 post 698 怎麼改）（58 篇既有文章已全數掃描完成；新產出內容的自動防護缺口已用 F-1 gate 補上（見下方「2026-07-07 根因） | handoff/tasks/T-A2-002-foodsafety-seo-cleanup.md |
 | T-A2-003-weekly-wp-audit | T-A2-003: 每週全站 WP 內容稽核排程 | A2 | 🔲 待開始（腳本已建好（wp-audit.sh / wp-audit-cron.sh）。待 Owner 用 /schedule 建立） | handoff/tasks/T-A2-003-weekly-wp-audit.md |
 | T-A2-004 | 首頁結構優化 — 配合品牌色票微調 + 轉換路徑整理 | A2 | 🔲 待開始（任務卡建立。A0 已完成對標分析和色票微調。） | handoff/tasks/T-A2-004.md |
-| T-A2-005-local-seo-factory | T-A2-005：MAPLAB SEO Factory（地端閉環，Pillar First） | A2 | 🔴 CRITICAL（~1800h無commit） | handoff/tasks/T-A2-005-local-seo-factory.md |
+| T-A2-005-local-seo-factory | T-A2-005：MAPLAB SEO Factory（地端閉環，Pillar First） | A2 | 🔴 CRITICAL（~1799h無commit） | handoff/tasks/T-A2-005-local-seo-factory.md |
 | T-A2-006-ads-seo-wordpress-patrol | T-A2-006 — Ads / SEO / WordPress Patrol | A2 | 🟢 ACTIVE（ICCTN 案例文（post 1829）已上線，QA PASS_WITH_NOTES。下一步：A3 接手 Google ） | handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md |
-| T-A2-SEO-CATERING-MATRIX-001 | Foreign Catering SEO Benchmark -> MAPLAB Article Matrix | A2 | 🔴 CRITICAL（~744h無commit） | handoff/tasks/T-A2-SEO-CATERING-MATRIX-001.md |
-| T-A2A3-001-B | SEO 場景頁面 + 內連結（從 T-A2A3-001 分拆） | A2/A3 | 🔴 CRITICAL（~1248h無commit） | handoff/tasks/T-A2A3-001-B.md |
+| T-A2-SEO-CATERING-MATRIX-001 | Foreign Catering SEO Benchmark -> MAPLAB Article Matrix | A2 | 🔴 CRITICAL（~743h無commit） | handoff/tasks/T-A2-SEO-CATERING-MATRIX-001.md |
+| T-A2A3-001-B | SEO 場景頁面 + 內連結（從 T-A2A3-001 分拆） | A2/A3 | 🔴 CRITICAL（~1247h無commit） | handoff/tasks/T-A2A3-001-B.md |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2/A3 | ⏸️ RM/GSC 部分暫停；案例寫作轉 T-A2A3-001-B（Rank Math 已退訂，已設定好的 SEO 欄位先不要再設定；下一步是依 live URL map 補 To B 真） | handoff/tasks/T-A2A3-001.md |
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | ⏸️ 阻塞中（受眾輪廓分析完成（693筆 Orders）。待執行：嘉義加入廣告地區、興趣條件精簡、策略一冷受眾上線。） | handoff/tasks/T-A3-002.md |
-| T-A4-002 | pagewu1010 帳號 Takeout 解壓 + Gemini Flash 照片資產整合 | A4 | 🔴 CRITICAL（~2184h無commit） | handoff/tasks/T-A4-002.md |
-| T-A4-003-photo-alt-pipeline | T-A4-003 — 照片 ALT/SEO 管線（地端 gemma4）+ Drive 改串流釋空間 | A4 | 🔴 CRITICAL（~888h無commit） | handoff/tasks/T-A4-003-photo-alt-pipeline.md |
-| T-A4-004-photo-classify | T-A4-004 — 照片分類搬移：截圖/家庭/外燴工作 + 年月資料夾 | A4 | 🔴 CRITICAL（~888h無commit） | handoff/tasks/T-A4-004-photo-classify.md |
+| T-A4-002 | pagewu1010 帳號 Takeout 解壓 + Gemini Flash 照片資產整合 | A4 | 🔴 CRITICAL（~2183h無commit） | handoff/tasks/T-A4-002.md |
+| T-A4-003-photo-alt-pipeline | T-A4-003 — 照片 ALT/SEO 管線（地端 gemma4）+ Drive 改串流釋空間 | A4 | 🔴 CRITICAL（~887h無commit） | handoff/tasks/T-A4-003-photo-alt-pipeline.md |
+| T-A4-004-photo-classify | T-A4-004 — 照片分類搬移：截圖/家庭/外燴工作 + 年月資料夾 | A4 | 🔴 CRITICAL（~887h無commit） | handoff/tasks/T-A4-004-photo-classify.md |
 | T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔴 CRITICAL（~599h無commit） | handoff/tasks/T-A5-002.md |
 | T-A5-004 | createSlides.gs — Slide 報價簡報自動生成 | A5 | 🟢 功能穩定（核心功能已可用且無需再動；~1500h+ 無 commit 是「沒事做」不是「壞掉」— 2026-07-06 A1 對帳澄清：先前 CURRENT_STATUS.md 任務表把「久無 commit」誤標為 🔴 CRITICAL，已改為反映實際狀態） | handoff/tasks/T-A5-004.md |
 | T-A5-005 | 報價狀態追蹤同步 + Dashboard | A5 | 🔴 CRITICAL（~599h無commit） | handoff/tasks/T-A5-005.md |

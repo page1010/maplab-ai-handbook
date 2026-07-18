@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-07-18 10:30（A0派工 Ollama RAM 調優）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-07-18 17:30（A1 A0派工落地）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -18,6 +18,8 @@
 ---
 
 ## 最新事實核對
+
+- 2026-07-18：**[A1 A0派工] W→SW→NW 迴圈入文化 + 價值密度重排落地** — A0 委派 4 項任務全部執行完成：①`docs/fable-mindset.md` 新增第 11 條「What→So What→Now What 迴圈」（任何回報必答三問，只有 What 的視為未完成；含三問格式表 + MAPLAB 實例）②`AGENT_RULES.md` 新增 SECTION 23「價值密度排序」（Tier1/Tier2/FROZEN 三層 + 每週必報訊息密度/算力回報率兩比率 + 4 條執行規則）③`TASK_QUEUE.md` 全面重排（Tier1=A6 LINE 上線/B3 廣告試跑/IS 規則引擎核准包/A7 Phase 3 授權；防守類標 FROZEN；含 So What 空轉成本估算）④`state/owner_one_reply_20260718.md` 建立（Owner 一次回覆清單：4 件事×選項 A/B/C，30 秒可回，4 條線同步解鎖）。T-A7-001 🔴 ~323h（第 23 次警告）；T-A6-001 🔴 ~275h（bot_a6 線上，唯一阻塞 LINE webhook）。
 
 - 2026-07-12：**[A1 Fable5交棒任務] 系統方向指引 + 複利計畫巡查落地** — Owner 交棒任務：①`docs/fable5-direction-and-guidance.md` 建立（北極星/三個結構性風險/方向優先序/決策文化）②`skills/compounding-patrol-prompt.md` 建立（複利計畫巡查完整 prompt 本體，可直接餵 `claude -p`）③`chrome-extension/task-modules/COMPOUNDING-PATROL.json` 建立（Extension 模組，按既有格式接線）④`AGENT_RULES.md` Section 22 新增（複利計畫巡查為每週例行，執行入口 skills/compounding-patrol-prompt.md）⑤`state/a0_delegate_20260712_report.md` 例會格式 append。CURRENT_STATUS merge conflict（upstream 22:00 vs stash 14:01）已解（取 22:00 版本）。
 - 2026-07-12：**[A0 跨專案] IS Phase B 走查完成 + A1 bot 修復** — A0 今日執行三 Phase：① IS 全貌地圖閱讀 ② 全角色走查（量尺文件 + 17 角色評分 + 半導體修正覆盤 + 規則引擎草稿 + 通知方案）③ Codex/agy 派工實驗（6 個 JOB 落檔）。共 4 commits（`3a7bb9c`/`61bbd8a`/`0e7dc76`/`dd23864`，14:01 +0800）。**[A1]** bot.py openclaw_command 佔位符修正（`d953951` 08:13 +0800）。零 A2-A8 新 commit（無 Owner 派工，正常）。
@@ -114,17 +116,17 @@
 | T-A2A3-001-B | SEO 場景頁面 + 內連結（從 T-A2A3-001 分拆） | A2/A3 | 🔴 CRITICAL（~1248h無commit） | handoff/tasks/T-A2A3-001-B.md |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2/A3 | ⏸️ RM/GSC 部分暫停；案例寫作轉 T-A2A3-001-B（Rank Math 已退訂，已設定好的 SEO 欄位先不要再設定；下一步是依 live URL map 補 To B 真） | handoff/tasks/T-A2A3-001.md |
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | ⏸️ 阻塞中（受眾輪廓分析完成（693筆 Orders）。待執行：嘉義加入廣告地區、興趣條件精簡、策略一冷受眾上線。） | handoff/tasks/T-A3-002.md |
-| T-A4-002 | pagewu1010 帳號 Takeout 解壓 + Gemini Flash 照片資產整合 | A4 | 🔴 CRITICAL（~2184h無commit） | handoff/tasks/T-A4-002.md |
-| T-A4-003-photo-alt-pipeline | T-A4-003 — 照片 ALT/SEO 管線（地端 gemma4）+ Drive 改串流釋空間 | A4 | 🔴 CRITICAL（~888h無commit） | handoff/tasks/T-A4-003-photo-alt-pipeline.md |
-| T-A4-004-photo-classify | T-A4-004 — 照片分類搬移：截圖/家庭/外燴工作 + 年月資料夾 | A4 | 🔴 CRITICAL（~888h無commit） | handoff/tasks/T-A4-004-photo-classify.md |
-| T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔴 CRITICAL（~600h無commit） | handoff/tasks/T-A5-002.md |
+| T-A4-002 | pagewu1010 帳號 Takeout 解壓 + Gemini Flash 照片資產整合 | A4 | 🔴 CRITICAL（~2183h無commit） | handoff/tasks/T-A4-002.md |
+| T-A4-003-photo-alt-pipeline | T-A4-003 — 照片 ALT/SEO 管線（地端 gemma4）+ Drive 改串流釋空間 | A4 | 🔴 CRITICAL（~887h無commit） | handoff/tasks/T-A4-003-photo-alt-pipeline.md |
+| T-A4-004-photo-classify | T-A4-004 — 照片分類搬移：截圖/家庭/外燴工作 + 年月資料夾 | A4 | 🔴 CRITICAL（~887h無commit） | handoff/tasks/T-A4-004-photo-classify.md |
+| T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🔴 CRITICAL（~599h無commit） | handoff/tasks/T-A5-002.md |
 | T-A5-004 | createSlides.gs — Slide 報價簡報自動生成 | A5 | 🟢 功能穩定（核心功能已可用且無需再動；~1500h+ 無 commit 是「沒事做」不是「壞掉」— 2026-07-06 A1 對帳澄清：先前 CURRENT_STATUS.md 任務表把「久無 commit」誤標為 🔴 CRITICAL，已改為反映實際狀態） | handoff/tasks/T-A5-004.md |
-| T-A5-005 | 報價狀態追蹤同步 + Dashboard | A5 | 🔴 CRITICAL（~600h無commit） | handoff/tasks/T-A5-005.md |
+| T-A5-005 | 報價狀態追蹤同步 + Dashboard | A5 | 🔴 CRITICAL（~599h無commit） | handoff/tasks/T-A5-005.md |
 | T-A5-006 | T-A5-006 | A5 | 🔲 待開始（尚未開始。等 T-A5-005 完成後啟動。） | handoff/tasks/T-A5-006.md |
 | T-A5-007-codex-takeover | T-A5-007 — A5 報價系統移交 Codex 管理 | A5 | 🔲 待 Codex 認領(Owner 2026-07-06 口頭指示:「把 A5 接給 Codex 管理」)（Codex 讀本卡「診斷結論」→ 執行「交接後第一批工作」） | handoff/tasks/T-A5-007-codex-takeover.md |
-| T-A6-001 | A6 LINE 業務報價助手系統 | A6 | 🔴 CRITICAL（~240h無commit） | handoff/tasks/T-A6-001.md |
+| T-A6-001 | A6 LINE 業務報價助手系統 | A6 | 🔴 CRITICAL（~239h無commit） | handoff/tasks/T-A6-001.md |
 | T-A6-002 | LINE 對話訓練資料收集計畫 | A6 | 💤 暫停（原計畫拆 Sheet 做訓練資料，04-07 重新規劃方向。等 Owner 決定是否需要 LINE 訓練資料及取得方式。） | handoff/tasks/T-A6-002.md |
-| T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | 🔴 CRITICAL（~168h無commit） | handoff/tasks/T-A7-001.md |
+| T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | 🔴 CRITICAL（~167h無commit） | handoff/tasks/T-A7-001.md |
 | T-A7-002 | A7 部門 80/20 優先任務清單 | A7 | ⏸️ 阻塞中（任務 9 已解除，其餘阻塞未變）（任務 6（Q1-Q10 實裝）+ 任務 9（Owner 政策確認）+ 任務 10（技能書 v2.0）已完成。Phase ） | handoff/tasks/T-A7-002.md |
 | T-A8-001-folder-to-video-distribution | T-A8-001 — Folder Case to Short Video Distribution | A8 | 🔴 CRITICAL（~743h無commit） | handoff/tasks/T-A8-001-folder-to-video-distribution.md |
 | T-B1-001 | B1 Cross-Project Governance Advisor Prompt + Project Pause |  | 🟢 召喚型可用（B1 轉為 Investment OS 投資邏輯橋接顧問（召喚型）；InnerFlowLab/Substack 發文自動） | handoff/tasks/T-B1-001.md |
@@ -160,24 +162,3 @@
 | Owner | T-GBP-001: 等 Owner 準備新圖片 | 見 Task Card |
 |  | T-HQ-001: Owner pending（非 B1 blocking） | 見 Task Card |
 |  | T-IOS-KOL-001: - **阻塞**：無。 | 見 Task Card |
-| ⚠️ A1巡查 2026-07-12 22:00 | T-A7-001 🔴 ~180h 無 commit（Phase 3 未啟動，**連續第 5 天警告**，需 Owner 緊急關注）；T-A6-001 🔴 ~132h 無 commit（超閾值 2.75x，持續惡化） | 待 Owner 決策 |
-| ⚠️ A1巡查 2026-07-12 23:30 | **晚間巡查**：T-A7-001 🔴 ~182h 無 commit（Phase 3 仍未啟動，**第 5 天末**，累計 6 次警告；last commit `f6fdaac` 07-07 patrol）；T-A6-001 🔴 ~134h 無 commit（超閾值 2.8x，bot_a6 上線 launchd 但 LINE webhook 仍等 Owner 確認）；今日正向：A1 Fable5交棒任務完成（方向指引+複利巡查 prompt+Extension 模組+AGENT_RULES S22）；A0 IS Phase B 走查完成（4 commits）；零 A2-A8 新 commit（正常，無 Owner 派工） | 待 Owner 決策 |
-| ⚠️ A1巡查 2026-07-13 08:00 | **每日巡查**：T-A7-001 🔴 ~194h 無 commit（Phase 3 仍未啟動，**第 8 天，累計 7 次警告，Owner 緊急決策急需**；last commit `f6fdaac` 07-07）；T-A6-001 🔴 ~146h 無 commit（bot_a6 launchd 已上線，阻塞點：LINE webhook Owner 確認）；正向：A1 備援召喚機制+考試流程落地（`31c7db6`：6份backup recalls/failover runbook/3份角色認證考卷/AGENT_STARTUP_PROTOCOL v1.8）；A0 IS Phase B 走查完成；A7 recall 斷點已更新（修正 04-20 過時狀態）；零 A2-A8 commit（正常，無 Owner 派工） | 待 Owner 決策 |
-| ⚠️ A1巡查 2026-07-13 16:08 | **午後巡查**：T-A7-001 🔴 ~202h 無 commit（Phase 3 仍未啟動，**累計第 8 次警告，已逾 8 天，Owner 決策急需**；last commit `f6fdaac` 07-07）；T-A6-001 🔴 ~154h 無 commit（bot_a6 launchd 線上，唯一阻塞：LINE webhook Channel 1654658337 等 Owner 確認）；過去 8h 零 A2-A8 新 commit（正常，無 Owner 派工）；AGENT_RECALL_PROMPTS.md A6/A7 斷點同步更新 | 待 Owner 決策 |
-| ⚠️ A1巡查 2026-07-13 22:00 | **晚間巡查**：T-A7-001 🔴 ~208h 無 commit（Phase 3 仍未啟動，**累計第 9 次警告，逾 8.7 天，Owner 決策急需**；last commit `f6fdaac` 07-07）；T-A6-001 🔴 ~160h 無 commit（bot_a6 launchd 線上，唯一阻塞：LINE webhook Channel 1654658337 等 Owner 確認）；今日 8h 零 A2-A8 新 commit（正常，無 Owner 派工）；無新增異常 | 待 Owner 決策 |
-| ⚠️ A1巡查 2026-07-14 08:00 | **每日巡查**：T-A7-001 🔴 ~218h 無 commit（Phase 3 仍未啟動，**累計第 10 次警告，逾 9.1 天，Owner 決策急需**；last commit `f6fdaac` 07-07）；T-A6-001 🔴 ~170h 無 commit（bot_a6 launchd 線上，唯一阻塞：LINE webhook Channel 1654658337 等 Owner 確認）；過去 24h 零 A2-A8 新 commit（正常，無 Owner 派工）；系統狀態與 CURRENT_STATUS 一致，無新增異常 | 待 Owner 決策 |
-| ⚠️ A1巡查 2026-07-14 16:00 | **午後巡查**：T-A7-001 🔴 ~226h 無 commit（Phase 3 仍未啟動，**累計第 11 次警告，逾 9.4 天，Owner 決策急需**；last commit `f6fdaac` 07-07）；T-A6-001 🔴 ~178h 無 commit（bot_a6 launchd 線上，唯一阻塞：LINE webhook Channel 1654658337 等 Owner 確認）；過去 8h 零 A2-A8 新 commit（正常，無 Owner 派工）；系統狀態與 CURRENT_STATUS 一致，無新增異常 | 待 Owner 決策 |
-| ⚠️ A1巡查 2026-07-14 22:00 | **晚間巡查**：T-A7-001 🔴 ~232h 無 commit（Phase 3 仍未啟動，**累計第 12 次警告，逾 9.7 天，Owner 決策急需**；last commit `f6fdaac` 07-07）；T-A6-001 🔴 ~184h 無 commit（bot_a6 launchd 線上，唯一阻塞：LINE webhook Channel 1654658337 等 Owner 確認）；今日 8h 零 A2-A8 新 commit（正常，無 Owner 派工）；Agent 狀態與 CURRENT_STATUS 一致，無新增異常；AGENT_RECALL_PROMPTS.md A6/A7 斷點同步更新 | 待 Owner 決策 |
-| ⚠️ A1巡查 2026-07-15 08:00 | **每日巡查**：T-A7-001 🔴 ~242h 無 commit（Phase 3 仍未啟動，**累計第 13 次警告，逾 10.1 天，Owner 決策急需**；last commit `f6fdaac` 07-07）；T-A6-001 🔴 ~194h 無 commit（bot_a6 launchd 線上，唯一阻塞：LINE webhook Channel 1654658337 等 Owner 確認）；過去 10h 零 A2-A8 新 commit（正常，無 Owner 派工）；系統狀態與 CURRENT_STATUS 一致，無新增異常 | 待 Owner 決策 |
-| ⚠️ A1巡查 2026-07-15 16:00 | **午後巡查**：T-A7-001 🔴 ~250h 無 commit（Phase 3 仍未啟動，**累計第 14 次警告，逾 10.4 天，Owner 決策急需**；last commit `f6fdaac` 07-07）；T-A6-001 🔴 ~202h 無 commit（bot_a6 launchd 線上，唯一阻塞：LINE webhook Channel 1654658337 等 Owner 確認）；過去 8h 零 A2-A8 新 commit（正常，無 Owner 派工）；系統狀態與 CURRENT_STATUS 一致，無新增異常 | 待 Owner 決策 |
-| ⚠️ A1巡查 2026-07-15 22:00 | **晚間巡查**：T-A7-001 🔴 ~256h 無 commit（Phase 3 仍未啟動，**累計第 15 次警告，逾 10.7 天，Owner 決策急需**；last commit `f6fdaac` 07-07）；T-A6-001 🔴 ~208h 無 commit（bot_a6 launchd 線上，唯一阻塞：LINE webhook Channel 1654658337 等 Owner 確認）；今日 8h 零 A2-A8 新 commit（正常，無 Owner 派工）；系統狀態與 CURRENT_STATUS 一致，無新增異常；AGENT_RECALL_PROMPTS.md A6/A7 斷點同步更新 | 待 Owner 決策 |
-| ⚠️ A1巡查 2026-07-16 08:00 | **每日巡查**：T-A7-001 🔴 ~266h 無 commit（Phase 3 仍未啟動，**累計第 16 次警告，逾 11.1 天，Owner 決策急需**；last commit `f6fdaac` 07-07）；T-A6-001 🔴 ~218h 無 commit（bot_a6 launchd 線上，唯一阻塞：LINE webhook Channel 1654658337 等 Owner 確認）；過去 10h 零 A2-A8 新 commit（正常，無 Owner 派工）；系統狀態與 CURRENT_STATUS 一致，無新增異常；AGENT_RECALL_PROMPTS.md A6/A7 斷點同步更新 | 待 Owner 決策 |
-| ⚠️ A1巡查 2026-07-16 16:00 | **午後巡查**：T-A7-001 🔴 ~274h 無 commit（Phase 3 仍未啟動，**累計第 17 次警告，逾 11.4 天，Owner 決策急需**；last commit `f6fdaac` 07-07）；T-A6-001 🔴 ~226h 無 commit（bot_a6 launchd 線上，唯一阻塞：LINE webhook Channel 1654658337 等 Owner 確認）；過去 8h 零 A2-A8 新 commit（正常，無 Owner 派工）；系統狀態與 CURRENT_STATUS 一致，無新增異常 | 待 Owner 決策 |
-| ⚠️ A1巡查 2026-07-16 22:00 | **晚間巡查**：T-A7-001 🔴 ~280h 無 commit（Phase 3 仍未啟動，**累計第 18 次警告，逾 11.7 天，Owner 決策急需**；last commit `f6fdaac` 07-07）；T-A6-001 🔴 ~232h 無 commit（bot_a6 launchd 線上，唯一阻塞：LINE webhook Channel 1654658337 等 Owner 確認）；今日 8h 零 A2-A8 新 commit（正常，無 Owner 派工）；Agent 狀態與 CURRENT_STATUS 一致，無新增異常；AGENT_RECALL_PROMPTS.md A6/A7 斷點同步更新 | 待 Owner 決策 |
-| ⚠️ A1巡查 2026-07-17 08:00 | **每日巡查**：T-A7-001 🔴 ~290h 無 commit（Phase 3 仍未啟動，**累計第 19 次警告，逾 12.1 天，Owner 決策急需**；last commit `f6fdaac` 07-07）；T-A6-001 🔴 ~242h 無 commit（bot_a6 launchd 線上，唯一阻塞：LINE webhook Channel 1654658337 等 Owner 確認）；過去 10h 零 A2-A8 新 commit（正常，無 Owner 派工）；系統狀態與 CURRENT_STATUS 一致，無新增異常；AGENT_RECALL_PROMPTS.md A6/A7 斷點同步更新 | 待 Owner 決策 |
-| ✅ A0派工 2026-07-17 14:10 | **監控排程去依賴化完成**：3 腳本（local_memory_watch/runtime_alarm/dispatch_backup）+ 3 launchd plist（每2h/每日08:30/每日03:00）裝載並實測；memory-watch log落地+Telegram推播✅；runtime-alarm 1筆CRITICAL推播✅（US曝險82.7% deadline今日）；`docs/local-monitoring-runbook.md` 完成；系統 RAM free=177MB(0%) 屬真實低記憶體告警；T-A7-001 🔴 ~292h；T-A6-001 🔴 ~244h | DONE — 見 state/a0_delegate_20260717_report.md |
-| ⚠️ A1巡查 2026-07-17 16:00 | **午後巡查**：T-A7-001 🔴 ~298h 無 commit（Phase 3 仍未啟動，**累計第 20 次警告，逾 12.4 天，Owner 決策急需**；last commit `f6fdaac` 07-07）；T-A6-001 🔴 ~250h 無 commit（bot_a6 launchd 線上，唯一阻塞：LINE webhook Channel 1654658337 等 Owner 確認）；今日正向：A1 A0派工監控去依賴化完成（`cab2c28`：3腳本+3 launchd plist，14:10）；過去 8h 零 A2-A8 新 commit（正常，無 Owner 派工）；系統狀態與 CURRENT_STATUS 一致，無新增異常 | 待 Owner 決策 |
-| ⚠️ A1巡查 2026-07-17 22:00 | **晚間巡查**：T-A7-001 🔴 ~304h 無 commit（Phase 3 仍未啟動，**累計第 21 次警告，逾 12.7 天，Owner 決策急需**；last commit `f6fdaac` 07-07）；T-A6-001 🔴 ~256h 無 commit（bot_a6 launchd 線上，唯一阻塞：LINE webhook Channel 1654658337 等 Owner 確認）；今日 8h 零 A2-A8 新 commit（正常，無 Owner 派工）；Agent 狀態與 CURRENT_STATUS 一致，無新增異常；AGENT_RECALL_PROMPTS.md A6/A7 斷點同步更新 | 待 Owner 決策 |
-| ⚠️ A1巡查 2026-07-18 08:00 | **每日巡查**：T-A7-001 🔴 ~315h 無 commit（Phase 3 仍未啟動，**累計第 22 次警告，逾 13.1 天，Owner 決策急需**；last commit `f6fdaac` 07-07）；T-A6-001 🔴 ~267h 無 commit（bot_a6 launchd 線上，唯一阻塞：LINE webhook Channel 1654658337 等 Owner 確認）；正向：A1 `42f8cae` 外接碟備份修補完成（03:09）；過去 10h 零 A2-A8 新 commit（正常，無 Owner 派工）；系統狀態與 CURRENT_STATUS 一致，無新增異常；AGENT_RECALL_PROMPTS.md A6/A7 斷點同步更新 | 待 Owner 決策 |
-| ✅ A0派工 2026-07-18 10:30 | **Ollama RAM 尖峰調優完成**：`OLLAMA_KEEP_ALIVE=5m` 設定三層落地（launchctl setenv 當前session + com.maplab.ollama-keep-alive.plist 重開機持久化 + bot_a6.py / a6_gym_runner.py API 呼叫明示 `keep_alive: "5m"`）；Ollama 重啟後實測 moondream:1.8b 呼叫 → 5m 後自動卸載（ollama ps 空）✅；docs/local-monitoring-runbook.md 補 KEEP_ALIVE 章節；預期 memory_watch 24h 警告頻率下降，隔日 patrol 核對 | DONE |
-| ⚠️ A1巡查 2026-07-18 16:00 | **午後巡查**：T-A7-001 🔴 ~323h 無 commit（Phase 3 仍未啟動，**累計第 23 次警告，逾 13.5 天，Owner 決策急需**；last commit `f6fdaac` 07-07）；T-A6-001 🔴 ~275h 無 commit（bot_a6 launchd 線上，唯一阻塞：LINE webhook Channel 1654658337 等 Owner 確認）；過去 8h 正向：fix(ollama) KEEP_ALIVE=5m 落地（`6820df0`）；零 A2-A8 新 commit（正常，無 Owner 派工）；Agent 狀態與 CURRENT_STATUS 一致，無新增異常；AGENT_RECALL_PROMPTS.md A6/A7 斷點同步更新 | 待 Owner 決策 |

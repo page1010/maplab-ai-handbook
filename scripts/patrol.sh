@@ -261,3 +261,22 @@ echo "  ${HS_LABEL} IS-HS: ${IS_HS}/100（新鮮度=${FRESH_SCORE}% 警報通暢
 if [[ -n "$IS_HS_LOG" ]]; then
   echo "{\"date\":\"$(date '+%Y-%m-%d %H:%M')\",\"is_hs\":${IS_HS},\"freshness\":${FRESH_SCORE},\"escalation\":${ESCAL_SCORE}}" >> "$IS_HS_LOG" 2>/dev/null || true
 fi
+
+# ── B3 廣告觀察（Owner 2026-07-18 裁決 A：自己去 Meta 建受眾包）──
+echo ""
+echo "【B3 廣告觀察】"
+B3_SIGNAL_FILE="$REPO_ROOT/state/b3_ads_signal.log"
+# 偵測方式：(1) Owner 主動回報 → 寫入 b3_ads_signal.log  (2) GA4/UTM 有 b3 流量
+if [[ -f "$B3_SIGNAL_FILE" ]]; then
+  LAST_B3=$(tail -1 "$B3_SIGNAL_FILE" 2>/dev/null || echo "")
+  if [[ -n "$LAST_B3" ]]; then
+    echo "  🟢 B3 廣告已啟動訊號偵測到："
+    echo "     $LAST_B3"
+    echo "  → 已觸發每日成效摘要模式（花費/曝光/點擊/詢價 UTM 進例會）"
+    echo "  → 每日成效追蹤：bash scripts/b3_ads_daily_summary.sh"
+  fi
+else
+  echo "  ⚪ B3 廣告尚未啟動（Owner 去 Meta 建受眾包後，回報一句話或 UTM 有 b3 流量自動偵測）"
+  echo "  → 啟動後：回報「B3 開始跑了」或 GA4 出現 utm_source=meta_b3 流量"
+  echo "  → A1 偵測到後自動開始每日成效摘要並進例會"
+fi

@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-07-18 22:00（A1 晚間巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-07-18 23:30（A1 — Owner 派工三任務落地）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -18,6 +18,8 @@
 ---
 
 ## 最新事實核對
+
+- 2026-07-18（23:30）：**[A1 Owner派工三任務落地]** ②A5外送費級距草案建立（`state/a5_delivery_fee_draft_20260718f.md` Zone A-E 五區定義；Q5 模板串入級距快查表；Owner 確認訊息 `state/owner_delivery_fee_confirm_20260718f.md`；T-A7-001 第24次警告收斂為單一里程碑：07-25 Phase 3 啟動）③IS 規則引擎上線（`scripts/is_rules_gate.sh` 四參數落地：SOP1=10%/SOP2=15%/槓桿=1.5x/日跌幅=-3%；5 條違規選項卡推播 Telegram ✅；IS 持續迭代計畫 P1 Layer 3 進度更新）④patrol 加 B3 ads 觀察（`scripts/patrol.sh` 新增 B3 偵測區塊；偵測方式：Owner 回報或 GA4 utm_source=meta_b3；觸發後自動每日成效摘要）。
 
 - 2026-07-18：**[A1 A0派工] W→SW→NW 迴圈入文化 + 價值密度重排落地** — A0 委派 4 項任務全部執行完成：①`docs/fable-mindset.md` 新增第 11 條「What→So What→Now What 迴圈」（任何回報必答三問，只有 What 的視為未完成；含三問格式表 + MAPLAB 實例）②`AGENT_RULES.md` 新增 SECTION 23「價值密度排序」（Tier1/Tier2/FROZEN 三層 + 每週必報訊息密度/算力回報率兩比率 + 4 條執行規則）③`TASK_QUEUE.md` 全面重排（Tier1=A6 LINE 上線/B3 廣告試跑/IS 規則引擎核准包/A7 Phase 3 授權；防守類標 FROZEN；含 So What 空轉成本估算）④`state/owner_one_reply_20260718.md` 建立（Owner 一次回覆清單：4 件事×選項 A/B/C，30 秒可回，4 條線同步解鎖）。T-A7-001 🔴 ~323h（第 23 次警告）；T-A6-001 🔴 ~275h（bot_a6 線上，唯一阻塞 LINE webhook）。
 
@@ -110,10 +112,10 @@
 | T-A2-002-foodsafety-seo-cleanup | T-A2-002 — 食安 + 法規 SEO 字眼清理 | A2 | ⏸️ 阻塞（回溯掃描 + 根因結構性修復已完成，只剩等 Owner 決定 post 698 怎麼改）（58 篇既有文章已全數掃描完成；新產出內容的自動防護缺口已用 F-1 gate 補上（見下方「2026-07-07 根因） | handoff/tasks/T-A2-002-foodsafety-seo-cleanup.md |
 | T-A2-003-weekly-wp-audit | T-A2-003: 每週全站 WP 內容稽核排程 | A2 | 🔲 待開始（腳本已建好（wp-audit.sh / wp-audit-cron.sh）。待 Owner 用 /schedule 建立） | handoff/tasks/T-A2-003-weekly-wp-audit.md |
 | T-A2-004 | 首頁結構優化 — 配合品牌色票微調 + 轉換路徑整理 | A2 | 🔲 待開始（任務卡建立。A0 已完成對標分析和色票微調。） | handoff/tasks/T-A2-004.md |
-| T-A2-005-local-seo-factory | T-A2-005：MAPLAB SEO Factory（地端閉環，Pillar First） | A2 | 🔴 CRITICAL（~1800h無commit） | handoff/tasks/T-A2-005-local-seo-factory.md |
+| T-A2-005-local-seo-factory | T-A2-005：MAPLAB SEO Factory（地端閉環，Pillar First） | A2 | 🔴 CRITICAL（~1799h無commit） | handoff/tasks/T-A2-005-local-seo-factory.md |
 | T-A2-006-ads-seo-wordpress-patrol | T-A2-006 — Ads / SEO / WordPress Patrol | A2 | 🟢 ACTIVE（ICCTN 案例文（post 1829）已上線，QA PASS_WITH_NOTES。下一步：A3 接手 Google ） | handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md |
-| T-A2-SEO-CATERING-MATRIX-001 | Foreign Catering SEO Benchmark -> MAPLAB Article Matrix | A2 | 🔴 CRITICAL（~744h無commit） | handoff/tasks/T-A2-SEO-CATERING-MATRIX-001.md |
-| T-A2A3-001-B | SEO 場景頁面 + 內連結（從 T-A2A3-001 分拆） | A2/A3 | 🔴 CRITICAL（~1248h無commit） | handoff/tasks/T-A2A3-001-B.md |
+| T-A2-SEO-CATERING-MATRIX-001 | Foreign Catering SEO Benchmark -> MAPLAB Article Matrix | A2 | 🔴 CRITICAL（~743h無commit） | handoff/tasks/T-A2-SEO-CATERING-MATRIX-001.md |
+| T-A2A3-001-B | SEO 場景頁面 + 內連結（從 T-A2A3-001 分拆） | A2/A3 | 🔴 CRITICAL（~1247h無commit） | handoff/tasks/T-A2A3-001-B.md |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2/A3 | ⏸️ RM/GSC 部分暫停；案例寫作轉 T-A2A3-001-B（Rank Math 已退訂，已設定好的 SEO 欄位先不要再設定；下一步是依 live URL map 補 To B 真） | handoff/tasks/T-A2A3-001.md |
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | ⏸️ 阻塞中（受眾輪廓分析完成（693筆 Orders）。待執行：嘉義加入廣告地區、興趣條件精簡、策略一冷受眾上線。） | handoff/tasks/T-A3-002.md |
 | T-A4-002 | pagewu1010 帳號 Takeout 解壓 + Gemini Flash 照片資產整合 | A4 | 🔴 CRITICAL（~2183h無commit） | handoff/tasks/T-A4-002.md |
@@ -126,7 +128,7 @@
 | T-A5-007-codex-takeover | T-A5-007 — A5 報價系統移交 Codex 管理 | A5 | 🔲 待 Codex 認領(Owner 2026-07-06 口頭指示:「把 A5 接給 Codex 管理」)（Codex 讀本卡「診斷結論」→ 執行「交接後第一批工作」） | handoff/tasks/T-A5-007-codex-takeover.md |
 | T-A6-001 | A6 LINE 業務報價助手系統 | A6 | 🔴 CRITICAL（~283h無commit，晚間巡查更新 07-18） | handoff/tasks/T-A6-001.md |
 | T-A6-002 | LINE 對話訓練資料收集計畫 | A6 | 💤 暫停（原計畫拆 Sheet 做訓練資料，04-07 重新規劃方向。等 Owner 決定是否需要 LINE 訓練資料及取得方式。） | handoff/tasks/T-A6-002.md |
-| T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | 🔴 CRITICAL（~331h無commit，第24次警告，晚間巡查更新 07-18） | handoff/tasks/T-A7-001.md |
+| T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | ⏳ 等 Owner 確認外送費金額（Zone B/C，state/owner_delivery_fee_confirm_20260718f.md），確認後目標 07-25 Phase 3 啟動（24次警告→單一里程碑收斂，2026-07-18） | handoff/tasks/T-A7-001.md |
 | T-A7-002 | A7 部門 80/20 優先任務清單 | A7 | ⏸️ 阻塞中（任務 9 已解除，其餘阻塞未變）（任務 6（Q1-Q10 實裝）+ 任務 9（Owner 政策確認）+ 任務 10（技能書 v2.0）已完成。Phase ） | handoff/tasks/T-A7-002.md |
 | T-A8-001-folder-to-video-distribution | T-A8-001 — Folder Case to Short Video Distribution | A8 | 🔴 CRITICAL（~743h無commit） | handoff/tasks/T-A8-001-folder-to-video-distribution.md |
 | T-B1-001 | B1 Cross-Project Governance Advisor Prompt + Project Pause |  | 🟢 召喚型可用（B1 轉為 Investment OS 投資邏輯橋接顧問（召喚型）；InnerFlowLab/Substack 發文自動） | handoff/tasks/T-B1-001.md |
@@ -157,7 +159,7 @@
 | A5 | T-A5-006: 前置 T-A5-005 需先完成 | 見 Task Card |
 | A6 | T-A6-001: LINE webhook 已可看到 inbound 同步，但它只含客戶→OA 訊息；若要完整雙向訓練資料，需 LINE OA Manager CSV 匯出或其他正式來源。 | 見 Task Card |
 | A6 | T-A6-002: 等 Owner 決定方向 | 見 Task Card |
-| A7 | T-A7-001: A5 外送費級距未建立（僅影響 Q5 自動計算；手動模板不受影響） | 見 Task Card |
+| A7 | T-A7-001: Owner 確認 Zone B/C 外送費金額（state/owner_delivery_fee_confirm_20260718f.md，30秒）→ Phase 3 啟動 07-25 | 見 Task Card |
 | A7 | T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 5/8 需 TimeTree 權限（任務 9 已解除） | 見 Task Card |
 | Owner | T-GBP-001: 等 Owner 準備新圖片 | 見 Task Card |
 |  | T-HQ-001: Owner pending（非 B1 blocking） | 見 Task Card |

@@ -194,12 +194,12 @@ Week 4 (08-08): ██████████ ?/100   ← Layer 3 規則引擎�
 
 ### 四週 Phase 排程
 
-| Phase | 週期 | 目標 | 主要行動 | 驗收指標 | Owner 需決策？ |
-|-------|------|------|---------|---------|--------------|
-| **P1** | Week 1 (07-18~07-25) | 心跳可見 + escalation 修復 | `is_health_score.sh` + escalation_push + patrol 整合 | IS-HS 從 30 → 50+；昨日 5 條 WARNING 推到 Telegram | P0 escalation push = 需 Owner 確認 Telegram 推播格式 |
-| **P2** | Week 2 (07-25~08-01) | 每日微迭代啟動 + 財經早報改善 | 財經早報加可動性摘要；nightwatch 加 content quality gate | 每日早報第一行是「今天可不可以動」；P-2/P-4 backlog 完成 | 最小 |
-| **P3** | Week 3 (08-01~08-08) | investment_goals.md + 規則引擎完整 | Owner 填 goals v0；B1 接 escalation 到規則引擎 | investment_goals.md 存在且有 2 個 thesis；escalation SLA 縮到 24h | Owner 15 min 填 goals |
-| **P4** | Week 4 (08-08~08-15) | IS-HS > 70，進度可視化 | IS-HS 週趨勢跑 3 週；exposure_ledger 自動週算 | IS-HS ≥ 70；每週五有 IS 進度週報進入 patrol | 最小 |
+| Phase | 週期 | 目標 | 主要行動 | 驗收指標 | Owner 需決策？ | 進度 |
+|-------|------|------|---------|---------|--------------|------|
+| **P1** | Week 1 (07-18~07-25) | 心跳可見 + escalation 修復 | `is_health_score.sh` + escalation_push + patrol 整合 | IS-HS 從 30 → 50+；昨日 5 條 WARNING 推到 Telegram | P0 escalation push = 需 Owner 確認 Telegram 推播格式 | 🔄 **Layer 3 規則引擎提前落地（2026-07-18）**：`scripts/is_rules_gate.sh` 建立（SOP1=10%/SOP2=15%/槓桿=1.5x/日跌幅=-3%）；現值實測 5 條違規（TSLA/3296/US tech/WFE）推播 Telegram ✅；下一步：escalation_push 補完 + IS-HS patrol 整合 |
+| **P2** | Week 2 (07-25~08-01) | 每日微迭代啟動 + 財經早報改善 | 財經早報加可動性摘要；nightwatch 加 content quality gate | 每日早報第一行是「今天可不可以動」；P-2/P-4 backlog 完成 | 最小 | 🔲 待啟動 |
+| **P3** | Week 3 (08-01~08-08) | investment_goals.md + 規則引擎完整 | Owner 填 goals v0；B1 接 escalation 到規則引擎 | investment_goals.md 存在且有 2 個 thesis；escalation SLA 縮到 24h | Owner 15 min 填 goals | 🔲 待啟動 |
+| **P4** | Week 4 (08-08~08-15) | IS-HS > 70，進度可視化 | IS-HS 週趨勢跑 3 週；exposure_ledger 自動週算 | IS-HS ≥ 70；每週五有 IS 進度週報進入 patrol | 最小 | 🔲 待啟動 |
 
 ---
 

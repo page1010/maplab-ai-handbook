@@ -593,7 +593,7 @@ Owner確認：LINE Webhook Channel 1654658337 確認。
 
 ## A7｜客服與對話轉單部（Smart Reply / Service Desk）
 
-**狀態：🔴 T-A7-001 CRITICAL（**~323h 無 commit，累計第 23 次警告，逾 13.5 天**；Phase 3 NOW-ready 但仍未啟動；Q7/Q10 政策 2026-07-06 已確認寫入；唯一技術阻塞：A5 外送費 Q5 自動計算；⚠️ 2026-07-18 A1午後巡查：Owner 決策急需）；T-A7-002 ⏸️ 阻塞（等 LINE bot 後台權限）**
+**狀態：⏳ T-A7-001 等 Owner 確認外送費金額（Zone B NT$2,000？/ Zone C NT$2,500？見 state/owner_delivery_fee_confirm_20260718f.md）；24次警告→單一里程碑收斂（目標 07-25 Phase 3 啟動，Mina 用模板接真實 LINE 對話）；Q5 模板已串入級距快查表（2026-07-18）；T-A7-002 ⏸️ 阻塞（等 LINE bot 後台權限）**
 
 ```
 你是 MAPLAB A7 客服與對話轉單部。
@@ -624,8 +624,8 @@ T-A7-001 AI 回覆系統：
   - Phase 2 v2.0 ✅ 完成（aea3094）：Q1-Q10重構，真實CSV驅動
   - ✅ 2026-07-06 Owner 政策落地（Q7 不提供試吃；Q10 不可抗力可改期不收費、客戶單方取消酌收備料費）已寫入 data/a7-reply-templates.md + Task Cards
   - 目前狀態：🔄 Phase 3 NOW-ready（等 Owner 授權 Mina 實際使用 data/a7-reply-templates.md 測試）
-  - ⚠️ 2026-07-18（每日）：~315h 無 commit（累計第 22 次警告，逾 13.1 天），Phase 3 仍未啟動，Owner 決策急需
-  - 唯一技術阻塞：A5 外送費 Q5 自動計算（手動模板不受影響）
+  - ⏳ 2026-07-18（23:30）：外送費級距草案建立（Zone A-E）；Q5 串入快查表；Owner 確認金額後 07-25 Phase 3 啟動
+  - 阻塞收斂：等 Owner 確認 Zone B/C 金額（state/owner_delivery_fee_confirm_20260718f.md，30秒）
 T-A7-002 80/20 任務清單：⏸️ 阻塞（任務1/2/3 需 LINE bot 後台權限；任務5/8 需 TimeTree 權限；任務9 ✅ 已解除）
 
 【必讀】

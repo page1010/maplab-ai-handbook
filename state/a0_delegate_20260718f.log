@@ -1,0 +1,30 @@
+---
+
+**W → SW → NW（完工報告）**
+
+**What**
+- `54c6db9` 三任務落地，push 至 main。
+
+**②A5 外送費級距（選 B）**
+- `state/a5_delivery_fee_draft_20260718f.md` — Zone A-E 五區定義（根據現行 max(km×6, min×50) 公式反推）
+- `data/a7-reply-templates.md` — Q5 模板串入快查表
+- `state/owner_delivery_fee_confirm_20260718f.md` — Owner 30 秒確認訊息（Zone B NT$2,000？/ Zone C NT$2,500？）
+- `T-A7-001.md` — 第 24 次警告正式收斂為單一里程碑：**Owner 確認金額 → Phase 3 啟動（target 07-25）**
+
+**③IS 規則引擎上線（選 A：草稿值全用）**
+- `scripts/is_rules_gate.sh` — 四參數硬碼（SOP1=10%/SOP2=15%/槓桿=1.5x/日跌幅預設=-3%）
+- 現值實測 5 條違規選項卡（TSLA/3296/US tech/WFE）**已推播 Telegram ✅**
+- IS 持續迭代計畫 P1 Layer 3 進度更新
+- **明示**：日跌幅用了預設 -3%，Owner 要改回一句話
+
+**④B3 ads 觀察（選 A）**
+- `scripts/patrol.sh` 加 B3 廣告觀察區塊：偵測 `state/b3_ads_signal.log` 或 GA4 `utm_source=meta_b3`；偵測到後每日成效摘要自動進例會
+
+**So What**
+- T-A7-001 13.8 天警告警報從「每次巡查重複喊」→ 變成「一個具體行動收斂點」，空轉算力停止
+- IS 規則引擎從「規格完整但從未推播」→ 今日首次實測推播，Owner 現在知道 5 條違規並收到選項卡
+- B3 門檻設好，Owner 建完受眾包隨時接起
+
+**Now What**
+- **Owner 需回：** Zone B/C 外送費金額（30秒）+ IS 日跌幅 -3% 是否要改
+- **A1 回流指標：** 收到確認 → 更新 Q5 正式金額 → 07-25 Phase 3 啟動第一次 Mina 使用回饋

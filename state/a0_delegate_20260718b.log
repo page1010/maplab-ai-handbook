@@ -1,0 +1,19 @@
+moondream 還在（剩 2 分鐘，不影響）。`OLLAMA_KEEP_ALIVE=5m` 確認設定。
+
+---
+
+**A0 派工完成報告 — Ollama RAM 尖峰調優**
+
+| 項目 | 結果 |
+|------|------|
+| KEEP_ALIVE=5m 當前 session | ✅ `launchctl setenv` 確認 |
+| 重開機持久化 | ✅ `com.maplab.ollama-keep-alive.plist` 已裝載 |
+| API 呼叫明示 keep_alive | ✅ bot_a6.py + a6_gym_runner.py |
+| Ollama 重啟 | ✅ PID 84345→55155，新進程繼承 env var |
+| 實測 | ✅ moondream 呼叫後 5m UNTIL 顯示，卸載計時確認 |
+| 文件更新 | ✅ local-monitoring-runbook.md 補 KEEP_ALIVE 章節 |
+| commit/push | ✅ `6820df0` |
+
+**技術說明（人話）**：大模型用完像是電腦開了大程式不關掉，RAM 被佔光。現在設定「用完 5 分鐘後自動關掉」，讓記憶體還給系統。下次呼叫會多幾秒重新開機的時間，這是正常的。
+
+**觀察指標**：memory_watch.log 未來 24h 警告次數應從 7 次↓。明日 patrol 核對。

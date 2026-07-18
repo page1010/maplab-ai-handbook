@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
-# patrol.sh — 掃描 Task Card 接續狀態，輸出 Owner 決策佇列
+# patrol.sh — 掃描 Task Card 接續狀態，驅動四態狀態機，輸出 Owner 決策佇列
 # 用法：bash scripts/patrol.sh
 # 整合入口：Telegram bot /patrol 指令
+# 四態狀態機：IN_PROGRESS → STALLED(48h) → NEEDS_REVIEW(7d) → AUTO_CLOSED(7d)
+# 見 AGENT_RULES.md SECTION 25
 
 set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -9,6 +11,7 @@ TASKS_DIR="$REPO_ROOT/handoff/tasks"
 
 # ── 日期計算 ──
 now_ts=$(date +%s)
+today=$(date '+%Y-%m-%d')
 
 days_since() {
   local date_str="$1"
@@ -22,12 +25,87 @@ days_since() {
   echo $(( (now_ts - then_ts) / 86400 ))
 }
 
+# ── 四態狀態機：寫回 Task Card 狀態欄位（可逆，SECTION 24）──
+update_task_state() {
+  local card="$1"
+  local new_state="$2"
+  local since_date="$3"
+  local state_field=""
+
+  case "$new_state" in
+    STALLED)
+      state_field="🟡 STALLED（since ${since_date}，48h 無 commit，Owner 可更新最後活動解除）"
+      ;;
+    NEEDS_REVIEW)
+      state_field="🔍 NEEDS_REVIEW（since ${since_date}，停滯逾 7 天，Owner 決策急需或回覆「重開 $(basename "$card" .md)」）"
+      ;;
+    AUTO_CLOSED)
+      state_field="🔒 AUTO_CLOSED（${since_date}，NEEDS_REVIEW 無回應逾 7 天，Owner 可回覆「重開 $(basename "$card" .md)」重啟）"
+      ;;
+  esac
+
+  # macOS 相容：sed -i ''
+  sed -i '' "s|^- \*\*狀態\*\*:.*|- **狀態**: ${state_field}|" "$card" 2>/dev/null || \
+  sed -i "s|^- \*\*狀態\*\*:.*|- **狀態**: ${state_field}|" "$card"
+}
+
+# ── 四態狀態機：偵測並執行狀態遷移 ──
+# 回傳：0=有遷移發生，1=無遷移
+drive_state_transition() {
+  local card="$1"
+  local status="$2"
+  local days_ago="$3"
+
+  # IN_PROGRESS → STALLED（最後活動 ≥ 2 天）
+  if echo "$status" | grep -q '🔄\|IN_PROGRESS\|進行中'; then
+    if [[ "$days_ago" != "?" ]] && [[ "$days_ago" -ge 2 ]]; then
+      update_task_state "$card" "STALLED" "$today"
+      transitions+=("  🔄→🟡 STALLED: $(basename "$card" .md)（最後活動 ${days_ago}d 前）")
+      return 0
+    fi
+  fi
+
+  # STALLED → NEEDS_REVIEW（在 STALLED 狀態 ≥ 7 天）
+  if echo "$status" | grep -q '🟡 STALLED'; then
+    local stalled_since
+    stalled_since=$(echo "$status" | grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2}' | head -1 || echo "")
+    if [[ -n "$stalled_since" ]]; then
+      local stalled_days
+      stalled_days=$(days_since "$stalled_since")
+      if [[ "$stalled_days" != "?" ]] && [[ "$stalled_days" -ge 7 ]]; then
+        update_task_state "$card" "NEEDS_REVIEW" "$today"
+        transitions+=("  🟡→🔍 NEEDS_REVIEW: $(basename "$card" .md)（停滯 ${stalled_days} 天）")
+        return 0
+      fi
+    fi
+  fi
+
+  # NEEDS_REVIEW → AUTO_CLOSED（在 NEEDS_REVIEW 狀態 ≥ 7 天）
+  if echo "$status" | grep -q '🔍 NEEDS_REVIEW'; then
+    local review_since
+    review_since=$(echo "$status" | grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2}' | head -1 || echo "")
+    if [[ -n "$review_since" ]]; then
+      local review_days
+      review_days=$(days_since "$review_since")
+      if [[ "$review_days" != "?" ]] && [[ "$review_days" -ge 7 ]]; then
+        update_task_state "$card" "AUTO_CLOSED" "$today"
+        transitions+=("  🔍→🔒 AUTO_CLOSED: $(basename "$card" .md)（NEEDS_REVIEW 逾 ${review_days} 天）")
+        return 0
+      fi
+    fi
+  fi
+
+  return 1
+}
+
 # ── 掃描所有 Task Card ──
 declare -a owner_actions=()
 declare -a blocked=()
 declare -a active=()
 declare -a paused=()
 declare -a done_tasks=()
+declare -a auto_closed=()
+declare -a transitions=()
 
 for card in "$TASKS_DIR"/T-*.md; do
   [[ -f "$card" ]] || continue
@@ -52,28 +130,39 @@ for card in "$TASKS_DIR"/T-*.md; do
   # 提取 agent 代號（從檔名 T-A5-002 → A5）
   agent=$(echo "$filename" | grep -oE 'A[0-9]+' | head -1 || echo "??")
 
-  # 分類
+  # ── 四態狀態機：先嘗試驅動狀態遷移（SECTION 25）──
+  # 只對 IN_PROGRESS / STALLED / NEEDS_REVIEW 執行（BLOCKED / DONE / FROZEN 略過）
+  if echo "$status" | grep -qv '✅\|⏸️\|阻塞\|⏳\|💤\|暫停\|🔲\|待開始\|🔒'; then
+    if drive_state_transition "$card" "$status" "$days_ago"; then
+      # 遷移後重新讀取狀態
+      status=$(grep -m1 '^\- \*\*狀態\*\*' "$card" 2>/dev/null | sed 's/.*\*\*: //' || echo "未標記")
+    fi
+  fi
+
+  # ── 分類（基於最新狀態）──
   if echo "$status" | grep -q '✅'; then
     done_tasks+=("  ✅ $filename ($agent): 已完成")
-  elif echo "$status" | grep -q '⏸️\|阻塞'; then
+  elif echo "$status" | grep -q '🔒 AUTO_CLOSED'; then
+    auto_closed+=("  🔒 $filename ($agent): 自動關閉（Owner 可回覆「重開 $filename」重啟）")
+  elif echo "$status" | grep -q '🔍 NEEDS_REVIEW'; then
+    blocked+=("  🔍 $filename ($agent): NEEDS_REVIEW — $blocker [$age_label]")
+    owner_actions+=("  → $filename [NEEDS_REVIEW]: $blocker（停滯逾 7 天，需 Owner 決策）")
+  elif echo "$status" | grep -q '🟡 STALLED'; then
+    active+=("  🟡 $filename ($agent): STALLED — ${next_step:0:60} [$age_label]")
+  elif echo "$status" | grep -q '⏸️\|阻塞\|⏳'; then
+    # ⏳ = 等外部條件（等同 ⏸️ 阻塞，不走 AUTO_CLOSE）
     blocked+=("  ⏸️ $filename ($agent): $blocker [$age_label]")
-    # 阻塞中有 Owner 字樣 → 加入 Owner 行動項
     if echo "$blocker" | grep -qi 'Owner'; then
       owner_actions+=("  → $filename: $blocker")
     fi
   elif echo "$status" | grep -q '💤\|暫停'; then
     paused+=("  💤 $filename ($agent): 暫停中 [$age_label]")
-  elif echo "$status" | grep -q '🔄\|進行中'; then
-    local_status="⏳"
-    # 超過 48h 無活動 + 進行中 → 需注意
-    if [[ "$days_ago" != "?" ]] && [[ "$days_ago" -ge 2 ]]; then
-      local_status="⚠️"
-    fi
-    active+=("  $local_status $filename ($agent): ${next_step:0:80} [$age_label]")
+  elif echo "$status" | grep -q '🔄\|IN_PROGRESS\|進行中'; then
+    active+=("  ⏳ $filename ($agent): IN_PROGRESS — ${next_step:0:60} [$age_label]")
   elif echo "$status" | grep -q '🔲\|待開始'; then
     paused+=("  🔲 $filename ($agent): 待開始")
   else
-    # 沒有接續狀態區塊的舊格式 Task Card
+    # 舊格式或未標記 → 顯示但不觸發狀態機
     active+=("  ❓ $filename ($agent): 狀態未標記 [$age_label]")
   fi
 done
@@ -158,6 +247,14 @@ echo ""
 check_token_expiry
 echo ""
 
+# 狀態遷移報告（本輪 patrol 自動執行的狀態機推進）
+if [[ ${#transitions[@]} -gt 0 ]]; then
+  echo "【⚡ 本輪狀態遷移（四態狀態機，SECTION 25）】"
+  printf '%s\n' "${transitions[@]}"
+  echo "  → 已自動寫回 Task Card，無需 Owner 操作（可逆，SECTION 24）"
+  echo ""
+fi
+
 if [[ ${#owner_actions[@]} -gt 0 ]]; then
   echo "【Owner 行動項】"
   printf '%s\n' "${owner_actions[@]}"
@@ -165,13 +262,13 @@ if [[ ${#owner_actions[@]} -gt 0 ]]; then
 fi
 
 if [[ ${#blocked[@]} -gt 0 ]]; then
-  echo "【阻塞中 — 等外部條件】"
+  echo "【阻塞中 — 等外部條件（⏸️/⏳/🔍）】"
   printf '%s\n' "${blocked[@]}"
   echo ""
 fi
 
 if [[ ${#active[@]} -gt 0 ]]; then
-  echo "【進行中】"
+  echo "【進行中（🔄 IN_PROGRESS / 🟡 STALLED）】"
   printf '%s\n' "${active[@]}"
   echo ""
 fi
@@ -179,6 +276,12 @@ fi
 if [[ ${#paused[@]} -gt 0 ]]; then
   echo "【暫停/待開始】"
   printf '%s\n' "${paused[@]}"
+  echo ""
+fi
+
+if [[ ${#auto_closed[@]} -gt 0 ]]; then
+  echo "【自動關閉（🔒 AUTO_CLOSED — Owner 可回覆「重開 T-XXX」重啟）】"
+  printf '%s\n' "${auto_closed[@]}"
   echo ""
 fi
 

@@ -1,0 +1,17 @@
+全部完成並推上 main。以下是今次任務的 W→SW→NW 報告：
+
+---
+
+**What（commit `21c8ed8`）：**
+
+1. **Pitfall 記錄** — `pitfalls.md` 新增兩種模型替代偏差模式教訓：模擬版不揭露、REAL 版有揭露但仍替代。規則固化：「指定模型的任務，第一步必須實測指定模型，失敗才停下回報，不得自行替代。」附封坑驗證指令。
+
+2. **R01 驗證版 5 輪（JOB-R-FABLE-VS-OPUS-VERIFIED-20260719）** — 使用真正的 `claude-fable-5` vs `claude-opus-4-8`（均以 `CLAUDE_CODE_OAUTH_TOKEN` via `bot/.env` 確認可用後執行）跑完 5 輪系統治理辯論，落檔 `rounds.md`（186 行）。
+
+3. **三版對比 `summary.md`** — 結論方向三版一致（警告無執行後果 + 狀態機缺衰變），但 `opus-4-8` 第 5 輪新增「可逆性優先原則」（前兩版均未出現），建議寫入 AGENT_RULES。判定：**不需全量重跑，REAL corpus 可沿用為主體，附加說明 opus-4-8 特質被低估。**
+
+4. **Codex CLI 驗收** — `codex exec --ephemeral -s read-only "回OK"` → 回 `OK`（v0.144.6，gpt-5.6-sol），400 問題已解決，驗收通過 ✅。
+
+**So What：** claude-fable-5 / opus-4-8 確認可用；模型替代偏差已固化為規則；REAL corpus 代表性得到獨立交叉驗證，省去全量重跑成本（約 50 次 API 呼叫）。
+
+**Now What：** Owner 可閱 `summary.md` 確認「接受 REAL corpus + 附加說明」的判定；若認同，REAL corpus 正式進入訓練/評估素材庫。Fable-5 / Opus-4-8 的 `bot/.env` token 確認可用，後續其他場景若需真模型可直接沿用同一路徑。

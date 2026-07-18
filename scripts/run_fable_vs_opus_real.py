@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """
 JOB-R-FABLE-VS-OPUS-REAL-20260719
-真模型重跑：5 場景 × 2 模型 (Fable=claude-sonnet-4-6, Opus=claude-opus-4-6-thinking) × 5 輪
-透過 agy CLI 呼叫，純文字推理，禁工具。
+真模型重跑：5 場景 × 2 模型 (Fable=claude-sonnet-4-6, Opus=claude-opus-4-7) × 5 輪
+使用 claude CLI（CLAUDE_CODE_OAUTH_TOKEN from bot/.env）+ 純文字推理，禁工具。
+前 3 場景使用 agy（claude-sonnet-4-6 / claude-opus-4-6-thinking）
+後 2 場景使用 claude CLI（claude-sonnet-4-6 / claude-opus-4-7）
 """
 
 import subprocess
@@ -12,7 +14,19 @@ import time
 
 BASE_DIR = "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-R-FABLE-VS-OPUS-REAL-20260719"
 FABLE_MODEL = "claude-sonnet-4-6"
-OPUS_MODEL = "claude-opus-4-6-thinking"
+OPUS_MODEL = "claude-opus-4-7"
+
+# Load OAuth token from bot/.env
+def load_oauth_token():
+    env_path = "/Users/pagemacmini/maplab-ai-handbook/bot/.env"
+    try:
+        with open(env_path) as f:
+            for line in f:
+                if line.startswith("CLAUDE_CODE_OAUTH_TOKEN="):
+                    return line.strip().split("=", 1)[1]
+    except Exception:
+        pass
+    return os.environ.get("CLAUDE_CODE_OAUTH_TOKEN", "")
 
 # 治理準則精煉指令（兩模型共用框架，各有側重）
 REFINE_FABLE = """
@@ -105,16 +119,21 @@ SCENARIOS = [
 
 
 def call_model(model_id, prompt, timeout=120):
-    """Call agy with the given model and prompt."""
+    """Call claude CLI with the given model and prompt."""
+    token = load_oauth_token()
+    env = os.environ.copy()
+    if token:
+        env["CLAUDE_CODE_OAUTH_TOKEN"] = token
     try:
         result = subprocess.run(
-            ["agy", "--model", model_id, "--print", prompt],
+            ["claude", "-p", "--model", model_id, prompt],
             capture_output=True,
             text=True,
             timeout=timeout,
+            env=env,
         )
         if result.returncode != 0:
-            return f"[ERROR] {result.stderr[:200]}"
+            return f"[ERROR] {result.stderr[:300]}"
         return result.stdout.strip()
     except subprocess.TimeoutExpired:
         return "[TIMEOUT] Model call exceeded time limit"
@@ -151,7 +170,7 @@ def run_scenario(scenario):
 
     rounds_content = [f"# {scenario['name']} — 5 輪真模型推理\n"]
     rounds_content.append(f"執行日期：2026-07-19")
-    rounds_content.append(f"模型：Fable=claude-sonnet-4-6 | Opus=claude-opus-4-6-thinking（agy）")
+    rounds_content.append(f"模型：Fable=claude-sonnet-4-6 | Opus=claude-opus-4-7（claude CLI）")
     rounds_content.append(f"任務代號：JOB-R-FABLE-VS-OPUS-REAL-20260719\n")
     rounds_content.append("---\n")
 
@@ -181,7 +200,7 @@ def run_scenario(scenario):
 
         rounds_content.append(f"## 第 {round_num} 輪\n")
         rounds_content.append(f"### Fable 視角（claude-sonnet-4-6）\n\n{fable_response}\n")
-        rounds_content.append(f"### Opus 視角（claude-opus-4-6）\n\n{opus_response}\n")
+        rounds_content.append(f"### Opus 視角（claude-opus-4-7）\n\n{opus_response}\n")
         rounds_content.append("---\n")
 
     # Write rounds file

@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-07-18 22:51（checkpoint.sh 自動同步）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-07-18 22:52（checkpoint.sh 自動同步）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -112,7 +112,7 @@
 | T-A2-002-foodsafety-seo-cleanup | T-A2-002 — 食安 + 法規 SEO 字眼清理 | A2 | ⏸️ 阻塞（回溯掃描 + 根因結構性修復已完成，只剩等 Owner 決定 post 698 怎麼改）（58 篇既有文章已全數掃描完成；新產出內容的自動防護缺口已用 F-1 gate 補上（見下方「2026-07-07 根因） | handoff/tasks/T-A2-002-foodsafety-seo-cleanup.md |
 | T-A2-003-weekly-wp-audit | T-A2-003: 每週全站 WP 內容稽核排程 | A2 | 🔲 待開始（腳本已建好（wp-audit.sh / wp-audit-cron.sh）。待 Owner 用 /schedule 建立） | handoff/tasks/T-A2-003-weekly-wp-audit.md |
 | T-A2-004 | 首頁結構優化 — 配合品牌色票微調 + 轉換路徑整理 | A2 | 🔲 待開始（任務卡建立。A0 已完成對標分析和色票微調。） | handoff/tasks/T-A2-004.md |
-| T-A2-005-local-seo-factory | T-A2-005：MAPLAB SEO Factory（地端閉環，Pillar First） | A2 | 🔴 CRITICAL（~1799h無commit） | handoff/tasks/T-A2-005-local-seo-factory.md |
+| T-A2-005-local-seo-factory | T-A2-005：MAPLAB SEO Factory（地端閉環，Pillar First） | A2 | 🔴 CRITICAL（~1800h無commit） | handoff/tasks/T-A2-005-local-seo-factory.md |
 | T-A2-006-ads-seo-wordpress-patrol | T-A2-006 — Ads / SEO / WordPress Patrol | A2 | 🟢 ACTIVE（ICCTN 案例文（post 1829）已上線，QA PASS_WITH_NOTES。下一步：A3 接手 Google ） | handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md |
 | T-A2-SEO-CATERING-MATRIX-001 | Foreign Catering SEO Benchmark -> MAPLAB Article Matrix | A2 | 🔴 CRITICAL（~743h無commit） | handoff/tasks/T-A2-SEO-CATERING-MATRIX-001.md |
 | T-A2A3-001-B | SEO 場景頁面 + 內連結（從 T-A2A3-001 分拆） | A2/A3 | 🔴 CRITICAL（~1247h無commit） | handoff/tasks/T-A2A3-001-B.md |

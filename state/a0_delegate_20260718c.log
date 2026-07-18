@@ -1,0 +1,69 @@
+---
+
+## 【IS 持續迭代計畫 — 例會回報】
+
+**commit `c9a44d9` / `12d6488`，2026-07-18**
+
+---
+
+### 一頁全貌（資料流圖 + 斷點）
+
+```
+訊號源 → 處理 → 輸出 → 決策 → 覆盤
+calc_exposure_ledger → runtime_escalation_queue ←★斷點②（最嚴重）
+                        13 條 WARNING，全部 escalated=false，從未推 Owner
+                        
+launchd 8 jobs 全 exit=0 ✅   →   產出新鮮 ✅   →   ★斷點③ quality 未量測
+investment_goals.md ★斷點⑤ 不存在 → 訊號無目標基準
+```
+
+**核心診斷：IS 不是「系統掛了」——資料和排程都在跑。IS 缺的是「警報→Owner→決策→覆盤」閉環從未跑完一圈。**
+
+---
+
+### 診斷：memory-watch 成功 vs IS 缺什麼
+
+| 要素 | memory-watch | IS 對照 | 缺口 |
+|------|-------------|---------|------|
+| ① 單一指標 | free% | 20 個輸出無主指標 | 需定義「今天可動嗎」 |
+| ② 緊回饋圈 | 2h log | nightwatch 每日 ✅，但 escalation queue 從不推播 | **回饋從未閉合** |
+| ③ 有人看結果 | A0 看 Telegram | **13 條 WARNING 從 07-01 至今沒人知道** | escalated=false 路徑斷 |
+| ④ 低風險自主修 | OLLAMA_KEEP_ALIVE | 改規則=需 Owner，但格式/監控=可自主 | 明確分類可/不可 |
+| ⑤ 修完立刻驗 | 下次 log | 修 launchd → 次日 nightwatch 見效 | OK |
+
+---
+
+### 計畫摘要（4 Layer × 4 Week）
+
+`projects/investment-os-continuous-iteration-plan.md`（已 push）
+
+- **Layer 1 心跳化**：IS-HS 健康分數（0-100），今日基線 **50/100**
+  - 資料新鮮度 100%（nightwatch 0 警示）
+  - 警報通暢度 0%（13 條逾期警報從未推 Owner）
+- **Layer 2 每日微迭代**：Ranked Backlog，P0 = 修 escalation_push，P1 = 財經早報加可動性摘要
+- **Layer 3 規則引擎**：草稿已存在（SOP1/SOP2），**Owner 只需確認 4 個門檻參數（15 分鐘）**
+- **Layer 4 進步可量測**：IS-HS 週趨勢，每週五例會顯示趨勢
+
+---
+
+### Phase 1 第一件（已落地，零風險）
+
+**`scripts/patrol.sh` IS 守夜人升級**：
+```
+【投資 OS 守夜人 + IS-HS】
+  🟢 nightwatch 今日正常（0 警示）
+  🔴 escalation_queue: 13 條 open+未推播
+  🟡 IS-HS: 50/100（新鮮度=100% 警報通暢度=0%）
+```
+
+**`state/is_health_trend.jsonl`** 開始記錄 IS-HS 趨勢（每次 patrol 追加），即複利可視化起點。
+
+---
+
+### Owner 需決策（僅 2 件）
+
+1. **P0（本週）**：escalation_queue 13 條警報 — 需 Owner 確認是否要接 Telegram 推播，確認後 B1 2h 實施。**不構成任何買賣建議，只是「警報可以通知到你」的機制。**
+
+2. **P3（Week 3）**：`investment_goals.md` — 填 3 欄位（本季風控目標 / 1-2 個 Thesis / 資料新鮮度要求），預計 15 分鐘，A1 提供草稿讓 Owner 填空。
+
+其餘 backlog 全由 A1/B1 自主推進，不需 Owner 等待。

@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-07-18 23:01（checkpoint.sh 自動同步）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-07-19 A1 R-VERIFIED+Codex驗收+Pitfall落地｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -18,6 +18,8 @@
 ---
 
 ## 最新事實核對
+
+- 2026-07-19：**[A1 A0派工驗證] R-VERIFIED + Pitfall + Codex驗收** — 四項任務全完成：①`pitfalls.md` 新增「指定模型任務不得自行替代」教訓（兩種偏差模式：模擬版不揭露、REAL版揭露但仍替代；封坑驗證：`echo test | CLAUDE_CODE_OAUTH_TOKEN=$TOKEN claude --model claude-fable-5 --print` → PASS）；②`JOB-R-FABLE-VS-OPUS-VERIFIED-20260719/scenario-01-system-governance/` 建立：claude-fable-5 vs claude-opus-4-8 真正 5 輪推理（rounds.md 186 行）；③三版對比 summary.md 落檔：結論方向一致（根因=警告無執行後果+狀態機缺衰變），但 opus-4-8 新增「可逆性優先」原則（前兩版未出現），REAL corpus 可接受為主體並附加說明；④Codex CLI 0.144.6 驗收：`codex exec --ephemeral -s read-only "回OK"` → 回 OK（model=gpt-5.6-sol，tokens 10,928），400 問題已解決，驗收通過✅。claude-fable-5 / claude-opus-4-8 均已確認可用（CLAUDE_CODE_OAUTH_TOKEN via bot/.env）。
 
 - 2026-07-18（23:30）：**[A1 Owner派工三任務落地]** ②A5外送費級距草案建立（`state/a5_delivery_fee_draft_20260718f.md` Zone A-E 五區定義；Q5 模板串入級距快查表；Owner 確認訊息 `state/owner_delivery_fee_confirm_20260718f.md`；T-A7-001 第24次警告收斂為單一里程碑：07-25 Phase 3 啟動）③IS 規則引擎上線（`scripts/is_rules_gate.sh` 四參數落地：SOP1=10%/SOP2=15%/槓桿=1.5x/日跌幅=-3%；5 條違規選項卡推播 Telegram ✅；IS 持續迭代計畫 P1 Layer 3 進度更新）④patrol 加 B3 ads 觀察（`scripts/patrol.sh` 新增 B3 偵測區塊；偵測方式：Owner 回報或 GA4 utm_source=meta_b3；觸發後自動每日成效摘要）。
 
@@ -112,7 +114,7 @@
 | T-A2-002-foodsafety-seo-cleanup | T-A2-002 — 食安 + 法規 SEO 字眼清理 | A2 | ⏸️ 阻塞（回溯掃描 + 根因結構性修復已完成，只剩等 Owner 決定 post 698 怎麼改）（58 篇既有文章已全數掃描完成；新產出內容的自動防護缺口已用 F-1 gate 補上（見下方「2026-07-07 根因） | handoff/tasks/T-A2-002-foodsafety-seo-cleanup.md |
 | T-A2-003-weekly-wp-audit | T-A2-003: 每週全站 WP 內容稽核排程 | A2 | 🔲 待開始（腳本已建好（wp-audit.sh / wp-audit-cron.sh）。待 Owner 用 /schedule 建立） | handoff/tasks/T-A2-003-weekly-wp-audit.md |
 | T-A2-004 | 首頁結構優化 — 配合品牌色票微調 + 轉換路徑整理 | A2 | 🔲 待開始（任務卡建立。A0 已完成對標分析和色票微調。） | handoff/tasks/T-A2-004.md |
-| T-A2-005-local-seo-factory | T-A2-005：MAPLAB SEO Factory（地端閉環，Pillar First） | A2 | 🔴 CRITICAL（~1800h無commit） | handoff/tasks/T-A2-005-local-seo-factory.md |
+| T-A2-005-local-seo-factory | T-A2-005：MAPLAB SEO Factory（地端閉環，Pillar First） | A2 | 🔴 CRITICAL（~1799h無commit） | handoff/tasks/T-A2-005-local-seo-factory.md |
 | T-A2-006-ads-seo-wordpress-patrol | T-A2-006 — Ads / SEO / WordPress Patrol | A2 | 🟢 ACTIVE（ICCTN 案例文（post 1829）已上線，QA PASS_WITH_NOTES。下一步：A3 接手 Google ） | handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md |
 | T-A2-SEO-CATERING-MATRIX-001 | Foreign Catering SEO Benchmark -> MAPLAB Article Matrix | A2 | 🔴 CRITICAL（~743h無commit） | handoff/tasks/T-A2-SEO-CATERING-MATRIX-001.md |
 | T-A2A3-001-B | SEO 場景頁面 + 內連結（從 T-A2A3-001 分拆） | A2/A3 | 🔴 CRITICAL（~1247h無commit） | handoff/tasks/T-A2A3-001-B.md |

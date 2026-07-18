@@ -1,0 +1,26 @@
+全部完成，commit `c88eb9f` 已 push。以下是本次任務完整交付清單：
+
+---
+
+## 完工回報（W→SW→NW）
+
+**What（做了什麼）：**
+
+| 任務 | 交付物 | 路徑 |
+|------|--------|------|
+| 一、R01-R10 狀態表 | 10 列完整狀態表 + 補課計畫 | `state/r_status_20260719.md` |
+| 二/四/五、Meta 廣告指引 | 摘要版 + 完整版（290行） | `state/meta_ads_guide_20260719.md` + `state/meta_ads_guide_final.md` |
+| 三、Loop Engineering | 四種迴圈 × MAPLAB 現況 + 治理升級提案 | `docs/loop-engineering-maplab-comparison.md` |
+| 六、Fable vs Opus | 5 場景 × 5 輪 × 11 檔語料 + 派工路由總結 | `workbook/reviews/JOB-R-FABLE-VS-OPUS-20260719/` + `state/r_fable_vs_opus_summary.md` |
+
+**So What（對決策的意義）：**
+- Meta 廣告：**最痛缺口解鎖** — 週歲溫層 retarget（現金流最近，冷層效佳但完全無 retarget）+ 婚禮冷層（landing live）+ B3 HR 茶會（素材完備），三組合計 NT$2,050/週，今天可開投
+- R01-R10：50% 已完成，R10 並非缺（Owner 確認 07-16 輸出即可），真正需補跑的是 R02/R06/R08/R09
+- Fable vs Opus：**派工路由黃金規則** — 複雜診斷先派 Opus（挑戰假設），執行落地派 Fable（W/SW/NW 行動序列）；外燴定價系統例外（Fable 主導）
+- Loop Engineering：Hermes CLI = null 是最大單一阻塞點，解鎖後 R02/R06/R08/R09 可自動消費 packet
+
+**Now What（下一步）：**
+- Owner 讀 `state/meta_ads_guide_final.md` → 照做三組廣告設定
+- Owner 確認 R10 輸出 `workbook/outputs/R10-ios-role-integration-2026-07-14.md`
+- 若 WP Application Password 可補：R03 解鎖，56 篇 SEO 文章可執行
+- R02/R06/R08/R09 四個未執行項待 A0 分配下一輪派工

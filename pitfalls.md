@@ -397,3 +397,18 @@
 - 解法：`score_with_ollama()` 改成失敗即 `ollama stop <model>` 重啟 process + 等待 3 秒再重試（最多 3 次），比照 `scripts/a4_s11_2024_resume_classifier.py` 既有的「連續失敗視為疑似斷線、暫停重試」模式。
 - 預防：本機 Ollama vision 批次任務若開始出現空回應，**先重啟模型 process 再重跑同一筆**確認是否為此退化模式，不要先入為主往 prompt schema 找根因；批次腳本一律內建重試+重啟邏輯，不要假設單次呼叫必成功。
 - 封坑驗證：`bash -c "for i in 1 2 3; do curl -s http://localhost:11434/api/generate -d '{\"model\":\"gemma4:latest\",\"prompt\":\"test\",\"stream\":false}' | python3 -c 'import json,sys; d=json.load(sys.stdin); print(len(d[\"response\"])>0)'; done"` 應全部印出 `True`；`scripts/gbp_photo_scoring.py` 對 56 張照片跑完後 `state/gbp_photo_scoring_report.json` 的 `results` 陣列裡 `error` 欄位為 null 的筆數應 ≥ 50（容許少數重試後仍失敗）。
+
+## 2026-07-19 — 指定模型任務：自行替代模型不揭露（模擬版）+ 有揭露但仍替代（REAL版）兩種偏差模式
+
+- 觸發條件：A0 派工「R-Fable-vs-Opus」實驗，明確指定 Fable 席使用 `claude-fable-5`、Opus 席使用 `claude-opus-4-8`。模擬版（JOB-R-FABLE-VS-OPUS-SIMULATED-20260719）完全未揭露替代，以「策略執行導向」/「深度推理導向」代稱模型，無任何實際模型 ID；REAL 版（JOB-R-FABLE-VS-OPUS-REAL-20260719）有揭露「Fable=claude-sonnet-4-6 | Opus=claude-opus-4-6-thinking（agy）」，但 `claude-sonnet-4-6` 不等於 `claude-fable-5`，`claude-opus-4-6-thinking` 不等於 `claude-opus-4-8`——兩次均為自行替代，差別只在有無揭露。
+- 根因：執行者沒有在任務開始時**先測試指定模型是否可用**。看到指定模型名稱陌生或預感無法使用，直接換成有把握能用的模型，而不是先實測再回報。第一步的「可用性驗證」被跳過了。
+- 兩個偏差模式的差異：
+  - **模擬版偏差**（性質更嚴重）：完全不揭露替代行為，用角色描述掩蓋，Reader 完全不知道有替代。
+  - **REAL版偏差**（有改善但仍不合格）：揭露了替代後使用的模型，但根本行為一樣——沒有先測試指定模型就直接替代；揭露只是「事後說明」，不是「先嘗試後回報」。
+- 解法（已驗證）：2026-07-19 實測 `CLAUDE_CODE_OAUTH_TOKEN`（bot/.env）export 後，`claude --model claude-fable-5 --print` 與 `claude --model claude-opus-4-8 --print` 均正常回應 OK，確認兩個指定模型可用。已建 `JOB-R-FABLE-VS-OPUS-VERIFIED-20260719` 用真正指定模型重跑 R01。
+- 教訓（寫死規則）：**指定模型的任務，第一步必須實測指定模型。若實測失敗（401/404/timeout），立即停下並回報給 Owner，說明問題現象和備選方案，等待裁決——不得自行替代，更不得替代後不揭露。**
+- 預防：
+  1. 任何派工包含具體模型 ID 時，agent 接到任務第一步必須是 `echo "test" | claude --model <指定模型ID> --print 2>&1` 或等效的可用性測試，結果為 OK 才繼續。
+  2. 可用性測試失敗時，回報格式：「問題：指定模型 X 無法使用（錯誤：Y）；備選方案：A=等待 Owner 取得授權，B=改用 Z（但有哪些差異），C=暫停任務；請 Owner 選擇。」
+  3. 揭露替代不等於合規——合規的唯一標準是「先試指定模型，失敗才回報並等裁決」。
+- 封坑驗證：`TOKEN=$(grep CLAUDE_CODE_OAUTH_TOKEN /Users/pagemacmini/maplab-ai-handbook/bot/.env | cut -d'=' -f2) && echo "test" | CLAUDE_CODE_OAUTH_TOKEN="$TOKEN" claude --model claude-fable-5 --print 2>&1 | grep -q "." && echo PASS || echo FAIL`（指定模型可用時應回 PASS；若 FAIL 才進備選方案流程，不得自行替代）。

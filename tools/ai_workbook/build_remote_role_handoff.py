@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import re
 import sys
@@ -56,7 +57,33 @@ class Route:
 
 ROUTES: tuple[Route, ...] = (
     Route("A0", "A0 總調度秘書", ("dispatch", "調度", "跨系統", "owner", "全局", "協調", "派工")),
-    Route("A1", "A1 系統總管", ("system", "governance", "repo", "extension", "module", "index", "系統", "治理", "全貌", "索引", "關聯", "冷啟動", "debug", "版本")),
+    Route(
+        "A1",
+        "A1 系統總管",
+        (
+            "system",
+            "governance",
+            "repo",
+            "extension",
+            "module",
+            "index",
+            "role launcher",
+            "remote codex",
+            "system directory",
+            "smoke test",
+            "branch freshness",
+            "系統",
+            "治理",
+            "全貌",
+            "索引",
+            "關聯",
+            "冷啟動",
+            "選角",
+            "召喚",
+            "debug",
+            "版本",
+        ),
+    ),
     Route("A2", "A2 搜尋流量作戰部", ("seo", "wordpress", "gsc", "rank math", "關鍵字", "官網", "文章", "搜尋")),
     Route("A3", "A3 社群與廣告成長部", ("ads", "meta", "facebook", "instagram", "廣告", "社群", "roas", "gtm", "pixel")),
     Route("A4", "A4 影像資產整理部", ("photo", "image", "asset", "圖片", "照片", "素材", "alt", "相簿")),
@@ -182,11 +209,17 @@ def parse_status(md: str) -> dict[str, Any]:
     return result
 
 
-def existing_source_state(path_text: str) -> str:
+def existing_source_state(path_text: str, expected_sha256: str = "") -> str:
     if not path_text or path_text.startswith("http"):
         return "external"
     path = ROOT / path_text
-    return "ok" if path.exists() else "missing_or_external"
+    if not path.exists():
+        return "missing_or_external"
+    if expected_sha256 and path.is_file():
+        actual_sha256 = hashlib.sha256(path.read_bytes()).hexdigest()
+        if actual_sha256 != expected_sha256:
+            return "stale_hash"
+    return "ok"
 
 
 def format_relation_rows(rows: Iterable[dict[str, str]]) -> str:
@@ -311,7 +344,8 @@ def build_handoff(task: str, role: str, runtime: str, module: dict[str, Any], re
     for item in read_first:
         path = str(item.get("path", ""))
         lines.append(
-            f"- [{existing_source_state(path)}] `{path}` — {item.get('purpose') or item.get('load_mode') or 'source'}"
+            f"- [{existing_source_state(path, str(item.get('source_sha256') or ''))}] "
+            f"`{path}` — {item.get('purpose') or item.get('load_mode') or 'source'}"
         )
     lines.extend(["", "## 7. 必拿技能"])
     base_skills = [

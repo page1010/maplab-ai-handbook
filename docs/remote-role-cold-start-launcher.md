@@ -81,7 +81,7 @@ python3 tools/ai_workbook/build_remote_role_handoff.py \
 python3 tools/ai_workbook/build_remote_role_handoff.py \
   --role B2 \
   --runtime codex \
-  --task "審查 Investment OS freshness 與資料流" 
+  --task "審查 Investment OS freshness 與資料流"
 ```
 
 ---
@@ -296,6 +296,12 @@ CURRENT_STATUS.md
 - 檢查 `chrome-extension/task-modules/index.json`。
 - 再檢查 `chrome-extension/task-modules/{ROLE}.json`。
 - 若 B5 或新角色檔案存在但 index 缺失，標 `module_index_drift`。
+
+### Module source hash 過期
+
+- handoff 的 read-first source 標記為 `stale_hash`。
+- 仍以 linked Markdown／JSON live source 執行，不把舊 module envelope 當成現況。
+- 由 A1 另行執行 `python3 tools/ai_workbook/build_extension_task_modules.py` 並審查 diff；launcher 不自行重建治理來源。
 
 ### Relation rows 為空
 

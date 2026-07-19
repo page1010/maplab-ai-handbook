@@ -1,0 +1,18 @@
+{
+  "job_id": "JOB-REMOTE-ROLE-LAUNCHER-SMOKE-20260719",
+  "status": "PASS_WITH_FOLLOW_UP",
+  "branch": "codex/system-directory-index-v0-1-20260718",
+  "runtime": "codex",
+  "official_smoke_passed": 4,
+  "official_smoke_total": 4,
+  "regression_tests_passed": 6,
+  "regression_tests_total": 6,
+  "files": [
+    "README.md",
+    "validation_report.md",
+    "output_manifest.json"
+  ],
+  "production_modified": false,
+  "main_modified": false,
+  "secrets_read": false
+}

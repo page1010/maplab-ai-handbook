@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-07-19 03:16（checkpoint.sh 自動同步）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-07-19（remote session 手動同步，非 checkpoint.sh——該腳本路徑寫死 `/Users/pagemacmini/...`，在 remote 沙盒不適用）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -18,6 +18,8 @@
 ---
 
 ## 最新事實核對
+
+- 2026-07-19（remote）：**[A1 Local Model Evolution Orchestrator 第一輪]** — 依 Draft PR #20 `LOCAL_MODEL_EVOLUTION_ORCHESTRATOR_PROMPT.md`（已 merge 進本分支）在 A1 remote cloud 沙盒執行第一輪。建立 `local_model_evolution/`（RUN_PLAN/STATE/config/bin/curricula/evals/models/reports 全套骨架）：①`bin/quota_sentinel.py`（provider-neutral 額度偵測，可執行並已跑過，`state/provider_status.json` 全部誠實標 `unknown`/`blocked_by_policy`，無捏造數字）；②`config/providers.yml` 明確標記 `model-tier-policy.md §0`（禁按量 API）優先於原始 prompt 假設，三個高成本 provider 的 official API 層預設 `blocked_by_policy`；③兩個 P0 curriculum（`investment-report-current-state`／`seo-ranking-keyword`，各 24 題去識別化合成 eval case，20-50 範圍內）；④`bin/eval_harness.py`（deterministic validator，已用手寫 fixture 自我測試通過，正確抓出全部 5-6 類刻意植入的錯誤，且對缺檔案的情況正確回傳 `baseline_unavailable` 而非假分數）。**誠實 blocker**：此 remote 沙盒沒有 Ollama/Mac mini runtime，`command -v` 確認 `ollama`/`codex`/`agy`/`gemini`/`hermes`/`sqlite3`/`launchctl` 全部缺席，**真實地端模型 baseline 無法在此環境完成**，已在 `evals/baseline_report.md` 與 `state/STATE.md` 明確標記為 blocked，不假裝有 baseline 數字。未建立任何 LoRA/adapter 候選（`models/registry.json.candidates` 維持空）、未觸碰 production runtime、未讀寫任何真實客戶或投資部位資料。完整 receipt：`workbook/reviews/JOB-LOCAL-MODEL-EVOLUTION-20260719/`。下一步：在 Mac mini 上重跑 `quota_sentinel.py`、補讀 `AGENT_RULES.md`/`pitfalls.md`/`dependency-map.md`、建立 eval-case→模型輸出轉接腳本，取得真正 baseline 後才能定第一版改善方案。Branch: `claude/local-model-evolution-orchestrator-puvj7d`。
 
 - 2026-07-19（03:16）：**[A1 A0派工] R實驗結論治理落地** — A0 委派 4 項可逆變更全部完成：①`AGENT_RULES.md` SECTION 24「可逆先行準則」（不等核准直接做可逆動作；快速判斷表；任務書標注格式；R-VERIFIED Opus 產出）②`AGENT_RULES.md` SECTION 25「任務卡四態狀態機」（IN_PROGRESS→STALLED(48h)→NEEDS_REVIEW(7d)→AUTO_CLOSED(7d)；翻轉預設：auto-CLOSED 不等 Owner；patrol.sh 唯一改寫端）③`scripts/patrol.sh` 重構（新增四態狀態機引擎；本輪實測：11 張殭屍卡自動轉 STALLED，T-A6-001 10d→STALLED ✅，T-A7-001 正確識別為 ⏸️ BLOCKED 不再累加警告 ✅；警告堆積問題結構性消失）④`distill/b5-epoch-20260719.md` B5蒸餾教材包（可逆先行+翻轉預設+三版對比派工路由+地端訓練指引）⑤`state/r_fable_vs_opus_summary.md` 最終定案（共識區三版可用；深層原則以 VERIFIED 版為準；不全量重跑）。Commit: `7efc03e`。
 

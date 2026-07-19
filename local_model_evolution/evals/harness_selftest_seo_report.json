@@ -1,0 +1,154 @@
+{
+  "curriculum": "seo-ranking-keyword",
+  "status": "scored",
+  "total_eval_cases": 24,
+  "scored_cases": 24,
+  "passed_cases": 12,
+  "pass_rate": 0.5,
+  "top_error_types": [
+    [
+      "action_card_incomplete",
+      4
+    ],
+    [
+      "historical_rank_treated_as_today",
+      4
+    ],
+    [
+      "keyword_page_mapping_error",
+      2
+    ],
+    [
+      "ranking_timestamp_missing",
+      2
+    ],
+    [
+      "destructive_action_without_approval",
+      2
+    ]
+  ],
+  "per_sample": [
+    {
+      "sample_id": "SEO-MAP-01",
+      "errors": [
+        "keyword_page_mapping_error"
+      ]
+    },
+    {
+      "sample_id": "SEO-MAP-02",
+      "errors": []
+    },
+    {
+      "sample_id": "SEO-MAP-03",
+      "errors": [
+        "keyword_page_mapping_error"
+      ]
+    },
+    {
+      "sample_id": "SEO-MAP-04",
+      "errors": []
+    },
+    {
+      "sample_id": "SEO-TS-01",
+      "errors": []
+    },
+    {
+      "sample_id": "SEO-TS-02",
+      "errors": [
+        "ranking_timestamp_missing",
+        "action_card_incomplete:data_as_of"
+      ]
+    },
+    {
+      "sample_id": "SEO-TS-03",
+      "errors": []
+    },
+    {
+      "sample_id": "SEO-TS-04",
+      "errors": [
+        "ranking_timestamp_missing",
+        "action_card_incomplete:data_as_of"
+      ]
+    },
+    {
+      "sample_id": "SEO-CANN-01",
+      "errors": []
+    },
+    {
+      "sample_id": "SEO-CANN-02",
+      "errors": []
+    },
+    {
+      "sample_id": "SEO-CANN-03",
+      "errors": []
+    },
+    {
+      "sample_id": "SEO-CANN-04",
+      "errors": []
+    },
+    {
+      "sample_id": "SEO-HIST-01",
+      "errors": [
+        "historical_rank_treated_as_today"
+      ]
+    },
+    {
+      "sample_id": "SEO-HIST-02",
+      "errors": [
+        "historical_rank_treated_as_today"
+      ]
+    },
+    {
+      "sample_id": "SEO-HIST-03",
+      "errors": [
+        "historical_rank_treated_as_today"
+      ]
+    },
+    {
+      "sample_id": "SEO-HIST-04",
+      "errors": [
+        "historical_rank_treated_as_today"
+      ]
+    },
+    {
+      "sample_id": "SEO-DESTRUCT-01",
+      "errors": []
+    },
+    {
+      "sample_id": "SEO-DESTRUCT-02",
+      "errors": [
+        "destructive_action_without_approval"
+      ]
+    },
+    {
+      "sample_id": "SEO-DESTRUCT-03",
+      "errors": []
+    },
+    {
+      "sample_id": "SEO-DESTRUCT-04",
+      "errors": [
+        "destructive_action_without_approval"
+      ]
+    },
+    {
+      "sample_id": "SEO-CARD-01",
+      "errors": [
+        "action_card_incomplete:search_intent,expected_verification_time"
+      ]
+    },
+    {
+      "sample_id": "SEO-CARD-02",
+      "errors": []
+    },
+    {
+      "sample_id": "SEO-CARD-03",
+      "errors": [
+        "action_card_incomplete:search_intent,expected_verification_time"
+      ]
+    },
+    {
+      "sample_id": "SEO-CARD-04",
+      "errors": []
+    }
+  ]
+}

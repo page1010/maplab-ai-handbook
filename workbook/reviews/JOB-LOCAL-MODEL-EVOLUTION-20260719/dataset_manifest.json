@@ -1,0 +1,21 @@
+{
+  "generated_at": "2026-07-19",
+  "note": "第一輪刻意不建 training dataset，只建 eval cases。見 local_model_evolution/datasets/README.md 進場門檻。",
+  "datasets": [],
+  "eval_sets": [
+    {
+      "curriculum": "investment-report-current-state",
+      "path": "local_model_evolution/curricula/investment-report-current-state/evals/eval_cases.jsonl",
+      "count": 24,
+      "data_type": "synthetic_deidentified",
+      "usage_rights": "approved"
+    },
+    {
+      "curriculum": "seo-ranking-keyword",
+      "path": "local_model_evolution/curricula/seo-ranking-keyword/evals/eval_cases.jsonl",
+      "count": 24,
+      "data_type": "synthetic_deidentified",
+      "usage_rights": "approved"
+    }
+  ]
+}

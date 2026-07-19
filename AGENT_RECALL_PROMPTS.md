@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-07-18 22:00 TST（遠端）A1 晚間巡查：T-A7-001 🔴 **~331h 無 commit**（Phase 3 仍未啟動，**累計第 24 次警告，逾 13.8 天，Owner 決策急需**；last commit `f6fdaac` 07-07）；T-A6-001 🔴 ~283h 無 commit（bot_a6 launchd 線上，阻塞：LINE webhook 等 Owner 確認）；零 A2-A8 新 commit（正常，無 Owner 派工）；本次發現下午巡查漏更新本檔，已補正
+> 最後更新：2026-07-19 TST A1 日常巡查：T-A7-001 ⏳ WAITING — 第 24 次警告已收斂為 07-25 Phase 3 里程碑（外送費級距草案建立，Zone B/C 待 Owner 確認金額）；T-A6-001 🟡 STALLED ~291h（LINE webhook 等 Owner 確認）；T-A4-002 🔴 CRITICAL ~2215h（~92天，持續）；T-IOS-KOL-001 🔴 CRITICAL ~703h（~29天，持續）；零 A2-A8 新 commit（正常，無 Owner 派工）；RECALL A5/A6/A7 行不一致已修正
 >
 > 使用方式：選擇角色 → 複製 prompt / module handoff → 貼到 Gemini / Codex / OpenClaw / legacy Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -23,10 +23,10 @@
 | A2 | 搜尋流量作戰部 | 🟢 召喚型可用 + patrol（Ads/SEO/WordPress）；last commit `5a83f0f` 2026-07-07（SEO 三人小組執行：婚禮pillar草稿+B3操作稿+cannibalization定案）；T-A2A3-001-B 🔴 >368h持續 | SEO / Ads / WordPress / Brand memory |
 | A3 | 社群與廣告成長部 | ✅ T-A3-001 完成（GTM v21 雙平台追蹤上線）；T-A3-002 ⏸️ 阻塞（等廣告週期+Owner操作）| Meta Ads / Social |
 | A4 | 影像資產整理部 | ✅ T-A4-001 S11(2024) 完成（07-09 22:56 run done，3,314/3,409 分類，GBP 照片評分 🔄 解鎖；2026-07-10 午後巡查確認；下一步：T-A4-003/004 待 Owner 派工）| Photo Archive |
-| A5 | 報價與提案引擎部 | ⚠️ T-A5-002 + T-A5-005 均超 48h 門檻（2026-06-23 07:01-07:22 +0800：`5ab7434` clasp push T-A5-005 + `3209fba` fixMasterTemplate_，均 awaiting Owner；現 **~472h**，2026-07-12 每日巡查更新）；T-A5-004 🔴 CRITICAL（~1732h+，無新 commit）；T-A5-007 🔲 待 Codex 認領（`6cefd13` 2026-07-06 建卡，A5→Codex 移交）| Quotation Engine |
-| A6 | 業務快反應部隊 | 🔴 T-A6-001 **~283h 無 commit**（last commits `e5ab867` 07-07 + `ed63f97` 07-08；bot_a6 ✅ 上線 launchd；LINE webhook 等 Owner 確認 Channel 1654658337；超 48h 閾值 **~5.9x**；2026-07-18 晚間巡查更新）| Sales Rapid Response |
-| A7 | 客服與對話轉單部 | 🔴 T-A7-001 CRITICAL（**~331h 無 commit，累計第 24 次警告，逾 13.8 天**，2026-07-18 晚間巡查；last commit `f6fdaac` 2026-07-07 patrol；A1 已完成三層審查逾時處置；Q7試吃+Q10取消改期政策 2026-07-06 落地，剩 A5 外送費級距 + Phase 3 上線測試，Phase 3 **仍未啟動，Owner 決策急需**）；T-A7-002 ⏸️ 阻塞（Phase 3A 剩任務 4 地區判斷 + 任務 7 流程圖同步）| Smart Reply |
-| A8 | 影音內容產線 | ⚠️ 持續超 48h（2026-06-25 08:25 `1a2d752` squash merge a8/video-checklist-mvp；現 **~312h/~13.0天**，2026-07-08 更新；下一步：審核 local motion POC storyboard → 地端動態生成 → 9:16 mp4/cover → Publish Approval Card，未經 Owner/A1 approval 不得上傳） | Content Repurposing Pipeline |
+| A5 | 報價與提案引擎部 | 🟡 T-A5-002 + T-A5-005 均 STALLED since 2026-07-19（Owner 待執行：`fixMasterTemplate_()`/手動接線；`5ab7434`/`3209fba` 2026-06-23 最後 commit）；T-A5-004 🟢 功能穩定（非 CRITICAL，2026-07-06 A1 對帳澄清）；T-A5-007 🔲 待 Codex 認領（`6cefd13` 2026-07-06 建卡，A5→Codex 移交）；2026-07-19 日常巡查更新 | Quotation Engine |
+| A6 | 業務快反應部隊 | 🟡 T-A6-001 STALLED **~291h 無 commit**（last commits `e5ab867` 07-07 + `ed63f97` 07-08；bot_a6 ✅ 上線 launchd；LINE webhook 等 Owner 確認 Channel 1654658337；2026-07-19 日常巡查更新）| Sales Rapid Response |
+| A7 | 客服與對話轉單部 | ⏳ T-A7-001 WAITING — 第 24 次警告已收斂為 07-25 Phase 3 里程碑（外送費級距草案 `state/a5_delivery_fee_draft_20260718f.md` 完成；Zone B/C 金額待 Owner 確認；last commit `f6fdaac` 07-07；2026-07-19 日常巡查更新）；T-A7-002 ⏸️ 阻塞（Phase 3A 剩任務 4 地區判斷 + 任務 7 流程圖同步）| Smart Reply |
+| A8 | 影音內容產線 | 🟡 T-A8-001 STALLED since 2026-07-19（last commit `1a2d752` 2026-06-25；現 **~576h/~24天**；下一步：審核 local motion POC storyboard → 地端動態生成 → 9:16 mp4/cover → Publish Approval Card，未經 Owner/A1 approval 不得上傳；2026-07-19 日常巡查更新） | Content Repurposing Pipeline |
 | **B1** | **Investment OS Builder** | **🟢 T-HQ-001 P1-P6 全完成；✅ 2026-07-07 新工作：`13f1719` IS 全功能檢討+Goal-Signal-Decision-Review 方案、`32b3afb` 跨專案治理科技樹+P0 根因診斷（TCC，唯讀）、`0695ece` G1/G3落地+封坑驗證欄+1%觸發規則+Self-Healing拍板部署記錄；建議 Owner 確認可關閉 T-HQ-001** | **寫功能 / runtime surface** |
 | **B2** | **Investment OS Reviewer** | **🟢 召喚型可用** | **資料流 / 錯誤 / freshness review** |
 | **B3** | **Investment OS Archivist** | **🟢 召喚型可用** | **版本紀錄 / 交接 / resume prompt** |

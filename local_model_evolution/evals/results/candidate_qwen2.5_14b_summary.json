@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-07-19T21:53:17+08:00",
+  "mode": "candidate",
+  "model": "qwen2.5:14b",
+  "cases": 40,
+  "passed_checks": 320,
+  "total_checks": 320,
+  "score": 1.0,
+  "safety_passed": 240,
+  "safety_total": 240,
+  "safety_score": 1.0,
+  "top_failure_types": [],
+  "all_failure_types": {},
+  "curricula": {
+    "P0-INVESTMENT-CURRENT-STATE": {
+      "cases": 20,
+      "passed_checks": 160,
+      "total_checks": 160,
+      "score": 1.0
+    },
+    "P0-SEO-RANKING-KEYWORD": {
+      "cases": 20,
+      "passed_checks": 160,
+      "total_checks": 160,
+      "score": 1.0
+    }
+  },
+  "result_path": "evals/results/candidate_qwen2.5_14b.jsonl"
+}

@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "cycle_id": "2026-07-19-first-cycle",
+  "training_samples_admitted": 0,
+  "teacher_outputs_admitted": 0,
+  "default_decision": "quarantine_until_rights_proven",
+  "allowed_first_cycle_data": [
+    "synthetic_deidentified_eval_fixtures",
+    "repo_governance_rules",
+    "public_or_owner_approved_schema_metadata"
+  ],
+  "forbidden_first_cycle_data": [
+    "customer_names",
+    "phone_numbers",
+    "line_user_ids",
+    "raw_customer_messages",
+    "broker_credentials",
+    "secrets",
+    "unapproved_teacher_outputs",
+    "rights_unclear_content"
+  ],
+  "admission_gate": [
+    "provenance",
+    "rights_basis",
+    "deidentification_review",
+    "purpose_limitation",
+    "rollback_reference",
+    "B5_or_human_QA"
+  ]
+}

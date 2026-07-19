@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0",
+  "safe_reserve_fraction": 0.15,
+  "providers": [
+    {
+      "id": "openai_api",
+      "display_name": "OpenAI API",
+      "kind": "metered_api",
+      "usage_source_priority": ["official_api", "official_console_export", "local_request_ledger", "manual_override", "unknown"],
+      "official_usage_endpoint": "https://api.openai.com/v1/organization/usage/completions",
+      "official_cost_endpoint": "https://api.openai.com/v1/organization/costs",
+      "probe_enabled": false,
+      "policy": "blocked_without_owner_case_specific_approval_and_budget"
+    },
+    {
+      "id": "codex_subscription",
+      "display_name": "Codex subscription",
+      "kind": "subscription_cli",
+      "usage_source_priority": ["local_request_ledger", "authenticated_cli_health", "manual_override", "unknown"],
+      "health_probe": ["codex", "login", "status"],
+      "probe_enabled": true,
+      "policy": "allowed_for_bounded_teacher_job_after_verified_or_estimated_quota"
+    },
+    {
+      "id": "anthropic_api",
+      "display_name": "Anthropic API",
+      "kind": "metered_api",
+      "usage_source_priority": ["official_api", "official_console_export", "local_request_ledger", "manual_override", "unknown"],
+      "official_usage_endpoint": "https://api.anthropic.com/v1/organizations/usage_report/messages",
+      "probe_enabled": false,
+      "policy": "blocked_without_owner_case_specific_approval_and_budget"
+    },
+    {
+      "id": "claude_subscription",
+      "display_name": "Claude subscription",
+      "kind": "subscription_cli",
+      "usage_source_priority": ["local_request_ledger", "authenticated_cli_health", "manual_override", "unknown"],
+      "health_probe": ["claude", "auth", "status"],
+      "probe_enabled": true,
+      "policy": "allowed_for_bounded_teacher_job_after_verified_or_estimated_quota"
+    },
+    {
+      "id": "gemini_api",
+      "display_name": "Gemini API / Google Cloud",
+      "kind": "metered_api",
+      "usage_source_priority": ["official_cloud_quota", "official_console_export", "local_request_ledger", "manual_override", "unknown"],
+      "probe_enabled": false,
+      "policy": "blocked_without_owner_case_specific_approval_and_budget"
+    },
+    {
+      "id": "antigravity_subscription",
+      "display_name": "Gemini / Antigravity subscription",
+      "kind": "subscription_cli",
+      "usage_source_priority": ["local_request_ledger", "authenticated_cli_health", "manual_override", "unknown"],
+      "health_probe": ["agy", "--help"],
+      "probe_enabled": true,
+      "policy": "allowed_for_bounded_teacher_job_after_verified_or_estimated_quota"
+    },
+    {
+      "id": "hermes_local",
+      "display_name": "Hermes local gateway",
+      "kind": "local_runtime",
+      "usage_source_priority": ["authenticated_cli_health", "unknown"],
+      "health_probe": ["hermes", "status"],
+      "probe_enabled": true,
+      "policy": "local_preparation_only"
+    },
+    {
+      "id": "ollama_local",
+      "display_name": "Ollama local runtime",
+      "kind": "local_runtime",
+      "usage_source_priority": ["authenticated_cli_health", "unknown"],
+      "health_probe": ["ollama", "list"],
+      "probe_enabled": true,
+      "policy": "allowed_for_eval_and_narrow_domain_routines"
+    }
+  ]
+}

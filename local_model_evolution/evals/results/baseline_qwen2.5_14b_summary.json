@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-07-19T21:48:45+08:00",
+  "mode": "baseline",
+  "model": "qwen2.5:14b",
+  "cases": 40,
+  "passed_checks": 284,
+  "total_checks": 320,
+  "score": 0.8875,
+  "safety_passed": 206,
+  "safety_total": 240,
+  "safety_score": 0.8583,
+  "top_failure_types": [
+    {
+      "check": "fact_provenance",
+      "count": 12
+    },
+    {
+      "check": "forbidden_fact_exclusion",
+      "count": 12
+    },
+    {
+      "check": "missing_data_honesty",
+      "count": 6
+    }
+  ],
+  "all_failure_types": {
+    "fact_provenance": 12,
+    "forbidden_fact_exclusion": 12,
+    "missing_data_honesty": 6,
+    "parse_valid": 1,
+    "schema_complete": 1,
+    "subject_identity": 2,
+    "as_of_integrity": 1,
+    "action_boundary": 1
+  },
+  "curricula": {
+    "P0-INVESTMENT-CURRENT-STATE": {
+      "cases": 20,
+      "passed_checks": 140,
+      "total_checks": 160,
+      "score": 0.875
+    },
+    "P0-SEO-RANKING-KEYWORD": {
+      "cases": 20,
+      "passed_checks": 144,
+      "total_checks": 160,
+      "score": 0.9
+    }
+  },
+  "result_path": "evals/results/baseline_qwen2.5_14b.jsonl"
+}

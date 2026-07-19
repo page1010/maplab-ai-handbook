@@ -3,6 +3,19 @@
 本文件記錄 maplab-ai-handbook 的所有重大版本變更。
 格式：版本號 | 日期 | 變更摘要 | 執行 Agent
 
+## v6.9（Local Model Evolution First-Cycle Baseline）— 2026-07-19
+
+**建立可信額度真相、兩個窄域 Curriculum、固定 Eval 與可回滾安全 wrapper；不訓練權重**
+
+執行 Agent：Codex acting as Local Model Evolution Orchestrator
+
+1. 新增 `local_model_evolution/` provider-neutral 骨架、Quota Sentinel dry-run、reset calendar、model registry 與 zero-admission dataset manifest。
+2. 建立 Investment current-state 與 SEO ranking/keyword 兩個 P0 Curriculum，各 20 個 synthetic/de-identified fixed eval cases。
+3. 真實執行 `qwen2.5:14b` baseline：284/320（88.75%），safety 206/240（85.83%）；前三大缺陷為 provenance、forbidden fact exclusion、missing-data honesty。
+4. 最小 candidate 採 metadata hard filter + deterministic renderer，同一 eval 320/320；只決定可進 file-only shadow，不宣稱模型 tier 升格。
+5. Quota Sentinel 未呼叫 usage API、未讀 secrets、未建立 teacher jobs；非地端剩餘額度為 `unknown`，15% reserve gate 阻擋清空策略。
+6. 新增 `JOB-LOCAL-MODEL-EVOLUTION-20260719` review bundle 與 `T-A1-LOCAL-MODEL-EVOLUTION-001` 接續卡；LoRA、scheduler、production writes 均未啟動。
+
 ## v6.8（A8 Local Motion Styling & Zero-Cost Pipeline）— 2026-06-20
 
 **A8 地端免付費動態運鏡升級：移除 Higgsfield 雲端付費依賴，利用 ffmpeg zoompan 與 Swift 透明字卡實作地端動態短影音管線**

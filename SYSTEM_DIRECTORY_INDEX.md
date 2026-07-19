@@ -109,6 +109,7 @@ Directory Index Check
 | A0／A1 briefing | `handoff/a0-briefing.md`、`handoff/a1-briefing.md` | durable handoff | A0、A1 | Owner 校正與 session 交接 |
 | Session log | `handoff/sessions/` | evidence history | A0、A1、接手角色 | 先讀實際發生，再讀 code |
 | Review bundles | `workbook/reviews/JOB-*/` | evidence package | B1、B2、B3、B4、A1、Owner | 原始輸出、測試、validation、review request |
+| Local Model Evolution | `local_model_evolution/` | operational working system | A1、B2、B4、B5、Investment OS／A2 consumers | Quota truth、Curriculum、fixed Eval、model registry；promotion 仍由 Task Card／review gate 決定 |
 | 踩坑／incident | `pitfalls.md`、`skills/experience-log.md` | durable learning | 全角色 | 相同問題先查，不得從零診斷 |
 | 決策紀錄 | `decisions.md` 與專案 decision logs | durable decision | A0、A1、B3、B4 | 保留理由、失效條件、替代方案 |
 

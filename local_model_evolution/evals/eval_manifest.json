@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "frozen_cycle": "2026-07-19-first-cycle",
+  "case_count": 40,
+  "curricula": {
+    "P0-INVESTMENT-CURRENT-STATE": 20,
+    "P0-SEO-RANKING-KEYWORD": 20
+  },
+  "rights": "synthetic_fixture_owner_approved_for_eval",
+  "deidentified": true,
+  "training_data": false
+}

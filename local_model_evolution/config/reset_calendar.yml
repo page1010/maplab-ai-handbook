@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "owner_timezone": "Asia/Taipei",
+  "schedule_design": {
+    "quota_sentinel": "hourly_at_minute_17",
+    "reset_check": "daily_00:05_Asia/Taipei",
+    "weekly_review": "Sunday_09:00_Asia/Taipei",
+    "monthly_review": "first_Sunday_10:00_Asia/Taipei"
+  },
+  "providers": {
+    "openai_api": {
+      "reset_rule": "billing_and_rate_limit_specific",
+      "reset_timezone": "provider_defined",
+      "confidence": "unknown",
+      "teacher_window": "disabled_by_repo_policy"
+    },
+    "codex_subscription": {
+      "reset_rule": "subscription_window_not_exposed_by_cli",
+      "reset_timezone": "unknown",
+      "confidence": "unknown",
+      "teacher_window": "only_when_local_ledger_or_manual_override_is_verified_or_estimated"
+    },
+    "anthropic_api": {
+      "reset_rule": "organization_report_window_not_subscription_reset",
+      "reset_timezone": "UTC_for_report_buckets",
+      "confidence": "verified",
+      "teacher_window": "disabled_by_repo_policy"
+    },
+    "claude_subscription": {
+      "reset_rule": "subscription_window_not_exposed_by_cli",
+      "reset_timezone": "unknown",
+      "confidence": "unknown",
+      "teacher_window": "only_when_local_ledger_or_manual_override_is_verified_or_estimated"
+    },
+    "gemini_api": {
+      "reset_rule": "RPD_resets_at_midnight_Pacific_Time",
+      "reset_timezone": "America/Los_Angeles",
+      "confidence": "verified",
+      "teacher_window": "disabled_by_repo_policy"
+    },
+    "antigravity_subscription": {
+      "reset_rule": "subscription_window_not_exposed_by_cli",
+      "reset_timezone": "unknown",
+      "confidence": "unknown",
+      "teacher_window": "only_when_local_ledger_or_manual_override_is_verified_or_estimated"
+    },
+    "hermes_local": {
+      "reset_rule": "not_applicable_local_runtime",
+      "reset_timezone": "not_applicable",
+      "confidence": "verified",
+      "teacher_window": "not_applicable"
+    },
+    "ollama_local": {
+      "reset_rule": "not_applicable_local_runtime",
+      "reset_timezone": "not_applicable",
+      "confidence": "verified",
+      "teacher_window": "not_applicable"
+    }
+  }
+}

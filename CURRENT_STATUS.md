@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-07-19 03:16（checkpoint.sh 自動同步）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-07-19 21:55（Local Model Evolution first-cycle receipt）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -18,6 +18,8 @@
 ---
 
 ## 最新事實核對
+
+- 2026-07-19（21:55）：**[A1/B5 Local Model Evolution 第一輪完成]** — 新增 `local_model_evolution/` provider-neutral 骨架與 `JOB-LOCAL-MODEL-EVOLUTION-20260719` receipt。Quota Sentinel dry-run 盤點 8 providers/runtimes：usage API 0、teacher jobs 0，Codex/Claude/Antigravity CLI health 可用但 remaining quota 全為 `unknown`，故清空策略 blocked、safe reserve 15%。兩個 P0 Curriculum 各凍結 20 個 synthetic/de-identified eval cases；`qwen2.5:14b` 真實 baseline 284/320（88.75%）、safety 206/240（85.83%），top 3 為 provenance 12、forbidden fact 12、missing-data honesty 6。最小 candidate 採 metadata hard filter + deterministic renderer，同一 40 cases 320/320；只准進 file-only de-identified shadow，**不代表模型升格**，LoRA/teacher jobs/production scheduler 仍關閉。Task Card：`handoff/tasks/T-A1-LOCAL-MODEL-EVOLUTION-001.md`。
 
 - 2026-07-19（03:16）：**[A1 A0派工] R實驗結論治理落地** — A0 委派 4 項可逆變更全部完成：①`AGENT_RULES.md` SECTION 24「可逆先行準則」（不等核准直接做可逆動作；快速判斷表；任務書標注格式；R-VERIFIED Opus 產出）②`AGENT_RULES.md` SECTION 25「任務卡四態狀態機」（IN_PROGRESS→STALLED(48h)→NEEDS_REVIEW(7d)→AUTO_CLOSED(7d)；翻轉預設：auto-CLOSED 不等 Owner；patrol.sh 唯一改寫端）③`scripts/patrol.sh` 重構（新增四態狀態機引擎；本輪實測：11 張殭屍卡自動轉 STALLED，T-A6-001 10d→STALLED ✅，T-A7-001 正確識別為 ⏸️ BLOCKED 不再累加警告 ✅；警告堆積問題結構性消失）④`distill/b5-epoch-20260719.md` B5蒸餾教材包（可逆先行+翻轉預設+三版對比派工路由+地端訓練指引）⑤`state/r_fable_vs_opus_summary.md` 最終定案（共識區三版可用；深層原則以 VERIFIED 版為準；不全量重跑）。Commit: `7efc03e`。
 

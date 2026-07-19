@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "promotion_is_automatic": false,
+  "models": [
+    {"id": "moondream:1.8b", "runtime": "ollama", "size_gb": 1.7, "role": "vision_specialist", "eval_status": "not_selected"},
+    {"id": "gemma4:latest", "runtime": "ollama", "size_gb": 9.6, "role": "existing_general_local_and_hermes", "eval_status": "inventory_only"},
+    {"id": "qwen2.5:14b", "runtime": "ollama", "size_gb": 9.0, "role": "primary_text_baseline", "context_length": 32768, "quantization": "Q4_K_M", "license": "Apache-2.0", "eval_status": "scheduled"},
+    {"id": "qwen2.5-coder:7b", "runtime": "ollama", "size_gb": 4.7, "role": "code_specialist", "eval_status": "not_selected"}
+  ],
+  "training_frameworks": {
+    "torch": false,
+    "transformers": false,
+    "peft": false,
+    "trl": false,
+    "datasets": false,
+    "mlx": false,
+    "mlx_lm": false,
+    "unsloth": false,
+    "llamafactory": false,
+    "axolotl": false
+  },
+  "lora_gate": "closed_until_fixed_eval_rights_rollback_and_baseline_pass"
+}

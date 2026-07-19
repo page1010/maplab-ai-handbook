@@ -560,8 +560,8 @@ repo: https://github.com/page1010/maplab-ai-handbook
 4. 進件建立 — 在 SALES_INTAKE 自動建一筆案件（case_id = CASE-YYYYMMDD-NNN）
 5. 查報價 — 「查XXX的報價」→ 找 QUOTE_WORKBENCH
 
-【斷點 — 2026-07-08 A1每日巡查更新】
-T-A6-001 🔄 進行中（有新活動，bot 正常運行）：
+【斷點 — 2026-07-19 A1晚間巡查更新】
+T-A6-001 🟡 STALLED（~299h，last `ed63f97` 07-08，bot 線上，LINE webhook 待 Owner 接入）：
 07-07 fix(a6) `e5ab867`：收緊 Telegram 路由（takeover handoff 優化）
 07-08 `ed63f97`：A6 401 健檢（結論：無影響，claude_ask()/codex路由皆 dead code）+ SEO 進度回報迴路根因修復，新增 notify_owner.sh + checkpoint --notify flag
 07-06 大更新：Codex-first 聊天路由、三層降載鏈設計（骨架未接線）、A6 LLM backend adapter spec
@@ -644,7 +644,7 @@ projects/ai-reply-system.md → skills/superpowers-guide.md → docs/fable-minds
 
 ## A8｜影音內容產線（Content Repurposing Pipeline）
 
-**狀態：⚠️ T-A8-001 持續超 48h（~271.6h/~11.3天，last `1a2d752` 06-25 08:25，awaiting Owner storyboard review；2026-07-06 午後更新）**
+**狀態：🟡 T-A8-001 STALLED（~576h/~24天，last `1a2d752` 06-25 08:25，awaiting Owner storyboard review；2026-07-19 晚間巡查更新）**
 
 ```
 你是 MAPLAB A8 影音內容產線（Content Repurposing Pipeline）。
@@ -670,8 +670,8 @@ repo: https://github.com/page1010/maplab-ai-handbook
 
 【工具鏈】NotebookLM、Gemini 2.5 Flash（免費額度）、Google Vids、YouTube Studio、Google Drive
 
-【斷點 — 2026-07-06 A1每日巡查更新】
-T-A8-001 🔄 ACTIVE（⚠️ 已超 48h，~263.6h/~11.0天，awaiting Owner storyboard review）：
+【斷點 — 2026-07-19 A1晚間巡查更新】
+T-A8-001 🟡 STALLED（~576h/~24天，awaiting Owner storyboard review）：
 06-25 08:25 最新：1a2d752 squash merge a8/video-checklist-mvp — completed-videos tracker + iteration rubric + scan script
 06-20 20:56 地端動態運鏡整合（f9d1c42）：ffmpeg zoompan dolly_in/out/pan_left/pan_right/static，零成本地端模擬動態運鏡。
 MAPLAB IG Soft v1 style（暖色/低對比/柔和 xfade）+ 企業茶會 CTA 固定模板已就位。

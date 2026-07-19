@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-07-18T03:09:02.543128",
-  "backup_dir": "/Users/pagemacmini/maplab_backup/20260718",
+  "generated_at": "2026-07-19T03:00:09.455624",
+  "backup_dir": "/Users/pagemacmini/maplab_backup/20260719",
   "repos": {
     "maplab-ai-handbook": {
       "root": "/Users/pagemacmini/maplab-ai-handbook",
-      "file_count": 2286,
+      "file_count": 2337,
       "files": [
         {
           "path": "open-hermes-status-panel.command",
@@ -18,8 +18,8 @@
         },
         {
           "path": "pitfalls.md",
-          "size": 58434,
-          "mtime": 1783650309
+          "size": 61330,
+          "mtime": 1784398056
         },
         {
           "path": ".DS_Store",
@@ -33,8 +33,8 @@
         },
         {
           "path": "AGENT_RECALL_PROMPTS.md",
-          "size": 80679,
-          "mtime": 1784298585
+          "size": 80783,
+          "mtime": 1784385584
         },
         {
           "path": ".mcp.json",
@@ -43,8 +43,8 @@
         },
         {
           "path": "AGENT_RULES.md",
-          "size": 55328,
-          "mtime": 1783855281
+          "size": 57761,
+          "mtime": 1784364742
         },
         {
           "path": "cookies.txt",
@@ -58,8 +58,8 @@
         },
         {
           "path": "TASK_QUEUE.md",
-          "size": 2589,
-          "mtime": 1783653287
+          "size": 4973,
+          "mtime": 1784364797
         },
         {
           "path": ".gitignore",
@@ -88,8 +88,8 @@
         },
         {
           "path": "CURRENT_STATUS.md",
-          "size": 81313,
-          "mtime": 1784298585
+          "size": 75158,
+          "mtime": 1784399412
         },
         {
           "path": "CLAUDE.md",
@@ -189,7 +189,7 @@
         {
           "path": "recalls/A1_recall.md",
           "size": 5404,
-          "mtime": 1784268686
+          "mtime": 1784399412
         },
         {
           "path": "recalls/IOS_strategy_role_recall.md",
@@ -583,8 +583,8 @@
         },
         {
           "path": "handoff/tasks/T-A7-001.md",
-          "size": 14659,
-          "mtime": 1783721155
+          "size": 14756,
+          "mtime": 1784385369
         },
         {
           "path": "handoff/tasks/T-A2-003-weekly-wp-audit.md",
@@ -659,7 +659,7 @@
         {
           "path": "handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md",
           "size": 2436,
-          "mtime": 1784268686
+          "mtime": 1784399412
         },
         {
           "path": "handoff/tasks/T-A6-002.md",
@@ -674,7 +674,7 @@
         {
           "path": "handoff/tasks/T-A1-LEARNING-LOOP-001.md",
           "size": 3049,
-          "mtime": 1784268686
+          "mtime": 1784399412
         },
         {
           "path": "handoff/tasks/T-A3-002.md",
@@ -754,7 +754,7 @@
         {
           "path": "handoff/tasks/T-A1-V6-P2.md",
           "size": 2442,
-          "mtime": 1784268686
+          "mtime": 1784399412
         },
         {
           "path": "handoff/tasks/T-A7-003.md",
@@ -789,7 +789,7 @@
         {
           "path": "handoff/tasks/T-A1-V7.md",
           "size": 4971,
-          "mtime": 1784268686
+          "mtime": 1784399412
         },
         {
           "path": "handoff/tasks/T-A2-001.md",
@@ -1085,6 +1085,11 @@
           "path": "projects/slides-quotation-system.md",
           "size": 121906,
           "mtime": 1774657015
+        },
+        {
+          "path": "projects/investment-os-continuous-iteration-plan.md",
+          "size": 16644,
+          "mtime": 1784385474
         },
         {
           "path": "projects/b4-invest-os-system-patrol.md",
@@ -3787,6 +3792,11 @@
           "mtime": 1783855152
         },
         {
+          "path": "docs/loop-engineering-maplab-comparison.md",
+          "size": 5687,
+          "mtime": 1784386253
+        },
+        {
           "path": "docs/quota-outage-failover-runbook.md",
           "size": 6715,
           "mtime": 1783871308
@@ -3828,8 +3838,8 @@
         },
         {
           "path": "docs/local-monitoring-runbook.md",
-          "size": 5085,
-          "mtime": 1784268686
+          "size": 7165,
+          "mtime": 1784340605
         },
         {
           "path": "docs/a0-dispatch-operations-manual.md",
@@ -3888,8 +3898,8 @@
         },
         {
           "path": "docs/fable-mindset.md",
-          "size": 8816,
-          "mtime": 1783654878
+          "size": 10819,
+          "mtime": 1784364715
         },
         {
           "path": "docs/ad-funnel-battle-plan.md",
@@ -4212,6 +4222,11 @@
           "mtime": 1776437541
         },
         {
+          "path": "state/owner_delivery_fee_confirm_20260718f.md",
+          "size": 1148,
+          "mtime": 1784385333
+        },
+        {
           "path": "state/weekly_eval_stdout.log",
           "size": 179,
           "mtime": 1784038357
@@ -4233,23 +4248,33 @@
         },
         {
           "path": "state/a6_gym_log.jsonl",
-          "size": 53339,
-          "mtime": 1784312988
+          "size": 56762,
+          "mtime": 1784363402
         },
         {
           "path": "state/seo_loop_stdout.log",
-          "size": 1385,
-          "mtime": 1784312988
+          "size": 1459,
+          "mtime": 1784397600
         },
         {
           "path": "state/seo_loop_run.jsonl",
-          "size": 3575,
-          "mtime": 1784312988
+          "size": 3669,
+          "mtime": 1784397600
+        },
+        {
+          "path": "state/meta_ads_guide_final.md",
+          "size": 12742,
+          "mtime": 1784386237
         },
         {
           "path": "state/loop_02_page_quality_report.md",
           "size": 2206,
           "mtime": 1783649292
+        },
+        {
+          "path": "state/a5_delivery_fee_draft_20260718f.md",
+          "size": 2296,
+          "mtime": 1784385324
         },
         {
           "path": "state/a0_delegate_20260710d.log",
@@ -4265,6 +4290,11 @@
           "path": "state/a0_delegate_20260711a.log",
           "size": 1267,
           "mtime": 1783815235
+        },
+        {
+          "path": "state/is_health_trend.jsonl",
+          "size": 140,
+          "mtime": 1784385510
         },
         {
           "path": "state/a0_delegate_20260710f.log",
@@ -4288,8 +4318,8 @@
         },
         {
           "path": "state/dispatch_backup.log",
-          "size": 674,
-          "mtime": 1784315342
+          "size": 1312,
+          "mtime": 1784401209
         },
         {
           "path": "state/a4_s11_resume_stdout.log",
@@ -4313,8 +4343,8 @@
         },
         {
           "path": "state/runtime_alarm.log",
-          "size": 325,
-          "mtime": 1784268686
+          "size": 650,
+          "mtime": 1784363402
         },
         {
           "path": "state/loop_17_kpi_daily.json",
@@ -4322,9 +4352,19 @@
           "mtime": 1783649220
         },
         {
+          "path": "state/is_brief_20260718.md",
+          "size": 4856,
+          "mtime": 1784365633
+        },
+        {
           "path": "state/a0_delegate_report_20260711.md",
           "size": 3728,
           "mtime": 1783721189
+        },
+        {
+          "path": "state/r_status_20260719.md",
+          "size": 3974,
+          "mtime": 1784386203
         },
         {
           "path": "state/weekly_eval_stderr.log",
@@ -4377,14 +4417,54 @@
           "mtime": 1783835049
         },
         {
+          "path": "state/a0_delegate_20260719a.log",
+          "size": 1778,
+          "mtime": 1784395811
+        },
+        {
+          "path": "state/a0_delegate_20260718e.log",
+          "size": 1274,
+          "mtime": 1784385008
+        },
+        {
+          "path": "state/meta_ads_guide_20260719.md",
+          "size": 2447,
+          "mtime": 1784386138
+        },
+        {
+          "path": "state/a0_delegate_20260718d.log",
+          "size": 804,
+          "mtime": 1784364931
+        },
+        {
           "path": "state/a0_delegate_20260712_report.md",
           "size": 17429,
           "mtime": 1783872383
         },
         {
+          "path": "state/a0_delegate_20260718f.log",
+          "size": 1679,
+          "mtime": 1784385652
+        },
+        {
+          "path": "state/a0_delegate_20260719b.log",
+          "size": 2301,
+          "mtime": 1784393497
+        },
+        {
           "path": "state/dispatch_backup_index.json",
-          "size": 903602,
-          "mtime": 1784314806
+          "size": 903860,
+          "mtime": 1784315342
+        },
+        {
+          "path": "state/a0_delegate_20260719c.log",
+          "size": 1651,
+          "mtime": 1784399412
+        },
+        {
+          "path": "state/owner_one_reply_20260718.md",
+          "size": 2834,
+          "mtime": 1784364822
         },
         {
           "path": "state/a0_delegate_20260710.log",
@@ -4392,9 +4472,19 @@
           "mtime": 1783653137
         },
         {
+          "path": "state/a0_delegate_20260718c.log",
+          "size": 2935,
+          "mtime": 1784364676
+        },
+        {
           "path": "state/a6_gym_stdout.log",
-          "size": 14106,
-          "mtime": 1784312988
+          "size": 14992,
+          "mtime": 1784363402
+        },
+        {
+          "path": "state/a0_delegate_20260718b.log",
+          "size": 989,
+          "mtime": 1784340682
         },
         {
           "path": "state/eval_baseline.json",
@@ -4402,14 +4492,19 @@
           "mtime": 1784038357
         },
         {
+          "path": "state/r_fable_vs_opus_summary.md",
+          "size": 7343,
+          "mtime": 1784393379
+        },
+        {
           "path": "state/memory_watch.log",
-          "size": 1251,
-          "mtime": 1784312988
+          "size": 3306,
+          "mtime": 1784398110
         },
         {
           "path": "state/a0_delegate_20260718a.log",
-          "size": 0,
-          "mtime": 1784315217
+          "size": 436,
+          "mtime": 1784334594
         },
         {
           "path": "state/a4_s11_resume.log",
@@ -4418,8 +4513,8 @@
         },
         {
           "path": "bot_a6/bot_a6.log",
-          "size": 3572029,
-          "mtime": 1784237528
+          "size": 3768817,
+          "mtime": 1784395008
         },
         {
           "path": "bot_a6/test_a6_telegram_routes.py",
@@ -4478,8 +4573,8 @@
         },
         {
           "path": "bot_a6/bot_a6.py",
-          "size": 70217,
-          "mtime": 1783438023
+          "size": 70237,
+          "mtime": 1784340616
         },
         {
           "path": "bot_a6/.env.example",
@@ -4503,8 +4598,8 @@
         },
         {
           "path": "bot_a6/launchd_stdout.log",
-          "size": 1784489,
-          "mtime": 1784237528
+          "size": 1981277,
+          "mtime": 1784395008
         },
         {
           "path": "rubrics/telegram-digest-quality.md",
@@ -4543,13 +4638,18 @@
         },
         {
           "path": "logs/worktree-cleanup-launchd.log",
-          "size": 6546885,
-          "mtime": 1784314651
+          "size": 6638037,
+          "mtime": 1784401066
         },
         {
           "path": "logs/patrol-launchd.log",
           "size": 0,
           "mtime": 1776474002
+        },
+        {
+          "path": "logs/runtime_alarm_launchd.log",
+          "size": 47,
+          "mtime": 1784334605
         },
         {
           "path": "logs/worktree-cleanup.log",
@@ -4558,8 +4658,8 @@
         },
         {
           "path": "logs/memory_watch_launchd.log",
-          "size": 235,
-          "mtime": 1784304497
+          "size": 658,
+          "mtime": 1784398110
         },
         {
           "path": "logs/a4-photo-classify.log",
@@ -4568,18 +4668,23 @@
         },
         {
           "path": "logs/runtime/patrol-scheduled.log",
-          "size": 117219,
-          "mtime": 1784250007
+          "size": 121448,
+          "mtime": 1784336405
         },
         {
           "path": "logs/runtime/worktree-cleanup.log",
-          "size": 2854270,
-          "mtime": 1784314651
+          "size": 2945422,
+          "mtime": 1784401066
         },
         {
           "path": "scripts/b5-pack-teaching-package.sh",
           "size": 4751,
           "mtime": 1783699816
+        },
+        {
+          "path": "scripts/repair_and_finish.py",
+          "size": 10377,
+          "mtime": 1784392662
         },
         {
           "path": "scripts/organize_photos_by_category.py",
@@ -4618,8 +4723,8 @@
         },
         {
           "path": "scripts/patrol.sh",
-          "size": 7499,
-          "mtime": 1783666275
+          "size": 9875,
+          "mtime": 1784385505
         },
         {
           "path": "scripts/extract_slide_photos_to_items.py",
@@ -4638,8 +4743,8 @@
         },
         {
           "path": "scripts/a6_gym_runner.py",
-          "size": 11292,
-          "mtime": 1783347954
+          "size": 11320,
+          "mtime": 1784340611
         },
         {
           "path": "scripts/verify-commit-on-main.sh",
@@ -4675,6 +4780,11 @@
           "path": "scripts/a4_s11_2024_resume_classifier.py",
           "size": 18284,
           "mtime": 1783361081
+        },
+        {
+          "path": "scripts/is_rules_gate.sh",
+          "size": 5952,
+          "mtime": 1784385441
         },
         {
           "path": "scripts/patrol-scheduled.sh",
@@ -4835,6 +4945,11 @@
           "path": "scripts/export_a7_line_jsonl.py",
           "size": 5986,
           "mtime": 1782313182
+        },
+        {
+          "path": "scripts/run_fable_vs_opus_real.py",
+          "size": 11742,
+          "mtime": 1784392599
         },
         {
           "path": "scripts/整理_品項圖片_pipeline.py",
@@ -5168,8 +5283,8 @@
         },
         {
           "path": "bot/bot.log",
-          "size": 3423214,
-          "mtime": 1784237523
+          "size": 3575494,
+          "mtime": 1784395007
         },
         {
           "path": "bot/DEPRECATED.md",
@@ -5183,8 +5298,8 @@
         },
         {
           "path": "bot/launchd_stdout.log",
-          "size": 3423214,
-          "mtime": 1784237523
+          "size": 3575494,
+          "mtime": 1784395007
         },
         {
           "path": "exams/a0-succession-exam.md",
@@ -5863,13 +5978,13 @@
         },
         {
           "path": "local-control-plane/hermes_status.json",
-          "size": 24736,
-          "mtime": 1784268686
+          "size": 24737,
+          "mtime": 1784363402
         },
         {
           "path": "local-control-plane/hermes_status.js",
-          "size": 24760,
-          "mtime": 1784268686
+          "size": 24761,
+          "mtime": 1784363402
         },
         {
           "path": "local-control-plane/config/roles.json",
@@ -5908,8 +6023,8 @@
         },
         {
           "path": "data/a7-reply-templates.md",
-          "size": 9558,
-          "mtime": 1783350403
+          "size": 10590,
+          "mtime": 1784385353
         },
         {
           "path": "data/photo_alt_index.db",
@@ -6429,7 +6544,7 @@
         {
           "path": "workbook/learning_loop/reaction_ledger_summary.md",
           "size": 1360,
-          "mtime": 1784268686
+          "mtime": 1784363402
         },
         {
           "path": "workbook/learning_loop/README.md",
@@ -6459,22 +6574,22 @@
         {
           "path": "workbook/hermes/patrol/telegram_decision_card.md",
           "size": 834,
-          "mtime": 1784268686
+          "mtime": 1784363402
         },
         {
           "path": "workbook/hermes/patrol/latest.json",
-          "size": 24736,
-          "mtime": 1784268686
+          "size": 24737,
+          "mtime": 1784363402
         },
         {
           "path": "workbook/hermes/patrol/hermes_prompt.md",
           "size": 4530,
-          "mtime": 1784250005
+          "mtime": 1784336404
         },
         {
           "path": "workbook/hermes/patrol/latest.md",
           "size": 8529,
-          "mtime": 1784268686
+          "mtime": 1784363402
         },
         {
           "path": "workbook/hermes/patrol/history/20260616-142753.json",
@@ -6565,6 +6680,11 @@
           "path": "workbook/hermes/patrol/history/20260615-205555.json",
           "size": 17736,
           "mtime": 1781960198
+        },
+        {
+          "path": "workbook/hermes/patrol/history/20260718-090004.json",
+          "size": 24737,
+          "mtime": 1784336404
         },
         {
           "path": "workbook/hermes/patrol/history/20260616-090005.json",
@@ -7292,6 +7412,26 @@
           "mtime": 1781020201
         },
         {
+          "path": "workbook/reviews/JOB-IS-PROPOSAL-BRIEF-20260718/2_worldview_pillar_draft.md",
+          "size": 8645,
+          "mtime": 1784365567
+        },
+        {
+          "path": "workbook/reviews/JOB-IS-PROPOSAL-BRIEF-20260718/1b_position_health.md",
+          "size": 10878,
+          "mtime": 1784365384
+        },
+        {
+          "path": "workbook/reviews/JOB-IS-PROPOSAL-BRIEF-20260718/1a_check_cards.md",
+          "size": 10804,
+          "mtime": 1784365270
+        },
+        {
+          "path": "workbook/reviews/JOB-IS-PROPOSAL-BRIEF-20260718/1c_concentration_options.md",
+          "size": 7606,
+          "mtime": 1784365472
+        },
+        {
           "path": "workbook/reviews/A5-QUOTE-20260609-235038/execution_log.json",
           "size": 24036,
           "mtime": 1782497117
@@ -7880,6 +8020,16 @@
           "path": "workbook/reviews/JOB-AGY-TASK2-STATUS-20260712/README.md",
           "size": 414,
           "mtime": 1783834717
+        },
+        {
+          "path": "workbook/reviews/JOB-R-FABLE-VS-OPUS-VERIFIED-20260719/scenario-01-system-governance/summary.md",
+          "size": 6615,
+          "mtime": 1784398499
+        },
+        {
+          "path": "workbook/reviews/JOB-R-FABLE-VS-OPUS-VERIFIED-20260719/scenario-01-system-governance/rounds.md",
+          "size": 16552,
+          "mtime": 1784398395
         },
         {
           "path": "workbook/reviews/A5-QUOTE-20260609-234856/execution_log.json",
@@ -10137,6 +10287,61 @@
           "mtime": 1781960198
         },
         {
+          "path": "workbook/reviews/JOB-R-FABLE-VS-OPUS-SIMULATED-20260719/total-summary.md",
+          "size": 7909,
+          "mtime": 1784386865
+        },
+        {
+          "path": "workbook/reviews/JOB-R-FABLE-VS-OPUS-SIMULATED-20260719/scenario-03-brand-voice/summary.md",
+          "size": 2475,
+          "mtime": 1784386536
+        },
+        {
+          "path": "workbook/reviews/JOB-R-FABLE-VS-OPUS-SIMULATED-20260719/scenario-03-brand-voice/rounds.md",
+          "size": 10530,
+          "mtime": 1784386510
+        },
+        {
+          "path": "workbook/reviews/JOB-R-FABLE-VS-OPUS-SIMULATED-20260719/scenario-01-system-governance/summary.md",
+          "size": 2687,
+          "mtime": 1784386296
+        },
+        {
+          "path": "workbook/reviews/JOB-R-FABLE-VS-OPUS-SIMULATED-20260719/scenario-01-system-governance/rounds.md",
+          "size": 13147,
+          "mtime": 1784386253
+        },
+        {
+          "path": "workbook/reviews/JOB-R-FABLE-VS-OPUS-SIMULATED-20260719/scenario-04-database-catering/summary.md",
+          "size": 2615,
+          "mtime": 1784386662
+        },
+        {
+          "path": "workbook/reviews/JOB-R-FABLE-VS-OPUS-SIMULATED-20260719/scenario-04-database-catering/rounds.md",
+          "size": 11346,
+          "mtime": 1784386635
+        },
+        {
+          "path": "workbook/reviews/JOB-R-FABLE-VS-OPUS-SIMULATED-20260719/scenario-02-seo/summary.md",
+          "size": 2437,
+          "mtime": 1784386424
+        },
+        {
+          "path": "workbook/reviews/JOB-R-FABLE-VS-OPUS-SIMULATED-20260719/scenario-02-seo/rounds.md",
+          "size": 12159,
+          "mtime": 1784386397
+        },
+        {
+          "path": "workbook/reviews/JOB-R-FABLE-VS-OPUS-SIMULATED-20260719/scenario-05-investment-os/summary.md",
+          "size": 2796,
+          "mtime": 1784386797
+        },
+        {
+          "path": "workbook/reviews/JOB-R-FABLE-VS-OPUS-SIMULATED-20260719/scenario-05-investment-os/rounds.md",
+          "size": 13020,
+          "mtime": 1784386771
+        },
+        {
           "path": "workbook/reviews/A5-QUOTE-20260609-235051/task_request.md",
           "size": 11609,
           "mtime": 1782497117
@@ -11432,6 +11637,56 @@
           "mtime": 1780269926
         },
         {
+          "path": "workbook/reviews/JOB-R-FABLE-VS-OPUS-REAL-20260719/scenario-03-brand-voice/summary.md",
+          "size": 4895,
+          "mtime": 1784392285
+        },
+        {
+          "path": "workbook/reviews/JOB-R-FABLE-VS-OPUS-REAL-20260719/scenario-03-brand-voice/rounds.md",
+          "size": 25228,
+          "mtime": 1784392251
+        },
+        {
+          "path": "workbook/reviews/JOB-R-FABLE-VS-OPUS-REAL-20260719/scenario-01-system-governance/summary.md",
+          "size": 4591,
+          "mtime": 1784391564
+        },
+        {
+          "path": "workbook/reviews/JOB-R-FABLE-VS-OPUS-REAL-20260719/scenario-01-system-governance/rounds.md",
+          "size": 24727,
+          "mtime": 1784391476
+        },
+        {
+          "path": "workbook/reviews/JOB-R-FABLE-VS-OPUS-REAL-20260719/scenario-04-catering-pricing/summary.md",
+          "size": 3655,
+          "mtime": 1784393252
+        },
+        {
+          "path": "workbook/reviews/JOB-R-FABLE-VS-OPUS-REAL-20260719/scenario-04-catering-pricing/rounds.md",
+          "size": 22239,
+          "mtime": 1784393208
+        },
+        {
+          "path": "workbook/reviews/JOB-R-FABLE-VS-OPUS-REAL-20260719/scenario-02-seo/summary.md",
+          "size": 4655,
+          "mtime": 1784391921
+        },
+        {
+          "path": "workbook/reviews/JOB-R-FABLE-VS-OPUS-REAL-20260719/scenario-02-seo/rounds.md",
+          "size": 23756,
+          "mtime": 1784391891
+        },
+        {
+          "path": "workbook/reviews/JOB-R-FABLE-VS-OPUS-REAL-20260719/scenario-05-investment-os/summary.md",
+          "size": 1910,
+          "mtime": 1784393285
+        },
+        {
+          "path": "workbook/reviews/JOB-R-FABLE-VS-OPUS-REAL-20260719/scenario-05-investment-os/rounds.md",
+          "size": 23425,
+          "mtime": 1784393170
+        },
+        {
           "path": "workbook/reviews/JOB-A5-20260519-sheet-plugin-diagnostic/validation_report.md",
           "size": 4737,
           "mtime": 1779147047
@@ -11694,18 +11949,18 @@
         },
         {
           "path": "governance/pitfalls.md",
-          "size": 58434,
-          "mtime": 1783650309
+          "size": 61330,
+          "mtime": 1784398056
         },
         {
           "path": "governance/AGENT_RECALL_PROMPTS.md",
-          "size": 80679,
-          "mtime": 1784298585
+          "size": 80783,
+          "mtime": 1784385584
         },
         {
           "path": "governance/AGENT_RULES.md",
-          "size": 55328,
-          "mtime": 1783855281
+          "size": 57761,
+          "mtime": 1784364742
         },
         {
           "path": "skills/shared/.gitkeep",
@@ -11716,7 +11971,7 @@
     },
     "new-project": {
       "root": "/Users/pagemacmini/Documents/New project",
-      "file_count": 3197,
+      "file_count": 3198,
       "files": [
         {
           "path": "extract_speech.py",
@@ -19696,7 +19951,7 @@
         {
           "path": "state/agent_command_board.json",
           "size": 336448,
-          "mtime": 1784313972
+          "mtime": 1784400383
         },
         {
           "path": "state/governance_held.json",
@@ -19721,7 +19976,7 @@
         {
           "path": "state/command_inbox.jsonl",
           "size": 225368,
-          "mtime": 1784313972
+          "mtime": 1784400383
         },
         {
           "path": "state/system_status_card.json",
@@ -24269,14 +24524,19 @@
           "mtime": 1781597990
         },
         {
+          "path": "reports/nightwatch/nightwatch_2026-07-18.md",
+          "size": 2260,
+          "mtime": 1784364277
+        },
+        {
           "path": "reports/nightwatch/nightwatch_2026-06-02.md",
           "size": 1559,
           "mtime": 1781597990
         },
         {
           "path": "reports/nightwatch/latest.md",
-          "size": 1559,
-          "mtime": 1781597990
+          "size": 2260,
+          "mtime": 1784364277
         },
         {
           "path": "reports/audit/free_public_research_sources_2026-05-21.md",
@@ -24555,8 +24815,8 @@
         },
         {
           "path": "reviews/background_jobs_state.json",
-          "size": 12756,
-          "mtime": 1784315327
+          "size": 12536,
+          "mtime": 1784400789
         },
         {
           "path": "reviews/OPERATING-CULTURE-HANDBOOK-BACKPORT-20260526/dashboard_culture_decision_escalation_smoke.png",
@@ -26656,12 +26916,12 @@
         {
           "path": "reviews/AGENT-COMMAND-CENTER-20260526/command_status.md",
           "size": 13080,
-          "mtime": 1784313972
+          "mtime": 1784400383
         },
         {
           "path": "reviews/AGENT-COMMAND-CENTER-20260526/command_status.json",
           "size": 336448,
-          "mtime": 1784313972
+          "mtime": 1784400383
         },
         {
           "path": "reviews/AGENT-COMMAND-CENTER-20260526/open_source_agent_panel_scan_20260526.md",

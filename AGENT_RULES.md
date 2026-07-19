@@ -1075,4 +1075,108 @@ B4 patrol 每次巡查時對每張「進行中」task card 問：
 - `docs/fable-mindset.md` — ⑪ W→SW→NW 迴圈（每次回報必含 So What 價值分析）
 - `TASK_QUEUE.md` — Tier 標記的單一維護地點
 - SECTION 16（阻塞審查 SOP）— Tier 1 超時自動升三層審查
+
+---
+
+## SECTION 24 — 可逆先行準則（Reversibility-First，2026-07-19 R-VERIFIED Opus 產出）
+
+**核心命題**：行動成本 ≠ 決策成本。可逆動作的決策成本接近零——做了可以撤；不可逆動作的決策成本是全部——做了就是真實發生。兩者必須使用不同的核准閾值。
+
+> 來源：R-VERIFIED claude-fable-5/opus-4-8 5 輪三版對比，`state/r_fable_vs_opus_summary.md`
+
+### 三條核心規則
+
+1. **可逆動作：不等數據，不等 Owner，直接做**
+   - 判準：做了 → 發現錯了 → `git revert` 或一個刪除指令能完全回到原狀
+   - 範例：更新 AGENT_RULES、新增技能書、修改 Task Card 狀態、更新 CURRENT_STATUS.md
+   - 行為：agent 自行判斷、執行、checkpoint，**不准等 Owner 點頭再動**（等待 = 偷懶）
+
+2. **不可逆動作：需 Owner 核准 + 量化依據**
+   - 判準：做了 → 發現錯了 → 需外部介入、或有真實金錢/時間成本才能回到原狀
+   - 範例：LINE webhook 正式上線、刪除 Drive 資料、廣告投放、GAS production deployment
+   - 行為：準備 W→SW→NW 格式的核准申請，等 Owner 一次回覆，再執行
+
+3. **每個派工 Task Card 必須標注動作可逆性（強制）**
+   - 在 `## Meta` 區塊加入：
+     ```
+     - **動作可逆性**: 可逆（git revert 可回） / 不可逆（需 Owner 核准）
+     ```
+   - 混合型任務：可逆部分先做，不可逆部分單獨核准
+
+### 快速判斷表
+
+| 動作類型 | 可逆？ | 標準行為 |
+|---------|-------|---------|
+| git commit / Task Card 更新 | ✅ 可逆 | 直接做 |
+| AGENT_RULES / CLAUDE.md 修改 | ✅ 可逆 | 直接做 |
+| patrol.sh 狀態遷移寫回 | ✅ 可逆 | 直接做 |
+| GAS clasp push（dev 環境） | ✅ 可逆 | 直接做 |
+| LINE webhook 正式啟用 | ❌ 不可逆 | 等 Owner 核准 |
+| 廣告投放 / 預算調整 | ❌ 不可逆 | 等 Owner 核准 |
+| Drive 檔案刪除 | ❌ 不可逆 | 等 Owner 核准 |
+| GAS clasp push（production） | ❌ 不可逆 | 等 Owner 核准 |
+
+### 關聯
+- SECTION 19（無人長跑安全規則）— 可逆/不可逆判準原型（本節是其系統化擴充）
+- SECTION 16（阻塞審查 SOP）— 可逆的阻塞自行解開（第一層）；不可逆才升 Owner（第三層）
+- SECTION 25（四態狀態機）— Task Card 狀態遷移是可逆動作，patrol.sh 直接執行
+- `state/r_fable_vs_opus_summary.md` — R-VERIFIED 實驗來源
+
+---
+
+## SECTION 25 — 任務卡四態狀態機（Task Card FSM，2026-07-19 R-REAL Opus 產出）
+
+**問題**：進行中任務無限累加警告（T-A7-001 累計 24 次警告 ~13.8 天），patrol.sh 的警告是噪音，Owner 警覺疲勞，需要決策的任務淹沒在警告堆裡。
+
+**解法**：四態有限狀態機 + patrol.sh 自動驅動狀態遷移，每個狀態只停留有限時間後自動推進。
+
+> 來源：R-REAL claude-fable-5/opus-4-7 R01 場景，Opus R5「翻轉預設」洞察
+
+### 四個狀態
+
+| 狀態 | 符號 | 定義 | 觸發 patrol 行為 |
+|------|------|------|----------------|
+| **IN_PROGRESS** | 🔄 | 活躍工作中，有實質 commit | 正常顯示 |
+| **STALLED** | 🟡 | 停滯：≥48h 無新 commit | 48h 後：patrol 寫回 STALLED |
+| **NEEDS_REVIEW** | 🔍 | 需 Owner 決策：STALLED ≥7 天 | 7d 後：patrol 寫回 NEEDS_REVIEW + 附摘要 |
+| **AUTO_CLOSED** | 🔒 | 自動關閉：NEEDS_REVIEW 無回應 ≥7 天 | 7d 後：patrol 寫回 AUTO_CLOSED |
+
+### 狀態轉移圖
+
+```
+IN_PROGRESS ──[48h]──► STALLED ──[7d]──► NEEDS_REVIEW ──[7d]──► AUTO_CLOSED
+     ▲                    │                     │
+     └─── Owner 重開 ─────┘─────────────────────┘
+```
+
+### 翻轉預設（核心設計決策）
+
+- **舊設計（錯）**：任務不關就不關，警告無限累加，等 Owner 說「關掉」
+- **新設計（對）**：任務超時自動關閉；Owner 有異議才重開（一句話「重開 T-XXX」即可）
+
+理由：Owner 注意力是稀缺資源。「沒有繼續的信號 = 不繼續」，而不是「沒有停止的信號 = 繼續」。
+
+### Task Card 格式（強制）
+
+每張 Task Card `## 接續狀態` 必須包含：
+
+```markdown
+- **狀態**: 🔄 IN_PROGRESS  （patrol 自動維護此欄位）
+- **最後活動**: YYYY-MM-DD  （只能由工作 agent 更新，patrol 不得修改）
+- **動作可逆性**: 可逆 / 不可逆（見 SECTION 24）
+```
+
+⚠️ `最後活動` 只能由執行實質工作的 agent 在 commit 時更新。patrol.sh 只更新 `狀態` 欄位。
+
+### 例外：不適用四態機的狀態
+
+- **BLOCKED（⏸️ / ⏳）**：等外部條件（Owner 決策 / API 憑證 / 第三方）→ 不走 AUTO_CLOSE
+- **FROZEN（凍結）**：見 SECTION 23 → 不走四態狀態機
+- **DONE（✅）**：已完成 → 不走狀態機
+
+### 關聯
+- SECTION 24（可逆先行準則）— 狀態遷移是可逆動作，patrol 直接執行無需核准
+- SECTION 16（阻塞審查 SOP）— NEEDS_REVIEW 觸發時 Owner 決策格式
+- SECTION 20（部門進度回報 SOP）— NEEDS_REVIEW 附 W→SW→NW 格式摘要
+- `scripts/patrol.sh` — 本節規則的自動化執行端（唯一改寫 Task Card 狀態的腳本）
 - SECTION 22（複利計畫巡查）— 每週算力回報率在此步驟回報

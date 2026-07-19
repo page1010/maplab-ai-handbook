@@ -194,12 +194,12 @@ Week 4 (08-08): ██████████ ?/100   ← Layer 3 規則引擎�
 
 ### 四週 Phase 排程
 
-| Phase | 週期 | 目標 | 主要行動 | 驗收指標 | Owner 需決策？ |
-|-------|------|------|---------|---------|--------------|
-| **P1** | Week 1 (07-18~07-25) | 心跳可見 + escalation 修復 | `is_health_score.sh` + escalation_push + patrol 整合 | IS-HS 從 30 → 50+；昨日 5 條 WARNING 推到 Telegram | P0 escalation push = 需 Owner 確認 Telegram 推播格式 |
-| **P2** | Week 2 (07-25~08-01) | 每日微迭代啟動 + 財經早報改善 | 財經早報加可動性摘要；nightwatch 加 content quality gate | 每日早報第一行是「今天可不可以動」；P-2/P-4 backlog 完成 | 最小 |
-| **P3** | Week 3 (08-01~08-08) | investment_goals.md + 規則引擎完整 | Owner 填 goals v0；B1 接 escalation 到規則引擎 | investment_goals.md 存在且有 2 個 thesis；escalation SLA 縮到 24h | Owner 15 min 填 goals |
-| **P4** | Week 4 (08-08~08-15) | IS-HS > 70，進度可視化 | IS-HS 週趨勢跑 3 週；exposure_ledger 自動週算 | IS-HS ≥ 70；每週五有 IS 進度週報進入 patrol | 最小 |
+| Phase | 週期 | 目標 | 主要行動 | 驗收指標 | Owner 需決策？ | 進度 |
+|-------|------|------|---------|---------|--------------|------|
+| **P1** | Week 1 (07-18~07-25) | 心跳可見 + escalation 修復 | `is_health_score.sh` + escalation_push + patrol 整合 | IS-HS 從 30 → 50+；昨日 5 條 WARNING 推到 Telegram | P0 escalation push = 需 Owner 確認 Telegram 推播格式 | 🔄 **Layer 3 規則引擎提前落地（2026-07-18）**：`scripts/is_rules_gate.sh` 建立（SOP1=10%/SOP2=15%/槓桿=1.5x/日跌幅=-3%）；現值實測 5 條違規（TSLA/3296/US tech/WFE）推播 Telegram ✅；下一步：escalation_push 補完 + IS-HS patrol 整合 |
+| **P2** | Week 2 (07-25~08-01) | 每日微迭代啟動 + 財經早報改善 | 財經早報加可動性摘要；nightwatch 加 content quality gate | 每日早報第一行是「今天可不可以動」；P-2/P-4 backlog 完成 | 最小 | 🔲 待啟動 |
+| **P3** | Week 3 (08-01~08-08) | investment_goals.md + 規則引擎完整 | Owner 填 goals v0；B1 接 escalation 到規則引擎 | investment_goals.md 存在且有 2 個 thesis；escalation SLA 縮到 24h | Owner 15 min 填 goals | 🔲 待啟動 |
+| **P4** | Week 4 (08-08~08-15) | IS-HS > 70，進度可視化 | IS-HS 週趨勢跑 3 週；exposure_ledger 自動週算 | IS-HS ≥ 70；每週五有 IS 進度週報進入 patrol | 最小 | 🔲 待啟動 |
 
 ---
 
@@ -235,6 +235,58 @@ Week 4 (08-08): ██████████ ?/100   ← Layer 3 規則引擎�
 
 ---
 
+## 週度投資提案簡報（固定產出，2026-07-18 制度化）
+
+**起源**：2026-07-18 Owner 檢討「股票系統沒有提案也沒有新幫助」→ IS 從警報器升級為提案幕僚。
+**第一份實品**：`workbook/reviews/JOB-IS-PROPOSAL-BRIEF-20260718/`
+
+### 產出規格
+
+| 項目 | 規格 |
+|------|------|
+| 產出時間 | 每週日（AI 自動，A1 整合把關）|
+| 發布時間 | 週一例會前 |
+| 儲存位置 | `workbook/reviews/JOB-IS-PROPOSAL-BRIEF-YYYYMMDD/` |
+| 精華版 | `state/is_brief_YYYYMMDD.md`（A0 轉發用）|
+| 回流指標 | Owner 每週打開並回應次數（A1 追蹤）|
+
+### 三固定章節
+
+**1a 候選檢核卡**（3-5 張）
+- 來源：system_status_card 四主線候選（資金流/第一根/動能/新聞）
+- 格式：L1 世界觀 → L2 產業結構 → L3 基本面 → L4 技術/籌碼，逐層判斷
+- 結論語：「值不值得你花 10 分鐘看」——不說買賣
+- 不確定的地方明確標 `[需補]` 或 `[需即時確認]`
+
+**1b 持倉論點健康**
+- 針對死亡清單持倉（當前：AMAT/CAMT/MKSI + TSLA/勝德）
+- 格式：「原始持有論點 vs 現在訊號」對照表 + 修正後論點是否仍成立的證據清單
+- 結論：開放給 Owner，不給結論
+
+**1c 集中度選項卡**（若出現新的集中度警告）
+- 格式：三路徑（維持/分散/對沖）× 後果 × Owner 規則對應
+- 等 Owner 一句話，不預設哪條路對
+
+### 品質門檻
+
+- 每張卡：W（What 數字來源）→ SW（對 Owner 決策的意義）→ NW（一個明確問題給 Owner）
+- 不在卡裡假設 Owner 的決策
+- 數據超過 5 天必須標資料新鮮度
+- 紅線：任何「應該買」「應該賣」的字樣均不得出現
+
+### 追蹤指標
+
+| 指標 | 目標 | 追蹤方式 |
+|------|------|---------|
+| 每週產出率 | 100%（週日前完成）| A1 巡查 commit 確認 |
+| Owner 打開率 | 目標 > 3 次/月 | A0/A1 記錄 Owner 回覆 |
+| Owner 回應率 | 目標 > 2 次/月 | 回覆任何章節的問題 |
+| 資料新鮮度 | L4 數據不超過 7 天 | 需啟動每週 system_status_card 更新 |
+
+> 制度化起點：2026-07-18（第一份）。下一份：2026-07-27（週日）。
+
+---
+
 ## 例會格式週報（模板）
 
 每週五 A1 例會回報格式：
@@ -243,6 +295,11 @@ Week 4 (08-08): ██████████ ?/100   ← Layer 3 規則引擎�
 【IS 週報 2026-W??】
 IS-HS: ??/100（↑/↓ from last week ??）
   - 資料新鮮度: ??% | 警報通暢度: ??% | 決策速度: ??% | 覆盤: ??%
+
+📋 本週投資提案簡報：state/is_brief_YYYYMMDD.md
+  - 候選亮點：[標的] — [一句話]
+  - 持倉健康：[最緊迫的一個問題]
+  - Owner 回應次數（本週）：?
 
 本週完成（可自主）:
   - [P?] 項目名稱 — 驗收證據（commit hash / log）

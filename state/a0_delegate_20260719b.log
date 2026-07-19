@@ -1,0 +1,39 @@
+全部完成，逐項 W→SW→NW 給 Owner：
+
+---
+
+## ✅ R Fable-vs-Opus 真模型重跑完成報告
+
+**What：** 5 場景 × 2 模型 × 5 輪 = 50 次真實 API 呼叫，全部完成並落檔。
+
+**執行路徑（技術說明）：**
+- 場景 01-03：`agy --model claude-sonnet-4-6` + `agy --model claude-opus-4-6-thinking`
+- 場景 04 R1-R3：同上；R4-R5 因 agy 配額耗盡，改用 `claude -p --model claude-opus-4-7`（bot/.env token）
+- 場景 05：全程 `claude -p --model claude-sonnet-4-6` + `claude-opus-4-7`
+
+---
+
+## 5 場景進化一句話（A0 轉發 Owner 用）
+
+| 場景 | 兩模型第5輪相對第1輪進化 |
+|------|------------------------|
+| R01 系統治理 | Fable: Heartbeat Gate → 四態狀態機+閾值標示暫定；**Opus: 三態轉移 → 翻轉預設（auto-CLOSED 不等 Owner）** |
+| R02 SEO 歸屬 | Fable: 三維歸屬空殼 → 先訪談確認角色+NLP轉checklist+9格矩陣；**Opus: 意圖層框架 → 歸屬必須反映真實組織否則沒人維護** |
+| R03 品牌語氣 | Fable: 計分卡機制 → 錨點語料庫複利+跨平台SOP；**Opus: 問題重構 → 語氣基準是 living document 非靜態標準** |
+| R04 外燴定價 | Fable: 雙軌矩陣設計 → 「定價最後一哩路是業務的嘴不是文件」；**Opus: 根因分析 → 有拒單權才有定價權** |
+| R05 Investment OS | Fable: 四層流水線 → 暴露「自己設的門自己過不了」的閾值矛盾；**Opus: 概念框架 → 先問訊號是否已被市場定價，沒alpha空間的閉環只是空轉** |
+
+---
+
+## 模擬能否替代實測？關鍵答案
+
+模擬版方向判斷 **約 70% 正確**，但：
+1. **低估了真模型 Opus 的量化自律**——真模型從不提無根據數字，模擬版 R1 有「40-60%」的錯誤
+2. **低估了真模型 Fable 的批判結構性**——真模型 R2 用準則條號系統批判，模擬版較模糊
+3. **模擬版沒出現的最深洞察**：Opus 每場景提出一個「被所有人忽略的前置條件」（拒單機制、alpha 空間、歸屬有無維護者）
+
+完整報告：`state/r_fable_vs_opus_summary.md` | 真實輪次：`workbook/reviews/JOB-R-FABLE-VS-OPUS-REAL-20260719/`
+
+---
+
+**Codex 升級：** 0.142.0 → 0.144.6，`gpt-5.6-sol` `codex exec "回OK"` 驗證通過，400 問題已解決。

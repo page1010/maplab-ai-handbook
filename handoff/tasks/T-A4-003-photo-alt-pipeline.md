@@ -1,7 +1,7 @@
 # T-A4-003 — 照片 ALT/SEO 管線（地端 gemma4）+ Drive 改串流釋空間
 
 ## 接續狀態
-- **狀態**: 🔄 進行中（管線已驗證可跑，背景批次處理中）
+- **狀態**: 🟡 STALLED（since 2026-07-19，48h 無 commit，Owner 可更新最後活動解除）
 - **最後活動**: 2026-06-11
 - **接續點**: 等 36,676 張處理完 → Owner 改 Drive 串流 → 釋出 ~433GB
 - **阻塞**: launchd 排程需 Owner 跑一次 `launchctl load`（見下）

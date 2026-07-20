@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-07-19（remote session 手動同步，非 checkpoint.sh——該腳本路徑寫死 `/Users/pagemacmini/...`，在 remote 沙盒不適用）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-07-20 00:07（patrol.sh A1巡查，Mac mini）｜2026-07-19 另有 remote session 手動同步一筆（該 session 無法跑 checkpoint.sh，路徑寫死 `/Users/pagemacmini/...`）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 

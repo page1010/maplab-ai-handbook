@@ -560,8 +560,8 @@ repo: https://github.com/page1010/maplab-ai-handbook
 4. 進件建立 — 在 SALES_INTAKE 自動建一筆案件（case_id = CASE-YYYYMMDD-NNN）
 5. 查報價 — 「查XXX的報價」→ 找 QUOTE_WORKBENCH
 
-【斷點 — 2026-07-08 A1每日巡查更新】
-T-A6-001 🔄 進行中（有新活動，bot 正常運行）：
+【斷點 — 2026-07-19 A1晚間巡查更新】
+T-A6-001 🟡 STALLED（~299h，last `ed63f97` 07-08，bot 線上，LINE webhook 待 Owner 接入）：
 07-07 fix(a6) `e5ab867`：收緊 Telegram 路由（takeover handoff 優化）
 07-08 `ed63f97`：A6 401 健檢（結論：無影響，claude_ask()/codex路由皆 dead code）+ SEO 進度回報迴路根因修復，新增 notify_owner.sh + checkpoint --notify flag
 07-06 大更新：Codex-first 聊天路由、三層降載鏈設計（骨架未接線）、A6 LLM backend adapter spec
@@ -618,12 +618,12 @@ repo: https://github.com/page1010/maplab-ai-handbook
 - 把對話往報價與成交推進
 - 應對情境：詢價、日期確認、活動形式建議、菜單推薦、場地份量、包材客製、急件判斷
 
-【斷點 — 2026-07-13 A1每日巡查更新（修正04-20過時斷點，補入07-06政策落地）】
+【斷點 — 2026-07-20 A1每日巡查更新（修正07-13頭部日期，內容含07-18資料不變）】
 T-A7-001 AI 回覆系統：
   - Phase 1 ✅ 完成（679cda6 + b53a1cc）：FAQ模板庫 + 補問流程 + 客戶分類標籤
   - Phase 2 v2.0 ✅ 完成（aea3094）：Q1-Q10重構，真實CSV驅動
   - ✅ 2026-07-06 Owner 政策落地（Q7 不提供試吃；Q10 不可抗力可改期不收費、客戶單方取消酌收備料費）已寫入 data/a7-reply-templates.md + Task Cards
-  - 目前狀態：🔄 Phase 3 NOW-ready（等 Owner 授權 Mina 實際使用 data/a7-reply-templates.md 測試）
+  - 目前狀態：⏳ 等 A5 外送費級距 Owner 確認後 07-25 Phase 3 啟動
   - ⏳ 2026-07-18（23:30）：外送費級距草案建立（Zone A-E）；Q5 串入快查表；Owner 確認金額後 07-25 Phase 3 啟動
   - 阻塞收斂：等 Owner 確認 Zone B/C 金額（state/owner_delivery_fee_confirm_20260718f.md，30秒）
 T-A7-002 80/20 任務清單：⏸️ 阻塞（任務1/2/3 需 LINE bot 後台權限；任務5/8 需 TimeTree 權限；任務9 ✅ 已解除）
@@ -644,7 +644,7 @@ projects/ai-reply-system.md → skills/superpowers-guide.md → docs/fable-minds
 
 ## A8｜影音內容產線（Content Repurposing Pipeline）
 
-**狀態：⚠️ T-A8-001 持續超 48h（~271.6h/~11.3天，last `1a2d752` 06-25 08:25，awaiting Owner storyboard review；2026-07-06 午後更新）**
+**狀態：🟡 T-A8-001 STALLED（~576h/~24天，last `1a2d752` 06-25 08:25，awaiting Owner storyboard review；2026-07-19 晚間巡查更新）**
 
 ```
 你是 MAPLAB A8 影音內容產線（Content Repurposing Pipeline）。
@@ -670,8 +670,8 @@ repo: https://github.com/page1010/maplab-ai-handbook
 
 【工具鏈】NotebookLM、Gemini 2.5 Flash（免費額度）、Google Vids、YouTube Studio、Google Drive
 
-【斷點 — 2026-07-06 A1每日巡查更新】
-T-A8-001 🔄 ACTIVE（⚠️ 已超 48h，~263.6h/~11.0天，awaiting Owner storyboard review）：
+【斷點 — 2026-07-19 A1晚間巡查更新】
+T-A8-001 🟡 STALLED（~576h/~24天，awaiting Owner storyboard review）：
 06-25 08:25 最新：1a2d752 squash merge a8/video-checklist-mvp — completed-videos tracker + iteration rubric + scan script
 06-20 20:56 地端動態運鏡整合（f9d1c42）：ffmpeg zoompan dolly_in/out/pan_left/pan_right/static，零成本地端模擬動態運鏡。
 MAPLAB IG Soft v1 style（暖色/低對比/柔和 xfade）+ 企業茶會 CTA 固定模板已就位。

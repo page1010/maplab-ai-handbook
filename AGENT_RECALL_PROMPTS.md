@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-07-20 午後巡查（A1）：all clear — 8h 僅 1 launchd auto-fix commit（Tier-A 自動維護，非 A2-A8 agent 活動）；零 A2-A8 新 commit（正常，無 Owner 派工）；無新異常，狀態與 CURRENT_STATUS.md 一致；CRITICAL 持續: T-A4-002 ~2231h+ / T-IOS-KOL-001 ~719h+；T-A7-001 ⏳ 07-25 Phase 3 里程碑倒數 5 天（Owner 待確認 Zone B NT$2,000? / Zone C NT$2,500?）；角色總覽各行已於晨間巡查更新，午後複核無變動
+> 最後更新：2026-07-20 22:00 晚間巡查（A1）：all clear — 8h 僅 1 commit（午後 patrol bfcc357，all clear）；零 A2-A8 新 commit（正常，無 Owner 派工）；無新異常，狀態與 CURRENT_STATUS.md 一致；CRITICAL 持續: T-A4-002 ~2231h+ / T-IOS-KOL-001 ~719h+；⚠️ T-A7-001 07-25 Phase 3 里程碑倒數 5 天，Owner 待確認 Zone B（NT$2,000?）/ Zone C（NT$2,500?）
 >
 > 使用方式：選擇角色 → 複製 prompt / module handoff → 貼到 Gemini / Codex / OpenClaw / legacy Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令

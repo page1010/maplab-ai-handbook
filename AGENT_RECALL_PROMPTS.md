@@ -618,12 +618,12 @@ repo: https://github.com/page1010/maplab-ai-handbook
 - 把對話往報價與成交推進
 - 應對情境：詢價、日期確認、活動形式建議、菜單推薦、場地份量、包材客製、急件判斷
 
-【斷點 — 2026-07-13 A1每日巡查更新（修正04-20過時斷點，補入07-06政策落地）】
+【斷點 — 2026-07-20 A1每日巡查更新（修正07-13頭部日期，內容含07-18資料不變）】
 T-A7-001 AI 回覆系統：
   - Phase 1 ✅ 完成（679cda6 + b53a1cc）：FAQ模板庫 + 補問流程 + 客戶分類標籤
   - Phase 2 v2.0 ✅ 完成（aea3094）：Q1-Q10重構，真實CSV驅動
   - ✅ 2026-07-06 Owner 政策落地（Q7 不提供試吃；Q10 不可抗力可改期不收費、客戶單方取消酌收備料費）已寫入 data/a7-reply-templates.md + Task Cards
-  - 目前狀態：🔄 Phase 3 NOW-ready（等 Owner 授權 Mina 實際使用 data/a7-reply-templates.md 測試）
+  - 目前狀態：⏳ 等 A5 外送費級距 Owner 確認後 07-25 Phase 3 啟動
   - ⏳ 2026-07-18（23:30）：外送費級距草案建立（Zone A-E）；Q5 串入快查表；Owner 確認金額後 07-25 Phase 3 啟動
   - 阻塞收斂：等 Owner 確認 Zone B/C 金額（state/owner_delivery_fee_confirm_20260718f.md，30秒）
 T-A7-002 80/20 任務清單：⏸️ 阻塞（任務1/2/3 需 LINE bot 後台權限；任務5/8 需 TimeTree 權限；任務9 ✅ 已解除）

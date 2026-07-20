@@ -14,6 +14,7 @@
 | **B3 廣告試跑點火** — B3-ADCOPY | B3 | ⏸️ 等 Owner 操作 | 操作稿已備 `docs/runbooks/2026-07-07-b3-trial-launch-stepbystep.md`，Owner 在 Meta Ads Manager（帳號 318634712）建立受眾包即可啟動 | ✋ 需 Owner 登入 Meta Ads Manager，無 API，需人工建立冷層受眾包 |
 | **IS 規則引擎核准包** — IS-Layer3 | B1 | ⏸️ 等 Owner 確認 4 參數 | 規則引擎本體已跑（5 條 WARNING 在 escalation_queue），只差 Owner 確認門檻參數 → B1 建 escalation_push.sh | ✋ 需 Owner 確認：SOP1 主題集中度上限（草稿 10%）、SOP2 單標的上限（草稿 15%）、槓桿警戒線（草稿 1.5x）、日跌幅急性警示（草稿未定義） |
 | **A7 Phase 3 上線授權** — T-A7-001 | A7 | 🔴 CRITICAL（~323h，第 23 次警告） | 模板庫完整可用，等 Owner 授權 Mina 開始用 `data/a7-reply-templates.md` 接真實 LINE 對話 | ✋ Owner 三選一：A. 立即授權啟動（Q5 外送費手動補）；B. 先等 A5 建外送費級距（下輪 A5 任務）；C. 暫停 Phase 3（接受現有損耗）|
+| **A2 廣告現況巡查 + 關鍵字/行銷規劃** — T-A2-006 | A2 | 🟢 不再等 MCP token | 走 `skills/ad-platform-browser-check.md`（瀏覽器唯讀巡查 Meta/Google Ads 現況：活動/受眾/素材），彙整結果餵進關鍵字與行銷整體規劃 | 無（唯讀巡查不需 Owner 操作，需在有 Chrome MCP 的環境如 Mac mini/Cowork 執行） |
 
 **So What（Tier 1 空轉成本估算）**：
 - A6 ~275h × 每日 3-5 則 LINE 詢問 = 估計 50+ 則真實業務對話未被 bot 學習
@@ -43,7 +44,6 @@
 |------|---------|---------|
 | T-A2-002 foodsafety post 698 改法 | 等 Owner 決定改法，現有自動防護已上 | Owner 決定「無麩質 FAQ」答案改法 |
 | T-A2-003 weekly WP audit 排程 | 等 Owner 建排程 | Owner 執行 `launchctl load` |
-| T-A2-006 Ads/SEO patrol Meta/Google token | MCP token 過期 | Owner 重授權 Meta/Google MCP |
 | T-A6-002 LINE 訓練資料收集 | 方向未定，依賴 T-A6-001 先上線 | A6 LINE webhook 上線後重評 |
 | T-GBP-001 GBP 新圖 | 等 Owner 準備新圖 | Owner 提供新照片 |
 | T-A5-002/T-A5-007 Codex 接手 | awaiting Owner 驗證 ~472h | Owner review Codex 輸出 |

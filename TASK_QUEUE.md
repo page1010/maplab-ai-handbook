@@ -49,6 +49,7 @@
 | T-A5-002/T-A5-007 Codex 接手 | awaiting Owner 驗證 ~472h | Owner review Codex 輸出 |
 | A8 影音上傳（IG/YouTube） | 等 Owner/A1 approval | Owner 核准 review draft |
 | Investment OS B3 Archivist 例行維護 | B2-B4 由 Ollama 接手，Claude 待 escalation | Ollama 地端跑不動才 escalate |
+| Antigravity ExecutionLease/Ontology 提案（`docs/governance/antigravity-execution-lease-ontology-v0.1.md`） | ①需 Codex 確認原始設計是否已存檔 ②agy sandbox 唯讀保證未驗證（`skills/codex-offload-guide.md` 2026-07-06 缺口至今未關）③是否擴大 Antigravity 角色屬於一次性升格決定，需 Owner 明確核准 | Codex 存檔原始設計 + agy sandbox 驗證通過 + Owner 對角色升格拍板 |
 
 ---
 

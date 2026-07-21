@@ -2,9 +2,9 @@
 
 ## 接續狀態
 - **狀態**: 🟢 ACTIVE
-- **最後活動**: 2026-06-15
-- **接續點**: ICCTN 案例文（post 1829）已上線，QA PASS_WITH_NOTES。下一步：A3 接手 Google Ads final URL + 受眾與否定字驗收；可補第 6 張以上圖片。
-- **阻塞**: Meta/Google MCP token 過期，需 Owner 重授權。
+- **最後活動**: 2026-07-20
+- **接續點**: ICCTN 案例文（post 1829）已上線，QA PASS_WITH_NOTES。下一步：A3 接手 Google Ads final URL + 受眾與否定字驗收；可補第 6 張以上圖片。廣告現況巡查（跑什麼活動/受眾/素材）改走 `skills/ad-platform-browser-check.md`（瀏覽器唯讀巡查），不再等 MCP token 重授權才能開始查。
+- **阻塞**: 無（唯讀巡查已解鎖，見上）。精確報表/程式化操作仍需 Meta/Google MCP token（已過期，需 Owner 重授權才能用那條路）。
 
 建立：2026-05-29
 負責：A2 / A1 governance

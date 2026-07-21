@@ -1,0 +1,22 @@
+{
+  "generated_at": "2026-07-19",
+  "harness": "local_model_evolution/bin/eval_harness.py",
+  "eval_sets": [
+    {
+      "curriculum": "investment-report-current-state",
+      "eval_cases": "local_model_evolution/curricula/investment-report-current-state/evals/eval_cases.jsonl",
+      "count": 24,
+      "categories": ["ticker_isolation", "period_isolation", "stale_source_handling", "unsupported_number_claims", "decision_card_completeness", "missing_data_decline_to_guess"],
+      "real_model_baseline_status": "blocked_no_ollama_in_sandbox",
+      "harness_selftest": "local_model_evolution/evals/harness_selftest_investment_report.json"
+    },
+    {
+      "curriculum": "seo-ranking-keyword",
+      "eval_cases": "local_model_evolution/curricula/seo-ranking-keyword/evals/eval_cases.jsonl",
+      "count": 24,
+      "categories": ["keyword_page_mapping", "ranking_timestamp_completeness", "cannibalization_detection", "historical_vs_today", "destructive_action_gating", "action_card_completeness"],
+      "real_model_baseline_status": "blocked_no_ollama_in_sandbox",
+      "harness_selftest": "local_model_evolution/evals/harness_selftest_seo_report.json"
+    }
+  ]
+}

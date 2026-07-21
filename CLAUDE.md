@@ -85,6 +85,11 @@ git log --oneline -5
 2. MCP 不可用 → 讀 `skills/credentials/` 對應技能書，用 curl + OAuth token
 3. 都不行 → 回報 Owner，不要硬幹
 
+⚠️ **例外（2026-07-20 Owner 指定）**：Google Ads / Meta Ads 的**唯讀狀態查詢**（現在跑什麼活動、受眾、
+素材、大概花費）不適用上面的優先序——改用 `skills/ad-platform-browser-check.md`（瀏覽器既有登入態 +
+截圖分析），不要因為想要一份結構化數字就去申請/維護會定期過期的 API 通行證。API/MCP 只留給精確報表、
+批量資料或程式化操作（見該技能書 §4）。完整原則見 `docs/company-values.md` 七、憑證選型。
+
 ⚠️ 無法用程式碼解決、或溝通比寫程式快 → 透過 A0 溝通讓他處理
 ⚠️ 此 prompt 請貼到 [Cowork / 終端機 Claude Code]，不是 Chrome 側邊欄
 

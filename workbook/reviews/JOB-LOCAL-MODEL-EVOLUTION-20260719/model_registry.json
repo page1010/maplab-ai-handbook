@@ -1,0 +1,36 @@
+{
+  "schema_version": "0.1",
+  "note": "第一輪沒有任何候選模型/adapter 通過 baseline 門檻，registry 目前是空骨架。禁止在沒有 baseline + 固定 eval + rollback 前建立 candidate 條目。",
+  "candidate_states": [
+    "created", "dataset_ready", "baseline_complete", "candidate_trained_or_configured",
+    "eval_passed", "shadow_running", "approved", "promoted"
+  ],
+  "exception_states": [
+    "rejected", "regressed", "unsafe", "stale_dataset", "rights_blocked",
+    "insufficient_data", "rolled_back"
+  ],
+  "candidate_schema": {
+    "candidate_id": "string",
+    "curriculum": "string — e.g. investment-report-current-state",
+    "base_model": "string — e.g. ollama/qwen2.5:14b (must match model-tier-policy.md T3 row)",
+    "change_type": "prompt | skill | metadata_filter | tool_routing | deterministic_validator | rag_index | lora_adapter",
+    "state": "one of candidate_states or exception_states",
+    "baseline_eval_ref": "path to baseline_report.md run this candidate is compared against",
+    "eval_result_ref": "path to eval run output",
+    "regression_check": {
+      "critical_safety_errors_increased": null,
+      "ticker_period_source_contamination": null,
+      "seo_destructive_action_count": null,
+      "score_delta_pct": null,
+      "cost_or_time_delta_pct": null
+    },
+    "verifier": "role or model that reviewed this candidate, must differ from the model that produced it",
+    "shadow_run_ref": null,
+    "owner_approval": null,
+    "created_at": null,
+    "promoted_at": null,
+    "rolled_back_at": null,
+    "rollback_reason": null
+  },
+  "candidates": []
+}

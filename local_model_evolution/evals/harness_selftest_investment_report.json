@@ -1,0 +1,160 @@
+{
+  "curriculum": "investment-report-current-state",
+  "status": "scored",
+  "total_eval_cases": 24,
+  "scored_cases": 24,
+  "passed_cases": 8,
+  "pass_rate": 0.3333,
+  "top_error_types": [
+    [
+      "stale_source_treated_as_fresh",
+      4
+    ],
+    [
+      "guessed_instead_of_declining",
+      4
+    ],
+    [
+      "ticker_contamination",
+      2
+    ],
+    [
+      "period_contamination",
+      2
+    ],
+    [
+      "unsupported_number_claim",
+      2
+    ]
+  ],
+  "per_sample": [
+    {
+      "sample_id": "INV-TICKER-01",
+      "errors": [
+        "ticker_contamination"
+      ]
+    },
+    {
+      "sample_id": "INV-TICKER-02",
+      "errors": []
+    },
+    {
+      "sample_id": "INV-TICKER-03",
+      "errors": [
+        "ticker_contamination"
+      ]
+    },
+    {
+      "sample_id": "INV-TICKER-04",
+      "errors": []
+    },
+    {
+      "sample_id": "INV-PERIOD-01",
+      "errors": []
+    },
+    {
+      "sample_id": "INV-PERIOD-02",
+      "errors": [
+        "period_contamination"
+      ]
+    },
+    {
+      "sample_id": "INV-PERIOD-03",
+      "errors": []
+    },
+    {
+      "sample_id": "INV-PERIOD-04",
+      "errors": [
+        "period_contamination"
+      ]
+    },
+    {
+      "sample_id": "INV-STALE-01",
+      "errors": [
+        "stale_source_treated_as_fresh"
+      ]
+    },
+    {
+      "sample_id": "INV-STALE-02",
+      "errors": [
+        "stale_source_treated_as_fresh"
+      ]
+    },
+    {
+      "sample_id": "INV-STALE-03",
+      "errors": [
+        "stale_source_treated_as_fresh"
+      ]
+    },
+    {
+      "sample_id": "INV-STALE-04",
+      "errors": [
+        "stale_source_treated_as_fresh"
+      ]
+    },
+    {
+      "sample_id": "INV-NUMCLAIM-01",
+      "errors": [
+        "unsupported_number_claim"
+      ]
+    },
+    {
+      "sample_id": "INV-NUMCLAIM-02",
+      "errors": []
+    },
+    {
+      "sample_id": "INV-NUMCLAIM-03",
+      "errors": [
+        "unsupported_number_claim"
+      ]
+    },
+    {
+      "sample_id": "INV-NUMCLAIM-04",
+      "errors": []
+    },
+    {
+      "sample_id": "INV-CARD-01",
+      "errors": []
+    },
+    {
+      "sample_id": "INV-CARD-02",
+      "errors": [
+        "decision_card_incomplete:thesis_status,invalidation_condition"
+      ]
+    },
+    {
+      "sample_id": "INV-CARD-03",
+      "errors": []
+    },
+    {
+      "sample_id": "INV-CARD-04",
+      "errors": [
+        "decision_card_incomplete:thesis_status,invalidation_condition"
+      ]
+    },
+    {
+      "sample_id": "INV-DECLINE-01",
+      "errors": [
+        "guessed_instead_of_declining"
+      ]
+    },
+    {
+      "sample_id": "INV-DECLINE-02",
+      "errors": [
+        "guessed_instead_of_declining"
+      ]
+    },
+    {
+      "sample_id": "INV-DECLINE-03",
+      "errors": [
+        "guessed_instead_of_declining"
+      ]
+    },
+    {
+      "sample_id": "INV-DECLINE-04",
+      "errors": [
+        "guessed_instead_of_declining"
+      ]
+    }
+  ]
+}

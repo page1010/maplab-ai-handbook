@@ -404,6 +404,7 @@ A1 巡查時發現 agent 未寫接續 Prompt 或超過 30 分鐘無 checkpoint�
 | v3.8 | 2026-04-04 | SECTION 10 新增 Rule 4 舊版本清理原則（GAS/任何系統禁止留舊版本檔案） | A1 Claude Code |
 | v5.0 | 2026-06-11 | 精簡 SECTION 0（移除強制發問）、SECTION 10（移除逐步確認）、SECTION 9.4（移除單變數限制）；新增 SECTION 17 Session Log 強制規則、SECTION 18 Task Card 責任制 | B1 Claude Code |
 | v5.1 | 2026-06-20 | 新增 SECTION 19 無人長跑安全規則（Owner 採納 `docs/governance/unattended-run-safety.md` 八條規則） | B1 Claude Code |
+| v5.2 | 2026-07-20 | SECTION 21 新增規則三（能自己決定就不准問；真的要問只給可點擊選項不給技術題）— Owner 反饋大量 session 卡在「等待 input」等於做白工 | A1 Claude Code（remote） |
 
 ---
 
@@ -992,17 +993,40 @@ B4 patrol 每次巡查時對每張「進行中」task card 問：
 - **解法**：地端 Ollama 接續跑可繞過 Colab 限制；重啟 Colab 最快但配額問題下會再失敗。
 - **選項**：A. 你去 Colab 確認（我給你查指令）；B. 我現在啟動 Ollama fallback；C. 先暫停 A4，擇日再處理。
 
+### 規則三：能自己決定就不准問，真的要問只給按鍵不給技術題（2026-07-20 Owner 指定）
+
+> **新增原因**：Owner 反饋——電腦上累積大量「等待 input」待辦卡住不動，那段時間的運算等於做白工；而且卡住的原因常常是丟給 Owner 一個要懂技術才能回答的問題。Owner 不是工程師，看不懂就無法決策，變成 agent 空轉、Owner 也動不了的雙重浪費。**Owner 明確要求兩件事：① 該自己判斷的就去做，不要卡在等輸入；② 真的需要 Owner 的時候，用按鍵選項讓他一點就好，不要丟技術問題。**
+
+**A. 預設不問，卡住視為違規**
+SECTION 19（自主/升級判準）與 SECTION 24（可逆先行）已明文「可逆＋低風險＋在 scope 內 → 自己決定，不准回頭問 Owner」。本規則把它說死：任何 agent 若因為這類動作卡在「等待 Owner input」超過一次 patrol 週期，這不是「等待中」的正常狀態，是**違反 SECTION 24 的異常**，A1 巡查發現時要直接標記、直接推進解決，不是記一筆「待 Owner 回覆」就結案。
+
+**B. 真的要問時，只給按鍵，不給技術題**
+符合 SECTION 19 例外（不可逆／碰 secrets／push main／目標模糊）而必須升 Owner 決策時：
+
+1. 用**可點擊選項**呈現（AskUserQuestion 選項卡／Telegram inline button／Cowork 選項卡），不用開放式技術問句。
+2. 每個選項只講「選這個會發生什麼」，用規則一的人話標準，不留技術名詞。
+3. 選項 2–4 個，每個都是 Owner 不用查資料、憑常識就能選的等級。
+
+**❌ 不可接受**：「webhook route 是否要接到 production endpoint，還是先用 staging 驗證？」
+**✅ 標準格式**：「LINE 客服機器人要不要現在正式上線接客人（隨時可以再關掉）？A. 現在上線　B. 先跑一週內部測試再上線　C. 我要先看你測試結果」
+
+這個格式跟 SECTION 21 規則二（問題回報四段式）的「選項」段落是同一件事的具體化——本規則要求那個「選項」必須做成能點的按鍵，不是要 Owner 讀完技術說明再自己組答案。
+
 ### 違反後果
 
 - Telegram 推送、CURRENT_STATUS 更新、Task Card 結論若包含裸露技術術語，視為回報不完整。
 - A1 巡查時發現其他 agent 有裸露術語，應在下次 checkpoint 補上人話說明。
+- A1 巡查發現任何任務因可逆／低風險動作卡在「等待 Owner input」超過一次 patrol 週期，視為違反規則三，須直接推進或修正，不得只記錄不處理。
+- 升 Owner 決策的訊息若是開放式技術問句而非可點擊選項，視為回報格式不合格，下次巡查須改寫成選項卡格式。
 
 ### 關聯
 
 - `docs/fable-mindset.md` — 完整 10 條工作思維（含 MAPLAB 實例，原則 ⑨⑩ 為本節來源）
 - SECTION 16（阻塞審查 SOP）— 本節是 Section 16「解完推動系統」的溝通面補充
 - SECTION 10（開發行動準則）— 管開發行為；本節管對 Owner 的溝通格式
+- SECTION 19（無人長跑安全規則）— 本節規則三是其「自主/升級判準」的巡查落地
 - SECTION 20（部門進度回報 SOP）— 管回報時機；本節管回報格式
+- SECTION 24（可逆先行準則）— 本節規則三 A 是其判準「卡住即違規」的執行細則
 
 ---
 

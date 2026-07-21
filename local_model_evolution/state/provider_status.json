@@ -1,0 +1,147 @@
+{
+  "generated_by": "quota_sentinel.py dry-run",
+  "generated_note": "此輪在 A1 remote 沙盒（非 Mac mini runtime）執行，CLI health 結果反映沙盒環境，不代表 Mac mini 實際訂閱狀態。正式訊號需在 Mac mini 上重跑本腳本。",
+  "safe_reserve_ratio": 0.15,
+  "providers": [
+    {
+      "provider": "claude",
+      "surface": "subscription_cli",
+      "source": "authenticated_cli_health",
+      "confidence": "estimated",
+      "window_start": null,
+      "window_end": null,
+      "reset_timezone": "unknown",
+      "limit_unit": "unknown",
+      "limit": null,
+      "used": null,
+      "remaining": null,
+      "remaining_ratio": null,
+      "last_success": null,
+      "status": "available",
+      "evidence": [
+        "`claude --version` exit=0"
+      ],
+      "safe_reserve_ratio": 0.15
+    },
+    {
+      "provider": "claude",
+      "surface": "api",
+      "source": "official_api",
+      "confidence": "unknown",
+      "window_start": null,
+      "window_end": null,
+      "reset_timezone": "unknown",
+      "limit_unit": "unknown",
+      "limit": null,
+      "used": null,
+      "remaining": null,
+      "remaining_ratio": null,
+      "last_success": null,
+      "status": "blocked_by_policy",
+      "evidence": [
+        "Anthropic API organization usage report 需要 metered admin key。model-tier-policy.md §0 預設禁止；只有 Owner 書面核准 + 預算上限才可臨時使用。"
+      ],
+      "safe_reserve_ratio": 0.15
+    },
+    {
+      "provider": "openai_codex",
+      "surface": "subscription_cli",
+      "source": "authenticated_cli_health",
+      "confidence": "unknown",
+      "window_start": null,
+      "window_end": null,
+      "reset_timezone": "unknown",
+      "limit_unit": "unknown",
+      "limit": null,
+      "used": null,
+      "remaining": null,
+      "remaining_ratio": null,
+      "last_success": null,
+      "status": "unknown",
+      "evidence": [
+        "binary 'codex' not found on PATH in this runtime — not installed here, not necessarily auth_missing on the real runtime host"
+      ],
+      "safe_reserve_ratio": 0.15
+    },
+    {
+      "provider": "openai_codex",
+      "surface": "api",
+      "source": "official_api",
+      "confidence": "unknown",
+      "window_start": null,
+      "window_end": null,
+      "reset_timezone": "unknown",
+      "limit_unit": "unknown",
+      "limit": null,
+      "used": null,
+      "remaining": null,
+      "remaining_ratio": null,
+      "last_success": null,
+      "status": "blocked_by_policy",
+      "evidence": [
+        "OpenAI Usage/Costs API 需要 organization admin key，屬按量 API，預設禁止。"
+      ],
+      "safe_reserve_ratio": 0.15
+    },
+    {
+      "provider": "gemini",
+      "surface": "app_ui",
+      "source": "manual",
+      "confidence": "unknown",
+      "window_start": null,
+      "window_end": null,
+      "reset_timezone": "unknown",
+      "limit_unit": "unknown",
+      "limit": null,
+      "used": null,
+      "remaining": null,
+      "remaining_ratio": null,
+      "last_success": null,
+      "status": "unknown",
+      "evidence": [
+        "Gemini App / AI Studio / Antigravity UI 型額度，沒有 machine-readable 官方來源；不得抓 cookie 或繞過平台限制。"
+      ],
+      "safe_reserve_ratio": 0.15
+    },
+    {
+      "provider": "gemini",
+      "surface": "api",
+      "source": "official_api",
+      "confidence": "unknown",
+      "window_start": null,
+      "window_end": null,
+      "reset_timezone": "unknown",
+      "limit_unit": "unknown",
+      "limit": null,
+      "used": null,
+      "remaining": null,
+      "remaining_ratio": null,
+      "last_success": null,
+      "status": "blocked_by_policy",
+      "evidence": [
+        "Gemini API / Google Cloud quota 端點需要按量 API key，預設禁止；每日 RPD reset 以太平洋時間午夜計算，僅在 Owner 核准例外時才適用。"
+      ],
+      "safe_reserve_ratio": 0.15
+    },
+    {
+      "provider": "ollama_local",
+      "surface": "local_process",
+      "source": "authenticated_cli_health",
+      "confidence": "unknown",
+      "window_start": null,
+      "window_end": null,
+      "reset_timezone": "unknown",
+      "limit_unit": "unknown",
+      "limit": null,
+      "used": null,
+      "remaining": null,
+      "remaining_ratio": null,
+      "last_success": null,
+      "status": "unknown",
+      "evidence": [
+        "binary 'ollama' not found on PATH in this runtime — not installed here, not necessarily auth_missing on the real runtime host"
+      ],
+      "safe_reserve_ratio": 0.15
+    }
+  ]
+}

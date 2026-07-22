@@ -487,18 +487,17 @@ repo: https://github.com/page1010/maplab-ai-handbook
 2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token
 3. Chrome tab 環境 → 自行開啟需要的網頁分頁，用截圖讀取
 
-【斷點 — 2026-07-06 A1午後巡查更新（非 A5 自寫）】
+【斷點 — 2026-07-22 A1晚間巡查更新（非 A5 自寫）】
 T-A5-001 Items 去重 + 全品項重新編碼：✅ 完成（108品項，APP050/DST041/MAIN009/BEV008）
-T-A5-002 QUOTE_DRAFT 報價單欄位增強：🔄 進行中（last `3209fba` 2026-06-23 07:22 fixMasterTemplate_ GAS fn + clasp push；awaiting Owner run；~320.6h 超 48h 門檻）
+T-A5-002 QUOTE_DRAFT 報價單欄位增強：🟡 STALLED（last `3209fba` 2026-06-23 07:22 fixMasterTemplate_ GAS fn + clasp push；awaiting Owner run；~696h 超 48h 門檻）
   - ✅ GAS fixMasterTemplate_ 修正 + clasp push 完成
   - ⬜ 待 Owner 在 GAS 端手動觸發一次確認
-T-A5-004 createSlides.gs — Slide 報價簡報自動生成：🔴 CRITICAL（~1662h+無commit）
-T-A5-005 報價狀態追蹤同步 + Dashboard：🔄 進行中（last `5ab7434` 2026-06-23 07:01 clasp push T-A5-005 sync functions；awaiting Owner trigger setup；~321.0h 超 48h 門檻）
+T-A5-004 createSlides.gs — Slide 報價簡報自動生成：🟢 功能穩定（2026-07-06 A1對帳澄清：久無commit是「沒事做」不是「壞掉」）
+T-A5-005 報價狀態追蹤同步 + Dashboard：🟡 STALLED（last `5ab7434` 2026-06-23 07:01 clasp push T-A5-005 sync functions；awaiting Owner trigger setup；~696h 超 48h 門檻）
 T-A5-003/006：🔲 待開始（T-A5-006 等 T-A5-005 完成後啟動）
 
 【Blocker】
-🟡 T-A5-002 / T-A5-005：GAS clasp push 完成，awaiting Owner trigger（~320.6h+）
-🔴 T-A5-004 createSlides.gs：~1662h無commit，CRITICAL
+🟡 T-A5-002 / T-A5-005：GAS clasp push 完成，awaiting Owner trigger（~696h+）
 
 【踩過的坑】
 - Items 原 300 筆大量重複，精簡至 108 筆
@@ -558,8 +557,8 @@ repo: https://github.com/page1010/maplab-ai-handbook
 4. 進件建立 — 在 SALES_INTAKE 自動建一筆案件（case_id = CASE-YYYYMMDD-NNN）
 5. 查報價 — 「查XXX的報價」→ 找 QUOTE_WORKBENCH
 
-【斷點 — 2026-07-19 A1晚間巡查更新】
-T-A6-001 🟡 STALLED（~299h，last `ed63f97` 07-08，bot 線上，LINE webhook 待 Owner 接入）：
+【斷點 — 2026-07-22 A1晚間巡查更新】
+T-A6-001 🟡 STALLED（~336h，last `ed63f97` 07-08，bot 線上，LINE webhook 待 Owner 接入）：
 07-07 fix(a6) `e5ab867`：收緊 Telegram 路由（takeover handoff 優化）
 07-08 `ed63f97`：A6 401 健檢（結論：無影響，claude_ask()/codex路由皆 dead code）+ SEO 進度回報迴路根因修復，新增 notify_owner.sh + checkpoint --notify flag
 07-06 大更新：Codex-first 聊天路由、三層降載鏈設計（骨架未接線）、A6 LLM backend adapter spec

@@ -459,6 +459,10 @@ echo ""
 _check_recall_module_consistency
 echo ""
 
+# 跨檔慣例漂移檢查（非阻塞）— 抓已廢止 alt/命名慣例殘留在 live 檔
+[ -f "$REPO_ROOT/scripts/check_spec_drift.sh" ] && bash "$REPO_ROOT/scripts/check_spec_drift.sh"
+echo ""
+
 # ============================================================
 # FAST MODE：直接 commit → cherry-pick 到 main → push（原有行為）
 # ============================================================
@@ -481,33 +485,35 @@ if [ "$FAST_MODE" = true ]; then
     if git cherry-pick "$HASH"; then
       echo "       ✅ Cherry-pick 完成"
     else
-      echo "⚠️  發現衝突，嘗試自動解（theirs 策略）..."
-      git checkout --theirs . 2>/dev/null || true
-      git add -A
-      if git cherry-pick --continue --no-edit; then
-        echo "       ✅ 衝突已自動解決"
-      else
-        echo "❌ Cherry-pick 失敗，請手動處理"
-        git cherry-pick --abort 2>/dev/null || true
-        exit 1
-      fi
+      # [T-A1-GIT-SYNC-001] 移除原 `git checkout --theirs .` 盲解——它會靜默丟棄
+      # 與 remote 衝突的一整批變更（無聲資料遺失）。改為停手交人工，保留衝突現場。
+      echo "❌ Cherry-pick 衝突。不自動盲解（避免靜默丟棄工作）。"
+      echo "   人工處理：git status 看衝突檔 → 解完 git add <檔> → git cherry-pick --continue"
+      echo "   或放棄本次：git cherry-pick --abort"
+      exit 1
     fi
   else
     echo "⏭️  [3/4] 已在 main branch，跳過 cherry-pick"
     cd "$REPO_ROOT"
   fi
 
-  echo "🚀 [4/4] Push main 到 remote..."
+  # [T-A1-GIT-SYNC-001 修正版] Push 前先主動 merge remote，避免本地落後累積成大分歧。
+  # commit 已在上一步完成（standard commit→merge→push 順序）；用 merge 不用 rebase，與 repo 歷史一致；
+  # 不 -X ours/theirs 盲解——真實內容衝突一律停手交人工。
+  echo "🔄 [4/4] Push 前先同步 remote（proactive merge，避免落後累積）..."
+  git fetch origin 2>/dev/null || echo "⚠️  fetch 失敗（可能離線），續試直接 push"
+  if git rev-parse --verify origin/main >/dev/null 2>&1 && ! git merge --no-edit origin/main; then
+    echo "❌ 與 origin/main merge 有衝突。"
+    echo "   若僅 CURRENT_STATUS.md 時間戳/單行：解完 → git add → git commit --no-edit → git push origin main"
+    echo "   若有其他內容衝突：停手人工處理，勿盲解（勿 -X ours/theirs）。"
+    exit 1
+  fi
+  echo "🚀 Push main 到 remote..."
   if git push origin main; then
-    echo "       ✅ Push 完成"
+    echo "       ✅ Push 完成（已先同步 remote）"
   else
-    echo "⚠️  Push 失敗，嘗試 pull --rebase..."
-    if git pull --rebase origin main && git push origin main; then
-      echo "       ✅ Push 完成（rebase 後）"
-    else
-      echo "❌ Push 失敗，請手動處理"
-      exit 1
-    fi
+    echo "❌ Push 失敗，請手動處理：git pull --no-rebase origin main 解衝突後再 push"
+    exit 1
   fi
 
   cd "$WORKTREE_DIR"

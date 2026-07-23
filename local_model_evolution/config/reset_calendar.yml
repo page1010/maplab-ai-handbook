@@ -1,0 +1,56 @@
+# Quota Sentinel — provider reset calendar
+# 版本：v0.1 ｜ 建立：2026-07-19
+#
+# 原則：讀不到官方可信來源時一律標 unknown，不得用「印象」或「常見說法」補值。
+# 下面每一列的 confidence 欄位如實反映「我們此刻真的知道什麼」。
+
+providers:
+  claude:
+    surface: subscription_cli
+    reset_window_unit: unknown
+    reset_timezone: unknown
+    confidence: unknown
+    evidence: []
+    note: >
+      Claude / Claude Code 訂閱型額度目前沒有官方可讀的剩餘量或 reset 時間端點。
+      不得假裝知道百分比或重置時刻；只能靠 CLI health（是否還能認證與回應）與
+      429/rate-limit 訊息做粗略推斷，狀態標 estimated 或 unknown。
+
+  openai_codex:
+    surface: subscription_cli
+    reset_window_unit: unknown
+    reset_timezone: unknown
+    confidence: unknown
+    evidence: []
+    note: >
+      ChatGPT/Codex 訂閱額度與 OpenAI API usage 是不同東西；沒有官方訂閱端剩餘量
+      端點時不得把 API usage 當成訂閱剩餘量。只能靠 CLI health 與訂閱 UI 人工回報。
+
+  gemini:
+    surface: api_or_app
+    reset_window_unit: daily
+    reset_timezone: America/Los_Angeles
+    confidence: estimated
+    evidence:
+      - "Owner 提供的背景說明：Gemini API 每日 RPD 配額以太平洋時間午夜重置（一般性認知，非本次 session 官方文件核對）"
+    note: >
+      此列僅在 Owner 核准開放 Gemini API 例外用量時才有意義（見 providers.yml
+      override 區塊）；MAPLAB 現行政策下 Gemini 走 App/Antigravity UI，
+      沒有機器可讀的官方剩餘量來源，狀態應標 unknown。confidence=estimated
+      是針對「API 面若被核准使用時」的已知規則，不代表目前有精確剩餘量可讀。
+
+  ollama_local:
+    surface: local_process
+    reset_window_unit: not_applicable
+    reset_timezone: not_applicable
+    confidence: verified
+    evidence: ["免費地端執行，無供應商配額或 reset 週期"]
+    note: "T3 地端模型不需要 reset calendar；只需確認 process 存活與模型版本。"
+
+daily_review:
+  time: "00:05"
+  timezone: "Asia/Taipei"
+  action: >
+    讀取每個 provider 距離其「自身 reset_timezone」（不是硬套台北午夜）
+    的剩餘時間；剩餘量可信（confidence != unknown）且距 reset 12–36 小時、
+    保留 safe_reserve_ratio 後仍有餘裕，才建立 teacher jobs。

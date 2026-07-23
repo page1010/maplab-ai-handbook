@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-07-20 00:07（patrol.sh A1巡查）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-07-23（A1每日巡查，remote cloud）｜2026-07-22 三次巡查 all clear（每日/午後/晚間）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -18,6 +18,10 @@
 ---
 
 ## 最新事實核對
+
+- 2026-07-20（remote，二）：**[A1 治理] 廣告平台改瀏覽器優先，不依賴會過期的 API 通行證** — Owner 指示：Google/Meta Ads 的唯讀狀態查詢（現在跑什麼活動/受眾/素材）不該依賴會定期過期的 API 通行證（常見成因：應用程式卡在 Google「測試中」狀態 7 天到期）,應該直接用 Owner 已登入的 Chrome session 導頁 + 截圖分析。已落地：①新技能書 `skills/ad-platform-browser-check.md`（SOP + 安全紅線 + 與既有 API/MCP 路徑的分工）；②`docs/company-values.md` 新增「七、憑證選型」原則；③`CLAUDE.md`【API 存取三層備援】加註明文例外；④`skills/credentials/google-ads-api.md`／`meta-ads-api.md` 頂部加指向新技能書的提示；⑤`TASK_QUEUE.md` 把 T-A2-006 從 FROZEN（等 MCP token 重授權）移到 Tier 1（唯讀巡查已解鎖，不再等 Owner）；⑥`handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md` 接續狀態同步更新。API/MCP 路徑保留給精確報表與程式化操作（啟停/改預算仍需 Owner 核准，Owner 已表示這塊他自己操作）。未執行任何實際廣告查詢或帳戶操作，本輪只完成技能與文化落地。Branch: `claude/local-model-evolution-orchestrator-puvj7d`。
+- 2026-07-20（remote）：**[A1 治理] SECTION 21 規則三 + Antigravity ExecutionLease 提案存檔** — Owner 兩項回饋處理完成：①`AGENT_RULES.md` SECTION 21 新增規則三（能自己決定就不准問；真的要問只給可點擊選項不給技術題），回應 Owner 觀察到多個 session 卡在「等待 input」等於做白工；②Codex 進行中的「Antigravity ExecutionLease / Ontology」提案（Owner 轉述，不確定 Codex 有無存檔）已存入 `docs/governance/antigravity-execution-lease-ontology-v0.1.md`，並對照既有治理文件做一致性檢查：與 `task-continuity-orchestrator-v0.1.md`（從未正式採納的舊草案）是同一條演進線非重複建置；與 SECTION 24 可逆先行準則同源；**發現一個未解阻塞**——`skills/codex-offload-guide.md` 2026-07-06 記錄的 agy sandbox 唯讀保證至今未驗證，在此之前不應授予 Antigravity 任何 ExecutionLease 寫入權；另指出把 Antigravity 升格為正式執行節點屬於一次性角色升格決定，需 Owner 明確核准，`CapabilityProfile` 初版應照抄 `multi-model-orchestration-v0.1.md` 現有邊界表。已登記 `TASK_QUEUE.md` FROZEN 區，等 Codex 存檔原始設計 + agy 驗證 + Owner 拍板。未執行任何程式碼變更或 runtime 操作。Branch: `claude/local-model-evolution-orchestrator-puvj7d`。
+- 2026-07-19（remote）：**[A1 Local Model Evolution Orchestrator 第一輪]** — 依 Draft PR #20 `LOCAL_MODEL_EVOLUTION_ORCHESTRATOR_PROMPT.md`（已 merge 進本分支）在 A1 remote cloud 沙盒執行第一輪。建立 `local_model_evolution/`（RUN_PLAN/STATE/config/bin/curricula/evals/models/reports 全套骨架）：①`bin/quota_sentinel.py`（provider-neutral 額度偵測，可執行並已跑過，`state/provider_status.json` 全部誠實標 `unknown`/`blocked_by_policy`，無捏造數字）；②`config/providers.yml` 明確標記 `model-tier-policy.md §0`（禁按量 API）優先於原始 prompt 假設，三個高成本 provider 的 official API 層預設 `blocked_by_policy`；③兩個 P0 curriculum（`investment-report-current-state`／`seo-ranking-keyword`，各 24 題去識別化合成 eval case，20-50 範圍內）；④`bin/eval_harness.py`（deterministic validator，已用手寫 fixture 自我測試通過，正確抓出全部 5-6 類刻意植入的錯誤，且對缺檔案的情況正確回傳 `baseline_unavailable` 而非假分數）。**誠實 blocker**：此 remote 沙盒沒有 Ollama/Mac mini runtime，`command -v` 確認 `ollama`/`codex`/`agy`/`gemini`/`hermes`/`sqlite3`/`launchctl` 全部缺席，**真實地端模型 baseline 無法在此環境完成**，已在 `evals/baseline_report.md` 與 `state/STATE.md` 明確標記為 blocked，不假裝有 baseline 數字。未建立任何 LoRA/adapter 候選（`models/registry.json.candidates` 維持空）、未觸碰 production runtime、未讀寫任何真實客戶或投資部位資料。完整 receipt：`workbook/reviews/JOB-LOCAL-MODEL-EVOLUTION-20260719/`。下一步：在 Mac mini 上重跑 `quota_sentinel.py`、補讀 `AGENT_RULES.md`/`pitfalls.md`/`dependency-map.md`、建立 eval-case→模型輸出轉接腳本，取得真正 baseline 後才能定第一版改善方案。Branch: `claude/local-model-evolution-orchestrator-puvj7d`。
 
 - 2026-07-19（03:16）：**[A1 A0派工] R實驗結論治理落地** — A0 委派 4 項可逆變更全部完成：①`AGENT_RULES.md` SECTION 24「可逆先行準則」（不等核准直接做可逆動作；快速判斷表；任務書標注格式；R-VERIFIED Opus 產出）②`AGENT_RULES.md` SECTION 25「任務卡四態狀態機」（IN_PROGRESS→STALLED(48h)→NEEDS_REVIEW(7d)→AUTO_CLOSED(7d)；翻轉預設：auto-CLOSED 不等 Owner；patrol.sh 唯一改寫端）③`scripts/patrol.sh` 重構（新增四態狀態機引擎；本輪實測：11 張殭屍卡自動轉 STALLED，T-A6-001 10d→STALLED ✅，T-A7-001 正確識別為 ⏸️ BLOCKED 不再累加警告 ✅；警告堆積問題結構性消失）④`distill/b5-epoch-20260719.md` B5蒸餾教材包（可逆先行+翻轉預設+三版對比派工路由+地端訓練指引）⑤`state/r_fable_vs_opus_summary.md` 最終定案（共識區三版可用；深層原則以 VERIFIED 版為準；不全量重跑）。Commit: `7efc03e`。
 
@@ -122,7 +126,7 @@
 | T-A2A3-001-B | SEO 場景頁面 + 內連結（從 T-A2A3-001 分拆） | A2/A3 | 🟡 STALLED（since 2026-07-19，48h 無 commit，Owner 可更新最後活動解除）（WordPress post `1696` 已建立為未發布草稿並重載驗證：`https://www.maplabkitc） | handoff/tasks/T-A2A3-001-B.md |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2/A3 | ⏸️ RM/GSC 部分暫停；案例寫作轉 T-A2A3-001-B（Rank Math 已退訂，已設定好的 SEO 欄位先不要再設定；下一步是依 live URL map 補 To B 真） | handoff/tasks/T-A2A3-001.md |
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | ⏸️ 阻塞中（受眾輪廓分析完成（693筆 Orders）。待執行：嘉義加入廣告地區、興趣條件精簡、策略一冷受眾上線。） | handoff/tasks/T-A3-002.md |
-| T-A4-002 | pagewu1010 帳號 Takeout 解壓 + Gemini Flash 照片資產整合 | A4 | 🔴 CRITICAL（~2208h無commit） | handoff/tasks/T-A4-002.md |
+| T-A4-002 | pagewu1010 帳號 Takeout 解壓 + Gemini Flash 照片資產整合 | A4 | 🔴 CRITICAL（~2255h無commit） | handoff/tasks/T-A4-002.md |
 | T-A4-003-photo-alt-pipeline | T-A4-003 — 照片 ALT/SEO 管線（地端 gemma4）+ Drive 改串流釋空間 | A4 | 🟡 STALLED（since 2026-07-19，48h 無 commit，Owner 可更新最後活動解除）（等 36,676 張處理完 → Owner 改 Drive 串流 → 釋出 ~433GB） | handoff/tasks/T-A4-003-photo-alt-pipeline.md |
 | T-A4-004-photo-classify | T-A4-004 — 照片分類搬移：截圖/家庭/外燴工作 + 年月資料夾 | A4 | 🟡 STALLED（since 2026-07-19，48h 無 commit，Owner 可更新最後活動解除）（批次跑完後 `--status` 查進度，續開下一批直到 ~98,400 張完成） | handoff/tasks/T-A4-004-photo-classify.md |
 | T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🟡 STALLED（since 2026-07-19，48h 無 commit，Owner 可更新最後活動解除）（Owner 三題已回答（2026-06-23）→ 已加 `fixMasterTemplate_()` 到 Code.gs） | handoff/tasks/T-A5-002.md |
@@ -140,7 +144,7 @@
 | T-B1-DASH-001 | Guild Ops Board 自動同步 + 即時狀態燈 |  | 🟢 READY（已派工，等 Codex 執行）（Game dashboard v0.2 完成（9 NPC / 6 rooms / 21 cards，驗收通過）。尚未完成） | handoff/tasks/T-B1-DASH-001.md |
 | T-GBP-001 | T-GBP-001 | Owner | 🔲 待開始（尚未開始。等 Owner 準備新圖片。） | handoff/tasks/T-GBP-001.md |
 | T-HQ-001 | AGENT-HQ 集團共用層遷移 |  | ⏳ 代碼已交付，等 Owner 啟用（P1-P5 腳本完成，P6 腳本完成，Owner 動作仍 pending）（Owner 執行下列三個 `launchctl load` + `hermes memory setup` 指令即完成） | handoff/tasks/T-HQ-001.md |
-| T-IOS-KOL-001 | IOS-KOL 網紅雷達 Daily Telegram Digest |  | 🔴 CRITICAL（~695h無commit） | handoff/tasks/T-IOS-KOL-001.md |
+| T-IOS-KOL-001 | IOS-KOL 網紅雷達 Daily Telegram Digest |  | 🔴 CRITICAL（~767h無commit） | handoff/tasks/T-IOS-KOL-001.md |
 ---
 
 ## Blockers（只列未解決的）
@@ -164,6 +168,7 @@
 | A6 | T-A6-001: LINE webhook 已可看到 inbound 同步，但它只含客戶→OA 訊息；若要完整雙向訓練資料，需 LINE OA Manager CSV 匯出或其他正式來源。 | 見 Task Card |
 | A6 | T-A6-002: 等 Owner 決定方向 | 見 Task Card |
 | A7 | T-A7-001: Owner 確認 Zone B（NT$2,000？）+ Zone C（NT$2,500？）兩個數字 | 見 Task Card |
+| ⚠️ A1巡查 2026-07-23 | T-A7-001 Phase 3 目標啟動日 07-25 距今僅 **2 天**，Owner 尚未確認 Zone B/C 金額（自 07-18 起等候 5 天）。若 07-24 前未回覆，Phase 3 將延誤。 | 請 Owner 儘速確認 Zone B/C 金額 |
 | A7 | T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 5/8 需 TimeTree 權限（任務 9 已解除） | 見 Task Card |
 | Owner | T-GBP-001: 等 Owner 準備新圖片 | 見 Task Card |
 |  | T-HQ-001: Owner pending（非 B1 blocking） | 見 Task Card |

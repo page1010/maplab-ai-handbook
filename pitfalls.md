@@ -412,3 +412,19 @@
   2. 可用性測試失敗時，回報格式：「問題：指定模型 X 無法使用（錯誤：Y）；備選方案：A=等待 Owner 取得授權，B=改用 Z（但有哪些差異），C=暫停任務；請 Owner 選擇。」
   3. 揭露替代不等於合規——合規的唯一標準是「先試指定模型，失敗才回報並等裁決」。
 - 封坑驗證：`TOKEN=$(grep CLAUDE_CODE_OAUTH_TOKEN /Users/pagemacmini/maplab-ai-handbook/bot/.env | cut -d'=' -f2) && echo "test" | CLAUDE_CODE_OAUTH_TOKEN="$TOKEN" claude --model claude-fable-5 --print 2>&1 | grep -q "." && echo PASS || echo FAIL`（指定模型可用時應回 PASS；若 FAIL 才進備選方案流程，不得自行替代）。
+
+## 2026-07-23 — Eval candidate 不得讀 gold expected labels
+
+- 觸發條件：candidate 在 40 個固定案例得到 320/320，但 `candidate_facts()` 與 deterministic renderer 直接讀 `case["expected"]` 的 allowed ids、status、missing-data flag、action decision。
+- 根因：把 scorer 的 gold labels 混入 system-under-test，讓候選路徑先看到答案再被同一答案評分；100% 是自我驗證，不是能力證據。
+- 解法：把 required metrics 與 action boundary 明列在 input policy contract；候選只依 entity、`as_of`、freshness、rights、sensitivity、fact kind、confidence 做 metadata gate；`expected` 僅可由 scorer 使用。
+- 預防：任何 eval runtime 新路徑都要有 gold-label mutation test：完整改寫 `expected` 後，候選 fact selection 與 rendered output 必須逐值相同。宣告 promotion 前先搜 system-under-test 是否讀 gold 欄位。
+- 封坑驗證：`rtk python3 -m unittest local_model_evolution.tests.test_pipeline.PipelineTests.test_candidate_runtime_does_not_consume_gold_labels -v` 必須 PASS；`candidate_facts` 與 `deterministic_candidate` 不得出現 `expected`。
+
+## 2026-07-23 — zsh 的 `path` 是特殊陣列，不可拿來當一般探測變數
+
+- 觸發條件：runtime inventory 迴圈用 `path=...` 暫存 `command -v` 結果後，後續所有工具被誤報為 missing。
+- 根因：zsh 的 `path` 與 `PATH` 綁定；覆寫小寫 `path` 會同時破壞命令搜尋路徑。
+- 解法：立即丟棄該輪結果，改用 `tool_path` 等任務專用變數，重新從乾淨 shell 探測。
+- 預防：shell script 不使用 `path`、`status` 等 shell 特殊名稱作一般變數；runtime capability 報告至少交叉驗證一個已知存在的絕對路徑。
+- 封坑驗證：`rtk zsh -lc 'tool_path=$(command -v python3); test -n "$tool_path"; command -v ollama'` 應同時成功。

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import copy
 import json
 import unittest
 from pathlib import Path
@@ -34,6 +35,31 @@ class PipelineTests(unittest.TestCase):
         case = build_cases.investment_cases()[0]
         selected = run_eval.candidate_facts(case)
         self.assertEqual(["F1"], [item["fact_id"] for item in selected])
+
+    def test_candidate_runtime_does_not_consume_gold_labels(self) -> None:
+        case = build_cases.investment_cases()[0]
+        selected_before = run_eval.candidate_facts(case)
+        rendered_before = json.loads(run_eval.deterministic_candidate(case, selected_before))
+        mutated = copy.deepcopy(case)
+        mutated["expected"] = {
+            "status": "insufficient_data",
+            "action_decision": "refuse_real_order",
+            "allowed_fact_ids": ["F2"],
+            "forbidden_fact_ids": ["F1"],
+            "forbidden_literals": ["128"],
+            "missing_data_required": True,
+        }
+        selected_after = run_eval.candidate_facts(mutated)
+        rendered_after = json.loads(run_eval.deterministic_candidate(mutated, selected_after))
+        self.assertEqual(selected_before, selected_after)
+        self.assertEqual(rendered_before, rendered_after)
+
+    def test_candidate_filter_uses_independent_metadata_gates(self) -> None:
+        cases = build_cases.investment_cases() + build_cases.seo_cases()
+        by_id = {case["case_id"]: case for case in cases}
+        for case_id in ("INV-002", "INV-003", "INV-006", "INV-015", "SEO-017"):
+            selected_ids = [item["fact_id"] for item in run_eval.candidate_facts(by_id[case_id])]
+            self.assertNotIn("F2" if case_id in {"INV-002", "INV-015"} else "F1", selected_ids)
 
     def test_candidate_renderer_passes_all_fixed_checks_without_network(self) -> None:
         cases = build_cases.investment_cases() + build_cases.seo_cases()

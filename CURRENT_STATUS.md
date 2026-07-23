@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-07-19 21:55（Local Model Evolution first-cycle receipt）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-07-23 15:00（Local Model Evolution first-cycle revalidation）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -19,7 +19,9 @@
 
 ## 最新事實核對
 
-- 2026-07-19（21:55）：**[A1/B5 Local Model Evolution 第一輪完成]** — 新增 `local_model_evolution/` provider-neutral 骨架與 `JOB-LOCAL-MODEL-EVOLUTION-20260719` receipt。Quota Sentinel dry-run 盤點 8 providers/runtimes：usage API 0、teacher jobs 0，Codex/Claude/Antigravity CLI health 可用但 remaining quota 全為 `unknown`，故清空策略 blocked、safe reserve 15%。兩個 P0 Curriculum 各凍結 20 個 synthetic/de-identified eval cases；`qwen2.5:14b` 真實 baseline 284/320（88.75%）、safety 206/240（85.83%），top 3 為 provenance 12、forbidden fact 12、missing-data honesty 6。最小 candidate 採 metadata hard filter + deterministic renderer，同一 40 cases 320/320；只准進 file-only de-identified shadow，**不代表模型升格**，LoRA/teacher jobs/production scheduler 仍關閉。Task Card：`handoff/tasks/T-A1-LOCAL-MODEL-EVOLUTION-001.md`。
+- 2026-07-23（15:00）：**[A1/B5 Local Model Evolution 第一輪重驗完成]** — Draft PR #20 既有 candidate 被發現直接讀取 `expected` gold labels 來選事實、決定 status/missing/action，因此 2026-07-19 的 320/320 證據撤回。已升級 fixed eval schema 1.1：40 個 synthetic/de-identified cases 不變（Investment 20 + SEO 20），把 required metrics 與 action boundary 放入 input policy；candidate runtime 只讀 entity/as_of/freshness/rights/sensitivity/fact-kind/confidence，`expected` 僅供 scorer。新增 gold-label mutation regression test，7/7 tests PASS。live `qwen2.5:14b` baseline 重跑 284/320（88.75%）、safety 206/240（85.83%），Top 3 = provenance 11 / forbidden exclusion 11 / missing honesty 8；`SEO-019` 真實記錄 180s timeout。修後 deterministic wrapper 320/320、0 model inference，只准 synthetic/de-identified file-only shadow，**仍不代表模型升格**。Quota Sentinel：8 providers、usage API 0、teacher jobs 0、nonlocal remaining 全 `unknown`；Drive 9 個指定域完成 metadata-only 盤點，未抓正文。Receipt：`workbook/reviews/JOB-LOCAL-MODEL-EVOLUTION-20260723/validation_receipt.md`。LoRA、teacher jobs、scheduler、production writes、main merge 全未啟動。
+
+- 2026-07-19（21:55）：**[歷史紀錄；candidate 320/320 已於 2026-07-23 因 gold-label leakage 撤回並重驗] [A1/B5 Local Model Evolution 第一輪完成]** — 新增 `local_model_evolution/` provider-neutral 骨架與 `JOB-LOCAL-MODEL-EVOLUTION-20260719` receipt。Quota Sentinel dry-run 盤點 8 providers/runtimes：usage API 0、teacher jobs 0，Codex/Claude/Antigravity CLI health 可用但 remaining quota 全為 `unknown`，故清空策略 blocked、safe reserve 15%。兩個 P0 Curriculum 各凍結 20 個 synthetic/de-identified eval cases；`qwen2.5:14b` 真實 baseline 284/320（88.75%）、safety 206/240（85.83%），top 3 為 provenance 12、forbidden fact 12、missing-data honesty 6。當時 candidate 採 metadata hard filter + deterministic renderer，同一 40 cases 320/320；該 candidate 證據後續已撤回，請以 2026-07-23 最新條目與 receipt 為準。LoRA/teacher jobs/production scheduler 仍關閉。Task Card：`handoff/tasks/T-A1-LOCAL-MODEL-EVOLUTION-001.md`。
 
 - 2026-07-19（03:16）：**[A1 A0派工] R實驗結論治理落地** — A0 委派 4 項可逆變更全部完成：①`AGENT_RULES.md` SECTION 24「可逆先行準則」（不等核准直接做可逆動作；快速判斷表；任務書標注格式；R-VERIFIED Opus 產出）②`AGENT_RULES.md` SECTION 25「任務卡四態狀態機」（IN_PROGRESS→STALLED(48h)→NEEDS_REVIEW(7d)→AUTO_CLOSED(7d)；翻轉預設：auto-CLOSED 不等 Owner；patrol.sh 唯一改寫端）③`scripts/patrol.sh` 重構（新增四態狀態機引擎；本輪實測：11 張殭屍卡自動轉 STALLED，T-A6-001 10d→STALLED ✅，T-A7-001 正確識別為 ⏸️ BLOCKED 不再累加警告 ✅；警告堆積問題結構性消失）④`distill/b5-epoch-20260719.md` B5蒸餾教材包（可逆先行+翻轉預設+三版對比派工路由+地端訓練指引）⑤`state/r_fable_vs_opus_summary.md` 最終定案（共識區三版可用；深層原則以 VERIFIED 版為準；不全量重跑）。Commit: `7efc03e`。
 

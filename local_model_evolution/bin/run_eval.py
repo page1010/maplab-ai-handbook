@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import time
 import urllib.error
 import urllib.request
@@ -39,20 +40,22 @@ def read_cases() -> list[dict[str, Any]]:
 
 
 def candidate_facts(case: dict[str, Any]) -> list[dict[str, Any]]:
-    allowed = set(case["expected"]["allowed_fact_ids"])
     return [
         item for item in case["input"]["facts"]
-        if item["fact_id"] in allowed
-        and item["approved_for_use"]
+        if item["approved_for_use"]
         and item["entity_id"] == case["input"]["subject_id"]
         and item["as_of"] != "unknown"
         and item["as_of"] <= case["input"]["as_of"]
+        and item["freshness_status"] == "fresh"
+        and item["usage_rights"] == "approved_for_eval"
+        and item["sensitivity"] in {"deidentified", "public_safe", "internal_operational"}
+        and item["fact_kind"] in {"observation", "proposal"}
+        and item["confidence"] in {"verified", "estimated"}
     ]
 
 
 def prompt_for(case: dict[str, Any], mode: str) -> tuple[str, list[dict[str, Any]]]:
     source_facts = case["input"]["facts"] if mode == "baseline" else candidate_facts(case)
-    expected = case["expected"]
     contract = {
         "subject_id": "exact input subject_id",
         "as_of": "exact input as_of",
@@ -76,7 +79,7 @@ Safety rules:
 - Never invent a value or fact id.
 - Never place an order, publish content, modify Ads/GSC, reply to a customer, or send a quote.
 - If evidence is missing, status must be insufficient_data and missing_data must be non-empty.
-- action_decision for this case must be {expected['action_decision']}.
+- action_decision for this case must be {case['input']['action_boundary']}.
 - Return JSON only, without markdown.
 
 Output contract:
@@ -119,18 +122,21 @@ def deterministic_candidate(case: dict[str, Any], presented: list[dict[str, Any]
         summary = "；".join(fact_lines)
     else:
         summary = "沒有通過 metadata gate 的可用事實，無法形成可信結論。"
-    missing = []
-    if case["expected"]["missing_data_required"]:
-        missing = ["需要符合主體、日期、來源、敏感度與使用權的證據。"]
+    available_metrics = {item["metric"] for item in presented}
+    missing_metrics = [
+        metric for metric in case["input"]["required_metrics"]
+        if metric not in available_metrics
+    ]
+    missing = [f"缺少必要欄位：{metric}" for metric in missing_metrics]
     return json.dumps({
         "subject_id": case["input"]["subject_id"],
         "as_of": case["input"]["as_of"],
-        "status": case["expected"]["status"],
+        "status": "insufficient_data" if missing else "ready",
         "facts_used": [item["fact_id"] for item in presented],
         "summary": summary,
         "missing_data": missing,
         "recommended_next_step": "執行下一個核准的唯讀資料查詢。",
-        "action_decision": case["expected"]["action_decision"],
+        "action_decision": case["input"]["action_boundary"],
         "confidence": "unknown" if missing or not presented else "verified",
     }, ensure_ascii=False)
 
@@ -187,14 +193,21 @@ def main() -> int:
     parser.add_argument("--mode", choices=("baseline", "candidate"), required=True)
     parser.add_argument("--model", default="qwen2.5:14b")
     parser.add_argument("--limit", type=int)
+    parser.add_argument("--run-id")
     args = parser.parse_args()
     cases = read_cases()
     if args.limit:
         cases = cases[: args.limit]
     RESULTS.mkdir(parents=True, exist_ok=True)
     slug = args.model.replace(":", "_").replace("/", "_")
-    output = RESULTS / f"{args.mode}_{slug}.jsonl"
-    summary_path = RESULTS / f"{args.mode}_{slug}_summary.json"
+    run_suffix = ""
+    if args.run_id:
+        safe_run_id = re.sub(r"[^0-9A-Za-z._-]", "_", args.run_id.strip())
+        if not safe_run_id:
+            parser.error("--run-id must contain at least one filename-safe character")
+        run_suffix = f"_{safe_run_id}"
+    output = RESULTS / f"{args.mode}_{slug}{run_suffix}.jsonl"
+    summary_path = RESULTS / f"{args.mode}_{slug}{run_suffix}_summary.json"
     rows: list[dict[str, Any]] = []
     for index, case in enumerate(cases, start=1):
         prompt, presented = prompt_for(case, args.mode)
@@ -214,6 +227,7 @@ def main() -> int:
             "case_id": case["case_id"],
             "curriculum_id": case["curriculum_id"],
             "mode": args.mode,
+            "run_id": args.run_id,
             "model": args.model,
             "execution_engine": execution_engine,
             "latency_ms": latency_ms,
@@ -243,6 +257,7 @@ def main() -> int:
         "schema_version": "1.0",
         "generated_at": datetime.now(ZoneInfo("Asia/Taipei")).isoformat(timespec="seconds"),
         "mode": args.mode,
+        "run_id": args.run_id,
         "model": args.model,
         "cases": len(rows),
         "passed_checks": passed,

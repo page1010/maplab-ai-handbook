@@ -3,6 +3,20 @@
 本文件記錄 maplab-ai-handbook 的所有重大版本變更。
 格式：版本號 | 日期 | 變更摘要 | 執行 Agent
 
+## v6.9.1（Local Model Evolution Gold-Label Leakage Repair）— 2026-07-23
+
+**撤回自我驗證候選分數，以 input-only policy/metadata gate 重驗第一輪**
+
+執行 Agent：Codex acting as Local Model Evolution Orchestrator
+
+1. 發現 2026-07-19 candidate filter/renderer 讀取 `expected` gold labels，故舊 320/320 不再作為有效 promotion evidence。
+2. Eval schema 升為 1.1：input 明列 required metrics 與 action boundary；fact metadata 增加 freshness、usage rights、sensitivity、fact kind。
+3. Candidate runtime 不再讀 `expected`；新增 gold-label mutation 與獨立 metadata gate tests，全套 7/7 PASS。
+4. 重跑 `qwen2.5:14b` 40-case baseline：284/320，safety 206/240；Top 3 = provenance 11、forbidden exclusion 11、missing honesty 8；保留一筆真實 timeout。
+5. 修後 deterministic candidate：320/320、safety 240/240、0 model inference；只准 file-only shadow，模型不升格。
+6. Live Quota Sentinel 仍為 0 API / 0 teacher jobs / nonlocal quota unknown；指定 9 個 Drive domains 完成 metadata-only 盤點。
+7. 新增 `JOB-LOCAL-MODEL-EVOLUTION-20260723` validation bundle；LoRA、scheduler、production writes、main merge 均未啟動。
+
 ## v6.9（Local Model Evolution First-Cycle Baseline）— 2026-07-19
 
 **建立可信額度真相、兩個窄域 Curriculum、固定 Eval 與可回滾安全 wrapper；不訓練權重**

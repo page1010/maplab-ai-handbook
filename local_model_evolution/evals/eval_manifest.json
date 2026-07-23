@@ -1,6 +1,8 @@
 {
-  "schema_version": "1.0",
-  "frozen_cycle": "2026-07-19-first-cycle",
+  "schema_version": "1.1",
+  "frozen_cycle": "2026-07-23-first-cycle-revalidated",
+  "supersedes_cycle": "2026-07-19-first-cycle",
+  "supersession_reason": "candidate path previously consumed gold expected labels",
   "case_count": 40,
   "curricula": {
     "P0-INVESTMENT-CURRENT-STATE": 20,

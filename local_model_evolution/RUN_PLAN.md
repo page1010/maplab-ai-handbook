@@ -1,6 +1,6 @@
 # Local Model Evolution — first-cycle run plan
 
-Date: 2026-07-19
+Date: 2026-07-23 revalidation of the 2026-07-19 first cycle
 Owner: MAPLAB Owner
 Role: Local Model Evolution Orchestrator (A1 integration; B5/B2/B4 governance lenses)
 Mode: reversible, file-only, no model-weight training, no production scheduler install
@@ -12,7 +12,7 @@ Create the first trustworthy evolution loop for two narrow domains:
 1. Investment report and current-state analysis.
 2. SEO ranking, strategy, and keyword tracking.
 
-The first cycle produces quota truth, 40 fixed de-identified eval cases, a real
+The revalidated first cycle produces quota truth, 40 fixed de-identified eval cases, a real
 `qwen2.5:14b` baseline, a smallest reversible candidate, regression evidence,
 and a one-week MVP. It does not create or execute teacher jobs.
 
@@ -74,7 +74,8 @@ shadow run or roll back. New production outcomes must become new fixed cases.
 - `supervision_cost`: target <= 20 minutes/week after the one-week MVP.
 - `human_touch_frequency`: weekly review; monthly promotion decision.
 - `common_failure_mode`: fluent answers merge stale, wrong-entity, or unsupported data.
-- `last_manual_repair`: none; first cycle establishes the baseline.
+- `last_manual_repair`: 2026-07-23 removed gold-label leakage from candidate
+  fact selection, status, missing-data, and action decisions.
 - `time_to_detect`: one eval run or one hourly sentinel cycle.
 - `time_to_recover`: one reversible prompt/filter rollback.
 - `owner_burden_delta`: expected reduction after shadow proof; not yet claimed.
@@ -98,6 +99,20 @@ shadow run or roll back. New production outcomes must become new fixed cases.
 - Day 5: B5 dataset/provenance QA; no training-set admission by default.
 - Day 6: regression run and rollback drill.
 - Day 7: Owner-facing promotion decision with no automatic runtime change.
+
+## 2026-07-23 revalidation checkpoint
+
+- The 2026-07-19 candidate consumed `expected` gold labels and its 320/320 score
+  was withdrawn as invalid evidence.
+- Eval schema 1.1 moves required metrics and action boundaries into the input
+  policy contract; runtime candidate code does not read `expected`.
+- A mutation regression test changes every gold field and proves candidate
+  selection/output are unchanged.
+- Revalidated baseline: 284/320; safety 206/240; top three failures are
+  provenance 11, forbidden-fact exclusion 11, and missing-data honesty 8.
+- Revalidated deterministic candidate: 320/320; 0 model inference calls.
+- Promotion decision is unchanged: file-only wrapper shadow only; model no
+  promotion; LoRA and teacher jobs closed.
 
 ## Approval gates
 

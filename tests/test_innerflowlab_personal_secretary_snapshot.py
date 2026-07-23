@@ -61,6 +61,9 @@ class SecretarySnapshotTests(unittest.TestCase):
             self.assertNotIn("BROKER_SECRET", rendered)
             self.assertEqual(set(snapshot), {"generated_at", "roles", "modules", "alerts"})
             self.assertEqual(len(snapshot["roles"]), 31)
+            b5 = next(role for role in snapshot["roles"] if role["id"] == "B5")
+            self.assertEqual(b5["status"], "warning")
+            self.assertIn("不能判定可用", b5["result"])
 
     def test_build_snapshot_flags_merge_conflict(self):
         with tempfile.TemporaryDirectory() as tmp:

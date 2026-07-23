@@ -11,7 +11,7 @@
 
 ## Live WordPress
 
-- Logged-in UI: generated at `2026-07-23T13:07:22+08:00`, 31 roles, 16
+- Logged-in UI: generated at `2026-07-23T13:14:00+08:00`, 31 roles, 16
   functions, IOS-ALPHA visible.
 - Role cards: stale task-module hashes render as standby plus context
   maintenance evidence; they no longer render as runtime warning.
@@ -19,7 +19,7 @@
 - Private page headers: `X-Robots-Tag: noindex, nofollow, noarchive` and
   `Cache-Control: no-store, private`.
 - Anonymous `GET /wp-json/innerflowlab-secretary/v1/snapshot`: HTTP 401.
-- Eye proof: `portal-ios-alpha-v03.png`.
+- Eye proof: `portal-summary-v04.png` and `portal-ios-alpha-v03.png`.
 
 ## IOS-ALPHA evidence
 

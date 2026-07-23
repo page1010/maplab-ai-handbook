@@ -193,6 +193,8 @@ def build_snapshot(
             if status != "warning":
                 status = runtime.status
             result = f"runtime {runtime_label}: pid={runtime.pid or '-'}, exit={runtime.last_exit}"
+        elif status == "warning":
+            result = "召喚條件不完整；缺少必要模組或 recall，不能判定可用"
         else:
             result = "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定"
         roles.append({

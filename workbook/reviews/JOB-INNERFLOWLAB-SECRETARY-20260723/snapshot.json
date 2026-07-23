@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-23T13:07:22+08:00",
+  "generated_at": "2026-07-23T13:14:00+08:00",
   "roles": [
     {
       "id": "A0",
@@ -96,7 +96,7 @@
       "id": "B5",
       "name": "影子系統總管",
       "status": "warning",
-      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "result": "召喚條件不完整；缺少必要模組或 recall，不能判定可用",
       "evidence": "missing module"
     },
     {

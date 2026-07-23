@@ -20,12 +20,16 @@ outcome layer of `127.0.0.1:18501` as a comparison-first data center.
 - WordPress snippet: active after update
 - Warning filter UI: exactly `4` visible job cards
 - Exporter unit tests: `7/7` passed
+- Public pages: `4` published, `2` recoverable in trash
+- Front page: `InnerFlowLab Home` (page `72`)
+- Retired URLs: old page `16` and `/elementor-9/` return HTTP `404`
 
 ## Visual evidence
 
 - `portal-18501-macromicro-v07.png`: compact hero and sticky data navigation
 - `portal-18501-market-v07.png`: eight equal-size public market cards
 - `portal-18501-workstreams-v07.png`: categorized workstreams with warning filter
+- `site-pages-cleanup-v08.png`: new homepage and four-item public navigation
 
 ## Security boundary
 

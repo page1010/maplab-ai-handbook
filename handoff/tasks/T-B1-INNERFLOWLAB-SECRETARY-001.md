@@ -2,7 +2,7 @@
 
 ## 接續狀態
 
-- **狀態**: COMPLETE（v0.7 live；18501 比較型資料中心已上線；hourly sync 待 Owner 一次性 Keychain 授權）
+- **狀態**: COMPLETE（v0.8 live；18501 資料中心與公開頁收斂已完成；hourly sync 待 Owner 一次性 Keychain 授權）
 - **負責**: A1 管理整合 + B1 Builder + B2/B3/B4 review
 - **目標**: 把 MAPLAB 角色與 Investment OS 已驗證成果整理成 InnerFlowLab 的管理員專用只讀入口。
 - **邊界**: 不下單、不建立模擬單、不公開 broker/持倉/secrets/raw logs、不提供任意 shell/command 執行。
@@ -67,9 +67,17 @@
 - 管理員 live render 已驗證；匿名頁 302、匿名 REST 401。測試 7/7 通過，`git diff --check` 通過。
 - 外掛版本 0.3.0；安裝包 `dist/innerflowlab-personal-secretary-0.3.0.zip`；review bundle：`workbook/reviews/JOB-B1-INNERFLOWLAB-SECRETARY-20260723/`。
 
+## 2026-07-23 v0.8 — 公開頁與導覽收斂
+
+- WordPress 後台盤點確認原有 6 個頁面全數公開；舊 `innerflowlab聽你內在的聲音` 仍是靜態首頁，`分析頁面` 也仍在主導覽，並非已下線。
+- 先實頁驗證 `InnerFlowLab Home` 的內容與個人秘書入口可正常接手，再於閱讀設定將 page 72 設為靜態首頁。
+- 舊首頁 page 16 與舊分析頁 page 9 移至回收桶，保留 WordPress 還原能力，沒有永久刪除內容。
+- 公開頁從 6 個減為 4 個：`InnerFlowLab Home`、`Privacy Policy`、`個人秘書`、`聯絡我們`；Page List 導覽自動移除兩個舊入口。
+- 公開 readback：`/` HTTP 200 且回 page 72；`/?page_id=16` 與 `/elementor-9/` 均 HTTP 404。私人入口仍在主導覽並維持管理員登入門檻。
+
 ## Resume Prompt
 
-我是接手 InnerFlowLab Personal Secretary v0.7 後續同步的 B1/Codex。先讀
+我是接手 InnerFlowLab Personal Secretary v0.8 後續同步的 B1/Codex。先讀
 `CURRENT_STATUS.md`、`pitfalls.md` 與本 Task Card。外掛在
 `wordpress/innerflowlab-personal-secretary/`，exporter 在
 `tools/innerflowlab_personal_secretary_snapshot.py`，live URL 是
@@ -78,6 +86,9 @@
 判讀是 14/18 工作完成、4 條未通過、2/4 核心成果線有產物，不能把 warning
 解讀成整套不能用。live 仍由 Code Snippets id=6 運作；修改 CodeMirror 必須
 `Meta+A → Backspace → fill → save`，並確認片段仍為 active。
+v0.8 已把 `InnerFlowLab Home` page 72 設為首頁，舊首頁 page 16 與舊分析頁
+page 9 在回收桶，可由 WordPress 還原；公開導覽只保留首頁、Privacy Policy、
+個人秘書、聯絡我們。不要永久清空回收桶，除非 Owner 再明確指定。
 下一步由 Owner 依 `docs/innerflowlab-personal-secretary-sync.md` 建立 WordPress
 Application Password，直接存入 macOS Keychain，不貼到聊天或 repo。分支 merge
 到 canonical checkout 後，執行 `tools/innerflowlab_personal_secretary_sync.sh` 與

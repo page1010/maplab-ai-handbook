@@ -1,6 +1,6 @@
 # GitHub Dynamic Role Task Modules
 
-Generated: 2026-06-29T08:45:19+08:00
+Generated: 2026-07-23T13:29:36+08:00
 
 ## Purpose
 
@@ -19,7 +19,8 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - `chrome-extension/task-modules/{role}.json` — one portable role module per agent.
 - `chrome-extension/config/task-modules.json` — extension config pointer.
 - `workbook/task_modules/role_module_relation_graph.json` — directed impact graph.
-- `workbook/task_modules/role_module_relationships.csv` and `.xlsx` — Excel-readable relationship table.
+- `workbook/task_modules/role_module_relationships.csv` — canonical relationship table.
+- `workbook/task_modules/role_module_relationships.xlsx` — formatted Excel workbook, rebuilt when the Codex artifact runtime is available.
 
 ## Markdown Refresh Model
 
@@ -146,6 +147,15 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: system_fit_patrol, pause_resume_review, workflow_suitability_check, overbuild_detection, role_routing_review, owner_surface_review
 - Affects: Investment OS workflow suitability; MAPLAB governance docs; Chrome side panel; B1 Builder scope; B2 Reviewer focus; B3 Archivist writeback
 - Module file: `chrome-extension/task-modules/B4.json`
+
+### B5 — Shadow System & Capability Distillation Manager
+
+- Department: 影子系統總管
+- Simulation: 負責 Recall Prompt 版本品質、複利輸出能力盤點與地端模型教材包蒸餾；不取代 A1 巡查或 B1-B4 執行。
+- Runtime targets: gemini, codex, openclaw, hermes
+- Task types: recall_quality_review, capability_inventory, local_model_teaching_package, pitfalls_distillation
+- Affects: recalls; skills/auto; pitfalls.md; workbook/reviews; packages/local-model-teaching
+- Module file: `chrome-extension/task-modules/B5.json`
 
 ### IOS-MOMENTUM — Daily Momentum Manager
 

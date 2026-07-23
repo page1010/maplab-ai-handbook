@@ -41,3 +41,15 @@ python3 tools/innerflowlab_personal_secretary_snapshot.py \
   --push
 ```
 
+## Hourly sync
+
+The production wrapper retrieves the WordPress Application Password from
+macOS Keychain at runtime. No secret is stored in git, `.env`, or the launchd
+plist. See `docs/innerflowlab-personal-secretary-sync.md`.
+
+The installer remains fail-closed until the Owner has created the application
+password and stored it in Keychain:
+
+```bash
+zsh tools/install_innerflowlab_personal_secretary_sync.sh
+```

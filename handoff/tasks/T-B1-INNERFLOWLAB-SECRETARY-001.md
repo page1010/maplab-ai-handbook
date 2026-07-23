@@ -2,7 +2,7 @@
 
 ## 接續狀態
 
-- **狀態**: COMPLETE（v0 live；持續自動同步另列後續）
+- **狀態**: COMPLETE（v0.5 live；hourly sync 已建，待 Owner 一次性 Keychain 授權後啟用）
 - **負責**: A1 管理整合 + B1 Builder + B2/B3/B4 review
 - **目標**: 把 MAPLAB 角色與 Investment OS 已驗證成果整理成 InnerFlowLab 的管理員專用只讀入口。
 - **邊界**: 不下單、不建立模擬單、不公開 broker/持倉/secrets/raw logs、不提供任意 shell/command 執行。
@@ -36,6 +36,15 @@
 - Chrome 檔案上傳權限未開，live 端改用 Code Snippets 啟用同一份 PHP；正式外掛 zip 已保存在 `dist/`。
 - 本輪是去敏的一次性快照。持續同步要另設 WordPress Application Password 與低頻排程，不得把憑證寫入 repo。
 
+## 2026-07-23 v0.5 接續完成
+
+- B5 已正式接入動態角色模組生成器；生成器目前 32 模組（31 portal 角色 + WIN），popup consistency PASS。
+- 乾淨 truth source 下，31 portal 角色為 `1 running / 30 standby / 0 warning`，source-hash alert 已清除。
+- IOS-ALPHA 前次 `36d stale` 是 exporter 讀到 repo 範例副本；真 runtime 手機卡、長報告、shadow training 與 local-model findings 均於 13:03 更新，runner SHA-256 與 repo 一致。
+- IOS 功能目前 `3 running / 5 ready / 4 standby / 4 warning`；IOS-ALPHA 為 `READY / 0h`。
+- Live WordPress 已同步 v0.5；登入後眼見 IOS-ALPHA READY，匿名頁仍 302，匿名 REST 仍 401。
+- 已新增 Keychain-only hourly wrapper、LaunchAgent、fail-closed installer 與一次性 Owner 設定文件；未建立、讀取或保存 Application Password。
+
 ## Resume Prompt
 
 我是接手 InnerFlowLab Personal Secretary v0.1 後續同步的 B1/Codex。先讀
@@ -43,8 +52,10 @@
 `wordpress/innerflowlab-personal-secretary/`，exporter 在
 `tools/innerflowlab_personal_secretary_snapshot.py`，live URL 是
 `https://innerflowlab.com/personal-secretary/`。v0 已完成登入/登出 eye proof。
-下一步先收斂 MAPLAB `CURRENT_STATUS.md` merge conflict 並重建 task modules，
-再更新 IOS-ALPHA 跨源資料並補齊 shadow training artifact；之後以環境變數設定
-WordPress Application Password，為 exporter 建立低頻排程。
+下一步由 Owner 依 `docs/innerflowlab-personal-secretary-sync.md` 建立 WordPress
+Application Password，直接存入 macOS Keychain，不貼到聊天或 repo。分支 merge
+到 canonical checkout 後，執行 `tools/innerflowlab_personal_secretary_sync.sh` 與
+`tools/install_innerflowlab_personal_secretary_sync.sh`，再驗 launchctl、登入後時間戳、
+匿名 302 與 REST 401。四個獨立 warning job 另建 B1/B2 修復任務，不阻塞入口。
 不可把 `.env`、broker state、持倉明細、raw logs 或任意命令送到 WordPress；
 每次同步後重驗匿名 302、REST 401 與管理員畫面。

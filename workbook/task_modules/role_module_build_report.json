@@ -1,21 +1,27 @@
 {
-  "generated_at": "2026-06-29T08:45:19+08:00",
-  "module_count": 31,
-  "relationship_rows": 660,
-  "graph_nodes": 351,
-  "graph_edges": 963,
+  "generated_at": "2026-07-23T13:29:36+08:00",
+  "module_count": 32,
+  "relationship_rows": 678,
+  "graph_nodes": 362,
+  "graph_edges": 992,
   "missing_sources": [
     "broker_api",
     "proposed_orders",
     "simulation_orders"
   ],
+  "xlsx": {
+    "generated": true,
+    "path": "workbook/task_modules/role_module_relationships.xlsx",
+    "builder": "tools/ai_workbook/build_role_module_relationships_xlsx.mjs",
+    "preview": "workbook/task_modules/role_module_relationships-preview.png"
+  },
   "outputs": [
     "docs/extension/dynamic-role-task-modules.md",
     "chrome-extension/config/task-modules.json",
     "chrome-extension/task-modules/index.json",
     "workbook/task_modules/role_module_relation_graph.json",
     "workbook/task_modules/role_module_relationships.csv",
-    "workbook/task_modules/role_module_relationships.xlsx",
-    "handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md"
+    "handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md",
+    "workbook/task_modules/role_module_relationships.xlsx"
   ]
 }

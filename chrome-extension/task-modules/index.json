@@ -1,6 +1,6 @@
 {
   "schema_version": "2026-05-11.dynamic-role-module-index.v1",
-  "generated_at": "2026-06-29T08:45:19+08:00",
+  "generated_at": "2026-07-23T13:29:36+08:00",
   "repository": "page1010/maplab-ai-handbook",
   "canonical_local_repo": "/Users/pagemacmini/maplab-ai-handbook",
   "dynamic_link_policy": "Load JSON/Markdown task data from GitHub; do not execute remote JS.",
@@ -180,6 +180,20 @@
       "role_name": "Investment OS System Patrol",
       "department": "Investment OS System Patrol（系統適配巡查）",
       "path": "chrome-extension/task-modules/B4.json",
+      "runtime_targets": [
+        "gemini",
+        "codex",
+        "openclaw",
+        "hermes"
+      ],
+      "risk_level": "medium"
+    },
+    {
+      "role_id": "B5",
+      "module_id": "MAPLAB_B5_SHADOW_SYSTEM_&_CAPABILITY_DISTILLATION_MANAGER_DYNAMIC_ROLE_MODULE",
+      "role_name": "Shadow System & Capability Distillation Manager",
+      "department": "影子系統總管",
+      "path": "chrome-extension/task-modules/B5.json",
       "runtime_targets": [
         "gemini",
         "codex",

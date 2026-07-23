@@ -418,3 +418,11 @@
 - 根因：一次性 seed 寫入 `ifl_secretary_snapshot`，正式入口實際讀取 `ifl_personal_secretary_snapshot`；寫入成功不代表 consumer 讀到同一個 key。
 - 解法：依正式 plugin 的 `OPTION_KEY` 改寫 seed，重新執行後以產生時間、角色數與 IOS-ALPHA 卡片三項 UI readback 驗證。
 - 預防：任何 WordPress option/REST 同步先從正式 consumer 取 key，不手打別名；完成條件必須包含登入後 UI readback，不能只看 Code Snippets 執行成功。
+
+## 2026-07-23 — Investment OS 產品 freshness 必須讀 runtime root，不可讀 repo 範例副本
+
+- 觸發條件：launchd 顯示 `convergence-engine` 每 15 分鐘 exit 0，但 WordPress IOS-ALPHA 卡片仍顯示 36 天 stale。
+- 根因：exporter 雖已用 `ios_runtime_root` 讀真正 runtime DB，卻仍用 `ios_repo/data/convergence_phone.md` 判定 IOS-ALPHA freshness；repo 副本停在 6 月，真 runtime 檔在 `~/.local/share/investmentos-telegram-operator/data/` 當日持續更新。
+- 解法：IOS-ALPHA 的手機卡與 freshness 全部改讀 `runtime_root`；比對 repo/runtime runner SHA-256 一致後，以 runtime 手機卡、shadow training、local-model findings 與 launchctl exit 0 共同驗證。
+- 預防：任何 Investment OS owner-facing runtime 狀態先分清 `repo source`、`repo sample/state`、`runtime copy`、`runtime output`；排程是否存在看 launchctl，程式版本看 checksum，資料新鮮度只能看 runtime output。
+- 封坑驗證：`python3 -m unittest -v tests/test_innerflowlab_personal_secretary_snapshot.py` 的 `test_ios_alpha_freshness_uses_runtime_root_not_stale_repo_copy` 必須通過。

@@ -7,12 +7,17 @@ is kept in `dist/`.
 
 Next safe slice:
 
-1. Resolve the MAPLAB `CURRENT_STATUS.md` merge conflict.
-2. Rebuild dynamic role modules and verify the source-hash alert clears.
-3. Run IOS-ALPHA against fresh sources, produce a new phone card and shadow
-   artifact, then verify the portal card leaves warning.
-4. Create a WordPress Application Password and a low-frequency exporter
-   schedule without storing credentials in git.
+1. Merge `codex/innerflowlab-secretary-v0` into the canonical repo.
+2. Owner follows `docs/innerflowlab-personal-secretary-sync.md` to create one
+   WordPress Application Password and store it directly in macOS Keychain.
+3. Run the one-shot sync, then the fail-closed installer.
+4. Verify launchctl, logged-in timestamp, anonymous 302, and REST 401.
+5. Route the four remaining failed jobs to scoped B1/B2 repair tasks.
+
+The role-module generator now rebuilds the Excel relationship workbook only
+when `CODEX_NODE_MODULES` points to the workspace dependency bundle. Without
+that dependency it reports XLSX as skipped instead of claiming a stale workbook
+was generated.
 
 Do not expose local port 18502, raw SQLite, holdings details, secrets, or any
 command execution endpoint to WordPress.

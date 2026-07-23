@@ -9,22 +9,23 @@ snapshot REST access returns HTTP 401.
 
 ## Owner question answered
 
-IOS-ALPHA is implemented and may be represented on WordPress. It is not a
-full-system rewrite case. Its scheduler and code path exist and last exited
-successfully, while its owner-facing convergence artifact is 36 days stale.
-The portal therefore marks the IOS-ALPHA data product as warning without
-marking the summonable role itself as failed.
+IOS-ALPHA is implemented and represented on WordPress. It is not a full-system
+rewrite case. Its runtime scheduler, phone card, long report, shadow training,
+and local-model findings are current. The earlier 36-day warning came from
+reading the repo example copy instead of the runtime output and is fixed.
 
 ## Current counts
 
-- Roles: 31 total — 1 running, 29 standby, 1 warning.
-- IOS functions: 16 total — 3 running, 4 ready, 4 standby, 5 warning.
-- Actual role warning: B5 has no task module.
+- Roles: 31 total — 1 running, 30 standby, 0 warning.
+- IOS functions: 16 total — 3 running, 5 ready, 4 standby, 4 warning.
+- B5 now has a generated task module; role source-hash warnings are cleared.
 - Actual function warnings: Cross Project Mirror, Live Position Watchdog,
-  Live Position Research, Strong Stock Story, and stale IOS-ALPHA data.
+  Live Position Research, and Strong Stock Story.
 
 ## Safety boundary
 
 WordPress receives sanitized summaries only. Computation, SQLite, broker
 adjacent data, raw logs, credentials, and order-capable actions stay on the
 Mac. The portal does not iframe the unauthenticated local Streamlit listener.
+An hourly Keychain-only sync path is implemented but remains fail-closed until
+the Owner performs the one-time WordPress Application Password handoff.

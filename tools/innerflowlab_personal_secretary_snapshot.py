@@ -241,11 +241,11 @@ def build_snapshot(
                         LaunchJob(pid=None, last_exit=None),
                     ).status == "warning"
                     or "stale" in file_freshness(
-                        ios_repo / "data" / "convergence_phone.md",
+                        runtime_root / "data" / "convergence_phone.md",
                         now,
                     )
                     or file_freshness(
-                        ios_repo / "data" / "convergence_phone.md",
+                        runtime_root / "data" / "convergence_phone.md",
                         now,
                     ) == "missing"
                 )
@@ -256,7 +256,7 @@ def build_snapshot(
                 "WordPress 僅顯示去敏手機卡與新鮮度，不執行研究或交易。"
             ),
             "freshness": file_freshness(
-                ios_repo / "data" / "convergence_phone.md",
+                runtime_root / "data" / "convergence_phone.md",
                 now,
             ),
         },

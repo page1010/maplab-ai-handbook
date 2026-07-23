@@ -128,6 +128,40 @@ class SecretarySnapshotTests(unittest.TestCase):
                 )
             )
 
+    def test_ios_alpha_freshness_uses_runtime_root_not_stale_repo_copy(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            maplab = root / "maplab"
+            ios = root / "ios"
+            runtime = root / "runtime"
+            (maplab / "chrome-extension" / "task-modules").mkdir(parents=True)
+            (maplab / "recalls").mkdir()
+            (ios / "data").mkdir(parents=True)
+            (runtime / "data").mkdir(parents=True)
+            (ios / "data" / "convergence_phone.md").write_text("stale repo copy\n")
+            (runtime / "data" / "convergence_phone.md").write_text("fresh runtime\n")
+
+            with mock.patch(
+                "tools.innerflowlab_personal_secretary_snapshot.read_launchctl",
+                return_value={
+                    "com.investmentos.convergence-engine": LaunchJob(None, 0),
+                },
+            ):
+                snapshot = build_snapshot(
+                    maplab,
+                    ios,
+                    datetime.now(timezone.utc),
+                    ios_runtime_root=runtime,
+                )
+
+            alpha = next(
+                module
+                for module in snapshot["modules"]
+                if module["id"] == "ios_alpha"
+            )
+            self.assertEqual(alpha["status"], "ready")
+            self.assertEqual(alpha["freshness"], "0h")
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-07-23 A1每日巡查（remote）：all clear — 24h 0 A2-A8 commits（正常）；CRITICAL 持續: T-A4-002 ~2311h+ / T-IOS-KOL-001 ~799h+；STALLED since 07-19 計 96h+（7天後升 NEEDS_REVIEW ~07-26）；⚠️ T-A7-001 07-25 Phase 3 里程碑倒數 **2 天**，Owner 待確認 Zone B/C 金額（5天未回覆）
+> 最後更新：2026-07-23 A1晚間巡查（remote）：all clear — A2 active（d4a518f 17:57 governance: spec-drift+patrol grader）；T-A7-001 07-25 Phase 3 里程碑倒數 **2 天**仍待 Owner 確認 Zone B/C；CRITICAL 持續: T-A4-002 ~2319h+ / T-IOS-KOL-001 ~807h+；STALLED since 07-19 計 104h+（~07-26 升 NEEDS_REVIEW）
 >
 > 使用方式：選擇角色 → 複製 prompt / module handoff → 貼到 Gemini / Codex / OpenClaw / legacy Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -20,7 +20,7 @@
 |------|---------|------|------|
 | A0 | 總調度秘書 | ✅ Cowork 常駐（今日活躍：IS Phase B 走查+Codex/agy 派工實驗，4 commits，2026-07-12）| 跨系統橋接、調度、桌面控制 |
 | A1 | 系統總管中心 | ✅ Claude Code 常駐 | Telegram bot + 終端機，直接下指令 |
-| A2 | 搜尋流量作戰部 | 🟢 召喚型可用 + patrol（Ads/SEO/WordPress）；last commit `5a83f0f` 2026-07-07（SEO 三人小組執行：婚禮pillar草稿+B3操作稿+cannibalization定案）；T-A2A3-001-B 🔴 >368h持續 | SEO / Ads / WordPress / Brand memory |
+| A2 | 搜尋流量作戰部 | 🟢 召喚型可用 + patrol（Ads/SEO/WordPress）；last commit `d4a518f` 2026-07-23 17:57（governance: spec-drift 檢查+patrol grader+自我改進缺口稽核）；T-A2A3-001-B 🔴 STALLED since 07-19 | SEO / Ads / WordPress / Brand memory |
 | A3 | 社群與廣告成長部 | ✅ T-A3-001 完成（GTM v21 雙平台追蹤上線）；T-A3-002 ⏸️ 阻塞（等廣告週期+Owner操作）| Meta Ads / Social |
 | A4 | 影像資產整理部 | ✅ T-A4-001 S11(2024) 完成（07-09 22:56 run done，3,314/3,409 分類，GBP 照片評分 🔄 解鎖；2026-07-10 午後巡查確認；下一步：T-A4-003/004 待 Owner 派工）| Photo Archive |
 | A5 | 報價與提案引擎部 | 🟡 T-A5-002 + T-A5-005 均 STALLED since 2026-07-19（Owner 待執行：`fixMasterTemplate_()`/手動接線；`5ab7434`/`3209fba` 2026-06-23 最後 commit）；T-A5-004 🟢 功能穩定（非 CRITICAL，2026-07-06 A1 對帳澄清）；T-A5-007 🔲 待 Codex 認領（`6cefd13` 2026-07-06 建卡，A5→Codex 移交）；2026-07-19 日常巡查更新 | Quotation Engine |

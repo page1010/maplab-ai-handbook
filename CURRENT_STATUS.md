@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-07-23（A1每日巡查 + 午後巡查，remote cloud）｜2026-07-22 三次巡查 all clear（每日/午後/晚間）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-07-23（A1每日+午後+晚間巡查，remote cloud）｜2026-07-22 三次巡查 all clear（每日/午後/晚間）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -170,6 +170,7 @@
 | A7 | T-A7-001: Owner 確認 Zone B（NT$2,000？）+ Zone C（NT$2,500？）兩個數字 | 見 Task Card |
 | ⚠️ A1巡查 2026-07-23 | T-A7-001 Phase 3 目標啟動日 07-25 距今僅 **2 天**，Owner 尚未確認 Zone B/C 金額（自 07-18 起等候 5 天）。若 07-24 前未回覆，Phase 3 將延誤。 | 請 Owner 儘速確認 Zone B/C 金額 |
 | ⚠️ A1巡查 2026-07-23 午後 | A4 RECALL 頭部（07-10 版）標記 T-A4-003/004 為 🔴CRITICAL，與任務表（🟡STALLED since 07-19）不一致；已修正 RECALL 頭部。午後 8h 內零新 agent commit，系統靜止，各 STALL 任務均等待 Owner 操作。 | 已修正 A4 RECALL；T-A7-001 Phase 3 後天截止，見上方 |
+| ✅ A1巡查 2026-07-23 晚間 | 系統一致，無新異常。A2 於 17:57 產出 governance commit（d4a518f：spec-drift 檢查+patrol grader+自我改進缺口稽核），RECALL A2 row 已更新最新 last commit。T-A7-001 07-25 Phase 3 deadline 明日（07-24）為 Owner 最後確認視窗；T-A4-002 ~2319h / T-IOS-KOL-001 ~807h CRITICAL 持續。 | 無需立即行動；T-A7-001 見上方 07-23 警告 |
 | A7 | T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 5/8 需 TimeTree 權限（任務 9 已解除） | 見 Task Card |
 | Owner | T-GBP-001: 等 Owner 準備新圖片 | 見 Task Card |
 |  | T-HQ-001: Owner pending（非 B1 blocking） | 見 Task Card |

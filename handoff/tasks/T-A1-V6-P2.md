@@ -6,8 +6,8 @@
 
 > **Agent 冷啟動時第一個看的區塊。每次 checkpoint 必須更新。**
 
-- **狀態**: 🔄 進行中
-- **最後活動**: 2026-07-19 7efc03e
+- **狀態**: 🟡 STALLED（since 2026-07-21，48h 無 commit，Owner 可更新最後活動解除）
+- **最後活動**: 2026-07-19 5230457
 - **接續點**: 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG 精簡完成。下一步：建虛擬測試案例 → A6 跑報價流程 → 驗證寫入。
 - **阻塞**: 等 A6 實際報價測試
 - **assigned_session**: 未認領（CRITICAL ~1279h 無 commit）

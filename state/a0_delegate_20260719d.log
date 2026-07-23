@@ -1,0 +1,21 @@
+**A0 派工四項任務全部完成。執行摘要：**
+
+---
+
+**SECTION 24 — 可逆先行準則**（AGENT_RULES.md）
+R-VERIFIED Opus-4-8 產出正式落地。可逆動作（git commit、Task Card 更新、AGENT_RULES 修改）不等核准直接做；不可逆動作（LINE webhook、廣告投放、Drive 刪除）才需 Owner + 量化依據。每個派工任務書強制標注 `動作可逆性`。
+
+**SECTION 25 — 任務卡四態狀態機**（AGENT_RULES.md）
+翻轉預設落地：`IN_PROGRESS → STALLED(48h) → NEEDS_REVIEW(7d) → AUTO_CLOSED(7d)`，patrol.sh 自動驅動。Owner 有異議一句話重開。殭屍卡不再無限累加警告。
+
+**patrol.sh 實測結果**
+- 11 張殭屍卡自動轉 🟡 STALLED（包含 T-A6-001 10 天無 commit ✅）
+- T-A7-001 正確識別為 ⏸️ BLOCKED（Owner 等 Zone B/C 金額），**第 24 次警告問題結構性消失** ✅
+- `【⚡ 本輪狀態遷移】` 區塊清楚顯示每次遷移，不再是噪音累積
+
+**r_fable_vs_opus 最終定案**（`state/r_fable_vs_opus_summary.md`）
+共識區三版一致可用；深層原則以 R-VERIFIED 版為準；不全量重跑（省 token，A0 決策）。
+
+**distill/b5-epoch-20260719.md** — B5 蒸餾教材包建立，含三版對比、可逆先行、翻轉預設、地端模型訓練指引。
+
+Commit：`7efc03e` + `5230457`，已 push，Owner 已通知。

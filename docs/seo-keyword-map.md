@@ -232,3 +232,21 @@
 - 每次寫新文章**前**讀本圖 → 確認主關鍵字無 §5 互搶 → 挑 §6 GAP 或強化現有 → 內鏈用佔位待 verify。
 - 每次 §7 Codex 盤點後、或新增/合併文章後，更新本圖並 `checkpoint.sh`。
 - 與 live WP 衝突時以 REST 為準，回寫修正本圖。
+- 疑似重複 / 互搶 / 死連結**先進 §9 封存觀察區，不即刪**；確認無流量影響再決定 301/移除。
+
+---
+
+## 9. 封存觀察區（Archive & Observe）
+
+> **治理原則：先封存、後觀察、再決定 —— 不即刪，避免誤殺。** 標記日起約 2 個月回看；只有在「判定依據」的訊號成立（多為 GSC 無流量/無排名）後，才 301 或從舊文件移除。回看前一律**保留現狀**。
+> 標記日：2026-07-23 ｜ 預計回看：2026-09-23 ｜ 回看時先跑 §7 Codex 盤點取得 GSC/Rank Math 實據再判。
+
+| # | 項目 | 類型 | 判定依據（成立才動手） | 回看前處置 |
+|--:|---|---|---|---|
+| 1 | `tai-nan-wai-hui-chang-di-tui-jian`（vs `tainan-waihui-changdi-tuijian`） | 疑似重複頁（兩個拼音 slug 同主題） | REST 確認兩頁皆 live；GSC 其一 0 點擊/0 排名 → 301 到有流量的那頁 | 保留兩頁，不 301 |
+| 2 | 場地 venue 4 頁：`tainan-catering-venue-7` / `-venue-selection-2026` / `-venue-guide` / page `tainan-party-venue` | 互搶「台南外燴場地」 | GSC query 重疊 + 各頁點擊；保留最高流量者當 pillar，其餘轉子意圖或 301 | 全保留，先只在內鏈上互指 |
+| 3 | 費用 cost 3 頁：`tainan-catering-cost-guide`（泛）/ `tainan-corporate-catering-cost` / `tainan-wedding-catering-cost` | 泛字頁疑似吃掉分眾頁 | GSC 看分眾頁是否被 cost-guide 壓排名；有才調整 | 全保留，分眾頁強化各自 modifier |
+| 4 | 7 個 404 規劃 slug（§4） | 死 slug 殘留在舊文件 | 全 repo grep 已無「當 live」引用 + 無廣告 final URL 指向 → 從舊文件清掉字串 | 保留字串，但**禁當 live target**（已在 §4 標） |
+| 5 | 廣告文件錯誤 slug `outdoor-wedding-catering-venue`（404，應為 `tainan-outdoor-wedding-catering`） | 廣告死連結 | 廣告文件（`ad-funnel-battle-plan.md` / `ad-buildout-plan.md`）已同步改為正確 slug → 此項關閉 | 修正前廣告 final URL **不可**上線指向 404 |
+
+**回看 SOP（2026-09-23 起）：** ① 跑 §7 Codex authenticated REST 取 GSC 點擊/排名 → ② 逐項比對上表「判定依據」→ ③ 訊號成立才 301/移除，並記進 `CHANGELOG` + `checkpoint.sh`；訊號不成立就把回看日再往後推、維持觀察。**任何移除都走 git commit（可回滾），不做不可逆刪除。**

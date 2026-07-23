@@ -22,3 +22,35 @@
 [2026-07-19 03:00:09] ✅ INDEX rebuilt → /Users/pagemacmini/maplab-ai-handbook/state/dispatch_backup_index.json
 [2026-07-19 03:00:09] === dispatch backup done ===
 [2026-07-19 03:00:09] 外接碟未掛載或不可寫，跳過外接碟備份（正常，外接碟可能已拔走）
+[2026-07-20 03:00:00] === dispatch backup 20260720 start ===
+[2026-07-20 03:00:02] ✅ rsync maplab-ai-handbook done
+[2026-07-20 03:00:02] ✅ rsync agent-hq done
+[2026-07-20 03:00:05] ✅ rsync new-project done
+[2026-07-20 03:00:05] rebuilding INDEX...
+[2026-07-20 03:00:05] ✅ INDEX rebuilt → /Users/pagemacmini/maplab-ai-handbook/state/dispatch_backup_index.json
+[2026-07-20 03:00:05] === dispatch backup done ===
+[2026-07-20 03:00:05] 外接碟未掛載或不可寫，跳過外接碟備份（正常，外接碟可能已拔走）
+[2026-07-21 03:00:00] === dispatch backup 20260721 start ===
+[2026-07-21 03:00:03] ✅ rsync maplab-ai-handbook done
+[2026-07-21 03:00:03] ✅ rsync agent-hq done
+[2026-07-21 03:00:06] ✅ rsync new-project done
+[2026-07-21 03:00:06] rebuilding INDEX...
+[2026-07-21 03:00:06] ✅ INDEX rebuilt → /Users/pagemacmini/maplab-ai-handbook/state/dispatch_backup_index.json
+[2026-07-21 03:00:06] === dispatch backup done ===
+[2026-07-21 03:00:07] 外接碟未掛載或不可寫，跳過外接碟備份（正常，外接碟可能已拔走）
+[2026-07-22 03:00:03] === dispatch backup 20260722 start ===
+[2026-07-22 03:00:10] ✅ rsync maplab-ai-handbook done
+[2026-07-22 03:00:10] ✅ rsync agent-hq done
+[2026-07-22 03:00:14] ✅ rsync new-project done
+[2026-07-22 03:00:14] rebuilding INDEX...
+[2026-07-22 03:00:14] ✅ INDEX rebuilt → /Users/pagemacmini/maplab-ai-handbook/state/dispatch_backup_index.json
+[2026-07-22 03:00:14] === dispatch backup done ===
+[2026-07-22 03:00:14] 外接碟未掛載或不可寫，跳過外接碟備份（正常，外接碟可能已拔走）
+[2026-07-23 03:00:05] === dispatch backup 20260723 start ===
+[2026-07-23 03:00:09] ✅ rsync maplab-ai-handbook done
+[2026-07-23 03:00:09] ✅ rsync agent-hq done
+[2026-07-23 03:00:13] ✅ rsync new-project done
+[2026-07-23 03:00:13] rebuilding INDEX...
+[2026-07-23 03:00:13] ✅ INDEX rebuilt → /Users/pagemacmini/maplab-ai-handbook/state/dispatch_backup_index.json
+[2026-07-23 03:00:13] === dispatch backup done ===
+[2026-07-23 03:00:13] 外接碟未掛載或不可寫，跳過外接碟備份（正常，外接碟可能已拔走）

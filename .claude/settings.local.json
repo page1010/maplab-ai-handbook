@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__google-sheets__create_sheet",
+      "mcp__google-sheets__update_cells",
+      "mcp__google-sheets__get_sheet_data",
+      "mcp__google-sheets__batch_update",
+      "mcp__google-sheets__batch_update_cells"
+    ]
+  },
+  "enabledMcpjsonServers": [
+    "google-sheets",
+    "google-drive",
+    "google-ads",
+    "google-analytics",
+    "google-search-console",
+    "line-bot",
+    "threads",
+    "meta-ads",
+    "cloudinary",
+    "ffmpeg"
+  ]
+}

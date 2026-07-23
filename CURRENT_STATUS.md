@@ -122,7 +122,7 @@
 | T-A2A3-001-B | SEO 場景頁面 + 內連結（從 T-A2A3-001 分拆） | A2/A3 | 🟡 STALLED（since 2026-07-19，48h 無 commit，Owner 可更新最後活動解除）（WordPress post `1696` 已建立為未發布草稿並重載驗證：`https://www.maplabkitc） | handoff/tasks/T-A2A3-001-B.md |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2/A3 | ⏸️ RM/GSC 部分暫停；案例寫作轉 T-A2A3-001-B（Rank Math 已退訂，已設定好的 SEO 欄位先不要再設定；下一步是依 live URL map 補 To B 真） | handoff/tasks/T-A2A3-001.md |
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | ⏸️ 阻塞中（受眾輪廓分析完成（693筆 Orders）。待執行：嘉義加入廣告地區、興趣條件精簡、策略一冷受眾上線。） | handoff/tasks/T-A3-002.md |
-| T-A4-002 | pagewu1010 帳號 Takeout 解壓 + Gemini Flash 照片資產整合 | A4 | 🔴 CRITICAL（~2207h無commit） | handoff/tasks/T-A4-002.md |
+| T-A4-002 | pagewu1010 帳號 Takeout 解壓 + Gemini Flash 照片資產整合 | A4 | 🔴 CRITICAL（~2208h無commit） | handoff/tasks/T-A4-002.md |
 | T-A4-003-photo-alt-pipeline | T-A4-003 — 照片 ALT/SEO 管線（地端 gemma4）+ Drive 改串流釋空間 | A4 | 🟡 STALLED（since 2026-07-19，48h 無 commit，Owner 可更新最後活動解除）（等 36,676 張處理完 → Owner 改 Drive 串流 → 釋出 ~433GB） | handoff/tasks/T-A4-003-photo-alt-pipeline.md |
 | T-A4-004-photo-classify | T-A4-004 — 照片分類搬移：截圖/家庭/外燴工作 + 年月資料夾 | A4 | 🟡 STALLED（since 2026-07-19，48h 無 commit，Owner 可更新最後活動解除）（批次跑完後 `--status` 查進度，續開下一批直到 ~98,400 張完成） | handoff/tasks/T-A4-004-photo-classify.md |
 | T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🟡 STALLED（since 2026-07-19，48h 無 commit，Owner 可更新最後活動解除）（Owner 三題已回答（2026-06-23）→ 已加 `fixMasterTemplate_()` 到 Code.gs） | handoff/tasks/T-A5-002.md |
@@ -168,3 +168,5 @@
 | Owner | T-GBP-001: 等 Owner 準備新圖片 | 見 Task Card |
 |  | T-HQ-001: Owner pending（非 B1 blocking） | 見 Task Card |
 |  | T-IOS-KOL-001: - **阻塞**：無。 | 見 Task Card |
+
+## 2026-07-19 weekly-eval: 520/540 | NO_DELTA

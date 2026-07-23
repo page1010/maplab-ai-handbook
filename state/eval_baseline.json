@@ -1,6 +1,6 @@
 {
   "_comment": "weekly_eval_compounding.py 的比對基線。由 Codex maker 每週更新。",
-  "last_run": "2026-07-12",
+  "last_run": "2026-07-19",
   "result_counts": {
     "PASS": 520,
     "FAIL": 20,
@@ -548,5 +548,5 @@
     "workbook/reviews/JOB-CODEX-WEDDING-PILLAR-20260710/output.md::E2_persuasion_patterns": "PASS",
     "workbook/reviews/JOB-CODEX-WEDDING-PILLAR-20260710/output.md::E3_absolute_words": "PASS"
   },
-  "updated_at_local": "2026-07-13T01:04:16+08:00"
+  "updated_at_local": "2026-07-20T01:04:09+08:00"
 }

@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-07-19T03:00:09.455624",
-  "backup_dir": "/Users/pagemacmini/maplab_backup/20260719",
+  "generated_at": "2026-07-23T03:00:13.330585",
+  "backup_dir": "/Users/pagemacmini/maplab_backup/20260723",
   "repos": {
     "maplab-ai-handbook": {
       "root": "/Users/pagemacmini/maplab-ai-handbook",
-      "file_count": 2337,
+      "file_count": 2349,
       "files": [
         {
           "path": "open-hermes-status-panel.command",
@@ -33,8 +33,8 @@
         },
         {
           "path": "AGENT_RECALL_PROMPTS.md",
-          "size": 80783,
-          "mtime": 1784385584
+          "size": 80637,
+          "mtime": 1784507452
         },
         {
           "path": ".mcp.json",
@@ -43,8 +43,8 @@
         },
         {
           "path": "AGENT_RULES.md",
-          "size": 57761,
-          "mtime": 1784364742
+          "size": 63065,
+          "mtime": 1784401957
         },
         {
           "path": "cookies.txt",
@@ -88,8 +88,8 @@
         },
         {
           "path": "CURRENT_STATUS.md",
-          "size": 75158,
-          "mtime": 1784399412
+          "size": 77870,
+          "mtime": 1784507452
         },
         {
           "path": "CLAUDE.md",
@@ -189,7 +189,7 @@
         {
           "path": "recalls/A1_recall.md",
           "size": 5404,
-          "mtime": 1784399412
+          "mtime": 1784507452
         },
         {
           "path": "recalls/IOS_strategy_role_recall.md",
@@ -613,8 +613,8 @@
         },
         {
           "path": "handoff/tasks/T-A2-005-local-seo-factory.md",
-          "size": 4201,
-          "mtime": 1782497679
+          "size": 4274,
+          "mtime": 1784402120
         },
         {
           "path": "handoff/tasks/T-A1-RTK-001.md",
@@ -623,13 +623,13 @@
         },
         {
           "path": "handoff/tasks/T-A5-005.md",
-          "size": 3971,
-          "mtime": 1782177714
+          "size": 3964,
+          "mtime": 1784402120
         },
         {
           "path": "handoff/tasks/T-A2A3-001-B.md",
-          "size": 21890,
-          "mtime": 1780187262
+          "size": 21963,
+          "mtime": 1784402120
         },
         {
           "path": "handoff/tasks/T-A5-001.md",
@@ -643,8 +643,8 @@
         },
         {
           "path": "handoff/tasks/T-B1-B4-investment-os-role-split.md",
-          "size": 4250,
-          "mtime": 1781960198
+          "size": 4277,
+          "mtime": 1784402120
         },
         {
           "path": "handoff/tasks/T-A5-007-codex-takeover.md",
@@ -658,8 +658,8 @@
         },
         {
           "path": "handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md",
-          "size": 2436,
-          "mtime": 1784399412
+          "size": 2509,
+          "mtime": 1784595600
         },
         {
           "path": "handoff/tasks/T-A6-002.md",
@@ -668,13 +668,13 @@
         },
         {
           "path": "handoff/tasks/T-A4-003-photo-alt-pipeline.md",
-          "size": 2443,
-          "mtime": 1781156095
+          "size": 2465,
+          "mtime": 1784402120
         },
         {
           "path": "handoff/tasks/T-A1-LEARNING-LOOP-001.md",
-          "size": 3049,
-          "mtime": 1784399412
+          "size": 3035,
+          "mtime": 1784595600
         },
         {
           "path": "handoff/tasks/T-A3-002.md",
@@ -693,8 +693,8 @@
         },
         {
           "path": "handoff/tasks/T-A6-001.md",
-          "size": 12456,
-          "mtime": 1783441143
+          "size": 12529,
+          "mtime": 1784402120
         },
         {
           "path": "handoff/tasks/T-A1-SYNC-GUARD-001.md",
@@ -718,8 +718,8 @@
         },
         {
           "path": "handoff/tasks/T-A4-004-photo-classify.md",
-          "size": 2190,
-          "mtime": 1781167482
+          "size": 2226,
+          "mtime": 1784402120
         },
         {
           "path": "handoff/tasks/T-A1-002.md",
@@ -728,13 +728,13 @@
         },
         {
           "path": "handoff/tasks/T-A8-001-folder-to-video-distribution.md",
-          "size": 12897,
-          "mtime": 1784038357
+          "size": 12973,
+          "mtime": 1784402120
         },
         {
           "path": "handoff/tasks/T-A2-SEO-CATERING-MATRIX-001.md",
-          "size": 3427,
-          "mtime": 1784038357
+          "size": 3500,
+          "mtime": 1784402120
         },
         {
           "path": "handoff/tasks/T-A5-006.md",
@@ -743,8 +743,8 @@
         },
         {
           "path": "handoff/tasks/T-A5-002.md",
-          "size": 7448,
-          "mtime": 1782177714
+          "size": 7413,
+          "mtime": 1784402120
         },
         {
           "path": "handoff/tasks/T-A2-004.md",
@@ -753,8 +753,8 @@
         },
         {
           "path": "handoff/tasks/T-A1-V6-P2.md",
-          "size": 2442,
-          "mtime": 1784399412
+          "size": 2515,
+          "mtime": 1784595600
         },
         {
           "path": "handoff/tasks/T-A7-003.md",
@@ -779,7 +779,7 @@
         {
           "path": "handoff/tasks/T-IOS-KOL-001.md",
           "size": 6980,
-          "mtime": 1782033687
+          "mtime": 1784682002
         },
         {
           "path": "handoff/tasks/T-A2-002-foodsafety-seo-cleanup.md",
@@ -788,8 +788,8 @@
         },
         {
           "path": "handoff/tasks/T-A1-V7.md",
-          "size": 4971,
-          "mtime": 1784399412
+          "size": 5044,
+          "mtime": 1784595600
         },
         {
           "path": "handoff/tasks/T-A2-001.md",
@@ -2827,6 +2827,11 @@
           "mtime": 1774955075
         },
         {
+          "path": "distill/b5-epoch-20260719.md",
+          "size": 6253,
+          "mtime": 1784402112
+        },
+        {
           "path": "distill/backup-recalls/A1-codex-backup-recall.md",
           "size": 5479,
           "mtime": 1783871108
@@ -4228,8 +4233,8 @@
         },
         {
           "path": "state/weekly_eval_stdout.log",
-          "size": 179,
-          "mtime": 1784038357
+          "size": 358,
+          "mtime": 1784507452
         },
         {
           "path": "state/a0_delegate_20260717a.log",
@@ -4248,18 +4253,18 @@
         },
         {
           "path": "state/a6_gym_log.jsonl",
-          "size": 56762,
-          "mtime": 1784363402
+          "size": 69414,
+          "mtime": 1784703688
         },
         {
           "path": "state/seo_loop_stdout.log",
-          "size": 1459,
-          "mtime": 1784397600
+          "size": 1755,
+          "mtime": 1784743202
         },
         {
           "path": "state/seo_loop_run.jsonl",
-          "size": 3669,
-          "mtime": 1784397600
+          "size": 4045,
+          "mtime": 1784743202
         },
         {
           "path": "state/meta_ads_guide_final.md",
@@ -4293,8 +4298,8 @@
         },
         {
           "path": "state/is_health_trend.jsonl",
-          "size": 140,
-          "mtime": 1784385510
+          "size": 420,
+          "mtime": 1784682003
         },
         {
           "path": "state/a0_delegate_20260710f.log",
@@ -4313,13 +4318,13 @@
         },
         {
           "path": "state/weekly_eval_run.jsonl",
-          "size": 612,
-          "mtime": 1784038357
+          "size": 765,
+          "mtime": 1784507452
         },
         {
           "path": "state/dispatch_backup.log",
-          "size": 1312,
-          "mtime": 1784401209
+          "size": 3456,
+          "mtime": 1784746813
         },
         {
           "path": "state/a4_s11_resume_stdout.log",
@@ -4338,13 +4343,13 @@
         },
         {
           "path": "state/a6_gym_stderr.log",
-          "size": 1140,
-          "mtime": 1784038357
+          "size": 1230,
+          "mtime": 1784507452
         },
         {
           "path": "state/runtime_alarm.log",
-          "size": 650,
-          "mtime": 1784363402
+          "size": 1950,
+          "mtime": 1784680201
         },
         {
           "path": "state/loop_17_kpi_daily.json",
@@ -4453,8 +4458,8 @@
         },
         {
           "path": "state/dispatch_backup_index.json",
-          "size": 903860,
-          "mtime": 1784315342
+          "size": 923082,
+          "mtime": 1784660414
         },
         {
           "path": "state/a0_delegate_20260719c.log",
@@ -4478,8 +4483,8 @@
         },
         {
           "path": "state/a6_gym_stdout.log",
-          "size": 14992,
-          "mtime": 1784363402
+          "size": 18528,
+          "mtime": 1784703688
         },
         {
           "path": "state/a0_delegate_20260718b.log",
@@ -4489,17 +4494,22 @@
         {
           "path": "state/eval_baseline.json",
           "size": 47669,
-          "mtime": 1784038357
+          "mtime": 1784507452
         },
         {
           "path": "state/r_fable_vs_opus_summary.md",
-          "size": 7343,
-          "mtime": 1784393379
+          "size": 8814,
+          "mtime": 1784402054
+        },
+        {
+          "path": "state/a0_delegate_20260719d.log",
+          "size": 1369,
+          "mtime": 1784507452
         },
         {
           "path": "state/memory_watch.log",
-          "size": 3306,
-          "mtime": 1784398110
+          "size": 10275,
+          "mtime": 1784686155
         },
         {
           "path": "state/a0_delegate_20260718a.log",
@@ -4513,8 +4523,8 @@
         },
         {
           "path": "bot_a6/bot_a6.log",
-          "size": 3768817,
-          "mtime": 1784395008
+          "size": 4378831,
+          "mtime": 1784708508
         },
         {
           "path": "bot_a6/test_a6_telegram_routes.py",
@@ -4598,8 +4608,8 @@
         },
         {
           "path": "bot_a6/launchd_stdout.log",
-          "size": 1981277,
-          "mtime": 1784395008
+          "size": 2591291,
+          "mtime": 1784708508
         },
         {
           "path": "rubrics/telegram-digest-quality.md",
@@ -4623,8 +4633,8 @@
         },
         {
           "path": "logs/dispatch_backup_launchd.log",
-          "size": 193,
-          "mtime": 1784314806
+          "size": 965,
+          "mtime": 1784660414
         },
         {
           "path": "logs/a4-photo-alt.log",
@@ -4638,8 +4648,8 @@
         },
         {
           "path": "logs/worktree-cleanup-launchd.log",
-          "size": 6638037,
-          "mtime": 1784401066
+          "size": 6973131,
+          "mtime": 1784687327
         },
         {
           "path": "logs/patrol-launchd.log",
@@ -4648,8 +4658,8 @@
         },
         {
           "path": "logs/runtime_alarm_launchd.log",
-          "size": 47,
-          "mtime": 1784334605
+          "size": 235,
+          "mtime": 1784680201
         },
         {
           "path": "logs/worktree-cleanup.log",
@@ -4658,8 +4668,8 @@
         },
         {
           "path": "logs/memory_watch_launchd.log",
-          "size": 658,
-          "mtime": 1784398110
+          "size": 2162,
+          "mtime": 1784686155
         },
         {
           "path": "logs/a4-photo-classify.log",
@@ -4668,13 +4678,13 @@
         },
         {
           "path": "logs/runtime/patrol-scheduled.log",
-          "size": 121448,
-          "mtime": 1784336405
+          "size": 141824,
+          "mtime": 1784682004
         },
         {
           "path": "logs/runtime/worktree-cleanup.log",
-          "size": 2945422,
-          "mtime": 1784401066
+          "size": 3280516,
+          "mtime": 1784687327
         },
         {
           "path": "scripts/b5-pack-teaching-package.sh",
@@ -4723,8 +4733,8 @@
         },
         {
           "path": "scripts/patrol.sh",
-          "size": 9875,
-          "mtime": 1784385505
+          "size": 14374,
+          "mtime": 1784402195
         },
         {
           "path": "scripts/extract_slide_photos_to_items.py",
@@ -5132,6 +5142,16 @@
           "mtime": 1783347954
         },
         {
+          "path": "launchd/com.maplab.runtime-alarm.plist",
+          "size": 892,
+          "mtime": 1784507452
+        },
+        {
+          "path": "launchd/com.maplab.dispatch-backup.plist",
+          "size": 899,
+          "mtime": 1784507452
+        },
+        {
           "path": "launchd/com.maplab.seo-loop.plist",
           "size": 2323,
           "mtime": 1783347954
@@ -5160,6 +5180,11 @@
           "path": "launchd/com.maplab.loop-17-kpi-anomaly.plist",
           "size": 958,
           "mtime": 1783434249
+        },
+        {
+          "path": "launchd/com.maplab.memory-watch.plist",
+          "size": 776,
+          "mtime": 1784507452
         },
         {
           "path": "launchd/com.maplab.a6bot.plist",
@@ -5223,8 +5248,8 @@
         },
         {
           "path": "bot/conv_history.json",
-          "size": 16579,
-          "mtime": 1784101519
+          "size": 16061,
+          "mtime": 1784530831
         },
         {
           "path": "bot/com.maplab.telegrambot.plist",
@@ -5283,8 +5308,8 @@
         },
         {
           "path": "bot/bot.log",
-          "size": 3575494,
-          "mtime": 1784395007
+          "size": 4102129,
+          "mtime": 1784645869
         },
         {
           "path": "bot/DEPRECATED.md",
@@ -5298,8 +5323,8 @@
         },
         {
           "path": "bot/launchd_stdout.log",
-          "size": 3575494,
-          "mtime": 1784395007
+          "size": 4102129,
+          "mtime": 1784645869
         },
         {
           "path": "exams/a0-succession-exam.md",
@@ -5978,13 +6003,13 @@
         },
         {
           "path": "local-control-plane/hermes_status.json",
-          "size": 24737,
-          "mtime": 1784363402
+          "size": 20458,
+          "mtime": 1784682003
         },
         {
           "path": "local-control-plane/hermes_status.js",
-          "size": 24761,
-          "mtime": 1784363402
+          "size": 20482,
+          "mtime": 1784682003
         },
         {
           "path": "local-control-plane/config/roles.json",
@@ -6100,6 +6125,11 @@
           "path": "data/telegram-conv/2026-07-07.jsonl",
           "size": 8153,
           "mtime": 1783434274
+        },
+        {
+          "path": "data/telegram-conv/2026-07-20.jsonl",
+          "size": 899,
+          "mtime": 1784530832
         },
         {
           "path": "data/telegram-conv/2026-07-13.jsonl",
@@ -6270,6 +6300,11 @@
           "path": "data/telegram-logs/2026-07-10.md",
           "size": 2396,
           "mtime": 1783654957
+        },
+        {
+          "path": "data/telegram-logs/2026-07-20.md",
+          "size": 904,
+          "mtime": 1784530832
         },
         {
           "path": "data/telegram-logs/2026-07-14.md",
@@ -6544,7 +6579,7 @@
         {
           "path": "workbook/learning_loop/reaction_ledger_summary.md",
           "size": 1360,
-          "mtime": 1784363402
+          "mtime": 1784682003
         },
         {
           "path": "workbook/learning_loop/README.md",
@@ -6573,23 +6608,23 @@
         },
         {
           "path": "workbook/hermes/patrol/telegram_decision_card.md",
-          "size": 834,
-          "mtime": 1784363402
+          "size": 694,
+          "mtime": 1784682003
         },
         {
           "path": "workbook/hermes/patrol/latest.json",
-          "size": 24737,
-          "mtime": 1784363402
+          "size": 20458,
+          "mtime": 1784682003
         },
         {
           "path": "workbook/hermes/patrol/hermes_prompt.md",
-          "size": 4530,
-          "mtime": 1784336404
+          "size": 3531,
+          "mtime": 1784682003
         },
         {
           "path": "workbook/hermes/patrol/latest.md",
-          "size": 8529,
-          "mtime": 1784363402
+          "size": 8507,
+          "mtime": 1784682003
         },
         {
           "path": "workbook/hermes/patrol/history/20260616-142753.json",
@@ -6605,6 +6640,11 @@
           "path": "workbook/hermes/patrol/history/20260628-090001.json",
           "size": 23806,
           "mtime": 1783350177
+        },
+        {
+          "path": "workbook/hermes/patrol/history/20260721-090002.json",
+          "size": 20571,
+          "mtime": 1784595602
         },
         {
           "path": "workbook/hermes/patrol/history/20260615-174221.json",
@@ -6642,6 +6682,11 @@
           "mtime": 1784077202
         },
         {
+          "path": "workbook/hermes/patrol/history/20260722-090003.json",
+          "size": 20458,
+          "mtime": 1784682003
+        },
+        {
           "path": "workbook/hermes/patrol/history/20260629-090003.json",
           "size": 24158,
           "mtime": 1783350177
@@ -6675,6 +6720,11 @@
           "path": "workbook/hermes/patrol/history/20260713-090005.json",
           "size": 25400,
           "mtime": 1784038357
+        },
+        {
+          "path": "workbook/hermes/patrol/history/20260719-090002.json",
+          "size": 22378,
+          "mtime": 1784422802
         },
         {
           "path": "workbook/hermes/patrol/history/20260615-205555.json",
@@ -6735,6 +6785,11 @@
           "path": "workbook/hermes/patrol/history/20260616-143101.json",
           "size": 27152,
           "mtime": 1781960198
+        },
+        {
+          "path": "workbook/hermes/patrol/history/20260720-090005.json",
+          "size": 22386,
+          "mtime": 1784509205
         },
         {
           "path": "workbook/hermes/patrol/history/20260704-090002.json",
@@ -6830,6 +6885,11 @@
           "path": "workbook/outputs/eval-digests/2026-07-12.md",
           "size": 77843,
           "mtime": 1784038357
+        },
+        {
+          "path": "workbook/outputs/eval-digests/2026-07-19.md",
+          "size": 81270,
+          "mtime": 1784480649
         },
         {
           "path": "workbook/outputs/eval-digests/2026-07-10.md",
@@ -11954,13 +12014,13 @@
         },
         {
           "path": "governance/AGENT_RECALL_PROMPTS.md",
-          "size": 80783,
-          "mtime": 1784385584
+          "size": 80637,
+          "mtime": 1784507452
         },
         {
           "path": "governance/AGENT_RULES.md",
-          "size": 57761,
-          "mtime": 1784364742
+          "size": 63065,
+          "mtime": 1784401957
         },
         {
           "path": "skills/shared/.gitkeep",
@@ -11971,7 +12031,7 @@
     },
     "new-project": {
       "root": "/Users/pagemacmini/Documents/New project",
-      "file_count": 3198,
+      "file_count": 3256,
       "files": [
         {
           "path": "extract_speech.py",
@@ -11985,8 +12045,8 @@
         },
         {
           "path": "pitfalls.md",
-          "size": 247531,
-          "mtime": 1784202509
+          "size": 254109,
+          "mtime": 1784605567
         },
         {
           "path": "AGENT_CORE.md",
@@ -12020,8 +12080,8 @@
         },
         {
           "path": "SYSTEM_MAP.md",
-          "size": 12110,
-          "mtime": 1784246402
+          "size": 12846,
+          "mtime": 1784678402
         },
         {
           "path": "YOUTUBE_NOTEBOOKLM_ACCURACY_FIRST.md",
@@ -12095,8 +12155,8 @@
         },
         {
           "path": "CURRENT_STATUS.md",
-          "size": 144360,
-          "mtime": 1784246402
+          "size": 154200,
+          "mtime": 1784678402
         },
         {
           "path": "implementation_plan.md",
@@ -12210,8 +12270,8 @@
         },
         {
           "path": "tasks/index.html",
-          "size": 37829,
-          "mtime": 1783417053
+          "size": 39982,
+          "mtime": 1784605967
         },
         {
           "path": "tasks/HERMES_NIGHTLY_PREP_RERUN_20260601.md",
@@ -12242,6 +12302,16 @@
           "path": "tasks/TELEGRAM_FORMAT_FIX_20260602.md",
           "size": 959,
           "mtime": 1781597990
+        },
+        {
+          "path": "tasks/CLAUDE_GOVERNED_STANDBY_AND_CROSS_REVIEW_20260721.md",
+          "size": 9649,
+          "mtime": 1784606118
+        },
+        {
+          "path": "tasks/ONTOLOGY_ACTION_LAYER_V0_20260720.md",
+          "size": 9167,
+          "mtime": 1784533665
         },
         {
           "path": "tasks/LOCAL_MODEL_HERMES_OLLAMA_UPGRADE_20260602.md",
@@ -12349,6 +12419,11 @@
           "mtime": 1781597990
         },
         {
+          "path": "tasks/ANTIGRAVITY_WARM_STANDBY_20260720.md",
+          "size": 8716,
+          "mtime": 1784543348
+        },
+        {
           "path": "tasks/INVESTOS_SKILL_SYSTEM_20260602.md",
           "size": 3997,
           "mtime": 1781597990
@@ -12357,6 +12432,11 @@
           "path": "tasks/HUMAN_AI_TASK_CARD_TEMPLATE.md",
           "size": 1556,
           "mtime": 1781597990
+        },
+        {
+          "path": "tasks/ANTIGRAVITY_TELEGRAM_SUITE_SETUP_20260720.md",
+          "size": 8614,
+          "mtime": 1784534631
         },
         {
           "path": "tasks/HERMES_VALUE_MAP_20260526.md",
@@ -17555,13 +17635,13 @@
         },
         {
           "path": ".pytest_cache/v/cache/nodeids",
-          "size": 34347,
-          "mtime": 1782436963
+          "size": 36854,
+          "mtime": 1784606052
         },
         {
           "path": ".pytest_cache/v/cache/lastfailed",
-          "size": 493,
-          "mtime": 1782135362
+          "size": 602,
+          "mtime": 1784605067
         },
         {
           "path": "config/left_side_thesis_frameworks.json",
@@ -17600,8 +17680,8 @@
         },
         {
           "path": "config/agent_team_registry.yml",
-          "size": 7126,
-          "mtime": 1781597990
+          "size": 9856,
+          "mtime": 1784604414
         },
         {
           "path": "config/output_guardrails.yml",
@@ -17657,6 +17737,11 @@
           "path": "config/data_sources.yml",
           "size": 1010,
           "mtime": 1781597990
+        },
+        {
+          "path": "config/antigravity_cli_failover_settings.json",
+          "size": 440,
+          "mtime": 1784542957
         },
         {
           "path": "config/concept_clusters.yml",
@@ -17724,6 +17809,16 @@
           "mtime": 1781597990
         },
         {
+          "path": "config/ontology/action_types.json",
+          "size": 17293,
+          "mtime": 1784604414
+        },
+        {
+          "path": "config/ontology/object_types.json",
+          "size": 7623,
+          "mtime": 1784540807
+        },
+        {
           "path": "nightly/README.md",
           "size": 383,
           "mtime": 1781597990
@@ -17750,8 +17845,8 @@
         },
         {
           "path": "ai_team/commander/review_card_schema.json",
-          "size": 1757,
-          "mtime": 1781597989
+          "size": 1782,
+          "mtime": 1784604414
         },
         {
           "path": "ai_team/commander/README.md",
@@ -18864,6 +18959,66 @@
           "mtime": 1781597989
         },
         {
+          "path": "ai_team/task_packets/20260721_claude_governed_standby/routing.md",
+          "size": 3293,
+          "mtime": 1784604249
+        },
+        {
+          "path": "ai_team/task_packets/20260721_claude_governed_standby/review_integration.md",
+          "size": 2529,
+          "mtime": 1784605967
+        },
+        {
+          "path": "ai_team/task_packets/20260721_claude_governed_standby/shared_evidence_briefing.md",
+          "size": 2171,
+          "mtime": 1784604249
+        },
+        {
+          "path": "ai_team/task_packets/20260721_claude_governed_standby/outputs/antigravity/review_integration_notes.md",
+          "size": 2737,
+          "mtime": 1784605509
+        },
+        {
+          "path": "ai_team/task_packets/20260721_claude_governed_standby/outputs/antigravity/deterministic_verifier_stdout.txt",
+          "size": 167,
+          "mtime": 1784605509
+        },
+        {
+          "path": "ai_team/task_packets/20260721_claude_governed_standby/outputs/antigravity/antigravity_receipt.md",
+          "size": 4348,
+          "mtime": 1784605509
+        },
+        {
+          "path": "ai_team/task_packets/20260721_claude_governed_standby/outputs/antigravity/deterministic_verifier_stderr.txt",
+          "size": 0,
+          "mtime": 1784605509
+        },
+        {
+          "path": "ai_team/task_packets/20260721_claude_governed_standby/outputs/antigravity/changed_files.md",
+          "size": 1059,
+          "mtime": 1784605509
+        },
+        {
+          "path": "ai_team/task_packets/20260721_claude_governed_standby/outputs/antigravity/review_card.json",
+          "size": 1430,
+          "mtime": 1784605509
+        },
+        {
+          "path": "ai_team/task_packets/20260721_claude_governed_standby/outputs/antigravity/validation_report.md",
+          "size": 3504,
+          "mtime": 1784605509
+        },
+        {
+          "path": "ai_team/task_packets/20260721_claude_governed_standby/outputs/antigravity/cross_agent_critique.md",
+          "size": 4923,
+          "mtime": 1784605509
+        },
+        {
+          "path": "ai_team/task_packets/20260721_claude_governed_standby/outputs/antigravity/agy_stdout.md",
+          "size": 4188,
+          "mtime": 1784605509
+        },
+        {
           "path": "ai_team/task_packets/20260525_fb_radar_quality_gate_shadow_review/routing.md",
           "size": 4916,
           "mtime": 1781597989
@@ -18902,6 +19057,56 @@
           "path": "ai_team/task_packets/20260526_fb_radar_production_high_grade_row_review/outputs/row_review_validation.json",
           "size": 1222,
           "mtime": 1781597989
+        },
+        {
+          "path": "ai_team/task_packets/20260720_antigravity_warm_standby/routing.md",
+          "size": 2756,
+          "mtime": 1784541483
+        },
+        {
+          "path": "ai_team/task_packets/20260720_antigravity_warm_standby/review_integration.md",
+          "size": 2903,
+          "mtime": 1784543112
+        },
+        {
+          "path": "ai_team/task_packets/20260720_antigravity_warm_standby/outputs/antigravity/review_integration_notes.md",
+          "size": 1491,
+          "mtime": 1784542584
+        },
+        {
+          "path": "ai_team/task_packets/20260720_antigravity_warm_standby/outputs/antigravity/deterministic_verifier_stdout.txt",
+          "size": 168,
+          "mtime": 1784542584
+        },
+        {
+          "path": "ai_team/task_packets/20260720_antigravity_warm_standby/outputs/antigravity/antigravity_receipt.md",
+          "size": 2240,
+          "mtime": 1784542584
+        },
+        {
+          "path": "ai_team/task_packets/20260720_antigravity_warm_standby/outputs/antigravity/deterministic_verifier_stderr.txt",
+          "size": 0,
+          "mtime": 1784542584
+        },
+        {
+          "path": "ai_team/task_packets/20260720_antigravity_warm_standby/outputs/antigravity/changed_files.md",
+          "size": 865,
+          "mtime": 1784542584
+        },
+        {
+          "path": "ai_team/task_packets/20260720_antigravity_warm_standby/outputs/antigravity/review_card.json",
+          "size": 1057,
+          "mtime": 1784542584
+        },
+        {
+          "path": "ai_team/task_packets/20260720_antigravity_warm_standby/outputs/antigravity/validation_report.md",
+          "size": 1549,
+          "mtime": 1784542584
+        },
+        {
+          "path": "ai_team/task_packets/20260720_antigravity_warm_standby/outputs/antigravity/agy_stdout.md",
+          "size": 3901,
+          "mtime": 1784542584
         },
         {
           "path": "ai_team/task_packets/20260526_fb_radar_p1_source_repair/routing.md",
@@ -19055,8 +19260,8 @@
         },
         {
           "path": "tests/test_antigravity_cli_skills_protocol.py",
-          "size": 2246,
-          "mtime": 1781597990
+          "size": 3004,
+          "mtime": 1784604591
         },
         {
           "path": "tests/test_ai_hermes_research_telegram_price_anchor.py",
@@ -19079,9 +19284,19 @@
           "mtime": 1781597990
         },
         {
+          "path": "tests/test_ontology_vertical_slice.py",
+          "size": 2622,
+          "mtime": 1784533585
+        },
+        {
           "path": "tests/test_background_job_runner.py",
           "size": 7828,
           "mtime": 1781597990
+        },
+        {
+          "path": "tests/test_antigravity_cli_safety_settings.py",
+          "size": 863,
+          "mtime": 1784542957
         },
         {
           "path": "tests/test_score_component_consistency.py",
@@ -19107,6 +19322,11 @@
           "path": "tests/test_research_evidence_pack.py",
           "size": 13028,
           "mtime": 1781597990
+        },
+        {
+          "path": "tests/test_ontology_action_gate.py",
+          "size": 8780,
+          "mtime": 1784540900
         },
         {
           "path": "tests/test_influencer_sync.py",
@@ -19210,8 +19430,8 @@
         },
         {
           "path": "tests/test_agent_command_center.py",
-          "size": 7865,
-          "mtime": 1781597990
+          "size": 8349,
+          "mtime": 1784540924
         },
         {
           "path": "tests/test_hermes_chat_gateway.py",
@@ -19287,6 +19507,11 @@
           "path": "tests/test_output_guardrails.py",
           "size": 3371,
           "mtime": 1781597990
+        },
+        {
+          "path": "tests/test_agent_failover_control.py",
+          "size": 16196,
+          "mtime": 1784605567
         },
         {
           "path": "tests/test_signal_outcome_readout.py",
@@ -19655,8 +19880,8 @@
         },
         {
           "path": "docs/UNIFIED_AGENT_COMMAND_PROTOCOL.md",
-          "size": 7053,
-          "mtime": 1781597990
+          "size": 7216,
+          "mtime": 1784541127
         },
         {
           "path": "docs/V0_1_RESEARCH_DISPATCHER_REPORT.md",
@@ -19665,8 +19890,8 @@
         },
         {
           "path": "docs/ANTIGRAVITY_CLI_SKILLS_PROTOCOL.md",
-          "size": 4370,
-          "mtime": 1783417053
+          "size": 6003,
+          "mtime": 1784604591
         },
         {
           "path": "docs/AI_WORKBOOK.md",
@@ -19779,6 +20004,11 @@
           "mtime": 1781597990
         },
         {
+          "path": "docs/CLAUDE_CLI_GOVERNED_WORKER_PROTOCOL.md",
+          "size": 2764,
+          "mtime": 1784604249
+        },
+        {
           "path": "docs/CURRENT_STATUS.md",
           "size": 8307,
           "mtime": 1781597990
@@ -19841,27 +20071,27 @@
         {
           "path": "docs/cross-project/maplab_agent_summon_map.md",
           "size": 10466,
-          "mtime": 1784246402
+          "mtime": 1784678402
         },
         {
           "path": "docs/cross-project/maplab_role_registry.json",
           "size": 12947,
-          "mtime": 1784246402
+          "mtime": 1784678402
         },
         {
           "path": "docs/cross-project/manifest.json",
           "size": 287,
-          "mtime": 1784246402
+          "mtime": 1784678402
         },
         {
           "path": "docs/cross-project/maplab_current_status.md",
-          "size": 79580,
-          "mtime": 1784246402
+          "size": 78044,
+          "mtime": 1784678402
         },
         {
           "path": "docs/cross-project/maplab_company_values.md",
           "size": 16450,
-          "mtime": 1784246402
+          "mtime": 1784678402
         },
         {
           "path": "docs/hermes/INSTALLATION_PLAN.md",
@@ -19950,8 +20180,8 @@
         },
         {
           "path": "state/agent_command_board.json",
-          "size": 336448,
-          "mtime": 1784400383
+          "size": 338802,
+          "mtime": 1784688417
         },
         {
           "path": "state/governance_held.json",
@@ -19976,7 +20206,7 @@
         {
           "path": "state/command_inbox.jsonl",
           "size": 225368,
-          "mtime": 1784400383
+          "mtime": 1784688417
         },
         {
           "path": "state/system_status_card.json",
@@ -20434,6 +20664,11 @@
           "mtime": 1781597990
         },
         {
+          "path": "scripts/verify_claude_worker_receipts.py",
+          "size": 3714,
+          "mtime": 1784604493
+        },
+        {
           "path": "scripts/analyze_fb_historical_corpus_seed.py",
           "size": 8114,
           "mtime": 1781597990
@@ -20574,6 +20809,11 @@
           "mtime": 1781597990
         },
         {
+          "path": "scripts/verify_antigravity_worker_receipts.py",
+          "size": 3625,
+          "mtime": 1784605252
+        },
+        {
           "path": "scripts/run_fb_radar_backtest_smoke.py",
           "size": 34142,
           "mtime": 1781597990
@@ -20622,6 +20862,11 @@
           "path": "scripts/signal_outcome_readout.py",
           "size": 39801,
           "mtime": 1782132852
+        },
+        {
+          "path": "scripts/agent_failover_control.py",
+          "size": 71201,
+          "mtime": 1784605397
         },
         {
           "path": "scripts/market_resonance_context.py",
@@ -20814,6 +21059,11 @@
           "mtime": 1781597990
         },
         {
+          "path": "scripts/validate_antigravity_cli_safety_settings.py",
+          "size": 2541,
+          "mtime": 1784542957
+        },
+        {
           "path": "scripts/fb_shadow_refresh.sh",
           "size": 857,
           "mtime": 1782170375
@@ -20870,8 +21120,8 @@
         },
         {
           "path": "scripts/hermes_commander.py",
-          "size": 21564,
-          "mtime": 1781597990
+          "size": 21740,
+          "mtime": 1784540900
         },
         {
           "path": "scripts/run_simulated_research_ledger.py",
@@ -21002,6 +21252,11 @@
           "path": "scripts/run_fb_radar_3row_preflight.py",
           "size": 15431,
           "mtime": 1781597990
+        },
+        {
+          "path": "scripts/run_ontology_vertical_slice.py",
+          "size": 13611,
+          "mtime": 1784533423
         },
         {
           "path": "scripts/launchd_program_namer.py",
@@ -21197,6 +21452,11 @@
           "path": "scripts/agent_office_server.py",
           "size": 4360,
           "mtime": 1781597990
+        },
+        {
+          "path": "scripts/ontology_action_gate.py",
+          "size": 11574,
+          "mtime": 1784540722
         },
         {
           "path": "scripts/generate_msr_report.py",
@@ -24815,8 +25075,8 @@
         },
         {
           "path": "reviews/background_jobs_state.json",
-          "size": 12536,
-          "mtime": 1784400789
+          "size": 12798,
+          "mtime": 1784745002
         },
         {
           "path": "reviews/OPERATING-CULTURE-HANDBOOK-BACKPORT-20260526/dashboard_culture_decision_escalation_smoke.png",
@@ -25157,6 +25417,26 @@
           "path": "reviews/RADAR-SIM-GPT-RESEARCH-LOOP-20260512/3008_response.json",
           "size": 5575,
           "mtime": 1781597990
+        },
+        {
+          "path": "reviews/ANTIGRAVITY-WARM-STANDBY-20260720/telegram_web_readback.md",
+          "size": 920,
+          "mtime": 1784543112
+        },
+        {
+          "path": "reviews/ANTIGRAVITY-WARM-STANDBY-20260720/review_card.json",
+          "size": 1542,
+          "mtime": 1784543112
+        },
+        {
+          "path": "reviews/ANTIGRAVITY-WARM-STANDBY-20260720/validation_report.md",
+          "size": 3138,
+          "mtime": 1784543348
+        },
+        {
+          "path": "reviews/ANTIGRAVITY-WARM-STANDBY-20260720/failover_drill_receipt.json",
+          "size": 562,
+          "mtime": 1784540958
         },
         {
           "path": "reviews/FB-RADAR-YEAR-CORPUS-COLLECTION-20260525/morning_check_20260525.md",
@@ -26214,6 +26494,21 @@
           "mtime": 1782111705
         },
         {
+          "path": "reviews/ANTIGRAVITY-TELEGRAM-SUITE-SETUP-20260720/security_review.md",
+          "size": 3395,
+          "mtime": 1784534672
+        },
+        {
+          "path": "reviews/ANTIGRAVITY-TELEGRAM-SUITE-SETUP-20260720/installation_report.md",
+          "size": 2025,
+          "mtime": 1784534672
+        },
+        {
+          "path": "reviews/ANTIGRAVITY-TELEGRAM-SUITE-SETUP-20260720/telegram_web_readback.md",
+          "size": 1150,
+          "mtime": 1784534672
+        },
+        {
           "path": "reviews/OUTPUT-GUARDRAILS-20260608/run_log.md",
           "size": 3732,
           "mtime": 1781597990
@@ -26547,6 +26842,61 @@
           "path": "reviews/FB-RADAR-SOURCE-COVERAGE-V2-20260525/source_route_health_delta.json",
           "size": 977,
           "mtime": 1781597990
+        },
+        {
+          "path": "reviews/CLAUDE-GOVERNED-STANDBY-20260721/telegram_web_readback.md",
+          "size": 1771,
+          "mtime": 1784605967
+        },
+        {
+          "path": "reviews/CLAUDE-GOVERNED-STANDBY-20260721/validation_report.md",
+          "size": 2679,
+          "mtime": 1784606118
+        },
+        {
+          "path": "reviews/ONTOLOGY-ACTION-LAYER-V0-20260720/allowed_receipt.json",
+          "size": 2215,
+          "mtime": 1784533423
+        },
+        {
+          "path": "reviews/ONTOLOGY-ACTION-LAYER-V0-20260720/denied_request.json",
+          "size": 705,
+          "mtime": 1784533423
+        },
+        {
+          "path": "reviews/ONTOLOGY-ACTION-LAYER-V0-20260720/full_loop_receipt.json",
+          "size": 3122,
+          "mtime": 1784533585
+        },
+        {
+          "path": "reviews/ONTOLOGY-ACTION-LAYER-V0-20260720/gap_analysis.md",
+          "size": 4583,
+          "mtime": 1784532757
+        },
+        {
+          "path": "reviews/ONTOLOGY-ACTION-LAYER-V0-20260720/full_loop_report.md",
+          "size": 2046,
+          "mtime": 1784533585
+        },
+        {
+          "path": "reviews/ONTOLOGY-ACTION-LAYER-V0-20260720/denied_receipt.json",
+          "size": 2616,
+          "mtime": 1784533423
+        },
+        {
+          "path": "reviews/ONTOLOGY-ACTION-LAYER-V0-20260720/validation_report.md",
+          "size": 3009,
+          "mtime": 1784533684
+        },
+        {
+          "path": "reviews/ONTOLOGY-ACTION-LAYER-V0-20260720/allowed_request.json",
+          "size": 580,
+          "mtime": 1784533423
+        },
+        {
+          "path": "reviews/ONTOLOGY-ACTION-LAYER-V0-20260720/second_opinion.md",
+          "size": 2446,
+          "mtime": 1784532757
         },
         {
           "path": "reviews/FB-RADAR-GITHUB-METHOD-SCAN-20260525/github_method_scan_and_optimization_plan.md",
@@ -26915,13 +27265,13 @@
         },
         {
           "path": "reviews/AGENT-COMMAND-CENTER-20260526/command_status.md",
-          "size": 13080,
-          "mtime": 1784400383
+          "size": 12764,
+          "mtime": 1784688417
         },
         {
           "path": "reviews/AGENT-COMMAND-CENTER-20260526/command_status.json",
-          "size": 336448,
-          "mtime": 1784400383
+          "size": 338802,
+          "mtime": 1784688417
         },
         {
           "path": "reviews/AGENT-COMMAND-CENTER-20260526/open_source_agent_panel_scan_20260526.md",

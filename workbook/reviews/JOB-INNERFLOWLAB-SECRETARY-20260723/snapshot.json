@@ -1,0 +1,373 @@
+{
+  "generated_at": "2026-07-23T13:07:22+08:00",
+  "roles": [
+    {
+      "id": "A0",
+      "name": "總調度秘書",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "召喚可用；上下文維護警示：chrome-extension/task-modules/A0.json has 9 stale source hash(es); rebuild required"
+    },
+    {
+      "id": "A1",
+      "name": "系統總管",
+      "status": "standby",
+      "result": "runtime com.maplab.patrol: pid=-, exit=0",
+      "evidence": "召喚可用；上下文維護警示：chrome-extension/task-modules/A1.json has 8 stale source hash(es); rebuild required"
+    },
+    {
+      "id": "A2",
+      "name": "搜尋流量",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "召喚可用；上下文維護警示：chrome-extension/task-modules/A2.json has 12 stale source hash(es); rebuild required"
+    },
+    {
+      "id": "A3",
+      "name": "社群廣告",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "召喚可用；上下文維護警示：chrome-extension/task-modules/A3.json has 8 stale source hash(es); rebuild required"
+    },
+    {
+      "id": "A4",
+      "name": "影像資產",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "召喚可用；上下文維護警示：chrome-extension/task-modules/A4.json has 8 stale source hash(es); rebuild required"
+    },
+    {
+      "id": "A5",
+      "name": "報價引擎",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "召喚可用；上下文維護警示：chrome-extension/task-modules/A5.json has 7 stale source hash(es); rebuild required"
+    },
+    {
+      "id": "A6",
+      "name": "業務快反應",
+      "status": "running",
+      "result": "runtime com.maplab.a6bot: pid=29067, exit=0",
+      "evidence": "召喚可用；上下文維護警示：chrome-extension/task-modules/A6.json has 8 stale source hash(es); rebuild required"
+    },
+    {
+      "id": "A7",
+      "name": "客服轉單",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "召喚可用；上下文維護警示：chrome-extension/task-modules/A7.json has 10 stale source hash(es); rebuild required"
+    },
+    {
+      "id": "A8",
+      "name": "影音產線",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "召喚可用；上下文維護警示：chrome-extension/task-modules/A8.json has 8 stale source hash(es); rebuild required"
+    },
+    {
+      "id": "B1",
+      "name": "IOS Builder",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "召喚可用；上下文維護警示：chrome-extension/task-modules/B1.json has 10 stale source hash(es); rebuild required"
+    },
+    {
+      "id": "B2",
+      "name": "IOS Reviewer",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "召喚可用；上下文維護警示：chrome-extension/task-modules/B2.json has 8 stale source hash(es); rebuild required"
+    },
+    {
+      "id": "B3",
+      "name": "IOS Archivist",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "召喚可用；上下文維護警示：chrome-extension/task-modules/B3.json has 8 stale source hash(es); rebuild required"
+    },
+    {
+      "id": "B4",
+      "name": "IOS System Patrol",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "召喚可用；上下文維護警示：chrome-extension/task-modules/B4.json has 8 stale source hash(es); rebuild required"
+    },
+    {
+      "id": "B5",
+      "name": "影子系統總管",
+      "status": "warning",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "missing module"
+    },
+    {
+      "id": "IOS-ALPHA",
+      "name": "阿爾法共振經理",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "召喚可用；上下文維護警示：chrome-extension/task-modules/IOS-ALPHA.json has 7 stale source hash(es); rebuild required"
+    },
+    {
+      "id": "IOS-BLACKSWAN",
+      "name": "黑天鵝監控官",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "召喚可用；上下文維護警示：chrome-extension/task-modules/IOS-BLACKSWAN.json has 7 stale source hash(es); rebuild required"
+    },
+    {
+      "id": "IOS-CHIP",
+      "name": "籌碼經理",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "召喚可用；上下文維護警示：chrome-extension/task-modules/IOS-CHIP.json has 7 stale source hash(es); rebuild required"
+    },
+    {
+      "id": "IOS-EVIDENCE",
+      "name": "研究證據經理",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "召喚可用；上下文維護警示：chrome-extension/task-modules/IOS-EVIDENCE.json has 7 stale source hash(es); rebuild required"
+    },
+    {
+      "id": "IOS-FAMILY",
+      "name": "家族基金經理",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "召喚可用；上下文維護警示：chrome-extension/task-modules/IOS-FAMILY.json has 7 stale source hash(es); rebuild required"
+    },
+    {
+      "id": "IOS-FB",
+      "name": "FB / 社群情報經理",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "召喚可用；上下文維護警示：chrome-extension/task-modules/IOS-FB.json has 7 stale source hash(es); rebuild required"
+    },
+    {
+      "id": "IOS-HEDGE",
+      "name": "盤後對沖經理",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "召喚可用；上下文維護警示：chrome-extension/task-modules/IOS-HEDGE.json has 7 stale source hash(es); rebuild required"
+    },
+    {
+      "id": "IOS-HYGIENE",
+      "name": "系統衛生官",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "召喚可用；上下文維護警示：chrome-extension/task-modules/IOS-HYGIENE.json has 7 stale source hash(es); rebuild required"
+    },
+    {
+      "id": "IOS-INVENTORY",
+      "name": "庫存審查經理",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "召喚可用；上下文維護警示：chrome-extension/task-modules/IOS-INVENTORY.json has 7 stale source hash(es); rebuild required"
+    },
+    {
+      "id": "IOS-KOL",
+      "name": "網紅雷達經理",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "召喚可用；上下文維護警示：chrome-extension/task-modules/IOS-KOL.json has 7 stale source hash(es); rebuild required"
+    },
+    {
+      "id": "IOS-LEFT",
+      "name": "左側預期差經理",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "召喚可用；上下文維護警示：chrome-extension/task-modules/IOS-LEFT.json has 7 stale source hash(es); rebuild required"
+    },
+    {
+      "id": "IOS-MACRO",
+      "name": "總經大師",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "召喚可用；上下文維護警示：chrome-extension/task-modules/IOS-MACRO.json has 7 stale source hash(es); rebuild required"
+    },
+    {
+      "id": "IOS-MOMENTUM",
+      "name": "每日動能經理",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "召喚可用；上下文維護警示：chrome-extension/task-modules/IOS-MOMENTUM.json has 7 stale source hash(es); rebuild required"
+    },
+    {
+      "id": "IOS-RIGHT",
+      "name": "右側交易經理",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "召喚可用；上下文維護警示：chrome-extension/task-modules/IOS-RIGHT.json has 7 stale source hash(es); rebuild required"
+    },
+    {
+      "id": "IOS-SELL",
+      "name": "實單哨兵",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "召喚可用；上下文維護警示：chrome-extension/task-modules/IOS-SELL.json has 7 stale source hash(es); rebuild required"
+    },
+    {
+      "id": "IOS-SIM",
+      "name": "模擬倉經理",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "召喚可用；上下文維護警示：chrome-extension/task-modules/IOS-SIM.json has 7 stale source hash(es); rebuild required"
+    },
+    {
+      "id": "IOS-SURFACE",
+      "name": "介面契約守門員",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "召喚可用；上下文維護警示：chrome-extension/task-modules/IOS-SURFACE.json has 7 stale source hash(es); rebuild required"
+    }
+  ],
+  "modules": [
+    {
+      "id": "dashboard",
+      "name": "Dashboard",
+      "status": "running",
+      "summary": "只讀決策、研究與風控顯示面；pid=40747，exit=-15",
+      "freshness": "launchctl live check"
+    },
+    {
+      "id": "telegram_operator",
+      "name": "Telegram Operator",
+      "status": "running",
+      "summary": "Owner 手機訊息與固定命令路由；pid=12838，exit=-15",
+      "freshness": "launchctl live check"
+    },
+    {
+      "id": "market_event_island",
+      "name": "Market Event Island",
+      "status": "running",
+      "summary": "市場事件資料與排程；pid=69180，exit=0",
+      "freshness": "launchctl live check"
+    },
+    {
+      "id": "black_swan_scanner",
+      "name": "Black Swan Scanner",
+      "status": "standby",
+      "summary": "黑天鵝條件掃描；pid=-，exit=0",
+      "freshness": "launchctl live check"
+    },
+    {
+      "id": "real_holdings_sentinel",
+      "name": "Real Holdings Sentinel",
+      "status": "standby",
+      "summary": "實單只讀風險哨兵；pid=-，exit=0",
+      "freshness": "launchctl live check"
+    },
+    {
+      "id": "self_healing_loop",
+      "name": "Self Healing Loop",
+      "status": "standby",
+      "summary": "治理 finding 的掃描與覆查；pid=-，exit=0",
+      "freshness": "launchctl live check"
+    },
+    {
+      "id": "system_truth",
+      "name": "System Truth",
+      "status": "standby",
+      "summary": "跨 repo 與 runtime 真相地圖；pid=-，exit=0",
+      "freshness": "launchctl live check"
+    },
+    {
+      "id": "cross_project_mirror",
+      "name": "Cross Project Mirror",
+      "status": "warning",
+      "summary": "MAPLAB 與 Investment OS 的狀態鏡像；pid=-，exit=127",
+      "freshness": "launchctl live check"
+    },
+    {
+      "id": "live_position_watchdog",
+      "name": "Live Position Watchdog",
+      "status": "warning",
+      "summary": "持倉研究工作的新鮮度守門；pid=-，exit=2",
+      "freshness": "launchctl live check"
+    },
+    {
+      "id": "live_position_research",
+      "name": "Live Position Research",
+      "status": "warning",
+      "summary": "持倉研究判讀；持倉快照過期時必須失敗關閉；pid=-，exit=2",
+      "freshness": "launchctl live check"
+    },
+    {
+      "id": "strong_stock_story",
+      "name": "Strong Stock Story",
+      "status": "warning",
+      "summary": "強勢股故事產物的 schema 與有效性檢查；pid=-，exit=1",
+      "freshness": "launchctl live check"
+    },
+    {
+      "id": "ios_alpha",
+      "name": "IOS-ALPHA 阿爾法共振",
+      "status": "warning",
+      "summary": "Reddit、RSS、Polymarket 與市場事件的跨源共振；WordPress 僅顯示去敏手機卡與新鮮度，不執行研究或交易。",
+      "freshness": "36d stale"
+    },
+    {
+      "id": "runtime_database",
+      "name": "Investment OS Runtime Database",
+      "status": "ready",
+      "summary": "真正 runtime DB；網站只讀去敏摘要，不讀 raw SQLite",
+      "freshness": "0h"
+    },
+    {
+      "id": "exposure_ledger",
+      "name": "Exposure Ledger",
+      "status": "ready",
+      "summary": "曝險與死亡清單的去敏風險摘要",
+      "freshness": "20h"
+    },
+    {
+      "id": "system_map",
+      "name": "System Truth Map",
+      "status": "ready",
+      "summary": "runtime、repo drift 與治理 dispatch 摘要",
+      "freshness": "5h"
+    },
+    {
+      "id": "current_status",
+      "name": "Investment OS Current Status",
+      "status": "ready",
+      "summary": "Investment OS 單一狀態入口",
+      "freshness": "5h"
+    }
+  ],
+  "alerts": [
+    {
+      "severity": "error",
+      "title": "MAPLAB 單一真相源存在 merge conflict",
+      "detail": "先由 A1 收斂 CURRENT_STATUS.md，再重建角色模組或做高風險變更。"
+    },
+    {
+      "severity": "warning",
+      "title": "角色召喚模組的來源線索已過期",
+      "detail": "A0, A1, A2, A3, A4, A5, A6, A7, A8, B1, B2, B3, B4, IOS-ALPHA, IOS-BLACKSWAN, IOS-CHIP, IOS-EVIDENCE, IOS-FAMILY, IOS-FB, IOS-HEDGE, IOS-HYGIENE, IOS-INVENTORY, IOS-KOL, IOS-LEFT, IOS-MACRO, IOS-MOMENTUM, IOS-RIGHT, IOS-SELL, IOS-SIM, IOS-SURFACE 的 source hash 與目前 repo 不一致；角色可召喚不等於上下文最新，需重建 task modules 後再驗證。"
+    },
+    {
+      "severity": "warning",
+      "title": "Cross Project Mirror 尚未綠燈",
+      "detail": "MAPLAB 與 Investment OS 的狀態鏡像；pid=-，exit=127"
+    },
+    {
+      "severity": "warning",
+      "title": "Live Position Watchdog 尚未綠燈",
+      "detail": "持倉研究工作的新鮮度守門；pid=-，exit=2"
+    },
+    {
+      "severity": "warning",
+      "title": "Live Position Research 尚未綠燈",
+      "detail": "持倉研究判讀；持倉快照過期時必須失敗關閉；pid=-，exit=2"
+    },
+    {
+      "severity": "warning",
+      "title": "Strong Stock Story 尚未綠燈",
+      "detail": "強勢股故事產物的 schema 與有效性檢查；pid=-，exit=1"
+    },
+    {
+      "severity": "warning",
+      "title": "IOS-ALPHA 阿爾法共振 尚未綠燈",
+      "detail": "Reddit、RSS、Polymarket 與市場事件的跨源共振；WordPress 僅顯示去敏手機卡與新鮮度，不執行研究或交易。"
+    }
+  ]
+}

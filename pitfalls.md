@@ -412,3 +412,9 @@
   2. 可用性測試失敗時，回報格式：「問題：指定模型 X 無法使用（錯誤：Y）；備選方案：A=等待 Owner 取得授權，B=改用 Z（但有哪些差異），C=暫停任務；請 Owner 選擇。」
   3. 揭露替代不等於合規——合規的唯一標準是「先試指定模型，失敗才回報並等裁決」。
 - 封坑驗證：`TOKEN=$(grep CLAUDE_CODE_OAUTH_TOKEN /Users/pagemacmini/maplab-ai-handbook/bot/.env | cut -d'=' -f2) && echo "test" | CLAUDE_CODE_OAUTH_TOKEN="$TOKEN" claude --model claude-fable-5 --print 2>&1 | grep -q "." && echo PASS || echo FAIL`（指定模型可用時應回 PASS；若 FAIL 才進備選方案流程，不得自行替代）。
+# 錯誤 — WordPress 一次性快照寫入必須共用正式 option key（2026-07-23）
+
+- 觸發條件：Code Snippets 顯示已執行，但個人秘書頁仍保留舊的角色數與產生時間。
+- 根因：一次性 seed 寫入 `ifl_secretary_snapshot`，正式入口實際讀取 `ifl_personal_secretary_snapshot`；寫入成功不代表 consumer 讀到同一個 key。
+- 解法：依正式 plugin 的 `OPTION_KEY` 改寫 seed，重新執行後以產生時間、角色數與 IOS-ALPHA 卡片三項 UI readback 驗證。
+- 預防：任何 WordPress option/REST 同步先從正式 consumer 取 key，不手打別名；完成條件必須包含登入後 UI readback，不能只看 Code Snippets 執行成功。

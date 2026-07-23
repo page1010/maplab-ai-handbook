@@ -174,6 +174,19 @@ class SecretarySnapshotTests(unittest.TestCase):
             (runtime / "state" / "system_status_card.json").write_text(json.dumps({
                 "generated_at_tpe": "2026-07-23T13:00:00+08:00",
                 "market_date": "2026-07-22",
+                "external_snapshot": {
+                    "date": "2026-07-22",
+                    "rows": [
+                        {"label": "10Y", "price": 4.63, "chg_pct": 0.65, "status": "ok"},
+                        {"label": "DXY", "price": 101.15, "chg_pct": -0.03, "status": "ok"},
+                        {
+                            "label": "SECRET-STOCK",
+                            "price": 999,
+                            "chg_pct": 9.9,
+                            "status": "ok",
+                        },
+                    ],
+                },
                 "four_lines": {
                     "資金流": {
                         "count": 3,
@@ -230,9 +243,20 @@ class SecretarySnapshotTests(unittest.TestCase):
             self.assertNotIn("SECRET", rendered)
             self.assertNotIn("private Telegram payload", rendered)
             self.assertNotIn("/private/path", rendered)
+            self.assertNotIn("SECRET-STOCK", rendered)
             self.assertIn("資料庫目前被鎖定", rendered)
             self.assertEqual(dashboard["status"], "warning")
             self.assertEqual(dashboard["products"][0]["result"], "已產生 3 筆去敏候選。")
+            self.assertEqual(
+                [(row["name"], row["value"]) for row in dashboard["market_indicators"]],
+                [("美債 10Y", "4.63%"), ("美元指數", "101.15")],
+            )
+            inventory = next(
+                job
+                for job in dashboard["jobs"]
+                if job["id"] == "live-position-session-refresh"
+            )
+            self.assertEqual(inventory["category"], "系統運維")
 
 
 if __name__ == "__main__":

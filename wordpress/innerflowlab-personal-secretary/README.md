@@ -3,10 +3,12 @@
 Private WordPress owner surface for sanitized MAPLAB and Investment OS health
 snapshots.
 
-Version 0.2 adds a de-identified mirror of the local Investment OS dashboard
-at `127.0.0.1:18501`: owner verdict, market date, production-job completion,
-four core outcome lines, responsible roles, and freshness. It is a result
-mirror, not a remote Streamlit proxy.
+Version 0.3 turns the de-identified mirror of the local Investment OS dashboard
+at `127.0.0.1:18501` into a comparison-first data center. The administrator
+page now includes a compact verdict, public macro indicator cards, four core
+outcome lines, five categorized workstream groups, search/status filters, and
+collapsed role/module archives. It is a result mirror, not a remote Streamlit
+proxy.
 
 ## Security contract
 
@@ -14,8 +16,9 @@ mirror, not a remote Streamlit proxy.
 - WordPress stores a sanitized summary only.
 - No broker credentials, API keys, cookies, holdings, raw logs, shell commands,
   or execution controls are accepted.
-- No account values, stock symbols, local filesystem paths, raw job messages,
-  or localhost links are included in the 18501 mirror.
+- Only an explicit allowlist of public macro indicators is accepted. No account
+  values, stock symbols, local filesystem paths, raw job messages, or localhost
+  links are included in the 18501 mirror.
 - The REST endpoint uses normal WordPress authentication and the
   `manage_options` capability.
 - The page is marked `noindex`, `nofollow`, and `noarchive`.

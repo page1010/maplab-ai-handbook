@@ -120,6 +120,38 @@ BACKGROUND_JOB_FAILURE_SUMMARIES = {
     "ai-hermes-strong-stock-story-early": "當日強勢股故事驗證未通過，不能算完成品。",
 }
 
+BACKGROUND_JOB_CATEGORIES = {
+    "finance-morning-brief": "總經風控",
+    "black-swan-risk-engine": "總經風控",
+    "market-event-watch-refresh": "總經風控",
+    "convergence-engine": "阿爾法雷達",
+    "influencer-youtube-rss-poll": "阿爾法雷達",
+    "influencer-sync-refresh": "阿爾法雷達",
+    "influencer-hermes-report": "阿爾法雷達",
+    "tradingview-heatmap-capture": "阿爾法雷達",
+    "stock-chip-refresh": "研究證據",
+    "market-rule-refresh": "研究證據",
+    "ai-hermes-roundtable-gpt": "研究證據",
+    "ai-hermes-research-telegram-digest": "研究證據",
+    "ai-hermes-strong-stock-story-early": "交易劇本",
+    "ai-hermes-stock-future-story-gpt": "交易劇本",
+    "stock-future-opening-playbook": "交易劇本",
+    "live-position-session-refresh": "系統運維",
+    "ai-hermes-live-position-gpt": "系統運維",
+    "live-position-gpt-watchdog": "系統運維",
+}
+
+MARKET_INDICATOR_LABELS = {
+    "10Y": ("美債 10Y", "%"),
+    "DXY": ("美元指數", ""),
+    "USD/TWD": ("美元／台幣", ""),
+    "Gold": ("黃金", ""),
+    "Oil": ("原油", ""),
+    "Copper": ("銅", ""),
+    "Nasdaq": ("Nasdaq", ""),
+    "SOX": ("費城半導體", ""),
+}
+
 
 @dataclass(frozen=True)
 class LaunchJob:
@@ -201,6 +233,13 @@ def timestamp_freshness(value: object, now: datetime) -> str:
     return f"{age_hours // 24}d stale"
 
 
+def format_public_number(value: object, unit: str = "") -> str:
+    if not isinstance(value, (int, float)) or isinstance(value, bool):
+        return "缺資料"
+    number = f"{float(value):,.2f}"
+    return number + unit
+
+
 def dashboard_outcome_snapshot(runtime_root: Path, now: datetime) -> dict[str, Any]:
     """Build the owner-facing, de-identified mirror of the 18501 first screen."""
     status_card_path = runtime_root / "state" / "system_status_card.json"
@@ -238,6 +277,7 @@ def dashboard_outcome_snapshot(runtime_root: Path, now: datetime) -> dict[str, A
             "id": str(job_id),
             "name": BACKGROUND_JOB_NAMES.get(str(job_id), str(job_id).replace("-", " ")),
             "owner": BACKGROUND_JOB_OWNERS.get(str(job_id), "B4"),
+            "category": BACKGROUND_JOB_CATEGORIES.get(str(job_id), "系統運維"),
             "status": status,
             "result": result,
             "freshness": (
@@ -274,6 +314,36 @@ def dashboard_outcome_snapshot(runtime_root: Path, now: datetime) -> dict[str, A
             "freshness": str(raw.get("date") or "未知"),
         })
     ready_products = sum(item["status"] == "ready" for item in product_rows)
+
+    market_rows: list[dict[str, str]] = []
+    external = status_card.get("external_snapshot")
+    if not isinstance(external, dict):
+        external = {}
+    external_date = str(external.get("date") or status_card.get("market_date") or "未知")
+    raw_market_rows = external.get("rows")
+    if not isinstance(raw_market_rows, list):
+        raw_market_rows = []
+    for raw in raw_market_rows:
+        if not isinstance(raw, dict):
+            continue
+        raw_label = str(raw.get("label") or "")
+        if raw_label not in MARKET_INDICATOR_LABELS:
+            continue
+        display_label, unit = MARKET_INDICATOR_LABELS[raw_label]
+        change = raw.get("chg_pct")
+        change_text = (
+            f"{float(change):+.2f}%"
+            if isinstance(change, (int, float)) and not isinstance(change, bool)
+            else "變動缺資料"
+        )
+        market_rows.append({
+            "id": raw_label,
+            "name": display_label,
+            "value": format_public_number(raw.get("price"), unit),
+            "change": change_text,
+            "status": "ready" if str(raw.get("status", "")).lower() == "ok" else "warning",
+            "freshness": external_date,
+        })
 
     broker = live_health.get("data_freshness", {}).get("broker_snapshot", {})
     if not isinstance(broker, dict):
@@ -346,6 +416,7 @@ def dashboard_outcome_snapshot(runtime_root: Path, now: datetime) -> dict[str, A
             f"健康快照 {file_freshness(live_health_path, now)}"
         ),
         "kpis": kpis,
+        "market_indicators": market_rows,
         "products": product_rows,
         "jobs": job_rows,
     }

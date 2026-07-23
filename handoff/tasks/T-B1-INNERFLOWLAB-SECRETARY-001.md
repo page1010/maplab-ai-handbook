@@ -2,7 +2,7 @@
 
 ## 接續狀態
 
-- **狀態**: COMPLETE（v0.6 live；18501 去敏成果中心已上線；hourly sync 待 Owner 一次性 Keychain 授權）
+- **狀態**: COMPLETE（v0.7 live；18501 比較型資料中心已上線；hourly sync 待 Owner 一次性 Keychain 授權）
 - **負責**: A1 管理整合 + B1 Builder + B2/B3/B4 review
 - **目標**: 把 MAPLAB 角色與 Investment OS 已驗證成果整理成 InnerFlowLab 的管理員專用只讀入口。
 - **邊界**: 不下單、不建立模擬單、不公開 broker/持倉/secrets/raw logs、不提供任意 shell/command 執行。
@@ -56,15 +56,28 @@
 - Code Snippets 更新時曾因 CodeMirror 未先清空全文而疊入新舊程式碼，安全機制自動停用 shortcode；已以 `Meta+A → Backspace → 一次 fill → save+activate` 修復並完成 UI readback。
 - 新外掛包：`dist/innerflowlab-personal-secretary-0.2.0.zip`。Live 目前仍由等價的 Code Snippets 版本運作，正式 merge 後可改由外掛安裝取代。
 
+## 2026-07-23 v0.7 — MacroMicro 式比較型資料中心
+
+- 已用登入中的實頁比對本機 18501、InnerFlowLab 私人入口與 MacroMicro 國家數據中心；採用「全寬主題頁首 → sticky 分類導覽 → 同尺寸指標卡 → 分類細節」的判讀結構，未複製品牌素材。
+- 首屏刪除 WordPress 頁名與多餘留白，改為 `Investment OS 資料中心`、更新時間、31 角色、18 正式工作、4 項需處理與只讀安全標示。
+- Exporter 新增公開市場指標 allowlist：10Y、DXY、USD/TWD、Gold、Oil、Copper、Nasdaq、SOX；不接受個股、帳戶值或任意原始欄位。
+- 18 條正式工作分為總經風控、阿爾法雷達、研究證據、交易劇本、系統運維五區，支援關鍵字搜尋與正常/警告/失敗篩選；live eye proof 的警告篩選恰顯示 4 條。
+- 31 個角色與 16 個功能保留完整成果，但預設收進兩個可展開檔案庫，避免長列表遮蔽真正判讀。
+- Live 快照時間 `2026-07-23T14:28:36+08:00`；行情日 2026-07-22、14/18 工作完成、2/4 核心成果線有當日產物、Broker 只讀快照 8 天需刷新、IOS-ALPHA 0h ready。
+- 管理員 live render 已驗證；匿名頁 302、匿名 REST 401。測試 7/7 通過，`git diff --check` 通過。
+- 外掛版本 0.3.0；安裝包 `dist/innerflowlab-personal-secretary-0.3.0.zip`；review bundle：`workbook/reviews/JOB-B1-INNERFLOWLAB-SECRETARY-20260723/`。
+
 ## Resume Prompt
 
-我是接手 InnerFlowLab Personal Secretary v0.6 後續同步的 B1/Codex。先讀
+我是接手 InnerFlowLab Personal Secretary v0.7 後續同步的 B1/Codex。先讀
 `CURRENT_STATUS.md`、`pitfalls.md` 與本 Task Card。外掛在
 `wordpress/innerflowlab-personal-secretary/`，exporter 在
 `tools/innerflowlab_personal_secretary_snapshot.py`，live URL 是
-`https://innerflowlab.com/personal-secretary/`。v0.6 已完成 18501 成果中心與
-登入/登出 eye proof；目前 live 判讀是 14/18 工作完成、4 條未通過、
-2/4 核心成果線有產物，不能把 warning 解讀成整套不能用。
+`https://innerflowlab.com/personal-secretary/`。v0.7 已完成 18501 比較型資料中心、
+8 個公開市場指標卡、五類工作分組、搜尋/狀態篩選與角色/功能收合；目前 live
+判讀是 14/18 工作完成、4 條未通過、2/4 核心成果線有產物，不能把 warning
+解讀成整套不能用。live 仍由 Code Snippets id=6 運作；修改 CodeMirror 必須
+`Meta+A → Backspace → fill → save`，並確認片段仍為 active。
 下一步由 Owner 依 `docs/innerflowlab-personal-secretary-sync.md` 建立 WordPress
 Application Password，直接存入 macOS Keychain，不貼到聊天或 repo。分支 merge
 到 canonical checkout 後，執行 `tools/innerflowlab_personal_secretary_sync.sh` 與

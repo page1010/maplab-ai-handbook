@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-07-22 午後巡查（A1 remote）：all clear — 8h 0 commits（無 A2-A8 新 commit，正常）；CRITICAL 持續: T-A4-002 ~2287h+ / T-IOS-KOL-001 ~775h+；STALLED since 07-19 計 72h+（7天後升 NEEDS_REVIEW）；⚠️ T-A7-001 07-25 Phase 3 里程碑倒數 **3 天**，Owner 待確認 Zone B（NT$2,000?）/ Zone C（NT$2,500?）
+> 最後更新：2026-07-23 A1每日巡查（remote）：all clear — 24h 0 A2-A8 commits（正常）；CRITICAL 持續: T-A4-002 ~2311h+ / T-IOS-KOL-001 ~799h+；STALLED since 07-19 計 96h+（7天後升 NEEDS_REVIEW ~07-26）；⚠️ T-A7-001 07-25 Phase 3 里程碑倒數 **2 天**，Owner 待確認 Zone B/C 金額（5天未回覆）
 >
 > 使用方式：選擇角色 → 複製 prompt / module handoff → 貼到 Gemini / Codex / OpenClaw / legacy Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -26,7 +26,7 @@
 | A5 | 報價與提案引擎部 | 🟡 T-A5-002 + T-A5-005 均 STALLED since 2026-07-19（Owner 待執行：`fixMasterTemplate_()`/手動接線；`5ab7434`/`3209fba` 2026-06-23 最後 commit）；T-A5-004 🟢 功能穩定（非 CRITICAL，2026-07-06 A1 對帳澄清）；T-A5-007 🔲 待 Codex 認領（`6cefd13` 2026-07-06 建卡，A5→Codex 移交）；2026-07-19 日常巡查更新 | Quotation Engine |
 | A6 | 業務快反應部隊 | 🟡 T-A6-001 STALLED **~291h 無 commit**（last commits `e5ab867` 07-07 + `ed63f97` 07-08；bot_a6 ✅ 上線 launchd；LINE webhook 等 Owner 確認 Channel 1654658337；2026-07-19 日常巡查更新）| Sales Rapid Response |
 | A7 | 客服與對話轉單部 | ⏳ T-A7-001 WAITING — 第 24 次警告已收斂為 07-25 Phase 3 里程碑（外送費級距草案 `state/a5_delivery_fee_draft_20260718f.md` 完成；Zone B/C 金額待 Owner 確認；last commit `f6fdaac` 07-07；2026-07-19 日常巡查更新）；T-A7-002 ⏸️ 阻塞（Phase 3A 剩任務 4 地區判斷 + 任務 7 流程圖同步）| Smart Reply |
-| A8 | 影音內容產線 | 🟡 T-A8-001 STALLED since 2026-07-19（last commit `1a2d752` 2026-06-25；現 **~576h/~24天**；下一步：審核 local motion POC storyboard → 地端動態生成 → 9:16 mp4/cover → Publish Approval Card，未經 Owner/A1 approval 不得上傳；2026-07-19 日常巡查更新） | Content Repurposing Pipeline |
+| A8 | 影音內容產線 | 🟡 T-A8-001 STALLED（last commit `1a2d752` 2026-06-25；現 **~672h/~28天**；下一步：審核 local motion POC storyboard → 地端動態生成 → 9:16 mp4/cover → Publish Approval Card，未經 Owner/A1 approval 不得上傳；2026-07-23 A1每日巡查更新） | Content Repurposing Pipeline |
 | **B1** | **Investment OS Builder** | **🟢 T-HQ-001 P1-P6 全完成；✅ 2026-07-07 新工作：`13f1719` IS 全功能檢討+Goal-Signal-Decision-Review 方案、`32b3afb` 跨專案治理科技樹+P0 根因診斷（TCC，唯讀）、`0695ece` G1/G3落地+封坑驗證欄+1%觸發規則+Self-Healing拍板部署記錄；建議 Owner 確認可關閉 T-HQ-001** | **寫功能 / runtime surface** |
 | **B2** | **Investment OS Reviewer** | **🟢 召喚型可用** | **資料流 / 錯誤 / freshness review** |
 | **B3** | **Investment OS Archivist** | **🟢 召喚型可用** | **版本紀錄 / 交接 / resume prompt** |
@@ -641,7 +641,7 @@ projects/ai-reply-system.md → skills/superpowers-guide.md → docs/fable-minds
 
 ## A8｜影音內容產線（Content Repurposing Pipeline）
 
-**狀態：🟡 T-A8-001 STALLED（~576h/~24天，last `1a2d752` 06-25 08:25，awaiting Owner storyboard review；2026-07-19 晚間巡查更新）**
+**狀態：🟡 T-A8-001 STALLED（~672h/~28天，last `1a2d752` 06-25 08:25，awaiting Owner storyboard review；2026-07-23 A1每日巡查更新）**
 
 ```
 你是 MAPLAB A8 影音內容產線（Content Repurposing Pipeline）。
@@ -667,8 +667,8 @@ repo: https://github.com/page1010/maplab-ai-handbook
 
 【工具鏈】NotebookLM、Gemini 2.5 Flash（免費額度）、Google Vids、YouTube Studio、Google Drive
 
-【斷點 — 2026-07-19 A1晚間巡查更新】
-T-A8-001 🟡 STALLED（~576h/~24天，awaiting Owner storyboard review）：
+【斷點 — 2026-07-23 A1每日巡查更新】
+T-A8-001 🟡 STALLED（~672h/~28天，awaiting Owner storyboard review）：
 06-25 08:25 最新：1a2d752 squash merge a8/video-checklist-mvp — completed-videos tracker + iteration rubric + scan script
 06-20 20:56 地端動態運鏡整合（f9d1c42）：ffmpeg zoompan dolly_in/out/pan_left/pan_right/static，零成本地端模擬動態運鏡。
 MAPLAB IG Soft v1 style（暖色/低對比/柔和 xfade）+ 企業茶會 CTA 固定模板已就位。

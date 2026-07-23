@@ -2,7 +2,7 @@
 
 ## 接續狀態
 
-- **狀態**: COMPLETE（v0.5 live；hourly sync 已建，待 Owner 一次性 Keychain 授權後啟用）
+- **狀態**: COMPLETE（v0.6 live；18501 去敏成果中心已上線；hourly sync 待 Owner 一次性 Keychain 授權）
 - **負責**: A1 管理整合 + B1 Builder + B2/B3/B4 review
 - **目標**: 把 MAPLAB 角色與 Investment OS 已驗證成果整理成 InnerFlowLab 的管理員專用只讀入口。
 - **邊界**: 不下單、不建立模擬單、不公開 broker/持倉/secrets/raw logs、不提供任意 shell/command 執行。
@@ -45,17 +45,31 @@
 - Live WordPress 已同步 v0.5；登入後眼見 IOS-ALPHA READY，匿名頁仍 302，匿名 REST 仍 401。
 - 已新增 Keychain-only hourly wrapper、LaunchAgent、fail-closed installer 與一次性 Owner 設定文件；未建立、讀取或保存 Application Password。
 
+## 2026-07-23 v0.6 — 18501 成果中心
+
+- 已實際讀取 `http://127.0.0.1:18501/`，確認它是完整 Investment OS Streamlit，涵蓋風控、總經、研究、交易、16 個 Strategy Guild 角色工作區與運維，不是單一 IOS-ALPHA 頁。
+- WordPress 新增「18501 成果中心」，首屏直接顯示：現在可不可信、行情日、正式工作完成率、四條核心成果線、Broker 只讀 freshness 與自動下單開關。
+- 目前 live 判讀：`14/18` 條正式工作完成、`4` 條未通過、`2/4` 條核心成果線有當日完成品；實單只讀快照需刷新，因此整體是「部分可用」，不是整套不能用。
+- 18 條工作逐條顯示名稱、責任角色、最近結果與 freshness；`timeout-smoke` 測試工作不列入正式分母。
+- 網站不接觸原始 SQLite、持倉、帳戶、股票清單、raw log、local URL 或任意命令。失敗原因只保留去敏判讀。
+- Live WordPress：管理員登入可見 `18501 成果中心`、31 角色、16 功能；匿名頁 HTTP 302、匿名 REST HTTP 401。
+- Code Snippets 更新時曾因 CodeMirror 未先清空全文而疊入新舊程式碼，安全機制自動停用 shortcode；已以 `Meta+A → Backspace → 一次 fill → save+activate` 修復並完成 UI readback。
+- 新外掛包：`dist/innerflowlab-personal-secretary-0.2.0.zip`。Live 目前仍由等價的 Code Snippets 版本運作，正式 merge 後可改由外掛安裝取代。
+
 ## Resume Prompt
 
-我是接手 InnerFlowLab Personal Secretary v0.1 後續同步的 B1/Codex。先讀
+我是接手 InnerFlowLab Personal Secretary v0.6 後續同步的 B1/Codex。先讀
 `CURRENT_STATUS.md`、`pitfalls.md` 與本 Task Card。外掛在
 `wordpress/innerflowlab-personal-secretary/`，exporter 在
 `tools/innerflowlab_personal_secretary_snapshot.py`，live URL 是
-`https://innerflowlab.com/personal-secretary/`。v0 已完成登入/登出 eye proof。
+`https://innerflowlab.com/personal-secretary/`。v0.6 已完成 18501 成果中心與
+登入/登出 eye proof；目前 live 判讀是 14/18 工作完成、4 條未通過、
+2/4 核心成果線有產物，不能把 warning 解讀成整套不能用。
 下一步由 Owner 依 `docs/innerflowlab-personal-secretary-sync.md` 建立 WordPress
 Application Password，直接存入 macOS Keychain，不貼到聊天或 repo。分支 merge
 到 canonical checkout 後，執行 `tools/innerflowlab_personal_secretary_sync.sh` 與
 `tools/install_innerflowlab_personal_secretary_sync.sh`，再驗 launchctl、登入後時間戳、
-匿名 302 與 REST 401。四個獨立 warning job 另建 B1/B2 修復任務，不阻塞入口。
+匿名 302 與 REST 401。四個 warning 工作是實單快照、實單研究、watchdog、
+強勢股故事驗證；另建 B1/B2 修復任務，不阻塞入口與其他 14 條成果。
 不可把 `.env`、broker state、持倉明細、raw logs 或任意命令送到 WordPress；
 每次同步後重驗匿名 302、REST 401 與管理員畫面。

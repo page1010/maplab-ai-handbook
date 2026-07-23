@@ -426,3 +426,10 @@
 - 解法：IOS-ALPHA 的手機卡與 freshness 全部改讀 `runtime_root`；比對 repo/runtime runner SHA-256 一致後，以 runtime 手機卡、shadow training、local-model findings 與 launchctl exit 0 共同驗證。
 - 預防：任何 Investment OS owner-facing runtime 狀態先分清 `repo source`、`repo sample/state`、`runtime copy`、`runtime output`；排程是否存在看 launchctl，程式版本看 checksum，資料新鮮度只能看 runtime output。
 - 封坑驗證：`python3 -m unittest -v tests/test_innerflowlab_personal_secretary_snapshot.py` 的 `test_ios_alpha_freshness_uses_runtime_root_not_stale_repo_copy` 必須通過。
+
+## 2026-07-23 — CodeMirror fill 不會自動取代整份 WordPress snippet
+
+- 觸發條件：在 Code Snippets 編輯頁直接對 `.CodeMirror textarea` 呼叫 fill，儲存後個人秘書 shortcode 變成純文字；snippet 列表出現驚嘆號並自動停用。
+- 根因：CodeMirror 的內部 textarea 是輸入緩衝，不是原始 `#snippet_code` 全文欄位；直接 fill 會在目前文件插入新內容，造成新舊 PHP 疊在一起。WordPress 安全檢查偵測到 activation error 後停用 snippet。
+- 解法：在同一個未離頁的編輯流程中，先 focus `.CodeMirror textarea`，依序送 `Meta+A`、`Backspace`，確認文件已清空，再 fill 完整程式碼並立即 `save+activate`；最後一定以 live shortcode render 驗收。
+- 預防：任何 CodeMirror/Monaco/Ace 類編輯器都不能把 hidden textarea 當普通表單欄位。更新 production snippet 前先保留現行版本，更新後檢查 active 狀態、短代碼是否渲染、登入後 UI 與匿名 gate；只看到「已儲存」不算完成。

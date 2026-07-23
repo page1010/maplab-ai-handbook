@@ -1,6 +1,6 @@
 {
   "schema_version": "2026-05-11.dynamic-role-module.v1",
-  "generated_at": "2026-07-23T13:29:36+08:00",
+  "generated_at": "2026-07-23T14:14:39+08:00",
   "module_id": "MAPLAB_IOS-EVIDENCE_RESEARCH_EVIDENCE_MANAGER_DYNAMIC_ROLE_MODULE",
   "role_id": "IOS-EVIDENCE",
   "role_name": "Research Evidence Manager",
@@ -49,8 +49,8 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "fa7918c42f43ac7820c2856a2eff10fda44cded88ff26cab9f91c23368bc27db",
-      "size_bytes": "63201"
+      "source_sha256": "305d991b512b856dd0791e4f89358065e49fba5615e6bfbf57664b1e1ba2ddc0",
+      "size_bytes": "64253"
     },
     {
       "path": "TASK_QUEUE.md",

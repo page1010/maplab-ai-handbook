@@ -1,5 +1,217 @@
 {
-  "generated_at": "2026-07-23T13:19:34+08:00",
+  "generated_at": "2026-07-23T14:14:46+08:00",
+  "dashboard": {
+    "status": "warning",
+    "verdict": "部分可用：成果可看，但資料阻塞仍需修復",
+    "detail": "14/18 條正式工作已完成，4 條未通過；Broker 只讀快照需刷新。",
+    "market_date": "2026-07-22",
+    "jobs_updated_at": "2026-07-23T06:13:56+00:00",
+    "source_freshness": "成果卡 21h；工作狀態 0h；健康快照 0h",
+    "kpis": [
+      {
+        "label": "行情資料",
+        "value": "2026-07-22",
+        "status": "ready",
+        "detail": "18501 系統狀態卡的最新行情日。"
+      },
+      {
+        "label": "正式工作",
+        "value": "14/18 完成",
+        "status": "warning",
+        "detail": "0 執行中，4 需處理；測試 smoke 不列入。"
+      },
+      {
+        "label": "核心成果線",
+        "value": "2/4 有產物",
+        "status": "warning",
+        "detail": "只計入有當日可驗證輸出的成果線。"
+      },
+      {
+        "label": "Broker 只讀",
+        "value": "需刷新",
+        "status": "warning",
+        "detail": "8 天未更新；只讀研究鏈路必須 fail closed。"
+      },
+      {
+        "label": "自動下單",
+        "value": "關閉",
+        "status": "ready",
+        "detail": "WordPress 僅顯示摘要，沒有下單或任意命令能力。"
+      }
+    ],
+    "products": [
+      {
+        "name": "資金流",
+        "status": "ready",
+        "result": "已產生 19 筆去敏候選。",
+        "freshness": "2026-07-22"
+      },
+      {
+        "name": "第一根故事",
+        "status": "warning",
+        "result": "本輪沒有可驗證完成品，不以空結果冒充成果。",
+        "freshness": "2026-07-22"
+      },
+      {
+        "name": "新聞催化",
+        "status": "warning",
+        "result": "本輪沒有可驗證完成品，不以空結果冒充成果。",
+        "freshness": "2026-07-22"
+      },
+      {
+        "name": "動能",
+        "status": "ready",
+        "result": "已產生 18 筆去敏候選。",
+        "freshness": "2026-07-22"
+      }
+    ],
+    "jobs": [
+      {
+        "id": "live-position-session-refresh",
+        "name": "實單只讀快照刷新",
+        "owner": "IOS-INVENTORY",
+        "status": "warning",
+        "result": "實單只讀快照刷新未通過；本機資料庫目前被鎖定。",
+        "freshness": "0h"
+      },
+      {
+        "id": "ai-hermes-live-position-gpt",
+        "name": "實單研究判讀",
+        "owner": "IOS-INVENTORY",
+        "status": "warning",
+        "result": "持倉快照過期，研究工作依規則停止，不輸出假結論。",
+        "freshness": "0h"
+      },
+      {
+        "id": "live-position-gpt-watchdog",
+        "name": "實單研究新鮮度守門",
+        "owner": "IOS-INVENTORY",
+        "status": "warning",
+        "result": "持倉快照過期，新鮮度守門依規則標紅。",
+        "freshness": "23h"
+      },
+      {
+        "id": "ai-hermes-strong-stock-story-early",
+        "name": "強勢股故事驗證",
+        "owner": "IOS-RIGHT",
+        "status": "warning",
+        "result": "當日強勢股故事驗證未通過，不能算完成品。",
+        "freshness": "21h"
+      },
+      {
+        "id": "stock-chip-refresh",
+        "name": "個股籌碼刷新",
+        "owner": "IOS-CHIP",
+        "status": "ready",
+        "result": "最近一次工作完成。",
+        "freshness": "16h"
+      },
+      {
+        "id": "ai-hermes-roundtable-gpt",
+        "name": "多角色研究圓桌",
+        "owner": "IOS-EVIDENCE",
+        "status": "ready",
+        "result": "最近一次工作完成。",
+        "freshness": "16h"
+      },
+      {
+        "id": "market-rule-refresh",
+        "name": "市場制度事件刷新",
+        "owner": "IOS-EVIDENCE",
+        "status": "ready",
+        "result": "最近一次工作完成。",
+        "freshness": "16h"
+      },
+      {
+        "id": "ai-hermes-research-telegram-digest",
+        "name": "研究摘要派送",
+        "owner": "IOS-EVIDENCE",
+        "status": "ready",
+        "result": "最近一次工作完成。",
+        "freshness": "16h"
+      },
+      {
+        "id": "influencer-youtube-rss-poll",
+        "name": "網紅 RSS 掃描",
+        "owner": "IOS-KOL",
+        "status": "ready",
+        "result": "最近一次工作完成。",
+        "freshness": "0h"
+      },
+      {
+        "id": "influencer-sync-refresh",
+        "name": "網紅情報同步",
+        "owner": "IOS-KOL",
+        "status": "ready",
+        "result": "最近一次工作完成。",
+        "freshness": "5h"
+      },
+      {
+        "id": "influencer-hermes-report",
+        "name": "網紅情報總匯",
+        "owner": "IOS-KOL",
+        "status": "ready",
+        "result": "最近一次工作完成。",
+        "freshness": "5h"
+      },
+      {
+        "id": "tradingview-heatmap-capture",
+        "name": "美股熱圖擷取",
+        "owner": "IOS-MOMENTUM",
+        "status": "ready",
+        "result": "最近一次工作完成。",
+        "freshness": "7h"
+      },
+      {
+        "id": "ai-hermes-stock-future-story-gpt",
+        "name": "股期故事研究",
+        "owner": "IOS-MOMENTUM",
+        "status": "ready",
+        "result": "最近一次工作完成。",
+        "freshness": "21h"
+      },
+      {
+        "id": "stock-future-opening-playbook",
+        "name": "股期開盤劇本",
+        "owner": "IOS-RIGHT",
+        "status": "ready",
+        "result": "最近一次工作完成。",
+        "freshness": "21h"
+      },
+      {
+        "id": "finance-morning-brief",
+        "name": "財經早報",
+        "owner": "IOS-MACRO",
+        "status": "ready",
+        "result": "最近一次工作完成。",
+        "freshness": "7h"
+      },
+      {
+        "id": "convergence-engine",
+        "name": "跨源共振引擎",
+        "owner": "IOS-ALPHA",
+        "status": "ready",
+        "result": "最近一次工作完成。",
+        "freshness": "0h"
+      },
+      {
+        "id": "market-event-watch-refresh",
+        "name": "重大事件風控",
+        "owner": "IOS-ALPHA",
+        "status": "ready",
+        "result": "最近一次工作完成。",
+        "freshness": "0h"
+      },
+      {
+        "id": "black-swan-risk-engine",
+        "name": "黑天鵝風險引擎",
+        "owner": "IOS-BLACKSWAN",
+        "status": "ready",
+        "result": "最近一次工作完成。",
+        "freshness": "5h"
+      }
+    ]
+  },
   "roles": [
     {
       "id": "A0",
@@ -316,21 +528,21 @@
       "name": "Exposure Ledger",
       "status": "ready",
       "summary": "曝險與死亡清單的去敏風險摘要",
-      "freshness": "20h"
+      "freshness": "21h"
     },
     {
       "id": "system_map",
       "name": "System Truth Map",
       "status": "ready",
       "summary": "runtime、repo drift 與治理 dispatch 摘要",
-      "freshness": "5h"
+      "freshness": "6h"
     },
     {
       "id": "current_status",
       "name": "Investment OS Current Status",
       "status": "ready",
       "summary": "Investment OS 單一狀態入口",
-      "freshness": "5h"
+      "freshness": "6h"
     }
   ],
   "alerts": [

@@ -9,6 +9,7 @@ from unittest import mock
 from tools.innerflowlab_personal_secretary_snapshot import (
     LaunchJob,
     build_snapshot,
+    dashboard_outcome_snapshot,
     file_freshness,
     parse_launchctl,
 )
@@ -59,7 +60,10 @@ class SecretarySnapshotTests(unittest.TestCase):
 
             self.assertNotIn("TOP_SECRET", rendered)
             self.assertNotIn("BROKER_SECRET", rendered)
-            self.assertEqual(set(snapshot), {"generated_at", "roles", "modules", "alerts"})
+            self.assertEqual(
+                set(snapshot),
+                {"generated_at", "dashboard", "roles", "modules", "alerts"},
+            )
             self.assertEqual(len(snapshot["roles"]), 31)
             b5 = next(role for role in snapshot["roles"] if role["id"] == "B5")
             self.assertEqual(b5["status"], "warning")
@@ -161,6 +165,74 @@ class SecretarySnapshotTests(unittest.TestCase):
             )
             self.assertEqual(alpha["status"], "ready")
             self.assertEqual(alpha["freshness"], "0h")
+
+    def test_dashboard_outcome_is_sanitized_and_excludes_smoke_job(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            runtime = Path(tmp)
+            (runtime / "state").mkdir()
+            (runtime / "reviews").mkdir()
+            (runtime / "state" / "system_status_card.json").write_text(json.dumps({
+                "generated_at_tpe": "2026-07-23T13:00:00+08:00",
+                "market_date": "2026-07-22",
+                "four_lines": {
+                    "資金流": {
+                        "count": 3,
+                        "top": [{"stock_id": "SECRET-TICKER"}],
+                        "date": "2026-07-22",
+                        "ok": True,
+                    },
+                    "新聞催化": {
+                        "count": 0,
+                        "top": [],
+                        "date": "2026-07-22",
+                        "ok": False,
+                    },
+                },
+            }))
+            (runtime / "reviews" / "background_jobs_state.json").write_text(json.dumps({
+                "updated_at_utc": "2026-07-23T05:00:00+00:00",
+                "jobs": {
+                    "timeout-smoke": {
+                        "status": "timeout",
+                        "last_message": "TEST SECRET",
+                    },
+                    "finance-morning-brief": {
+                        "status": "done",
+                        "completed_at_utc": "2026-07-23T00:00:00+00:00",
+                        "last_message": "private Telegram payload",
+                    },
+                    "live-position-session-refresh": {
+                        "status": "failed",
+                        "completed_at_utc": "2026-07-23T05:00:00+00:00",
+                        "last_message": "/private/path account=123456 token=SECRET",
+                    },
+                },
+            }))
+            (runtime / "state" / "live_health.json").write_text(json.dumps({
+                "data_freshness": {
+                    "broker_snapshot": {
+                        "snapshot_date": "2026-07-15",
+                        "days_stale": 8,
+                        "alert": True,
+                        "account": "SECRET-ACCOUNT",
+                    }
+                }
+            }))
+
+            dashboard = dashboard_outcome_snapshot(
+                runtime,
+                datetime(2026, 7, 23, 6, 0, tzinfo=timezone.utc),
+            )
+            rendered = json.dumps(dashboard, ensure_ascii=False)
+
+            self.assertEqual(len(dashboard["jobs"]), 2)
+            self.assertNotIn("timeout-smoke", rendered)
+            self.assertNotIn("SECRET", rendered)
+            self.assertNotIn("private Telegram payload", rendered)
+            self.assertNotIn("/private/path", rendered)
+            self.assertIn("資料庫目前被鎖定", rendered)
+            self.assertEqual(dashboard["status"], "warning")
+            self.assertEqual(dashboard["products"][0]["result"], "已產生 3 筆去敏候選。")
 
 
 if __name__ == "__main__":

@@ -2,7 +2,7 @@
 /**
  * Plugin Name: InnerFlowLab Personal Secretary
  * Description: Private, read-only MAPLAB and Investment OS operations summary for the site owner.
- * Version: 0.1.0
+ * Version: 0.2.0
  * Author: InnerFlowLab
  * Requires at least: 6.5
  * Requires PHP: 8.0
@@ -102,6 +102,7 @@ final class IFL_Personal_Secretary {
             'generated_at' => $snapshot['generated_at'],
             'roles' => count($snapshot['roles']),
             'modules' => count($snapshot['modules']),
+            'dashboard_jobs' => count($snapshot['dashboard']['jobs'] ?? []),
         ], 200);
     }
 
@@ -153,6 +154,10 @@ final class IFL_Personal_Secretary {
         $roles = isset($snapshot['roles']) && is_array($snapshot['roles']) ? $snapshot['roles'] : [];
         $modules = isset($snapshot['modules']) && is_array($snapshot['modules']) ? $snapshot['modules'] : [];
         $alerts = isset($snapshot['alerts']) && is_array($snapshot['alerts']) ? $snapshot['alerts'] : [];
+        $dashboard = isset($snapshot['dashboard']) && is_array($snapshot['dashboard']) ? $snapshot['dashboard'] : [];
+        $dashboard_kpis = isset($dashboard['kpis']) && is_array($dashboard['kpis']) ? $dashboard['kpis'] : [];
+        $dashboard_products = isset($dashboard['products']) && is_array($dashboard['products']) ? $dashboard['products'] : [];
+        $dashboard_jobs = isset($dashboard['jobs']) && is_array($dashboard['jobs']) ? $dashboard['jobs'] : [];
 
         ob_start();
         ?>
@@ -165,6 +170,10 @@ final class IFL_Personal_Secretary {
             .ifl-card{border:1px solid var(--line);border-radius:18px;padding:18px;background:#fff;box-shadow:0 8px 24px rgba(16,35,63,.05)}.ifl-card h3{margin:0 0 8px;font-size:18px}.ifl-card p{margin:7px 0;color:var(--muted);font-size:14px;line-height:1.55}
             .ifl-status{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}.ifl-dot{width:9px;height:9px;border-radius:50%;background:#8796a8}.ifl-status.ok{color:var(--ok)}.ifl-status.ok .ifl-dot{background:var(--ok)}.ifl-status.warning{color:var(--warn)}.ifl-status.warning .ifl-dot{background:var(--warn)}.ifl-status.error{color:var(--bad)}.ifl-status.error .ifl-dot{background:var(--bad)}
             .ifl-alert{border-left:4px solid var(--warn);padding:12px 15px;margin:10px 0;background:#fff9ed;border-radius:0 12px 12px 0}.ifl-alert.error{border-color:var(--bad);background:#fff3f2}.ifl-alert strong{display:block;margin-bottom:4px}.ifl-empty{padding:22px;border:1px dashed #a9b9ca;border-radius:16px;color:var(--muted);background:#f8fafc}
+            .ifl-verdict{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:center;padding:22px;border:1px solid #f1d29c;border-radius:18px;background:#fff9ed}.ifl-verdict h3{margin:4px 0 8px;font-size:24px}.ifl-verdict p{margin:0;color:var(--muted)}.ifl-verdict-badge{min-width:110px;text-align:center;padding:12px 16px;border-radius:14px;background:#fff;color:var(--warn);font-weight:800}
+            .ifl-kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:14px}.ifl-kpi{padding:15px;border:1px solid var(--line);border-radius:16px;background:#fff}.ifl-kpi small{display:block;color:var(--muted);margin-bottom:5px}.ifl-kpi strong{display:block;font-size:20px;margin-bottom:5px}.ifl-kpi span{display:block;color:var(--muted);font-size:12px;line-height:1.45}.ifl-kpi .ifl-status{display:inline-flex;margin-bottom:5px}
+            .ifl-job-list{display:grid;gap:8px;margin-top:12px}.ifl-job{display:grid;grid-template-columns:minmax(190px,1.3fr) minmax(100px,.55fr) minmax(95px,.45fr) minmax(220px,1.7fr);gap:12px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:13px;background:#fff;font-size:13px}.ifl-job strong{font-size:14px}.ifl-job-owner,.ifl-job-fresh{color:var(--muted)}.ifl-details{margin-top:16px;border:1px solid var(--line);border-radius:16px;background:#f8fafc;padding:0 16px}.ifl-details summary{cursor:pointer;padding:15px 0;font-weight:700}.ifl-source-note{margin-top:10px;color:var(--muted);font-size:12px}
+            @media (max-width:720px){.ifl-verdict{grid-template-columns:1fr}.ifl-verdict-badge{text-align:left}.ifl-job{grid-template-columns:1fr 1fr}.ifl-job-result{grid-column:1/-1}}
             .ifl-footer{margin:28px 0 10px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:12px}
         </style>
         <main class="ifl-secretary">
@@ -178,6 +187,64 @@ final class IFL_Personal_Secretary {
                     <span class="ifl-pill">功能：<?php echo esc_html((string) count($modules)); ?></span>
                     <span class="ifl-pill">模式：只讀</span>
                 </div>
+            </section>
+
+            <section class="ifl-section">
+                <h2>18501 成果中心</h2>
+                <?php if (!$dashboard): ?>
+                    <div class="ifl-empty">尚未收到 18501 的去敏成果快照；現有角色與功能資料仍可在下方查看。</div>
+                <?php else: ?>
+                    <?php $dashboard_status = self::status_class($dashboard['status'] ?? 'unknown'); ?>
+                    <div class="ifl-verdict">
+                        <div>
+                            <span class="ifl-status <?php echo esc_attr($dashboard_status); ?>"><i class="ifl-dot"></i><?php echo esc_html($dashboard['status'] ?? 'unknown'); ?></span>
+                            <h3><?php echo esc_html($dashboard['verdict'] ?? '尚無判讀'); ?></h3>
+                            <p><?php echo esc_html($dashboard['detail'] ?? ''); ?></p>
+                        </div>
+                        <div class="ifl-verdict-badge">只讀鏡像</div>
+                    </div>
+
+                    <div class="ifl-kpi-grid">
+                        <?php foreach ($dashboard_kpis as $kpi): ?>
+                            <?php $kpi_status = self::status_class($kpi['status'] ?? 'unknown'); ?>
+                            <article class="ifl-kpi">
+                                <small><?php echo esc_html($kpi['label'] ?? '指標'); ?></small>
+                                <strong><?php echo esc_html($kpi['value'] ?? '未知'); ?></strong>
+                                <span class="ifl-status <?php echo esc_attr($kpi_status); ?>"><i class="ifl-dot"></i><?php echo esc_html($kpi['status'] ?? 'unknown'); ?></span>
+                                <span><?php echo esc_html($kpi['detail'] ?? ''); ?></span>
+                            </article>
+                        <?php endforeach; ?>
+                    </div>
+
+                    <h3>四條核心成果線</h3>
+                    <div class="ifl-grid">
+                        <?php foreach ($dashboard_products as $product): ?>
+                            <?php $product_status = self::status_class($product['status'] ?? 'unknown'); ?>
+                            <article class="ifl-card">
+                                <span class="ifl-status <?php echo esc_attr($product_status); ?>"><i class="ifl-dot"></i><?php echo esc_html($product['status'] ?? 'unknown'); ?></span>
+                                <h3><?php echo esc_html($product['name'] ?? '未命名成果線'); ?></h3>
+                                <p><?php echo esc_html($product['result'] ?? ''); ?></p>
+                                <p>資料日：<?php echo esc_html($product['freshness'] ?? '未知'); ?></p>
+                            </article>
+                        <?php endforeach; ?>
+                    </div>
+
+                    <details class="ifl-details" open>
+                        <summary>正式工作最近成果（<?php echo esc_html((string) count($dashboard_jobs)); ?>）</summary>
+                        <div class="ifl-job-list">
+                            <?php foreach ($dashboard_jobs as $job): ?>
+                                <?php $job_status = self::status_class($job['status'] ?? 'unknown'); ?>
+                                <div class="ifl-job">
+                                    <strong><?php echo esc_html($job['name'] ?? '未命名工作'); ?></strong>
+                                    <span class="ifl-status <?php echo esc_attr($job_status); ?>"><i class="ifl-dot"></i><?php echo esc_html($job['status'] ?? 'unknown'); ?></span>
+                                    <span class="ifl-job-owner"><?php echo esc_html($job['owner'] ?? 'B4'); ?></span>
+                                    <span class="ifl-job-result"><?php echo esc_html($job['result'] ?? ''); ?> · <?php echo esc_html($job['freshness'] ?? '未知'); ?></span>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </details>
+                    <p class="ifl-source-note">來源新鮮度：<?php echo esc_html($dashboard['source_freshness'] ?? '未知'); ?>。此區不含持倉、帳戶、股票清單、原始 log 或可執行指令。</p>
+                <?php endif; ?>
             </section>
 
             <section class="ifl-section">
@@ -238,7 +305,7 @@ final class IFL_Personal_Secretary {
     }
 
     private static function validate_snapshot(array $snapshot) {
-        foreach (['generated_at', 'roles', 'modules', 'alerts'] as $key) {
+        foreach (['generated_at', 'dashboard', 'roles', 'modules', 'alerts'] as $key) {
             if (!array_key_exists($key, $snapshot)) {
                 return new WP_Error(
                     'ifl_snapshot_missing_field',
@@ -247,7 +314,7 @@ final class IFL_Personal_Secretary {
                 );
             }
         }
-        if (!is_string($snapshot['generated_at']) || !is_array($snapshot['roles']) || !is_array($snapshot['modules']) || !is_array($snapshot['alerts'])) {
+        if (!is_string($snapshot['generated_at']) || !is_array($snapshot['dashboard']) || !is_array($snapshot['roles']) || !is_array($snapshot['modules']) || !is_array($snapshot['alerts'])) {
             return new WP_Error(
                 'ifl_snapshot_invalid_shape',
                 'Snapshot fields have invalid types.',
@@ -260,10 +327,33 @@ final class IFL_Personal_Secretary {
     private static function sanitize_snapshot(array $snapshot): array {
         return [
             'generated_at' => sanitize_text_field($snapshot['generated_at']),
+            'dashboard' => self::sanitize_dashboard($snapshot['dashboard']),
             'roles' => self::sanitize_rows($snapshot['roles'], ['id', 'name', 'status', 'result', 'evidence']),
             'modules' => self::sanitize_rows($snapshot['modules'], ['id', 'name', 'status', 'summary', 'freshness']),
             'alerts' => self::sanitize_rows($snapshot['alerts'], ['severity', 'title', 'detail']),
         ];
+    }
+
+    private static function sanitize_dashboard(array $dashboard): array {
+        $clean = [];
+        foreach (['status', 'verdict', 'detail', 'market_date', 'jobs_updated_at', 'source_freshness'] as $key) {
+            if (isset($dashboard[$key]) && is_scalar($dashboard[$key])) {
+                $clean[$key] = sanitize_text_field((string) $dashboard[$key]);
+            }
+        }
+        $clean['kpis'] = self::sanitize_rows(
+            isset($dashboard['kpis']) && is_array($dashboard['kpis']) ? $dashboard['kpis'] : [],
+            ['label', 'value', 'status', 'detail']
+        );
+        $clean['products'] = self::sanitize_rows(
+            isset($dashboard['products']) && is_array($dashboard['products']) ? $dashboard['products'] : [],
+            ['name', 'status', 'result', 'freshness']
+        );
+        $clean['jobs'] = self::sanitize_rows(
+            isset($dashboard['jobs']) && is_array($dashboard['jobs']) ? $dashboard['jobs'] : [],
+            ['id', 'name', 'owner', 'status', 'result', 'freshness']
+        );
+        return $clean;
     }
 
     private static function sanitize_rows(array $rows, array $allowed_keys): array {

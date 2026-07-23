@@ -1,11 +1,12 @@
 # Changed Files
 
 - `wordpress/innerflowlab-personal-secretary/innerflowlab-personal-secretary.php`
-  — private page, auth gate, read-only dashboard, private snapshot REST API.
+  — private page, auth gate, 18501 outcome center, and private snapshot REST API.
 - `wordpress/innerflowlab-personal-secretary/README.md`
   — installation, sync, and security notes.
 - `tools/innerflowlab_personal_secretary_snapshot.py`
-  — sanitized role/runtime exporter and IOS-ALPHA freshness card.
+  — sanitized role/runtime exporter, IOS-ALPHA freshness, 18-job result mirror,
+  and four-line outcome summary.
 - `tools/ai_workbook/build_extension_task_modules.py`
   — B5 dynamic role registration and truthful XLSX generation status.
 - `tools/ai_workbook/build_role_module_relationships_xlsx.mjs`
@@ -26,7 +27,7 @@
 - `tests/test_dynamic_role_modules.py`
   — B5 catalog regression.
 - `tests/test_innerflowlab_personal_secretary_snapshot.py`
-  — launchctl, secret-boundary, conflict, and status-semantics tests.
+  — launchctl, secret-boundary, 18501 mirror, conflict, and status-semantics tests.
 - `handoff/tasks/T-B1-INNERFLOWLAB-SECRETARY-001.md`
   — completion record and Resume Prompt.
 - `workbook/owner_requirements_panel.md`
@@ -35,3 +36,9 @@
   — WordPress option-key and repo-vs-runtime freshness lessons.
 - `dist/innerflowlab-personal-secretary-0.1.0.zip`
   — installable plugin artifact.
+- `dist/innerflowlab-personal-secretary-0.2.0.zip`
+  — installable plugin with the 18501 outcome center.
+- `workbook/reviews/JOB-INNERFLOWLAB-SECRETARY-20260723/portal-18501-outcome-center-v06.png`
+  — logged-in live portal first-screen proof.
+- `workbook/reviews/JOB-INNERFLOWLAB-SECRETARY-20260723/portal-18501-outcome-center-detail-v06.png`
+  — logged-in live verdict and KPI proof.

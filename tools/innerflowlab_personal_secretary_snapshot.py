@@ -71,6 +71,55 @@ MAPLAB_JOBS = {
     "A6": "com.maplab.a6bot",
 }
 
+BACKGROUND_JOB_NAMES = {
+    "convergence-engine": "跨源共振引擎",
+    "market-event-watch-refresh": "重大事件風控",
+    "influencer-youtube-rss-poll": "網紅 RSS 掃描",
+    "stock-chip-refresh": "個股籌碼刷新",
+    "market-rule-refresh": "市場制度事件刷新",
+    "influencer-sync-refresh": "網紅情報同步",
+    "ai-hermes-roundtable-gpt": "多角色研究圓桌",
+    "ai-hermes-research-telegram-digest": "研究摘要派送",
+    "tradingview-heatmap-capture": "美股熱圖擷取",
+    "finance-morning-brief": "財經早報",
+    "live-position-session-refresh": "實單只讀快照刷新",
+    "black-swan-risk-engine": "黑天鵝風險引擎",
+    "ai-hermes-live-position-gpt": "實單研究判讀",
+    "live-position-gpt-watchdog": "實單研究新鮮度守門",
+    "ai-hermes-strong-stock-story-early": "強勢股故事驗證",
+    "ai-hermes-stock-future-story-gpt": "股期故事研究",
+    "stock-future-opening-playbook": "股期開盤劇本",
+    "influencer-hermes-report": "網紅情報總匯",
+}
+
+BACKGROUND_JOB_OWNERS = {
+    "convergence-engine": "IOS-ALPHA",
+    "market-event-watch-refresh": "IOS-ALPHA",
+    "influencer-youtube-rss-poll": "IOS-KOL",
+    "stock-chip-refresh": "IOS-CHIP",
+    "market-rule-refresh": "IOS-EVIDENCE",
+    "influencer-sync-refresh": "IOS-KOL",
+    "ai-hermes-roundtable-gpt": "IOS-EVIDENCE",
+    "ai-hermes-research-telegram-digest": "IOS-EVIDENCE",
+    "tradingview-heatmap-capture": "IOS-MOMENTUM",
+    "finance-morning-brief": "IOS-MACRO",
+    "live-position-session-refresh": "IOS-INVENTORY",
+    "black-swan-risk-engine": "IOS-BLACKSWAN",
+    "ai-hermes-live-position-gpt": "IOS-INVENTORY",
+    "live-position-gpt-watchdog": "IOS-INVENTORY",
+    "ai-hermes-strong-stock-story-early": "IOS-RIGHT",
+    "ai-hermes-stock-future-story-gpt": "IOS-MOMENTUM",
+    "stock-future-opening-playbook": "IOS-RIGHT",
+    "influencer-hermes-report": "IOS-KOL",
+}
+
+BACKGROUND_JOB_FAILURE_SUMMARIES = {
+    "live-position-session-refresh": "實單只讀快照刷新未通過；本機資料庫目前被鎖定。",
+    "ai-hermes-live-position-gpt": "持倉快照過期，研究工作依規則停止，不輸出假結論。",
+    "live-position-gpt-watchdog": "持倉快照過期，新鮮度守門依規則標紅。",
+    "ai-hermes-strong-stock-story-early": "當日強勢股故事驗證未通過，不能算完成品。",
+}
+
 
 @dataclass(frozen=True)
 class LaunchJob:
@@ -127,6 +176,179 @@ def file_freshness(path: Path, now: datetime) -> str:
     if age_hours < 48:
         return f"{age_hours}h"
     return f"{age_hours // 24}d stale"
+
+
+def read_json_object(path: Path) -> dict[str, Any]:
+    try:
+        value = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    return value if isinstance(value, dict) else {}
+
+
+def timestamp_freshness(value: object, now: datetime) -> str:
+    if not isinstance(value, str) or not value.strip():
+        return "尚無完成時間"
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return "時間格式無法判讀"
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    age_hours = max(0, int((now - parsed.astimezone(timezone.utc)).total_seconds() // 3600))
+    if age_hours < 48:
+        return f"{age_hours}h"
+    return f"{age_hours // 24}d stale"
+
+
+def dashboard_outcome_snapshot(runtime_root: Path, now: datetime) -> dict[str, Any]:
+    """Build the owner-facing, de-identified mirror of the 18501 first screen."""
+    status_card_path = runtime_root / "state" / "system_status_card.json"
+    background_path = runtime_root / "reviews" / "background_jobs_state.json"
+    live_health_path = runtime_root / "state" / "live_health.json"
+    status_card = read_json_object(status_card_path)
+    background = read_json_object(background_path)
+    live_health = read_json_object(live_health_path)
+
+    job_rows: list[dict[str, str]] = []
+    raw_jobs = background.get("jobs")
+    if not isinstance(raw_jobs, dict):
+        raw_jobs = {}
+    for job_id, raw in raw_jobs.items():
+        if job_id == "timeout-smoke" or not isinstance(raw, dict):
+            continue
+        raw_status = str(raw.get("status", "unknown")).lower()
+        if raw_status == "done":
+            status = "ready"
+            result = "最近一次工作完成。"
+        elif raw_status == "running":
+            status = "running"
+            result = "目前正在執行。"
+        elif raw_status in {"failed", "error", "timeout", "crashed"}:
+            status = "warning"
+            result = BACKGROUND_JOB_FAILURE_SUMMARIES.get(
+                job_id,
+                "最新一次工作未通過；詳細證據保留在本機。",
+            )
+        else:
+            status = "standby"
+            result = "尚無可驗證的最近完成紀錄。"
+        completed_at = raw.get("completed_at_utc")
+        job_rows.append({
+            "id": str(job_id),
+            "name": BACKGROUND_JOB_NAMES.get(str(job_id), str(job_id).replace("-", " ")),
+            "owner": BACKGROUND_JOB_OWNERS.get(str(job_id), "B4"),
+            "status": status,
+            "result": result,
+            "freshness": (
+                "執行中"
+                if status == "running"
+                else timestamp_freshness(completed_at, now)
+            ),
+        })
+
+    status_order = {"warning": 0, "running": 1, "standby": 2, "ready": 3}
+    job_rows.sort(key=lambda item: (status_order.get(item["status"], 9), item["name"]))
+    ready_jobs = sum(item["status"] == "ready" for item in job_rows)
+    running_jobs = sum(item["status"] == "running" for item in job_rows)
+    warning_jobs = sum(item["status"] == "warning" for item in job_rows)
+
+    product_rows: list[dict[str, str]] = []
+    raw_products = status_card.get("four_lines")
+    if not isinstance(raw_products, dict):
+        raw_products = {}
+    for name, raw in raw_products.items():
+        if not isinstance(raw, dict):
+            continue
+        count = raw.get("count")
+        count_text = str(count) if isinstance(count, int) else "未知"
+        ok = bool(raw.get("ok"))
+        product_rows.append({
+            "name": str(name),
+            "status": "ready" if ok else "warning",
+            "result": (
+                f"已產生 {count_text} 筆去敏候選。"
+                if ok
+                else "本輪沒有可驗證完成品，不以空結果冒充成果。"
+            ),
+            "freshness": str(raw.get("date") or "未知"),
+        })
+    ready_products = sum(item["status"] == "ready" for item in product_rows)
+
+    broker = live_health.get("data_freshness", {}).get("broker_snapshot", {})
+    if not isinstance(broker, dict):
+        broker = {}
+    broker_alert = bool(broker.get("alert", True))
+    broker_days = broker.get("days_stale")
+    broker_detail = (
+        f"{broker_days} 天未更新；只讀研究鏈路必須 fail closed。"
+        if isinstance(broker_days, int)
+        else "缺少可驗證的新鮮度。"
+    )
+    kpis = [
+        {
+            "label": "行情資料",
+            "value": str(status_card.get("market_date") or "缺資料"),
+            "status": "ready" if status_card.get("market_date") else "warning",
+            "detail": "18501 系統狀態卡的最新行情日。",
+        },
+        {
+            "label": "正式工作",
+            "value": f"{ready_jobs}/{len(job_rows)} 完成",
+            "status": "warning" if warning_jobs else "ready",
+            "detail": f"{running_jobs} 執行中，{warning_jobs} 需處理；測試 smoke 不列入。",
+        },
+        {
+            "label": "核心成果線",
+            "value": f"{ready_products}/{len(product_rows)} 有產物",
+            "status": "ready" if product_rows and ready_products == len(product_rows) else "warning",
+            "detail": "只計入有當日可驗證輸出的成果線。",
+        },
+        {
+            "label": "Broker 只讀",
+            "value": "需刷新" if broker_alert else "正常",
+            "status": "warning" if broker_alert else "ready",
+            "detail": broker_detail,
+        },
+        {
+            "label": "自動下單",
+            "value": "關閉",
+            "status": "ready",
+            "detail": "WordPress 僅顯示摘要，沒有下單或任意命令能力。",
+        },
+    ]
+
+    if warning_jobs or broker_alert:
+        status = "warning"
+        verdict = "部分可用：成果可看，但資料阻塞仍需修復"
+        detail = (
+            f"{ready_jobs}/{len(job_rows)} 條正式工作已完成，"
+            f"{warning_jobs} 條未通過；Broker 只讀快照需刷新。"
+        )
+    elif not job_rows:
+        status = "warning"
+        verdict = "尚未讀到 18501 的工作成果"
+        detail = "等待本機背景工作狀態檔產生後再同步。"
+    else:
+        status = "ready"
+        verdict = "目前成果可用"
+        detail = f"{ready_jobs}/{len(job_rows)} 條正式工作已完成。"
+
+    return {
+        "status": status,
+        "verdict": verdict,
+        "detail": detail,
+        "market_date": str(status_card.get("market_date") or "缺資料"),
+        "jobs_updated_at": str(background.get("updated_at_utc") or "未知"),
+        "source_freshness": (
+            f"成果卡 {file_freshness(status_card_path, now)}；"
+            f"工作狀態 {file_freshness(background_path, now)}；"
+            f"健康快照 {file_freshness(live_health_path, now)}"
+        ),
+        "kpis": kpis,
+        "products": product_rows,
+        "jobs": job_rows,
+    }
 
 
 def role_evidence(maplab_repo: Path, role_id: str) -> tuple[str, str]:
@@ -329,6 +551,7 @@ def build_snapshot(
 
     return {
         "generated_at": now.astimezone().isoformat(timespec="seconds"),
+        "dashboard": dashboard_outcome_snapshot(runtime_root, now),
         "roles": roles,
         "modules": modules,
         "alerts": alerts[:20],

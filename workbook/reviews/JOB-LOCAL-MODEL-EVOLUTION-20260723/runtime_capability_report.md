@@ -1,7 +1,7 @@
 # Runtime capability report — 2026-07-23
 
 Role: Local Model Evolution Orchestrator
-Environment: Mac mini / local Draft PR #20 worktree
+Environment: Mac mini / local worktree for the branch formerly attached to Draft PR #20
 Decision mode: read-only inventory plus local eval; no training or production writes
 
 ## Live capability inventory

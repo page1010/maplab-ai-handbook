@@ -6,6 +6,7 @@
 - **最後活動**: 2026-07-23 gold-label leakage repaired; live baseline and receipt complete
 - **接續點**: 版本化 semantic rubric，產兩份去識別化 shadow report。
 - **阻塞**: 非地端 provider remaining quota 全為 `unknown`；只阻塞 teacher jobs，不阻塞 local shadow。
+- **GitHub 狀態**: PR #20 於 2026-07-21 closed without merge；本輪 scoped commits 已推 requested branch。PR #21 已由另一分支 merged；不可把 reopen #20 當安全整合路徑。
 - **assigned_session**: 2026-07-23 / Local Model Evolution Orchestrator
 - **last_committed_by**: Codex（scoped Draft PR branch commit）
 
@@ -63,3 +64,5 @@ metadata/policy gate，並以 gold-label mutation test 封坑。
 下一步建立 versioned semantic rubric，產 Investment/SEO 各一份 synthetic
 file-only shadow report；不可讀 secrets、不可真實下單/發布/改 Ads/回客戶、
 不可執行 teacher jobs 或 LoRA。重跑固定 safety eval，任一 regression 即 rollback。
+PR #20 已 closed；若未來要進 main，先從 current main 建 scoped integration
+branch，只帶本次 revalidation diff，不直接 reopen 舊 PR。

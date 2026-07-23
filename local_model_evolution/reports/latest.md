@@ -25,6 +25,9 @@ and cheaply than LoRA, but it does not improve model semantics.
 
 Allow only a de-identified file-only shadow of the wrapper. Keep quota-based
 teacher jobs, model promotion, production scheduling, and LoRA blocked.
+The requested branch is pushed, but PR #20 is closed without merge; do not
+reopen it as an integration shortcut because PR #21 already merged a parallel
+first-cycle implementation.
 
 ## Loop Back
 

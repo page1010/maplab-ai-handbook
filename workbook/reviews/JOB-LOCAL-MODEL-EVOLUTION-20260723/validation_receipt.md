@@ -38,6 +38,18 @@ longer reads gold labels.
 - LoRA: closed.
 - Runtime/production/main branch: unchanged.
 
+## GitHub delivery state
+
+- Remote branch:
+  `codex/system-directory-index-v0-1-20260718`.
+- PR #20 was closed without merge on 2026-07-21 and remains closed.
+- PR #21 was merged on 2026-07-21 from a separate implementation branch.
+- This cycle pushed the scoped revalidation commits to the requested remote
+  branch. It did not reopen PR #20, create a duplicate PR, merge `main`, or
+  resolve the branch's pre-existing merge conflicts.
+- A future integration decision should start from current `main` and carry only
+  the scoped revalidation diff; do not assume reopening PR #20 is safe.
+
 ## One-week MVP
 
 1. Day 1: keep the 40-case v1.1 eval frozen; investigate the Ollama timeout
@@ -54,7 +66,7 @@ longer reads gold labels.
 ## Resume Prompt
 
 我是 Local Model Evolution Orchestrator，環境是 Mac mini Remote Codex，
-工作分支 `codex/system-directory-index-v0-1-20260718`（Draft PR #20）。
+工作分支 `codex/system-directory-index-v0-1-20260718`（原 Draft PR #20 分支）。
 
 冷啟動先讀：
 1. `CURRENT_STATUS.md`
@@ -77,6 +89,10 @@ provenance 11 / forbidden exclusion 11 / missing honesty 8。
 
 下一步只做：版本化 semantic rubric；產 Investment 與 SEO 各一份
 synthetic/de-identified file-only shadow report；跑完整固定回歸。
+
+GitHub 現況：PR #20 已於 2026-07-21 closed without merge；PR #21 已由
+另一分支 merged。不得直接 reopen #20、另開重複 PR 或 merge main；
+若要整合，先從 current main 建立乾淨 scoped branch，只帶本次 revalidation diff。
 
 禁止：付費 API、teacher jobs、LoRA、模型自動升格、live order、
 外部發布/Ads/GSC 寫入、客戶回覆、正式報價、scheduler install、merge main。

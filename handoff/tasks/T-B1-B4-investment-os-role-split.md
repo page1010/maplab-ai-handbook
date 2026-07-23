@@ -1,7 +1,7 @@
 # T-B1-B4-001 — Investment OS B1-B4 Role Split + Chrome Extension Summon
 
 ## 接續狀態
-- **狀態**: 🔄 ACTIVE — Recursive Self-Improvement v0 baseline added
+- **狀態**: 🟡 STALLED（since 2026-07-19，48h 無 commit，Owner 可更新最後活動解除）
 - **最後活動**: 2026-06-18 B1 Recursive Self-Improvement loop v0
 - **接續點**: B1-B4 已不只做角色拆分；新增 RSI-like 成長閉環，下一步是把 scorer 接進排程/Telegram first-screen red item 摘要。
 - **阻塞**: 無

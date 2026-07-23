@@ -1,0 +1,77 @@
+# Quota Sentinel — provider registry
+# 版本：v0.1 ｜ 建立：2026-07-19 ｜ 建立者：A1 / Local Model Evolution Orchestrator (第一輪)
+#
+# 治理前提（不得繞過）：
+#   docs/governance/model-tier-policy.md §0 —「只用已付費的訂閱額度，禁止按量 API」。
+#   OpenAI/Anthropic/Gemini 的官方 usage/cost API 都需要 metered API key，
+#   MAPLAB 現行政策預設禁止開任何按量 API key（2026-04-18 GCP Gemini 事件燒掉 ~NT$3000 的教訓）。
+#   因此本檔把「official_api」信任層級標為 blocked_by_policy，不是單純「較低優先」。
+#   若 Owner 針對特定任務書面核准 + 預算上限 + 用量回報，才可臨時解鎖，見 override 欄位。
+#
+# 資料來源優先順序（見 LOCAL_MODEL_EVOLUTION_ORCHESTRATOR_PROMPT.md §六）：
+#   official usage/quota API（MAPLAB 現行政策下預設 blocked_by_policy）
+#   → provider console export / official CLI
+#   → local request ledger
+#   → authenticated CLI health / 429 分類
+#   → manual override
+#   → unknown
+
+safe_reserve_ratio: 0.15
+
+providers:
+  - provider: claude
+    label: "Claude (Anthropic) — T0/T1 訂閱端"
+    surfaces:
+      - surface: subscription_cli
+        source: authenticated_cli_health
+        detect_command: ["claude", "--version"]
+        notes: "Claude Code CLI / Cowork 訂閱端。無官方 subscription 剩餘量端點；只能測 CLI 是否能認證、是否回應。"
+      - surface: api
+        source: official_api
+        status_override: blocked_by_policy
+        notes: "Anthropic API organization usage report 需要 metered admin key。model-tier-policy.md §0 預設禁止；只有 Owner 書面核准 + 預算上限才可臨時使用。"
+    reset_calendar_ref: claude
+    model_tier_ref: ["T0", "T1"]
+
+  - provider: openai_codex
+    label: "OpenAI / Codex CLI — T2 訂閱端"
+    surfaces:
+      - surface: subscription_cli
+        source: authenticated_cli_health
+        detect_command: ["codex", "--version"]
+        notes: "Codex CLI 訂閱端，無官方 subscription 剩餘量端點；靠 CLI health + 429 分類。"
+      - surface: api
+        source: official_api
+        status_override: blocked_by_policy
+        notes: "OpenAI Usage/Costs API 需要 organization admin key，屬按量 API，預設禁止。"
+    reset_calendar_ref: openai_codex
+    model_tier_ref: ["T2"]
+
+  - provider: gemini
+    label: "Gemini / Antigravity — 視使用面而定"
+    surfaces:
+      - surface: app_ui
+        source: manual
+        notes: "Gemini App / AI Studio / Antigravity UI 型額度，沒有 machine-readable 官方來源；不得抓 cookie 或繞過平台限制。"
+      - surface: api
+        source: official_api
+        status_override: blocked_by_policy
+        notes: "Gemini API / Google Cloud quota 端點需要按量 API key，預設禁止；每日 RPD reset 以太平洋時間午夜計算，僅在 Owner 核准例外時才適用。"
+    reset_calendar_ref: gemini
+    model_tier_ref: []
+
+  - provider: ollama_local
+    label: "Ollama 地端模型 — T3"
+    surfaces:
+      - surface: local_process
+        source: authenticated_cli_health
+        detect_command: ["ollama", "list"]
+        notes: "免費、無額度上限；Quota Sentinel 只需確認 process 是否在線與模型清單是否符合 model-tier-policy.md §1.1 對照表，不需要額度追蹤。"
+    reset_calendar_ref: null
+    model_tier_ref: ["T3"]
+    quota_tracking: not_applicable
+
+override:
+  requires: "Owner 書面核准 + 預算上限 + 用量回報義務（model-tier-policy.md §0 例外條款）"
+  applies_to: ["claude.api", "openai_codex.api", "gemini.api"]
+  default: disabled

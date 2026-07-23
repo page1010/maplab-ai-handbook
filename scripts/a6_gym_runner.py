@@ -53,6 +53,7 @@ def ollama_generate(prompt: str, system: str = "") -> str | None:
         "prompt": prompt,
         "system": system,
         "stream": False,
+        "keep_alive": "5m",
         "options": {"temperature": 0.4, "num_predict": 256},
     }
     data = json.dumps(payload).encode("utf-8")

@@ -404,6 +404,7 @@ A1 巡查時發現 agent 未寫接續 Prompt 或超過 30 分鐘無 checkpoint�
 | v3.8 | 2026-04-04 | SECTION 10 新增 Rule 4 舊版本清理原則（GAS/任何系統禁止留舊版本檔案） | A1 Claude Code |
 | v5.0 | 2026-06-11 | 精簡 SECTION 0（移除強制發問）、SECTION 10（移除逐步確認）、SECTION 9.4（移除單變數限制）；新增 SECTION 17 Session Log 強制規則、SECTION 18 Task Card 責任制 | B1 Claude Code |
 | v5.1 | 2026-06-20 | 新增 SECTION 19 無人長跑安全規則（Owner 採納 `docs/governance/unattended-run-safety.md` 八條規則） | B1 Claude Code |
+| v5.2 | 2026-07-20 | SECTION 21 新增規則三（能自己決定就不准問；真的要問只給可點擊選項不給技術題）— Owner 反饋大量 session 卡在「等待 input」等於做白工 | A1 Claude Code（remote） |
 
 ---
 
@@ -992,17 +993,40 @@ B4 patrol 每次巡查時對每張「進行中」task card 問：
 - **解法**：地端 Ollama 接續跑可繞過 Colab 限制；重啟 Colab 最快但配額問題下會再失敗。
 - **選項**：A. 你去 Colab 確認（我給你查指令）；B. 我現在啟動 Ollama fallback；C. 先暫停 A4，擇日再處理。
 
+### 規則三：能自己決定就不准問，真的要問只給按鍵不給技術題（2026-07-20 Owner 指定）
+
+> **新增原因**：Owner 反饋——電腦上累積大量「等待 input」待辦卡住不動，那段時間的運算等於做白工；而且卡住的原因常常是丟給 Owner 一個要懂技術才能回答的問題。Owner 不是工程師，看不懂就無法決策，變成 agent 空轉、Owner 也動不了的雙重浪費。**Owner 明確要求兩件事：① 該自己判斷的就去做，不要卡在等輸入；② 真的需要 Owner 的時候，用按鍵選項讓他一點就好，不要丟技術問題。**
+
+**A. 預設不問，卡住視為違規**
+SECTION 19（自主/升級判準）與 SECTION 24（可逆先行）已明文「可逆＋低風險＋在 scope 內 → 自己決定，不准回頭問 Owner」。本規則把它說死：任何 agent 若因為這類動作卡在「等待 Owner input」超過一次 patrol 週期，這不是「等待中」的正常狀態，是**違反 SECTION 24 的異常**，A1 巡查發現時要直接標記、直接推進解決，不是記一筆「待 Owner 回覆」就結案。
+
+**B. 真的要問時，只給按鍵，不給技術題**
+符合 SECTION 19 例外（不可逆／碰 secrets／push main／目標模糊）而必須升 Owner 決策時：
+
+1. 用**可點擊選項**呈現（AskUserQuestion 選項卡／Telegram inline button／Cowork 選項卡），不用開放式技術問句。
+2. 每個選項只講「選這個會發生什麼」，用規則一的人話標準，不留技術名詞。
+3. 選項 2–4 個，每個都是 Owner 不用查資料、憑常識就能選的等級。
+
+**❌ 不可接受**：「webhook route 是否要接到 production endpoint，還是先用 staging 驗證？」
+**✅ 標準格式**：「LINE 客服機器人要不要現在正式上線接客人（隨時可以再關掉）？A. 現在上線　B. 先跑一週內部測試再上線　C. 我要先看你測試結果」
+
+這個格式跟 SECTION 21 規則二（問題回報四段式）的「選項」段落是同一件事的具體化——本規則要求那個「選項」必須做成能點的按鍵，不是要 Owner 讀完技術說明再自己組答案。
+
 ### 違反後果
 
 - Telegram 推送、CURRENT_STATUS 更新、Task Card 結論若包含裸露技術術語，視為回報不完整。
 - A1 巡查時發現其他 agent 有裸露術語，應在下次 checkpoint 補上人話說明。
+- A1 巡查發現任何任務因可逆／低風險動作卡在「等待 Owner input」超過一次 patrol 週期，視為違反規則三，須直接推進或修正，不得只記錄不處理。
+- 升 Owner 決策的訊息若是開放式技術問句而非可點擊選項，視為回報格式不合格，下次巡查須改寫成選項卡格式。
 
 ### 關聯
 
 - `docs/fable-mindset.md` — 完整 10 條工作思維（含 MAPLAB 實例，原則 ⑨⑩ 為本節來源）
 - SECTION 16（阻塞審查 SOP）— 本節是 Section 16「解完推動系統」的溝通面補充
 - SECTION 10（開發行動準則）— 管開發行為；本節管對 Owner 的溝通格式
+- SECTION 19（無人長跑安全規則）— 本節規則三是其「自主/升級判準」的巡查落地
 - SECTION 20（部門進度回報 SOP）— 管回報時機；本節管回報格式
+- SECTION 24（可逆先行準則）— 本節規則三 A 是其判準「卡住即違規」的執行細則
 
 ---
 
@@ -1035,3 +1059,148 @@ B4 patrol 每次巡查時對每張「進行中」task card 問：
 - `docs/fable5-direction-and-guidance.md` — 系統方向指引（本節的「為什麼」）
 - `docs/fable-mindset.md` — Fable 工作思維框架
 - SECTION 20（部門進度回報 SOP）— 每日/里程碑回報；本節管每週全局複利巡查
+
+---
+
+## SECTION 23 — 價值密度排序（Value Density Dispatch，2026-07-18 A0 指定）
+
+**定義**：派工佇列按「距離現金流 / 決策品質的遠近 × 算力成本」排序。空轉型防守工作在產值迴圈尚未閉合時，凍結新算力投入。
+
+### 排序公式
+
+```
+價值密度 = (現金流距離分 + 決策品質分) / 算力成本估算
+```
+
+| 層級 | 判斷準則 | 舉例 | 行動 |
+|------|---------|------|------|
+| **Tier 1 — 立即執行** | 3 步內直連現金流 or 解鎖 Owner 決策佇列 | A6 LINE webhook 上線、B3 廣告試跑、IS 規則引擎 Owner 核准 | 優先排、不可凍 |
+| **Tier 2 — 次輪執行** | 有槓桿效果但需等上游 or Owner 確認 | A7 Phase 3 啟動後的 QA 迭代、A2 SEO 草稿發布 | 等 Tier1 閘門解開後執行 |
+| **FROZEN — 凍結** | 算力投入但產值迴圈尚未閉合；或等 Owner 超過 48h 無進展 | 任何「等環境/等憑證/等預算」的非核心工作 | 標 FROZEN，不投新 token，等 Owner 決策解鎖 |
+
+### 每週巡查必報兩比率
+
+**執行者**：A1 系統總管（每週複利巡查）
+**時機**：SECTION 22 複利計畫巡查步驟 3 之後，補報兩比率：
+
+| 比率 | 計算方式 | 健康標準 |
+|------|---------|---------|
+| **訊息密度**（訊息數 / 決策數） | 本週總 Telegram 回報數 ÷ 本週 Owner 拍板決策數 | ≤ 10：每 10 則訊息至少帶出 1 個決策；> 20 = 噪音過多 |
+| **算力回報率**（token → 價值） | 本週有直接現金流 or Owner 決策效果的工作 ÷ 總工作項 | ≥ 50%；< 30% = 停止新 FROZEN 任務投入 |
+
+### 執行規則
+
+1. **新任務開單前**：先評 Tier 等級，寫入 Task Card `## Meta` 的 `Priority` 欄。
+2. **FROZEN 任務**：不得在 patrol 報告主體出現；僅在「凍結清單」底部條列一行，標解鎖條件。
+3. **Tier 1 卡住超過 48h**：強制升 SECTION 16 三層審查（自判→審核→推 Owner）。
+4. **防守型工作（系統健康、文件維護）**：每輪最多佔總投入 30%；超過則凍結最末一項直到 Tier 1 全解鎖。
+
+### 關聯
+- `docs/fable-mindset.md` — ⑪ W→SW→NW 迴圈（每次回報必含 So What 價值分析）
+- `TASK_QUEUE.md` — Tier 標記的單一維護地點
+- SECTION 16（阻塞審查 SOP）— Tier 1 超時自動升三層審查
+
+---
+
+## SECTION 24 — 可逆先行準則（Reversibility-First，2026-07-19 R-VERIFIED Opus 產出）
+
+**核心命題**：行動成本 ≠ 決策成本。可逆動作的決策成本接近零——做了可以撤；不可逆動作的決策成本是全部——做了就是真實發生。兩者必須使用不同的核准閾值。
+
+> 來源：R-VERIFIED claude-fable-5/opus-4-8 5 輪三版對比，`state/r_fable_vs_opus_summary.md`
+
+### 三條核心規則
+
+1. **可逆動作：不等數據，不等 Owner，直接做**
+   - 判準：做了 → 發現錯了 → `git revert` 或一個刪除指令能完全回到原狀
+   - 範例：更新 AGENT_RULES、新增技能書、修改 Task Card 狀態、更新 CURRENT_STATUS.md
+   - 行為：agent 自行判斷、執行、checkpoint，**不准等 Owner 點頭再動**（等待 = 偷懶）
+
+2. **不可逆動作：需 Owner 核准 + 量化依據**
+   - 判準：做了 → 發現錯了 → 需外部介入、或有真實金錢/時間成本才能回到原狀
+   - 範例：LINE webhook 正式上線、刪除 Drive 資料、廣告投放、GAS production deployment
+   - 行為：準備 W→SW→NW 格式的核准申請，等 Owner 一次回覆，再執行
+
+3. **每個派工 Task Card 必須標注動作可逆性（強制）**
+   - 在 `## Meta` 區塊加入：
+     ```
+     - **動作可逆性**: 可逆（git revert 可回） / 不可逆（需 Owner 核准）
+     ```
+   - 混合型任務：可逆部分先做，不可逆部分單獨核准
+
+### 快速判斷表
+
+| 動作類型 | 可逆？ | 標準行為 |
+|---------|-------|---------|
+| git commit / Task Card 更新 | ✅ 可逆 | 直接做 |
+| AGENT_RULES / CLAUDE.md 修改 | ✅ 可逆 | 直接做 |
+| patrol.sh 狀態遷移寫回 | ✅ 可逆 | 直接做 |
+| GAS clasp push（dev 環境） | ✅ 可逆 | 直接做 |
+| LINE webhook 正式啟用 | ❌ 不可逆 | 等 Owner 核准 |
+| 廣告投放 / 預算調整 | ❌ 不可逆 | 等 Owner 核准 |
+| Drive 檔案刪除 | ❌ 不可逆 | 等 Owner 核准 |
+| GAS clasp push（production） | ❌ 不可逆 | 等 Owner 核准 |
+
+### 關聯
+- SECTION 19（無人長跑安全規則）— 可逆/不可逆判準原型（本節是其系統化擴充）
+- SECTION 16（阻塞審查 SOP）— 可逆的阻塞自行解開（第一層）；不可逆才升 Owner（第三層）
+- SECTION 25（四態狀態機）— Task Card 狀態遷移是可逆動作，patrol.sh 直接執行
+- `state/r_fable_vs_opus_summary.md` — R-VERIFIED 實驗來源
+
+---
+
+## SECTION 25 — 任務卡四態狀態機（Task Card FSM，2026-07-19 R-REAL Opus 產出）
+
+**問題**：進行中任務無限累加警告（T-A7-001 累計 24 次警告 ~13.8 天），patrol.sh 的警告是噪音，Owner 警覺疲勞，需要決策的任務淹沒在警告堆裡。
+
+**解法**：四態有限狀態機 + patrol.sh 自動驅動狀態遷移，每個狀態只停留有限時間後自動推進。
+
+> 來源：R-REAL claude-fable-5/opus-4-7 R01 場景，Opus R5「翻轉預設」洞察
+
+### 四個狀態
+
+| 狀態 | 符號 | 定義 | 觸發 patrol 行為 |
+|------|------|------|----------------|
+| **IN_PROGRESS** | 🔄 | 活躍工作中，有實質 commit | 正常顯示 |
+| **STALLED** | 🟡 | 停滯：≥48h 無新 commit | 48h 後：patrol 寫回 STALLED |
+| **NEEDS_REVIEW** | 🔍 | 需 Owner 決策：STALLED ≥7 天 | 7d 後：patrol 寫回 NEEDS_REVIEW + 附摘要 |
+| **AUTO_CLOSED** | 🔒 | 自動關閉：NEEDS_REVIEW 無回應 ≥7 天 | 7d 後：patrol 寫回 AUTO_CLOSED |
+
+### 狀態轉移圖
+
+```
+IN_PROGRESS ──[48h]──► STALLED ──[7d]──► NEEDS_REVIEW ──[7d]──► AUTO_CLOSED
+     ▲                    │                     │
+     └─── Owner 重開 ─────┘─────────────────────┘
+```
+
+### 翻轉預設（核心設計決策）
+
+- **舊設計（錯）**：任務不關就不關，警告無限累加，等 Owner 說「關掉」
+- **新設計（對）**：任務超時自動關閉；Owner 有異議才重開（一句話「重開 T-XXX」即可）
+
+理由：Owner 注意力是稀缺資源。「沒有繼續的信號 = 不繼續」，而不是「沒有停止的信號 = 繼續」。
+
+### Task Card 格式（強制）
+
+每張 Task Card `## 接續狀態` 必須包含：
+
+```markdown
+- **狀態**: 🔄 IN_PROGRESS  （patrol 自動維護此欄位）
+- **最後活動**: YYYY-MM-DD  （只能由工作 agent 更新，patrol 不得修改）
+- **動作可逆性**: 可逆 / 不可逆（見 SECTION 24）
+```
+
+⚠️ `最後活動` 只能由執行實質工作的 agent 在 commit 時更新。patrol.sh 只更新 `狀態` 欄位。
+
+### 例外：不適用四態機的狀態
+
+- **BLOCKED（⏸️ / ⏳）**：等外部條件（Owner 決策 / API 憑證 / 第三方）→ 不走 AUTO_CLOSE
+- **FROZEN（凍結）**：見 SECTION 23 → 不走四態狀態機
+- **DONE（✅）**：已完成 → 不走狀態機
+
+### 關聯
+- SECTION 24（可逆先行準則）— 狀態遷移是可逆動作，patrol 直接執行無需核准
+- SECTION 16（阻塞審查 SOP）— NEEDS_REVIEW 觸發時 Owner 決策格式
+- SECTION 20（部門進度回報 SOP）— NEEDS_REVIEW 附 W→SW→NW 格式摘要
+- `scripts/patrol.sh` — 本節規則的自動化執行端（唯一改寫 Task Card 狀態的腳本）
+- SECTION 22（複利計畫巡查）— 每週算力回報率在此步驟回報

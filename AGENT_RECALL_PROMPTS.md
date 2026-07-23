@@ -413,7 +413,7 @@ handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-
 
 ## A4｜影像資產整理部（Photo Archive / Asset Library）
 
-**狀態：✅ T-A4-001 S11(2024) 完成（2026-07-08 08:48 主進程完成，07-09 A0 驗收，3,314/3,409 張已分類）；GBP 照片評分 🔓 解鎖執行中（2026-07-10）；T-A4-003/004 🔴 CRITICAL（~720h無commit）；GCP帳單~84天未處理🔴；2026-07-10 A1 更新）**
+**狀態：✅ T-A4-001 S11(2024) 完成；GBP 照片評分 ✅ 完成（2026-07-10）；T-A4-002 🔴 CRITICAL（~2279h無commit）；T-A4-003/004 🟡 STALLED（since 2026-07-19，各待 Owner 操作）；2026-07-23 A1午後巡查更新**
 
 ```
 你是 MAPLAB A4 影像資產整理部。
@@ -615,7 +615,7 @@ repo: https://github.com/page1010/maplab-ai-handbook
 - 把對話往報價與成交推進
 - 應對情境：詢價、日期確認、活動形式建議、菜單推薦、場地份量、包材客製、急件判斷
 
-【斷點 — 2026-07-20 A1每日巡查更新（修正07-13頭部日期，內容含07-18資料不變）】
+【斷點 — 2026-07-23 A1午後巡查更新（內容不變；⚠️ Phase 3 啟動日 07-25 後天到期，Owner Zone B/C 金額確認等候第 6 天，07-24 前未回覆則 Phase 3 延誤）】
 T-A7-001 AI 回覆系統：
   - Phase 1 ✅ 完成（679cda6 + b53a1cc）：FAQ模板庫 + 補問流程 + 客戶分類標籤
   - Phase 2 v2.0 ✅ 完成（aea3094）：Q1-Q10重構，真實CSV驅動

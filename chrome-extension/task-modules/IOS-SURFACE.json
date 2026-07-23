@@ -1,6 +1,6 @@
 {
   "schema_version": "2026-05-11.dynamic-role-module.v1",
-  "generated_at": "2026-06-29T08:45:19+08:00",
+  "generated_at": "2026-07-23T14:14:39+08:00",
   "module_id": "MAPLAB_IOS-SURFACE_SURFACE_CONTRACT_STEWARD_DYNAMIC_ROLE_MODULE",
   "role_id": "IOS-SURFACE",
   "role_name": "Surface Contract Steward",
@@ -25,40 +25,40 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "b998e5c360b77d23cc4d73a75bea74b8ff0696bca09d10a09fee7a4f528b4529",
-      "size_bytes": "92413"
+      "source_sha256": "b752c6235519a7a3e513999797bb0d3181253d3f4f8a19ee213c534b7d90336c",
+      "size_bytes": "82541"
     },
     {
       "path": "AGENT_RULES.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "a99f620c512bae2a0c46115114b2e8cfda932020584f4870fbe8af7fa5225acd",
-      "size_bytes": "47470"
+      "source_sha256": "5663efdc718110ddcccbf0362b3428827e1773ab047caceed3a15e801b0f5aa7",
+      "size_bytes": "66060"
     },
     {
       "path": "AGENT_STARTUP_PROTOCOL.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "0598bc33ec7b77c111e578cb432ee900c3829b815ba9a2bfb380fdac0d1d81f3",
-      "size_bytes": "12260"
+      "source_sha256": "0259ee1fa4d7f14eb88f57fa108904e93de2b49b4f83da5a3c467f0a6009b9c8",
+      "size_bytes": "13831"
     },
     {
       "path": "pitfalls.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "85e6dbccaa510e2772d205f366fbf381e5c57d1f919e72662dbfbae1c3e9db24",
-      "size_bytes": "47784"
+      "source_sha256": "305d991b512b856dd0791e4f89358065e49fba5615e6bfbf57664b1e1ba2ddc0",
+      "size_bytes": "64253"
     },
     {
       "path": "TASK_QUEUE.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "b38bc2af32dceebeac0644b23d51ae2452eb5f0a21eca9ed08e1c8ebfeb29169",
-      "size_bytes": "1792"
+      "source_sha256": "73c4a81f00263b614c1790a1c49c9db17d305be1968919b090761c1a5fa02c6f",
+      "size_bytes": "5682"
     },
     {
       "path": "workbook/task_index.json",
@@ -73,16 +73,16 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "38aa5c999ae323cd30ffe683b2eea5334da126d3cbe6d2aa1a06d6b8dc6fcb11",
-      "size_bytes": "64596"
+      "source_sha256": "fabf9bba6abfafb380443b3f83f8e480629028e6e23a79a56d66da82d49fe6bb",
+      "size_bytes": "80467"
     },
     {
       "path": "skills/superpowers-guide.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "skill / operating guide",
-      "source_sha256": "092e8c27d7f2492f78f1b4d4d0404cc0ec88ff7c110ce51cd9e472cfe1b7ec6f",
-      "size_bytes": "14872"
+      "source_sha256": "c23956066daad46dfc3518031539eeb61f9bc1254517590d9802faec89fbab03",
+      "size_bytes": "15141"
     },
     {
       "path": "skills/task-progress-guide.md",

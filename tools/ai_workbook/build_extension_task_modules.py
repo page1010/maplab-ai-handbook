@@ -11,6 +11,8 @@ from __future__ import annotations
 import csv
 import hashlib
 import json
+import os
+import subprocess
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
@@ -644,6 +646,42 @@ ROLES = [
         ],
         risk_level="medium",
     ),
+    RoleModule(
+        "B5",
+        "Shadow System & Capability Distillation Manager",
+        "影子系統總管",
+        "負責 Recall Prompt 版本品質、複利輸出能力盤點與地端模型教材包蒸餾；不取代 A1 巡查或 B1-B4 執行。",
+        [
+            "recall_quality_review",
+            "capability_inventory",
+            "local_model_teaching_package",
+            "pitfalls_distillation",
+        ],
+        [
+            "projects/b5-shadow-capability-distillation.md",
+            "reports/recall-quality/recall_quality_2026-Q3.md",
+            "reports/capability-inventory/inventory_2026-07.md",
+        ],
+        [
+            "skills/superpowers-guide.md",
+            "skills/task-progress-guide.md",
+        ],
+        output_contract=[
+            "recall_quality_report.md",
+            "capability_inventory.md",
+            "teaching_package_manifest.md",
+            "review_request.md",
+        ],
+        affects=[
+            "recalls",
+            "skills/auto",
+            "pitfalls.md",
+            "workbook/reviews",
+            "packages/local-model-teaching",
+        ],
+        recall_path="recalls/B5_recall.md",
+        risk_level="medium",
+    ),
 ]
 
 
@@ -967,6 +1005,33 @@ def write_csv(path: Path, rows: list[dict[str, Any]], fieldnames: list[str]) -> 
         writer.writerows(rows)
 
 
+def build_relationship_workbook(csv_path: Path, xlsx_path: Path) -> dict[str, Any]:
+    """Build the Excel relationship workbook when the Codex artifact runtime is available."""
+    node_modules = os.environ.get("CODEX_NODE_MODULES", "")
+    if not node_modules:
+        return {
+            "generated": False,
+            "path": str(xlsx_path.relative_to(ROOT)),
+            "reason": "CODEX_NODE_MODULES is unset; CSV remains canonical and XLSX was not rebuilt.",
+        }
+
+    node = os.environ.get("CODEX_NODE", "node")
+    builder = ROOT / "tools" / "ai_workbook" / "build_role_module_relationships_xlsx.mjs"
+    preview = WORKBOOK_DIR / "role_module_relationships-preview.png"
+    subprocess.run(
+        [node, str(builder), str(csv_path), str(xlsx_path), str(preview)],
+        cwd=ROOT,
+        env=os.environ.copy(),
+        check=True,
+    )
+    return {
+        "generated": True,
+        "path": str(xlsx_path.relative_to(ROOT)),
+        "builder": str(builder.relative_to(ROOT)),
+        "preview": str(preview.relative_to(ROOT)),
+    }
+
+
 def build_graph(modules: list[dict[str, Any]]) -> dict[str, Any]:
     nodes: dict[str, dict[str, Any]] = {}
     edges: list[dict[str, Any]] = []
@@ -1108,7 +1173,8 @@ def build_doc(modules: list[dict[str, Any]]) -> str:
         "- `chrome-extension/task-modules/{role}.json` — one portable role module per agent.",
         "- `chrome-extension/config/task-modules.json` — extension config pointer.",
         "- `workbook/task_modules/role_module_relation_graph.json` — directed impact graph.",
-        "- `workbook/task_modules/role_module_relationships.csv` and `.xlsx` — Excel-readable relationship table.",
+        "- `workbook/task_modules/role_module_relationships.csv` — canonical relationship table.",
+        "- `workbook/task_modules/role_module_relationships.xlsx` — formatted Excel workbook, rebuilt when the Codex artifact runtime is available.",
         "",
         "## Markdown Refresh Model",
         "",
@@ -1260,7 +1326,7 @@ def main() -> None:
 
     rows = build_relationship_rows(modules)
     write_csv(
-        WORKBOOK_DIR / "role_module_relationships.csv",
+        relationship_csv := WORKBOOK_DIR / "role_module_relationships.csv",
         rows,
         [
             "role_id",
@@ -1278,6 +1344,10 @@ def main() -> None:
             "notes",
         ],
     )
+    xlsx_result = build_relationship_workbook(
+        relationship_csv,
+        WORKBOOK_DIR / "role_module_relationships.xlsx",
+    )
 
     (DOCS_DIR / "dynamic-role-task-modules.md").write_text(build_doc(modules), encoding="utf-8")
     TASK_CARD_PATH.write_text(build_task_card(modules), encoding="utf-8")
@@ -1292,15 +1362,20 @@ def main() -> None:
             "graph_nodes": len(graph["nodes"]),
             "graph_edges": len(graph["edges"]),
             "missing_sources": missing,
+            "xlsx": xlsx_result,
             "outputs": [
                 "docs/extension/dynamic-role-task-modules.md",
                 "chrome-extension/config/task-modules.json",
                 "chrome-extension/task-modules/index.json",
                 "workbook/task_modules/role_module_relation_graph.json",
                 "workbook/task_modules/role_module_relationships.csv",
-                "workbook/task_modules/role_module_relationships.xlsx",
                 str(TASK_CARD_PATH.relative_to(ROOT)),
-            ],
+            ]
+            + (
+                ["workbook/task_modules/role_module_relationships.xlsx"]
+                if xlsx_result["generated"]
+                else []
+            ),
         },
     )
     # Consistency check: roles hardcoded in popup.html roleSelect vs index.json

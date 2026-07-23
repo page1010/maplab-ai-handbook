@@ -1,0 +1,570 @@
+{
+  "generated_at": "2026-07-23T14:14:46+08:00",
+  "dashboard": {
+    "status": "warning",
+    "verdict": "部分可用：成果可看，但資料阻塞仍需修復",
+    "detail": "14/18 條正式工作已完成，4 條未通過；Broker 只讀快照需刷新。",
+    "market_date": "2026-07-22",
+    "jobs_updated_at": "2026-07-23T06:13:56+00:00",
+    "source_freshness": "成果卡 21h；工作狀態 0h；健康快照 0h",
+    "kpis": [
+      {
+        "label": "行情資料",
+        "value": "2026-07-22",
+        "status": "ready",
+        "detail": "18501 系統狀態卡的最新行情日。"
+      },
+      {
+        "label": "正式工作",
+        "value": "14/18 完成",
+        "status": "warning",
+        "detail": "0 執行中，4 需處理；測試 smoke 不列入。"
+      },
+      {
+        "label": "核心成果線",
+        "value": "2/4 有產物",
+        "status": "warning",
+        "detail": "只計入有當日可驗證輸出的成果線。"
+      },
+      {
+        "label": "Broker 只讀",
+        "value": "需刷新",
+        "status": "warning",
+        "detail": "8 天未更新；只讀研究鏈路必須 fail closed。"
+      },
+      {
+        "label": "自動下單",
+        "value": "關閉",
+        "status": "ready",
+        "detail": "WordPress 僅顯示摘要，沒有下單或任意命令能力。"
+      }
+    ],
+    "products": [
+      {
+        "name": "資金流",
+        "status": "ready",
+        "result": "已產生 19 筆去敏候選。",
+        "freshness": "2026-07-22"
+      },
+      {
+        "name": "第一根故事",
+        "status": "warning",
+        "result": "本輪沒有可驗證完成品，不以空結果冒充成果。",
+        "freshness": "2026-07-22"
+      },
+      {
+        "name": "新聞催化",
+        "status": "warning",
+        "result": "本輪沒有可驗證完成品，不以空結果冒充成果。",
+        "freshness": "2026-07-22"
+      },
+      {
+        "name": "動能",
+        "status": "ready",
+        "result": "已產生 18 筆去敏候選。",
+        "freshness": "2026-07-22"
+      }
+    ],
+    "jobs": [
+      {
+        "id": "live-position-session-refresh",
+        "name": "實單只讀快照刷新",
+        "owner": "IOS-INVENTORY",
+        "status": "warning",
+        "result": "實單只讀快照刷新未通過；本機資料庫目前被鎖定。",
+        "freshness": "0h"
+      },
+      {
+        "id": "ai-hermes-live-position-gpt",
+        "name": "實單研究判讀",
+        "owner": "IOS-INVENTORY",
+        "status": "warning",
+        "result": "持倉快照過期，研究工作依規則停止，不輸出假結論。",
+        "freshness": "0h"
+      },
+      {
+        "id": "live-position-gpt-watchdog",
+        "name": "實單研究新鮮度守門",
+        "owner": "IOS-INVENTORY",
+        "status": "warning",
+        "result": "持倉快照過期，新鮮度守門依規則標紅。",
+        "freshness": "23h"
+      },
+      {
+        "id": "ai-hermes-strong-stock-story-early",
+        "name": "強勢股故事驗證",
+        "owner": "IOS-RIGHT",
+        "status": "warning",
+        "result": "當日強勢股故事驗證未通過，不能算完成品。",
+        "freshness": "21h"
+      },
+      {
+        "id": "stock-chip-refresh",
+        "name": "個股籌碼刷新",
+        "owner": "IOS-CHIP",
+        "status": "ready",
+        "result": "最近一次工作完成。",
+        "freshness": "16h"
+      },
+      {
+        "id": "ai-hermes-roundtable-gpt",
+        "name": "多角色研究圓桌",
+        "owner": "IOS-EVIDENCE",
+        "status": "ready",
+        "result": "最近一次工作完成。",
+        "freshness": "16h"
+      },
+      {
+        "id": "market-rule-refresh",
+        "name": "市場制度事件刷新",
+        "owner": "IOS-EVIDENCE",
+        "status": "ready",
+        "result": "最近一次工作完成。",
+        "freshness": "16h"
+      },
+      {
+        "id": "ai-hermes-research-telegram-digest",
+        "name": "研究摘要派送",
+        "owner": "IOS-EVIDENCE",
+        "status": "ready",
+        "result": "最近一次工作完成。",
+        "freshness": "16h"
+      },
+      {
+        "id": "influencer-youtube-rss-poll",
+        "name": "網紅 RSS 掃描",
+        "owner": "IOS-KOL",
+        "status": "ready",
+        "result": "最近一次工作完成。",
+        "freshness": "0h"
+      },
+      {
+        "id": "influencer-sync-refresh",
+        "name": "網紅情報同步",
+        "owner": "IOS-KOL",
+        "status": "ready",
+        "result": "最近一次工作完成。",
+        "freshness": "5h"
+      },
+      {
+        "id": "influencer-hermes-report",
+        "name": "網紅情報總匯",
+        "owner": "IOS-KOL",
+        "status": "ready",
+        "result": "最近一次工作完成。",
+        "freshness": "5h"
+      },
+      {
+        "id": "tradingview-heatmap-capture",
+        "name": "美股熱圖擷取",
+        "owner": "IOS-MOMENTUM",
+        "status": "ready",
+        "result": "最近一次工作完成。",
+        "freshness": "7h"
+      },
+      {
+        "id": "ai-hermes-stock-future-story-gpt",
+        "name": "股期故事研究",
+        "owner": "IOS-MOMENTUM",
+        "status": "ready",
+        "result": "最近一次工作完成。",
+        "freshness": "21h"
+      },
+      {
+        "id": "stock-future-opening-playbook",
+        "name": "股期開盤劇本",
+        "owner": "IOS-RIGHT",
+        "status": "ready",
+        "result": "最近一次工作完成。",
+        "freshness": "21h"
+      },
+      {
+        "id": "finance-morning-brief",
+        "name": "財經早報",
+        "owner": "IOS-MACRO",
+        "status": "ready",
+        "result": "最近一次工作完成。",
+        "freshness": "7h"
+      },
+      {
+        "id": "convergence-engine",
+        "name": "跨源共振引擎",
+        "owner": "IOS-ALPHA",
+        "status": "ready",
+        "result": "最近一次工作完成。",
+        "freshness": "0h"
+      },
+      {
+        "id": "market-event-watch-refresh",
+        "name": "重大事件風控",
+        "owner": "IOS-ALPHA",
+        "status": "ready",
+        "result": "最近一次工作完成。",
+        "freshness": "0h"
+      },
+      {
+        "id": "black-swan-risk-engine",
+        "name": "黑天鵝風險引擎",
+        "owner": "IOS-BLACKSWAN",
+        "status": "ready",
+        "result": "最近一次工作完成。",
+        "freshness": "5h"
+      }
+    ]
+  },
+  "roles": [
+    {
+      "id": "A0",
+      "name": "總調度秘書",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "chrome-extension/task-modules/A0.json + recalls/A0_recall.md"
+    },
+    {
+      "id": "A1",
+      "name": "系統總管",
+      "status": "standby",
+      "result": "runtime com.maplab.patrol: pid=-, exit=0",
+      "evidence": "chrome-extension/task-modules/A1.json + recalls/A1_recall.md"
+    },
+    {
+      "id": "A2",
+      "name": "搜尋流量",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "chrome-extension/task-modules/A2.json + recalls/A2_recall.md"
+    },
+    {
+      "id": "A3",
+      "name": "社群廣告",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "chrome-extension/task-modules/A3.json + recalls/A3_recall.md"
+    },
+    {
+      "id": "A4",
+      "name": "影像資產",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "chrome-extension/task-modules/A4.json + recalls/A4_recall.md"
+    },
+    {
+      "id": "A5",
+      "name": "報價引擎",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "chrome-extension/task-modules/A5.json + recalls/A5_recall.md"
+    },
+    {
+      "id": "A6",
+      "name": "業務快反應",
+      "status": "running",
+      "result": "runtime com.maplab.a6bot: pid=29067, exit=0",
+      "evidence": "chrome-extension/task-modules/A6.json + recalls/A6_recall.md"
+    },
+    {
+      "id": "A7",
+      "name": "客服轉單",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "chrome-extension/task-modules/A7.json + recalls/A7_recall.md"
+    },
+    {
+      "id": "A8",
+      "name": "影音產線",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "chrome-extension/task-modules/A8.json + recalls/A8_recall.md"
+    },
+    {
+      "id": "B1",
+      "name": "IOS Builder",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "chrome-extension/task-modules/B1.json + recalls/B1_recall.md"
+    },
+    {
+      "id": "B2",
+      "name": "IOS Reviewer",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "chrome-extension/task-modules/B2.json + recalls/B2_recall.md"
+    },
+    {
+      "id": "B3",
+      "name": "IOS Archivist",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "chrome-extension/task-modules/B3.json + recalls/B3_recall.md"
+    },
+    {
+      "id": "B4",
+      "name": "IOS System Patrol",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "chrome-extension/task-modules/B4.json + recalls/B4_recall.md"
+    },
+    {
+      "id": "B5",
+      "name": "影子系統總管",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "chrome-extension/task-modules/B5.json + recalls/B5_recall.md"
+    },
+    {
+      "id": "IOS-ALPHA",
+      "name": "阿爾法共振經理",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "chrome-extension/task-modules/IOS-ALPHA.json + recalls/IOS_strategy_role_recall.md"
+    },
+    {
+      "id": "IOS-BLACKSWAN",
+      "name": "黑天鵝監控官",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "chrome-extension/task-modules/IOS-BLACKSWAN.json + recalls/IOS_strategy_role_recall.md"
+    },
+    {
+      "id": "IOS-CHIP",
+      "name": "籌碼經理",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "chrome-extension/task-modules/IOS-CHIP.json + recalls/IOS_strategy_role_recall.md"
+    },
+    {
+      "id": "IOS-EVIDENCE",
+      "name": "研究證據經理",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "chrome-extension/task-modules/IOS-EVIDENCE.json + recalls/IOS_strategy_role_recall.md"
+    },
+    {
+      "id": "IOS-FAMILY",
+      "name": "家族基金經理",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "chrome-extension/task-modules/IOS-FAMILY.json + recalls/IOS_strategy_role_recall.md"
+    },
+    {
+      "id": "IOS-FB",
+      "name": "FB / 社群情報經理",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "chrome-extension/task-modules/IOS-FB.json + recalls/IOS_strategy_role_recall.md"
+    },
+    {
+      "id": "IOS-HEDGE",
+      "name": "盤後對沖經理",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "chrome-extension/task-modules/IOS-HEDGE.json + recalls/IOS_strategy_role_recall.md"
+    },
+    {
+      "id": "IOS-HYGIENE",
+      "name": "系統衛生官",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "chrome-extension/task-modules/IOS-HYGIENE.json + recalls/IOS_strategy_role_recall.md"
+    },
+    {
+      "id": "IOS-INVENTORY",
+      "name": "庫存審查經理",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "chrome-extension/task-modules/IOS-INVENTORY.json + recalls/IOS_strategy_role_recall.md"
+    },
+    {
+      "id": "IOS-KOL",
+      "name": "網紅雷達經理",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "chrome-extension/task-modules/IOS-KOL.json + recalls/IOS_strategy_role_recall.md"
+    },
+    {
+      "id": "IOS-LEFT",
+      "name": "左側預期差經理",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "chrome-extension/task-modules/IOS-LEFT.json + recalls/IOS_strategy_role_recall.md"
+    },
+    {
+      "id": "IOS-MACRO",
+      "name": "總經大師",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "chrome-extension/task-modules/IOS-MACRO.json + recalls/IOS_strategy_role_recall.md"
+    },
+    {
+      "id": "IOS-MOMENTUM",
+      "name": "每日動能經理",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "chrome-extension/task-modules/IOS-MOMENTUM.json + recalls/IOS_strategy_role_recall.md"
+    },
+    {
+      "id": "IOS-RIGHT",
+      "name": "右側交易經理",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "chrome-extension/task-modules/IOS-RIGHT.json + recalls/IOS_strategy_role_recall.md"
+    },
+    {
+      "id": "IOS-SELL",
+      "name": "實單哨兵",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "chrome-extension/task-modules/IOS-SELL.json + recalls/IOS-SELL_recall.md"
+    },
+    {
+      "id": "IOS-SIM",
+      "name": "模擬倉經理",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "chrome-extension/task-modules/IOS-SIM.json + recalls/IOS_strategy_role_recall.md"
+    },
+    {
+      "id": "IOS-SURFACE",
+      "name": "介面契約守門員",
+      "status": "standby",
+      "result": "召喚模組與 recall 可用；屬按需角色，不以常駐 PID 判定",
+      "evidence": "chrome-extension/task-modules/IOS-SURFACE.json + recalls/IOS_strategy_role_recall.md"
+    }
+  ],
+  "modules": [
+    {
+      "id": "dashboard",
+      "name": "Dashboard",
+      "status": "running",
+      "summary": "只讀決策、研究與風控顯示面；pid=40747，exit=-15",
+      "freshness": "launchctl live check"
+    },
+    {
+      "id": "telegram_operator",
+      "name": "Telegram Operator",
+      "status": "running",
+      "summary": "Owner 手機訊息與固定命令路由；pid=12838，exit=-15",
+      "freshness": "launchctl live check"
+    },
+    {
+      "id": "market_event_island",
+      "name": "Market Event Island",
+      "status": "running",
+      "summary": "市場事件資料與排程；pid=69180，exit=0",
+      "freshness": "launchctl live check"
+    },
+    {
+      "id": "black_swan_scanner",
+      "name": "Black Swan Scanner",
+      "status": "standby",
+      "summary": "黑天鵝條件掃描；pid=-，exit=0",
+      "freshness": "launchctl live check"
+    },
+    {
+      "id": "real_holdings_sentinel",
+      "name": "Real Holdings Sentinel",
+      "status": "standby",
+      "summary": "實單只讀風險哨兵；pid=-，exit=0",
+      "freshness": "launchctl live check"
+    },
+    {
+      "id": "self_healing_loop",
+      "name": "Self Healing Loop",
+      "status": "standby",
+      "summary": "治理 finding 的掃描與覆查；pid=-，exit=0",
+      "freshness": "launchctl live check"
+    },
+    {
+      "id": "system_truth",
+      "name": "System Truth",
+      "status": "standby",
+      "summary": "跨 repo 與 runtime 真相地圖；pid=-，exit=0",
+      "freshness": "launchctl live check"
+    },
+    {
+      "id": "cross_project_mirror",
+      "name": "Cross Project Mirror",
+      "status": "warning",
+      "summary": "MAPLAB 與 Investment OS 的狀態鏡像；pid=-，exit=127",
+      "freshness": "launchctl live check"
+    },
+    {
+      "id": "live_position_watchdog",
+      "name": "Live Position Watchdog",
+      "status": "warning",
+      "summary": "持倉研究工作的新鮮度守門；pid=-，exit=2",
+      "freshness": "launchctl live check"
+    },
+    {
+      "id": "live_position_research",
+      "name": "Live Position Research",
+      "status": "warning",
+      "summary": "持倉研究判讀；持倉快照過期時必須失敗關閉；pid=-，exit=2",
+      "freshness": "launchctl live check"
+    },
+    {
+      "id": "strong_stock_story",
+      "name": "Strong Stock Story",
+      "status": "warning",
+      "summary": "強勢股故事產物的 schema 與有效性檢查；pid=-，exit=1",
+      "freshness": "launchctl live check"
+    },
+    {
+      "id": "ios_alpha",
+      "name": "IOS-ALPHA 阿爾法共振",
+      "status": "ready",
+      "summary": "Reddit、RSS、Polymarket 與市場事件的跨源共振；WordPress 僅顯示去敏手機卡與新鮮度，不執行研究或交易。",
+      "freshness": "0h"
+    },
+    {
+      "id": "runtime_database",
+      "name": "Investment OS Runtime Database",
+      "status": "ready",
+      "summary": "真正 runtime DB；網站只讀去敏摘要，不讀 raw SQLite",
+      "freshness": "0h"
+    },
+    {
+      "id": "exposure_ledger",
+      "name": "Exposure Ledger",
+      "status": "ready",
+      "summary": "曝險與死亡清單的去敏風險摘要",
+      "freshness": "21h"
+    },
+    {
+      "id": "system_map",
+      "name": "System Truth Map",
+      "status": "ready",
+      "summary": "runtime、repo drift 與治理 dispatch 摘要",
+      "freshness": "6h"
+    },
+    {
+      "id": "current_status",
+      "name": "Investment OS Current Status",
+      "status": "ready",
+      "summary": "Investment OS 單一狀態入口",
+      "freshness": "6h"
+    }
+  ],
+  "alerts": [
+    {
+      "severity": "warning",
+      "title": "Cross Project Mirror 尚未綠燈",
+      "detail": "MAPLAB 與 Investment OS 的狀態鏡像；pid=-，exit=127"
+    },
+    {
+      "severity": "warning",
+      "title": "Live Position Watchdog 尚未綠燈",
+      "detail": "持倉研究工作的新鮮度守門；pid=-，exit=2"
+    },
+    {
+      "severity": "warning",
+      "title": "Live Position Research 尚未綠燈",
+      "detail": "持倉研究判讀；持倉快照過期時必須失敗關閉；pid=-，exit=2"
+    },
+    {
+      "severity": "warning",
+      "title": "Strong Stock Story 尚未綠燈",
+      "detail": "強勢股故事產物的 schema 與有效性檢查；pid=-，exit=1"
+    }
+  ]
+}

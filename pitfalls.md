@@ -412,3 +412,24 @@
   2. 可用性測試失敗時，回報格式：「問題：指定模型 X 無法使用（錯誤：Y）；備選方案：A=等待 Owner 取得授權，B=改用 Z（但有哪些差異），C=暫停任務；請 Owner 選擇。」
   3. 揭露替代不等於合規——合規的唯一標準是「先試指定模型，失敗才回報並等裁決」。
 - 封坑驗證：`TOKEN=$(grep CLAUDE_CODE_OAUTH_TOKEN /Users/pagemacmini/maplab-ai-handbook/bot/.env | cut -d'=' -f2) && echo "test" | CLAUDE_CODE_OAUTH_TOKEN="$TOKEN" claude --model claude-fable-5 --print 2>&1 | grep -q "." && echo PASS || echo FAIL`（指定模型可用時應回 PASS；若 FAIL 才進備選方案流程，不得自行替代）。
+# 錯誤 — WordPress 一次性快照寫入必須共用正式 option key（2026-07-23）
+
+- 觸發條件：Code Snippets 顯示已執行，但個人秘書頁仍保留舊的角色數與產生時間。
+- 根因：一次性 seed 寫入 `ifl_secretary_snapshot`，正式入口實際讀取 `ifl_personal_secretary_snapshot`；寫入成功不代表 consumer 讀到同一個 key。
+- 解法：依正式 plugin 的 `OPTION_KEY` 改寫 seed，重新執行後以產生時間、角色數與 IOS-ALPHA 卡片三項 UI readback 驗證。
+- 預防：任何 WordPress option/REST 同步先從正式 consumer 取 key，不手打別名；完成條件必須包含登入後 UI readback，不能只看 Code Snippets 執行成功。
+
+## 2026-07-23 — Investment OS 產品 freshness 必須讀 runtime root，不可讀 repo 範例副本
+
+- 觸發條件：launchd 顯示 `convergence-engine` 每 15 分鐘 exit 0，但 WordPress IOS-ALPHA 卡片仍顯示 36 天 stale。
+- 根因：exporter 雖已用 `ios_runtime_root` 讀真正 runtime DB，卻仍用 `ios_repo/data/convergence_phone.md` 判定 IOS-ALPHA freshness；repo 副本停在 6 月，真 runtime 檔在 `~/.local/share/investmentos-telegram-operator/data/` 當日持續更新。
+- 解法：IOS-ALPHA 的手機卡與 freshness 全部改讀 `runtime_root`；比對 repo/runtime runner SHA-256 一致後，以 runtime 手機卡、shadow training、local-model findings 與 launchctl exit 0 共同驗證。
+- 預防：任何 Investment OS owner-facing runtime 狀態先分清 `repo source`、`repo sample/state`、`runtime copy`、`runtime output`；排程是否存在看 launchctl，程式版本看 checksum，資料新鮮度只能看 runtime output。
+- 封坑驗證：`python3 -m unittest -v tests/test_innerflowlab_personal_secretary_snapshot.py` 的 `test_ios_alpha_freshness_uses_runtime_root_not_stale_repo_copy` 必須通過。
+
+## 2026-07-23 — CodeMirror fill 不會自動取代整份 WordPress snippet
+
+- 觸發條件：在 Code Snippets 編輯頁直接對 `.CodeMirror textarea` 呼叫 fill，儲存後個人秘書 shortcode 變成純文字；snippet 列表出現驚嘆號並自動停用。
+- 根因：CodeMirror 的內部 textarea 是輸入緩衝，不是原始 `#snippet_code` 全文欄位；直接 fill 會在目前文件插入新內容，造成新舊 PHP 疊在一起。WordPress 安全檢查偵測到 activation error 後停用 snippet。
+- 解法：在同一個未離頁的編輯流程中，先 focus `.CodeMirror textarea`，依序送 `Meta+A`、`Backspace`，確認文件已清空，再 fill 完整程式碼並立即 `save+activate`；最後一定以 live shortcode render 驗收。
+- 預防：任何 CodeMirror/Monaco/Ace 類編輯器都不能把 hidden textarea 當普通表單欄位。更新 production snippet 前先保留現行版本，更新後檢查 active 狀態、短代碼是否渲染、登入後 UI 與匿名 gate；只看到「已儲存」不算完成。

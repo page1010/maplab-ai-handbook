@@ -468,6 +468,44 @@ content_indexable=false
 
 ---
 
+## 素材資產／本輪發現(2026-07-24)
+
+> 2026-07-24 素材歸檔 + 存檔規範任務的痕跡留檔。此段為人工維護，插入本索引（非跨 repo 自動覆寫的 SYSTEM_MAP.md）。
+
+**素材真相（單一來源）**
+- A4 素材索引 = `MAPLAB_ASSET_LOG`（Google Sheet，mina / lb99104@gmail.com 擁有，2026-03-19 共享 Owner）。ID `1nlxlMdaLdGEAmOjP70BYspRWqu_eYpsiRyZaujEZkYI`。欄位：file_id/original_name/seo_name/category/keywords/alt_text/drive_url/year。
+- `photo_alt_index.csv`（29,258 列，mina 擁有）：`GoogleDrive-lb99104…/我的雲端硬碟/MAPLAB/MAPLAB_ASSETS/_alt_index/photo_alt_index.csv`。
+- ⚠️ 關鍵陷阱：ASSET_LOG 的 `category` 只有粗分「外燴/日常/旅遊」，會把婚禮/HR 壓平成外燴。**細分類真相在 CSV 路徑子類別** `年份/catering/{子類別}/`：wedding 333（TA-2 婚禮）、corporate 472（TA-3 HR）、birthday 3,347（TA-1 週歲）、dessert 4,283（甜點桌跨 TA）、other 9,013。**別信 category 欄，以路徑子類別為準。**
+
+**關鍵字主軸（TA = 視圖）**
+- `docs/seo-keyword-map.md`（A2 canonical）＝素材分類主軸；三個 TA 是「關鍵字→TA」視圖。pillar：婚禮 `tainan-outdoor-wedding-catering`(1215)、週歲 `catering-one-year-old-party-tainan`(498)、企業茶會 `corporate-tea-party-desserts`(924)。
+- `docs/real-cases-to-seo-matrix.md`＝2026 活動事件夾→cluster→關鍵字 對照。
+
+**成果位置**
+- 已分類素材（190 張）：`/Volumes/MacExternal/MAPLAB_素材_依TA_20260724/`（TA1_週歲 39、TA2_婚禮、TA3_HR 117）。
+- 可用清單（含 drive_url）：`/Volumes/MacExternal/MAPLAB_WORKSPACE/index/`（婚禮 231/333 有連結、企業 183/472 有連結＋原始清單＋schema 草稿）。
+
+**新存檔架構（治理）**
+- agent 固定存檔根：`/Volumes/MacExternal/MAPLAB_WORKSPACE/{outputs,state,tools,index}`；規範 `skills/agent-output-convention.md`＋review bundle `handoff/review-bundles/2026-07-24-agent-output-convention/`。
+
+**已知卡點／陷阱（走過的坑）**
+1. 實體素材未同步本機（只有 `_alt_index` CSV 有同步）。
+2. Drive API `download_file_content` 回 base64 進 context，單張全解析度≈數十萬 token → 大量下載別在主 context 做，優先「離線/鏡像後 cp」或 subagent 批次。
+3. Google Drive 桌面版只能整碟鏡像、不能挑單夾。
+4. 實體檔名 seo/原始混用 → join 命中率被壓（婚 231/333、企 183/472）；A4 完成 seo-rename 回寫可拉高。
+5. 資料夾列檔 400 筆分頁上限 → 大夾要 nextPageToken 補齊。
+6. 婚禮無拍攝日期（A4 只有年份+處理時間）→ date-join 走不通，改靠路徑子類別桶分類。
+7. Chrome 開 Drive 縮圖會 render 凍結 → 視覺驗證改本機 sips+montage。
+
+**其他本輪事實（痕跡）**
+- Ollama 排程：`com.maplab.a6-gym`（LaunchAgent）每天 15:00 跑 `a6_gym_runner.py` 用 `qwen2.5:14b`（~9GB）；工作時段勿 stop。
+- 婚禮日期最可靠來源＝mina 訂單 Sheet 標題（2026/6/27、2026/3/6、2025/11/23、2025/9/27、2024/11/2…）；TimeTree 用客戶/場地名（如東門教會），搜「婚禮」無果。
+- mina 舊照片共享：`外燴照片（擺設）`140（人工命名事件庫）、`餐點照片`103（純食物，0 婚禮）。
+- 外接硬碟 `/Volumes/MacExternal`（1.8T 可寫）；廣告 meta-ads MCP 已接、Meta 帳號 `act_318634712`。
+- 分類方法定論：以事件脈絡/A4 路徑桶為主、單張影像辨識為輔（甜點桌跨 TA 撞臉，單圖不可靠）；主軸跟 seo-keyword-map，TA 為視圖，一份素材跨 audience/channel 共用。
+
+---
+
 # 版本紀錄
 
 ## v0.1 — 2026-07-18

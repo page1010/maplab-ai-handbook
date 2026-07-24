@@ -83,6 +83,7 @@ Startup Check
 - Skills loaded: [從路由表選的技能書，至少 1 本 + task-progress-guide（必拿）]
 - Test plan: [本輪要跑哪些最小測試；若純文件，寫 readback/grep 檢查]
 - Receipt path: [測試或驗證結果要寫到哪個 repo 檔案]
+- 輸出根目錄: MAPLAB_WORKSPACE（/Volumes/MacExternal/MAPLAB_WORKSPACE）— 必填；交辦任務另填 outputs/<YYYY-MM-DD>_<任務短名>/ 子夾
 - Questions for Owner: [至少 1 個問題，確認方向/範圍/優先順序]
 - Risks / ambiguities: [你發現的衝突或不確定]
 - Proposed scope: [你這輪只做什麼、不做什麼]
@@ -92,6 +93,7 @@ Startup Check
 - Skills loaded 為空 = 不算啟動完成
 - **1% 觸發規則（2026-07-07）**：不只啟動時——任務中每遇到新類型動作（GAS/Sheets/WP/照片/報價/clasp…），只要有 1% 機率某技能書適用，動手前必回 `CLAUDE.md` 索引重查一次並載入。「這一步很簡單」「先看看再說」是繞過紀律的紅旗
 - Test plan 或 Receipt path 為空 = 不算啟動完成
+- **輸出根目錄（2026-07-24）**：`輸出根目錄` 欄缺、或指向 ~/.claude/state、~/.claude/tools、/tmp、桌面、各 session outputs = 不算啟動完成（見 skills/agent-output-convention.md）
 - Questions for Owner 為空 = 不算啟動完成
 - 沒有輸出 Startup Check = 不能直接開始改檔案
 
@@ -155,6 +157,9 @@ Progress Log #[序號]
 
 ### 規則 5：方向偏移必須停下回報
 做法行不通時，**禁止自己默默換方案**。必須停下來輸出方向偏移通知，等 Owner 決定。
+
+### 規則 6：輸出路徑鎖定（2026-07-24）
+所有產出只落 `MAPLAB_WORKSPACE`：任務產出→`outputs/<YYYY-MM-DD>_<任務短名>/`、跨 session 狀態→`state/`、可重用腳本→`tools/`、素材索引→`index/`。**禁止**寫入 `~/.claude/state`、`~/.claude/tools`、`/tmp`、桌面、各 session 的 `outputs/`。依據 `skills/agent-output-convention.md`；理由：規則存在於散文等於不存在，故亦做成 Step 6 必填欄。
 
 ---
 

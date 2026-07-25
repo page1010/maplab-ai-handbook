@@ -504,6 +504,20 @@ content_indexable=false
 - 外接硬碟 `/Volumes/MacExternal`（1.8T 可寫）；廣告 meta-ads MCP 已接、Meta 帳號 `act_318634712`。
 - 分類方法定論：以事件脈絡/A4 路徑桶為主、單張影像辨識為輔（甜點桌跨 TA 撞臉，單圖不可靠）；主軸跟 seo-keyword-map，TA 為視圖，一份素材跨 audience/channel 共用。
 
+**最終素材庫狀態（2026-07-25 更新）**
+- 方案 A 已把 A4 路徑桶實體檔 materialize 到本機外接，全程本機處理（sips+montage 驗證、cp），不再走 API base64。
+- **最終 TA 可用張數**（`/Volumes/MacExternal/MAPLAB_素材_依TA_20260724/`）：
+  - TA1 週歲 **3,154**（抓周/托嬰 39 + birthday 回收 3,115）
+  - TA2 婚禮 **308**（證婚 27 + 候選 7 + A4回收 274；**婚禮缺口從 27 補到 308**）
+  - TA3 HR **676**（前批 117 + A4回收 559）
+  - 甜點桌_跨TA **4,285**（dessert 回收，TA1/2/3 共用池）
+  - 合計 **~8,423 張**。
+- **截圖/文件排除**：PNG（≈截圖）排除 **1,206 張**；jpg 文件/菜單（檔名 hint）排除 **119 張**，移到各 TA `_A4回收_疑似截圖排除/`。長寬比無法區分真照片直長裁切 vs 截圖，故只靠檔名/OCR。
+- **索引（雙檔）**：`MAPLAB_WORKSPACE/index/素材索引_關鍵字主軸.csv`（wedding+corporate 1,086 列）、`…_birthday_dessert.csv`（8,472 列）；欄位含 wp主關鍵字/TA視圖/audience/channels/png-doc 排除旗標/本機路徑。驗證與誤標記錄：`…/index/A4回收_驗證與誤標記錄_2026-07-25.md`。
+- **A4 品質坑定論**：路徑子類別分類**可信**（wedding/corporate/birthday/dessert 桶都對）；最大坑＝把 IG/LINE 截圖、報價菜單、ChatGPT 截圖、logo 圖倒進素材桶（**PNG 幾乎全是截圖**）。建議 A4 pipeline 先分「照片 vs 截圖/文件/logo」再進場景桶；`category` 粗欄（外燴/日常/旅遊）該廢，以路徑桶為準。
+- **原始庫完整保留**：`MAPLAB_WORKSPACE/index/原始庫_wedding_corporate/`（wedding 393、corporate 693）、`…/原始庫_birthday_dessert/`（birthday 3,459、dessert 5,032），按年份，未刪。
+- skill：`skills/photo-asset-retrieval-guide.md`（DRAFT，含能力摘要與大量 Drive 檔落地策略）。
+
 ---
 
 # 版本紀錄

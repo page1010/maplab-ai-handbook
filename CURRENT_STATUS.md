@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-07-24 晚間（A1晚間巡查，remote cloud）｜2026-07-24 三次巡查（每日/午後/晚間）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-07-25 09:00（A1每日巡查，remote cloud）｜2026-07-24 三次巡查（每日/午後/晚間）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -175,6 +175,7 @@
 | ⚠️ A1巡查 2026-07-24 09:00 | **T-A7-001 Phase 3 deadline 明天（07-25）— 今日為最後確認視窗。** Owner 自 07-18 起等候 6 天，Zone B/C 金額仍未確認；Phase 3 若 07-24 EOD 前未得回覆將正式延誤。T-A4-002 CRITICAL ~2343h+；T-IOS-KOL-001 CRITICAL ~831h+；STALLED 任務群 since 07-19 已 ~120h（~07-26 自動升 NEEDS_REVIEW）。24h 內無 A2-A8 新 commit，系統其他部分靜止待 Owner 操作。 | 請 Owner 今日確認 Zone B（NT$2,000？）+ Zone C（NT$2,500？），否則 T-A7-001 Phase 3 正式延誤 |
 | ⚠️ A1巡查 2026-07-24 午後 | 8h 零非巡查 commit，系統持續靜止。**T-A7-001 Phase 3 截止日明天（07-25）— Owner Zone B/C 自 07-18 起等候 6 天，今日全天仍無回應**；Phase 3 已確定延誤。STALLED since 07-19 各任務現 ~124h（07-26 升 NEEDS_REVIEW）。T-A4-002 ~2367h / T-IOS-KOL-001 ~855h CRITICAL 持續。A6 RECALL hours 由 ~291h 更新為 ~384h（last commit 07-08）。 | T-A7-001 Phase 3 正式延誤；請 Owner 確認 Zone B/C 以重啟 |
 | ✅ A1巡查 2026-07-24 晚間 | 8h 零非巡查 commit（系統靜止，無新異常）。各 agent 狀態與 CURRENT_STATUS 一致。STALLED since 07-19 各任務現 **~132h**（07-26 AM 升 NEEDS_REVIEW，約 36h 後）；T-A7-001 Phase 3 延誤持續（Owner 確認 Zone B/C 才能重啟）；T-A4-002 ~2375h / T-IOS-KOL-001 ~863h CRITICAL 持續；A6 RECALL ~392h（last commit 07-08）。無新增行動項目。 | 無立即行動；STALLED 任務 ~36h 後升 NEEDS_REVIEW；T-A7-001 見上方警告 |
+| ⚠️ A1巡查 2026-07-25 09:00 | **T-A7-001 Phase 3 截止日（07-25）今日到期 — Owner 自 07-18 起共 7 天未確認 Zone B/C 金額，Phase 3 正式延誤，須 Owner 回覆才能重啟。** STALLED since 07-19 任務群現 **~148h**（約 20h 後升 NEEDS_REVIEW 07-26）；T-A4-002 CRITICAL ~2367h+ / T-IOS-KOL-001 CRITICAL ~855h+；24h 零 A2-A8 commit，系統持續靜止等 Owner 操作。各 agent 狀態與 CURRENT_STATUS 一致，無新異常。 | 請 Owner 儘速確認 Zone B（NT$2,000？）+ Zone C（NT$2,500？）以重啟 T-A7-001 Phase 3；留意明日 07-26 NEEDS_REVIEW 升級 |
 | A7 | T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 5/8 需 TimeTree 權限（任務 9 已解除） | 見 Task Card |
 | Owner | T-GBP-001: 等 Owner 準備新圖片 | 見 Task Card |
 |  | T-HQ-001: Owner pending（非 B1 blocking） | 見 Task Card |

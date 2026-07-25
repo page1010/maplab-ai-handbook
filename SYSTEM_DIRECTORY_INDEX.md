@@ -518,6 +518,13 @@ content_indexable=false
 - **原始庫完整保留**：`MAPLAB_WORKSPACE/index/原始庫_wedding_corporate/`（wedding 393、corporate 693）、`…/原始庫_birthday_dessert/`（birthday 3,459、dessert 5,032），按年份，未刪。
 - skill：`skills/photo-asset-retrieval-guide.md`（DRAFT，含能力摘要與大量 Drive 檔落地策略）。
 
+**PNG 修正 + webp 轉檔路線（2026-07-25 更正）**
+- ⚠️ 更正：**PNG 不該一律排除**——有些 PNG 是被誤丟的真照片。正解＝走「看到是照片 → (SEO 命名) → 轉 webp」路線（webp 供 WordPress/SEO/IG/YT/Pinterest 多頻道復用）。
+- **webp 工具**：`/opt/homebrew/bin/cwebp` 已裝、PIL webp=True。命名慣例 `maplab-{場景}-{描述}.webp`、alt `台南{場景}外燴—{描述}`（見 `recalls/A2_recall.md`§D、`projects/a2-asset-guide.md`）。**repo 無現成 end-to-end「照片→改名→webp」腳本**（既有 `scripts/a4_photo_alt_pipeline.py`/`tools/ai_workbook/photo_pipeline.py` 只做 alt/命名或轉 jpg 上傳）；本輪用等效實作 `outputs/_verify/png_recover.py`（尺寸判截圖 + 白底低飽和判文件 → 真照片轉 webp）。**建議把此步正式化為 A4 pipeline 的一環。**
+- **1,206 PNG 重新處理**：依尺寸分「截圖解析度 1,058（多為 1290x2796 iPhone 截圖）」+「候選照片 148」→ 候選再用內容（白底低飽和=文件/菜單）判別 → **救回 93 張真照片轉 webp**（dessert 56、birthday 31、corporate 4、wedding 2），其餘 1,113 留排除（截圖/報價單/LINE/logo/插畫）。webp 放各 TA `A4回收_PNG救回_webp/`；索引 `MAPLAB_WORKSPACE/index/素材索引_PNG救回_webp.csv`（source=png_recovered、format=webp）。
+- **更新後 TA 可用**：TA1 週歲 **3,185**、TA2 婚禮 **310**、TA3 HR **680**、甜點桌跨TA **4,341**（合計 ~8,516）。
+- **原檔策略**：jpg/heic/png 原檔全保留（原始庫）；webp 為上稿/多頻道格式，發佈時轉、原檔當備份。不因副檔名誤剔真照片。
+
 ---
 
 # 版本紀錄

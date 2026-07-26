@@ -413,7 +413,7 @@ handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-
 
 ## A4｜影像資產整理部（Photo Archive / Asset Library）
 
-**狀態：✅ T-A4-001 S11(2024) 完成；GBP 照片評分 ✅ 完成（2026-07-10）；T-A4-002 🔴 CRITICAL（~2391h無commit）；T-A4-003/004 🔴 **NEEDS_REVIEW**（since 2026-07-19，168h 07-26 觸發，待 Owner 決定延長/關閉/重啟）；2026-07-26 A1每日巡查更新**
+**狀態：✅ T-A4-001 S11(2024) 完成；GBP 照片評分 ✅ 完成（2026-07-10）；T-A4-002 🔴 CRITICAL（~2413h無commit）；T-A4-003/004 🔴 **NEEDS_REVIEW**（since 2026-07-19，168h 07-26 觸發，待 Owner 決定延長/關閉/重啟）；2026-07-26 A1晚間巡查更新**
 
 ```
 你是 MAPLAB A4 影像資產整理部。
@@ -469,7 +469,7 @@ projects/maplab-pipeline.md → handoff/handoff-to-A4.md → skills/superpowers-
 
 ## A5｜報價與提案引擎部（Quotation Engine）
 
-**狀態：⚠️ T-A5-002 + T-A5-005 均超 48h 門檻（awaiting Owner trigger；最後 commit 2026-06-23 07:01-07:22；~320.6h/~321.0h）；T-A5-004 🔴 CRITICAL（~1662h+無commit）；2026-07-06 午後更新**
+**狀態：🔴 T-A5-002/T-A5-005 **NEEDS_REVIEW**（since 2026-07-19，168h 07-26 觸發，待 Owner 決定延長/關閉/重啟；last commit 2026-06-23）；T-A5-004 🟢 功能穩定（無需再動）；T-A5-006 🔲 待開始（前置 T-A5-005）；T-A5-007 🔲 待 Codex 認領；2026-07-26 A1晚間巡查更新**
 
 ```
 你是 MAPLAB A5 報價與提案引擎部。
@@ -526,7 +526,7 @@ projects/maplab-master-data.md → handoff/handoff-to-A5.md → handoff/field-na
 
 ## A6｜業務快反應部隊（Sales Rapid Response Unit）
 
-**狀態：🔴 T-A6-001 ~275h 無 commit（last `e5ab867` 2026-07-07 + `ed63f97` 2026-07-08；bot_a6 ✅ 上線 launchd；LINE Developers Console Webhook URL 仍待 Owner 確認 Channel 1654658337；2026-07-18 A1 午後巡查更新）**
+**狀態：🔴 T-A6-001 **NEEDS_REVIEW**（since 2026-07-19，168h 07-26 觸發；~438h 無 commit，last `ed63f97` 2026-07-08；bot_a6 ✅ 上線 launchd；LINE Developers Console Webhook URL 仍待 Owner 確認 Channel 1654658337；2026-07-26 A1晚間巡查更新）**
 
 ```
 你是 MAPLAB A6 業務快反應部隊。
@@ -590,7 +590,7 @@ Owner確認：LINE Webhook Channel 1654658337 確認。
 
 ## A7｜客服與對話轉單部（Smart Reply / Service Desk）
 
-**狀態：⏳ T-A7-001 等 Owner 確認外送費金額（Zone B NT$2,000？/ Zone C NT$2,500？見 state/owner_delivery_fee_confirm_20260718f.md）；24次警告→單一里程碑收斂（目標 07-25 Phase 3 啟動，Mina 用模板接真實 LINE 對話）；Q5 模板已串入級距快查表（2026-07-18）；T-A7-002 ⏸️ 阻塞（等 LINE bot 後台權限）**
+**狀態：⏳ T-A7-001 **Phase 3 正式延誤**（07-25 截止已過；Owner 自 07-18 起第 8 天未確認 Zone B/C 金額；Zone B NT$2,000？/ Zone C NT$2,500？確認後才能重啟；Q5 模板已串入級距快查表）；T-A7-002 ⏸️ 阻塞（等 LINE bot 後台權限）；2026-07-26 A1晚間巡查更新**
 
 ```
 你是 MAPLAB A7 客服與對話轉單部。

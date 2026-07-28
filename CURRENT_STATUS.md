@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-07-28 每日巡查（A1每日巡查，remote cloud）｜24h 零非巡查 commit（系統靜止）；NEEDS_REVIEW 10 tasks 持續等 Owner 決定（~216h since 07-19）；T-A7-001 Phase 3 延誤（07-25截止已過，第10天）；CRITICAL: T-A4-002 ~2449h / T-IOS-KOL-001 ~937h / A6 ~474h；一致，無新異常｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-07-28 午後巡查（A1午後巡查，remote cloud）｜8h 零非巡查 commit（系統靜止）；NEEDS_REVIEW 10 tasks 持續等 Owner 決定（~224h since 07-19）；T-A7-001 Phase 3 延誤（07-25截止已過，第10天）；CRITICAL: T-A4-002 ~2457h / T-IOS-KOL-001 ~945h / A6 ~482h；一致，無新異常｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -128,7 +128,7 @@
 | T-A2A3-001-B | SEO 場景頁面 + 內連結（從 T-A2A3-001 分拆） | A2/A3 | 🟡 STALLED（since 2026-07-19，48h 無 commit，Owner 可更新最後活動解除）（WordPress post `1696` 已建立為未發布草稿並重載驗證：`https://www.maplabkitc） | handoff/tasks/T-A2A3-001-B.md |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2/A3 | ⏸️ RM/GSC 部分暫停；案例寫作轉 T-A2A3-001-B（Rank Math 已退訂，已設定好的 SEO 欄位先不要再設定；下一步是依 live URL map 補 To B 真） | handoff/tasks/T-A2A3-001.md |
 | T-A3-002 | Meta 廣告「慶生周歲派對」受眾確認 + 優化 | A3 | ⏸️ 阻塞中（受眾輪廓分析完成（693筆 Orders）。待執行：嘉義加入廣告地區、興趣條件精簡、策略一冷受眾上線。） | handoff/tasks/T-A3-002.md |
-| T-A4-002 | pagewu1010 帳號 Takeout 解壓 + Gemini Flash 照片資產整合 | A4 | 🔴 CRITICAL（~2343h無commit） | handoff/tasks/T-A4-002.md |
+| T-A4-002 | pagewu1010 帳號 Takeout 解壓 + Gemini Flash 照片資產整合 | A4 | 🔴 CRITICAL（~2457h無commit） | handoff/tasks/T-A4-002.md |
 | T-A4-003-photo-alt-pipeline | T-A4-003 — 照片 ALT/SEO 管線（地端 gemma4）+ Drive 改串流釋空間 | A4 | 🟡 STALLED（since 2026-07-19，48h 無 commit，Owner 可更新最後活動解除）（等 36,676 張處理完 → Owner 改 Drive 串流 → 釋出 ~433GB） | handoff/tasks/T-A4-003-photo-alt-pipeline.md |
 | T-A4-004-photo-classify | T-A4-004 — 照片分類搬移：截圖/家庭/外燴工作 + 年月資料夾 | A4 | 🟡 STALLED（since 2026-07-19，48h 無 commit，Owner 可更新最後活動解除）（批次跑完後 `--status` 查進度，續開下一批直到 ~98,400 張完成） | handoff/tasks/T-A4-004-photo-classify.md |
 | T-A5-002 | QUOTE_DRAFT 報價單欄位增強 | A5 | 🟡 STALLED（since 2026-07-19，48h 無 commit，Owner 可更新最後活動解除）（Owner 三題已回答（2026-06-23）→ 已加 `fixMasterTemplate_()` 到 Code.gs） | handoff/tasks/T-A5-002.md |
@@ -146,7 +146,7 @@
 | T-B1-DASH-001 | Guild Ops Board 自動同步 + 即時狀態燈 |  | 🟢 READY（已派工，等 Codex 執行）（Game dashboard v0.2 完成（9 NPC / 6 rooms / 21 cards，驗收通過）。尚未完成） | handoff/tasks/T-B1-DASH-001.md |
 | T-GBP-001 | T-GBP-001 | Owner | 🔲 待開始（尚未開始。等 Owner 準備新圖片。） | handoff/tasks/T-GBP-001.md |
 | T-HQ-001 | AGENT-HQ 集團共用層遷移 |  | ⏳ 代碼已交付，等 Owner 啟用（P1-P5 腳本完成，P6 腳本完成，Owner 動作仍 pending）（Owner 執行下列三個 `launchctl load` + `hermes memory setup` 指令即完成） | handoff/tasks/T-HQ-001.md |
-| T-IOS-KOL-001 | IOS-KOL 網紅雷達 Daily Telegram Digest |  | 🔴 CRITICAL（~831h無commit） | handoff/tasks/T-IOS-KOL-001.md |
+| T-IOS-KOL-001 | IOS-KOL 網紅雷達 Daily Telegram Digest |  | 🔴 CRITICAL（~945h無commit） | handoff/tasks/T-IOS-KOL-001.md |
 ---
 
 ## Blockers（只列未解決的）
@@ -186,6 +186,7 @@
 | ✅ A1巡查 2026-07-27 午後 | 8h 零非巡查 commit，系統持續靜止。各 agent 狀態與 CURRENT_STATUS 一致，無新異常。10 項 NEEDS_REVIEW 任務持續等 Owner 決定（since 07-19，現 **~200h**）；T-A7-001 Phase 3 延誤（Owner 自 07-18 起第 **9 天**，07-25 截止已過）；T-A4-002 CRITICAL **~2433h** / T-IOS-KOL-001 CRITICAL **~921h** / A6 RECALL **~458h**（last commit 07-08）。RECALL 頭部更新：時數 +8h。 | 無立即行動；T-A7-001 請 Owner 儘速確認 Zone B（NT$2,000？）+ Zone C（NT$2,500？）以重啟 Phase 3 |
 | ✅ A1巡查 2026-07-27 晚間 | 3 非巡查 commit（`ce113c5` A1文化治理、`4cd6234`+`849c56b` docs/assets）；無 A2-A8 新 commit，各 agent 狀態與 CURRENT_STATUS 一致，無新異常。10 項 NEEDS_REVIEW 任務 ~208h（since 07-19，等 Owner 決定延長/關閉/重啟）；T-A7-001 Phase 3 延誤（Owner 自 07-18 起第 **9 天**，07-25 截止已過）；T-A4-002 CRITICAL **~2441h** / T-IOS-KOL-001 CRITICAL **~929h** / A6 RECALL **~466h**（last commit 07-08）。RECALL 更新：A6 ~458h→~466h；A8 ~736h→~744h。 | 無新增行動項目；T-A7-001 請 Owner 儘速確認 Zone B（NT$2,000？）+ Zone C（NT$2,500？）以重啟 Phase 3 |
 | ✅ A1巡查 2026-07-28 | 24h 零非巡查 commit，系統持續靜止。各 agent 狀態與 CURRENT_STATUS 一致，無新異常。10 項 NEEDS_REVIEW 任務 **~216h**（since 07-19，等 Owner 決定延長/關閉/重啟）；T-A7-001 Phase 3 延誤（Owner 自 07-18 起第 **10 天**未確認 Zone B/C，07-25 截止已過）；T-A4-002 CRITICAL **~2449h** / T-IOS-KOL-001 CRITICAL **~937h** / A6 RECALL **~474h**（last commit 07-08）。RECALL 更新：A4 ~2441h→~2449h；A6 ~466h→~474h；A7 9天→10天；A8 ~744h→~752h。 | 無立即行動；T-A7-001 請 Owner 儘速確認 Zone B（NT$2,000？）+ Zone C（NT$2,500？）以重啟 Phase 3 |
+| ✅ A1巡查 2026-07-28 午後 | 8h 零非巡查 commit，系統持續靜止。各 agent 狀態與 CURRENT_STATUS 一致，無新異常。10 項 NEEDS_REVIEW 任務 **~224h**（since 07-19，等 Owner 決定延長/關閉/重啟）；T-A7-001 Phase 3 延誤（Owner 自 07-18 起第 **10 天**，07-25 截止已過）；T-A4-002 CRITICAL **~2457h** / T-IOS-KOL-001 CRITICAL **~945h** / A6 RECALL **~482h**（last commit 07-08）。RECALL 更新：A4 ~2449h→~2457h；A6 ~474h→~482h；A8 ~752h→~760h。 | 無立即行動；T-A7-001 請 Owner 儘速確認 Zone B（NT$2,000？）+ Zone C（NT$2,500？）以重啟 Phase 3 |
 | A7 | T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 5/8 需 TimeTree 權限（任務 9 已解除） | 見 Task Card |
 | Owner | T-GBP-001: 等 Owner 準備新圖片 | 見 Task Card |
 |  | T-HQ-001: Owner pending（非 B1 blocking） | 見 Task Card |

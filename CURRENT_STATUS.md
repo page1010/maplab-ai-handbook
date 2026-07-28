@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-07-28 午後巡查（A1午後巡查，remote cloud）｜8h 零非巡查 commit（系統靜止）；NEEDS_REVIEW 10 tasks 持續等 Owner 決定（~224h since 07-19）；T-A7-001 Phase 3 延誤（07-25截止已過，第10天）；CRITICAL: T-A4-002 ~2457h / T-IOS-KOL-001 ~945h / A6 ~482h；一致，無新異常｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-07-28 晚間巡查（A1晚間巡查，remote cloud）｜8h 零非巡查 commit（系統靜止）；NEEDS_REVIEW 10 tasks 持續等 Owner 決定（~232h since 07-19）；T-A7-001 Phase 3 延誤（07-25截止已過，第10天）；CRITICAL: T-A4-002 ~2465h / T-IOS-KOL-001 ~953h / A6 ~490h；一致，無新異常｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -187,6 +187,7 @@
 | ✅ A1巡查 2026-07-27 晚間 | 3 非巡查 commit（`ce113c5` A1文化治理、`4cd6234`+`849c56b` docs/assets）；無 A2-A8 新 commit，各 agent 狀態與 CURRENT_STATUS 一致，無新異常。10 項 NEEDS_REVIEW 任務 ~208h（since 07-19，等 Owner 決定延長/關閉/重啟）；T-A7-001 Phase 3 延誤（Owner 自 07-18 起第 **9 天**，07-25 截止已過）；T-A4-002 CRITICAL **~2441h** / T-IOS-KOL-001 CRITICAL **~929h** / A6 RECALL **~466h**（last commit 07-08）。RECALL 更新：A6 ~458h→~466h；A8 ~736h→~744h。 | 無新增行動項目；T-A7-001 請 Owner 儘速確認 Zone B（NT$2,000？）+ Zone C（NT$2,500？）以重啟 Phase 3 |
 | ✅ A1巡查 2026-07-28 | 24h 零非巡查 commit，系統持續靜止。各 agent 狀態與 CURRENT_STATUS 一致，無新異常。10 項 NEEDS_REVIEW 任務 **~216h**（since 07-19，等 Owner 決定延長/關閉/重啟）；T-A7-001 Phase 3 延誤（Owner 自 07-18 起第 **10 天**未確認 Zone B/C，07-25 截止已過）；T-A4-002 CRITICAL **~2449h** / T-IOS-KOL-001 CRITICAL **~937h** / A6 RECALL **~474h**（last commit 07-08）。RECALL 更新：A4 ~2441h→~2449h；A6 ~466h→~474h；A7 9天→10天；A8 ~744h→~752h。 | 無立即行動；T-A7-001 請 Owner 儘速確認 Zone B（NT$2,000？）+ Zone C（NT$2,500？）以重啟 Phase 3 |
 | ✅ A1巡查 2026-07-28 午後 | 8h 零非巡查 commit，系統持續靜止。各 agent 狀態與 CURRENT_STATUS 一致，無新異常。10 項 NEEDS_REVIEW 任務 **~224h**（since 07-19，等 Owner 決定延長/關閉/重啟）；T-A7-001 Phase 3 延誤（Owner 自 07-18 起第 **10 天**，07-25 截止已過）；T-A4-002 CRITICAL **~2457h** / T-IOS-KOL-001 CRITICAL **~945h** / A6 RECALL **~482h**（last commit 07-08）。RECALL 更新：A4 ~2449h→~2457h；A6 ~474h→~482h；A8 ~752h→~760h。 | 無立即行動；T-A7-001 請 Owner 儘速確認 Zone B（NT$2,000？）+ Zone C（NT$2,500？）以重啟 Phase 3 |
+| ✅ A1巡查 2026-07-28 晚間 | 8h 零非巡查 commit，系統持續靜止。各 agent 狀態與 CURRENT_STATUS 一致，無新異常。10 項 NEEDS_REVIEW 任務 **~232h**（since 07-19，等 Owner 決定延長/關閉/重啟）；T-A7-001 Phase 3 延誤（Owner 自 07-18 起第 **10 天**，07-25 截止已過）；T-A4-002 CRITICAL **~2465h** / T-IOS-KOL-001 CRITICAL **~953h** / A6 RECALL **~490h**（last commit 07-08）。RECALL 更新：A4 ~2457h→~2465h；A6 ~482h→~490h；A8 ~760h→~768h。 | 無立即行動；T-A7-001 請 Owner 儘速確認 Zone B（NT$2,000？）+ Zone C（NT$2,500？）以重啟 Phase 3 |
 | A7 | T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 5/8 需 TimeTree 權限（任務 9 已解除） | 見 Task Card |
 | Owner | T-GBP-001: 等 Owner 準備新圖片 | 見 Task Card |
 |  | T-HQ-001: Owner pending（非 B1 blocking） | 見 Task Card |

@@ -542,3 +542,43 @@ content_indexable=false
 3. GitHub、Drive、Runtime 分別承擔治理、營運、即時真相。
 4. Drive mirror 不凌駕 GitHub，live Sheet 不被舊 repo note 取代。
 5. 找資料後必須回到 What／So What／Now What，再 loop back 檢查是否真的變好。
+
+
+---
+
+# A6 LINE 資料流與回覆預訓練資產（本輪發現 2026-07-30，DRAFT）
+
+> 只新增，不覆寫既有段落。目的：把「A6 現在 live 在收 LINE 訊息的那條路徑」與「A6 回覆模型的預訓練資產」釘死位置，未來不必重找。
+> ⚠️ 關鍵區別：**live 收訊息的 sheet** 與 **預訓練用的歷史匯出** 是**兩個不同的東西**，不可混為一談（見下方 A/B）。
+
+## A. Live LINE 收訊息路徑（webhook 已在運作，客戶→OA 單向）
+
+| 項目 | 內容 |
+|---|---|
+| Webhook 程式碼 | `scripts/apps-script/LineWebhook.gs`（GAS，`doPost` → LockService + `message.id` 去重 → 直接 `appendRow`，不走 trigger queue） |
+| 部署 URL / ID | `https://script.google.com/macros/s/AKfycbz_zA_tG2fxNRlvrRMsJyMAzbnpNC-IL8oKqc5h94kyhExsIOuuo7LujbrSuZGK_eap/exec` |
+| LINE Channel | `1654658337`（金鑰在 Notion「MAPLAB API Keys」+ `bot/.env`；不進 git） |
+| 落點 Sheet ID | `1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg`（Drive 名稱 `MAPLAB_外燴系統_v0.1`；與報價系統同一份試算表） |
+| 落點分頁 | `CONVERSATION_LOG` |
+| 欄位 | `msg_id, case_id, timestamp, speaker, message, source, line_user_id, reply_to_msg_id`（`case_id` 多數空白，需業務回填） |
+| 現況 | 試算表本身 modifiedTime 2026-07-29（但那是 DASHBOARD 分頁自動更新，非 CONVERSATION_LOG）。CONVERSATION_LOG 最後**獨立確認**有 LINE inbound 是 **2026-05-19**（見 CURRENT_STATUS + T-A6-001 驗收）。**⚠️ 未確認今日仍有新 inbound 列**（Drive 全文渲染被大小截斷、只回傳 dashboard 分頁）→ 待直接讀 CONVERSATION_LOG 分頁尾列補證。 |
+| 重大限制 | LINE Messaging API webhook **只收得到客戶傳給 OA 的訊息，收不到業務從 OA Manager 後台回的訊息**（根因見 `handoff/tasks/T-A6-002.md`）。這條 live 路徑只有**半邊對話**。 |
+
+## B. 回覆預訓練資產（一次性歷史匯出，靜態，含雙向）
+
+| 項目 | 內容 |
+|---|---|
+| 原始來源 | `/Volumes/MacExternal/外接硬碟 讀取專用/line_oa_chat_csv_260622_213421/`（LINE OA Manager 對話匯出，3,625 個 CSV；資料夾名時戳 2026-06-22，dir mtime 2026-06-22 = **靜態 dump，非 live**） |
+| 產出資料集 | `workbook/a6-training/generated_local/training_samples.jsonl`（run_ts 2026-06-25）+ `manifest.json`（統計）+ `qa_examples_deidentified.json` + `training_pairs_raw.json` |
+| 規模 | 20,244 筆 CSV pairs（總監督樣本 20,370；train 16,317 / val 2,037 / test 2,016）；**含業務回覆側**（with_account_target=20,370） |
+| 階段標註 | S0_OPENING → S6_PREDAY 銷售漏斗 13 類（S3_QUOTE_SEND 8,415 筆最多；S3_MENU_ADJUST 僅 3 筆＝稀疏） |
+| 訂單配對 | `data/line_booking_pairs.csv`（2,634 列，62 筆對到 TimeTree；mtime 2026-06-23；PII 已去識別，另有副本移至 `/Volumes/MacExternal/maplab-data/`） |
+| 模型/評估「gym」 | `scripts/a6_gym_runner.py`（Ollama `qwen2.5:14b` 產建議回覆 vs 真實員工回覆，算可用率）；排程 `launchd/com.maplab.a6-gym.plist`；log `state/a6_gym_log.jsonl` + `state/a6_gym_stdout.log` |
+| ⚠️ 可用率現況（誠實） | gym log 實測每輪可用率約 **0%–20%**（啟發式評分器），**不是 8 成**。repo 裡的「80%」是 A5 報價**毛利率**，非模型回覆準確率。Owner 記憶中的「~8 成可用模型」目前**在 gym 評估裡查無實證**，需再確認是指哪個指標/哪次結果。 |
+| 相關 skill/doc | `projects/line-conversation-training.md`、`projects/ai-reply-system.md`、`skills/a6-local-quote-model-tuning.md`、`skills/a6-qa-examples.md`、`skills/a6-telegram-window.md`（業務輸入視窗操作手冊）、`bot_a6/`（線上 A6 bot）、`local_model_evolution/`（模型演化骨架，2026-07-19 remote 跑因無 Ollama runtime 標 baseline blocked） |
+
+## A vs B 結論
+
+- **A（live 收訊息）** 和 **B（預訓練資料）** 是兩個不同的東西：B 來自 2026-06-22 的靜態 CSV 匯出，**不是**從 live sheet 流出來的。
+- Owner 推論「在 sheet 就代表 webhook 接好了」需拆開看：預訓練 pairs 不在 live sheet；而 live sheet（CONVERSATION_LOG）就算在寫，也只有客戶單向那半邊。
+- 閉環要吃 live 流時：可用 A 拿到客戶訊息，但**業務採用/修改後的回覆（校正訊號）目前沒有任何 live 路徑在捕捉**——這正是新「業務輸入視窗 app」要補的缺口。

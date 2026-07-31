@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "safe_reserve_percent": 15,
+  "activation_window_hours": 36,
+  "cooldown_hours": 168,
+  "candidates": [
+    {
+      "id": "maplab-a6-reply-closed-loop-v1",
+      "revision": "2026-07-31-v1",
+      "project": "maplab",
+      "title": "把 A6 回覆校正設計推進成可測試的採用／修改／丟棄閉環",
+      "owner_value": 5,
+      "step_change": 5,
+      "readiness": 4,
+      "risk": 2,
+      "evidence": [
+        "/Users/pagemacmini/maplab-ai-handbook/docs/a6-reply-closed-loop-mvp-design.md",
+        "/Users/pagemacmini/maplab-ai-handbook/handoff/tasks/T-A6-001.md"
+      ],
+      "acceptance": [
+        "完成一條可執行的採用／修改／丟棄垂直切片，不只補文件",
+        "新增或更新自動測試並通過",
+        "留下使用者可點擊的 validation receipt 與 scoped commit",
+        "不傳送 Telegram、不寫正式 Google Sheet、不修改外部服務"
+      ],
+      "external_mutation": false,
+      "owner_decision_required": false
+    },
+    {
+      "id": "maplab-wedding-landing-alignment-v1",
+      "revision": "2026-07-31-v1",
+      "project": "maplab",
+      "title": "修正婚禮廣告實際目的頁、顯示連結與追蹤參數不一致",
+      "owner_value": 5,
+      "step_change": 4,
+      "readiness": 2,
+      "risk": 4,
+      "evidence": [
+        "/Users/pagemacmini/.codex/automations/a2-ads-seo-wordpress-patrol/memory.md"
+      ],
+      "acceptance": [
+        "先產出可審核變更包；沒有 Owner 廣告操作授權不得寫入 Meta"
+      ],
+      "external_mutation": true,
+      "owner_decision_required": true
+    },
+    {
+      "id": "investment-telegram-fail-closed-v1",
+      "revision": "2026-07-31-v1",
+      "project": "investment-os",
+      "title": "關閉 Telegram direct Bot API allowlist 的 fail-open 缺口",
+      "owner_value": 5,
+      "step_change": 5,
+      "readiness": 5,
+      "risk": 2,
+      "evidence": [
+        "/Users/pagemacmini/investment-os/tasks/TELEGRAM_SEND_PATH_CONTROL_PLANE_20260529.md",
+        "/Users/pagemacmini/investment-os/reviews/TELEGRAM-UX-READABILITY-20260529/checkpoints/20260731-1308-checkpoint.md"
+      ],
+      "acceptance": [
+        "註冊並分類 black_swan_scanner.py",
+        "新增 discovery-based fail-closed allowlist test",
+        "targeted pytest 全綠",
+        "留下 validation receipt 與 scoped commit",
+        "不送 Telegram、不碰 broker/order、不讀 secrets"
+      ],
+      "external_mutation": false,
+      "owner_decision_required": false
+    },
+    {
+      "id": "investment-owner-first-screen-v1",
+      "revision": "2026-07-31-v1",
+      "project": "investment-os",
+      "title": "把 Owner Telegram 第一屏 raw status/debug 欄位改為決策摘要",
+      "owner_value": 5,
+      "step_change": 4,
+      "readiness": 3,
+      "risk": 2,
+      "evidence": [
+        "/Users/pagemacmini/investment-os/docs/TELEGRAM_MESSAGE_TAXONOMY_AND_READABILITY_PROTOCOL.md",
+        "/Users/pagemacmini/investment-os/reviews/TELEGRAM-UX-READABILITY-20260529/checkpoints/20260731-1308-checkpoint.md"
+      ],
+      "acceptance": [
+        "第一屏只保留結論、原因、下一步與 freshness",
+        "raw/debug 資料移至明確的詳細資訊層",
+        "renderer tests 與 validation receipt 完成",
+        "不送 Telegram、不碰 broker/order、不讀 secrets"
+      ],
+      "external_mutation": false,
+      "owner_decision_required": false
+    }
+  ]
+}

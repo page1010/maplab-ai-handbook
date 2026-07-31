@@ -383,6 +383,14 @@
 - 解法：① 新增 `scripts/notify_owner.sh`，用既有 A1 bot Telegram 憑證即時推播；② `scripts/checkpoint.sh` 新增 `--notify` flag，里程碑完成時呼叫即時推播，不必等每日 patrol；③ `scripts/patrol.sh` 的「已完成」區塊改成超過 5 張時仍列出最近異動的 3 張，不再整批消音；④ 補建 `handoff/tasks/T-A2-007-seo-trio-review-20260707.md`（正確格式，✅ 已完成）；⑤ SOP 寫進 `AGENT_RULES.md` SECTION 20，明定 WHO/WHAT 管道/HOW OFTEN。
 - 預防：任何完成一個 Owner 明確派工的多步驟任務，**在同一次 checkpoint 裡就要決定要不要 `--notify`**，不要假設「有 commit 就等於有回報」——commit 只進 git 歷史，不會主動出現在 Owner 眼前。新建 Task Card 一律用既有的 `- **狀態**:` bullet 格式（照抄 `handoff/tasks/T-A2-001.md` 的接續狀態區塊），不要自創格式，否則巡查工具解析不到、等於沒寫。
 
+## 2026-07-31 — 額度複利不能退化成重複 checkpoint
+
+- 觸發條件：Owner 要求在訂閱額度重置前主動尋找高價值工作並提交報告；稽核發現規格與 Quota Sentinel 骨架存在，但沒有 request ledger、teacher-job planner、runner 或 reset report，重置後可觀測的固定消耗主要是 25 次重複 Telegram checkpoint，實際紅燈沒有被修掉。
+- 根因：把「排程有跑／報告有寫」當作「系統有複利」，沒有以 Owner utility、step change、output receipt、tests 和 no-delta suppression 作為額度准入 gate。
+- 解法：建立 `quota_value_cycle.py`，把不耗模型的 rate-limit snapshot、36 小時 activation window、15% reserve、價值評分、同 revision 完成去重、no-delta 七天 cooldown、強制 output receipt 與 post-reset report 接成一條閉環。
+- 預防：任何「利用剩餘額度」排程都必須先回答：本輪會替 Owner 新增什麼可用能力、哪個檔案／畫面能驗證、測試是什麼、與上一輪有何 delta。答不出來就停止，不得再產生 inventory-only checkpoint。
+- 封坑驗證：本機 watcher 不呼叫模型也能持續留下 used/reset/source；pre-reset automation 只有 gate=`ready` 才做一個高價值 job；`done` 沒有 output path 會被 controller 拒絕；重置後報告列出每個 output/test/commit，零成果時明確標紅而不是報成功。
+
 ## 2026-07-09 — 同一張 Task Card 藏兩個「狀態」欄位，且互相矛盾（第三個活例）
 
 - 觸發條件：驗收 T-A4-001（S11/2024 補跑）時發現，這張卡在檔案上半部只有「最後活動/接續點/阻塞」，完全沒有「狀態」欄位；`scripts/patrol.sh` 的 `grep -m1` 因此往下抓到檔案中段一段 2026-04-15 遺留的舊格式區塊（`Task ID`/`任務名稱` 那組），把早已過時的「🔄 進行中（S11/2024 補跑執行中）」當成現況——這是繼 `T-A2-SEO-CATERING-MATRIX-001.md`（`**Status**:` 英文無 bullet 格式）、`T-A2-007` 補建（session task list 沒寫進 Task Card）之後，第三個「Task Card 格式跟巡查解析器對不上」的活例。

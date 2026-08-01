@@ -527,7 +527,9 @@ def build_parser() -> argparse.ArgumentParser:
     sub.add_parser("snapshot")
     plan_parser = sub.add_parser("plan")
     plan_parser.add_argument(
-        "--project", choices=["maplab", "investment-os", "all"], default="all"
+        "--project",
+        choices=["maplab", "investment-os", "tainan-game", "all"],
+        default="all",
     )
     record_parser = sub.add_parser("record")
     record_parser.add_argument("--plan", required=True)

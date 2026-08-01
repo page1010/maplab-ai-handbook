@@ -88,6 +88,31 @@
       ],
       "external_mutation": false,
       "owner_decision_required": false
+    },
+    {
+      "id": "tainan-playable-slice-v0",
+      "revision": "2026-08-02-v1",
+      "project": "tainan-game",
+      "title": "把台南三點一回音做成手機可走、可重播、可檢視的虛擬搖桿切片",
+      "owner_value": 5,
+      "step_change": 5,
+      "readiness": 5,
+      "risk": 2,
+      "evidence": [
+        "/Users/pagemacmini/Documents/tainan-location-social-game/docs/PHONE_PLAYABLE_SLICE_V0.md",
+        "/Users/pagemacmini/Documents/tainan-location-social-game/tasks/PHONE_PLAYABLE_SLICE_V0_20260802.md",
+        "/Users/pagemacmini/Documents/tainan-location-social-game/docs/AUTONOMOUS_IMPROVEMENT_LOOP_V0.md",
+        "/Users/pagemacmini/Documents/tainan-location-social-game/config/playable_slice_eval_v0.json"
+      ],
+      "acceptance": [
+        "提供手機瀏覽器可操作的虛擬搖桿路徑，不呼叫真 GPS",
+        "至少完成一條 Anchor／Echo／Agent 的 deterministic closed loop",
+        "交付同 build/seed 的手機畫面、event/state、tests 與 iteration receipt",
+        "用 playable-slice rubric 留下前後分數，只修最高價值缺口",
+        "留下 scoped commit；不公開部署、不增加 recurring cost"
+      ],
+      "external_mutation": false,
+      "owner_decision_required": false
     }
   ]
 }

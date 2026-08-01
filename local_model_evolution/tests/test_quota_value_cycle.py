@@ -123,6 +123,11 @@ class QuotaValueCycleTests(unittest.TestCase):
         self.assertEqual(result["used_percent"], 6)
         self.assertEqual(result["remaining_percent"], 94)
 
+    def test_cli_accepts_tainan_game_project(self) -> None:
+        parser = qvc.build_parser()
+        args = parser.parse_args(["plan", "--project", "tainan-game"])
+        self.assertEqual(args.project, "tainan-game")
+
     def test_plan_selects_highest_user_value_job(self) -> None:
         now = datetime.now(timezone.utc)
         self.add_snapshot(now, 20, timedelta(hours=20))

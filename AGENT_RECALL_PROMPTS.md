@@ -413,7 +413,7 @@ handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-
 
 ## A4｜影像資產整理部（Photo Archive / Asset Library）
 
-**狀態：✅ T-A4-001 S11(2024) 完成；GBP 照片評分 ✅ 完成（2026-07-10）；T-A4-002 🔴 CRITICAL（**~2619h**無commit）；T-A4-003/004 🔴 **NEEDS_REVIEW**（since 2026-07-19，168h 07-26 觸發，待 Owner 決定延長/關閉/重啟）；2026-08-03 A1午後巡查更新**
+**狀態：✅ T-A4-001 S11(2024) 完成；GBP 照片評分 ✅ 完成（2026-07-10）；T-A4-002 🔴 CRITICAL（**~2627h**無commit）；T-A4-003/004 🔴 **NEEDS_REVIEW**（since 2026-07-19，168h 07-26 觸發，待 Owner 決定延長/關閉/重啟）；2026-08-03 A1晚間巡查更新**
 
 ```
 你是 MAPLAB A4 影像資產整理部。
@@ -526,7 +526,7 @@ projects/maplab-master-data.md → handoff/handoff-to-A5.md → handoff/field-na
 
 ## A6｜業務快反應部隊（Sales Rapid Response Unit）
 
-**狀態：🔴 T-A6-001 **NEEDS_REVIEW**（since 2026-07-19，168h 07-26 觸發；**~642h** 無 commit，last `ed63f97` 2026-07-08；bot_a6 ✅ 上線 launchd；LINE Developers Console Webhook URL 仍待 Owner 確認 Channel 1654658337；2026-08-03 A1午後巡查更新）**
+**狀態：🔴 T-A6-001 **NEEDS_REVIEW**（since 2026-07-19，168h 07-26 觸發；**~650h** 無 commit，last `ed63f97` 2026-07-08；bot_a6 ✅ 上線 launchd；LINE Developers Console Webhook URL 仍待 Owner 確認 Channel 1654658337；2026-08-03 A1晚間巡查更新）**
 
 ```
 你是 MAPLAB A6 業務快反應部隊。
@@ -590,7 +590,7 @@ Owner確認：LINE Webhook Channel 1654658337 確認。
 
 ## A7｜客服與對話轉單部（Smart Reply / Service Desk）
 
-**狀態：⏳ T-A7-001 **Phase 3 正式延誤**（07-25 截止已過；Owner 自 07-18 起第 **13 天**未確認 Zone B/C 金額；Zone B NT$2,000？/ Zone C NT$2,500？確認後才能重啟；Q5 模板已串入級距快查表）；T-A7-002 ⏸️ 阻塞（等 LINE bot 後台權限）；2026-07-31 A1每日巡查更新**
+**狀態：⏳ T-A7-001 **Phase 3 正式延誤**（07-25 截止已過；Owner 自 07-18 起第 **16 天**未確認 Zone B/C 金額；Zone B NT$2,000？/ Zone C NT$2,500？確認後才能重啟；Q5 模板已串入級距快查表）；T-A7-002 ⏸️ 阻塞（等 LINE bot 後台權限）；2026-08-03 A1晚間巡查更新**
 
 ```
 你是 MAPLAB A7 客服與對話轉單部。
@@ -641,7 +641,7 @@ projects/ai-reply-system.md → skills/superpowers-guide.md → docs/fable-minds
 
 ## A8｜影音內容產線（Content Repurposing Pipeline）
 
-**狀態：🔴 T-A8-001 **NEEDS_REVIEW**（**~922h/~38.4天**，last `1a2d752` 06-25 08:25，awaiting Owner storyboard review；168h 閾值 07-26 觸發；2026-08-03 A1午後巡查更新）**
+**狀態：🔴 T-A8-001 **NEEDS_REVIEW**（**~930h/~38.75天**，last `1a2d752` 06-25 08:25，awaiting Owner storyboard review；168h 閾值 07-26 觸發；2026-08-03 A1晚間巡查更新）**
 
 ```
 你是 MAPLAB A8 影音內容產線（Content Repurposing Pipeline）。

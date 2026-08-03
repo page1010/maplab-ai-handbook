@@ -56,6 +56,29 @@
 
 ---
 
+## 2.5 影片優先原則 ＋ 真片段剪輯（重要）
+
+**原則：有影片素材就優先用真片段剪輯，不要只把相片轉影片。**
+- 案例夾若有 `.mov / .mp4` → 用真片段剪成短片。
+- 只有沒有影片時，才退回相片 zoompan（Ken Burns）。
+- 流程：A2/A3/A4 個案「內容確認」後才發 A8 建片；每案標明哪些有影片檔（附時間碼更佳）。
+
+**工具現況（不重造輪子）**：`tools/ai_workbook/a8_enhanced_video_draft.py` **已支援影片輸入**（`VIDEO_EXTS={.mov,.mp4}`）：
+- 影片段：自動 crop 置中 9:16 → scale 1080×1920 → **取每支開頭 N 秒（`--seconds`）** → 疊 Swift IG Soft 字幕 → `maplab_ig_soft` 濾鏡 → xfade 串接；音軌去除（發布前配授權樂）。
+- 相片段：zoompan 運鏡。**同一支片可混用影片＋相片**（把 MOV 與精選 webp 放同一 asset-dir）。
+- 用法：`--asset-dir` 指到「含 MOV 的資料夾」即可（先前 pilot 只餵相片，之後改餵 MOV/混合）。
+
+**挑片段 in/out（現況限制與解法）**：
+- 限制：工具目前只取「每支**開頭** N 秒」，不能自動挑中段最佳片段。
+- 解法：依 A2/A3/A4 給的時間碼**先用 ffmpeg 預剪**，再餵 enhanced draft：
+  `ffmpeg -ss {開始秒} -t {長度秒} -i clip.mov -c copy clips/seg01.mov`
+  （順序命名 seg01/seg02… 決定分鏡順序；再 `--asset-dir clips/`。）
+- 素材先過 A8 A/B/C 分級（A 直用、B 需裁/遮臉/遮 logo、C 私密不可用）。
+
+**缺口（待評估建）**：尚無「自動偵測最佳片段 in/out」工具；目前靠人工/個案標時間碼。可評估建 `a8_clip_trim.py`（讀時間碼清單 → 批次預剪 → 餵 enhanced draft）。**等 b285b719 選出 3 案（標明哪些有影片檔）再依此準備剪輯流程。**
+
+---
+
 ## 3. 品牌語氣（字幕/標題/描述都套）
 
 完整見 `skills/brand-voice-guide.md`。要點：說場景不硬賣、具體名詞、開放感（不用「保證/一定」）、不用「不是…而是…」句型。
@@ -74,6 +97,7 @@
 4. 填標題、描述（§5 模板）、目標觀眾＝**否，這不是兒童專屬**（必填）。
 5. 瀏覽權限＝**私人**（草稿）。**絕不選公開**；公開等 Owner。
 6. 儲存。垂直 <3 分自動歸類 **Short**（連結變 `youtube.com/shorts/…`）。
+7. **YouTube Studio 內建「編輯器」（開放性編輯器）**：上片後可在左側「編輯器」做 **trim 首尾／剪掉中段／加片尾／模糊處理**，適合對已上傳片微調，走 Chrome MCP 操作（Studio 可控已驗證）。**用於發布前微修，不取代本機真片段剪輯**（本機剪輯可重跑、可 commit、有 IG Soft 模板；Studio 編輯器是線上手動微調）。
 
 ---
 
@@ -166,7 +190,10 @@
 
 ## 6. 憑證 / 邊界
 
-- Drive/Sheets token：`~/.claude/mcp-keys/google-token.json`；失效（invalid_grant）時跑 `~/.claude/mcp-keys/reauth_google.py` 重授權（installed client 測試模式 refresh 每 7 天過期；根治＝Cloud Console 專案 maplab-ai 發布 OAuth 同意畫面）。
+- Drive/Sheets token：`~/.claude/mcp-keys/google-token.json`；失效（invalid_grant）時，Owner 在電腦前跑一次 `python3 ~/.claude/mcp-keys/reauth_google.py` → 瀏覽器跳 Google 同意頁 → 點「允許」→ 新 token（含 refresh_token）自動存回、舊的備份為 `.prev`。
+  - **更正（2026-08-03，取代舊「測試模式 7 天過期」診斷）**：先前每 7 天 invalid_grant 的根因，是 GCP 專案 **`maplab-ai`** 的 OAuth 同意畫面卡在「測試」狀態（外部＋測試 → refresh token 每 7 天過期）。**該同意畫面已於 2026-08-03 發布為「實際運作中」，根因已消除。** 舊 token 是測試期核發的短命 token；只要重授權一次，新 refresh token 即長期有效——**換一次即永久，不再每 7 天要 Owner 動作**。
+  - 這是 A8 影音產線用的憑證（專案 `maplab-ai`、單一 `google-token.json`）。**勿與相片產線 `maplab-pipeline`（`./auth/token_owner.json`、`token_spouse.json`）混為一談**——兩者是不同 GCP 專案、不同 token 檔。
+  - 因 app 為「外部＋未驗證」且含 restricted `drive` scope，Owner 在同意頁可能先看到「未驗證應用程式」警告 → 點「進階 / 繼續前往 MAPLAB-AI（不安全）」→ 再「允許」，屬正常（僅 2 位授權使用者，不影響）。
 - YouTube 上片走**瀏覽器 Studio**（現有 OAuth 沒有 YouTube scope；要 API 上傳才需加 scope）。
 - **公開發佈一律等 Owner**；本 SOP 只到私人草稿。祕密不 echo、不進 git。
 

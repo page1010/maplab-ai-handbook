@@ -19,6 +19,16 @@ def render_music_stub(direction):
     """Suno 無官方 API → 人工在網頁生成下載。現在回 None(留位)。"""
     return None
 
+# tone 選單（含固定卡別「留言 Rap」）
+TONE_MENU = ["紀錄片", "搞笑", "浪漫", "文青(indie)", "發表會", "MV", "紀錄片(茶點視角)", "留言Rap(comment-rap)"]
+# 固定卡別：顧客好評/留言 → trap beat → 30s Short
+COMMENT_RAP = {
+    "how": "Suno Custom Mode 貼留言當歌詞 + 曲風填 trap/hip-hop（半自動,無 API;免費試聽,Pro 商用下載）",
+    "structure": "[Hook] 品牌+場景鉤子 / [Verse] 好評重點押韻 / [Hook] 收尾；約 30s；自然置入 台南外燴/MAPLAB/場景",
+    "voice": "唱＝Suno；旁白版才用 ElevenLabs（唸）",
+    "source_rule": "優先用真實好評(Google 商家/IG/LINE)並標來源；拿不到用代表性一則並註明",
+}
+
 def draw_card(base_img, out_jpg, num, tone, hook):
     hookfile = f"/tmp/ce_hook_{num}.txt"; Path(hookfile).write_text(hook)
     vf = (

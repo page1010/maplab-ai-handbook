@@ -89,18 +89,38 @@ def sheet_append(cards, case, token):
         data=body, headers={"Authorization":f"Bearer {AT}","Content-Type":"application/json"}, method="POST")
     return json.load(urllib.request.urlopen(req, timeout=30)).get("updates",{}).get("updatedRows")
 
+def tg_send_text(cards, case, env):
+    """預設模式：純文字規格卡（不配縮圖，省算力）。每卡＝Hook＋3節拍＋CTA＋音樂/旁白方向。"""
+    TG = env["TELEGRAM_BOT_TOKEN"]; CHAT = env.get("OWNER_CHAT_ID", "1077768811")
+    lines = [f"🎬 {case['name']}｜Creative Engine 規格卡（文字版，回編號選，可多選）"]
+    for c in cards:
+        beats = "｜".join(c.get("beats", [])) or "—"
+        lines.append(f"\n#{c['id']:02d} [{c['tone']}]\nHook: {c['hook_oneline']}\n節拍: {beats}\nCTA: {c.get('cta','—')}\n🎵{c['music']}｜🎙{c['voice']}")
+    lines.append("\n（旁白待 ElevenLabs Starter API；音樂待 Suno 人工。回編號→選中才渲染。）")
+    text = "\n".join(lines); msgs = []
+    while text:
+        chunk, text = text[:3900], text[3900:]
+        d = urllib.parse.urlencode({"chat_id": CHAT, "text": chunk}).encode()
+        j = json.load(urllib.request.urlopen(urllib.request.Request(f"https://api.telegram.org/bot{TG}/sendMessage", data=d), timeout=60))
+        msgs.append(j.get("result", {}).get("message_id") if j.get("ok") else j)
+    return msgs
+
 if __name__ == "__main__":
-    CASE = {"name":"說事實木地板 開幕", "date":"2026-06-21"}
-    base = REPO/"workbook/a8/pilot-woodfloor"
-    CARDS = json.load(open(base/"spec_cards_input.json"))
-    made = generate(CASE, CARDS, base)
-    env = dict(re.findall(r'^(\w+)=(.*)$', open(REPO/"bot/.env").read(), re.M))
-    mg, txt = tg_send(made, CASE, env)
-    print("telegram_media_group_ids:", mg)
-    print("telegram_summary_msg_id:", txt)
+    import sys
+    CASE = {"name": "說事實木地板 開幕", "date": "2026-06-21"}
+    base = REPO / "workbook/a8/pilot-woodfloor"
+    CARDS = json.load(open(base / "spec_cards_input.json"))
+    env = dict(re.findall(r'^(\w+)=(.*)$', open(REPO / "bot/.env").read(), re.M))
+    THUMBS = "--thumbnails" in sys.argv  # 預設純文字卡；要縮圖/封面才加 --thumbnails
+    if THUMBS:
+        made = generate(CASE, CARDS, base)
+        mg, txt = tg_send(made, CASE, env)
+        print("telegram_media_group_ids:", mg, "| summary:", txt)
+    else:
+        print("telegram_text_card_msg_ids:", tg_send_text(CARDS, CASE, env))
     try:
-        tok = json.load(open(Path.home()/".claude/mcp-keys/google-token.json"))
-        n = sheet_append(CARDS, CASE, tok); print("sheet_rows_appended:", n)
+        tok = json.load(open(Path.home() / ".claude/mcp-keys/google-token.json"))
+        print("sheet_rows_appended:", sheet_append(CARDS, CASE, tok))
     except Exception as e:
         print("sheet_append_error:", str(e)[:200])
     print("DONE")

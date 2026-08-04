@@ -7,5 +7,6 @@
  {"id":6,"tone":"MV","frame":"seg05.jpg","hook_disp":"花・光・木紋\n開幕的節奏","hook_oneline":"花・光・木紋，開幕的節奏","music":"節奏lofi","voice":"無旁白(純音樂)","beats":["花籃","木地板","茶點特寫快剪"],"cta":"台南開幕茶會 MAPLAB","note":""},
  {"id":7,"tone":"紀錄片(茶點視角)","frame":"seg03.jpg","hook_disp":"開幕茶點\n一口一口排開","hook_oneline":"開幕茶點，一口一口排開","music":"輕爵士","voice":"Owner旁白","beats":["迎賓茶點的擺放","賓客邊逛邊取用","把開幕變成有溫度的見面"],"cta":"開幕迎賓茶點找 MAPLAB","note":""},
  {"id":8,"tone":"壞點子大賽/第一人稱","frame":"foodA_a.jpg","hook_disp":"讓木地板旁白\n『踩我，輕一點』","hook_oneline":"讓木地板自己旁白：踩我輕一點","music":"文青木吉他(placeholder)","voice":"木地板擬人(say→待EL)","beats":["我是這片木地板，今天上任","花籃茶點來去的腳步我都記得","踩我的時候輕一點"],"cta":"MAPLAB 幫你鋪好每一步","note":"壞點子→反推:擬人視角可玩(已渲染樣本)"},
- {"id":9,"tone":"浪漫(空間)","frame":"seg01.jpg","hook_disp":"新店的第一頁\n從一杯熱茶開始","hook_oneline":"新店的第一頁，從一杯熱茶開始","music":"溫暖民謠","voice":"溫柔女聲","beats":["推開門的第一個畫面","熱茶與甜點的迎賓","替新店留下溫暖的開始"],"cta":"開幕氛圍交給 MAPLAB","note":""}
+ {"id":9,"tone":"浪漫(空間)","frame":"seg01.jpg","hook_disp":"新店的第一頁\n從一杯熱茶開始","hook_oneline":"新店的第一頁，從一杯熱茶開始","music":"溫暖民謠","voice":"溫柔女聲","beats":["推開門的第一個畫面","熱茶與甜點的迎賓","替新店留下溫暖的開始"],"cta":"開幕氛圍交給 MAPLAB","note":""},
+ {"id":10,"tone":"留言Rap(comment-rap)","frame":"seg03.jpg","hook_disp":"把好評\n唱成一首 rap","hook_oneline":"把顧客好評唱成一首 rap","music":"trap/hip-hop(Suno Custom Mode)","voice":"Suno 唱(rap)","beats":["賓客拍照問哪裡訂的","甜點桌擺到你發慌","下次活動還要找 MAPLAB"],"cta":"台南外燴 MAPLAB","note":"留言→歌;來源:代表性好評(可換真評並標來源);Suno Custom Mode 貼歌詞+曲風trap"}
 ]

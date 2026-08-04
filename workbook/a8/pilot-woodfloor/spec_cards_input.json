@@ -1,0 +1,11 @@
+[
+ {"id":1,"tone":"紀錄片","frame":"seg02.jpg","hook_disp":"說事實木地板\n開幕這天","hook_oneline":"說事實木地板，開幕這天","music":"溫暖鋼琴/木質民謠","voice":"Owner沉穩旁白(待EL)","beats":["花籃排到門口","茶點一口一口排開","為新店留下第一天"],"cta":"台南開幕茶會，找 MAPLAB","note":""},
+ {"id":2,"tone":"搞笑","frame":"seg01.jpg","hook_disp":"開幕最忙的\n是怕甜點被偷吃","hook_oneline":"開幕最忙的是怕甜點被偷吃","music":"俏皮ukulele","voice":"諧星旁白","beats":["花籃排到門口，茶點排更長","一口漢堡一口鹹派手速要快","開幕嘛開心最重要"],"cta":"下一場想這樣熱鬧？找 MAPLAB","note":""},
+ {"id":3,"tone":"浪漫","frame":"foodA_a.jpg","hook_disp":"午後的光\n落在剛鋪好的木地板","hook_oneline":"午後的光落在剛鋪好的木地板","music":"抒情弦樂","voice":"溫柔女聲","beats":["花與甜點替新店寫下第一頁","熱茶配甜點，時間慢下來","開幕是一段關係的開始"],"cta":"把你的開幕交給懂氛圍的人","note":""},
+ {"id":4,"tone":"文青(indie)","frame":"seg04.jpg","hook_disp":"這家店\n等了很久才開","hook_oneline":"這家店，等了很久才開","music":"indie木吉他/lo-fi民謠","voice":"文青男聲/低語","beats":["門口的花，是很多人的祝福","一桌茶點，陪它走過第一天","慢慢來，好的東西值得等"],"cta":"重要的日子，MAPLAB 陪你","note":"文青風:淡、留白、木質溫暖(原憂傷改文青)"},
+ {"id":5,"tone":"發表會","frame":"foodB_a.jpg","hook_disp":"一塊木地板的講究\n從今天說起","hook_oneline":"一塊木地板的講究，從今天說起","music":"品牌感電子","voice":"主持人旁白","beats":["整面木地板任你挑","開幕茶點迎接每位貴賓","專業的第一印象從此開始"],"cta":"品牌活動、開幕規劃找 MAPLAB","note":""},
+ {"id":6,"tone":"MV","frame":"seg05.jpg","hook_disp":"花・光・木紋\n開幕的節奏","hook_oneline":"花・光・木紋，開幕的節奏","music":"節奏lofi","voice":"無旁白(純音樂)","beats":["花籃","木地板","茶點特寫快剪"],"cta":"台南開幕茶會 MAPLAB","note":""},
+ {"id":7,"tone":"紀錄片(茶點視角)","frame":"seg03.jpg","hook_disp":"開幕茶點\n一口一口排開","hook_oneline":"開幕茶點，一口一口排開","music":"輕爵士","voice":"Owner旁白","beats":["迎賓茶點的擺放","賓客邊逛邊取用","把開幕變成有溫度的見面"],"cta":"開幕迎賓茶點找 MAPLAB","note":""},
+ {"id":8,"tone":"壞點子大賽/第一人稱","frame":"foodA_a.jpg","hook_disp":"讓木地板旁白\n『踩我，輕一點』","hook_oneline":"讓木地板自己旁白：踩我輕一點","music":"文青木吉他(placeholder)","voice":"木地板擬人(say→待EL)","beats":["我是這片木地板，今天上任","花籃茶點來去的腳步我都記得","踩我的時候輕一點"],"cta":"MAPLAB 幫你鋪好每一步","note":"壞點子→反推:擬人視角可玩(已渲染樣本)"},
+ {"id":9,"tone":"浪漫(空間)","frame":"seg01.jpg","hook_disp":"新店的第一頁\n從一杯熱茶開始","hook_oneline":"新店的第一頁，從一杯熱茶開始","music":"溫暖民謠","voice":"溫柔女聲","beats":["推開門的第一個畫面","熱茶與甜點的迎賓","替新店留下溫暖的開始"],"cta":"開幕氛圍交給 MAPLAB","note":""}
+]

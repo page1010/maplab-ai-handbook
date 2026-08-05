@@ -86,6 +86,8 @@
 - **音訊合成**：ffmpeg amix 把旁白(volume~1.7)＋音樂(volume~0.15 低音量鋪底)混進無聲影片；`-stream_loop -1` 讓短 loop 填滿長度。
 - **規格卡＝文字卡（預設不配縮圖，省算力）**：`a8_spec_card_generator.py` 預設輸出文字卡（Hook＋3節拍＋CTA＋音樂/旁白方向）推 Telegram；要封面才加 `--thumbnails`（Swift 出圖）。選中的卡才 ffmpeg＋Swift 字幕渲染；聲音先 placeholder、Owner 訂閱後接真版（Suno 音樂人工、ElevenLabs 旁白 API）。
 - **固定卡別「留言 Rap（comment-rap）」**：顧客好評/留言 → trap beat → 30s Short。做法：Suno **Custom Mode 貼留言當歌詞＋曲風填 trap/hip-hop**（半自動、無 API；免費試聽、Pro 商用下載）。歌詞結構 `[Hook]` 品牌+場景鉤子／`[Verse]` 好評重點押韻／`[Hook]` 收尾，自然置入台南外燴/MAPLAB/場景。**好評來源優先真實**（Google 商家/IG/LINE 並標來源），拿不到用代表性一則並註明。唱＝Suno；旁白版才用 ElevenLabs。
+- **⚠️ TTS 授權（重要）**：macOS 內建語音（含 **美佳 Meijia / Siri 語音**）Apple SLA **僅限個人非商用**，**不可用於營利/發佈的 YouTube** → 只能當 placeholder，公開前一定要換。**免費可商用 TTS**：Piper（MIT，離線、中文可、品質基本）、Kokoro（Apache-2.0，品質較好、中文可）、Chatterbox（MIT，主英文）；**避開 Coqui XTTS v2**（CPML＝非商用、公司已停運）。付費最佳＝ElevenLabs（品質＋Owner 語音複製、商用）。唱歌仍走 Suno。
+- **訂閱一句話對照**：**Suno Pro**＝解鎖「商用權＋可下載＋去浮水印，~500 首/月」｜**ElevenLabs Starter**＝解鎖「商用＋即時語音複製＋API，~30–40 分旁白/月」｜**ElevenLabs Creator**＝解鎖「專業語音複製 PVC（高品質 Owner 聲）＋~2 小時旁白/月＋192kbps」。
 
 ---
 

@@ -92,6 +92,15 @@
 - **🎵 配樂對拍**：用**完整 bar 對齊的 beat/loop**（Apple Loops 的 hip hop「…Beat」是整小節，`-stream_loop -1` 接在拍點上）；**別拿旋律樂句隨機裁**（會在奇怪時間刷和弦）。rap 用 hip hop beat、文青用完整木吉他 loop。
 - **🚫 去人臉（擴到成人/業主/賓客）**：選片段避開任何可辨識人臉；抽 start/mid/end 幀確認整段 face-free，或只取 face-free 時窗（例：邦尼兔 c03 只用 <6.5s，因 ~7s 有人入鏡）。**樣本一律用邦尼兔**（Owner 與木地板老闆不熟，木地板不擴張）。
 
+### A8 工具庫候選：MiniMax Music 3.0（2026-08 收錄，Owner FB 分享）
+- **用途**：AI 生成**完整歌曲含人聲**（貼歌詞 [Verse]/[Chorus]，可出中文饒舌/boom bap）——正是我們「唱/rap」缺口。
+- **免費/收費**：有 `Music-3.0-free` 免費層（有限）；完整走 API **$0.15/首(≤5分)**、歌詞 $0.01。
+- **API**：✅ 官方＋fal.ai → **agent 可自動生成**（比 Suno 強，Suno 無官方 API）。
+- **本地**：❌ 無官方開放權重；Mac mini 無 NVIDIA GPU 跑不了 → 走雲端 API。（FB 示範是 RTX 4080 自建，非官方。）
+- **可否商用**：⚠️ **不明確**——官方 API 文件無商用條款；消費頁稱可商用但不在 API 文件內 → **採用前務必向 MiniMax 確認**，別當已授權。
+- **與產線關係**：可當 **Suno 的替代/補足**（唱/rap 自動化）；與 Piper(免費口白)、Apple Loops(beat) 互補。連結：minimax.io/audio、fal.ai/models/fal-ai/minimax-music。
+- **採用前提**：先確認商用授權 → OK 再接 API 當 rap 歌自動化來源；否則維持 Suno(人工) 出商用 rap。
+
 ---
 
 ## 3. 品牌語氣（字幕/標題/描述都套）

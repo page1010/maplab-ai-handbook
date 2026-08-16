@@ -582,3 +582,23 @@ content_indexable=false
 - **A（live 收訊息）** 和 **B（預訓練資料）** 是兩個不同的東西：B 來自 2026-06-22 的靜態 CSV 匯出，**不是**從 live sheet 流出來的。
 - Owner 推論「在 sheet 就代表 webhook 接好了」需拆開看：預訓練 pairs 不在 live sheet；而 live sheet（CONVERSATION_LOG）就算在寫，也只有客戶單向那半邊。
 - 閉環要吃 live 流時：可用 A 拿到客戶訊息，但**業務採用/修改後的回覆（校正訊號）目前沒有任何 live 路徑在捕捉**——這正是新「業務輸入視窗 app」要補的缺口。
+
+---
+
+# 工具與帳號能力清單（Capability Registry · v1.0 · 2026-08-15）
+
+> 指向性導覽：只寫「有什麼、怎麼取用」，**零帳密、零檔案路徑、零 vault page id**。
+> 取用一律透過技能介面（技能內部才解析路徑/憑證/登入態）。消費端呼叫技能即可，拿不到也不需要原始路徑。
+
+| 能力 / 帳號 | 是什麼 | 狀態 | 透過哪個技能取用 |
+|-------------|--------|------|------------------|
+| agent 專用 FB 帳號 | 供 agent 穿越 FB 登入牆做唯讀收集的專用身分（非 Owner 個人帳號） | ✅ 已建、憑證在保管室（僅遮罩顯示） | `agent-login`（不寫帳密） |
+| FB Radar / KOL 情報 feed | 登入態下抓 ~20 財經 KOL 第一手貼文；**接解讀層（playbook/持股情報），非搶快交易** | ✅ 程式在／⏳ 登入 session 待重登 | `agent-login`（登入態）→ FB Radar 流程 |
+| quota-meter | 讀 Claude 方案用量（週 + 5 小時窗），寫預算閘給 daily-ops | ✅ 可用 | `quota-meter` |
+| A8 音樂（MiniMax / Suno） | A8 影音產線的配樂 / 音樂生成 | ⏳ 帳號待指定 | `agent-login`（登入）+ `a8-video-pipeline` / `a8-local-motion-integration` |
+| agent-login | 登入牆穿越的統一介面（`open` / `get-cred`）；唯讀 + 注入防禦 | ✅ v1.1 | `agent-login` |
+| arb 引擎 / rr_framework | investment-os 的套利 / 風報比框架（參考、非執行） | 參考層 · **無獨立技能封裝** | investment-os runtime 內模組（`investment-os/skills/` 目前無對應獨立技能 → 建議後續封裝） |
+| 處置雷達 | 處置股 / 風險標的偵測 | 參考層 · **無獨立技能封裝** | investment-os runtime 內模組（同上，尚未封裝成技能 → 建議後續封裝） |
+| daily-ops cycles | 每日營運循環（預算閘、巡查、狀態回寫） | ✅ 運行中 | daily-operations 循環 / 技能 |
+
+**規則**：本清單只指向「用哪個技能」。任何人（或 agent）需要實際帳密 / 路徑 / 登入態時，呼叫對應技能，由技能內部解析——**導覽頁與其他文件不再寫死 vault id 或檔案路徑**。狀態標「待確認」者表示尚未核對到確切技能名，屬誠實標示、待補。

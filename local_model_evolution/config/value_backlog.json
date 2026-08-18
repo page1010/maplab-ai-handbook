@@ -88,12 +88,17 @@
       ],
       "external_mutation": false,
       "owner_decision_required": false
-    },
+    }
+  ],
+  "archived_candidates": [
     {
       "id": "tainan-playable-slice-v0",
       "revision": "2026-08-02-v1",
       "project": "tainan-game",
       "title": "把台南三點一回音做成手機可走、可重播、可檢視的虛擬搖桿切片",
+      "archive_status": "owner_sealed",
+      "archived_at": "2026-08-18T14:12:00+08:00",
+      "archive_reason": "Owner sealed the entire Tainan project to focus on investment; explicit unseal and post-discussion convergence are required before reactivation.",
       "owner_value": 5,
       "step_change": 5,
       "readiness": 5,
@@ -112,7 +117,7 @@
         "留下 scoped commit；不公開部署、不增加 recurring cost"
       ],
       "external_mutation": false,
-      "owner_decision_required": false
+      "owner_decision_required": true
     }
   ]
 }

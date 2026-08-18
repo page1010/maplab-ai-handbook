@@ -91,7 +91,11 @@ def collect_rate_limits(
                     except json.JSONDecodeError:
                         continue
                     payload = event.get("payload", {})
-                    rate = payload.get("rate_limits", {})
+                    # Some Codex events explicitly emit `rate_limits: null` before
+                    # a later event carries the usable snapshot. Treat those rows
+                    # as absent telemetry so one nullable event cannot crash the
+                    # entire quota gate or hide a fresher valid observation.
+                    rate = payload.get("rate_limits") or {}
                     primary = rate.get("primary") or {}
                     if rate.get("limit_id") != limit_id or "used_percent" not in primary:
                         continue

@@ -44,6 +44,21 @@ def write_event(
         handle.write(json.dumps(event) + "\n")
 
 
+def write_null_rate_limit_event(path: Path, timestamp: datetime) -> None:
+    event = {
+        "timestamp": timestamp.isoformat().replace("+00:00", "Z"),
+        "type": "event_msg",
+        "payload": {
+            "type": "token_count",
+            "info": {"total_token_usage": {"total_tokens": 1}},
+            "rate_limits": None,
+        },
+    }
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a", encoding="utf-8") as handle:
+        handle.write(json.dumps(event) + "\n")
+
+
 class QuotaValueCycleTests(unittest.TestCase):
     def setUp(self) -> None:
         self.temp = tempfile.TemporaryDirectory()
@@ -122,6 +137,31 @@ class QuotaValueCycleTests(unittest.TestCase):
         result = qvc.take_snapshot(self.sessions, self.state, "codex")
         self.assertEqual(result["used_percent"], 6)
         self.assertEqual(result["remaining_percent"], 94)
+
+    def test_null_rate_limit_event_is_skipped_without_hiding_valid_snapshot(self) -> None:
+        now = datetime.now(timezone.utc)
+        path = self.sessions / "2026" / "run.jsonl"
+        write_null_rate_limit_event(path, now - timedelta(minutes=1))
+        write_event(path, now, 23, int((now + timedelta(days=2)).timestamp()))
+
+        result = qvc.take_snapshot(self.sessions, self.state, "codex")
+
+        self.assertEqual(result["status"], "available")
+        self.assertEqual(result["used_percent"], 23)
+        self.assertEqual(result["remaining_percent"], 77)
+
+    def test_archived_candidates_are_outside_the_eligible_pool(self) -> None:
+        config = json.loads(self.config.read_text(encoding="utf-8"))
+        archived = dict(config["candidates"][1])
+        config["candidates"] = []
+        config["archived_candidates"] = [archived]
+
+        eligible, rejected = qvc.eligible_candidates(
+            config, "all", self.state / "job_ledger.jsonl"
+        )
+
+        self.assertEqual(eligible, [])
+        self.assertEqual(rejected, [])
 
     def test_cli_accepts_tainan_game_project(self) -> None:
         parser = qvc.build_parser()

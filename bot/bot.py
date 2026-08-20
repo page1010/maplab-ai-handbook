@@ -2125,12 +2125,51 @@ async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     await _run_claude_guarded(update, context, chat_id, user_message, system_extra, "photo", log_msg)
 
 
+A0_INBOX_FILE = Path(
+    os.getenv(
+        "A0_INBOX_FILE",
+        "/Users/pagemacmini/claude-daily-operations/state/a0_inbox.jsonl",
+    )
+)
+
+
+def _a0_inbox_append(chat_id: int, text: str) -> None:
+    # append-only tap for the A0 dispatch window; must never break the bot
+    try:
+        A0_INBOX_FILE.parent.mkdir(parents=True, exist_ok=True)
+        with A0_INBOX_FILE.open("a", encoding="utf-8") as f:
+            f.write(
+                json.dumps(
+                    {
+                        "ts": datetime.now().isoformat(timespec="seconds"),
+                        "chat_id": chat_id,
+                        "text": text[:4000],
+                    },
+                    ensure_ascii=False,
+                )
+                + "\n"
+            )
+    except Exception:
+        logger.exception("a0 inbox append failed")
+
+
+def _is_a0_direct(text: str) -> bool:
+    return bool(re.match(r"^\s*@?[Aa]0\b", text))
+
+
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if not is_owner(update):
         await deny(update)
         return
     text = update.message.text or ""
     chat_id = update.effective_chat.id
+    _a0_inbox_append(chat_id, text)
+    if _is_a0_direct(text):
+        ack = "📨 已轉 A0/Fable5 直答（A0 視窗上線時會直接回覆）"
+        await update.message.reply_text(ack)
+        _record_history(chat_id, text, ack)
+        log_and_commit(text, ack, "a0-relay")
+        return
     local_answer = _local_runtime_question_answer(text)
     if local_answer:
         await update.message.reply_text(local_answer)

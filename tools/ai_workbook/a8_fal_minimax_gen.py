@@ -12,11 +12,12 @@ ENDPOINT = "fal-ai/minimax-music/text-to-music"
 # 備選：fal-ai/minimax-music-2.6 / fal-ai/minimax-music-1.5 / fal-ai/minimax-music(需 reference_audio_url)
 
 def load_key():
-    k = os.environ.get("FAL_KEY", "")
+    k = os.environ.get("FAL_KEY", "") or os.environ.get("FAL_API_KEY", "")
     if not k:
         f = REPO/"bot/.env"
         if f.exists():
-            m = re.search(r'^FAL_KEY=(.+)$', f.read_text(), re.M)
+            # 容錯：export/空格/引號/FAL_API_KEY 皆可
+            m = re.search(r'^\s*(?:export\s+)?FAL_(?:API_)?KEY\s*=\s*[\'"]?(.+?)[\'"]?\s*$', f.read_text(), re.M)
             if m: k = m.group(1).strip()
     return k
 def mask(k): return (k[:5]+"…"+k[-4:]) if k and len(k)>12 else ("<set>" if k else "<none>")

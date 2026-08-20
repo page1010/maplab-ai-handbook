@@ -101,6 +101,12 @@
 - **與產線關係**：可當 **Suno 的替代/補足**（唱/rap 自動化）；與 Piper(免費口白)、Apple Loops(beat) 互補。連結：minimax.io/audio、fal.ai/models/fal-ai/minimax-music。
 - **採用前提**：先確認商用授權 → OK 再接 API 當 rap 歌自動化來源；否則維持 Suno(人工) 出商用 rap。
 
+### 唱/rap 供應商優先序（Owner 定，最省）
+1. **fal.ai 免費 credits 優先**（新註冊送 ~$20≈570 首、$0.035/首、有 API、商用）→ 達標就放心多用做實際產出＋更多曲風；每次跑後追蹤剩餘 credits 記 `state/`。adapter：`a8_fal_minimax_gen.py`。
+2. **fal credits 見底 → 切 MiniMax $5**（最小儲值≈33 首，key 已在 bot/.env）→ **提醒 Owner 儲值，不自動花錢**。adapter：`a8_minimax_gen.py`。
+3. 之後 fal PAYG $0.035/首（比 MiniMax $0.15 便宜）。
+- **⚠️ 現況（2026-08）**：fal 帳號目前 **403 locked「Exhausted balance」**——免費 $20 未生效/已用完，**暫不可用**；MiniMax 亦 1008 餘額不足。技術全通(key/endpoint 都對)，唯一 gate＝帳號餘額。→ 先解 fal billing（加卡啟用免費額度）或直接 MiniMax $5，才生得出來。
+
 ---
 
 ## 3. 品牌語氣（字幕/標題/描述都套）

@@ -99,12 +99,14 @@ def make_suno_pack(eid, variant=None):
     if not e: return f"找不到 {eid}"
     ep = e["engine_prompts"]
     style = ep["suno"] if not variant else ep.get("suno_variants", {}).get(variant, ep["suno"])
+    lyr = e.get("suno_lyrics", e["lyrics_reviewed"])
     tag = f"（{variant}）" if variant else ""
     return (f"🎵 Suno 貼上包｜{e['id']}{tag}\n"
             f"vibe：{e['vibe']}\n\n"
+            f"🔮 預計產出風格：{e.get('expected_style','')}\n\n"
             f"① 曲風/Style 欄貼這段：\n{style}\n\n"
-            f"② 歌詞/Lyrics 欄貼這段：\n{e['lyrics_reviewed']}\n\n"
-            f"（先用 Suno 免費層試品質：有浮水印、非商用；對味再升 Pro $10/月＝商用＋可下載＋無浮水印。訂閱由 Owner 決定。）")
+            f"② 歌詞/Lyrics 欄貼這段（含 meta-tag/vocal cue）：\n{lyr}\n\n"
+            f"（先用 Suno 免費層試品質：有浮水印、非商用；對味再升 Pro $10/月(年繳$96/年、省20%)＝商用＋可下載＋無浮水印。訂閱由 Owner 決定。）")
 
 if __name__=="__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else ""

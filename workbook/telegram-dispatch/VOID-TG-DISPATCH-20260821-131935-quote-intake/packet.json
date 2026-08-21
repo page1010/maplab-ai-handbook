@@ -1,13 +1,13 @@
 {
   "schema_version": "maplab.telegram_dispatch.v1",
-  "dispatch_id": "TG-DISPATCH-20260821-125241-quote-intake",
-  "created_at": "2026-08-21T12:52:41",
-  "status": "void_no_action_taken",
-  "void_reason": "quote-intake classifier misfired on bare 「成本」 inside 「機會成本」 (now fixed on 2026-08-21); routed to local Ollama qwen2.5-coder:7b (not Codex, not @maplab_a6_bot), which only returned a malformed tool_call fragment and did no real work",
+  "dispatch_id": "TG-DISPATCH-20260821-131935-quote-intake",
+  "created_at": "2026-08-21T13:19:35",
+  "status": "closed_void",
+  "void_reason": "Owner's message was a meta-question about the quote-intake misroute itself (literally contains 「報價」twice) — classifier keyword-matched correctly but the intent was not a real quote task; routed to local Ollama qwen2.5-coder:7b (not Codex, not @maplab_a6_bot), which only returned a malformed tool_call fragment and did no real work",
   "source": {
     "surface": "telegram",
     "owner_chat_id": "1077768811",
-    "message": "這個方向很棒，動手，但不是只查核資料要提出看法與以風暴比敘事押注給機會成本對比現有持股的見解與建議",
+    "message": "為什麼a6報價路徑會在我這裡，a6有自己機器人你們誤會甚麼了！是不是程式碼亂存搞錯了",
     "context_excerpt": "source=data/telegram-logs/2026-08-21.md\n# Telegram 對話紀錄 — 2026-08-21\n\n> 自動產生，供 agent 恢復記憶用\n\n## 2026-08-21 00:34:43\n**Owner：** 呼叫fable5 你可以自行閱讀上面貼過來的嗎？\n\n**Bot：** 🟢 [Claude]\n可以，上面貼過來的對話我已經讀到了（Telegram 轉發內容整段都在我的 context 裡），不需要另外開檔案讀取。\n\n不過要澄清一點：我目前這個 session 是 **A1（Sonnet 5）**，不是 Fable 5。如果你是想指定讓 Fable 5 處理這類任務，我這邊的身份跟模型底層對不上——要嘛你直接跟 Fable 5 的 session/視窗對話，要嘛請 A0 那邊的 dispatch 路由過去（看 commit `ae486eb` 提到的 \"A0\"-prefix 直接通道）。\n\n需要我針對上面那段對話內容做什麼後續動作嗎？（例如整理成任務卡、回報 R0x 狀態、或針對 Meta 廣告指引繼續往下做）\n\n---\n\n## 2026-08-21 08:46:18 `[dispatch-local]`\n**Owner：** seo部分你當核稿和確認方向的，沒問題就發，目前看行政外燴推薦Hr的部分把無麩質特殊飲食敘述拿掉，---格式通病，服務亮點不用自己說，動線好拿取說法不要再出現很AI,客戶與場景背景直接寫在標題，但問題是我不希望出現在標題是要去做，去研究客戶IG官網,圖片場景說故事，讚美一下，不是只在標題 +line可以上line圖示嗎？-----\n\n**Bot：** ✅ 已建立派工包：TG-DISPATCH-20260821-084616-ads-performance-review\n這不是只回覆：已落檔，並寫入 Codex clipboard bridge。\n- 主責：A3（協作：A3, A2, A1）\n- worker：Codex primary; OpenClaw read-only browser proof if logged-in Ads UI is needed\n- status：queued_for_codex\n- openclaw_worker：will_start\n- packet：workbook/telegram-dispatch/TG-DISPATCH-20260821-084616-ads-performance-review/packet.json\n- prompt：workbook/telegram-dispatch/TG-DISPATCH-20260821-084616-ads-performance-review/prompt.md\n下一步：worker 必\n…（截斷）"
   },
   "route": {
@@ -39,11 +39,11 @@
     ]
   },
   "artifacts": {
-    "packet": "workbook/telegram-dispatch/TG-DISPATCH-20260821-125241-quote-intake/packet.json",
-    "prompt": "workbook/telegram-dispatch/TG-DISPATCH-20260821-125241-quote-intake/prompt.md",
-    "readme": "workbook/telegram-dispatch/TG-DISPATCH-20260821-125241-quote-intake/README.md",
-    "openclaw_result": "workbook/telegram-dispatch/TG-DISPATCH-20260821-125241-quote-intake/openclaw_result.json"
+    "packet": "workbook/telegram-dispatch/TG-DISPATCH-20260821-131935-quote-intake/packet.json",
+    "prompt": "workbook/telegram-dispatch/TG-DISPATCH-20260821-131935-quote-intake/prompt.md",
+    "readme": "workbook/telegram-dispatch/TG-DISPATCH-20260821-131935-quote-intake/README.md",
+    "openclaw_result": "workbook/telegram-dispatch/TG-DISPATCH-20260821-131935-quote-intake/openclaw_result.json"
   },
-  "codex_command": "codex exec --cd /Users/pagemacmini/maplab-ai-handbook --sandbox workspace-write - < /Users/pagemacmini/maplab-ai-handbook/workbook/telegram-dispatch/TG-DISPATCH-20260821-125241-quote-intake/prompt.md",
-  "openclaw_command": "openclaw agent --agent main --session-key agent:main:TG-DISPATCH-20260821-125241-quote-intake --message \"$(cat /Users/pagemacmini/maplab-ai-handbook/workbook/telegram-dispatch/TG-DISPATCH-20260821-125241-quote-intake/prompt.md)\" --timeout 180 --json"
+  "codex_command": "codex exec --cd /Users/pagemacmini/maplab-ai-handbook --sandbox workspace-write - < /Users/pagemacmini/maplab-ai-handbook/workbook/telegram-dispatch/TG-DISPATCH-20260821-131935-quote-intake/prompt.md",
+  "openclaw_command": "openclaw agent --agent main --session-key agent:main:TG-DISPATCH-20260821-131935-quote-intake --message \"$(cat /Users/pagemacmini/maplab-ai-handbook/workbook/telegram-dispatch/TG-DISPATCH-20260821-131935-quote-intake/prompt.md)\" --timeout 180 --json"
 }

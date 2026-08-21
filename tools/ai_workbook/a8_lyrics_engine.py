@@ -84,11 +84,38 @@ def run(lyrics, client=None, backend="minimax", style="中文 boom bap 饒舌"):
     gen=get_backend(backend).generate(lyrics, style)
     return {"stage":"sent_to_backend","review":r,"backend_result":gen}
 
+# ---- 中性創意 DB（不綁供應商）----
+import os
+DB_PATH = os.path.join(os.path.dirname(__file__), "..", "..", "workbook", "a8", "music_creative_db.json")
+def load_db():
+    return json.load(open(DB_PATH, encoding="utf-8"))
+def get_entry(eid):
+    for e in load_db().get("entries", []):
+        if e["id"] == eid: return e
+    return None
+def make_suno_pack(eid, variant=None):
+    """產 paste-ready Suno 包：曲風欄 + 歌詞欄，可直接貼進 Suno 網頁。"""
+    e = get_entry(eid)
+    if not e: return f"找不到 {eid}"
+    ep = e["engine_prompts"]
+    style = ep["suno"] if not variant else ep.get("suno_variants", {}).get(variant, ep["suno"])
+    tag = f"（{variant}）" if variant else ""
+    return (f"🎵 Suno 貼上包｜{e['id']}{tag}\n"
+            f"vibe：{e['vibe']}\n\n"
+            f"① 曲風/Style 欄貼這段：\n{style}\n\n"
+            f"② 歌詞/Lyrics 欄貼這段：\n{e['lyrics_reviewed']}\n\n"
+            f"（先用 Suno 免費層試品質：有浮水印、非商用；對味再升 Pro $10/月＝商用＋可下載＋無浮水印。訂閱由 Owner 決定。）")
+
 if __name__=="__main__":
-    if len(sys.argv)>=3 and sys.argv[1]=="review":
-        client=None
-        if "--client" in sys.argv: client=sys.argv[sys.argv.index("--client")+1]
-        txt=open(sys.argv[2]).read()
-        print(json.dumps(review_lyrics(txt,client),ensure_ascii=False,indent=2))
+    cmd = sys.argv[1] if len(sys.argv) > 1 else ""
+    if cmd == "review" and len(sys.argv) >= 3:
+        client = sys.argv[sys.argv.index("--client")+1] if "--client" in sys.argv else None
+        print(json.dumps(review_lyrics(open(sys.argv[2]).read(), client), ensure_ascii=False, indent=2))
+    elif cmd == "suno-pack" and len(sys.argv) >= 3:
+        variant = sys.argv[sys.argv.index("--variant")+1] if "--variant" in sys.argv else None
+        print(make_suno_pack(sys.argv[2], variant))
+    elif cmd == "db":
+        for e in load_db().get("entries", []):
+            print(e["id"], "|", e["concept"], "| status:", e.get("status"))
     else:
-        print("usage: python3 a8_lyrics_engine.py review <lyrics.txt> [--client 名稱]")
+        print("usage:\n  review <lyrics.txt> [--client 名稱]\n  suno-pack <id> [--variant trap|lofi]\n  db")

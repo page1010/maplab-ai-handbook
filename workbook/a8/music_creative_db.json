@@ -1,0 +1,39 @@
+{
+  "_schema": {
+    "desc": "A8 中性音樂創意庫（不綁任何供應商）。歌詞為我們資產；每引擎 prompt 只是可攜變體。",
+    "fields": {
+      "id": "唯一代號 kebab",
+      "concept": "一句概念",
+      "target": "目標 {client, scene, product}",
+      "vibe": "白話 vibe 描述（給人看，決定情緒/節奏）",
+      "style_tags": "風格標籤陣列（中性，可對應各引擎）",
+      "lyrics_reviewed": "已過 a8_lyrics_engine 審查的歌詞（結構標籤 [Chorus]/[Verse]/[Outro]）",
+      "brand_safety": "{passed, notes} 審查結果",
+      "engine_prompts": "各引擎風格 prompt 變體：suno / suno_variants / minimax / fal（中性可攜）",
+      "status": "draft | paste_ready | generated",
+      "created": "年月"
+    }
+  },
+  "entries": [
+    {
+      "id": "bunny-grad-hiphop-v1",
+      "concept": "托嬰畢業典禮甜點桌，歡樂中帶溫馨，把場景寫成歡快中文饒舌",
+      "target": { "client": "邦尼兔托嬰", "scene": "畢業典禮", "product": "甜點桌/一口點心/外燴" },
+      "vibe": "歡樂、可愛、俏皮；暖色調；甜點桌為主角；30s Short；副歌洗腦、Verse 點名餐點；避開業主/賓客臉",
+      "style_tags": ["中文饒舌", "hip-hop", "boom bap", "歡快", "可愛", "暖色"],
+      "lyrics_reviewed": "[Chorus]\n邦尼兔 畢業啦 今天最神氣\n甜點桌 一擺開 全場都歡喜\n小小的手 抓一塊小酥皮\nMAPLAB 台南外燴 甜進心坎裡\n[Verse]\n畢業帽 歪歪戴 樣子超可愛\n蛋塔 杯子蛋糕 排排站好乖\n兔子餅乾 咬一口 喀滋脆到嗨\n小朋友 踮起腳 笑容藏不來\n[Outro]\n邦尼兔 畢業啦 記得這一天\nMAPLAB 陪你長大 甜甜的畫面",
+      "brand_safety": { "passed": true, "notes": "a8_lyrics_engine 過：無禁用詞/無敏感國旗政治/客戶名已置入；含 台南外燴+MAPLAB；結構 [Chorus]/[Verse]/[Outro]" },
+      "engine_prompts": {
+        "suno": "Chinese hip-hop, boom bap, playful and warm, male rap verses with a catchy sung hook, jazzy piano, boom bap drums, light vinyl crackle, around 90 BPM, clear natural Mandarin vocals",
+        "suno_variants": {
+          "trap": "Chinese trap, warm and playful, male rap, 808 bass and crisp hi-hats, around 140 BPM, clear Mandarin vocals",
+          "lofi": "Chinese lo-fi hip hop, cozy and nostalgic, soft vocal, mellow keys and brushed drums, around 75 BPM, clear Mandarin vocals"
+        },
+        "minimax": "Chinese hip-hop boom bap, playful and warm, male rap with sung hook, jazzy piano, around 90 BPM (prompt=style; lyrics 另填)",
+        "fal": "same as minimax (text-to-music: prompt=style, lyrics=歌詞)"
+      },
+      "status": "paste_ready",
+      "created": "2026-08"
+    }
+  ]
+}

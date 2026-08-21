@@ -28,11 +28,26 @@ echo "[$(date '+%Y-%m-%d %H:%M:%S')] patrol-scheduled 開始" >> "$LOG_FILE"
 
 RESULT=$(bash "$REPO_ROOT/scripts/patrol.sh" 2>&1) || true
 
-# ── 加上時間戳標題 ──
-HEADER="📋 每日自動巡查 — $(date '+%Y-%m-%d %H:%M')"
+# ── 獨立 grader：客觀 repo 健康關卡（T-A1-PATROL-GRADER-001）──
+# patrol.sh 是任務狀態機（會給「差不多」的決策佇列）；grader 只看客觀產出物
+# （衝突標記/未收尾 merge/失控落後/漂移/逾期）給 PASS/FAIL——獨立驗證者勝過自我批評。
+set +e
+GRADER=$(bash "$REPO_ROOT/scripts/patrol_grader.sh" 2>&1)
+GRADER_RC=$?
+set -e
+
+# ── 加上時間戳標題（grader FAIL → 標題標 🔴，確保 Owner 一定看到、不被蓋章吃掉）──
+if [[ "$GRADER_RC" -ne 0 ]]; then
+  HEADER="🔴 每日自動巡查（repo 健康 FAIL，需處理）— $(date '+%Y-%m-%d %H:%M')"
+else
+  HEADER="📋 每日自動巡查 — $(date '+%Y-%m-%d %H:%M')"
+fi
 MESSAGE="$HEADER
 
-$RESULT"
+$RESULT
+
+── repo 健康關卡（獨立 grader）──
+$GRADER"
 
 # ── 存 log ──
 echo "$MESSAGE" >> "$LOG_FILE"

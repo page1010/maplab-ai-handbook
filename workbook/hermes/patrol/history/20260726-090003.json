@@ -1,0 +1,345 @@
+{
+  "schema_version": "maplab.hermes_patrol_reaction.v1",
+  "generated_at": "2026-07-26T09:00:03+08:00",
+  "repo": "/Users/pagemacmini/maplab-ai-handbook",
+  "source": {
+    "patrol_script": "scripts/patrol.sh",
+    "scheduled_wrapper": "scripts/patrol-scheduled.sh",
+    "launch_agent": "com.maplab.patrol",
+    "telegram_is_surface_only": true
+  },
+  "model_policy": {
+    "patrol_hot_path_uses_claude": false,
+    "patrol_hot_path_uses_local_model": false,
+    "hermes_role": "cold-path reaction, memory candidate, role next-step packet",
+    "codex_role": "periodically verify repo/project progress and push next actions downward"
+  },
+  "hermes": {
+    "cli_path": null,
+    "checked": false,
+    "returncode": null,
+    "status": {}
+  },
+  "chrome_extension": {
+    "runtime_selector_has_hermes": true,
+    "prompt_builder_has_hermes_instruction": true,
+    "module_count": 31,
+    "modules_with_hermes_target": [
+      "A0",
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5",
+      "A6",
+      "A7",
+      "A8",
+      "B1",
+      "B2",
+      "B3",
+      "B4",
+      "IOS-MOMENTUM",
+      "IOS-KOL",
+      "IOS-FB",
+      "IOS-ALPHA",
+      "IOS-BLACKSWAN",
+      "IOS-INVENTORY",
+      "IOS-MACRO",
+      "IOS-CHIP",
+      "IOS-LEFT",
+      "IOS-RIGHT",
+      "IOS-EVIDENCE",
+      "IOS-SIM",
+      "IOS-FAMILY",
+      "IOS-HEDGE",
+      "IOS-SURFACE",
+      "IOS-HYGIENE",
+      "IOS-SELL"
+    ],
+    "module_gap": false
+  },
+  "counts": {
+    "total": 45,
+    "blocked": 3,
+    "active": 0,
+    "stale_active": 0,
+    "unmarked": 23,
+    "paused_or_not_started": 8,
+    "done": 11,
+    "owner_related": 29
+  },
+  "signals": {
+    "google_oauth_invalid_grant_seen": false,
+    "google_oauth_expired_seen": true,
+    "owner_reauth_needed": true
+  },
+  "reaction_cards": [
+    {
+      "id": "google-oauth-reauth-card",
+      "severity": "high",
+      "owner_role": "A1",
+      "target_task_card": "handoff/tasks/T-A1-SYNC-GUARD-001.md",
+      "why": "Google OAuth token refresh is invalid_grant; repeating the patrol text will not solve it.",
+      "next_step": "Prepare an Owner 5-minute OAuth reauthorization card, then rerun Sheets/Drive smoke.",
+      "next_step_patch_hint": "把阻塞改成精準 OAuth reauth action，不要每日原文轉發 invalid_grant。",
+      "codex_followup_prompt": "你是 MAPLAB A1，運行在 Codex。\n先讀 CURRENT_STATUS.md、pitfalls.md、workbook/hermes/patrol/latest.json，再讀相關 Task Card。\n\n觸發 reaction: google-oauth-reauth-card\n原因: patrol saw invalid_grant in Google OAuth\n本輪目標: produce the reauth card and verification command\n\n輸出：更新相對角色下一步或產 task packet；若需要 Owner，必須是 5 分鐘內可完成的具體行動。"
+    },
+    {
+      "id": "long-blocked-three-layer-review",
+      "severity": "high",
+      "owner_role": "A0/A1",
+      "target_task_card": "handoff/tasks/",
+      "why": "3 blocked tasks are older than 14 days: T-A2A3-001, T-A3-002, T-A7-002.",
+      "next_step": "Run three-layer blocker review and split false blockers into direct-do / delegated / true Owner action.",
+      "next_step_patch_hint": "每張卡改寫接續點：誰負責、下一個命令、何時才需要 Owner。",
+      "codex_followup_prompt": "你是 MAPLAB A0/A1，運行在 Codex。\n先讀 CURRENT_STATUS.md、pitfalls.md、workbook/hermes/patrol/latest.json，再讀相關 Task Card。\n\n觸發 reaction: long-blocked-three-layer-review\n原因: 3 blockers are stale\n本輪目標: patch the top stale task cards with concrete next steps\n\n輸出：更新相對角色下一步或產 task packet；若需要 Owner，必須是 5 分鐘內可完成的具體行動。"
+    },
+    {
+      "id": "task-card-status-normalization",
+      "severity": "medium",
+      "owner_role": "A1",
+      "target_task_card": "handoff/tasks/",
+      "why": "23 task cards have unmarked status, so patrol cannot decide reliably.",
+      "next_step": "Normalize 接續狀態 blocks from existing task-card evidence.",
+      "next_step_patch_hint": "補狀態、最後活動、接續點、阻塞；缺資料標缺資料，不要腦補。",
+      "codex_followup_prompt": "你是 MAPLAB A1，運行在 Codex。\n先讀 CURRENT_STATUS.md、pitfalls.md、workbook/hermes/patrol/latest.json，再讀相關 Task Card。\n\n觸發 reaction: task-card-status-normalization\n原因: task card metadata is unmarked\n本輪目標: normalize status blocks for the unmarked cards\n\n輸出：更新相對角色下一步或產 task packet；若需要 Owner，必須是 5 分鐘內可完成的具體行動。"
+    }
+  ],
+  "buckets": {
+    "blocked": [
+      {
+        "task_id": "T-A3-002",
+        "agent": "A3",
+        "path": "handoff/tasks/T-A3-002.md",
+        "status": "⏸️ 阻塞中",
+        "last_activity": "2026-03-29",
+        "days_ago": 119,
+        "bucket": "blocked",
+        "owner_related": true,
+        "next_step": "受眾輪廓分析完成（693筆 Orders）。待執行：嘉義加入廣告地區、興趣條件精簡、策略一冷受眾上線。",
+        "blocker": "執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）"
+      },
+      {
+        "task_id": "T-A2A3-001",
+        "agent": "A2",
+        "path": "handoff/tasks/T-A2A3-001.md",
+        "status": "⏸️ RM/GSC 部分暫停；案例寫作轉 T-A2A3-001-B",
+        "last_activity": "2026-05-24 A2 live WordPress B2B fact check",
+        "days_ago": 63,
+        "bucket": "blocked",
+        "owner_related": true,
+        "next_step": "Rank Math 已退訂，已設定好的 SEO 欄位先不要再設定；下一步是依 live URL map 補 To B 真案例",
+        "blocker": "RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL"
+      },
+      {
+        "task_id": "T-A7-002",
+        "agent": "A7",
+        "path": "handoff/tasks/T-A7-002.md",
+        "status": "⏸️ 阻塞中（任務 9 已解除，其餘阻塞未變）",
+        "last_activity": "2026-07-06（A1 — 任務 9 Owner 政策落地）",
+        "days_ago": 20,
+        "bucket": "blocked",
+        "owner_related": true,
+        "next_step": "任務 6（Q1-Q10 實裝）+ 任務 9（Owner 政策確認）+ 任務 10（技能書 v2.0）已完成。Phase 3A 剩任務 4（地區判斷）、7（流程圖同步）。Phase 3B/3C 全部待外部條件。",
+        "blocker": "任務 1/2/3 需 LINE bot 後台權限；任務 5/8 需 TimeTree 權限（任務 9 已解除）"
+      }
+    ],
+    "active": [],
+    "unmarked": [
+      {
+        "task_id": "T-A5-004",
+        "agent": "A5",
+        "path": "handoff/tasks/T-A5-004.md",
+        "status": "🟢 功能穩定（核心功能已可用且無需再動；~1500h+ 無 commit 是「沒事做」不是「壞掉」— 2026-07-06 A1 對帳澄清：先前 CURRENT_STATUS.md 任務表把「久無 commit」誤標為 🔴 CRITICAL，已改為反映實際狀態）",
+        "last_activity": "2026-04-09 f67672d（6 項 Owner feedback 修復）",
+        "days_ago": 108,
+        "bucket": "unmarked",
+        "owner_related": true,
+        "next_step": "Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔案清理、Items english_name 確認 — 皆為優化項，非阻塞",
+        "blocker": "無（功能已上線，剩餘為優化項，可等 Owner 有空再排）"
+      },
+      {
+        "task_id": "T-A2-005-local-seo-factory",
+        "agent": "A2",
+        "path": "handoff/tasks/T-A2-005-local-seo-factory.md",
+        "status": "🔍 NEEDS_REVIEW（since 2026-07-26，停滯逾 7 天，Owner 決策急需或回覆「重開 T-A2-005-local-seo-factory」）",
+        "last_activity": "2026-05-04 local-seo-factory-initial",
+        "days_ago": 83,
+        "bucket": "unmarked",
+        "owner_related": true,
+        "next_step": "本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar dry-run 可產生 draft payload。下一步：接 WordPress 實站憑證做 `--publish` 驗證 + 把 56 篇歸屬表餵入 Linker。",
+        "blocker": "WordPress 寫入憑證與測試站檢核流程待 Owner 確認"
+      },
+      {
+        "task_id": "T-B1-001",
+        "agent": "B1",
+        "path": "handoff/tasks/T-B1-001.md",
+        "status": "🟢 召喚型可用",
+        "last_activity": "2026-05-21",
+        "days_ago": 66,
+        "bucket": "unmarked",
+        "owner_related": true,
+        "next_step": "B1 轉為 Investment OS 投資邏輯橋接顧問（召喚型）；InnerFlowLab/Substack 發文自動化已永久暫停。僅 Owner/A1 明確召喚時才啟動。",
+        "blocker": "無"
+      },
+      {
+        "task_id": "T-A2A3-001-B",
+        "agent": "A2",
+        "path": "handoff/tasks/T-A2A3-001-B.md",
+        "status": "🔍 NEEDS_REVIEW（since 2026-07-26，停滯逾 7 天，Owner 決策急需或回覆「重開 T-A2A3-001-B」）",
+        "last_activity": "2026-05-27 A2 Round 009 WordPress draft saved",
+        "days_ago": 60,
+        "bucket": "unmarked",
+        "owner_related": true,
+        "next_step": "WordPress post `1696` 已建立為未發布草稿並重載驗證：`https://www.maplabkitchen.com/wp-admin/post.php?post=1696&action=edit`。內容已含 Round 008 的 21 則案例段、圖片 slot、檔名、Alt、Caption；Report：`workbook/reviews/JOB-A2-B2B-CASE-ADS-20260526/reports/wp_draft_round_009.md`。Round 008 的 `ads_landing_settings_round_008.md` 仍是 Google/Meta Ads 設定建議來源；Meta",
+        "blocker": "WordPress 圖片實體插入未完成，因 Chrome extension file chooser 回 `Not allowed`；需 Owner 開啟 Codex Chrome extension 的 file URL access 後再重試。WordPress 發布、Google Ads / Meta Ads 設定變更仍需 Owner approval。舊 planned slugs 不能當 live URL。"
+      },
+      {
+        "task_id": "T-A1-RTK-001",
+        "agent": "A1",
+        "path": "handoff/tasks/T-A1-RTK-001.md",
+        "status": "🟢 已上線",
+        "last_activity": "2026-05-31",
+        "days_ago": 56,
+        "bucket": "unmarked",
+        "owner_related": false,
+        "next_step": "Codex hook 已掛（`~/.codex/RTK.md`）、驗收通過（patrol diff 一致）、git 排除生效。任務完成，無後續。",
+        "blocker": "無"
+      },
+      {
+        "task_id": "T-A4-003-photo-alt-pipeline",
+        "agent": "A4",
+        "path": "handoff/tasks/T-A4-003-photo-alt-pipeline.md",
+        "status": "🟡 STALLED（since 2026-07-19，48h 無 commit，Owner 可更新最後活動解除）",
+        "last_activity": "2026-06-11",
+        "days_ago": 45,
+        "bucket": "unmarked",
+        "owner_related": true,
+        "next_step": "等 36,676 張處理完 → Owner 改 Drive 串流 → 釋出 ~433GB",
+        "blocker": "launchd 排程需 Owner 跑一次 `launchctl load`（見下）"
+      },
+      {
+        "task_id": "T-A4-004-photo-classify",
+        "agent": "A4",
+        "path": "handoff/tasks/T-A4-004-photo-classify.md",
+        "status": "🟡 STALLED（since 2026-07-19，48h 無 commit，Owner 可更新最後活動解除）",
+        "last_activity": "2026-06-11",
+        "days_ago": 45,
+        "bucket": "unmarked",
+        "owner_related": true,
+        "next_step": "批次跑完後 `--status` 查進度，續開下一批直到 ~98,400 張完成",
+        "blocker": "無（每小時 launchd 排程被 auto-mode 擋，Owner 可選擇性啟用，見下）"
+      },
+      {
+        "task_id": "T-A2-SEO-CATERING-MATRIX-001",
+        "agent": "A2",
+        "path": "handoff/tasks/T-A2-SEO-CATERING-MATRIX-001.md",
+        "status": "🔍 NEEDS_REVIEW（since 2026-07-26，停滯逾 7 天，Owner 決策急需或回覆「重開 T-A2-SEO-CATERING-MATRIX-001」）",
+        "last_activity": "2026-06-17",
+        "days_ago": 39,
+        "bucket": "unmarked",
+        "owner_related": true,
+        "next_step": "競品分析工作包已建立於 `workbook/reviews/JOB-A2-SEO-CATERING-COMPETITOR-MATRIX-20260617/`；文章矩陣撰寫尚未開始。",
+        "blocker": "WP 寫入憑證需 Owner 確認（路徑：`skills/credentials/wordpress-api.md`）"
+      }
+    ],
+    "paused": [
+      {
+        "task_id": "T-A6-002",
+        "agent": "A6",
+        "path": "handoff/tasks/T-A6-002.md",
+        "status": "💤 暫停",
+        "last_activity": "2026-04-07",
+        "days_ago": 110,
+        "bucket": "paused",
+        "owner_related": true,
+        "next_step": "原計畫拆 Sheet 做訓練資料，04-07 重新規劃方向。等 Owner 決定是否需要 LINE 訓練資料及取得方式。",
+        "blocker": "等 Owner 決定方向"
+      }
+    ],
+    "not_started": [
+      {
+        "task_id": "T-A2-003-weekly-wp-audit",
+        "agent": "A2",
+        "path": "handoff/tasks/T-A2-003-weekly-wp-audit.md",
+        "status": "🔲 待開始",
+        "last_activity": "2026-04-07",
+        "days_ago": 110,
+        "bucket": "not_started",
+        "owner_related": true,
+        "next_step": "腳本已建好（wp-audit.sh / wp-audit-cron.sh）。待 Owner 用 /schedule 建立 cron 排程。",
+        "blocker": "等 Owner 建立排程"
+      },
+      {
+        "task_id": "T-A1-V6-P3",
+        "agent": "A1",
+        "path": "handoff/tasks/T-A1-V6-P3.md",
+        "status": "🔲 待開始",
+        "last_activity": "2026-04-08（建卡）",
+        "days_ago": 109,
+        "bucket": "not_started",
+        "owner_related": false,
+        "next_step": "尚未開始。等 T-A1-V6-P2 完成後啟動。",
+        "blocker": "前置 T-A1-V6-P2 需先完成"
+      },
+      {
+        "task_id": "T-A5-006",
+        "agent": "A5",
+        "path": "handoff/tasks/T-A5-006.md",
+        "status": "🔲 待開始",
+        "last_activity": "2026-04-08（建卡）",
+        "days_ago": 109,
+        "bucket": "not_started",
+        "owner_related": false,
+        "next_step": "尚未開始。等 T-A5-005 完成後啟動。",
+        "blocker": "前置 T-A5-005 需先完成"
+      },
+      {
+        "task_id": "T-GBP-001",
+        "agent": "??",
+        "path": "handoff/tasks/T-GBP-001.md",
+        "status": "🔲 待開始",
+        "last_activity": "2026-04-08（建卡）",
+        "days_ago": 109,
+        "bucket": "not_started",
+        "owner_related": true,
+        "next_step": "尚未開始。等 Owner 準備新圖片。",
+        "blocker": "等 Owner 準備新圖片"
+      },
+      {
+        "task_id": "T-A2-004",
+        "agent": "A2",
+        "path": "handoff/tasks/T-A2-004.md",
+        "status": "🔲 待開始",
+        "last_activity": "2026-04-15",
+        "days_ago": 102,
+        "bucket": "not_started",
+        "owner_related": false,
+        "next_step": "任務卡建立。A0 已完成對標分析和色票微調。",
+        "blocker": "無"
+      }
+    ]
+  },
+  "memory_management": {
+    "truth_sources": [
+      "CURRENT_STATUS.md",
+      "pitfalls.md",
+      "handoff/tasks/T-*.md",
+      "workbook/hermes/patrol/latest.json"
+    ],
+    "write_back_candidates": [
+      "pitfalls.md when same patrol failure repeats 7+ days",
+      "handoff/tasks/T-*.md when a role next step is stale/unmarked",
+      "skills/experience-log.md when a reusable Hermes/Codex routing lesson appears"
+    ]
+  },
+  "raw_patrol_excerpt": "📋 每日自動巡查 — 2026-07-26 09:00\n\n=== MAPLAB 系統巡查 2026-07-26 09:00 ===\n\n[🔴 EXPIRED] Google OAuth token — auto-refreshing...\n✅ Token refreshed, new expiry: 2026-07-26T02:00:00.891054+00:00\n\n【⚡ 本輪狀態遷移（四態狀態機，SECTION 25）】\n  🟡→🔍 NEEDS_REVIEW: T-A2-005-local-seo-factory（停滯 7 天）\n  🟡→🔍 NEEDS_REVIEW: T-A2-SEO-CATERING-MATRIX-001（停滯 7 天）\n  🟡→🔍 NEEDS_REVIEW: T-A2A3-001-B（停滯 7 天）\n  🔄→🟡 STALLED: T-IOS-KOL-001（最後活動 35d 前）\n  → 已自動寫回 Task Card，無需 Owner 操作（可逆，SECTION 24）\n\n【Owner 行動項】\n  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 決定 post 698 的「無麩質或低糖選項」FAQ 答案要不要改（A2 唯讀掃描，未動任何文章）\n  → T-A2-005-local-seo-factory [NEEDS_REVIEW]: WordPress 寫入憑證與測試站檢核流程待 Owner 確認（停滯逾 7 天，需 Owner 決策）\n  → T-A2-SEO-CATERING-MATRIX-001 [NEEDS_REVIEW]: WP 寫入憑證需 Owner 確認（路徑：`skills/credentials/wordpress-api.md`）（停滯逾 7 天，需 Owner 決策）\n  → T-A2A3-001-B [NEEDS_REVIEW]: WordPress 圖片實體插入未完成，因 Chrome extension file chooser 回 `Not allowed`；需 Owner 開啟 Codex Chrome extension 的 file URL access 後再重試。WordPress 發布、Google Ads / Meta Ads 設定變更仍需 Owner approval。舊 planned slugs 不能當 live URL。（停滯逾 7 天，需 Owner 決策）\n  → T-A2A3-001: RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL\n  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）\n  → T-A7-001: Owner 確認 Zone B（NT$2,000？）+ Zone C（NT$2,500？）兩個數字\n  → T-HQ-001: Owner pending（非 B1 blocking）\n\n【阻塞中 — 等外部條件（⏸️/⏳/🔍）】\n  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 決定 post 698 的「無麩質或低糖選項」FAQ 答案要不要改（A2 唯讀掃描，未動任何文章） [19d ago]\n  🔍 T-A2-005-local-seo-factory (A2): NEEDS_REVIEW — WordPress 寫入憑證與測試站檢核流程待 Owner 確認 [83d ago]\n  🔍 T-A2-SEO-CATERING-MATRIX-001 (A2): NEEDS_REVIEW — WP 寫入憑證需 Owner 確認（路徑：`skills/credentials/wordpress-api.md`） [39d ago]\n  🔍 T-A2A3-001-B (A2): NEEDS_REVIEW — WordPress 圖片實體插入未完成，因 Chrome extension file chooser 回 `Not allowed`；需 Owner 開啟 Codex Chrome extension 的 file URL access 後再重試。WordPress 發布、Google Ads / Meta Ads 設定變更仍需 Owner approval。舊 planned slugs 不能當 live URL。 [60d ago]\n  ⏸️ T-A2A3-001 (A2): RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL [63d ago]\n  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [119d ago]\n  ⏸️ T-A7-001 (A7): Owner 確認 Zone B（NT$2,000？）+ Zone C（NT$2,500？）兩個數字 [7d ago]\n  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 5/8 需 TimeTree 權限（任務 9 已解除） [19d ago]\n  ⏸️ T-HQ-001 (??): Owner pending（非 B1 blocking） [31d ago]\n\n【進行中（🔄 IN_PROGRESS / 🟡 STALLED）】\n  🟡 T-A1-EXT-001-dynamic-role-modules (A1): STALLED — （checkpoint.sh 自動補建，請 agent 填寫） [7d ago]\n  ❓ T-A1-GIT-SYNC-001-checkpoint-pull-before-commit (A1): 狀態未標記 [日期不明]\n  🟡 T-A1-LEARNING-LOOP-001 (A1): STALLED — 建立 token capital registry，登記可複用 prompt / eva [7d ago]\n  ❓ T-A1-PATROL-GRADER-001-wire-grader-into-patrol (A1): 狀態未標記 [日期不明]\n  ❓ T-A1-RTK-001 (A1): 狀態未標記 [56d ago]\n  🟡 T-A1-V6-P2 (A1): STALLED — 4 分頁架構 + DropdownHelper 驗證完成、REVISION_LOG  [7d ago]\n  🟡 T-A1-V7 (A1): STALLED — Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Ph [7d ago]\n  ❓ T-A2-006-ads-seo-wordpress-patrol (A2): 狀態未標記 [6d ago]\n  ⏳ T-A4-002 (A4): IN_PROGRESS — 187GB Takeout（5 個 ZIP）確認存在 Drive，尚未解?? [98d ago]\n  🟡 T-A4-003-photo-alt-pipeline (A4): STALLED — 等 36,676 張處理完 → Owner 改 Drive 串流 → 釋?? [44d ago]\n  🟡 T-A4-004-photo-classify (A4): STALLED — 批次跑完後 `--status` 查進度，續開下一批直到 [44d ago]\n  🟡 T-A5-002 (A5): STALLED — Owner 三題已回答（2026-06-23）→ 已加 `fixMasterTe [32d ago]\n  ❓ T-A5-004 (A5): 狀態未標記 [107d ago]\n  🟡 T-A5-005 (A5): STALLED — `clasp push --force` 已成功部署 8 檔（含 syncQuoteSt [32d ago]\n  🟡 T-A6-001 (A6): STALLED — Case Store v0 已接到現有 `CONVERSATION_LOG`；A6 Telegr [17d ago]\n  🟡 T-A8-001-folder-to-video-distribution (A8): STALLED — 任務已建立，Owner 要求 A8 從「閒置」轉為真?? [38d ago]\n  ❓ T-B1-001 (??): 狀態未標記 [65d ago]\n  🟡 T-B1-B4-investment-os-role-split (??): STALLED — B1-B4 已不只做角色拆分；新增 RSI-like 成長閉?? [37d ago]\n  ❓ T-B1-DASH-001 (??): 狀態未標記 [35d ago]\n  ⏳ T-IOS-KOL-001 (??): IN_PROGRESS — - **接續點**：四個每日時段（02:30/08:30/14:30/21: [35d ago]\n\n【暫停/待開始】\n  🔲 T-A1-SYNC-GUARD-001 (A1): 待開始\n  🔲 T-A1-V6-P3 (A1): 待開始\n  🔲 T-A2-003-weekly-wp-audit (A2): 待開始\n  🔲 T-A2-004 (A2): 待開始\n  🔲 T-A5-006 (A5): 待開始\n  🔲 T-A5-007-codex-takeover (A5): 待開始\n  💤 T-A6-002 (A6): 暫停中 [109d ago]\n  🔲 T-GBP-001 (??): 待開始\n\n【已完成】8 張 Task Card\n  （最近異動 3 張，其餘見 handoff/tasks/）\n  ✅ T-A4-001\n  ✅ T-A2-007-seo-trio-review-20260707\n  ✅ T-A2-001\n\n【投資 OS 守夜人 + IS-HS】\n  🟢 nightwatch 今日正常（0 警示）\n  🔴 escalation_queue: 13 條 open+未推播（見 projects/investment-os-continuous-iteration-plan.md ④）\n  🟡 IS-HS: 50/100（新鮮度=100% 警報通暢度=0%）\n\n【B3 廣告觀察】\n  ⚪ B3 廣告尚未啟動（Owner 去 Meta 建受眾包後，回報一句話或 UTM 有 b3 流量自動偵測）\n  → 啟動後：回報「B3 開始跑了」或 GA4 出現 utm_source=meta_b3 流量\n  → A1 偵測到後自動開始每日成效摘要並進例會\n\n── repo 健康關卡（獨立 grader）──\n🟡 PATROL GRADER：PASS with WARN\n⚠️  WARN：本地有 2 個未 push 的 commit\n⚠️  WARN：2 張進行中任務卡 >7 天無 commit（patrol.sh 詳列）\n",
+  "reaction_ledger": {
+    "schema_version": "maplab.learning_loop.reaction_ledger.v1",
+    "ledger_path": "workbook/learning_loop/reaction_ledger.jsonl",
+    "summary_path": "workbook/learning_loop/reaction_ledger_summary.md",
+    "entries_added": 0,
+    "total_entries": 4,
+    "open_entries": 4
+  }
+}

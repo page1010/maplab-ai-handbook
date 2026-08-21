@@ -1,5 +1,7 @@
 # CURRENT_STATUS.md — 唯一最新狀態入口
 
+> ⚠️ 狀態漂移註記(2026-08-18):本檔最後實質更新約 2026-07-25;目前實際進行中的是 Claude↔Codex 共治 + 控制面 cadence(見 claude-daily-operations 的 CYCLES/SELF_IMPROVEMENT_LOOP/task_queue),此 CURRENT_STATUS 待對齊。
+
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
@@ -19,6 +21,7 @@
 
 ## 最新事實核對
 
+- 2026-08-03：**[修復＋更正] A8 影音產線 Google Drive/Sheets OAuth 根因已消除** — 先前診斷「卡在測試模式、refresh token 每 7 天過期」對「A8 產線」是**指錯專案**：A8 用的是 GCP 專案 **`maplab-ai`**（單一 `~/.claude/mcp-keys/google-token.json`），非相片產線的 `maplab-pipeline`（`token_owner/spouse.json`）。實查 Console：`maplab-ai` 同意畫面確為「測試」→ 這才是 7 天過期真因；**已於本日發布為「實際運作中」**，根因消除（可逆，Console 有「返回測試」）。Notion 金鑰保管室查無現成可用 Drive token，且 OAuth user-token 本質無法靠保管室繞過（會被 Google 依測試模式作廢）。**Owner 唯一一次動作**：在電腦前跑 `python3 ~/.claude/mcp-keys/reauth_google.py`，瀏覽器跳同意頁點「允許」（未驗證警告 → 進階 → 繼續 → 允許），新 refresh token 存回後**長期有效、不再每 7 天復發**。細節見 `skills/a8-produce-to-publish-sop.md` §6、`pitfalls.md`（2026-08-03 條）。➡️ 下個協作者：別再把 A8 的 OAuth 當週期性雜務；只剩那一次重授權。
 - 2026-07-27：**[決策] 重大事件改用金十數據 app，停用自建「事件島」+ 不再自建事件分頁** — Owner 指示走「最短路徑／不重造輪子」（`docs/OPERATING_CULTURE.md` 原則 5）。重大財經事件（FOMC/財報/Fed/即時新聞）用現成 **金十數據 app** 那類工具即可，我們只做**提醒/整合**；**停用自建「重大事件島」浮窗、不再自建事件分頁**。➡️ 下個協作者：**別再去建事件 UI**。同輪並新增文化原則 6（解決根因，不只補症狀）。
 - 2026-07-24：**[GOVERNANCE] Agent 固定存檔規範落地 + 素材痕跡歸檔 + 2 skill 轉正** — Owner 指示根治「各 agent 亂存檔（產出散在 ~/.claude/state、~/.claude/tools、40+ session outputs、/tmp）」。①建 `/Volumes/MacExternal/MAPLAB_WORKSPACE/{outputs,state,tools,index}`＋`README_存檔規範.md`；散落產出已**複製**進去（複製不刪、原檔全留，去重 2 個 byte-identical 廣告/預算檔只留一份），紀錄見該處 `MANIFEST_搬移紀錄.md`。②`skills/agent-output-convention.md` 轉正；三處治理同步新增（只增不覆蓋既有）：`AGENT_STARTUP_PROTOCOL.md` Step 6 新增必填欄「輸出根目錄=MAPLAB_WORKSPACE」＋阻擋規則＋執行中規則 6、`AGENT_RULES.md` SECTION 26、`docs/OPERATING_CULTURE.md` 原則 5。③素材資產痕跡插入人工維護的 `SYSTEM_DIRECTORY_INDEX.md`「## 素材資產／本輪發現(2026-07-24)」新段（**未碰**跨 repo 自動覆寫的 `Documents/New project/SYSTEM_MAP.md`）。④`skills/photo-asset-retrieval-guide.md` 轉正。**治本點**：存檔規範做成開工 Step 6 必填欄＋執行中硬規則，非只寫散文（呼應 pitfalls「規則存在於散文等於不存在」）。邊界：不碰 Google Drive 同步（另一任務）。review bundle：`handoff/review-bundles/2026-07-24-agent-output-convention/`、`.../2026-07-24-素材資產發現/`。
 - 2026-07-20（remote，二）：**[A1 治理] 廣告平台改瀏覽器優先，不依賴會過期的 API 通行證** — Owner 指示：Google/Meta Ads 的唯讀狀態查詢（現在跑什麼活動/受眾/素材）不該依賴會定期過期的 API 通行證（常見成因：應用程式卡在 Google「測試中」狀態 7 天到期）,應該直接用 Owner 已登入的 Chrome session 導頁 + 截圖分析。已落地：①新技能書 `skills/ad-platform-browser-check.md`（SOP + 安全紅線 + 與既有 API/MCP 路徑的分工）；②`docs/company-values.md` 新增「七、憑證選型」原則；③`CLAUDE.md`【API 存取三層備援】加註明文例外；④`skills/credentials/google-ads-api.md`／`meta-ads-api.md` 頂部加指向新技能書的提示；⑤`TASK_QUEUE.md` 把 T-A2-006 從 FROZEN（等 MCP token 重授權）移到 Tier 1（唯讀巡查已解鎖，不再等 Owner）；⑥`handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md` 接續狀態同步更新。API/MCP 路徑保留給精確報表與程式化操作（啟停/改預算仍需 Owner 核准，Owner 已表示這塊他自己操作）。未執行任何實際廣告查詢或帳戶操作，本輪只完成技能與文化落地。Branch: `claude/local-model-evolution-orchestrator-puvj7d`。
@@ -263,3 +266,11 @@
 |  | T-IOS-KOL-001: - **阻塞**：無。 | 見 Task Card |
 
 ## 2026-07-19 weekly-eval: 520/540 | NO_DELTA
+
+## 2026-07-26 weekly-eval: 520/540 | NO_DELTA
+
+## 2026-08-02 weekly-eval: 520/540 | NO_DELTA
+
+## 2026-08-09 weekly-eval: 520/540 | NO_DELTA
+
+## 2026-08-16 weekly-eval: 520/540 | NO_DELTA

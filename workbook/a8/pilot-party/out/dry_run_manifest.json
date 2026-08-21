@@ -1,0 +1,18 @@
+{
+  "asset_dir": "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-party/oriented",
+  "out_dir": "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-party/out",
+  "title": "台南週歲派對外燴",
+  "subtitle": "抓周慶生 · 甜點桌佈置",
+  "case_label": "one-year-old-party",
+  "images": [
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-party/oriented/party_01.jpg",
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-party/oriented/party_02.jpg",
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-party/oriented/party_03.jpg",
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-party/oriented/party_04.jpg"
+  ],
+  "video": "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-party/out/a8-short-dry-run.mp4",
+  "cover": "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-party/out/a8-short-cover.jpg",
+  "font": "/System/Library/Fonts/STHeiti Medium.ttc",
+  "text_overlay": "metadata_only_ffmpeg_drawtext_unavailable",
+  "status": "dry_run_rendered"
+}

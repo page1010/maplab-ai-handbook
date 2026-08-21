@@ -1,0 +1,42 @@
+{
+  "asset_dir": "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-bunny/clips",
+  "out_dir": "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-bunny/review_mv",
+  "case_label": "邦尼兔托嬰畢業典禮・甜點桌",
+  "category": "general",
+  "cta_line": "台南外燴設計、活動茶點｜官方 LINE 洽詢檔期 @maplab",
+  "title": "台南活動外燴",
+  "images": [
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-bunny/clips/c01.mov",
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-bunny/clips/c02.mov",
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-bunny/clips/c03.mov"
+  ],
+  "scene_lines": [
+    "畢業典禮的甜點桌",
+    "一口點心排成慶祝",
+    "小小畢業生的大日子"
+  ],
+  "scene_motions": [
+    "dolly_in",
+    "pan_right",
+    "pan_left"
+  ],
+  "frame_modes": [
+    "intro",
+    "scene",
+    "scene",
+    "scene",
+    "outro"
+  ],
+  "video": "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-bunny/review_mv/a8-short-review-draft.mp4",
+  "cover": "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-bunny/review_mv/a8-short-review-cover.jpg",
+  "watermark": "MAPLAB Kitchen",
+  "subtitle_overlay": "swift_appkit_rendered",
+  "visual_template": "MAPLAB IG Soft v1",
+  "visual_preset": "maplab_ig_soft",
+  "counter": "hidden",
+  "transition": "xfade",
+  "transition_effect": "fade",
+  "transition_seconds": 0.35,
+  "audio": "none_local_draft_add_platform_licensed_music_before_publish",
+  "status": "review_draft_rendered"
+}

@@ -1,6 +1,11 @@
 # T-A1-GIT-SYNC-001 — checkpoint.sh 提交前先 pull（根治 CURRENT_STATUS 時間戳復發衝突）
 
-建立：2026-07-23 ｜ 提案：A2 ｜ 負責：A1 governance ｜ 狀態：🟢 方案 1 已落檔（Owner 核准，待測）；方案 2 待做
+建立：2026-07-23 ｜ 提案：A2 ｜ 負責：A1 governance ｜ 狀態：🟢 方案 1 + 方案 2A 已落檔（待 host 測）；方案 2B 選配待評估
+
+## 方案 2A 已落地（2026-07-23）
+- `scripts/checkpoint.sh` 的 `_sync_current_status()` awk **已移除 `/^最後更新：/` 時間戳重寫區塊**（原第 233–237 行）→ checkpoint 不再與 patrol.sh 爭那一行；該行改由 patrol 當唯一寫入者、原樣通過。
+- 沙箱 awk 測試確認：`最後更新：...` 行原樣保留、不再被 checkpoint 改寫。
+- 待 host：連跑 checkpoint + patrol 觀察一週，確認時間戳衝突消失（驗收見下）。若仍要完全冪等再上 2B。
 
 ## 執行紀錄（2026-07-23）
 - **方案 1 已實作**：`scripts/checkpoint.sh` FAST_MODE 的 push 區塊（原 500–511 行）改為「push 前先 `git fetch` + `git merge --no-edit origin/main`」，移除原本失敗才 `pull --rebase` 的脆弱 fallback。merge 衝突一律 `exit 1` 停手交人工，不 `-X ours/theirs` 盲解。**待在 Mac mini 實跑驗證。**

@@ -230,11 +230,9 @@ _sync_current_status() {
       -v task_file="$task_table_file" \
       -v blocker_file="$blocker_section_file" '
   BEGIN { skip=0 }
-  # 更新時間戳
-  /^最後更新：/ {
-    print "最後更新：" today " " now_time "（checkpoint.sh 自動同步）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`"
-    next
-  }
+  # [T-A1-GIT-SYNC-001 方案2A] checkpoint 不再重寫「最後更新」時間戳。
+  # 原本 checkpoint 與 patrol.sh 各自用 date 重寫這一行 → 每次同步必衝突。
+  # 改由 patrol.sh 當唯一寫入者；此行原樣通過（下方 skip==0 { print }）。
   # 替換任務表區塊（從 ## 當前進行中任務 到 ---）
   /^## 當前進行中任務/ {
     while ((getline line < task_file) > 0) print line

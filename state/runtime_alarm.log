@@ -26,3 +26,119 @@
 [2026-07-23 08:30:02] 🚨 [runtime-alarm] 1 筆 open CRITICAL:
   • [exposure_ledger] 跨帳戶合併 US 曝險 82.7% gross (股 77.0% + 選擇權 5.7%) | regime=UNKNOWN | 建議留意 — regime 未知，保守 (deadline: 2026-07-17)
 [2026-07-23 08:30:03] 推播已觸發
+[2026-07-24 08:30:05] === runtime alarm check ===
+[2026-07-24 08:30:05] 🚨 [runtime-alarm] 1 筆 open CRITICAL:
+  • [exposure_ledger] 跨帳戶合併 US 曝險 82.7% gross (股 77.0% + 選擇權 5.7%) | regime=UNKNOWN | 建議留意 — regime 未知，保守 (deadline: 2026-07-17)
+[2026-07-24 08:30:07] 推播已觸發
+[2026-07-25 08:30:00] === runtime alarm check ===
+[2026-07-25 08:30:00] 🚨 [runtime-alarm] 1 筆 open CRITICAL:
+  • [exposure_ledger] 跨帳戶合併 US 曝險 82.7% gross (股 77.0% + 選擇權 5.7%) | regime=UNKNOWN | 建議留意 — regime 未知，保守 (deadline: 2026-07-17)
+[2026-07-25 08:30:01] 推播已觸發
+[2026-07-26 08:30:00] === runtime alarm check ===
+[2026-07-26 08:30:00] 🚨 [runtime-alarm] 1 筆 open CRITICAL:
+  • [exposure_ledger] 跨帳戶合併 US 曝險 82.7% gross (股 77.0% + 選擇權 5.7%) | regime=UNKNOWN | 建議留意 — regime 未知，保守 (deadline: 2026-07-17)
+[2026-07-26 08:30:01] 推播已觸發
+[2026-07-27 08:30:01] === runtime alarm check ===
+[2026-07-27 08:30:01] 🚨 [runtime-alarm] 1 筆 open CRITICAL:
+  • [exposure_ledger] 跨帳戶合併 US 曝險 82.7% gross (股 77.0% + 選擇權 5.7%) | regime=UNKNOWN | 建議留意 — regime 未知，保守 (deadline: 2026-07-17)
+[2026-07-27 08:30:02] 推播已觸發
+[2026-07-28 08:30:00] === runtime alarm check ===
+[2026-07-28 08:30:00] 🚨 [runtime-alarm] 1 筆 open CRITICAL:
+  • [exposure_ledger] 跨帳戶合併 US 曝險 82.7% gross (股 77.0% + 選擇權 5.7%) | regime=UNKNOWN | 建議留意 — regime 未知，保守 (deadline: 2026-07-17)
+[2026-07-28 08:30:01] 推播已觸發
+[2026-07-29 08:30:01] === runtime alarm check ===
+[2026-07-29 08:30:01] 🚨 [runtime-alarm] 1 筆 open CRITICAL:
+  • [exposure_ledger] 跨帳戶合併 US 曝險 82.7% gross (股 77.0% + 選擇權 5.7%) | regime=UNKNOWN | 建議留意 — regime 未知，保守 (deadline: 2026-07-17)
+[2026-07-29 08:30:02] 推播已觸發
+[2026-07-30 08:30:00] === runtime alarm check ===
+[2026-07-30 08:30:01] 🚨 [runtime-alarm] 1 筆 open CRITICAL:
+  • [exposure_ledger] 跨帳戶合併 US 曝險 82.7% gross (股 77.0% + 選擇權 5.7%) | regime=UNKNOWN | 建議留意 — regime 未知，保守 (deadline: 2026-07-17)
+[2026-07-30 08:30:02] 推播已觸發
+[2026-07-31 08:30:00] === runtime alarm check ===
+[2026-07-31 08:30:00] 🚨 [runtime-alarm] 1 筆 open CRITICAL:
+  • [exposure_ledger] 跨帳戶合併 US 曝險 82.7% gross (股 77.0% + 選擇權 5.7%) | regime=UNKNOWN | 建議留意 — regime 未知，保守 (deadline: 2026-07-17)
+[2026-07-31 08:30:01] 推播已觸發
+[2026-08-01 08:30:05] === runtime alarm check ===
+[2026-08-01 08:30:05] 🚨 [runtime-alarm] 1 筆 open CRITICAL:
+  • [exposure_ledger] 跨帳戶合併 US 曝險 82.7% gross (股 77.0% + 選擇權 5.7%) | regime=UNKNOWN | 建議留意 — regime 未知，保守 (deadline: 2026-07-17)
+[2026-08-01 08:30:06] 推播已觸發
+[2026-08-02 08:30:02] === runtime alarm check ===
+[2026-08-02 08:30:02] 🚨 [runtime-alarm] 1 筆 open CRITICAL:
+  • [exposure_ledger] 跨帳戶合併 US 曝險 82.7% gross (股 77.0% + 選擇權 5.7%) | regime=UNKNOWN | 建議留意 — regime 未知，保守 (deadline: 2026-07-17)
+[2026-08-02 08:30:03] 推播已觸發
+[2026-08-03 08:37:01] === runtime alarm check ===
+[2026-08-03 08:37:01] 🚨 [runtime-alarm] 1 筆 open CRITICAL:
+  • [exposure_ledger] 跨帳戶合併 US 曝險 82.7% gross (股 77.0% + 選擇權 5.7%) | regime=UNKNOWN | 建議留意 — regime 未知，保守 (deadline: 2026-07-17)
+[2026-08-03 08:37:02] 推播已觸發
+[2026-08-04 08:37:00] === runtime alarm check ===
+[2026-08-04 08:37:00] 🚨 [runtime-alarm] 1 筆 open CRITICAL:
+  • [exposure_ledger] 跨帳戶合併 US 曝險 82.7% gross (股 77.0% + 選擇權 5.7%) | regime=UNKNOWN | 建議留意 — regime 未知，保守 (deadline: 2026-07-17)
+[2026-08-04 08:37:01] 推播已觸發
+[2026-08-05 08:37:01] === runtime alarm check ===
+[2026-08-05 08:37:01] 🚨 [runtime-alarm] 1 筆 open CRITICAL:
+  • [exposure_ledger] 跨帳戶合併 US 曝險 82.7% gross (股 77.0% + 選擇權 5.7%) | regime=UNKNOWN | 建議留意 — regime 未知，保守 (deadline: 2026-07-17)
+[2026-08-05 08:37:02] 推播已觸發
+[2026-08-06 08:37:01] === runtime alarm check ===
+[2026-08-06 08:37:01] 🚨 [runtime-alarm] 1 筆 open CRITICAL:
+  • [exposure_ledger] 跨帳戶合併 US 曝險 82.7% gross (股 77.0% + 選擇權 5.7%) | regime=UNKNOWN | 建議留意 — regime 未知，保守 (deadline: 2026-07-17)
+[2026-08-06 08:37:02] 推播已觸發
+[2026-08-07 08:37:03] === runtime alarm check ===
+[2026-08-07 08:37:03] 🚨 [runtime-alarm] 1 筆 open CRITICAL:
+  • [exposure_ledger] 跨帳戶合併 US 曝險 82.7% gross (股 77.0% + 選擇權 5.7%) | regime=UNKNOWN | 建議留意 — regime 未知，保守 (deadline: 2026-07-17)
+[2026-08-07 08:37:04] 推播已觸發
+[2026-08-08 08:37:02] === runtime alarm check ===
+[2026-08-08 08:37:02] 🚨 [runtime-alarm] 1 筆 open CRITICAL:
+  • [exposure_ledger] 跨帳戶合併 US 曝險 82.7% gross (股 77.0% + 選擇權 5.7%) | regime=UNKNOWN | 建議留意 — regime 未知，保守 (deadline: 2026-07-17)
+[2026-08-08 08:37:03] 推播已觸發
+[2026-08-09 08:37:01] === runtime alarm check ===
+[2026-08-09 08:37:01] 🚨 [runtime-alarm] 1 筆 open CRITICAL:
+  • [exposure_ledger] 跨帳戶合併 US 曝險 82.7% gross (股 77.0% + 選擇權 5.7%) | regime=UNKNOWN | 建議留意 — regime 未知，保守 (deadline: 2026-07-17)
+[2026-08-09 08:37:02] 推播已觸發
+[2026-08-10 08:37:03] === runtime alarm check ===
+[2026-08-10 08:37:03] 🚨 [runtime-alarm] 1 筆 open CRITICAL:
+  • [exposure_ledger] 跨帳戶合併 US 曝險 82.7% gross (股 77.0% + 選擇權 5.7%) | regime=UNKNOWN | 建議留意 — regime 未知，保守 (deadline: 2026-07-17)
+[2026-08-10 08:37:05] 推播已觸發
+[2026-08-11 08:37:03] === runtime alarm check ===
+[2026-08-11 08:37:03] 🚨 [runtime-alarm] 1 筆 open CRITICAL:
+  • [exposure_ledger] 跨帳戶合併 US 曝險 82.7% gross (股 77.0% + 選擇權 5.7%) | regime=UNKNOWN | 建議留意 — regime 未知，保守 (deadline: 2026-07-17)
+[2026-08-11 08:37:05] 推播已觸發
+[2026-08-12 08:37:01] === runtime alarm check ===
+[2026-08-12 08:37:01] 🚨 [runtime-alarm] 1 筆 open CRITICAL:
+  • [exposure_ledger] 跨帳戶合併 US 曝險 82.7% gross (股 77.0% + 選擇權 5.7%) | regime=UNKNOWN | 建議留意 — regime 未知，保守 (deadline: 2026-07-17)
+[2026-08-12 08:37:03] 推播已觸發
+[2026-08-13 08:37:04] === runtime alarm check ===
+[2026-08-13 08:37:04] 🚨 [runtime-alarm] 1 筆 open CRITICAL:
+  • [exposure_ledger] 跨帳戶合併 US 曝險 82.7% gross (股 77.0% + 選擇權 5.7%) | regime=UNKNOWN | 建議留意 — regime 未知，保守 (deadline: 2026-07-17)
+[2026-08-13 08:37:05] 推播已觸發
+[2026-08-14 08:37:04] === runtime alarm check ===
+[2026-08-14 08:37:04] 🚨 [runtime-alarm] 1 筆 open CRITICAL:
+  • [exposure_ledger] 跨帳戶合併 US 曝險 82.7% gross (股 77.0% + 選擇權 5.7%) | regime=UNKNOWN | 建議留意 — regime 未知，保守 (deadline: 2026-07-17)
+[2026-08-14 08:37:05] 推播已觸發
+[2026-08-15 08:37:02] === runtime alarm check ===
+[2026-08-15 08:37:02] 🚨 [runtime-alarm] 1 筆 open CRITICAL:
+  • [exposure_ledger] 跨帳戶合併 US 曝險 82.7% gross (股 77.0% + 選擇權 5.7%) | regime=UNKNOWN | 建議留意 — regime 未知，保守 (deadline: 2026-07-17)
+[2026-08-15 08:37:03] 推播已觸發
+[2026-08-16 08:37:02] === runtime alarm check ===
+[2026-08-16 08:37:02] 🚨 [runtime-alarm] 1 筆 open CRITICAL:
+  • [exposure_ledger] 跨帳戶合併 US 曝險 82.7% gross (股 77.0% + 選擇權 5.7%) | regime=UNKNOWN | 建議留意 — regime 未知，保守 (deadline: 2026-07-17)
+[2026-08-16 08:37:04] 推播已觸發
+[2026-08-17 08:37:02] === runtime alarm check ===
+[2026-08-17 08:37:02] 🚨 [runtime-alarm] 1 筆 open CRITICAL:
+  • [exposure_ledger] 跨帳戶合併 US 曝險 82.7% gross (股 77.0% + 選擇權 5.7%) | regime=UNKNOWN | 建議留意 — regime 未知，保守 (deadline: 2026-07-17)
+[2026-08-17 08:37:04] 推播已觸發
+[2026-08-18 08:37:05] === runtime alarm check ===
+[2026-08-18 08:37:05] 🚨 [runtime-alarm] 1 筆 open CRITICAL:
+  • [exposure_ledger] 跨帳戶合併 US 曝險 82.7% gross (股 77.0% + 選擇權 5.7%) | regime=UNKNOWN | 建議留意 — regime 未知，保守 (deadline: 2026-07-17)
+[2026-08-18 08:37:06] 推播已觸發
+[2026-08-19 08:37:05] === runtime alarm check ===
+[2026-08-19 08:37:05] 🚨 [runtime-alarm] 1 筆 open CRITICAL:
+  • [exposure_ledger] 跨帳戶合併 US 曝險 82.7% gross (股 77.0% + 選擇權 5.7%) | regime=UNKNOWN | 建議留意 — regime 未知，保守 (deadline: 2026-07-17)
+[2026-08-19 08:37:06] 推播已觸發
+[2026-08-20 08:37:03] === runtime alarm check ===
+[2026-08-20 08:37:03] 🚨 [runtime-alarm] 1 筆 open CRITICAL:
+  • [exposure_ledger] 跨帳戶合併 US 曝險 82.7% gross (股 77.0% + 選擇權 5.7%) | regime=UNKNOWN | 建議留意 — regime 未知，保守 (deadline: 2026-07-17)
+[2026-08-20 08:37:04] 推播已觸發
+[2026-08-21 08:37:04] === runtime alarm check ===
+[2026-08-21 08:37:04] 🚨 [runtime-alarm] 1 筆 open CRITICAL:
+  • [exposure_ledger] 跨帳戶合併 US 曝險 82.7% gross (股 77.0% + 選擇權 5.7%) | regime=UNKNOWN | 建議留意 — regime 未知，保守 (deadline: 2026-07-17)
+[2026-08-21 08:37:05] 推播已觸發

@@ -276,7 +276,12 @@ class OpenClawAdapter:
             fallback_used = True
 
         command = ["ollama", "run", ollama_model, prompt]
-        proc = _run_command(command, timeout=600)
+        # OOM fix: force request-layer num_ctx (default 8192) via the Ollama HTTP
+        # API. This build ignores global OLLAMA_CONTEXT_LENGTH and `ollama run`
+        # has no num_ctx flag, so the CLI loads models at the 32768 default and
+        # blows up RAM. Mirrors the proven scripts/a6_gym_runner.py pattern.
+        # Fully reversible: any HTTP error falls back to the original CLI command.
+        proc = _ollama_generate_with_ctx(ollama_model, prompt, command, timeout=600)
         finished = datetime.now(timezone.utc)
         stderr_text = proc.stderr
         if attempted_openclaw:
@@ -300,6 +305,56 @@ class OpenClawAdapter:
             fallback_used=fallback_used,
             command=command,
             bundle_dir=bundle_dir,
+        )
+
+
+def _ollama_generate_with_ctx(
+    model: str,
+    prompt: str,
+    cli_command: Sequence[str],
+    timeout: int = 600,
+) -> subprocess.CompletedProcess[str]:
+    """Call Ollama /api/generate with a capped num_ctx to bound RAM (OOM fix).
+
+    num_ctx defaults to 8192 (override via OPENCLAW_OLLAMA_NUM_CTX). On ANY error
+    it falls back to the original `ollama run` CLI command, so behavior is
+    preserved and the change is fully reversible.
+    """
+    try:
+        num_ctx = int(os.getenv("OPENCLAW_OLLAMA_NUM_CTX", "8192"))
+    except ValueError:
+        num_ctx = 8192
+    host = os.getenv("OLLAMA_HOST", "http://127.0.0.1:11434").strip().rstrip("/")
+    if not host.startswith("http"):
+        host = "http://" + host
+    payload = {
+        "model": model,
+        "prompt": prompt,
+        "stream": False,
+        "keep_alive": os.getenv("OPENCLAW_OLLAMA_KEEP_ALIVE", "5m"),
+        "options": {"num_ctx": num_ctx},
+    }
+    try:
+        import urllib.request
+
+        data = json.dumps(payload).encode("utf-8")
+        req = urllib.request.Request(
+            host + "/api/generate",
+            data=data,
+            headers={"Content-Type": "application/json"},
+        )
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            body = json.loads(resp.read())
+        return subprocess.CompletedProcess(
+            list(cli_command), returncode=0, stdout=body.get("response", ""), stderr=""
+        )
+    except Exception as exc:  # reversible fallback to original CLI behavior
+        proc = _run_command(list(cli_command), timeout=timeout)
+        return subprocess.CompletedProcess(
+            list(cli_command),
+            returncode=proc.returncode,
+            stdout=proc.stdout,
+            stderr=(proc.stderr or "") + f"\n[num_ctx-http-fallback: {exc}]",
         )
 
 

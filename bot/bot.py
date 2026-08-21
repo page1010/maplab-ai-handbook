@@ -655,6 +655,33 @@ def _dispatch_catalog() -> dict[str, DispatchRoute]:
                 "if Sheet/GAS write is required, route through A5 and report the real artifact URL only after creation",
             ),
         ),
+        "research": DispatchRoute(
+            task_type="investment-research-note",
+            title="投資研究筆記歸檔任務",
+            primary_role="B3",
+            roles=("B3", "A1"),
+            worker="Codex writes/updates workbook/stock-notes/ cards as B3 Investment OS Archivist; no trading action",
+            runtime_target="codex",
+            task_cards=(
+                "handoff/tasks/T-B1-B4-investment-os-role-split.md",
+                "workbook/stock-notes/",
+            ),
+            goal=(
+                "把 Owner 討論過的個股敘事、財務快照、風險點、來源連結整理成 workbook/stock-notes/ 卡片，"
+                "並附上與 Owner 現有持股的機會成本比較觀點，供後續覆核追蹤（漲跌/敘事是否兌現）。"
+            ),
+            data_needed=(
+                "ticker, company name, sector narrative",
+                "revenue/growth snapshot and PE or valuation estimate with source and query date",
+                "opportunity-cost comparison against Owner's current holdings",
+                "chip/institutional flow signal if available, and risk points",
+            ),
+            guardrails=(
+                "不下單、不建立模擬單、不給買賣建議 — 只整理事實與研究觀點，最終決策由 Owner 判斷",
+                "every number must carry its source link and the date it was pulled",
+                "flag when a narrative claim cannot be verified rather than presenting it as fact",
+            ),
+        ),
         "patrol": DispatchRoute(
             task_type="system-patrol-dispatch",
             title="系統巡查/任務推進派工",
@@ -735,6 +762,8 @@ def _route_from_dispatch_context(context_text: str) -> Optional[DispatchRoute]:
         ),
     ):
         return catalog["ads"]
+    if _dispatch_has_any(context, ("個股", "股票", "本益比", "籌碼面", "法人佈局", "持股", "財報敘事")):
+        return catalog["research"]
     if _dispatch_has_any(context, ("報價任務", "quote", "試算", "毛利", "競品菜單")):
         return catalog["quote"]
     if _dispatch_has_any(context, ("系統巡查", "任務推進", "三層阻塞審查", "taskcard", "任務卡")):
@@ -748,7 +777,17 @@ def _dispatch_route_for_text(text: str, context_text: str = "") -> Optional[Disp
         return None
 
     catalog = _dispatch_catalog()
-    quote_markers = ("報價", "quote", "試算", "毛利", "成本", "競品菜單")
+    quote_markers = ("報價", "quote", "試算", "毛利", "競品菜單")
+    research_markers = (
+        "個股",
+        "股票",
+        "股價",
+        "本益比",
+        "籌碼面",
+        "法人佈局",
+        "持股",
+        "機會成本",
+    )
     ads_markers = (
         "google廣告",
         "googleads",
@@ -777,6 +816,8 @@ def _dispatch_route_for_text(text: str, context_text: str = "") -> Optional[Disp
         "去做",
     )
 
+    if _dispatch_has_any(normalized, research_markers):
+        return catalog["research"]
     if _dispatch_has_any(normalized, quote_markers):
         return catalog["quote"]
     if _dispatch_has_any(normalized, ads_markers) or (

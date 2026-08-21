@@ -98,3 +98,29 @@ status: DRAFT (2026-07-31 建立，待實戰截圖補圖庫後轉正)
 代表性截圖存在同層 `images/`，命名 `畫面代號-情境-YYYYMMDD.png`（如 `cowork-folder-auth-popup-20260731.png`）。取用時對照本篇 2.x 的「畫面長怎樣／關鍵字」定位。缺圖時先照文字特徵辨識，補到圖後回填此節與 `images/README.md`。
 
 > 建立時（2026-07-31）因 `request_access` 授權未獲回應，未能截到即時範本——這本身就是本篇 §2.2 / §四 描述的「授權等不到回應」實況。`images/` 已備好結構與拍攝清單，待下次桌面任務順手補齊。
+
+
+---
+
+## 六、Chrome 分頁衛生（開了就關，別留殘留）—— 記憶體治本
+
+> 根因:各 agent 用 Chrome(`mcp__claude-in-chrome__*` 或 `mcp__Control_Chrome__*`)開了 Drive 檔案頁、gviz、Google 搜尋、docs 預覽…**用完不關**,分頁累積吃記憶體。Chrome 多次是本機前幾大記憶體消耗,直接助長「記憶體/swap 耗盡 → 核心 reap 網路 daemon → 斷線只能重開機」(見 `reconnect-fix.sh` / `mem_watchdog.sh` 根因)。
+
+### 鐵律(全體 agent 適用)
+1. **誰開的誰關**:任務中用瀏覽器工具開的分頁,任務結束前**自己關掉**。
+   - claude-in-chrome:先 `tabs_context_mcp` 拿到本 session tab group 的 id,做完用 `tabs_close_mcp` 逐一關。**每個新對話開自己的新分頁**(`tabs_create_mcp`),不要重用/堆疊。
+   - Control_Chrome:`list_tabs` 找到自己開的,`close_tab` 關掉。
+2. **只關自己開的殘留,不關 Owner 的**。關之前先辨識:
+   - **可關(agent 殘留)**:Google 搜尋結果頁、Drive 一般「首頁/home」導覽頁、gviz、臨時 docs 預覽、研究用網頁——無未存狀態、可秒開回。
+   - **不可關(Owner 的,先列給 Owner 別硬關)**:登入頁/OAuth 流程(關了會中斷授權)、Gmail/Keep、具名 Drive 業務資料夾(如活動/報價)、Owner 的 dashboard(Streamlit/localhost)、正在編輯的 docs、音樂/影片。
+   - **不確定就不關**,列清單回報 Owner 決定。
+3. **長文字/表單**沿用本篇 §2.2:瀏覽器 tier=read,computer-use 不能點打字,一律走 `mcp__claude-in-chrome__*`。
+
+### 定時清理(保守,選配)
+- 可加一支輕量 launchd 清理「開超過 N 小時的**閒置** agent 分頁」,但**必須**套用上面「只關殘留、白名單保護 Owner」的判斷;寧可漏關,不可誤關 Owner。目前先靠「誰開誰關」的鐵律,定時清理待有穩定白名單再上。
+- 記憶體急救(`mem_watchdog.sh`)刻意**不關 Chrome 分頁**(只動 Ollama/llama-server),避免誤關 Owner;Chrome 衛生靠本節的行為規則,不靠自動殺。
+
+### 反模式
+- 開了 Drive/搜尋/預覽頁做完不關,一路堆到十幾個分頁。
+- 重用舊 tab group 或把新任務的分頁疊在舊的上面(難追蹤、難清)。
+- 為了「清乾淨」把 Owner 的登入頁/具名資料夾/dashboard 一起關掉——**寧留勿誤關**。

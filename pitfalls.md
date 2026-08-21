@@ -420,3 +420,16 @@
   2. 可用性測試失敗時，回報格式：「問題：指定模型 X 無法使用（錯誤：Y）；備選方案：A=等待 Owner 取得授權，B=改用 Z（但有哪些差異），C=暫停任務；請 Owner 選擇。」
   3. 揭露替代不等於合規——合規的唯一標準是「先試指定模型，失敗才回報並等裁決」。
 - 封坑驗證：`TOKEN=$(grep CLAUDE_CODE_OAUTH_TOKEN /Users/pagemacmini/maplab-ai-handbook/bot/.env | cut -d'=' -f2) && echo "test" | CLAUDE_CODE_OAUTH_TOKEN="$TOKEN" claude --model claude-fable-5 --print 2>&1 | grep -q "." && echo PASS || echo FAIL`（指定模型可用時應回 PASS；若 FAIL 才進備選方案流程，不得自行替代）。
+
+## 2026-08-03 — Google OAuth「測試 7 天過期」診斷指錯專案；真相來源要查活的 Console，不是紙面
+
+- 觸發條件：A8 影音產線「帶字幕 mp4 上傳 Drive `/publish/`」被 `invalid_grant` 擋住。既有交接文件與 Owner 印象都說「OAuth 卡在測試模式、refresh token 每 7 天過期」。Owner 問「一定要我重授權嗎？能不能走 Notion 金鑰保管室路徑？」，先前沒得到清楚定案。
+- 根因（兩層）：
+  1. **指錯專案**：任務描述與部分文件把 token 寫成 `./auth/token_owner.json`／`token_spouse.json`（那是**相片產線 `maplab-pipeline`**），但 A8 產線實際用的是 GCP 專案 **`maplab-ai`** 的單一 `~/.claude/mcp-keys/google-token.json`。兩個是不同專案、不同 token 檔——真相來源混亂。
+  2. **紙面 vs 活的來源**：實查 Console 才確認：`maplab-pipeline` 早已「實際運作中」（紅鯡魚），而真正在用的 `maplab-ai` 才是「測試」狀態——這才是 7 天過期真因。
+- 解法（已執行）：直接在 Cloud Console 把專案 `maplab-ai` 的 OAuth 同意畫面**發布為「實際運作中」**（可逆，有「返回測試」）；根因消除。此後只需 Owner 跑一次 `python3 ~/.claude/mcp-keys/reauth_google.py` 點「允許」，新 refresh token 即長期有效。
+- 治理教訓：
+  - **OAuth user-token 不適合當「金鑰保管室」的靜態祕密管理**。保管室能治理的是不過期的 API key／App Password；OAuth refresh token 是動態的，測試模式下會被 Google 每 7 天作廢——抄進 Notion 也沒用。凡問「能不能走 Notion 路徑繞過重授權」，答案是不能，要治本得靠「同意畫面上線 + 一次授權」。
+  - **涉及外部服務狀態，先查活的來源（Console）再下結論**；一次現場查核就推翻了紙面診斷。
+  - 憑證文件要**明標所屬 GCP 專案與 token 檔路徑**，避免多產線共用「Google OAuth」字眼卻指不同專案。
+- 預防：遇 `invalid_grant`，第一步先確認「是哪條產線／哪個 GCP 專案／哪個 token 檔」，再查該專案 Console 的發布狀態；測試模式先發布上線再重授權，不要只重授權（測試模式下 7 天後照樣復發）。

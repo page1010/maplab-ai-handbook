@@ -1,0 +1,50 @@
+{
+  "asset_dir": "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-woodfloor/final",
+  "out_dir": "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-woodfloor/review",
+  "case_label": "台南開幕・說事實木地板",
+  "category": "opening",
+  "cta_line": "台南開幕茶會、品牌活動｜官方 LINE 洽詢檔期 @maplab",
+  "title": "台南開幕茶會外燴",
+  "images": [
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-woodfloor/final/a01.mov",
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-woodfloor/final/a02.mp4",
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-woodfloor/final/a03.mov",
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-woodfloor/final/a04.mp4",
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-woodfloor/final/a05.mov"
+  ],
+  "scene_lines": [
+    "說事實木地板開幕這天",
+    "開幕花籃排到門口",
+    "牆上一整排木地板樣",
+    "腳下的溫潤木紋",
+    "為新店開張道聲恭喜"
+  ],
+  "scene_motions": [
+    "dolly_in",
+    "pan_right",
+    "pan_left",
+    "dolly_out",
+    "dolly_in"
+  ],
+  "frame_modes": [
+    "intro",
+    "scene",
+    "scene",
+    "scene",
+    "scene",
+    "scene",
+    "outro"
+  ],
+  "video": "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-woodfloor/review/a8-short-review-draft.mp4",
+  "cover": "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-woodfloor/review/a8-short-review-cover.jpg",
+  "watermark": "MAPLAB Kitchen",
+  "subtitle_overlay": "swift_appkit_rendered",
+  "visual_template": "MAPLAB IG Soft v1",
+  "visual_preset": "maplab_ig_soft",
+  "counter": "hidden",
+  "transition": "xfade",
+  "transition_effect": "fade",
+  "transition_seconds": 0.35,
+  "audio": "none_local_draft_add_platform_licensed_music_before_publish",
+  "status": "review_draft_rendered"
+}

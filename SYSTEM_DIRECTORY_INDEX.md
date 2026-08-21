@@ -597,7 +597,7 @@ content_indexable=false
 | quota-meter | 讀 Claude 方案用量（週 + 5 小時窗），寫預算閘給 daily-ops | ✅ 可用 | `quota-meter` |
 | A8 音樂（MiniMax / Suno） | A8 影音產線的配樂 / 音樂生成 | ⏳ 帳號待指定 | `agent-login`（登入）+ `a8-video-pipeline` / `a8-local-motion-integration` |
 | agent-login | 登入牆穿越的統一介面（`open` / `get-cred`）；唯讀 + 注入防禦 | ✅ v1.1 | `agent-login` |
-| arb 引擎 / rr_framework | investment-os 的套利 / 風報比框架（參考、非執行） | 參考層 · **無獨立技能封裝** | investment-os runtime 內模組（`investment-os/skills/` 目前無對應獨立技能 → 建議後續封裝） |
+| arb 引擎 / rr_framework | investment-os 的套利 / 風報比框架（參考、非執行） | 參考層 · **無獨立技能封裝** | ⚠️ 本體不在本機(Cowork 孤兒),待匯出成真 crypto-stock-engine repo;現況僅介面/對齊說明 |
 | 處置雷達 | 處置股 / 風險標的偵測 | 參考層 · **無獨立技能封裝** | investment-os runtime 內模組（同上，尚未封裝成技能 → 建議後續封裝） |
 | daily-ops cycles | 每日營運循環（預算閘、巡查、狀態回寫） | ✅ 運行中 | daily-operations 循環 / 技能 |
 

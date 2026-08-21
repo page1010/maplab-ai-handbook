@@ -1,6 +1,12 @@
 # T-A1-PATROL-GRADER-001 — 把獨立 grader 接進每日巡查
 
-建立：2026-07-23 ｜ 提案：A2 ｜ 負責：A1 ｜ 狀態：🟢 grader 已建待接線（host 測）
+建立：2026-07-23 ｜ 提案：A2 ｜ 負責：A1 ｜ 狀態：🟢 已接線 + 沙箱 dry-run 驗證通過，待 host 冒煙測
+
+## 已落地（2026-07-23）
+- `scripts/patrol_grader.sh` 已建。
+- **已接進 `scripts/patrol-scheduled.sh`**：跑完 patrol.sh 後呼叫 grader，輸出併入 Telegram 訊息；grader FAIL（exit 1）→ 標題改 `🔴 每日自動巡查（repo 健康 FAIL）`，確保 Owner 一定看到。
+- 沙箱 `--dry-run` 實測：grader 區塊正確附在訊息底部，且當場抓到一個 stale `.git/index.lock` 並 WARN（證明關卡有效）。
+- 待 host：Mac mini 跑一次 `bash scripts/patrol-scheduled.sh --dry-run` 確認 Telegram 格式；再讓 launchd 排程生效。
 
 ## 接續狀態
 - **接續點**：`scripts/patrol_grader.sh` 已建並沙箱實跑 PASS（檢查：未解衝突標記、未收尾 merge/rebase/cherry-pick、落後 origin ≥10 升 FAIL、stale index.lock、spec-drift、逾期任務）。下一步：接進 `scripts/patrol-scheduled.sh`，讓每日巡查有客觀關卡。

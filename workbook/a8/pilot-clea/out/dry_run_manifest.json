@@ -1,0 +1,18 @@
+{
+  "asset_dir": "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-clea/oriented",
+  "out_dir": "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-clea/out",
+  "title": "台南開幕茶會外燴",
+  "subtitle": "Cléa 女裝選品店 · 迎賓茶點",
+  "case_label": "opening-tea-catering",
+  "images": [
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-clea/oriented/clea_01.jpg",
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-clea/oriented/clea_02.jpg",
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-clea/oriented/clea_03.jpg",
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-clea/oriented/clea_04.jpg"
+  ],
+  "video": "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-clea/out/a8-short-dry-run.mp4",
+  "cover": "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-clea/out/a8-short-cover.jpg",
+  "font": "/System/Library/Fonts/STHeiti Medium.ttc",
+  "text_overlay": "metadata_only_ffmpeg_drawtext_unavailable",
+  "status": "dry_run_rendered"
+}

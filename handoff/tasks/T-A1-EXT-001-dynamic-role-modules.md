@@ -1,7 +1,7 @@
 # T-A1-EXT-001 — GitHub Dynamic Role Task Modules
 
 ## 接續狀態
-- **狀態**: 🟡 STALLED（since 2026-07-21，48h 無 commit，Owner 可更新最後活動解除）
+- **狀態**: 🔒 AUTO_CLOSED（2026-08-04，NEEDS_REVIEW 無回應逾 7 天，Owner 可回覆「重開 T-A1-EXT-001-dynamic-role-modules」重啟）
 - **最後活動**: 2026-07-19 5230457
 - **接續點**: （checkpoint.sh 自動補建，請 agent 填寫）
 - **阻塞**: 無

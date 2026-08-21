@@ -1,7 +1,7 @@
 # T-A1-LEARNING-LOOP-001 — MAPLAB Learning Loop v0 Reaction Ledger
 
 ## 接續狀態
-- **狀態**: 🟡 STALLED（since 2026-07-21，48h 無 commit，Owner 可更新最後活動解除）
+- **狀態**: 🔒 AUTO_CLOSED（2026-08-04，NEEDS_REVIEW 無回應逾 7 天，Owner 可回覆「重開 T-A1-LEARNING-LOOP-001」重啟）
 - **最後活動**: 2026-07-19 5230457
 - **接續點**: 建立 token capital registry，登記可複用 prompt / eval / task packet / skill / pitfall；接著做 ledger closure/eval harness。
 - **阻塞**: 無。Google OAuth reauth 是 `google-oauth-reauth-card` 的獨立 Owner 5 分鐘 action，不阻塞 ledger 機制。

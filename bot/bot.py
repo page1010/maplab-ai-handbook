@@ -744,33 +744,6 @@ def _dispatch_has_any(haystack: str, markers: tuple[str, ...]) -> bool:
     return any(marker in haystack for marker in markers)
 
 
-def _route_from_dispatch_context(context_text: str) -> Optional[DispatchRoute]:
-    catalog = _dispatch_catalog()
-    context = _dispatch_norm(context_text)
-    if _dispatch_has_any(
-        context,
-        (
-            "投放成效判讀",
-            "googleads",
-            "google廣告",
-            "metaads",
-            "meta廣告",
-            "廣告成效",
-            "roas",
-            "cpc",
-            "cpa",
-        ),
-    ):
-        return catalog["ads"]
-    if _dispatch_has_any(context, ("個股", "股票", "本益比", "籌碼面", "法人佈局", "持股", "財報敘事")):
-        return catalog["research"]
-    if _dispatch_has_any(context, ("報價任務", "quote", "試算", "毛利", "競品菜單")):
-        return catalog["quote"]
-    if _dispatch_has_any(context, ("系統巡查", "任務推進", "三層阻塞審查", "taskcard", "任務卡")):
-        return catalog["patrol"]
-    return None
-
-
 def _dispatch_route_for_text(text: str, context_text: str = "") -> Optional[DispatchRoute]:
     normalized = _dispatch_norm(text)
     if not normalized:
@@ -801,20 +774,6 @@ def _dispatch_route_for_text(text: str, context_text: str = "") -> Optional[Disp
         "ctr",
     )
     patrol_markers = ("巡查", "任務推進", "任務卡", "taskcard", "三層阻塞審查")
-    followup_markers = (
-        "誰做",
-        "召喚了嗎",
-        "召喚了",
-        "派工",
-        "派給",
-        "貼到codex",
-        "丟給codex",
-        "openclaw",
-        "hermes",
-        "不是回覆",
-        "要做",
-        "去做",
-    )
 
     if _dispatch_has_any(normalized, research_markers):
         return catalog["research"]
@@ -827,8 +786,13 @@ def _dispatch_route_for_text(text: str, context_text: str = "") -> Optional[Disp
         return catalog["ads"]
     if _dispatch_has_any(normalized, patrol_markers) or ("角色" in normalized and "巡查" in normalized):
         return catalog["patrol"]
-    if _dispatch_has_any(normalized, followup_markers) or "召喚" in normalized:
-        return _route_from_dispatch_context(context_text) or catalog["generic"]
+    # NOTE(2026-08-21): removed the vague followup_markers/context-guess branch
+    # (words like 派工/要做/去做/召喚 + stale _route_from_dispatch_context).
+    # It kept reusing a contaminated recent-log snippet, so once one message
+    # got misfiled (e.g. into ads-performance-review), every ambiguous
+    # follow-up all evening re-inherited that same wrong label instead of
+    # reaching real Claude. Ambiguous text now falls through to
+    # _run_claude_guarded (real Claude judges it) instead of a regex guess.
     return None
 
 

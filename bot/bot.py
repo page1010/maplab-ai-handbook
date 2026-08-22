@@ -341,8 +341,33 @@ def _falsey_env(name: str, default: str = "") -> bool:
     return os.getenv(name, default).strip().lower() in {"0", "false", "no", "off"}
 
 
+LOCAL_MODEL_POLICY_FILE = Path(
+    os.getenv(
+        "LOCAL_MODEL_POLICY_FILE",
+        "/Users/pagemacmini/claude-daily-operations/state/local_model_policy.json",
+    )
+)
+
+
+def _local_model_disabled(model: str) -> bool:
+    """Owner 2026-08-22 memory policy: models listed in disabled_models must not be loaded."""
+    try:
+        policy = json.loads(LOCAL_MODEL_POLICY_FILE.read_text(encoding="utf-8"))
+        disabled = {str(m).strip() for m in policy.get("disabled_models", [])}
+        base = model.split(":")[0]
+        return model in disabled or any(d.split(":")[0] == base for d in disabled)
+    except Exception:
+        return False
+
+
 def _hermes_fallback_enabled() -> bool:
-    return not _falsey_env("HERMES_FALLBACK_ENABLED", "1")
+    if _falsey_env("HERMES_FALLBACK_ENABLED", "1"):
+        return False
+    model = os.getenv("HERMES_FALLBACK_MODEL", HERMES_FALLBACK_MODEL)
+    if _local_model_disabled(model):
+        logger.warning("hermes fallback skipped: model %s disabled by local_model_policy", model)
+        return False
+    return True
 
 
 def _runtime_path(base_path: str = "") -> str:

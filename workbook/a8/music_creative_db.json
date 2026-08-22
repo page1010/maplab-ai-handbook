@@ -1,13 +1,15 @@
 {
   "_schema": {
-    "desc": "A8 中性音樂創意庫（不綁供應商）。歌詞為我們資產；每引擎 prompt 只是可攜變體。",
+    "desc": "A8 中性音樂創意庫（不綁供應商）＝prompt→產出 可回溯目錄。歌詞為我們資產；引擎 prompt 為可攜變體；outputs 記實際成品。",
     "fields": {
       "id": "唯一代號", "concept": "一句概念", "target": "{client,scene,product}",
       "vibe": "白話 vibe", "style_tags": "中性風格標籤",
-      "lyrics_reviewed": "已審歌詞(乾淨版)", "suno_lyrics": "Suno 用:加 meta-tag/vocal cue 的歌詞",
-      "expected_style": "預計產出風格描述(給 Owner 生成前預覽)",
+      "lyrics_reviewed": "已審歌詞(乾淨版)", "suno_lyrics": "Suno 用:加 meta-tag/vocal cue",
+      "expected_style": "預計產出風格(生成前預覽)",
+      "lyrics_doc": "歌詞對稿 Google Doc 連結(Owner 改/留言,定稿同步回本檔)",
       "brand_safety": "{passed,notes}",
       "engine_prompts": "suno / suno_variants / minimax / fal",
+      "outputs": "產出目錄陣列 [{type, file, link, note}]：type=song/video；file=本機路徑；link=Telegram/YouTube/Drive；note=狀態(placeholder/定版)",
       "status": "draft|paste_ready|generated", "created": "年月"
     }
   },
@@ -20,7 +22,8 @@
       "style_tags": ["中文饒舌", "hip-hop", "boom bap", "歡快", "可愛", "暖色"],
       "lyrics_reviewed": "[Chorus]\n邦尼兔 畢業啦 今天最神氣\n甜點桌 一擺開 全場都歡喜\n小小的手 抓一塊小酥皮\nMAPLAB 台南外燴 甜進心坎裡\n[Verse]\n畢業帽 歪歪戴 樣子超可愛\n蛋塔 杯子蛋糕 排排站好乖\n兔子餅乾 咬一口 喀滋脆到嗨\n小朋友 踮起腳 笑容藏不來\n[Outro]\n邦尼兔 畢業啦 記得這一天\nMAPLAB 陪你長大 甜甜的畫面",
       "suno_lyrics": "[Intro]\n[Chorus] [Female Vocal]\n邦尼兔 畢業啦 今天最神氣\n甜點桌 一擺開 全場都歡喜\n小小的手 抓一塊小酥皮\nMAPLAB 台南外燴 甜進心坎裡\n[Verse] [Male Rap]\n畢業帽 歪歪戴 樣子超可愛\n蛋塔 杯子蛋糕 排排站好乖\n兔子餅乾 咬一口 喀滋脆到嗨\n小朋友 踮起腳 笑容藏不來\n[Chorus] [Female Vocal]\n邦尼兔 畢業啦 今天最神氣\n甜點桌 一擺開 全場都歡喜\n[Outro]\n邦尼兔 畢業啦 記得這一天\nMAPLAB 陪你長大 甜甜的畫面",
-      "expected_style": "約 2–3 分鐘完整歌(可截 30s)：歡快中文 hip-hop / boom bap；男聲 rap 主歌＋女聲洗腦副歌；jazzy 鋼琴＋boom-bap 鼓＋輕黑膠雜訊；~85–95 BPM；情緒歡樂可愛、暖色；副歌重複 hook『邦尼兔畢業啦』記憶點強。tag 為機率提示，可能要 regenerate 2–3 次挑最順的。",
+      "expected_style": "約 2–3 分鐘完整歌(可截 30s)：歡快中文 hip-hop / boom bap；男聲 rap 主歌＋女聲洗腦副歌；jazzy 鋼琴＋boom-bap 鼓＋輕黑膠；~85–95 BPM；歡樂可愛暖色；hook『邦尼兔畢業啦』記憶點強。tag 為機率提示，可能 regenerate 2–3 次。",
+      "lyrics_doc": "https://docs.google.com/document/d/1n8IMgjdyvpXHVcbL3Vq7buydwaC48roieDbGjmLUp6M/edit",
       "brand_safety": { "passed": true, "notes": "a8_lyrics_engine 過：無禁用詞/敏感；客戶名+台南外燴+MAPLAB 已置入；結構標籤齊" },
       "engine_prompts": {
         "suno": "Chinese hip-hop, boom bap, playful and warm, male rap verses with a catchy female sung hook, jazzy piano, boom-bap drums, light vinyl crackle, around 90 BPM, clear natural Mandarin vocals, radio-clean mix",
@@ -31,6 +34,11 @@
         "minimax": "Chinese hip-hop boom bap, playful and warm, male rap with sung hook, jazzy piano, around 90 BPM (prompt=style; lyrics 另填)",
         "fal": "same as minimax (text-to-music: prompt=style, lyrics=歌詞)"
       },
+      "outputs": [
+        { "type": "video", "file": "workbook/a8/pilot-bunny/review_rap/bunny_rap_demo.mp4", "link": "Telegram msg 2974", "note": "placeholder 音(Piper 口白+Apple Loops beat)，待換 Suno 定版" },
+        { "type": "video", "file": "workbook/a8/pilot-bunny/review_mv/bunny_mv.mp4", "link": "Telegram msg 2973", "note": "溫馨MV，Apple Loops 音樂 placeholder" },
+        { "type": "song", "file": null, "link": null, "note": "Suno 定版歌曲：待 Owner 生成後回填(檔名+連結)" }
+      ],
       "status": "paste_ready",
       "created": "2026-08"
     }

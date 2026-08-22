@@ -413,7 +413,7 @@ handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-
 
 ## A4｜影像資產整理部（Photo Archive / Asset Library）
 
-**狀態：✅ T-A4-001 S11(2024) 完成；GBP 照片評分 ✅ 完成（2026-07-10）；T-A4-002 🔴 CRITICAL（**~3143h**無commit）；T-A4-003/004 🔴 **NEEDS_REVIEW**（since 2026-07-19，168h 07-26 觸發，待 Owner 決定延長/關閉/重啟）；2026-08-21 A1晚間巡查更新**
+**狀態：✅ T-A4-001 S11(2024) 完成；GBP 照片評分 ✅ 完成（2026-07-10）；T-A4-002 🔴 CRITICAL（**~3167h**無commit）；T-A4-003/004 🔴 **NEEDS_REVIEW**（since 2026-07-19，168h 07-26 觸發，待 Owner 決定延長/關閉/重啟）；2026-08-22 A1每日巡查更新**
 
 ```
 你是 MAPLAB A4 影像資產整理部。
@@ -436,7 +436,7 @@ T-A4-001 Gemini 照片分類：✅ 全部完成
   - S1-S12 全部 ✅（S11(2024) 2026-07-09 驗收通過，3,314/3,409 張分類）
   - GBP 照片評分：✅ 完成（2026-07-10；37/56 有效，Top20+WP1992×5 精選落檔）
   - S13(2026) 🔲 待開始（T-A4-001 整體已 DONE，S13 為後續加分項）
-T-A4-002 pagewu1010 Takeout（187GB）：🔴 CRITICAL（~3143h無commit；Phase 1 規劃完成，等 Owner 下一步）
+T-A4-002 pagewu1010 Takeout（187GB）：🔴 CRITICAL（~3167h無commit；Phase 1 規劃完成，等 Owner 下一步）
 T-A4-003 照片 ALT/SEO 管線（地端 gemma4）：🔴 NEEDS_REVIEW（since 2026-07-19，168h 07-26 觸發；36,676 張中繼資料已產出；等 Owner 改 Drive 串流釋出 ~433GB）
 T-A4-004 照片分類搬移（截圖/家庭/外燴）：🔴 NEEDS_REVIEW（since 2026-07-19，168h 07-26 觸發；批次管線已建，等 Owner 開 launchctl + 繼續下批）
 Gemini API Key 已更換（舊 key leaked，新 key 記錄於 Notion）
@@ -526,7 +526,7 @@ projects/maplab-master-data.md → handoff/handoff-to-A5.md → handoff/field-na
 
 ## A6｜業務快反應部隊（Sales Rapid Response Unit）
 
-**狀態：🔴 T-A6-001 **NEEDS_REVIEW**（since 2026-07-19，168h 07-26 觸發；**~1166h** 無 commit，last `ed63f97` 2026-07-08；bot_a6 ✅ 上線 launchd；LINE Developers Console Webhook URL 仍待 Owner 確認 Channel 1654658337；2026-08-21 A1晚間巡查更新）**
+**狀態：🔴 T-A6-001 **NEEDS_REVIEW**（since 2026-07-19，168h 07-26 觸發；**~1190h** 無 commit，last `ed63f97` 2026-07-08；bot_a6 ✅ 上線 launchd；LINE Developers Console Webhook URL 仍待 Owner 確認 Channel 1654658337；2026-08-22 A1每日巡查更新）**
 
 ```
 你是 MAPLAB A6 業務快反應部隊。
@@ -590,7 +590,7 @@ Owner確認：LINE Webhook Channel 1654658337 確認。
 
 ## A7｜客服與對話轉單部（Smart Reply / Service Desk）
 
-**狀態：⏳ T-A7-001 **Phase 3 正式延誤**（07-25 截止已過；Owner 自 07-18 起第 **33 天**未確認 Zone B/C 金額；Zone B NT$2,000？/ Zone C NT$2,500？確認後才能重啟；Q5 模板已串入級距快查表）；T-A7-002 ⏸️ 阻塞（等 LINE bot 後台權限）；2026-08-20 A1晚間巡查更新**
+**狀態：⏳ T-A7-001 **Phase 3 正式延誤**（07-25 截止已過；Owner 自 07-18 起第 **35 天**未確認 Zone B/C 金額；Zone B NT$2,000？/ Zone C NT$2,500？確認後才能重啟；Q5 模板已串入級距快查表）；T-A7-002 ⏸️ 阻塞（等 LINE bot 後台權限）；2026-08-22 A1每日巡查更新**
 
 ```
 你是 MAPLAB A7 客服與對話轉單部。
@@ -641,7 +641,7 @@ projects/ai-reply-system.md → skills/superpowers-guide.md → docs/fable-minds
 
 ## A8｜影音內容產線（Content Repurposing Pipeline）
 
-**狀態：🔴 T-A8-001 **NEEDS_REVIEW**（**~1446h/~60.25天**，last `1a2d752` 06-25 08:25，awaiting Owner storyboard review；168h 閾值 07-26 觸發；2026-08-21 A1晚間巡查更新）**
+**狀態：🔴 T-A8-001 **NEEDS_REVIEW**（**~1470h/~61.25天**，last `1a2d752` 06-25 08:25，awaiting Owner storyboard review；168h 閾值 07-26 觸發；2026-08-22 A1每日巡查更新）**
 
 ```
 你是 MAPLAB A8 影音內容產線（Content Repurposing Pipeline）。

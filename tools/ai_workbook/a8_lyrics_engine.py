@@ -13,6 +13,65 @@ SOFT = ["精緻","質感","用心","客製化"]              # 少用（警告�
 SENSITIVE = ["國旗","政治","總統","宗教","神明","種族","政黨","兩岸","統獨"]  # 敏感：國旗過貼那類雷，避免
 POSITIVE_HINT = ["台南外燴","MAPLAB"]               # 建議自然置入
 
+# ---- 中文押韻（十三轍）分析 ----
+_ZHE_GROUPS = {
+    "一七(i/ü)": "氣喜皮裡齊你米西記意力起級集例低題習句去語魚雨",
+    "懷來(ai)": "愛乖嗨來戴懷白菜開台拜賽蓋派孩在還海",
+    "言前(an)": "天面前邊年見甜點願線煙翻端安產感慢辦滿",
+    "發花(a)": "啦家他花大媽怕阿沙抓吧茶掛畫",
+    "江陽(ang)": "香上忙想場亮光唱樣幫湯牆胖旁",
+    "中東(eng/ong/ing)": "紅夢風中情星應鐘空鬆種動用夢冷聲成",
+    "人辰(en/in/un)": "心新人門神真春恩們沉分身信近今銀",
+    "灰堆(ei/ui)": "美飛妹對誰淚給背黑北位嘴",
+    "遙條(ao)": "高道好笑腳靠到抱早鬧巧包跑找號",
+    "由求(ou)": "手口走有頭州收愁夠留丟秀",
+    "姑蘇(u)": "路度樹步苦主哭部住福服",
+    "梭波(o/e/uo)": "我河波過說課多錯坐火脆熱樂",
+    "乜斜(ie/ue)": "街月也些節葉謝跌捷夜借",
+}
+ZHE = {ch: g for g, s in _ZHE_GROUPS.items() for ch in s}
+def _zhe(ch): return ZHE.get(ch, "?")
+def rhyme_words(zhe, n=10):
+    for g, s in _ZHE_GROUPS.items():
+        if g == zhe: return list(dict.fromkeys(s))[:n]
+    return []
+def analyze_rhyme(text):
+    from collections import Counter
+    sections, cur = {}, "_"
+    for raw in text.splitlines():
+        s = raw.strip()
+        if not s: continue
+        m = re.match(r'^\[([^\]]+)\]', s)
+        if m:
+            cur = m.group(1); sections.setdefault(cur, [])
+            rest = s[m.end():].strip()
+            if rest: sections[cur].append(rest)
+            continue
+        sections.setdefault(cur, []).append(s)
+    per, total, rhymed, shuang = {}, 0, 0, 0
+    for sec, lines in sections.items():
+        rows = []
+        for ln in lines:
+            c = re.sub(r'[\s，。！？、,.!?/：:（）()【】\[\]]+', '', ln)
+            rows.append({"line": ln, "e1": c[-1] if c else "", "z1": _zhe(c[-1]) if c else "?",
+                         "e2": c[-2] if len(c) >= 2 else "", "z2": _zhe(c[-2]) if len(c) >= 2 else "?"})
+        cnt = Counter(r["z1"] for r in rows if r["z1"] != "?")
+        dom = cnt.most_common(1)[0][0] if cnt else "?"
+        weak = []
+        for i, r in enumerate(rows):
+            total += 1
+            r["ok"] = (r["z1"] == dom and dom != "?")
+            if r["ok"]: rhymed += 1
+            else: weak.append(r["line"])
+            r["shuang"] = any(i != j and r["z1"] != "?" and r["z1"] == o["z1"] and r["z2"] != "?" and r["z2"] == o["z2"] for j, o in enumerate(rows))
+            if r["shuang"]: shuang += 1
+        per[sec] = {"dominant_zhe": dom, "weak_offrhyme": weak,
+                    "ends": [f'{r["e2"]}{r["e1"]}({r["z1"]}{"+雙押" if r["shuang"] else ""})' for r in rows],
+                    "suggest_words": rhyme_words(dom) if weak else []}
+    return {"rhymed_ratio": round(rhymed/total, 2) if total else 0,
+            "shuang_lines": shuang, "total_lines": total, "per_section": per,
+            "hint": "弱的 weak_offrhyme 換同轍字(見 suggest_words)；相鄰行末兩字同轍=雙押,密度更高；但別為押韻犧牲順口/意思。"}
+
 def _end_char(line): 
     s=re.sub(r"[\s，。！？、,.!?/\[\]（）()]+","",line); return s[-1] if s else ""
 
@@ -22,7 +81,7 @@ def review_lyrics(text, client=None):
     banned=[w for w in BANNED+A8_BANNED if w in joined]
     soft=[w for w in SOFT if w in joined]
     sensitive=[w for w in SENSITIVE if w in joined]
-    has_hook="[Hook]" in text or "[hook]" in text.lower()
+    has_hook=("[hook]" in text.lower()) or ("[chorus]" in text.lower())
     has_verse="[Verse]" in text or "[verse]" in text.lower()
     ends=[_end_char(l) for l in lines]
     # 簡易押韻提示：相鄰行尾字相同者
@@ -42,6 +101,7 @@ def review_lyrics(text, client=None):
         "brand_placed": brand_in,              # 是否置入 台南外燴/MAPLAB
         "client_name_flags": client_flag,
         "line_count": len(lines),
+        "rhyme": analyze_rhyme(text),
         "human_checklist": [                   # 歌詞優先＝人做最終審(做厚這段)
             "俏皮/有記憶點？","雙押韻順不順口？","不傷品牌(無禁用詞/不低價)？",
             "無業主/賓客敏感、無過貼國旗政治？","客戶名已查證？","自然置入 台南外燴/MAPLAB？",

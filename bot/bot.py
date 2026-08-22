@@ -2162,6 +2162,24 @@ def _is_a0_direct(text: str) -> bool:
     return bool(re.match(r"^\s*@?[Aa]0\b", text))
 
 
+A0_HEARTBEAT_FILE = Path(
+    os.getenv(
+        "A0_HEARTBEAT_FILE",
+        "/Users/pagemacmini/claude-daily-operations/state/a0_heartbeat.json",
+    )
+)
+A0_ALIVE_MAX_AGE_S = int(os.getenv("A0_ALIVE_MAX_AGE_S", "180"))
+
+
+def _a0_alive() -> bool:
+    """True when the Fable5 A0 window has written a heartbeat recently."""
+    try:
+        age = datetime.now().timestamp() - A0_HEARTBEAT_FILE.stat().st_mtime
+        return age <= A0_ALIVE_MAX_AGE_S
+    except Exception:
+        return False
+
+
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if not is_owner(update):
         await deny(update)
@@ -2169,12 +2187,20 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     text = update.message.text or ""
     chat_id = update.effective_chat.id
     _a0_inbox_append(chat_id, text)
-    if _is_a0_direct(text):
-        ack = "📨 已轉 A0/Fable5 直答（A0 視窗上線時會直接回覆）"
+
+    # 2026-08-22 (Owner decision, TELEGRAM_ROUTING.md): this bot is the
+    # Fable5 finance working-meeting line. Every Owner message goes to the
+    # A0/Fable5 window when it is alive. The keyword dispatch classifier
+    # (quote-intake / ads-performance-review / OpenClaw packets) is OFF on
+    # this line — Owner: "派工是無用那請把它關掉", "不要自己幫我報價".
+    # Explicit slash commands (/codex_dispatch etc.) are unaffected.
+    if _a0_alive():
+        ack = "📨 A0/Fable5 已收到，直答中…"
         await update.message.reply_text(ack)
         _record_history(chat_id, text, ack)
         log_and_commit(text, ack, "a0-relay")
         return
+
     local_answer = _local_runtime_question_answer(text)
     if local_answer:
         await update.message.reply_text(local_answer)
@@ -2182,23 +2208,24 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         log_and_commit(text, local_answer, "runtime-local")
         return
 
-    dispatch_context = _latest_telegram_log_snippet(limit=3500)
-    dispatch_route = _dispatch_route_for_text(text, dispatch_context)
-    if dispatch_route:
-        packet = _write_dispatch_packet(text, dispatch_context, route=dispatch_route)
-        receipt = _dispatch_receipt(packet)
-        await update.message.reply_text(receipt)
-        _record_history(chat_id, text, receipt)
-        log_and_commit(text, receipt, "dispatch-local")
-        asyncio.create_task(_run_openclaw_dispatch_background(context.bot, chat_id, packet))
-        return
+    # A0 window offline: say so honestly (no impersonation), keep the message
+    # in the inbox for A0, then give a clearly-labelled one-shot fallback.
+    notice = (
+        "⚠️ Fable5（A0 主控窗）目前離線，訊息已存入 A0 inbox 待其上線處理。\n"
+        "以下為 bot 一次性代答（非 Fable5 本人，不含派工）："
+    )
+    try:
+        await update.message.reply_text(notice)
+    except Exception:
+        logger.exception("offline notice failed")
     git_pull_silent()
     try:
         status_snippet = read_file("CURRENT_STATUS.md")[:1500]
     except Exception:
         status_snippet = ""
     system_extra = (
-        "以下是目前 MAPLAB 專案狀態摘要（供參考）：\n\n"
+        "你是 bot 的一次性代答模型，不是 Fable5/A0 本人；不得自稱 Fable5、"
+        "不得宣稱已派工或已稽核。以下是目前 MAPLAB 專案狀態摘要（供參考）：\n\n"
         f"{status_snippet}"
     )
     await _run_claude_guarded(update, context, chat_id, text, system_extra, "", text)

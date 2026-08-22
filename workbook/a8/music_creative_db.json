@@ -23,6 +23,18 @@
       "lyrics_v1_before": "[Chorus]\n邦尼兔 畢業啦 今天最神氣\n甜點桌 一擺開 全場都歡喜\n小小的手 抓一塊小酥皮\nMAPLAB 台南外燴 甜進心坎裡\n[Verse]\n畢業帽 歪歪戴 樣子超可愛\n蛋塔 杯子蛋糕 排排站好乖\n兔子餅乾 咬一口 喀滋脆到嗨\n小朋友 踮起腳 笑容藏不來\n[Outro]\n邦尼兔 畢業啦 記得這一天\nMAPLAB 陪你長大 甜甜的畫面",
       "suno_lyrics": "[Intro]\n[Chorus] [Female Vocal]\n邦尼兔 畢業啦 超神氣\n甜點排整齊 全都歡喜\n一口塔 一口皮\nMAPLAB 台南外燴 甜心裡\n[Verse] [Male Rap]\n畢業帽 歪歪戴 超可愛\n蛋糕排排站 站得好乖\n兔子餅乾 咬一口 脆到嗨\n小朋友 踮起腳 笑開懷\n[Chorus] [Female Vocal]\n邦尼兔 畢業啦 超神氣\n甜點排整齊 全都歡喜\n[Outro]\n邦尼兔 畢業啦 這一天\nMAPLAB 陪你長大 每個畫面",
       "rhyme_note": "v1→v2 押韻升級(a8_lyrics_engine/十三轍)：雙押 2→4 行；Chorus 一七單押+『神氣/心裡』雙押+內韻『整齊』；Verse 懷來單押+『好乖/到嗨』雙押；rhymed_ratio 1.0。品牌安全維持(無禁用詞、台南外燴+MAPLAB 在)。",
+      "short_form": {
+        "target_sec": 30,
+        "variants_sec": [15, 30, 45],
+        "hook_window_sec": 3,
+        "bpm": 90,
+        "bars_for_30s": "~11 bars (30s ÷ 2.67s/bar @90BPM)",
+        "structure_30s": "Hook 4 bars(~10.7s) + Verse 4 bars(~10.7s) + Hook 3 bars(~8s)",
+        "structure_15s": "只用 Hook 4 bars(+1 句)",
+        "cut_strategy": "生全曲→a8_beat_mux 剪最強 ~30s(以 Hook 段為主)；切點對拍；副歌加倍快切",
+        "gen_strategy": "Suno 只生全曲(~2–3min,可到8min)、不易直接指定 30s → 生全曲再剪最佳段；歌詞 hook 前置且夠強,確保 30s 段就是 hook",
+        "platform_fit": "30s 命中 TikTok 甜區(24–38s)+在 YT Shorts(30–60)內+Reels 可接受；15s 給 TikTok/Reels vibe;45–60s 給內容較豐時的 YT/Reels"
+      },
       "expected_style": "約 2–3 分鐘完整歌(可截 30s)：歡快中文 hip-hop / boom bap；男聲 rap 主歌＋女聲洗腦副歌；jazzy 鋼琴＋boom-bap 鼓＋輕黑膠；~85–95 BPM；hook『邦尼兔畢業啦』記憶點強。tag 為機率提示，可能 regenerate 2–3 次。",
       "lyrics_doc": "https://docs.google.com/document/d/1AZNFRA2LUUvhpyMIeEelLEhFBc1HAuPRlyBL6bCcptc/edit",
       "brand_safety": { "passed": true, "notes": "a8_lyrics_engine 過：無禁用詞/敏感；客戶名+台南外燴+MAPLAB 已置入；結構標籤齊；押韻已升級" },

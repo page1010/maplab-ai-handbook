@@ -43,14 +43,15 @@ def cut_plan(beats, perbar=4):
     # 每 perbar 拍一刀
     return [(beats[i], beats[min(i+perbar, len(beats)-1)]) for i in range(0, len(beats)-1, perbar)]
 
-def render(music, out, clips, maxsec=None, perbar=4):
+def render(music, out, clips, maxsec=None, perbar=4, aspect="9:16"):
+    W, H = (1080, 1920) if aspect == "9:16" else (1920, 1080)
     x, sr = load_audio(music)
     bpm, beats, onset, fps, dur = beat_track(x, sr)
     songlen = min(dur, maxsec) if maxsec else dur
     cuts = [(a,b) for (a,b) in cut_plan(beats, perbar) if a < songlen]
     if cuts: cuts[-1] = (cuts[-1][0], songlen)
     print(f"BPM={bpm} beats={len(beats)} songlen={songlen:.1f}s cuts={len(cuts)}")
-    seg_dir = Path("/tmp/_beatsegs"); seg_dir.mkdir(exist_ok=True)
+    seg_dir = Path("/tmp/_beatsegs_"+Path(out).stem); seg_dir.mkdir(parents=True, exist_ok=True)
     # face-free 取用視窗（避免業主/賓客臉）：clip -> (start,maxend)
     windows = {}  # 可外部指定；預設整支
     segfiles = []
@@ -62,7 +63,7 @@ def render(music, out, clips, maxsec=None, perbar=4):
         off = st + (i//len(clips))*seglen
         sf = seg_dir/f"s{i:03d}.mp4"
         subprocess.run(["ffmpeg","-y","-loglevel","error","-ss",f"{off:.2f}","-i",str(clip),"-t",f"{seglen:.2f}",
-            "-vf","scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,setsar=1,fps=30",
+            "-vf",f"scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},setsar=1,fps=30",
             "-an","-c:v","libx264","-preset","veryfast","-crf","20",str(sf)], check=False)
         if sf.exists() and sf.stat().st_size>0: segfiles.append(sf)
     lst = seg_dir/"list.txt"; lst.write_text("".join(f"file '{s}'\n" for s in segfiles))
@@ -82,5 +83,6 @@ if __name__ == "__main__":
     music, out = a[1], a[2]
     maxsec = float(a[a.index("--max")+1]) if "--max" in a else None
     perbar = int(a[a.index("--perbar")+1]) if "--perbar" in a else 4
+    aspect = a[a.index("--aspect")+1] if "--aspect" in a else "9:16"
     clips = [c for c in a[3:] if not c.startswith("--") and Path(c).exists()]
-    render(music, out, clips, maxsec, perbar)
+    render(music, out, clips, maxsec, perbar, aspect)

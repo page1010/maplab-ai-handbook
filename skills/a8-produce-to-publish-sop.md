@@ -10,7 +10,10 @@
 
 把「一個活動專案的照片 → 帶字幕 9:16 短片 → 上到 YouTube 私人草稿 → 待 Owner 核准公開」做成**可重複、可驗證、可回收**的一條流程。字幕、標題、描述一律套品牌語氣＋固定色卡；上片先到**私人/草稿**，公開一律等 Owner。
 
-規格（TikTok / YouTube Shorts / IG Reels / Pinterest 共用）：**1080×1920、9:16、H.264 MP4**。
+規格（單一真相來源 = `tools/ai_workbook/a8_platform_formats.py` 的 `PLATFORM_FORMATS`；出處見 `docs/platform_formats_sources.md`）：
+- **垂直短片**（YT Shorts / IG Reels / TikTok / FB Reels）：**9:16、1080×1920、H.264 MP4**，我方片長 **≤30s**（Owner 定案）。
+- **YouTube 長版**：**16:9、1920×1080**，全曲；縮圖 **1280×720**。
+- 多平台一次匯出＋自動生縮圖：`a8_platform_formats.py export <music> <prefix> <clips...> --platforms youtube|vertical|all`（相同規格只 render 一次；各平台安全區見 `specs`）。
 
 ---
 

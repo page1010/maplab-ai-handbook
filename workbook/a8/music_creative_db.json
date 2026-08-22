@@ -25,7 +25,8 @@
       "rhyme_note": "v1→v2 押韻升級(a8_lyrics_engine/十三轍)：雙押 2→4 行；Chorus 一七單押+『神氣/心裡』雙押+內韻『整齊』；Verse 懷來單押+『好乖/到嗨』雙押；rhymed_ratio 1.0。品牌安全維持(無禁用詞、台南外燴+MAPLAB 在)。",
       "short_form": {
         "target_sec": 30,
-        "variants_sec": [15, 30, 45],
+        "max_sec": 30,
+        "variants_sec": [15, 30],
         "hook_window_sec": 3,
         "bpm": 90,
         "bars_for_30s": "~11 bars (30s ÷ 2.67s/bar @90BPM)",
@@ -33,7 +34,7 @@
         "structure_15s": "只用 Hook 4 bars(+1 句)",
         "cut_strategy": "生全曲→a8_beat_mux 剪最強 ~30s(以 Hook 段為主)；切點對拍；副歌加倍快切",
         "gen_strategy": "Suno 只生全曲(~2–3min,可到8min)、不易直接指定 30s → 生全曲再剪最佳段；歌詞 hook 前置且夠強,確保 30s 段就是 hook",
-        "platform_fit": "30s 命中 TikTok 甜區(24–38s)+在 YT Shorts(30–60)內+Reels 可接受；15s 給 TikTok/Reels vibe;45–60s 給內容較豐時的 YT/Reels"
+        "platform_fit": "Owner 定案：Shorts 壓 ≤30s。30s 版命中 YT Shorts(≤30)＋TikTok 甜區(24–38s)＋Reels 可接受；15s 版給 TikTok/Reels 快 vibe。YouTube 長版 16:9 走全曲不受此上限。"
       },
       "expected_style": "約 2–3 分鐘完整歌(可截 30s)：歡快中文 hip-hop / boom bap；男聲 rap 主歌＋女聲洗腦副歌；jazzy 鋼琴＋boom-bap 鼓＋輕黑膠；~85–95 BPM；hook『邦尼兔畢業啦』記憶點強。tag 為機率提示，可能 regenerate 2–3 次。",
       "lyrics_doc": "https://docs.google.com/document/d/1AZNFRA2LUUvhpyMIeEelLEhFBc1HAuPRlyBL6bCcptc/edit",

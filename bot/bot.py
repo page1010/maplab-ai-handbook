@@ -1955,11 +1955,20 @@ async def _run_claude_background(
     system_extra: str,
     log_label: str,
     log_user_msg: str,
+    reply_prefix: str = "",
 ) -> None:
-    """Background task: call Claude then push result via send_message."""
+    """Background task: call Claude then push result via send_message.
+
+    reply_prefix (optional) is prepended to the outbound text so callers that
+    route here as a fallback (e.g. after an A0-session resume attempt fails)
+    can stamp an explicit identity label — the bot must never let a one-shot
+    fallback answer read as if it came from Fable5/A0 itself.
+    """
     async with _claude_semaphore:
         model_answer = await claude_ask_with_fallback(chat_id, user_message, system_extra)
         text = _sanitize_for_telegram(model_answer.text)
+        if reply_prefix:
+            text = f"{reply_prefix}{text}"
         MAX = 4096
         for i in range(0, len(text), MAX):
             await bot.send_message(chat_id=chat_id, text=text[i:i + MAX])
@@ -1979,6 +1988,7 @@ async def _run_claude_guarded(
     system_extra: str,
     log_label: str,
     log_user_msg: str,
+    reply_prefix: str = "",
 ) -> None:
     """Reply immediately, then run Claude in background. Reports busy if semaphore is taken."""
     if _claude_semaphore.locked():
@@ -1987,7 +1997,7 @@ async def _run_claude_guarded(
     await update.message.reply_text("⏳ 處理中…")
     asyncio.create_task(
         _run_claude_background(
-            context.bot, chat_id, user_message, system_extra, log_label, log_user_msg
+            context.bot, chat_id, user_message, system_extra, log_label, log_user_msg, reply_prefix
         )
     )
 
@@ -2205,6 +2215,245 @@ def _a0_alive() -> bool:
         return False
 
 
+# ── A0/Fable5 session resume (Owner 2026-08-22 21:32 + 21:37) ───────────────
+#
+# 21:32: a heartbeat-triggered stateless one-shot fallback has no prior
+# context, so it's useless — "切了沒前文的模型沒意義". When A0 looks offline
+# (or Owner forces it with a leading "代答"), the bot must headlessly RESUME
+# A0's own Claude Code session (`claude -p --resume <session_id>`) instead of
+# starting a fresh one-shot, and every outbound reply must say plainly
+# whether it is Fable5 (resumed) or not (bot fallback).
+#
+# 21:37 follow-up: an immediate "📨 已收到" ack while A0 is alive reads as
+# noise ("ack 被視為洗板"). The bot now stays silent while A0 looks alive and
+# gives it up to A0_WAIT_TIMEOUT_S to actually answer via its own reply
+# channel (scripts/a0_reply.sh, which appends a receipt to A0_REPLIES_FILE).
+# No receipt by the deadline ⇒ A0 didn't actually pick the message up, so the
+# bot resumes A0's session itself.
+
+A0_SESSION_FILE = Path(
+    os.getenv(
+        "A0_SESSION_FILE",
+        "/Users/pagemacmini/claude-daily-operations/state/a0_session.json",
+    )
+)
+A0_SESSION_ID_DEFAULT = os.getenv("A0_SESSION_ID", "3a3df70f-b5ce-4c45-9d85-6651d7022e4b")
+A0_RESUME_MODEL_DEFAULT = os.getenv("A0_RESUME_MODEL", "claude-fable-5")
+A0_RESUME_CWD = os.getenv("A0_RESUME_CWD", "/Users/pagemacmini/Documents")
+A0_RESUME_TIMEOUT_S = int(os.getenv("A0_RESUME_TIMEOUT_S", "180"))
+
+A0_REPLIES_FILE = Path(
+    os.getenv(
+        "A0_REPLIES_FILE",
+        "/Users/pagemacmini/claude-daily-operations/state/a0_replies.jsonl",
+    )
+)
+A0_WAIT_TIMEOUT_S = float(os.getenv("A0_WAIT_TIMEOUT_S", "150"))
+A0_WAIT_POLL_INTERVAL_S = float(os.getenv("A0_WAIT_POLL_INTERVAL_S", "5"))
+
+A0_RESUME_LABEL = "【Fable5 本人（續接 session）】"
+BOT_FALLBACK_LABEL = "【bot 代答，非 Fable5】"
+
+
+def _a0_session_config() -> tuple[str, str]:
+    """Resolve (session_id, model) for `claude -p --resume`.
+
+    A0_SESSION_FILE (kept fresh by A0 itself) wins when present and has
+    usable fields; otherwise falls back to the A0_SESSION_ID / A0_RESUME_MODEL
+    defaults (env-overridable, hardcoded default session id otherwise).
+    A missing/corrupt file must never break message handling.
+    """
+    session_id = A0_SESSION_ID_DEFAULT
+    model = A0_RESUME_MODEL_DEFAULT
+    try:
+        data = json.loads(A0_SESSION_FILE.read_text(encoding="utf-8"))
+        file_session = str(data.get("session_id") or "").strip()
+        file_model = str(data.get("model") or "").strip()
+        if file_session:
+            session_id = file_session
+        if file_model:
+            model = file_model
+    except Exception:
+        pass
+    return session_id, model
+
+
+def _is_a0_answer_command(text: str) -> bool:
+    """Owner prefixes a message with 代答 to force the resume/fallback path
+    immediately, without waiting to see whether A0 answers on its own."""
+    return bool(re.match(r"^\s*代答", text or ""))
+
+
+def _coerce_epoch(value: Any) -> Optional[float]:
+    """Best-effort epoch-seconds parse for a0_replies.jsonl's "ts" field
+    (a0_reply.sh writes `date +%s`, but tolerate ISO strings too)."""
+    if isinstance(value, (int, float)):
+        return float(value)
+    if isinstance(value, str):
+        try:
+            return float(value)
+        except ValueError:
+            pass
+        try:
+            return datetime.fromisoformat(value).timestamp()
+        except Exception:
+            return None
+    return None
+
+
+def _a0_has_replied_since(since_ts: float) -> bool:
+    """True when A0_REPLIES_FILE has a receipt timestamped at/after since_ts.
+
+    Receipts aren't correlated to a specific inbox message — this is a
+    coarse "A0 is actually answering" signal written by scripts/a0_reply.sh.
+    Never raises: a missing/corrupt file just means "no receipt yet".
+    """
+    try:
+        if not A0_REPLIES_FILE.exists():
+            return False
+        lines = A0_REPLIES_FILE.read_text(encoding="utf-8").splitlines()
+        for line in reversed(lines[-200:]):
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                entry = json.loads(line)
+            except Exception:
+                continue
+            entry_ts = _coerce_epoch(entry.get("ts"))
+            if entry_ts is not None and entry_ts >= since_ts:
+                return True
+        return False
+    except Exception:
+        return False
+
+
+async def _a0_resume_ask(user_message: str, timeout: int = A0_RESUME_TIMEOUT_S) -> ModelResult:
+    """Headlessly resume A0's own Claude Code session so the reply keeps full
+    context, instead of a stateless one-shot.
+
+    Calls `claude -p --resume <session_id> --output-format text [--model ...]`
+    with cwd=A0_RESUME_CWD. Never raises — failures come back as
+    ModelResult(ok=False, ...) so the caller can fall back to a clearly
+    labelled one-shot answer.
+    """
+    session_id, model = _a0_session_config()
+    if not session_id:
+        return ModelResult(ok=False, answer="⚠️ 沒有可用的 A0 session id", failure_kind="no_session")
+
+    env = os.environ.copy()
+    if CLAUDE_OAUTH_TOKEN:
+        env["CLAUDE_CODE_OAUTH_TOKEN"] = CLAUDE_OAUTH_TOKEN
+    env["PATH"] = _runtime_path(env.get("PATH", ""))
+
+    cmd = ["claude", "-p", "--resume", session_id, "--output-format", "text"]
+    if model:
+        cmd += ["--model", model]
+    cmd.append(user_message)
+
+    try:
+        proc = await asyncio.create_subprocess_exec(
+            *cmd,
+            cwd=A0_RESUME_CWD,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+            env=env,
+        )
+        try:
+            stdout, stderr = await asyncio.wait_for(proc.communicate(), timeout=timeout)
+        except asyncio.TimeoutError:
+            proc.kill()
+            return ModelResult(
+                ok=False,
+                answer=f"⚠️ Fable5 session resume 逾時（{timeout}秒）",
+                failure_kind="timeout",
+                stderr=f"timeout after {timeout}s",
+            )
+        if proc.returncode != 0:
+            err = stderr.decode(errors="replace").strip()
+            out = stdout.decode(errors="replace").strip()
+            diagnostic = _trim(err or out or "未知錯誤", 500)
+            return ModelResult(
+                ok=False,
+                answer=f"⚠️ resume 錯誤: {_trim(diagnostic, 300)}",
+                failure_kind="resume_failed",
+                stderr=diagnostic,
+            )
+        answer = _sanitize_for_telegram(stdout.decode(errors="replace"))
+        if not answer:
+            return ModelResult(ok=False, answer="⚠️ resume 無回應（空輸出）", failure_kind="resume_empty", stderr="empty stdout")
+        return ModelResult(ok=True, answer=answer)
+    except FileNotFoundError:
+        return ModelResult(
+            ok=False,
+            answer="⚠️ 找不到 claude 命令，請確認已安裝 Claude Code",
+            failure_kind="cli_missing",
+            stderr="claude command not found",
+        )
+    except Exception as e:
+        err = str(e)
+        return ModelResult(ok=False, answer=f"⚠️ resume 呼叫失敗: {err}", failure_kind="resume_error", stderr=err)
+
+
+async def _a0_resume_or_fallback(bot, chat_id: int, text: str) -> None:
+    """Shared resume→fallback chain: try to resume A0's own session first;
+    only if that itself fails, drop to a clearly-labelled one-shot answer.
+    Used both when A0 looks offline immediately and when the wait timer
+    (see _a0_wait_then_maybe_resume) expires with no reply receipt."""
+    git_pull_silent()
+    resume_result = await _a0_resume_ask(text)
+    if resume_result.ok:
+        answer = _sanitize_for_telegram(f"{A0_RESUME_LABEL}\n{resume_result.answer}")
+        MAX = 4096
+        for i in range(0, len(answer), MAX):
+            await bot.send_message(chat_id=chat_id, text=answer[i:i + MAX])
+        _record_history(chat_id, text, answer)
+        log_and_commit(text, answer, "a0-resume")
+        return
+
+    logger.warning("A0 resume failed (%s): %s", resume_result.failure_kind, resume_result.stderr)
+    try:
+        await bot.send_message(
+            chat_id=chat_id,
+            text=(
+                "⚠️ Fable5 session resume 失敗，訊息已存入 A0 inbox 待其上線處理。\n"
+                "以下為 bot 一次性代答（非 Fable5 本人，不含派工）："
+            ),
+        )
+    except Exception:
+        logger.exception("offline notice failed")
+    try:
+        status_snippet = read_file("CURRENT_STATUS.md")[:1500]
+    except Exception:
+        status_snippet = ""
+    system_extra = (
+        "你是 bot 的一次性代答模型，不是 Fable5/A0 本人；不得自稱 Fable5、"
+        "不得宣稱已派工或已稽核。以下是目前 MAPLAB 專案狀態摘要（供參考）：\n\n"
+        f"{status_snippet}"
+    )
+    await _run_claude_background(
+        bot, chat_id, text, system_extra, "bot-fallback", text,
+        reply_prefix=f"{BOT_FALLBACK_LABEL}\n",
+    )
+
+
+async def _a0_wait_then_maybe_resume(bot, chat_id: int, text: str, since_ts: float) -> None:
+    """A0 looked alive, so stay silent (no ack) and give it up to
+    A0_WAIT_TIMEOUT_S to actually answer through scripts/a0_reply.sh. If no
+    receipt shows up in A0_REPLIES_FILE by the deadline, treat A0 as having
+    missed the message and resume its session headlessly."""
+    loop = asyncio.get_event_loop()
+    deadline = loop.time() + A0_WAIT_TIMEOUT_S
+    poll = max(A0_WAIT_POLL_INTERVAL_S, 0.01)
+    while loop.time() < deadline:
+        if _a0_has_replied_since(since_ts):
+            return
+        await asyncio.sleep(min(poll, max(deadline - loop.time(), 0)))
+    if _a0_has_replied_since(since_ts):
+        return
+    await _a0_resume_or_fallback(bot, chat_id, text)
+
+
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if not is_owner(update):
         await deny(update)
@@ -2219,41 +2468,31 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     # (quote-intake / ads-performance-review / OpenClaw packets) is OFF on
     # this line — Owner: "派工是無用那請把它關掉", "不要自己幫我報價".
     # Explicit slash commands (/codex_dispatch etc.) are unaffected.
-    if _a0_alive():
-        ack = "📨 A0/Fable5 已收到，直答中…"
-        await update.message.reply_text(ack)
-        _record_history(chat_id, text, ack)
-        log_and_commit(text, ack, "a0-relay")
+    #
+    # See the "A0/Fable5 session resume" block above for the 21:32 + 21:37
+    # decisions this routing implements: no ack noise while A0 is alive, a
+    # bounded silent wait for A0's own reply receipt, and a context-preserving
+    # session resume (not a stateless one-shot) whenever the bot has to step
+    # in — unless Owner forces an immediate answer with a "代答" prefix.
+    force_answer_now = _is_a0_answer_command(text)
+
+    if _a0_alive() and not force_answer_now:
+        since_ts = datetime.now().timestamp()
+        asyncio.create_task(_a0_wait_then_maybe_resume(context.bot, chat_id, text, since_ts))
         return
 
-    local_answer = _local_runtime_question_answer(text)
-    if local_answer:
-        await update.message.reply_text(local_answer)
-        _record_history(chat_id, text, local_answer)
-        log_and_commit(text, local_answer, "runtime-local")
-        return
+    if not force_answer_now:
+        local_answer = _local_runtime_question_answer(text)
+        if local_answer:
+            await update.message.reply_text(local_answer)
+            _record_history(chat_id, text, local_answer)
+            log_and_commit(text, local_answer, "runtime-local")
+            return
 
-    # A0 window offline: say so honestly (no impersonation), keep the message
-    # in the inbox for A0, then give a clearly-labelled one-shot fallback.
-    notice = (
-        "⚠️ Fable5（A0 主控窗）目前離線，訊息已存入 A0 inbox 待其上線處理。\n"
-        "以下為 bot 一次性代答（非 Fable5 本人，不含派工）："
-    )
-    try:
-        await update.message.reply_text(notice)
-    except Exception:
-        logger.exception("offline notice failed")
-    git_pull_silent()
-    try:
-        status_snippet = read_file("CURRENT_STATUS.md")[:1500]
-    except Exception:
-        status_snippet = ""
-    system_extra = (
-        "你是 bot 的一次性代答模型，不是 Fable5/A0 本人；不得自稱 Fable5、"
-        "不得宣稱已派工或已稽核。以下是目前 MAPLAB 專案狀態摘要（供參考）：\n\n"
-        f"{status_snippet}"
-    )
-    await _run_claude_guarded(update, context, chat_id, text, system_extra, "", text)
+    # A0 offline (or Owner forced an immediate answer): resume A0's own
+    # session so the reply keeps full context; fall back to a clearly
+    # labelled one-shot only if the resume itself fails.
+    await _a0_resume_or_fallback(context.bot, chat_id, text)
 
 
 async def on_error(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:

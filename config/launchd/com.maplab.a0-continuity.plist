@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.maplab.a0-continuity</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/pagemacmini/maplab-ai-handbook/scripts/a0_continuity_tick.sh</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/pagemacmini/maplab-ai-handbook</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>HOME</key>
+        <string>/Users/pagemacmini</string>
+        <key>PATH</key>
+        <string>/Users/pagemacmini/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    </dict>
+
+    <key>StartInterval</key>
+    <integer>600</integer>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>ProcessType</key>
+    <string>Background</string>
+
+    <key>StandardOutPath</key>
+    <string>/Users/pagemacmini/claude-daily-operations/state/a0_continuity.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/pagemacmini/claude-daily-operations/state/a0_continuity.log</string>
+</dict>
+</plist>

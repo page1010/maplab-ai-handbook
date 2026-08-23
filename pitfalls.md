@@ -433,3 +433,11 @@
   - **涉及外部服務狀態，先查活的來源（Console）再下結論**；一次現場查核就推翻了紙面診斷。
   - 憑證文件要**明標所屬 GCP 專案與 token 檔路徑**，避免多產線共用「Google OAuth」字眼卻指不同專案。
 - 預防：遇 `invalid_grant`，第一步先確認「是哪條產線／哪個 GCP 專案／哪個 token 檔」，再查該專案 Console 的發布狀態；測試模式先發布上線再重授權，不要只重授權（測試模式下 7 天後照樣復發）。
+
+## 2026-08-23 — macOS `wc -c` 輸出未正規化會讓 byte-size gate 靜默失效
+
+- 觸發條件：A0 Continuity Watchdog 實作 2MB log rotation 時，先把 `wc -c < file` 的結果直接拿去做只含數字的 regex 與算術判斷；在 macOS/BSD `wc` 上，數字可能帶前置空白，因此 rotation gate 會被靜默跳過。
+- 根因：把 CLI 的人類可讀輸出誤當成已正規化的 machine value；測試只覆蓋行為路徑，沒有先用超小門檻驗證 rotation side effect。
+- 解法：`wc -c` 後先用 `tr -d '[:space:]'` 正規化，再做整數檢查與 `> LOG_MAX_BYTES` 判斷。
+- 預防：任何把 BSD/GNU CLI 輸出餵給 regex、JSON 或算術式的 gate，都先去除格式空白並用實際 side effect 做 smoke；不要只看 exit code。
+- 封坑驗證：用隔離 temp state 設 `A0_LOG_MAX_BYTES=1` 連跑兩次 alive tick，`a0_continuity.log` 與 `a0_continuity.log.1` 都必須存在且非空；不得碰真實 A0 heartbeat。

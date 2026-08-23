@@ -26,6 +26,7 @@ from collections import deque
 from dataclasses import dataclass
 from pathlib import Path
 from datetime import datetime
+from zoneinfo import ZoneInfo
 from typing import Any, Optional
 
 from dotenv import load_dotenv
@@ -77,6 +78,23 @@ CONV_HISTORY_FILE = BOT_DIR / "conv_history.json"
 DISPATCH_DIR = Path(
     os.getenv("MAPLAB_DISPATCH_DIR", str(REPO_PATH / "workbook" / "telegram-dispatch"))
 )
+
+# ── Stock Discussion Group ingress (Owner 2026-08-24) ───────────────────────────
+# The bot is already a member of the group chat -5589898264 (see
+# claude-daily-operations/state/a0_groups.json) and receives Owner's own
+# messages there (bots never see other bots' messages, so anything reaching
+# handle_group_message is always a human). Owner's ruling from 能力測試 D:
+# general group chit-chat must stay completely silent — only an explicit
+# 研調:/辯論:/討論: trigger (optionally after an @bot mention) gets any
+# reply at all. See handle_group_message() below.
+STOCK_DISCUSSION_GROUP_BOT_USERNAME = os.getenv("STOCK_DISCUSSION_GROUP_BOT_USERNAME", "maplab_claude_bot")
+INVESTMENT_OS_DIR = Path(os.getenv("INVESTMENT_OS_DIR", "/Users/pagemacmini/investment-os"))
+INVESTMENT_OS_VENV_PYTHON = Path(
+    os.getenv("INVESTMENT_OS_VENV_PYTHON", str(INVESTMENT_OS_DIR / ".venv" / "bin" / "python"))
+)
+DISCUSSION_ORCHESTRATOR_RELATIVE_SCRIPT = "scripts/run_stock_discussion.py"
+DISCUSSION_ORCHESTRATOR_TIMEOUT_S = int(os.getenv("DISCUSSION_ORCHESTRATOR_TIMEOUT_S", "1500"))
+TAIPEI_TZ = ZoneInfo("Asia/Taipei")
 
 # ── Clipboard Server ────────────────────────────────────────────────────────────
 CLIP_FILE = Path("/tmp/maplab_clip.json")
@@ -2175,13 +2193,19 @@ A0_INBOX_FILE = Path(
 )
 
 
-def _a0_inbox_append(chat_id: int, text: str, message_id: Optional[int] = None) -> str:
+def _a0_inbox_append(chat_id: int, text: str, message_id: Optional[int] = None, source: Optional[str] = None) -> str:
     """Append-only tap for the A0 dispatch window; must never break the bot.
 
     Returns the "ts" string written for this entry (even if the write
     itself failed) so callers can use the exact same value as
     reply_to_inbox_ts when correlating a later receipt in A0_REPLIES_FILE —
     see scripts/a0_reply.sh and _a0_has_replied_for().
+
+    `source` (Owner 2026-08-24): callers tapping a Stock Discussion Group
+    message pass source="group" so A0 can see the entry has a negative
+    chat_id (see handle_group_message) without it ever being routed through
+    the offline resume/relay path — that path is guarded separately by
+    chat_id<0 checks in _a0_resume_or_fallback/_a0_wait_then_maybe_resume.
     """
     ts = datetime.now().isoformat(timespec="seconds")
     try:
@@ -2189,6 +2213,8 @@ def _a0_inbox_append(chat_id: int, text: str, message_id: Optional[int] = None) 
         entry = {"ts": ts, "chat_id": chat_id, "text": text[:4000]}
         if message_id is not None:
             entry["message_id"] = message_id
+        if source is not None:
+            entry["source"] = source
         with A0_INBOX_FILE.open("a", encoding="utf-8") as f:
             f.write(json.dumps(entry, ensure_ascii=False) + "\n")
     except Exception:
@@ -2806,6 +2832,18 @@ async def _a0_resume_or_fallback(bot, chat_id: int, text: str, reply_to_inbox_ts
     immediate "代答" path and the wait-timer path can never both send an
     automatic answer for the same Owner message — the second claimant just
     logs and returns."""
+    if chat_id < 0:
+        # Group chat_ids are always negative in Telegram. Group ingress
+        # (Stock Discussion Group, see handle_group_message) is dispatched
+        # entirely through its own trigger/orchestrator path and must never
+        # synthesize an A0/Fable5 "代答" into a group — general group
+        # chit-chat stays silent (能力測試 D) and even Owner's own group
+        # messages only get a reply when they hit a research/debate trigger.
+        # As of 2026-08-24 no caller actually reaches this function with a
+        # negative chat_id (handle_group_message never calls it), but this
+        # guard is defense-in-depth against any future code path doing so.
+        logger.info("A0 relay/fallback skipped for group chat_id=%s (group ingress never auto-answers via A0 relay)", chat_id)
+        return
     if reply_to_inbox_ts and not _a0_claim_single_reply(reply_to_inbox_ts, chat_id):
         logger.info("A0 auto-reply already claimed for chat_id=%s reply_to_inbox_ts=%s; skipping duplicate", chat_id, reply_to_inbox_ts)
         return
@@ -2880,6 +2918,12 @@ async def _a0_wait_then_maybe_resume(bot, chat_id: int, text: str, reply_to_inbo
     receipt paired to reply_to_inbox_ts shows up in A0_REPLIES_FILE by the
     deadline, treat A0 as having missed the message and resume its session
     headlessly."""
+    if chat_id < 0:
+        # Same group-chat_id guard as _a0_resume_or_fallback — see that
+        # function's docstring. No caller reaches this with a negative
+        # chat_id as of 2026-08-24; defense-in-depth only.
+        logger.info("A0 wait-then-resume skipped for group chat_id=%s", chat_id)
+        return
     loop = asyncio.get_event_loop()
     deadline = loop.time() + A0_WAIT_TIMEOUT_S
     poll = max(A0_WAIT_POLL_INTERVAL_S, 0.01)
@@ -2893,6 +2937,13 @@ async def _a0_wait_then_maybe_resume(bot, chat_id: int, text: str, reply_to_inbo
 
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    # Group/supergroup messages are routed to handle_group_message (registered
+    # before this handler — see main()) and must never reach the private-chat
+    # deny()/A0-relay flow below, even if handler registration order ever
+    # changes: deny() replying "⛔ 未授權" into a group would violate 能力測試
+    # D's "一般群聊保持靜默" ruling. Defense-in-depth only as of 2026-08-24.
+    if getattr(update.effective_chat, "type", None) in ("group", "supergroup"):
+        return
     if not is_owner(update):
         await deny(update)
         return
@@ -2956,6 +3007,234 @@ async def on_my_chat_member(update: Update, context: ContextTypes.DEFAULT_TYPE) 
         _a0_inbox_append(chat.id, f"[群組事件] bot 在 {chat.type} '{title}' 狀態→{status}(操作者 {by})", None)
     except Exception as e:  # pragma: no cover
         logger.warning(f"my_chat_member inbox append failed: {e}")
+
+
+# ── Stock Discussion Group ingress (Owner 2026-08-24) ───────────────────────────
+#
+# The bot is already a member of group chat_id -5589898264 and receives
+# Owner's own messages there (bots never see other bots' messages — see
+# claude-daily-operations/state/a0_groups.json). Owner's ruling from 能力測試
+# D: general group chit-chat must stay completely silent; only Owner's own
+# messages starting with 研調:/研調：/辯論:/辯論：/討論:/討論： (optionally after an
+# @bot mention) trigger anything, and everything else — including any
+# message from a non-Owner group member — gets no reply at all, not even
+# deny(). On trigger, this spawns investment-os's
+# scripts/run_stock_discussion.py as a background subprocess (never blocks
+# the polling loop) and always follows the ack with either a summary or a
+# one-line failure — never silent after acking.
+
+_GROUP_TRIGGER_KEYWORDS = ("研調", "辯論", "討論")
+_GROUP_TRIGGER_RE = re.compile(r"^(研調|辯論|討論)[:：]\s*(.*)$", re.DOTALL)
+_GROUP_MENTION_RE = re.compile(
+    rf"^\s*@{re.escape(STOCK_DISCUSSION_GROUP_BOT_USERNAME)}\b\s*", re.IGNORECASE
+)
+# 討論 is treated as a plain-language alias for 研調 (research mode); 辯論 is
+# the only trigger that maps to debate mode. The ack line only ever shows
+# "開工(研調)" or "開工(辯論)" per this task's spec — 討論 shows as 研調.
+_GROUP_TRIGGER_MODE = {"研調": "research", "討論": "research", "辯論": "debate"}
+_GROUP_MODE_ACK_LABEL = {"research": "研調", "debate": "辯論"}
+
+# In-process concurrency guard + reply-to-summary follow-up tracking. Both
+# are best-effort, in-memory, reset on bot restart — acceptable because the
+# orchestrator itself is idempotent per (text, date) via its own Phase 1
+# file lock (see run_stock_discussion.topic_id_for/phase1_locked), so a bot
+# restart mid-run only risks a duplicate *trigger*, not corrupted output.
+_GROUP_DISCUSSION_RUNNING: set[str] = set()
+_GROUP_TOPICS: dict[str, dict[str, str]] = {}
+_GROUP_MSG_TO_TOPIC: dict[int, str] = {}
+
+
+def _stock_discussion_today() -> str:
+    """Asia/Taipei today, matching investment-os's
+    scripts/run_stock_discussion.py:today_str() default so the bot's id8 and
+    the orchestrator's own topic_id land on the same date."""
+    return datetime.now(TAIPEI_TZ).date().isoformat()
+
+
+def _stock_discussion_topic_id(text: str, date_str: str) -> str:
+    """Replicates run_stock_discussion.topic_id_for() exactly:
+    sha256(text+date)[:16]. Duplicated rather than imported because bot.py
+    runs out of bot/venv in this repo, not investment-os's own .venv — see
+    investment-os/scripts/run_stock_discussion.py:topic_id_for and
+    investment-os/scripts/discussion_ingress_stub.md."""
+    return hashlib.sha256((text + date_str).encode("utf-8")).hexdigest()[:16]
+
+
+def _group_trigger_match(text: str) -> Optional["re.Match[str]"]:
+    """Group-chat trigger detection (Owner 2026-08-24): text starting with
+    研調:/研調：/辯論:/辯論：/討論:/討論：(full- or half-width colon), or the same
+    prefixes after an @bot-username mention. Returns the match against the
+    prefix-stripped text (group 1 = keyword, group 2 = statement with the
+    prefix removed), or None when nothing matches — everything else in the
+    group must stay silent."""
+    stripped = _GROUP_MENTION_RE.sub("", text or "", count=1)
+    return _GROUP_TRIGGER_RE.match(stripped.lstrip())
+
+
+def _group_discussion_out_dir(date_str: str, topic_id: str, mode: str) -> Path:
+    """Mirrors run_stock_discussion.run()'s out_dir selection: research mode
+    uses reports/discussion/<date>/<topic_id>/, debate mode uses
+    .../<topic_id>__debate/ (see that module's `mode` handling)."""
+    name = topic_id if mode == "research" else f"{topic_id}__{mode}"
+    return INVESTMENT_OS_DIR / "reports" / "discussion" / date_str / name
+
+
+def _read_group_discussion_summary(date_str: str, topic_id: str, mode: str) -> str:
+    """Reads the orchestrator's summary.txt (<=3 lines, always written by
+    run()); falls back to the first 3 non-empty lines of integrated.md if
+    summary.txt is somehow missing. Never raises — returns "" on any
+    failure so the caller can post a clear failure line instead."""
+    out_dir = _group_discussion_out_dir(date_str, topic_id, mode)
+    try:
+        text = (out_dir / "summary.txt").read_text(encoding="utf-8").strip()
+        if text:
+            return text
+    except Exception:
+        pass
+    try:
+        lines = [ln.strip() for ln in (out_dir / "integrated.md").read_text(encoding="utf-8").splitlines() if ln.strip()]
+        return "\n".join(lines[:3])
+    except Exception:
+        return ""
+
+
+async def _run_group_discussion_orchestrator(
+    bot, chat_id: int, id8: str, topic_id: str, statement_text: str, mode: str, date_str: str
+) -> None:
+    """Runs investment-os/scripts/run_stock_discussion.py as a background
+    subprocess (asyncio.create_subprocess_exec — never blocks the polling
+    loop) with --send-telegram (TelbotFin renders the same integrated
+    result to Owner's private chat, unchanged from the existing manual
+    flow), then posts a <=3-line summary — or, on any failure/timeout, one
+    failure line — back to the SAME group. Never silent after the ack."""
+    cmd = [
+        str(INVESTMENT_OS_VENV_PYTHON),
+        DISCUSSION_ORCHESTRATOR_RELATIVE_SCRIPT,
+        "--text", statement_text,
+        "--today", date_str,
+        "--send-telegram",
+    ]
+    if mode == "debate":
+        cmd += ["--mode", "debate"]
+    try:
+        try:
+            proc = await asyncio.create_subprocess_exec(
+                *cmd,
+                cwd=str(INVESTMENT_OS_DIR),
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE,
+            )
+        except Exception as e:
+            await bot.send_message(chat_id=chat_id, text=f"topic-id {id8} 失敗:{_trim(str(e), 80)},稍後重試")
+            return
+        try:
+            stdout, stderr = await asyncio.wait_for(proc.communicate(), timeout=DISCUSSION_ORCHESTRATOR_TIMEOUT_S)
+        except asyncio.TimeoutError:
+            proc.kill()
+            await proc.wait()
+            await bot.send_message(chat_id=chat_id, text=f"topic-id {id8} 失敗:逾時{DISCUSSION_ORCHESTRATOR_TIMEOUT_S}秒,稍後重試")
+            return
+        if proc.returncode != 0:
+            err = (stderr.decode(errors="replace") or stdout.decode(errors="replace") or "未知錯誤").strip()
+            await bot.send_message(chat_id=chat_id, text=f"topic-id {id8} 失敗:{_trim(err, 80)},稍後重試")
+            return
+        summary_text = _read_group_discussion_summary(date_str, topic_id, mode)
+        if not summary_text:
+            await bot.send_message(chat_id=chat_id, text=f"topic-id {id8} 失敗:找不到整合結果,稍後重試")
+            return
+        msg = await bot.send_message(chat_id=chat_id, text=f"【Fable5 整合】topic-id {id8}\n{summary_text}")
+        msg_id = getattr(msg, "message_id", None)
+        if msg_id is not None:
+            _GROUP_MSG_TO_TOPIC[msg_id] = topic_id
+    except Exception as e:
+        logger.exception("group discussion orchestrator run failed")
+        try:
+            await bot.send_message(chat_id=chat_id, text=f"topic-id {id8} 失敗:{_trim(str(e), 80)},稍後重試")
+        except Exception:
+            logger.exception("group discussion failure notice send failed")
+    finally:
+        _GROUP_DISCUSSION_RUNNING.discard(topic_id)
+
+
+async def _dispatch_group_discussion(bot, chat_id: int, statement_text: str, mode: str) -> None:
+    """Acks in the group with the topic-id, then spawns the orchestrator in
+    the background. A second trigger for a topic_id already running gets a
+    "仍在進行" ack instead of a duplicate run (concurrency guard, Owner
+    2026-08-24 spec)."""
+    date_str = _stock_discussion_today()
+    topic_id = _stock_discussion_topic_id(statement_text, date_str)
+    id8 = topic_id[:8]
+    if topic_id in _GROUP_DISCUSSION_RUNNING:
+        await bot.send_message(chat_id=chat_id, text=f"topic-id {id8} 仍在進行")
+        return
+    _GROUP_DISCUSSION_RUNNING.add(topic_id)
+    ack_label = _GROUP_MODE_ACK_LABEL.get(mode, "研調")
+    ack_msg = await bot.send_message(chat_id=chat_id, text=f"收到 topic-id {id8} 開工({ack_label})")
+    ack_msg_id = getattr(ack_msg, "message_id", None)
+    if ack_msg_id is not None:
+        _GROUP_MSG_TO_TOPIC[ack_msg_id] = topic_id
+    _GROUP_TOPICS[topic_id] = {"text": statement_text, "mode": mode, "date": date_str, "id8": id8}
+    asyncio.create_task(_run_group_discussion_orchestrator(bot, chat_id, id8, topic_id, statement_text, mode, date_str))
+
+
+async def _handle_group_followup(bot, chat_id: int, parent_message_id: int, new_text: str) -> None:
+    """Owner replying (in the group) to the bot's ack or summary message for
+    a prior topic is treated as a follow-up: re-run the orchestrator with
+    the original topic text plus an explicit "追問(承接 topic-id <parent
+    id8>): <new text>" continuation, so the new topic's own input_pack
+    carries a legible reference back to the parent discussion (Owner
+    2026-08-24: "new topic whose text references the parent id8"). Reuses
+    the parent's mode (研調 stays 研調, 辯論 stays 辯論)."""
+    parent_topic_id = _GROUP_MSG_TO_TOPIC.get(parent_message_id)
+    parent = _GROUP_TOPICS.get(parent_topic_id) if parent_topic_id else None
+    if parent is None:
+        return
+    parent_id8 = parent.get("id8") or (parent_topic_id or "")[:8]
+    followup_text = f"{parent['text']}\n追問(承接 topic-id {parent_id8}): {new_text.strip()}"
+    await _dispatch_group_discussion(bot, chat_id, followup_text, parent.get("mode", "research"))
+
+
+async def handle_group_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Registered before handle_message (see main()) so it exclusively
+    handles every group/supergroup text message — handle_message never sees
+    them. General group chit-chat, and anything from a non-Owner sender,
+    stays completely silent per 能力測試 D: no reply, no deny(), not even an
+    inbox tap for non-Owner senders. Owner's own group messages are tapped
+    to the same a0_inbox.jsonl used for the private line (tagged
+    source="group") so A0 has visibility, but — per this task's spec — that
+    tap must never feed the offline resume/relay path; see the chat_id<0
+    guards in _a0_resume_or_fallback/_a0_wait_then_maybe_resume."""
+    if update.message is None:
+        return
+    text = update.message.text or ""
+    chat_id = update.effective_chat.id
+    message_id = getattr(update.message, "message_id", None)
+    sender_id = update.effective_user.id if update.effective_user else None
+
+    if sender_id != OWNER_CHAT_ID:
+        # Non-owner group member: fully silent. No deny(), no inbox tap —
+        # this bot only ever acts on Owner's own group messages.
+        return
+
+    _a0_inbox_append(chat_id, text, message_id, source="group")
+
+    reply_to = getattr(update.message, "reply_to_message", None)
+    reply_to_id = getattr(reply_to, "message_id", None) if reply_to is not None else None
+    if reply_to_id is not None and reply_to_id in _GROUP_MSG_TO_TOPIC:
+        await _handle_group_followup(context.bot, chat_id, reply_to_id, text)
+        return
+
+    match = _group_trigger_match(text)
+    if match is None:
+        return  # 一般群聊保持靜默 — no trigger, no reply at all.
+    keyword = match.group(1)
+    statement = (match.group(2) or "").strip()
+    if not statement:
+        # Trigger prefix with nothing after it — nothing to research; stay
+        # silent rather than spawn a run on empty input.
+        return
+    mode = _GROUP_TRIGGER_MODE.get(keyword, "research")
+    await _dispatch_group_discussion(context.bot, chat_id, statement, mode)
 
 
 async def on_error(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -3070,6 +3349,11 @@ def main() -> None:
     app.add_handler(CommandHandler("reset", reset_cmd))
     app.add_handler(CommandHandler("clip", clip_cmd))
     app.add_handler(MessageHandler(filters.PHOTO, handle_photo))
+    # Registered BEFORE handle_message and in the same default handler group
+    # (0): PTB dispatches only the first matching handler per group per
+    # update, so any group/supergroup text message is fully claimed here and
+    # never reaches handle_message's private-chat deny()/A0-relay flow.
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND & filters.ChatType.GROUPS, handle_group_message))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     app.add_handler(ChatMemberHandler(on_my_chat_member, ChatMemberHandler.MY_CHAT_MEMBER))
     app.add_error_handler(on_error)

@@ -32,6 +32,7 @@ from dotenv import load_dotenv
 from telegram import Update
 from telegram.ext import (
     Application,
+    ChatMemberHandler,
     CommandHandler,
     MessageHandler,
     ContextTypes,
@@ -2939,6 +2940,24 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     await _a0_resume_or_fallback(context.bot, chat_id, text, reply_to_inbox_ts)
 
 
+
+async def on_my_chat_member(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """2026-08-24: bot 被拉進/踢出群組時,記 log 並落 A0 inbox(含群組 chat_id),
+    讓 A0/Fable5 知道討論群入口在哪。不回覆群組、不做其他事。"""
+    cm = update.my_chat_member
+    if cm is None:
+        return
+    chat = cm.chat
+    status = cm.new_chat_member.status if cm.new_chat_member else "?"
+    by = cm.from_user.id if cm.from_user else "?"
+    title = getattr(chat, "title", None) or ""
+    logger.info(f"my_chat_member: chat={chat.id} type={chat.type} title={title!r} status={status} by={by}")
+    try:
+        _a0_inbox_append(chat.id, f"[群組事件] bot 在 {chat.type} '{title}' 狀態→{status}(操作者 {by})", None)
+    except Exception as e:  # pragma: no cover
+        logger.warning(f"my_chat_member inbox append failed: {e}")
+
+
 async def on_error(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
     logger.error(f"Unhandled exception: {context.error}", exc_info=context.error)
 
@@ -3052,6 +3071,7 @@ def main() -> None:
     app.add_handler(CommandHandler("clip", clip_cmd))
     app.add_handler(MessageHandler(filters.PHOTO, handle_photo))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
+    app.add_handler(ChatMemberHandler(on_my_chat_member, ChatMemberHandler.MY_CHAT_MEMBER))
     app.add_error_handler(on_error)
 
     logger.info(f"Bot running — owner={OWNER_CHAT_ID}")

@@ -805,6 +805,11 @@ class A0OutageNoticeTests(unittest.IsolatedAsyncioTestCase):
             patch.object(maplab_bot, "_a0_alive", return_value=True),
             patch.object(maplab_bot, "_a0_wait_then_maybe_resume", AsyncMock()),
             patch.object(maplab_bot, "_a0_clear_outage_notice_state", clear_mock),
+            # This class has no shared setUp (unlike A0ResumeRoutingTests),
+            # so _a0_inbox_append must be patched explicitly here — leaving
+            # it real would append this test's fake Owner message straight
+            # into the real A0_INBOX_FILE on disk.
+            patch.object(maplab_bot, "_a0_inbox_append", return_value=FIXED_INBOX_TS),
         ):
             await maplab_bot.handle_message(update, context)
         clear_mock.assert_called_once()

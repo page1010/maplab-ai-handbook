@@ -1,4 +1,4 @@
-"""Tests for the A0/Fable5 relay routing added 2026-08-22.
+"""Tests for the A0/Fable5 relay routing added 2026-08-22, updated 2026-08-23.
 
 Owner decisions being tested:
 - 21:32: a heartbeat-triggered stateless one-shot has no prior context, so
@@ -10,13 +10,11 @@ Owner decisions being tested:
   A0_REPLIES_FILE (written by scripts/a0_reply.sh) before deciding A0 missed
   the message and relaying itself. A leading "代答" always forces the
   relay/fallback path immediately.
-- VERIFIED 22:32 + Owner 22:35: `claude -p --resume <session>` timed out at
-  180s because that session's context sits at ~98% (huge to reload on every
-  resume). Default routing (A0_RELAY_MODE=fresh, unset) is now a
-  fresh-context one-shot relay primed with FABLE5_HANDOFF.md's RESUME
-  PROMPT + standing memory + recent inbox/replies, instead of resuming the
-  near-full session. `--resume` stays available opt-in via
-  A0_RELAY_MODE=resume.
+- VERIFIED 22:32 + Owner 22:35 (2026-08-22): `claude -p --resume <session>`
+  timed out at 180s because that session's context sits at ~98% (huge to
+  reload on every resume). Routing was flipped to a fresh-context one-shot
+  relay primed with FABLE5_HANDOFF.md's RESUME PROMPT + standing memory +
+  recent inbox/replies.
 
 Codex review (FABLE5_CONTINUITY_COGOV_REVIEW_20260822.md route A) minimal
 fixes, also 2026-08-22:
@@ -31,11 +29,35 @@ fixes, also 2026-08-22:
   sending an automatic answer for a given inbox message, so the immediate
   "代答" path and the wait-timer path can't both auto-answer the same
   message.
+
+REVERSED — Owner ruling 2026-08-23 14:15 + 14:53 ("新 context 不是人物代碼而
+是問題"; offline handling must never synthesize a new-context Fable5
+persona by default):
+- A0_RELAY_MODE now defaults to "resume" (same live session), NOT "fresh".
+  The fresh-context relay stays in the code but only fires when
+  A0_RELAY_MODE is explicitly set to "fresh" in the environment, and doing
+  so logs a warning every time.
+- A0_RESUME_TIMEOUT_S raised 180 → 900 (the 22:35 timeout concern is now
+  addressed by giving resume more time, not by inventing a new persona).
+- The resume prompt is prefixed with a short "續接開場" (A0_RESUME_PRELUDE)
+  telling the resumed session this is a same-session continuation: pull,
+  read the handoff's RESUME PROMPT, diff a0_inbox/a0_replies, answer only
+  this one message with a receipt, label replies
+  "【Fable5 本人・同 session 續接】", never claim unfinished work as done.
+- An empty/failed resume no longer falls back to a bot one-shot answer
+  standing in for Fable5 — it's logged only, plus a once-per-outage
+  "續接失敗，訊息仍排隊，待主程式喚醒" notice.
+- Exactly one "A0 offline, message queued, continuing on same session"
+  notice is sent per outage (keyed off the A0 heartbeat file's mtime, which
+  only changes once A0 writes a fresh heartbeat); later messages in the
+  same outage queue silently. The notice state is cleared once A0 heartbeats
+  alive again, so the next outage gets its own notice.
 """
 
 import asyncio
 import importlib.util
 import json
+import os
 import sys
 import time
 import unittest
@@ -82,6 +104,13 @@ class A0ResumeRoutingTests(unittest.IsolatedAsyncioTestCase):
             # claim mechanics itself, so default to "always claims" and
             # exercise the real function separately below.
             patch.object(maplab_bot, "_a0_claim_single_reply", return_value=True),
+            # The once-per-outage notice helpers also touch real disk
+            # (A0_OUTAGE_NOTICE_FILE) and send their own bot.send_message
+            # call; routing tests below care about the relay/fallback
+            # decision, not the notice mechanics, so default them to no-ops
+            # here and exercise the real functions separately below.
+            patch.object(maplab_bot, "_a0_maybe_notify_outage", AsyncMock()),
+            patch.object(maplab_bot, "_a0_maybe_notify_resume_failed", AsyncMock()),
         ]
         for p in self._patches:
             p.start()
@@ -128,9 +157,40 @@ class A0ResumeRoutingTests(unittest.IsolatedAsyncioTestCase):
 
         inbox_append_mock.assert_called_once_with(update.effective_chat.id, "問一下 CURRENT_STATUS", 9999)
 
-    # ── handle_message: A0 offline → fresh-context relay (default) ─────────
+    # ── handle_message: A0 offline → same-session resume (default) ─────────
 
-    async def test_a0_offline_uses_fresh_relay_with_fable5_label_by_default(self):
+    async def test_a0_offline_uses_resume_with_fable5_label_by_default(self):
+        """Owner 2026-08-23 ruling: default routing is the SAME session
+        resume, not the fresh-context relay — A0_RELAY_MODE is left
+        untouched here (i.e. whatever the module actually defaults to,
+        which must be "resume") rather than patched, so this test would
+        catch a regression back to "fresh" as the default."""
+        self.assertEqual(maplab_bot.A0_RELAY_MODE, "resume")
+        update = _fake_update("財務問題請直答")
+        context = _fake_context()
+        resume_result = maplab_bot.ModelResult(ok=True, answer="這是續接 session 的回答")
+        with (
+            patch.object(maplab_bot, "_a0_alive", return_value=False),
+            patch.object(maplab_bot, "_local_runtime_question_answer", return_value=""),
+            patch.object(maplab_bot, "_a0_resume_ask", AsyncMock(return_value=resume_result)) as resume_mock,
+            patch.object(maplab_bot, "_a0_fresh_relay_ask", AsyncMock()) as fresh_mock,
+        ):
+            await maplab_bot.handle_message(update, context)
+
+        resume_mock.assert_awaited_once()
+        fresh_mock.assert_not_called()
+        context.bot.send_message.assert_awaited_once()
+        sent_text = context.bot.send_message.await_args.kwargs["text"]
+        self.assertTrue(sent_text.startswith(maplab_bot.A0_RESUME_LABEL))
+        self.assertIn("這是續接 session 的回答", sent_text)
+        maplab_bot.log_and_commit.assert_called_once()
+        log_args = maplab_bot.log_and_commit.call_args[0]
+        self.assertEqual(log_args[2], "a0-resume")
+
+    async def test_a0_offline_uses_fresh_relay_when_explicitly_enabled(self):
+        """A0_RELAY_MODE=fresh is still selectable, but only as an explicit
+        opt-in — this test patches it on purpose, unlike the default test
+        above."""
         update = _fake_update("財務問題請直答")
         context = _fake_context()
         relay_result = maplab_bot.ModelResult(ok=True, answer="這是新 context 的回答")
@@ -140,7 +200,11 @@ class A0ResumeRoutingTests(unittest.IsolatedAsyncioTestCase):
             patch.object(maplab_bot, "A0_RELAY_MODE", "fresh"),
             patch.object(maplab_bot, "_a0_fresh_relay_ask", AsyncMock(return_value=relay_result)) as relay_mock,
         ):
-            await maplab_bot.handle_message(update, context)
+            with self.assertLogs(maplab_bot.logger, level="WARNING") as log_ctx:
+                await maplab_bot.handle_message(update, context)
+            # Explicit "fresh" opt-in must always be logged as a warning
+            # (Owner 2026-08-23).
+            self.assertTrue(any("A0_RELAY_MODE=fresh" in msg for msg in log_ctx.output))
 
         relay_mock.assert_awaited_once()
         context.bot.send_message.assert_awaited_once()
@@ -222,6 +286,36 @@ class A0ResumeRoutingTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(call_args[0], context.bot)
         self.assertEqual(call_args[4], "bot-fallback")  # log_label
         self.assertEqual(call_kwargs["reply_prefix"], f"{maplab_bot.BOT_FALLBACK_LABEL}\n")
+
+    # ── handle_message: resume failure/empty → no bot fallback answer ──────
+
+    async def test_resume_failure_does_not_fall_back_to_bot_answer(self):
+        """Owner 2026-08-23 item 3: an empty/failed same-session resume must
+        never be papered over with a bot one-shot standing in for Fable5 —
+        just log it and (once per outage) tell Owner the message is still
+        queued. No _run_claude_background call, no relay-success message,
+        no history/commit for a non-answer."""
+        update = _fake_update("財務問題請直答")
+        context = _fake_context()
+        resume_result = maplab_bot.ModelResult(
+            ok=False, answer="⚠️ resume 無回應（空輸出）", failure_kind="resume_empty", stderr="empty stdout"
+        )
+        fallback_mock = AsyncMock()
+        notify_failed_mock = AsyncMock()
+        with (
+            patch.object(maplab_bot, "_a0_alive", return_value=False),
+            patch.object(maplab_bot, "_local_runtime_question_answer", return_value=""),
+            patch.object(maplab_bot, "_a0_resume_ask", AsyncMock(return_value=resume_result)),
+            patch.object(maplab_bot, "_run_claude_background", fallback_mock),
+            patch.object(maplab_bot, "_a0_maybe_notify_resume_failed", notify_failed_mock),
+        ):
+            await maplab_bot.handle_message(update, context)
+
+        fallback_mock.assert_not_called()
+        context.bot.send_message.assert_not_called()
+        maplab_bot.log_and_commit.assert_not_called()
+        maplab_bot._record_history.assert_not_called()
+        notify_failed_mock.assert_awaited_once()
 
     # ── handle_message: A0_RELAY_MODE=resume still routes to --resume ──────
 
@@ -473,9 +567,10 @@ class A0InboxAppendTests(unittest.TestCase):
 
 class A0FreshRelayAskTests(unittest.IsolatedAsyncioTestCase):
     """Direct coverage of _a0_fresh_relay_ask's subprocess handling — the
-    fresh-context relay path that is now the default A0 routing. At least
-    three cases per the relay2 handoff: a clean success, a timeout that
-    must kill+wait the child (Codex route-A minimal fix), and the CLI
+    fresh-context relay path, which since the 2026-08-23 Owner ruling is
+    opt-in only (A0_RELAY_MODE=fresh explicitly), never the default. At
+    least three cases per the relay2 handoff: a clean success, a timeout
+    that must kill+wait the child (Codex route-A minimal fix), and the CLI
     being missing entirely. A fourth covers the --system-prompt
     unsupported→inline-prompt retry."""
 
@@ -536,6 +631,203 @@ class A0FreshRelayAskTests(unittest.IsolatedAsyncioTestCase):
         # of using --system-prompt
         second_cmd = create_mock.await_args_list[1].args
         self.assertNotIn("--system-prompt", second_cmd)
+
+
+class A0ResumeAskPreludeTests(unittest.IsolatedAsyncioTestCase):
+    """Direct coverage of _a0_resume_ask's "續接開場" prelude and raised
+    timeout (Owner 2026-08-23 item 3)."""
+
+    def _make_proc(self, returncode=0, stdout=b"ok answer", stderr=b""):
+        proc = MagicMock()
+        proc.communicate = AsyncMock(return_value=(stdout, stderr))
+        proc.returncode = returncode
+        proc.kill = MagicMock()
+        proc.wait = AsyncMock()
+        return proc
+
+    def test_default_timeout_is_900_seconds(self):
+        self.assertEqual(maplab_bot.A0_RESUME_TIMEOUT_S, 900)
+
+    async def test_prelude_prepended_to_user_message_and_labels_same_session(self):
+        proc = self._make_proc(stdout=b"resumed answer")
+        create_mock = AsyncMock(return_value=proc)
+        with patch("asyncio.create_subprocess_exec", create_mock):
+            result = await maplab_bot._a0_resume_ask("Owner 的原始訊息", timeout=5)
+
+        self.assertTrue(result.ok)
+        sent_cmd = create_mock.await_args.args
+        sent_message = sent_cmd[-1]
+        # The prelude must actually carry the "same session, not a new
+        # persona" framing, the concrete steps Owner specified, the required
+        # reply label, and the original Owner message — in that order.
+        self.assertIn("同一個", sent_message)
+        self.assertIn("git pull cdo", sent_message)
+        self.assertIn("RESUME PROMPT", sent_message)
+        self.assertIn("a0_inbox", sent_message)
+        self.assertIn("a0_reply.sh", sent_message)
+        self.assertIn(maplab_bot.A0_RESUME_LABEL, sent_message)
+        self.assertIn("不得宣稱已派工", sent_message)
+        self.assertIn("Owner 的原始訊息", sent_message)
+        self.assertLess(sent_message.index(maplab_bot.A0_RESUME_LABEL), sent_message.index("Owner 的原始訊息"))
+
+
+class A0OutageNoticeTests(unittest.IsolatedAsyncioTestCase):
+    """_a0_maybe_notify_outage / _a0_maybe_notify_resume_failed /
+    _a0_clear_outage_notice_state: exactly one notice per outage, silent
+    queuing after that, and a clean slate once A0 heartbeats alive again
+    (Owner 2026-08-23 item 2)."""
+
+    def _set_heartbeat(self, path: Path, hhmm: str = "13:37") -> None:
+        path.write_text("{}", encoding="utf-8")
+        ts = time.mktime(time.strptime(f"2026-08-23 {hhmm}:00", "%Y-%m-%d %H:%M:%S"))
+        os.utime(path, (ts, ts))
+
+    async def test_first_call_sends_notice_with_heartbeat_time_and_queue_count(self):
+        with TemporaryDirectory() as tmp:
+            heartbeat = Path(tmp) / "a0_heartbeat.json"
+            self._set_heartbeat(heartbeat, "13:37")
+            notice_file = Path(tmp) / "a0_outage_notice.json"
+            bot = MagicMock()
+            bot.send_message = AsyncMock()
+            with (
+                patch.object(maplab_bot, "A0_HEARTBEAT_FILE", heartbeat),
+                patch.object(maplab_bot, "A0_OUTAGE_NOTICE_FILE", notice_file),
+            ):
+                await maplab_bot._a0_maybe_notify_outage(bot, 555)
+
+        bot.send_message.assert_awaited_once()
+        text = bot.send_message.await_args.kwargs["text"]
+        self.assertTrue(text.startswith(maplab_bot.A0_OUTAGE_NOTICE_LABEL))
+        self.assertIn("13:37", text)
+        self.assertIn("已排隊 1 則", text)
+
+    async def test_second_call_same_outage_is_silent(self):
+        with TemporaryDirectory() as tmp:
+            heartbeat = Path(tmp) / "a0_heartbeat.json"
+            self._set_heartbeat(heartbeat, "13:37")
+            notice_file = Path(tmp) / "a0_outage_notice.json"
+            bot = MagicMock()
+            bot.send_message = AsyncMock()
+            with (
+                patch.object(maplab_bot, "A0_HEARTBEAT_FILE", heartbeat),
+                patch.object(maplab_bot, "A0_OUTAGE_NOTICE_FILE", notice_file),
+            ):
+                await maplab_bot._a0_maybe_notify_outage(bot, 555)
+                await maplab_bot._a0_maybe_notify_outage(bot, 555)
+                await maplab_bot._a0_maybe_notify_outage(bot, 555)
+
+        # Three messages arrived during the same outage; only the first
+        # ever produced a notice.
+        bot.send_message.assert_awaited_once()
+
+    async def test_new_outage_after_heartbeat_recovers_sends_again(self):
+        with TemporaryDirectory() as tmp:
+            heartbeat = Path(tmp) / "a0_heartbeat.json"
+            notice_file = Path(tmp) / "a0_outage_notice.json"
+            bot = MagicMock()
+            bot.send_message = AsyncMock()
+
+            self._set_heartbeat(heartbeat, "13:37")
+            with (
+                patch.object(maplab_bot, "A0_HEARTBEAT_FILE", heartbeat),
+                patch.object(maplab_bot, "A0_OUTAGE_NOTICE_FILE", notice_file),
+            ):
+                await maplab_bot._a0_maybe_notify_outage(bot, 555)
+                # A0 comes back and heartbeats again, then goes down a
+                # second time — a fresh heartbeat mtime is a new outage key.
+                self._set_heartbeat(heartbeat, "15:02")
+                await maplab_bot._a0_maybe_notify_outage(bot, 555)
+
+        self.assertEqual(bot.send_message.await_count, 2)
+        second_text = bot.send_message.await_args.kwargs["text"]
+        self.assertIn("15:02", second_text)
+        self.assertIn("已排隊 1 則", second_text)  # queue count reset for the new outage
+
+    async def test_resume_failed_notice_also_fires_once_per_outage(self):
+        with TemporaryDirectory() as tmp:
+            heartbeat = Path(tmp) / "a0_heartbeat.json"
+            self._set_heartbeat(heartbeat, "13:37")
+            notice_file = Path(tmp) / "a0_outage_notice.json"
+            bot = MagicMock()
+            bot.send_message = AsyncMock()
+            with (
+                patch.object(maplab_bot, "A0_HEARTBEAT_FILE", heartbeat),
+                patch.object(maplab_bot, "A0_OUTAGE_NOTICE_FILE", notice_file),
+            ):
+                await maplab_bot._a0_maybe_notify_resume_failed(bot, 555)
+                await maplab_bot._a0_maybe_notify_resume_failed(bot, 555)
+
+        bot.send_message.assert_awaited_once()
+        text = bot.send_message.await_args.kwargs["text"]
+        self.assertIn("續接失敗", text)
+        self.assertIn("待主程式喚醒", text)
+
+    async def test_outage_notice_and_resume_failed_notice_are_independent_flags(self):
+        """Both the "offline, queued" notice and the "resume failed" notice
+        can each fire once per outage without suppressing the other."""
+        with TemporaryDirectory() as tmp:
+            heartbeat = Path(tmp) / "a0_heartbeat.json"
+            self._set_heartbeat(heartbeat, "13:37")
+            notice_file = Path(tmp) / "a0_outage_notice.json"
+            bot = MagicMock()
+            bot.send_message = AsyncMock()
+            with (
+                patch.object(maplab_bot, "A0_HEARTBEAT_FILE", heartbeat),
+                patch.object(maplab_bot, "A0_OUTAGE_NOTICE_FILE", notice_file),
+            ):
+                await maplab_bot._a0_maybe_notify_outage(bot, 555)
+                await maplab_bot._a0_maybe_notify_resume_failed(bot, 555)
+                # Repeats of either must stay silent.
+                await maplab_bot._a0_maybe_notify_outage(bot, 555)
+                await maplab_bot._a0_maybe_notify_resume_failed(bot, 555)
+
+        self.assertEqual(bot.send_message.await_count, 2)
+
+    def test_clear_removes_notice_state_file(self):
+        with TemporaryDirectory() as tmp:
+            notice_file = Path(tmp) / "a0_outage_notice.json"
+            notice_file.write_text(json.dumps({"key": "x", "notified": True}), encoding="utf-8")
+            with patch.object(maplab_bot, "A0_OUTAGE_NOTICE_FILE", notice_file):
+                maplab_bot._a0_clear_outage_notice_state()
+                self.assertFalse(notice_file.exists())
+
+    def test_clear_is_a_no_op_when_file_already_absent(self):
+        with TemporaryDirectory() as tmp:
+            notice_file = Path(tmp) / "nonexistent" / "a0_outage_notice.json"
+            with patch.object(maplab_bot, "A0_OUTAGE_NOTICE_FILE", notice_file):
+                maplab_bot._a0_clear_outage_notice_state()  # must not raise
+
+    async def test_handle_message_clears_outage_state_once_a0_is_alive_again(self):
+        clear_mock = MagicMock()
+        update = _fake_update("問一下 CURRENT_STATUS")
+        context = _fake_context()
+        with (
+            patch.object(maplab_bot, "_a0_alive", return_value=True),
+            patch.object(maplab_bot, "_a0_wait_then_maybe_resume", AsyncMock()),
+            patch.object(maplab_bot, "_a0_clear_outage_notice_state", clear_mock),
+        ):
+            await maplab_bot.handle_message(update, context)
+        clear_mock.assert_called_once()
+
+    async def test_handle_message_does_not_clear_outage_state_while_offline(self):
+        clear_mock = MagicMock()
+        update = _fake_update("財務問題請直答")
+        context = _fake_context()
+        relay_result = maplab_bot.ModelResult(ok=True, answer="ok")
+        with (
+            patch.object(maplab_bot, "_a0_alive", return_value=False),
+            patch.object(maplab_bot, "_local_runtime_question_answer", return_value=""),
+            patch.object(maplab_bot, "_a0_resume_ask", AsyncMock(return_value=relay_result)),
+            patch.object(maplab_bot, "_record_history"),
+            patch.object(maplab_bot, "log_and_commit"),
+            patch.object(maplab_bot, "git_pull_silent"),
+            patch.object(maplab_bot, "_a0_inbox_append", return_value=FIXED_INBOX_TS),
+            patch.object(maplab_bot, "_a0_claim_single_reply", return_value=True),
+            patch.object(maplab_bot, "_a0_maybe_notify_outage", AsyncMock()),
+            patch.object(maplab_bot, "_a0_clear_outage_notice_state", clear_mock),
+        ):
+            await maplab_bot.handle_message(update, context)
+        clear_mock.assert_not_called()
 
 
 if __name__ == "__main__":

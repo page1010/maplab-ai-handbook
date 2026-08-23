@@ -2217,6 +2217,122 @@ def _a0_alive() -> bool:
         return False
 
 
+# ── A0/Fable5 offline notice (Owner 2026-08-23 14:15 + 14:53) ───────────────
+#
+# Owner ruling: "新 context 不是人物代碼而是問題" — the problem was never
+# which persona label the offline path used, it was that the bot kept
+# spinning up brand-new Fable5 contexts. Priority is avoiding that next time,
+# not decorating it. While A0 looks offline the bot must not generate any
+# new-context Fable5 persona at all; it queues silently and continues the
+# *same* session. The one thing Owner still wants to see is a single,
+# non-Fable5 notice per outage — not one per queued message — telling them
+# the bot noticed A0 is down and is queuing/continuing, not answering as
+# Fable5 itself.
+
+A0_OUTAGE_NOTICE_FILE = Path(
+    os.getenv(
+        "A0_OUTAGE_NOTICE_FILE",
+        "/Users/pagemacmini/claude-daily-operations/state/a0_outage_notice.json",
+    )
+)
+A0_OUTAGE_NOTICE_LABEL = "【bot 通知，非 Fable5】"
+A0_RESUME_FAILED_NOTICE_LABEL = "【bot 通知，非 Fable5】"
+
+
+def _a0_outage_key() -> str:
+    """Identifies "this outage period": the mtime of the last heartbeat A0
+    actually wrote. Stable for as long as A0 stays offline (the heartbeat
+    file doesn't change while nobody is writing it) and automatically
+    becomes a new value the moment A0 comes back and writes a fresh
+    heartbeat — so a stale notice-state entry can never be mistaken for the
+    current outage. Missing heartbeat file entirely still yields a stable
+    (if degenerate) key so notice-once behaviour still holds."""
+    try:
+        return str(A0_HEARTBEAT_FILE.stat().st_mtime)
+    except Exception:
+        return "no-heartbeat-file"
+
+
+def _a0_outage_heartbeat_hhmm() -> str:
+    """HH:MM of the last A0 heartbeat, for the outage notice text. Never
+    raises — falls back to "?" when the heartbeat file is missing/unreadable."""
+    try:
+        return datetime.fromtimestamp(A0_HEARTBEAT_FILE.stat().st_mtime).strftime("%H:%M")
+    except Exception:
+        return "?"
+
+
+def _a0_read_outage_notice_state() -> dict:
+    try:
+        return json.loads(A0_OUTAGE_NOTICE_FILE.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+
+def _a0_write_outage_notice_state(state: dict) -> None:
+    try:
+        A0_OUTAGE_NOTICE_FILE.parent.mkdir(parents=True, exist_ok=True)
+        A0_OUTAGE_NOTICE_FILE.write_text(json.dumps(state, ensure_ascii=False), encoding="utf-8")
+    except Exception:
+        logger.exception("a0 outage notice state write failed")
+
+
+def _a0_clear_outage_notice_state() -> None:
+    """Called once A0 is confirmed alive again, so the next outage starts
+    from a clean slate instead of inheriting stale notified/failed flags."""
+    try:
+        if A0_OUTAGE_NOTICE_FILE.exists():
+            A0_OUTAGE_NOTICE_FILE.unlink()
+    except Exception:
+        logger.exception("a0 outage notice state clear failed")
+
+
+async def _a0_maybe_notify_outage(bot, chat_id: int) -> None:
+    """Send the "A0 is offline, your message is queued and being handled via
+    the same session" notice — but only once per outage period. Every
+    subsequent message during the same outage just silently bumps the queued
+    count in state; Owner explicitly asked for no repeat noise ("之後同一
+    離線期內的訊息不再重複通知，只靜默排隊+續接"). Never raises."""
+    key = _a0_outage_key()
+    state = _a0_read_outage_notice_state()
+    queued = int(state.get("queued", 0)) + 1 if state.get("key") == key else 1
+    already_notified = state.get("key") == key and state.get("notified")
+    state = {"key": key, "notified": True, "queued": queued, "failed_notified": state.get("failed_notified") if state.get("key") == key else False}
+    _a0_write_outage_notice_state(state)
+    if already_notified:
+        return
+    hhmm = _a0_outage_heartbeat_hhmm()
+    text = (
+        f"{A0_OUTAGE_NOTICE_LABEL} Fable5 主程式離線（心跳 {hhmm} 起），"
+        f"你的訊息已排隊 {queued} 則，正以同一 session 續接，需數分鐘。"
+    )
+    try:
+        await bot.send_message(chat_id=chat_id, text=text)
+    except Exception:
+        logger.exception("a0 outage notice send failed")
+
+
+async def _a0_maybe_notify_resume_failed(bot, chat_id: int) -> None:
+    """Same once-per-outage discipline as _a0_maybe_notify_outage, but for
+    the "the same-session resume itself came back empty/failed" case (Owner
+    2026-08-23: 續接結果若為空/失敗 → 不代答，只在 log 記錄，並每離線期一次
+    補一句通知). Never raises."""
+    key = _a0_outage_key()
+    state = _a0_read_outage_notice_state()
+    already_notified = state.get("key") == key and state.get("failed_notified")
+    state = dict(state) if state.get("key") == key else {}
+    state["key"] = key
+    state["failed_notified"] = True
+    _a0_write_outage_notice_state(state)
+    if already_notified:
+        return
+    text = f"{A0_RESUME_FAILED_NOTICE_LABEL} 續接失敗，訊息仍排隊，待主程式喚醒。"
+    try:
+        await bot.send_message(chat_id=chat_id, text=text)
+    except Exception:
+        logger.exception("a0 resume-failed notice send failed")
+
+
 # ── A0/Fable5 session resume (Owner 2026-08-22 21:32 + 21:37) ───────────────
 #
 # 21:32: a heartbeat-triggered stateless one-shot fallback has no prior
@@ -2242,7 +2358,7 @@ A0_SESSION_FILE = Path(
 A0_SESSION_ID_DEFAULT = os.getenv("A0_SESSION_ID", "3a3df70f-b5ce-4c45-9d85-6651d7022e4b")
 A0_RESUME_MODEL_DEFAULT = os.getenv("A0_RESUME_MODEL", "claude-fable-5")
 A0_RESUME_CWD = os.getenv("A0_RESUME_CWD", "/Users/pagemacmini/Documents")
-A0_RESUME_TIMEOUT_S = int(os.getenv("A0_RESUME_TIMEOUT_S", "180"))
+A0_RESUME_TIMEOUT_S = int(os.getenv("A0_RESUME_TIMEOUT_S", "900"))
 
 A0_REPLIES_FILE = Path(
     os.getenv(
@@ -2253,7 +2369,7 @@ A0_REPLIES_FILE = Path(
 A0_WAIT_TIMEOUT_S = float(os.getenv("A0_WAIT_TIMEOUT_S", "150"))
 A0_WAIT_POLL_INTERVAL_S = float(os.getenv("A0_WAIT_POLL_INTERVAL_S", "5"))
 
-A0_RESUME_LABEL = "【Fable5 本人（續接 session）】"
+A0_RESUME_LABEL = "【Fable5 本人・同 session 續接】"
 BOT_FALLBACK_LABEL = "【bot 代答，非 Fable5】"
 
 # ── A0/Fable5 fresh-context relay (Owner 22:35 2026-08-22) ──────────────────
@@ -2271,8 +2387,22 @@ BOT_FALLBACK_LABEL = "【bot 代答，非 Fable5】"
 #
 # `--resume` is kept as an opt-in via A0_RELAY_MODE=resume for cases where
 # the live session actually is healthy and worth reconnecting to.
+#
+# ── REVERSED — Owner ruling 2026-08-23 14:15 + 14:53 ────────────────────────
+#
+# "新 context 不是人物代碼而是問題" — the fresh-context relay above is exactly
+# the "new Fable5 persona" Owner wants stopped by default: offline handling
+# must not synthesize a brand-new context that speaks as Fable5. Default
+# routing flips back to `resume` (the SAME live session, not a new one) —
+# the 22:35 timeout concern is addressed instead by raising
+# A0_RESUME_TIMEOUT_S (180 → 900) rather than by inventing a new persona.
+# The fresh-context relay path stays in the code (still selectable) but is
+# opt-in ONLY: it fires solely when A0_RELAY_MODE is explicitly set to
+# "fresh" in the environment, and doing so logs a warning every time. Any
+# other value (unset, "resume", or anything else) uses resume — the default
+# must never silently reach the fresh path.
 
-A0_RELAY_MODE = os.getenv("A0_RELAY_MODE", "fresh").strip().lower()  # "fresh" | "resume"
+A0_RELAY_MODE = os.getenv("A0_RELAY_MODE", "resume").strip().lower()  # "resume" (default) | "fresh" (explicit opt-in only, warns)
 A0_FRESH_RELAY_TIMEOUT_S = int(os.getenv("A0_FRESH_RELAY_TIMEOUT_S", "120"))
 
 FABLE5_HANDOFF_FILE = Path(
@@ -2567,14 +2697,34 @@ def _a0_claim_single_reply(reply_to_inbox_ts: str, chat_id: int) -> bool:
         return True
 
 
+# Short "續接開場" prelude prepended to every same-session resume call (Owner
+# 2026-08-23 14:15 + 14:53, item 3): tell the resumed session plainly that
+# it is the bot continuing A0's own session while A0 itself is offline —
+# not a new persona — and what to actually do about it (pull, read the
+# handoff's RESUME PROMPT, diff a0_inbox/a0_replies, answer only this one
+# message with a receipt) rather than claim work that hasn't happened.
+A0_RESUME_PRELUDE = (
+    "【續接開場】你是 bot，在 A0/Fable5 主程式離線期間以「同一個」既有 session 續接——"
+    "不是開新 context、不是新的 Fable5 人格。請依序：\n"
+    "1) 先執行 git pull cdo；\n"
+    "2) 讀 handoff 檔案最頂部的 RESUME PROMPT 區段；\n"
+    "3) 比對 a0_inbox 與 a0_replies，找出尚未回覆的訊息；\n"
+    "4) 只回覆 Owner 這一則訊息（用 scripts/a0_reply.sh 留收據）。\n"
+    "回覆開頭必須標「【Fable5 本人・同 session 續接】」；"
+    "不得宣稱已派工、已稽核或已完成任何實際上還沒做的事。\n\n"
+    "=== Owner 訊息 ===\n"
+)
+
+
 async def _a0_resume_ask(user_message: str, timeout: int = A0_RESUME_TIMEOUT_S) -> ModelResult:
     """Headlessly resume A0's own Claude Code session so the reply keeps full
     context, instead of a stateless one-shot.
 
     Calls `claude -p --resume <session_id> --output-format text [--model ...]`
-    with cwd=A0_RESUME_CWD. Never raises — failures come back as
-    ModelResult(ok=False, ...) so the caller can fall back to a clearly
-    labelled one-shot answer.
+    with cwd=A0_RESUME_CWD, prefixed with A0_RESUME_PRELUDE so the resumed
+    session knows this is a same-session continuation, not a new context.
+    Never raises — failures come back as ModelResult(ok=False, ...) so the
+    caller can decide how to handle a failed/empty resume.
     """
     session_id, model = _a0_session_config()
     if not session_id:
@@ -2588,7 +2738,7 @@ async def _a0_resume_ask(user_message: str, timeout: int = A0_RESUME_TIMEOUT_S) 
     cmd = ["claude", "-p", "--resume", session_id, "--output-format", "text"]
     if model:
         cmd += ["--model", model]
-    cmd.append(user_message)
+    cmd.append(A0_RESUME_PRELUDE + user_message)
 
     try:
         proc = await asyncio.create_subprocess_exec(
@@ -2641,11 +2791,12 @@ async def _a0_resume_ask(user_message: str, timeout: int = A0_RESUME_TIMEOUT_S) 
 
 
 async def _a0_resume_or_fallback(bot, chat_id: int, text: str, reply_to_inbox_ts: str = "") -> None:
-    """Shared relay→fallback chain: try to reach A0/Fable5 first — via the
-    fresh-context relay by default (A0_RELAY_MODE=fresh), or via a resume of
-    A0's own live session when A0_RELAY_MODE=resume — and only if that
-    itself fails, drop to a clearly-labelled one-shot answer. Used both when
-    A0 looks offline immediately and when the wait timer (see
+    """Shared relay chain: try to reach A0/Fable5 first — via a same-session
+    resume of A0's own live session by default (A0_RELAY_MODE unset/"resume"),
+    or via the fresh-context relay ONLY when A0_RELAY_MODE is explicitly set
+    to "fresh" (Owner 2026-08-23 ruling: offline handling must never
+    synthesize a new-context Fable5 persona by default). Used both when A0
+    looks offline immediately and when the wait timer (see
     _a0_wait_then_maybe_resume) expires with no reply receipt.
 
     reply_to_inbox_ts identifies which a0_inbox.jsonl entry this automatic
@@ -2657,15 +2808,25 @@ async def _a0_resume_or_fallback(bot, chat_id: int, text: str, reply_to_inbox_ts
     if reply_to_inbox_ts and not _a0_claim_single_reply(reply_to_inbox_ts, chat_id):
         logger.info("A0 auto-reply already claimed for chat_id=%s reply_to_inbox_ts=%s; skipping duplicate", chat_id, reply_to_inbox_ts)
         return
+    # A0 actually looking offline (not just an Owner-forced "代答" while A0 is
+    # alive) is what "an outage" means for notice purposes — send the single
+    # once-per-outage "queued, continuing on same session" notice here.
+    if not _a0_alive():
+        await _a0_maybe_notify_outage(bot, chat_id)
     git_pull_silent()
-    if A0_RELAY_MODE == "resume":
-        relay_result = await _a0_resume_ask(text)
-        relay_label = A0_RESUME_LABEL
-        relay_log_label = "a0-resume"
-    else:
+    if A0_RELAY_MODE == "fresh":
+        logger.warning(
+            "A0_RELAY_MODE=fresh explicitly set — using new-context fresh relay "
+            "instead of same-session resume; this path is opt-in only and "
+            "never the default (Owner 2026-08-23 ruling)."
+        )
         relay_result = await _a0_fresh_relay_ask(text)
         relay_label = A0_FRESH_RELAY_LABEL
         relay_log_label = "a0-fresh-relay"
+    else:
+        relay_result = await _a0_resume_ask(text)
+        relay_label = A0_RESUME_LABEL
+        relay_log_label = "a0-resume"
     if relay_result.ok:
         answer = _sanitize_for_telegram(f"{relay_label}\n{relay_result.answer}")
         MAX = 4096
@@ -2676,12 +2837,22 @@ async def _a0_resume_or_fallback(bot, chat_id: int, text: str, reply_to_inbox_ts
         return
 
     logger.warning("A0 relay failed (%s, mode=%s): %s", relay_result.failure_kind, A0_RELAY_MODE, relay_result.stderr)
-    relay_desc = "session resume" if A0_RELAY_MODE == "resume" else "fresh-context relay"
+
+    if A0_RELAY_MODE != "fresh":
+        # Same-session resume (the default path): Owner 2026-08-23 item 3 —
+        # an empty/failed resume must never be papered over with a bot
+        # one-shot answer standing in for Fable5. Just log it and, once per
+        # outage, tell Owner the message is still queued.
+        await _a0_maybe_notify_resume_failed(bot, chat_id)
+        return
+
+    # Fresh-context relay (explicit opt-in only) failing still falls back to
+    # a clearly-labelled one-shot bot answer, as before opt-in was required.
     try:
         await bot.send_message(
             chat_id=chat_id,
             text=(
-                f"⚠️ Fable5 {relay_desc} 失敗，訊息已存入 A0 inbox 待其上線處理。\n"
+                "⚠️ Fable5 fresh-context relay 失敗，訊息已存入 A0 inbox 待其上線處理。\n"
                 "以下為 bot 一次性代答（非 Fable5 本人，不含派工）："
             ),
         )
@@ -2742,8 +2913,15 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     # session resume (not a stateless one-shot) whenever the bot has to step
     # in — unless Owner forces an immediate answer with a "代答" prefix.
     force_answer_now = _is_a0_answer_command(text)
+    a0_is_alive = _a0_alive()
+    if a0_is_alive:
+        # Heartbeat is fresh again ⇒ any prior outage is over. Clear the
+        # once-per-outage notice state so the *next* outage gets its own
+        # fresh notice instead of silently reusing a stale "already
+        # notified" flag (Owner 2026-08-23: 心跳恢復後清除).
+        _a0_clear_outage_notice_state()
 
-    if _a0_alive() and not force_answer_now:
+    if a0_is_alive and not force_answer_now:
         asyncio.create_task(_a0_wait_then_maybe_resume(context.bot, chat_id, text, reply_to_inbox_ts))
         return
 

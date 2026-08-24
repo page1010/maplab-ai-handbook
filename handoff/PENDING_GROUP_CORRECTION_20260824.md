@@ -1,6 +1,6 @@
 # 待送:群組更正(航運報告舊股價)
 
-- 建立:2026-08-24 19:45|狀態:**待送**(本窗為 bot resume 代答通道,無 curl 權限)
+- 建立:2026-08-24 19:45|狀態:**已送 2026-08-25 01:00**(主窗恢復權限後由 notify_group.sh 送出,✅ chat_id=-5589898264)
 - 送出方式:任何有網路權限的 A0 窗口執行:
   `bash scripts/notify_group.sh "$(cat handoff/PENDING_GROUP_CORRECTION_20260824.md 訊息區塊)"`,
   或直接複製下方訊息全文作為 notify_group.sh 第一參數。送出後把本檔狀態改為「已送 + 時間」。

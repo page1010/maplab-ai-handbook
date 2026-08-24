@@ -126,6 +126,7 @@ Directory Index Check
 | Session 技能 | `skills/session-lifecycle/SKILL.md` | canonical skill | 全角色 | session 開關與資源衛生 |
 | Codex／agy 路由 | `skills/codex-offload-guide.md` | tool routing guide | A0、A1、A6、B1、B5 | 需依實際版本更新 |
 | Credential 指南 | `skills/credentials/` | credential route reference | A0、A1、A2–A7、IOS-FB／KOL | 只能存路徑與 scope，不存 secret |
+| Owner Telegram 對話 SOP | `skills/owner-telegram-conversation-sop.md` | canonical skill | 全角色（接 Telegram 線者必讀） | inbox 落檔＋收據回覆＋先 ACK＋同 session 續接＋來源標示；群組要 bot 設管理員（privacy mode） |
 | 本索引技能 | `skills/system-directory-index/SKILL.md` | navigation skill | 全角色 | 冷啟動追加讀取 |
 
 ---

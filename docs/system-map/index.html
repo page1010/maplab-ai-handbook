@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>系統指向性地圖 — MAPLAB / Investment OS 全貌</title>
+<style>
+  :root{
+    --bg:#12100e; --panel:#1d1a17; --line:#3a352f; --text:#e8e2d9; --muted:#9a927f;
+    --c-cmd:#e8a33d; --c-prod:#6fb3a0; --c-data:#8f9fd1; --c-ext:#c78fb0; --c-ch:#b0b86f;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:"PingFang TC","Noto Sans TC",sans-serif;overflow:hidden}
+  header{padding:14px 20px;border-bottom:1px solid var(--line);display:flex;gap:16px;align-items:baseline;flex-wrap:wrap}
+  header h1{font-size:18px;font-weight:600}
+  header .sub{font-size:12px;color:var(--muted)}
+  .filters{display:flex;gap:8px;margin-left:auto}
+  .filters button{background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:14px;padding:4px 12px;font-size:12px;cursor:pointer}
+  .filters button.on{border-color:var(--text)}
+  #wrap{display:flex;height:calc(100vh - 55px)}
+  #map{flex:1;overflow:auto}
+  svg{display:block}
+  #panel{width:320px;border-left:1px solid var(--line);padding:16px;overflow-y:auto;background:var(--panel)}
+  #panel h2{font-size:15px;margin-bottom:6px}
+  #panel .tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;margin-bottom:10px}
+  #panel p{font-size:13px;line-height:1.7;margin-bottom:10px;color:var(--text)}
+  #panel .path{font-size:11px;color:var(--muted);word-break:break-all;line-height:1.6;margin-bottom:4px}
+  #panel .hint{font-size:12px;color:var(--muted)}
+  .node{cursor:pointer}
+  .node rect{rx:8;stroke-width:1.5}
+  .node text{font-size:12px;fill:var(--text);pointer-events:none}
+  .node .role{font-size:10px;fill:var(--muted)}
+  .edge{fill:none;stroke-width:1.5;opacity:.55}
+  .edge.hl{stroke-width:2.5;opacity:1}
+  .dim{opacity:.12}
+  .lane-label{font-size:11px;fill:var(--muted);letter-spacing:2px}
+</style>
+</head>
+<body>
+<header>
+  <h1>系統指向性地圖</h1>
+  <span class="sub">箭頭=指令/資料流向 · 點節點看說明與檔案位置 · 更新 2026-08-25</span>
+  <div class="filters" id="filters"></div>
+</header>
+<div id="wrap">
+  <div id="map"></div>
+  <div id="panel">
+    <h2>怎麼看這張圖</h2>
+    <p>由左至右:Owner 下指令 → 指揮層分工 → 每日產品自動產出 → 回到 Owner 的 Telegram。</p>
+    <p>顏色=層:<span style="color:var(--c-cmd)">指揮</span>、<span style="color:var(--c-prod)">產品</span>、<span style="color:var(--c-data)">資料</span>、<span style="color:var(--c-ext)">外部能力</span>、<span style="color:var(--c-ch)">通道</span>。</p>
+    <p class="hint">點任一節點:右欄顯示它是誰、聽誰的、產出去哪、檔案在哪;同時亮起它的所有進出箭頭。</p>
+  </div>
+</div>
+<script>
+const LAYERS = {cmd:"指揮層", prod:"每日產品", data:"資料/儲存", ext:"外部能力", ch:"通道"};
+const COLOR = {cmd:"#e8a33d", prod:"#6fb3a0", data:"#8f9fd1", ext:"#c78fb0", ch:"#b0b86f"};
+
+// x 按欄位、y 手排;desc 用 Owner 看得懂的話;paths = 真實檔案位置
+const NODES = [
+ {id:"owner", x:60, y:330, w:130, layer:"cmd", name:"Owner", role:"下指令・驗收成果",
+  desc:"只負責:定優先、檢查成果、花錢與發布的最終核准。不需要動手做事。",
+  paths:["Telegram 私訊 → maplab_claude_bot"]},
+ {id:"bot", x:250, y:330, w:150, layer:"ch", name:"Telegram bot 中繼", role:"訊息入匣・轉交",
+  desc:"Owner 每則訊息落地成收件匣;Fable5 在線走本人回覆,離線時 bot 以同一 session 續接轉交,150 秒沒人答才代答。",
+  paths:["maplab-ai-handbook/bot/bot.py","claude-daily-operations/state/a0_inbox.jsonl"]},
+ {id:"fable5", x:460, y:230, w:170, layer:"cmd", name:"A0 / Fable5(本席)", role:"總調度・驗收・治理",
+  desc:"高階額度用在派工、驗收、風險審與 Owner 溝通;額度滿=下班,交接給 hermes 照手冊答疑。",
+  paths:["claude-daily-operations/state/FABLE5_HANDOFF.md(唯一真相源)","handoff/CARD_SYSTEM_BACKLOG_20260825.md(待辦總表)"]},
+ {id:"codex", x:700, y:120, w:150, layer:"cmd", name:"Codex", role:"工程主力・共治",
+  desc:"吃派工卡做重工程(免費算力路由、bot 修復、看門狗);與 Fable5 互審,產出要閉環回 git。",
+  paths:["claude-daily-operations/state/dispatch/(派工卡)"]},
+ {id:"hermes", x:700, y:220, w:150, layer:"cmd", name:"hermes", role:"備援答疑・粗活勞力",
+  desc:"Fable5 額度滿時照接手手冊答日常問題;吃免費算力跑 L2 粗活。禁區:不下單、不發布、不動排程、不碰金鑰。",
+  paths:["handoff/HERMES_TAKEOVER_RUNBOOK_20260825.md","~/.hermes/(副本)"]},
+ {id:"antigravity", x:700, y:320, w:150, layer:"cmd", name:"Antigravity", role:"SEO/廣告巡檢",
+  desc:"排程巡檢 Ads/SEO/WordPress;live run 進行中勿打斷。",
+  paths:["Antigravity.app workspace: Ads SEO WordPress Patrol"]},
+ {id:"win01", x:700, y:420, w:150, layer:"cmd", name:"win-01 工作機", role:"Windows 剪片/SEO 產線",
+  desc:"agent-bus 唯一 lane;heartbeat 自 08-19 停滯(已知問題)。規劃中:hermes 掛此機跑剪片產線。",
+  paths:["claude-daily-operations/state/(agent-bus heartbeat)"]},
+ {id:"openclaw", x:700, y:520, w:150, layer:"cmd", name:"OpenClaw", role:"瀏覽器 operator(舊)",
+  desc:"歷史斷點:NotebookLM 那步幾乎沒跑完。現行替代=直接用已登入 Chrome 當 operator。",
+  paths:["skills/capability-notebooklm-project-brain.md(替代方法)"]},
+ {id:"launchd", x:460, y:430, w:170, layer:"prod", name:"launchd 排程", role:"七個每日產品的心臟",
+  desc:"不依賴任何 AI 視窗存活。缺席時去對應 out.log 看最後一段 JSON。",
+  paths:["~/Library/LaunchAgents/com.investmentos.*"]},
+ {id:"p0700", x:950, y:80, w:190, layer:"prod", name:"07:00 早報(規則版)", role:"平日",
+  desc:"規則引擎產出,不靠模型。", paths:["runtime reports/、data/logs/"]},
+ {id:"pkol", x:950, y:150, w:190, layer:"prod", name:"03:05/15:20/22:05 KOL 雷達", role:"平日×3",
+  desc:"網紅/KOL 更新追蹤與摘要。", paths:["runtime data/logs/"]},
+ {id:"p1620", x:950, y:220, w:190, layer:"prod", name:"16:20 強股故事+前幾名", role:"平日・動能",
+  desc:"已知弱點:ChatGPT 步驟約半數失敗會整則不送;底稿其實已生成,可人工/hermes 補位(B-2 要做 fallback)。",
+  paths:["reports/limit_up_chip_story/"]},
+ {id:"p1650", x:950, y:290, w:190, layer:"prod", name:"16:50 股期開盤劇本", role:"平日・動能",
+  desc:"訊息組好但送達 chat 未驗證(B-1 待查)。", paths:["reports/stock_future_order_plan/"]},
+ {id:"p1845", x:950, y:360, w:190, layer:"prod", name:"18:45 Owner 晚報", role:"平日",
+  desc:"當日總結給 Owner。", paths:["owner_evening_latest.md"]},
+ {id:"p2100", x:950, y:430, w:190, layer:"prod", name:"21:00 籌碼日報", role:"平日",
+  desc:"籌碼面日更。", paths:["runtime data/logs/"]},
+ {id:"p2210", x:950, y:500, w:190, layer:"prod", name:"22:10 研究摘要", role:"平日・已加判斷層",
+  desc:"top3-gate 已上:超過 2 天的舊研究不重播、非持股/非觀察名單不推(晶技事件的修復)。",
+  paths:["send_ai_hermes_research_telegram.py","data/logs/ai_hermes_research_telegram_launchd.out.log"]},
+ {id:"repo_cdo", x:460, y:560, w:170, layer:"data", name:"claude-daily-operations", role:"狀態真相源 repo",
+  desc:"handoff、收件匣/收據、派工卡、額度儀表都在這。", paths:["state/FABLE5_HANDOFF.md","state/quota_meter.json"]},
+ {id:"repo_handbook", x:250, y:560, w:170, layer:"data", name:"maplab-ai-handbook", role:"規則+skill repo",
+  desc:"所有 agent 共用的 SOP、skill、通道腳本。", paths:["skills/(能力包)","docs/RESEARCH_PRICE_FRESHNESS_SOP.md","scripts/a0_reply.sh、notify_group.sh"]},
+ {id:"repo_ios", x:60, y:560, w:160, layer:"data", name:"investment-os", role:"投資研究 repo",
+  desc:"研究報告、免費算力排名、行情快取。持股 ledger 損毀待修。", paths:["reports/","scripts/free_compute/ranking.json"]},
+ {id:"twse", x:1210, y:80, w:150, layer:"ext", name:"TWSE 官方報價", role:"查價唯一來源",
+  desc:"價格只准官方 API,每個數字標日期(查價 SOP)。", paths:["scripts/twse_quote.sh","docs/RESEARCH_PRICE_FRESHNESS_SOP.md"]},
+ {id:"openrouter", x:1210, y:160, w:150, layer:"ext", name:"OpenRouter(鑰匙1/3)", role:"免費算力・已接",
+  desc:"三把鑰匙已接第一把;中文鏈 gemma-4-31b 領跑、代碼鏈 poolside/cohere。只送 L2 公開資料。",
+  paths:["~/.maplab/free_compute.env","scripts/free_compute/ranking.json"]},
+ {id:"aistudio", x:1210, y:240, w:150, layer:"ext", name:"AI Studio(鑰匙2/3)", role:"後備・未接",
+  desc:"OpenRouter 額度撞頂才接。", paths:["接法照 OpenRouter 兩畫面模式"]},
+ {id:"groq", x:1210, y:320, w:150, layer:"ext", name:"Groq(鑰匙3/3)", role:"後備・未接",
+  desc:"同上,後備。", paths:["—"]},
+ {id:"notebooklm", x:1210, y:400, w:150, layer:"ext", name:"NotebookLM", role:"專案大腦・可用",
+  desc:"把專案狀態餵進去變成可問答知識庫;金鑰/持股/個資絕不餵。", paths:["skills/capability-notebooklm-project-brain.md"]},
+ {id:"firecrawl", x:1210, y:480, w:150, layer:"ext", name:"Firecrawl", role:"抓站・待接鑰匙",
+  desc:"網站爬成乾淨 markdown,SEO 競品研究用。", paths:["skills/capability-firecrawl-web-harvest.md"]},
+ {id:"voice", x:1210, y:560, w:150, layer:"ext", name:"Owner 聲音生成", role:"待建",
+  desc:"先本地開源盲測再決定花錢;聲音樣本=最高機密等級。", paths:["skills/capability-owner-voice-generation.md"]},
+ {id:"telbotfin", x:1210, y:640, w:150, layer:"ch", name:"TelbotFin 頻道", role:"財經成品出口",
+  desc:"七個每日產品的 Telegram 出口;群組回交只限 Owner 派工成果。", paths:["scripts/notify_group.sh(邊界見手冊)"]},
+];
+
+const EDGES = [
+ ["owner","bot","指令"], ["bot","fable5","入匣/續接"], ["fable5","bot","回覆(留收據)"], ["bot","owner","送達"],
+ ["fable5","codex","派工卡"], ["fable5","hermes","接手手冊"], ["fable5","antigravity","巡檢範圍"], ["fable5","win01","產線規劃"],
+ ["fable5","launchd","建/修排程"], ["fable5","repo_cdo","寫真相源"], ["fable5","repo_handbook","寫 SOP/skill"],
+ ["codex","repo_ios","工程產出"], ["hermes","openrouter","吃免費算力"], ["hermes","p1620","失敗時讀底稿補位"],
+ ["launchd","p0700"], ["launchd","pkol"], ["launchd","p1620"], ["launchd","p1650"], ["launchd","p1845"], ["launchd","p2100"], ["launchd","p2210"],
+ ["p0700","telbotfin"], ["pkol","telbotfin"], ["p1620","telbotfin"], ["p1650","telbotfin"], ["p1845","telbotfin"], ["p2100","telbotfin"], ["p2210","telbotfin"],
+ ["telbotfin","owner","每日成品"],
+ ["twse","p2210","官方價"], ["twse","fable5","查價 SOP"],
+ ["openrouter","hermes"], ["repo_ios","p2210","研究資料"], ["repo_cdo","fable5","續接讀取"],
+ ["fable5","notebooklm","餵專案狀態"], ["fable5","firecrawl","待接"], ["fable5","voice","待建"],
+ ["openclaw","p2210","舊推播來源(已加判斷層)"],
+];
+
+const svgNS = "http://www.w3.org/2000/svg";
+const svg = document.createElementNS(svgNS,"svg");
+svg.setAttribute("width",1420); svg.setAttribute("height",760);
+document.getElementById("map").appendChild(svg);
+
+const defs = document.createElementNS(svgNS,"defs");
+for (const [k,c] of Object.entries(COLOR)) {
+  const m = document.createElementNS(svgNS,"marker");
+  m.setAttribute("id","arr-"+k); m.setAttribute("markerWidth",8); m.setAttribute("markerHeight",8);
+  m.setAttribute("refX",7); m.setAttribute("refY",3); m.setAttribute("orient","auto");
+  const p = document.createElementNS(svgNS,"path");
+  p.setAttribute("d","M0,0 L7,3 L0,6 Z"); p.setAttribute("fill",c);
+  m.appendChild(p); defs.appendChild(m);
+}
+svg.appendChild(defs);
+
+const byId = {}; NODES.forEach(n=>byId[n.id]=n);
+const H = 46;
+const edgeEls = [], nodeEls = {};
+
+EDGES.forEach(e=>{
+  const [a,b,label] = e, A = byId[a], B = byId[b];
+  const x1 = A.x + A.w, y1 = A.y + H/2, x2 = B.x, y2 = B.y + H/2;
+  const path = document.createElementNS(svgNS,"path");
+  const midx = (x1+x2)/2;
+  path.setAttribute("d",`M${x1},${y1} C${midx},${y1} ${midx},${y2} ${x2},${y2}`);
+  path.setAttribute("class","edge");
+  path.setAttribute("stroke",COLOR[A.layer]);
+  path.setAttribute("marker-end",`url(#arr-${A.layer})`);
+  path.dataset.a=a; path.dataset.b=b; path.dataset.label=label||"";
+  svg.appendChild(path); edgeEls.push(path);
+});
+
+NODES.forEach(n=>{
+  const g = document.createElementNS(svgNS,"g");
+  g.setAttribute("class","node"); g.dataset.id=n.id; g.dataset.layer=n.layer;
+  const r = document.createElementNS(svgNS,"rect");
+  r.setAttribute("x",n.x); r.setAttribute("y",n.y); r.setAttribute("width",n.w); r.setAttribute("height",H);
+  r.setAttribute("fill","#1d1a17"); r.setAttribute("stroke",COLOR[n.layer]); r.setAttribute("rx",8);
+  const t = document.createElementNS(svgNS,"text");
+  t.setAttribute("x",n.x+10); t.setAttribute("y",n.y+19); t.textContent = n.name;
+  const rl = document.createElementNS(svgNS,"text");
+  rl.setAttribute("x",n.x+10); rl.setAttribute("y",n.y+36); rl.setAttribute("class","role"); rl.textContent = n.role;
+  g.append(r,t,rl); svg.appendChild(g); nodeEls[n.id]=g;
+  g.addEventListener("click",()=>select(n.id));
+});
+
+function select(id){
+  const n = byId[id];
+  edgeEls.forEach(p=>{
+    const on = p.dataset.a===id || p.dataset.b===id;
+    p.classList.toggle("hl",on); p.classList.toggle("dim",!on);
+  });
+  Object.entries(nodeEls).forEach(([nid,g])=>{
+    const linked = nid===id || edgeEls.some(p=>(p.dataset.a===id&&p.dataset.b===nid)||(p.dataset.b===id&&p.dataset.a===nid));
+    g.classList.toggle("dim",!linked);
+  });
+  const ins = edgeEls.filter(p=>p.dataset.b===id).map(p=>byId[p.dataset.a].name+(p.dataset.label?"("+p.dataset.label+")":""));
+  const outs = edgeEls.filter(p=>p.dataset.a===id).map(p=>byId[p.dataset.b].name+(p.dataset.label?"("+p.dataset.label+")":""));
+  document.getElementById("panel").innerHTML =
+    `<h2>${n.name}</h2><span class="tag" style="background:${COLOR[n.layer]}22;color:${COLOR[n.layer]}">${LAYERS[n.layer]} · ${n.role}</span>`+
+    `<p>${n.desc}</p>`+
+    (ins.length?`<p><b>誰指向它:</b>${ins.join("、")}</p>`:"")+
+    (outs.length?`<p><b>它指向誰:</b>${outs.join("、")}</p>`:"")+
+    `<p><b>檔案位置</b></p>`+n.paths.map(p=>`<div class="path">${p}</div>`).join("")+
+    `<p class="hint" style="margin-top:10px">點空白處或其他節點切換。</p>`;
+}
+
+svg.addEventListener("click",e=>{
+  if (e.target===svg){
+    edgeEls.forEach(p=>p.classList.remove("hl","dim"));
+    Object.values(nodeEls).forEach(g=>g.classList.remove("dim"));
+  }
+});
+
+const fdiv = document.getElementById("filters");
+let active = null;
+Object.entries(LAYERS).forEach(([k,label])=>{
+  const b = document.createElement("button");
+  b.textContent = label; b.style.color = COLOR[k];
+  b.onclick = ()=>{
+    active = active===k?null:k;
+    [...fdiv.children].forEach(x=>x.classList.remove("on"));
+    if (active) b.classList.add("on");
+    Object.entries(nodeEls).forEach(([nid,g])=>g.classList.toggle("dim",active&&byId[nid].layer!==active));
+    edgeEls.forEach(p=>p.classList.toggle("dim",active&&byId[p.dataset.a].layer!==active&&byId[p.dataset.b].layer!==active));
+  };
+  fdiv.appendChild(b);
+});
+</script>
+</body>
+</html>

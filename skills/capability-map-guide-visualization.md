@@ -1,22 +1,22 @@
-# Skill:指向性地圖導覽視覺化
+# Skill:指向性地圖(系統全貌導覽視覺化)
 
-- 建立:2026-08-25|作者:A0/Fable5|狀態:**待認領(未找到既有實作)**|Owner 指示:msg 3992
-- 用途:地圖上的指向性導覽視覺化——店面/地點導覽、路線指引、位置敘事。
+- 建立:2026-08-25|更新:2026-08-25(Owner 澄清語義+首版已建)|作者:A0/Fable5|狀態:**已建 v1**
+- Owner 澄清(msg 3999 前後):指向性地圖=**幫助了解系統全貌的導覽圖**,不是地理地圖。
 
-## 現況(2026-08-25 盤點,誠實記錄)
+## 成品位置
 
-- 搜過 maplab-ai-handbook、tainan-location-social-game、innerflowlab-local-growth 三處:**沒有找到可直接復用的地圖導覽程式碼**。
-- tainan-location-social-game 有城市錨點/地點概念但已封存(PROJECT_SEALED),且明載「no map pipeline exists」。
-- 結論:Owner 說的「我們本來指向性地圖導覽視覺化」若指某個舊 demo/檔案,請 Owner 一句話指出在哪(哪台機器/哪個對話/哪個檔),找到就併入本 skill;若找不到就當新建項。
+- `docs/system-map/index.html` — 單檔互動地圖,瀏覽器直接開,免金鑰免安裝。
+- 內容:指揮層(Owner→bot→Fable5→Codex/hermes/Antigravity/win-01/OpenClaw)、七個每日產品(launchd 時刻表)、資料層(三個 repo)、外部能力(TWSE/OpenRouter 三鑰匙/NotebookLM/Firecrawl/聲音生成)、通道(TelbotFin)。
+- 互動:點節點→右欄顯示「它是誰、誰指向它、它指向誰、檔案在哪」,並亮起相關箭頭;上方按層過濾。
 
-## 新建時的技術底(先寫好,免重複研究)
+## 維護規則(所有 agent 共用)
 
-- 免費技術棧:Leaflet 或 MapLibre GL(開源免金鑰)+ OpenStreetMap 圖資;指向性動畫用 polyline 漸進繪製+方向箭頭;手機優先(PWA 可離線)。
-- Google Maps API 也可但要金鑰+額度,除非需要街景/店家資料才用。
-- 產出形式:單檔 HTML(好分享、好嵌 WordPress)或 claude-design 專案(要視覺 draft 時)。
-- 第一個落地場景建議:maplabkitchen 店面導覽頁(從捷運站/停車場到店的指向動畫),可直接嵌官網,對 SEO 也有用。
+1. 系統拓撲變了(新 agent、新產品 job、新外部能力、通道改動)→ 改 index.html 裡的 NODES/EDGES 兩個陣列即可,不用動繪圖程式。
+2. 每個節點的 paths 必須是真實檔案位置——這張圖同時是新 agent 的入門導覽,錯的路徑比沒有更糟。
+3. 節點描述用 Owner 看得懂的話(說人話),工程細節放 paths 指向的文件。
+4. 不放任何金鑰、token、客戶個資;chat_id 等識別碼也不放(圖可能被截圖分享)。
 
-## 邊界
+## 待辦
 
-- 客戶地址/個資不進地圖資料;只用公開地點。
-- 發布到 WordPress 走既有審核閘(draft→review→Owner 核准),不自動發布。
+- 併入 WordPress/SEO 線的細節節點(等 Antigravity 巡檢資料)。
+- 若 Owner 早前另有舊版指向性地圖檔案,找到後把有用的元素併入本版。

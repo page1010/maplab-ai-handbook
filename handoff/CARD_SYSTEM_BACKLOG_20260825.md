@@ -27,6 +27,11 @@
 - 前置:hermes 定位對齊稿先給 Owner 裁決(Owner 3938 已點出雙方認知不同步)——對齊稿=佇列最前。
 - 設計要點:同一套 prompt/驗收標準,產出格式不變只換引擎;交接觸發=額度監測(quota_meter);產出仍走同一 telegram 通道+四問格式。
 
+## E. 能力 skill 包(Owner msg 3992,2026-08-25 01:04)
+
+- 四項能力已落 skills/(capability-*.md):NotebookLM 專案大腦(**可用**,方法 06-05 已驗證)、Firecrawl 抓站(**待接鑰匙**,啟用步驟已寫)、Owner 聲音生成(**待建**,先本地開源評測再談花錢)、指向性地圖導覽視覺化(**待認領**,三 repo 都沒找到既有實作,等 Owner 指出舊物在哪或當新建)。
+- 工作 E-1:Firecrawl 註冊+MCP 接入(Owner 貼 key 照兩畫面模式)。E-2:語音克隆本地方案評測(可派 hermes/免費算力)。E-3:地圖導覽第一場景=maplabkitchen 店面導覽頁。
+
 ## 優先序(建議)
 
 1. C-1 殺 gemma4(一條命令)2. B-2 fallback 防斷供 3. A-1 roll-call 對照表 4. B-1/B-3 排查 5. D hermes 對齊稿+接手設計 6. C-2 hermes 預設模型改雲端

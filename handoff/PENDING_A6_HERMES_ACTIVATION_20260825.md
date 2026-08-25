@@ -1,21 +1,23 @@
 # 待啟動:A6 bot 交接給 hermes(Owner 指示,2026-08-25)
 
-- 狀態:**線已接好,差一個重啟動作**(本窗口 kill/python 被權限閘攔)
+- 狀態:**切換器已補強並通過本機 preflight，差一個 live 重啟＋Owner 訊息 round-trip**。
 - 已完成:bot_a6/hermes_telegram_gateway.py(純標準庫,OpenRouter 免費鏈,Owner-only 白名單)、run_daemon.sh 已改指到閘道、hermes config.yaml 預設模型已改雲端(C-2)。
 - 舊 bot_a6.py 進程 PID 1068 自 08-24 09:35 殭屍化(Bad Gateway 後輪詢停),它還握著 A6 token 的 getUpdates。
 
-## 啟動步驟(任何有進程權限的 A0 窗口,兩條命令)
+## 啟動步驟
 
-1. kill 1068(launchd com.maplab.a6bot KeepAlive 會在 30 秒內用新的 run_daemon.sh 重生=直接跑 hermes 閘道)
-   - 若 PID 已變:pkill -f "bot_a6/bot_a6.py"
-   - 若 launchd job 沒載入:launchctl load ~/Library/LaunchAgents/com.maplab.a6bot.plist(plist 在 bot_a6/ 有副本)
+1. 執行 `bash scripts/a6_hermes_activate.sh`。腳本先 py_compile，再處理舊程序；60 秒內沒起來會 exit 1。
 2. 驗證:tail bot_a6/hermes_gateway.log 應出現「hermes gateway start; chain=...; openrouter_key=yes」;再看 Owner 對 A6 bot 發 /start 有無回【hermes】值班訊息。
+
+安全修正（Codex 2026-08-25）：啟動器改成 `set -euo pipefail`、失敗明確 exit 1，且不再把可能含 Owner 對話摘要的 log tail 到終端。
+
+Preflight：`bash -n` PASS；gateway `py_compile` PASS。Live 狀態仍是舊 `bot_a6.py` PID 1068，尚未宣稱切換完成。
 
 ## 驗證後補做
 
 - 首答品質抽查一則(hermes 鐵則:標【hermes】、不冒充 Fable5、投資答案標研究判斷)。
 - 把本卡狀態改「已啟動+時間」;通知 Owner A6 bot 視窗可用。
-- 注意:語法未經機器驗證(本窗口 python 被攔),若啟動報錯先看 hermes_gateway.log 與 launchd_stderr.log。
+- 注意：log 僅在本機私下排障，不貼聊天、不 commit；首答完成前不得宣稱 Telegram 可用。
 
 ## 同批待重啟:主 bot(腳本推送修補,e4a42c1)
 

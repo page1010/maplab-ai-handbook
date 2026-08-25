@@ -71,6 +71,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--scene-line", action="append", default=[])
     parser.add_argument("--scene-motion", action="append", default=[])
     parser.add_argument(
+        "--card-motion",
+        choices=["dolly_in", "dolly_out", "pan_left", "pan_right", "static"],
+        default="dolly_in",
+        help="Motion used behind the intro and CTA cards.",
+    )
+    parser.add_argument(
         "--asset-file",
         action="append",
         default=[],
@@ -505,7 +511,7 @@ def main() -> None:
             motion = motions[scene_index]
             scene_index += 1
         else:
-            motion = "dolly_in"  # Use dolly_in for intro/outro backgrounds
+            motion = args.card_motion
         make_segment(
             ffmpeg_bin,
             bg_image,
@@ -547,6 +553,7 @@ def main() -> None:
         "images": [str(image) for image in images],
         "scene_lines": lines,
         "scene_motions": motions,
+        "card_motion": args.card_motion,
         "frame_modes": frame_modes,
         "video": str(video_path),
         "cover": str(cover_path),

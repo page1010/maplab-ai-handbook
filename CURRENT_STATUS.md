@@ -5,7 +5,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-08-25 Codex A8 EDM private trial｜邦尼兔素材分類、WP 草稿、hiphop v2、EDM v1 與安全短片已完成；Suno 一次 Create 產出 4 個 private variants，待 Owner 選曲與音訊 QA，發布仍在 gate｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-08-25 Codex A2→Songwriter→A8 接力｜邦尼兔客戶可讀 WP 稿已與內部 SEO 包分離；Owner 已選 Suno v4.5-all 版本一，2:37 母帶與 45–60 秒 hook 已落地，15 秒直式審核片完成，待 Owner 聽感確認後製作長版；發布仍在 gate｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -21,7 +21,7 @@
 
 ## 最新事實核對
 
-- 2026-08-25：**[A8 重啟] 邦尼兔托嬰畢業典禮案例已完成第一個原子閉環與 EDM private trial** — Drive `0717邦尼兔-托嬰畢業典禮` 共 28 件素材完成範圍盤點；本機 preview `c01/c03` 為無人餐點桌景候選，`c02` 因含幼兒人像海報列 C 級排除。新增 `workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/`，包含 WordPress 審稿草稿、已由 Drive 對稿回讀的 hiphop v2、新 EDM 歌詞、Suno 貼上包與生成收據。修正 enhanced renderer 把所有案例誤寫成「大臺南會展中心企業會議」的硬編碼，新增 graduation category 與零網路測試。Owner 當輪明確要求後只按一次 Suno Create，平台自動產出 4 個 private variants；四頁皆完成渲染、第一版完整歌詞 readback PASS，未 Publish。下一步只由 Owner 選 1 版，再做音訊發音／副歌／品牌 QA；WP 與社群仍未建立或發布。
+- 2026-08-25：**[A2→Songwriter→A8 接力] 邦尼兔托嬰畢業典禮案例已完成公開稿、選曲與第一支精準 15 秒審核片** — Drive `0717邦尼兔-托嬰畢業典禮` 共 28 件素材完成範圍盤點；公開 WP 稿已與 SEO／素材內部備註分離，公開 copy gate `ok=true`。Owner 已選第一個 Suno v4.5-all；2:37 母帶、45.0–60.0 秒 hook 候選與 15.000 秒直式審核片已落地。短片為 H.264/AAC、1080x1920、30fps，抽幀未見人物或日期。下一步只由 Owner 確認切點與發音，通過後 A8 製作 16:9 長版；WP 與社群仍未建立或發布。
 - 2026-08-25：**[A6 Hermes] 外接算力 Telegram 窗口已完成真實啟動** — `scripts/a6_hermes_activate.sh` fail-closed 啟動成功，`com.maplab.a6bot` 已常駐 `bot_a6/hermes_telegram_gateway.py`；Telegram Web 對 `@maplab_a6_bot` 送 `/start` 後真實讀回 `【hermes】值班中`。這只證明入口與身份回覆可用，第一題公開資訊的來源／推論／研究判斷品質仍待 bounded QA；私有客戶素材、持股、券商與密鑰不得送免費端點。收據：`workbook/reviews/JOB-A6-HERMES-ACTIVATION-20260825/telegram_roundtrip.md`。
 
 - 2026-08-03：**[修復＋更正] A8 影音產線 Google Drive/Sheets OAuth 根因已消除** — 先前診斷「卡在測試模式、refresh token 每 7 天過期」對「A8 產線」是**指錯專案**：A8 用的是 GCP 專案 **`maplab-ai`**（單一 `~/.claude/mcp-keys/google-token.json`），非相片產線的 `maplab-pipeline`（`token_owner/spouse.json`）。實查 Console：`maplab-ai` 同意畫面確為「測試」→ 這才是 7 天過期真因；**已於本日發布為「實際運作中」**，根因消除（可逆，Console 有「返回測試」）。Notion 金鑰保管室查無現成可用 Drive token，且 OAuth user-token 本質無法靠保管室繞過（會被 Google 依測試模式作廢）。**Owner 唯一一次動作**：在電腦前跑 `python3 ~/.claude/mcp-keys/reauth_google.py`，瀏覽器跳同意頁點「允許」（未驗證警告 → 進階 → 繼續 → 允許），新 refresh token 存回後**長期有效、不再每 7 天復發**。細節見 `skills/a8-produce-to-publish-sop.md` §6、`pitfalls.md`（2026-08-03 條）。➡️ 下個協作者：別再把 A8 的 OAuth 當週期性雜務；只剩那一次重授權。
@@ -146,7 +146,7 @@
 | T-A6-002 | LINE 對話訓練資料收集計畫 | A6 | 💤 暫停（原計畫拆 Sheet 做訓練資料，04-07 重新規劃方向。等 Owner 決定是否需要 LINE 訓練資料及取得方式。） | handoff/tasks/T-A6-002.md |
 | T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | ⏳ 等 A5 外送費級距 Owner 確認（Owner 已裁決選項 B：建完級距→Q5串接→Phase 3 啟動）（Owner 確認 Zone B/C 金額（`state/owner_delivery_fee_confirm_20260） | handoff/tasks/T-A7-001.md |
 | T-A7-002 | A7 部門 80/20 優先任務清單 | A7 | ⏸️ 阻塞中（任務 9 已解除，其餘阻塞未變）（任務 6（Q1-Q10 實裝）+ 任務 9（Owner 政策確認）+ 任務 10（技能書 v2.0）已完成。Phase ） | handoff/tasks/T-A7-002.md |
-| T-A8-001-folder-to-video-distribution | T-A8-001 — Folder Case to Short Video Distribution | A8 | 🟠 OWNER_GATE（2026-08-25 已完成邦尼兔素材分級、WP/兩版歌詞、A 級素材本機短片與 Suno 一次 Create 的 4 個 private variants；待 Owner 選曲與人工音訊 QA，尚未發布。） | handoff/tasks/T-A8-001-folder-to-video-distribution.md |
+| T-A8-001-folder-to-video-distribution | T-A8-001 — Folder Case to Short Video Distribution | A8 | 🟠 OWNER_GATE（2026-08-25 Owner 已選 v4.5-all 版本一；A2 公開 WP 稿、songwriter 交接、2:37 母帶與 15 秒直式審核片已完成。待 Owner 確認 45–60 秒 hook 與發音，再製作 16:9 長版；尚未建立 WP 或發布社群。） | handoff/tasks/T-A8-001-folder-to-video-distribution.md |
 | T-B1-001 | B1 Cross-Project Governance Advisor Prompt + Project Pause |  | 🟢 召喚型可用（B1 轉為 Investment OS 投資邏輯橋接顧問（召喚型）；InnerFlowLab/Substack 發文自動） | handoff/tasks/T-B1-001.md |
 | T-B1-B4-investment-os-role-split | T-B1-B4-001 — Investment OS B1-B4 Role Split + Chrome Extension Summon |  | 🟡 STALLED（since 2026-07-19，48h 無 commit，Owner 可更新最後活動解除）（B1-B4 已不只做角色拆分；新增 RSI-like 成長閉環，下一步是把 scorer 接進排程/Telegram f） | handoff/tasks/T-B1-B4-investment-os-role-split.md |
 | T-B1-DASH-001 | Guild Ops Board 自動同步 + 即時狀態燈 |  | 🟢 READY（已派工，等 Codex 執行）（Game dashboard v0.2 完成（9 NPC / 6 rooms / 21 cards，驗收通過）。尚未完成） | handoff/tasks/T-B1-DASH-001.md |

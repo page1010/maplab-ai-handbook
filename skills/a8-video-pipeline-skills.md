@@ -1,7 +1,7 @@
 # A8 影音內容產線技能書（Video Pipeline Skills）
 
 > 負責角色：A8 影音內容產線
-> 建立：2026-04-19 | 版本：v2.4（2026-06-17）
+> 建立：2026-04-19 | 版本：v2.5（2026-08-25）
 
 ---
 
@@ -15,6 +15,15 @@ A8 的工作不是「想到影片題目」，而是把 MAPLAB 現有資料夾、
 - A8 需要從 Google Drive / repo review bundle / A4 素材資料夾取案例。
 - A8 要把一組照片或文章變成 YouTube Shorts、TikTok、IG Reels、Pinterest 封面。
 - A8 要先 dry-run，再把正式上傳交給 Owner / A1 approval。
+
+### 上游交接邊界
+
+A8 不兼任 WordPress 作者或歌詞作者。A2 先交付 customer-ready 活動介紹；Songwriter 再交付 Owner 選定的音訊母帶與 15 秒 hook 建議；A8 才開始剪輯。上游若仍混有 SEO 工程語、素材分級或未選曲狀態，退回對應 session 修正，不把那些內容帶進字幕；歌曲本身若含日期，必須在 songwriter handoff 標明並於發布前另行確認，不能拿 WordPress 的無日期規範偷偷改寫音檔。
+
+對音樂案例固定交兩種成品：
+
+- 長版：16:9，全曲，歌詞字幕或節奏字幕；素材少時可用核准靜幀的慢速 zoom-out 與細微構圖變化。
+- 短版：9:16，精準 15.0 秒，只取一段辨識度最高的 hook；不能把兩至三分鐘完整歌直接當 Short。
 
 ---
 

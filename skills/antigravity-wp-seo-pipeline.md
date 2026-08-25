@@ -12,7 +12,7 @@
 |---|---|---|
 | ① 素材分類（TA/活動/場次） | **本機腳本**（photo-asset-retrieval-guide） | `MAPLAB_asset_mount_map`（確定）＋不確定素材 → 圖+文確認表 |
 | ②（不確定時）Owner 確認分類 | **Owner** | 確認表回覆 → 分類定案，才進 ③ |
-| ③ 內文生成 | **Antigravity（Gemini）** | 依 brand-voice + wp-article-standard 產 H1/引言/TOC/內文（Markdown/HTML 草稿） |
+| ③ 內文生成 | **Antigravity（Gemini）** | 依 brand-voice + wp-article-standard 產 H1/引言/內文（長篇指南只有讀者確實需要時才加 TOC） |
 | ④ SEO 打包 | **Antigravity** | 標題/描述/focus keyword、**圖片 alt**、內鏈（佔位）、掛載子頁 |
 | ⑤ 上稿 | **本機腳本/A0** | WP REST 建文章 **status=draft**、上傳媒體設 alt、掛 category；**不自蓋 🍁** |
 | ⑥ 驗收 → 發布 | **Owner** | review draft → 授權才 `status=publish`（agent 不自動發布） |
@@ -48,7 +48,7 @@
   （page `320ab0806d5c80e0be95f298399d2c44`）。**A0 透過 Notion MCP 取出 → 寫入 gitignore 的 .env → 腳本讀 env**。
 - 一律 `status:"draft"`；agent 不設 `publish`、不 DELETE、不改用戶權限、不改 Rank Math 付費設定。
 - 圖片：Drive/外接碟 → WP media（同源 blob→clipboard→REST，見 gdrive-to-wordpress-upload-guide）；alt 依 §3。
-- 文章結構：H1（地區+場景+外燴）→ 引言 → 快速索引 TOC（錨點）→ 內文 → 文末 cluster 內鏈。真文章 🍁 暗號只有 Owner 能蓋。
+- 文章結構：H1（地區+場景+外燴）→ 引言 → 內文 → 文末 cluster 內鏈。短案例不強塞「快速索引」；內部工程備註與公開稿必須分檔。真文章 🍁 暗號只有 Owner 能蓋。
 
 ## 6. 金鑰治理（不叫 Owner 手動輪替）
 

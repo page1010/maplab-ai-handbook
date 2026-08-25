@@ -10,9 +10,18 @@
 
 把「一個活動專案的照片 → 帶字幕 9:16 短片 → 上到 YouTube 私人草稿 → 待 Owner 核准公開」做成**可重複、可驗證、可回收**的一條流程。字幕、標題、描述一律套品牌語氣＋固定色卡；上片先到**私人/草稿**，公開一律等 Owner。
 
+### 0.1 三段接力，不在同一份稿裡混工種
+
+1. **A2 WordPress / SEO** 先完成 customer-ready 公開稿；SEO 欄位與素材判定分開留在內部包。
+2. **Songwriter** 只讀核准的活動介紹與音樂 brief，依 `skills/maplab-hiphop-songwriter/SKILL.md` 交歌詞、曲風與 15 秒 hook 建議。
+3. **A8** 只接選定音訊與核准素材，負責長片、短片、字幕、封面與平台包。
+
+每段可以在不同 session 執行，但只能依序交接。WordPress 文章不描述寫歌或剪片流程；歌詞不描述 SEO 或素材治理；影片 metadata 不承接內部工作語言。
+
 規格（單一真相來源 = `tools/ai_workbook/a8_platform_formats.py` 的 `PLATFORM_FORMATS`；出處見 `docs/platform_formats_sources.md`）：
-- **垂直短片**（YT Shorts / IG Reels / TikTok / FB Reels）：**9:16、1080×1920、H.264 MP4**，我方片長 **≤30s**（Owner 定案）。
+- **垂直短片**（YT Shorts / IG Reels / TikTok / FB Reels）：**9:16、1080×1920、H.264 MP4**；邦尼兔案例與同型音樂宣傳片預設 **15.0s**，延長需 Owner 明確核准。
 - **YouTube 長版**：**16:9、1920×1080**，全曲；縮圖 **1280×720**。
+- 若完整歌曲超過 Shorts 長度，保留為長版母帶，另選精準 15 秒 hook。素材不足時使用核准靜幀、歌詞字幕與慢速 zoom-out／輕微平移建立節奏，不用私人或不合格畫面補數量。
 - 多平台一次匯出＋自動生縮圖：`a8_platform_formats.py export <music> <prefix> <clips...> --platforms youtube|vertical|all`（相同規格只 render 一次；各平台安全區見 `specs`）。
 
 ---

@@ -8,6 +8,14 @@
 > 選填欄「當時的合理化」：記下當時給自己的藉口，累積成紅旗清單。
 > 依據：superpowers「NO SKILL WITHOUT A FAILING TEST FIRST」；我們的記憶鏈缺的正是 Verify 階。
 
+## 2026-08-25 — WordPress 公開稿不能兼作產線審核包
+
+- 觸發條件：Owner 再次發現文章含「快速導覽」「公開草稿只選無人畫面」、日期、圖片佔位與寫歌／剪片流程；整檔貼進 WordPress 時，客人會看到 agent 的內部自言自語。
+- 根因：A2 文案、素材審核、Songwriter 與 A8 剪片共用同一份 Markdown，把「給客人看的內容」與「給下一位 agent 的證據」誤當成同一交付物；舊 WP SOP 又把 TOC 當成所有文章的固定模板。
+- 解法：公開正文固定放 `wp_draft.md`，SEO metadata、日期、內鏈驗證、素材分級與媒體狀態放 `wp_internal_notes.md`；WordPress → Songwriter → A8 改為依序交接。短案例不強塞 TOC，案例日期預設不公開。
+- 預防：建立或上傳 WordPress 草稿前先跑 customer-ready gate，並只把 `wp_draft.md` 送進 public surface；任何含 `Owner`、`repo`、路徑、待補、素材排除、生成工具或日期的檔案都留在內部包。
+- 封坑驗證：`python3 tools/ai_workbook/a8_public_copy_gate.py workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/wp_draft.md --forbid-dates` 應回 `"ok": true`；`python -m pytest -q tests/test_a8_public_copy_gate.py` 應 3/3 PASS。
+
 ## 2026-06-20 — Unattended long-running tasks need hardcoded constraint/error-handling, not "agent will notice"
 
 - 觸發條件：研究一支「AI agent 無人介入連跑 27 小時」的影片（`docs/references/ai-agent-long-running-go-feature-rubric.md`）後，發現 MAPLAB 目前沒有任何規則明確規定 `/go` 類、cron、background task 等無人長跑任務的安全邊界；長跑迴圈若配上既有的高風險操作（例如會清空目錄的 deploy 腳本），一旦無人看管下重複執行，錯誤會被放大成大規模事故。

@@ -61,3 +61,7 @@ workbook/reviews/JOB-2025-CASE-LIBRARY/
 # LINE training artifacts — de-identified but local-only, never push (see docs/data-locations.md)
 workbook/a6-training/
 data/line_booking_pairs.csv
+
+# Third-party/generated A8 audio and rendered review binaries stay local.
+workbook/a8/pilot-bunny/audio/suno/
+workbook/a8/pilot-bunny/short15-review/

@@ -15,5 +15,7 @@ else
     exit 1
 fi
 
-# 使用 A1 bot 的 venv（同一個環境，不重複安裝）
-exec "/Users/pagemacmini/maplab-ai-handbook/bot/venv/bin/python3" "$BOT_DIR/bot_a6.py"
+# 2026-08-25 Owner 指示「把 A6 bot 接給 hermes」:Telegram 側改跑 hermes 閘道,
+# 舊報價助理 bot_a6.py 退出 Telegram 輪詢(程式保留在原地,LINE/GAS 流程不受影響)。
+# 閘道只用標準庫,任何 python3 都能跑;沿用同一 venv 免 PATH 意外。
+exec "/Users/pagemacmini/maplab-ai-handbook/bot/venv/bin/python3" "$BOT_DIR/hermes_telegram_gateway.py"

@@ -26,6 +26,7 @@
 1. **查價 SOP**:docs/RESEARCH_PRICE_FRESHNESS_SOP.md——價格只准官方 API(scripts/twse_quote.sh,一行查多檔含資料日期);每個數字標日期;盤後交付必含當日收盤;SCFI/CCFI 是週五發布的週指標,標「MM/DD 發布值」。
 2. **四問格式**:發生什麼變化/對我有何影響/下一步看什麼/什麼情況證明原判斷失效。
 3. **通道**:回 Owner=scripts/a0_reply.sh(留收據);群組成果回交=scripts/notify_group.sh(僅限 Owner 群組派工的成果,平時靜默);財經成品走 TelbotFin 既有 job,不要手動另開通道。
+   **hermes 專屬視窗(2026-08-25 新增)**:A6 bot 已交接給 hermes——Owner 直接在 A6 bot 對話=跟 hermes 說話,閘道=bot_a6/hermes_telegram_gateway.py(OpenRouter 免費鏈,回覆固定標【hermes】,只答 Owner 私訊)。啟動狀態見 handoff/PENDING_A6_HERMES_ACTIVATION_20260825.md。
 4. 訊息不用反引號、說人話三段式、不發收據式空回報。
 
 ## 三、SEO 專案:去哪找答案

@@ -2763,6 +2763,17 @@ async def _a0_resume_ask(user_message: str, timeout: int = A0_RESUME_TIMEOUT_S) 
     env["PATH"] = _runtime_path(env.get("PATH", ""))
 
     cmd = ["claude", "-p", "--resume", session_id, "--output-format", "text"]
+    # 2026-08-25 Owner「解決腳本推送問題」: resume 視窗過去沒有任何 permission
+    # 旗標，a0_reply.sh 每次都被權限閘攔下，只能靠 bot 轉送最終文字。這裡只放行
+    # 三支既有回報腳本（回 Owner 留收據、群組成果回交），其餘命令維持原本閘門。
+    # 單一逗號串而非 variadic 多值：--allowedTools 是 variadic 旗標，若用多個
+    # 裸值且後面剛好沒有 --model，最後的 prompt 位置參數會被吃進工具清單。
+    _a0_reply_allow = ",".join(
+        f"Bash({prefix}/Users/pagemacmini/maplab-ai-handbook/scripts/{script}:*)"
+        for script in ("a0_reply.sh", "a0_reply_from_file.sh", "notify_group.sh")
+        for prefix in ("bash ", "")
+    )
+    cmd += ["--allowedTools", _a0_reply_allow]
     if model:
         cmd += ["--model", model]
     cmd.append(A0_RESUME_PRELUDE + user_message)

@@ -3,8 +3,8 @@
 ## 接續狀態
 - **狀態**: 🔄 ACTIVE（Owner 於 2026-08-25 明確要求以邦尼兔案例重啟）
 - **最後活動**: 2026-08-25
-- **接續點**: 邦尼兔 Drive 素材已分級，WP 草稿、hiphop v2 與 EDM v1 貼上包已建立；先完成本機驗證，再由 Owner 決定是否送 Suno 免費層試作。
-- **阻塞**: `owner_gate` — 對外送出 EDM 歌詞／曲風與消耗每日免費額度前需當輪確認；WP／社群仍未核准發布。
+- **接續點**: 邦尼兔 Drive 素材已分級，WP 草稿、hiphop v2、EDM v1 與本機安全短片已建立；Suno 一次 Create 已完成並產出 4 個 private variants。
+- **阻塞**: `publish_gate` — Owner 尚未選定試聽版本，WP／社群亦未核准發布。
 
 Owner: A8 影音內容產線
 Status: 🔄 ACTIVE
@@ -18,8 +18,9 @@ Risk: medium
 - Draft bundle：`workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/`。
 - Root-cause fix：enhanced renderer 的平台文案原先硬編碼 ICC／企業會議內容；已改為 category profile，新增 `graduation`，避免不同案例沿用錯誤文案。
 - 已完成：WP 審稿草稿、hiphop v2 readback、新 EDM 歌詞與 Suno paste-ready package。
-- 尚未執行：Suno 生成、WordPress draft/publish、任何社群上傳。
-- Next bounded action：Owner 核准後，只送一次 `edm_lyrics_v1.txt`＋`suno_edm_submission.md` 的 style 做免費層試作，回讀發音與副歌，不延伸第二首。
+- Suno：Owner 當輪明確要求後只按一次 Create，平台自動產出 4 個 private variants（v4.5-all 2 個、v5.5 Preview 2 個）；歌詞、標題與曲風頁面 readback PASS，未 Publish。
+- 尚未執行：WordPress draft/publish、任何社群上傳、逐字人工音訊發音 QA。
+- Next bounded action：Owner 先在 `suno_generation_receipt.md` 的 4 個連結中選 1 版；A8 只驗該版發音、副歌辨識與品牌語氣，不再生成第二首。
 - Acceptance proof：A8 focused tests `5/5 PASS`；歌詞引擎 hiphop/EDM 均 `ok=true`；本機 review draft 為 H.264、1080x1920、30fps、7.833s，人工抽幀未見人物；完整證據見 `workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/validation_report.md`。
 
 ## Owner Request
@@ -208,7 +209,11 @@ Hermes/OpenClaw 現況：Hermes CLI 有但 gateway stopped；OpenClaw browser do
 workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/
 
 已完成：WP 審稿草稿、hiphop v2 回讀、新 EDM v1、Suno 貼上包、graduation metadata root-cause fix、5 個 focused tests、7.833 秒本機 review draft。
-尚未完成：Suno 外部生成、WP 建立/發布、任何社群上傳。
+Suno 已完成：Owner 當輪核准後只按一次 Create，平台自動產出 4 個 private variants；四頁皆已完成渲染，
+第一版完整歌詞 readback PASS。連結與邊界見 `suno_generation_receipt.md`。
+尚未完成：Owner 選曲、人工音訊發音 QA、WP 建立/發布、任何社群上傳。
 
-下一個 bounded action 只有一個：若 Owner 當輪明確核准，使用 `edm_lyrics_v1.txt` 與 `suno_edm_submission.md` 消耗一次每日免費額度生成 EDM 試作；只回讀歌詞發音、副歌辨識與品牌語氣，保存內部試聽 receipt，不延伸第二首、不發布。若未核准，維持 owner_gate，不對外傳送任何素材。
+下一個 bounded action 只有一個：Owner 從 `suno_generation_receipt.md` 的 4 個 private variants 選 1 版；
+只對該版做發音、副歌辨識與品牌語氣 QA。未選曲前不再生成；未另行核准不得 Publish、建立 WP draft
+或上傳社群。
 ```

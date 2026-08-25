@@ -15,6 +15,9 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
+from hermes_task_executor import execute as execute_task
+from hermes_task_executor import telegram_summary
+
 BOT_DIR = Path(__file__).resolve().parent
 LOG = BOT_DIR / "hermes_gateway.log"
 CONV = BOT_DIR / "hermes_conv.json"
@@ -33,6 +36,7 @@ LOCAL_OLLAMA_MODEL = "gemma4:latest"
 LOCAL_OLLAMA_URL = "http://127.0.0.1:11434/api/generate"
 MAX_HISTORY = 12
 MAX_REPLY = 3500
+EXECUTE_PREFIXES = ("/do", "執行：", "執行:", "動手：", "動手:")
 
 
 def log(msg):
@@ -206,9 +210,19 @@ def main():
                     log(f"ignore non-owner chat {chat.get('id')}")
                     continue
                 if text == "/start":
-                    tg_call(token, "sendMessage", {"chat_id": owner, "text": "【hermes】值班中。問我每日投資訊號、系統狀態、SEO 專案都可以;答不了的我會明說要等 Fable5。"})
+                    tg_call(token, "sendMessage", {"chat_id": owner, "text": "【hermes】值班中。可答疑，也可用 /do repo-status、/do recent-commits、/do a6-self-test 派安全有界任務；每次執行都有檔案 receipt，高風險指令會拒絕。"})
                     continue
                 log(f"owner msg: {text[:120]}")
+                if text.startswith(EXECUTE_PREFIXES):
+                    request = text
+                    for prefix in EXECUTE_PREFIXES:
+                        if request.startswith(prefix):
+                            request = request[len(prefix):].strip()
+                            break
+                    receipt = execute_task(request, owner)
+                    log(f"executor task={receipt['task_id']} status={receipt['status']} action={receipt.get('action')}")
+                    tg_call(token, "sendMessage", {"chat_id": owner, "text": telegram_summary(receipt)[:MAX_REPLY]})
+                    continue
                 if key is None:
                     key = load_free_env_key()
                 reply = answer(key, chain, history, text) if key else None

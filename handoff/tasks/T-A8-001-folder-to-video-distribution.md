@@ -23,6 +23,15 @@ Risk: medium
 - Next bounded action：Owner 在 https://docs.google.com/document/d/18kApXho1icyj78XBVo2aEzFUfJI7sMKt4y9I0jq5Ky8/edit?tab=t.0 核准文章與一版歌詞。通過後才在有效訂閱下生成新母帶，再交 A8。
 - Acceptance proof：公開文案 gate `ok=true`；focused public-copy tests `3/3 PASS`；Google Doc API 反讀 `inlineObjectCount=2`、CTA 獨立段落且 link=`https://lin.ee/IP8nt4n`；15 秒審核片為 H.264/AAC、1080x1920、30fps、15.000 秒，intro/middle/outro 抽幀未見人物或日期；本輪收據見 `workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/wp_photo_cta_correction_receipt.md`。
 
+## 2026-08-25 Automatic Distribution Audit
+
+- 邦尼兔 15 秒審核片反讀仍是 H.264/AAC、1080×1920、30fps、15.000 秒。
+- 目前唯一有真實成功證據的自動外部寫入，是 Chrome 操作 YouTube Studio 建立**私人** Short 草稿（2026-08-02 已驗證的另一案例）；本案本輪沒有上傳。
+- TikTok、Instagram Reels、Facebook Reels 與 Pinterest 目前只有輸出格式／metadata／cover 規格，沒有已驗證的自動上傳器；Telegram `sendVideo` 只有 SOP 目標，未找到本案可重跑 sender receipt，不能算接通。
+- 本案舊音源是免費期輸出，商業權利未驗證；因此「影片技術合格」不等於「可公開發佈」。
+- 完整收據：`workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/auto_distribution_audit_20260825.md`。
+- Next：Owner 明確核准歌詞後，在有效訂閱下生成新母帶；若只想驗證上片線路，需另行明確核准「可上傳 YouTube 私人草稿」。
+
 ## Owner Request
 
 Owner wants A8 to stop being idle and run a real content production loop:

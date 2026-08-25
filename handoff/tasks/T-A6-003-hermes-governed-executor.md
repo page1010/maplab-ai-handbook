@@ -1,6 +1,6 @@
 # T-A6-003 — Hermes Telegram 治理式執行器
 
-- 狀態：✅ IMPLEMENTED / 待 Telegram Web 真實 roundtrip
+- 狀態：✅ ROUNDTRIP_VERIFIED
 - Owner 需求：A6 Hermes 收到指令後能動手，不只答疑。
 - 版本邊界：Owner-only、固定 argv 白名單、每次建立 task/receipt；禁止任意 shell。
 
@@ -26,6 +26,8 @@
 - `py_compile`：PASS。
 - `git diff --check`：PASS。
 - 本機真實 worker receipt：`workbook/reviews/A6-HERMES-TASKS/A6H-20260825-204904-bcf1c5/receipt.json`。
+- Telegram Web 於 2026-08-25 20:54 實送 `/start` 與 `/do recent-commits`；畫面回覆 `completed`，task id `A6H-20260825-205420-d79c9c`。
+- 同 id 本機 receipt 存在，`status=completed`、`action=recent-commits`、`returncode=0`，且輸出首筆 commit 為 `a47e7c0`；owner-facing 與 file-backed 證據一致。
 
 ## Resume Prompt
 

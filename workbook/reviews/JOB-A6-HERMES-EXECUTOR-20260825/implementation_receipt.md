@@ -11,7 +11,7 @@
 ## DRIFT
 
 - 舊 Hermes 對話宣稱完全沒有本機執行能力；新版啟用後應由 `/start` 說明三項有界能力。
-- 尚未在本工作 session 取得 Telegram Web 新版 roundtrip，因此不標 LIVE_VERIFIED。
+- 2026-08-25 20:54 已取得 Telegram Web 新版 roundtrip，task id `A6H-20260825-205420-d79c9c` 與本機 receipt 一致；原 drift 已關閉。
 
 ## DISPATCH
 
@@ -20,4 +20,4 @@
 
 ## NEXT
 
-- 重載 `com.maplab.a6bot` 後以 Telegram Web 發 `/do recent-commits`；比對回覆 task id 與本機 receipt。
+- ROUNDTRIP_VERIFIED。後續新增能力時，維持固定 argv allowlist、focused tests 與 Telegram/receipt 同 id 驗證。

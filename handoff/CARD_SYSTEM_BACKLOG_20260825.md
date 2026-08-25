@@ -20,6 +20,7 @@
 - 現況:7 個 /Users/pagemacmini/.hermes/hermes-agent venv 的 tui_gateway.slash_worker --model gemma4:latest(PID 47301/47313/47356/49342/49359=08-24 00:27-00:38 殭屍;73785/73824=08-25 00:18 新起)+ Ollama.app serve(PID 37787)。
 - 工作 C-1(有權限窗口立即執行):pkill -f "slash_worker.*gemma4";確認 ollama 卸載 gemma4(ollama ps / ollama stop gemma4)。
 - 工作 C-2(治本):查 hermes-agent tui_gateway 為何自動起 gemma4 worker(設定檔在 ~/.hermes/hermes-agent),改預設模型為 hermes 雲端方案,本地 gemma4 退役,釋放記憶體。
+  → **2026-08-25 11:00 已做**:根源=~/.hermes/config.yaml model.default 指向 gemma4:latest+本地 Ollama;已改為 provider openrouter + google/gemma-4-31b-it:free(照 ranking.json 中文鏈)。金鑰補進 hermes .env 由 scripts/hermes_gateway_setup.sh 處理(複製自 free_compute.env,不經對話)。
 
 ## D. hermes 備援接手設計(Owner:我額度滿就下班,hermes 無上限方案接)
 

@@ -47,6 +47,13 @@
 - 待辦總表:handoff/CARD_SYSTEM_BACKLOG_20260825.md(優先序在檔尾);08-22 兩個 16 點檔整天沒跑,原因未查明(機器沒睡,不是睡眠問題)。
 - Owner 待裁決:晶技要不要進 watchlist;hermes 定位對齊(本手冊=第一版操作邊界,深層分工等 Fable5 額度回來對齊)。
 
+## 四之二、hermes 獨立 Telegram 窗口(Owner 08-25 指示:額度滿自動接手+多一個對話窗)
+
+- 設計:hermes gateway **長駐**自己的 Telegram bot(hermes-agent 原生支援)——長駐=不需要任何「切換觸發」,Fable5 額度滿時 Owner 直接改跟 hermes 窗講話即可;quota_meter.json 週用量高時 Fable5 會在回覆中主動提醒 Owner 改用 hermes 窗。
+- 已就位:①~/.hermes/config.yaml 已切 OpenRouter 雲端(gemma4 本地退役的治本)②啟動腳本 scripts/hermes_gateway_setup.sh(金鑰自動補、限 Owner 對話)③常駐排程檔 launchd/com.hermes.telegram-gateway.plist(RunAtLoad+KeepAlive)。
+- 待完成:①BotFather /newbot 拿新 bot token(30 秒;由有瀏覽器權限的 Fable5 窗口代辦或 Owner 順手)②跑 setup 腳本+載入 plist ③首訊驗證(hermes 自我介紹+報今日產品點名結果)。
+- hermes 窗鐵律:開頭標【hermes】不冒充 Fable5;答疑照本手冊;拿不準說拿不準;禁區照第五節。
+
 ## 五、hermes 明確不做
 
 不下單/不轉帳;不發布 WordPress/不動生產設定;不動 launchd(壞了就記錄+回報,等 Fable5/Codex);不碰 bot/.env 等 secrets(用現成腳本,不讀值);不冒充 Fable5(標自己身分);拿不準的說拿不準。

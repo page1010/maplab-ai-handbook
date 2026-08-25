@@ -3,7 +3,7 @@
 ## 接續狀態
 - **狀態**: 🟠 OWNER_GATE（文章＋歌詞核稿）
 - **最後活動**: 2026-08-25
-- **接續點**: A2 已完成 live SEO 佈局、Drive 客戶事實核對、無具名 WordPress 文章、圖片／OG 與縮短歌詞；Google Doc 已建立並反讀。
+- **接續點**: A2 已完成 live SEO 佈局、Drive 客戶事實核對、無具名 WordPress 文章、圖片／OG 與縮短歌詞；Owner 指出的「審稿面沒有照片／CTA 不清楚」已修正，Google Doc 反讀為 2 張 inline images、獨立可點擊 LINE CTA。
 - **阻塞**: `owner_article_and_lyrics_gate` — Owner 尚未核准文章與安全版／具名版歌詞；Suno 新母帶與 A8 均尚未啟動。
 
 Owner: A8 影音內容產線
@@ -17,11 +17,11 @@ Risk: medium
 - Privacy：`c02` 含幼兒人像海報，列 C 級排除；`c01` 與 `c03` 前 2.8 秒為無人餐點桌景候選，review draft 僅使用該安全時間窗。
 - Draft bundle：`workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/`。
 - Root-cause fix：enhanced renderer 的平台文案原先硬編碼 ICC／企業會議內容；已改為 category profile，新增 `graduation`，避免不同案例沿用錯誤文案。
-- 已完成：客戶可讀 WP 稿與內部 SEO 備註分離、live SEO 佈局、Drive 事實核對、1200×630 OG、縮短 EDM 歌詞、exact 15 秒 hook、A2 獨立 checker 與 Google Doc 審稿頁。
+- 已完成：客戶可讀 WP 稿與內部 SEO 備註分離、live SEO 佈局、Drive 事實核對、兩張正文圖、1200×630 OG、明確 LINE CTA、縮短 EDM 歌詞、exact 15 秒 hook、A2 獨立 checker 與 Google Doc 審稿頁。
 - Suno：Owner 當輪明確要求後只按一次 Create，平台自動產出 4 個 private variants（v4.5-all 2 個、v5.5 Preview 2 個）；歌詞、標題與曲風頁面 readback PASS，未 Publish。
 - 尚未執行：WordPress draft/publish、任何社群上傳、Owner 音訊聽辨、2:37 的 16:9 長版歌詞影片。
 - Next bounded action：Owner 在 https://docs.google.com/document/d/18kApXho1icyj78XBVo2aEzFUfJI7sMKt4y9I0jq5Ky8/edit?tab=t.0 核准文章與一版歌詞。通過後才在有效訂閱下生成新母帶，再交 A8。
-- Acceptance proof：公開文案 gate `ok=true`；focused public-copy tests `3/3 PASS`；15 秒審核片為 H.264/AAC、1080x1920、30fps、15.000 秒，intro/middle/outro 抽幀未見人物或日期；完整接力見 `pipeline_handoff.md`。
+- Acceptance proof：公開文案 gate `ok=true`；focused public-copy tests `3/3 PASS`；Google Doc API 反讀 `inlineObjectCount=2`、CTA 獨立段落且 link=`https://lin.ee/IP8nt4n`；15 秒審核片為 H.264/AAC、1080x1920、30fps、15.000 秒，intro/middle/outro 抽幀未見人物或日期；本輪收據見 `workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/wp_photo_cta_correction_receipt.md`。
 
 ## Owner Request
 
@@ -205,7 +205,7 @@ Hermes/OpenClaw 現況：Hermes CLI 有但 gateway stopped；OpenClaw browser do
 ```text
 你是 MAPLAB 單案內容接力者，先完整讀 CURRENT_STATUS.md、pitfalls.md、skills/maplab-case-to-content-pipeline/SKILL.md、skills/maplab-hiphop-songwriter/SKILL.md、skills/a8-produce-to-publish-sop.md 與本 Task Card。
 
-Active case 是托嬰畢業典禮。A2 已完成 live WordPress SEO 佈局、Drive 客戶事實核對、無具名公開文章、兩張正文圖、1200×630 OG、FAQ/schema 與獨立 checker。Songwriter 已完成 60–75 秒短完整歌詞與 exact 15 秒 hook，兩版 lyrics engine 都通過。Owner 審稿頁：
+Active case 是托嬰畢業典禮。A2 已完成 live WordPress SEO 佈局、Drive 客戶事實核對、無具名公開文章、兩張正文圖、1200×630 OG、FAQ/schema 與獨立 checker。2026-08-25 Owner 指出的審稿面照片與 CTA 缺口已修正：Google Doc 有 2 張 inline images，CTA 是獨立可點擊段落。Songwriter 已完成 60–75 秒短完整歌詞與 exact 15 秒 hook，兩版 lyrics engine 都通過。Owner 審稿頁：
 https://docs.google.com/document/d/18kApXho1icyj78XBVo2aEzFUfJI7sMKt4y9I0jq5Ky8/edit?tab=t.0
 
 目前 gate 是 OWNER_ARTICLE_AND_LYRICS_GATE。下一個 bounded action 只有一個：讀 Owner 回覆，依「文章通過＋歌詞安全版通過」、「文章通過＋具名邦尼兔通過」或逐句修改更新核准版。核准前不建立 WordPress 草稿、不送音樂生成、不啟動 A8。

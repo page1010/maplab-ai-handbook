@@ -5,7 +5,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-08-25 Codex A2→Songwriter→A8 單案流程｜托嬰畢業典禮 live SEO 佈局、Drive 事實核對、無具名 WP 文章、圖片／OG、縮短歌詞與 Google Doc 審稿面完成；目前停在文章＋歌詞 Owner gate，尚未建立 WP 草稿、生成新歌或啟動 A8｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-08-25 Codex A2→Songwriter→A8 單案流程｜托嬰畢業典禮審稿面已補 2 張可公開照片與獨立可點擊 LINE CTA，API 反讀通過；目前仍停在文章＋歌詞 Owner gate，尚未建立 WP 草稿、生成新歌或啟動 A8｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -21,7 +21,7 @@
 
 ## 最新事實核對
 
-- 2026-08-25：**[A2→Songwriter→A8 單案核稿] 托嬰畢業典禮案例已完成文章與歌詞審稿包** — live WP REST 共 57 篇且「畢業」為內容 gap；本案定位為家庭活動 cluster 的獨立 case child，不與週歲頁混寫。Drive 28 件素材與同日客戶資料已作內部事實核對，公開文章不使用未核准客戶名稱；兩張正文圖、1200×630 OG、FAQ/schema、60–75 秒歌詞與 exact 15 秒 hook 已完成。Google Doc 已 API 反讀：`https://docs.google.com/document/d/18kApXho1icyj78XBVo2aEzFUfJI7sMKt4y9I0jq5Ky8/edit?tab=t.0`。下一步只有 Owner 核准文章與歌詞；既有免費期歌曲只作風格參考，核准後才在有效訂閱下生成新母帶並交 A8。尚未建立 WP 草稿、生成新歌、渲染新片或上傳發布。
+- 2026-08-25：**[A2→Songwriter→A8 單案核稿] 托嬰畢業典禮案例已完成文章與歌詞審稿包** — live WP REST 共 57 篇且「畢業」為內容 gap；本案定位為家庭活動 cluster 的獨立 case child，不與週歲頁混寫。Drive 28 件素材與同日客戶資料已作內部事實核對，公開文章不使用未核准客戶名稱；兩張正文圖、1200×630 OG、FAQ/schema、60–75 秒歌詞與 exact 15 秒 hook 已完成。Owner 指出的「審稿面沒有照片／CTA 不明確」已修正；Google Doc API 反讀為 2 張 inline images、CTA 獨立段落且連到真實 LINE：`https://docs.google.com/document/d/18kApXho1icyj78XBVo2aEzFUfJI7sMKt4y9I0jq5Ky8/edit?tab=t.0`。下一步只有 Owner 核准文章與歌詞；既有免費期歌曲只作風格參考，核准後才在有效訂閱下生成新母帶並交 A8。尚未建立 WP 草稿、生成新歌、渲染新片或上傳發布。
 - 2026-08-25：**[A6 Hermes] 外接算力 Telegram 窗口已完成真實啟動** — `scripts/a6_hermes_activate.sh` fail-closed 啟動成功，`com.maplab.a6bot` 已常駐 `bot_a6/hermes_telegram_gateway.py`；Telegram Web 對 `@maplab_a6_bot` 送 `/start` 後真實讀回 `【hermes】值班中`。這只證明入口與身份回覆可用，第一題公開資訊的來源／推論／研究判斷品質仍待 bounded QA；私有客戶素材、持股、券商與密鑰不得送免費端點。收據：`workbook/reviews/JOB-A6-HERMES-ACTIVATION-20260825/telegram_roundtrip.md`。
 
 - 2026-08-03：**[修復＋更正] A8 影音產線 Google Drive/Sheets OAuth 根因已消除** — 先前診斷「卡在測試模式、refresh token 每 7 天過期」對「A8 產線」是**指錯專案**：A8 用的是 GCP 專案 **`maplab-ai`**（單一 `~/.claude/mcp-keys/google-token.json`），非相片產線的 `maplab-pipeline`（`token_owner/spouse.json`）。實查 Console：`maplab-ai` 同意畫面確為「測試」→ 這才是 7 天過期真因；**已於本日發布為「實際運作中」**，根因消除（可逆，Console 有「返回測試」）。Notion 金鑰保管室查無現成可用 Drive token，且 OAuth user-token 本質無法靠保管室繞過（會被 Google 依測試模式作廢）。**Owner 唯一一次動作**：在電腦前跑 `python3 ~/.claude/mcp-keys/reauth_google.py`，瀏覽器跳同意頁點「允許」（未驗證警告 → 進階 → 繼續 → 允許），新 refresh token 存回後**長期有效、不再每 7 天復發**。細節見 `skills/a8-produce-to-publish-sop.md` §6、`pitfalls.md`（2026-08-03 條）。➡️ 下個協作者：別再把 A8 的 OAuth 當週期性雜務；只剩那一次重授權。

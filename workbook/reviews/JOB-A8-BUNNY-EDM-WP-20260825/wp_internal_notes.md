@@ -8,11 +8,12 @@
 - SEO title：`台南托嬰畢業典禮外燴｜一口點心與成長日甜點桌｜MAPLAB`
 - Meta description：`台南托嬰畢業典禮外燴案例，整理一口點心、花藝與親子活動餐桌配置；查看準備重點，透過 MAPLAB 官方 LINE 詢問。`
 - Focus keyword：`台南托嬰畢業典禮外燴`
-- 核准版字元數：`1774`
-- 核准版前 500 字 SHA-256：`d47138246e4c3ae8`
+- 目前待核稿字元數：`1962`
+- 目前待核稿前 500 字 SHA-256：`385c7784d6b18a6e`
 - 真實 LINE URL：`https://lin.ee/IP8nt4n`
 - 精選圖：`wp_assets/maplab-daycare-graduation-catering-dessert-table.webp`
 - 精選圖 WP media ID：尚未上傳，因此目前沒有 media ID；建立 WordPress 草稿前先上傳並寫回。
+- Owner 審稿 Google Doc 已反讀確認：2 個 inline image objects；CTA 為獨立段落且連至真實 LINE URL。
 
 ## 素材邊界
 

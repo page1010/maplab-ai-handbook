@@ -456,3 +456,10 @@
 - 根因：把同一個 connector 的讀取成功誤當成完整寫入授權；Drive/Docs actions 的 OAuth scopes 可以不對稱。
 - 解法：先讓 create action fail closed，不重複送內容；改用已登入的 Google Docs 瀏覽器建立文件，再用 Google Docs API 讀回標題與全文作 durable proof。
 - 預防：每條 Google 產線把 `read / create / edit / upload` 分開做 capability probe。建立審稿面前先測 create scope；若只有 read，使用已登入瀏覽器完成可逆的草稿建立，最後仍以 API 或可讀畫面反讀，不把「輸入已完成」當成「內容已保存」。
+
+## 2026-08-25 — WordPress 用 WebP 不等於 Google Docs 審稿面可直接上傳
+
+- 觸發條件：文章 bundle 已有兩張可公開 WebP，瀏覽器也完成檔案選取，但 Google Docs 畫面回「不支援的圖片類型」；只看上傳流程或雲端儲存狀態會把空行誤報成照片已加入。
+- 根因：把 WordPress 的最佳圖片格式直接沿用到 Google Docs，沒有在審稿面做格式相容性與 inline object 反讀；同一張素材在不同交付面有不同媒體能力。
+- 解法：WordPress 保留 WebP；只為 Google Docs 審稿面轉一份 JPEG 再插入，最後用 Docs API 驗證 `inlineObjectCount` 與正文引用數都等於預期值。
+- 預防：案例文章有圖片時，驗收必須同時檢查「公開稿 image markup／WP asset」與「Owner 審稿面 inline image object」；Google Docs 上傳先用 JPEG/PNG，不把 file chooser 成功或空白段落當成圖片證明。

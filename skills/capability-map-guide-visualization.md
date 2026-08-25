@@ -30,4 +30,23 @@ python3 tools/ai_workbook/build_directional_system_map.py
 python3 tools/ai_workbook/build_directional_system_map.py --check
 ```
 
-Graphify 目前不是必要依賴；未來安裝後直接 ingest generated graph JSON，不再建立第二份人工 schema。
+## Graphify 已上線（2026-08-25）
+
+- 版本：`0.9.49`；全域 Codex 規則：`/Users/pagemacmini/AGENTS.md`。
+- repo 排除規則：`.graphifyignore`，排除投資域、secrets、runtime logs、客戶原始資料、歷史／生成器雜訊。
+- 程式圖：`graphify-out/graph.json`（1817 nodes／3252 edges／148 communities）。
+- 互動圖：`graphify-out/graph.html`；目錄樹：`graphify-out/GRAPH_TREE.html`。
+- 診斷：0 dangling、0 missing endpoints、0 self-loops、0 collapsed edges；AST 抽取曾警告 `AppKit` 與 `Foundation` 各有一個重複 node id 被去重。
+- 效率基準：約 121,133 naive tokens 對 3,404 average query tokens，約 `35.6x` 縮減。
+
+維護指令：
+
+```bash
+graphify update .
+graphify query "<question>"
+graphify path "<A>" "<B>" --undirected
+graphify explain "<concept>"
+graphify tree --graph graphify-out/graph.json --output graphify-out/GRAPH_TREE.html --root .
+```
+
+Graphify 只用於程式結構與影響面；治理真相仍來自 canonical manifest、`CURRENT_STATUS.md`、Task Card、live readback 與 receipt。

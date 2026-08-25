@@ -125,7 +125,8 @@
     {"id": "gov:receipt", "name": "Review／receipt", "status": "verified", "description": "測試、live readback、完成證據與缺口。", "path": "workbook/reviews/", "owner": "task owner + reviewer", "outputs": ["completion evidence"]},
     {"id": "gov:pitfalls", "name": "pitfalls.md／experience log", "status": "verified", "description": "重複錯誤的觸發、根因、解法與預防。", "path": "pitfalls.md", "owner": "A1/all roles", "outputs": ["durable lessons"]},
     {"id": "gov:memory", "name": "Hermes／agent memory", "status": "declared", "description": "可檢索歷史與經驗，只能輔助定位，不可覆蓋 live fact。", "path": "workbook/hermes/", "owner": "A1/B5", "outputs": ["recall candidates"], "boundary": "需用 repo/runtime/receipt 驗證"},
-    {"id": "gov:notebooklm", "name": "NotebookLM Project Brain", "status": "declared", "description": "sanitized 專案閱讀、問答與教育層；不會自動同步 git。", "path": "workbook/notebooklm/maplab-project-brain/", "owner": "A0/A1", "outputs": ["citation-grounded Q&A source pack"], "boundary": "不得匯入 secrets、L0、客戶原始個資、持股、runtime dump"}
+    {"id": "gov:notebooklm", "name": "NotebookLM Project Brain", "status": "declared", "description": "sanitized 專案閱讀、問答與教育層；不會自動同步 git。", "path": "workbook/notebooklm/maplab-project-brain/", "owner": "A0/A1", "outputs": ["citation-grounded Q&A source pack"], "boundary": "不得匯入 secrets、L0、客戶原始個資、持股、runtime dump"},
+    {"id": "gov:graphify", "name": "Graphify 0.9.49 code graph", "status": "verified", "description": "AST-only 程式依賴圖；現有 1817 nodes、3252 edges、148 communities，用於 query／path／explain／affected 與影響面縮小。", "path": "graphify-out/GRAPH_REPORT.md", "owner": "A1", "outputs": ["graph.html", "GRAPH_TREE.html", "graph.json", "GRAPH_REPORT.md", "query memory"], "boundary": "只證明程式結構；不取代 canonical manifest、live readback、approval gate 或 receipt", "freshness": "graphify update . after code changes"}
   ],
   "notebooklm": {
     "allowed_sensitivity": ["public", "internal_governance", "sanitized_operational_summary"],

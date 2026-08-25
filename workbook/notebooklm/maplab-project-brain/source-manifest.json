@@ -1,8 +1,8 @@
 {
   "schema_version": "2026-08-25.notebooklm-source-pack.v1",
   "generated_at": "2026-08-25T00:00:00+08:00",
-  "build_base_commit": "4fa25ea3eb41",
-  "directional_map_manifest_sha256": "75a93d5bb747e9eb8e649876c1f1c48e9a233845fd3894429e2737391d1236ce",
+  "build_base_commit": "238b1fa123c8",
+  "directional_map_manifest_sha256": "c5297ddaf7b90c75a3ede164264c286b8756b4f64989de51480f2b5d03179b03",
   "upload_files": [
     "workbook/notebooklm/maplab-project-brain/maplab-project-brain.md",
     "workbook/notebooklm/maplab-project-brain/source-manifest.json"
@@ -30,8 +30,8 @@
   "sources": [
     {
       "path": "config/system-map/maplab-directional-map.json",
-      "sha256": "75a93d5bb747e9eb8e649876c1f1c48e9a233845fd3894429e2737391d1236ce",
-      "bytes": 27899,
+      "sha256": "c5297ddaf7b90c75a3ede164264c286b8756b4f64989de51480f2b5d03179b03",
+      "bytes": 28461,
       "classification": "internal_governance",
       "redactions": 0
     },
@@ -58,15 +58,15 @@
     },
     {
       "path": "SYSTEM_DIRECTORY_INDEX.md",
-      "sha256": "fdaa236c18f11ce99f9c2f9112e3320fcd3b1fcfc8c64985f5bcd0ba1fde74c5",
-      "bytes": 35060,
+      "sha256": "885107adec85b309a33b7eb9a685ad85490966db2fb67c6c495cc41fbe678b9a",
+      "bytes": 35660,
       "classification": "internal_governance",
       "redactions": 0
     },
     {
       "path": "skills/capability-map-guide-visualization.md",
-      "sha256": "ef2936b9dc0c2fc65db55306bab503d7dce283ea84641140a619267ec3b143fb",
-      "bytes": 1879,
+      "sha256": "229a913612d1cac388fa085a86f82d4bccc456caa9e9b4db37474c45f1ada83a",
+      "bytes": 2835,
       "classification": "internal_governance",
       "redactions": 0
     },

@@ -8,6 +8,14 @@
 > 選填欄「當時的合理化」：記下當時給自己的藉口，累積成紅旗清單。
 > 依據：superpowers「NO SKILL WITHOUT A FAILING TEST FIRST」；我們的記憶鏈缺的正是 Verify 階。
 
+## 2026-08-25 — Graphify 首建與 incremental update 必須共用同一 corpus 邊界
+
+- 觸發條件：先用 `graphify extract . --code-only` 產生 2,203-node AST 圖，之後依全域規則跑 `graphify update .`，圖卻膨脹為 7,332 nodes／622 communities，大量 `skills`、`docs`、`handoff` Markdown 被當成 code-like 節點。
+- 根因：首建的 `--code-only` 只是當次參數，incremental update 仍依 `.graphifyignore` 決定 corpus；當 ignore 沒有排除文件時，首建與後續更新來自兩個不同集合。
+- 解法：`.graphifyignore` 明確排除 `*.md`／`*.txt`／`*.html`、歷史／generated／runtime／secrets／customer raw 與 Investment OS 路徑；另外排除會記錄 Graphify 自身統計的 canonical manifest/schema，避免地圖索引自己的數字形成 self-reference。以 `graphify extract . --code-only --force` 重建，再連跑兩次 `graphify update .` 驗證穩定。文件／角色／SOP 由 canonical manifest 與 NotebookLM safe pack 管理。
+- 預防：新 repo 建 Graphify 前先寫 `.graphifyignore`；首建後立刻再跑一次 update，若 nodes 大幅增長就停下修 corpus，不把膨脹圖當正常 freshness。
+- 封坑驗證：`graphify update .` 應顯示 `No code-graph topology changes detected`；`graphify diagnose multigraph --graph graphify-out/graph.json --json` 應為 1817 nodes／3252 edges 且 missing／dangling／self-loop／collapsed 全為 0。
+
 ## 2026-08-25 — WordPress 公開稿不能兼作產線審核包
 
 - 觸發條件：Owner 再次發現文章含「快速導覽」「公開草稿只選無人畫面」、日期、圖片佔位與寫歌／剪片流程；整檔貼進 WordPress 時，客人會看到 agent 的內部自言自語。

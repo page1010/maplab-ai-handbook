@@ -1,6 +1,6 @@
 # MAPLAB Project Brain — NotebookLM Safe Source Pack
 
-> Generated from `config/system-map/maplab-directional-map.json`. Build base commit `4fa25ea3eb41`; manifest SHA `75a93d5bb747e9eb8e649876c1f1c48e9a233845fd3894429e2737391d1236ce`.
+> Generated from `config/system-map/maplab-directional-map.json`. Build base commit `238b1fa123c8`; manifest SHA `c5297ddaf7b90c75a3ede164264c286b8756b4f64989de51480f2b5d03179b03`.
 > This is a curated internal-governance corpus, not a literal repository dump and not a live-state authority.
 > Excluded: secrets, credentials, cookies, customer raw data, runtime logs, SQLite/DB dumps, investment data, media binaries and generated noise.
 
@@ -13,7 +13,7 @@
 
 ## Source: `config/system-map/maplab-directional-map.json`
 
-- SHA-256: `75a93d5bb747e9eb8e649876c1f1c48e9a233845fd3894429e2737391d1236ce`
+- SHA-256: `c5297ddaf7b90c75a3ede164264c286b8756b4f64989de51480f2b5d03179b03`
 - Classification: `internal_governance`
 - Redactions: `0`
 
@@ -145,7 +145,8 @@
     {"id": "gov:receipt", "name": "Review／receipt", "status": "verified", "description": "測試、live readback、完成證據與缺口。", "path": "workbook/reviews/", "owner": "task owner + reviewer", "outputs": ["completion evidence"]},
     {"id": "gov:pitfalls", "name": "pitfalls.md／experience log", "status": "verified", "description": "重複錯誤的觸發、根因、解法與預防。", "path": "pitfalls.md", "owner": "A1/all roles", "outputs": ["durable lessons"]},
     {"id": "gov:memory", "name": "Hermes／agent memory", "status": "declared", "description": "可檢索歷史與經驗，只能輔助定位，不可覆蓋 live fact。", "path": "workbook/hermes/", "owner": "A1/B5", "outputs": ["recall candidates"], "boundary": "需用 repo/runtime/receipt 驗證"},
-    {"id": "gov:notebooklm", "name": "NotebookLM Project Brain", "status": "declared", "description": "sanitized 專案閱讀、問答與教育層；不會自動同步 git。", "path": "workbook/notebooklm/maplab-project-brain/", "owner": "A0/A1", "outputs": ["citation-grounded Q&A source pack"], "boundary": "不得匯入 secrets、L0、客戶原始個資、持股、runtime dump"}
+    {"id": "gov:notebooklm", "name": "NotebookLM Project Brain", "status": "declared", "description": "sanitized 專案閱讀、問答與教育層；不會自動同步 git。", "path": "workbook/notebooklm/maplab-project-brain/", "owner": "A0/A1", "outputs": ["citation-grounded Q&A source pack"], "boundary": "不得匯入 secrets、L0、客戶原始個資、持股、runtime dump"},
+    {"id": "gov:graphify", "name": "Graphify 0.9.49 code graph", "status": "verified", "description": "AST-only 程式依賴圖；現有 1817 nodes、3252 edges、148 communities，用於 query／path／explain／affected 與影響面縮小。", "path": "graphify-out/GRAPH_REPORT.md", "owner": "A1", "outputs": ["graph.html", "GRAPH_TREE.html", "graph.json", "GRAPH_REPORT.md", "query memory"], "boundary": "只證明程式結構；不取代 canonical manifest、live readback、approval gate 或 receipt", "freshness": "graphify update . after code changes"}
   ],
   "notebooklm": {
     "allowed_sensitivity": ["public", "internal_governance", "sanitized_operational_summary"],
@@ -1966,7 +1967,7 @@ Chrome tab 規範：`AGENT_RULES.md` §「資源衛生 — Chrome / 瀏覽器 se
 
 ## Source: `SYSTEM_DIRECTORY_INDEX.md`
 
-- SHA-256: `fdaa236c18f11ce99f9c2f9112e3320fcd3b1fcfc8c64985f5bcd0ba1fde74c5`
+- SHA-256: `885107adec85b309a33b7eb9a685ad85490966db2fb67c6c495cc41fbe678b9a`
 - Classification: `internal_governance`
 - Redactions: `0`
 
@@ -2097,6 +2098,9 @@ Directory Index Check
 | MAPLAB 指向性地圖 manifest | `config/system-map/maplab-directional-map.json` | canonical navigation schema | A0–A8、Owner、Extension、Codex、Claude、Hermes、OpenClaw | 非投資域；所有視覺與 NotebookLM 包由此重建 |
 | MAPLAB 指向性地圖 | `docs/system-map/index.html` | generated owner view | Owner、A0–A8、全 runtime | 七視角；不可直接手改 HTML |
 | Graphify-compatible 關聯圖 | `docs/system-map/maplab-directional-map.graph.json` | generated nodes/edges | A1、Codex、Graphify／graph tooling | 管地址與依賴，不取代 CURRENT_STATUS／receipt |
+| Graphify 程式依賴圖 | `graphify-out/graph.json` | generated AST graph | A1、Codex、Claude、Graphify | 1817 nodes／3252 edges；改 code 後跑 `graphify update .` |
+| Graphify 互動圖／目錄樹 | `graphify-out/graph.html` / `graphify-out/GRAPH_TREE.html` | generated navigation views | Owner、A0、A1、工程 agent | 程式層；角色／SOP／Sheet 仍看 canonical map |
+| Graphify 查詢記憶 | `graphify-out/memory/` / `graphify-out/reflections/LESSONS.md` | generated feedback loop | A1、Codex、Claude | useful／dead_end／corrected；不得存 secrets 或客戶 raw data |
 | NotebookLM Project Brain 包 | `workbook/notebooklm/maplab-project-brain/` | generated sanitized reading pack | Owner、A0、A1、NotebookLM | 禁止 wholesale repo dump；先讀 source-manifest 的 hash／排除規則 |
 | 技能總路由 | `skills/superpowers-guide.md` | canonical skill router | 全角色 | 新動作前重查 |
 | 任務進度技能 | `skills/task-progress-guide.md` | canonical skill | 全角色 | Progress Log、Resume、checkpoint |
@@ -2595,7 +2599,7 @@ content_indexable=false
 
 ## Source: `skills/capability-map-guide-visualization.md`
 
-- SHA-256: `ef2936b9dc0c2fc65db55306bab503d7dce283ea84641140a619267ec3b143fb`
+- SHA-256: `229a913612d1cac388fa085a86f82d4bccc456caa9e9b4db37474c45f1ada83a`
 - Classification: `internal_governance`
 - Redactions: `0`
 
@@ -2632,7 +2636,26 @@ python3 tools/ai_workbook/build_directional_system_map.py
 python3 tools/ai_workbook/build_directional_system_map.py --check
 ```
 
-Graphify 目前不是必要依賴；未來安裝後直接 ingest generated graph JSON，不再建立第二份人工 schema。
+## Graphify 已上線（2026-08-25）
+
+- 版本：`0.9.49`；全域 Codex 規則：`/Users/pagemacmini/AGENTS.md`。
+- repo 排除規則：`.graphifyignore`，排除投資域、secrets、runtime logs、客戶原始資料、歷史／生成器雜訊。
+- 程式圖：`graphify-out/graph.json`（1817 nodes／3252 edges／148 communities）。
+- 互動圖：`graphify-out/graph.html`；目錄樹：`graphify-out/GRAPH_TREE.html`。
+- 診斷：0 dangling、0 missing endpoints、0 self-loops、0 collapsed edges；AST 抽取曾警告 `AppKit` 與 `Foundation` 各有一個重複 node id 被去重。
+- 效率基準：約 121,133 naive tokens 對 3,404 average query tokens，約 `35.6x` 縮減。
+
+維護指令：
+
+```bash
+graphify update .
+graphify query "<question>"
+graphify path "<A>" "<B>" --undirected
+graphify explain "<concept>"
+graphify tree --graph graphify-out/graph.json --output graphify-out/GRAPH_TREE.html --root .
+```
+
+Graphify 只用於程式結構與影響面；治理真相仍來自 canonical manifest、`CURRENT_STATUS.md`、Task Card、live readback 與 receipt。
 
 ````
 

@@ -1,14 +1,14 @@
 {
   "schema_version": "2026-08-25.maplab-directional-map.v1",
   "generated_at": "2026-08-25T00:00:00+08:00",
-  "build_base_commit": "4fa25ea3eb41",
+  "build_base_commit": "238b1fa123c8",
   "source_manifest": "config/system-map/maplab-directional-map.json",
-  "source_manifest_sha256": "75a93d5bb747e9eb8e649876c1f1c48e9a233845fd3894429e2737391d1236ce",
+  "source_manifest_sha256": "c5297ddaf7b90c75a3ede164264c286b8756b4f64989de51480f2b5d03179b03",
   "views": 7,
   "roles": 10,
   "workflows": 7,
   "workflow_stages": 28,
-  "graph_nodes": 262,
+  "graph_nodes": 263,
   "graph_edges": 302,
   "notebook_sources": 8,
   "outputs": [

@@ -2,8 +2,8 @@
   "schema_version": "2026-08-25.maplab-directional-map.v1",
   "generated_at": "2026-08-25T00:00:00+08:00",
   "source_manifest": "config/system-map/maplab-directional-map.json",
-  "source_manifest_sha256": "75a93d5bb747e9eb8e649876c1f1c48e9a233845fd3894429e2737391d1236ce",
-  "build_base_commit": "4fa25ea3eb41",
+  "source_manifest_sha256": "c5297ddaf7b90c75a3ede164264c286b8756b4f64989de51480f2b5d03179b03",
+  "build_base_commit": "238b1fa123c8",
   "scope": {
     "title": "MAPLAB 非投資域指向性治理地圖",
     "included": [
@@ -1217,6 +1217,13 @@
       "label": "Git commit／review",
       "status": "verified",
       "path": ".git"
+    },
+    {
+      "id": "gov:graphify",
+      "type": "governance",
+      "label": "Graphify 0.9.49 code graph",
+      "status": "verified",
+      "path": "graphify-out/GRAPH_REPORT.md"
     },
     {
       "id": "gov:memory",

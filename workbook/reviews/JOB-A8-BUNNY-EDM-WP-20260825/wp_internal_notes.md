@@ -6,12 +6,12 @@
 
 - 建議 slug：`tainan-daycare-graduation-catering`
 - SEO title：`台南托嬰畢業典禮外燴｜一口點心與成長日甜點桌｜MAPLAB`
-- Meta description：`台南托嬰畢業典禮外燴案例，從一口點心、飲品、花藝到桌面層次，整理親子活動餐點與洽詢前應準備的資訊。`
+- Meta description：`台南托嬰畢業典禮外燴案例，整理一口點心、花藝與親子活動餐桌配置；查看準備重點，透過 MAPLAB 官方 LINE 詢問。`
 - Focus keyword：`台南托嬰畢業典禮外燴`
-- 核准版字元數：`1387`
-- 核准版前 500 字 SHA-256：`e376b1f7906f8dd1`
+- 核准版字元數：`1774`
+- 核准版前 500 字 SHA-256：`d47138246e4c3ae8`
 - 真實 LINE URL：`https://lin.ee/IP8nt4n`
-- 精選圖：`wp_assets/bunny-graduation-catering-02.webp`
+- 精選圖：`wp_assets/maplab-daycare-graduation-catering-dessert-table.webp`
 - 精選圖 WP media ID：尚未上傳，因此目前沒有 media ID；建立 WordPress 草稿前先上傳並寫回。
 
 ## 素材邊界
@@ -25,20 +25,57 @@
 
 - 主關鍵字：`台南托嬰畢業典禮外燴`。
 - 次關鍵字：`台南畢業典禮外燴`、`親子活動茶點`、`畢業典禮甜點桌`。
-- 內容策略：先作案例長尾草稿，不搶既有週歲 pillar。
+- 內容策略：作案例長尾草稿，不搶既有週歲 pillar；以情境式內鏈支援 498，但明寫兩者是不同活動。
 - 掛載：案例／派對家庭活動 cluster；「畢業典禮」在目前 keyword map 是未覆蓋的長尾意圖。
 - 已驗證內鏈：
   - `tainan-custom-catering-menu` → `https://www.maplabkitchen.com/tainan-custom-catering-menu/`
   - `tainan-catering-line-inquiry-guide` → `https://www.maplabkitchen.com/tainan-catering-line-inquiry-guide/`
+  - `catering-one-year-old-party-tainan` → `https://www.maplabkitchen.com/catering-one-year-old-party-tainan/`
 - 禁連：`school-event-catering-tainan` 仍列在 404 slug 清單；不可因場景相近就使用。
 
 ## 建議圖片命名與 alt
 
-- 首圖後：`bunny-graduation-catering-01.webp` — `台南托嬰畢業典禮外燴—一口點心與菜單桌景`
-- 「一張甜點桌」段後：`bunny-graduation-catering-02.webp` — `台南畢業典禮外燴—甜點層架與花藝陳列`
+- 首圖後：`maplab-daycare-graduation-catering-menu.webp` — `台南托嬰畢業典禮外燴的一口鹹食與甜點桌景`
+- 「一張甜點桌」段後：`maplab-daycare-graduation-catering-desserts.webp` — `台南畢業典禮外燴的甜點層架與花藝陳列`
 
 ## 查證邊界
 
-- 內部來源：Drive 活動資料夾、臺南市政府私立托嬰中心名冊、中心品牌公開資料。
-- 已確認：台南場景、中心名稱、畢業典禮資料夾標示、畫面可見的餐點與佈置。
+- 內部來源：Drive 活動資料夾與同日客戶報價表；本輪沒有以外部名冊推定公開名稱。
+- 已確認：台南場景、活動類型、報價表與資料夾對應、畫面可見的餐點與佈置。
+- 公開具名：報價表使用「邦尼托嬰中心」，Drive 工作資料夾使用「邦尼兔」；未找到客戶具名發布授權，因此公開文章先不使用中心名稱，「邦尼兔」只保留為內部 case label 與待 Owner 核准的歌詞選項。
 - 尚未核准：WordPress 建立／發布；任何社群上傳。
+
+## FAQ schema（需與公開頁面文字一致）
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "托嬰畢業典禮適合準備哪些餐點？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "可以先依活動時段、停留時間與賓客年齡，安排容易拿取的一口鹹食、烘焙點心與甜點。若跨過正餐時間，再增加較有飽足感的品項。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "親子活動茶點桌怎麼安排取餐動線？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "餐點、餐具與飲品依取用順序配置，桌邊保留拍照與通行空間；主要流程結束後再引導取餐，也較容易維持桌面完整。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "詢問畢業典禮甜點桌前要準備哪些資訊？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "先提供活動地點、預計人數、成人與孩子比例、流程時間、餐點方向及場地設備，就能開始整理菜單與桌面配置。"
+      }
+    }
+  ]
+}
+```

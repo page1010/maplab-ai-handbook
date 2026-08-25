@@ -13,10 +13,11 @@
 ### 0.1 三段接力，不在同一份稿裡混工種
 
 1. **A2 WordPress / SEO** 先完成 customer-ready 公開稿；SEO 欄位與素材判定分開留在內部包。
-2. **Songwriter** 只讀核准的活動介紹與音樂 brief，依 `skills/maplab-hiphop-songwriter/SKILL.md` 交歌詞、曲風與 15 秒 hook 建議。
-3. **A8** 只接選定音訊與核准素材，負責長片、短片、字幕、封面與平台包。
+2. **Songwriter** 只讀核准的活動介紹與音樂 brief，依 `skills/maplab-hiphop-songwriter/SKILL.md` 先交歌詞與 15 秒 hook 給 Owner 核稿；這一輪停在 `OWNER_LYRICS_GATE`。
+3. **音樂生成** 只接 Owner 已核准的歌詞；生成後由 Owner 選定音訊版本。
+4. **A8** 只接選定音訊與核准素材，負責長片、短片、字幕、封面與平台包。
 
-每段可以在不同 session 執行，但只能依序交接。WordPress 文章不描述寫歌或剪片流程；歌詞不描述 SEO 或素材治理；影片 metadata 不承接內部工作語言。
+每段可以在不同 session 執行，但只能依序交接。WordPress 文章不描述寫歌或剪片流程；歌詞不描述 SEO 或素材治理；影片 metadata 不承接內部工作語言。未取得 Owner 歌詞核准時，不得把「文章已好」解讀成可生歌或可啟動 A8。
 
 規格（單一真相來源 = `tools/ai_workbook/a8_platform_formats.py` 的 `PLATFORM_FORMATS`；出處見 `docs/platform_formats_sources.md`）：
 - **垂直短片**（YT Shorts / IG Reels / TikTok / FB Reels）：**9:16、1080×1920、H.264 MP4**；邦尼兔案例與同型音樂宣傳片預設 **15.0s**，延長需 Owner 明確核准。
@@ -93,7 +94,9 @@
 
 ## 2.6 音樂／旁白工具鏈（Creative Engine v0）
 
-**第三方音樂送出 gate（2026-08-25）**：先在 repo 產 `lyrics.txt`＋`submission.md`，跑 `a8_lyrics_engine.py review`；只把通過審查的抽象歌詞與曲風送外部平台，不送 Drive 原圖／影片。若歌詞來自含客戶或兒童的私人案例，送出與消耗每日免費額度前要取得 Owner 當輪確認；免費層產物先標內部試聽，不直接當商用成品。
+**第三方音樂送出 gate（2026-08-25）**：先在 repo 產 `lyrics_review.md`，跑 `a8_lyrics_engine.py review`，把歌詞給 Owner 直接核稿；只有收到明確「歌詞通過」或採納 Owner 改句後，才建立 `submission.md` 並送外部平台。只送通過審查的抽象歌詞與曲風，不送 Drive 原圖／影片。若歌詞來自含客戶或兒童的私人案例，公開具名與送出／消耗額度分別需要核准；試聽產物不直接當商用成品。
+
+**Suno 訂閱期 checkpoint（2026-08-25）**：官方說明指出，後續訂閱預設不會替免費期舊歌補發商用權；Pro／Premier 有效期間建立的歌曲才取得其商用使用權，且商用權不等於保證著作權成立。因此每個正式 case 在歌詞通過後，都以可見的有效訂閱重新建立新母帶，並記錄方案、建立時間、版本與發音；舊免費歌只保留作風格參考。官方來源見 `workbook/reviews/JOB-A2-BUNNY-CASE-TO-LYRICS-20260825/suno_subscription_rights.md`。
 
 - **音樂風格＝Suno**（Custom Mode「曲風欄」指定風格；歌詞欄可貼自訂歌詞／把留言唱成歌）。**無官方 API＝人工**在網頁生成下載，商用需 Pro。**placeholder（免費、先驗氣氛）**＝Apple Loops（本機 GarageBand 素材，免版稅，如「Yearning Acoustic Guitar」文青木吉他）或 YouTube 音樂庫。
 - **旁白＝ElevenLabs**（有 API、可 agent 自動；Owner 聲音用語音複製）。**placeholder**＝macOS `say`（本機免費 TTS；中文 voice：Meijia zh_TW；`-r` 調語速，`-o narration.aiff`）。

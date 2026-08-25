@@ -2,7 +2,7 @@
   "pillars": [
     {
       "pillar": "corporate",
-      "slug": "catering-corporate-tainan",
+      "slug": "corporate-catering-tainan",
       "target_intent": "B2B corporate catering in Tainan",
       "audience": "office admins, HR, marketing, PR teams",
       "required_sections": [
@@ -23,7 +23,7 @@
     },
     {
       "pillar": "birthday",
-      "slug": "catering-birthday-party-tainan",
+      "slug": "catering-one-year-old-party-tainan",
       "target_intent": "B2C birthday and zhuazhou party catering in Tainan",
       "audience": "families planning birthday or zhuazhou events",
       "required_sections": [
@@ -43,7 +43,7 @@
     },
     {
       "pillar": "wedding",
-      "slug": "catering-wedding-tainan",
+      "slug": "tainan-outdoor-wedding-catering",
       "target_intent": "modern wedding catering and reception snacks in Tainan",
       "audience": "couples planning modern or outdoor weddings",
       "required_sections": [

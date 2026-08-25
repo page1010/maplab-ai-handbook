@@ -5,7 +5,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-08-25 Codex A2→Songwriter→A8 接力｜邦尼兔客戶可讀 WP 稿已與內部 SEO 包分離；Owner 已選 Suno v4.5-all 版本一，2:37 母帶與 45–60 秒 hook 已落地，15 秒直式審核片完成，待 Owner 聽感確認後製作長版；發布仍在 gate｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-08-25 Codex A2→Songwriter→A8 單案流程｜托嬰畢業典禮 live SEO 佈局、Drive 事實核對、無具名 WP 文章、圖片／OG、縮短歌詞與 Google Doc 審稿面完成；目前停在文章＋歌詞 Owner gate，尚未建立 WP 草稿、生成新歌或啟動 A8｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -21,7 +21,7 @@
 
 ## 最新事實核對
 
-- 2026-08-25：**[A2→Songwriter→A8 接力] 邦尼兔托嬰畢業典禮案例已完成公開稿、選曲與第一支精準 15 秒審核片** — Drive `0717邦尼兔-托嬰畢業典禮` 共 28 件素材完成範圍盤點；公開 WP 稿已與 SEO／素材內部備註分離，公開 copy gate `ok=true`。Owner 已選第一個 Suno v4.5-all；2:37 母帶、45.0–60.0 秒 hook 候選與 15.000 秒直式審核片已落地。短片為 H.264/AAC、1080x1920、30fps，抽幀未見人物或日期。下一步只由 Owner 確認切點與發音，通過後 A8 製作 16:9 長版；WP 與社群仍未建立或發布。
+- 2026-08-25：**[A2→Songwriter→A8 單案核稿] 托嬰畢業典禮案例已完成文章與歌詞審稿包** — live WP REST 共 57 篇且「畢業」為內容 gap；本案定位為家庭活動 cluster 的獨立 case child，不與週歲頁混寫。Drive 28 件素材與同日客戶資料已作內部事實核對，公開文章不使用未核准客戶名稱；兩張正文圖、1200×630 OG、FAQ/schema、60–75 秒歌詞與 exact 15 秒 hook 已完成。Google Doc 已 API 反讀：`https://docs.google.com/document/d/18kApXho1icyj78XBVo2aEzFUfJI7sMKt4y9I0jq5Ky8/edit?tab=t.0`。下一步只有 Owner 核准文章與歌詞；既有免費期歌曲只作風格參考，核准後才在有效訂閱下生成新母帶並交 A8。尚未建立 WP 草稿、生成新歌、渲染新片或上傳發布。
 - 2026-08-25：**[A6 Hermes] 外接算力 Telegram 窗口已完成真實啟動** — `scripts/a6_hermes_activate.sh` fail-closed 啟動成功，`com.maplab.a6bot` 已常駐 `bot_a6/hermes_telegram_gateway.py`；Telegram Web 對 `@maplab_a6_bot` 送 `/start` 後真實讀回 `【hermes】值班中`。這只證明入口與身份回覆可用，第一題公開資訊的來源／推論／研究判斷品質仍待 bounded QA；私有客戶素材、持股、券商與密鑰不得送免費端點。收據：`workbook/reviews/JOB-A6-HERMES-ACTIVATION-20260825/telegram_roundtrip.md`。
 
 - 2026-08-03：**[修復＋更正] A8 影音產線 Google Drive/Sheets OAuth 根因已消除** — 先前診斷「卡在測試模式、refresh token 每 7 天過期」對「A8 產線」是**指錯專案**：A8 用的是 GCP 專案 **`maplab-ai`**（單一 `~/.claude/mcp-keys/google-token.json`），非相片產線的 `maplab-pipeline`（`token_owner/spouse.json`）。實查 Console：`maplab-ai` 同意畫面確為「測試」→ 這才是 7 天過期真因；**已於本日發布為「實際運作中」**，根因消除（可逆，Console 有「返回測試」）。Notion 金鑰保管室查無現成可用 Drive token，且 OAuth user-token 本質無法靠保管室繞過（會被 Google 依測試模式作廢）。**Owner 唯一一次動作**：在電腦前跑 `python3 ~/.claude/mcp-keys/reauth_google.py`，瀏覽器跳同意頁點「允許」（未驗證警告 → 進階 → 繼續 → 允許），新 refresh token 存回後**長期有效、不再每 7 天復發**。細節見 `skills/a8-produce-to-publish-sop.md` §6、`pitfalls.md`（2026-08-03 條）。➡️ 下個協作者：別再把 A8 的 OAuth 當週期性雜務；只剩那一次重授權。
@@ -146,7 +146,7 @@
 | T-A6-002 | LINE 對話訓練資料收集計畫 | A6 | 💤 暫停（原計畫拆 Sheet 做訓練資料，04-07 重新規劃方向。等 Owner 決定是否需要 LINE 訓練資料及取得方式。） | handoff/tasks/T-A6-002.md |
 | T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | ⏳ 等 A5 外送費級距 Owner 確認（Owner 已裁決選項 B：建完級距→Q5串接→Phase 3 啟動）（Owner 確認 Zone B/C 金額（`state/owner_delivery_fee_confirm_20260） | handoff/tasks/T-A7-001.md |
 | T-A7-002 | A7 部門 80/20 優先任務清單 | A7 | ⏸️ 阻塞中（任務 9 已解除，其餘阻塞未變）（任務 6（Q1-Q10 實裝）+ 任務 9（Owner 政策確認）+ 任務 10（技能書 v2.0）已完成。Phase ） | handoff/tasks/T-A7-002.md |
-| T-A8-001-folder-to-video-distribution | T-A8-001 — Folder Case to Short Video Distribution | A8 | 🟠 OWNER_GATE（2026-08-25 Owner 已選 v4.5-all 版本一；A2 公開 WP 稿、songwriter 交接、2:37 母帶與 15 秒直式審核片已完成。待 Owner 確認 45–60 秒 hook 與發音，再製作 16:9 長版；尚未建立 WP 或發布社群。） | handoff/tasks/T-A8-001-folder-to-video-distribution.md |
+| T-A8-001-folder-to-video-distribution | T-A8-001 — Folder Case to Short Video Distribution | A8 | 🟠 OWNER_GATE（2026-08-25 live SEO、Drive 事實核對、無具名 WP 文章、圖片／OG、縮短歌詞與 Google Doc 審稿面完成。待 Owner 核准文章＋安全版／具名版歌詞；通過後才生成訂閱期新母帶並啟動 A8。） | handoff/tasks/T-A8-001-folder-to-video-distribution.md |
 | T-B1-001 | B1 Cross-Project Governance Advisor Prompt + Project Pause |  | 🟢 召喚型可用（B1 轉為 Investment OS 投資邏輯橋接顧問（召喚型）；InnerFlowLab/Substack 發文自動） | handoff/tasks/T-B1-001.md |
 | T-B1-B4-investment-os-role-split | T-B1-B4-001 — Investment OS B1-B4 Role Split + Chrome Extension Summon |  | 🟡 STALLED（since 2026-07-19，48h 無 commit，Owner 可更新最後活動解除）（B1-B4 已不只做角色拆分；新增 RSI-like 成長閉環，下一步是把 scorer 接進排程/Telegram f） | handoff/tasks/T-B1-B4-investment-os-role-split.md |
 | T-B1-DASH-001 | Guild Ops Board 自動同步 + 即時狀態燈 |  | 🟢 READY（已派工，等 Codex 執行）（Game dashboard v0.2 完成（9 NPC / 6 rooms / 21 cards，驗收通過）。尚未完成） | handoff/tasks/T-B1-DASH-001.md |

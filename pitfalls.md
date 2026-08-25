@@ -449,3 +449,10 @@
 - 解法：`wc -c` 後先用 `tr -d '[:space:]'` 正規化，再做整數檢查與 `> LOG_MAX_BYTES` 判斷。
 - 預防：任何把 BSD/GNU CLI 輸出餵給 regex、JSON 或算術式的 gate，都先去除格式空白並用實際 side effect 做 smoke；不要只看 exit code。
 - 封坑驗證：用隔離 temp state 設 `A0_LOG_MAX_BYTES=1` 連跑兩次 alive tick，`a0_continuity.log` 與 `a0_continuity.log.1` 都必須存在且非空；不得碰真實 A0 heartbeat。
+
+## 2026-08-25 — Google Drive connector 可讀不代表能建立 Google Doc
+
+- 觸發條件：A2→Songwriter 單案已能用 connector 讀 Drive 資料夾、Sheet 與既有文件，但建立 Owner 審稿 Google Doc 時回缺少 scope。
+- 根因：把同一個 connector 的讀取成功誤當成完整寫入授權；Drive/Docs actions 的 OAuth scopes 可以不對稱。
+- 解法：先讓 create action fail closed，不重複送內容；改用已登入的 Google Docs 瀏覽器建立文件，再用 Google Docs API 讀回標題與全文作 durable proof。
+- 預防：每條 Google 產線把 `read / create / edit / upload` 分開做 capability probe。建立審稿面前先測 create scope；若只有 read，使用已登入瀏覽器完成可逆的草稿建立，最後仍以 API 或可讀畫面反讀，不把「輸入已完成」當成「內容已保存」。

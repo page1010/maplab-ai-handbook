@@ -15,9 +15,9 @@ Use only facts in the approved brief. Brand spelling, place names, event type, m
 
 ## Deliverables
 
-Produce a bounded song package:
+Produce a bounded song package in two gates:
 
-- `lyrics.txt`: section-tagged, singable lyrics.
+- `lyrics_review.md`: section-tagged, singable lyrics, an exact 15-second hook, and the one Owner action needed to approve or revise it.
 - `style_prompt.txt` or equivalent submission copy: genre, tempo range, vocal texture, and arrangement direction.
 - `song_handoff.md`: selected version, duration, pronunciation notes, licensing boundary, and a separate 15-second hook recommendation for A8.
 
@@ -32,8 +32,14 @@ The full song and social hook are different deliverables. A full master may be t
 - Do not expose internal labels, source paths, content-safety decisions, unapproved names, or dates that are not explicitly approved for the song. A WordPress-specific no-date requirement does not silently rewrite an Owner-selected song; flag any date-bearing lyric again before publishing.
 - Review the draft with `tools/ai_workbook/a8_lyrics_engine.py review` before any external generation.
 
+## Owner lyrics gate
+
+The first songwriter pass stops at `OWNER_LYRICS_GATE`. Give the Owner the lyrics in a directly readable review surface and accept either explicit approval or line edits. A general request to continue the case does not approve the lyric wording.
+
+Only after the Owner approves one lyric version may the songwriter prepare the external music submission. If the Owner revises a line, rerun the lyrics review and return the updated review surface before consuming credits. Music generation, version selection, and A8 handoff are later gates; never bundle them into the first lyric-writing pass.
+
 ## Handoff boundary
 
-The songwriter does not edit WordPress, render video, upload media, or publish. After the Owner selects one generated version, give A8 the approved audio master plus the 15-second hook recommendation. A8 owns the long video, the 15-second Short, subtitles, motion, export formats, and platform package.
+The songwriter does not edit WordPress, render video, upload media, or publish. After the Owner approves the lyrics and then selects one generated version, give A8 the approved audio master plus the 15-second hook recommendation. A8 owns the long video, the 15-second Short, subtitles, motion, export formats, and platform package.
 
 Sending lyrics to an external music service and consuming paid or limited credits requires the authorization specified by the current Task Card. Keep private client media and raw case files out of the music service.

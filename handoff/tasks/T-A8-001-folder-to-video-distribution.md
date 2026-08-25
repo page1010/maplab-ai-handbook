@@ -1,13 +1,13 @@
 # T-A8-001 — Folder Case to Short Video Distribution
 
 ## 接續狀態
-- **狀態**: 🔄 ACTIVE（Owner 於 2026-08-25 明確要求以邦尼兔案例重啟）
+- **狀態**: 🟠 OWNER_GATE（文章＋歌詞核稿）
 - **最後活動**: 2026-08-25
-- **接續點**: A2 公開 WordPress 稿與內部 SEO 包已分離；Owner 已選 Suno v4.5-all 版本一，2:37 母帶與 45.0–60.0 秒 hook 已落地，15 秒直式審核片已完成。
-- **阻塞**: `audio_approval_gate` — Owner 尚未確認 15 秒切點與中文發音；WP／社群也未核准建立或發布。
+- **接續點**: A2 已完成 live SEO 佈局、Drive 客戶事實核對、無具名 WordPress 文章、圖片／OG 與縮短歌詞；Google Doc 已建立並反讀。
+- **阻塞**: `owner_article_and_lyrics_gate` — Owner 尚未核准文章與安全版／具名版歌詞；Suno 新母帶與 A8 均尚未啟動。
 
 Owner: A8 影音內容產線
-Status: 🔄 ACTIVE
+Status: 🟠 OWNER_GATE
 Created: 2026-06-17
 Risk: medium
 
@@ -17,10 +17,10 @@ Risk: medium
 - Privacy：`c02` 含幼兒人像海報，列 C 級排除；`c01` 與 `c03` 前 2.8 秒為無人餐點桌景候選，review draft 僅使用該安全時間窗。
 - Draft bundle：`workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/`。
 - Root-cause fix：enhanced renderer 的平台文案原先硬編碼 ICC／企業會議內容；已改為 category profile，新增 `graduation`，避免不同案例沿用錯誤文案。
-- 已完成：客戶可讀 WP 稿與內部 SEO 備註分離、hiphop v2 readback、新 EDM 歌詞、Suno paste-ready package、歌曲交接與精準 15 秒直式審核片。
+- 已完成：客戶可讀 WP 稿與內部 SEO 備註分離、live SEO 佈局、Drive 事實核對、1200×630 OG、縮短 EDM 歌詞、exact 15 秒 hook、A2 獨立 checker 與 Google Doc 審稿頁。
 - Suno：Owner 當輪明確要求後只按一次 Create，平台自動產出 4 個 private variants（v4.5-all 2 個、v5.5 Preview 2 個）；歌詞、標題與曲風頁面 readback PASS，未 Publish。
 - 尚未執行：WordPress draft/publish、任何社群上傳、Owner 音訊聽辨、2:37 的 16:9 長版歌詞影片。
-- Next bounded action：Owner 試聽 `workbook/a8/pilot-bunny/short15-review/bunny-v45-all-01-short15-review.mp4`，只判斷 45.0–60.0 秒是不是要保留的 hook；確認後 A8 才渲染完整 16:9 長版。
+- Next bounded action：Owner 在 https://docs.google.com/document/d/18kApXho1icyj78XBVo2aEzFUfJI7sMKt4y9I0jq5Ky8/edit?tab=t.0 核准文章與一版歌詞。通過後才在有效訂閱下生成新母帶，再交 A8。
 - Acceptance proof：公開文案 gate `ok=true`；focused public-copy tests `3/3 PASS`；15 秒審核片為 H.264/AAC、1080x1920、30fps、15.000 秒，intro/middle/outro 抽幀未見人物或日期；完整接力見 `pipeline_handoff.md`。
 
 ## Owner Request
@@ -203,18 +203,12 @@ Hermes/OpenClaw 現況：Hermes CLI 有但 gateway stopped；OpenClaw browser do
 ## Resume Prompt 2026-08-25
 
 ```text
-你是 MAPLAB A8 影音內容產線，先完整讀 CURRENT_STATUS.md、pitfalls.md、skills/a8-produce-to-publish-sop.md、skills/a8-video-pipeline-skills.md 與本 Task Card。
+你是 MAPLAB 單案內容接力者，先完整讀 CURRENT_STATUS.md、pitfalls.md、skills/maplab-case-to-content-pipeline/SKILL.md、skills/maplab-hiphop-songwriter/SKILL.md、skills/a8-produce-to-publish-sop.md 與本 Task Card。
 
-目前 Active case 是 Drive `0717邦尼兔-托嬰畢業典禮`。本機已完成 A/B/C 分級，C 級 `c02` 含幼兒人像海報不得外送；review draft 只白名單使用 `c01.mov` 與 `c03.mov` 前 2.8 秒。成果與驗證都在：
-workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/
+Active case 是托嬰畢業典禮。A2 已完成 live WordPress SEO 佈局、Drive 客戶事實核對、無具名公開文章、兩張正文圖、1200×630 OG、FAQ/schema 與獨立 checker。Songwriter 已完成 60–75 秒短完整歌詞與 exact 15 秒 hook，兩版 lyrics engine 都通過。Owner 審稿頁：
+https://docs.google.com/document/d/18kApXho1icyj78XBVo2aEzFUfJI7sMKt4y9I0jq5Ky8/edit?tab=t.0
 
-三段責任已拆開：A2 只交付客戶可讀的 `wp_draft.md` 與內部 `wp_internal_notes.md`；
-songwriter 只交付歌詞與 `song_handoff.md`；A8 才負責長短片、字幕、平台包與發布 gate。
+目前 gate 是 OWNER_ARTICLE_AND_LYRICS_GATE。下一個 bounded action 只有一個：讀 Owner 回覆，依「文章通過＋歌詞安全版通過」、「文章通過＋具名邦尼兔通過」或逐句修改更新核准版。核准前不建立 WordPress 草稿、不送音樂生成、不啟動 A8。
 
-Owner 已選第一個 v4.5-all。完整 2:37 母帶已下載，45.0–60.0 秒已切成精準 15 秒 hook 候選，
-直式審核片位於：
-workbook/a8/pilot-bunny/short15-review/bunny-v45-all-01-short15-review.mp4
-
-下一個 bounded action 只有一個：Owner 試聽上列 15 秒審核片，確認切點與中文發音；通過後 A8 以完整母帶
-渲染 16:9 長版歌詞影片。未另行核准不得 Publish、建立 WP draft 或上傳任何社群。
+Owner 核准後，在可見的有效訂閱下生成一首新母帶並記錄權益／版本／時間／發音；既有 v4.5-all 第一版只作風格參考。Owner 再選定母帶後，A8 才產 16:9 長版、9:16 exact 15 秒版、字幕、封面與平台 metadata 審稿包。
 ```

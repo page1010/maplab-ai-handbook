@@ -3,8 +3,8 @@
 ## 接續狀態
 - **狀態**: 🟠 OWNER_GATE（文章＋歌詞核稿）
 - **最後活動**: 2026-08-25
-- **接續點**: A2 已完成 live SEO 佈局、Drive 客戶事實核對、無具名 WordPress 文章、圖片／OG 與縮短歌詞；Owner 指出的「審稿面沒有照片／CTA 不清楚」已修正，Google Doc 反讀為 2 張 inline images、獨立可點擊 LINE CTA。
-- **阻塞**: `owner_article_and_lyrics_gate` — Owner 尚未核准文章與安全版／具名版歌詞；Suno 新母帶與 A8 均尚未啟動。
+- **接續點**: A2 已完成 live SEO 佈局、Drive 客戶事實核對與無具名文章；WordPress post `2018` 已建立為草稿，前台預覽反讀有 2 張正文圖、精選圖、H2/H3、分類／標籤與可點擊 LINE CTA。
+- **阻塞**: `owner_article_and_lyrics_gate` — Owner 可先審 WordPress 草稿與安全版／具名版歌詞；Suno 新母帶與 A8 均尚未啟動，草稿未公開。
 
 Owner: A8 影音內容產線
 Status: 🟠 OWNER_GATE
@@ -19,9 +19,20 @@ Risk: medium
 - Root-cause fix：enhanced renderer 的平台文案原先硬編碼 ICC／企業會議內容；已改為 category profile，新增 `graduation`，避免不同案例沿用錯誤文案。
 - 已完成：客戶可讀 WP 稿與內部 SEO 備註分離、live SEO 佈局、Drive 事實核對、兩張正文圖、1200×630 OG、明確 LINE CTA、縮短 EDM 歌詞、exact 15 秒 hook、A2 獨立 checker 與 Google Doc 審稿頁。
 - Suno：Owner 當輪明確要求後只按一次 Create，平台自動產出 4 個 private variants（v4.5-all 2 個、v5.5 Preview 2 個）；歌詞、標題與曲風頁面 readback PASS，未 Publish。
-- 尚未執行：WordPress draft/publish、任何社群上傳、Owner 音訊聽辨、2:37 的 16:9 長版歌詞影片。
-- Next bounded action：Owner 在 https://docs.google.com/document/d/18kApXho1icyj78XBVo2aEzFUfJI7sMKt4y9I0jq5Ky8/edit?tab=t.0 核准文章與一版歌詞。通過後才在有效訂閱下生成新母帶，再交 A8。
+- 尚未執行：WordPress publish、任何社群上傳、Owner 音訊聽辨、2:37 的 16:9 長版歌詞影片；WordPress draft 已依 Owner 要求建立。
+- Next bounded action：Owner 先看 https://www.maplabkitchen.com/?p=2018&preview=true 審文章，再到 https://docs.google.com/document/d/18kApXho1icyj78XBVo2aEzFUfJI7sMKt4y9I0jq5Ky8/edit?tab=t.0 核准一版歌詞。歌詞通過後才在有效訂閱下生成新母帶，再交 A8。
 - Acceptance proof：公開文案 gate `ok=true`；focused public-copy tests `3/3 PASS`；Google Doc API 反讀 `inlineObjectCount=2`、CTA 獨立段落且 link=`https://lin.ee/IP8nt4n`；15 秒審核片為 H.264/AAC、1080x1920、30fps、15.000 秒，intro/middle/outro 抽幀未見人物或日期；本輪收據見 `workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/wp_photo_cta_correction_receipt.md`。
+
+## 2026-08-25 WordPress Draft Checkpoint
+
+- WordPress post：`2018`，status=`draft`，沒有公開發布。
+- Owner 預覽：https://www.maplabkitchen.com/?p=2018&preview=true
+- Editor：https://www.maplabkitchen.com/wp-admin/post.php?post=2018&action=edit
+- Slug：`tainan-daycare-graduation-catering`。
+- 前台預覽反讀：H1 `1`、正文 H2 `6`、FAQ／小節 H3 `6`；正文圖片 `2` 且 alt 完整；LINE CTA 文字本身連至 `https://lin.ee/IP8nt4n`，沒有裸網址重複段落。
+- 分類：`📍 台南地區外燴`、`📸 案例分享 / 活動紀錄`；標籤：`MAPLAB Kitchen`、`台南外燴`、`畢業典禮外燴`、`親子活動茶點`。
+- Next bounded action：Owner 先看預覽並回覆文章修改或 `邦妮兔文章通過`；歌詞仍在原 Google Doc 的獨立核稿閘，文章草稿建立不等於歌詞核准。
+- Durable receipt：`workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/wordpress_draft_receipt_20260825.md`。
 
 ## 2026-08-25 Automatic Distribution Audit
 
@@ -217,7 +228,7 @@ Hermes/OpenClaw 現況：Hermes CLI 有但 gateway stopped；OpenClaw browser do
 Active case 是托嬰畢業典禮。A2 已完成 live WordPress SEO 佈局、Drive 客戶事實核對、無具名公開文章、兩張正文圖、1200×630 OG、FAQ/schema 與獨立 checker。2026-08-25 Owner 指出的審稿面照片與 CTA 缺口已修正：Google Doc 有 2 張 inline images，CTA 是獨立可點擊段落。Songwriter 已完成 60–75 秒短完整歌詞與 exact 15 秒 hook，兩版 lyrics engine 都通過。Owner 審稿頁：
 https://docs.google.com/document/d/18kApXho1icyj78XBVo2aEzFUfJI7sMKt4y9I0jq5Ky8/edit?tab=t.0
 
-目前 gate 是 OWNER_ARTICLE_AND_LYRICS_GATE。下一個 bounded action 只有一個：讀 Owner 回覆，依「文章通過＋歌詞安全版通過」、「文章通過＋具名邦尼兔通過」或逐句修改更新核准版。核准前不建立 WordPress 草稿、不送音樂生成、不啟動 A8。
+目前 gate 是 OWNER_ARTICLE_AND_LYRICS_GATE。WordPress post 2018 已依 Owner 要求建立為草稿，預覽為 https://www.maplabkitchen.com/?p=2018&preview=true；未公開。下一個 bounded action 只有一個：讀 Owner 回覆，依「文章通過＋歌詞安全版通過」、「文章通過＋具名邦尼兔通過」或逐句修改更新核准版。核准前不發布 WordPress、不送音樂生成、不啟動 A8。
 
 Owner 核准後，在可見的有效訂閱下生成一首新母帶並記錄權益／版本／時間／發音；既有 v4.5-all 第一版只作風格參考。Owner 再選定母帶後，A8 才產 16:9 長版、9:16 exact 15 秒版、字幕、封面與平台 metadata 審稿包。
 ```

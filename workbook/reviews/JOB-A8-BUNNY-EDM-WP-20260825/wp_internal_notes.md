@@ -12,7 +12,8 @@
 - 目前待核稿前 500 字 SHA-256：`385c7784d6b18a6e`
 - 真實 LINE URL：`https://lin.ee/IP8nt4n`
 - 精選圖：`wp_assets/maplab-daycare-graduation-catering-dessert-table.webp`
-- 精選圖 WP media ID：尚未上傳，因此目前沒有 media ID；建立 WordPress 草稿前先上傳並寫回。
+- WordPress draft：post `2018`，preview=`https://www.maplabkitchen.com/?p=2018&preview=true`，status=`draft`。
+- 精選圖：已透過 WordPress UI 上傳並設定；public preview 可見，但本輪 owner-facing readback 未暴露 media ID，因此 ID 保留 `MISSING`，不可猜。
 - Owner 審稿 Google Doc 已反讀確認：2 個 inline image objects；CTA 為獨立段落且連至真實 LINE URL。
 
 ## 素材邊界
@@ -44,7 +45,7 @@
 - 內部來源：Drive 活動資料夾與同日客戶報價表；本輪沒有以外部名冊推定公開名稱。
 - 已確認：台南場景、活動類型、報價表與資料夾對應、畫面可見的餐點與佈置。
 - 公開具名：報價表使用「邦尼托嬰中心」，Drive 工作資料夾使用「邦尼兔」；未找到客戶具名發布授權，因此公開文章先不使用中心名稱，「邦尼兔」只保留為內部 case label 與待 Owner 核准的歌詞選項。
-- 尚未核准：WordPress 建立／發布；任何社群上傳。
+- 尚未核准：WordPress 發布；任何社群上傳。草稿建立已由 Owner 本輪明確要求。
 
 ## FAQ schema（需與公開頁面文字一致）
 

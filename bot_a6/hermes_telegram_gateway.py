@@ -29,6 +29,8 @@ FALLBACK_CHAIN = [
     "nvidia/nemotron-3-super-120b-a12b:free",
     "google/gemma-4-26b-a4b-it:free",
 ]
+LOCAL_OLLAMA_MODEL = "gemma4:latest"
+LOCAL_OLLAMA_URL = "http://127.0.0.1:11434/api/generate"
 MAX_HISTORY = 12
 MAX_REPLY = 3500
 
@@ -119,6 +121,26 @@ def openrouter_chat(key, model, messages):
     return content.strip() if content and content.strip() else None
 
 
+def local_ollama_chat(messages):
+    """Final fallback only after every OpenRouter candidate is unavailable."""
+    prompt = "\n\n".join(
+        f"{item.get('role', 'user')}: {item.get('content', '')}" for item in messages
+    )
+    req = urllib.request.Request(
+        LOCAL_OLLAMA_URL,
+        data=json.dumps({
+            "model": LOCAL_OLLAMA_MODEL,
+            "prompt": prompt,
+            "stream": False,
+        }).encode(),
+        headers={"Content-Type": "application/json"},
+    )
+    with urllib.request.urlopen(req, timeout=180) as resp:
+        data = json.loads(resp.read().decode())
+    content = data.get("response")
+    return content.strip() if content and content.strip() else None
+
+
 def load_history():
     try:
         return json.loads(CONV.read_text(encoding="utf-8"))[-MAX_HISTORY:]
@@ -144,6 +166,15 @@ def answer(key, chain, history, user_text):
             log(f"answered via {model}")
             return reply
         log(f"model {model} empty reply, fallback")
+    try:
+        reply = local_ollama_chat(messages)
+    except (urllib.error.URLError, OSError, ValueError) as e:
+        log(f"local fallback {LOCAL_OLLAMA_MODEL} error: {e}")
+        return None
+    if reply:
+        log(f"answered via local fallback {LOCAL_OLLAMA_MODEL}")
+        return reply
+    log(f"local fallback {LOCAL_OLLAMA_MODEL} empty reply")
     return None
 
 

@@ -30,10 +30,30 @@ CATEGORY_CTA_LINES = {
     "brand_event": "台南品牌活動、發表會規劃｜官方 LINE 洽詢檔期 @maplab",
     "wedding": "台南婚禮茶會、婚禮外燴｜官方 LINE 洽詢檔期 @maplab",
     "birthday": "台南慶生派對、週歲茶點｜官方 LINE 洽詢檔期 @maplab",
+    "graduation": "台南畢業典禮、親子活動茶點｜官方 LINE 洽詢檔期 @maplab",
     "private_party": "台南派對餐敘、私宅外燴｜官方 LINE 洽詢檔期 @maplab",
     "art_wine": "台南藝文活動、品酒茶會｜官方 LINE 洽詢檔期 @maplab",
     "custom_box": "台南客製餐盒、外帶點心｜官方 LINE 洽詢檔期 @maplab",
     "general": "台南外燴設計、活動茶點｜官方 LINE 洽詢檔期 @maplab",
+}
+
+CATEGORY_PLATFORM_PROFILES = {
+    "corporate_tea": {
+        "title_keyword": "台南企業外燴茶點",
+        "description": "企業會議茶點紀錄。以一口點心、飲品補給與清楚桌面配置，照顧活動中場的取用節奏。",
+        "caption": "企業會議茶點紀錄；一口點心、飲品補給與清楚桌面配置，讓活動中場自然銜接。",
+        "hashtags": ["#台南外燴", "#企業外燴", "#會議茶點", "#MAPLAB"],
+        "board": "MAPLAB Catering / Corporate Refreshments",
+        "pin_description": "台南企業活動的一口點心、飲品與桌面陳列參考。",
+    },
+    "graduation": {
+        "title_keyword": "台南畢業典禮外燴",
+        "description": "畢業典禮活動茶點紀錄。以一口點心、花藝與慶祝陳列，留下畢業日的明亮畫面。",
+        "caption": "畢業典禮的慶祝桌景；一口點心、花藝與紀念日期一起留下成長的畫面。",
+        "hashtags": ["#台南外燴", "#畢業典禮", "#親子活動", "#甜點桌", "#MAPLAB"],
+        "board": "MAPLAB Catering / Family Events",
+        "pin_description": "台南畢業典禮的一口點心、花藝與慶祝桌景參考。",
+    },
 }
 VISUAL_PRESETS = {
     "maplab_ig_soft": "eq=brightness=0.012:contrast=0.94:saturation=1.035:gamma=1.015,unsharp=3:3:0.22",
@@ -50,6 +70,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--category", choices=sorted(CATEGORY_CTA_LINES), default=DEFAULT_CATEGORY)
     parser.add_argument("--scene-line", action="append", default=[])
     parser.add_argument("--scene-motion", action="append", default=[])
+    parser.add_argument(
+        "--asset-file",
+        action="append",
+        default=[],
+        help="Explicit public-safe file name inside asset-dir; repeat to enforce an A-class allowlist.",
+    )
     parser.add_argument("--limit", type=int, default=5)
     parser.add_argument("--seconds", type=float, default=2.8)
     parser.add_argument("--opening-seconds", type=float, default=1.55)
@@ -100,8 +126,18 @@ def run(command: list[str]) -> None:
         raise SystemExit(detail)
 
 
-def list_images(asset_dir: Path, limit: int) -> list[Path]:
-    images = sorted(p for p in asset_dir.iterdir() if p.suffix.lower() in MEDIA_EXTS)
+def list_images(asset_dir: Path, limit: int, asset_files: list[str] | None = None) -> list[Path]:
+    if asset_files:
+        images = []
+        for name in asset_files:
+            candidate = (asset_dir / name).resolve()
+            if candidate.parent != asset_dir.resolve():
+                raise SystemExit(f"asset-file must stay inside asset-dir: {name}")
+            if not candidate.is_file() or candidate.suffix.lower() not in MEDIA_EXTS:
+                raise SystemExit(f"asset-file is missing or unsupported: {name}")
+            images.append(candidate)
+    else:
+        images = sorted(p for p in asset_dir.iterdir() if p.suffix.lower() in MEDIA_EXTS)
     if not images:
         raise SystemExit(f"no media files found in {asset_dir}")
     return images[:limit]
@@ -361,29 +397,33 @@ def extract_cover(ffmpeg_bin: str, video_path: Path, cover_path: Path) -> None:
 
 
 def write_metadata(out_dir: Path, args: argparse.Namespace, images: list[Path], lines: list[str]) -> None:
+    profile = CATEGORY_PLATFORM_PROFILES.get(
+        args.category,
+        {
+            "title_keyword": "台南活動外燴",
+            "description": "活動茶點影像紀錄。畫面以餐點陳列、花藝與現場佈置為主。",
+            "caption": "活動茶點影像紀錄；從餐點陳列、花藝到桌面佈置，留下現場的完整氣氛。",
+            "hashtags": ["#台南外燴", "#活動餐點", "#活動茶點", "#MAPLAB"],
+            "board": "MAPLAB Catering / Event Inspiration",
+            "pin_description": "台南活動外燴的餐點陳列與現場佈置參考。",
+        },
+    )
     metadata = {
         "youtube_shorts": {
-            "title": f"{args.case_label} | 台南企業外燴茶點 #Shorts",
-            "description": (
-                "大臺南會展中心企業會議茶點紀錄。"
-                "以好拿取、畫面乾淨、休息時間不打斷交流為主。"
-                f"\n\n{args.ending_line}"
-            ),
-            "hashtags": ["#台南外燴", "#企業外燴", "#會議茶點", "#MAPLAB", "#Shorts"],
+            "title": f"{args.case_label} | {profile['title_keyword']} #Shorts",
+            "description": f"{profile['description']}\n\n{args.ending_line}",
+            "hashtags": [*profile["hashtags"], "#Shorts"],
             "music_note": "建議上傳後使用平台授權音樂庫，不在本機嵌入未授權配樂。",
         },
         "tiktok": {
-            "caption": (
-                f"{args.case_label}。會議休息時間的茶點配置，"
-                f"重點是好拿取、動線穩。{args.ending_line}"
-            ),
-            "hashtags": ["#台南外燴", "#企業茶點", "#活動餐點", "#MAPLAB"],
+            "caption": f"{args.case_label}。{profile['caption']} {args.ending_line}",
+            "hashtags": profile["hashtags"],
             "music_note": "建議使用 TikTok app/Studio 授權音源後再發布。",
         },
         "pinterest": {
-            "board": "MAPLAB Catering / Corporate Refreshments",
-            "pin_title": f"{args.case_label}｜台南企業外燴茶點",
-            "pin_description": "大臺南會展中心企業會議茶點與飲品桌面配置參考。",
+            "board": profile["board"],
+            "pin_title": f"{args.case_label}｜{profile['title_keyword']}",
+            "pin_description": profile["pin_description"],
         },
         "cta": {
             "category": args.category,
@@ -450,7 +490,7 @@ def main() -> None:
     if not SWIFT_RENDERER.exists():
         raise SystemExit(f"missing renderer: {SWIFT_RENDERER}")
 
-    images = list_images(asset_dir, args.limit)
+    images = list_images(asset_dir, args.limit, args.asset_file)
     lines = scene_lines(args, len(images))
     motions = scene_motions(args, len(images))
     frames = render_frames(swift_bin, images, work_dir, args, lines)

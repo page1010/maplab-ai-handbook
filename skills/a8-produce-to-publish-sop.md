@@ -55,7 +55,7 @@
 
 **場景配色**：週歲/抓周＝裸粉+奶油白｜婚禮＝裸粉+暖米｜企業/開幕＝深橄欖+暖米。禁：螢光色、純黑大面積、單畫面>3 主色。
 
-**category → CTA / 場景色 對照**：opening（開幕）、corporate_tea（企業茶會）、wedding（婚禮）、birthday（週歲/抓周）、brand_event、private_party、art_wine、custom_box、general。CTA 由 category 帶出固定文案（例：opening＝「台南開幕茶會、品牌活動｜官方 LINE 洽詢檔期 @maplab」）。
+**category → CTA / 場景色 對照**：opening（開幕）、corporate_tea（企業茶會）、wedding（婚禮）、birthday（週歲/抓周）、graduation（畢業典禮/親子成長）、brand_event、private_party、art_wine、custom_box、general。CTA 與平台 metadata 必須由同一 category profile 帶出（例：graduation＝「台南畢業典禮、親子活動茶點｜官方 LINE 洽詢檔期 @maplab」），不得沿用 seed case 的場地、客戶或活動類型。
 
 ---
 
@@ -83,6 +83,8 @@
 ---
 
 ## 2.6 音樂／旁白工具鏈（Creative Engine v0）
+
+**第三方音樂送出 gate（2026-08-25）**：先在 repo 產 `lyrics.txt`＋`submission.md`，跑 `a8_lyrics_engine.py review`；只把通過審查的抽象歌詞與曲風送外部平台，不送 Drive 原圖／影片。若歌詞來自含客戶或兒童的私人案例，送出與消耗每日免費額度前要取得 Owner 當輪確認；免費層產物先標內部試聽，不直接當商用成品。
 
 - **音樂風格＝Suno**（Custom Mode「曲風欄」指定風格；歌詞欄可貼自訂歌詞／把留言唱成歌）。**無官方 API＝人工**在網頁生成下載，商用需 Pro。**placeholder（免費、先驗氣氛）**＝Apple Loops（本機 GarageBand 素材，免版稅，如「Yearning Acoustic Guitar」文青木吉他）或 YouTube 音樂庫。
 - **旁白＝ElevenLabs**（有 API、可 agent 自動；Owner 聲音用語音複製）。**placeholder**＝macOS `say`（本機免費 TTS；中文 voice：Meijia zh_TW；`-r` 調語速，`-o narration.aiff`）。

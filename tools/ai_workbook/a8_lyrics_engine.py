@@ -16,7 +16,7 @@ POSITIVE_HINT = ["台南外燴","MAPLAB"]               # 建議自然置入
 # ---- 中文押韻（十三轍）分析 ----
 _ZHE_GROUPS = {
     "一七(i/ü)": "氣喜皮裡齊你米西記意力起級集例低題習句去語魚雨",
-    "懷來(ai)": "愛乖嗨來戴懷白菜開台拜賽蓋派孩在還海",
+    "懷來(ai)": "愛乖嗨來戴袋懷白菜開台拜賽蓋派孩在還海",
     "言前(an)": "天面前邊年見甜點願線煙翻端安產感慢辦滿",
     "發花(a)": "啦家他花大媽怕阿沙抓吧茶掛畫",
     "江陽(ang)": "香上忙想場亮光唱樣幫湯牆胖旁",
@@ -45,6 +45,8 @@ def analyze_rhyme(text):
         if m:
             cur = m.group(1); sections.setdefault(cur, [])
             rest = s[m.end():].strip()
+            # Suno 常用 `[Chorus][Female Vocal]`：後面的 vocal cue 是指令，不是歌詞行。
+            rest = re.sub(r'^(?:\[[^\]]+\]\s*)+', '', rest)
             if rest: sections[cur].append(rest)
             continue
         sections.setdefault(cur, []).append(s)
@@ -81,8 +83,8 @@ def review_lyrics(text, client=None):
     banned=[w for w in BANNED+A8_BANNED if w in joined]
     soft=[w for w in SOFT if w in joined]
     sensitive=[w for w in SENSITIVE if w in joined]
-    has_hook=("[hook]" in text.lower()) or ("[chorus]" in text.lower())
-    has_verse="[Verse]" in text or "[verse]" in text.lower()
+    has_hook=bool(re.search(r'^\[(?:hook|chorus)(?:\s+\d+)?\]', text, re.I | re.M))
+    has_verse=bool(re.search(r'^\[verse(?:\s+\d+)?\]', text, re.I | re.M))
     ends=[_end_char(l) for l in lines]
     # 簡易押韻提示：相鄰行尾字相同者
     rhyme_pairs=sum(1 for i in range(len(ends)-1) if ends[i] and ends[i]==ends[i+1])

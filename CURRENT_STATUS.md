@@ -5,7 +5,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-08-21 A1每日巡查（remote cloud）｜24h 零非巡查 commit（系統靜止）；NEEDS_REVIEW 10 tasks 持續等 Owner 決定（~894h since 07-19）；T-A7-001 Phase 3 延誤（07-25截止已過，第34天）；CRITICAL: T-A4-002 ~3127h / T-IOS-KOL-001 ~1615h / A6 ~1150h；A8 ~1430h；一致，無新異常｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-08-25 Codex A8 bounded reopen｜Owner 以邦尼兔案例重啟 T-A8-001；Drive 素材分類、WP 草稿、hiphop v2 與 EDM v1 生成包已完成，外部音樂生成與發布仍在 owner_gate｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -20,6 +20,8 @@
 ---
 
 ## 最新事實核對
+
+- 2026-08-25：**[A8 重啟] 邦尼兔托嬰畢業典禮案例已完成第一個原子閉環** — Drive `0717邦尼兔-托嬰畢業典禮` 共 28 件素材完成範圍盤點；本機 preview `c01/c03` 為無人餐點桌景候選，`c02` 因含幼兒人像海報列 C 級排除。新增 `workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/`，包含 WordPress 審稿草稿、已由 Drive 對稿回讀的 hiphop v2、新 EDM 歌詞與 Suno 貼上包。修正 enhanced renderer 把所有案例誤寫成「大臺南會展中心企業會議」的硬編碼，新增 graduation category 與零網路測試。尚未送 Suno、未建立或發布 WP、未上傳社群；下一步只在 Owner 當輪核准後消耗一次每日免費額度做 EDM 試作。
 
 - 2026-08-03：**[修復＋更正] A8 影音產線 Google Drive/Sheets OAuth 根因已消除** — 先前診斷「卡在測試模式、refresh token 每 7 天過期」對「A8 產線」是**指錯專案**：A8 用的是 GCP 專案 **`maplab-ai`**（單一 `~/.claude/mcp-keys/google-token.json`），非相片產線的 `maplab-pipeline`（`token_owner/spouse.json`）。實查 Console：`maplab-ai` 同意畫面確為「測試」→ 這才是 7 天過期真因；**已於本日發布為「實際運作中」**，根因消除（可逆，Console 有「返回測試」）。Notion 金鑰保管室查無現成可用 Drive token，且 OAuth user-token 本質無法靠保管室繞過（會被 Google 依測試模式作廢）。**Owner 唯一一次動作**：在電腦前跑 `python3 ~/.claude/mcp-keys/reauth_google.py`，瀏覽器跳同意頁點「允許」（未驗證警告 → 進階 → 繼續 → 允許），新 refresh token 存回後**長期有效、不再每 7 天復發**。細節見 `skills/a8-produce-to-publish-sop.md` §6、`pitfalls.md`（2026-08-03 條）。➡️ 下個協作者：別再把 A8 的 OAuth 當週期性雜務；只剩那一次重授權。
 - 2026-07-27：**[決策] 重大事件改用金十數據 app，停用自建「事件島」+ 不再自建事件分頁** — Owner 指示走「最短路徑／不重造輪子」（`docs/OPERATING_CULTURE.md` 原則 5）。重大財經事件（FOMC/財報/Fed/即時新聞）用現成 **金十數據 app** 那類工具即可，我們只做**提醒/整合**；**停用自建「重大事件島」浮窗、不再自建事件分頁**。➡️ 下個協作者：**別再去建事件 UI**。同輪並新增文化原則 6（解決根因，不只補症狀）。
@@ -143,7 +145,7 @@
 | T-A6-002 | LINE 對話訓練資料收集計畫 | A6 | 💤 暫停（原計畫拆 Sheet 做訓練資料，04-07 重新規劃方向。等 Owner 決定是否需要 LINE 訓練資料及取得方式。） | handoff/tasks/T-A6-002.md |
 | T-A7-001 | FAQ 回覆模板庫 + 補問流程 + 客戶分類標籤 | A7 | ⏳ 等 A5 外送費級距 Owner 確認（Owner 已裁決選項 B：建完級距→Q5串接→Phase 3 啟動）（Owner 確認 Zone B/C 金額（`state/owner_delivery_fee_confirm_20260） | handoff/tasks/T-A7-001.md |
 | T-A7-002 | A7 部門 80/20 優先任務清單 | A7 | ⏸️ 阻塞中（任務 9 已解除，其餘阻塞未變）（任務 6（Q1-Q10 實裝）+ 任務 9（Owner 政策確認）+ 任務 10（技能書 v2.0）已完成。Phase ） | handoff/tasks/T-A7-002.md |
-| T-A8-001-folder-to-video-distribution | T-A8-001 — Folder Case to Short Video Distribution | A8 | 🟡 STALLED（since 2026-07-19，48h 無 commit，Owner 可更新最後活動解除）（任務已建立，Owner 要求 A8 從「閒置」轉為真實內容產線；IG Reel 底層邏輯研究 + 流程技能書尚未完成。） | handoff/tasks/T-A8-001-folder-to-video-distribution.md |
+| T-A8-001-folder-to-video-distribution | T-A8-001 — Folder Case to Short Video Distribution | A8 | 🟠 OWNER_GATE（2026-08-25 已完成邦尼兔素材分級、WP/兩版歌詞、A 級素材本機短片與驗證；待 Owner 核准一次 Suno 免費層 EDM 試作，尚未發布。） | handoff/tasks/T-A8-001-folder-to-video-distribution.md |
 | T-B1-001 | B1 Cross-Project Governance Advisor Prompt + Project Pause |  | 🟢 召喚型可用（B1 轉為 Investment OS 投資邏輯橋接顧問（召喚型）；InnerFlowLab/Substack 發文自動） | handoff/tasks/T-B1-001.md |
 | T-B1-B4-investment-os-role-split | T-B1-B4-001 — Investment OS B1-B4 Role Split + Chrome Extension Summon |  | 🟡 STALLED（since 2026-07-19，48h 無 commit，Owner 可更新最後活動解除）（B1-B4 已不只做角色拆分；新增 RSI-like 成長閉環，下一步是把 scorer 接進排程/Telegram f） | handoff/tasks/T-B1-B4-investment-os-role-split.md |
 | T-B1-DASH-001 | Guild Ops Board 自動同步 + 即時狀態燈 |  | 🟢 READY（已派工，等 Codex 執行）（Game dashboard v0.2 完成（9 NPC / 6 rooms / 21 cards，驗收通過）。尚未完成） | handoff/tasks/T-B1-DASH-001.md |

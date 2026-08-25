@@ -290,10 +290,15 @@ CTA 類別預設：
 | `brand_event` | `台南品牌活動、發表會規劃｜官方 LINE 洽詢檔期 @maplab` |
 | `wedding` | `台南婚禮茶會、婚禮外燴｜官方 LINE 洽詢檔期 @maplab` |
 | `birthday` | `台南慶生派對、週歲茶點｜官方 LINE 洽詢檔期 @maplab` |
+| `graduation` | `台南畢業典禮、親子活動茶點｜官方 LINE 洽詢檔期 @maplab` |
 | `private_party` | `台南派對餐敘、私宅外燴｜官方 LINE 洽詢檔期 @maplab` |
 | `art_wine` | `台南藝文活動、品酒茶會｜官方 LINE 洽詢檔期 @maplab` |
 | `custom_box` | `台南客製餐盒、外帶點心｜官方 LINE 洽詢檔期 @maplab` |
 | `general` | `台南外燴設計、活動茶點｜官方 LINE 洽詢檔期 @maplab` |
+
+平台文案 invariant：category 必須同時決定 CTA、YouTube title/description、TikTok caption/hashtags 與 Pinterest board。產出後 grep 不得含其他 seed case 的場地或活動詞；`graduation` 至少驗證不含「大臺南會展中心／企業會議／動線穩」。
+
+素材 privacy invariant：A/B/C 分級完成後，正式 review draft 必須用 `--asset-file` 逐一白名單指定 A 級素材；不能只靠 `--asset-dir` 的排序假設排除 C 級檔案。
 
 ### Step 4.6：MAPLAB IG Soft v1 視覺規格
 

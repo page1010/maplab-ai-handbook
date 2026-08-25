@@ -2,27 +2,23 @@
   "asset_dir": "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-bunny/clips",
   "out_dir": "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-bunny/review_mv",
   "case_label": "邦尼兔托嬰畢業典禮・甜點桌",
-  "category": "general",
-  "cta_line": "台南外燴設計、活動茶點｜官方 LINE 洽詢檔期 @maplab",
-  "title": "台南活動外燴",
+  "category": "graduation",
+  "cta_line": "台南畢業典禮、親子活動茶點｜官方 LINE 洽詢檔期 @maplab",
+  "title": "台南畢業典禮外燴",
   "images": [
     "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-bunny/clips/c01.mov",
-    "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-bunny/clips/c02.mov",
     "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-bunny/clips/c03.mov"
   ],
   "scene_lines": [
     "畢業典禮的甜點桌",
-    "一口點心排成慶祝",
-    "小小畢業生的大日子"
+    "一口點心排成慶祝"
   ],
   "scene_motions": [
     "dolly_in",
-    "pan_right",
-    "pan_left"
+    "pan_right"
   ],
   "frame_modes": [
     "intro",
-    "scene",
     "scene",
     "scene",
     "outro"

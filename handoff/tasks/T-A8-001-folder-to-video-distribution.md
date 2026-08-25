@@ -1,15 +1,26 @@
 # T-A8-001 — Folder Case to Short Video Distribution
 
 ## 接續狀態
-- **狀態**: 🔒 AUTO_CLOSED（2026-08-04，NEEDS_REVIEW 無回應逾 7 天，Owner 可回覆「重開 T-A8-001-folder-to-video-distribution」重啟）
-- **最後活動**: 2026-06-17
-- **接續點**: 任務已建立，Owner 要求 A8 從「閒置」轉為真實內容產線；IG Reel 底層邏輯研究 + 流程技能書尚未完成。
-- **阻塞**: 無（可自主執行）
+- **狀態**: 🔄 ACTIVE（Owner 於 2026-08-25 明確要求以邦尼兔案例重啟）
+- **最後活動**: 2026-08-25
+- **接續點**: 邦尼兔 Drive 素材已分級，WP 草稿、hiphop v2 與 EDM v1 貼上包已建立；先完成本機驗證，再由 Owner 決定是否送 Suno 免費層試作。
+- **阻塞**: `owner_gate` — 對外送出 EDM 歌詞／曲風與消耗每日免費額度前需當輪確認；WP／社群仍未核准發布。
 
 Owner: A8 影音內容產線
 Status: 🔄 ACTIVE
 Created: 2026-06-17
 Risk: medium
+
+## 2026-08-25 Reopen Checkpoint
+
+- Source：Drive `0717邦尼兔-托嬰畢業典禮`，28 件素材；本輪不搬移、不刪除原檔。
+- Privacy：`c02` 含幼兒人像海報，列 C 級排除；`c01` 與 `c03` 前 2.8 秒為無人餐點桌景候選，review draft 僅使用該安全時間窗。
+- Draft bundle：`workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/`。
+- Root-cause fix：enhanced renderer 的平台文案原先硬編碼 ICC／企業會議內容；已改為 category profile，新增 `graduation`，避免不同案例沿用錯誤文案。
+- 已完成：WP 審稿草稿、hiphop v2 readback、新 EDM 歌詞與 Suno paste-ready package。
+- 尚未執行：Suno 生成、WordPress draft/publish、任何社群上傳。
+- Next bounded action：Owner 核准後，只送一次 `edm_lyrics_v1.txt`＋`suno_edm_submission.md` 的 style 做免費層試作，回讀發音與副歌，不延伸第二首。
+- Acceptance proof：A8 focused tests `5/5 PASS`；歌詞引擎 hiphop/EDM 均 `ok=true`；本機 review draft 為 H.264、1080x1920、30fps、7.833s，人工抽幀未見人物；完整證據見 `workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/validation_report.md`。
 
 ## Owner Request
 
@@ -186,4 +197,18 @@ ffprobe: H.264, 1080x1920, 30fps, 13.2s
 Hermes/OpenClaw 現況：Hermes CLI 有但 gateway stopped；OpenClaw browser doctor OK，可做 UI readback/operator；OpenClaw agent QA 對 A8 v5 回 `NO_REPLY`，暫不作 A8 文案/影片 QA 主力。
 
 下一步：先確認最新 `local_model_video_v5/` 與 `review_draft_v4/` 是否通過手機預覽；如 GPT/Gemini 不可用，可跑地端 video pipeline 產 MP4 proof，但仍需人工/雲端工具 polish。再用 Google Vids / Canva / CapCut 加授權配樂、動態細修與最終封面，產 final 9:16 mp4 + cover；再產 publish approval card。未經 Owner/A1 approval，不得上傳 YouTube / TikTok / Instagram / Pinterest。
+```
+
+## Resume Prompt 2026-08-25
+
+```text
+你是 MAPLAB A8 影音內容產線，先完整讀 CURRENT_STATUS.md、pitfalls.md、skills/a8-produce-to-publish-sop.md、skills/a8-video-pipeline-skills.md 與本 Task Card。
+
+目前 Active case 是 Drive `0717邦尼兔-托嬰畢業典禮`。本機已完成 A/B/C 分級，C 級 `c02` 含幼兒人像海報不得外送；review draft 只白名單使用 `c01.mov` 與 `c03.mov` 前 2.8 秒。成果與驗證都在：
+workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/
+
+已完成：WP 審稿草稿、hiphop v2 回讀、新 EDM v1、Suno 貼上包、graduation metadata root-cause fix、5 個 focused tests、7.833 秒本機 review draft。
+尚未完成：Suno 外部生成、WP 建立/發布、任何社群上傳。
+
+下一個 bounded action 只有一個：若 Owner 當輪明確核准，使用 `edm_lyrics_v1.txt` 與 `suno_edm_submission.md` 消耗一次每日免費額度生成 EDM 試作；只回讀歌詞發音、副歌辨識與品牌語氣，保存內部試聽 receipt，不延伸第二首、不發布。若未核准，維持 owner_gate，不對外傳送任何素材。
 ```

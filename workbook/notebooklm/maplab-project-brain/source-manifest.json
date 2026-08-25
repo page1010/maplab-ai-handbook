@@ -1,0 +1,90 @@
+{
+  "schema_version": "2026-08-25.notebooklm-source-pack.v1",
+  "generated_at": "2026-08-25T00:00:00+08:00",
+  "build_base_commit": "4fa25ea3eb41",
+  "directional_map_manifest_sha256": "75a93d5bb747e9eb8e649876c1f1c48e9a233845fd3894429e2737391d1236ce",
+  "upload_files": [
+    "workbook/notebooklm/maplab-project-brain/maplab-project-brain.md",
+    "workbook/notebooklm/maplab-project-brain/source-manifest.json"
+  ],
+  "allowed_sensitivity": [
+    "public",
+    "internal_governance",
+    "sanitized_operational_summary"
+  ],
+  "excluded_patterns": [
+    ".env",
+    "token",
+    "secret",
+    "credentials",
+    "cookie",
+    "session",
+    "broker",
+    "position",
+    "ledger",
+    "customer raw",
+    "runtime log",
+    "sqlite",
+    "private key"
+  ],
+  "sources": [
+    {
+      "path": "config/system-map/maplab-directional-map.json",
+      "sha256": "75a93d5bb747e9eb8e649876c1f1c48e9a233845fd3894429e2737391d1236ce",
+      "bytes": 27899,
+      "classification": "internal_governance",
+      "redactions": 0
+    },
+    {
+      "path": "docs/company-values.md",
+      "sha256": "20111f9d52eff61799b0817d78125e1c2062cd7d815e83b7f2d8d79aaeccf087",
+      "bytes": 18153,
+      "classification": "internal_governance",
+      "redactions": 0
+    },
+    {
+      "path": "AGENT_RULES.md",
+      "sha256": "1a86040aca614c577b702b139faa41d5f1172c47d27bf62c9aed2ab5dca44e9c",
+      "bytes": 67025,
+      "classification": "internal_governance",
+      "redactions": 0
+    },
+    {
+      "path": "AGENT_STARTUP_PROTOCOL.md",
+      "sha256": "b0aef7ed781537139c481e02498383aece8b7a54041cb120547fa15ddf28cd52",
+      "bytes": 14662,
+      "classification": "internal_governance",
+      "redactions": 0
+    },
+    {
+      "path": "SYSTEM_DIRECTORY_INDEX.md",
+      "sha256": "fdaa236c18f11ce99f9c2f9112e3320fcd3b1fcfc8c64985f5bcd0ba1fde74c5",
+      "bytes": 35060,
+      "classification": "internal_governance",
+      "redactions": 0
+    },
+    {
+      "path": "skills/capability-map-guide-visualization.md",
+      "sha256": "ef2936b9dc0c2fc65db55306bab503d7dce283ea84641140a619267ec3b143fb",
+      "bytes": 1879,
+      "classification": "internal_governance",
+      "redactions": 0
+    },
+    {
+      "path": "skills/capability-notebooklm-project-brain.md",
+      "sha256": "c2c7057f84b8856b3cb60a3a86b9c4cea1b96ef3ee4086f5ec695a1f8934a9cf",
+      "bytes": 2727,
+      "classification": "internal_governance",
+      "redactions": 0
+    },
+    {
+      "path": "docs/extension/dynamic-role-task-modules.md",
+      "sha256": "d9a38910aa461f798c5c0fe695a5271990e1593a8af1d73b1f1848f97a8ab9e3",
+      "bytes": 18461,
+      "classification": "internal_governance",
+      "redactions": 0
+    }
+  ],
+  "total_redactions": 0,
+  "not_live_truth": true
+}

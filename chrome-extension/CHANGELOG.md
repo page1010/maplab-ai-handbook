@@ -1,5 +1,12 @@
 # Chrome Extension Changelog
 
+## v5.7.0 — 2026-08-25
+變更者：A1 Codex
+- **指向性地圖入口**：角色召喚區新增離線 `🗺 指向性地圖` 按鈕，直接開啟 Extension 內建地圖，不依賴 GitHub raw 或外部網站。
+- **單一資料源**：`docs/system-map/index.html` 與 `chrome-extension/system-map/index.html` 改由 `config/system-map/maplab-directional-map.json` 同步生成，避免兩份地圖人工漂移。
+- **七個管理視角**：系統總圖、Repo／地址、角色與派工、A2–A8 工作流、產物血緣、能力／工具／硬體、治理／記憶／證據。
+- **NotebookLM 安全包**：同一生成器建立帶 source hash 與去敏紀錄的 MAPLAB Project Brain source pack；不把整個 repo、secrets、客戶 raw data 或 runtime logs 直接上傳。
+
 ## v5.6.1 — 2026-06-05
 變更者：A1 Codex
 - **交接目標拆細**：runtime selector 從 4 個粗分類擴充為 Claude Code、Codex、GPT/ChatGPT、Claude Chrome tab、Antigravity、Gemini、OpenClaw、Hermes、Gemini Chrome tab。

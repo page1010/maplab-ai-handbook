@@ -121,6 +121,10 @@ Directory Index Check
 | 動態角色索引 | `chrome-extension/task-modules/index.json` | generated runtime index | A0、A1、Chrome Extension、Codex、Gemini、OpenClaw | 缺 B5／新模組時標記 drift |
 | 角色 Module | `chrome-extension/task-modules/*.json` | generated routing envelope | 對應角色、runtime | 來源 hash 不同即 stale |
 | 角色關聯圖 | `workbook/task_modules/role_module_relation_graph.json` | generated relation view | A0、A1、B3、B4、Extension | 不得當唯一真相 |
+| MAPLAB 指向性地圖 manifest | `config/system-map/maplab-directional-map.json` | canonical navigation schema | A0–A8、Owner、Extension、Codex、Claude、Hermes、OpenClaw | 非投資域；所有視覺與 NotebookLM 包由此重建 |
+| MAPLAB 指向性地圖 | `docs/system-map/index.html` | generated owner view | Owner、A0–A8、全 runtime | 七視角；不可直接手改 HTML |
+| Graphify-compatible 關聯圖 | `docs/system-map/maplab-directional-map.graph.json` | generated nodes/edges | A1、Codex、Graphify／graph tooling | 管地址與依賴，不取代 CURRENT_STATUS／receipt |
+| NotebookLM Project Brain 包 | `workbook/notebooklm/maplab-project-brain/` | generated sanitized reading pack | Owner、A0、A1、NotebookLM | 禁止 wholesale repo dump；先讀 source-manifest 的 hash／排除規則 |
 | 技能總路由 | `skills/superpowers-guide.md` | canonical skill router | 全角色 | 新動作前重查 |
 | 任務進度技能 | `skills/task-progress-guide.md` | canonical skill | 全角色 | Progress Log、Resume、checkpoint |
 | Session 技能 | `skills/session-lifecycle/SKILL.md` | canonical skill | 全角色 | session 開關與資源衛生 |
@@ -195,6 +199,8 @@ Drive 搜尋名稱：`Investment OS`
 
 - `CURRENT_STATUS.md`
 - `SYSTEM_DIRECTORY_INDEX.md`
+- `docs/system-map/index.html`
+- `config/system-map/maplab-directional-map.json`
 - 關聯表 CSV
 - `handoff/a0-briefing.md`
 - `workbook/owner_requirements_panel.md`
@@ -205,6 +211,7 @@ Drive 搜尋名稱：`Investment OS`
 ## A1 系統總管
 
 - 全局治理文件
+- 指向性地圖 manifest／generator／build report
 - Task Cards、task index、relation graph
 - Review bundles、pitfalls、decisions
 - Drive operational source metadata
@@ -212,6 +219,7 @@ Drive 搜尋名稱：`Investment OS`
 
 ## A2 SEO／搜尋流量
 
+- 指向性地圖 A2 workflow／A2↔A3↔A4↔A8 產物交接
 - SEO project／skills／Task Cards
 - A3 landing／ads 關係
 - A4 assets
@@ -220,36 +228,42 @@ Drive 搜尋名稱：`Investment OS`
 
 ## A3 社群／廣告
 
+- 指向性地圖 A3 workflow／平台 readback 與 approval gate
 - A2 landing pages、A4 assets、A5/A7 FAQ／conversion insight
 - Drive：外燴案例、廣告策略、素材
 - Credential：Meta／Google Ads／GTM
 
 ## A4 影像資產
 
+- 指向性地圖 A4 workflow／MAPLAB_ASSET_LOG／本機素材索引血緣
 - Drive：外燴案例、Items Photos、ASSET_LOG
 - GitHub：photo pipeline、visual spec、A4 Task Cards
 - 下游：A2、A3、A5、A6、A8
 
 ## A5 報價引擎
 
+- 指向性地圖 A5 workflow／Items→QUOTE_DRAFT→Sheet/Slides 血緣
 - Drive：核心 Sheet、Items、報價單、Proposals、訂單資料夾
 - GitHub：master data、quotation skills、Task Cards
 - 下游：A6、A7、Slides／GAS
 
 ## A6 業務快反應
 
+- 指向性地圖 A6 workflow／A7→A5→A6 交接
 - Drive：A6 回覆訓練、核心 Sheet、LINE cases、報價單
 - GitHub：A6 task card、quote SOP、Codex routing
 - 上游：A5、A4、A7
 
 ## A7 客服
 
+- 指向性地圖 A7 workflow／CONVERSATION_LOG→需求→洞察血緣
 - Drive：LINE CSV、ai_reply_system、A6 回覆訓練、訂單結果
 - GitHub：A7 templates、AI reply project、Task Cards
 - 下游：A5、A6、A2、A3
 
 ## A8 影音
 
+- 指向性地圖 A8 workflow／brief→素材→歌詞／曲風→合法音軌→影片→發布 receipt
 - Drive：外燴案例、Mina 精修素材、Items Photos
 - GitHub：A8 skills／Task Card
 - 上游：A2、A3、A4

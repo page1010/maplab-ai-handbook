@@ -5,7 +5,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-08-25 Codex A8 發佈盤點＋品牌主題曲｜邦尼兔 15 秒審核片規格合格，但舊免費音源商用權未驗證；目前唯一有成功證據的自動外部寫入是 YouTube Studio 私人 Short 草稿。另依 MAPLAB IG Soft v1 完成《把相聚端上桌》長版歌詞、exact 15 秒 Hook、曲風與分鏡，停在 Owner 歌詞核稿，不耗生成額度、不上傳｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-08-25 Codex A1 非投資域指向性治理地圖｜已以單一 manifest 產生 7 個視角、Graphify-compatible graph、Chrome Extension offline map 與 NotebookLM 去敏 source pack；程式、schema、路徑、敏感資料、桌面／行動 UI 驗收通過。目前只剩 Owner 在 `chrome://extensions` 對已安裝擴充套件按一次「重新載入」，因 Chrome 安全邊界不允許 agent 自動打開該頁面。完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -21,6 +21,7 @@
 
 ## 最新事實核對
 
+- 2026-08-25：**[A1 MAPLAB 非投資域指向性治理地圖]** — `config/system-map/maplab-directional-map.json` 現為 canonical manifest，同源產生系統總覽、Repo、角色、A2–A8 工作流、產物互用、能力／硬體、治理／證據 7 個視角。已納入 Mac mini、Windows 宣告節點、Claude／Codex／Antigravity／Hermes／GPT／OpenClaw 共治邊界、A0–A8 角色、A2–A8 共 28 個交接階段與既有 Sheet／索引。`docs/system-map/index.html` 與 Extension offline map 已生成；NotebookLM 改用帶 hash／排除機密與投資資料的 safe pack，不整庫上傳。驗收收據：`workbook/reviews/JOB-A1-DIRECTIONAL-MAP-20260825/validation_receipt.md`。尚未自動 reload Owner Chrome 內已安裝擴充套件，需 Owner 在 `chrome://extensions` 手動點一次「重新載入」後才能宣稱 live Extension readback 完成。
 - 2026-08-25：**[A8 自動發佈真相盤點＋MAPLAB IG 主題曲]** — 邦尼兔現有 15 秒審核片反讀為 H.264/AAC、1080×1920、30fps、15.000 秒；其音源來自舊免費期，商業使用權未驗證，不能冒充可公開母帶。repo 目前唯一有歷史真實成功證據的自動外部寫入是 Chrome → YouTube Studio 私人 Short 草稿；TikTok／IG Reels／FB Reels／Pinterest 只有格式與 metadata，未接通可驗證自動上傳器，Telegram `sendVideo` 也沒有本案可重跑 receipt。收據：`workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/auto_distribution_audit_20260825.md`。下一案已依 Owner 的 IG 截圖與既有 Reels readback 完成《把相聚端上桌》75–90 秒歌詞、exact 15 秒 Hook、歌詞介紹、City-pop × 輕 Hip-hop 曲風與長短版分鏡；歌詞引擎 `ok=true`，focused unittest `5/5 PASS`。Task：`handoff/tasks/T-A8-002-maplab-ig-theme-song.md`；目前 `OWNER_LYRICS_GATE`，未送外部生成、未耗額度、未渲染或上傳。
 - 2026-08-25：**[A2→Songwriter→A8 單案核稿] 托嬰畢業典禮案例已完成文章與歌詞審稿包** — live WP REST 共 57 篇且「畢業」為內容 gap；本案定位為家庭活動 cluster 的獨立 case child，不與週歲頁混寫。Drive 28 件素材與同日客戶資料已作內部事實核對，公開文章不使用未核准客戶名稱；兩張正文圖、1200×630 OG、FAQ/schema、60–75 秒歌詞與 exact 15 秒 hook 已完成。Owner 指出的「審稿面沒有照片／CTA 不明確」已修正；Google Doc API 反讀為 2 張 inline images、CTA 獨立段落且連到真實 LINE：`https://docs.google.com/document/d/18kApXho1icyj78XBVo2aEzFUfJI7sMKt4y9I0jq5Ky8/edit?tab=t.0`。下一步只有 Owner 核准文章與歌詞；既有免費期歌曲只作風格參考，核准後才在有效訂閱下生成新母帶並交 A8。尚未建立 WP 草稿、生成新歌、渲染新片或上傳發布。
 - 2026-08-25：**[A6 Hermes] 外接算力 Telegram 窗口已完成真實啟動** — `scripts/a6_hermes_activate.sh` fail-closed 啟動成功，`com.maplab.a6bot` 已常駐 `bot_a6/hermes_telegram_gateway.py`；Telegram Web 對 `@maplab_a6_bot` 送 `/start` 後真實讀回 `【hermes】值班中`。這只證明入口與身份回覆可用，第一題公開資訊的來源／推論／研究判斷品質仍待 bounded QA；私有客戶素材、持股、券商與密鑰不得送免費端點。收據：`workbook/reviews/JOB-A6-HERMES-ACTIVATION-20260825/telegram_roundtrip.md`。

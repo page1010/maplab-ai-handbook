@@ -1,0 +1,3371 @@
+{
+  "schema_version": "2026-08-25.maplab-directional-map.v1",
+  "generated_at": "2026-08-25T00:00:00+08:00",
+  "source_manifest": "config/system-map/maplab-directional-map.json",
+  "source_manifest_sha256": "75a93d5bb747e9eb8e649876c1f1c48e9a233845fd3894429e2737391d1236ce",
+  "build_base_commit": "4fa25ea3eb41",
+  "scope": {
+    "title": "MAPLAB 非投資域指向性治理地圖",
+    "included": [
+      "MAPLAB A0-A8",
+      "Mac mini",
+      "Windows",
+      "Claude/Codex/Antigravity/Hermes/GPT/OpenClaw",
+      "A2-A8 workflows",
+      "Sheets/Drive/local indexes",
+      "governance evidence"
+    ],
+    "excluded": [
+      "Investment OS roles, workflows, positions, research, databases and runtime details"
+    ],
+    "last_verified": "2026-08-25"
+  },
+  "nodes": [
+    {
+      "id": "A2-01",
+      "type": "workflow_stage",
+      "label": "內容機會",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "A2-02",
+      "type": "workflow_stage",
+      "label": "事實與素材查核",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "A2-03",
+      "type": "workflow_stage",
+      "label": "文章草稿",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "A2-04",
+      "type": "workflow_stage",
+      "label": "圖片／SEO／Schema",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "A2-05",
+      "type": "workflow_stage",
+      "label": "Owner 核稿",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "A2-06",
+      "type": "workflow_stage",
+      "label": "WordPress 草稿／發布",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "A2-07",
+      "type": "workflow_stage",
+      "label": "成效回讀",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "A3-01",
+      "type": "workflow_stage",
+      "label": "平台成效讀取",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "A3-02",
+      "type": "workflow_stage",
+      "label": "漏斗與素材判讀",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "A3-03",
+      "type": "workflow_stage",
+      "label": "調整提案",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "A3-04",
+      "type": "workflow_stage",
+      "label": "執行與回讀",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "A4-01",
+      "type": "workflow_stage",
+      "label": "來源盤點",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "A4-02",
+      "type": "workflow_stage",
+      "label": "分類／去重／隱私",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "A4-03",
+      "type": "workflow_stage",
+      "label": "命名／ALT／索引",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "A4-04",
+      "type": "workflow_stage",
+      "label": "素材包交接",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "A5-01",
+      "type": "workflow_stage",
+      "label": "需求正規化",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "A5-02",
+      "type": "workflow_stage",
+      "label": "品項／成本／毛利",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "A5-03",
+      "type": "workflow_stage",
+      "label": "Sheet／提案生成",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "A6-01",
+      "type": "workflow_stage",
+      "label": "急件分流",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "A6-02",
+      "type": "workflow_stage",
+      "label": "報價／提案組裝",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "A6-03",
+      "type": "workflow_stage",
+      "label": "Owner 核准與送出",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "A7-01",
+      "type": "workflow_stage",
+      "label": "對話收集",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "A7-02",
+      "type": "workflow_stage",
+      "label": "意圖與需求結構化",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "A7-03",
+      "type": "workflow_stage",
+      "label": "回覆與洞察回寫",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "A8-01",
+      "type": "workflow_stage",
+      "label": "素材準備",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "A8-02",
+      "type": "workflow_stage",
+      "label": "內容與歌曲",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "A8-03",
+      "type": "workflow_stage",
+      "label": "影片製作與平台裁切",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "A8-04",
+      "type": "workflow_stage",
+      "label": "發布資料與分發",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:1-1-video",
+      "type": "artifact",
+      "label": "1:1 video",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:16-9-video",
+      "type": "artifact",
+      "label": "16:9 video",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:7-14-30-day-window",
+      "type": "artifact",
+      "label": "7/14/30-day window",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:9-16-video",
+      "type": "artifact",
+      "label": "9:16 video",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:a2-landing-status",
+      "type": "artifact",
+      "label": "A2 landing status",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:a2-seo-metadata",
+      "type": "artifact",
+      "label": "A2 SEO metadata",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:a4-approved-asset-pack",
+      "type": "artifact",
+      "label": "A4 approved asset pack",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:a4-asset-index",
+      "type": "artifact",
+      "label": "A4 asset index",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:a4-asset-pack",
+      "type": "artifact",
+      "label": "A4 asset pack",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:a5-quote-payload",
+      "type": "artifact",
+      "label": "A5 quote payload",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:a7-structured-intake",
+      "type": "artifact",
+      "label": "A7 structured intake",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:a7-urgent-intake",
+      "type": "artifact",
+      "label": "A7 urgent intake",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:approval-ready-article-package",
+      "type": "artifact",
+      "label": "approval-ready article package",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:approval-ready-change-plan",
+      "type": "artifact",
+      "label": "approval-ready change plan",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:approval-record",
+      "type": "artifact",
+      "label": "approval record",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:approved-article-package",
+      "type": "artifact",
+      "label": "approved article package",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:approved-asset-pack",
+      "type": "artifact",
+      "label": "approved asset pack",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:approved-case-brief",
+      "type": "artifact",
+      "label": "approved case brief",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:approved-change-plan",
+      "type": "artifact",
+      "label": "approved change plan",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:approved-customer-message",
+      "type": "artifact",
+      "label": "approved customer message",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:approved-lyrics",
+      "type": "artifact",
+      "label": "approved lyrics",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:approved-revise-reject-decision",
+      "type": "artifact",
+      "label": "approved/revise/reject decision",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:article-draft",
+      "type": "artifact",
+      "label": "article draft",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:asset-index-records",
+      "type": "artifact",
+      "label": "asset index records",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:asset-manifest",
+      "type": "artifact",
+      "label": "asset manifest",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:asset-pack",
+      "type": "artifact",
+      "label": "asset pack",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:asset-request",
+      "type": "artifact",
+      "label": "asset request",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:brand-music-direction",
+      "type": "artifact",
+      "label": "brand/music direction",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:brand-voice",
+      "type": "artifact",
+      "label": "brand voice",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:business-priority",
+      "type": "artifact",
+      "label": "business priority",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:case-keyword-context",
+      "type": "artifact",
+      "label": "case/keyword context",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:case-records",
+      "type": "artifact",
+      "label": "case records",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:change-receipt",
+      "type": "artifact",
+      "label": "change receipt",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:classified-asset-set",
+      "type": "artifact",
+      "label": "classified asset set",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:content-inventory",
+      "type": "artifact",
+      "label": "content inventory",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:content-opportunity-brief",
+      "type": "artifact",
+      "label": "content opportunity brief",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:conversation-exports",
+      "type": "artifact",
+      "label": "conversation exports",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:conversation-record",
+      "type": "artifact",
+      "label": "conversation record",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:cost-margin-rules",
+      "type": "artifact",
+      "label": "cost/margin rules",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:cover-assets",
+      "type": "artifact",
+      "label": "cover assets",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:customer-approved-facts",
+      "type": "artifact",
+      "label": "customer-approved facts",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:customer-ready-draft",
+      "type": "artifact",
+      "label": "customer-ready draft",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:customer-safe-templates",
+      "type": "artifact",
+      "label": "customer-safe templates",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:delivery-receipt",
+      "type": "artifact",
+      "label": "delivery receipt",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:direct-owner-request",
+      "type": "artifact",
+      "label": "direct Owner request",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:distribution-receipt",
+      "type": "artifact",
+      "label": "distribution receipt",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:downstream-request",
+      "type": "artifact",
+      "label": "downstream request",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:drive-folders",
+      "type": "artifact",
+      "label": "Drive folders",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:event-date-metadata",
+      "type": "artifact",
+      "label": "event/date metadata",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:exclusion-list",
+      "type": "artifact",
+      "label": "exclusion list",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:faq-market-insight",
+      "type": "artifact",
+      "label": "FAQ/market insight",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:findings",
+      "type": "artifact",
+      "label": "findings",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:ga-gsc-ads-metrics",
+      "type": "artifact",
+      "label": "GA/GSC/Ads metrics",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:generation-record",
+      "type": "artifact",
+      "label": "generation record",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:google-meta-account-read-only-state",
+      "type": "artifact",
+      "label": "Google/Meta account read-only state",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:gsc-ga-ads-evidence",
+      "type": "artifact",
+      "label": "GSC/GA/Ads evidence",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:items",
+      "type": "artifact",
+      "label": "Items",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:keyword-intent",
+      "type": "artifact",
+      "label": "keyword/intent",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:license-status",
+      "type": "artifact",
+      "label": "license status",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:licensed-audio-track",
+      "type": "artifact",
+      "label": "licensed audio track",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:line-inbound",
+      "type": "artifact",
+      "label": "LINE inbound",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:live-url",
+      "type": "artifact",
+      "label": "live URL",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:master-video",
+      "type": "artifact",
+      "label": "master video",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:next-content-action",
+      "type": "artifact",
+      "label": "next content action",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:next-measurement-window",
+      "type": "artifact",
+      "label": "next measurement window",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:owner-customer-constraints",
+      "type": "artifact",
+      "label": "Owner/customer constraints",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:owner-priority",
+      "type": "artifact",
+      "label": "Owner priority",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:owner-publish-decision",
+      "type": "artifact",
+      "label": "Owner publish decision",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:performance-readback",
+      "type": "artifact",
+      "label": "performance readback",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:performance-snapshot",
+      "type": "artifact",
+      "label": "performance snapshot",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:platform-intent",
+      "type": "artifact",
+      "label": "platform intent",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:platform-specs",
+      "type": "artifact",
+      "label": "platform specs",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:platform-urls-ids",
+      "type": "artifact",
+      "label": "platform URLs/IDs",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:platform-videos",
+      "type": "artifact",
+      "label": "platform videos",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:proposal-package",
+      "type": "artifact",
+      "label": "proposal package",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:publish-package",
+      "type": "artifact",
+      "label": "publish package",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:publish-receipt",
+      "type": "artifact",
+      "label": "publish receipt",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:quote-calculation-payload",
+      "type": "artifact",
+      "label": "quote calculation payload",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:quote-delivery-result",
+      "type": "artifact",
+      "label": "quote/delivery result",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:quote-draft-template",
+      "type": "artifact",
+      "label": "QUOTE_DRAFT template",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:quote-sheet-url",
+      "type": "artifact",
+      "label": "quote Sheet URL",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:raw-asset-inventory",
+      "type": "artifact",
+      "label": "raw asset inventory",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:reasonable-inference",
+      "type": "artifact",
+      "label": "reasonable inference",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:reply-proposal",
+      "type": "artifact",
+      "label": "reply proposal",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:reply-receipt",
+      "type": "artifact",
+      "label": "reply receipt",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:reply-rules",
+      "type": "artifact",
+      "label": "reply rules",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:routed-sales-task",
+      "type": "artifact",
+      "label": "routed sales task",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:seo-title-description-draft",
+      "type": "artifact",
+      "label": "SEO title/description draft",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:sheet-proposal-urls",
+      "type": "artifact",
+      "label": "Sheet/proposal URLs",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:storyboard",
+      "type": "artifact",
+      "label": "storyboard",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:structured-intake",
+      "type": "artifact",
+      "label": "structured intake",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:style-profile",
+      "type": "artifact",
+      "label": "style profile",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:validated-quote-intake",
+      "type": "artifact",
+      "label": "validated quote intake",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:verified-findings",
+      "type": "artifact",
+      "label": "verified findings",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "artifact:wordpress-url",
+      "type": "artifact",
+      "label": "WordPress URL",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "data:a2-patrol",
+      "type": "data_source",
+      "label": "A2 Ads SEO Patrol Matrix",
+      "status": "verified",
+      "path": "google-sheet:1mUig-TrkbAMNSHngV-sJ3cPqs-5gGLkTH1cjpkyK0Vs"
+    },
+    {
+      "id": "data:ads-dashboard",
+      "type": "data_source",
+      "label": "Google Ads 儀表板",
+      "status": "declared",
+      "path": "google-sheet:1bVcYTSjxSLLHf1SApJg5fbpPyX5RGv_LMTfKOqMl6-I"
+    },
+    {
+      "id": "data:asset-index-local",
+      "type": "data_source",
+      "label": "MAPLAB_WORKSPACE 素材索引",
+      "status": "verified",
+      "path": "/Volumes/MacExternal/MAPLAB_WORKSPACE/index"
+    },
+    {
+      "id": "data:asset-log",
+      "type": "data_source",
+      "label": "MAPLAB_ASSET_LOG",
+      "status": "verified",
+      "path": "google-sheet:1nlxlMdaLdGEAmOjP70BYspRWqu_eYpsiRyZaujEZkYI"
+    },
+    {
+      "id": "data:maplab-sheet",
+      "type": "data_source",
+      "label": "MAPLAB 外燴系統主表",
+      "status": "verified",
+      "path": "google-sheet:1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg"
+    },
+    {
+      "id": "data:task-index",
+      "type": "data_source",
+      "label": "Task／Role generated indexes",
+      "status": "verified",
+      "path": "workbook/task_index.json"
+    },
+    {
+      "id": "evidence:analysis-matrix",
+      "type": "evidence",
+      "label": "analysis matrix",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "evidence:approval-record",
+      "type": "evidence",
+      "label": "approval record",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "evidence:article-qa-report",
+      "type": "evidence",
+      "label": "article QA report",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "evidence:asset-manifest",
+      "type": "evidence",
+      "label": "asset manifest",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "evidence:asset-pack-manifest",
+      "type": "evidence",
+      "label": "asset pack manifest",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "evidence:before-after-receipt",
+      "type": "evidence",
+      "label": "before/after receipt",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "evidence:brand-memory-check",
+      "type": "evidence",
+      "label": "brand memory check",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "evidence:calculation-validation",
+      "type": "evidence",
+      "label": "calculation validation",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "evidence:classification-receipt",
+      "type": "evidence",
+      "label": "classification receipt",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "evidence:classification-record",
+      "type": "evidence",
+      "label": "classification record",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "evidence:conversation-learning-receipt",
+      "type": "evidence",
+      "label": "conversation + learning receipt",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "evidence:dated-patrol-receipt",
+      "type": "evidence",
+      "label": "dated patrol receipt",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "evidence:delivery-readback-receipt",
+      "type": "evidence",
+      "label": "delivery/readback receipt",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "evidence:dispatch-record",
+      "type": "evidence",
+      "label": "dispatch record",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "evidence:draft-bundle",
+      "type": "evidence",
+      "label": "draft bundle",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "evidence:draft-review",
+      "type": "evidence",
+      "label": "draft review",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "evidence:index-readback",
+      "type": "evidence",
+      "label": "index readback",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "evidence:intake-payload",
+      "type": "evidence",
+      "label": "intake payload",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "evidence:inventory-manifest",
+      "type": "evidence",
+      "label": "inventory manifest",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "evidence:license-generation-receipt",
+      "type": "evidence",
+      "label": "license/generation receipt",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "evidence:lyrics-approval",
+      "type": "evidence",
+      "label": "lyrics approval",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "evidence:media-probe-receipt",
+      "type": "evidence",
+      "label": "media probe receipt",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "evidence:per-platform-ui-api-receipt",
+      "type": "evidence",
+      "label": "per-platform UI/API receipt",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "evidence:platform-readback",
+      "type": "evidence",
+      "label": "platform readback",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "evidence:review-brief",
+      "type": "evidence",
+      "label": "review brief",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "evidence:review-clip",
+      "type": "evidence",
+      "label": "review clip",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "evidence:review-request",
+      "type": "evidence",
+      "label": "review request",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "evidence:sheet-readback-receipt",
+      "type": "evidence",
+      "label": "Sheet readback receipt",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "evidence:sheet-tail-readback",
+      "type": "evidence",
+      "label": "Sheet tail readback",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "evidence:source-bridge",
+      "type": "evidence",
+      "label": "source bridge",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "evidence:wp-rest-ui-receipt",
+      "type": "evidence",
+      "label": "WP REST/UI receipt",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "gate:A2-05",
+      "type": "approval_gate",
+      "label": "Owner content and publish approval",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "gate:A2-06",
+      "type": "approval_gate",
+      "label": "Publishing and changes to published pages require approval",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "gate:A3-03",
+      "type": "approval_gate",
+      "label": "Owner approves spend/status/targeting/creative changes",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "gate:A3-04",
+      "type": "approval_gate",
+      "label": "Use only exact approved change",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "gate:A4-04",
+      "type": "approval_gate",
+      "label": "Public use of uncertain faces/logos requires approval",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "gate:A6-03",
+      "type": "approval_gate",
+      "label": "Owner approves customer-facing quote",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "gate:A7-03",
+      "type": "approval_gate",
+      "label": "External customer reply follows channel policy",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "gate:A8-02",
+      "type": "approval_gate",
+      "label": "Owner lyrics approval before paid/external generation",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "gate:A8-04",
+      "type": "approval_gate",
+      "label": "Owner approves public publishing",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "gov:current-status",
+      "type": "governance",
+      "label": "CURRENT_STATUS.md",
+      "status": "verified",
+      "path": "CURRENT_STATUS.md"
+    },
+    {
+      "id": "gov:git",
+      "type": "governance",
+      "label": "Git commit／review",
+      "status": "verified",
+      "path": ".git"
+    },
+    {
+      "id": "gov:memory",
+      "type": "governance",
+      "label": "Hermes／agent memory",
+      "status": "declared",
+      "path": "workbook/hermes/"
+    },
+    {
+      "id": "gov:notebooklm",
+      "type": "governance",
+      "label": "NotebookLM Project Brain",
+      "status": "declared",
+      "path": "workbook/notebooklm/maplab-project-brain/"
+    },
+    {
+      "id": "gov:pitfalls",
+      "type": "governance",
+      "label": "pitfalls.md／experience log",
+      "status": "verified",
+      "path": "pitfalls.md"
+    },
+    {
+      "id": "gov:receipt",
+      "type": "governance",
+      "label": "Review／receipt",
+      "status": "verified",
+      "path": "workbook/reviews/"
+    },
+    {
+      "id": "gov:task-card",
+      "type": "governance",
+      "label": "Task Card",
+      "status": "verified",
+      "path": "handoff/tasks/"
+    },
+    {
+      "id": "hardware:cloud",
+      "type": "hardware",
+      "label": "Google／WordPress／Social SaaS",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "hardware:mac-mini",
+      "type": "hardware",
+      "label": "Mac mini",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "hardware:windows",
+      "type": "hardware",
+      "label": "Windows 工作機",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "repo:investment-os",
+      "type": "repositorie",
+      "label": "Investment OS",
+      "status": "excluded",
+      "path": "/Users/pagemacmini/investment-os"
+    },
+    {
+      "id": "repo:maplab",
+      "type": "repositorie",
+      "label": "maplab-ai-handbook",
+      "status": "verified",
+      "path": "/Users/pagemacmini/maplab-ai-handbook"
+    },
+    {
+      "id": "repo:maplab-workspace",
+      "type": "repositorie",
+      "label": "MAPLAB_WORKSPACE",
+      "status": "verified",
+      "path": "/Volumes/MacExternal/MAPLAB_WORKSPACE"
+    },
+    {
+      "id": "role:A0",
+      "type": "role",
+      "label": "A0 總調度秘書",
+      "status": "verified",
+      "path": "AGENT_RULES.md"
+    },
+    {
+      "id": "role:A1",
+      "type": "role",
+      "label": "A1 系統總管",
+      "status": "verified",
+      "path": "recalls/A1_recall.md"
+    },
+    {
+      "id": "role:A2",
+      "type": "role",
+      "label": "A2 搜尋流量作戰部",
+      "status": "verified",
+      "path": "projects/seo-ads-agent.md"
+    },
+    {
+      "id": "role:A3",
+      "type": "role",
+      "label": "A3 社群與廣告成長部",
+      "status": "verified",
+      "path": "projects/maplab-ads-monitor.md"
+    },
+    {
+      "id": "role:A4",
+      "type": "role",
+      "label": "A4 影像資產整理部",
+      "status": "verified",
+      "path": "projects/maplab-pipeline.md"
+    },
+    {
+      "id": "role:A5",
+      "type": "role",
+      "label": "A5 報價與提案引擎部",
+      "status": "verified",
+      "path": "projects/maplab-master-data.md"
+    },
+    {
+      "id": "role:A6",
+      "type": "role",
+      "label": "A6 業務快反應部隊",
+      "status": "verified",
+      "path": "skills/a5-quotation-engine-skills.md"
+    },
+    {
+      "id": "role:A7",
+      "type": "role",
+      "label": "A7 客服與對話轉單部",
+      "status": "verified",
+      "path": "projects/ai-reply-system.md"
+    },
+    {
+      "id": "role:A8",
+      "type": "role",
+      "label": "A8 影音內容產線",
+      "status": "verified",
+      "path": "skills/a8-video-pipeline-skills.md"
+    },
+    {
+      "id": "role:Owner",
+      "type": "role",
+      "label": "Owner",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "runtime:antigravity",
+      "type": "runtime",
+      "label": "Antigravity",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "runtime:claude",
+      "type": "runtime",
+      "label": "Claude",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "runtime:codex",
+      "type": "runtime",
+      "label": "Codex",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "runtime:gpt",
+      "type": "runtime",
+      "label": "GPT／ChatGPT",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "runtime:hermes",
+      "type": "runtime",
+      "label": "Hermes",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "runtime:openclaw",
+      "type": "runtime",
+      "label": "OpenClaw",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:a2-patrol-matrix",
+      "type": "tool",
+      "label": "A2 patrol matrix",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:a4-asset-index",
+      "type": "tool",
+      "label": "A4 asset index",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:a5-engine",
+      "type": "tool",
+      "label": "A5 engine",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:ads",
+      "type": "tool",
+      "label": "Ads",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:ads-api-when-appropriate",
+      "type": "tool",
+      "label": "Ads API when appropriate",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:ads-dashboard",
+      "type": "tool",
+      "label": "Ads dashboard",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:analysis-rubric",
+      "type": "tool",
+      "label": "analysis rubric",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:approval-ready-template",
+      "type": "tool",
+      "label": "approval-ready template",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:approved-platform-uploader",
+      "type": "tool",
+      "label": "approved platform uploader",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:asset-case-match",
+      "type": "tool",
+      "label": "asset-case-match",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:audio-inspector",
+      "type": "tool",
+      "label": "audio inspector",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:brand-skills",
+      "type": "tool",
+      "label": "brand skills",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:browser",
+      "type": "tool",
+      "label": "browser",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:browser-api",
+      "type": "tool",
+      "label": "browser/API",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:case-store",
+      "type": "tool",
+      "label": "Case Store",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:content-audit",
+      "type": "tool",
+      "label": "content audit",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:conversation-log",
+      "type": "tool",
+      "label": "CONVERSATION_LOG",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:deterministic-guards",
+      "type": "tool",
+      "label": "deterministic guards",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:deterministic-parser",
+      "type": "tool",
+      "label": "deterministic parser",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:drive",
+      "type": "tool",
+      "label": "Drive",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:drive-metadata",
+      "type": "tool",
+      "label": "Drive metadata",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:ffmpeg",
+      "type": "tool",
+      "label": "ffmpeg",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:ga",
+      "type": "tool",
+      "label": "GA",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:gas",
+      "type": "tool",
+      "label": "GAS",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:gas-helpers",
+      "type": "tool",
+      "label": "GAS helpers",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:google-docs-review-bundle",
+      "type": "tool",
+      "label": "Google Docs/review bundle",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:google-sheets",
+      "type": "tool",
+      "label": "Google Sheets",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:google-slides",
+      "type": "tool",
+      "label": "Google Slides",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:gsc",
+      "type": "tool",
+      "label": "GSC",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:items",
+      "type": "tool",
+      "label": "Items",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:line",
+      "type": "tool",
+      "label": "LINE",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:line-webhook",
+      "type": "tool",
+      "label": "LINE webhook",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:local-index",
+      "type": "tool",
+      "label": "local index",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:maplab-asset-log",
+      "type": "tool",
+      "label": "MAPLAB_ASSET_LOG",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:maplab-workspace-index",
+      "type": "tool",
+      "label": "MAPLAB_WORKSPACE index",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:metadata",
+      "type": "tool",
+      "label": "metadata",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:owner-chrome",
+      "type": "tool",
+      "label": "Owner Chrome",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:owner-chrome-api",
+      "type": "tool",
+      "label": "Owner Chrome/API",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:quote-engine",
+      "type": "tool",
+      "label": "quote engine",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:rank-math-gutenberg",
+      "type": "tool",
+      "label": "Rank Math/Gutenberg",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:reply-model",
+      "type": "tool",
+      "label": "reply model",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:sales-intake",
+      "type": "tool",
+      "label": "SALES_INTAKE",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:slides",
+      "type": "tool",
+      "label": "Slides",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:songwriter-skill",
+      "type": "tool",
+      "label": "songwriter skill",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:suno-or-approved-generator",
+      "type": "tool",
+      "label": "Suno or approved generator",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:supervisor-grader",
+      "type": "tool",
+      "label": "supervisor grader",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:telegram-line-approved-channel",
+      "type": "tool",
+      "label": "Telegram/LINE/approved channel",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:telegram-routing",
+      "type": "tool",
+      "label": "Telegram routing",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:training-ledger",
+      "type": "tool",
+      "label": "training ledger",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:video-pipeline",
+      "type": "tool",
+      "label": "video pipeline",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:vision-qa",
+      "type": "tool",
+      "label": "vision QA",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:visual-qa",
+      "type": "tool",
+      "label": "visual QA",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:wordpress",
+      "type": "tool",
+      "label": "WordPress",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:wordpress-rest",
+      "type": "tool",
+      "label": "WordPress REST",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:wp-content-audit",
+      "type": "tool",
+      "label": "wp-content-audit",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:writing-skill",
+      "type": "tool",
+      "label": "writing skill",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "tool:youtube-studio",
+      "type": "tool",
+      "label": "YouTube Studio",
+      "status": "declared",
+      "path": ""
+    },
+    {
+      "id": "workflow:A2",
+      "type": "workflow",
+      "label": "WordPress／SEO 案例工作流",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "workflow:A3",
+      "type": "workflow",
+      "label": "社群／廣告成長工作流",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "workflow:A4",
+      "type": "workflow",
+      "label": "影像資產整理工作流",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "workflow:A5",
+      "type": "workflow",
+      "label": "報價真相與提案資料工作流",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "workflow:A6",
+      "type": "workflow",
+      "label": "業務快反應工作流",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "workflow:A7",
+      "type": "workflow",
+      "label": "客服與對話轉單工作流",
+      "status": "verified",
+      "path": ""
+    },
+    {
+      "id": "workflow:A8",
+      "type": "workflow",
+      "label": "影音案例生產工作流",
+      "status": "verified",
+      "path": ""
+    }
+  ],
+  "edges": [
+    {
+      "from": "A2-01",
+      "to": "A2-02",
+      "relation": "next_stage"
+    },
+    {
+      "from": "A2-01",
+      "to": "artifact:content-opportunity-brief",
+      "relation": "produces"
+    },
+    {
+      "from": "A2-01",
+      "to": "evidence:review-brief",
+      "relation": "proven_by"
+    },
+    {
+      "from": "A2-01",
+      "to": "role:A3",
+      "relation": "handoff_to"
+    },
+    {
+      "from": "A2-02",
+      "to": "A2-03",
+      "relation": "next_stage"
+    },
+    {
+      "from": "A2-02",
+      "to": "artifact:approved-case-brief",
+      "relation": "produces"
+    },
+    {
+      "from": "A2-02",
+      "to": "artifact:asset-request",
+      "relation": "produces"
+    },
+    {
+      "from": "A2-02",
+      "to": "evidence:brand-memory-check",
+      "relation": "proven_by"
+    },
+    {
+      "from": "A2-02",
+      "to": "evidence:source-bridge",
+      "relation": "proven_by"
+    },
+    {
+      "from": "A2-02",
+      "to": "role:A4",
+      "relation": "handoff_to"
+    },
+    {
+      "from": "A2-03",
+      "to": "A2-04",
+      "relation": "next_stage"
+    },
+    {
+      "from": "A2-03",
+      "to": "artifact:article-draft",
+      "relation": "produces"
+    },
+    {
+      "from": "A2-03",
+      "to": "artifact:seo-title-description-draft",
+      "relation": "produces"
+    },
+    {
+      "from": "A2-03",
+      "to": "evidence:draft-bundle",
+      "relation": "proven_by"
+    },
+    {
+      "from": "A2-04",
+      "to": "A2-05",
+      "relation": "next_stage"
+    },
+    {
+      "from": "A2-04",
+      "to": "artifact:approval-ready-article-package",
+      "relation": "produces"
+    },
+    {
+      "from": "A2-04",
+      "to": "evidence:article-qa-report",
+      "relation": "proven_by"
+    },
+    {
+      "from": "A2-05",
+      "to": "A2-06",
+      "relation": "next_stage"
+    },
+    {
+      "from": "A2-05",
+      "to": "artifact:approved-revise-reject-decision",
+      "relation": "produces"
+    },
+    {
+      "from": "A2-05",
+      "to": "evidence:approval-record",
+      "relation": "proven_by"
+    },
+    {
+      "from": "A2-05",
+      "to": "gate:A2-05",
+      "relation": "requires"
+    },
+    {
+      "from": "A2-06",
+      "to": "A2-07",
+      "relation": "next_stage"
+    },
+    {
+      "from": "A2-06",
+      "to": "artifact:publish-receipt",
+      "relation": "produces"
+    },
+    {
+      "from": "A2-06",
+      "to": "artifact:wordpress-url",
+      "relation": "produces"
+    },
+    {
+      "from": "A2-06",
+      "to": "evidence:wp-rest-ui-receipt",
+      "relation": "proven_by"
+    },
+    {
+      "from": "A2-06",
+      "to": "gate:A2-06",
+      "relation": "requires"
+    },
+    {
+      "from": "A2-06",
+      "to": "role:A3",
+      "relation": "handoff_to"
+    },
+    {
+      "from": "A2-07",
+      "to": "artifact:next-content-action",
+      "relation": "produces"
+    },
+    {
+      "from": "A2-07",
+      "to": "artifact:performance-readback",
+      "relation": "produces"
+    },
+    {
+      "from": "A2-07",
+      "to": "evidence:dated-patrol-receipt",
+      "relation": "proven_by"
+    },
+    {
+      "from": "A2-07",
+      "to": "role:A3",
+      "relation": "handoff_to"
+    },
+    {
+      "from": "A3-01",
+      "to": "A3-02",
+      "relation": "next_stage"
+    },
+    {
+      "from": "A3-01",
+      "to": "artifact:performance-snapshot",
+      "relation": "produces"
+    },
+    {
+      "from": "A3-01",
+      "to": "evidence:platform-readback",
+      "relation": "proven_by"
+    },
+    {
+      "from": "A3-02",
+      "to": "A3-03",
+      "relation": "next_stage"
+    },
+    {
+      "from": "A3-02",
+      "to": "artifact:reasonable-inference",
+      "relation": "produces"
+    },
+    {
+      "from": "A3-02",
+      "to": "artifact:verified-findings",
+      "relation": "produces"
+    },
+    {
+      "from": "A3-02",
+      "to": "evidence:analysis-matrix",
+      "relation": "proven_by"
+    },
+    {
+      "from": "A3-02",
+      "to": "role:A2",
+      "relation": "handoff_to"
+    },
+    {
+      "from": "A3-02",
+      "to": "role:A4",
+      "relation": "handoff_to"
+    },
+    {
+      "from": "A3-02",
+      "to": "role:A8",
+      "relation": "handoff_to"
+    },
+    {
+      "from": "A3-03",
+      "to": "A3-04",
+      "relation": "next_stage"
+    },
+    {
+      "from": "A3-03",
+      "to": "artifact:approval-ready-change-plan",
+      "relation": "produces"
+    },
+    {
+      "from": "A3-03",
+      "to": "evidence:review-request",
+      "relation": "proven_by"
+    },
+    {
+      "from": "A3-03",
+      "to": "gate:A3-03",
+      "relation": "requires"
+    },
+    {
+      "from": "A3-04",
+      "to": "artifact:change-receipt",
+      "relation": "produces"
+    },
+    {
+      "from": "A3-04",
+      "to": "artifact:next-measurement-window",
+      "relation": "produces"
+    },
+    {
+      "from": "A3-04",
+      "to": "evidence:before-after-receipt",
+      "relation": "proven_by"
+    },
+    {
+      "from": "A3-04",
+      "to": "gate:A3-04",
+      "relation": "requires"
+    },
+    {
+      "from": "A3-04",
+      "to": "role:A2",
+      "relation": "handoff_to"
+    },
+    {
+      "from": "A3-04",
+      "to": "role:A8",
+      "relation": "handoff_to"
+    },
+    {
+      "from": "A4-01",
+      "to": "A4-02",
+      "relation": "next_stage"
+    },
+    {
+      "from": "A4-01",
+      "to": "artifact:raw-asset-inventory",
+      "relation": "produces"
+    },
+    {
+      "from": "A4-01",
+      "to": "evidence:inventory-manifest",
+      "relation": "proven_by"
+    },
+    {
+      "from": "A4-02",
+      "to": "A4-03",
+      "relation": "next_stage"
+    },
+    {
+      "from": "A4-02",
+      "to": "artifact:classified-asset-set",
+      "relation": "produces"
+    },
+    {
+      "from": "A4-02",
+      "to": "artifact:exclusion-list",
+      "relation": "produces"
+    },
+    {
+      "from": "A4-02",
+      "to": "evidence:classification-receipt",
+      "relation": "proven_by"
+    },
+    {
+      "from": "A4-03",
+      "to": "A4-04",
+      "relation": "next_stage"
+    },
+    {
+      "from": "A4-03",
+      "to": "artifact:asset-index-records",
+      "relation": "produces"
+    },
+    {
+      "from": "A4-03",
+      "to": "evidence:index-readback",
+      "relation": "proven_by"
+    },
+    {
+      "from": "A4-04",
+      "to": "artifact:approved-asset-pack",
+      "relation": "produces"
+    },
+    {
+      "from": "A4-04",
+      "to": "evidence:asset-pack-manifest",
+      "relation": "proven_by"
+    },
+    {
+      "from": "A4-04",
+      "to": "gate:A4-04",
+      "relation": "requires"
+    },
+    {
+      "from": "A4-04",
+      "to": "role:A2",
+      "relation": "handoff_to"
+    },
+    {
+      "from": "A4-04",
+      "to": "role:A3",
+      "relation": "handoff_to"
+    },
+    {
+      "from": "A4-04",
+      "to": "role:A6",
+      "relation": "handoff_to"
+    },
+    {
+      "from": "A4-04",
+      "to": "role:A8",
+      "relation": "handoff_to"
+    },
+    {
+      "from": "A5-01",
+      "to": "A5-02",
+      "relation": "next_stage"
+    },
+    {
+      "from": "A5-01",
+      "to": "artifact:validated-quote-intake",
+      "relation": "produces"
+    },
+    {
+      "from": "A5-01",
+      "to": "evidence:intake-payload",
+      "relation": "proven_by"
+    },
+    {
+      "from": "A5-02",
+      "to": "A5-03",
+      "relation": "next_stage"
+    },
+    {
+      "from": "A5-02",
+      "to": "artifact:quote-calculation-payload",
+      "relation": "produces"
+    },
+    {
+      "from": "A5-02",
+      "to": "evidence:calculation-validation",
+      "relation": "proven_by"
+    },
+    {
+      "from": "A5-02",
+      "to": "role:A6",
+      "relation": "handoff_to"
+    },
+    {
+      "from": "A5-03",
+      "to": "artifact:proposal-package",
+      "relation": "produces"
+    },
+    {
+      "from": "A5-03",
+      "to": "artifact:quote-sheet-url",
+      "relation": "produces"
+    },
+    {
+      "from": "A5-03",
+      "to": "evidence:sheet-readback-receipt",
+      "relation": "proven_by"
+    },
+    {
+      "from": "A5-03",
+      "to": "role:A6",
+      "relation": "handoff_to"
+    },
+    {
+      "from": "A6-01",
+      "to": "A6-02",
+      "relation": "next_stage"
+    },
+    {
+      "from": "A6-01",
+      "to": "artifact:routed-sales-task",
+      "relation": "produces"
+    },
+    {
+      "from": "A6-01",
+      "to": "evidence:dispatch-record",
+      "relation": "proven_by"
+    },
+    {
+      "from": "A6-01",
+      "to": "role:A5",
+      "relation": "handoff_to"
+    },
+    {
+      "from": "A6-02",
+      "to": "A6-03",
+      "relation": "next_stage"
+    },
+    {
+      "from": "A6-02",
+      "to": "artifact:customer-ready-draft",
+      "relation": "produces"
+    },
+    {
+      "from": "A6-02",
+      "to": "evidence:draft-review",
+      "relation": "proven_by"
+    },
+    {
+      "from": "A6-03",
+      "to": "artifact:approved-customer-message",
+      "relation": "produces"
+    },
+    {
+      "from": "A6-03",
+      "to": "artifact:delivery-receipt",
+      "relation": "produces"
+    },
+    {
+      "from": "A6-03",
+      "to": "evidence:delivery-readback-receipt",
+      "relation": "proven_by"
+    },
+    {
+      "from": "A6-03",
+      "to": "gate:A6-03",
+      "relation": "requires"
+    },
+    {
+      "from": "A6-03",
+      "to": "role:A7",
+      "relation": "handoff_to"
+    },
+    {
+      "from": "A7-01",
+      "to": "A7-02",
+      "relation": "next_stage"
+    },
+    {
+      "from": "A7-01",
+      "to": "artifact:conversation-record",
+      "relation": "produces"
+    },
+    {
+      "from": "A7-01",
+      "to": "evidence:sheet-tail-readback",
+      "relation": "proven_by"
+    },
+    {
+      "from": "A7-02",
+      "to": "A7-03",
+      "relation": "next_stage"
+    },
+    {
+      "from": "A7-02",
+      "to": "artifact:reply-proposal",
+      "relation": "produces"
+    },
+    {
+      "from": "A7-02",
+      "to": "artifact:structured-intake",
+      "relation": "produces"
+    },
+    {
+      "from": "A7-02",
+      "to": "evidence:classification-record",
+      "relation": "proven_by"
+    },
+    {
+      "from": "A7-02",
+      "to": "role:A5",
+      "relation": "handoff_to"
+    },
+    {
+      "from": "A7-02",
+      "to": "role:A6",
+      "relation": "handoff_to"
+    },
+    {
+      "from": "A7-03",
+      "to": "artifact:faq-market-insight",
+      "relation": "produces"
+    },
+    {
+      "from": "A7-03",
+      "to": "artifact:reply-receipt",
+      "relation": "produces"
+    },
+    {
+      "from": "A7-03",
+      "to": "evidence:conversation-learning-receipt",
+      "relation": "proven_by"
+    },
+    {
+      "from": "A7-03",
+      "to": "gate:A7-03",
+      "relation": "requires"
+    },
+    {
+      "from": "A7-03",
+      "to": "role:A2",
+      "relation": "handoff_to"
+    },
+    {
+      "from": "A7-03",
+      "to": "role:A3",
+      "relation": "handoff_to"
+    },
+    {
+      "from": "A7-03",
+      "to": "role:A5",
+      "relation": "handoff_to"
+    },
+    {
+      "from": "A7-03",
+      "to": "role:A6",
+      "relation": "handoff_to"
+    },
+    {
+      "from": "A8-01",
+      "to": "A8-02",
+      "relation": "next_stage"
+    },
+    {
+      "from": "A8-01",
+      "to": "artifact:asset-manifest",
+      "relation": "produces"
+    },
+    {
+      "from": "A8-01",
+      "to": "artifact:asset-pack",
+      "relation": "produces"
+    },
+    {
+      "from": "A8-01",
+      "to": "evidence:asset-manifest",
+      "relation": "proven_by"
+    },
+    {
+      "from": "A8-02",
+      "to": "A8-03",
+      "relation": "next_stage"
+    },
+    {
+      "from": "A8-02",
+      "to": "artifact:approved-lyrics",
+      "relation": "produces"
+    },
+    {
+      "from": "A8-02",
+      "to": "artifact:generation-record",
+      "relation": "produces"
+    },
+    {
+      "from": "A8-02",
+      "to": "artifact:licensed-audio-track",
+      "relation": "produces"
+    },
+    {
+      "from": "A8-02",
+      "to": "artifact:style-profile",
+      "relation": "produces"
+    },
+    {
+      "from": "A8-02",
+      "to": "evidence:license-generation-receipt",
+      "relation": "proven_by"
+    },
+    {
+      "from": "A8-02",
+      "to": "evidence:lyrics-approval",
+      "relation": "proven_by"
+    },
+    {
+      "from": "A8-02",
+      "to": "gate:A8-02",
+      "relation": "requires"
+    },
+    {
+      "from": "A8-03",
+      "to": "A8-04",
+      "relation": "next_stage"
+    },
+    {
+      "from": "A8-03",
+      "to": "artifact:1-1-video",
+      "relation": "produces"
+    },
+    {
+      "from": "A8-03",
+      "to": "artifact:16-9-video",
+      "relation": "produces"
+    },
+    {
+      "from": "A8-03",
+      "to": "artifact:9-16-video",
+      "relation": "produces"
+    },
+    {
+      "from": "A8-03",
+      "to": "artifact:cover-assets",
+      "relation": "produces"
+    },
+    {
+      "from": "A8-03",
+      "to": "artifact:master-video",
+      "relation": "produces"
+    },
+    {
+      "from": "A8-03",
+      "to": "evidence:media-probe-receipt",
+      "relation": "proven_by"
+    },
+    {
+      "from": "A8-03",
+      "to": "evidence:review-clip",
+      "relation": "proven_by"
+    },
+    {
+      "from": "A8-03",
+      "to": "role:A2",
+      "relation": "handoff_to"
+    },
+    {
+      "from": "A8-04",
+      "to": "artifact:distribution-receipt",
+      "relation": "produces"
+    },
+    {
+      "from": "A8-04",
+      "to": "artifact:platform-urls-ids",
+      "relation": "produces"
+    },
+    {
+      "from": "A8-04",
+      "to": "artifact:publish-package",
+      "relation": "produces"
+    },
+    {
+      "from": "A8-04",
+      "to": "evidence:per-platform-ui-api-receipt",
+      "relation": "proven_by"
+    },
+    {
+      "from": "A8-04",
+      "to": "gate:A8-04",
+      "relation": "requires"
+    },
+    {
+      "from": "artifact:7-14-30-day-window",
+      "to": "A3-01",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:a2-landing-status",
+      "to": "A3-02",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:a2-seo-metadata",
+      "to": "A8-04",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:a4-approved-asset-pack",
+      "to": "A6-02",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:a4-asset-index",
+      "to": "A2-02",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:a4-asset-index",
+      "to": "A8-01",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:a4-asset-pack",
+      "to": "A3-02",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:a5-quote-payload",
+      "to": "A6-02",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:a7-structured-intake",
+      "to": "A5-01",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:a7-urgent-intake",
+      "to": "A6-01",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:approval-ready-article-package",
+      "to": "A2-05",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:approval-record",
+      "to": "A2-06",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:approved-article-package",
+      "to": "A2-06",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:approved-asset-pack",
+      "to": "A2-04",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:approved-case-brief",
+      "to": "A2-03",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:approved-case-brief",
+      "to": "A8-01",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:approved-case-brief",
+      "to": "A8-02",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:approved-change-plan",
+      "to": "A3-04",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:article-draft",
+      "to": "A2-04",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:asset-index-records",
+      "to": "A4-04",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:asset-manifest",
+      "to": "A8-02",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:asset-pack",
+      "to": "A8-03",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:brand-music-direction",
+      "to": "A8-02",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:brand-voice",
+      "to": "A2-03",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:business-priority",
+      "to": "A3-03",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:case-keyword-context",
+      "to": "A4-03",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:case-records",
+      "to": "A4-01",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:classified-asset-set",
+      "to": "A4-03",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:content-inventory",
+      "to": "A2-01",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:content-opportunity-brief",
+      "to": "A2-02",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:conversation-exports",
+      "to": "A7-01",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:conversation-record",
+      "to": "A7-02",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:cost-margin-rules",
+      "to": "A5-02",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:customer-approved-facts",
+      "to": "A2-02",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:customer-ready-draft",
+      "to": "A6-03",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:customer-safe-templates",
+      "to": "A6-02",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:direct-owner-request",
+      "to": "A6-01",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:downstream-request",
+      "to": "A4-04",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:drive-folders",
+      "to": "A4-01",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:event-date-metadata",
+      "to": "A4-01",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:findings",
+      "to": "A3-03",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:ga-gsc-ads-metrics",
+      "to": "A2-07",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:google-meta-account-read-only-state",
+      "to": "A3-01",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:gsc-ga-ads-evidence",
+      "to": "A2-01",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:items",
+      "to": "A5-02",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:keyword-intent",
+      "to": "A2-03",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:license-status",
+      "to": "A8-04",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:licensed-audio-track",
+      "to": "A8-03",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:line-inbound",
+      "to": "A7-01",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:live-url",
+      "to": "A2-07",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:owner-customer-constraints",
+      "to": "A5-01",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:owner-priority",
+      "to": "A2-01",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:owner-publish-decision",
+      "to": "A8-04",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:performance-snapshot",
+      "to": "A3-02",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:platform-intent",
+      "to": "A8-01",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:platform-specs",
+      "to": "A8-03",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:platform-videos",
+      "to": "A8-04",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:publish-receipt",
+      "to": "A2-07",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:quote-calculation-payload",
+      "to": "A5-03",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:quote-delivery-result",
+      "to": "A7-03",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:quote-draft-template",
+      "to": "A5-03",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:raw-asset-inventory",
+      "to": "A4-02",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:reply-proposal",
+      "to": "A7-03",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:reply-rules",
+      "to": "A7-02",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:sheet-proposal-urls",
+      "to": "A6-03",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:storyboard",
+      "to": "A8-03",
+      "relation": "input_to"
+    },
+    {
+      "from": "artifact:validated-quote-intake",
+      "to": "A5-02",
+      "relation": "input_to"
+    },
+    {
+      "from": "role:A2",
+      "to": "workflow:A2",
+      "relation": "owns"
+    },
+    {
+      "from": "role:A3",
+      "to": "workflow:A3",
+      "relation": "owns"
+    },
+    {
+      "from": "role:A4",
+      "to": "workflow:A4",
+      "relation": "owns"
+    },
+    {
+      "from": "role:A5",
+      "to": "workflow:A5",
+      "relation": "owns"
+    },
+    {
+      "from": "role:A6",
+      "to": "workflow:A6",
+      "relation": "owns"
+    },
+    {
+      "from": "role:A7",
+      "to": "workflow:A7",
+      "relation": "owns"
+    },
+    {
+      "from": "role:A8",
+      "to": "workflow:A8",
+      "relation": "owns"
+    },
+    {
+      "from": "tool:a2-patrol-matrix",
+      "to": "A2-01",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:a2-patrol-matrix",
+      "to": "A2-07",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:a4-asset-index",
+      "to": "A2-04",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:a5-engine",
+      "to": "A6-02",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:ads",
+      "to": "A2-07",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:ads-api-when-appropriate",
+      "to": "A3-01",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:ads-dashboard",
+      "to": "A3-01",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:analysis-rubric",
+      "to": "A3-02",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:approval-ready-template",
+      "to": "A3-03",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:approved-platform-uploader",
+      "to": "A8-04",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:asset-case-match",
+      "to": "A4-04",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:asset-case-match",
+      "to": "A8-01",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:audio-inspector",
+      "to": "A8-02",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:brand-skills",
+      "to": "A2-02",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:browser",
+      "to": "A3-02",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:browser-api",
+      "to": "A8-04",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:case-store",
+      "to": "A6-01",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:content-audit",
+      "to": "A2-03",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:conversation-log",
+      "to": "A7-01",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:deterministic-guards",
+      "to": "A7-02",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:deterministic-parser",
+      "to": "A5-01",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:drive",
+      "to": "A4-04",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:drive",
+      "to": "A8-01",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:drive-metadata",
+      "to": "A2-02",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:drive-metadata",
+      "to": "A4-01",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:ffmpeg",
+      "to": "A8-03",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:ga",
+      "to": "A2-01",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:ga",
+      "to": "A2-07",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:gas",
+      "to": "A5-03",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:gas-helpers",
+      "to": "A5-02",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:google-docs-review-bundle",
+      "to": "A2-05",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:google-sheets",
+      "to": "A5-03",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:google-slides",
+      "to": "A5-03",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:gsc",
+      "to": "A2-01",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:gsc",
+      "to": "A2-07",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:items",
+      "to": "A5-02",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:line",
+      "to": "A7-03",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:line-webhook",
+      "to": "A7-01",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:local-index",
+      "to": "A4-01",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:maplab-asset-log",
+      "to": "A4-03",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:maplab-asset-log",
+      "to": "A8-01",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:maplab-workspace-index",
+      "to": "A4-03",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:metadata",
+      "to": "A4-02",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:owner-chrome",
+      "to": "A3-01",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:owner-chrome-api",
+      "to": "A2-06",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:owner-chrome-api",
+      "to": "A3-04",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:quote-engine",
+      "to": "A5-02",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:rank-math-gutenberg",
+      "to": "A2-04",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:reply-model",
+      "to": "A7-02",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:sales-intake",
+      "to": "A5-01",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:slides",
+      "to": "A6-02",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:songwriter-skill",
+      "to": "A8-02",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:suno-or-approved-generator",
+      "to": "A8-02",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:supervisor-grader",
+      "to": "A6-02",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:telegram-line-approved-channel",
+      "to": "A6-03",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:telegram-routing",
+      "to": "A6-01",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:training-ledger",
+      "to": "A7-03",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:video-pipeline",
+      "to": "A8-03",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:vision-qa",
+      "to": "A4-02",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:visual-qa",
+      "to": "A8-03",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:wordpress",
+      "to": "A2-06",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:wordpress-rest",
+      "to": "A2-01",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:wordpress-rest",
+      "to": "A2-02",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:wp-content-audit",
+      "to": "A2-04",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:writing-skill",
+      "to": "A2-03",
+      "relation": "enables"
+    },
+    {
+      "from": "tool:youtube-studio",
+      "to": "A8-04",
+      "relation": "enables"
+    },
+    {
+      "from": "workflow:A2",
+      "to": "A2-01",
+      "relation": "contains"
+    },
+    {
+      "from": "workflow:A2",
+      "to": "A2-02",
+      "relation": "contains"
+    },
+    {
+      "from": "workflow:A2",
+      "to": "A2-03",
+      "relation": "contains"
+    },
+    {
+      "from": "workflow:A2",
+      "to": "A2-04",
+      "relation": "contains"
+    },
+    {
+      "from": "workflow:A2",
+      "to": "A2-05",
+      "relation": "contains"
+    },
+    {
+      "from": "workflow:A2",
+      "to": "A2-06",
+      "relation": "contains"
+    },
+    {
+      "from": "workflow:A2",
+      "to": "A2-07",
+      "relation": "contains"
+    },
+    {
+      "from": "workflow:A3",
+      "to": "A3-01",
+      "relation": "contains"
+    },
+    {
+      "from": "workflow:A3",
+      "to": "A3-02",
+      "relation": "contains"
+    },
+    {
+      "from": "workflow:A3",
+      "to": "A3-03",
+      "relation": "contains"
+    },
+    {
+      "from": "workflow:A3",
+      "to": "A3-04",
+      "relation": "contains"
+    },
+    {
+      "from": "workflow:A4",
+      "to": "A4-01",
+      "relation": "contains"
+    },
+    {
+      "from": "workflow:A4",
+      "to": "A4-02",
+      "relation": "contains"
+    },
+    {
+      "from": "workflow:A4",
+      "to": "A4-03",
+      "relation": "contains"
+    },
+    {
+      "from": "workflow:A4",
+      "to": "A4-04",
+      "relation": "contains"
+    },
+    {
+      "from": "workflow:A5",
+      "to": "A5-01",
+      "relation": "contains"
+    },
+    {
+      "from": "workflow:A5",
+      "to": "A5-02",
+      "relation": "contains"
+    },
+    {
+      "from": "workflow:A5",
+      "to": "A5-03",
+      "relation": "contains"
+    },
+    {
+      "from": "workflow:A6",
+      "to": "A6-01",
+      "relation": "contains"
+    },
+    {
+      "from": "workflow:A6",
+      "to": "A6-02",
+      "relation": "contains"
+    },
+    {
+      "from": "workflow:A6",
+      "to": "A6-03",
+      "relation": "contains"
+    },
+    {
+      "from": "workflow:A7",
+      "to": "A7-01",
+      "relation": "contains"
+    },
+    {
+      "from": "workflow:A7",
+      "to": "A7-02",
+      "relation": "contains"
+    },
+    {
+      "from": "workflow:A7",
+      "to": "A7-03",
+      "relation": "contains"
+    },
+    {
+      "from": "workflow:A8",
+      "to": "A8-01",
+      "relation": "contains"
+    },
+    {
+      "from": "workflow:A8",
+      "to": "A8-02",
+      "relation": "contains"
+    },
+    {
+      "from": "workflow:A8",
+      "to": "A8-03",
+      "relation": "contains"
+    },
+    {
+      "from": "workflow:A8",
+      "to": "A8-04",
+      "relation": "contains"
+    }
+  ]
+}

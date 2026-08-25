@@ -1,5 +1,5 @@
-// MAPLAB Agent Commander v5.6.1 — popup.js
-// 角色選擇 + GitHub dynamic role task modules + runtime handoff prompt
+// MAPLAB Agent Commander v5.7.0 — popup.js
+// 角色選擇 + 指向性治理地圖 + GitHub dynamic role task modules + runtime handoff prompt
 const DEFAULT_BASE = 'https://raw.githubusercontent.com/page1010/maplab-ai-handbook/main';
 const GITHUB_API   = 'https://api.github.com/repos/page1010/maplab-ai-handbook';
 const COMMIT_COUNT = 8;
@@ -971,6 +971,10 @@ function copyPrompt() {
     }, 2500);
   }).catch(() => el('promptText').select());
 }
+
+function openDirectionalSystemMap() {
+  chrome.tabs.create({ url: chrome.runtime.getURL('system-map/index.html') });
+}
 function copyHandoff() {
   const role = el('roleSelect').value;
   const module = cachedRoleModules[role];
@@ -1093,7 +1097,7 @@ async function loadAll() {
 
     el('overdueCount').textContent = cachedOverdue.length > 0 ? `⏰ ${cachedOverdue.length}` : '';
     const vb = document.getElementById('versionBadge');
-    if (vb) vb.textContent = formatVersion(chrome.runtime.getManifest?.().version || '5.6.1');
+    if (vb) vb.textContent = formatVersion(chrome.runtime.getManifest?.().version || '5.7.0');
     const moduleCount = cachedModuleIndex?.modules?.length || 0;
     setStatus('ok', `${formatVersion(cachedParsed.version)} ｜ 模組 ${moduleCount} 已載入`);
   } catch(e) {
@@ -1142,6 +1146,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
   el('handoffBtn')?.addEventListener('click', copyHandoff);
   el('copyBtn')?.addEventListener('click', copyPrompt);
+  el('openSystemMapBtn')?.addEventListener('click', openDirectionalSystemMap);
   el('injectBtn')?.addEventListener('click', injectToClaudeTab);
   el('syncBtn')?.addEventListener('click', checkSelectedModuleFreshness);
   el('reloadBtn')?.addEventListener('click', reloadExtension);

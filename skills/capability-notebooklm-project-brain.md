@@ -17,6 +17,25 @@
 - 建議一專案一 notebook:maplab-ai-handbook 用 CURRENT_STATUS.md + docs/ 重點;investment-os 只餵已發布的 reports(不餵 ledger/DB)。
 - 更新方式:狀態檔改版後重新上傳來源(NotebookLM 不會自己同步 git)。
 
+## MAPLAB 可重建安全包（2026-08-25）
+
+不要把整個 repo 直接拖進 NotebookLM。repo 內含 runtime log、credential 路由、歷史生成物、可能的客戶資料與跨專案內容；wholesale dump 會同時造成資料外洩風險、過期文件干擾與引用品質下降。
+
+標準入口：
+
+```bash
+python3 tools/ai_workbook/build_directional_system_map.py
+```
+
+只上傳：
+
+- `workbook/notebooklm/maplab-project-brain/maplab-project-brain.md`
+- `workbook/notebooklm/maplab-project-brain/source-manifest.json`
+
+`source-manifest.json` 會列出來源路徑、SHA-256、分類、redaction 數量與 build base commit。NotebookLM 回答現況問題時必引用來源；來源 hash 過期或涉及外部 live 狀態時，回答 `needs live refresh`，再由 A0/A1 走 API/UI/runtime readback。
+
+禁止上傳：`.env`、token／secret value、cookie/session、credential files、客戶 raw conversations、持股／券商／ledger、SQLite/DB、runtime logs、媒體 binary、未審核 generated dump。
+
 ## 既有管線(KOL 線)
 
 RSS→逐字稿→packet(scripts/kol_shadow_workflow.py)→ NotebookLM → Codex 整合;歷史斷點在 OpenClaw 那步,用上面的 Chrome operator 法即可繞過。產出範例:investment-os reviews/JOB-KOL-NOTEBOOKLM-OPERATOR-20260605/smoke/。

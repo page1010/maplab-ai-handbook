@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://maplab.local/schemas/maplab-directional-map.v1.json",
+  "title": "MAPLAB Directional System Map",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "scope",
+    "views",
+    "repositories",
+    "hardware",
+    "runtimes",
+    "roles",
+    "data_sources",
+    "workflows",
+    "governance"
+  ],
+  "properties": {
+    "schema_version": {"const": "2026-08-25.maplab-directional-map.v1"},
+    "scope": {
+      "type": "object",
+      "required": ["title", "included", "excluded", "last_verified"],
+      "properties": {
+        "title": {"type": "string", "minLength": 1},
+        "included": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+        "excluded": {"type": "array", "items": {"type": "string"}},
+        "last_verified": {"type": "string", "format": "date"}
+      },
+      "additionalProperties": false
+    },
+    "views": {
+      "type": "array",
+      "minItems": 7,
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "question"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z][a-z0-9_-]+$"},
+          "title": {"type": "string"},
+          "question": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "repositories": {"$ref": "#/$defs/entities"},
+    "hardware": {"$ref": "#/$defs/entities"},
+    "runtimes": {"$ref": "#/$defs/entities"},
+    "roles": {"$ref": "#/$defs/entities"},
+    "data_sources": {"$ref": "#/$defs/entities"},
+    "workflows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "owner_role", "name", "purpose", "stages"],
+        "properties": {
+          "id": {"type": "string"},
+          "owner_role": {"type": "string"},
+          "name": {"type": "string"},
+          "purpose": {"type": "string"},
+          "stages": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["id", "name", "inputs", "actions", "outputs", "acceptance", "handoff_to", "evidence"],
+              "properties": {
+                "id": {"type": "string"},
+                "name": {"type": "string"},
+                "inputs": {"type": "array", "items": {"type": "string"}},
+                "actions": {"type": "array", "items": {"type": "string"}},
+                "outputs": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+                "acceptance": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+                "tools": {"type": "array", "items": {"type": "string"}},
+                "approval_gate": {"type": ["string", "null"]},
+                "handoff_to": {"type": "array", "items": {"type": "string"}},
+                "evidence": {"type": "array", "items": {"type": "string"}, "minItems": 1}
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "governance": {"$ref": "#/$defs/entities"},
+    "notebooklm": {
+      "type": "object",
+      "required": ["allowed_sensitivity", "excluded_patterns", "source_files"],
+      "properties": {
+        "allowed_sensitivity": {"type": "array", "items": {"type": "string"}},
+        "excluded_patterns": {"type": "array", "items": {"type": "string"}},
+        "source_files": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "entities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "status", "description"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[A-Za-z0-9._:-]+$"},
+          "name": {"type": "string"},
+          "status": {"enum": ["verified", "declared", "missing", "excluded"]},
+          "description": {"type": "string"},
+          "path": {"type": "string"},
+          "owner": {"type": "string"},
+          "used_by": {"type": "array", "items": {"type": "string"}},
+          "inputs": {"type": "array", "items": {"type": "string"}},
+          "outputs": {"type": "array", "items": {"type": "string"}},
+          "boundary": {"type": "string"},
+          "freshness": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

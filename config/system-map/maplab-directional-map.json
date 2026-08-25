@@ -1,0 +1,144 @@
+{
+  "schema_version": "2026-08-25.maplab-directional-map.v1",
+  "scope": {
+    "title": "MAPLAB 非投資域指向性治理地圖",
+    "included": ["MAPLAB A0-A8", "Mac mini", "Windows", "Claude/Codex/Antigravity/Hermes/GPT/OpenClaw", "A2-A8 workflows", "Sheets/Drive/local indexes", "governance evidence"],
+    "excluded": ["Investment OS roles, workflows, positions, research, databases and runtime details"],
+    "last_verified": "2026-08-25"
+  },
+  "views": [
+    {"id": "overview", "title": "系統總圖", "question": "Owner、硬體、代理、角色、資料與出口怎麼連？"},
+    {"id": "repositories", "title": "Repo／地址", "question": "正式來源、狀態檔、生成器和 freshness 在哪裡？"},
+    {"id": "roles", "title": "角色與派工", "question": "誰負責、誰協作、應召喚哪個角色？"},
+    {"id": "workflows", "title": "A2–A8 工作流", "question": "每個專業角色如何把輸入變成可驗收輸出？"},
+    {"id": "artifacts", "title": "產物血緣", "question": "Sheet、brief、素材、文章、報價、影片和 receipt 如何互用？"},
+    {"id": "capabilities", "title": "能力／工具／硬體", "question": "哪台機器、哪個代理和哪個工具可做哪些步驟？"},
+    {"id": "governance", "title": "治理／記憶／證據", "question": "現況、任務、版本、教訓與完成證據分別由誰管理？"}
+  ],
+  "repositories": [
+    {"id": "repo:maplab", "name": "maplab-ai-handbook", "status": "verified", "description": "MAPLAB 規則、角色、工作流、Extension、生成器與 review receipts 的 canonical repo。", "path": "/Users/pagemacmini/maplab-ai-handbook", "owner": "A1", "inputs": ["Owner decisions", "runtime/UI readback", "task receipts"], "outputs": ["CURRENT_STATUS", "Task Cards", "role modules", "system maps"], "freshness": "git commit + manifest hash"},
+    {"id": "repo:maplab-workspace", "name": "MAPLAB_WORKSPACE", "status": "verified", "description": "固定的大型輸出、狀態、工具與素材索引根目錄；不是治理真相源。", "path": "/Volumes/MacExternal/MAPLAB_WORKSPACE", "owner": "A1/A4", "outputs": ["outputs", "state", "tools", "index"], "freshness": "artifact receipts"},
+    {"id": "repo:investment-os", "name": "Investment OS", "status": "excluded", "description": "本輪只保留邊界標記，不畫投資角色、資料或 runtime 關係。", "path": "/Users/pagemacmini/investment-os", "owner": "B roles"}
+  ],
+  "hardware": [
+    {"id": "hardware:mac-mini", "name": "Mac mini", "status": "verified", "description": "主 repo、Git、launchd、Telegram bot、Ollama、控制面、生成器與 receipts 所在。", "owner": "A1", "outputs": ["generated maps", "runtime readback", "commits"]},
+    {"id": "hardware:windows", "name": "Windows 工作機", "status": "declared", "description": "跨機器素材、剪輯與 UI 工作面，由 Chrome Remote Desktop／bridge 管理；每次仍需 live heartbeat 或畫面反讀。", "owner": "A0/A4", "outputs": ["asset/video/UI evidence"], "boundary": "Windows 證據須回 Mac canonical repo 留 receipt"},
+    {"id": "hardware:cloud", "name": "Google／WordPress／Social SaaS", "status": "verified", "description": "Drive、Sheets、WordPress、Google Ads、Meta、YouTube 等外部工作面。", "owner": "A0/A1 + specialist role", "boundary": "發布、廣告變更、權限與外部寫入各自需要 approval/readback"}
+  ],
+  "runtimes": [
+    {"id": "runtime:claude", "name": "Claude", "status": "verified", "description": "A0 Cowork 跨系統調度與 A1 Claude Code 治理／工程能力。", "owner": "A0/A1", "inputs": ["Task Card", "repo sources"], "outputs": ["dispatch", "governance changes", "review"]},
+    {"id": "runtime:codex", "name": "Codex", "status": "verified", "description": "有界實作、測試、審查、可重建產出與 scoped commit。", "owner": "A1", "inputs": ["bounded task", "canonical sources"], "outputs": ["code", "tests", "receipt"]},
+    {"id": "runtime:antigravity", "name": "Antigravity", "status": "declared", "description": "第二讀、SEO／廣告巡檢與候選執行節點。", "owner": "A0/A1", "boundary": "未驗證 ExecutionLease 前不得升格為任意寫入者"},
+    {"id": "runtime:hermes", "name": "Hermes", "status": "verified", "description": "受限 Telegram 值班與文字判讀能力；依注入手冊回答。", "owner": "A1", "boundary": "不能把人設或回覆當作檔案、雲端或 runtime readback"},
+    {"id": "runtime:gpt", "name": "GPT／ChatGPT", "status": "verified", "description": "內容、推理與第二讀能力，由角色契約與驗證 gate 約束。", "owner": "specialist role", "boundary": "模型建議不是現況證據"},
+    {"id": "runtime:openclaw", "name": "OpenClaw", "status": "declared", "description": "瀏覽器 operator／worker 路徑；能力需按工作流逐案認證。", "owner": "A1", "boundary": "不得自我宣告 PASS；必須產出契約化檔案與 supervisor receipt"}
+  ],
+  "roles": [
+    {"id": "role:Owner", "name": "Owner", "status": "verified", "description": "定方向、品牌、花錢、發布、權限與高風險核准。", "outputs": ["priority", "approval", "correction"]},
+    {"id": "role:A0", "name": "A0 總調度秘書", "status": "verified", "description": "跨系統橋接、Owner 入口、派工、存檔監督與 Windows 遠端監控。", "path": "AGENT_RULES.md", "outputs": ["dispatch brief", "cross-system handoff"]},
+    {"id": "role:A1", "name": "A1 系統總管", "status": "verified", "description": "repo 內治理、Task Card、巡查、debug、版本、生成器和證據收斂。", "path": "recalls/A1_recall.md", "outputs": ["task routing", "commit", "status writeback", "receipt"]},
+    {"id": "role:A2", "name": "A2 搜尋流量作戰部", "status": "verified", "description": "SEO、WordPress、GSC／GA、案例內容與搜尋流量。", "path": "projects/seo-ads-agent.md", "inputs": ["brand facts", "A3 metrics", "A4 assets"], "outputs": ["case brief", "article", "landing page", "SEO metadata"]},
+    {"id": "role:A3", "name": "A3 社群與廣告成長部", "status": "verified", "description": "Meta／Google Ads 成效、社群節奏、受眾、素材與漏斗。", "path": "projects/maplab-ads-monitor.md", "inputs": ["A2 landing", "A4 assets", "platform metrics"], "outputs": ["performance readback", "creative direction", "budget proposal"]},
+    {"id": "role:A4", "name": "A4 影像資產整理部", "status": "verified", "description": "Drive 素材分類、授權／隱私、命名、標籤、ALT 與索引。", "path": "projects/maplab-pipeline.md", "inputs": ["raw assets", "case metadata"], "outputs": ["asset index", "approved asset pack"]},
+    {"id": "role:A5", "name": "A5 報價與提案引擎部", "status": "verified", "description": "Items、成本、毛利、公式、條款與報價模板真相。", "path": "projects/maplab-master-data.md", "inputs": ["structured demand", "Items", "cost/margin rules"], "outputs": ["quote payload", "pricing validation", "proposal data"]},
+    {"id": "role:A6", "name": "A6 業務快反應部隊", "status": "verified", "description": "依 A5 真相與 A4 素材快速組報價、提案與安全回覆。", "path": "skills/a5-quotation-engine-skills.md", "inputs": ["A7 demand", "A5 rules", "A4 assets"], "outputs": ["quote draft", "Slides proposal", "customer-safe reply"]},
+    {"id": "role:A7", "name": "A7 客服與對話轉單部", "status": "verified", "description": "客戶詢問分類、標準回覆、需求結構化與轉單。", "path": "projects/ai-reply-system.md", "inputs": ["LINE/conversation"], "outputs": ["structured intake", "urgent route", "FAQ/market insight"]},
+    {"id": "role:A8", "name": "A8 影音內容產線", "status": "verified", "description": "案例 brief 與素材轉歌詞、音軌、影片版本、發布包與平台 receipt。", "path": "skills/a8-video-pipeline-skills.md", "inputs": ["A2 brief", "A3 cadence", "A4 asset pack"], "outputs": ["lyrics package", "audio track", "platform videos", "publish package"]}
+  ],
+  "data_sources": [
+    {"id": "data:maplab-sheet", "name": "MAPLAB 外燴系統主表", "status": "verified", "description": "Task Board、Owner Actions、Items、QUOTE_DRAFT、CONVERSATION_LOG 等營運資料入口。", "path": "google-sheet:1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg", "owner": "A5/A1", "used_by": ["A0", "A1", "A5", "A6", "A7"], "boundary": "Sheet 是營運資料真相，不等於 runtime 或完成證據", "freshness": "live Sheets readback"},
+    {"id": "data:asset-log", "name": "MAPLAB_ASSET_LOG", "status": "verified", "description": "素材 file_id、原名、SEO 名、分類、關鍵字、ALT、Drive URL、年份。", "path": "google-sheet:1nlxlMdaLdGEAmOjP70BYspRWqu_eYpsiRyZaujEZkYI", "owner": "A4", "used_by": ["A2", "A3", "A4", "A6", "A8"], "outputs": ["asset lineage", "approved asset lookup"], "freshness": "Sheet readback + local index receipt"},
+    {"id": "data:ads-dashboard", "name": "Google Ads 儀表板", "status": "declared", "description": "Google Ads 資料寫入與分析面；圖表與即時新鮮度需另行驗證。", "path": "google-sheet:1bVcYTSjxSLLHf1SApJg5fbpPyX5RGv_LMTfKOqMl6-I", "owner": "A3", "used_by": ["A2", "A3", "A1"], "freshness": "platform + Sheet readback"},
+    {"id": "data:a2-patrol", "name": "A2 Ads SEO Patrol Matrix", "status": "verified", "description": "SEO／Ads／WordPress 巡查工作資料與 approval-ready 追蹤。", "path": "google-sheet:1mUig-TrkbAMNSHngV-sJ3cPqs-5gGLkTH1cjpkyK0Vs", "owner": "A2", "used_by": ["A1", "A2", "A3"], "freshness": "live sources override Sheet notes"},
+    {"id": "data:asset-index-local", "name": "MAPLAB_WORKSPACE 素材索引", "status": "verified", "description": "婚禮／企業／生日／甜點素材索引、原始庫與 PNG 救回紀錄。", "path": "/Volumes/MacExternal/MAPLAB_WORKSPACE/index", "owner": "A4", "used_by": ["A2", "A3", "A4", "A6", "A8"], "freshness": "index validation receipts"},
+    {"id": "data:task-index", "name": "Task／Role generated indexes", "status": "verified", "description": "任務索引、角色模組關聯與跨來源反向索引。", "path": "workbook/task_index.json", "owner": "A1", "used_by": ["A0", "A1", "all runtimes"], "outputs": ["impact analysis", "cold-start navigation"], "freshness": "generated_at + source hashes"}
+  ],
+  "workflows": [
+    {
+      "id": "workflow:A2", "owner_role": "A2", "name": "WordPress／SEO 案例工作流", "purpose": "把已核准事實與素材做成可發布、可回讀的搜尋內容。",
+      "stages": [
+        {"id": "A2-01", "name": "內容機會", "inputs": ["GSC/GA/Ads evidence", "content inventory", "Owner priority"], "actions": ["找搜尋與案例 gap", "確認不與既有頁 cannibalize"], "outputs": ["content opportunity brief"], "acceptance": ["來源、日期、搜尋意圖清楚"], "tools": ["GSC", "GA", "WordPress REST", "A2 patrol matrix"], "approval_gate": null, "handoff_to": ["A2-02", "A3"], "evidence": ["review brief"]},
+        {"id": "A2-02", "name": "事實與素材查核", "inputs": ["content opportunity brief", "customer-approved facts", "A4 asset index"], "actions": ["品牌記憶檢查", "live URL/REST 查核", "授權與隱私篩選"], "outputs": ["approved case brief", "asset request"], "acceptance": ["verified/inference/missing 分層", "無未核准客戶名稱與私密資訊"], "tools": ["WordPress REST", "Drive metadata", "brand skills"], "approval_gate": null, "handoff_to": ["A2-03", "A4", "A8-01"], "evidence": ["source bridge", "brand memory check"]},
+        {"id": "A2-03", "name": "文章草稿", "inputs": ["approved case brief", "keyword/intent", "brand voice"], "actions": ["撰寫案例與 CTA", "建立內連與 FAQ"], "outputs": ["article draft", "SEO title/description draft"], "acceptance": ["文案無 AI 慣用說服句", "CTA 與公開事實正確"], "tools": ["writing skill", "content audit"], "approval_gate": null, "handoff_to": ["A2-04", "A8-02"], "evidence": ["draft bundle"]},
+        {"id": "A2-04", "name": "圖片／SEO／Schema", "inputs": ["article draft", "approved asset pack"], "actions": ["插圖與 ALT", "設定 metadata", "產 FAQ/schema proposal"], "outputs": ["approval-ready article package"], "acceptance": ["圖片對應場景", "無 inline script/style", "公開安全掃描通過"], "tools": ["A4 asset index", "wp-content-audit", "Rank Math/Gutenberg"], "approval_gate": null, "handoff_to": ["A2-05"], "evidence": ["article QA report"]},
+        {"id": "A2-05", "name": "Owner 核稿", "inputs": ["approval-ready article package"], "actions": ["呈現文章、圖片、CTA 與風險"], "outputs": ["approved/revise/reject decision"], "acceptance": ["Owner 決定可追溯"], "tools": ["Google Docs/review bundle"], "approval_gate": "Owner content and publish approval", "handoff_to": ["A2-06"], "evidence": ["approval record"]},
+        {"id": "A2-06", "name": "WordPress 草稿／發布", "inputs": ["approved article package", "approval record"], "actions": ["建立草稿或發布", "前台與 REST 讀回"], "outputs": ["WordPress URL", "publish receipt"], "acceptance": ["status/URL/media/CTA/metadata 實際讀回", "發布狀態符合核准"], "tools": ["WordPress", "Owner Chrome/API"], "approval_gate": "Publishing and changes to published pages require approval", "handoff_to": ["A2-07", "A3", "A8-04"], "evidence": ["WP REST/UI receipt"]},
+        {"id": "A2-07", "name": "成效回讀", "inputs": ["live URL", "publish receipt", "GA/GSC/Ads metrics"], "actions": ["比較排名、流量與轉換", "產下一輪內容／landing 建議"], "outputs": ["performance readback", "next content action"], "acceptance": ["數據標期間與來源", "建議分 verified/inference"], "tools": ["GA", "GSC", "Ads", "A2 patrol matrix"], "approval_gate": null, "handoff_to": ["A2-01", "A3"], "evidence": ["dated patrol receipt"]}
+      ]
+    },
+    {
+      "id": "workflow:A3", "owner_role": "A3", "name": "社群／廣告成長工作流", "purpose": "把 live 成效轉成可核准的投放、素材與 landing 改善。",
+      "stages": [
+        {"id": "A3-01", "name": "平台成效讀取", "inputs": ["Google/Meta account read-only state", "7/14/30-day window"], "actions": ["讀花費、曝光、點擊、CTR、CPC、轉換、CPA/ROAS"], "outputs": ["performance snapshot"], "acceptance": ["期間、帳戶、來源與缺口清楚"], "tools": ["Owner Chrome", "Ads API when appropriate", "Ads dashboard"], "approval_gate": null, "handoff_to": ["A3-02"], "evidence": ["platform readback"]},
+        {"id": "A3-02", "name": "漏斗與素材判讀", "inputs": ["performance snapshot", "A2 landing status", "A4 asset pack"], "actions": ["找素材、受眾、landing、轉換落差"], "outputs": ["verified findings", "reasonable inference"], "acceptance": ["平台事實與推論分開"], "tools": ["browser", "analysis rubric"], "approval_gate": null, "handoff_to": ["A3-03", "A2", "A4", "A8"], "evidence": ["analysis matrix"]},
+        {"id": "A3-03", "name": "調整提案", "inputs": ["findings", "business priority"], "actions": ["提出保留、暫停、預算、受眾、素材與 landing 選項"], "outputs": ["approval-ready change plan"], "acceptance": ["影響、風險、rollback、驗收方式齊全"], "tools": ["approval-ready template"], "approval_gate": "Owner approves spend/status/targeting/creative changes", "handoff_to": ["A3-04"], "evidence": ["review request"]},
+        {"id": "A3-04", "name": "執行與回讀", "inputs": ["approved change plan"], "actions": ["執行核准變更", "平台 UI/API 反讀"], "outputs": ["change receipt", "next measurement window"], "acceptance": ["實際平台狀態與核准一致"], "tools": ["Owner Chrome/API"], "approval_gate": "Use only exact approved change", "handoff_to": ["A3-01", "A2", "A8"], "evidence": ["before/after receipt"]}
+      ]
+    },
+    {
+      "id": "workflow:A4", "owner_role": "A4", "name": "影像資產整理工作流", "purpose": "把原始素材轉成可搜尋、可授權、可追溯的素材包。",
+      "stages": [
+        {"id": "A4-01", "name": "來源盤點", "inputs": ["Drive folders", "event/date metadata", "case records"], "actions": ["列檔、保留原始檔、排除既有分類資料夾"], "outputs": ["raw asset inventory"], "acceptance": ["不移動或刪除既有原始庫"], "tools": ["Drive metadata", "local index"], "approval_gate": null, "handoff_to": ["A4-02"], "evidence": ["inventory manifest"]},
+        {"id": "A4-02", "name": "分類／去重／隱私", "inputs": ["raw asset inventory"], "actions": ["依場景、日期、格式分類", "去重", "標記人臉、logo、授權"], "outputs": ["classified asset set", "exclusion list"], "acceptance": ["授權與私隱狀態不被猜測"], "tools": ["metadata", "vision QA"], "approval_gate": null, "handoff_to": ["A4-03"], "evidence": ["classification receipt"]},
+        {"id": "A4-03", "name": "命名／ALT／索引", "inputs": ["classified asset set", "case/keyword context"], "actions": ["產 SEO 名、分類、關鍵字、ALT", "寫入 Sheet／本機索引"], "outputs": ["asset index records"], "acceptance": ["file_id/來源/公開用途可追溯"], "tools": ["MAPLAB_ASSET_LOG", "MAPLAB_WORKSPACE index"], "approval_gate": null, "handoff_to": ["A4-04"], "evidence": ["index readback"]},
+        {"id": "A4-04", "name": "素材包交接", "inputs": ["asset index records", "downstream request"], "actions": ["按案例與用途選出素材", "附授權／隱私／格式狀態"], "outputs": ["approved asset pack"], "acceptance": ["每個素材能追回原始來源與核准狀態"], "tools": ["asset-case-match", "Drive"], "approval_gate": "Public use of uncertain faces/logos requires approval", "handoff_to": ["A2", "A3", "A6", "A8"], "evidence": ["asset pack manifest"]}
+      ]
+    },
+    {
+      "id": "workflow:A5", "owner_role": "A5", "name": "報價真相與提案資料工作流", "purpose": "把結構化需求套入 Items、成本、毛利與條款，產生可驗算的正式資料。",
+      "stages": [
+        {"id": "A5-01", "name": "需求正規化", "inputs": ["A7 structured intake", "Owner/customer constraints"], "actions": ["解析人數、預算、日期、地點、飲食與服務需求"], "outputs": ["validated quote intake"], "acceptance": ["缺欄位明示、不猜數字"], "tools": ["deterministic parser", "SALES_INTAKE"], "approval_gate": null, "handoff_to": ["A5-02"], "evidence": ["intake payload"]},
+        {"id": "A5-02", "name": "品項／成本／毛利", "inputs": ["validated quote intake", "Items", "cost/margin rules"], "actions": ["配品項", "計算成本、營收、毛利、服務與車馬費"], "outputs": ["quote calculation payload"], "acceptance": ["公式可重算", "未知成本標 needsManualCost", "不發明售價"], "tools": ["Items", "quote engine", "GAS helpers"], "approval_gate": null, "handoff_to": ["A5-03", "A6"], "evidence": ["calculation validation"]},
+        {"id": "A5-03", "name": "Sheet／提案生成", "inputs": ["quote calculation payload", "QUOTE_DRAFT template"], "actions": ["建立報價副本", "產 Slides/proposal data", "讀回關鍵範圍"], "outputs": ["quote Sheet URL", "proposal package"], "acceptance": ["D2:F31/I7:J31 等關鍵欄位讀回", "母版未被覆蓋"], "tools": ["Google Sheets", "GAS", "Google Slides"], "approval_gate": null, "handoff_to": ["A6", "Owner"], "evidence": ["Sheet readback receipt"]}
+      ]
+    },
+    {
+      "id": "workflow:A6", "owner_role": "A6", "name": "業務快反應工作流", "purpose": "用 A5 真相與 A4 素材快速形成可給 Owner 核對的報價與提案。",
+      "stages": [
+        {"id": "A6-01", "name": "急件分流", "inputs": ["A7 urgent intake", "direct Owner request"], "actions": ["判斷報價／一般問答／狀態查詢", "缺資料先列出"], "outputs": ["routed sales task"], "acceptance": ["一般聊天不誤入報價", "急件需求完整"], "tools": ["Telegram routing", "Case Store"], "approval_gate": null, "handoff_to": ["A5", "A6-02"], "evidence": ["dispatch record"]},
+        {"id": "A6-02", "name": "報價／提案組裝", "inputs": ["A5 quote payload", "A4 approved asset pack", "customer-safe templates"], "actions": ["組報價摘要", "組 Slides/提案", "檢查禁語與承諾"], "outputs": ["customer-ready draft"], "acceptance": ["金額與 Sheet 一致", "不洩漏高毛利等內部語言"], "tools": ["A5 engine", "Slides", "supervisor grader"], "approval_gate": null, "handoff_to": ["A6-03"], "evidence": ["draft review"]},
+        {"id": "A6-03", "name": "Owner 核准與送出", "inputs": ["customer-ready draft", "Sheet/proposal URLs"], "actions": ["Owner 核對", "依核准管道送客戶"], "outputs": ["approved customer message", "delivery receipt"], "acceptance": ["送出內容與核准版相同", "送達可讀回"], "tools": ["Telegram/LINE/approved channel"], "approval_gate": "Owner approves customer-facing quote", "handoff_to": ["A7", "A2/A3 when converted"], "evidence": ["delivery/readback receipt"]}
+      ]
+    },
+    {
+      "id": "workflow:A7", "owner_role": "A7", "name": "客服與對話轉單工作流", "purpose": "把對話轉成可回覆、可報價、可學習的結構化需求。",
+      "stages": [
+        {"id": "A7-01", "name": "對話收集", "inputs": ["LINE inbound", "conversation exports"], "actions": ["寫入 CONVERSATION_LOG", "保留來源與時間"], "outputs": ["conversation record"], "acceptance": ["live inbound 與 seed/fallback 分開"], "tools": ["LINE webhook", "CONVERSATION_LOG"], "approval_gate": null, "handoff_to": ["A7-02"], "evidence": ["Sheet tail readback"]},
+        {"id": "A7-02", "name": "意圖與需求結構化", "inputs": ["conversation record", "reply rules"], "actions": ["分類 FAQ／詢價／急件／異常", "抽取報價欄位"], "outputs": ["structured intake", "reply proposal"], "acceptance": ["個資最小化", "缺欄位不腦補"], "tools": ["deterministic guards", "reply model"], "approval_gate": null, "handoff_to": ["A5", "A6", "A7-03"], "evidence": ["classification record"]},
+        {"id": "A7-03", "name": "回覆與洞察回寫", "inputs": ["reply proposal", "quote/delivery result"], "actions": ["送安全回覆", "把 FAQ、阻力與需求熱點回寫"], "outputs": ["reply receipt", "FAQ/market insight"], "acceptance": ["回覆可讀回", "洞察去識別化"], "tools": ["LINE", "training ledger"], "approval_gate": "External customer reply follows channel policy", "handoff_to": ["A2", "A3", "A5", "A6"], "evidence": ["conversation + learning receipt"]}
+      ]
+    },
+    {
+      "id": "workflow:A8", "owner_role": "A8", "name": "影音案例生產工作流", "purpose": "把核准案例與合法素材轉成歌曲、影片版本與可驗證發布包。",
+      "stages": [
+        {"id": "A8-01", "name": "素材準備", "inputs": ["approved case brief", "A4 asset index", "platform intent"], "actions": ["從 Drive 找指定案例", "確認授權、隱私、方向與格式"], "outputs": ["asset pack", "asset manifest"], "acceptance": ["每個素材有來源與用途狀態", "不可用素材被排除"], "tools": ["Drive", "MAPLAB_ASSET_LOG", "asset-case-match"], "approval_gate": null, "handoff_to": ["A8-02", "A8-03"], "evidence": ["asset manifest"]},
+        {"id": "A8-02", "name": "內容與歌曲", "inputs": ["approved case brief", "asset manifest", "brand/music direction"], "actions": ["讀 WP/內容 brief", "寫歌詞與 exact hook", "確定曲風", "Owner 核稿後生成新音軌", "曲風設定寫入可重用資料"], "outputs": ["approved lyrics", "style profile", "licensed audio track", "generation record"], "acceptance": ["Owner 核稿", "商用授權狀態清楚", "音軌可供剪輯"], "tools": ["songwriter skill", "Suno or approved generator", "audio inspector"], "approval_gate": "Owner lyrics approval before paid/external generation", "handoff_to": ["A8-03"], "evidence": ["lyrics approval", "license/generation receipt"]},
+        {"id": "A8-03", "name": "影片製作與平台裁切", "inputs": ["asset pack", "licensed audio track", "storyboard", "platform specs"], "actions": ["音軌回剪", "字幕與節奏", "裁切長寬與秒數", "codec QA"], "outputs": ["master video", "9:16 video", "1:1 video", "16:9 video", "cover assets"], "acceptance": ["秒數、解析度、fps、codec、音訊讀回", "畫面與案例一致"], "tools": ["ffmpeg", "video pipeline", "visual QA"], "approval_gate": null, "handoff_to": ["A8-04", "A2"], "evidence": ["media probe receipt", "review clip"]},
+        {"id": "A8-04", "name": "發布資料與分發", "inputs": ["platform videos", "A2 SEO metadata", "license status", "Owner publish decision"], "actions": ["產標題、描述、標籤與平台 metadata", "依已認證 API／瀏覽器路徑建立草稿或發布", "逐平台讀回"], "outputs": ["publish package", "platform URLs/IDs", "distribution receipt"], "acceptance": ["每平台狀態明確", "沒有自動上傳器就標 missing", "不可用私人草稿冒充公開發布"], "tools": ["YouTube Studio", "approved platform uploader", "browser/API"], "approval_gate": "Owner approves public publishing", "handoff_to": ["A2-07", "A3-01"], "evidence": ["per-platform UI/API receipt"]}
+      ]
+    }
+  ],
+  "governance": [
+    {"id": "gov:current-status", "name": "CURRENT_STATUS.md", "status": "verified", "description": "目前版本、Owner-facing 狀態與下一步；有 freshness 漂移時必須標記。", "path": "CURRENT_STATUS.md", "owner": "A1", "outputs": ["current state"]},
+    {"id": "gov:task-card", "name": "Task Card", "status": "verified", "description": "任務邊界、狀態、下一步、Blocker 與 Resume Prompt。", "path": "handoff/tasks/", "owner": "task owner", "outputs": ["bounded work contract"]},
+    {"id": "gov:git", "name": "Git commit／review", "status": "verified", "description": "版本、差異、review、還原與跨 session durable boundary。", "path": ".git", "owner": "A1/task owner", "outputs": ["version evidence"]},
+    {"id": "gov:receipt", "name": "Review／receipt", "status": "verified", "description": "測試、live readback、完成證據與缺口。", "path": "workbook/reviews/", "owner": "task owner + reviewer", "outputs": ["completion evidence"]},
+    {"id": "gov:pitfalls", "name": "pitfalls.md／experience log", "status": "verified", "description": "重複錯誤的觸發、根因、解法與預防。", "path": "pitfalls.md", "owner": "A1/all roles", "outputs": ["durable lessons"]},
+    {"id": "gov:memory", "name": "Hermes／agent memory", "status": "declared", "description": "可檢索歷史與經驗，只能輔助定位，不可覆蓋 live fact。", "path": "workbook/hermes/", "owner": "A1/B5", "outputs": ["recall candidates"], "boundary": "需用 repo/runtime/receipt 驗證"},
+    {"id": "gov:notebooklm", "name": "NotebookLM Project Brain", "status": "declared", "description": "sanitized 專案閱讀、問答與教育層；不會自動同步 git。", "path": "workbook/notebooklm/maplab-project-brain/", "owner": "A0/A1", "outputs": ["citation-grounded Q&A source pack"], "boundary": "不得匯入 secrets、L0、客戶原始個資、持股、runtime dump"}
+  ],
+  "notebooklm": {
+    "allowed_sensitivity": ["public", "internal_governance", "sanitized_operational_summary"],
+    "excluded_patterns": [".env", "token", "secret", "credentials", "cookie", "session", "broker", "position", "ledger", "customer raw", "runtime log", "sqlite", "private key"],
+    "source_files": [
+      "config/system-map/maplab-directional-map.json",
+      "docs/company-values.md",
+      "AGENT_RULES.md",
+      "AGENT_STARTUP_PROTOCOL.md",
+      "SYSTEM_DIRECTORY_INDEX.md",
+      "skills/capability-map-guide-visualization.md",
+      "skills/capability-notebooklm-project-brain.md",
+      "docs/extension/dynamic-role-task-modules.md"
+    ]
+  }
+}

@@ -1,12 +1,14 @@
 {
   "schema_version": "2026-08-25.notebooklm-source-pack.v1",
   "generated_at": "2026-08-25T00:00:00+08:00",
-  "build_base_commit": "238b1fa123c8",
-  "directional_map_manifest_sha256": "c5297ddaf7b90c75a3ede164264c286b8756b4f64989de51480f2b5d03179b03",
+  "build_base_commit": "e5d931d46f72",
+  "directional_map_manifest_sha256": "0590393544adafa9a6848d514ddf08cab8a8e95a92f1e81f38f4f3a5076d7868",
+  "notebook_url": "https://notebook.google.com/notebook/68114d21-ebc9-4116-a88a-52cc31cbe9a7",
   "upload_files": [
     "workbook/notebooklm/maplab-project-brain/maplab-project-brain.md",
-    "workbook/notebooklm/maplab-project-brain/source-manifest.json"
+    "workbook/notebooklm/maplab-project-brain/maplab-sop-router.md"
   ],
+  "audit_file": "workbook/notebooklm/maplab-project-brain/source-manifest.json",
   "allowed_sensitivity": [
     "public",
     "internal_governance",
@@ -30,61 +32,229 @@
   "sources": [
     {
       "path": "config/system-map/maplab-directional-map.json",
-      "sha256": "c5297ddaf7b90c75a3ede164264c286b8756b4f64989de51480f2b5d03179b03",
-      "bytes": 28461,
+      "sha256": "0590393544adafa9a6848d514ddf08cab8a8e95a92f1e81f38f4f3a5076d7868",
+      "bytes": 30854,
       "classification": "internal_governance",
-      "redactions": 0
+      "redactions": 0,
+      "group": "governance"
     },
     {
       "path": "docs/company-values.md",
       "sha256": "20111f9d52eff61799b0817d78125e1c2062cd7d815e83b7f2d8d79aaeccf087",
       "bytes": 18153,
       "classification": "internal_governance",
-      "redactions": 0
+      "redactions": 0,
+      "group": "governance"
     },
     {
       "path": "AGENT_RULES.md",
-      "sha256": "1a86040aca614c577b702b139faa41d5f1172c47d27bf62c9aed2ab5dca44e9c",
-      "bytes": 67025,
+      "sha256": "74b269c6ba0503f5f0af6a10eef9fdcb3a19b91e8b9f355bb56c363d2b90daee",
+      "bytes": 67915,
       "classification": "internal_governance",
-      "redactions": 0
+      "redactions": 0,
+      "group": "governance"
     },
     {
       "path": "AGENT_STARTUP_PROTOCOL.md",
-      "sha256": "b0aef7ed781537139c481e02498383aece8b7a54041cb120547fa15ddf28cd52",
-      "bytes": 14662,
+      "sha256": "bd8a0c28c16199c490b1e70395615801bb78442d2a1fce7c8e3f4de6ee7f8629",
+      "bytes": 15026,
       "classification": "internal_governance",
-      "redactions": 0
+      "redactions": 0,
+      "group": "governance"
     },
     {
       "path": "SYSTEM_DIRECTORY_INDEX.md",
-      "sha256": "885107adec85b309a33b7eb9a685ad85490966db2fb67c6c495cc41fbe678b9a",
-      "bytes": 35660,
+      "sha256": "dcfea8fe6c4bc4934a6a6f8dd1551c78d001e5e010b7c9253325c318f51754eb",
+      "bytes": 36184,
       "classification": "internal_governance",
-      "redactions": 0
+      "redactions": 0,
+      "group": "governance"
     },
     {
       "path": "skills/capability-map-guide-visualization.md",
       "sha256": "229a913612d1cac388fa085a86f82d4bccc456caa9e9b4db37474c45f1ada83a",
       "bytes": 2835,
       "classification": "internal_governance",
-      "redactions": 0
+      "redactions": 0,
+      "group": "governance"
     },
     {
       "path": "skills/capability-notebooklm-project-brain.md",
-      "sha256": "c2c7057f84b8856b3cb60a3a86b9c4cea1b96ef3ee4086f5ec695a1f8934a9cf",
-      "bytes": 2727,
+      "sha256": "24c40f304dae34b36d8886d5047f18490b20a05c2af5f7f08aa88678766f1b65",
+      "bytes": 3762,
       "classification": "internal_governance",
-      "redactions": 0
+      "redactions": 0,
+      "group": "governance"
     },
     {
       "path": "docs/extension/dynamic-role-task-modules.md",
       "sha256": "d9a38910aa461f798c5c0fe695a5271990e1593a8af1d73b1f1848f97a8ab9e3",
       "bytes": 18461,
       "classification": "internal_governance",
-      "redactions": 0
+      "redactions": 0,
+      "group": "governance"
+    },
+    {
+      "path": "skills/superpowers-guide.md",
+      "sha256": "8987b633b6f64545027e4744ec8ce3e8d85cf80127241dc79861dd5360407195",
+      "bytes": 15373,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/task-progress-guide.md",
+      "sha256": "a0a8dce530f8b02cba8dba5cdd461d0c1e7a972373da867edebe06ec9b7b7eb5",
+      "bytes": 10792,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/troubleshooting-hub.md",
+      "sha256": "25069e3f9f68de89305f258f28e1af847a8527411faaab7261e04349e6a476a7",
+      "bytes": 3027,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/verification-checklist-guide.md",
+      "sha256": "f819a1875dfb479ab442575f7ec261a8a8da858e6d7e15c5d250b8350732a4ed",
+      "bytes": 1845,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/agent-output-convention.md",
+      "sha256": "6592a5cac7bf3a004ad5c2ad66ce92e19d187df5ba11ff62b871c8fbdf636c71",
+      "bytes": 2274,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/wp-article-standard.md",
+      "sha256": "19b61daf2f71b132d75f7fc412f4619266ac28287698f236b67e642ee492114c",
+      "bytes": 9396,
+      "classification": "internal_governance",
+      "redactions": 1,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/seo-session-checklist.md",
+      "sha256": "794e3a4c87c594191b98dde847fe8d7d177a9c530861a5c1a3a766b782abff2d",
+      "bytes": 6471,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/a3-social-ads-skills.md",
+      "sha256": "a8e17d3db7e8b735c411f4fc1f8536d40e3844afda85e3b94cd2dc84c91dd7a0",
+      "bytes": 2452,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/a4-fact-first-asset-matching.md",
+      "sha256": "998b7e9f8705e5107d4258e856d78052ae71ad479cfc5272bda9505662ad8331",
+      "bytes": 3569,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/a4-photo-asset-skills.md",
+      "sha256": "0fce02d9b74f5133ed9d46d4a0a588eccd2068db285cf56cdde21d5eec733dda",
+      "bytes": 3902,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/a5-quotation-engine-skills.md",
+      "sha256": "cd3ead7a6c39ed2573afcbda72c7aea27ceffda0a2c15b27959d7f3d073ae727",
+      "bytes": 5448,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/a6-rapid-quote-sop.md",
+      "sha256": "d59036dda2310132e507e590dcd6e6747a41137e61da7f2dd9b4e6673b319fb0",
+      "bytes": 18258,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/a7-customer-service-skills.md",
+      "sha256": "d2681c3739ebc9d68755b12c9ef5e90be3ed86e8b2fed8ea1dcf2424f7fcf8f7",
+      "bytes": 6377,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/a8-video-pipeline-skills.md",
+      "sha256": "fb1cefebf0b3b27a1372cdf98e1a3a3c183261559ff2005228c3b47865afa1da",
+      "bytes": 20690,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/a8-produce-to-publish-sop.md",
+      "sha256": "e1ff9a3ca33d055c2a595e4efd938f4438957fab6639488109e136209ae49d9c",
+      "bytes": 23794,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/maplab-hiphop-songwriter/SKILL.md",
+      "sha256": "4b25c2786b2389c939a80b384b62839cc4c779ea24e335c21559b3162d58dea3",
+      "bytes": 3744,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/ai-model-guide.md",
+      "sha256": "eb7e0918010114537b13deac0999b9cf458b38b18d9d812574eb20de1616a690",
+      "bytes": 8289,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/mcp-usage-guide.md",
+      "sha256": "1bceedbfe36229f978dd1d1df989fd29133f29de816915a367782aaa7a9e1dee",
+      "bytes": 7248,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "docs/cross-project-agent-summon-workflow-map.md",
+      "sha256": "5cb6790893cd78c9d71126c7937ef8d6ac624792a5b4217800c36370d6b8f9ba",
+      "bytes": 10262,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "scripts/hermes_memory_sop.md",
+      "sha256": "8fa49c548e289addd65eab2a962dc78f8494618d3e1a288309b45a7ff53f7557",
+      "bytes": 3546,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
     }
   ],
-  "total_redactions": 0,
+  "total_redactions": 1,
   "not_live_truth": true
 }

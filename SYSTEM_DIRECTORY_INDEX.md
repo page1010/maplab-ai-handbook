@@ -124,10 +124,12 @@ Directory Index Check
 | MAPLAB 指向性地圖 manifest | `config/system-map/maplab-directional-map.json` | canonical navigation schema | A0–A8、Owner、Extension、Codex、Claude、Hermes、OpenClaw | 非投資域；所有視覺與 NotebookLM 包由此重建 |
 | MAPLAB 指向性地圖 | `docs/system-map/index.html` | generated owner view | Owner、A0–A8、全 runtime | 七視角；不可直接手改 HTML |
 | Graphify-compatible 關聯圖 | `docs/system-map/maplab-directional-map.graph.json` | generated nodes/edges | A1、Codex、Graphify／graph tooling | 管地址與依賴，不取代 CURRENT_STATUS／receipt |
-| Graphify 程式依賴圖 | `graphify-out/graph.json` | generated AST graph | A1、Codex、Claude、Graphify | 1817 nodes／3252 edges；改 code 後跑 `graphify update .` |
+| Graphify 程式依賴圖 | `graphify-out/graph.json` | generated AST graph | A1、Codex、Claude、Graphify | 1820 nodes／3262 edges／147 communities；改 code 後跑 `graphify update .` |
 | Graphify 互動圖／目錄樹 | `graphify-out/graph.html` / `graphify-out/GRAPH_TREE.html` | generated navigation views | Owner、A0、A1、工程 agent | 程式層；角色／SOP／Sheet 仍看 canonical map |
 | Graphify 查詢記憶 | `graphify-out/memory/` / `graphify-out/reflections/LESSONS.md` | generated feedback loop | A1、Codex、Claude | useful／dead_end／corrected；不得存 secrets 或客戶 raw data |
-| NotebookLM Project Brain 包 | `workbook/notebooklm/maplab-project-brain/` | generated sanitized reading pack | Owner、A0、A1、NotebookLM | 禁止 wholesale repo dump；先讀 source-manifest 的 hash／排除規則 |
+| MAPLAB Project Brain（NotebookLM） | `https://notebook.google.com/notebook/68114d21-ebc9-4116-a88a-52cc31cbe9a7` | verified citation navigation | Owner、A0、A1、找不到路徑的 agent | 只作 SOP／路徑／角色／交接導航；現況仍需 live refresh |
+| NotebookLM／地端模型路由 | `config/notebooklm/maplab-project-brain-router.json` | generated machine-readable route | Hermes、Ollama、OpenClaw、Codex、Claude | online browser operator＋offline `maplab-sop-router.md` |
+| NotebookLM Project Brain 包 | `workbook/notebooklm/maplab-project-brain/` | generated sanitized reading pack | Owner、A0、A1、NotebookLM | 只上傳兩個 `.md`；JSON manifest 留 repo audit，禁止 wholesale repo dump |
 | 技能總路由 | `skills/superpowers-guide.md` | canonical skill router | 全角色 | 新動作前重查 |
 | 任務進度技能 | `skills/task-progress-guide.md` | canonical skill | 全角色 | Progress Log、Resume、checkpoint |
 | Session 技能 | `skills/session-lifecycle/SKILL.md` | canonical skill | 全角色 | session 開關與資源衛生 |

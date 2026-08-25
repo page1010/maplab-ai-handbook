@@ -1,16 +1,16 @@
 # Graph Report - maplab-ai-handbook  (2026-08-25)
 
 ## Corpus Check
-- 187 files · ~141,804 words
+- 188 files · ~142,510 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1817 nodes · 3252 edges · 148 communities (105 shown, 43 thin omitted)
+- 1820 nodes · 3262 edges · 147 communities (103 shown, 44 thin omitted)
 - Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 50 edges (avg confidence: 0.86)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `238b1fa1`
+- Built from commit: `e5d931d4`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -98,10 +98,10 @@
 - seo_gap_picker.py
 - auto_orient_file
 - enum
-- test_a6_telegram_routes.py
+- build_context_pack.py
 - local_dispatch_backup.sh
 - local_memory_watch.sh
-- parse_line_booking_pairs.py
+- schema_version
 - a8_fal_minimax_gen.py
 - validate_lottie
 - required
@@ -119,7 +119,7 @@
 - forbidden_actions
 - runtime_targets
 - skill_group
-- build_context_pack.py
+- HermesTaskExecutorTest
 - verification_required
 - bot_restart_emergency.sh
 - cleanup-worktrees.sh
@@ -130,7 +130,6 @@
 - bot_a6/run_daemon.sh
 - run_bridge_daemon.sh
 - start_bot.sh
-- generated_at
 - module_id
 - role_id
 - task-module.schema.json
@@ -187,15 +186,15 @@
 ## Import Cycles
 - None detected.
 
-## Communities (148 total, 43 thin omitted)
+## Communities (147 total, 44 thin omitted)
 
 ### Community 0 - "bot_a6.py"
 Cohesion: 0.06
-Nodes (94): build_sheet_quote_payload(), Build a deterministic GAS payload when the request is concrete enough. This is…, a5_cloud_quote_ask(), _alert_if_injection(), _build_codex_prompt(), _build_ollama_prompt(), case_cmd(), casequote_cmd() (+86 more)
+Nodes (98): build_sheet_quote_payload(), Build a deterministic GAS payload when the request is concrete enough. This is…, a5_cloud_quote_ask(), _alert_if_injection(), _build_codex_prompt(), _build_ollama_prompt(), case_cmd(), casequote_cmd() (+90 more)
 
 ### Community 1 - "datetime"
-Cohesion: 0.08
-Nodes (57): get_log_path(), log_exchange(), Path, Structured JSONL conversation logger — one line per exchange, with model field.…, Append one conversation exchange to today's JSONL log file., datetime, log_append(), main() (+49 more)
+Cohesion: 0.06
+Nodes (66): get_log_path(), log_exchange(), Path, Structured JSONL conversation logger — one line per exchange, with model field.…, Append one conversation exchange to today's JSONL log file., datetime, check_match(), first_chinese_char() (+58 more)
 
 ### Community 2 - "seo_factory.py"
 Cohesion: 0.07
@@ -254,8 +253,8 @@ Cohesion: 0.12
 Nodes (16): AntigravityBackend, Backend, BackendChain, BackendError, CodexBackend, default_chain(), OllamaBackend, Path (+8 more)
 
 ### Community 17 - "build_directional_system_map.py"
-Cohesion: 0.17
-Nodes (18): build_notebooklm_pack(), check_generated_outputs(), generated_at(), git_base_commit(), graph_from_manifest(), iter_entities(), load_manifest(), main() (+10 more)
+Cohesion: 0.16
+Nodes (20): _build_notebook_document(), build_notebooklm_pack(), _build_workflow_route_cards(), check_generated_outputs(), generated_at(), git_base_commit(), graph_from_manifest(), iter_entities() (+12 more)
 
 ### Community 18 - "A0ResumeRoutingTests"
 Cohesion: 0.14
@@ -295,7 +294,7 @@ Nodes (17): AppKit, Foundation, Never, NSColor, NSRect, NSTextAlignment, String,
 
 ### Community 27 - "properties"
 Cohesion: 0.11
-Nodes (19): type, properties, department, read_first, risk_level, role_name, role_simulation, schema_version (+11 more)
+Nodes (19): type, type, properties, department, generated_at, read_first, risk_level, role_name (+11 more)
 
 ### Community 28 - "seo_qa_checker.py"
 Cohesion: 0.18
@@ -509,9 +508,9 @@ Nodes (6): auto_orient_file(), auto_orient_image(), main(), Path, 依 EXIF Orien
 Cohesion: 0.33
 Nodes (6): enum, type, anchor_type, brand_generic, exact_match, semantic_related
 
-### Community 84 - "test_a6_telegram_routes.py"
-Cohesion: 0.60
-Nodes (5): run_tests(), test_localquote_summary_compacts_json_flood(), test_photo_handoff_does_not_expose_raw_claude_failure(), test_runtime_status_intent_is_narrow(), test_takeover_packet_has_operable_handoff()
+### Community 84 - "build_context_pack.py"
+Cohesion: 0.48
+Nodes (6): _as_bullets(), build_context_pack(), _pick_projects(), _pick_rules(), _pick_skills(), Path
 
 ### Community 85 - "local_dispatch_backup.sh"
 Cohesion: 0.40
@@ -520,10 +519,6 @@ Nodes (4): log(), NAMES, local_dispatch_backup.sh script, SOURCES
 ### Community 86 - "local_memory_watch.sh"
 Cohesion: 0.60
 Nodes (4): log(), local_memory_watch.sh script, trim_log(), warn()
-
-### Community 87 - "parse_line_booking_pairs.py"
-Cohesion: 0.33
-Nodes (9): check_match(), first_chinese_char(), load_timetree(), main(), name_overlap(), parse_filename(), parse_line_booking_pairs.py --- 純檔名 metadata 解析：不讀任何對話內容。 輸出路徑由…, Return (index, start_date, end_date, contact_name) or None. (+1 more)
 
 ### Community 89 - "validate_lottie"
 Cohesion: 0.73
@@ -577,10 +572,6 @@ Nodes (3): runtime_targets, items, type
 Cohesion: 0.67
 Nodes (3): skill_group, items, type
 
-### Community 106 - "build_context_pack.py"
-Cohesion: 0.48
-Nodes (6): _as_bullets(), build_context_pack(), _pick_projects(), _pick_rules(), _pick_skills(), Path
-
 ### Community 107 - "verification_required"
 Cohesion: 0.67
 Nodes (3): verification_required, items, type
@@ -596,7 +587,7 @@ Nodes (3): startup_contract, items, type
 ## Knowledge Gaps
 - **206 isolated node(s):** `$schema`, `title`, `type`, `pillar`, `target_intent` (+201 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **43 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **44 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Work-memory lessons
 
@@ -606,16 +597,16 @@ Nodes (3): startup_contract, items, type
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `run_a5_local_quote()` connect `a5_quote_engine.py` to `bot_a6.py`, `openclaw_adapter.py`?**
+- **Why does `OpenClawAdapter` connect `openclaw_adapter.py` to `a5_quote_engine.py`?**
   _High betweenness centrality (0.004) - this node is a cross-community bridge._
 - **Are the 2 inferred relationships involving `datetime` (e.g. with `_extract_event_date_for_payload()` and `parse_sheet_timestamp()`) actually correct?**
   _`datetime` has 2 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `$schema`, `title`, `type` to the rest of the system?**
   _206 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `bot_a6.py` be split into smaller, more focused modules?**
-  _Cohesion score 0.05558728345707215 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.0563487530934704 - nodes in this community are weakly interconnected._
 - **Should `datetime` be split into smaller, more focused modules?**
-  _Cohesion score 0.07738095238095238 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06368011847463902 - nodes in this community are weakly interconnected._
 - **Should `seo_factory.py` be split into smaller, more focused modules?**
   _Cohesion score 0.06810035842293907 - nodes in this community are weakly interconnected._
 - **Should `popup.js` be split into smaller, more focused modules?**

@@ -1,22 +1,24 @@
 {
   "schema_version": "2026-08-25.maplab-directional-map.v1",
   "generated_at": "2026-08-25T00:00:00+08:00",
-  "build_base_commit": "238b1fa123c8",
+  "build_base_commit": "e5d931d46f72",
   "source_manifest": "config/system-map/maplab-directional-map.json",
-  "source_manifest_sha256": "c5297ddaf7b90c75a3ede164264c286b8756b4f64989de51480f2b5d03179b03",
+  "source_manifest_sha256": "0590393544adafa9a6848d514ddf08cab8a8e95a92f1e81f38f4f3a5076d7868",
   "views": 7,
   "roles": 10,
   "workflows": 7,
   "workflow_stages": 28,
   "graph_nodes": 263,
   "graph_edges": 302,
-  "notebook_sources": 8,
+  "notebook_sources": 28,
   "outputs": [
     "docs/system-map/index.html",
     "chrome-extension/system-map/index.html",
     "docs/system-map/maplab-directional-map.graph.json",
     "workbook/notebooklm/maplab-project-brain/maplab-project-brain.md",
+    "workbook/notebooklm/maplab-project-brain/maplab-sop-router.md",
     "workbook/notebooklm/maplab-project-brain/source-manifest.json",
-    "workbook/notebooklm/maplab-project-brain/README.md"
+    "workbook/notebooklm/maplab-project-brain/README.md",
+    "config/notebooklm/maplab-project-brain-router.json"
   ]
 }

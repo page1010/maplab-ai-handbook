@@ -19,6 +19,10 @@
 
 ## MAPLAB 可重建安全包（2026-08-25）
 
+Canonical notebook（已建立並以 Browser 實問驗證）：
+
+`https://notebook.google.com/notebook/68114d21-ebc9-4116-a88a-52cc31cbe9a7`
+
 不要把整個 repo 直接拖進 NotebookLM。repo 內含 runtime log、credential 路由、歷史生成物、可能的客戶資料與跨專案內容；wholesale dump 會同時造成資料外洩風險、過期文件干擾與引用品質下降。
 
 標準入口：
@@ -27,12 +31,22 @@
 python3 tools/ai_workbook/build_directional_system_map.py
 ```
 
-只上傳：
+只上傳兩個 NotebookLM 支援的 Markdown source：
 
 - `workbook/notebooklm/maplab-project-brain/maplab-project-brain.md`
-- `workbook/notebooklm/maplab-project-brain/source-manifest.json`
+- `workbook/notebooklm/maplab-project-brain/maplab-sop-router.md`
 
-`source-manifest.json` 會列出來源路徑、SHA-256、分類、redaction 數量與 build base commit。NotebookLM 回答現況問題時必引用來源；來源 hash 過期或涉及外部 live 狀態時，回答 `needs live refresh`，再由 A0/A1 走 API/UI/runtime readback。
+`source-manifest.json` 留在 repo 作 audit receipt，不上傳（NotebookLM 新版不接受 JSON）。它會列出來源路徑、SHA-256、分類、分組、redaction 數量與 build base commit。NotebookLM 回答現況問題時必引用來源；來源 hash 過期或涉及外部 live 狀態時，回答 `NEEDS_LIVE_REFRESH`，再由 A0/A1 走 API/UI/runtime readback。
+
+## 找不到先問的標準路由
+
+觸發：cold-start、`SYSTEM_DIRECTORY_INDEX.md`、`skills/superpowers-guide.md` 與本機搜尋都無法定位精確 SOP／path／handoff 時。
+
+1. 讀 `config/notebooklm/maplab-project-brain-router.json`。
+2. 有 browser operator：開 canonical notebook，套用 `prompt_template`。
+3. 沒 browser operator／地端離線：讀 `maplab-sop-router.md`，使用同一 response contract。
+4. 回答開頭只能是 `FOUND`、`NEEDS_LIVE_REFRESH` 或 `NOT_IN_PACK`，且必列 path、required reads、inputs、output/handoff、gate、evidence、next action、citations。
+5. NotebookLM 是 navigation oracle，不是 execution oracle；不能用它的回答證明 runtime 已改、Owner 已核准或發布已完成。
 
 禁止上傳：`.env`、token／secret value、cookie/session、credential files、客戶 raw conversations、持股／券商／ledger、SQLite/DB、runtime logs、媒體 binary、未審核 generated dump。
 

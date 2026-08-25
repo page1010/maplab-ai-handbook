@@ -1,19 +1,22 @@
-# MAPLAB Project Brain — NotebookLM Safe Source Pack
+# MAPLAB Project Brain — Governance Core
 
-> Generated from `config/system-map/maplab-directional-map.json`. Build base commit `238b1fa123c8`; manifest SHA `c5297ddaf7b90c75a3ede164264c286b8756b4f64989de51480f2b5d03179b03`.
-> This is a curated internal-governance corpus, not a literal repository dump and not a live-state authority.
+> Purpose: roles, hardware, workflows, Sheets/indexes, governance and truth-layer boundaries
+> Generated from `config/system-map/maplab-directional-map.json`. Build base commit `e5d931d46f72`; manifest SHA `0590393544adafa9a6848d514ddf08cab8a8e95a92f1e81f38f4f3a5076d7868`.
+> This is a curated, sanitized corpus. It is not a literal repository dump and not a live-state authority.
 > Excluded: secrets, credentials, cookies, customer raw data, runtime logs, SQLite/DB dumps, investment data, media binaries and generated noise.
 
-## How to answer from this pack
+## Required answer contract
 
-1. Cite the source path and its embedded SHA for every material claim.
-2. Treat CURRENT_STATUS/Task Cards/runtime/UI/receipts as separate truth layers.
-3. If a fact may have changed after the embedded source hash, answer `needs live refresh`.
-4. Never infer approval, publishing, platform state or completion from a plan alone.
+1. Start with exactly one status: `FOUND`, `NEEDS_LIVE_REFRESH`, or `NOT_IN_PACK`.
+2. Return the exact repo path, why it applies, required reads, expected output/handoff, and the next bounded action.
+3. Cite the embedded source path and SHA for every material claim.
+4. Treat CURRENT_STATUS, Task Cards, runtime/UI readback, commits and receipts as separate truth layers.
+5. Never infer approval, publishing, platform state or completion from a plan alone.
+6. If the source is present in this pack, answer from it; do not claim the source is unhydrated merely because it is embedded inside this bundle.
 
 ## Source: `config/system-map/maplab-directional-map.json`
 
-- SHA-256: `c5297ddaf7b90c75a3ede164264c286b8756b4f64989de51480f2b5d03179b03`
+- SHA-256: `0590393544adafa9a6848d514ddf08cab8a8e95a92f1e81f38f4f3a5076d7868`
 - Classification: `internal_governance`
 - Redactions: `0`
 
@@ -75,7 +78,7 @@
   ],
   "workflows": [
     {
-      "id": "workflow:A2", "owner_role": "A2", "name": "WordPress／SEO 案例工作流", "purpose": "把已核准事實與素材做成可發布、可回讀的搜尋內容。",
+      "id": "workflow:A2", "owner_role": "A2", "name": "WordPress／SEO 案例工作流", "purpose": "把已核准事實與素材做成可發布、可回讀的搜尋內容。", "sop_paths": ["skills/wp-article-standard.md", "skills/seo-session-checklist.md"],
       "stages": [
         {"id": "A2-01", "name": "內容機會", "inputs": ["GSC/GA/Ads evidence", "content inventory", "Owner priority"], "actions": ["找搜尋與案例 gap", "確認不與既有頁 cannibalize"], "outputs": ["content opportunity brief"], "acceptance": ["來源、日期、搜尋意圖清楚"], "tools": ["GSC", "GA", "WordPress REST", "A2 patrol matrix"], "approval_gate": null, "handoff_to": ["A2-02", "A3"], "evidence": ["review brief"]},
         {"id": "A2-02", "name": "事實與素材查核", "inputs": ["content opportunity brief", "customer-approved facts", "A4 asset index"], "actions": ["品牌記憶檢查", "live URL/REST 查核", "授權與隱私篩選"], "outputs": ["approved case brief", "asset request"], "acceptance": ["verified/inference/missing 分層", "無未核准客戶名稱與私密資訊"], "tools": ["WordPress REST", "Drive metadata", "brand skills"], "approval_gate": null, "handoff_to": ["A2-03", "A4", "A8-01"], "evidence": ["source bridge", "brand memory check"]},
@@ -87,7 +90,7 @@
       ]
     },
     {
-      "id": "workflow:A3", "owner_role": "A3", "name": "社群／廣告成長工作流", "purpose": "把 live 成效轉成可核准的投放、素材與 landing 改善。",
+      "id": "workflow:A3", "owner_role": "A3", "name": "社群／廣告成長工作流", "purpose": "把 live 成效轉成可核准的投放、素材與 landing 改善。", "sop_paths": ["skills/a3-social-ads-skills.md"],
       "stages": [
         {"id": "A3-01", "name": "平台成效讀取", "inputs": ["Google/Meta account read-only state", "7/14/30-day window"], "actions": ["讀花費、曝光、點擊、CTR、CPC、轉換、CPA/ROAS"], "outputs": ["performance snapshot"], "acceptance": ["期間、帳戶、來源與缺口清楚"], "tools": ["Owner Chrome", "Ads API when appropriate", "Ads dashboard"], "approval_gate": null, "handoff_to": ["A3-02"], "evidence": ["platform readback"]},
         {"id": "A3-02", "name": "漏斗與素材判讀", "inputs": ["performance snapshot", "A2 landing status", "A4 asset pack"], "actions": ["找素材、受眾、landing、轉換落差"], "outputs": ["verified findings", "reasonable inference"], "acceptance": ["平台事實與推論分開"], "tools": ["browser", "analysis rubric"], "approval_gate": null, "handoff_to": ["A3-03", "A2", "A4", "A8"], "evidence": ["analysis matrix"]},
@@ -96,7 +99,7 @@
       ]
     },
     {
-      "id": "workflow:A4", "owner_role": "A4", "name": "影像資產整理工作流", "purpose": "把原始素材轉成可搜尋、可授權、可追溯的素材包。",
+      "id": "workflow:A4", "owner_role": "A4", "name": "影像資產整理工作流", "purpose": "把原始素材轉成可搜尋、可授權、可追溯的素材包。", "sop_paths": ["skills/a4-fact-first-asset-matching.md", "skills/a4-photo-asset-skills.md"],
       "stages": [
         {"id": "A4-01", "name": "來源盤點", "inputs": ["Drive folders", "event/date metadata", "case records"], "actions": ["列檔、保留原始檔、排除既有分類資料夾"], "outputs": ["raw asset inventory"], "acceptance": ["不移動或刪除既有原始庫"], "tools": ["Drive metadata", "local index"], "approval_gate": null, "handoff_to": ["A4-02"], "evidence": ["inventory manifest"]},
         {"id": "A4-02", "name": "分類／去重／隱私", "inputs": ["raw asset inventory"], "actions": ["依場景、日期、格式分類", "去重", "標記人臉、logo、授權"], "outputs": ["classified asset set", "exclusion list"], "acceptance": ["授權與私隱狀態不被猜測"], "tools": ["metadata", "vision QA"], "approval_gate": null, "handoff_to": ["A4-03"], "evidence": ["classification receipt"]},
@@ -105,7 +108,7 @@
       ]
     },
     {
-      "id": "workflow:A5", "owner_role": "A5", "name": "報價真相與提案資料工作流", "purpose": "把結構化需求套入 Items、成本、毛利與條款，產生可驗算的正式資料。",
+      "id": "workflow:A5", "owner_role": "A5", "name": "報價真相與提案資料工作流", "purpose": "把結構化需求套入 Items、成本、毛利與條款，產生可驗算的正式資料。", "sop_paths": ["skills/a5-quotation-engine-skills.md"],
       "stages": [
         {"id": "A5-01", "name": "需求正規化", "inputs": ["A7 structured intake", "Owner/customer constraints"], "actions": ["解析人數、預算、日期、地點、飲食與服務需求"], "outputs": ["validated quote intake"], "acceptance": ["缺欄位明示、不猜數字"], "tools": ["deterministic parser", "SALES_INTAKE"], "approval_gate": null, "handoff_to": ["A5-02"], "evidence": ["intake payload"]},
         {"id": "A5-02", "name": "品項／成本／毛利", "inputs": ["validated quote intake", "Items", "cost/margin rules"], "actions": ["配品項", "計算成本、營收、毛利、服務與車馬費"], "outputs": ["quote calculation payload"], "acceptance": ["公式可重算", "未知成本標 needsManualCost", "不發明售價"], "tools": ["Items", "quote engine", "GAS helpers"], "approval_gate": null, "handoff_to": ["A5-03", "A6"], "evidence": ["calculation validation"]},
@@ -113,7 +116,7 @@
       ]
     },
     {
-      "id": "workflow:A6", "owner_role": "A6", "name": "業務快反應工作流", "purpose": "用 A5 真相與 A4 素材快速形成可給 Owner 核對的報價與提案。",
+      "id": "workflow:A6", "owner_role": "A6", "name": "業務快反應工作流", "purpose": "用 A5 真相與 A4 素材快速形成可給 Owner 核對的報價與提案。", "sop_paths": ["skills/a6-rapid-quote-sop.md"],
       "stages": [
         {"id": "A6-01", "name": "急件分流", "inputs": ["A7 urgent intake", "direct Owner request"], "actions": ["判斷報價／一般問答／狀態查詢", "缺資料先列出"], "outputs": ["routed sales task"], "acceptance": ["一般聊天不誤入報價", "急件需求完整"], "tools": ["Telegram routing", "Case Store"], "approval_gate": null, "handoff_to": ["A5", "A6-02"], "evidence": ["dispatch record"]},
         {"id": "A6-02", "name": "報價／提案組裝", "inputs": ["A5 quote payload", "A4 approved asset pack", "customer-safe templates"], "actions": ["組報價摘要", "組 Slides/提案", "檢查禁語與承諾"], "outputs": ["customer-ready draft"], "acceptance": ["金額與 Sheet 一致", "不洩漏高毛利等內部語言"], "tools": ["A5 engine", "Slides", "supervisor grader"], "approval_gate": null, "handoff_to": ["A6-03"], "evidence": ["draft review"]},
@@ -121,7 +124,7 @@
       ]
     },
     {
-      "id": "workflow:A7", "owner_role": "A7", "name": "客服與對話轉單工作流", "purpose": "把對話轉成可回覆、可報價、可學習的結構化需求。",
+      "id": "workflow:A7", "owner_role": "A7", "name": "客服與對話轉單工作流", "purpose": "把對話轉成可回覆、可報價、可學習的結構化需求。", "sop_paths": ["skills/a7-customer-service-skills.md"],
       "stages": [
         {"id": "A7-01", "name": "對話收集", "inputs": ["LINE inbound", "conversation exports"], "actions": ["寫入 CONVERSATION_LOG", "保留來源與時間"], "outputs": ["conversation record"], "acceptance": ["live inbound 與 seed/fallback 分開"], "tools": ["LINE webhook", "CONVERSATION_LOG"], "approval_gate": null, "handoff_to": ["A7-02"], "evidence": ["Sheet tail readback"]},
         {"id": "A7-02", "name": "意圖與需求結構化", "inputs": ["conversation record", "reply rules"], "actions": ["分類 FAQ／詢價／急件／異常", "抽取報價欄位"], "outputs": ["structured intake", "reply proposal"], "acceptance": ["個資最小化", "缺欄位不腦補"], "tools": ["deterministic guards", "reply model"], "approval_gate": null, "handoff_to": ["A5", "A6", "A7-03"], "evidence": ["classification record"]},
@@ -129,7 +132,7 @@
       ]
     },
     {
-      "id": "workflow:A8", "owner_role": "A8", "name": "影音案例生產工作流", "purpose": "把核准案例與合法素材轉成歌曲、影片版本與可驗證發布包。",
+      "id": "workflow:A8", "owner_role": "A8", "name": "影音案例生產工作流", "purpose": "把核准案例與合法素材轉成歌曲、影片版本與可驗證發布包。", "sop_paths": ["skills/a8-video-pipeline-skills.md", "skills/a8-produce-to-publish-sop.md", "skills/maplab-hiphop-songwriter/SKILL.md"],
       "stages": [
         {"id": "A8-01", "name": "素材準備", "inputs": ["approved case brief", "A4 asset index", "platform intent"], "actions": ["從 Drive 找指定案例", "確認授權、隱私、方向與格式"], "outputs": ["asset pack", "asset manifest"], "acceptance": ["每個素材有來源與用途狀態", "不可用素材被排除"], "tools": ["Drive", "MAPLAB_ASSET_LOG", "asset-case-match"], "approval_gate": null, "handoff_to": ["A8-02", "A8-03"], "evidence": ["asset manifest"]},
         {"id": "A8-02", "name": "內容與歌曲", "inputs": ["approved case brief", "asset manifest", "brand/music direction"], "actions": ["讀 WP/內容 brief", "寫歌詞與 exact hook", "確定曲風", "Owner 核稿後生成新音軌", "曲風設定寫入可重用資料"], "outputs": ["approved lyrics", "style profile", "licensed audio track", "generation record"], "acceptance": ["Owner 核稿", "商用授權狀態清楚", "音軌可供剪輯"], "tools": ["songwriter skill", "Suno or approved generator", "audio inspector"], "approval_gate": "Owner lyrics approval before paid/external generation", "handoff_to": ["A8-03"], "evidence": ["lyrics approval", "license/generation receipt"]},
@@ -145,10 +148,11 @@
     {"id": "gov:receipt", "name": "Review／receipt", "status": "verified", "description": "測試、live readback、完成證據與缺口。", "path": "workbook/reviews/", "owner": "task owner + reviewer", "outputs": ["completion evidence"]},
     {"id": "gov:pitfalls", "name": "pitfalls.md／experience log", "status": "verified", "description": "重複錯誤的觸發、根因、解法與預防。", "path": "pitfalls.md", "owner": "A1/all roles", "outputs": ["durable lessons"]},
     {"id": "gov:memory", "name": "Hermes／agent memory", "status": "declared", "description": "可檢索歷史與經驗，只能輔助定位，不可覆蓋 live fact。", "path": "workbook/hermes/", "owner": "A1/B5", "outputs": ["recall candidates"], "boundary": "需用 repo/runtime/receipt 驗證"},
-    {"id": "gov:notebooklm", "name": "NotebookLM Project Brain", "status": "declared", "description": "sanitized 專案閱讀、問答與教育層；不會自動同步 git。", "path": "workbook/notebooklm/maplab-project-brain/", "owner": "A0/A1", "outputs": ["citation-grounded Q&A source pack"], "boundary": "不得匯入 secrets、L0、客戶原始個資、持股、runtime dump"},
-    {"id": "gov:graphify", "name": "Graphify 0.9.49 code graph", "status": "verified", "description": "AST-only 程式依賴圖；現有 1817 nodes、3252 edges、148 communities，用於 query／path／explain／affected 與影響面縮小。", "path": "graphify-out/GRAPH_REPORT.md", "owner": "A1", "outputs": ["graph.html", "GRAPH_TREE.html", "graph.json", "GRAPH_REPORT.md", "query memory"], "boundary": "只證明程式結構；不取代 canonical manifest、live readback、approval gate 或 receipt", "freshness": "graphify update . after code changes"}
+    {"id": "gov:notebooklm", "name": "MAPLAB Project Brain", "status": "verified", "description": "已建立 NotebookLM／Gemini Notebook；供找不到 SOP、路徑、角色或產物交接的 agent 做帶引用導航，不會自動同步 git。", "path": "https://notebook.google.com/notebook/68114d21-ebc9-4116-a88a-52cc31cbe9a7", "owner": "A0/A1", "outputs": ["citation-grounded SOP/path answer", "needs live refresh route", "local-model safe pack"], "boundary": "不得匯入 secrets、L0、客戶原始個資、持股、runtime dump；NotebookLM 回答不取代 live readback 或 receipt"},
+    {"id": "gov:graphify", "name": "Graphify 0.9.49 code graph", "status": "verified", "description": "AST-only 程式依賴圖；現有 1820 nodes、3262 edges、147 communities，用於 query／path／explain／affected 與影響面縮小。", "path": "graphify-out/GRAPH_REPORT.md", "owner": "A1", "outputs": ["graph.html", "GRAPH_TREE.html", "graph.json", "GRAPH_REPORT.md", "query memory"], "boundary": "只證明程式結構；不取代 canonical manifest、live readback、approval gate 或 receipt", "freshness": "graphify update . after code changes"}
   ],
   "notebooklm": {
+    "notebook_url": "https://notebook.google.com/notebook/68114d21-ebc9-4116-a88a-52cc31cbe9a7",
     "allowed_sensitivity": ["public", "internal_governance", "sanitized_operational_summary"],
     "excluded_patterns": [".env", "token", "secret", "credentials", "cookie", "session", "broker", "position", "ledger", "customer raw", "runtime log", "sqlite", "private key"],
     "source_files": [
@@ -160,7 +164,34 @@
       "skills/capability-map-guide-visualization.md",
       "skills/capability-notebooklm-project-brain.md",
       "docs/extension/dynamic-role-task-modules.md"
-    ]
+    ],
+    "sop_source_files": [
+      "skills/superpowers-guide.md",
+      "skills/task-progress-guide.md",
+      "skills/troubleshooting-hub.md",
+      "skills/verification-checklist-guide.md",
+      "skills/agent-output-convention.md",
+      "skills/wp-article-standard.md",
+      "skills/seo-session-checklist.md",
+      "skills/a3-social-ads-skills.md",
+      "skills/a4-fact-first-asset-matching.md",
+      "skills/a4-photo-asset-skills.md",
+      "skills/a5-quotation-engine-skills.md",
+      "skills/a6-rapid-quote-sop.md",
+      "skills/a7-customer-service-skills.md",
+      "skills/a8-video-pipeline-skills.md",
+      "skills/a8-produce-to-publish-sop.md",
+      "skills/maplab-hiphop-songwriter/SKILL.md",
+      "skills/ai-model-guide.md",
+      "skills/mcp-usage-guide.md",
+      "docs/cross-project-agent-summon-workflow-map.md",
+      "scripts/hermes_memory_sop.md"
+    ],
+    "query_contract": {
+      "trigger": "After cold-start files and local index/search cannot identify the exact SOP, path, handoff artifact or owning role",
+      "prompt_template": "Question: {question}\nActor/runtime: {actor}\nReturn one status: FOUND, NEEDS_LIVE_REFRESH, or NOT_IN_PACK. Then list exact repo path, why it applies, required reads, inputs, expected output/handoff, approval gate, evidence path, next bounded action, and citations. Do not infer live completion from plans.",
+      "response_fields": ["status", "exact_repo_path", "why", "required_reads", "inputs", "expected_output_handoff", "approval_gate", "evidence_path", "next_bounded_action", "citations"]
+    }
   }
 }
 
@@ -431,7 +462,7 @@
 
 ## Source: `AGENT_RULES.md`
 
-- SHA-256: `1a86040aca614c577b702b139faa41d5f1172c47d27bf62c9aed2ab5dca44e9c`
+- SHA-256: `74b269c6ba0503f5f0af6a10eef9fdcb3a19b91e8b9f355bb56c363d2b90daee`
 - Classification: `internal_governance`
 - Redactions: `0`
 
@@ -455,6 +486,16 @@ Step 5. Session 結束前在 `workbook/owner_requirements_panel.md` 寫一筆紀
 > ⚠️ CURRENT_STATUS.md 的資訊優先於所有其他文件。若衝突，以 CURRENT_STATUS 為準。
 > ⚠️ 任務清楚 → 直接執行，不要用「確認需求」當拖延藉口。
 > ⚠️ 有寫但沒測，等於沒完成；有測但沒 receipt，等於下一個 session 無法信任。
+
+### NotebookLM／Gemini Notebook 導航 fallback（Owner 2026-08-25）
+
+當 agent 已讀 cold-start 文件、查過 `SYSTEM_DIRECTORY_INDEX.md`／`skills/superpowers-guide.md` 並用本機搜尋仍找不到精確 SOP、路徑、角色或交接產物時，下一步先問 MAPLAB Project Brain：
+
+- Notebook：`https://notebook.google.com/notebook/68114d21-ebc9-4116-a88a-52cc31cbe9a7`
+- 機器可讀路由：`config/notebooklm/maplab-project-brain-router.json`
+- 地端離線 fallback：`workbook/notebooklm/maplab-project-brain/maplab-sop-router.md`
+
+回答必含 `FOUND`／`NEEDS_LIVE_REFRESH`／`NOT_IN_PACK`、精確 repo path、必讀檔案、輸入、輸出／交接、approval gate、evidence path、下一個 bounded action 與引用。NotebookLM 只負責導航與來源綜合；CURRENT_STATUS、Task Card、runtime/UI readback、commit 和 receipt 才能確認現況或完成。
 
 ---
 
@@ -1668,7 +1709,7 @@ IN_PROGRESS ──[48h]──► STALLED ──[7d]──► NEEDS_REVIEW ──
 
 ## Source: `AGENT_STARTUP_PROTOCOL.md`
 
-- SHA-256: `b0aef7ed781537139c481e02498383aece8b7a54041cb120547fa15ddf28cd52`
+- SHA-256: `bd8a0c28c16199c490b1e70395615801bb78442d2a1fce7c8e3f4de6ee7f8629`
 - Classification: `internal_governance`
 - Redactions: `0`
 
@@ -1726,6 +1767,8 @@ IN_PROGRESS ──[48h]──► STALLED ──[7d]──► NEEDS_REVIEW ──
 
 ### Step 5. 讀 skills/superpowers-guide.md 路由表 + 必拿技能
 查「任務類型 → 建議預讀技能書」，選擇最適合當前任務的技能書。
+
+若讀完路由表並以本機搜尋仍找不到精確 SOP／路徑／交接產物，先依 `config/notebooklm/maplab-project-brain-router.json` 問 MAPLAB Project Brain。沒有瀏覽器能力的地端模型先讀 `workbook/notebooklm/maplab-project-brain/maplab-sop-router.md`；不得因 NotebookLM 回答就跳過 live state、Task Card 或 receipt 驗證。
 
 **Superpowers 規則**：
 - **必拿**：skills/task-progress-guide.md — 所有任務都必須讀，不可跳過
@@ -1967,7 +2010,7 @@ Chrome tab 規範：`AGENT_RULES.md` §「資源衛生 — Chrome / 瀏覽器 se
 
 ## Source: `SYSTEM_DIRECTORY_INDEX.md`
 
-- SHA-256: `885107adec85b309a33b7eb9a685ad85490966db2fb67c6c495cc41fbe678b9a`
+- SHA-256: `dcfea8fe6c4bc4934a6a6f8dd1551c78d001e5e010b7c9253325c318f51754eb`
 - Classification: `internal_governance`
 - Redactions: `0`
 
@@ -2098,10 +2141,12 @@ Directory Index Check
 | MAPLAB 指向性地圖 manifest | `config/system-map/maplab-directional-map.json` | canonical navigation schema | A0–A8、Owner、Extension、Codex、Claude、Hermes、OpenClaw | 非投資域；所有視覺與 NotebookLM 包由此重建 |
 | MAPLAB 指向性地圖 | `docs/system-map/index.html` | generated owner view | Owner、A0–A8、全 runtime | 七視角；不可直接手改 HTML |
 | Graphify-compatible 關聯圖 | `docs/system-map/maplab-directional-map.graph.json` | generated nodes/edges | A1、Codex、Graphify／graph tooling | 管地址與依賴，不取代 CURRENT_STATUS／receipt |
-| Graphify 程式依賴圖 | `graphify-out/graph.json` | generated AST graph | A1、Codex、Claude、Graphify | 1817 nodes／3252 edges；改 code 後跑 `graphify update .` |
+| Graphify 程式依賴圖 | `graphify-out/graph.json` | generated AST graph | A1、Codex、Claude、Graphify | 1820 nodes／3262 edges／147 communities；改 code 後跑 `graphify update .` |
 | Graphify 互動圖／目錄樹 | `graphify-out/graph.html` / `graphify-out/GRAPH_TREE.html` | generated navigation views | Owner、A0、A1、工程 agent | 程式層；角色／SOP／Sheet 仍看 canonical map |
 | Graphify 查詢記憶 | `graphify-out/memory/` / `graphify-out/reflections/LESSONS.md` | generated feedback loop | A1、Codex、Claude | useful／dead_end／corrected；不得存 secrets 或客戶 raw data |
-| NotebookLM Project Brain 包 | `workbook/notebooklm/maplab-project-brain/` | generated sanitized reading pack | Owner、A0、A1、NotebookLM | 禁止 wholesale repo dump；先讀 source-manifest 的 hash／排除規則 |
+| MAPLAB Project Brain（NotebookLM） | `https://notebook.google.com/notebook/68114d21-ebc9-4116-a88a-52cc31cbe9a7` | verified citation navigation | Owner、A0、A1、找不到路徑的 agent | 只作 SOP／路徑／角色／交接導航；現況仍需 live refresh |
+| NotebookLM／地端模型路由 | `config/notebooklm/maplab-project-brain-router.json` | generated machine-readable route | Hermes、Ollama、OpenClaw、Codex、Claude | online browser operator＋offline `maplab-sop-router.md` |
+| NotebookLM Project Brain 包 | `workbook/notebooklm/maplab-project-brain/` | generated sanitized reading pack | Owner、A0、A1、NotebookLM | 只上傳兩個 `.md`；JSON manifest 留 repo audit，禁止 wholesale repo dump |
 | 技能總路由 | `skills/superpowers-guide.md` | canonical skill router | 全角色 | 新動作前重查 |
 | 任務進度技能 | `skills/task-progress-guide.md` | canonical skill | 全角色 | Progress Log、Resume、checkpoint |
 | Session 技能 | `skills/session-lifecycle/SKILL.md` | canonical skill | 全角色 | session 開關與資源衛生 |
@@ -2661,7 +2706,7 @@ Graphify 只用於程式結構與影響面；治理真相仍來自 canonical man
 
 ## Source: `skills/capability-notebooklm-project-brain.md`
 
-- SHA-256: `c2c7057f84b8856b3cb60a3a86b9c4cea1b96ef3ee4086f5ec695a1f8934a9cf`
+- SHA-256: `24c40f304dae34b36d8886d5047f18490b20a05c2af5f7f08aa88678766f1b65`
 - Classification: `internal_governance`
 - Redactions: `0`
 
@@ -2687,6 +2732,10 @@ Graphify 只用於程式結構與影響面；治理真相仍來自 canonical man
 
 ## MAPLAB 可重建安全包（2026-08-25）
 
+Canonical notebook（已建立並以 Browser 實問驗證）：
+
+`https://notebook.google.com/notebook/68114d21-ebc9-4116-a88a-52cc31cbe9a7`
+
 不要把整個 repo 直接拖進 NotebookLM。repo 內含 runtime log、credential 路由、歷史生成物、可能的客戶資料與跨專案內容；wholesale dump 會同時造成資料外洩風險、過期文件干擾與引用品質下降。
 
 標準入口：
@@ -2695,12 +2744,22 @@ Graphify 只用於程式結構與影響面；治理真相仍來自 canonical man
 python3 tools/ai_workbook/build_directional_system_map.py
 ```
 
-只上傳：
+只上傳兩個 NotebookLM 支援的 Markdown source：
 
 - `workbook/notebooklm/maplab-project-brain/maplab-project-brain.md`
-- `workbook/notebooklm/maplab-project-brain/source-manifest.json`
+- `workbook/notebooklm/maplab-project-brain/maplab-sop-router.md`
 
-`source-manifest.json` 會列出來源路徑、SHA-256、分類、redaction 數量與 build base commit。NotebookLM 回答現況問題時必引用來源；來源 hash 過期或涉及外部 live 狀態時，回答 `needs live refresh`，再由 A0/A1 走 API/UI/runtime readback。
+`source-manifest.json` 留在 repo 作 audit receipt，不上傳（NotebookLM 新版不接受 JSON）。它會列出來源路徑、SHA-256、分類、分組、redaction 數量與 build base commit。NotebookLM 回答現況問題時必引用來源；來源 hash 過期或涉及外部 live 狀態時，回答 `NEEDS_LIVE_REFRESH`，再由 A0/A1 走 API/UI/runtime readback。
+
+## 找不到先問的標準路由
+
+觸發：cold-start、`SYSTEM_DIRECTORY_INDEX.md`、`skills/superpowers-guide.md` 與本機搜尋都無法定位精確 SOP／path／handoff 時。
+
+1. 讀 `config/notebooklm/maplab-project-brain-router.json`。
+2. 有 browser operator：開 canonical notebook，套用 `prompt_template`。
+3. 沒 browser operator／地端離線：讀 `maplab-sop-router.md`，使用同一 response contract。
+4. 回答開頭只能是 `FOUND`、`NEEDS_LIVE_REFRESH` 或 `NOT_IN_PACK`，且必列 path、required reads、inputs、output/handoff、gate、evidence、next action、citations。
+5. NotebookLM 是 navigation oracle，不是 execution oracle；不能用它的回答證明 runtime 已改、Owner 已核准或發布已完成。
 
 禁止上傳：`.env`、token／secret value、cookie/session、credential files、客戶 raw conversations、持股／券商／ledger、SQLite/DB、runtime logs、媒體 binary、未審核 generated dump。
 

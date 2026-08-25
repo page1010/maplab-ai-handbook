@@ -3,6 +3,18 @@
 本文件記錄 maplab-ai-handbook 的所有重大版本變更。
 格式：版本號 | 日期 | 變更摘要 | 執行 Agent
 
+## v6.9（Directional Map + NotebookLM SOP Router）— 2026-08-25
+
+**A1 將 MAPLAB 非投資域全貌、A2–A8 交接與 SOP 導航接成可重建地圖、Gemini Notebook 與地端 fallback。**
+
+執行 Agent：Codex acting as A1
+
+1. 由 `config/system-map/maplab-directional-map.json` 同源生成 7 視角地圖、Extension offline map、Graphify-compatible governance graph 與安全知識包。
+2. Graphify 0.9.49 維持 AST-only corpus，現為 1820 nodes／3262 edges／147 communities；投資域、secrets、runtime logs、客戶 raw 與治理文件重複層均排除。
+3. 建立 canonical Gemini Notebook，僅上傳 `maplab-project-brain.md` 與 `maplab-sop-router.md`，底層彙整 28 份帶 hash 的治理／SOP 來源；JSON manifest 留本機稽核。
+4. 新增 `config/notebooklm/maplab-project-brain-router.json`，讓找不到 SOP／path／handoff 的 agent 先問 notebook；無 Browser 的 Hermes／地端模型讀本機 SOP pack。
+5. 回答契約只允許 `FOUND`、`NEEDS_LIVE_REFRESH`、`NOT_IN_PACK`，NotebookLM 不得冒充 runtime、Owner approval、發布或 receipt 真相。
+
 ## v6.8（A8 Local Motion Styling & Zero-Cost Pipeline）— 2026-06-20
 
 **A8 地端免付費動態運鏡升級：移除 Higgsfield 雲端付費依賴，利用 ffmpeg zoompan 與 Swift 透明字卡實作地端動態短影音管線**

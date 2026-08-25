@@ -27,9 +27,10 @@
 - ✅ 7 視角 HTML：`docs/system-map/index.html`
 - ✅ Extension offline copy 與「系統地圖」按鈕
 - ✅ canonical Graphify-compatible governance graph：263 nodes／302 edges
-- ✅ Graphify 0.9.49 AST code graph：1817 nodes／3252 edges／148 communities，含 interactive graph、tree、report 與 query memory
+- ✅ Graphify 0.9.49 AST code graph：1820 nodes／3262 edges／147 communities，含 interactive graph、tree、report 與 query memory
 - ✅ A2–A8：7 workflows／28 stages，含交接合約與產物血緣
-- ✅ NotebookLM safe pack：8 份去敏內部來源，帶 SHA-256 與排除規則
+- ✅ Canonical Gemini Notebook：兩個 Markdown upload packs／28 份底層去敏來源，帶 SHA-256、排除規則與實際引用問答
+- ✅ Agent／地端模型路由：`config/notebooklm/maplab-project-brain-router.json`；無 Browser 時直接讀 `maplab-sop-router.md`
 - ✅ unit、schema、path、sensitive scan、desktop／mobile UI readback、console scan、`git diff --check`
 - ⚠️ 未能自動開啟 `chrome://extensions`：Chrome 安全邊界明確拒絕。Owner 手動按一次「重新載入」後，再做 live Extension UI readback 即可收尾。
 
@@ -39,9 +40,9 @@
 
 - 不展開 Investment OS 角色、研究、部位、資料庫或 runtime。
 - Graphify 已全域安裝；repo 只用 AST-only 程式圖，不開付費 LLM 語意抽取，不索引投資域、secrets、runtime logs 或客戶 raw data。
-- 不發布、不傳送、不上傳 NotebookLM、不改外部平台。
+- 只把 generator 明列的兩個安全 Markdown pack 上傳 canonical notebook；manifest、整庫、credential、runtime、客戶 raw 與投資資料不外傳。
 - 不碰本任務以外既有 dirty files。
 
 ## Resume Prompt
 
-我是 A1 指向性治理地圖接手者。先讀 `CURRENT_STATUS.md`、`pitfalls.md`、本 Task Card、`config/system-map/maplab-directional-map.json`、`.graphifyignore` 與 `tools/ai_workbook/build_directional_system_map.py`。重新執行 generator／unittest／`--check`；若有 code-like 變更再跑 `graphify update .`，確認 topology 不會由 2k 節點漂到全文件圖。確認 docs／Extension map、Graphify graph／Tree／Report、NotebookLM source pack 和 Extension 入口一致。完成前讀 `workbook/reviews/JOB-A1-DIRECTIONAL-MAP-20260825/validation_receipt.md`，只 stage 本任務明列檔案。
+我是 A1 指向性治理地圖接手者。先讀 `CURRENT_STATUS.md`、`pitfalls.md`、本 Task Card、`config/system-map/maplab-directional-map.json`、`.graphifyignore`、`config/notebooklm/maplab-project-brain-router.json` 與 `tools/ai_workbook/build_directional_system_map.py`。重新執行 generator／unittest／`--check`；若有 code-like 變更再跑 `graphify update .`，確認 topology 不會由 2k 節點漂到全文件圖。確認 docs／Extension map、Graphify graph／Tree／Report、兩個 NotebookLM upload packs 和 Extension 入口一致；pack hash 改變時只替換 canonical notebook 的兩個來源。完成前讀兩份 A1 receipt，只 stage 本任務明列檔案。

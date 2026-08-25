@@ -51,12 +51,13 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "owner_role", "name", "purpose", "stages"],
+        "required": ["id", "owner_role", "name", "purpose", "sop_paths", "stages"],
         "properties": {
           "id": {"type": "string"},
           "owner_role": {"type": "string"},
           "name": {"type": "string"},
           "purpose": {"type": "string"},
+          "sop_paths": {"type": "array", "minItems": 1, "items": {"type": "string"}},
           "stages": {
             "type": "array",
             "minItems": 1,
@@ -85,11 +86,23 @@
     "governance": {"$ref": "#/$defs/entities"},
     "notebooklm": {
       "type": "object",
-      "required": ["allowed_sensitivity", "excluded_patterns", "source_files"],
+      "required": ["notebook_url", "allowed_sensitivity", "excluded_patterns", "source_files", "sop_source_files", "query_contract"],
       "properties": {
+        "notebook_url": {"type": "string", "pattern": "^https://notebook\\.google\\.com/notebook/"},
         "allowed_sensitivity": {"type": "array", "items": {"type": "string"}},
         "excluded_patterns": {"type": "array", "items": {"type": "string"}},
-        "source_files": {"type": "array", "items": {"type": "string"}}
+        "source_files": {"type": "array", "items": {"type": "string"}},
+        "sop_source_files": {"type": "array", "items": {"type": "string"}},
+        "query_contract": {
+          "type": "object",
+          "required": ["trigger", "prompt_template", "response_fields"],
+          "properties": {
+            "trigger": {"type": "string"},
+            "prompt_template": {"type": "string"},
+            "response_fields": {"type": "array", "items": {"type": "string"}, "minItems": 1}
+          },
+          "additionalProperties": false
+        }
       },
       "additionalProperties": false
     }

@@ -936,10 +936,10 @@
     "semantic_hash": "4419b3533773579356265734218c073e"
   },
   "tools/ai_workbook/build_directional_system_map.py": {
-    "mtime": 1787664487.560208,
-    "seen": 1787664939.2605572,
-    "ast_hash": "903a233a01b3f8a551615ff8f51471b5",
-    "semantic_hash": "903a233a01b3f8a551615ff8f51471b5"
+    "mtime": 1787667851.6061924,
+    "seen": 1787667860.1800902,
+    "ast_hash": "4de2f16dbe1298639fccbdcf0baaee2a",
+    "semantic_hash": ""
   },
   "tools/ai_workbook/build_extension_task_modules.py": {
     "mtime": 1783347954.8904672,
@@ -1026,10 +1026,10 @@
     "semantic_hash": "dedd474f9529bc28d8625a2a3386d2d3"
   },
   "tools/ai_workbook/test_build_directional_system_map.py": {
-    "mtime": 1787664487.560421,
-    "seen": 1787664939.260565,
-    "ast_hash": "d1048ac3a4ea2305e56baf7c05f0729c",
-    "semantic_hash": "d1048ac3a4ea2305e56baf7c05f0729c"
+    "mtime": 1787667851.6065876,
+    "seen": 1787667860.180097,
+    "ast_hash": "a0b990711dc2076b5b6b8a104684877c",
+    "semantic_hash": ""
   },
   "tools/ai_workbook/test_build_remote_role_handoff.py": {
     "mtime": 1784787852.135676,
@@ -1131,6 +1131,12 @@
     "mtime": 1781960198.8699734,
     "seen": 1787665210.0785248,
     "ast_hash": "6deaafe8024f3b1dbd4bce30f1446ba5",
+    "semantic_hash": ""
+  },
+  "config/notebooklm/maplab-project-brain-router.json": {
+    "mtime": 1787668061.368057,
+    "seen": 1787668334.170602,
+    "ast_hash": "61e9a48951b891254f7133177b0dcbf5",
     "semantic_hash": ""
   }
 }

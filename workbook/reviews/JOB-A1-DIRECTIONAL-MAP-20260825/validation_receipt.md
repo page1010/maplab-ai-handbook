@@ -87,7 +87,7 @@ git diff --check
 - CLI `graphify hook status` 顯示 git post-commit/post-checkout hook 未安裝；本輪不额外改 repo git hook。
 - 原始 corpus 盤點：631 supported files／445,560 words，含 221 code／410 docs，超過 500-file 警戒線。
 - 最終邊界：`.graphifyignore` 排除 docs／history／generated copies／secrets／runtime／customer raw／Investment OS，使首建與 `graphify update .` 都維持同一 AST-only corpus。
-- 最終 graph：1817 nodes／3252 edges／148 communities，0 LLM input/output tokens。
+- 21:43 基線 graph：1817 nodes／3252 edges／148 communities，0 LLM input/output tokens；後續 NotebookLM router generator 變更已由新 receipt 記錄新的最終 topology。
 - 交付：`graphify-out/graph.html`、`GRAPH_TREE.html`、`GRAPH_REPORT.md`、`graph.json`、`manifest.json`、`memory/`、`reflections/LESSONS.md`。
 - 完整性診斷：0 missing endpoints／0 dangling endpoints／0 self-loops／0 collapsed edges／0 duplicates。
 - 抽取警告：`AppKit` 與 `Foundation` 分別在兩個 Swift 檔案產生同 id，Graphify 各去重一個；圖可用，但這兩個 framework 節點不能當完整檔案雙向證據。
@@ -95,7 +95,7 @@ git diff --check
 - Investment 邊界複驗：共用 `bot/bot.py` 仍會帶出 4 個 investment discussion 節點；因 Graphify 只能以檔案排除，本版將整個混合 dispatcher 移出 corpus，角色／Telegram 路由改由 canonical manifest 保留。最終圖不含 investment／stock 專項節點；`reaction_ledger`、slide 文案 `PORTFOLIO` 與 schema `position_hint` 是非投資同名詞，保留。
 - Token benchmark：121,133 naive tokens 對平均 3,404 query tokens，約 `35.6x` 縮減。
 - Drift 修復：第一次 incremental update 因把 Markdown 當 code-like 節點，圖膨脹為 7,332 nodes；補 `.graphifyignore` 後 force rebuild，再排除混合 investment dispatcher 與記錄 Graphify 統計的 canonical manifest/schema，避免 self-reference，最終穩定為 1,817 nodes；第二次 update 顯示 `No code-graph topology changes detected`。
-- In-app Browser 實際讀回：`graph.html` 顯示 1,817 nodes／3,252 edges／148 communities，搜尋 `build_directional_system_map` 可回傳 generator 與 test 節點；網路圖可視、community filter 可見。`GRAPH_TREE.html` 顯示專案標題與 Expand All／Collapse All／Reset View，console error 為 0。
+- 21:43 In-app Browser 基線讀回：`graph.html` 顯示 1,817 nodes／3,252 edges／148 communities，搜尋 `build_directional_system_map` 可回傳 generator 與 test 節點；網路圖可視、community filter 可見。`GRAPH_TREE.html` 顯示專案標題與 Expand All／Collapse All／Reset View，console error 為 0。
 - `vis-network` 留下一則 info 級 layout 建議，但實際圖已正常定位並可操作；不把它誤記成零訊息，也不視為功能失敗。
 
 ## NEXT

@@ -17,19 +17,6 @@
       "source_location": "L61"
     },
     {
-      "id": "tests_test_hermes_task_executor_hermestaskexecutortest",
-      "label": "HermesTaskExecutorTest",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "bot_a6.py",
-      "file_type": "code",
-      "norm_label": "hermestaskexecutortest",
-      "source_file": "tests/test_hermes_task_executor.py",
-      "source_location": "L10"
-    },
-    {
       "id": "tools_hermes_patrol_bridge_taskcard",
       "label": "TaskCard",
       "_callable": true,
@@ -67,6 +54,19 @@
       "norm_label": "remoterolehandoffsmoketest",
       "source_file": "tools/ai_workbook/test_build_remote_role_handoff.py",
       "source_location": "L16"
+    },
+    {
+      "id": "tests_test_hermes_task_executor_hermestaskexecutortest",
+      "label": "HermesTaskExecutorTest",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 106,
+      "community_name": "HermesTaskExecutorTest",
+      "file_type": "code",
+      "norm_label": "hermestaskexecutortest",
+      "source_file": "tests/test_hermes_task_executor.py",
+      "source_location": "L10"
     },
     {
       "id": "bot_test_hermes_fallback_fakehermesproc",
@@ -1609,52 +1609,64 @@
       "source_location": "L90"
     },
     {
-      "id": "tests_test_hermes_task_executor_hermestaskexecutortest_test_classifies_safe_natural_language",
-      "label": ".test_classifies_safe_natural_language()",
+      "id": "bot_a6_test_a6_telegram_routes_run_tests",
+      "label": "run_tests()",
       "_callable": true,
       "_origin": "ast",
       "community": 0,
       "community_name": "bot_a6.py",
       "file_type": "code",
-      "norm_label": ".test_classifies_safe_natural_language()",
-      "source_file": "tests/test_hermes_task_executor.py",
-      "source_location": "L11"
+      "norm_label": "run_tests()",
+      "source_file": "bot_a6/test_a6_telegram_routes.py",
+      "source_location": "L68"
     },
     {
-      "id": "tests_test_hermes_task_executor_hermestaskexecutortest_test_rejects_high_risk_even_when_safe_alias_is_present",
-      "label": ".test_rejects_high_risk_even_when_safe_alias_is_present()",
+      "id": "bot_a6_test_a6_telegram_routes_test_localquote_summary_compacts_json_flood",
+      "label": "test_localquote_summary_compacts_json_flood()",
       "_callable": true,
       "_origin": "ast",
       "community": 0,
       "community_name": "bot_a6.py",
       "file_type": "code",
-      "norm_label": ".test_rejects_high_risk_even_when_safe_alias_is_present()",
-      "source_file": "tests/test_hermes_task_executor.py",
-      "source_location": "L14"
+      "norm_label": "test_localquote_summary_compacts_json_flood()",
+      "source_file": "bot_a6/test_a6_telegram_routes.py",
+      "source_location": "L46"
     },
     {
-      "id": "tests_test_hermes_task_executor_hermestaskexecutortest_test_safe_action_uses_fixed_argv_and_writes_receipt",
-      "label": ".test_safe_action_uses_fixed_argv_and_writes_receipt()",
+      "id": "bot_a6_test_a6_telegram_routes_test_photo_handoff_does_not_expose_raw_claude_failure",
+      "label": "test_photo_handoff_does_not_expose_raw_claude_failure()",
       "_callable": true,
       "_origin": "ast",
       "community": 0,
       "community_name": "bot_a6.py",
       "file_type": "code",
-      "norm_label": ".test_safe_action_uses_fixed_argv_and_writes_receipt()",
-      "source_file": "tests/test_hermes_task_executor.py",
-      "source_location": "L26"
+      "norm_label": "test_photo_handoff_does_not_expose_raw_claude_failure()",
+      "source_file": "bot_a6/test_a6_telegram_routes.py",
+      "source_location": "L39"
     },
     {
-      "id": "tests_test_hermes_task_executor_hermestaskexecutortest_test_unknown_request_is_rejected_with_receipt",
-      "label": ".test_unknown_request_is_rejected_with_receipt()",
+      "id": "bot_a6_test_a6_telegram_routes_test_runtime_status_intent_is_narrow",
+      "label": "test_runtime_status_intent_is_narrow()",
       "_callable": true,
       "_origin": "ast",
       "community": 0,
       "community_name": "bot_a6.py",
       "file_type": "code",
-      "norm_label": ".test_unknown_request_is_rejected_with_receipt()",
-      "source_file": "tests/test_hermes_task_executor.py",
-      "source_location": "L19"
+      "norm_label": "test_runtime_status_intent_is_narrow()",
+      "source_file": "bot_a6/test_a6_telegram_routes.py",
+      "source_location": "L12"
+    },
+    {
+      "id": "bot_a6_test_a6_telegram_routes_test_takeover_packet_has_operable_handoff",
+      "label": "test_takeover_packet_has_operable_handoff()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "bot_a6.py",
+      "file_type": "code",
+      "norm_label": "test_takeover_packet_has_operable_handoff()",
+      "source_file": "bot_a6/test_a6_telegram_routes.py",
+      "source_location": "L25"
     },
     {
       "id": "bot_conv_log_get_log_path",
@@ -1679,6 +1691,78 @@
       "norm_label": "log_exchange()",
       "source_file": "bot/conv_log.py",
       "source_location": "L26"
+    },
+    {
+      "id": "scripts_parse_line_booking_pairs_check_match",
+      "label": "check_match()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "datetime",
+      "file_type": "code",
+      "norm_label": "check_match()",
+      "source_file": "scripts/parse_line_booking_pairs.py",
+      "source_location": "L81"
+    },
+    {
+      "id": "scripts_parse_line_booking_pairs_first_chinese_char",
+      "label": "first_chinese_char()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "datetime",
+      "file_type": "code",
+      "norm_label": "first_chinese_char()",
+      "source_file": "scripts/parse_line_booking_pairs.py",
+      "source_location": "L62"
+    },
+    {
+      "id": "scripts_parse_line_booking_pairs_load_timetree",
+      "label": "load_timetree()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "datetime",
+      "file_type": "code",
+      "norm_label": "load_timetree()",
+      "source_file": "scripts/parse_line_booking_pairs.py",
+      "source_location": "L26"
+    },
+    {
+      "id": "scripts_parse_line_booking_pairs_main",
+      "label": "main()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "datetime",
+      "file_type": "code",
+      "norm_label": "main()",
+      "source_file": "scripts/parse_line_booking_pairs.py",
+      "source_location": "L94"
+    },
+    {
+      "id": "scripts_parse_line_booking_pairs_name_overlap",
+      "label": "name_overlap()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "datetime",
+      "file_type": "code",
+      "norm_label": "name_overlap()",
+      "source_file": "scripts/parse_line_booking_pairs.py",
+      "source_location": "L69"
+    },
+    {
+      "id": "scripts_parse_line_booking_pairs_parse_filename",
+      "label": "parse_filename()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "datetime",
+      "file_type": "code",
+      "norm_label": "parse_filename()",
+      "source_file": "scripts/parse_line_booking_pairs.py",
+      "source_location": "L47"
     },
     {
       "id": "scripts_seo_loop_orchestrator_log_append",
@@ -2569,64 +2653,52 @@
       "source_location": "L47"
     },
     {
-      "id": "tools_ai_workbook_build_context_pack_as_bullets",
-      "label": "_as_bullets()",
+      "id": "tests_test_hermes_task_executor_hermestaskexecutortest_test_classifies_safe_natural_language",
+      "label": ".test_classifies_safe_natural_language()",
       "_callable": true,
       "_origin": "ast",
       "community": 106,
-      "community_name": "build_context_pack.py",
+      "community_name": "HermesTaskExecutorTest",
       "file_type": "code",
-      "norm_label": "_as_bullets()",
-      "source_file": "tools/ai_workbook/build_context_pack.py",
-      "source_location": "L91"
+      "norm_label": ".test_classifies_safe_natural_language()",
+      "source_file": "tests/test_hermes_task_executor.py",
+      "source_location": "L11"
     },
     {
-      "id": "tools_ai_workbook_build_context_pack_build_context_pack",
-      "label": "build_context_pack()",
+      "id": "tests_test_hermes_task_executor_hermestaskexecutortest_test_rejects_high_risk_even_when_safe_alias_is_present",
+      "label": ".test_rejects_high_risk_even_when_safe_alias_is_present()",
       "_callable": true,
       "_origin": "ast",
       "community": 106,
-      "community_name": "build_context_pack.py",
+      "community_name": "HermesTaskExecutorTest",
       "file_type": "code",
-      "norm_label": "build_context_pack()",
-      "source_file": "tools/ai_workbook/build_context_pack.py",
-      "source_location": "L8"
+      "norm_label": ".test_rejects_high_risk_even_when_safe_alias_is_present()",
+      "source_file": "tests/test_hermes_task_executor.py",
+      "source_location": "L14"
     },
     {
-      "id": "tools_ai_workbook_build_context_pack_pick_projects",
-      "label": "_pick_projects()",
+      "id": "tests_test_hermes_task_executor_hermestaskexecutortest_test_safe_action_uses_fixed_argv_and_writes_receipt",
+      "label": ".test_safe_action_uses_fixed_argv_and_writes_receipt()",
       "_callable": true,
       "_origin": "ast",
       "community": 106,
-      "community_name": "build_context_pack.py",
+      "community_name": "HermesTaskExecutorTest",
       "file_type": "code",
-      "norm_label": "_pick_projects()",
-      "source_file": "tools/ai_workbook/build_context_pack.py",
-      "source_location": "L58"
+      "norm_label": ".test_safe_action_uses_fixed_argv_and_writes_receipt()",
+      "source_file": "tests/test_hermes_task_executor.py",
+      "source_location": "L26"
     },
     {
-      "id": "tools_ai_workbook_build_context_pack_pick_rules",
-      "label": "_pick_rules()",
+      "id": "tests_test_hermes_task_executor_hermestaskexecutortest_test_unknown_request_is_rejected_with_receipt",
+      "label": ".test_unknown_request_is_rejected_with_receipt()",
       "_callable": true,
       "_origin": "ast",
       "community": 106,
-      "community_name": "build_context_pack.py",
+      "community_name": "HermesTaskExecutorTest",
       "file_type": "code",
-      "norm_label": "_pick_rules()",
-      "source_file": "tools/ai_workbook/build_context_pack.py",
-      "source_location": "L48"
-    },
-    {
-      "id": "tools_ai_workbook_build_context_pack_pick_skills",
-      "label": "_pick_skills()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 106,
-      "community_name": "build_context_pack.py",
-      "file_type": "code",
-      "norm_label": "_pick_skills()",
-      "source_file": "tools/ai_workbook/build_context_pack.py",
-      "source_location": "L72"
+      "norm_label": ".test_unknown_request_is_rejected_with_receipt()",
+      "source_file": "tests/test_hermes_task_executor.py",
+      "source_location": "L19"
     },
     {
       "id": "bot_test_hermes_fallback_fakehermesproc_communicate",
@@ -3829,6 +3901,18 @@
       "source_location": "L141"
     },
     {
+      "id": "tools_ai_workbook_build_directional_system_map_build_notebook_document",
+      "label": "_build_notebook_document()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "build_directional_system_map.py",
+      "file_type": "code",
+      "norm_label": "_build_notebook_document()",
+      "source_file": "tools/ai_workbook/build_directional_system_map.py",
+      "source_location": "L336"
+    },
+    {
       "id": "tools_ai_workbook_build_directional_system_map_build_notebooklm_pack",
       "label": "build_notebooklm_pack()",
       "_callable": true,
@@ -3838,7 +3922,19 @@
       "file_type": "code",
       "norm_label": "build_notebooklm_pack()",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L283"
+      "source_location": "L398"
+    },
+    {
+      "id": "tools_ai_workbook_build_directional_system_map_build_workflow_route_cards",
+      "label": "_build_workflow_route_cards()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "build_directional_system_map.py",
+      "file_type": "code",
+      "norm_label": "_build_workflow_route_cards()",
+      "source_file": "tools/ai_workbook/build_directional_system_map.py",
+      "source_location": "L299"
     },
     {
       "id": "tools_ai_workbook_build_directional_system_map_check_generated_outputs",
@@ -3850,7 +3946,7 @@
       "file_type": "code",
       "norm_label": "check_generated_outputs()",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L393"
+      "source_location": "L513"
     },
     {
       "id": "tools_ai_workbook_build_directional_system_map_generated_at",
@@ -3862,7 +3958,7 @@
       "file_type": "code",
       "norm_label": "generated_at()",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L78"
+      "source_location": "L80"
     },
     {
       "id": "tools_ai_workbook_build_directional_system_map_git_base_commit",
@@ -3874,7 +3970,7 @@
       "file_type": "code",
       "norm_label": "git_base_commit()",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L65"
+      "source_location": "L67"
     },
     {
       "id": "tools_ai_workbook_build_directional_system_map_graph_from_manifest",
@@ -3886,7 +3982,7 @@
       "file_type": "code",
       "norm_label": "graph_from_manifest()",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L139"
+      "source_location": "L155"
     },
     {
       "id": "tools_ai_workbook_build_directional_system_map_iter_entities",
@@ -3898,7 +3994,7 @@
       "file_type": "code",
       "norm_label": "iter_entities()",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L82"
+      "source_location": "L84"
     },
     {
       "id": "tools_ai_workbook_build_directional_system_map_load_manifest",
@@ -3910,7 +4006,7 @@
       "file_type": "code",
       "norm_label": "load_manifest()",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L53"
+      "source_location": "L55"
     },
     {
       "id": "tools_ai_workbook_build_directional_system_map_main",
@@ -3922,7 +4018,7 @@
       "file_type": "code",
       "norm_label": "main()",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L450"
+      "source_location": "L583"
     },
     {
       "id": "tools_ai_workbook_build_directional_system_map_redact_secret_values",
@@ -3934,7 +4030,7 @@
       "file_type": "code",
       "norm_label": "redact_secret_values()",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L269"
+      "source_location": "L285"
     },
     {
       "id": "tools_ai_workbook_build_directional_system_map_render_html",
@@ -3946,7 +4042,7 @@
       "file_type": "code",
       "norm_label": "render_html()",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L213"
+      "source_location": "L229"
     },
     {
       "id": "tools_ai_workbook_build_directional_system_map_sha256_bytes",
@@ -3958,7 +4054,7 @@
       "file_type": "code",
       "norm_label": "sha256_bytes()",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L57"
+      "source_location": "L59"
     },
     {
       "id": "tools_ai_workbook_build_directional_system_map_sha256_file",
@@ -3970,7 +4066,7 @@
       "file_type": "code",
       "norm_label": "sha256_file()",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L61"
+      "source_location": "L63"
     },
     {
       "id": "tools_ai_workbook_build_directional_system_map_slug",
@@ -3982,7 +4078,7 @@
       "file_type": "code",
       "norm_label": "slug()",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L206"
+      "source_location": "L222"
     },
     {
       "id": "tools_ai_workbook_build_directional_system_map_validate_manifest",
@@ -3994,7 +4090,7 @@
       "file_type": "code",
       "norm_label": "validate_manifest()",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L88"
+      "source_location": "L90"
     },
     {
       "id": "tools_ai_workbook_build_directional_system_map_write_outputs",
@@ -4006,7 +4102,7 @@
       "file_type": "code",
       "norm_label": "write_outputs()",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L358"
+      "source_location": "L476"
     },
     {
       "id": "tools_ai_workbook_test_build_directional_system_map_directionalsystemmaptest_setup",
@@ -4030,7 +4126,7 @@
       "file_type": "code",
       "norm_label": ".test_generated_outputs_match_current_manifest_and_sources()",
       "source_file": "tools/ai_workbook/test_build_directional_system_map.py",
-      "source_location": "L45"
+      "source_location": "L46"
     },
     {
       "id": "tools_ai_workbook_test_build_directional_system_map_directionalsystemmaptest_test_graph_has_workflow_artifact_tool_gate_and_evidence_nodes",
@@ -4078,7 +4174,19 @@
       "file_type": "code",
       "norm_label": ".test_manifest_json_and_schema_json_parse()",
       "source_file": "tools/ai_workbook/test_build_directional_system_map.py",
-      "source_location": "L40"
+      "source_location": "L41"
+    },
+    {
+      "id": "tools_ai_workbook_test_build_directional_system_map_directionalsystemmaptest_test_notebooklm_router_has_two_supported_packs_and_local_fallback",
+      "label": ".test_notebooklm_router_has_two_supported_packs_and_local_fallback()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "build_directional_system_map.py",
+      "file_type": "code",
+      "norm_label": ".test_notebooklm_router_has_two_supported_packs_and_local_fallback()",
+      "source_file": "tools/ai_workbook/test_build_directional_system_map.py",
+      "source_location": "L49"
     },
     {
       "id": "tools_ai_workbook_test_build_directional_system_map_directionalsystemmaptest_test_secret_value_redaction_preserves_policy_words",
@@ -11965,136 +12073,64 @@
       "source_location": "L23"
     },
     {
-      "id": "bot_a6_test_a6_telegram_routes_run_tests",
-      "label": "run_tests()",
+      "id": "tools_ai_workbook_build_context_pack_as_bullets",
+      "label": "_as_bullets()",
       "_callable": true,
       "_origin": "ast",
       "community": 84,
-      "community_name": "test_a6_telegram_routes.py",
+      "community_name": "build_context_pack.py",
       "file_type": "code",
-      "norm_label": "run_tests()",
-      "source_file": "bot_a6/test_a6_telegram_routes.py",
-      "source_location": "L68"
+      "norm_label": "_as_bullets()",
+      "source_file": "tools/ai_workbook/build_context_pack.py",
+      "source_location": "L91"
     },
     {
-      "id": "bot_a6_test_a6_telegram_routes_test_localquote_summary_compacts_json_flood",
-      "label": "test_localquote_summary_compacts_json_flood()",
+      "id": "tools_ai_workbook_build_context_pack_build_context_pack",
+      "label": "build_context_pack()",
       "_callable": true,
       "_origin": "ast",
       "community": 84,
-      "community_name": "test_a6_telegram_routes.py",
+      "community_name": "build_context_pack.py",
       "file_type": "code",
-      "norm_label": "test_localquote_summary_compacts_json_flood()",
-      "source_file": "bot_a6/test_a6_telegram_routes.py",
-      "source_location": "L46"
+      "norm_label": "build_context_pack()",
+      "source_file": "tools/ai_workbook/build_context_pack.py",
+      "source_location": "L8"
     },
     {
-      "id": "bot_a6_test_a6_telegram_routes_test_photo_handoff_does_not_expose_raw_claude_failure",
-      "label": "test_photo_handoff_does_not_expose_raw_claude_failure()",
+      "id": "tools_ai_workbook_build_context_pack_pick_projects",
+      "label": "_pick_projects()",
       "_callable": true,
       "_origin": "ast",
       "community": 84,
-      "community_name": "test_a6_telegram_routes.py",
+      "community_name": "build_context_pack.py",
       "file_type": "code",
-      "norm_label": "test_photo_handoff_does_not_expose_raw_claude_failure()",
-      "source_file": "bot_a6/test_a6_telegram_routes.py",
-      "source_location": "L39"
+      "norm_label": "_pick_projects()",
+      "source_file": "tools/ai_workbook/build_context_pack.py",
+      "source_location": "L58"
     },
     {
-      "id": "bot_a6_test_a6_telegram_routes_test_runtime_status_intent_is_narrow",
-      "label": "test_runtime_status_intent_is_narrow()",
+      "id": "tools_ai_workbook_build_context_pack_pick_rules",
+      "label": "_pick_rules()",
       "_callable": true,
       "_origin": "ast",
       "community": 84,
-      "community_name": "test_a6_telegram_routes.py",
+      "community_name": "build_context_pack.py",
       "file_type": "code",
-      "norm_label": "test_runtime_status_intent_is_narrow()",
-      "source_file": "bot_a6/test_a6_telegram_routes.py",
-      "source_location": "L12"
+      "norm_label": "_pick_rules()",
+      "source_file": "tools/ai_workbook/build_context_pack.py",
+      "source_location": "L48"
     },
     {
-      "id": "bot_a6_test_a6_telegram_routes_test_takeover_packet_has_operable_handoff",
-      "label": "test_takeover_packet_has_operable_handoff()",
+      "id": "tools_ai_workbook_build_context_pack_pick_skills",
+      "label": "_pick_skills()",
       "_callable": true,
       "_origin": "ast",
       "community": 84,
-      "community_name": "test_a6_telegram_routes.py",
+      "community_name": "build_context_pack.py",
       "file_type": "code",
-      "norm_label": "test_takeover_packet_has_operable_handoff()",
-      "source_file": "bot_a6/test_a6_telegram_routes.py",
-      "source_location": "L25"
-    },
-    {
-      "id": "scripts_parse_line_booking_pairs_check_match",
-      "label": "check_match()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 87,
-      "community_name": "parse_line_booking_pairs.py",
-      "file_type": "code",
-      "norm_label": "check_match()",
-      "source_file": "scripts/parse_line_booking_pairs.py",
-      "source_location": "L81"
-    },
-    {
-      "id": "scripts_parse_line_booking_pairs_first_chinese_char",
-      "label": "first_chinese_char()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 87,
-      "community_name": "parse_line_booking_pairs.py",
-      "file_type": "code",
-      "norm_label": "first_chinese_char()",
-      "source_file": "scripts/parse_line_booking_pairs.py",
-      "source_location": "L62"
-    },
-    {
-      "id": "scripts_parse_line_booking_pairs_load_timetree",
-      "label": "load_timetree()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 87,
-      "community_name": "parse_line_booking_pairs.py",
-      "file_type": "code",
-      "norm_label": "load_timetree()",
-      "source_file": "scripts/parse_line_booking_pairs.py",
-      "source_location": "L26"
-    },
-    {
-      "id": "scripts_parse_line_booking_pairs_main",
-      "label": "main()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 87,
-      "community_name": "parse_line_booking_pairs.py",
-      "file_type": "code",
-      "norm_label": "main()",
-      "source_file": "scripts/parse_line_booking_pairs.py",
-      "source_location": "L94"
-    },
-    {
-      "id": "scripts_parse_line_booking_pairs_name_overlap",
-      "label": "name_overlap()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 87,
-      "community_name": "parse_line_booking_pairs.py",
-      "file_type": "code",
-      "norm_label": "name_overlap()",
-      "source_file": "scripts/parse_line_booking_pairs.py",
-      "source_location": "L69"
-    },
-    {
-      "id": "scripts_parse_line_booking_pairs_parse_filename",
-      "label": "parse_filename()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 87,
-      "community_name": "parse_line_booking_pairs.py",
-      "file_type": "code",
-      "norm_label": "parse_filename()",
-      "source_file": "scripts/parse_line_booking_pairs.py",
-      "source_location": "L47"
+      "norm_label": "_pick_skills()",
+      "source_file": "tools/ai_workbook/build_context_pack.py",
+      "source_location": "L72"
     },
     {
       "id": "tools_ai_workbook_a8_fal_minimax_gen_generate",
@@ -12718,6 +12754,17 @@
       "source_location": "L1"
     },
     {
+      "id": "bot_a6_test_a6_telegram_routes",
+      "label": "test_a6_telegram_routes.py",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "bot_a6.py",
+      "file_type": "code",
+      "norm_label": "test_a6_telegram_routes.py",
+      "source_file": "bot_a6/test_a6_telegram_routes.py",
+      "source_location": "L1"
+    },
+    {
       "id": "default_type",
       "label": "DEFAULT_TYPE",
       "_origin": "ast",
@@ -12760,17 +12807,6 @@
       "norm_label": "replykeyboardmarkup",
       "source_file": "",
       "source_location": ""
-    },
-    {
-      "id": "tests_test_hermes_task_executor",
-      "label": "test_hermes_task_executor.py",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "bot_a6.py",
-      "file_type": "code",
-      "norm_label": "test_hermes_task_executor.py",
-      "source_file": "tests/test_hermes_task_executor.py",
-      "source_location": "L1"
     },
     {
       "id": "update",
@@ -12993,6 +13029,17 @@
       "source_location": ""
     },
     {
+      "id": "scripts_parse_line_booking_pairs",
+      "label": "parse_line_booking_pairs.py",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "datetime",
+      "file_type": "code",
+      "norm_label": "parse_line_booking_pairs.py",
+      "source_file": "scripts/parse_line_booking_pairs.py",
+      "source_location": "L1"
+    },
+    {
       "id": "scripts_seo_loop_orchestrator",
       "label": "seo_loop_orchestrator.py",
       "_origin": "ast",
@@ -13079,6 +13126,39 @@
       "norm_label": "append one conversation exchange to today's jsonl log file.",
       "source_file": "bot/conv_log.py",
       "source_location": "L34"
+    },
+    {
+      "id": "scripts_parse_line_booking_pairs_rationale_1",
+      "label": "parse_line_booking_pairs.py --- \u7d14\u6a94\u540d metadata \u89e3\u6790\uff1a\u4e0d\u8b80\u4efb\u4f55\u5c0d\u8a71\u5167\u5bb9\u3002 \u8f38\u51fa\u8def\u5f91\u7531\u2026",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "datetime",
+      "file_type": "rationale",
+      "norm_label": "parse_line_booking_pairs.py --- \u7d14\u6a94\u540d metadata \u89e3\u6790:\u4e0d\u8b80\u4efb\u4f55\u5c0d\u8a71\u5167\u5bb9\u3002 \u8f38\u51fa\u8def\u5f91\u7531...",
+      "source_file": "scripts/parse_line_booking_pairs.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "scripts_parse_line_booking_pairs_rationale_48",
+      "label": "Return (index, start_date, end_date, contact_name) or None.",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "datetime",
+      "file_type": "rationale",
+      "norm_label": "return (index, start_date, end_date, contact_name) or none.",
+      "source_file": "scripts/parse_line_booking_pairs.py",
+      "source_location": "L48"
+    },
+    {
+      "id": "scripts_parse_line_booking_pairs_rationale_70",
+      "label": "Find longest \u22652-char Chinese substring of line_name present in tt_text.",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "datetime",
+      "file_type": "rationale",
+      "norm_label": "find longest \u22652-char chinese substring of line_name present in tt_text.",
+      "source_file": "scripts/parse_line_booking_pairs.py",
+      "source_location": "L70"
     },
     {
       "id": "scripts_seo_preview_render_rationale_176",
@@ -13384,26 +13464,15 @@
       "source_location": "L57"
     },
     {
-      "id": "tools_ai_workbook_build_context_pack",
-      "label": "build_context_pack.py",
+      "id": "tests_test_hermes_task_executor",
+      "label": "test_hermes_task_executor.py",
       "_origin": "ast",
       "community": 106,
-      "community_name": "build_context_pack.py",
+      "community_name": "HermesTaskExecutorTest",
       "file_type": "code",
-      "norm_label": "build_context_pack.py",
-      "source_file": "tools/ai_workbook/build_context_pack.py",
+      "norm_label": "test_hermes_task_executor.py",
+      "source_file": "tests/test_hermes_task_executor.py",
       "source_location": "L1"
-    },
-    {
-      "id": "tools_ai_workbook_build_context_pack_py_path",
-      "label": "Path",
-      "_origin": "ast",
-      "community": 106,
-      "community_name": "build_context_pack.py",
-      "file_type": "code",
-      "norm_label": "path",
-      "source_file": "",
-      "source_location": ""
     },
     {
       "id": "chrome_extension_task_modules_task_module_schema_properties_verification_required",
@@ -13776,32 +13845,10 @@
       "source_location": "L1"
     },
     {
-      "id": "chrome_extension_task_modules_task_module_schema_generated_at_type",
-      "label": "type",
-      "_origin": "ast",
-      "community": 117,
-      "community_name": "generated_at",
-      "file_type": "code",
-      "norm_label": "type",
-      "source_file": "chrome-extension/task-modules/task-module.schema.json",
-      "source_location": "L21"
-    },
-    {
-      "id": "chrome_extension_task_modules_task_module_schema_properties_generated_at",
-      "label": "generated_at",
-      "_origin": "ast",
-      "community": 117,
-      "community_name": "generated_at",
-      "file_type": "code",
-      "norm_label": "generated_at",
-      "source_file": "chrome-extension/task-modules/task-module.schema.json",
-      "source_location": "L20"
-    },
-    {
       "id": "chrome_extension_task_modules_task_module_schema_module_id_type",
       "label": "type",
       "_origin": "ast",
-      "community": 118,
+      "community": 117,
       "community_name": "module_id",
       "file_type": "code",
       "norm_label": "type",
@@ -13812,7 +13859,7 @@
       "id": "chrome_extension_task_modules_task_module_schema_properties_module_id",
       "label": "module_id",
       "_origin": "ast",
-      "community": 118,
+      "community": 117,
       "community_name": "module_id",
       "file_type": "code",
       "norm_label": "module_id",
@@ -16538,6 +16585,17 @@
       "source_location": "L33"
     },
     {
+      "id": "chrome_extension_task_modules_task_module_schema_generated_at_type",
+      "label": "type",
+      "_origin": "ast",
+      "community": 27,
+      "community_name": "properties",
+      "file_type": "code",
+      "norm_label": "type",
+      "source_file": "chrome-extension/task-modules/task-module.schema.json",
+      "source_location": "L21"
+    },
+    {
       "id": "chrome_extension_task_modules_task_module_schema_properties",
       "label": "properties",
       "_origin": "ast",
@@ -16558,6 +16616,17 @@
       "norm_label": "department",
       "source_file": "chrome-extension/task-modules/task-module.schema.json",
       "source_location": "L32"
+    },
+    {
+      "id": "chrome_extension_task_modules_task_module_schema_properties_generated_at",
+      "label": "generated_at",
+      "_origin": "ast",
+      "community": 27,
+      "community_name": "properties",
+      "file_type": "code",
+      "norm_label": "generated_at",
+      "source_file": "chrome-extension/task-modules/task-module.schema.json",
+      "source_location": "L20"
     },
     {
       "id": "chrome_extension_task_modules_task_module_schema_properties_read_first",
@@ -16602,17 +16671,6 @@
       "norm_label": "role_simulation",
       "source_file": "chrome-extension/task-modules/task-module.schema.json",
       "source_location": "L35"
-    },
-    {
-      "id": "chrome_extension_task_modules_task_module_schema_properties_schema_version",
-      "label": "schema_version",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "properties",
-      "file_type": "code",
-      "norm_label": "schema_version",
-      "source_file": "chrome-extension/task-modules/task-module.schema.json",
-      "source_location": "L17"
     },
     {
       "id": "chrome_extension_task_modules_task_module_schema_properties_source_freshness",
@@ -16690,17 +16748,6 @@
       "norm_label": "type",
       "source_file": "chrome-extension/task-modules/task-module.schema.json",
       "source_location": "L36"
-    },
-    {
-      "id": "chrome_extension_task_modules_task_module_schema_schema_version_type",
-      "label": "type",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "properties",
-      "file_type": "code",
-      "norm_label": "type",
-      "source_file": "chrome-extension/task-modules/task-module.schema.json",
-      "source_location": "L18"
     },
     {
       "id": "chrome_extension_task_modules_task_module_schema_source_freshness_type",
@@ -20940,15 +20987,26 @@
       "source_location": "L58"
     },
     {
-      "id": "bot_a6_test_a6_telegram_routes",
-      "label": "test_a6_telegram_routes.py",
+      "id": "tools_ai_workbook_build_context_pack",
+      "label": "build_context_pack.py",
       "_origin": "ast",
       "community": 84,
-      "community_name": "test_a6_telegram_routes.py",
+      "community_name": "build_context_pack.py",
       "file_type": "code",
-      "norm_label": "test_a6_telegram_routes.py",
-      "source_file": "bot_a6/test_a6_telegram_routes.py",
+      "norm_label": "build_context_pack.py",
+      "source_file": "tools/ai_workbook/build_context_pack.py",
       "source_location": "L1"
+    },
+    {
+      "id": "tools_ai_workbook_build_context_pack_py_path",
+      "label": "Path",
+      "_origin": "ast",
+      "community": 84,
+      "community_name": "build_context_pack.py",
+      "file_type": "code",
+      "norm_label": "path",
+      "source_file": "",
+      "source_location": ""
     },
     {
       "id": "scripts_local_dispatch_backup",
@@ -21131,48 +21189,26 @@
       "source_location": "L36"
     },
     {
-      "id": "scripts_parse_line_booking_pairs",
-      "label": "parse_line_booking_pairs.py",
+      "id": "chrome_extension_task_modules_task_module_schema_properties_schema_version",
+      "label": "schema_version",
       "_origin": "ast",
       "community": 87,
-      "community_name": "parse_line_booking_pairs.py",
+      "community_name": "schema_version",
       "file_type": "code",
-      "norm_label": "parse_line_booking_pairs.py",
-      "source_file": "scripts/parse_line_booking_pairs.py",
-      "source_location": "L1"
+      "norm_label": "schema_version",
+      "source_file": "chrome-extension/task-modules/task-module.schema.json",
+      "source_location": "L17"
     },
     {
-      "id": "scripts_parse_line_booking_pairs_rationale_1",
-      "label": "parse_line_booking_pairs.py --- \u7d14\u6a94\u540d metadata \u89e3\u6790\uff1a\u4e0d\u8b80\u4efb\u4f55\u5c0d\u8a71\u5167\u5bb9\u3002 \u8f38\u51fa\u8def\u5f91\u7531\u2026",
+      "id": "chrome_extension_task_modules_task_module_schema_schema_version_type",
+      "label": "type",
       "_origin": "ast",
       "community": 87,
-      "community_name": "parse_line_booking_pairs.py",
-      "file_type": "rationale",
-      "norm_label": "parse_line_booking_pairs.py --- \u7d14\u6a94\u540d metadata \u89e3\u6790:\u4e0d\u8b80\u4efb\u4f55\u5c0d\u8a71\u5167\u5bb9\u3002 \u8f38\u51fa\u8def\u5f91\u7531...",
-      "source_file": "scripts/parse_line_booking_pairs.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "scripts_parse_line_booking_pairs_rationale_48",
-      "label": "Return (index, start_date, end_date, contact_name) or None.",
-      "_origin": "ast",
-      "community": 87,
-      "community_name": "parse_line_booking_pairs.py",
-      "file_type": "rationale",
-      "norm_label": "return (index, start_date, end_date, contact_name) or none.",
-      "source_file": "scripts/parse_line_booking_pairs.py",
-      "source_location": "L48"
-    },
-    {
-      "id": "scripts_parse_line_booking_pairs_rationale_70",
-      "label": "Find longest \u22652-char Chinese substring of line_name present in tt_text.",
-      "_origin": "ast",
-      "community": 87,
-      "community_name": "parse_line_booking_pairs.py",
-      "file_type": "rationale",
-      "norm_label": "find longest \u22652-char chinese substring of line_name present in tt_text.",
-      "source_file": "scripts/parse_line_booking_pairs.py",
-      "source_location": "L70"
+      "community_name": "schema_version",
+      "file_type": "code",
+      "norm_label": "type",
+      "source_file": "chrome-extension/task-modules/task-module.schema.json",
+      "source_location": "L18"
     },
     {
       "id": "tools_ai_workbook_a8_fal_minimax_gen",
@@ -33274,7 +33310,7 @@
       "weight": 1.0
     },
     {
-      "source": "tools_ai_workbook_build_directional_system_map_build_notebooklm_pack",
+      "source": "tools_ai_workbook_build_directional_system_map_build_notebook_document",
       "target": "tools_ai_workbook_build_directional_system_map_git_base_commit",
       "relation": "calls",
       "_origin": "ast",
@@ -33282,11 +33318,11 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L289",
+      "source_location": "L348",
       "weight": 1.0
     },
     {
-      "source": "tools_ai_workbook_build_directional_system_map_build_notebooklm_pack",
+      "source": "tools_ai_workbook_build_directional_system_map_build_notebook_document",
       "target": "tools_ai_workbook_build_directional_system_map_sha256_file",
       "relation": "calls",
       "_origin": "ast",
@@ -33294,11 +33330,23 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L289",
+      "source_location": "L348",
       "weight": 1.0
     },
     {
-      "source": "tools_ai_workbook_build_directional_system_map_build_notebooklm_pack",
+      "source": "tools_ai_workbook_build_directional_system_map_build_notebook_document",
+      "target": "tools_ai_workbook_build_directional_system_map_build_workflow_route_cards",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tools/ai_workbook/build_directional_system_map.py",
+      "source_location": "L362",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_ai_workbook_build_directional_system_map_build_notebook_document",
       "target": "tools_ai_workbook_build_directional_system_map_redact_secret_values",
       "relation": "calls",
       "_origin": "ast",
@@ -33306,11 +33354,11 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L306",
+      "source_location": "L369",
       "weight": 1.0
     },
     {
-      "source": "tools_ai_workbook_build_directional_system_map_build_notebooklm_pack",
+      "source": "tools_ai_workbook_build_directional_system_map_build_notebook_document",
       "target": "tools_ai_workbook_build_directional_system_map_sha256_bytes",
       "relation": "calls",
       "_origin": "ast",
@@ -33318,7 +33366,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L310",
+      "source_location": "L372",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_ai_workbook_build_directional_system_map_build_notebooklm_pack",
+      "target": "tools_ai_workbook_build_directional_system_map_build_notebook_document",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tools/ai_workbook/build_directional_system_map.py",
+      "source_location": "L401",
       "weight": 1.0
     },
     {
@@ -33330,7 +33390,31 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L334",
+      "source_location": "L426",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_ai_workbook_build_directional_system_map_build_notebooklm_pack",
+      "target": "tools_ai_workbook_build_directional_system_map_git_base_commit",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tools/ai_workbook/build_directional_system_map.py",
+      "source_location": "L427",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_ai_workbook_build_directional_system_map_build_notebooklm_pack",
+      "target": "tools_ai_workbook_build_directional_system_map_sha256_file",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tools/ai_workbook/build_directional_system_map.py",
+      "source_location": "L428",
       "weight": 1.0
     },
     {
@@ -33342,7 +33426,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L407",
+      "source_location": "L529",
       "weight": 1.0
     },
     {
@@ -33354,7 +33438,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L153",
+      "source_location": "L169",
       "weight": 1.0
     },
     {
@@ -33366,7 +33450,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L170",
+      "source_location": "L186",
       "weight": 1.0
     },
     {
@@ -33378,7 +33462,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L193",
+      "source_location": "L209",
       "weight": 1.0
     },
     {
@@ -33390,7 +33474,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L196",
+      "source_location": "L212",
       "weight": 1.0
     },
     {
@@ -33402,7 +33486,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L199",
+      "source_location": "L215",
       "weight": 1.0
     },
     {
@@ -33414,7 +33498,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L454",
+      "source_location": "L587",
       "weight": 1.0
     },
     {
@@ -33426,7 +33510,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L455",
+      "source_location": "L588",
       "weight": 1.0
     },
     {
@@ -33438,7 +33522,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L460",
+      "source_location": "L593",
       "weight": 1.0
     },
     {
@@ -33450,7 +33534,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L466",
+      "source_location": "L599",
       "weight": 1.0
     },
     {
@@ -33462,7 +33546,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L475",
+      "source_location": "L608",
       "weight": 1.0
     },
     {
@@ -33474,19 +33558,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L62",
-      "weight": 1.0
-    },
-    {
-      "source": "tools_ai_workbook_build_directional_system_map_validate_manifest",
-      "target": "tools_ai_workbook_build_directional_system_map_py_path",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L111",
+      "source_location": "L64",
       "weight": 1.0
     },
     {
@@ -33498,7 +33570,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L98",
+      "source_location": "L100",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_ai_workbook_build_directional_system_map_validate_manifest",
+      "target": "tools_ai_workbook_build_directional_system_map_py_path",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tools/ai_workbook/build_directional_system_map.py",
+      "source_location": "L113",
       "weight": 1.0
     },
     {
@@ -33510,7 +33594,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L359",
+      "source_location": "L477",
       "weight": 1.0
     },
     {
@@ -33522,7 +33606,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L360",
+      "source_location": "L478",
       "weight": 1.0
     },
     {
@@ -33534,7 +33618,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L366",
+      "source_location": "L484",
       "weight": 1.0
     },
     {
@@ -33546,7 +33630,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L369",
+      "source_location": "L487",
       "weight": 1.0
     },
     {
@@ -33558,7 +33642,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L370",
+      "source_location": "L488",
       "weight": 1.0
     },
     {
@@ -33570,7 +33654,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L372",
+      "source_location": "L490",
       "weight": 1.0
     },
     {
@@ -36454,6 +36538,18 @@
       "weight": 1.0
     },
     {
+      "source": "tools_ai_workbook_build_directional_system_map_build_notebook_document",
+      "target": "tools_ai_workbook_build_directional_system_map_py_any",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "generic_arg",
+      "source_file": "tools/ai_workbook/build_directional_system_map.py",
+      "source_location": "L336",
+      "weight": 1.0
+    },
+    {
       "source": "tools_ai_workbook_build_directional_system_map_build_notebooklm_pack",
       "target": "tools_ai_workbook_build_directional_system_map_py_any",
       "relation": "references",
@@ -36462,7 +36558,19 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L283",
+      "source_location": "L398",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_ai_workbook_build_directional_system_map_build_workflow_route_cards",
+      "target": "tools_ai_workbook_build_directional_system_map_py_any",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "generic_arg",
+      "source_file": "tools/ai_workbook/build_directional_system_map.py",
+      "source_location": "L299",
       "weight": 1.0
     },
     {
@@ -36474,7 +36582,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L393",
+      "source_location": "L513",
       "weight": 1.0
     },
     {
@@ -36486,7 +36594,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L78",
+      "source_location": "L80",
       "weight": 1.0
     },
     {
@@ -36498,7 +36606,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L139",
+      "source_location": "L155",
       "weight": 1.0
     },
     {
@@ -36510,7 +36618,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L82",
+      "source_location": "L84",
       "weight": 1.0
     },
     {
@@ -36522,7 +36630,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L53",
+      "source_location": "L55",
       "weight": 1.0
     },
     {
@@ -36534,7 +36642,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L213",
+      "source_location": "L229",
       "weight": 1.0
     },
     {
@@ -36546,7 +36654,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L88",
+      "source_location": "L90",
       "weight": 1.0
     },
     {
@@ -36558,7 +36666,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L358",
+      "source_location": "L476",
       "weight": 1.0
     },
     {
@@ -41038,6 +41146,18 @@
       "weight": 1.0
     },
     {
+      "source": "tools_ai_workbook_build_directional_system_map_build_notebook_document",
+      "target": "tools_ai_workbook_build_directional_system_map_py_path",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "parameter_type",
+      "source_file": "tools/ai_workbook/build_directional_system_map.py",
+      "source_location": "L336",
+      "weight": 1.0
+    },
+    {
       "source": "tools_ai_workbook_build_directional_system_map_load_manifest",
       "target": "tools_ai_workbook_build_directional_system_map_py_path",
       "relation": "references",
@@ -41046,7 +41166,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L53",
+      "source_location": "L55",
       "weight": 1.0
     },
     {
@@ -41058,7 +41178,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L61",
+      "source_location": "L63",
       "weight": 1.0
     },
     {
@@ -52418,7 +52538,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L139",
+      "source_location": "L155",
       "weight": 1.0
     },
     {
@@ -52429,7 +52549,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L206",
+      "source_location": "L222",
       "weight": 1.0
     },
     {
@@ -52440,7 +52560,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L213",
+      "source_location": "L229",
       "weight": 1.0
     },
     {
@@ -52451,7 +52571,29 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L269",
+      "source_location": "L285",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_ai_workbook_build_directional_system_map",
+      "target": "tools_ai_workbook_build_directional_system_map_build_workflow_route_cards",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tools/ai_workbook/build_directional_system_map.py",
+      "source_location": "L299",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_ai_workbook_build_directional_system_map",
+      "target": "tools_ai_workbook_build_directional_system_map_build_notebook_document",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tools/ai_workbook/build_directional_system_map.py",
+      "source_location": "L336",
       "weight": 1.0
     },
     {
@@ -52462,7 +52604,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L283",
+      "source_location": "L398",
       "weight": 1.0
     },
     {
@@ -52473,7 +52615,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L358",
+      "source_location": "L476",
       "weight": 1.0
     },
     {
@@ -52484,18 +52626,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L393",
-      "weight": 1.0
-    },
-    {
-      "source": "tools_ai_workbook_build_directional_system_map",
-      "target": "tools_ai_workbook_build_directional_system_map_main",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L450",
+      "source_location": "L513",
       "weight": 1.0
     },
     {
@@ -52506,7 +52637,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L53",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_ai_workbook_build_directional_system_map",
+      "target": "tools_ai_workbook_build_directional_system_map_main",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tools/ai_workbook/build_directional_system_map.py",
+      "source_location": "L583",
       "weight": 1.0
     },
     {
@@ -52517,7 +52659,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L57",
+      "source_location": "L59",
       "weight": 1.0
     },
     {
@@ -52528,7 +52670,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L61",
+      "source_location": "L63",
       "weight": 1.0
     },
     {
@@ -52539,7 +52681,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L65",
+      "source_location": "L67",
       "weight": 1.0
     },
     {
@@ -52550,7 +52692,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L78",
+      "source_location": "L80",
       "weight": 1.0
     },
     {
@@ -52561,7 +52703,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L82",
+      "source_location": "L84",
       "weight": 1.0
     },
     {
@@ -52572,7 +52714,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/ai_workbook/build_directional_system_map.py",
-      "source_location": "L88",
+      "source_location": "L90",
       "weight": 1.0
     },
     {
@@ -56983,7 +57125,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/ai_workbook/test_build_directional_system_map.py",
-      "source_location": "L40",
+      "source_location": "L41",
       "weight": 1.0
     },
     {
@@ -56994,7 +57136,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/ai_workbook/test_build_directional_system_map.py",
-      "source_location": "L45",
+      "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_ai_workbook_test_build_directional_system_map_directionalsystemmaptest",
+      "target": "tools_ai_workbook_test_build_directional_system_map_directionalsystemmaptest_test_notebooklm_router_has_two_supported_packs_and_local_fallback",
+      "relation": "method",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tools/ai_workbook/test_build_directional_system_map.py",
+      "source_location": "L49",
       "weight": 1.0
     },
     {
@@ -59254,5 +59407,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "238b1fa123c846d8b5da9df9322afd86c5ee96aa"
+  "built_at_commit": "e5d931d46f72f083ebc0954a255102dfbaed51bd"
 }

@@ -1,0 +1,52 @@
+{
+  "schema_version": "2026-08-25.maplab-notebooklm-router.v1",
+  "notebook_name": "MAPLAB Project Brain｜SOP・路徑・角色・產物（非投資域）",
+  "notebook_url": "https://notebook.google.com/notebook/68114d21-ebc9-4116-a88a-52cc31cbe9a7",
+  "online_route": {
+    "requires_browser_operator": true,
+    "operators": [
+      "A0",
+      "A1",
+      "Codex Browser",
+      "OpenClaw browser"
+    ],
+    "trigger": "After cold-start files and local index/search cannot identify the exact SOP, path, handoff artifact or owning role",
+    "prompt_template": "Question: {question}\nActor/runtime: {actor}\nReturn one status: FOUND, NEEDS_LIVE_REFRESH, or NOT_IN_PACK. Then list exact repo path, why it applies, required reads, inputs, expected output/handoff, approval gate, evidence path, next bounded action, and citations. Do not infer live completion from plans.",
+    "response_fields": [
+      "status",
+      "exact_repo_path",
+      "why",
+      "required_reads",
+      "inputs",
+      "expected_output_handoff",
+      "approval_gate",
+      "evidence_path",
+      "next_bounded_action",
+      "citations"
+    ]
+  },
+  "local_model_route": {
+    "read_first": [
+      "workbook/notebooklm/maplab-project-brain/maplab-sop-router.md",
+      "SYSTEM_DIRECTORY_INDEX.md"
+    ],
+    "fallback_status": [
+      "FOUND",
+      "NEEDS_LIVE_REFRESH",
+      "NOT_IN_PACK"
+    ],
+    "boundary": "local models may navigate and draft; repo/runtime/UI/receipt readback verifies current truth"
+  },
+  "source_packs": [
+    {
+      "path": "workbook/notebooklm/maplab-project-brain/maplab-project-brain.md",
+      "sha256": "1b4384878875151439aca4f92433691639213233f78ba13b2677f9d060367b7a"
+    },
+    {
+      "path": "workbook/notebooklm/maplab-project-brain/maplab-sop-router.md",
+      "sha256": "b21270aba451f70f70128962ddb726de5a924b631967f3e57b87c97b7f395132"
+    }
+  ],
+  "refresh_command": "python3 tools/ai_workbook/build_directional_system_map.py",
+  "audit_manifest": "workbook/notebooklm/maplab-project-brain/source-manifest.json"
+}

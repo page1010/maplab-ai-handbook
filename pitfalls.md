@@ -14,7 +14,15 @@
 - 根因：首建的 `--code-only` 只是當次參數，incremental update 仍依 `.graphifyignore` 決定 corpus；當 ignore 沒有排除文件時，首建與後續更新來自兩個不同集合。
 - 解法：`.graphifyignore` 明確排除 `*.md`／`*.txt`／`*.html`、歷史／generated／runtime／secrets／customer raw 與 Investment OS 路徑；另外排除會記錄 Graphify 自身統計的 canonical manifest/schema，避免地圖索引自己的數字形成 self-reference。以 `graphify extract . --code-only --force` 重建，再連跑兩次 `graphify update .` 驗證穩定。文件／角色／SOP 由 canonical manifest 與 NotebookLM safe pack 管理。
 - 預防：新 repo 建 Graphify 前先寫 `.graphifyignore`；首建後立刻再跑一次 update，若 nodes 大幅增長就停下修 corpus，不把膨脹圖當正常 freshness。
-- 封坑驗證：`graphify update .` 應顯示 `No code-graph topology changes detected`；`graphify diagnose multigraph --graph graphify-out/graph.json --json` 應為 1817 nodes／3252 edges 且 missing／dangling／self-loop／collapsed 全為 0。
+- 封坑驗證：`graphify update .` 應顯示 `No code-graph topology changes detected`；`graphify diagnose multigraph --graph graphify-out/graph.json --json` 應為 1820 nodes／3262 edges 且 missing／dangling／self-loop／collapsed 全為 0。
+
+## 2026-08-25 — 去敏替換文字本身不能再長得像 secret assignment
+
+- 觸發條件：NotebookLM safe pack 已把一個設定值換成 `[REDACTED_CONFIG_VALUE]`，但保留 `token=[REDACTED_CONFIG_VALUE]` 形狀，後續 secret scan 仍命中 1 筆。
+- 根因：只考慮人眼看不到原值，沒有把 redaction output 再餵回同一組偵測 regex 做 idempotence 驗證。
+- 解法：assignment 類遮罩改成 `token value redacted`，不保留 `:`／`=`；unit test 強制所有 redacted sample 再掃一次必須為 0 matches。
+- 預防：任何 sanitizer 都要通過 `sanitize → rescan`；遮罩字串不可符合原始敏感值 pattern。
+- 封坑驗證：`python3 -m unittest tools.ai_workbook.test_build_directional_system_map.DirectionalSystemMapTest.test_secret_value_redaction_preserves_policy_words -v` 必須 PASS，且兩個 NotebookLM upload packs 的 secret-value scan 為 0。
 
 ## 2026-08-25 — WordPress 公開稿不能兼作產線審核包
 

@@ -24,6 +24,7 @@
 | Colab、Python、batch、長時間 | colab-resilience-guide | 防死機 + checkpoint |
 | Sheets、試算表、品項、資料 | sheets-data-cleaning-guide + sheets-tracking-guide | 清洗 + 追蹤 |
 | 卡住、錯誤、失敗、bug | troubleshooting-hub | 先查急救表再行動 |
+| 找不到 SOP、路徑、負責角色、交接產物 | capability-notebooklm-project-brain + `config/notebooklm/maplab-project-brain-router.json` | 本機索引找不到後，問 Project Brain；地端模型讀離線 SOP router |
 | 斷線、接手、上次做到哪 | crash-recovery-guide | 進度驗證 + 補齊 |
 | 第一次、新 agent、不知道從哪開始 | AGENT_STARTUP_PROTOCOL.md | 完整 9 步驟 |
 | 照片、相簿、圖片分類、素材 | photo-pipeline-toolkit-guide + a4-photo-asset-skills | 全流程 + 品牌規範 |

@@ -26,8 +26,10 @@ GRAPH_PATH = ROOT / "docs/system-map/maplab-directional-map.graph.json"
 BUILD_REPORT_PATH = ROOT / "docs/system-map/build-report.json"
 NOTEBOOK_DIR = ROOT / "workbook/notebooklm/maplab-project-brain"
 NOTEBOOK_DOC_PATH = NOTEBOOK_DIR / "maplab-project-brain.md"
+NOTEBOOK_SOP_PATH = NOTEBOOK_DIR / "maplab-sop-router.md"
 NOTEBOOK_MANIFEST_PATH = NOTEBOOK_DIR / "source-manifest.json"
 NOTEBOOK_README_PATH = NOTEBOOK_DIR / "README.md"
+NOTEBOOK_ROUTER_PATH = ROOT / "config/notebooklm/maplab-project-brain-router.json"
 
 EXPECTED_VIEWS = {
     "overview",
@@ -121,8 +123,22 @@ def validate_manifest(manifest: dict[str, Any], check_paths: bool = True) -> lis
     if workflow_ids != EXPECTED_WORKFLOWS:
         errors.append(f"workflows must be exactly {sorted(EXPECTED_WORKFLOWS)}")
 
+    notebook = manifest.get("notebooklm", {})
+    notebook_sources = notebook.get("source_files", []) + notebook.get("sop_source_files", [])
+    sop_source_set = set(notebook.get("sop_source_files", []))
+    if check_paths:
+        for relative in notebook_sources:
+            if not (ROOT / relative).is_file():
+                errors.append(f"missing NotebookLM source: {relative}")
+
     stage_ids: list[str] = []
     for workflow in manifest.get("workflows", []):
+        sop_paths = workflow.get("sop_paths", [])
+        if not sop_paths:
+            errors.append(f"{workflow.get('id')} missing/empty sop_paths")
+        for relative in sop_paths:
+            if relative not in sop_source_set:
+                errors.append(f"{workflow.get('id')} SOP is not included in NotebookLM router sources: {relative}")
         for stage in workflow.get("stages", []):
             stage_ids.append(stage.get("id"))
             for key in ("id", "name", "inputs", "actions", "outputs", "acceptance", "handoff_to", "evidence"):
@@ -271,7 +287,7 @@ def redact_secret_values(text: str) -> tuple[str, int]:
     output = text
     for pattern in SECRET_VALUE_PATTERNS:
         if pattern.pattern.startswith("(?i)\\b(api"):
-            output, count = pattern.subn(lambda match: f"{match.group(1)}=[REDACTED_CONFIG_VALUE]", output)
+            output, count = pattern.subn(lambda match: f"{match.group(1)} value redacted", output)
         elif "bearer" in pattern.pattern.lower():
             output, count = pattern.subn(lambda match: f"{match.group(1)}[REDACTED]", output)
         else:
@@ -280,39 +296,86 @@ def redact_secret_values(text: str) -> tuple[str, int]:
     return output, redactions
 
 
-def build_notebooklm_pack(manifest: dict[str, Any]) -> dict[str, Any]:
-    NOTEBOOK_DIR.mkdir(parents=True, exist_ok=True)
-    source_rows: list[dict[str, Any]] = []
-    chapters: list[str] = [
-        "# MAPLAB Project Brain — NotebookLM Safe Source Pack",
+def _build_workflow_route_cards(manifest: dict[str, Any]) -> list[str]:
+    lines = [
         "",
+        "## Authoritative A2-A8 workflow route cards",
+        "",
+        "These route cards are hydrated directly from the canonical manifest. Use them for static SOP, input, output, handoff, gate and evidence questions. Only actual task status, approval state, runtime/UI state and completion receipts require live refresh.",
+    ]
+    for workflow in manifest["workflows"]:
+        lines.extend(
+            [
+                "",
+                f"### {workflow['owner_role']} — {workflow['name']}",
+                "",
+                f"- Purpose: {workflow['purpose']}",
+                "- Exact SOP paths:",
+                *[f"  - `{path}`" for path in workflow["sop_paths"]],
+            ]
+        )
+        for stage in workflow["stages"]:
+            gate = stage.get("approval_gate") or "none in static workflow; still verify current task/runtime state"
+            lines.extend(
+                [
+                    "",
+                    f"#### {stage['id']} — {stage['name']}",
+                    "",
+                    f"- Inputs: {', '.join(stage['inputs'])}",
+                    f"- Actions: {', '.join(stage['actions'])}",
+                    f"- Outputs: {', '.join(stage['outputs'])}",
+                    f"- Acceptance: {', '.join(stage['acceptance'])}",
+                    f"- Handoff: {', '.join(stage['handoff_to'])}",
+                    f"- Approval gate: {gate}",
+                    f"- Evidence: {', '.join(stage['evidence'])}",
+                ]
+            )
+    return lines
+
+
+def _build_notebook_document(
+    manifest: dict[str, Any],
+    output_path: Path,
+    title: str,
+    purpose: str,
+    group: str,
+    source_files: list[str],
+) -> list[dict[str, Any]]:
+    chapters: list[str] = [
+        f"# {title}",
+        "",
+        f"> Purpose: {purpose}",
         f"> Generated from `{MANIFEST_PATH.relative_to(ROOT)}`. Build base commit `{git_base_commit()}`; manifest SHA `{sha256_file(MANIFEST_PATH)}`.",
-        "> This is a curated internal-governance corpus, not a literal repository dump and not a live-state authority.",
+        "> This is a curated, sanitized corpus. It is not a literal repository dump and not a live-state authority.",
         "> Excluded: secrets, credentials, cookies, customer raw data, runtime logs, SQLite/DB dumps, investment data, media binaries and generated noise.",
         "",
-        "## How to answer from this pack",
+        "## Required answer contract",
         "",
-        "1. Cite the source path and its embedded SHA for every material claim.",
-        "2. Treat CURRENT_STATUS/Task Cards/runtime/UI/receipts as separate truth layers.",
-        "3. If a fact may have changed after the embedded source hash, answer `needs live refresh`.",
-        "4. Never infer approval, publishing, platform state or completion from a plan alone.",
+        "1. Start with exactly one status: `FOUND`, `NEEDS_LIVE_REFRESH`, or `NOT_IN_PACK`.",
+        "2. Return the exact repo path, why it applies, required reads, expected output/handoff, and the next bounded action.",
+        "3. Cite the embedded source path and SHA for every material claim.",
+        "4. Treat CURRENT_STATUS, Task Cards, runtime/UI readback, commits and receipts as separate truth layers.",
+        "5. Never infer approval, publishing, platform state or completion from a plan alone.",
+        "6. If the source is present in this pack, answer from it; do not claim the source is unhydrated merely because it is embedded inside this bundle.",
     ]
-    total_redactions = 0
-    for relative in manifest["notebooklm"]["source_files"]:
+    if group == "sop_router":
+        chapters.extend(_build_workflow_route_cards(manifest))
+    rows: list[dict[str, Any]] = []
+    for relative in source_files:
         source = ROOT / relative
         if not source.exists() or not source.is_file():
             raise FileNotFoundError(f"NotebookLM source missing: {relative}")
         raw = source.read_text(encoding="utf-8")
         sanitized, count = redact_secret_values(raw)
-        total_redactions += count
         row = {
             "path": relative,
             "sha256": sha256_bytes(raw.encode("utf-8")),
             "bytes": len(raw.encode("utf-8")),
             "classification": "internal_governance",
             "redactions": count,
+            "group": group,
         }
-        source_rows.append(row)
+        rows.append(row)
         fence = "````" if "```" in sanitized else "```"
         chapters.extend(
             [
@@ -328,13 +391,44 @@ def build_notebooklm_pack(manifest: dict[str, Any]) -> dict[str, Any]:
                 fence,
             ]
         )
-    NOTEBOOK_DOC_PATH.write_text("\n".join(chapters).rstrip() + "\n", encoding="utf-8")
+    output_path.write_text("\n".join(chapters).rstrip() + "\n", encoding="utf-8")
+    return rows
+
+
+def build_notebooklm_pack(manifest: dict[str, Any]) -> dict[str, Any]:
+    NOTEBOOK_DIR.mkdir(parents=True, exist_ok=True)
+    NOTEBOOK_ROUTER_PATH.parent.mkdir(parents=True, exist_ok=True)
+    source_rows = _build_notebook_document(
+        manifest,
+        NOTEBOOK_DOC_PATH,
+        "MAPLAB Project Brain — Governance Core",
+        "roles, hardware, workflows, Sheets/indexes, governance and truth-layer boundaries",
+        "governance",
+        manifest["notebooklm"]["source_files"],
+    )
+    source_rows.extend(
+        _build_notebook_document(
+            manifest,
+            NOTEBOOK_SOP_PATH,
+            "MAPLAB Project Brain — SOP and Path Router",
+            "route A2-A8 agents and local models to exact SOPs, inputs, outputs, gates and evidence paths",
+            "sop_router",
+            manifest["notebooklm"]["sop_source_files"],
+        )
+    )
+    total_redactions = sum(row["redactions"] for row in source_rows)
+    upload_files = [
+        str(NOTEBOOK_DOC_PATH.relative_to(ROOT)),
+        str(NOTEBOOK_SOP_PATH.relative_to(ROOT)),
+    ]
     source_manifest = {
         "schema_version": "2026-08-25.notebooklm-source-pack.v1",
         "generated_at": generated_at(manifest),
         "build_base_commit": git_base_commit(),
         "directional_map_manifest_sha256": sha256_file(MANIFEST_PATH),
-        "upload_files": [str(NOTEBOOK_DOC_PATH.relative_to(ROOT)), str(NOTEBOOK_MANIFEST_PATH.relative_to(ROOT))],
+        "notebook_url": manifest["notebooklm"]["notebook_url"],
+        "upload_files": upload_files,
+        "audit_file": str(NOTEBOOK_MANIFEST_PATH.relative_to(ROOT)),
         "allowed_sensitivity": manifest["notebooklm"]["allowed_sensitivity"],
         "excluded_patterns": manifest["notebooklm"]["excluded_patterns"],
         "sources": source_rows,
@@ -342,9 +436,33 @@ def build_notebooklm_pack(manifest: dict[str, Any]) -> dict[str, Any]:
         "not_live_truth": True,
     }
     NOTEBOOK_MANIFEST_PATH.write_text(json.dumps(source_manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    router = {
+        "schema_version": "2026-08-25.maplab-notebooklm-router.v1",
+        "notebook_name": "MAPLAB Project Brain｜SOP・路徑・角色・產物（非投資域）",
+        "notebook_url": manifest["notebooklm"]["notebook_url"],
+        "online_route": {
+            "requires_browser_operator": True,
+            "operators": ["A0", "A1", "Codex Browser", "OpenClaw browser"],
+            "trigger": manifest["notebooklm"]["query_contract"]["trigger"],
+            "prompt_template": manifest["notebooklm"]["query_contract"]["prompt_template"],
+            "response_fields": manifest["notebooklm"]["query_contract"]["response_fields"],
+        },
+        "local_model_route": {
+            "read_first": [str(NOTEBOOK_SOP_PATH.relative_to(ROOT)), "SYSTEM_DIRECTORY_INDEX.md"],
+            "fallback_status": ["FOUND", "NEEDS_LIVE_REFRESH", "NOT_IN_PACK"],
+            "boundary": "local models may navigate and draft; repo/runtime/UI/receipt readback verifies current truth",
+        },
+        "source_packs": [
+            {"path": relative, "sha256": sha256_file(ROOT / relative)} for relative in upload_files
+        ],
+        "refresh_command": "python3 tools/ai_workbook/build_directional_system_map.py",
+        "audit_manifest": str(NOTEBOOK_MANIFEST_PATH.relative_to(ROOT)),
+    }
+    NOTEBOOK_ROUTER_PATH.write_text(json.dumps(router, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     NOTEBOOK_README_PATH.write_text(
         "# MAPLAB NotebookLM Project Brain\n\n"
-        "Upload only `maplab-project-brain.md` and `source-manifest.json` to the MAPLAB notebook. "
+        "Upload only `maplab-project-brain.md` and `maplab-sop-router.md` to the MAPLAB notebook. "
+        "NotebookLM does not accept JSON uploads; keep `source-manifest.json` in the repo as the audit receipt. "
         "The pack is generated by `python3 tools/ai_workbook/build_directional_system_map.py`; "
         "never upload the repository wholesale. Regenerate after governance changes, replace the "
         "NotebookLM sources, and keep the source manifest so answers can cite file hashes.\n\n"
@@ -382,8 +500,10 @@ def write_outputs(manifest: dict[str, Any]) -> dict[str, Any]:
             str(EXT_MAP_PATH.relative_to(ROOT)),
             str(GRAPH_PATH.relative_to(ROOT)),
             str(NOTEBOOK_DOC_PATH.relative_to(ROOT)),
+            str(NOTEBOOK_SOP_PATH.relative_to(ROOT)),
             str(NOTEBOOK_MANIFEST_PATH.relative_to(ROOT)),
             str(NOTEBOOK_README_PATH.relative_to(ROOT)),
+            str(NOTEBOOK_ROUTER_PATH.relative_to(ROOT)),
         ],
     }
     BUILD_REPORT_PATH.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -397,8 +517,10 @@ def check_generated_outputs(manifest: dict[str, Any]) -> list[str]:
         GRAPH_PATH,
         BUILD_REPORT_PATH,
         NOTEBOOK_DOC_PATH,
+        NOTEBOOK_SOP_PATH,
         NOTEBOOK_MANIFEST_PATH,
         NOTEBOOK_README_PATH,
+        NOTEBOOK_ROUTER_PATH,
     ]
     errors = [f"missing generated output: {path.relative_to(ROOT)}" for path in expected if not path.exists()]
     if errors:
@@ -426,11 +548,14 @@ def check_generated_outputs(manifest: dict[str, Any]) -> list[str]:
         notebook = json.loads(NOTEBOOK_MANIFEST_PATH.read_text(encoding="utf-8"))
         if notebook.get("directional_map_manifest_sha256") != manifest_hash:
             errors.append("NotebookLM pack manifest hash is stale")
-        expected_sources = manifest["notebooklm"]["source_files"]
+        expected_sources = manifest["notebooklm"]["source_files"] + manifest["notebooklm"]["sop_source_files"]
         actual_sources = [row.get("path") for row in notebook.get("sources", [])]
         if actual_sources != expected_sources:
             errors.append("NotebookLM source list differs from canonical manifest")
-        notebook_text = NOTEBOOK_DOC_PATH.read_text(encoding="utf-8")
+        notebook_texts = {
+            "governance": NOTEBOOK_DOC_PATH.read_text(encoding="utf-8"),
+            "sop_router": NOTEBOOK_SOP_PATH.read_text(encoding="utf-8"),
+        }
         for row in notebook.get("sources", []):
             relative = row.get("path", "")
             source = ROOT / relative
@@ -440,8 +565,16 @@ def check_generated_outputs(manifest: dict[str, Any]) -> list[str]:
             current_hash = sha256_file(source)
             if row.get("sha256") != current_hash:
                 errors.append(f"NotebookLM source hash is stale: {relative}")
+            notebook_text = notebook_texts.get(row.get("group", ""), "")
             if relative not in notebook_text or current_hash not in notebook_text:
                 errors.append(f"NotebookLM combined source lacks path/hash: {relative}")
+        router = json.loads(NOTEBOOK_ROUTER_PATH.read_text(encoding="utf-8"))
+        if router.get("notebook_url") != manifest["notebooklm"]["notebook_url"]:
+            errors.append("NotebookLM router URL differs from canonical manifest")
+        for pack in router.get("source_packs", []):
+            path = ROOT / pack.get("path", "")
+            if not path.exists() or pack.get("sha256") != sha256_file(path):
+                errors.append(f"NotebookLM router source pack is stale: {pack.get('path', '')}")
     except json.JSONDecodeError as exc:
         errors.append(f"NotebookLM source manifest JSON is invalid: {exc}")
     return errors

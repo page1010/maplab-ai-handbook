@@ -18,6 +18,16 @@ Step 5. Session 結束前在 `workbook/owner_requirements_panel.md` 寫一筆紀
 > ⚠️ 任務清楚 → 直接執行，不要用「確認需求」當拖延藉口。
 > ⚠️ 有寫但沒測，等於沒完成；有測但沒 receipt，等於下一個 session 無法信任。
 
+### NotebookLM／Gemini Notebook 導航 fallback（Owner 2026-08-25）
+
+當 agent 已讀 cold-start 文件、查過 `SYSTEM_DIRECTORY_INDEX.md`／`skills/superpowers-guide.md` 並用本機搜尋仍找不到精確 SOP、路徑、角色或交接產物時，下一步先問 MAPLAB Project Brain：
+
+- Notebook：`https://notebook.google.com/notebook/68114d21-ebc9-4116-a88a-52cc31cbe9a7`
+- 機器可讀路由：`config/notebooklm/maplab-project-brain-router.json`
+- 地端離線 fallback：`workbook/notebooklm/maplab-project-brain/maplab-sop-router.md`
+
+回答必含 `FOUND`／`NEEDS_LIVE_REFRESH`／`NOT_IN_PACK`、精確 repo path、必讀檔案、輸入、輸出／交接、approval gate、evidence path、下一個 bounded action 與引用。NotebookLM 只負責導航與來源綜合；CURRENT_STATUS、Task Card、runtime/UI readback、commit 和 receipt 才能確認現況或完成。
+
 ---
 
 ## SECTION 1 — 角色對照表

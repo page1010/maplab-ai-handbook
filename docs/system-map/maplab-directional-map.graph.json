@@ -2,8 +2,8 @@
   "schema_version": "2026-08-25.maplab-directional-map.v1",
   "generated_at": "2026-08-25T00:00:00+08:00",
   "source_manifest": "config/system-map/maplab-directional-map.json",
-  "source_manifest_sha256": "c5297ddaf7b90c75a3ede164264c286b8756b4f64989de51480f2b5d03179b03",
-  "build_base_commit": "238b1fa123c8",
+  "source_manifest_sha256": "0590393544adafa9a6848d514ddf08cab8a8e95a92f1e81f38f4f3a5076d7868",
+  "build_base_commit": "e5d931d46f72",
   "scope": {
     "title": "MAPLAB 非投資域指向性治理地圖",
     "included": [
@@ -1235,9 +1235,9 @@
     {
       "id": "gov:notebooklm",
       "type": "governance",
-      "label": "NotebookLM Project Brain",
-      "status": "declared",
-      "path": "workbook/notebooklm/maplab-project-brain/"
+      "label": "MAPLAB Project Brain",
+      "status": "verified",
+      "path": "https://notebook.google.com/notebook/68114d21-ebc9-4116-a88a-52cc31cbe9a7"
     },
     {
       "id": "gov:pitfalls",

@@ -7,7 +7,7 @@
 - **接續點**: 若 Owner 要第一個 live smoke，先選 Docker 隔離路徑，或明確核准本機安裝 nginx；之後只用 public/synthetic fixture 跑 loopback smoke。
 - **阻塞**: 不阻塞本卡完成。DeerFlow live smoke 尚缺 Docker 或 nginx；OpenRouter account-level ZDR/data-collection Guardrail 尚未做 authenticated readback。
 - **assigned_session**: 2026-08-27 / Codex acting as A1 Skill/SOP Engineer
-- **last_committed_by**: Codex（task-scoped checkpoint 待寫入 receipt）
+- **last_committed_by**: Codex（implementation checkpoint `00432a95b88d79dfbe42345c1b38c5768b1dae56`）
 - **可逆性**: 可逆。Skill、外接 checkout、CLI 與 config 可移除；沒有 production route、external send 或 live data migration。
 
 ## Owner 需求
@@ -76,4 +76,3 @@ Owner logged-in UI 證據仍用 Browser/Chrome，不用 Playwright persistent pr
 Anime.js/Cult UI 只在實際 portal repo 建立後按需加入。
 Supabase 要等 SSOT/PII/RLS/backup/rollback 決策，不要先建 project。
 若沒有新 Owner 授權，本卡保持 DONE，不要自動擴張。
-

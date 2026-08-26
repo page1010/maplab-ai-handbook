@@ -5,6 +5,7 @@
 - Actor: Codex acting as A1 Skill/SOP Engineer
 - Scope: reversible local/user/repo setup and documentation only
 - Overall: `PASS_WITH_RUNTIME_GATE`
+- Implementation checkpoint: `00432a95b88d79dfbe42345c1b38c5768b1dae56`
 
 ## Outcome
 

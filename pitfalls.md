@@ -510,3 +510,10 @@
 - 解法：人數候選需排除鄰近素食、過敏、工作／服務人員、搬運詞彙；完整需求收齊前由 quote-ready gate 禁止進 A5 報價。
 - 預防：Gym 必測「總人數在前、子群人數在後」的多輪案例；報價 payload 必須保留 `case_id + event_date + headcount`，不得只靠自然語言重新猜測。
 - 封坑驗證：`python3 -m unittest -v tests.test_a6_intake_flow`，其中 dietary count regression 必須維持總人數 60。
+
+# 2026-08-26｜把「不能發完成通知」誤寫成「不必通知」
+
+- 觸發條件：跨平台發布仍缺 YouTube／TikTok／Pinterest 等連結或 Owner 手勢。
+- 根因：把完成訊息的 all-done gate 錯誤套用到所有 Telegram 狀態回報，導致 Owner 不知道缺件。
+- 解法：分成缺件通知與完成通知；前者列平台、缺件、Owner 最短動作，後者只在核准平台全數回讀後發。
+- 預防：每次發布 receipt 必填平台矩陣與 `BLOCKER_MESSAGE_STATUS`；Telegram 送出前仍需 Owner 當下確認。

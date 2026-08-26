@@ -33,6 +33,14 @@
 - Hook：正式母帶 29–44 秒
 - 目標觀眾：一般活動規劃者；不是兒童專屬
 
+## TikTok / Instagram Reels / Facebook Reels
+
+- 影片：`video/maplab-bunny-youtube-short-15s.mp4`
+- 說明：台南畢業典禮外燴。讓一口點心、花藝與慶祝桌景，一起留下成長的明亮畫面。完整案例：https://www.maplabkitchen.com/tainan-daycare-graduation-catering/
+- Hashtags：`#台南外燴 #畢業典禮 #親子活動 #甜點桌 #MAPLAB`
+- 替代文字：TikTok、Instagram Reels、Facebook Reels 沒有獨立影片 alt 欄位；以畫面字幕、平台自動／人工字幕及描述第一句承接可及性與搜尋語意。
+- 發布設定：先存草稿或私人狀態；公開前逐平台取得 Owner action-time approval。
+
 ## Pinterest Pin 1
 
 - 圖片：`pinterest/maplab-tainan-graduation-catering-menu-pin.jpg`

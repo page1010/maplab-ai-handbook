@@ -54,7 +54,14 @@
 | 7 | 上片草稿 | mp4 / pin | YouTube 私人草稿、Pinterest 發布前草稿 + 填欄位 | Chrome → Studio / Pinterest | 私人影片、待發布 Pin | 欄位、連結、alt、圖片尺寸齊 |
 | 8 | 核准 | 草稿連結＋欄位摘要 | Owner 一次確認各對外動作 | Studio / Pinterest / WP | approval 決定 | 送出前 Owner 明確同意 |
 | 9 | 發布回讀 | 已核准草稿 | 逐平台發布後打開公開頁回讀 | Chrome | 公開連結與截圖 | 標題、描述、圖片、CTA、可見度正確 |
-| 10 | 完成回報 | 已回讀連結 | Telegram 發單一完成訊息 | Telegram Web | Owner 可點擊連結 | 發送後重讀訊息氣泡與連結 |
+| 10 | 狀態回報 | 平台矩陣＋已回讀連結 | 有阻塞先發「缺件通知」；全數完成後再發「完成通知」 | Telegram Web | Owner 知道缺什麼或可點擊成果 | 發送前取得 Owner action-time approval；發送後重讀訊息氣泡與連結 |
+
+### 1.1 多平台發布矩陣與 Telegram 通知語意
+
+- 標準矩陣：YouTube 長版、YouTube Shorts、TikTok、Instagram Reels、Facebook Reels、Pinterest Pin；Owner 可按個案縮減，但不得默默漏平台。
+- `BLOCKED`／`NEEDS_OWNER_ACTION` 不是靜默條件。缺登入、選檔、平台連結或核准時，應先準備並發送缺件通知，逐項寫清平台、缺件、Owner 最短動作與已完成成果。
+- 「完成通知」只在本案核准的平台都有可回讀連結後發送；不能拿「尚未完成」當成完全不通知的理由。
+- Telegram 發送屬代表 Owner 的外部通訊，按下送出前須取得當下確認。若尚未取得確認，receipt 必須標為 `MESSAGE_READY_NOT_SENT`，不可寫成已通知。
 
 ---
 
@@ -162,6 +169,8 @@
 5. 瀏覽權限＝**私人**（草稿）。**絕不選公開**；公開等 Owner。
 6. 儲存。垂直 <3 分自動歸類 **Short**（連結變 `youtube.com/shorts/…`）。
 7. **YouTube Studio 內建「編輯器」（開放性編輯器）**：上片後可在左側「編輯器」做 **trim 首尾／剪掉中段／加片尾／模糊處理**，適合對已上傳片微調，走 Chrome MCP 操作（Studio 可控已驗證）。**用於發布前微修，不取代本機真片段剪輯**（本機剪輯可重跑、可 commit、有 IG Soft 模板；Studio 編輯器是線上手動微調）。
+8. 上傳完成後逐欄回讀：標題、描述首兩行、縮圖、字幕、播放清單、觀眾設定、可見度與影片 URL。YouTube 沒有影片或縮圖的獨立 alt 欄位；可及性以描述性標題、描述與字幕承接，不得捏造 alt 已填。
+9. 若同一 file chooser 第二次仍回 `Not allowed`，停止重試，保留 Studio 上傳視窗並請 Owner 手選 receipt 中的絕對路徑；選檔後代理接續填欄位與 QA。
 
 ---
 

@@ -8,6 +8,14 @@
 > 選填欄「當時的合理化」：記下當時給自己的藉口，累積成紅旗清單。
 > 依據：superpowers「NO SKILL WITHOUT A FAILING TEST FIRST」；我們的記憶鏈缺的正是 Verify 階。
 
+## 2026-08-26 — Telegram CLI 訊息不能把 JSON escape 當成實際換行
+
+- 觸發條件：用 `JSON.stringify()` 把多行訊息拼進 `scripts/notify_owner.sh` 的單一 CLI 引數；Bot API 回 200，但 Telegram Web 顯示的是字面 `\\n`，連 URL 邊界也被 escape 文字污染。
+- 根因：JSON 字串的 `\\n` 是兩個可見字元，不會在一般 shell 雙引號引數中自動還原成 newline；只驗 HTTP 200／`message_id`，沒有檢查送出的 `result.text` 與 Telegram 可見畫面。
+- 解法：補發時使用 bash ANSI-C quoting `$'...\\n...'` 讓 shell 在呼叫腳本前產生真實換行；以 Bot API `result.text | split("\\n")` 驗證行數，再用 Telegram Web 反讀正式訊息與連結。
+- 預防：多行 Telegram 訊息優先由 stdin／message file 或明確的 newline-safe 介面傳入；若仍用 CLI 引數，禁止直接塞 JSON escape。完成判準必含 `message_id`、實際 line count 與 Telegram Web 可見文字。
+- 封坑驗證：正式訊息 `message_id=4130` 的 Bot API readback 為 26 lines，Telegram Web 顯示三個獨立連結；格式不良的 `message_id=4129` 只能標失敗樣本，不得當交付完成。
+
 ## 2026-08-25 — Graphify 首建與 incremental update 必須共用同一 corpus 邊界
 
 - 觸發條件：先用 `graphify extract . --code-only` 產生 2,203-node AST 圖，之後依全域規則跑 `graphify update .`，圖卻膨脹為 7,332 nodes／622 communities，大量 `skills`、`docs`、`handoff` Markdown 被當成 code-like 節點。

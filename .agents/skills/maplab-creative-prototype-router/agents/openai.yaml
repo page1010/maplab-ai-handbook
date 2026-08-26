@@ -1,0 +1,4 @@
+interface:
+  display_name: "MAPLAB Creative Prototype Router"
+  short_description: "Route UI and campaign prototypes safely"
+  default_prompt: "Use $maplab-creative-prototype-router to choose the safest useful design tool and produce a MAPLAB-governed prototype brief."

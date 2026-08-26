@@ -1,0 +1,4 @@
+interface:
+  display_name: "MAPLAB Project Knowledge Router"
+  short_description: "Route questions to Graphify or NotebookLM safely"
+  default_prompt: "Use $maplab-project-knowledge-router to locate the exact MAPLAB code, SOP, owner, gate, and evidence path for this question."

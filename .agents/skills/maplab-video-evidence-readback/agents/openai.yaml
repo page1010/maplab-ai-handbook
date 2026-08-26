@@ -1,0 +1,4 @@
+interface:
+  display_name: "MAPLAB Video Evidence Readback"
+  short_description: "Private-first frame and transcript review"
+  default_prompt: "Use $maplab-video-evidence-readback to inspect this video and return bounded evidence without bypassing A8 approval gates."

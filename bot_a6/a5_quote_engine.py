@@ -202,6 +202,7 @@ def _find_restrictions(user_message: str) -> list[str]:
         (r"(?:不吃|不要|無|不能有)\s*海鮮", "不可含海鮮"),
         (r"(?:不吃|不要|無|不能有)\s*酒", "不可含酒精"),
         (r"素食|吃素|蔬食", "需要素食或蔬食選項"),
+        (r"堅果.*過敏|過敏.*堅果", "堅果過敏，需做硬性排除與交叉污染確認"),
     ]
     return [label for pattern, label in patterns if re.search(pattern, user_message)]
 
@@ -388,6 +389,7 @@ def _build_basic_high_margin_quote_payload(user_message: str, user_name: str = "
     client_name = _extract_client_name(user_message, user_name)
     event_type = "生日派對" if any(term in compact for term in ("生日", "birthday", "Birthday")) else "外燴正餐"
     event_name = f"{headcount}人{event_type}高毛利正餐"
+    tracking = _extract_quote_tracking_fields(user_message)
 
     notes = [
         "A6 deterministic Sheet-first payload；品項皆取自 Items standard_name。",
@@ -403,6 +405,7 @@ def _build_basic_high_margin_quote_payload(user_message: str, user_name: str = "
     return {
         "action": "createQuoteVariants",
         "base": {
+            "caseId": tracking["case_id"],
             "clientName": client_name,
             "customer": client_name,
             "eventDate": event_date,
@@ -412,6 +415,10 @@ def _build_basic_high_margin_quote_payload(user_message: str, user_name: str = "
             "eventName": event_name,
             "headcount": headcount,
             "pax": headcount,
+            "budget": tracking["budget"],
+            "venue": tracking["venue"],
+            "indoorOutdoor": tracking["indoor_outdoor"],
+            "serviceFormat": tracking["service_format"],
             "totalItems": len(menu),
             "depositAmount": int(total_revenue * 0.5),
             "dietaryNotes": "｜".join(notes),
@@ -433,6 +440,27 @@ def _build_basic_high_margin_quote_payload(user_message: str, user_name: str = "
             }
         ],
         "needsManualCost": [],
+    }
+
+
+def _extract_quote_tracking_fields(user_message: str) -> dict[str, object]:
+    def value_after(label: str) -> str:
+        match = re.search(rf"{label}[:=]([^\s]+)", user_message)
+        return match.group(1).strip() if match else ""
+
+    case_match = re.search(r"case_id=([A-Za-z0-9._:-]+)", user_message)
+    budget = _find_budget(user_message)
+    venue_match = re.search(
+        r"\d{1,2}[:：]\d{2}\s*[-~到至]\s*\d{1,2}[:：]\d{2}\s+(.+?)\s+(?:室內|戶外)\s+\d{1,4}人",
+        user_message,
+    )
+    indoor_match = re.search(r"\b(室內|戶外)\b", user_message)
+    return {
+        "case_id": case_match.group(1) if case_match else "",
+        "budget": budget[0] if budget else "",
+        "venue": venue_match.group(1).strip() if venue_match else "",
+        "indoor_outdoor": indoor_match.group(1) if indoor_match else "",
+        "service_format": value_after("形式"),
     }
 
 
@@ -486,7 +514,12 @@ def _extract_headcount(user_message: str) -> Optional[int]:
         r"(?:estimated\s+number\s+of|number\s+of|headcount|pax)\s*[:：]?\s*(\d{1,4})",
     ]
     for pattern in patterns:
-        matches = re.findall(pattern, user_message, flags=re.IGNORECASE)
+        matches = []
+        for match in re.finditer(pattern, user_message, flags=re.IGNORECASE):
+            window = user_message[max(0, match.start() - 8):match.end() + 10]
+            if any(term in window for term in ("素食", "吃素", "過敏", "工作人員", "服務人員", "協助搬運")):
+                continue
+            matches.append(match.group(1))
         if matches:
             try:
                 return int(matches[-1])
@@ -633,6 +666,7 @@ def _build_competitor_quote_payload(user_message: str) -> Optional[dict]:
 def _extract_event_date_for_payload(user_message: str) -> tuple[str, str]:
     patterns = [
         (r"(20\d{2})[/-](\d{1,2})[/-](\d{1,2})", 0, "使用訊息中的西元活動日期"),
+        (r"(20\d{2})年(\d{1,2})月(\d{1,2})日", 0, "使用訊息中的中文西元活動日期"),
         (r"(?<!\d)(1\d{2})[/-](\d{1,2})[/-](\d{1,2})(?!\d)", 1911, "使用訊息中的民國活動日期"),
     ]
     for pattern, year_offset, note in patterns:

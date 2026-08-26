@@ -502,3 +502,11 @@
 - 根因：把 WordPress 的最佳圖片格式直接沿用到 Google Docs，沒有在審稿面做格式相容性與 inline object 反讀；同一張素材在不同交付面有不同媒體能力。
 - 解法：WordPress 保留 WebP；只為 Google Docs 審稿面轉一份 JPEG 再插入，最後用 Docs API 驗證 `inlineObjectCount` 與正文引用數都等於預期值。
 - 預防：案例文章有圖片時，驗收必須同時檢查「公開稿 image markup／WP asset」與「Owner 審稿面 inline image object」；Google Docs 上傳先用 JPEG/PNG，不把 file chooser 成功或空白段落當成圖片證明。
+
+## 2026-08-26 — 對話中的子群人數不可覆寫活動總人數
+
+- 觸發條件：客戶先說「60 人」，後續補充「4 位素食／1 位過敏」，以最後一個 `數字+人/位` 當總人數的 parser 會把案件人數改成 4 或 1。
+- 根因：欄位抽取只有字面 regex，未區分總參加人數與素食、過敏、工作人員、搬運協助等子群語意。
+- 解法：人數候選需排除鄰近素食、過敏、工作／服務人員、搬運詞彙；完整需求收齊前由 quote-ready gate 禁止進 A5 報價。
+- 預防：Gym 必測「總人數在前、子群人數在後」的多輪案例；報價 payload 必須保留 `case_id + event_date + headcount`，不得只靠自然語言重新猜測。
+- 封坑驗證：`python3 -m unittest -v tests.test_a6_intake_flow`，其中 dietary count regression 必須維持總人數 60。

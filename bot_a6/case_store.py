@@ -486,9 +486,16 @@ def extract_case_facts(messages: Iterable[ConversationMessage]) -> dict:
     if date_match:
         facts["event_date_hint"] = date_match.group(0)
     full_date = re.search(r"(20\d{2})[/-](\d{1,2})[/-](\d{1,2})", text)
+    if not full_date:
+        full_date = re.search(r"(20\d{2})年(\d{1,2})月(\d{1,2})日", text)
     if full_date:
         facts["event_date_hint"] = full_date.group(0)
-    people = re.findall(r"(\d{1,4})\s*(?:人|位)", text)
+    people = []
+    for match in re.finditer(r"(\d{1,4})\s*(?:人|位)", text):
+        window = text[max(0, match.start() - 8):match.end() + 10]
+        if any(term in window for term in ("素食", "吃素", "過敏", "工作人員", "服務人員", "協助搬運")):
+            continue
+        people.append(match.group(1))
     if people:
         facts["pax_hint"] = int(people[-1])
     budget = _find_budget(text)

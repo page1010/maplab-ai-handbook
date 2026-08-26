@@ -1,0 +1,40 @@
+{
+  "candidate_id": "skill-ui",
+  "kind": "tool",
+  "identity": {
+    "status": "upstream_verified",
+    "url": "https://github.com/gishamer/skill-ui"
+  },
+  "license": {
+    "status": "missing",
+    "id": null
+  },
+  "maintenance": "active",
+  "fit": "low",
+  "overlap": "duplicate",
+  "runtime": {
+    "ready": false,
+    "smoke": "not_run"
+  },
+  "data": {
+    "max_allowed": "public",
+    "egress": "external_service"
+  },
+  "credentials": [
+    "github_write_token"
+  ],
+  "side_effects": [
+    "dependency_install",
+    "local_files",
+    "external_write"
+  ],
+  "evidence": {
+    "social_url": "https://www.instagram.com/jayte.genai/reel/DcJK_hHprkV/",
+    "official_urls": [
+      "https://github.com/gishamer/skill-ui/commit/3a91861f421f2ea0589aa3219e432e28071b21f0",
+      "https://github.com/gishamer/skill-ui/blob/3a91861f421f2ea0589aa3219e432e28071b21f0/bin/skill-ui.js"
+    ],
+    "checked_at": "2026-08-27"
+  },
+  "note": "Duplicates the existing lifecycle control plane while adding token discovery, recursive replacement, Electron storage, and GitHub branch/PR writes. package.json says MIT but the repository has no LICENSE file."
+}

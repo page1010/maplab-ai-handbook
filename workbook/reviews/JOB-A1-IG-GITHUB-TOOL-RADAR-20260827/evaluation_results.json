@@ -1,0 +1,84 @@
+{
+  "evaluator": ".agents/skills/maplab-tool-evidence-radar/scripts/evaluate_candidate.py",
+  "evaluated_at": "2026-08-27",
+  "results": [
+    {
+      "candidate_id": "ai-copywriter",
+      "decision": "HOLD",
+      "reasons": [
+        "isolated_smoke_missing"
+      ],
+      "required_gates": [
+        "isolated_smoke"
+      ]
+    },
+    {
+      "candidate_id": "context7",
+      "decision": "PILOT",
+      "reasons": [
+        "useful_but_requires_external_service_or_credential"
+      ],
+      "required_gates": [
+        "synthetic_or_public_fixture",
+        "explicit_credential_or_cost_gate",
+        "isolated_receipt"
+      ]
+    },
+    {
+      "candidate_id": "higgsfield",
+      "decision": "HOLD",
+      "reasons": [
+        "high_risk_execution_surface",
+        "third_party_processing_boundary",
+        "metered_spend_required"
+      ],
+      "required_gates": [
+        "explicit_target_and_execution_scope",
+        "synthetic_or_public_fixture",
+        "explicit_cost_approval"
+      ]
+    },
+    {
+      "candidate_id": "skill-ui",
+      "decision": "REJECT",
+      "reasons": [
+        "duplicates_existing_control_plane"
+      ],
+      "required_gates": [
+        "use_existing_route"
+      ]
+    },
+    {
+      "candidate_id": "strix",
+      "decision": "HOLD",
+      "reasons": [
+        "high_risk_execution_surface",
+        "third_party_processing_boundary"
+      ],
+      "required_gates": [
+        "explicit_target_and_execution_scope",
+        "synthetic_or_public_fixture"
+      ]
+    },
+    {
+      "candidate_id": "taste",
+      "decision": "REJECT",
+      "reasons": [
+        "duplicates_existing_control_plane"
+      ],
+      "required_gates": [
+        "use_existing_route"
+      ]
+    },
+    {
+      "candidate_id": "ui-inspiration-list",
+      "decision": "NOT_A_TOOL",
+      "reasons": [
+        "reference_or_claim_only"
+      ],
+      "required_gates": [
+        "keep_as_cited_reference"
+      ]
+    }
+  ]
+}

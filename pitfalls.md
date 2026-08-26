@@ -423,6 +423,13 @@
 - 預防：任何「利用剩餘額度」排程都必須先回答：本輪會替 Owner 新增什麼可用能力、哪個檔案／畫面能驗證、測試是什麼、與上一輪有何 delta。答不出來就停止，不得再產生 inventory-only checkpoint。
 - 封坑驗證：本機 watcher 不呼叫模型也能持續留下 used/reset/source；pre-reset automation 只有 gate=`ready` 才做一個高價值 job；`done` 沒有 output path 會被 controller 拒絕；重置後報告列出每個 output/test/commit，零成果時明確標紅而不是報成功。
 
+## 2026-08-26 — 客戶頁的日期／內部語與平台上傳成功必須分開驗證
+
+- 觸發條件：Owner 再次指出公開 WP 不應露出日期、工程用快速導覽或「草稿只選無人畫面」這類內部語；同一案又遇到 YouTube file chooser 與 Pinterest Google 登入失敗，容易把素材完成誤報成平台完成。
+- 根因：內容產線把內部 release plan、客戶可讀 copy、平台 upload state 混在同一個完成判斷；圖片也只看「有插入」，沒有要求每張扮演不同資訊角色並逐張驗 alt。
+- 解法：公開前固定做兩個獨立 gate。Content gate 只掃客戶會看到的 title／body／caption／CTA／image alt，預設不曝光日期與內部流程語，WP 至少三張不同角色照片；Platform gate 必須拿到 platform ID、可讀 URL 與欄位 readback，file chooser `Not allowed`、登入未建立、HTTP 200 或空對話框都只記 `BLOCKED`。
+- 預防：每案只維護一份 `platform_metadata.md`，發布後另寫 release receipt；WordPress、長片、Short、Pin、Telegram 各自有狀態，任一平台阻擋不重做內容，也不把部分完成包成「全部上傳完成」。
+
 ## 2026-07-09 — 同一張 Task Card 藏兩個「狀態」欄位，且互相矛盾（第三個活例）
 
 - 觸發條件：驗收 T-A4-001（S11/2024 補跑）時發現，這張卡在檔案上半部只有「最後活動/接續點/阻塞」，完全沒有「狀態」欄位；`scripts/patrol.sh` 的 `grep -m1` 因此往下抓到檔案中段一段 2026-04-15 遺留的舊格式區塊（`Task ID`/`任務名稱` 那組），把早已過時的「🔄 進行中（S11/2024 補跑執行中）」當成現況——這是繼 `T-A2-SEO-CATERING-MATRIX-001.md`（`**Status**:` 英文無 bullet 格式）、`T-A2-007` 補建（session task list 沒寫進 Task Card）之後，第三個「Task Card 格式跟巡查解析器對不上」的活例。

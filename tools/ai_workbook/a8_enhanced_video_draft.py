@@ -49,7 +49,7 @@ CATEGORY_PLATFORM_PROFILES = {
     "graduation": {
         "title_keyword": "台南畢業典禮外燴",
         "description": "畢業典禮活動茶點紀錄。以一口點心、花藝與慶祝陳列，留下畢業日的明亮畫面。",
-        "caption": "畢業典禮的慶祝桌景；一口點心、花藝與紀念日期一起留下成長的畫面。",
+        "caption": "畢業典禮的慶祝桌景；一口點心、花藝與親子活動畫面一起留下成長的記憶。",
         "hashtags": ["#台南外燴", "#畢業典禮", "#親子活動", "#甜點桌", "#MAPLAB"],
         "board": "MAPLAB Catering / Family Events",
         "pin_description": "台南畢業典禮的一口點心、花藝與慶祝桌景參考。",
@@ -97,6 +97,12 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--transition-seconds", type=float, default=0.35)
     parser.add_argument("--visual-preset", choices=sorted(VISUAL_PRESETS), default="maplab_ig_soft")
+    parser.add_argument(
+        "--aspect",
+        choices=["9:16", "16:9"],
+        default="9:16",
+        help="Render native vertical Short (9:16) or YouTube long-form (16:9).",
+    )
     parser.add_argument("--show-counter", action="store_true")
     parser.add_argument("--no-opening", action="store_true")
     parser.add_argument("--no-ending", action="store_true")
@@ -172,6 +178,13 @@ def resolve_category_defaults(args: argparse.Namespace) -> None:
         args.ending_line = CATEGORY_CTA_LINES[args.category]
 
 
+def output_geometry(aspect: str) -> tuple[int, int]:
+    """Return native delivery dimensions for the selected platform shape."""
+    if aspect == "16:9":
+        return 1920, 1080
+    return 1080, 1920
+
+
 def frame_cta_line(cta_line: str) -> str:
     return cta_line.replace("｜", "\n", 1)
 
@@ -194,6 +207,7 @@ def render_frames(
         scene_tag: str,
         mode: str,
     ) -> None:
+        width, height = output_geometry(args.aspect)
         run(
             [
                 swift_bin,
@@ -205,6 +219,8 @@ def render_frames(
                 args.watermark,
                 scene_tag,
                 mode,
+                str(width),
+                str(height),
             ]
         )
 
@@ -247,14 +263,17 @@ def make_segment(
     seconds: float,
     motion: str,
     visual_preset: str,
+    width: int,
+    height: int,
 ) -> None:
     total_frames = int(seconds * 30)
     preset_filter = VISUAL_PRESETS.get(visual_preset, "null")
 
     if bg_image.suffix.lower() in VIDEO_EXTS:
-        # Video input: crop center 9:16, scale to 1080x1920, and trim
+        # Video input: crop center to the requested native aspect and trim.
         filter_complex = (
-            f"[0:v]crop=w='min(iw,ih*9/16)':h='min(ih,iw*16/9)',scale=1080:1920[cropped];"
+            f"[0:v]crop=w='min(iw,ih*{width}/{height})':h='min(ih,iw*{height}/{width})',"
+            f"scale={width}:{height}[cropped];"
             f"[cropped][1:v]overlay=0:0[graded];"
             f"[graded]{preset_filter}[out]"
         )
@@ -280,20 +299,22 @@ def make_segment(
         )
     else:
         # Image input: zoompan motion
+        canvas = f"{width}x{height}"
         if motion == "dolly_in":
-            zoompan = f"zoompan=z='1.0+0.15*on/{total_frames}':x='(iw-iw/zoom)/2':y='(ih-ih/zoom)/2':d={total_frames}:s=1080x1920:fps=30"
+            zoompan = f"zoompan=z='1.0+0.15*on/{total_frames}':x='(iw-iw/zoom)/2':y='(ih-ih/zoom)/2':d={total_frames}:s={canvas}:fps=30"
         elif motion == "dolly_out":
-            zoompan = f"zoompan=z='1.15-0.15*on/{total_frames}':x='(iw-iw/zoom)/2':y='(ih-ih/zoom)/2':d={total_frames}:s=1080x1920:fps=30"
+            zoompan = f"zoompan=z='1.15-0.15*on/{total_frames}':x='(iw-iw/zoom)/2':y='(ih-ih/zoom)/2':d={total_frames}:s={canvas}:fps=30"
         elif motion == "pan_right":
-            zoompan = f"zoompan=z=1.15:x='(iw-iw/zoom)*(on/{total_frames})':y='(ih-ih/zoom)/2':d={total_frames}:s=1080x1920:fps=30"
+            zoompan = f"zoompan=z=1.15:x='(iw-iw/zoom)*(on/{total_frames})':y='(ih-ih/zoom)/2':d={total_frames}:s={canvas}:fps=30"
         elif motion == "pan_left":
-            zoompan = f"zoompan=z=1.15:x='(iw-iw/zoom)*(1-on/{total_frames})':y='(ih-ih/zoom)/2':d={total_frames}:s=1080x1920:fps=30"
+            zoompan = f"zoompan=z=1.15:x='(iw-iw/zoom)*(1-on/{total_frames})':y='(ih-ih/zoom)/2':d={total_frames}:s={canvas}:fps=30"
         else: # static or fallback
-            zoompan = f"zoompan=z=1.001:x=0:y=0:d={total_frames}:s=1080x1920:fps=30"
+            zoompan = f"zoompan=z=1.001:x=0:y=0:d={total_frames}:s={canvas}:fps=30"
 
         # Combine cropping/scaling, zoompan motion, transparent overlay, and color presets in one filter complex
         filter_complex = (
-            f"[0:v]crop=w='min(iw,ih*9/16)':h='min(ih,iw*16/9)',scale=2160:3840,{zoompan}[panned];"
+            f"[0:v]crop=w='min(iw,ih*{width}/{height})':h='min(ih,iw*{height}/{width})',"
+            f"scale={width * 2}:{height * 2},{zoompan}[panned];"
             f"[panned][1:v]overlay=0:0[graded];"
             f"[graded]{preset_filter}[out]"
         )
@@ -499,6 +520,7 @@ def main() -> None:
     images = list_images(asset_dir, args.limit, args.asset_file)
     lines = scene_lines(args, len(images))
     motions = scene_motions(args, len(images))
+    width, height = output_geometry(args.aspect)
     frames = render_frames(swift_bin, images, work_dir, args, lines)
 
     segments: list[Path] = []
@@ -520,6 +542,8 @@ def main() -> None:
             duration,
             motion,
             args.visual_preset,
+            width,
+            height,
         )
         segments.append(segment)
         durations.append(duration)
@@ -561,6 +585,8 @@ def main() -> None:
         "subtitle_overlay": "swift_appkit_rendered",
         "visual_template": "MAPLAB IG Soft v1",
         "visual_preset": args.visual_preset,
+        "aspect": args.aspect,
+        "resolution": f"{width}x{height}",
         "counter": "shown" if args.show_counter else "hidden",
         "transition": transition_status,
         "transition_effect": args.transition,

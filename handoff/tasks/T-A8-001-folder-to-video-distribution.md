@@ -1,15 +1,25 @@
 # T-A8-001 — Folder Case to Short Video Distribution
 
 ## 接續狀態
-- **狀態**: 🟠 OWNER_GATE（文章＋歌詞核稿）
-- **最後活動**: 2026-08-25
-- **接續點**: A2 已完成 live SEO 佈局、Drive 客戶事實核對與無具名文章；WordPress post `2018` 已建立為草稿，前台預覽反讀有 2 張正文圖、精選圖、H2/H3、分類／標籤與可點擊 LINE CTA。
-- **阻塞**: `owner_article_and_lyrics_gate` — Owner 可先審 WordPress 草稿與安全版／具名版歌詞；Suno 新母帶與 A8 均尚未啟動，草稿未公開。
+- **狀態**: 🟠 PARTIAL_DELIVERY（WP 已發布；YouTube／Pinterest 外部入口阻擋）
+- **最後活動**: 2026-08-26
+- **接續點**: Owner 接受邦尼兔新版；Pro 期無日期 v5.5 母帶、原生 16:9 長版、原生 9:16 Short、兩張 2:3 Pin、平台 metadata 與 WP 三圖／alt 已完成。WordPress post `2018` 已公開並反讀通過。
+- **阻塞**: `platform_upload_access` — YouTube file chooser 對四種路徑皆回 `Not allowed`；Pinterest Google 按鈕未建立登入 session。沒有平台 ID 或 URL 就不宣稱上傳成功、不先發 Telegram 完成通知。
 
 Owner: A8 影音內容產線
-Status: 🟠 OWNER_GATE
+Status: 🟠 PARTIAL_DELIVERY
 Created: 2026-06-17
 Risk: medium
+
+## 2026-08-26 Release Checkpoint
+
+- WordPress 正式頁：https://www.maplabkitchen.com/tainan-daycare-graduation-catering/
+- 公開頁 readback：H1、LINE CTA、三張正文圖與三組 alt PASS；無日期與內部工作語言。
+- 長版：`final/video/maplab-bunny-youtube-long-50s.mp4`，1920×1080，50.840 秒。
+- Short：`final/video/maplab-bunny-youtube-short-15s.mp4`，1080×1920，15.000 秒。
+- Pin：`final/pinterest/` 兩張 1000×1500，標題／說明／alt／目的連結均在 `final/platform_metadata.md`。
+- Durable receipt：`workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/final/release_receipt_20260826.md`。
+- Next bounded action：Owner 在已開啟的 YouTube Studio 手選長／短 MP4，並在 Pinterest 完成 Google 登入；下一輪直接消耗現成素材完成欄位、兩個 YouTube publish、兩張 Pin readback 與一則 Telegram 連結通知。
 
 ## 2026-08-25 Reopen Checkpoint
 

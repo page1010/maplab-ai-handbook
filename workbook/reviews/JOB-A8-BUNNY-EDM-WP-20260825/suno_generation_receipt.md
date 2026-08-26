@@ -1,28 +1,37 @@
 # 邦尼兔 EDM Suno 生成收據
 
-日期：2026-08-25 12:23–12:33（Asia/Taipei）
-狀態：`owner_selected_short_candidate_rendered_audio_qa_pending`
+日期：2026-08-26（Asia/Taipei）
+狀態：`owner_accepted_date_free_master_and_release_assets_complete`
 
-## 執行結果
+## 正式母帶
 
-- Owner 已在當輪要求使用每日免費額度生成一首電子舞曲風格「邦尼兔」。
-- 只按一次 Create；Suno 自動產出 4 個 private variants：
-  - v4.5-all：https://suno.com/song/0d21eeed-7634-4403-8757-1ddf675793ab
-  - v4.5-all：https://suno.com/song/89191712-5dac-446e-9946-89311cbbffee
-  - v5.5 Preview：https://suno.com/song/9c057fbf-5ffb-447e-83d9-72b0ce083081
-  - v5.5 Preview：https://suno.com/song/ac7434ad-071d-4c92-adba-7b701aa934a8
-- 四頁都不再顯示 rendering／preparing；第一個 v4.5-all 顯示 2:37 且 Play 可用。
-- 第一個成品頁完整 readback 原定歌詞結構與文字；標題、曲風正確。
-- Owner 已選第一個 v4.5-all。完整母帶已留作 2:37 長版來源；另切出 45.0–60.0 秒的精準 15 秒 hook 候選，並完成直式審核片。
-- 本機交接與影音規格見 `song_handoff.md`、`short15_edit_plan.md`；這些是內部審核素材，不是公開貼文。
+- 帳號畫面可見 Pro 權益：v5.5 可生成、WAV 下載已解鎖；本案新母帶是在有效訂閱期間建立。
+- 選定版本：https://suno.com/song/33f4eced-ded1-47c5-887f-9cf1e39eea68（0:51）
+- 備選版本：https://suno.com/song/2160bd1a-fa58-4ffb-9aab-a5f5e42febdd（0:50）
+- 正式 WAV：`final/audio/maplab-bunny-date-free-v55-master.wav`
+- SHA-256：`032d93033905def246cfca885d194bee726fe7a32ba5047c95b9442e01edf813`
+- 音訊：PCM s16le、48 kHz、stereo、50.840 秒。
+- 取得方式：Suno 官方 Download；沒有以畫面或系統音訊側錄替代正式母帶。
 
-## 邊界
+## 歌詞／發音 QA
 
-- 未按 Publish，未上傳 WordPress、YouTube、TikTok、Instagram、Pinterest 或 Telegram。
-- 未傳送 Google Drive 照片／影片；送出的只有抽象活動歌詞與曲風提示。
-- 目前證明的是「Owner 已選曲、檔案完整、15 秒候選可播放」；尚未宣稱切點、每個中文發音或歌詞對位都經 Owner 聽辨通過。
-- 選定音檔包含日期相關歌詞；WordPress 的無日期規範不會自動改寫既有音檔，正式發布前需另做歌曲層級確認。
+- 新版歌詞不含活動日期，ASR 未發現日期字串。
+- `邦尼兔`、`MAPLAB` 與副歌皆有可辨識唱出；正式 Short 使用 29–44 秒副歌。
+- Owner 已回覆「邦妮兔看起來沒問題」，本案完成選曲 gate。
 
-## 下一步
+## 長短影片
 
-Owner 只需試聽 15 秒審核版，確認 45.0–60.0 秒是否是正確 hook；確認後 A8 以 2:37 母帶製作 16:9 長版歌詞影片。未再核准前不重新生成、不上傳。
+- YouTube 長版：`final/video/maplab-bunny-youtube-long-50s.mp4`，1920×1080、50.840 秒，SHA-256 `1231fbe9410915b017150627a48cadf079d9eada32e1bc4533238a5e6a2c0226`。
+- YouTube Short：`final/video/maplab-bunny-youtube-short-15s.mp4`，1080×1920、15.000 秒，SHA-256 `61097eb8adb3c5538f32c24259cde2aec224d300943d538ee6607258d0ddd082`。
+- 兩版均為原生比例；長版不是把直式片加模糊邊框冒充 16:9。
+
+## 發布狀態
+
+- WordPress 已公開：https://www.maplabkitchen.com/tainan-daycare-graduation-catering/
+- YouTube Studio 已確認登入 MAPLAB 頻道；清除一個無關的 Suno 儲存視窗後，Chrome file chooser 對 repo、Documents、`outputs/`、tmp 四種路徑仍回 `Not allowed`，視覺點擊也無法把受控分頁交給 macOS 選檔器。因此沒有影片 URL，也不把空的上傳對話框算成功。
+- Pinterest 有 Google 登入按鈕；iframe 與頁面備用按鈕都已實測，沒有產生可接管登入分頁，帳號仍未建立，未發 Pin。
+- 因 YouTube／Pinterest 尚無公開成果連結，本輪不先送 Telegram「上傳完成」訊息。
+
+## 下一個最小動作
+
+Owner 在已開啟的 YouTube Studio 手選長／短 MP4，並在 Pinterest 完成一次 Google 登入；下一輪只做欄位填寫、YouTube 長＋短發布、兩張 Pin 與 Telegram 連結回報，不重做內容與影片。

@@ -5,8 +5,8 @@
 - **狀態**：🟠 OWNER_LYRICS_GATE
 - **建立日期**：2026-08-25
 - **Owner**：A8 影音內容產線
-- **接續點**：品牌語氣修正版歌詞、exact 15 秒 Hook、City-pop A/B 曲風 prompt、長短版分鏡、Google Doc 審稿面與可驗證 prompt registry 已完成；TikTok Studio 已驗證登入與上傳規格。
-- **唯一阻塞**：Owner 尚未逐句核准《把相聚端上桌》歌詞；未送外部音樂生成、未耗額度、未渲染正式影片。
+- **接續點**：品牌語氣修正版歌詞、exact 15 秒 Hook、City-pop A/B 曲風 prompt、長短版分鏡、Google Doc 審稿面與可驗證 prompt registry 已完成；Owner 新增的 `lemon and cream` 已做兩個私有發音測試，本機 ASR 淘汰候選 A、候選 B exact match 通過。
+- **唯一阻塞**：Owner 尚未逐句核准《把相聚端上桌》完整歌詞；發音測試不等於核准，未生成完整 v2A／v2B、未渲染正式影片。
 
 ## Goal
 
@@ -46,6 +46,16 @@ Owner 審稿 Google Doc：
 ## Next Bounded Action
 
 Owner 回覆 `主題曲歌詞通過` 或逐句修改。核准後只做一件事：在有效訂閱權益下生成主題曲候選，留下版本、時間、權利與發音收據，回到 Owner 選曲 gate。
+
+## 2026-08-26 English Pronunciation Checkpoint
+
+- Google Doc API 已反讀 Owner 最新句子：`lemon and cream　在燈下透著光`。
+- 只取主歌做兩個私有 v5.5 測試，要求把 `lemon and cream` 在同一拍句清楚唱成三個英文單字：
+  - https://suno.com/song/4896bfaa-74b8-4cf6-a054-66e08294c752（12 秒）
+  - https://suno.com/song/7a8d7ecf-bc6a-4a37-b6a0-128c78343046（18 秒）
+- 收據：`workbook/reviews/JOB-A8-MAPLAB-IG-THEME-20260825/theme_pronunciation_test_receipt.md`。
+- 本機 ASR（無 initial prompt）：候選 A=`Lemon and Queen` FAIL；候選 B=`Lemon and Cream` PASS。完整生成沿用 B 的 bilingual diction 規則。
+- 邊界：`PRONUNCIATION_TEST_ONLY`；不公開、不交 A8 正式剪片、不解除完整歌詞 gate。
 
 ## 2026-08-25 Brand／Rights／Publish-path Checkpoint
 

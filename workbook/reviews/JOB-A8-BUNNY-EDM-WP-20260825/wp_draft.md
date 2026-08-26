@@ -2,7 +2,7 @@
 
 孩子準備離開熟悉的教室，走向下一段旅程。畢業典禮讓老師、家長與孩子聚在一起，也讓平常細小的成長被好好看見。這場台南托嬰畢業典禮外燴，以一口點心與花藝組成明亮的慶祝桌景，讓祝福自然地留在相聚的時間裡。
 
-![台南托嬰畢業典禮外燴的一口鹹食與甜點桌景](wp_assets/maplab-daycare-graduation-catering-menu.webp)
+![台南托嬰畢業典禮外燴—一口鹹食與甜點桌景](wp_assets/maplab-daycare-graduation-catering-menu.webp)
 
 ## 一張甜點桌，收藏成長的喜悅
 
@@ -10,7 +10,7 @@
 
 餐點與器皿安排在不同高度，讓桌面從遠處看有清楚的輪廓，走近時仍保留可以慢慢欣賞的細節。對親子活動來說，這樣的陳列也能讓拍照、取餐與交談各自保有舒服的空間。
 
-![台南畢業典禮外燴的甜點層架與花藝陳列](wp_assets/maplab-daycare-graduation-catering-desserts.webp)
+![台南畢業典禮外燴—甜點層架與花藝陳列](wp_assets/maplab-daycare-graduation-catering-desserts.webp)
 
 ## 一口份量，讓大人孩子自在分享
 
@@ -33,6 +33,8 @@
 ### 先照顧活動節奏
 
 餐點出現的時間會影響現場感受。典禮開始前可以先保留桌景的完整，合照或主要流程結束後再引導取餐；若賓客分批抵達，也可以事先安排補餐方式，讓桌面在活動過程中維持整齊。
+
+![台南托嬰畢業典禮外燴—兔子造型手工餅乾細節](https://www.maplabkitchen.com/wp-content/uploads/2026/08/maplab-tainan-preschool-grad-bunny-cookie-1024x768.webp)
 
 ## 詢問畢業典禮外燴前，可以先準備什麼？
 

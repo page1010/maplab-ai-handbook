@@ -7,6 +7,7 @@ from pathlib import Path
 from tools.ai_workbook.a8_enhanced_video_draft import (
     CATEGORY_CTA_LINES,
     list_images,
+    output_geometry,
     write_metadata,
 )
 
@@ -25,6 +26,10 @@ def _args(category: str) -> argparse.Namespace:
 
 
 class A8EnhancedMetadataTest(unittest.TestCase):
+    def test_output_geometry_supports_native_long_and_short_formats(self) -> None:
+        self.assertEqual(output_geometry("9:16"), (1080, 1920))
+        self.assertEqual(output_geometry("16:9"), (1920, 1080))
+
     def test_graduation_metadata_does_not_leak_corporate_seed_copy(self) -> None:
         with tempfile.TemporaryDirectory() as raw:
             out = Path(raw)

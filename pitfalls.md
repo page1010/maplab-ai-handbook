@@ -531,3 +531,11 @@
 - 根因：把不同版本 OAuth client 寫出的 token schema 當成固定格式，並企圖直接沿用會寫回共享 token 的 helper。
 - 解法：下載器獨立正規化整數／字串 expiry，只在記憶體 refresh access token，不改寫共享 auth 檔；下載結果以 folder allowlist、SHA-256 manifest、0700/0600 權限驗收。
 - 預防：外部憑證 helper 必先測 schema variant；讀取既有 token 可共用，寫回與 refresh side effect 必須明確隔離。
+
+## 2026-08-27 — 曾經做過的人工精修若沒有 project／timing receipt，就不算進入 SOP
+
+- 觸發條件：Owner 指出新片歌詞拖拍、畫質退化，並追問以前用過 Canva／CapCut 等做法為何沒留下；現行文件一份把 local renderer 寫成 review，另一份又寫成「產片一律用」，造成 review draft 被交成 final candidate。
+- 根因：把工具名稱與成功印象當成流程資產，沒有保存 editable project、逐句歌詞時間碼、raw hash、encode lineage 與完整播放收據；SOP 之間也沒有 final SSOT。舊版畫面文字碰巧按歌意排列，看起來較順，但不是可重複的聲畫校時。
+- 解法：正式狀態改為 `AUDIO_SELECTED → TIMING_LOCKED → EDIT_READY → RENDERED_UNVERIFIED → QA_PASS → OWNER_VIDEO_GATE → APPROVED_FOR_UPLOAD`；CapCut／核准 NLE 必留 project/timeline，Canva只承接封面／overlay，one-pass FFmpeg 必留 raw hashes／filtergraph／lineage。新增 fail-closed validator，現行 v2 因 timing、歌詞版本、proxy、盲裁、三代有損與未完整播放被直接退件。
+- 預防：任何「之前有做過」的好做法，只有在 SOP 同時寫明輸入、操作工具、可重開產物、驗收閾值、機器 gate 與失敗回復點後才算地基。工具用過但沒有 receipt，不得在後續 session 推定已完成；音訊未過 actual-audio ASR＋真人聽辨時，不得先剪正式片。
+- 封坑驗證：`python3 -m unittest tests.test_a8_video_acceptance tests.test_a8_one_pass_timeline -v` 必須全過；現行 v2 acceptance 必回 `ok=false`，而內部回歸片只能通過 raw／timing／encode／playback 子項，仍因音訊與 target-device gate 保持不可發布。

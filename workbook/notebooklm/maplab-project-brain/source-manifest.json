@@ -1,8 +1,8 @@
 {
   "schema_version": "2026-08-25.notebooklm-source-pack.v1",
   "generated_at": "2026-08-25T00:00:00+08:00",
-  "build_base_commit": "e5d931d46f72",
-  "directional_map_manifest_sha256": "0590393544adafa9a6848d514ddf08cab8a8e95a92f1e81f38f4f3a5076d7868",
+  "build_base_commit": "540bf2f80f44",
+  "directional_map_manifest_sha256": "c1c88b1905f8cf1220bbd81eca657c4b62287a351ba04dc5048b8fb657b09383",
   "notebook_url": "https://notebook.google.com/notebook/68114d21-ebc9-4116-a88a-52cc31cbe9a7",
   "upload_files": [
     "workbook/notebooklm/maplab-project-brain/maplab-project-brain.md",
@@ -32,8 +32,8 @@
   "sources": [
     {
       "path": "config/system-map/maplab-directional-map.json",
-      "sha256": "0590393544adafa9a6848d514ddf08cab8a8e95a92f1e81f38f4f3a5076d7868",
-      "bytes": 30854,
+      "sha256": "c1c88b1905f8cf1220bbd81eca657c4b62287a351ba04dc5048b8fb657b09383",
+      "bytes": 31752,
       "classification": "internal_governance",
       "redactions": 0,
       "group": "governance"
@@ -200,16 +200,16 @@
     },
     {
       "path": "skills/a8-video-pipeline-skills.md",
-      "sha256": "fb1cefebf0b3b27a1372cdf98e1a3a3c183261559ff2005228c3b47865afa1da",
-      "bytes": 20690,
+      "sha256": "cd081986fdfcd8787f48669ccf3507be9c231ce22d812dc3e8839aba4ecff478",
+      "bytes": 22322,
       "classification": "internal_governance",
       "redactions": 0,
       "group": "sop_router"
     },
     {
       "path": "skills/a8-produce-to-publish-sop.md",
-      "sha256": "e1ff9a3ca33d055c2a595e4efd938f4438957fab6639488109e136209ae49d9c",
-      "bytes": 23794,
+      "sha256": "cc4aa8ed1abd1f6e90791856aa6a9951e1ca680ccb3e0fe64d465f1a95fbe89a",
+      "bytes": 34953,
       "classification": "internal_governance",
       "redactions": 0,
       "group": "sop_router"

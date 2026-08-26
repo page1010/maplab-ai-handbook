@@ -1,0 +1,112 @@
+{
+  "schema_version": "maplab.a8.video-acceptance/v1",
+  "job_id": "JOB-A8-BUNNY-EDM-WP-20260825-SOP-REGRESSION",
+  "state": "RENDERED_UNVERIFIED",
+  "state_history": [
+    "AUDIO_SELECTED",
+    "TIMING_LOCKED",
+    "EDIT_READY",
+    "RENDERED_UNVERIFIED"
+  ],
+  "classification": "INTERNAL_DIAGNOSTIC_NOT_PUBLISHABLE",
+  "approvals": {
+    "lyrics": {
+      "path": "../lyrics_v2_public_safe.txt",
+      "sha256": "fc2831f5d859770e9590d93d8e2220e72f002052dccc8bcf76a2b3f3239eab6a"
+    },
+    "audio": {
+      "path": "../final/audio/maplab-bunny-date-free-v55-master.wav",
+      "sha256": "032d93033905def246cfca885d194bee726fe7a32ba5047c95b9442e01edf813",
+      "asr_receipt": {
+        "path": "asr_readback.json",
+        "sha256": "3282aaeee42e3be92c417c315c9f06f8256b8136b7591aa239bdeed3e3824ca2"
+      },
+      "qa": {
+        "actual_audio_asr_pass": false,
+        "brand_exact_tokens_pass": false,
+        "human_listen_pass": false
+      }
+    }
+  },
+  "timing": {
+    "alignment": {
+      "path": "alignment.json",
+      "sha256": "a910a25df678e1a7421c36376803f8def8e871f179d05041885fc28d5db98a1c"
+    },
+    "approved_lyrics_match": false,
+    "cues": [
+      {"text": "邦尼兔　把祝福點亮", "start_ms": 360, "end_ms": 2880},
+      {"text": "手牽手　全場一起唱", "start_ms": 2880, "end_ms": 6360},
+      {"text": "長大的第一站　就在這一場", "start_ms": 6360, "end_ms": 9740},
+      {"text": "新的故事　現在要出發", "start_ms": 9740, "end_ms": 13440}
+    ],
+    "max_onset_error_ms": 20,
+    "max_tail_error_ms": 120,
+    "hook_lead_in_ms": 360,
+    "starts_mid_word": false
+  },
+  "sources": [
+    {
+      "raw_path": "/Users/pagemacmini/Library/CloudStorage/GoogleDrive-pagewu1010@gmail.com/我的雲端硬碟/2026maplab外燴紀錄/0717邦尼兔-托嬰畢業典禮/54E363B7-358B-4863-A246-77391395D80D.mov",
+      "raw_sha256": "a1d6362027a588365ec7413e1d69a2505606e5a4084e05154dd9157ca8d10a6f",
+      "is_proxy": false,
+      "privacy_status": "APPROVED",
+      "trim": {"in_ms": 200, "out_ms": 2900},
+      "layout": "full_fit_brand_canvas",
+      "crop_strategy": "none_native_vertical"
+    },
+    {
+      "raw_path": "/Users/pagemacmini/Library/CloudStorage/GoogleDrive-pagewu1010@gmail.com/我的雲端硬碟/2026maplab外燴紀錄/0717邦尼兔-托嬰畢業典禮/D10A6C61-48D2-4ADF-9599-174F6B8CDC5C.mov",
+      "raw_sha256": "c21091e6349ad533644e973cdf834a0e698c0338ea44eb1657a65aa352bab156",
+      "is_proxy": false,
+      "privacy_status": "APPROVED",
+      "trim": {"in_ms": 200, "out_ms": 2900},
+      "layout": "full_fit_brand_canvas",
+      "crop_strategy": "none_native_vertical"
+    },
+    {
+      "raw_path": "/Users/pagemacmini/Library/CloudStorage/GoogleDrive-pagewu1010@gmail.com/我的雲端硬碟/2026maplab外燴紀錄/0717邦尼兔-托嬰畢業典禮/VID_20260717_174946.mp4",
+      "raw_sha256": "1c6cde091781f56fd4aa47ecfdab5e62d404d9a874bb301e6bc397466c58cbf9",
+      "is_proxy": false,
+      "privacy_status": "APPROVED",
+      "trim": {"in_ms": 200, "out_ms": 3600},
+      "layout": "manual_subject_safe_crop",
+      "crop_strategy": "explicit_1215x2160_x1312_y0"
+    }
+  ],
+  "edit": {
+    "engine": "ffmpeg_one_pass",
+    "timeline_receipt": {
+      "path": "render_config.json",
+      "sha256": "c4973eeecebc86db18548d252c02c01ea7c834f2edd0cad95f16bd0580ba65ff"
+    },
+    "no_intermediate_video": true,
+    "lyric_and_marketing_tracks_separate": true
+  },
+  "encoding": {
+    "actual_lossy_video_encode_depth": 1,
+    "max_lossy_video_encode_depth": 1,
+    "lineage": {
+      "path": "encode_lineage.json",
+      "sha256": "b6b7e60b13268831e27bdae5eedb7b65fe544c4b582e24f7e89c55c066482288"
+    }
+  },
+  "output": {
+    "path": "maplab-bunny-alignment-regression-INTERNAL-NOT-PUBLISHABLE.mp4",
+    "sha256": "aacc5ddd5b80dabbf7f1360fbd2f1339e78abc6313f3c459443a5eeaa844413d",
+    "duration_ms": 15000
+  },
+  "visual_qa": {
+    "timeline_contact_sheet": {
+      "path": "qa/timeline-0p5s.jpg",
+      "sha256": "deb92205264765d693a5afd0dfa2ea128b0c5692202164d29210b2e4e8f51d04"
+    },
+    "full_playback": {
+      "1x": {"watched_duration_ms": 15000, "verdict": "PASS", "surface": "Chrome QA player"},
+      "0.5x": {"watched_duration_ms": 15000, "verdict": "PASS", "surface": "Chrome QA player"}
+    },
+    "target_device_pass": false,
+    "blur_sidebars_absent": true,
+    "blind_crop_absent": true
+  }
+}

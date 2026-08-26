@@ -1,6 +1,6 @@
 # A8 產片 → 上片 標準流程（Produce-to-Publish SOP）
 
-> 負責角色：A8 影音內容產線 ｜ 建立：2026-08-02 ｜ 版本：v1.0
+> 負責角色：A8 影音內容產線 ｜ 建立：2026-08-02 ｜ 版本：v2.0（2026-08-26）
 > 對齊：`skills/brand-voice-guide.md`（語氣）、`skills/maplab-visual-spec.md`（視覺/色卡）、`skills/a8-video-pipeline-skills.md`（產線細節）、`skills/a8-local-motion-integration.md`（運鏡）
 > 規範文件（雲端）：【正式規範】A2/A4 內容產線格式＋規範 v1、【基準】品牌語氣＋色調
 
@@ -8,7 +8,9 @@
 
 ## 0. 這本 SOP 解決什麼
 
-把「一個活動專案的照片 → 帶字幕 9:16 短片 → 上到 YouTube 私人草稿 → 待 Owner 核准公開」做成**可重複、可驗證、可回收**的一條流程。字幕、標題、描述一律套品牌語氣＋固定色卡；上片先到**私人/草稿**，公開一律等 Owner。
+把「一個活動專案的原始照片／影片＋核准音訊 → 人工校時的長／短片 → 完整播放驗收 → 上到平台草稿 → 待 Owner 核准公開」做成**可重複、可驗證、可回收**的一條流程。字幕、標題、描述一律套品牌語氣＋固定色卡；上片先到**私人/草稿**，公開一律等 Owner。
+
+本文件是 A8 最終成品的 canonical SOP。`a8-video-pipeline-skills.md` 裡的 local dry-run／review draft 只用來驗證素材、比例與模板，不能取代本文件的正式 timeline、音訊、畫質與 QA gate。
 
 ### 0.1 三段接力，不在同一份稿裡混工種
 
@@ -39,6 +41,13 @@
 - 以官方下載音檔在本機 ASR 辨識，不送外部 endpoint、不把預期歌詞當 initial prompt。英文片語必須 exact match；例如 `cream` 被辨識為 `queen` 就淘汰。
 - 發音 gate 只選出可沿用的 diction prompt，不代表完整歌詞、曲風、母帶或發布已核准。
 
+### 0.4 正式母帶也要過 actual-audio gate
+
+- 正式候選必須對**實際下載音檔**跑不帶 initial prompt 的 ASR，並由真人完整聽辨；`邦尼兔`、`MAPLAB` 等品牌詞逐一 exact-token 記錄。任何一項聽錯、吞字或含糊就回音樂生成，不准靠字幕掩蓋。
+- ASR／人工聽辨出的逐句內容還必須與 receipt 綁定的 Owner 核准歌詞完全一致；唱到另一版（例如具名 hook 對上公開安全版文字）也要退件，不能只把字幕換成核准版。
+- 15 秒 hook 不得從字中間切入；第一個唱詞前保留 0.2–0.5 秒。hook 的來源母帶 SHA-256、in/out 與聽辨結果寫進 acceptance receipt。
+- 音訊沒過 gate 時，不得進正式剪輯。為除錯而產生的片必須在檔名與 receipt 標 `INTERNAL_DIAGNOSTIC_NOT_PUBLISHABLE`，不能送 Owner 當發布候選。
+
 ---
 
 ## 1. 標準流程表（每步：輸入 → 動作 → 工具/腳本 → 產出 → QA）
@@ -48,13 +57,16 @@
 | 1 | 取素材 | Drive 專案子夾 fileId | 下載精選照片到本機 | Drive API（`~/.claude/mcp-keys` token；refresh 見 §6）| `pilot-{name}/raw/*` | 檔案數對、非私密畫面 |
 | 2 | 轉正 | raw 照片（含 HEIC）| 依 EXIF 轉正，不盲轉 | `tools/ai_workbook/a8_auto_orient.py`；HEIC 用 `sips -s format jpeg` | `oriented/*.jpg` | orient=6 轉正、orient=1 不動 |
 | 3 | A4 出圖 | oriented | 轉 webp + 2:3 直式 pin | `cwebp -q 80`；`ffmpeg` scale/crop 1000×1500 | `webp/*.webp`、`*_pin.jpg` | 尺寸/色調對；命名 `maplab-{場景}-{描述}` |
-| 4 | A8 產片 | oriented + 字幕句 | 依平台原生尺寸生成 IG Soft 長／短片 | `a8_enhanced_video_draft.py --aspect 9:16|16:9`（見 §2）| 15 秒 Short + 全曲長版 + cover | ffprobe 驗證尺寸與秒數；字幕 QA（§3）|
-| 5 | 字幕 QA | 字幕句 + CTA | 逐句掃禁用詞 + 逐幀目視 | 禁用詞掃描 script + 抽幀 `ffmpeg -ss` 目視 | QA 通過紀錄 | 無禁用詞、非豆腐字、非佔位 |
-| 6 | 存檔 | webp/pin/mp4 | 回存專案 Drive `/publish/` | Drive API multipart upload | Drive `/publish/*` | 檔案可開、命名對 |
-| 7 | 上片草稿 | mp4 / pin | YouTube 私人草稿、Pinterest 發布前草稿 + 填欄位 | Chrome → Studio / Pinterest | 私人影片、待發布 Pin | 欄位、連結、alt、圖片尺寸齊 |
-| 8 | 核准 | 草稿連結＋欄位摘要 | Owner 一次確認各對外動作 | Studio / Pinterest / WP | approval 決定 | 送出前 Owner 明確同意 |
-| 9 | 發布回讀 | 已核准草稿 | 逐平台發布後打開公開頁回讀 | Chrome | 公開連結與截圖 | 標題、描述、圖片、CTA、可見度正確 |
-| 10 | 狀態回報 | 平台矩陣＋已回讀連結 | 有阻塞先發「缺件通知」；全數完成後再發「完成通知」 | Telegram Web | Owner 知道缺什麼或可點擊成果 | 發送前取得 Owner action-time approval；發送後重讀訊息氣泡與連結 |
+| 4 | 音訊 gate | 核准歌詞 + 實際下載母帶 | ASR＋真人完整聽辨；鎖定 hook | prompt-free ASR + 人工聽辨 | audio receipt + hash + hook in/out | 品牌詞 exact-token；不從字中間切 |
+| 5 | 歌詞校時 | 選定音訊 + 核准歌詞 | 依 waveform 逐句標 in/out；切點吸附句界／beat | CapCut／核准 NLE；或等效人工 timeline | SRT/JSON + timeline receipt | onset ≤100ms；tail ≤200ms；歌詞／行銷字分軌 |
+| 6 | Review draft | 原始素材 allowlist + timing map | 本機試排素材、比例與模板 | `a8_enhanced_video_draft.py`（review-only）| review MP4 + cover | 不得標 final；不得送上傳 |
+| 7 | 正式剪輯 | raw originals + timing map | CapCut／核准 NLE 人工精修；或 raw 直入的一次性 FFmpeg filtergraph | CapCut／核准 NLE；`ffmpeg_one_pass` 例外路徑 | 長／短片 + 可編輯專案／lineage | 無模糊側欄、盲裁、proxy、重複有損編碼 |
+| 8 | 完整 QA | 正式輸出 | 1×、0.5× 完整播放＋target-device 目視 | 播放器 + contact sheet + `a8_video_acceptance.py` | `QA_PASS` receipt | 逐句同步、清晰度、隱私、全片完整 |
+| 9 | 存檔 | webp/pin/mp4 + receipt | 回存專案 Drive `/publish/` | Drive API multipart upload | Drive `/publish/*` | 檔案可開、命名與 hash 對 |
+| 10 | 上片草稿 | `OWNER_VIDEO_GATE` 的 hash-locked mp4 / pin | YouTube 私人草稿、Pinterest 發布前草稿 + 填欄位 | Chrome → Studio / Pinterest | 私人影片、待發布 Pin | 欄位、連結、alt、圖片尺寸齊 |
+| 11 | 核准 | 草稿連結＋欄位摘要 | Owner 一次確認各對外動作 | Studio / Pinterest / WP | approval 決定 | 送出前 Owner 明確同意 |
+| 12 | 發布回讀 | 已核准草稿 | 逐平台發布後打開公開頁回讀 | Chrome | 公開連結與截圖 | 標題、描述、圖片、CTA、可見度正確 |
+| 13 | 狀態回報 | 平台矩陣＋已回讀連結 | 有阻塞先備妥「缺件通知」；全數完成後再備妥「完成通知」 | Telegram Web | Owner 知道缺什麼或可點擊成果 | 發送前取得 Owner action-time approval；發送後重讀訊息氣泡與連結 |
 
 ### 1.1 多平台發布矩陣與 Telegram 通知語意
 
@@ -65,9 +77,20 @@
 
 ---
 
-## 2. 固定色卡 + 上色/字幕怎麼調用（實際工具）
+## 2. 正式剪輯工具與固定色卡
 
-**產片一律用**：`tools/ai_workbook/a8_enhanced_video_draft.py`，`--visual-preset maplab_ig_soft`（預設），並明寫 `--aspect 9:16` 或 `--aspect 16:9`。它的實作：
+### 2.1 工具角色，不再把 review 當 final
+
+| 工具 | 正式角色 | 必留證據 |
+|---|---|---|
+| `a8_enhanced_video_draft.py` | 素材／比例／模板 review-only；永遠停在 `RENDERED_UNVERIFIED` 之前 | draft manifest；檔名含 `review` |
+| CapCut／核准 NLE | 預設正式剪輯：waveform 校時、逐句字幕、切點、轉場、聲畫完整播放 | 可編輯 project、timeline 截圖／匯出、export hash |
+| Canva | 封面、開場／結尾品牌字卡、overlay 素材；可進 NLE，但不能單憑一張 Canva export 證明歌詞校時 | design link／ID、export hash、被引用的 timeline receipt |
+| `ffmpeg_one_pass` | 無外部 NLE 時的等效正式路徑；原檔直接進單一 filtergraph，只能一次有損視訊編碼 | 完整 command/filtergraph、raw hashes、timing map、encode lineage |
+
+CapCut／Canva 是正式 workflow 的工具選項，不是成功的自動證明。沒有 editable timeline、逐句時間碼、完整播放與 hash receipt，無論用了哪個品牌工具都不能升到 final。
+
+Review renderer 可用 `--visual-preset maplab_ig_soft` 並明寫 `--aspect 9:16` 或 `--aspect 16:9`。它的實作只供試排：
 
 - **運鏡**：ffmpeg `zoompan`（dolly_in / dolly_out / pan_left/right / static），每幕 2.4–2.8s。
 - **字幕/浮水印**：**Swift/AppKit 在透明畫布繪字**（不靠 ffmpeg drawtext，避免精簡版 ffmpeg 無 drawtext），再 ffmpeg `overlay` 疊上；右下 `MAPLAB Kitchen` 浮水印。
@@ -100,16 +123,14 @@
 - 只有沒有影片時，才退回相片 zoompan（Ken Burns）。
 - 流程：A2/A3/A4 個案「內容確認」後才發 A8 建片；每案標明哪些有影片檔（附時間碼更佳）。
 
-**工具現況（不重造輪子）**：`tools/ai_workbook/a8_enhanced_video_draft.py` **已支援影片輸入**（`VIDEO_EXTS={.mov,.mp4}`）：
+**Review 工具現況**：`tools/ai_workbook/a8_enhanced_video_draft.py` **已支援影片輸入**（`VIDEO_EXTS={.mov,.mp4}`），但只可做試排：
 - 影片段：自動 crop 置中 9:16 → scale 1080×1920 → **取每支開頭 N 秒（`--seconds`）** → 疊 Swift IG Soft 字幕 → `maplab_ig_soft` 濾鏡 → xfade 串接；音軌去除（發布前配授權樂）。
 - 相片段：zoompan 運鏡。**同一支片可混用影片＋相片**（把 MOV 與精選 webp 放同一 asset-dir）。
 - 用法：`--asset-dir` 指到「含 MOV 的資料夾」即可（先前 pilot 只餵相片，之後改餵 MOV/混合）。
 
-**挑片段 in/out（現況限制與解法）**：
+**挑片段 in/out（正式解法）**：
 - 限制：工具目前只取「每支**開頭** N 秒」，不能自動挑中段最佳片段。
-- 解法：依 A2/A3/A4 給的時間碼**先用 ffmpeg 預剪**，再餵 enhanced draft：
-  `ffmpeg -ss {開始秒} -t {長度秒} -i clip.mov -c copy clips/seg01.mov`
-  （順序命名 seg01/seg02… 決定分鏡順序；再 `--asset-dir clips/`。）
+- review 可先做無損／stream-copy 預剪來試排；正式輸出不得把預剪 H.264 proxy 再重編。正式 timeline 必須保存 raw original path/hash 與每個 shot 的 in/out，直接由 NLE 或一次性 FFmpeg 從原檔解碼。
 - 素材先過 A8 A/B/C 分級（A 直用、B 需裁/遮臉/遮 logo、C 私密不可用）。
 
 **缺口（待評估建）**：尚無「自動偵測最佳片段 in/out」工具；目前靠人工/個案標時間碼。可評估建 `a8_clip_trim.py`（讀時間碼清單 → 批次預剪 → 餵 enhanced draft）。**等 b285b719 選出 3 案（標明哪些有影片檔）再依此準備剪輯流程。**
@@ -118,19 +139,35 @@
 
 ### 2.5.1 成品視覺 QA 與素材覆蓋 gate
 
-每支待審片都必須同時留下以下四種證據，缺一就只能寫 `RENDERED_NOT_VISUALLY_VERIFIED`：
+每支待審片都必須同時留下以下六種證據，缺一就只能寫 `RENDERED_UNVERIFIED`：
 
 1. **原始素材盤點**：照片／影片總數、格式與來源；不能只看已被 WP 壓縮的衍生圖。
 2. **allowlist manifest**：實際進時間軸的檔名、影片安全 in/out、排除理由與素材數。renderer 的預設 `limit` 必須明列；manifest 數量少於計畫數就退件。
 3. **完整時間軸 contact sheet**：涵蓋 intro、每幕、轉場與 outro；要以實際成品抽幀，不用來源圖或 storyboard 代替。
 4. **視覺辨識 readback**：以人眼／vision 實看原始 contact sheet 與成品時間軸，逐項判斷裁切、清晰度、主體、字幕、日期、人臉、QR／電話與內部工作語。ffprobe、位元率、HTTP 200、render exit 0 都只是技術 preflight。
+5. **人工歌詞 timeline**：核准歌詞逐句 `text/start_ms/end_ms`、音訊 hash、waveform／beat 依據；歌詞 onset 在 30fps 下誤差 ≤3 frames（100ms），tail ≤6 frames（200ms）。禁止把行銷文案當歌詞、禁止平均分配 scene 秒數。
+6. **完整播放 readback**：同一輸出 hash 以 1× 與 0.5× 從頭看到尾，記錄 reviewer、watched duration、target device 與 verdict；抽三幀或 contact sheet 不能替代。
 
 素材策略：
 
 - 案例夾有原始影片時，成品至少要有真實動態片段；低解析 WP WebP 不得成為唯一影片來源。
 - Short 優先使用原生直式影片與高解析直式照片；不得用「橫片縮小置中＋大面積模糊背景」補足直式畫面，除非 Owner 明確選此風格。
-- 長版可讓直式片以清晰中央主體＋側邊環境延伸進 16:9，但原生橫式影片維持清晰全幅。
+- 長版直式素材用雙直式 split-screen 或實色品牌側欄；禁止模糊側欄。原生橫式影片維持清晰全幅。
+- 照片採 full-fit 品牌畫布或人工 subject-safe crop；禁止盲目中心裁切。
+- 正式輸出最多一次有損視訊編碼。原檔 → H.264 proxy → scene H.264 → xfade H.264 這類多代流程一律退件。
 - 若 Owner 說「裁切不對／很糊／沒有用我的影片」，立即把目前版本標為退件；先回到原始素材 coverage 與完整時間軸 readback，不在低解析成品上反覆加濾鏡。
+
+### 2.5.2 不可跳級的狀態機與機器 gate
+
+正式候選只能依序前進：
+
+`AUDIO_SELECTED → TIMING_LOCKED → EDIT_READY → RENDERED_UNVERIFIED → QA_PASS → OWNER_VIDEO_GATE → APPROVED_FOR_UPLOAD`
+
+- 不准從 render exit 0、ffprobe PASS 或 contact sheet 直接跳 `OWNER_VIDEO_GATE`。
+- `tools/ai_workbook/a8_video_acceptance.py <acceptance_receipt.json>` 必須回 `ok=true`，才可進 Owner 審片；發布器只能吃 receipt 綁定的 output path/hash，不接受任意 `--video`。
+- CapCut／核准 NLE 路徑必有 editable project＋timeline receipt；Canva 單獨只算封面／overlay receipt。
+- `ffmpeg_one_pass` 路徑必須 `no_intermediate_video=true`，並保存 raw hashes、filtergraph、timing map 與 encode lineage。
+- 任一檔案 hash、歌詞、音訊或 timeline 變動，舊 `QA_PASS` 立即失效，回到相應狀態重跑。
 
 ---
 
@@ -174,7 +211,7 @@
 
 **字幕每幕 6–14 字**，先過禁用詞。**禁用詞**：最頂/超值/保證/CP值/佛心/便宜又大碗/錯過可惜/趕快預約/名額有限/一生一次/不訂會後悔/限時優惠；**A8 額外流程禁用語**：取餐/順暢/分開/方便交流/促進交流/確保/動線穩/節奏更穩/節奏穩健。少用：精緻/質感/用心/客製化。
 
-字幕 QA（step 5）＝①禁用詞掃描 ②長度 6–14 ③無佔位/亂碼 ④抽幀目視中文正常渲染。
+字幕文案 QA＝①禁用詞掃描 ②長度 6–14 ③無佔位/亂碼 ④抽幀目視中文正常渲染；歌詞聲畫 timing 另依 §2.5.1 驗收，兩者不可互相取代。
 
 ---
 

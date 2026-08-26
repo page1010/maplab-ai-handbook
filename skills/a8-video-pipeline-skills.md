@@ -1,13 +1,15 @@
 # A8 影音內容產線技能書（Video Pipeline Skills）
 
 > 負責角色：A8 影音內容產線
-> 建立：2026-04-19 | 版本：v2.5（2026-08-25）
+> 建立：2026-04-19 | 版本：v2.6（2026-08-26）
 
 ---
 
 ## 0. 這本技能書解決什麼
 
 A8 的工作不是「想到影片題目」，而是把 MAPLAB 現有資料夾、案例文章、照片與短影片，變成可審核、可上傳、可分發、可回收成下一版素材規則的影音產線。
+
+> Final SSOT：正式音訊、人工歌詞校時、原檔畫質、完整播放與 upload gate 一律以 `skills/a8-produce-to-publish-sop.md` v2.0+ 為準。本技能書的 dry-run／review renderer 不能自行升格為 final。
 
 本技能書適用於：
 
@@ -88,7 +90,9 @@ A8 要把 MAPLAB 版本寫成：
 | 工具 | A8 用途 | 產出 |
 |---|---|---|
 | Gemini / GPT | 拆腳本、字幕、平台 metadata、封面文案 | `storyboard.md` / `platform_metadata.md` |
-| Google Vids / Canva / CapCut | 正式組片、字幕、封面字卡 | 9:16 mp4 + cover |
+| CapCut / 核准 NLE | 正式人工 timeline、waveform 校時、字幕、組片 | editable project + timeline receipt + mp4 |
+| Canva | 正式封面、開場／結尾字卡、overlay 素材；不能單獨證明歌詞同步 | design receipt + cover/overlay export |
+| Google Vids | 可做協作草稿；能否當 final 取決於是否能留下等效 timeline/encode evidence | draft 或 evidence-complete export |
 | Higgsfield / 其他 AI video tool | 只在需要生成動態鏡頭或 AI motion 時使用 | 生成片段，必須保留 prompt 與來源 |
 | NotebookLM | 長文或英文內容轉 podcast；中文 MAPLAB 案例非優先 | podcast outline / audio |
 | ffmpeg dry-run | 本機快速驗證比例、素材順序、基本影片可出 | proof mp4 + cover |
@@ -341,21 +345,23 @@ MAPLAB IG Soft v1：
 
 ### Step 5：正式組片
 
-正式版本優先用 Google Vids / Canva / CapCut：
+正式版本預設用 CapCut／核准 NLE；Canva 負責封面與品牌 overlay。若不用 NLE，只能採 `ffmpeg_one_pass` 等效路徑，且仍需完整 timing／lineage／playback receipt：
 
-1. 建 9:16 專案。
-2. 匯入 dry-run 選出的 A 級素材。
-3. 加 3-5 段字幕，每段 6-12 字，前 3 秒有 hook。
-4. 字幕不要蓋食物主體；優先上方 1/3 或左下留白。
-5. 匯出 1080x1920 H.264 mp4。
-6. 另存封面 1080x1920 jpg/png。
+1. 母帶先過 prompt-free ASR＋真人完整聽辨；品牌詞 exact-token 不過就停止，不准先剪。
+2. 建 9:16／16:9 專案，直接綁 raw originals 與 SHA-256，不匯入 review draft 或 H.264 proxy 當 final source。
+3. 在 waveform 上逐句建立核准歌詞 `text/start_ms/end_ms`；禁止固定等分場景。hook 首字前保留 0.2–0.5 秒，不能從字中間開始。
+4. 歌詞字幕與行銷 overlay 分軌；30fps onset 誤差 ≤100ms、tail ≤200ms。
+5. 直式素材進長版採 split-screen 或實色品牌側欄；禁模糊側欄。照片 full-fit 或人工 subject-safe crop；禁盲目中心裁切。
+6. NLE 保存 editable project／timeline 截圖；Canva 保存 design ID／export hash。FFmpeg 例外路徑保存單一 filtergraph，且只允許一次有損視訊編碼。
+7. 匯出後對同一 hash 以 1×、0.5× 完整播放並做 target-device 實看，再跑 `a8_video_acceptance.py`；只有 `QA_PASS` 才能交 Owner 審片。
 
 正式版必要元素：
 
-- 簡短字幕：每幕 6-12 個中文字，不能遮食物主體。
+- 核准歌詞字幕：逐句對齊實際人聲；行銷短句另軌且不能冒充歌詞。
 - 授權配樂：低音量、不要搶過畫面；優先平台授權音樂庫。
 - 浮水印：每幕保留 `MAPLAB Kitchen` 或正式 logo，位置低調。
 - 封面：小尺寸仍可讀，主題需含地區 + 場景。
+- 證據：raw hashes、timing map、editable timeline／filtergraph、encode lineage、full-playback readback、output hash。
 
 MAPLAB 短影音腳本模板：
 
@@ -439,5 +445,5 @@ A8 每次完成都要回寫：
 不得把「上傳成功」當作唯一完成標準。A8 完成標準是：
 
 ```text
-素材來源可追溯 + dry-run 可驗證 + 正式版本可審核 + 發布需有 receipt + 失敗原因可回收
+素材來源可追溯 + actual-audio 通過 + 人工 timing 鎖定 + 正式 timeline 可重開 + 一次有損輸出 + 全片播放通過 + 發布需有 receipt + 失敗原因可回收
 ```

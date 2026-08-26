@@ -1,15 +1,35 @@
 # T-A8-001 — Folder Case to Short Video Distribution
 
 ## 接續狀態
-- **狀態**: 🟠 OWNER_VIDEO_GATE（WP 已發布；舊片退件，原始素材 v2 待審）
-- **最後活動**: 2026-08-26
-- **接續點**: Owner 退回只用低解析 WP WebP 的長／短片。A8 已從 Drive 28 件原始素材重做：15 秒版使用 2 影片＋3 高解析照片，50.8 秒版使用 3 影片＋7 高解析照片；完整時間軸已作視覺辨識，待 Owner 審片。
-- **阻塞**: `owner_video_gate` — Pinterest 與 TikTok Studio 登入／上傳入口已驗證，但影片通過前不建立平台草稿、不發布。
+- **狀態**: 🟠 AUDIO_REGEN_REQUIRED（現行 v2 與內部回歸片均不可上傳）
+- **最後活動**: 2026-08-27
+- **接續點**: 現行 v2 已由新 acceptance gate 以 13 個理由退件。raw／逐句 timing／單次編碼的內部回歸片可重跑，1×／0.5× 全片 readback 完成；但 v5.5 咬字失敗且唱的是具名 hook，與 Owner 綁定的公開安全版歌詞不一致。
+- **阻塞**: `audio_regen_required` — 先從 Owner 目前 Google Doc 鎖定唯一核准歌詞並重新生成母帶；actual-audio ASR＋Owner 真人聽辨通過前，不進正式 NLE、不建立平台草稿、不發布。
 
 Owner: A8 影音內容產線
-Status: 🟠 OWNER_VIDEO_GATE
+Status: 🟠 AUDIO_REGEN_REQUIRED
 Created: 2026-06-17
 Risk: medium
+
+## 2026-08-27 SOP Convergence Checkpoint
+
+- 歷史實證沒有顯示邦尼兔舊版由 Canva／CapCut 匯出；可追溯流程是 Swift/AppKit＋FFmpeg review draft。Canva／CapCut 曾被規劃為正式精修，但沒有 project／timeline／export receipt，因此不能當成已制度化地基。
+- `skills/a8-produce-to-publish-sop.md` 已升為 v2.0；`a8_enhanced_video_draft.py` 恢復 review-only。正式路徑預設 CapCut／核准 NLE，Canva承接 cover／overlay；one-pass FFmpeg 只有在留下等效 evidence 時可用。
+- 新增 `tools/ai_workbook/a8_video_acceptance.py` 與 `tools/ai_workbook/a8_one_pass_timeline.py`，focused tests 需持續全過。
+- 現行 v2 退件 receipt：`workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/correction_20260826/current_v2_rejected_acceptance.json`。
+- 內部眼見 proof：`workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/sop_regression_20260826/maplab-bunny-alignment-regression-INTERNAL-NOT-PUBLISHABLE.mp4`；只證明剪輯機制，不是新歌成品。
+- 完整 QA receipt：`workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/sop_regression_20260826/qa_receipt.md`。
+- Governance receipt：`reviews/GOVERNANCE-MORNING-BRIEF-20260827/0009-a8-video-sop-convergence.md`。
+
+## Resume Prompt 2026-08-27 (Current)
+
+```text
+我是 MAPLAB A8 影音產線接手者，環境是 /Users/pagemacmini/maplab-ai-handbook，任務是從 AUDIO_REGEN_REQUIRED 收斂邦尼兔正式影音。先完整讀 CURRENT_STATUS.md、pitfalls.md、本 Task Card、skills/a8-produce-to-publish-sop.md、skills/a8-video-pipeline-skills.md、reviews/GOVERNANCE-MORNING-BRIEF-20260827/0009-a8-video-sop-convergence.md 與 sop_regression_20260826/qa_receipt.md。
+
+不要再把 correction_20260826 的 v2 或 sop_regression_20260826 的 INTERNAL 片當發布候選。下一個 bounded action 是先讀 Owner 目前 Google Doc，鎖定唯一核准歌詞版本，生成新母帶；對實際下載音檔跑 prompt-free ASR 並交 Owner 真人完整聽辨。邦尼兔／MAPLAB exact-token、逐句內容與核准歌詞任何一項不一致就重生，不准靠字幕修飾。
+
+音訊 PASS 後才建立 CapCut／核准 NLE manual timeline；Canva只做 cover／overlay。若採 ffmpeg_one_pass，必須 raw originals 直入、explicit crop、無 blur、單次有損編碼並保存 config／lineage。完成後以同一 output hash 跑 1×、0.5× 全片與手機實看，再用 a8_video_acceptance.py；只有 ok=true 才能進 OWNER_VIDEO_GATE。未取得通過與相應確認前，不上傳 YouTube、TikTok、Instagram、Facebook、Pinterest，也不發 Telegram。
+```
 
 ## 2026-08-26 Release Checkpoint
 

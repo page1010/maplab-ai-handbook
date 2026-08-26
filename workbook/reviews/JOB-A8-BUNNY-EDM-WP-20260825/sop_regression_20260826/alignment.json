@@ -1,0 +1,24 @@
+{
+  "schema_version": "maplab.a8.lyric-alignment/v1",
+  "classification": "INTERNAL_DIAGNOSTIC_NOT_PUBLISHABLE",
+  "source_master_sha256": "032d93033905def246cfca885d194bee726fe7a32ba5047c95b9442e01edf813",
+  "source_interval_ms": {"in": 28000, "out": 43000},
+  "hook_lead_in_ms": 360,
+  "starts_mid_word": false,
+  "method": "Prompt-free ASR word timestamps followed by manual waveform/listening correction",
+  "tolerance": {"max_onset_error_ms": 100, "max_tail_error_ms": 200},
+  "approved_lyrics_match": false,
+  "diagnostic_variant": "named-hook heard in the actual v5.5 master",
+  "cues": [
+    {"text": "邦尼兔　把祝福點亮", "start_ms": 360, "end_ms": 2880},
+    {"text": "手牽手　全場一起唱", "start_ms": 2880, "end_ms": 6360},
+    {"text": "長大的第一站　就在這一場", "start_ms": 6360, "end_ms": 9740},
+    {"text": "新的故事　現在要出發", "start_ms": 9740, "end_ms": 13440}
+  ],
+  "audio_gate": {
+    "actual_audio_asr_pass": false,
+    "brand_exact_tokens_pass": false,
+    "human_listen_pass": false,
+    "note": "The timing/cut mechanics are under regression; current v5.5 pronunciation fails and the sung named hook does not match the bound public-safe lyrics."
+  }
+}

@@ -1,7 +1,7 @@
 # MAPLAB Project Brain — Governance Core
 
 > Purpose: roles, hardware, workflows, Sheets/indexes, governance and truth-layer boundaries
-> Generated from `config/system-map/maplab-directional-map.json`. Build base commit `e5d931d46f72`; manifest SHA `0590393544adafa9a6848d514ddf08cab8a8e95a92f1e81f38f4f3a5076d7868`.
+> Generated from `config/system-map/maplab-directional-map.json`. Build base commit `540bf2f80f44`; manifest SHA `c1c88b1905f8cf1220bbd81eca657c4b62287a351ba04dc5048b8fb657b09383`.
 > This is a curated, sanitized corpus. It is not a literal repository dump and not a live-state authority.
 > Excluded: secrets, credentials, cookies, customer raw data, runtime logs, SQLite/DB dumps, investment data, media binaries and generated noise.
 
@@ -16,7 +16,7 @@
 
 ## Source: `config/system-map/maplab-directional-map.json`
 
-- SHA-256: `0590393544adafa9a6848d514ddf08cab8a8e95a92f1e81f38f4f3a5076d7868`
+- SHA-256: `c1c88b1905f8cf1220bbd81eca657c4b62287a351ba04dc5048b8fb657b09383`
 - Classification: `internal_governance`
 - Redactions: `0`
 
@@ -135,9 +135,9 @@
       "id": "workflow:A8", "owner_role": "A8", "name": "影音案例生產工作流", "purpose": "把核准案例與合法素材轉成歌曲、影片版本與可驗證發布包。", "sop_paths": ["skills/a8-video-pipeline-skills.md", "skills/a8-produce-to-publish-sop.md", "skills/maplab-hiphop-songwriter/SKILL.md"],
       "stages": [
         {"id": "A8-01", "name": "素材準備", "inputs": ["approved case brief", "A4 asset index", "platform intent"], "actions": ["從 Drive 找指定案例", "確認授權、隱私、方向與格式"], "outputs": ["asset pack", "asset manifest"], "acceptance": ["每個素材有來源與用途狀態", "不可用素材被排除"], "tools": ["Drive", "MAPLAB_ASSET_LOG", "asset-case-match"], "approval_gate": null, "handoff_to": ["A8-02", "A8-03"], "evidence": ["asset manifest"]},
-        {"id": "A8-02", "name": "內容與歌曲", "inputs": ["approved case brief", "asset manifest", "brand/music direction"], "actions": ["讀 WP/內容 brief", "寫歌詞與 exact hook", "確定曲風", "Owner 核稿後生成新音軌", "曲風設定寫入可重用資料"], "outputs": ["approved lyrics", "style profile", "licensed audio track", "generation record"], "acceptance": ["Owner 核稿", "商用授權狀態清楚", "音軌可供剪輯"], "tools": ["songwriter skill", "Suno or approved generator", "audio inspector"], "approval_gate": "Owner lyrics approval before paid/external generation", "handoff_to": ["A8-03"], "evidence": ["lyrics approval", "license/generation receipt"]},
-        {"id": "A8-03", "name": "影片製作與平台裁切", "inputs": ["asset pack", "licensed audio track", "storyboard", "platform specs"], "actions": ["音軌回剪", "字幕與節奏", "裁切長寬與秒數", "codec QA"], "outputs": ["master video", "9:16 video", "1:1 video", "16:9 video", "cover assets"], "acceptance": ["秒數、解析度、fps、codec、音訊讀回", "畫面與案例一致"], "tools": ["ffmpeg", "video pipeline", "visual QA"], "approval_gate": null, "handoff_to": ["A8-04", "A2"], "evidence": ["media probe receipt", "review clip"]},
-        {"id": "A8-04", "name": "發布資料與分發", "inputs": ["platform videos", "A2 SEO metadata", "license status", "Owner publish decision"], "actions": ["產標題、描述、標籤與平台 metadata", "依已認證 API／瀏覽器路徑建立草稿或發布", "逐平台讀回"], "outputs": ["publish package", "platform URLs/IDs", "distribution receipt"], "acceptance": ["每平台狀態明確", "沒有自動上傳器就標 missing", "不可用私人草稿冒充公開發布"], "tools": ["YouTube Studio", "approved platform uploader", "browser/API"], "approval_gate": "Owner approves public publishing", "handoff_to": ["A2-07", "A3-01"], "evidence": ["per-platform UI/API receipt"]}
+        {"id": "A8-02", "name": "內容與歌曲", "inputs": ["approved case brief", "asset manifest", "brand/music direction"], "actions": ["讀 WP/內容 brief", "寫歌詞與 exact hook", "確定曲風", "Owner 核稿後生成新音軌", "對實際下載音檔跑 prompt-free ASR 與真人聽辨", "曲風設定寫入可重用資料"], "outputs": ["approved lyrics", "style profile", "licensed audio track", "generation record", "audio selection receipt"], "acceptance": ["Owner 核稿", "商用授權狀態清楚", "品牌詞 exact-token", "實際唱詞與核准歌詞一致", "音軌可供剪輯"], "tools": ["songwriter skill", "Suno or approved generator", "actual-audio ASR", "human listening gate"], "approval_gate": "Owner lyrics approval before paid/external generation", "handoff_to": ["A8-03"], "evidence": ["lyrics approval", "license/generation receipt", "audio ASR/listening receipt"]},
+        {"id": "A8-03", "name": "影片製作與平台裁切", "inputs": ["asset pack", "audio-gate-passed track", "approved lyrics", "storyboard", "platform specs"], "actions": ["raw originals 綁 hash", "waveform 逐句校時", "CapCut/核准 NLE 人工 timeline 或 evidence-complete one-pass", "字幕與行銷字分軌", "explicit crop/fit", "一次有損視訊編碼", "1x/0.5x 全片與 target-device QA"], "outputs": ["timing map", "editable project or one-pass lineage", "master video", "9:16 video", "1:1 video", "16:9 video", "cover assets", "acceptance receipt"], "acceptance": ["a8_video_acceptance ok=true", "raw provenance 完整", "歌詞 onset/tail 在容許值", "無 blur/盲裁", "encode depth=1", "完整播放與 target-device PASS"], "tools": ["CapCut or approved NLE", "Canva cover/overlay", "a8_one_pass_timeline.py", "a8_video_acceptance.py", "visual QA"], "approval_gate": "Only QA_PASS may enter OWNER_VIDEO_GATE", "handoff_to": ["A8-04", "A2"], "evidence": ["timing receipt", "project/timeline receipt", "encode lineage", "full-playback receipt", "hash-bound acceptance receipt"]},
+        {"id": "A8-04", "name": "發布資料與分發", "inputs": ["OWNER_VIDEO_GATE hash-bound platform videos", "A2 SEO metadata", "license status", "Owner publish decision"], "actions": ["產標題、描述、標籤與平台 metadata", "只解析 acceptance receipt 綁定的影片", "依已認證 API／瀏覽器路徑建立草稿或發布", "逐平台讀回"], "outputs": ["publish package", "platform URLs/IDs", "distribution receipt"], "acceptance": ["每平台狀態明確", "沒有自動上傳器就標 missing", "不可用私人草稿冒充公開發布", "平台檔案 hash 與 acceptance receipt 一致"], "tools": ["YouTube Studio", "approved platform uploader", "browser/API"], "approval_gate": "Owner approves public publishing", "handoff_to": ["A2-07", "A3-01"], "evidence": ["acceptance receipt", "per-platform UI/API receipt"]}
       ]
     }
   ],

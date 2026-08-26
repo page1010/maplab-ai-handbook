@@ -40,11 +40,11 @@
   "source_packs": [
     {
       "path": "workbook/notebooklm/maplab-project-brain/maplab-project-brain.md",
-      "sha256": "1b4384878875151439aca4f92433691639213233f78ba13b2677f9d060367b7a"
+      "sha256": "757ceb4a00d6e1825b0e106a238128bca59d30afa946dd752e3a05b621eee02a"
     },
     {
       "path": "workbook/notebooklm/maplab-project-brain/maplab-sop-router.md",
-      "sha256": "b21270aba451f70f70128962ddb726de5a924b631967f3e57b87c97b7f395132"
+      "sha256": "8d4ee348ca7742765c724921e98821c14368228760c487acc489114362598dbe"
     }
   ],
   "refresh_command": "python3 tools/ai_workbook/build_directional_system_map.py",

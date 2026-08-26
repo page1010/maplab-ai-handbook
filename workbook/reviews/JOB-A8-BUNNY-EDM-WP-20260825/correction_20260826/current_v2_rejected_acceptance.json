@@ -1,0 +1,79 @@
+{
+  "schema_version": "maplab.a8.video-acceptance/v1",
+  "job_id": "JOB-A8-BUNNY-EDM-WP-20260825-CURRENT-V2-AUDIT",
+  "state": "RENDERED_UNVERIFIED",
+  "state_history": [
+    "AUDIO_SELECTED",
+    "TIMING_LOCKED",
+    "EDIT_READY",
+    "RENDERED_UNVERIFIED"
+  ],
+  "classification": "REJECTED_NOT_FOR_UPLOAD",
+  "approvals": {
+    "lyrics": {
+      "path": "../lyrics_v2_public_safe.txt",
+      "sha256": "fc2831f5d859770e9590d93d8e2220e72f002052dccc8bcf76a2b3f3239eab6a"
+    },
+    "audio": {
+      "path": "../final/audio/maplab-bunny-hook-29s-44s.wav",
+      "sha256": "132d0a917b70803e7fbb2f1f04d09125520c34e031e7531837ad5d75f49d8b3b",
+      "qa": {
+        "actual_audio_asr_pass": false,
+        "brand_exact_tokens_pass": false,
+        "human_listen_pass": false,
+        "audit_note": "Existing hook cuts into the first brand token and the master/alt ASR did not preserve required brand tokens."
+      }
+    }
+  },
+  "timing": {
+    "cues": [],
+    "max_onset_error_ms": 2600,
+    "max_tail_error_ms": 2600,
+    "hook_lead_in_ms": 0,
+    "starts_mid_word": true,
+    "audit_note": "The current overlays are fixed-duration marketing copy, not an approved-lyrics alignment track."
+  },
+  "sources": [
+    {
+      "raw_path": "approved_sources/short/s-v01.mp4",
+      "raw_sha256": "5cc1575795aee993c052431ee0d6dd6d53bf8bc21002c7373ec953e8d5720349",
+      "is_proxy": true,
+      "privacy_status": "APPROVED",
+      "trim": {"in_ms": 0, "out_ms": 2900},
+      "layout": "blind_fill",
+      "crop_strategy": "blind_center_crop"
+    }
+  ],
+  "edit": {
+    "engine": "ffmpeg_one_pass",
+    "timeline_receipt": {
+      "path": "render/short/review_draft_manifest.json",
+      "sha256": "9a8ff7552d2b26c0066d1824acf79440b96436752b85dfa6ac24bed2a9943916"
+    },
+    "no_intermediate_video": false,
+    "lyric_and_marketing_tracks_separate": false
+  },
+  "encoding": {
+    "actual_lossy_video_encode_depth": 3,
+    "max_lossy_video_encode_depth": 1,
+    "lineage": {
+      "path": "render/short/review_draft_manifest.json",
+      "sha256": "9a8ff7552d2b26c0066d1824acf79440b96436752b85dfa6ac24bed2a9943916"
+    }
+  },
+  "output": {
+    "path": "render/maplab-bunny-short-15s-v2.mp4",
+    "sha256": "057e15128408c1be08960afa444074d550724975affcec9aba4511da6564fe39",
+    "duration_ms": 15000
+  },
+  "visual_qa": {
+    "timeline_contact_sheet": {
+      "path": "qa/bunny-short-v2-timeline.jpg",
+      "sha256": "b42b236aa8cd225ddd472f726122386519bb3de999d8cead5bde11c86643ef74"
+    },
+    "full_playback": {},
+    "target_device_pass": false,
+    "blur_sidebars_absent": false,
+    "blind_crop_absent": false
+  }
+}

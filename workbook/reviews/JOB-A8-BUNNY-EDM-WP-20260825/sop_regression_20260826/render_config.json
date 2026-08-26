@@ -1,0 +1,86 @@
+{
+  "schema_version": "maplab.a8.one-pass-timeline/v1",
+  "classification": "INTERNAL_DIAGNOSTIC_NOT_PUBLISHABLE",
+  "canvas": {"width": 1080, "height": 1920, "fps": 30},
+  "shots": [
+    {
+      "source": {
+        "path": "/Users/pagemacmini/Library/CloudStorage/GoogleDrive-pagewu1010@gmail.com/我的雲端硬碟/2026maplab外燴紀錄/0717邦尼兔-托嬰畢業典禮/54E363B7-358B-4863-A246-77391395D80D.mov",
+        "sha256": "a1d6362027a588365ec7413e1d69a2505606e5a4084e05154dd9157ca8d10a6f"
+      },
+      "is_proxy": false,
+      "privacy_status": "APPROVED_SAFE_WINDOW",
+      "in_ms": 200,
+      "out_ms": 2900,
+      "duration_ms": 2880,
+      "layout": {"mode": "fit_brand_canvas"}
+    },
+    {
+      "source": {
+        "path": "/Users/pagemacmini/Library/CloudStorage/GoogleDrive-pagewu1010@gmail.com/我的雲端硬碟/2026maplab外燴紀錄/0717邦尼兔-托嬰畢業典禮/D10A6C61-48D2-4ADF-9599-174F6B8CDC5C.mov",
+        "sha256": "c21091e6349ad533644e973cdf834a0e698c0338ea44eb1657a65aa352bab156"
+      },
+      "is_proxy": false,
+      "privacy_status": "APPROVED_SAFE_WINDOW",
+      "in_ms": 200,
+      "out_ms": 2900,
+      "duration_ms": 3480,
+      "layout": {"mode": "fit_brand_canvas"}
+    },
+    {
+      "source": {
+        "path": "/Users/pagemacmini/Library/CloudStorage/GoogleDrive-pagewu1010@gmail.com/我的雲端硬碟/2026maplab外燴紀錄/0717邦尼兔-托嬰畢業典禮/VID_20260717_174946.mp4",
+        "sha256": "1c6cde091781f56fd4aa47ecfdab5e62d404d9a874bb301e6bc397466c58cbf9"
+      },
+      "is_proxy": false,
+      "privacy_status": "APPROVED_SAFE_WINDOW",
+      "in_ms": 200,
+      "out_ms": 3600,
+      "duration_ms": 3380,
+      "layout": {
+        "mode": "manual_crop",
+        "crop": {"width": 1215, "height": 2160, "x": 1312, "y": 0},
+        "review_note": "Explicit subject-safe center window verified against the raw-video contact sheet."
+      }
+    },
+    {
+      "source": {
+        "path": "/Users/pagemacmini/Library/CloudStorage/GoogleDrive-pagewu1010@gmail.com/我的雲端硬碟/2026maplab外燴紀錄/0717邦尼兔-托嬰畢業典禮/54E363B7-358B-4863-A246-77391395D80D.mov",
+        "sha256": "a1d6362027a588365ec7413e1d69a2505606e5a4084e05154dd9157ca8d10a6f"
+      },
+      "is_proxy": false,
+      "privacy_status": "APPROVED_SAFE_WINDOW",
+      "in_ms": 200,
+      "out_ms": 2900,
+      "duration_ms": 3700,
+      "layout": {"mode": "fit_brand_canvas"}
+    },
+    {
+      "source": {
+        "path": "/Users/pagemacmini/Library/CloudStorage/GoogleDrive-pagewu1010@gmail.com/我的雲端硬碟/2026maplab外燴紀錄/0717邦尼兔-托嬰畢業典禮/D10A6C61-48D2-4ADF-9599-174F6B8CDC5C.mov",
+        "sha256": "c21091e6349ad533644e973cdf834a0e698c0338ea44eb1657a65aa352bab156"
+      },
+      "is_proxy": false,
+      "privacy_status": "APPROVED_SAFE_WINDOW",
+      "in_ms": 200,
+      "out_ms": 1760,
+      "duration_ms": 1560,
+      "layout": {"mode": "fit_brand_canvas"}
+    }
+  ],
+  "overlays": [
+    {"path": "overlays/01-lyric.png", "sha256": "06e5dcf61bdb14630c9c693212ff3a57b9f04d95502bda25bef00c9b1618dfcb", "start_ms": 360, "end_ms": 2880},
+    {"path": "overlays/02-lyric.png", "sha256": "5033336bf92cfbb35871e18e8cf650c05861a4df0f49d2a7b0a8c8a6c6aec82c", "start_ms": 2880, "end_ms": 6360},
+    {"path": "overlays/03-lyric.png", "sha256": "137da762d84b4e641dafc811a4f78c3144245ad8a4dcb75d8b5d6ae1508cb1ca", "start_ms": 6360, "end_ms": 9740},
+    {"path": "overlays/04-lyric.png", "sha256": "18e346b4b7f0f44429cfd82391d6f2dd86d8ccf489bbf3f143ded7a370f4cbdc", "start_ms": 9740, "end_ms": 13440},
+    {"path": "overlays/05-outro.png", "sha256": "ea72ebd2f0cc21001538fd57967baba3853acfcfe43a74b3db580cee499785b3", "start_ms": 13440, "end_ms": 15000}
+  ],
+  "audio": {
+    "path": "../final/audio/maplab-bunny-date-free-v55-master.wav",
+    "sha256": "032d93033905def246cfca885d194bee726fe7a32ba5047c95b9442e01edf813",
+    "in_ms": 28000,
+    "out_ms": 43000
+  },
+  "output": {"path": "maplab-bunny-alignment-regression-INTERNAL-NOT-PUBLISHABLE.mp4"},
+  "lineage_path": "encode_lineage.json"
+}

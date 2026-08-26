@@ -58,11 +58,18 @@ A8 是「一次產出、多平台分發」的影音再製產線。
 - A8 是基礎設施，不歸某個專案專屬
 
 【斷點】
-🔄 第一個正式任務已啟動：`T-A8-001-folder-to-video-distribution`。
-目標是把 MAPLAB 真實資料夾案例轉成 9:16 短影音產線，先從 ICC Tainan 案例 dry-run，再做 YouTube / TikTok / IG / Pinterest approval-ready 分發包。
+🟠 `T-A8-001-folder-to-video-distribution` 現為 `AUDIO_REGEN_REQUIRED`。
+邦尼兔 correction v2 已由 acceptance gate 退件；`sop_regression_20260826/` 只是一支 raw／timing／one-pass 內部回歸片，不是可發布新歌。下一步先從 Owner 現行 Google Doc 鎖定唯一歌詞並重生母帶；actual-audio ASR＋Owner 真人聽辨通過後才進正式剪輯。
+
+【正式影音 SSOT（2026-08-27）】
+- final 一律讀 `skills/a8-produce-to-publish-sop.md` v2.0+；本地 enhanced renderer 永遠是 review-only。
+- CapCut／核准 NLE＝正式人工 waveform timeline 與 editable project；Canva＝cover／intro／outro／overlay，不單獨證明歌詞同步。
+- 無 NLE 時只能走 evidence-complete `ffmpeg_one_pass`：raw originals、explicit crop、無 blur、單次有損視訊編碼、timing map、lineage、output hash。
+- 狀態只能依序：`AUDIO_SELECTED → TIMING_LOCKED → EDIT_READY → RENDERED_UNVERIFIED → QA_PASS → OWNER_VIDEO_GATE → APPROVED_FOR_UPLOAD`。
+- `a8_video_acceptance.py` 未回 `ok=true`，不得上傳平台草稿，也不得要求 Owner 審發布。
 
 【必讀】
-CURRENT_STATUS.md → AGENT_RULES.md → skills/a8-video-pipeline-skills.md
+CURRENT_STATUS.md → pitfalls.md → handoff/tasks/T-A8-001-folder-to-video-distribution.md → skills/a8-produce-to-publish-sop.md → skills/a8-video-pipeline-skills.md
 
 【協作】
 - A2 寫完文章 → 通知 A8 → A8 做影音再製

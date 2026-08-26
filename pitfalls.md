@@ -430,6 +430,14 @@
 - 解法：公開前固定做兩個獨立 gate。Content gate 只掃客戶會看到的 title／body／caption／CTA／image alt，預設不曝光日期與內部流程語，WP 至少三張不同角色照片；Platform gate 必須拿到 platform ID、可讀 URL 與欄位 readback，file chooser `Not allowed`、登入未建立、HTTP 200 或空對話框都只記 `BLOCKED`。
 - 預防：每案只維護一份 `platform_metadata.md`，發布後另寫 release receipt；WordPress、長片、Short、Pin、Telegram 各自有狀態，任一平台阻擋不重做內容，也不把部分完成包成「全部上傳完成」。
 
+## 2026-08-26 — 人設手冊不是 runtime capability；Telegram 授權不能拿 chat id 當 sender id
+
+- 觸發條件：Owner 問 Hermes 權限、模型與記憶，A6 bot 連續回答「本機零存取、無持久記憶、模型未知」，叫 Owner 自己跑 launchctl/cat；Owner 在群組說話或傳照片時，gateway 沒看、沒回、沒開工。
+- 根因：三個錯誤疊在一起。① system prompt 把 2026-08-25 runbook 稱為「知識邊界」，模型把舊角色限制覆蓋真實 gateway 能力。② 私聊授權用 `chat.id == owner_user_id`，群組 chat id 必然不同，所以 Owner 本人也被忽略。③ poller 只取 `message.text`，沒有 text 就直接 continue，照片更新被靜默丟掉；安全 executor 雖已存在，卻只認 `/do`，自然語句仍被 LLM 接走。
+- 解法：能力題改由 runtime deterministic readback；provider、last provider、history 與固定 actions 寫 private state。授權改查 `message.from.id`，群組另要求 @bot 或 reply。照片走 `getFile` 私密保存＋bytes/hash receipt。安全 alias 可由自然語句直接觸發；手冊快照降級為歷史背景，current 必須跑 readback。
+- 預防：任何 agent 入口都要分開記錄 `surface capability / model capability / connector capability`；不得用 persona 散文回答權限。Telegram handler 的測試矩陣至少包含 private text、group mention、group reply、non-owner、photo、unknown action；Owner 問「現在」時，沒有 runtime evidence 就不得用「應該」補空白。
+- 封坑驗證：能力題可見回覆必含 `能力真相 v2`、`不是零存取`、provider chain 與持久記憶；自然語句狀態題必回 `A6H-*` receipt；group/photo focused tests 必 PASS，live eye proof 未拿到前分項標 `MISSING`，不得把 code path 當 UI 完成。
+
 ## 2026-07-09 — 同一張 Task Card 藏兩個「狀態」欄位，且互相矛盾（第三個活例）
 
 - 觸發條件：驗收 T-A4-001（S11/2024 補跑）時發現，這張卡在檔案上半部只有「最後活動/接續點/阻塞」，完全沒有「狀態」欄位；`scripts/patrol.sh` 的 `grep -m1` 因此往下抓到檔案中段一段 2026-04-15 遺留的舊格式區塊（`Task ID`/`任務名稱` 那組），把早已過時的「🔄 進行中（S11/2024 補跑執行中）」當成現況——這是繼 `T-A2-SEO-CATERING-MATRIX-001.md`（`**Status**:` 英文無 bullet 格式）、`T-A2-007` 補建（session task list 沒寫進 Task Card）之後，第三個「Task Card 格式跟巡查解析器對不上」的活例。

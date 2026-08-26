@@ -1,7 +1,7 @@
 # MAPLAB Project Brain — Governance Core
 
 > Purpose: roles, hardware, workflows, Sheets/indexes, governance and truth-layer boundaries
-> Generated from `config/system-map/maplab-directional-map.json`. Build base commit `540bf2f80f44`; manifest SHA `c1c88b1905f8cf1220bbd81eca657c4b62287a351ba04dc5048b8fb657b09383`.
+> Generated from `config/system-map/maplab-directional-map.json`. Build base commit `15b585cbb664`; manifest SHA `c1c88b1905f8cf1220bbd81eca657c4b62287a351ba04dc5048b8fb657b09383`.
 > This is a curated, sanitized corpus. It is not a literal repository dump and not a live-state authority.
 > Excluded: secrets, credentials, cookies, customer raw data, runtime logs, SQLite/DB dumps, investment data, media binaries and generated noise.
 

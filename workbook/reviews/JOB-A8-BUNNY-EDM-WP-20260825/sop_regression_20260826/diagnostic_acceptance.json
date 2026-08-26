@@ -1,5 +1,5 @@
 {
-  "schema_version": "maplab.a8.video-acceptance/v1",
+  "schema_version": "maplab.a8.video-acceptance/v2",
   "job_id": "JOB-A8-BUNNY-EDM-WP-20260825-SOP-REGRESSION",
   "state": "RENDERED_UNVERIFIED",
   "state_history": [

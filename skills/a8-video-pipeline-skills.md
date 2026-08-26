@@ -1,7 +1,7 @@
 # A8 影音內容產線技能書（Video Pipeline Skills）
 
 > 負責角色：A8 影音內容產線
-> 建立：2026-04-19 | 版本：v2.6（2026-08-26）
+> 建立：2026-04-19 | 版本：v2.7（2026-08-27）
 
 ---
 
@@ -9,7 +9,13 @@
 
 A8 的工作不是「想到影片題目」，而是把 MAPLAB 現有資料夾、案例文章、照片與短影片，變成可審核、可上傳、可分發、可回收成下一版素材規則的影音產線。
 
-> Final SSOT：正式音訊、人工歌詞校時、原檔畫質、完整播放與 upload gate 一律以 `skills/a8-produce-to-publish-sop.md` v2.0+ 為準。本技能書的 dry-run／review renderer 不能自行升格為 final。
+> Final SSOT：正式音訊、人工歌詞校時、工具工程收據、人工美感配方、原檔畫質、完整播放與 upload gate 一律以 `skills/a8-produce-to-publish-sop.md` v2.1+ 為準。本技能書的 dry-run／review renderer 不能自行升格為 final。
+
+### 0.1 歷史工具事實與本技能書的定位
+
+- Owner 確認歷史 MAPLAB 影音曾用 Canva／CapCut 與人工精修；本機 2025 開幕 Reel 也留下 Canva-like export＋疑似第二個 NLE 重編的 precedent。
+- 該 precedent 沒保存 design/project ID、timeline 或 export receipt，不能證明曾套用到邦尼兔，也不能直接重跑。邦尼兔 repo receipt 目前只證實 Swift/AppKit＋FFmpeg review。
+- 所以本技能書保留所有 local draft 能力，但正式成片必另外保存實際工具鏈、工程重開、polish recipe 與 output hash。缺收據要寫「無法歸因／重播」，不得寫成「歷史上沒做過」。
 
 本技能書適用於：
 
@@ -97,6 +103,8 @@ A8 要把 MAPLAB 版本寫成：
 | NotebookLM | 長文或英文內容轉 podcast；中文 MAPLAB 案例非優先 | podcast outline / audio |
 | ffmpeg dry-run | 本機快速驗證比例、素材順序、基本影片可出 | proof mp4 + cover |
 | 地端模型（qwen/gemma） | 低成本備援：資料夾初判、storyboard 草稿、platform metadata、privacy checklist | draft only，需 validator / 人工審核 |
+
+`tools/ai_workbook/a8_platform_formats.py` 只以 `specs` 提供平台尺寸與安全區。舊 final `export` 已 fail-closed；`review-export` 會在 manifest 標 `REVIEW_ONLY_NOT_FOR_UPLOAD`，因底層 blind crop／多代 H.264 不符合正式畫質規則。
 
 ### Step 3.5：地端模型備援邊界
 
@@ -345,15 +353,16 @@ MAPLAB IG Soft v1：
 
 ### Step 5：正式組片
 
-正式版本預設用 CapCut／核准 NLE；Canva 負責封面與品牌 overlay。若不用 NLE，只能採 `ffmpeg_one_pass` 等效路徑，且仍需完整 timing／lineage／playback receipt：
+正式版本預設用 CapCut／核准 NLE；Canva 負責封面與品牌 overlay，Google Vids 可做協作組片。Canva Video／Google Vids 若能留下等效 project/timeline/export/reopen receipt，也可成為正式 editor；否則只算 draft 或 overlay。若不用這些 editor，只能採 `ffmpeg_one_pass` 等效路徑，且仍需完整 timing／lineage／playback receipt：
 
 1. 母帶先過 prompt-free ASR＋真人完整聽辨；品牌詞 exact-token 不過就停止，不准先剪。
 2. 建 9:16／16:9 專案，直接綁 raw originals 與 SHA-256，不匯入 review draft 或 H.264 proxy 當 final source。
 3. 在 waveform 上逐句建立核准歌詞 `text/start_ms/end_ms`；禁止固定等分場景。hook 首字前保留 0.2–0.5 秒，不能從字中間開始。
 4. 歌詞字幕與行銷 overlay 分軌；30fps onset 誤差 ≤100ms、tail ≤200ms。
 5. 直式素材進長版採 split-screen 或實色品牌側欄；禁模糊側欄。照片 full-fit 或人工 subject-safe crop；禁盲目中心裁切。
-6. NLE 保存 editable project／timeline 截圖；Canva 保存 design ID／export hash。FFmpeg 例外路徑保存單一 filtergraph，且只允許一次有損視訊編碼。
-7. 匯出後對同一 hash 以 1×、0.5× 完整播放並做 target-device 實看，再跑 `a8_video_acceptance.py`；只有 `QA_PASS` 才能交 Owner 審片。
+6. NLE 保存 app version、editable project／timeline 與 reopen PASS；Canva／Google Vids 保存本機 design/project receipt、頁面或 timeline snapshot、export hash。FFmpeg 例外路徑保存單一 filtergraph，且只允許一次有損視訊編碼。
+7. 保存可重跑的人工精修配方：motion、字體層級、字幕 safe zone、色票、封面小尺寸辨識、長短版構圖與音樂權利 receipt。
+8. 匯出後對同一 hash 以 1×、0.5× 完整播放，逐 target-device 留結構化記錄，並為每個目標平台綁 video／cover／metadata／safe-zone package；再跑 `a8_video_acceptance.py`，只有 `QA_PASS` 才能交 Owner 審片。
 
 正式版必要元素：
 

@@ -1,6 +1,6 @@
 # A8 產片 → 上片 標準流程（Produce-to-Publish SOP）
 
-> 負責角色：A8 影音內容產線 ｜ 建立：2026-08-02 ｜ 版本：v2.0（2026-08-26）
+> 負責角色：A8 影音內容產線 ｜ 建立：2026-08-02 ｜ 版本：v2.1（2026-08-27）
 > 對齊：`skills/brand-voice-guide.md`（語氣）、`skills/maplab-visual-spec.md`（視覺/色卡）、`skills/a8-video-pipeline-skills.md`（產線細節）、`skills/a8-local-motion-integration.md`（運鏡）
 > 規範文件（雲端）：【正式規範】A2/A4 內容產線格式＋規範 v1、【基準】品牌語氣＋色調
 
@@ -11,6 +11,15 @@
 把「一個活動專案的原始照片／影片＋核准音訊 → 人工校時的長／短片 → 完整播放驗收 → 上到平台草稿 → 待 Owner 核准公開」做成**可重複、可驗證、可回收**的一條流程。字幕、標題、描述一律套品牌語氣＋固定色卡；上片先到**私人/草稿**，公開一律等 Owner。
 
 本文件是 A8 最終成品的 canonical SOP。`a8-video-pipeline-skills.md` 裡的 local dry-run／review draft 只用來驗證素材、比例與模板，不能取代本文件的正式 timeline、音訊、畫質與 QA gate。
+
+### 0.0 歷史做法如何記錄，不再把「沒收據」寫成「沒做過」
+
+- Owner 確認歷史 MAPLAB 影音曾使用 Canva／CapCut 與人工美感精修；這是流程重建的有效輸入，不得因 repo 沒工程檔就否定。
+- 本機另找到 2025 開幕 Reel 的可恢復 precedent：一支檔名高度符合 Canva 範本匯出的 1080×1920 無聲片，之後另有加上音訊並重新編碼的 `0326.mp4`。後一步符合第二個 NLE 精修的跡象，但沒有 CapCut 專案或軟體標籤，只能標示為「疑似 CapCut／其他 NLE」，不能寫成已驗證 CapCut。
+- 邦尼兔可追溯成品則只綁到 Swift/AppKit＋FFmpeg review receipt；目前沒有能與它配對的 Canva design、CapCut timeline 或 Google Vids project。這只表示**無法重播／歸因該次做法**，不表示歷史上從未使用那些工具。
+- 從本版起分四種證據：`OWNER_CONFIRMED_PRACTICE`、`FILE_VERIFIED`、`INFERRED_NOT_VERIFIED`、`PLANNED_ONLY`。只有綁定本次 output hash 的 project／timeline／export receipt 才能當本次 QA 證據。
+
+因此本次根因定義為：人工美感流程、工具工程檔與版本收據沒有被納入 canonical SOP，兩份舊 SOP 又把 review/final 寫成相反定義；不是「以前沒做」，也不是「這次只是漏跑一個已完整寫好的步驟」。
 
 ### 0.1 三段接力，不在同一份稿裡混工種
 
@@ -25,7 +34,7 @@
 - **垂直短片**（YT Shorts / IG Reels / TikTok / FB Reels）：**9:16、1080×1920、H.264 MP4**；邦尼兔案例與同型音樂宣傳片預設 **15.0s**，延長需 Owner 明確核准。
 - **YouTube 長版**：**16:9、1920×1080**，全曲；縮圖 **1280×720**。
 - 若完整歌曲超過 Shorts 長度，保留為長版母帶，另選精準 15 秒 hook。素材不足時使用核准靜幀、歌詞字幕與慢速 zoom-out／輕微平移建立節奏，不用私人或不合格畫面補數量。
-- 多平台一次匯出＋自動生縮圖：`a8_platform_formats.py export <music> <prefix> <clips...> --platforms youtube|vertical|all`（相同規格只 render 一次；各平台安全區見 `specs`）。
+- 平台尺寸與安全區只讀 `a8_platform_formats.py specs`。舊 `export` 已 fail-closed，因其 beat-mux 路徑會盲目置中裁切並做多代 H.264；`review-export` 只產 `REVIEW_ONLY_NOT_FOR_UPLOAD` 診斷片，不能作 final。
 
 ### 0.2 公開欄位先做「客人眼睛」掃描
 
@@ -60,13 +69,14 @@
 | 4 | 音訊 gate | 核准歌詞 + 實際下載母帶 | ASR＋真人完整聽辨；鎖定 hook | prompt-free ASR + 人工聽辨 | audio receipt + hash + hook in/out | 品牌詞 exact-token；不從字中間切 |
 | 5 | 歌詞校時 | 選定音訊 + 核准歌詞 | 依 waveform 逐句標 in/out；切點吸附句界／beat | CapCut／核准 NLE；或等效人工 timeline | SRT/JSON + timeline receipt | onset ≤100ms；tail ≤200ms；歌詞／行銷字分軌 |
 | 6 | Review draft | 原始素材 allowlist + timing map | 本機試排素材、比例與模板 | `a8_enhanced_video_draft.py`（review-only）| review MP4 + cover | 不得標 final；不得送上傳 |
-| 7 | 正式剪輯 | raw originals + timing map | CapCut／核准 NLE 人工精修；或 raw 直入的一次性 FFmpeg filtergraph | CapCut／核准 NLE；`ffmpeg_one_pass` 例外路徑 | 長／短片 + 可編輯專案／lineage | 無模糊側欄、盲裁、proxy、重複有損編碼 |
-| 8 | 完整 QA | 正式輸出 | 1×、0.5× 完整播放＋target-device 目視 | 播放器 + contact sheet + `a8_video_acceptance.py` | `QA_PASS` receipt | 逐句同步、清晰度、隱私、全片完整 |
-| 9 | 存檔 | webp/pin/mp4 + receipt | 回存專案 Drive `/publish/` | Drive API multipart upload | Drive `/publish/*` | 檔案可開、命名與 hash 對 |
-| 10 | 上片草稿 | `OWNER_VIDEO_GATE` 的 hash-locked mp4 / pin | YouTube 私人草稿、Pinterest 發布前草稿 + 填欄位 | Chrome → Studio / Pinterest | 私人影片、待發布 Pin | 欄位、連結、alt、圖片尺寸齊 |
-| 11 | 核准 | 草稿連結＋欄位摘要 | Owner 一次確認各對外動作 | Studio / Pinterest / WP | approval 決定 | 送出前 Owner 明確同意 |
-| 12 | 發布回讀 | 已核准草稿 | 逐平台發布後打開公開頁回讀 | Chrome | 公開連結與截圖 | 標題、描述、圖片、CTA、可見度正確 |
-| 13 | 狀態回報 | 平台矩陣＋已回讀連結 | 有阻塞先備妥「缺件通知」；全數完成後再備妥「完成通知」 | Telegram Web | Owner 知道缺什麼或可點擊成果 | 發送前取得 Owner action-time approval；發送後重讀訊息氣泡與連結 |
+| 7 | 正式 timeline | raw originals + timing map | 逐鏡頭人工構圖、逐句字幕、切點與轉場；不用 review proxy | CapCut／核准 NLE；evidence-complete Canva／Google Vids；`ffmpeg_one_pass` 例外 | 可編輯 project／design receipt 或 filtergraph | 工程可重開；raw/hash/in-out 可追溯 |
+| 8 | 人工美感精修 | 正式 timeline + 品牌規格 | 調整 motion、字體層級、字幕安全區、色卡、封面小尺寸辨識與長短版構圖 | CapCut／Canva／Google Vids／核准 NLE | polish recipe + cover/design/export receipt | 五項視覺檢查全 PASS；權利 receipt 齊 |
+| 9 | 完整 QA | 正式輸出 | 1×、0.5× 完整播放＋每個 target-device 目視 | 播放器 + contact sheet + `a8_video_acceptance.py` | `QA_PASS` receipt | 逐句同步、清晰度、隱私、全片完整 |
+| 10 | 存檔 | project/design/mp4 + receipt | 保存可編輯工程、platform package 與 hash；核准後才回存雲端 | 本機 evidence bundle；Drive 需相應核准 | project + delivery manifest | 工程重開、檔案與 hash 對 |
+| 11 | 上片草稿 | `OWNER_VIDEO_GATE` 的 hash-locked platform package | YouTube 私人草稿、Pinterest 發布前草稿 + 填欄位 | Chrome → Studio / Pinterest | 私人影片、待發布 Pin | `DRAFT_UPLOAD` 已核准；欄位與 URL 齊 |
+| 12 | 核准 | 草稿連結＋欄位摘要 | Owner 分別確認公開動作 | Studio / Pinterest / WP | `PUBLICATION` 決定 | 不沿用 upload 核准代替公開核准 |
+| 13 | 發布回讀 | 已核准草稿 | 逐平台發布後打開公開頁回讀 | Chrome | 公開連結與截圖 | 標題、描述、圖片、CTA、可見度正確 |
+| 14 | 狀態回報 | 平台矩陣＋已回讀連結 | 有阻塞先備妥「缺件通知」；全數完成後再備妥「完成通知」 | Telegram Web | Owner 知道缺什麼或可點擊成果 | `MESSAGE_SEND` 核准後才發；發後重讀氣泡與連結 |
 
 ### 1.1 多平台發布矩陣與 Telegram 通知語意
 
@@ -74,6 +84,7 @@
 - `BLOCKED`／`NEEDS_OWNER_ACTION` 不是靜默條件。缺登入、選檔、平台連結或核准時，應先準備並發送缺件通知，逐項寫清平台、缺件、Owner 最短動作與已完成成果。
 - 「完成通知」只在本案核准的平台都有可回讀連結後發送；不能拿「尚未完成」當成完全不通知的理由。
 - Telegram 發送屬代表 Owner 的外部通訊，按下送出前須取得當下確認。若尚未取得確認，receipt 必須標為 `MESSAGE_READY_NOT_SENT`，不可寫成已通知。
+- 四種核准不得合併：`THIRD_PARTY_PROCESSING`（私有素材送 Canva／Google Vids 等雲端）、`DRAFT_UPLOAD`（建立私人／草稿）、`PUBLICATION`（公開）、`MESSAGE_SEND`（對外通知）。前一項通過不自動授權下一項。
 
 ---
 
@@ -84,11 +95,26 @@
 | 工具 | 正式角色 | 必留證據 |
 |---|---|---|
 | `a8_enhanced_video_draft.py` | 素材／比例／模板 review-only；永遠停在 `RENDERED_UNVERIFIED` 之前 | draft manifest；檔名含 `review` |
-| CapCut／核准 NLE | 預設正式剪輯：waveform 校時、逐句字幕、切點、轉場、聲畫完整播放 | 可編輯 project、timeline 截圖／匯出、export hash |
-| Canva | 封面、開場／結尾品牌字卡、overlay 素材；可進 NLE，但不能單憑一張 Canva export 證明歌詞校時 | design link／ID、export hash、被引用的 timeline receipt |
+| CapCut／核准 NLE | 預設正式剪輯：waveform 校時、逐句字幕、人工構圖、切點、轉場、聲畫完整播放 | app version、可編輯 project、timeline、reopen PASS、export hash |
+| Canva | 封面、品牌字卡、overlay；也可做完整影片，但只有 design pages／timing／export／reopen 都綁 output 時才算 evidence-complete | design ID/URL 本機 receipt、頁面尺寸/字體/色票、project hash、reopen PASS、export hash |
+| Google Vids | 可做協作組片與人工精修；私有素材送雲端前先過 `THIRD_PARTY_PROCESSING` | project URL/ID 本機 receipt、app/version snapshot、timeline/export/reopen、output hash |
 | `ffmpeg_one_pass` | 無外部 NLE 時的等效正式路徑；原檔直接進單一 filtergraph，只能一次有損視訊編碼 | 完整 command/filtergraph、raw hashes、timing map、encode lineage |
+| `a8_platform_formats.py` | `specs` 是尺寸 SSOT；`review-export` 只供診斷 | manifest 必標 `REVIEW_ONLY_NOT_FOR_UPLOAD`；不得出現在 final lineage |
 
-CapCut／Canva 是正式 workflow 的工具選項，不是成功的自動證明。沒有 editable timeline、逐句時間碼、完整播放與 hash receipt，無論用了哪個品牌工具都不能升到 final。
+Canva／CapCut／Google Vids 是歷史與正式 workflow 的工具選項，不是成功的自動證明。沒有 editable timeline、逐句時間碼、完整播放與 hash receipt，無論用了哪個品牌工具都不能升到 final。
+
+### 2.1.1 每次正式成片必留的「人工精修配方」
+
+先複製 `config/a8/video-acceptance-v2.template.json` 到本次 evidence bundle；填完所有 placeholder 並刪除 `template_only` 後才可驗證。模板本身永遠被 gate 拒絕。`a8_video_acceptance.py` v2 的 `QA_PASS` 最少需要：
+
+1. `tool_chain[]`：實際執行的每一步工具、角色、版本與 receipt；沒執行的工具不填，不能事後補名字。
+2. `edit.project`＋`edit.project_reopen`：CapCut／NLE／Canva Video／Google Vids 工程必須能重開，且重開的 project hash 要相同。雲端工程用本機 JSON receipt 保存 design/project ID、URL、頁數／timeline snapshot 與匯出 hash。
+3. `polish.recipe`：motion profile、鏡頭 in/out、轉場、字體／字級／行距、字幕 safe zone、色票、logo、封面構圖與長短版差異；另綁 cover hash。
+4. `rights.receipt`：母帶與新增配樂的商用權狀態；平台音樂庫也要記平台、曲目與建立時間。無新增配樂則明寫 `NO_ADDITIONAL_MUSIC`，不能留空。
+5. `visual_qa.target_devices[]`：每個裝置／surface 綁同一 output hash，分別記 1×、0.5× watched duration 與 verdict；單一 `target_device_pass=true` 不算收據。
+6. `delivery.targets[]`＋`delivery.exports[]`：每個已選平台各自綁 video、cover、metadata 與 safe-zone verdict；長版與 9:16 不得拿同一裁切假裝全平台適配。
+
+只要更換歌、照片、字體、封面、工具工程、timeline 或輸出檔，相關 hash 失效，必須從對應步驟重跑。這就是把歷史人工判斷變成下一次真的能重複的 SOP。
 
 Review renderer 可用 `--visual-preset maplab_ig_soft` 並明寫 `--aspect 9:16` 或 `--aspect 16:9`。它的實作只供試排：
 
@@ -146,7 +172,7 @@ Review renderer 可用 `--visual-preset maplab_ig_soft` 並明寫 `--aspect 9:16
 3. **完整時間軸 contact sheet**：涵蓋 intro、每幕、轉場與 outro；要以實際成品抽幀，不用來源圖或 storyboard 代替。
 4. **視覺辨識 readback**：以人眼／vision 實看原始 contact sheet 與成品時間軸，逐項判斷裁切、清晰度、主體、字幕、日期、人臉、QR／電話與內部工作語。ffprobe、位元率、HTTP 200、render exit 0 都只是技術 preflight。
 5. **人工歌詞 timeline**：核准歌詞逐句 `text/start_ms/end_ms`、音訊 hash、waveform／beat 依據；歌詞 onset 在 30fps 下誤差 ≤3 frames（100ms），tail ≤6 frames（200ms）。禁止把行銷文案當歌詞、禁止平均分配 scene 秒數。
-6. **完整播放 readback**：同一輸出 hash 以 1× 與 0.5× 從頭看到尾，記錄 reviewer、watched duration、target device 與 verdict；抽三幀或 contact sheet 不能替代。
+6. **完整播放 readback**：同一輸出 hash 以 1× 與 0.5× 從頭看到尾，並為每個 target device／surface 留結構化記錄；抽三幀、contact sheet 或單一 boolean 不能替代。
 
 素材策略：
 
@@ -165,8 +191,9 @@ Review renderer 可用 `--visual-preset maplab_ig_soft` 並明寫 `--aspect 9:16
 
 - 不准從 render exit 0、ffprobe PASS 或 contact sheet 直接跳 `OWNER_VIDEO_GATE`。
 - `tools/ai_workbook/a8_video_acceptance.py <acceptance_receipt.json>` 必須回 `ok=true`，才可進 Owner 審片；發布器只能吃 receipt 綁定的 output path/hash，不接受任意 `--video`。
-- CapCut／核准 NLE 路徑必有 editable project＋timeline receipt；Canva 單獨只算封面／overlay receipt。
+- CapCut／核准 NLE 路徑必有 editable project＋timeline＋app version＋reopen receipt。Canva／Google Vids 只有在保存等效工程與 timeline 證據時才可當完整影片 editor；否則只算封面／overlay／協作 draft receipt。
 - `ffmpeg_one_pass` 路徑必須 `no_intermediate_video=true`，並保存 raw hashes、filtergraph、timing map 與 encode lineage。
+- `QA_PASS` 還必須有 tool chain、polish recipe、cover、rights、structured target-device 與 per-platform delivery package；這些是防止「工具用過但做法又消失」的機器 gate。
 - 任一檔案 hash、歌詞、音訊或 timeline 變動，舊 `QA_PASS` 立即失效，回到相應狀態重跑。
 
 ---

@@ -532,13 +532,13 @@
 - 解法：下載器獨立正規化整數／字串 expiry，只在記憶體 refresh access token，不改寫共享 auth 檔；下載結果以 folder allowlist、SHA-256 manifest、0700/0600 權限驗收。
 - 預防：外部憑證 helper 必先測 schema variant；讀取既有 token 可共用，寫回與 refresh side effect 必須明確隔離。
 
-## 2026-08-27 — 曾經做過的人工精修若沒有 project／timing receipt，就不算進入 SOP
+## 2026-08-27 — 曾經做過的人工精修若沒有 project／timing receipt，就無法變成可重跑 SOP
 
 - 觸發條件：Owner 指出新片歌詞拖拍、畫質退化，並追問以前用過 Canva／CapCut 等做法為何沒留下；現行文件一份把 local renderer 寫成 review，另一份又寫成「產片一律用」，造成 review draft 被交成 final candidate。
-- 根因：把工具名稱與成功印象當成流程資產，沒有保存 editable project、逐句歌詞時間碼、raw hash、encode lineage 與完整播放收據；SOP 之間也沒有 final SSOT。舊版畫面文字碰巧按歌意排列，看起來較順，但不是可重複的聲畫校時。
-- 解法：正式狀態改為 `AUDIO_SELECTED → TIMING_LOCKED → EDIT_READY → RENDERED_UNVERIFIED → QA_PASS → OWNER_VIDEO_GATE → APPROVED_FOR_UPLOAD`；CapCut／核准 NLE 必留 project/timeline，Canva只承接封面／overlay，one-pass FFmpeg 必留 raw hashes／filtergraph／lineage。新增 fail-closed validator，現行 v2 因 timing、歌詞版本、proxy、盲裁、三代有損與未完整播放被直接退件。
-- 預防：任何「之前有做過」的好做法，只有在 SOP 同時寫明輸入、操作工具、可重開產物、驗收閾值、機器 gate 與失敗回復點後才算地基。工具用過但沒有 receipt，不得在後續 session 推定已完成；音訊未過 actual-audio ASR＋真人聽辨時，不得先剪正式片。
-- 封坑驗證：`python3 -m unittest tests.test_a8_video_acceptance tests.test_a8_one_pass_timeline -v` 必須全過；現行 v2 acceptance 必回 `ok=false`，而內部回歸片只能通過 raw／timing／encode／playback 子項，仍因音訊與 target-device gate 保持不可發布。
+- 根因：歷史上 Canva／CapCut 與人工精修曾被使用或規劃，但 editable project、逐句歌詞時間碼、tool version、polish recipe、raw hash、encode lineage 與完整播放收據沒有一起保存；SOP 之間也沒有 final SSOT。這讓後續 session 只能看到工具名稱與 review MP4，無法重播當時人工判斷。
+- 解法：證據分成 Owner-confirmed、file-verified、inferred、planned-only；缺 receipt 只代表無法歸因／重播，不得改寫成沒做過。正式狀態維持不可跳級；CapCut／Canva／Google Vids 完整影片路徑必留 project/timeline/version/reopen，人工 motion／typography／cover 配方也進 gate；one-pass FFmpeg 必留 raw hashes／filtergraph／lineage。舊 platform exporter 因盲裁與多代有損已 fail-closed。
+- 預防：任何「之前有做過」的好做法，只有在 SOP 同時寫明輸入、實際工具鏈、可重開產物、精修配方、驗收閾值、機器 gate 與失敗回復點後，才可作為下一次可重跑地基；但不能因地基缺收據就否定 Owner 對歷史實作的確認。音訊未過 actual-audio ASR＋真人聽辨時，不得先剪正式片。
+- 封坑驗證：`python3 -m unittest tests.test_a8_video_acceptance tests.test_a8_platform_formats_guard tests.test_a8_one_pass_timeline -v` 必須全過；舊 `export` 必須拒絕、`review-export` 必標不可上傳；現行 v2 acceptance 仍必回 `ok=false`。
 
 ## 2026-08-27 — 第三方 `doctor` 可能先安裝依賴，不能把名稱當成唯讀保證
 

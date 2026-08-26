@@ -1,7 +1,7 @@
 {
   "schema_version": "2026-08-25.notebooklm-source-pack.v1",
   "generated_at": "2026-08-25T00:00:00+08:00",
-  "build_base_commit": "540bf2f80f44",
+  "build_base_commit": "15b585cbb664",
   "directional_map_manifest_sha256": "c1c88b1905f8cf1220bbd81eca657c4b62287a351ba04dc5048b8fb657b09383",
   "notebook_url": "https://notebook.google.com/notebook/68114d21-ebc9-4116-a88a-52cc31cbe9a7",
   "upload_files": [
@@ -184,32 +184,32 @@
     },
     {
       "path": "skills/a6-rapid-quote-sop.md",
-      "sha256": "d59036dda2310132e507e590dcd6e6747a41137e61da7f2dd9b4e6673b319fb0",
-      "bytes": 18258,
+      "sha256": "4f791577c50f44e8eca3abea59d644f1b444d304a7ce2ccddeffa1aad204b633",
+      "bytes": 18629,
       "classification": "internal_governance",
       "redactions": 0,
       "group": "sop_router"
     },
     {
       "path": "skills/a7-customer-service-skills.md",
-      "sha256": "d2681c3739ebc9d68755b12c9ef5e90be3ed86e8b2fed8ea1dcf2424f7fcf8f7",
-      "bytes": 6377,
+      "sha256": "bacb62669a4b530f6ea62faa98db9f44bee55ea25a60640591efe862078f28a2",
+      "bytes": 6692,
       "classification": "internal_governance",
       "redactions": 0,
       "group": "sop_router"
     },
     {
       "path": "skills/a8-video-pipeline-skills.md",
-      "sha256": "cd081986fdfcd8787f48669ccf3507be9c231ce22d812dc3e8839aba4ecff478",
-      "bytes": 22322,
+      "sha256": "16efb1edaeff9978d10c08aae6e54ceb38a9707a429f35c9da4a844e4fddf448",
+      "bytes": 23814,
       "classification": "internal_governance",
       "redactions": 0,
       "group": "sop_router"
     },
     {
       "path": "skills/a8-produce-to-publish-sop.md",
-      "sha256": "cc4aa8ed1abd1f6e90791856aa6a9951e1ca680ccb3e0fe64d465f1a95fbe89a",
-      "bytes": 34953,
+      "sha256": "32e7f391fb95f195772a7bc84e3f2da849d361c363947167fe84d463814bdfc6",
+      "bytes": 39496,
       "classification": "internal_governance",
       "redactions": 0,
       "group": "sop_router"

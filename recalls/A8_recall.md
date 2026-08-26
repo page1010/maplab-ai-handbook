@@ -62,9 +62,12 @@ A8 是「一次產出、多平台分發」的影音再製產線。
 邦尼兔 correction v2 已由 acceptance gate 退件；`sop_regression_20260826/` 只是一支 raw／timing／one-pass 內部回歸片，不是可發布新歌。下一步先從 Owner 現行 Google Doc 鎖定唯一歌詞並重生母帶；actual-audio ASR＋Owner 真人聽辨通過後才進正式剪輯。
 
 【正式影音 SSOT（2026-08-27）】
-- final 一律讀 `skills/a8-produce-to-publish-sop.md` v2.0+；本地 enhanced renderer 永遠是 review-only。
-- CapCut／核准 NLE＝正式人工 waveform timeline 與 editable project；Canva＝cover／intro／outro／overlay，不單獨證明歌詞同步。
+- final 一律讀 `skills/a8-produce-to-publish-sop.md` v2.1+；本地 enhanced renderer 永遠是 review-only。
+- Owner 確認歷史 MAPLAB 曾用 Canva／CapCut 人工精修；缺工程 receipt 只能寫「無法重播／歸因」，不得寫成「以前沒做」。
+- CapCut／核准 NLE＝正式人工 waveform timeline 與可重開 project；Canva／Google Vids 若沒有等效 project/timeline/export/reopen receipt，只算 cover／overlay／協作 draft，不單獨證明歌詞同步。
 - 無 NLE 時只能走 evidence-complete `ffmpeg_one_pass`：raw originals、explicit crop、無 blur、單次有損視訊編碼、timing map、lineage、output hash。
+- `a8_platform_formats.py export` 已拒絕；只讀 `specs`，`review-export` 產物不得上傳。
+- `QA_PASS` 另需 tool chain、polish recipe、rights、structured target-device、per-platform package；第三方處理、草稿上傳、公開、訊息發送分別核准。
 - 狀態只能依序：`AUDIO_SELECTED → TIMING_LOCKED → EDIT_READY → RENDERED_UNVERIFIED → QA_PASS → OWNER_VIDEO_GATE → APPROVED_FOR_UPLOAD`。
 - `a8_video_acceptance.py` 未回 `ok=true`，不得上傳平台草稿，也不得要求 Owner 審發布。
 

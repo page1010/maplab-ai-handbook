@@ -1,0 +1,203 @@
+{
+  "template_only": true,
+  "schema_version": "maplab.a8.video-acceptance/v2",
+  "job_id": "REPLACE_JOB_ID",
+  "state": "QA_PASS",
+  "state_history": [
+    "AUDIO_SELECTED",
+    "TIMING_LOCKED",
+    "EDIT_READY",
+    "RENDERED_UNVERIFIED",
+    "QA_PASS"
+  ],
+  "classification": "FINAL_CANDIDATE_QA_PASS",
+  "approvals": {
+    "lyrics": {
+      "path": "REPLACE_APPROVED_LYRICS_PATH",
+      "sha256": "REPLACE_SHA256"
+    },
+    "audio": {
+      "path": "REPLACE_SELECTED_AUDIO_PATH",
+      "sha256": "REPLACE_SHA256",
+      "qa": {
+        "actual_audio_asr_pass": false,
+        "brand_exact_tokens_pass": false,
+        "human_listen_pass": false
+      }
+    },
+    "third_party_processing": {
+      "status": "PENDING"
+    },
+    "draft_upload": {
+      "status": "PENDING"
+    },
+    "publication": {
+      "status": "PENDING"
+    },
+    "message_send": {
+      "status": "PENDING"
+    }
+  },
+  "timing": {
+    "alignment": {
+      "path": "REPLACE_ALIGNMENT_PATH",
+      "sha256": "REPLACE_SHA256"
+    },
+    "approved_lyrics_match": false,
+    "cues": [
+      {
+        "text": "REPLACE_APPROVED_LYRIC_LINE",
+        "start_ms": 0,
+        "end_ms": 1
+      }
+    ],
+    "max_onset_error_ms": 999999,
+    "max_tail_error_ms": 999999,
+    "hook_lead_in_ms": 0,
+    "starts_mid_word": true
+  },
+  "sources": [
+    {
+      "raw_path": "REPLACE_RAW_ORIGINAL_PATH",
+      "raw_sha256": "REPLACE_SHA256",
+      "is_proxy": false,
+      "privacy_status": "PENDING",
+      "trim": {
+        "in_ms": 0,
+        "out_ms": 1
+      },
+      "layout": "REPLACE_LAYOUT",
+      "crop_strategy": "REPLACE_EXPLICIT_SUBJECT_SAFE_STRATEGY"
+    }
+  ],
+  "edit": {
+    "engine": "capcut_manual",
+    "app_version": "REPLACE_APP_VERSION",
+    "project": {
+      "path": "REPLACE_EDITABLE_PROJECT_OR_PROJECT_RECEIPT_PATH",
+      "sha256": "REPLACE_SHA256"
+    },
+    "project_reopen": {
+      "surface": "REPLACE_REOPEN_SURFACE",
+      "reopened_at": "REPLACE_ISO8601_TIME",
+      "project_sha256": "REPLACE_SHA256",
+      "verdict": "PENDING"
+    },
+    "timeline_receipt": {
+      "path": "REPLACE_TIMELINE_RECEIPT_PATH",
+      "sha256": "REPLACE_SHA256"
+    },
+    "no_intermediate_video": true,
+    "lyric_and_marketing_tracks_separate": false
+  },
+  "tool_chain": [
+    {
+      "tool": "CapCut",
+      "version": "REPLACE_VERSION",
+      "role": "waveform timing, manual composition, and final export",
+      "receipt": {
+        "path": "REPLACE_TOOL_RECEIPT_PATH",
+        "sha256": "REPLACE_SHA256"
+      }
+    },
+    {
+      "tool": "Canva",
+      "version": "REPLACE_VERSION_OR_DELETE_UNUSED_STEP",
+      "role": "cover and brand overlay",
+      "processing": "third_party_cloud",
+      "receipt": {
+        "path": "REPLACE_CANVA_RECEIPT_PATH",
+        "sha256": "REPLACE_SHA256"
+      }
+    }
+  ],
+  "encoding": {
+    "actual_lossy_video_encode_depth": 0,
+    "max_lossy_video_encode_depth": 1,
+    "lineage": {
+      "path": "REPLACE_ENCODE_LINEAGE_PATH",
+      "sha256": "REPLACE_SHA256"
+    }
+  },
+  "polish": {
+    "recipe": {
+      "path": "REPLACE_POLISH_RECIPE_PATH",
+      "sha256": "REPLACE_SHA256"
+    },
+    "cover": {
+      "path": "REPLACE_COVER_PATH",
+      "sha256": "REPLACE_SHA256"
+    },
+    "motion_pass": false,
+    "typography_pass": false,
+    "subtitle_safe_zone_pass": false,
+    "brand_palette_pass": false,
+    "cover_small_size_pass": false
+  },
+  "rights": {
+    "status": "REPLACE_ALLOWED_RIGHTS_STATUS",
+    "receipt": {
+      "path": "REPLACE_RIGHTS_RECEIPT_PATH",
+      "sha256": "REPLACE_SHA256"
+    }
+  },
+  "output": {
+    "path": "REPLACE_FINAL_OUTPUT_PATH",
+    "sha256": "REPLACE_SHA256",
+    "duration_ms": 0
+  },
+  "visual_qa": {
+    "timeline_contact_sheet": {
+      "path": "REPLACE_CONTACT_SHEET_PATH",
+      "sha256": "REPLACE_SHA256"
+    },
+    "full_playback": {
+      "1x": {
+        "watched_duration_ms": 0,
+        "verdict": "PENDING"
+      },
+      "0.5x": {
+        "watched_duration_ms": 0,
+        "verdict": "PENDING"
+      }
+    },
+    "target_device_pass": false,
+    "target_devices": [
+      {
+        "device": "REPLACE_DEVICE",
+        "surface": "REPLACE_SURFACE",
+        "output_sha256": "REPLACE_SHA256",
+        "full_playback": {
+          "1x": 0,
+          "0.5x": 0
+        },
+        "verdict": "PENDING"
+      }
+    ],
+    "blur_sidebars_absent": false,
+    "blind_crop_absent": false
+  },
+  "delivery": {
+    "targets": [
+      "REPLACE_PLATFORM"
+    ],
+    "exports": [
+      {
+        "platform": "REPLACE_PLATFORM",
+        "video": {
+          "path": "REPLACE_FINAL_OUTPUT_PATH",
+          "sha256": "REPLACE_SHA256"
+        },
+        "cover": {
+          "path": "REPLACE_COVER_PATH",
+          "sha256": "REPLACE_SHA256"
+        },
+        "metadata": {
+          "path": "REPLACE_METADATA_PATH",
+          "sha256": "REPLACE_SHA256"
+        },
+        "safe_zone_pass": false
+      }
+    ]
+  }
+}

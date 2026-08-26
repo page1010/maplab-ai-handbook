@@ -3,7 +3,7 @@
   "generated_at": "2026-08-25T00:00:00+08:00",
   "source_manifest": "config/system-map/maplab-directional-map.json",
   "source_manifest_sha256": "c1c88b1905f8cf1220bbd81eca657c4b62287a351ba04dc5048b8fb657b09383",
-  "build_base_commit": "540bf2f80f44",
+  "build_base_commit": "15b585cbb664",
   "scope": {
     "title": "MAPLAB 非投資域指向性治理地圖",
     "included": [

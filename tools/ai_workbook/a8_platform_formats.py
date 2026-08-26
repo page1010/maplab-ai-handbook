@@ -1,26 +1,35 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-a8_platform_formats.py — MAPLAB A8 各平台影片格式標準化 config + 多平台匯出。
+a8_platform_formats.py — MAPLAB A8 各平台影片格式 config + review-only 匯出。
 
 用途：
   一份 config = 各平台正確「比例/解析度/片長上限/安全區/縮圖尺寸」的單一真相來源，
-  搭配 export_for_platforms() 依平台自動輸出正確格式的影片＋自動生縮圖。
-  相同 render 規格（同比例/解析度/長度/切法）只 render 一次再複製，省算力。
-  支援「可以發都發」多平台一次匯出。
+  PLATFORM_FORMATS 是平台規格的單一真相來源。
+  舊 export_for_platforms() 會呼叫 a8_beat_mux（中心裁切＋多代 H.264），只可做
+  review diagnostic；不得把它的輸出當 final 或 upload candidate。
 
 規格出處（2026-08 查證，見 docs/platform_formats_sources.md）：
   YouTube Shorts / IG Reels / FB Reels / TikTok = 9:16 1080x1920 H.264 mp4。
   YouTube 長版 = 16:9 1920x1080；縮圖 1280x720 (16:9)。
   Owner 定案：我方 Shorts/垂直短片一律壓 ≤30s（平台本身允許更長）。
 
-依賴：a8_beat_mux.render（對拍剪輯，含 aspect/maxsec）＋ ffmpeg（縮圖）。
+review-only 依賴：a8_beat_mux.render（對拍剪輯，含 aspect/maxsec）＋ ffmpeg（縮圖）。
 file-only、不花錢。
 """
 import sys, subprocess, shutil
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
-from a8_beat_mux import render
+
+
+REVIEW_CLASSIFICATION = "REVIEW_ONLY_NOT_FOR_UPLOAD"
+
+
+def _review_render(*args, **kwargs):
+    """Lazy import keeps read-only specs usable without loading the legacy renderer."""
+    from a8_beat_mux import render
+
+    return render(*args, **kwargs)
 
 # 我方 Shorts/垂直短片統一上限（Owner 定案）。平台本身允許更長，但我們刻意壓 ≤30s。
 VERTICAL_MAX_SEC = 30.0
@@ -120,11 +129,28 @@ def make_thumbnail(video, out_jpg, size, at_sec=1.0):
     return out_jpg
 
 
-def export_for_platforms(music, prefix, clips, platforms, outdir=".", thumbs=True):
+def export_for_platforms(
+    music,
+    prefix,
+    clips,
+    platforms,
+    outdir=".",
+    thumbs=True,
+    *,
+    review_only=False,
+):
     """
-    依平台清單自動輸出正確格式影片＋縮圖。相同 render 規格只 render 一次。
-    回傳 manifest：{platform: {"video":..., "thumb":..., "spec":...}}
+    依平台清單輸出 review diagnostic。相同 render 規格只 render 一次。
+
+    這條 legacy renderer 會中心裁切並產生多代 H.264，因此預設 fail closed。
+    呼叫者必須明確傳 review_only=True；manifest 也會逐項標為不可上傳。
     """
+    if review_only is not True:
+        raise RuntimeError(
+            "final export refused: a8_beat_mux uses blind center crop and multiple "
+            "lossy video encodes; use specs for dimensions or pass review_only=True "
+            "for an internal diagnostic only"
+        )
     outdir = Path(outdir); outdir.mkdir(parents=True, exist_ok=True)
     plats = resolve_platforms(platforms)
     if not plats:
@@ -140,14 +166,31 @@ def export_for_platforms(music, prefix, clips, platforms, outdir=".", thumbs=Tru
             base = str(outdir / f"{prefix}__base_{spec['aspect'].replace(':','x')}_{int(spec['max_sec']) if spec['max_sec'] else 'full'}.mp4")
             print(f"=== render {spec['label']} 規格 {spec['aspect']} {spec['w']}x{spec['h']} "
                   f"max={spec['max_sec']} perbar={spec['perbar']} ===")
-            render(music, base, clips, maxsec=spec["max_sec"], perbar=spec["perbar"], aspect=spec["aspect"])
+            _review_render(
+                music,
+                base,
+                clips,
+                maxsec=spec["max_sec"],
+                perbar=spec["perbar"],
+                aspect=spec["aspect"],
+            )
             key_to_base[key] = base
         base = key_to_base[key]
-        # 2) 每平台一份最終檔（複製 base）
+        # 2) 每平台一份 review 檔（複製 base）
         final = str(outdir / f"{prefix}_{p}.mp4")
         if final != base:
             shutil.copyfile(base, final)
-        entry = {"video": final, "thumb": None, "spec": {k: spec[k] for k in ("aspect", "w", "h", "max_sec", "thumb", "safe", "note")}}
+        entry = {
+            "classification": REVIEW_CLASSIFICATION,
+            "video": final,
+            "thumb": None,
+            "spec": {k: spec[k] for k in ("aspect", "w", "h", "max_sec", "thumb", "safe", "note")},
+            "release_restrictions": [
+                "blind_center_crop_not_subject_safe",
+                "multiple_lossy_video_encodes",
+                "acceptance_receipt_required_from_a_different_final_path",
+            ],
+        }
         # 3) 每平台縮圖
         if thumbs:
             tj = str(outdir / f"{prefix}_{p}_thumb.jpg")
@@ -183,9 +226,20 @@ def main():
             _print_specs(); return
         print("用法：")
         print("  a8_platform_formats.py specs                     # 印各平台格式表")
-        print("  a8_platform_formats.py export <music> <prefix> <clip...> [--platforms youtube vertical|all|<name>...] [--outdir DIR] [--no-thumbs]")
-        return
+        print("  a8_platform_formats.py export                    # 拒絕舊 final exporter")
+        print("  a8_platform_formats.py review-export <music> <prefix> <clip...> [--platforms youtube vertical|all|<name>...] [--outdir DIR] [--no-thumbs]")
+        return 0
     if a[1] == "export":
+        print(
+            "REFUSED: legacy exporter blind-crops and performs multiple lossy video "
+            "encodes. Use 'specs' for dimensions; use 'review-export' only for an "
+            "internal diagnostic."
+        )
+        return 2
+    if a[1] == "review-export":
+        if len(a) < 5:
+            print("need music, prefix, and at least one clip")
+            return 2
         music, prefix = a[2], a[3]
         rest = a[4:]
         platforms = ["youtube"]
@@ -205,14 +259,28 @@ def main():
             thumbs = False
         clips = [c for c in rest if not c.startswith("--") and Path(c).exists()]
         if not clips:
-            print("need clips"); return
-        m = export_for_platforms(music, prefix, clips, platforms, outdir=outdir, thumbs=thumbs)
+            print("need clips")
+            return 2
+        m = export_for_platforms(
+            music,
+            prefix,
+            clips,
+            platforms,
+            outdir=outdir,
+            thumbs=thumbs,
+            review_only=True,
+        )
         print("\nMANIFEST")
         for p, e in m.items():
-            print(f"  {p}: {e['video']}" + (f" | thumb {e['thumb']}" if e['thumb'] else ""))
+            print(
+                f"  {p}: {e['video']} | {e['classification']}"
+                + (f" | thumb {e['thumb']}" if e["thumb"] else "")
+            )
+        return 0
     else:
-        print("unknown cmd; try: specs | export")
+        print("unknown cmd; try: specs | export | review-export")
+        return 2
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

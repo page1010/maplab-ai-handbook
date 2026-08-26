@@ -15,7 +15,7 @@ from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional
 
 
-SCHEMA_VERSION = "maplab.a8.video-acceptance/v1"
+SCHEMA_VERSION = "maplab.a8.video-acceptance/v2"
 STATES = [
     "AUDIO_SELECTED",
     "TIMING_LOCKED",
@@ -25,7 +25,22 @@ STATES = [
     "OWNER_VIDEO_GATE",
     "APPROVED_FOR_UPLOAD",
 ]
-FINAL_ENGINES = {"capcut_manual", "approved_nle_manual", "ffmpeg_one_pass"}
+FINAL_ENGINES = {
+    "capcut_manual",
+    "approved_nle_manual",
+    "canva_video_evidence_complete",
+    "google_vids_evidence_complete",
+    "ffmpeg_one_pass",
+}
+PROJECT_ENGINES = FINAL_ENGINES - {"ffmpeg_one_pass"}
+CLOUD_ENGINES = {"canva_video_evidence_complete", "google_vids_evidence_complete"}
+APPROVAL_STATUSES = {"APPROVED", "PENDING", "NOT_REQUESTED", "DENIED"}
+RIGHTS_STATUSES = {
+    "COMMERCIAL_LICENSE_VERIFIED",
+    "PLATFORM_LIBRARY_LICENSED",
+    "ORIGINAL_OWNED",
+    "NO_ADDITIONAL_MUSIC",
+}
 
 
 def _error(errors: List[Dict[str, str]], code: str, message: str) -> None:
@@ -80,6 +95,27 @@ def _valid_transition_history(history: Any, target_state: str) -> bool:
     return history[-1] == target_state and history[0] == STATES[0]
 
 
+def _at_or_after(state: str, threshold: str) -> bool:
+    return state in STATES and STATES.index(state) >= STATES.index(threshold)
+
+
+def _check_approval_record(
+    errors: List[Dict[str, str]],
+    approvals: Dict[str, Any],
+    name: str,
+) -> Dict[str, Any]:
+    record = approvals.get(name)
+    if not isinstance(record, dict) or record.get("status") not in APPROVAL_STATUSES:
+        _error(
+            errors,
+            "APPROVAL_TYPES_CONFLATED",
+            "third_party_processing, draft_upload, publication, and message_send "
+            "must each have an explicit status",
+        )
+        return {}
+    return record
+
+
 def verify_receipt(
     receipt: Dict[str, Any],
     receipt_path: Optional[Path] = None,
@@ -87,6 +123,12 @@ def verify_receipt(
 ) -> List[Dict[str, str]]:
     errors: List[Dict[str, str]] = []
 
+    if receipt.get("template_only") is True:
+        _error(
+            errors,
+            "TEMPLATE_RECEIPT_FORBIDDEN",
+            "copy the template, replace every placeholder, and remove template_only before validation",
+        )
     if receipt.get("schema_version") != SCHEMA_VERSION:
         _error(errors, "SCHEMA_VERSION_INVALID", f"schema_version must be {SCHEMA_VERSION}")
 
@@ -190,9 +232,14 @@ def verify_receipt(
     edit = receipt.get("edit") or {}
     engine = edit.get("engine")
     if engine not in FINAL_ENGINES:
-        _error(errors, "FINAL_EDITOR_MISSING", "final edit engine must be CapCut/manual NLE or one-pass FFmpeg")
+        _error(
+            errors,
+            "FINAL_EDITOR_MISSING",
+            "final edit engine must be evidence-complete CapCut/NLE/Canva/Google Vids "
+            "or one-pass FFmpeg",
+        )
     _check_binding(errors, edit.get("timeline_receipt"), "TIMELINE_RECEIPT_MISSING", "timeline receipt", receipt_path, verify_files)
-    if engine in {"capcut_manual", "approved_nle_manual"}:
+    if engine in PROJECT_ENGINES:
         _check_binding(errors, edit.get("project"), "EDITOR_PROJECT_MISSING", "editable NLE project", receipt_path, verify_files)
     if engine == "ffmpeg_one_pass" and edit.get("no_intermediate_video") is not True:
         _error(errors, "INTERMEDIATE_VIDEO_FORBIDDEN", "ffmpeg final path must declare no_intermediate_video=true")
@@ -223,6 +270,217 @@ def verify_receipt(
         _error(errors, "TARGET_DEVICE_QA_MISSING", "target-device visual QA must pass")
     if qa.get("blur_sidebars_absent") is not True or qa.get("blind_crop_absent") is not True:
         _error(errors, "VISUAL_LAYOUT_FAILED", "visual QA must confirm no blur sidebars and no blind crop")
+
+    # Evidence that is meaningful only when a candidate claims QA_PASS or later.
+    # RENDERED_UNVERIFIED diagnostics stay auditable without pretending to be final.
+    if _at_or_after(state, "QA_PASS"):
+        for approval_name in (
+            "third_party_processing",
+            "draft_upload",
+            "publication",
+            "message_send",
+        ):
+            _check_approval_record(errors, approvals, approval_name)
+        cloud_tool_used = engine in CLOUD_ENGINES
+        if isinstance(tool_chain := receipt.get("tool_chain"), list):
+            cloud_tool_used = cloud_tool_used or any(
+                isinstance(step, dict) and step.get("processing") == "third_party_cloud"
+                for step in tool_chain
+            )
+        if cloud_tool_used:
+            cloud_approval = approvals.get("third_party_processing") or {}
+            if cloud_approval.get("status") != "APPROVED":
+                _error(
+                    errors,
+                    "THIRD_PARTY_PROCESSING_UNAPPROVED",
+                    "Canva/Google Vids processing requires explicit third-party approval",
+                )
+        if _at_or_after(state, "APPROVED_FOR_UPLOAD"):
+            upload_approval = approvals.get("draft_upload") or {}
+            if upload_approval.get("status") != "APPROVED":
+                _error(
+                    errors,
+                    "DRAFT_UPLOAD_UNAPPROVED",
+                    "APPROVED_FOR_UPLOAD requires a separate draft-upload approval",
+                )
+
+        tool_chain = receipt.get("tool_chain")
+        if not isinstance(tool_chain, list) or not tool_chain:
+            _error(
+                errors,
+                "TOOL_CHAIN_RECEIPT_MISSING",
+                "QA_PASS requires every executed editor/polish/export step and its receipt",
+            )
+        else:
+            for index, step in enumerate(tool_chain):
+                if (
+                    not isinstance(step, dict)
+                    or not str(step.get("tool", "")).strip()
+                    or not str(step.get("role", "")).strip()
+                    or not str(step.get("version", "")).strip()
+                ):
+                    _error(
+                        errors,
+                        "TOOL_CHAIN_RECEIPT_MISSING",
+                        f"tool_chain[{index}] requires tool, version, and role",
+                    )
+                    break
+                _check_binding(
+                    errors,
+                    step.get("receipt"),
+                    "TOOL_CHAIN_RECEIPT_MISSING",
+                    f"tool_chain[{index}] receipt",
+                    receipt_path,
+                    verify_files,
+                )
+
+        if engine in PROJECT_ENGINES:
+            if not str(edit.get("app_version", "")).strip():
+                _error(errors, "EDITOR_VERSION_MISSING", "project editors require an app version")
+            project = edit.get("project") or {}
+            reopen = edit.get("project_reopen") or {}
+            if (
+                reopen.get("verdict") != "PASS"
+                or reopen.get("project_sha256") != project.get("sha256")
+                or not str(reopen.get("surface", "")).strip()
+                or not str(reopen.get("reopened_at", "")).strip()
+            ):
+                _error(
+                    errors,
+                    "EDITOR_REOPEN_MISSING",
+                    "editable project must be reopened and matched to the saved project hash",
+                )
+
+        polish = receipt.get("polish") or {}
+        _check_binding(
+            errors,
+            polish.get("recipe"),
+            "POLISH_RECIPE_MISSING",
+            "repeatable visual polish recipe",
+            receipt_path,
+            verify_files,
+        )
+        _check_binding(
+            errors,
+            polish.get("cover"),
+            "COVER_RECEIPT_MISSING",
+            "cover/thumbnail",
+            receipt_path,
+            verify_files,
+        )
+        polish_checks = (
+            "motion_pass",
+            "typography_pass",
+            "subtitle_safe_zone_pass",
+            "brand_palette_pass",
+            "cover_small_size_pass",
+        )
+        if any(polish.get(name) is not True for name in polish_checks):
+            _error(
+                errors,
+                "VISUAL_POLISH_FAILED",
+                "motion, typography, safe zone, palette, and small-size cover checks must all pass",
+            )
+
+        rights = receipt.get("rights") or {}
+        if rights.get("status") not in RIGHTS_STATUSES:
+            _error(errors, "RIGHTS_UNVERIFIED", "commercial music/audio rights status is not verified")
+        _check_binding(
+            errors,
+            rights.get("receipt"),
+            "RIGHTS_UNVERIFIED",
+            "commercial music/audio rights receipt",
+            receipt_path,
+            verify_files,
+        )
+
+        devices = qa.get("target_devices")
+        if not isinstance(devices, list) or not devices:
+            _error(
+                errors,
+                "TARGET_DEVICE_RECEIPT_MISSING",
+                "QA_PASS requires structured target-device readback records",
+            )
+        else:
+            output_hash = output.get("sha256") if isinstance(output, dict) else None
+            for record in devices:
+                playback_record = record.get("full_playback") if isinstance(record, dict) else {}
+                record_ok = (
+                    isinstance(record, dict)
+                    and str(record.get("device", "")).strip()
+                    and str(record.get("surface", "")).strip()
+                    and record.get("output_sha256") == output_hash
+                    and record.get("verdict") == "PASS"
+                    and isinstance(playback_record, dict)
+                    and all(
+                        isinstance(playback_record.get(speed), int)
+                        and (not isinstance(duration_ms, int) or playback_record[speed] >= duration_ms)
+                        for speed in ("1x", "0.5x")
+                    )
+                )
+                if not record_ok:
+                    _error(
+                        errors,
+                        "TARGET_DEVICE_RECEIPT_INVALID",
+                        "each target-device record must bind the output hash and complete 1x/0.5x playback",
+                    )
+                    break
+
+        delivery = receipt.get("delivery") or {}
+        targets = delivery.get("targets")
+        exports = delivery.get("exports")
+        if not isinstance(targets, list) or not targets or not isinstance(exports, list):
+            _error(
+                errors,
+                "PLATFORM_PACKAGE_MISSING",
+                "QA_PASS requires explicit target platforms and one evidence-bound package per target",
+            )
+        else:
+            packages = {
+                item.get("platform"): item
+                for item in exports
+                if isinstance(item, dict) and item.get("platform")
+            }
+            for target in targets:
+                package = packages.get(target) or {}
+                _check_binding(
+                    errors,
+                    package.get("video"),
+                    "PLATFORM_PACKAGE_MISSING",
+                    f"{target} video",
+                    receipt_path,
+                    verify_files,
+                )
+                video_binding = package.get("video") if isinstance(package.get("video"), dict) else {}
+                accepted_output_hash = output.get("sha256") if isinstance(output, dict) else None
+                if video_binding.get("sha256") != accepted_output_hash:
+                    _error(
+                        errors,
+                        "PLATFORM_OUTPUT_DRIFT",
+                        f"{target} package video is not the accepted output hash",
+                    )
+                _check_binding(
+                    errors,
+                    package.get("cover"),
+                    "PLATFORM_PACKAGE_MISSING",
+                    f"{target} cover",
+                    receipt_path,
+                    verify_files,
+                )
+                _check_binding(
+                    errors,
+                    package.get("metadata"),
+                    "PLATFORM_PACKAGE_MISSING",
+                    f"{target} metadata",
+                    receipt_path,
+                    verify_files,
+                )
+                if package.get("safe_zone_pass") is not True:
+                    _error(
+                        errors,
+                        "PLATFORM_SAFE_ZONE_FAILED",
+                        f"{target} package has no safe-zone PASS",
+                    )
 
     return errors
 

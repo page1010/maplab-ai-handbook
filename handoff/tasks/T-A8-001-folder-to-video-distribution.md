@@ -13,22 +13,24 @@ Risk: medium
 
 ## 2026-08-27 SOP Convergence Checkpoint
 
-- 歷史實證沒有顯示邦尼兔舊版由 Canva／CapCut 匯出；可追溯流程是 Swift/AppKit＋FFmpeg review draft。Canva／CapCut 曾被規劃為正式精修，但沒有 project／timeline／export receipt，因此不能當成已制度化地基。
-- `skills/a8-produce-to-publish-sop.md` 已升為 v2.0；`a8_enhanced_video_draft.py` 恢復 review-only。正式路徑預設 CapCut／核准 NLE，Canva承接 cover／overlay；one-pass FFmpeg 只有在留下等效 evidence 時可用。
+- Owner 確認歷史 MAPLAB 影音曾用 Canva／CapCut 與人工精修；本機亦找到 2025 Canva-like export＋疑似第二 NLE 重編 precedent。因 project／timeline／export receipt 沒保存，不能綁到邦尼兔或重跑；邦尼兔可追溯流程仍只證實 Swift/AppKit＋FFmpeg review。缺 receipt 不等於歷史上沒做過。
+- `skills/a8-produce-to-publish-sop.md` 已升為 v2.1；`a8_enhanced_video_draft.py` 維持 review-only。正式路徑補回 CapCut／Canva／Google Vids 的 evidence-complete 工程與人工 polish recipe；one-pass FFmpeg 只有在留下等效 evidence 時可用。
+- 舊 `a8_platform_formats.py export` 因 blind crop／多代 H.264 已 fail-closed；`review-export` 只能產 `REVIEW_ONLY_NOT_FOR_UPLOAD` 診斷片。
 - 新增 `tools/ai_workbook/a8_video_acceptance.py` 與 `tools/ai_workbook/a8_one_pass_timeline.py`，focused tests 需持續全過。
 - 現行 v2 退件 receipt：`workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/correction_20260826/current_v2_rejected_acceptance.json`。
 - 內部眼見 proof：`workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/sop_regression_20260826/maplab-bunny-alignment-regression-INTERNAL-NOT-PUBLISHABLE.mp4`；只證明剪輯機制，不是新歌成品。
 - 完整 QA receipt：`workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/sop_regression_20260826/qa_receipt.md`。
+- v2.1 歷史精修／SOP gap／23-test receipt：`workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/sop_regression_20260826/sop_v2_1_review_receipt.md`。
 - Governance receipt：`reviews/GOVERNANCE-MORNING-BRIEF-20260827/0009-a8-video-sop-convergence.md`。
 
 ## Resume Prompt 2026-08-27 (Current)
 
 ```text
-我是 MAPLAB A8 影音產線接手者，環境是 /Users/pagemacmini/maplab-ai-handbook，任務是從 AUDIO_REGEN_REQUIRED 收斂邦尼兔正式影音。先完整讀 CURRENT_STATUS.md、pitfalls.md、本 Task Card、skills/a8-produce-to-publish-sop.md、skills/a8-video-pipeline-skills.md、reviews/GOVERNANCE-MORNING-BRIEF-20260827/0009-a8-video-sop-convergence.md 與 sop_regression_20260826/qa_receipt.md。
+我是 MAPLAB A8 影音產線接手者，環境是 /Users/pagemacmini/maplab-ai-handbook，任務是從 AUDIO_REGEN_REQUIRED 收斂邦尼兔正式影音。先完整讀 CURRENT_STATUS.md、pitfalls.md、本 Task Card、skills/a8-produce-to-publish-sop.md、skills/a8-video-pipeline-skills.md、reviews/GOVERNANCE-MORNING-BRIEF-20260827/0009-a8-video-sop-convergence.md、sop_regression_20260826/qa_receipt.md 與 sop_regression_20260826/sop_v2_1_review_receipt.md。
 
 不要再把 correction_20260826 的 v2 或 sop_regression_20260826 的 INTERNAL 片當發布候選。下一個 bounded action 是先讀 Owner 目前 Google Doc，鎖定唯一核准歌詞版本，生成新母帶；對實際下載音檔跑 prompt-free ASR 並交 Owner 真人完整聽辨。邦尼兔／MAPLAB exact-token、逐句內容與核准歌詞任何一項不一致就重生，不准靠字幕修飾。
 
-音訊 PASS 後才建立 CapCut／核准 NLE manual timeline；Canva只做 cover／overlay。若採 ffmpeg_one_pass，必須 raw originals 直入、explicit crop、無 blur、單次有損編碼並保存 config／lineage。完成後以同一 output hash 跑 1×、0.5× 全片與手機實看，再用 a8_video_acceptance.py；只有 ok=true 才能進 OWNER_VIDEO_GATE。未取得通過與相應確認前，不上傳 YouTube、TikTok、Instagram、Facebook、Pinterest，也不發 Telegram。
+音訊 PASS 後才建立可重開的 CapCut／核准 NLE manual timeline；Canva／Google Vids 只有 project/timeline/export/reopen evidence 齊全才可當完整 editor，否則只做 cover／overlay／協作 draft。保存 tool_chain、polish recipe、rights、structured target-device 與 per-platform package。若採 ffmpeg_one_pass，必須 raw originals 直入、explicit crop、無 blur、單次有損編碼並保存 config／lineage。完成後以同一 output hash 跑 1×、0.5× 全片與手機實看，再用 a8_video_acceptance.py；只有 ok=true 才能進 OWNER_VIDEO_GATE。未取得相應 THIRD_PARTY_PROCESSING／DRAFT_UPLOAD／PUBLICATION／MESSAGE_SEND 獨立核准前，不做對應外部動作。
 ```
 
 ## 2026-08-26 Release Checkpoint
@@ -200,13 +202,14 @@ A8 may directly do:
 - Source-folder readback.
 - Local dry-run.
 - Storyboard, metadata, and approval-ready package.
-- Draft work inside Google Vids / Canva / CapCut if no external publishing occurs.
+- Local CapCut／NLE draft and local evidence package; Canva／Google Vids 只先做 storyboard／操作計畫，不先送檔。
 
 A8 must ask Owner/A1 before:
 
 - Uploading or publishing to YouTube / TikTok / Instagram / Pinterest.
 - Using private photos with clear faces, QR codes, phone numbers, meeting slides, client documents, or internal project labels.
-- Sending files to a third-party AI tool when the file contains private client material.
+- Sending any source file to Canva／Google Vids or another third-party processing service (`THIRD_PARTY_PROCESSING` approval；私有客戶素材預設不送)。
+- Creating a private/draft platform upload (`DRAFT_UPLOAD`), making it public (`PUBLICATION`), or sending an Owner notification (`MESSAGE_SEND`)；四者不能互相代替。
 
 ## Resume Prompt
 

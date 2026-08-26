@@ -563,3 +563,11 @@
 - 解法：preflight 分開回 `routes.graphify` 與 `routes.notebooklm`，解析 Graphify built commit 並與 `git rev-parse HEAD` 比對；graph stale 時相關回答只能 `NEEDS_LIVE_REFRESH`，NotebookLM 仍可獨立 `ready`。
 - 預防：每種 index/快取/生成物都要同時留 `source identity + built-at version/hash + refresh command`；查詢前逐 route 判 freshness，不做「有檔案就 PASS」。在 dirty worktree 不為了消掉警告偷偷重建 generated artifact。
 - 封坑驗證：`python3 .agents/skills/maplab-project-knowledge-router/scripts/preflight.py --repo-root . --json` 必須回 Graphify `needs_refresh`、NotebookLM `ready`，並列出 built commit、HEAD、兩個 pack hash verdict 與各自 refresh command。
+
+## 2026-08-27 — Skill initializer 失敗也可能留下半套 scaffold
+
+- 觸發條件：用 `init_skill.py` 建新 skill 時，`short_description` 少於介面規定的 25–64 字元；命令回 non-zero，但目標目錄與 `SKILL.md` 已先建立。
+- 根因：誤以為初始化器會原子化失敗，把 non-zero 當成「完全沒有寫入」，沒有先檢查實際檔案 inventory。
+- 解法：立刻檢查限定目標目錄，只用 `apply_patch` 補完既有 scaffold 與合法 `agents/openai.yaml`，再跑 focused tests、`quick_validate.py` 與 lifecycle audit；沒有重跑 initializer 覆蓋半成品。
+- 預防：初始化前先驗 `short_description` 為 25–64 字元；任何 setup／initializer non-zero 後都先比對目標目錄與 git diff，不能假設 rollback。需要重試時先判斷是續補、移走隔離，或明確刪除，不可盲目覆寫。
+- 封坑驗證：新 skill 檔案 inventory 無 `TODO`／placeholder；`quick_validate.py` 回 `Skill is valid!`，lifecycle audit 回 `duplicates=0`。

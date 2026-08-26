@@ -1,25 +1,31 @@
 # T-A8-001 — Folder Case to Short Video Distribution
 
 ## 接續狀態
-- **狀態**: 🟠 PARTIAL_DELIVERY（WP 已發布；YouTube／Pinterest 外部入口阻擋）
+- **狀態**: 🟠 OWNER_VIDEO_GATE（WP 已發布；舊片退件，原始素材 v2 待審）
 - **最後活動**: 2026-08-26
-- **接續點**: Owner 接受邦尼兔新版；Pro 期無日期 v5.5 母帶、原生 16:9 長版、原生 9:16 Short、兩張 2:3 Pin、平台 metadata 與 WP 三圖／alt 已完成。WordPress post `2018` 已公開並反讀通過。
-- **阻塞**: `platform_upload_access` — YouTube file chooser 對四種路徑皆回 `Not allowed`；Pinterest Google 按鈕未建立登入 session。沒有平台 ID 或 URL 就不宣稱上傳成功、不先發 Telegram 完成通知。
+- **接續點**: Owner 退回只用低解析 WP WebP 的長／短片。A8 已從 Drive 28 件原始素材重做：15 秒版使用 2 影片＋3 高解析照片，50.8 秒版使用 3 影片＋7 高解析照片；完整時間軸已作視覺辨識，待 Owner 審片。
+- **阻塞**: `owner_video_gate` — Pinterest 與 TikTok Studio 登入／上傳入口已驗證，但影片通過前不建立平台草稿、不發布。
 
 Owner: A8 影音內容產線
-Status: 🟠 PARTIAL_DELIVERY
+Status: 🟠 OWNER_VIDEO_GATE
 Created: 2026-06-17
 Risk: medium
 
 ## 2026-08-26 Release Checkpoint
 
+- **更正（同日）**：下列 `final/video/` 舊片只使用 WP 衍生 WebP，因裁切、模糊與沒有使用原始影片被 Owner 退件，不再是發布候選。
+- 新 15 秒審片：`workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/correction_20260826/render/maplab-bunny-short-15s-v2.mp4`。
+- 新 50.8 秒審片：`workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/correction_20260826/render/maplab-bunny-long-50s-v2.mp4`。
+- 視覺收據：`workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/correction_20260826/correction_receipt.md`。
+- Pinterest 已登入；TikTok Studio 已登入且上傳入口可見。仍須 Owner 先通過新片，才能消耗這兩個確切檔案進入上傳／發布步驟。
+
 - WordPress 正式頁：https://www.maplabkitchen.com/tainan-daycare-graduation-catering/
 - 公開頁 readback：H1、LINE CTA、三張正文圖與三組 alt PASS；無日期與內部工作語言。
-- 長版：`final/video/maplab-bunny-youtube-long-50s.mp4`，1920×1080，50.840 秒。
-- Short：`final/video/maplab-bunny-youtube-short-15s.mp4`，1080×1920，15.000 秒。
+- 舊長版（退件、不可發布）：`final/video/maplab-bunny-youtube-long-50s.mp4`，1920×1080，50.840 秒。
+- 舊 Short（退件、不可發布）：`final/video/maplab-bunny-youtube-short-15s.mp4`，1080×1920，15.000 秒。
 - Pin：`final/pinterest/` 兩張 1000×1500，標題／說明／alt／目的連結均在 `final/platform_metadata.md`。
 - Durable receipt：`workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/final/release_receipt_20260826.md`。
-- Next bounded action：Owner 在已開啟的 YouTube Studio 手選長／短 MP4，並在 Pinterest 完成 Google 登入；下一輪直接消耗現成素材完成欄位、兩個 YouTube publish、兩張 Pin readback 與一則 Telegram 連結通知。
+- Next bounded action：Owner 先審 `correction_20260826/render/` 的兩支 v2；通過後才把 hash 鎖定的檔案上傳 TikTok／Pinterest 草稿並回讀欄位。
 
 ## 2026-08-25 Reopen Checkpoint
 

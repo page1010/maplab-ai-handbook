@@ -116,6 +116,24 @@
 
 ---
 
+### 2.5.1 成品視覺 QA 與素材覆蓋 gate
+
+每支待審片都必須同時留下以下四種證據，缺一就只能寫 `RENDERED_NOT_VISUALLY_VERIFIED`：
+
+1. **原始素材盤點**：照片／影片總數、格式與來源；不能只看已被 WP 壓縮的衍生圖。
+2. **allowlist manifest**：實際進時間軸的檔名、影片安全 in/out、排除理由與素材數。renderer 的預設 `limit` 必須明列；manifest 數量少於計畫數就退件。
+3. **完整時間軸 contact sheet**：涵蓋 intro、每幕、轉場與 outro；要以實際成品抽幀，不用來源圖或 storyboard 代替。
+4. **視覺辨識 readback**：以人眼／vision 實看原始 contact sheet 與成品時間軸，逐項判斷裁切、清晰度、主體、字幕、日期、人臉、QR／電話與內部工作語。ffprobe、位元率、HTTP 200、render exit 0 都只是技術 preflight。
+
+素材策略：
+
+- 案例夾有原始影片時，成品至少要有真實動態片段；低解析 WP WebP 不得成為唯一影片來源。
+- Short 優先使用原生直式影片與高解析直式照片；不得用「橫片縮小置中＋大面積模糊背景」補足直式畫面，除非 Owner 明確選此風格。
+- 長版可讓直式片以清晰中央主體＋側邊環境延伸進 16:9，但原生橫式影片維持清晰全幅。
+- 若 Owner 說「裁切不對／很糊／沒有用我的影片」，立即把目前版本標為退件；先回到原始素材 coverage 與完整時間軸 readback，不在低解析成品上反覆加濾鏡。
+
+---
+
 ## 2.6 音樂／旁白工具鏈（Creative Engine v0）
 
 **第三方音樂送出 gate（2026-08-25）**：先在 repo 產 `lyrics_review.md`，跑 `a8_lyrics_engine.py review`，把歌詞給 Owner 直接核稿；只有收到明確「歌詞通過」或採納 Owner 改句後，才建立 `submission.md` 並送外部平台。只送通過審查的抽象歌詞與曲風，不送 Drive 原圖／影片。若歌詞來自含客戶或兒童的私人案例，公開具名與送出／消耗額度分別需要核准；試聽產物不直接當商用成品。

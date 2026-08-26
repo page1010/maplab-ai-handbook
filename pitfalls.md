@@ -517,3 +517,17 @@
 - 根因：把完成訊息的 all-done gate 錯誤套用到所有 Telegram 狀態回報，導致 Owner 不知道缺件。
 - 解法：分成缺件通知與完成通知；前者列平台、缺件、Owner 最短動作，後者只在核准平台全數回讀後發。
 - 預防：每次發布 receipt 必填平台矩陣與 `BLOCKER_MESSAGE_STATUS`；Telegram 送出前仍需 Owner 當下確認。
+
+## 2026-08-26 — 規格通過與稀疏抽幀不能取代完整成品視覺辨識
+
+- 觸發條件：邦尼兔長／短片尺寸、秒數、音軌與少量 start/mid/end 抽幀都正常，但 Owner 實看發現裁切不對、模糊，而且沒有用案例夾內的真實影片。
+- 根因：產線只餵 WordPress 衍生 WebP；又把 ffprobe、render success 與稀疏抽幀誤當成視覺品質驗收。長版重剪時，renderer 預設 `limit=5` 還會把明列的後五個素材靜默截掉。
+- 解法：回到 Drive 原始 28 件素材，逐張／逐片建立 contact sheet 與隱私 allowlist；短版改為 2 支原始直式影片＋3 張原始高解析照片，長版改為 3 支影片＋7 張原始高解析照片；成品用完整時間軸 contact sheet 實際辨識後才送審。
+- 預防：每支成品必留「原始盤點＋allowlist manifest＋完整時間軸 contact sheet＋視覺辨識 readback」四件證據；manifest 素材數不足即退件。案例有原始影片時，低解析 WP WebP 不得成為唯一影片來源。
+
+## 2026-08-26 — Google OAuth token 的 expiry 型別會漂移，下載器不可直接改共享憑證
+
+- 觸發條件：Drive 案例素材下載器沿用舊 helper 時，token 的 `expiry` 是整數 timestamp，而 helper 只接受 ISO 字串，refresh 前即失敗。
+- 根因：把不同版本 OAuth client 寫出的 token schema 當成固定格式，並企圖直接沿用會寫回共享 token 的 helper。
+- 解法：下載器獨立正規化整數／字串 expiry，只在記憶體 refresh access token，不改寫共享 auth 檔；下載結果以 folder allowlist、SHA-256 manifest、0700/0600 權限驗收。
+- 預防：外部憑證 helper 必先測 schema variant；讀取既有 token 可共用，寫回與 refresh side effect 必須明確隔離。

@@ -171,7 +171,7 @@ def tg_call(token: str, method: str, payload: dict | None = None, timeout: int =
         return json.loads(response.read().decode())
 
 
-def openrouter_chat(key: str, model: str, messages: list[dict]) -> str | None:
+def openrouter_chat(key: str, model: str, messages: list[dict], timeout: int = 120) -> str | None:
     request = urllib.request.Request(
         "https://openrouter.ai/api/v1/chat/completions",
         data=json.dumps(
@@ -184,7 +184,7 @@ def openrouter_chat(key: str, model: str, messages: list[dict]) -> str | None:
         ).encode(),
         headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
     )
-    with urllib.request.urlopen(request, timeout=120) as response:
+    with urllib.request.urlopen(request, timeout=timeout) as response:
         data = json.loads(response.read().decode())
     choices = data.get("choices") or []
     if not choices:

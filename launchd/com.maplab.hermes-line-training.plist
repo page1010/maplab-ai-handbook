@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.maplab.hermes-line-training</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/bin/python3</string>
+    <string>/Users/pagemacmini/maplab-ai-handbook/scripts/hermes_line_training_loop.py</string>
+    <string>--batch</string><string>5</string>
+  </array>
+  <key>StartCalendarInterval</key><dict><key>Hour</key><integer>2</integer><key>Minute</key><integer>20</integer></dict>
+  <key>WorkingDirectory</key><string>/Users/pagemacmini/maplab-ai-handbook</string>
+  <key>StandardOutPath</key><string>/Users/pagemacmini/maplab-ai-handbook/state/hermes_line_training_stdout.log</string>
+  <key>StandardErrorPath</key><string>/Users/pagemacmini/maplab-ai-handbook/state/hermes_line_training_stderr.log</string>
+</dict>
+</plist>

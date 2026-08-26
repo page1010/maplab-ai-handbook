@@ -539,3 +539,11 @@
 - 解法：正式狀態改為 `AUDIO_SELECTED → TIMING_LOCKED → EDIT_READY → RENDERED_UNVERIFIED → QA_PASS → OWNER_VIDEO_GATE → APPROVED_FOR_UPLOAD`；CapCut／核准 NLE 必留 project/timeline，Canva只承接封面／overlay，one-pass FFmpeg 必留 raw hashes／filtergraph／lineage。新增 fail-closed validator，現行 v2 因 timing、歌詞版本、proxy、盲裁、三代有損與未完整播放被直接退件。
 - 預防：任何「之前有做過」的好做法，只有在 SOP 同時寫明輸入、操作工具、可重開產物、驗收閾值、機器 gate 與失敗回復點後才算地基。工具用過但沒有 receipt，不得在後續 session 推定已完成；音訊未過 actual-audio ASR＋真人聽辨時，不得先剪正式片。
 - 封坑驗證：`python3 -m unittest tests.test_a8_video_acceptance tests.test_a8_one_pass_timeline -v` 必須全過；現行 v2 acceptance 必回 `ok=false`，而內部回歸片只能通過 raw／timing／encode／playback 子項，仍因音訊與 target-device gate 保持不可發布。
+
+## 2026-08-27 — 第三方 `doctor` 可能先安裝依賴，不能把名稱當成唯讀保證
+
+- 觸發條件：依 DeerFlow `Install.md` 執行 `make doctor`，原預期只做健康檢查，實際先由 uv 建立 `.venv` 並安裝 222 個 backend packages，才輸出 nginx／model key 診斷。
+- 根因：把 `doctor` 這個人類可讀名稱當成無副作用語意，沒有先讀 Makefile target 與 `scripts/doctor.py` 的 dependency bootstrap 路徑；第三方專案命令的實際 side effect 只能由 source 或隔離實跑證明。
+- 解法：本次確認所有寫入都限制在外接碟的 pinned DeerFlow checkout；未啟動服務、未開 port、未裝 nginx 或 Docker。Receipt 明列 `.venv`／222 packages 是 setup side effect，不把 doctor 描述成 read-only。
+- 預防：執行第三方 `setup`／`doctor`／`check`／`verify` 前先讀對應 Makefile target；若可能下載、建 venv、build image 或改 config，先放到隔離目錄、設輸出邊界並在 commentary 明示。完成判準同時看 filesystem diff、process/port 與 tool output，不能只看命令名稱或 exit code。
+- 封坑驗證：DeerFlow preflight helper 本身保持離線，只讀 anchor/config/env 名稱並回 JSON；`make doctor` 的 package side effect 與 nginx blocker 必須在 validation receipt 分開列出。

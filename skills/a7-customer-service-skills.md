@@ -2,6 +2,7 @@
 版本：v2.0 | 建立：2026-03-26 | 更新：2026-03-29 | 維護：A7
 
 > Phase 2 更新：從 20 筆真實 LINE 對話 CSV 驗證重寫。框架版（v1.0）已淘汰。
+> **Quote-ready 規則更新（2026-08-27）**：本檔的「5 項齊全送 A5」是 legacy 規則，只保留 intent、語氣、升級與 follow-up 參考。現行 readiness 唯一依 `docs/a6-a7-customer-to-quote-gym-sop.md` 與 `bot_a6/intake_flow.py`：十類欄位全部明示後才可送 A5 internal draft。
 > > 模板完整版見：data/a7-reply-templates.md
 > >
 > > ---

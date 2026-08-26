@@ -1,6 +1,8 @@
 # A6 Rapid Quote SOP — 業務報價助手操作流程
 版本：v1.0 | 建立：2026-03-29 | 維護者：A0 + A1
 
+> **Quote-ready 規則更新（2026-08-27）**：本檔 Section 2 的「活動類型＋人數即可進報價、地點可待確認」是 legacy 規則，只保留 A6/A5 角色、quote truth 與人工核准邊界。現行 readiness 唯一依 `docs/a6-a7-customer-to-quote-gym-sop.md` 與 `bot_a6/intake_flow.py`：十類欄位全部明示後才可送 A5 internal draft。
+
 ---
 
 ## SECTION 0 — 角色定位

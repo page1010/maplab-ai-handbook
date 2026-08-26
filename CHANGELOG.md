@@ -3,6 +3,19 @@
 本文件記錄 maplab-ai-handbook 的所有重大版本變更。
 格式：版本號 | 日期 | 變更摘要 | 執行 Agent
 
+## v6.10（DeerFlow/OpenRouter Isolated Research + Discoverable Lead Intake）— 2026-08-27
+
+**A1 把新 agent runtime 與短影音工具建議收斂成可發現、可驗證、不可越界的 Skill／SOP。**
+
+執行 Agent：Codex acting as A1
+
+1. 建立 user Skill `deerflow-openrouter-research`：只允許 public/synthetic 長任務，加入 commit pin、OpenRouter egress、loopback/sandbox、secret/PII stop rules、preflight 與 receipt contract。
+2. DeerFlow 官方 source pin `788a890` 到外接工作區；建立 config v36、OpenRouter model placeholder 與 backend diagnostic environment。因 nginx 缺少且 Docker 不存在，依官方規則未啟動服務或安裝系統套件。
+3. 建立 repo Skill `maplab-lead-intake-followup`，把既有 form／LINE／DM／詢價流程包成 Codex discovery entry；沿用十欄 quote-ready、dedupe、A7→A6→A5 與人工發送 gate，不另建 CRM。
+4. 安裝 `@playwright/cli` 0.1.18 與官方 `playwright-cli` Agent Skill；隔離 `example.com` snapshot smoke 成功且 session 已關閉。
+5. Anime.js、Cult UI 定位為實際 React portal 的 project dependency；Supabase 延至 SSOT、PII、RLS、backup/rollback 架構核准後，避免第二真相源。
+6. 驗證：兩個新 Skill validator PASS、skill audit duplicates=0、Lead intake unittest 7/7 PASS、DeerFlow preflight 精確只剩 nginx blocker。
+
 ## v6.9（Directional Map + NotebookLM SOP Router）— 2026-08-25
 
 **A1 將 MAPLAB 非投資域全貌、A2–A8 交接與 SOP 導航接成可重建地圖、Gemini Notebook 與地端 fallback。**

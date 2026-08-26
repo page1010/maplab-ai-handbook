@@ -547,3 +547,19 @@
 - 解法：本次確認所有寫入都限制在外接碟的 pinned DeerFlow checkout；未啟動服務、未開 port、未裝 nginx 或 Docker。Receipt 明列 `.venv`／222 packages 是 setup side effect，不把 doctor 描述成 read-only。
 - 預防：執行第三方 `setup`／`doctor`／`check`／`verify` 前先讀對應 Makefile target；若可能下載、建 venv、build image 或改 config，先放到隔離目錄、設輸出邊界並在 commentary 明示。完成判準同時看 filesystem diff、process/port 與 tool output，不能只看命令名稱或 exit code。
 - 封坑驗證：DeerFlow preflight helper 本身保持離線，只讀 anchor/config/env 名稱並回 JSON；`make doctor` 的 package side effect 與 nginx blocker 必須在 validation receipt 分開列出。
+
+## 2026-08-27 — 第三方 Skill 顯示安裝成功，不代表符合 Codex 可發現格式
+
+- 觸發條件：用官方 skill-installer 從 pinned GitHub commit 安裝 `watch` 與 `impeccable`，下載器均回 installed，但 `quick_validate.py` 隨即拒絕 `version`、`argument-hint`、`user-invocable`、`homepage` 等額外 frontmatter 欄位。
+- 根因：上游以跨 harness 格式發布；下載成功只證明檔案抵達，不證明當前 Codex 的 frontmatter schema、工具路徑或安全政策相容。
+- 解法：保留 `name`、`description`、`license`、`allowed-tools`，把 provenance/version/argument hint 移入合法 `metadata`；記錄 immutable source commit，另加私有資料、hook、自動安裝與 cleanup 的本機護欄，再重跑 validator 與實際 smoke。
+- 預防：所有外部 skill 都走 `pin commit → install → quick_validate → realistic smoke → lifecycle audit`；任何一步沒過都不能標已上線。不要把 `npx ... install` 或 installer 的 success line 當完成證據。
+- 封坑驗證：`watch`、`impeccable` 與三個新 MAPLAB routers 共 5 個 validator 全 PASS；lifecycle audit 回 `skills=14 duplicates=0`；watch 以無網路 ASR 的 2 秒本機影片成功抽出 4 frames。
+
+## 2026-08-27 — 索引檔存在且可解析，不代表索引對目前 HEAD 新鮮
+
+- 觸發條件：Project knowledge preflight 初版只檢查 `graphify-out/graph.json`／HTML 存在與 NotebookLM pack hash，一度回整體 `ready`；獨立架構稽核再讀 `GRAPH_REPORT.md` 才發現 Graphify built commit 是 `e5d931d4`，已落後 repo HEAD。
+- 根因：把 artifact presence/integrity 與 source freshness 混成同一個布林值；NotebookLM pack hash 對齊也不能替 Graphify 或 live runtime 背書。
+- 解法：preflight 分開回 `routes.graphify` 與 `routes.notebooklm`，解析 Graphify built commit 並與 `git rev-parse HEAD` 比對；graph stale 時相關回答只能 `NEEDS_LIVE_REFRESH`，NotebookLM 仍可獨立 `ready`。
+- 預防：每種 index/快取/生成物都要同時留 `source identity + built-at version/hash + refresh command`；查詢前逐 route 判 freshness，不做「有檔案就 PASS」。在 dirty worktree 不為了消掉警告偷偷重建 generated artifact。
+- 封坑驗證：`python3 .agents/skills/maplab-project-knowledge-router/scripts/preflight.py --repo-root . --json` 必須回 Graphify `needs_refresh`、NotebookLM `ready`，並列出 built commit、HEAD、兩個 pack hash verdict 與各自 refresh command。

@@ -23,6 +23,8 @@ data/telegram-photos/
 bot_a6/bot_a6.log
 bot_a6/launchd_stdout.log
 bot_a6/launchd_stderr.log
+bot_a6/hermes_gateway.log
+bot_a6/hermes_conv.json
 bot/conv_history.json
 bot/bot.log
 bot/launchd_stdout.log

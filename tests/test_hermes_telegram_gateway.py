@@ -1,0 +1,79 @@
+import io
+import tempfile
+import unittest
+from pathlib import Path
+from unittest import mock
+
+from bot_a6 import hermes_telegram_gateway as gateway
+
+
+class _Response:
+    def __init__(self, payload: bytes):
+        self.payload = io.BytesIO(payload)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *_args):
+        return False
+
+    def read(self, amount=-1):
+        return self.payload.read(amount)
+
+
+class HermesTelegramGatewayTest(unittest.TestCase):
+    def test_capability_question_is_deterministic_route(self):
+        self.assertTrue(gateway.is_capability_question("權限邊界與當前模型是什麼？"))
+        self.assertTrue(gateway.is_capability_question("你有持久記憶嗎"))
+        self.assertFalse(gateway.is_capability_question("幫我查動能名單"))
+
+    def test_natural_safe_request_routes_without_do_prefix(self):
+        self.assertEqual(gateway.extract_action_request("幫我查 Hermes runtime 狀態"), "幫我查 Hermes runtime 狀態")
+        self.assertEqual(gateway.extract_action_request("現在動能名單狀態如何"), "現在動能名單狀態如何")
+        self.assertEqual(gateway.extract_action_request("/do recent-commits"), "recent-commits")
+
+    def test_owner_group_message_requires_mention_or_reply(self):
+        base = {"chat": {"type": "supergroup"}, "text": "大家早"}
+        self.assertFalse(gateway.is_group_addressed(base, "maplab_a6_bot", 99))
+        mentioned = {**base, "text": "@maplab_a6_bot 幫我查狀態"}
+        self.assertTrue(gateway.is_group_addressed(mentioned, "maplab_a6_bot", 99))
+        replied = {**base, "reply_to_message": {"from": {"id": 99}}}
+        self.assertTrue(gateway.is_group_addressed(replied, "maplab_a6_bot", 99))
+
+    def test_group_command_normalization(self):
+        text = gateway.strip_bot_mention("/status@maplab_a6_bot", "maplab_a6_bot")
+        self.assertEqual(gateway.normalize_command(text, "maplab_a6_bot"), "/status")
+
+    def test_photo_is_downloaded_with_private_receipt(self):
+        message = {
+            "message_id": 88,
+            "chat": {"id": 123, "type": "private"},
+            "from": {"id": 456},
+            "caption": "測試照片",
+            "photo": [
+                {"file_id": "small", "file_unique_id": "same", "file_size": 10, "width": 10},
+                {"file_id": "large", "file_unique_id": "unique-id", "file_size": 20, "width": 20},
+            ],
+        }
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(
+            gateway, "INBOX_ROOT", Path(tmp)
+        ), mock.patch.object(
+            gateway,
+            "tg_call",
+            return_value={"ok": True, "result": {"file_path": "photos/file_1.jpg"}},
+        ) as tg, mock.patch.object(
+            gateway.urllib.request, "urlopen", return_value=_Response(b"image-bytes")
+        ):
+            receipt = gateway.receive_photo("secret-token", message)
+            self.assertEqual(tg.call_args.args[2]["file_id"], "large")
+            saved = Path(receipt["file_path"])
+            receipt_path = Path(receipt["receipt_path"])
+            self.assertTrue(saved.exists())
+            self.assertTrue(receipt_path.exists())
+            self.assertEqual(saved.stat().st_mode & 0o777, 0o600)
+            self.assertEqual(receipt_path.stat().st_mode & 0o777, 0o600)
+            self.assertIn(str(receipt_path), receipt_path.read_text(encoding="utf-8"))
+
+
+if __name__ == "__main__":
+    unittest.main()

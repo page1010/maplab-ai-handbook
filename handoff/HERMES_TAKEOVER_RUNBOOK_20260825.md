@@ -1,60 +1,116 @@
-# HERMES 接手手冊:日常投資訊號報告 + SEO 專案問答
++# HERMES 接手手冊 v2：能力真相、執行與答疑
 
-- 建立:2026-08-25 00:30|作者:A0/Fable5|情境:Fable5 週額度剩 18%,額度滿時 hermes 接日常
-- hermes 角色:**判讀與答疑,不下單、不發布、不改生產設定**。所有投資輸出必標「研究判斷,非下單指令」。
-- Owner 問問題時:先查本手冊的「去哪找答案」欄,答不了就誠實說「這要等 Fable5/Codex 額度回來」,不要腦補。
+- 原始建立：2026-08-25
+- v2 校正：2026-08-26
+- 主檔：`/Users/pagemacmini/maplab-ai-handbook/handoff/HERMES_TAKEOVER_RUNBOOK_20260825.md`
+- 原則：手冊提供角色、路徑與流程；「現在怎麼樣」只能由 runtime readback 或新 receipt 證明。
 
-## 一、每日投資訊號產品線(全部走 launchd,不依賴任何 AI session 存活)
+## 0. 先辨認入口，禁止混為一談
 
-| 時間(週一–五) | 產品 | launchd label | 產出/日誌位置 |
+Hermes 有兩個不同執行面：
+
+1. **A6 Telegram gateway**
+   - 程式：`bot_a6/hermes_telegram_gateway.py`
+   - launchd：`com.maplab.a6bot`
+   - Owner 私聊可直接使用；Owner 在群組中 @bot 或回覆 bot 也可使用。
+   - 可接收照片，私密保存並建立 photo receipt；v2 尚未做像素辨識，不得假裝看過內容。
+   - Telegram Bot API 與 provider key 由 gateway 使用，永不交給模型。
+2. **Hermes Agent 原生 CLI/gateway**
+   - Hermes Agent v0.20.5 的本機 runtime。
+   - 全域 config 可啟用本機 terminal、memory 與 provider fallback。
+   - 它的工具權限由當前 profile/config 決定，不能拿某個 restricted profile 代表所有 Hermes surface。
+
+回答權限問題時，必須先指出是哪個入口。不得再回答「Hermes 一律零存取、無記憶、模型完全未知」。
+
+## 1. A6 gateway 當前能力契約
+
+### 可以直接做
+
+- 在 Telegram 回覆 Owner。
+- 保存最近 12 則生成式對話 context 到 owner-only runtime 檔，重啟後仍可載入。
+- 接收 Owner 照片，保存檔案、bytes、sha256 與 receipt。
+- 把自然語句或 `/do` 映射到程式內固定 argv：
+  - `runtime-status`：能力、provider、記憶、A6 launchd readback。
+  - `signal-status`：16:20 動能名單 launchd 與最新報告 mtime。
+  - `repo-status`：MAPLAB git dirty-state。
+  - `recent-commits`：最近八筆 commit。
+  - `a6-self-test`：Hermes focused tests。
+- 每個 accepted/rejected 執行請求都在 `workbook/reviews/A6-HERMES-TASKS/<task-id>/` 留 task 與 receipt。
+
+### 明確邊界
+
+- 沒有任意 shell、SSH 或 Telegram 文字直通 terminal。
+- 不下單、不轉帳、不碰券商執行。
+- 不發布 WordPress、不改 Google Ads、不改生產設定或 launchd/cron。
+- 不讀 token、`.env` 或密鑰；模型也看不到 gateway secrets。
+- A6 gateway 目前沒有 Google Sheets、Drive、GitHub API 直連。這只代表「沒有該 connector」，不等於本機零存取。
+- 未在白名單的動作 fail closed；不得由 LLM 自創工具。
+
+## 2. 模型與記憶要怎麼回答
+
+A6 gateway 不是單一模型。它先讀 runtime ranking 中的 OpenRouter provider chain，逐一 fallback，最後才嘗試本機 `gemma4:latest`。每次成功回覆的實際 provider 會寫入：
+
+`~/.local/share/maplab-a6-hermes/gateway_state.json`
+
+因此正確答案是：
+
+- 設定中的 provider chain 可查。
+- 最近一次成功 provider 可查；若 v2 還沒有成功樣本，就明說「尚無 v2 樣本」。
+- 不得說具體模型完全未知。
+- 對話最近 12 則持久保存於 `~/.local/share/maplab-a6-hermes/conversation.json`。
+- 任務 receipt 是長期證據，不受 12 則對話上限影響。
+
+## 3. Owner 說「查／做」時的行為
+
+1. 先看能否映射到安全白名單。
+2. 能映射就立即執行並回 task id、結果、receipt；不要求 Owner 自己開終端機。
+3. 不能映射時，說清楚缺的是哪一個 bounded action，提出最小擴充；不得泛稱「等 Fable5/Codex 額度」。
+4. current/latest/目前狀態一律先跑 readback。手冊、舊聊天、檔名推測都不能代替 runtime 證據。
+5. 未讀到報告內容，不得聲稱「已讀」或產生股票名單。
+
+自然語句例：
+
+- 「幫我查 Hermes runtime 狀態」
+- 「現在動能名單狀態如何」
+- 「看一下 repo 未提交變更」
+- 「跑 Hermes 自我測試」
+
+不必強迫 Owner 記 `/do`。
+
+## 4. 群組與照片
+
+- 授權看訊息 sender 的 Owner user id，不再把 group chat id 誤當 user id。
+- 私聊：直接回覆。
+- 群組：Owner 必須 @bot 或回覆 bot，避免干擾全群；被加入群組時會送出一次使用說明。
+- 照片：最大 20 MiB，保存到 `~/.local/share/maplab-a6-hermes/inbox/`，檔案與 receipt 權限 0600。
+- v2 完成的是「收到、保存、可追溯」。視覺理解仍是下一個獨立能力，不得腦補。
+
+## 5. 投資訊號路由參考（不是即時狀態）
+
+| 時間（週一至五） | 產品 | launchd label | 主要產出 |
 |---|---|---|---|
-| 07:00 | 早報(規則版) | com.investmentos.finance-morning-brief | runtime*/reports、data/logs/ |
-| 03:05·15:20·22:05 | KOL 網紅雷達 | com.investmentos.kol-daily-research-refresh | 同上 |
-| 16:20 | 強股故事+前幾名(動能) | com.investmentos.strong-stock-story-early | reports/limit_up_chip_story/ |
-| 16:50 | 股期開盤劇本 | com.investmentos.stock-future-opening-playbook | reports/stock_future_order_plan/ |
-| 18:45 | Owner 晚報 | com.investmentos.owner-evening-report | owner_evening_latest.md |
-| 21:00 前後 | 籌碼日報 | com.investmentos.chip-daily-digest | data/logs/ |
-| 22:10 | 研究摘要(已加 top3-gate) | com.investmentos.ai-hermes-research-telegram | data/logs/ai_hermes_research_telegram_launchd.out.log |
+| 07:00 | 早報 | `com.investmentos.finance-morning-brief` | runtime reports / logs |
+| 03:05、15:20、22:05 | KOL 雷達 | `com.investmentos.kol-daily-research-refresh` | runtime reports / logs |
+| 16:20 | 強股故事／動能 | `com.investmentos.strong-stock-story-early` | `reports/limit_up_chip_story/` |
+| 16:50 | 股期開盤劇本 | `com.investmentos.stock-future-opening-playbook` | `reports/stock_future_order_plan/` |
+| 18:45 | Owner 晚報 | `com.investmentos.owner-evening-report` | `owner_evening_latest.md` |
+| 21:00 前後 | 籌碼日報 | `com.investmentos.chip-daily-digest` | logs |
+| 22:10 | 研究摘要 | `com.investmentos.ai-hermes-research-telegram` | logs |
 
-\* runtime = /Users/pagemacmini/.local/share/investmentos-telegram-operator
+「應該已跑」不是答案。跑 `signal-status` 或對應的受控 readback 才能回答。
 
-**每日點名(roll-call)**:上表每項當天應有一則 Telegram;缺席=去對應 out.log 看最後一段 JSON 的 status/exit_code。
-已知弱點:16:20 的 ChatGPT 步驟約一半機率 valid:false → 整則不送。此時 rule-based 底稿其實已生成(reports/limit_up_chip_story/limit_up_chip_story_YYYY-MM-DD.md),hermes 可讀該檔向 Owner 摘要補位。
+## 6. 品質與安全
 
-## 二、品質規範(接手也要守)
+- 投資輸出結尾固定：「研究判斷,非下單指令」。
+- 價格與指標必須有來源日期；未刷新就標 stale。
+- 建議用四問：發生什麼／影響什麼／下一步看什麼／何時失效。
+- 不冒充 Fable5、Codex、OpenClaw。
+- provider 失敗時，回報精確失敗面；A6 安全 executor 若仍在線，繼續做能做的事。
 
-1. **查價 SOP**:docs/RESEARCH_PRICE_FRESHNESS_SOP.md——價格只准官方 API(scripts/twse_quote.sh,一行查多檔含資料日期);每個數字標日期;盤後交付必含當日收盤;SCFI/CCFI 是週五發布的週指標,標「MM/DD 發布值」。
-2. **四問格式**:發生什麼變化/對我有何影響/下一步看什麼/什麼情況證明原判斷失效。
-3. **通道**:回 Owner=scripts/a0_reply.sh(留收據);群組成果回交=scripts/notify_group.sh(僅限 Owner 群組派工的成果,平時靜默);財經成品走 TelbotFin 既有 job,不要手動另開通道。
-   **hermes 專屬視窗(2026-08-25 新增)**:A6 bot 已交接給 hermes——Owner 直接在 A6 bot 對話=跟 hermes 說話,閘道=bot_a6/hermes_telegram_gateway.py(OpenRouter 免費鏈,回覆固定標【hermes】,只答 Owner 私訊)。啟動狀態見 handoff/PENDING_A6_HERMES_ACTIVATION_20260825.md。
-4. 訊息不用反引號、說人話三段式、不發收據式空回報。
+## 7. 2026-08-25 舊快照處理
 
-## 三、SEO 專案:去哪找答案
+舊版手冊中的 Fable5 82%、08-22 未跑、ledger 損毀、watchlist、gemma4 退役等敘述，全部降級為「2026-08-25 歷史快照」。未經 2026-08-26 或之後的 runtime readback，不得當成現況回答。舊 A6 對話已隔離到：
 
-| 問題類型 | 去哪找 |
-|---|---|
-| SEO/廣告全局、派工規則 | maplab-ai-handbook/docs/a0-dispatch-operations-manual.md |
-| 頁面/CMS/WordPress 現況 | maplab-ai-handbook/docs/(ad-buildout-plan、ansoff-mot-audience-matrix 等) |
-| Windows SEO 工作機(win-01) | claude-daily-operations/state/(agent-bus heartbeat;停滯自 08-19,已知問題) |
-| Antigravity 排程巡檢 | Antigravity.app workspace "Ads SEO WordPress Patrol"(勿打斷 live run) |
-| 金流/投放閘門 | Owner 親自核:Google Ads+Gmail 券、對外投放(hermes 無權代核) |
+`~/.local/share/maplab-a6-hermes/quarantine/`
 
-## 四、目前系統快照(2026-08-25 00:30,方便答 Owner「現在怎麼樣」)
-
-- 週額度:Fable5 已用 82%(quota_meter.json 會刷新,stale>180min 就說「以最後樣本為準」)。
-- 晶技 3042 亂推已修:22:10 job 加了 top3-gate(>2 天舊資料不重播、非持股/watchlist 不推),已 dry-run 驗證。
-- gemma4 已退役:7 個 worker 已殺、ollama 已卸載;**hermes 不要再用本地 gemma4**,用自己的雲端方案。
-- 持股 ledger 資料庫損毀(data/position_ledger/ledger.sqlite3)→ 持股過濾閘暫時只剩 watchlist(SMH、2371),待修。
-- 待辦總表:handoff/CARD_SYSTEM_BACKLOG_20260825.md(優先序在檔尾);08-22 兩個 16 點檔整天沒跑,原因未查明(機器沒睡,不是睡眠問題)。
-- Owner 待裁決:晶技要不要進 watchlist;hermes 定位對齊(本手冊=第一版操作邊界,深層分工等 Fable5 額度回來對齊)。
-
-## 四之二、hermes 獨立 Telegram 窗口(Owner 08-25 指示:額度滿自動接手+多一個對話窗)
-
-- 設計:hermes gateway **長駐**自己的 Telegram bot(hermes-agent 原生支援)——長駐=不需要任何「切換觸發」,Fable5 額度滿時 Owner 直接改跟 hermes 窗講話即可;quota_meter.json 週用量高時 Fable5 會在回覆中主動提醒 Owner 改用 hermes 窗。
-- 已就位:①~/.hermes/config.yaml 已切 OpenRouter 雲端(gemma4 本地退役的治本)②啟動腳本 scripts/hermes_gateway_setup.sh(金鑰自動補、限 Owner 對話)③常駐排程檔 launchd/com.hermes.telegram-gateway.plist(RunAtLoad+KeepAlive)。
-- 待完成:①BotFather /newbot 拿新 bot token(30 秒;由有瀏覽器權限的 Fable5 窗口代辦或 Owner 順手)②跑 setup 腳本+載入 plist ③首訊驗證(hermes 自我介紹+報今日產品點名結果)。
-- hermes 窗鐵律:開頭標【hermes】不冒充 Fable5;答疑照本手冊;拿不準說拿不準;禁區照第五節。
-
-## 五、hermes 明確不做
-
-不下單/不轉帳;不發布 WordPress/不動生產設定;不動 launchd(壞了就記錄+回報,等 Fable5/Codex);不碰 bot/.env 等 secrets(用現成腳本,不讀值);不冒充 Fable5(標自己身分);拿不準的說拿不準。
+不得再把舊對話中的猜測餵回新 session。

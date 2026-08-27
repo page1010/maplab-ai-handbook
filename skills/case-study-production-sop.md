@@ -1,6 +1,6 @@
 # skills/case-study-production-sop.md — 個案（活動場次）內容產線 SOP
 
-> 狀態：DRAFT（2026-08-02）。一支技能把「一個活動場次 → WP 文章 + 影片」的產線歸一。
+> 狀態：ACTIVE v1.1（2026-08-27）。一支技能把「一個活動場次 → WP 文章 + 影片」的產線歸一。
 > **不重造輪子**：本 SOP 只做「編排 + 缺口」，實作全部指到既有技能/規範（見 §0）。
 > 核心紀律：A2/A3/A4 先產文＋確認 → **確認後才交 A8 建影片**；全程 draft/私人，Owner 點頭才公開。
 
@@ -17,6 +17,45 @@
 - 廣告(A3)：`skills/a3-social-ads-skills.md`、`recalls/A3_recall.md`、`docs/ad-funnel-battle-plan.md`。
 - 影片(A8)：`skills/a8-produce-to-publish-sop.md`、`skills/a8-video-pipeline-skills.md`、`skills/a8-local-motion-integration.md`、`recalls/A8_recall.md`。
 - 上稿/憑證：`skills/gdrive-to-wordpress-upload-guide.md`、`scripts/wp_publish_draft.py`（Notion vault 取密、draft-only）、`skills/credentials/wordpress-api.md`。
+
+## 0.5 Case-first intake gate（先有真實案例，才有題目）
+
+一個服務分類、既有 WP landing、SEO 關鍵字或想像中的歌風，**都不構成案例**。案例候選必須先有 Drive 子資料夾 ID、活動日期與可列出的真實影像資產；資料夾名稱只作入口，不能直接當公開事實。
+
+固定順序：
+
+```text
+Drive folder ID + connector inventory
+→ 活動日期／報價或等價事件錨
+→ TimeTree／外燴系統（如適用）
+→ MAPLAB_ASSET_LOG file_id 對應
+→ 原始影像 visual QA
+→ 客戶／場館 2–3 個公開來源交叉查證（私人家庭案可匿名豁免）
+→ live WP / GSC / seo-keyword-map 查重與 pillar 路由
+→ 才定 public-safe title、主／次關鍵字與曲風
+```
+
+### 0.5.1 三個硬規則
+
+1. **同資料夾不等於同一案件事實。** 若混有行程、個資、私人文件或其他專案資料，標 `unrelated_private_document_detected=true`，並以 `excluded_from_case_facts` 排除；不引用、不摘要、不寫進稿。
+2. **十個案例不等於十個新 slug。** 每案先選 `existing_pillar_proof_module`、`existing_post_music_extension`、`new_case_gap` 或 `social_only`；已被 pillar 承接的意圖優先補 proof，不製造關鍵字互搶。
+3. **關鍵字先是候選。** 只有案例身分、公開名稱與 live collision check 都通過，才可把 `candidate_not_final` 升為 `final_verified`。
+
+### 0.5.2 機器閘門
+
+每個案例先登記到 case registry，再跑：
+
+```bash
+python3 scripts/maplab_case_first_gate.py <registry.json> --level intake
+```
+
+只有要進 WordPress 草稿的單案再跑：
+
+```bash
+python3 scripts/maplab_case_first_gate.py <registry.json> --level wp --case-id <CASE_ID>
+```
+
+`--level wp` 會要求 verified identity、公開名稱或匿名策略、事件／報價／ASSET_LOG／visual QA、live SEO 查重與 public-safe title。任何一項缺失時，正確輸出是 fail closed 與下一個證據動作，而不是先寫文章再補來源。
 
 ## 1. 檔案組織（沿用既有 Drive 慣例）
 

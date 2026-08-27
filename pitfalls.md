@@ -610,3 +610,18 @@
 - 根因：把送給 `rg` 的人類可讀 pattern 當成純資料，忽略 shell 會先解析雙引號內的 backtick 與 `$()`。
 - 解法：含 Markdown backtick 或 `$` 的搜尋 pattern 一律用單引號包住，或改為固定字串參數；失敗後立即檢查 command output，確認沒有敏感值或寫入副作用。
 - 預防：建構 shell command 前先做 interpolation audit；未知／外來文字不要直接插入 command string。驗證搜尋使用 `rtk rg -n 'pattern-with-`backtick`' ...`，不得讓 shell 先解讀 pattern。
+
+## 2026-08-27 — Durable job 與私有 worker receipt 是兩個 ownership root，驗證工具不可混用
+
+- 觸發條件：heartbeat 驗證 LINE round 時，先到 user-local `supervisor_jobs` 目錄尋找 job lock，又把該 repo 外路徑交給 `git status`，分別得到 lock 不存在與 `outside repository`。
+- 根因：混淆 canonical control plane 與 private data plane；job state／lock 位於 repo 的 ignored `MAPLAB-DURABLE-JOBS/<job-id>/`，run／lesson／supervisor receipt 才位於 user-local 0700 cache。
+- 解法：canonical `job.json` 與 `.line-training-supervisor.lock` 用 repo path 驗證；user-local run、delta、receipt 用 `stat`／SHA-256 驗證。`git status` 只接 repo 內 path，不拿它查外部資料根。
+- 預防：每個 durable adapter 的 Resume Prompt 必列出 control root、data root、lock path 與各自驗證工具；完成檢查先按 ownership root 分組，不用單一命令跨兩個根。
+
+## 2026-08-27 — Live 服務頁與案例資料夾都不能單獨證明真實案例
+
+- 觸發條件：規劃 WP／音樂 01–10 時，先從十個 live 服務分類頁定題與曲風，沒有先逐案對應 Google Drive 活動資料夾、活動身分與素材；後續又發現一個案例夾混入無關私人文件。
+- 根因：把「內容 owner 存在」誤當「案例證據存在」，也把「檔案位於案例夾」誤當「檔案屬於該案例」。這會讓關鍵字、專名與曲風在事實鏈完成前被過早定案。
+- 解法：案例產線固定走 `Drive folder ID/inventory → event/quote anchor → TimeTree/外燴系統 → ASSET_LOG file ID → visual QA → 公開來源三角 → live SEO collision/pillar route → title/keyword/style`；無關私密文件標記後排除，不引用或摘要。十個案例逐案選 existing post、pillar proof、new gap 或 social-only，不自動建十個 slug。
+- 預防：任何案例 registry 先跑 `scripts/maplab_case_first_gate.py --level intake`；進 WP 前再跑 `--level wp --case-id ...`。服務頁不能作 `source_kind`，final keyword 必須同時有 verified identity 與 live collision proof。
+- 封坑驗證：`tests.test_maplab_case_first_gate` 7/7 PASS；真實 10 案 intake PASS；服飾店開幕案例在分店、ASSET_LOG、visual QA 與 live collision 未齊時由 WP gate 正確拒絕。

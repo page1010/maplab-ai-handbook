@@ -75,4 +75,5 @@ exit 0; plateau_method_review_required; round 12; calls 60; no new attempt
 - Privacy：raw text 0、customer identifiers 0、source conversation IDs 0、network 0、model calls 0、customer send false、live price write false。
 - Artifact：`/Users/pagemacmini/.maplab/margin-leak-audit/20260828-calibration-v1.json`，mode 0600，SHA-256 `812e313c24e449fbdb75210f9060de59bd107622cb1b9bd27ce14b8cadceef85`。
 - Tests：`python3 -m unittest tests.test_maplab_margin_leak_calibrate -v` → 2/2 PASS；`python3 -m py_compile scripts/maplab_margin_leak_calibrate.py` → PASS。
+- Repo checkpoint：`70077c0 feat(margin): calibrate hidden-cost candidates`。
 - 解讀：label 是 deterministic prelabel，不是 human gold／confirmed leakage；confirmed leakage amount 保持 0。

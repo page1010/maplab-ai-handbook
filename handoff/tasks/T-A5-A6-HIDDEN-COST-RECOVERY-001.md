@@ -3,7 +3,7 @@
 ```yaml
 status: ACTIVE_EVIDENCE_JOIN
 assigned_session: 2026-08-28 / A1-A5-A6 Codex
-last_committed_by: Codex / 665eb23 (workflow, workbook, SOP and receipts); 86c1cf1 (supervisor guard)
+last_committed_by: Codex / 70077c0 (50-case calibration); 665eb23 (workflow/workbook); 86c1cf1 (supervisor guard)
 owner_goal: 從真實對話與交付證據找出本來不在標準範圍、MAPLAB 實際代解且未收費的工作，產品化為合理加價服務，提升專案毛利。
 data_class: private-local-only
 ```

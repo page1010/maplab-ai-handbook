@@ -118,3 +118,16 @@ exit 0; plateau_method_review_required; round 12; calls 60; no new attempt
 - Verification：四個 margin modules focused unittest 13/13 PASS；`py_compile` PASS；independent audit 對日期、identity entropy、prior provenance、manifest、ambiguous split、stdout privacy 複審 PASS。
 - Repo checkpoint：`444c73a feat(margin): pilot join-first shadow links`。
 - Stop-loss decision：沒有 unique two-anchor link，禁止再擴 name/fuzzy matcher；下一 repair point 是 proposal-only intake-time `case_id` capture contract，先用 synthetic five-stage fixture 驗證，不改 live Sheet。
+
+## 12. Intake-time Case-ID synthetic contract（2026-08-28 03:49 Asia/Taipei）
+
+- Plateau review：最近三個 fingerprints 為 evidence join `9a739a73...`、Google bridge `8c96645e...`、join-first `cfe227ba...`；後兩輪 verified improvement 都是 0，依 stop-loss 不再推進 historical inference，repair point 改 prospective intake capture。
+- Method contract：`margin-intake-case-id-contract-v1`；fingerprint `a1573a74b88222ae10c2b8edcbeaa9c7bdf2f139596df6be6c33db7b2bea2123`；model=`none`、fixed-ten synthetic holdout、deterministic referential-integrity evaluator。
+- Result：10/10 expected outcomes PASS；valid case chain 5/5。Case Store 與 `SALES_INTAKE` 必須各有一個同 key acknowledgement，缺任一邊不建立 quote；quote gate check＋insert 同鎖，late duplicate acknowledgement fail closed。
+- Durable intake：synthetic SQLite ledger 以 source-event primary key、case unique constraint、`BEGIN IMMEDIATE`、FULL sync 通過 fresh-instance replay 與 two-connection race。同 event＋同 payload 回既有 key；同 event＋不同 payload 回 `REPLAY_CONFLICT`。
+- Migration boundary：cutover 用 ingestion cursor／snapshot，不用 event date；historical blank 保持 `LEGACY_UNLINKED`，fuzzy/name/date/content-hash auto-link forbidden；post-cutover 必須由 ledger exact event→case readback 證明。
+- Current-system read-only gaps：`LineWebhook.gs` 留空 case_id、Case Store row/date fallback、`Code.gs` 另生秒級 `Q...`、live `SALES_INTAKE` header 與 repo positional writer 不相容、Orders／OrderCharges／ASSET_LOG 缺完整 foreign keys；`/casequote` raw LINE context 另有 cloud fallback。這些只記 plan boundary，本輪未修改 production file。
+- Receipt：`/Users/pagemacmini/.maplab/margin-leak-audit/20260828-case-id-capture-contract-v1.json`，mode 0600，parent 0700，SHA-256 `b5f0c17824c2486b4fa1c3ee228cf5fae51a0044662264f5e48cc37d8696206d`；deterministic body `4fc873790f2bd023ba7c936d13631c3b171ac49ea0817a11d9925b9a0648bf2f`。
+- Privacy/no-write：exact top-level＋nested＋per-scenario key/value allowlist、ISO timestamp、fixture/body hash、raw-case-ID reject；network/model/Google write/customer send/price write/history mutation/new private egress 全 0，confirmed leakage amount 0。
+- Verification：contract 16/16 PASS；五個 margin modules focused suite 29/29 PASS；`py_compile` PASS；兩個 independent red-team 最終 PASS。Implementation `4ecda3f`。
+- Decision：`PROPOSAL_ONLY / eligible_for_separate_live_review`，不是 live adoption。下一步只做 no-write integration patch plan、migration/rollback/readback 與 local fixture compatibility tests；不部署 GAS、不改 live Sheets。

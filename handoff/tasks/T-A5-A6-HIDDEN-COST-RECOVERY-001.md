@@ -1,9 +1,9 @@
 # T-A5-A6-HIDDEN-COST-RECOVERY-001 — 隱藏成本與可加價服務回收
 
 ```yaml
-status: ACTIVE_INTAKE_CASE_ID_CAPTURE
+status: ACTIVE_CASE_ID_INTEGRATION_PLAN
 assigned_session: 2026-08-28 / A1-A5-A6 Codex
-last_committed_by: Codex / 444c73a (fixed-five join-first shadow); 0ed12cb (live Google join bridge); bfb6854 (10-case evidence join); 70077c0 (50-case calibration); 665eb23 (workflow/workbook); 86c1cf1 (supervisor guard)
+last_committed_by: Codex / 4ecda3f (synthetic intake case-id contract); 444c73a (fixed-five join-first shadow); 0ed12cb (live Google join bridge); bfb6854 (10-case evidence join); 70077c0 (50-case calibration); 665eb23 (workflow/workbook); 86c1cf1 (supervisor guard)
 owner_goal: 從真實對話與交付證據找出本來不在標準範圍、MAPLAB 實際代解且未收費的工作，產品化為合理加價服務，提升專案毛利。
 data_class: private-local-only
 ```
@@ -22,8 +22,10 @@ data_class: private-local-only
 - `scripts/maplab_margin_leak_evidence_join.py`
 - `scripts/maplab_margin_google_join_bridge.py`
 - `scripts/maplab_margin_join_first_shadow.py`
+- `scripts/maplab_case_id_capture_contract.py`
 - `scripts/build_hidden_cost_pricing_workbook.mjs`
 - `docs/margin-leak-evidence-join-schema-proposal.md`
+- `docs/margin-leak-case-id-capture-contract.md`
 - `workbook/reviews/JOB-A6-LINE-PLATEAU-MARGIN-20260828/validation_receipt.md`
 - private aggregate：`/Users/pagemacmini/.maplab/margin-leak-audit/20260828-initial-aggregate.json`
 
@@ -61,12 +63,13 @@ data_class: private-local-only
 - [x] 固定 10 個 true-candidate hashes 做首次 evidence-location join；明列 join 缺口，不把 request cue 當漏收。
 - [x] 以 live Google read-only bridge 驗 10 案並產 field-level schema proposal；無 live write。
 - [x] 從已有 quote＋OrderCharges 的固定五個 2026 Orders 做 hardened join-first shadow；0 unique links 後依 stop-loss 停止歷史 fuzzy backfill。
+- [x] 以 10 個 synthetic holdouts 驗 intake-time `case_id` 五階段 contract；Case Store／SALES_INTAKE 各自 readback、restart／two-connection、migration provenance、late duplicate 與 nested receipt red-team 全 fail closed，沒有 live write。
 - [ ] 以 quote、OrderCharges、交付／照片 evidence join，估出 confirmed leakage；未 join 前金額必為 0。
 - [ ] Owner 核准第一批正式品項、價格、標準內含量與生效日後，才另開 live Sheet／GAS 變更任務。
 
 ## Next Bounded Action
 
-建立 proposal-only 的 intake-time `case_id` capture contract：以 synthetic fixtures 驗證一個本機 opaque case key 能依序穿過 LINE intake、Case Store／`SALES_INTAKE`、quote creation、`Orders`／`OrderCharges`、`ASSET_LOG` 五個階段，並產 migration/backfill boundary receipt。不得改 live Sheets、訊息、價格或歷史 fuzzy links；若五階段無法保留同一 case key，立即停下修 contract，不提 live adoption。
+建立 no-write integration patch plan：把已通過的 contract 對應到 `LineWebhook.gs`、Case Store、A5 payload、`Code.gs`、`Orders`／`OrderCharges` adapter 與 `ASSET_LOG` writer 的精確欄位／函式，列 migration order、rollback、named-header/readback、private-local-only guard 與 fixture compatibility tests。只產 plan／local fixtures，不編輯或部署 live GAS，不改 live Sheets、訊息、價格或歷史資料；發現 deployed-source truth 不完整時標 owner-review boundary，不猜部署狀態。
 
 ## 2026-08-28 Calibration Receipt
 
@@ -106,6 +109,17 @@ data_class: private-local-only
 - Verification：四個 margin modules focused unittest 13/13 PASS、`py_compile` PASS、independent audit PASS；implementation `444c73a`。
 - 方法結論：歷史 archive 無法可靠補出 unique identity chain；依事前 stop-loss 轉向 intake-time `case_id` capture，不再消耗 quota 重跑 name／fuzzy join。
 
+## 2026-08-28 Intake Case-ID Contract Receipt
+
+- Method：`margin-intake-case-id-contract-v1`；fingerprint `a1573a74b88222ae10c2b8edcbeaa9c7bdf2f139596df6be6c33db7b2bea2123`；changed variable 是從 historical identity inference 改成 prospective mint-once＋immutable foreign-key propagation。
+- Fixed holdout：10/10 expected outcomes PASS；valid chain 5/5。Case Store／`SALES_INTAKE` 為兩個獨立且唯一 acknowledgement，任一缺失就禁止 quote；quote gate check＋insert 同鎖，late duplicate 被拒絕。
+- Durable/provenance：owner-only synthetic SQLite ledger 以 source-event primary key、case unique constraint、`BEGIN IMMEDIATE`／FULL sync 通過 fresh-instance replay 與 two-connection race；post-cutover link 直接查 event→case，不接受 caller boolean。
+- Migration：historical blank key 保持 `LEGACY_UNLINKED`／`INSUFFICIENT_EVIDENCE`；name/date/content hash/fuzzy auto-backfill 一律拒絕；confirmed leakage amount 仍為 0。
+- Artifact：`/Users/pagemacmini/.maplab/margin-leak-audit/20260828-case-id-capture-contract-v1.json`；SHA-256 `b5f0c17824c2486b4fa1c3ee228cf5fae51a0044662264f5e48cc37d8696206d`；mode 0600，parent 0700。
+- Privacy/no-write：receipt 走 exact nested key/value allowlist、timestamp、fixture/body hash 與 raw-case-ID gate；raw/customer/source IDs/path 0、network/model/Google write/customer send/price write/history mutation/new private egress 全 0。
+- Verification：contract tests 16/16 PASS、五個 margin modules focused suite 29/29 PASS、`py_compile` PASS、兩個 independent red-team 最終 PASS；implementation `4ecda3f`。
+- 現況：這是 `PROPOSAL_ONLY`，不是 live adoption。唯讀盤點另發現 live `SALES_INTAKE` header 與 repo positional writer 不相容、quote 秒級 `Q...` 重生 key、Orders／charges／assets 缺 join fields，以及 `/casequote` raw LINE context 的 cloud fallback；下一步先做 no-write integration plan。
+
 ## Resume Prompt
 
-我是 A5/A6 毛利漏損稽核工程師，環境是 `/Users/pagemacmini/maplab-ai-handbook`。先讀 `CURRENT_STATUS.md`、`pitfalls.md`、本卡、validation receipt、schema proposal、canonical job 與 private join-first receipt。先驗 receipt SHA-256 `55ce24ff8eeea3136d14a80764ed4dff57500c4414c2807c433ab47bbd714b52`；fixed-five 已證實 3 案無 two-anchor candidate、2 案為 ambiguous、unique stable link 0，禁止再重跑 fuzzy/name matcher。下一步只用 synthetic fixtures 建 proposal-only intake-time `case_id` capture contract，使一個 opaque key 穿過 LINE intake、Case Store／SALES_INTAKE、quote、Orders／OrderCharges、ASSET_LOG；不得改 live Sheets、訊息、價格或歷史資料。私有資料不得送 DeerFlow/OpenRouter；無模型、無 customer send。未同時證明 baseline、delivery、incremental cost、charged fee 前 confirmed amount 必須為 0。每個 bounded action 更新 job、task card、receipt、CURRENT_STATUS 與 Resume Prompt，只 stage 任務相關檔案。
+我是 A5/A6 毛利漏損稽核工程師，環境是 `/Users/pagemacmini/maplab-ai-handbook`。先讀 `CURRENT_STATUS.md`、`pitfalls.md`、本卡、validation receipt、`docs/margin-leak-case-id-capture-contract.md`、schema proposal、canonical job 與 private contract receipt。先驗 receipt SHA-256 `b5f0c17824c2486b4fa1c3ee228cf5fae51a0044662264f5e48cc37d8696206d`；method fingerprint `a1573a74...`、10/10 holdouts、5/5 stages、16/16 contract tests、29/29 margin suite 與 independent red-team PASS。下一步只做 no-write integration patch plan，精確對應 LINE intake、Case Store／SALES_INTAKE、quote、Orders／OrderCharges、ASSET_LOG 的函式／欄位、migration／rollback／readback 與 private-local-only guard；不得改或部署 live GAS／Sheets、訊息、價格或歷史資料。禁止再跑 fuzzy/name backfill。私有資料不得送 DeerFlow/OpenRouter；無模型、無 customer send。四柱未 join 前 confirmed amount 必須為 0。完成後原子更新 job、task card、receipt、CURRENT_STATUS 與 Resume Prompt，只 stage 任務相關檔案。

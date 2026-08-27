@@ -31,6 +31,10 @@ class HermesTelegramGatewayTest(unittest.TestCase):
         self.assertEqual(gateway.extract_action_request("幫我查 Hermes runtime 狀態"), "幫我查 Hermes runtime 狀態")
         self.assertEqual(gateway.extract_action_request("現在動能名單狀態如何"), "現在動能名單狀態如何")
         self.assertEqual(gateway.extract_action_request("/do recent-commits"), "recent-commits")
+        self.assertEqual(
+            gateway.extract_action_request("讓 A8 生歌、做影片並上傳 YouTube 給我看"),
+            "讓 A8 生歌、做影片並上傳 YouTube 給我看",
+        )
 
     def test_owner_group_message_requires_mention_or_reply(self):
         base = {"chat": {"type": "supergroup"}, "text": "大家早"}
@@ -73,6 +77,23 @@ class HermesTelegramGatewayTest(unittest.TestCase):
             self.assertEqual(saved.stat().st_mode & 0o777, 0o600)
             self.assertEqual(receipt_path.stat().st_mode & 0o777, 0o600)
             self.assertIn(str(receipt_path), receipt_path.read_text(encoding="utf-8"))
+
+    def test_background_notification_is_sent_once_then_marked(self):
+        deerflow_item = {"receipt": {"task_id": "DFR-1", "status": "completed"}, "receipt_path": "/tmp/r.json", "chat_id": 7}
+        durable_item = {"job": {"job_id": "MAPJOB-1", "state": "COMPLETED"}, "job_path": "/tmp/j.json", "chat_id": 8}
+        with mock.patch.object(gateway, "completed_deerflow_notifications", return_value=[deerflow_item]), mock.patch.object(
+            gateway, "pending_durable_notifications", return_value=[durable_item]
+        ), mock.patch.object(gateway, "deerflow_completion_summary", return_value="dfr done"), mock.patch.object(
+            gateway, "durable_completion_summary", return_value="job done"
+        ), mock.patch.object(
+            gateway, "tg_call", side_effect=[{"result": {"message_id": 11}}, {"result": {"message_id": 12}}]
+        ) as tg, mock.patch.object(gateway, "mark_deerflow_notified") as mark_dfr, mock.patch.object(
+            gateway, "mark_durable_notified"
+        ) as mark_job:
+            self.assertEqual(gateway.drain_background_notifications("token"), 2)
+            self.assertEqual(tg.call_count, 2)
+            mark_dfr.assert_called_once_with("/tmp/r.json", 11)
+            mark_job.assert_called_once_with("/tmp/j.json", 12)
 
 
 if __name__ == "__main__":

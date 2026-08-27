@@ -1,0 +1,3 @@
+interface:
+  display_name: "MAPLAB Durable Job Orchestrator"
+  short_description: "Auto-route and resume multi-round MAPLAB work"

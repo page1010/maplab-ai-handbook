@@ -65,6 +65,10 @@
         <string>650</string>
         <key>OPENCLAW_AGENT_TIMEOUT_SECONDS</key>
         <string>45</string>
+        <key>HERMES_LINE_DATA_ROOT</key>
+        <string>/Users/pagemacmini/.maplab/a6-hermes-training</string>
+        <key>HERMES_LINE_PROVIDER</key>
+        <string>local-only</string>
     </dict>
 </dict>
 </plist>

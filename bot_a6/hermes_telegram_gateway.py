@@ -27,8 +27,20 @@ try:
         save_gateway_state,
         write_private_json,
     )
-    from .hermes_task_executor import ACTIONS, classify, execute as execute_task
-    from .hermes_task_executor import telegram_summary
+    from .hermes_task_executor import (
+        ACTIONS,
+        classify,
+        completed_deerflow_notifications,
+        deerflow_completion_summary,
+        execute as execute_task,
+        mark_deerflow_notified,
+        telegram_summary,
+    )
+    from .hermes_durable_job_router import (
+        durable_completion_summary,
+        mark_durable_notified,
+        pending_durable_notifications,
+    )
 except ImportError:  # Direct launchd/script execution.
     from hermes_capability_runtime import (
         HISTORY_PATH,
@@ -40,8 +52,20 @@ except ImportError:  # Direct launchd/script execution.
         save_gateway_state,
         write_private_json,
     )
-    from hermes_task_executor import ACTIONS, classify, execute as execute_task
-    from hermes_task_executor import telegram_summary
+    from hermes_task_executor import (
+        ACTIONS,
+        classify,
+        completed_deerflow_notifications,
+        deerflow_completion_summary,
+        execute as execute_task,
+        mark_deerflow_notified,
+        telegram_summary,
+    )
+    from hermes_durable_job_router import (
+        durable_completion_summary,
+        mark_durable_notified,
+        pending_durable_notifications,
+    )
 
 
 BOT_DIR = Path(__file__).resolve().parent
@@ -397,10 +421,34 @@ def photo_summary(receipt: dict) -> str:
 def start_text(bot_username: str | None) -> str:
     mention = f"@{bot_username}" if bot_username else "@bot"
     return (
-        "【hermes】A6 v2 值班中。你可以直接說『幫我查 Hermes runtime 狀態』或『現在動能名單狀態如何』，不必背 /do。\n"
+        "【hermes】A6 v3 值班中。你只要說成果目標；公開多來源研究、A8 影音與多輪 LINE 訓練會自動建立持久任務，不必背研究指令。\n"
+        "任務會跨 session 留 receipt、續跑到可見成果或真正 Owner gate；私密 A8／LINE 內容只留本機，不送 DeerFlow/OpenRouter。\n"
         "也可用 /capabilities、/do repo-status、/do recent-commits、/do a6-self-test。每次執行都有檔案 receipt。\n"
         f"群組內請 {mention} 或回覆我的訊息；Owner 傳照片時會私密保存並回 photo receipt。"
     )
+
+
+def drain_background_notifications(token: str) -> int:
+    sent = 0
+    for item in completed_deerflow_notifications():
+        response = tg_call(
+            token,
+            "sendMessage",
+            {"chat_id": item["chat_id"], "text": deerflow_completion_summary(item["receipt"])[:MAX_REPLY]},
+        )
+        message_id = ((response or {}).get("result") or {}).get("message_id")
+        mark_deerflow_notified(item["receipt_path"], message_id)
+        sent += 1
+    for item in pending_durable_notifications():
+        response = tg_call(
+            token,
+            "sendMessage",
+            {"chat_id": item["chat_id"], "text": durable_completion_summary(item["job"])[:MAX_REPLY]},
+        )
+        message_id = ((response or {}).get("result") or {}).get("message_id")
+        mark_durable_notified(item["job_path"], message_id)
+        sent += 1
+    return sent
 
 
 def handle_membership_update(token: str, update: dict, owner_user_id: int, bot_username: str | None) -> None:
@@ -441,6 +489,9 @@ def main() -> None:
     history = load_history()
     while True:
         try:
+            delivered = drain_background_notifications(token)
+            if delivered:
+                log(f"background notifications sent={delivered}")
             params: dict = {"timeout": 50, "allowed_updates": ["message", "my_chat_member"]}
             if offset is not None:
                 params["offset"] = offset
@@ -507,6 +558,7 @@ def main() -> None:
                         owner,
                         chat_id=chat_id,
                         chat_type=chat.get("type"),
+                        openrouter_key=key,
                     )
                     log(
                         f"executor task={receipt['task_id']} status={receipt['status']} "

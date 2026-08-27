@@ -1,6 +1,6 @@
 # MAPLAB 作業文化 — 企業溝通規則（所有 Agent 遵守）
 
-> 版本：v1.0 | 建立：2026-07-03 | Owner 親口指示  
+> 版本：v1.6 | 建立：2026-07-03 | 更新：2026-08-28 | Owner 親口指示
 > ⚠️ 硬性規則，適用所有 Agent（A0–A8、B-roles、IOS-roles）面向 Owner 或人類的一切回報。
 
 ---
@@ -204,6 +204,46 @@
 
 ---
 
+## 原則 7 — 沒有學習就不准重跑（No Repeat Without Learning）
+
+**Owner 指示（2026-08-28）**：Agent 不能用「多跑幾輪」取代檢討、回推與換方法。輪數、模型呼叫數、排程有在動都不是進度；只有通過固定驗證、留下 artifact／live readback／Owner-visible proof 才算進展。
+
+### Plateau 熔斷器
+
+同一方法連續兩次沒有可驗證改善，立即凍結，不得再消耗模型呼叫或 attempt。第三次遇到同一失敗，必須先跑第一性原理 5 題並更新 `pitfalls.md`，不能只是換 seed、換樣本或增加輪數。
+
+「同一方法」以 method fingerprint 判定，至少包含：
+
+- 模型與版本／digest
+- system prompt、retrieval、few-shot examples 與 tool route
+- dataset、dev set、held-out set 與抽樣方式
+- evaluator、rubric、threshold 與環境
+
+### 重新啟動實驗前的必填契約
+
+每個新實驗必須先寫完：`hypothesis`、`target_failure_bucket`、`changed_variable`、`fixed_holdout`、`baseline`、`expected_delta`、`stop_loss`、`method_version` 與 receipt path。一次只改一個主要變因；沒有 changed variable，不得增加 round／attempt。
+
+### 診斷與資格驗收分離
+
+1. 先由人工／規則閱讀失敗 transcript，建立 failure taxonomy；不能只看總分。
+2. 開發集可用於修正；held-out set 不得餵回 lesson、prompt 或 few-shot。
+3. baseline 與 candidate 必須跑同一批固定案例、同一 grader、同一環境，才能比較。
+4. 安全硬門檻（虛構價格、洩漏私密資料、越權發送、重問已知資料）與能力分數分開；安全違規為零容忍。
+5. 依錯誤類型選解法：知識缺口補 retrieval／資料；固定規則交給 deterministic code／tool；語氣與格式才調 prompt；模型能力不足才換模型；grader 或環境噪音先修 evaluator／infra。
+
+### 必須沉澱成系統資產
+
+每次 plateau 解除後，同步留下：failure taxonomy、固定 regression set、前後比較 receipt、SOP／Skill 更新與一條 `pitfalls.md`。如果只得到一段聊天說明，視為尚未學習。
+
+### 方法來源
+
+- OpenAI：先看輸出、建立 failure taxonomy，再選改善槓桿 — https://openai.com/index/evals-drive-next-chapter-of-ai/
+- Anthropic evaluation guide：開發資料與 held-out data 分離 — https://www-cdn.anthropic.com/38a1fb9db81446402a70bc45d104327aab12f3fe.pdf
+- Anthropic agent evals：baseline／candidate 同案例比較，低分先讀 transcript 與 grader — https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents
+- Dwork et al.：反覆用同一驗證資料做適應性決策會過擬合 — https://arxiv.org/abs/1506.02629
+
+---
+
 ## 變更紀錄
 
 | 版本 | 日期 | 變更 | 來源 |
@@ -214,3 +254,4 @@
 | v1.3 | 2026-07-06 | 新增原則 4：STATE 讀寫紀律 — session 開場讀/收場寫強制規範 | Owner 指示（Fable 5 #11） |
 | v1.4 | 2026-07-27 | 新增原則 5：最短路徑／不重造輪子 — 現成成熟工具優先、只做提醒/整合（實例：財經事件用金十數據、停用事件島/不自建事件分頁） | Owner 指示 |
 | v1.5 | 2026-07-27 | 新增原則 6：解決根因不只補症狀 — 根因/系統性解方/共享解決過程 | Owner 指示 |
+| v1.6 | 2026-08-28 | 新增原則 7：同方法兩輪無改善即熔斷；重啟前必填單一變因實驗契約、固定 holdout 與 stop-loss | Owner 指示＋12 輪 LINE plateau 檢討 |

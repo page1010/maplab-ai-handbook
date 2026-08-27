@@ -1,6 +1,6 @@
 # AGENT_RULES.md — MAPLAB AI 全域行為準則
 
-版本：v5.0 | 建立：2026-03-12 | 更新：2026-06-11
+版本：v5.1 | 建立：2026-03-12 | 更新：2026-08-28
 
 ---
 
@@ -700,6 +700,7 @@ ID:698 發現一篇 SEO 文章的 FAQ 區塊含自定義 HTML + `<script type="a
 遇到以下任何一個情境，**必須**先跑 `skills/first-principles-check/SKILL.md` 的 5 題 checklist，才能動手：
 
 - 正在修**第 3 次同一個錯誤**
+- 同一 method fingerprint 已跑兩次，固定驗證沒有改善，仍準備增加 round／attempt／token
 - Owner 說「為什麼要這樣？」或「這不對吧」
 - 版號連跳（v3.1 → v3.2 → v3.3 ...）卻在解同一個問題
 - 即將接受「流程本來就是這樣」的說法
@@ -709,6 +710,10 @@ ID:698 發現一篇 SEO 文章的 FAQ 區塊含自定義 HTML + `<script type="a
 ### 違反後果
 
 未跑 checklist 就動手，且事後確認是思考問題造成的錯誤 → 在 `skills/pitfalls/SKILL.md` 追加 pattern，並在 `skills/first-principles-check/SKILL.md` 追加失敗案例。
+
+### Plateau 執行閘門
+
+同方法兩輪無改善即凍結。重新啟動前必須在 Task Card 或 receipt 寫出 `hypothesis`、`changed_variable`、`fixed_holdout`、`baseline`、`expected_delta`、`stop_loss` 與 `method_version`；缺任一欄位不得消耗新的模型呼叫。完整規則見 `docs/OPERATING_CULTURE.md` 原則 7。
 
 ### 關聯
 - `skills/first-principles-check/SKILL.md`（完整 checklist）

@@ -1,0 +1,44 @@
+{
+  "generated_at": "2026-08-28",
+  "xlsx": "outputs/01a03eed-f050-7e80-bb78-f2f05fd02f8b/maplab_hidden_cost_pricing_matrix_20260828.xlsx",
+  "sheets": [
+    "毛利機會總覽",
+    "加價服務矩陣",
+    "對話訊號彙總",
+    "案件稽核表",
+    "計價參數",
+    "來源與邊界"
+  ],
+  "addon_rows": 24,
+  "conversation_categories": 9,
+  "formula_inspection": {
+    "recordCount": 42,
+    "truncated": false,
+    "metadata": {
+      "revision": "7kz49v",
+      "target": {
+        "id": "wb/04g6aa",
+        "beforeLines": 0,
+        "afterLines": 0
+      },
+      "kind": {
+        "requested": "formula",
+        "tokens": [
+          "formula"
+        ]
+      },
+      "include": {
+        "tokens": []
+      },
+      "exclude": {
+        "tokens": []
+      },
+      "notices": []
+    }
+  },
+  "warnings": [
+    "No MAPLAB live price was changed.",
+    "All proposed fees remain Owner review until approved.",
+    "Conversation counts are overlapping candidate signals, not confirmed leakage cases."
+  ]
+}

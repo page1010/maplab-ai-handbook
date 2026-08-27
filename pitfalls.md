@@ -625,3 +625,19 @@
 - 解法：案例產線固定走 `Drive folder ID/inventory → event/quote anchor → TimeTree/外燴系統 → ASSET_LOG file ID → visual QA → 公開來源三角 → live SEO collision/pillar route → title/keyword/style`；無關私密文件標記後排除，不引用或摘要。十個案例逐案選 existing post、pillar proof、new gap 或 social-only，不自動建十個 slug。
 - 預防：任何案例 registry 先跑 `scripts/maplab_case_first_gate.py --level intake`；進 WP 前再跑 `--level wp --case-id ...`。服務頁不能作 `source_kind`，final keyword 必須同時有 verified identity 與 live collision proof。
 - 封坑驗證：`tests.test_maplab_case_first_gate` 7/7 PASS；真實 10 案 intake PASS；服飾店開幕案例在分店、ASSET_LOG、visual QA 與 live collision 未齊時由 WP gate 正確拒絕。
+
+## 2026-08-28 — 多跑不同樣本不等於訓練，也不等於換方法
+
+- 觸發條件：Hermes LINE supervisor 連跑 12 rounds／60 次本機推論，總通過率只有 10/60；每輪換問題與 seed，卻沒有固定 canary、單一 changed variable、可比較 baseline 或 stop-loss。
+- 根因：把 worker activity、round count 與新 lesson 檔誤當品質進展；現行流程其實是 random two-shot prompt evaluation，不是權重訓練或 retrieval learning。總分又主要被長度 gate 支配，failure taxonomy 與真實業務正確性沒有分開。
+- 解法：Supervisor 新增 plateau guard；兩個未通過 qualification rounds 後切到 `method-redesign`，後續 resume 零模型呼叫、零 attempt。下一版先固定 20 案分層 canary、校正 rubric，再做 baseline/candidate 單一變因比較。
+- 預防：每次新實驗必填 hypothesis、failure bucket、changed variable、fixed holdout、expected delta、stop-loss 與 method version；同方法兩輪無改善後禁止只換 seed／樣本繼續跑。第三次同錯必跑第一性原理 5 題並更新 regression set。
+- 封坑驗證：34/34 focused tests PASS；真實 job 在不帶 `--data-root` 的 resume 回 `plateau_method_review_required`，round 仍 12、attempt 仍 6、loopback calls 仍 60。
+
+## 2026-08-28 — Durable resume 不可依賴呼叫者記得私有 data root
+
+- 觸發條件：以 canonical job path 直接續跑 LINE supervisor 時，CLI 未帶 `--data-root`，程式退回舊外接碟預設並回 `permissions_not_private`；同一任務因入口不同讀到不同資料根。
+- 根因：資料根只存在 launchd／shell 參數，沒有從 canonical supervisor receipt 回推；把狀態責任留給下一位操作者記命令。
+- 解法：resume 先驗證 owner-only supervisor receipt，再從 receipt 的 `data_root` 綁回相同 private dataset；CLI explicit value 只保留初始設定／診斷用途，receipt path 與 job id／data root 必須一致。
+- 預防：任何 durable job 的 provider、data root、model digest 與 contract 都要由 canonical receipt 自我恢復；環境變數只能 bootstrap，不能成為跨 session 單一真相源。
+- 封坑驗證：`test_resume_derives_private_data_root_from_canonical_receipt` PASS；實機無參數 resume 成功讀回 user-local 0700/0600 root，且 plateau guard 阻止任何新增模型呼叫。

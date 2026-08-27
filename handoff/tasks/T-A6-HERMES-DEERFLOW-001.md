@@ -2,8 +2,8 @@
 
 ## 接續狀態
 
-- **狀態**: IMPLEMENTED / LINE_QUALIFICATION_RUNNING
-- **最後活動**: 2026-08-27 Codex A1/A6 integration
+- **狀態**: IMPLEMENTED / LINE_METHOD_REDESIGN_REQUIRED
+- **最後活動**: 2026-08-28 Codex A1/A6 plateau correction
 - **任務**: Owner 只說成果目標；Hermes 自動判斷是否建立 durable job、使用 hardened DeerFlow 公開研究、呼叫本地 domain worker，並跨 session 續跑到可見成果或真正 Owner gate。
 - **可逆性**: 可逆；不取代 Hermes 既有一般對話 provider chain，不新增公開 listener，不把 A8／LINE 私密 payload 交給 DeerFlow。
 - **外部資料政策**: OpenRouter account-level ZDR/data-collection 尚無 authenticated readback；DeerFlow 模型路徑保持本機 Ollama。OpenRouter profile 保留 fail-closed，不執行 live inference。
@@ -53,9 +53,9 @@
 11. Canonical jobs 位於 `workbook/reviews/MAPLAB-DURABLE-JOBS/`，檔案 owner-only 且 runtime 內容不進 git。
 12. `MAPLAB durable job continuation` heartbeat 每 30 分鐘只做一個 idempotent bounded action。
 13. 目前 LINE job 是 `MAPJOB-20260827-224251-d291ad`。
-14. 該 job 現為 `RUNNING`，最近一次原因是 `bounded_pause/max_rounds_reached`，不是失敗或完成。
-15. 已完成 2 rounds、success streak 0、target streak 7；不可降低門檻或重播 receipt。
-16. 下一步是 resume 同一 supervisor receipt，再跑下一個 bounded two-round chunk。
+14. 該 job 現為 `RUNNING / method-redesign`，最近一次原因是 `plateau_method_review_required`，不是失敗或完成。
+15. 已完成 12 rounds／60 local calls、總 pass 10/60、success streak 0；不可降低門檻、重播 receipt 或只換 seed 繼續跑。
+16. 下一步是零模型呼叫完成固定 20 案 canary 與 E1 單一變因實驗契約；契約未驗證前不得增加 round／attempt。
 17. LINE data root 固定 `/Users/pagemacmini/.maplab/a6-hermes-training`；目錄 0700、語料檔 0600。
 18. LINE child 只能呼叫 `127.0.0.1:11434/api/generate`，receipt 必須保持 external network calls 0。
 19. `com.maplab.a6bot` 已重載並為 running，帶入 local-only provider 與安全 data root。
@@ -67,6 +67,10 @@
 25. 完成必須有 artifact/live readback、receipt 與 Owner surface；API 200、process exit 或 worker chat 不算。
 26. A8 私人／unlisted upload 可承接 Owner 已明說的授權；公開發布、新花費與新第三方 egress 仍是 gate。
 27. LINE offline training 永遠不授權 customer send；任何 send route 都必須保持 false。
-28. 最後 focused suite 是 59/59 PASS；重改 supervisor 必須重跑同一六模組 suite。
+28. 2026-08-28 plateau／data-root focused suite 與 margin scanner 合計 34/34 PASS；重改 supervisor 必須包含 plateau zero-call 與 receipt-derived data-root regressions。
 29. 只 stage 本卡相關檔案；保留既有 unrelated dirty runtime/A8/workbook 變更。
 30. 每次 bounded action 後更新 job、validation receipt、`CURRENT_STATUS.md`、必要的 `pitfalls.md`，並留下新的 Resume Prompt。
+
+## 2026-08-28 方法校正
+
+前 12 rounds 並非權重訓練或穩定 retrieval learning，而是 random two-shot＋latest lesson 的不可比較推論。60 題全部不同，沒有固定 canary；50/60 fail，且主要失敗桶是過長。Supervisor 已在 commit `86c1cf1` 加入兩輪 plateau 熔斷與 receipt-derived private data root；真實無參數 resume 保持 round 12、attempt 6、loopback calls 60。方法回推與 E1 契約見 `workbook/reviews/JOB-A6-LINE-PLATEAU-MARGIN-20260828/first_principles_review.md`。

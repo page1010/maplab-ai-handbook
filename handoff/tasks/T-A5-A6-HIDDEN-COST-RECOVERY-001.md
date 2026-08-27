@@ -1,9 +1,9 @@
 # T-A5-A6-HIDDEN-COST-RECOVERY-001 — 隱藏成本與可加價服務回收
 
 ```yaml
-status: ACTIVE_CASE_ID_INTEGRATION_PLAN
+status: ACTIVE_DEPLOYED_SOURCE_READBACK_PLAN
 assigned_session: 2026-08-28 / A1-A5-A6 Codex
-last_committed_by: Codex / 4ecda3f (synthetic intake case-id contract); 444c73a (fixed-five join-first shadow); 0ed12cb (live Google join bridge); bfb6854 (10-case evidence join); 70077c0 (50-case calibration); 665eb23 (workflow/workbook); 86c1cf1 (supervisor guard)
+last_committed_by: Codex / 1b2a2af (no-write case-id integration gates); 4ecda3f (synthetic intake case-id contract); 444c73a (fixed-five join-first shadow); 0ed12cb (live Google join bridge); bfb6854 (10-case evidence join); 70077c0 (50-case calibration); 665eb23 (workflow/workbook); 86c1cf1 (supervisor guard)
 owner_goal: 從真實對話與交付證據找出本來不在標準範圍、MAPLAB 實際代解且未收費的工作，產品化為合理加價服務，提升專案毛利。
 data_class: private-local-only
 ```
@@ -26,6 +26,9 @@ data_class: private-local-only
 - `scripts/build_hidden_cost_pricing_workbook.mjs`
 - `docs/margin-leak-evidence-join-schema-proposal.md`
 - `docs/margin-leak-case-id-capture-contract.md`
+- `docs/margin-leak-case-id-integration-plan.md`
+- `scripts/maplab_case_id_integration_plan.py`
+- `tests/test_maplab_case_id_integration_plan.py`
 - `workbook/reviews/JOB-A6-LINE-PLATEAU-MARGIN-20260828/validation_receipt.md`
 - private aggregate：`/Users/pagemacmini/.maplab/margin-leak-audit/20260828-initial-aggregate.json`
 
@@ -64,12 +67,13 @@ data_class: private-local-only
 - [x] 以 live Google read-only bridge 驗 10 案並產 field-level schema proposal；無 live write。
 - [x] 從已有 quote＋OrderCharges 的固定五個 2026 Orders 做 hardened join-first shadow；0 unique links 後依 stop-loss 停止歷史 fuzzy backfill。
 - [x] 以 10 個 synthetic holdouts 驗 intake-time `case_id` 五階段 contract；Case Store／SALES_INTAKE 各自 readback、restart／two-connection、migration provenance、late duplicate 與 nested receipt red-team 全 fail closed，沒有 live write。
+- [x] 建立 exact source-to-adapter no-write integration plan；20 個 pinned source anchors、25 個 synthetic fail-closed fixtures、4 個 prior live-header pins 與 7 個 plan gates 全通過，並明列 direct GAS Web App 無法取得 LINE signature header，必須先有 header-capable ingress。沒有 deploy、live write 或 durable outbox overclaim。
 - [ ] 以 quote、OrderCharges、交付／照片 evidence join，估出 confirmed leakage；未 join 前金額必為 0。
 - [ ] Owner 核准第一批正式品項、價格、標準內含量與生效日後，才另開 live Sheet／GAS 變更任務。
 
 ## Next Bounded Action
 
-建立 no-write integration patch plan：把已通過的 contract 對應到 `LineWebhook.gs`、Case Store、A5 payload、`Code.gs`、`Orders`／`OrderCharges` adapter 與 `ASSET_LOG` writer 的精確欄位／函式，列 migration order、rollback、named-header/readback、private-local-only guard 與 fixture compatibility tests。只產 plan／local fixtures，不編輯或部署 live GAS，不改 live Sheets、訊息、價格或歷史資料；發現 deployed-source truth 不完整時標 owner-review boundary，不猜部署狀態。
+建立 read-only deployed-source/header inventory packet：定位分離的 LINE GAS checkout／deployment digest、quote GAS deployment digest、`Orders`／`OrderCharges` authoritative writer，以及目前 Case Store／OpenClaw private artifact roots 與 modes；比較其 digest/header hash 與已 pin 的 static plan。只讀、不 deploy、不改 GAS／Sheets／訊息／價格／歷史資料，不搬 secret。無法由現有授權面讀到的項目明列 `UNRESOLVED`，不得猜。另把 header-capable LINE ingress 設為未來 live proposal 的 Phase-0 必要條件；direct GAS Web App 不可作 LINE webhook authority。
 
 ## 2026-08-28 Calibration Receipt
 
@@ -120,6 +124,16 @@ data_class: private-local-only
 - Verification：contract tests 16/16 PASS、五個 margin modules focused suite 29/29 PASS、`py_compile` PASS、兩個 independent red-team 最終 PASS；implementation `4ecda3f`。
 - 現況：這是 `PROPOSAL_ONLY`，不是 live adoption。唯讀盤點另發現 live `SALES_INTAKE` header 與 repo positional writer 不相容、quote 秒級 `Q...` 重生 key、Orders／charges／assets 缺 join fields，以及 `/casequote` raw LINE context 的 cloud fallback；下一步先做 no-write integration plan。
 
+## 2026-08-28 Case-ID No-Write Integration Plan Receipt
+
+- Method：`margin-case-id-integration-plan-v1`；fingerprint `201cf84e8090c12ba743f47f9073dc733a87dd7a57874729b6ce302e4c627133`；repair point 從 historical inference 改成 exact source-to-adapter plan，沒有重開 fuzzy backfill。
+- Static gates：20/20 pinned source anchors、25/25 expected synthetic fixtures、4/4 prior live-header digests、7/7 plan gates；Orders writer 在 inspected paths 仍為 authoritative unresolved。
+- LINE truth：direct Apps Script Web App event object 沒有 request headers，不能依 LINE 規範驗 `x-line-signature`＋untouched raw body；Phase 0 必須先選定 header-capable ingress、簽名驗證與 replay-bounded internal envelope，否則 LINE ingestion fail closed。
+- Private/local guard：unknown data class、cloud provider、non-loopback、cloud/proxy/provider/model overrides、repo artifact root、unsafe modes 與 live/cloud flags 全 reject；receipt／parent 為 0600／0700。
+- Artifact：`/Users/pagemacmini/.maplab/margin-leak-audit/20260828-case-id-integration-plan-v1.json`；SHA-256 `bfcf5a5f7c887576017513e488a3b658debfc777c92d3cfbf1733de13edc3812`；body SHA `bb7ebccde0bef37ef614caccce6ecedd8edc6c5674d4235c2da9fe2a9192ec1a`。
+- Verification：focused 20/20 PASS、related margin/case-id regression 29/29 PASS、三個 independent final audits PASS；implementation `1b2a2af`。
+- Boundary：`STATIC_PLAN_VALIDATED / PROPOSAL_ONLY`；`eligible_for_live_change=false`、`durable_outbox_runtime_validated=false`、live adoption false、confirmed leakage amount 0。下一步只做 read-only deployed-source/header inventory。
+
 ## Resume Prompt
 
-我是 A5/A6 毛利漏損稽核工程師，環境是 `/Users/pagemacmini/maplab-ai-handbook`。先讀 `CURRENT_STATUS.md`、`pitfalls.md`、本卡、validation receipt、`docs/margin-leak-case-id-capture-contract.md`、schema proposal、canonical job 與 private contract receipt。先驗 receipt SHA-256 `b5f0c17824c2486b4fa1c3ee228cf5fae51a0044662264f5e48cc37d8696206d`；method fingerprint `a1573a74...`、10/10 holdouts、5/5 stages、16/16 contract tests、29/29 margin suite 與 independent red-team PASS。下一步只做 no-write integration patch plan，精確對應 LINE intake、Case Store／SALES_INTAKE、quote、Orders／OrderCharges、ASSET_LOG 的函式／欄位、migration／rollback／readback 與 private-local-only guard；不得改或部署 live GAS／Sheets、訊息、價格或歷史資料。禁止再跑 fuzzy/name backfill。私有資料不得送 DeerFlow/OpenRouter；無模型、無 customer send。四柱未 join 前 confirmed amount 必須為 0。完成後原子更新 job、task card、receipt、CURRENT_STATUS 與 Resume Prompt，只 stage 任務相關檔案。
+我是 A5/A6 毛利漏損稽核工程師，環境是 `/Users/pagemacmini/maplab-ai-handbook`。先讀 `CURRENT_STATUS.md`、`pitfalls.md`、本卡、validation receipt、`docs/margin-leak-case-id-integration-plan.md`、canonical job 與 private integration receipt。先驗 plan SHA `e93da7d1c480112118d1e803fc1809faa1129db7101a52b9454cda33bbeb2695`、receipt SHA `bfcf5a5f7c887576017513e488a3b658debfc777c92d3cfbf1733de13edc3812`、method fingerprint `201cf84e...`、20 anchors、25 fixtures、4 header pins、20/20 focused tests 與三個 independent final audits PASS。注意這 25 個 static fixtures 不含 LINE signature/envelope runtime tests；那些只能在 header-capable ingress adapter 建成後驗。下一步只做 read-only deployed-source/header inventory packet：分離 LINE GAS、quote GAS、Orders／OrderCharges authoritative writer、Case Store／OpenClaw artifact root/modes；比較 digests/header hashes 並把無法讀到的項目標 `UNRESOLVED`，不得猜。direct GAS Web App 沒有 LINE signature header，未有 header-capable ingress 前不得進 live proposal。禁止 deploy、GAS/Sheet/訊息/價格/歷史 write，禁止重跑 fuzzy/name backfill，私有資料不得送 DeerFlow/OpenRouter。confirmed leakage amount 保持 0。完成後原子更新 job、task card、receipt、CURRENT_STATUS 與 Resume Prompt，只 stage 任務相關檔案。

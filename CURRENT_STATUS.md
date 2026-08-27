@@ -5,7 +5,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-08-28 Codex A1/A5/A6｜LINE 盲跑已熔斷；隱藏成本 intake-time case_id synthetic contract 10/10 PASS，下一步為 no-write integration plan。完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-08-28 Codex A1/A5/A6｜隱藏成本 no-write case-id integration plan 通過 static gates；下一步為 read-only deployed-source/header inventory。完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -20,6 +20,8 @@
 ---
 
 ## 最新事實核對
+
+- 2026-08-28 04:25：**[隱藏成本 case-id integration static gates]** — 完成 `margin-case-id-integration-plan-v1`（fingerprint `201cf84e...`），把已驗 intake contract 精確對應到 LINE ingress、Case Store／`SALES_INTAKE`、A5／quote GAS、`Orders`／`OrderCharges` 與 `ASSET_LOG`。20/20 pinned source anchors、25/25 synthetic fixtures、4/4 prior header digests、7/7 plan gates、focused 20/20 與 related margin regression 29/29 PASS，三個 independent final audits PASS；implementation `1b2a2af`，receipt SHA `bfcf5a5f...`、parent/file 0700/0600。重要修正：direct Apps Script Web App event object 沒有 request headers，不能按 LINE 規範驗 `x-line-signature`＋untouched raw body；未來 live proposal 必須先有 header-capable ingress、signature 驗證與 replay-bounded signed internal envelope，否則 LINE ingestion fail closed。現有 25 個 static fixtures 不包含 signature/envelope runtime test，不能冒充 ingress 已驗。Repo LINE source 被 clasp 排除、separate checkout 缺失、Orders writer 與 deployed digests 仍 unresolved，沒有猜。狀態只到 `STATIC_PLAN_VALIDATED / PROPOSAL_ONLY`；live adoption、durable outbox runtime、Google write、customer send 與 confirmed leakage 皆為 false/0。Job 現為 `RUNNING / deployed-source-readback-plan`，下一步只做 read-only deployed-source/header inventory，不 deploy 或改 live systems。
 
 - 2026-08-28 03:49：**[隱藏成本 intake-time case_id contract]** — 依 plateau stop-loss 不再重跑歷史 fuzzy/name join，改用 `margin-intake-case-id-contract-v1`（fingerprint `a1573a74...`）驗 prospective mint-once＋immutable propagation。Fixed-ten synthetic holdouts 10/10、valid chain 5/5；Case Store／`SALES_INTAKE` 各自且唯一 acknowledgement，任一缺失不建 quote，quote gate 與 insert 同鎖，late duplicate fail closed。Owner-only SQLite ledger 通過 fresh-instance replay＋two-connection race；post-cutover provenance 必須 exact event→case lookup。Receipt 逐層 exact allowlist、timestamp、fixture/body SHA 與 raw-case-ID gate；network/model/Google write/customer send/price write/history mutation/new private egress 皆 0，confirmed amount 0。Contract 16/16、margin focused suite 29/29、`py_compile`、兩個 independent red-team PASS；implementation `4ecda3f`，artifact SHA `b5f0c178...`。唯讀盤點顯示 repo/live writer 尚有 case key 分裂、positional header drift、foreign-key 與 cloud fallback 缺口，因此狀態只到 `PROPOSAL_ONLY`；job 現為 `RUNNING / case-id-integration-plan`，下一步只產 no-write integration／migration／rollback／readback plan，不改或部署 live GAS／Sheets。
 - 2026-08-28 03:18：**[隱藏成本 fixed-five join-first stop-loss]** — 新 method `margin-join-first-shadow-v1` 從 live `Orders=693`／`OrderCharges=184` 中 deterministic 選 5 個已有 quote＋charge 的 2026 案，反查本機 3,625 個 LINE archives。結果 3 案無 two-anchor candidate、2 案各有 8／9 個 ambiguous candidates、unique stable link 0；四柱 verified 仍全 0、5/5 insufficient、confirmed leakage amount 0。全年日期／低熵 identity／短 Sheet ID／prior provenance／content manifest／ambiguous split／stdout privacy 已 hardened，13/13 focused tests、`py_compile`、independent audit PASS；implementation `444c73a`，artifact SHA `55ce24ff...`。Google reads 4，writes/token writes/model/send/new third-party egress 皆 0。job 現為 `RUNNING / intake-case-id-capture`：依事前 stop-loss 停止歷史 fuzzy/name backfill，下一步只用 synthetic fixtures 建 proposal-only `case_id` 五階段傳遞 contract，不改 live Sheet。

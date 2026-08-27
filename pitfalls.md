@@ -641,3 +641,11 @@
 - 解法：resume 先驗證 owner-only supervisor receipt，再從 receipt 的 `data_root` 綁回相同 private dataset；CLI explicit value 只保留初始設定／診斷用途，receipt path 與 job id／data root 必須一致。
 - 預防：任何 durable job 的 provider、data root、model digest 與 contract 都要由 canonical receipt 自我恢復；環境變數只能 bootstrap，不能成為跨 session 單一真相源。
 - 封坑驗證：`test_resume_derives_private_data_root_from_canonical_receipt` PASS；實機無參數 resume 成功讀回 user-local 0700/0600 root，且 plateau guard 阻止任何新增模型呼叫。
+
+## 2026-08-28 — 找到客戶要求不等於找到可收費漏損；缺 join key 時應停掉分類迴圈
+
+- 觸發條件：50 案 taxonomy calibration 找出 18 個 heuristic true candidates；固定十案再做 evidence join 時，10/10 LINE source rows 都能定位，卻沒有任何一案同時接到 quote content、actual delivery、incremental cost 與 OrderCharges。
+- 根因：LINE conversation ID 只由私有 CSV filename hash 而來；quote folder、`SALES_INTAKE`、`OrderCharges` 與 `MAPLAB_ASSET_LOG` 沒有共用的 stable case/quote/asset key。本機 `.gsheet` pointer 只有檔名 metadata，也不是報價內容或 charged-fee 證據。
+- 解法：停止增加 keyword、round 或 classifier 版本；先建立本機 read-only join bridge，把 case、quote、charge、asset 的最小 key 在 process 內對應，receipt 只留 hashes、evidence status 與 missing codes。四柱缺一就維持 `insufficient_evidence`、金額 0。
+- 預防：margin-leak pipeline 的第一個 acceptance 不是「候選數」，而是四柱 join coverage；每案必有 baseline scope、actual delivery、incremental cost、charged fee。Pointer、keyword 或回覆語氣只能進 review queue，不可自動成為 leakage。
+- 封坑驗證：固定十案 10/10 source hash resolved、四柱 verified 各 0、private-label/source-ID leak audit 0、network/model/send/write 0；下一方法必改 join source，不得重跑相同 classifier。

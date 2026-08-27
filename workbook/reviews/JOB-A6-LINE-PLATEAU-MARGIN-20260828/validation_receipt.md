@@ -77,3 +77,16 @@ exit 0; plateau_method_review_required; round 12; calls 60; no new attempt
 - Tests：`python3 -m unittest tests.test_maplab_margin_leak_calibrate -v` → 2/2 PASS；`python3 -m py_compile scripts/maplab_margin_leak_calibrate.py` → PASS。
 - Repo checkpoint：`70077c0 feat(margin): calibrate hidden-cost candidates`。
 - 解讀：label 是 deterministic prelabel，不是 human gold／confirmed leakage；confirmed leakage amount 保持 0。
+
+## 9. 固定 10 案 evidence-location join（2026-08-28 02:18 Asia/Taipei）
+
+- Plateau review：比較 aggregate scan 與 calibration fingerprint；只有一次 calibration，沒有連續兩次相同方法無改善。這輪改做 evidence-location join，不再加 round、seed 或分類規則。
+- Method contract：`margin-evidence-join-v1`；fingerprint `9a739a7386e53b5f2d7391d772a573cd93050d75e531c57776ab909bee29cf17`；固定從 18 個 true candidates 以 method+hash 排序取 10。
+- 結果：10/10 private source rows resolved；本機可見 3,625 個 LINE export files、1,042 個 quote `.gsheet` pointers，但固定十案沒有 name+year stable pointer match；沒有本機 `OrderCharges` export，也沒有 case-to-asset stable key。
+- 四證據柱：baseline scope 0、actual delivery 0、incremental cost 0、charged fee 0；10/10 `insufficient_evidence`，confirmed leakage amount 0。
+- Missing codes（各 10）：`BASELINE_SCOPE_UNVERIFIED_NO_QUOTE_CONTENT`、`ACTUAL_DELIVERY_UNVERIFIED_NO_ASSET_JOIN`、`INCREMENTAL_COST_UNVERIFIED_NO_COST_LEDGER`、`CHARGED_FEE_UNVERIFIED_NO_ORDERCHARGES_EXPORT`、`NO_STABLE_CASE_QUOTE_ASSET_JOIN_KEY`。
+- Privacy：raw text 0、customer identifiers 0、source conversation IDs 0、customer-bearing paths 0、network 0、cloud content reads 0、model calls 0、customer send false、live price write false。
+- Artifact：`/Users/pagemacmini/.maplab/margin-leak-audit/20260828-evidence-join-pilot-v1.json`，mode 0600，SHA-256 `2cfc50a3250a84347dde5dab0840b3e2b66f088a96fc0e5a532fe3b211dd3758`。
+- Tests：`python3 -m unittest tests.test_maplab_margin_leak_evidence_join -v` → 2/2 PASS；`python3 -m py_compile scripts/maplab_margin_leak_evidence_join.py` → PASS；private-label/source-ID leak audit → 0。
+- Repo checkpoint：`bfb6854 feat(margin): pilot private evidence joins`。
+- Next：同一十案改用 read-only Google source bridge 取最小 join fields，hash 後才落 receipt；若仍 zero stable joins，產 schema proposal，不改 live Sheet。

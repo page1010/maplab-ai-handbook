@@ -1,9 +1,9 @@
 # T-A5-A6-HIDDEN-COST-RECOVERY-001 — 隱藏成本與可加價服務回收
 
 ```yaml
-status: ACTIVE_EVIDENCE_JOIN
+status: ACTIVE_JOIN_KEY_BRIDGE
 assigned_session: 2026-08-28 / A1-A5-A6 Codex
-last_committed_by: Codex / 70077c0 (50-case calibration); 665eb23 (workflow/workbook); 86c1cf1 (supervisor guard)
+last_committed_by: Codex / bfb6854 (10-case evidence join); 70077c0 (50-case calibration); 665eb23 (workflow/workbook); 86c1cf1 (supervisor guard)
 owner_goal: 從真實對話與交付證據找出本來不在標準範圍、MAPLAB 實際代解且未收費的工作，產品化為合理加價服務，提升專案毛利。
 data_class: private-local-only
 ```
@@ -19,6 +19,7 @@ data_class: private-local-only
 
 - `outputs/01a03eed-f050-7e80-bb78-f2f05fd02f8b/maplab_hidden_cost_pricing_matrix_20260828.xlsx`
 - `scripts/maplab_margin_leak_scan.py`
+- `scripts/maplab_margin_leak_evidence_join.py`
 - `scripts/build_hidden_cost_pricing_workbook.mjs`
 - `workbook/reviews/JOB-A6-LINE-PLATEAU-MARGIN-20260828/validation_receipt.md`
 - private aggregate：`/Users/pagemacmini/.maplab/margin-leak-audit/20260828-initial-aggregate.json`
@@ -54,12 +55,13 @@ data_class: private-local-only
 - [x] privacy-safe aggregate scanner；無原文、無識別碼、network calls 0。
 - [x] 可填寫的 200-row MARGIN_LEAK_EVENT workbook 與完全成本／漏收公式。
 - [x] 本機抽 50 個高優先候選做 taxonomy calibration，留下 hash 與標籤，不複製原文。
+- [x] 固定 10 個 true-candidate hashes 做首次 evidence-location join；明列 join 缺口，不把 request cue 當漏收。
 - [ ] 以 quote、OrderCharges、交付／照片 evidence join，估出 confirmed leakage；未 join 前金額必為 0。
 - [ ] Owner 核准第一批正式品項、價格、標準內含量與生效日後，才另開 live Sheet／GAS 變更任務。
 
 ## Next Bounded Action
 
-從 18 個 heuristic `true_candidate` hashes 固定抽 10 案，在本機 join quote／OrderCharges 與 delivery／asset evidence；只輸出 hash、evidence path、decision 與 missing-evidence code。全程 zero cloud/network、無 customer send、無 live price write。
+為同一固定 10 案建立 read-only Google source bridge：只由本機 process 讀既有 2026 quote folder 與主 Sheet 的最小 join 欄位，再接 `SALES_INTAKE`／`OrderCharges`／`MAPLAB_ASSET_LOG`。輸出前把 case、quote、asset key 全部 hash；最多 10 案、無模型、無寫入、無 customer send。若仍為零 stable joins，就產生 schema change proposal，不改 live Sheet。
 
 ## 2026-08-28 Calibration Receipt
 
@@ -70,6 +72,15 @@ data_class: private-local-only
 - Privacy readback：raw text 0、customer identifiers 0、source conversation IDs 0、network 0、model calls 0。
 - 邊界：這是 deterministic triage，不是 human gold，也不是 confirmed leakage；已確認漏收金額仍為 0。
 
+## 2026-08-28 Evidence-Join Pilot Receipt
+
+- Method：`margin-evidence-join-v1`；fingerprint `9a739a7386e53b5f2d7391d772a573cd93050d75e531c57776ab909bee29cf17`；固定 10 hashes。
+- Readback：10/10 private source rows resolved；本機可見 1,042 個 `.gsheet` pointer，但固定十案的 name+year stable match 為 0；本機 `OrderCharges` export 與 stable asset join 都不存在。
+- 四證據柱：baseline scope 0、actual delivery 0、incremental cost 0、charged fee 0；10/10 都是 `insufficient_evidence`，confirmed leakage amount 仍為 0。
+- Artifact：`/Users/pagemacmini/.maplab/margin-leak-audit/20260828-evidence-join-pilot-v1.json`；SHA-256 `2cfc50a3250a84347dde5dab0840b3e2b66f088a96fc0e5a532fe3b211dd3758`；mode 0600。
+- Privacy readback：raw text 0、customer identifiers 0、source conversation IDs 0、customer-bearing paths 0、network/cloud-content/model calls 0、customer send 0、live price write 0。
+- 結論：這一輪的新產出不是漏收金額，而是證明目前缺 `case_id → quote_id → OrderCharges → asset_id` 的穩定 key；再跑 keyword/classifier 不會補出這條證據鏈。
+
 ## Resume Prompt
 
-我是 A5/A6 毛利漏損稽核工程師，環境是 `/Users/pagemacmini/maplab-ai-handbook`。先讀 `CURRENT_STATUS.md`、`pitfalls.md`、本卡、validation receipt、canonical job 與 private calibration receipt。先驗 calibration SHA-256，再從 18 個 heuristic true candidates 固定抽 10 案做本機 evidence join。私有 LINE、報價、照片與客資只留本機；公開價格研究才可用 hardened DeerFlow。命中與 heuristic label 都不是漏收證明；必須 join baseline scope、實際交付、增量成本與 charged fee。不得改 live price、不得對客發送、不得把私密原文外送。每個 bounded action 更新 job、task card、receipt、CURRENT_STATUS 與 Resume Prompt，只 stage 任務相關檔案。
+我是 A5/A6 毛利漏損稽核工程師，環境是 `/Users/pagemacmini/maplab-ai-handbook`。先讀 `CURRENT_STATUS.md`、`pitfalls.md`、本卡、validation receipt、canonical job 與 private evidence-join receipt。先驗 evidence receipt SHA-256 `2cfc50a3250a84347dde5dab0840b3e2b66f088a96fc0e5a532fe3b211dd3758`；固定十案已證實 10/10 request source 可定位，但四證據柱全為 0，根因是沒有穩定 `case_id → quote_id → OrderCharges → asset_id` key。下一步只做 read-only Google source bridge：由本機 domain worker 讀既有 quote/Sheet/ASSET_LOG 最小 join 欄位，寫 receipt 前全部 hash，最多十案；不得把原文、姓名、地址、報價內容或登入態送 DeerFlow/OpenRouter。命中與 pointer 都不是漏收證明；不足四柱時 confirmed amount 必須為 0。不得改 live price、不得對客發送。每個 bounded action 更新 job、task card、receipt、CURRENT_STATUS 與 Resume Prompt，只 stage 任務相關檔案。

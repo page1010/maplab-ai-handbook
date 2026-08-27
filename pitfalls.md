@@ -657,3 +657,11 @@
 - 解法：unique candidate 才能標 stable；0 candidates 與 ambiguous candidates 分開記錄，ambiguous 一律 fail closed。固定五案 unique joins=0 後立即執行 stop-loss，repair point 改為 intake-time `case_id` capture，不再擴歷史 matcher。
 - 預防：所有新 LINE case 在 intake 建本機 opaque `case_id`，並讓同一 key 穿過 Case Store／SALES_INTAKE、quote、Orders／OrderCharges 與 ASSET_LOG。歷史 backfill 沒有 deterministic key 時只保留 `insufficient_evidence`，不得算漏收金額。
 - 封坑驗證：`margin-join-first-shadow-v1` fixed-five 為 no-candidate=3、ambiguous=2、stable=0、confirmed amount=0；13/13 focused tests、`py_compile` 與 independent audit PASS；receipt SHA-256 `55ce24ff...`，raw/customer/source IDs/Google IDs/third-party egress/model/send/write 全為 0。
+
+## 2026-08-28 — 把兩個 destination 合成一個 synthetic PASS，會製造假的端到端證明
+
+- 觸發條件：intake-time `case_id` contract 初版把 Case Store 與 `SALES_INTAKE` 合成單一 `atomic_pair` node，並只用 process-local `RLock` 驗 concurrency；14/14 tests 雖過，獨立稽核仍可構造「其中一邊沒寫」與「worker restart 後重複 mint」兩個 false-positive。
+- 根因：把設計意圖的 distributed atomicity 當成已驗事實，也把 thread safety 當 crash-safe idempotency。真實系統中兩個 destination 不可能因一個記憶體 node 就原子完成；語法合法的 post-cutover key 也不等於有 intake provenance。
+- 解法：拆成 `case_store`／`sales_intake` 兩個獨立且唯一的 acknowledgement，coverage 必須兩者皆在且 key 相同；quote gate 的檢查與 insert 留在同一把 `RLock`，late duplicate ack 一律拒絕。新增 owner-only synthetic SQLite intake ledger，以 source-event primary key、case unique constraint、`BEGIN IMMEDIATE` 與 FULL sync 驗 restart／two-connection race；post-cutover link 直接查 ledger 的 event→case，不接受 caller boolean。Receipt 寫入前逐層比對 exact key/value allowlist、timestamp 與 body/fixture hashes，`OrderCharges` schema proposal 補齊 `case_id`／`quote_id`／idempotency key。
+- 預防：任何「穿過 N 階段」的 acceptance 必須逐 destination 留獨立 receipt/readback，不能用 composite boolean 代替；任何「可重跑／併發安全」宣稱至少測 fresh process/connection、unique constraint 與 commit-before-ack。Synthetic PASS 只能進 separate live review，不得直接部署。
+- 封坑驗證：fixed 10 scenarios 必須 10/10，包含 missing Case Store、missing `SALES_INTAKE`、one-side mismatch、restart 與 two-connection race；16/16 contract tests、29/29 margin focused suite、`py_compile` 與 independent red-team 全 PASS，live write/send/model/network 仍為 0。

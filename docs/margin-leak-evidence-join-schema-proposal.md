@@ -87,8 +87,11 @@ Retain `order_id`; propose adding:
 Retain `order_id`; propose adding:
 
 - `charge_id`
+- `case_id`
+- `quote_id`
 - `addon_id`
 - `change_order_id`
+- `idempotency_key`
 - `quantity`
 - `unit`
 - `cost_basis_id`
@@ -129,22 +132,21 @@ Each row must include:
 6. Schema and price changes require a separate approved live-write task; this
    proposal does not authorize modifying Sheets.
 
-## Next bounded experiment: join-first shadow pilot
+## Completed stop-loss and current repair point
 
-The conversation-first random sample is now stopped. The next method starts
-from evidence-rich 2026 orders instead:
+The fixed-five join-first shadow found three orders with no two-anchor LINE
+candidate and two with multiple ambiguous candidates; stable unique links were
+zero. Its predeclared stop-loss therefore ended historical name/fuzzy backfill.
 
-1. Select five `Orders` rows that have a nonblank `client_sheet_url` and at
-   least one `OrderCharges` row, using deterministic order-ID hashing.
-2. Resolve quote spreadsheet and order charge locally.
-3. Search the private LINE archive for the same case using at least two
-   independent anchors; raw anchors never leave the process.
-4. Write only opaque references, anchor counts, pillar status, and missing
-   codes to the owner-only shadow registry.
-5. Stop after five. If none has a two-anchor conversation link, do not widen the
-   fuzzy matcher; move the repair point to intake-time capture of `case_id`.
+The next method moved the repair point to prospective intake-time identity. A
+proposal-only synthetic contract now mints one opaque case key at new-case
+intake, preserves it through Case Store/`SALES_INTAKE`, quote creation,
+`Orders`/`OrderCharges`, and `ASSET_LOG`, and rejects missing parents, replay
+drift, key mismatches, and historical fuzzy backfill. See
+`docs/margin-leak-case-id-capture-contract.md`.
 
-Acceptance for the pilot is at least one stable case-to-conversation-to-quote-
-to-charge chain, with Google writes, customer sends, model calls, and confirmed
-leakage claims all remaining zero until delivery and incremental-cost evidence
-are separately verified.
+Passing the synthetic contract authorizes only a separate, no-write integration
+plan. It does not authorize editing or deploying GAS, changing live Sheet
+schemas, sending customer messages, writing prices, modifying history, or
+claiming leakage. `confirmed_leakage_amount` remains zero until all four
+evidence pillars join to the same case.

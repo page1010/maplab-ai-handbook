@@ -43,6 +43,7 @@ DEFAULT_BATCH = 5
 DEFAULT_TARGET_STREAK = 7
 DEFAULT_TARGET_PASS_RATE = 0.85
 DEFAULT_REGRESSION_THRESHOLD = 2
+DEFAULT_PLATEAU_THRESHOLD = 2
 PRIVATE_DIR_MODE = 0o700
 PRIVATE_FILE_MODE = 0o600
 JOB_ID_RE = re.compile(r"^MAPJOB-[A-Za-z0-9._-]{1,96}$")
@@ -293,6 +294,7 @@ def transition_durable_job(
     reason: str,
     result: dict,
     next_action: str,
+    current_phase: str | None = None,
 ) -> None:
     if state not in CANONICAL_JOB_STATES:
         raise SupervisorError("durable_job_state_invalid")
@@ -300,7 +302,9 @@ def transition_durable_job(
     if state not in ALLOWED_TRANSITIONS.get(str(previous), set()):
         raise SupervisorError(f"durable_job_transition_forbidden:{previous}:{state}")
     job["state"] = state
-    job["current_phase"] = "offline-training" if state != "COMPLETED" else "terminal"
+    job["current_phase"] = current_phase or (
+        "offline-training" if state != "COMPLETED" else "terminal"
+    )
     job["last_result"] = result
     job["next_bounded_action"] = next_action
     if previous != state or not job.get("history"):
@@ -330,6 +334,8 @@ def _new_receipt(job: dict, data_root: Path, receipt_path: Path) -> dict:
         "invocations": [],
         "success_streak": 0,
         "regression_streak": 0,
+        "plateau_streak": 0,
+        "method_review_required": False,
         "best_pass_rate": None,
         "last_pass_rate": None,
         "lowest_stage": None,
@@ -622,12 +628,14 @@ def validate_round_history(receipt: dict, data_root: Path, contract: dict) -> di
     loopback_total = 0
     success_streak = 0
     regression_streak = 0
+    plateau_streak = 0
     best_pass_rate: float | None = None
     previous_pass_rate: float | None = None
     last_unsupported_rate: float | None = None
     lowest_stage = None
     diagnostic_mode = False
     next_stage = None
+    method_review_required = False
     for history_index, item in enumerate(rounds):
         if not isinstance(item, dict):
             raise SupervisorError("supervisor_round_history_invalid")
@@ -717,12 +725,21 @@ def validate_round_history(receipt: dict, data_root: Path, contract: dict) -> di
             regression_streak = 0
         if qualifying_round:
             success_streak = success_streak + 1 if successful else 0
+            if not method_review_required:
+                plateau_streak = 0 if successful else min(
+                    DEFAULT_PLATEAU_THRESHOLD, plateau_streak + 1
+                )
+                method_review_required = plateau_streak >= DEFAULT_PLATEAU_THRESHOLD
         best_pass_rate = (
             metrics["pass_rate"]
             if best_pass_rate is None
             else max(best_pass_rate, metrics["pass_rate"])
         )
-        if regression_streak >= int(contract["regression_threshold"]):
+        if method_review_required:
+            diagnostic_mode = False
+            next_stage = None
+            success_streak = 0
+        elif regression_streak >= int(contract["regression_threshold"]):
             diagnostic_mode = True
             next_stage = metrics["lowest_stage"]
             success_streak = 0
@@ -737,15 +754,26 @@ def validate_round_history(receipt: dict, data_root: Path, contract: dict) -> di
     derived = {
         "success_streak": success_streak,
         "regression_streak": regression_streak,
+        "plateau_streak": plateau_streak,
         "best_pass_rate": best_pass_rate,
         "last_pass_rate": previous_pass_rate,
         "last_unsupported_price_rate": last_unsupported_rate,
         "lowest_stage": lowest_stage,
         "diagnostic_mode": diagnostic_mode,
         "next_stage": next_stage,
+        "method_review_required": method_review_required,
     }
-    if any(receipt.get(key) != value for key, value in derived.items()):
+    optional_migration_fields = {"plateau_streak", "method_review_required"}
+    if any(
+        receipt.get(key) != value
+        for key, value in derived.items()
+        if key not in optional_migration_fields
+    ):
         raise SupervisorError("supervisor_derived_state_tampered")
+    for key in optional_migration_fields:
+        if key in receipt and receipt.get(key) != derived[key]:
+            raise SupervisorError("supervisor_derived_state_tampered")
+        receipt[key] = derived[key]
     if receipt.get("status") not in {
         "accepted",
         "running",
@@ -759,6 +787,7 @@ def validate_round_history(receipt: dict, data_root: Path, contract: dict) -> di
         success_streak < int(contract["target_streak"])
         or diagnostic_mode
         or regression_streak >= int(contract["regression_threshold"])
+        or method_review_required
     ):
         raise SupervisorError("completed_receipt_invariant_failed")
     return derived
@@ -793,6 +822,8 @@ def _progress_result(receipt: dict, receipt_path: Path, status: str, reason: str
         "supervisor_receipt": str(receipt_path),
         "round_count": len(receipt.get("rounds", [])),
         "success_streak": int(receipt.get("success_streak") or 0),
+        "plateau_streak": int(receipt.get("plateau_streak") or 0),
+        "method_review_required": bool(receipt.get("method_review_required")),
         "target_streak": int(receipt.get("target_streak") or DEFAULT_TARGET_STREAK),
         "pass_rate": receipt.get("last_pass_rate"),
         "unsupported_price_rate": receipt.get("last_unsupported_price_rate"),
@@ -910,6 +941,30 @@ def _supervise_locked(
     receipt["target_pass_rate"] = target_pass_rate
     receipt["regression_threshold"] = regression_threshold
     derived = validate_round_history(receipt, data_root, qualification_contract)
+    if derived["method_review_required"]:
+        receipt["status"] = "bounded_pause"
+        receipt["updated_at"] = utc_iso()
+        _private_json(receipt_path, receipt)
+        result = _progress_result(
+            receipt,
+            receipt_path,
+            "bounded_pause",
+            "plateau_method_review_required",
+        )
+        transition_durable_job(
+            job_path,
+            job,
+            "RUNNING",
+            reason="plateau_method_review_required",
+            result=result,
+            next_action=(
+                "Plateau audit only: make zero model calls. Define a fixed holdout and one "
+                "single-variable experiment with hypothesis, expected_delta, stop_loss, and "
+                "method_version before creating a new qualification contract."
+            ),
+            current_phase="method-redesign",
+        )
+        return result, 0
     if receipt.get("status") == "completed":
         result = _progress_result(receipt, receipt_path, "completed", "target_streak_reached")
         transition_durable_job(
@@ -1054,6 +1109,18 @@ def _supervise_locked(
             receipt["success_streak"] = (
                 int(receipt.get("success_streak") or 0) + 1 if successful else 0
             )
+            if not receipt.get("method_review_required"):
+                receipt["plateau_streak"] = (
+                    0
+                    if successful
+                    else min(
+                        DEFAULT_PLATEAU_THRESHOLD,
+                        int(receipt.get("plateau_streak") or 0) + 1,
+                    )
+                )
+                receipt["method_review_required"] = (
+                    int(receipt.get("plateau_streak") or 0) >= DEFAULT_PLATEAU_THRESHOLD
+                )
         best = receipt.get("best_pass_rate")
         receipt["best_pass_rate"] = (
             metrics["pass_rate"] if not isinstance(best, (int, float)) else max(best, metrics["pass_rate"])
@@ -1065,7 +1132,11 @@ def _supervise_locked(
             "loopback_ollama_calls"
         ]
         receipt["lowest_stage"] = metrics["lowest_stage"]
-        if int(receipt.get("regression_streak") or 0) >= regression_threshold:
+        if receipt.get("method_review_required"):
+            receipt["diagnostic_mode"] = False
+            receipt["next_stage"] = None
+            receipt["success_streak"] = 0
+        elif int(receipt.get("regression_streak") or 0) >= regression_threshold:
             receipt["diagnostic_mode"] = True
             receipt["next_stage"] = metrics["lowest_stage"]
             receipt["success_streak"] = 0
@@ -1092,8 +1163,23 @@ def _supervise_locked(
         rounds_this_invocation += 1
         progress = _progress_result(receipt, receipt_path, "running", "round checkpointed")
         job["last_result"] = progress
-        job["next_bounded_action"] = "Continue the current bounded local-only round set."
+        job["next_bounded_action"] = (
+            "Plateau audit only; make zero model calls and design a fixed-holdout, "
+            "single-variable experiment."
+            if receipt.get("method_review_required")
+            else "Continue the current bounded local-only round set."
+        )
         write_durable_job(job_path, job)
+        if receipt.get("method_review_required"):
+            stop_reason = "plateau_method_review_required"
+            final_state = "RUNNING"
+            final_result_status = "bounded_pause"
+            next_action = (
+                "Plateau audit only: make zero model calls. Define a fixed holdout and one "
+                "single-variable experiment with hypothesis, expected_delta, stop_loss, and "
+                "method_version before creating a new qualification contract."
+            )
+            break
         if (
             int(receipt.get("success_streak") or 0) >= target_streak
             and receipt.get("diagnostic_mode") is False
@@ -1119,6 +1205,11 @@ def _supervise_locked(
         reason=stop_reason,
         result=result,
         next_action=next_action,
+        current_phase=(
+            "method-redesign"
+            if stop_reason == "plateau_method_review_required"
+            else None
+        ),
     )
     return result, exit_code
 
@@ -1253,6 +1344,58 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
+def resolve_supervisor_data_root(job: dict, cli_value: str | None = None) -> Path:
+    """Resolve a resumed job to the private dataset recorded in its receipt.
+
+    A durable job must not silently fall back to a machine-wide default after
+    its first round.  An explicit CLI value is still authoritative for initial
+    setup and diagnostics.  On resume, the canonical receipt pointer binds the
+    job to the same private data root even when launchd or an interactive shell
+    omitted ``HERMES_LINE_DATA_ROOT``.
+    """
+
+    if cli_value:
+        return training_loop.resolve_data_root(cli_value)
+
+    last_result = job.get("last_result")
+    receipt_value = (
+        last_result.get("supervisor_receipt") if isinstance(last_result, dict) else None
+    )
+    if not receipt_value:
+        return training_loop.resolve_data_root(None)
+    if not isinstance(receipt_value, str):
+        raise SupervisorError("supervisor_receipt_path_invalid")
+
+    receipt_path = Path(receipt_value).expanduser()
+    if not receipt_path.is_absolute() or receipt_path.is_symlink():
+        raise SupervisorError("supervisor_receipt_path_invalid")
+    try:
+        receipt_info = receipt_path.stat()
+    except OSError as exc:
+        raise SupervisorError("supervisor_receipt_unavailable") from exc
+    if not stat.S_ISREG(receipt_info.st_mode) or stat.S_IMODE(receipt_info.st_mode) & 0o077:
+        raise SupervisorError("supervisor_receipt_not_private")
+    if hasattr(os, "getuid") and receipt_info.st_uid != os.getuid():
+        raise SupervisorError("supervisor_receipt_wrong_owner")
+    try:
+        receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise SupervisorError("supervisor_receipt_invalid") from exc
+    if not isinstance(receipt, dict) or not isinstance(receipt.get("data_root"), str):
+        raise SupervisorError("supervisor_receipt_data_root_missing")
+
+    data_root = training_loop.resolve_data_root(receipt["data_root"])
+    expected_receipt = (
+        data_root
+        / "supervisor_jobs"
+        / str(job.get("job_id") or "")
+        / "receipt.json"
+    )
+    if receipt_path.resolve() != expected_receipt.resolve():
+        raise SupervisorError("supervisor_receipt_data_root_mismatch")
+    return data_root
+
+
 def main(argv: list[str] | None = None) -> int:
     os.umask(0o077)
     args = build_parser().parse_args(argv)
@@ -1260,7 +1403,7 @@ def main(argv: list[str] | None = None) -> int:
     job: dict | None = None
     try:
         job_path, job = read_durable_job(args.job_path)
-        data_root = training_loop.resolve_data_root(args.data_root)
+        data_root = resolve_supervisor_data_root(job, args.data_root)
         seed_base = args.seed_base
         if seed_base is None:
             seed_base = int(datetime.now(timezone.utc).strftime("%Y%m%d%H")) * 100

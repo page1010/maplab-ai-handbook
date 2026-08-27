@@ -209,6 +209,59 @@ class HermesLineTrainingSupervisorTests(unittest.TestCase):
         self.assertEqual(runner.calls[3]["stage"], "S3")
         self.assertEqual(runner.calls[3]["batch"], 5)
 
+    def test_two_failed_qualification_rounds_require_method_review(self):
+        runner = FakeRoundRunner(self.data_root, [0.4, 0.4, 0.9])
+        result, exit_code = self.call_supervise(
+            runner,
+            max_rounds=3,
+            target_streak=7,
+        )
+        self.assertEqual(exit_code, 0)
+        self.assertEqual(result["reason"], "plateau_method_review_required")
+        self.assertTrue(result["method_review_required"])
+        self.assertEqual(result["plateau_streak"], 2)
+        self.assertEqual(len(runner.calls), 2)
+        receipt = json.loads(Path(result["supervisor_receipt"]).read_text(encoding="utf-8"))
+        self.assertTrue(receipt["method_review_required"])
+        self.assertEqual(receipt["plateau_streak"], 2)
+        final_job = json.loads(self.job_path.read_text(encoding="utf-8"))
+        self.assertEqual(final_job["state"], "RUNNING")
+        self.assertEqual(final_job["current_phase"], "method-redesign")
+        self.assertIn("zero model calls", final_job["next_bounded_action"])
+
+    def test_method_review_resume_makes_zero_model_calls_or_attempts(self):
+        runner = FakeRoundRunner(self.data_root, [0.4, 0.4, 0.9])
+        first, _ = self.call_supervise(runner, max_rounds=3, target_streak=7)
+        first_job = json.loads(self.job_path.read_text(encoding="utf-8"))
+        self.assertEqual(first_job["attempt"], 1)
+        self.job = first_job
+
+        second, second_exit = self.call_supervise(runner, max_rounds=1, target_streak=7)
+        self.assertEqual(second_exit, 0)
+        self.assertEqual(second["reason"], "plateau_method_review_required")
+        self.assertEqual(len(runner.calls), 2)
+        resumed_job = json.loads(self.job_path.read_text(encoding="utf-8"))
+        self.assertEqual(resumed_job["attempt"], 1)
+        self.assertEqual(resumed_job["current_phase"], "method-redesign")
+
+    def test_legacy_receipt_without_plateau_fields_migrates_without_new_round(self):
+        runner = FakeRoundRunner(self.data_root, [0.4, 0.4, 0.9])
+        first, _ = self.call_supervise(runner, max_rounds=3, target_streak=7)
+        receipt_path = Path(first["supervisor_receipt"])
+        receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+        receipt.pop("plateau_streak")
+        receipt.pop("method_review_required")
+        MODULE.training_loop.write_private_json(receipt_path, receipt)
+        self.job = json.loads(self.job_path.read_text(encoding="utf-8"))
+
+        second, second_exit = self.call_supervise(runner, max_rounds=1, target_streak=7)
+        self.assertEqual(second_exit, 0)
+        self.assertEqual(second["reason"], "plateau_method_review_required")
+        self.assertEqual(len(runner.calls), 2)
+        migrated = json.loads(receipt_path.read_text(encoding="utf-8"))
+        self.assertEqual(migrated["plateau_streak"], 2)
+        self.assertTrue(migrated["method_review_required"])
+
     def test_wall_bound_pauses_without_starting_another_round(self):
         runner = FakeRoundRunner(self.data_root, [0.9])
         ticks = iter([0.0, 11.0])
@@ -241,6 +294,22 @@ class HermesLineTrainingSupervisorTests(unittest.TestCase):
         self.assertEqual(job["job_type"], "hermes-line-training")
         parsed = MODULE.build_parser().parse_args(["--job-path", str(self.job_path)])
         self.assertEqual(parsed.job_path, str(self.job_path))
+
+    def test_resume_derives_private_data_root_from_canonical_receipt(self):
+        runner = FakeRoundRunner(self.data_root, [0.4, 0.4])
+        first, _ = self.call_supervise(runner, max_rounds=2, target_streak=7)
+        resumed_job = json.loads(self.job_path.read_text(encoding="utf-8"))
+        wrong_default = self.root / "wrong-default"
+
+        with mock.patch.dict(
+            os.environ,
+            {"HERMES_LINE_DATA_ROOT": str(wrong_default)},
+            clear=False,
+        ):
+            resolved = MODULE.resolve_supervisor_data_root(resumed_job)
+
+        self.assertEqual(resolved, self.data_root)
+        self.assertEqual(first["reason"], "plateau_method_review_required")
 
     def test_child_environment_drops_cloud_keys_and_proxies(self):
         with mock.patch.dict(

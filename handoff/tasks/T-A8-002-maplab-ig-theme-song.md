@@ -5,8 +5,8 @@
 - **狀態**：🟠 OWNER_LYRICS_GATE
 - **建立日期**：2026-08-25
 - **Owner**：A8 影音內容產線
-- **接續點**：品牌語氣修正版歌詞、exact 15 秒 Hook、City-pop A/B 曲風 prompt、長短版分鏡、Google Doc 審稿面與可驗證 prompt registry 已完成；Owner 新增的 `lemon and cream` 已做兩個私有發音測試，本機 ASR 淘汰候選 A、候選 B exact match 通過。
-- **唯一阻塞**：Owner 尚未逐句核准《把相聚端上桌》完整歌詞；發音測試不等於核准，未生成完整 v2A／v2B、未渲染正式影片。
+- **接續點**：品牌語氣修正版歌詞、exact 15 秒 Hook、City-pop A/B 曲風 prompt、長短版分鏡、Google Doc 審稿面與可驗證 prompt registry 已完成；Owner 新增的 `lemon and cream` 已做兩個私有發音測試，本機 ASR 淘汰候選 A、候選 B exact match 通過。2026-08-27 另完成雙視角第二讀：保留《把相聚端上桌》，提案把 75–90 秒收斂為 62–70 秒，加入 8 小節服務場景 Rap，並建立實際 WP 01–10 音樂系列規劃。
+- **唯一阻塞**：Owner 尚未選定 Rap 受眾與 15 秒 Hook 是否唱出品牌，也尚未逐句核准《把相聚端上桌》完整歌詞；發音測試不等於核准，未生成完整候選、未渲染正式影片。
 
 ## Goal
 
@@ -30,6 +30,9 @@
 - `workbook/reviews/JOB-A8-MAPLAB-IG-THEME-20260825/city_pop_research_notes.md`
 - `workbook/reviews/JOB-A8-MAPLAB-IG-THEME-20260825/tiktok_publish_path.md`
 - `workbook/music_prompt_registry/experiments.jsonl`
+- `workbook/reviews/JOB-A8-MAPLAB-IG-THEME-20260825/theme_second_read_20260827.md`
+- `workbook/reviews/JOB-A8-MAPLAB-IG-THEME-20260825/visual_cut_plan_v3_proposal.md`
+- `workbook/reviews/JOB-A8-MAPLAB-MUSIC-SERIES-20260827/wp_music_series_01_10.md`
 
 Owner 審稿 Google Doc：
 
@@ -45,7 +48,17 @@ Owner 審稿 Google Doc：
 
 ## Next Bounded Action
 
-Owner 回覆 `主題曲歌詞通過` 或逐句修改。核准後只做一件事：在有效訂閱權益下生成主題曲候選，留下版本、時間、權利與發音收據，回到 Owner 選曲 gate。
+Owner 先選：① Rap 採混合場景或企業品牌優先；② 15 秒 Hook 只靠畫面 Logo 或增加一次 `MAPLAB` 音訊 tag。選定後把第二讀版本同步到 Google Doc 逐句核稿；只有 Owner 明確回覆 `主題曲歌詞通過` 才可生成兩個候選，留下版本、時間、權利與發音收據，回到 Owner 選曲 gate。
+
+## 2026-08-27 Second-read／Series Checkpoint
+
+- 主 agent 與獨立第二讀皆首選保留《把相聚端上桌》；弱點一致指向「現主歌偏單一家庭聚會，服務辨識不足」。
+- 修正提案把廣告內容放進 8 小節輕 Rap：品牌開幕、會議茶點、婚禮、週歲，以及動線、菜單、桌景、份量、器皿、取餐節奏；副歌不改成服務清單。
+- 音樂 prompt 增加 Hook-first、Rap bars、behind-the-beat flow、鼓／bass 能量與 stop-time audio-logo 規格；建議長度 62–70 秒。
+- 影片提案只使用有原檔與 allowlist 的素材；邦尼兔、ICC 與 B2B 場景組成四場景品牌片，未在音訊 gate 前冒充正式成片。
+- 官方 WP 01–10 頁面於 2026-08-27 逐頁回 HTTP 200；系列計畫已寫入 `JOB-A8-MAPLAB-MUSIC-SERIES-20260827/`。美術館頁面仍有「大新／大慶」正文漂移，A2 修正前不寫專名歌詞。
+- 發現歌詞 SSOT 漂移：repo 檔仍為「檸檬和奶油」，Task Card／Google Doc 記錄為 `lemon and cream`；生成前必須反讀 Google Doc 並同步正式檔。
+- 邊界：本 checkpoint 只做研究與提案；未改 Google Doc、未送 Suno、未耗額度、未渲染或發布。
 
 ## 2026-08-26 English Pronunciation Checkpoint
 
@@ -71,5 +84,5 @@ Owner 回覆 `主題曲歌詞通過` 或逐句修改。核准後只做一件事�
 ```text
 你是 MAPLAB Hip-hop Songwriter。先完整讀 CURRENT_STATUS.md、pitfalls.md、skills/maplab-hiphop-songwriter/SKILL.md、skills/brand-voice-guide.md、skills/a8-produce-to-publish-sop.md 與 handoff/tasks/T-A8-002-maplab-ig-theme-song.md。
 
-Owner 正在審《把相聚端上桌》。歌詞、15 秒 Hook、IG 風格 brief、City-pop A/B prompt、研究、分鏡與驗證都在 workbook/reviews/JOB-A8-MAPLAB-IG-THEME-20260825/；Google Doc 是 https://docs.google.com/document/d/1VicisMW7dVmwkr9wjL-l3hxlwJn3SLGH6-RcHtQHVKI/edit?tab=t.0。Prompt registry 在 workbook/music_prompt_registry/。先讀 Owner 的逐句回覆；只有明確回覆「主題曲歌詞通過」才可準備外部生成。一般「繼續／跑完」不是歌詞核准。核准後在有效訂閱下只生成 v2A／v2B 第一輪候選並留 receipt；正式母帶只用 provider Download，畫面側錄只作 UI 證據。未選曲前不交 A8 正式剪片，未核准平台前不發布。
+Owner 正在審《把相聚端上桌》。先讀 theme_second_read_20260827.md、visual_cut_plan_v3_proposal.md 與 JOB-A8-MAPLAB-MUSIC-SERIES-20260827/wp_music_series_01_10.md；Google Doc 是 https://docs.google.com/document/d/1VicisMW7dVmwkr9wjL-l3hxlwJn3SLGH6-RcHtQHVKI/edit?tab=t.0。先確認 Owner 對「混合場景 vs 企業優先」與「15 秒畫面 Logo vs 音訊 MAPLAB tag」的選擇，再反讀 Google Doc，解決 repo「檸檬和奶油」與文件 `lemon and cream` 的 SSOT 漂移。只有明確回覆「主題曲歌詞通過」才可準備外部生成。一般「繼續／跑完」不是歌詞核准。核准後在有效訂閱下只生成兩個第一輪候選並留 receipt；正式母帶只用 provider Download。未選曲前不交 A8 正式剪片，未核准平台前不發布。WP 音樂系列每次只做一案，不一次生成九首。
 ```

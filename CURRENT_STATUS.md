@@ -5,7 +5,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-08-28 Codex A1/A5/A6｜隱藏成本 no-write case-id integration plan 通過 static gates；下一步為 read-only deployed-source/header inventory。完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-08-28 Codex A1/A5/A6｜隱藏成本 deployed-source/header read-only inventory 完成；live adoption 維持 HOLD，下一步為 no-write private-root/deployed-readback hardening plan。完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -20,6 +20,8 @@
 ---
 
 ## 最新事實核對
+
+- 2026-08-28 05:06：**[隱藏成本 deployed-source/header inventory]** — 完成 `margin-deployed-source-inventory-v1`（fingerprint `d282b0fe...`），4/4 fresh full-header hashes match；canonical quote binding與 8-file local bundle verified，但 current quote deployed revision仍 `UNRESOLVED`。Separate LINE GAS只有 historical hash-only evidence，`scripts/apps-script-line/`缺失，current binding/manifest/version/source digest仍 `UNRESOLVED`；direct GAS不可驗 LINE signature header。`writer-search-v2`固定 67 current source files＋bounded Git selector為 0/0 matches，quote GAS只寫 `SALES_INTAKE`，Orders/OrderCharges authority維持 `UNRESOLVED`。Private-root readback：`REPO_PATH` salted fingerprint matches canonical repo，Case Store dir/DB/fallback `0755/0644/0644`；OpenClaw root `0755`、405/405 fixed bundle artifacts at `0644`；Google token `0644`且 Apps Script readonly scope absent，未用於 network。Receipt SHA `21106476...`、parent/file 0700/0600；focused 20/20、related 71/71、`py_compile`、live receipt reload與三個 independent red-teams PASS；implementation `b7ccd3e`。狀態為 `READ_ONLY_INVENTORY_COMPLETE / LIVE_ADOPTION_HOLD`，deployed truth、private roots、writer、header-capable ingress仍未達 live gate，confirmed leakage保持 0。下一步只做 no-write consumers/migration/readback/rollback hardening plan，不 chmod/move/restart/deploy/write。
 
 - 2026-08-28 04:25：**[隱藏成本 case-id integration static gates]** — 完成 `margin-case-id-integration-plan-v1`（fingerprint `201cf84e...`），把已驗 intake contract 精確對應到 LINE ingress、Case Store／`SALES_INTAKE`、A5／quote GAS、`Orders`／`OrderCharges` 與 `ASSET_LOG`。20/20 pinned source anchors、25/25 synthetic fixtures、4/4 prior header digests、7/7 plan gates、focused 20/20 與 related margin regression 29/29 PASS，三個 independent final audits PASS；implementation `1b2a2af`，receipt SHA `bfcf5a5f...`、parent/file 0700/0600。重要修正：direct Apps Script Web App event object 沒有 request headers，不能按 LINE 規範驗 `x-line-signature`＋untouched raw body；未來 live proposal 必須先有 header-capable ingress、signature 驗證與 replay-bounded signed internal envelope，否則 LINE ingestion fail closed。現有 25 個 static fixtures 不包含 signature/envelope runtime test，不能冒充 ingress 已驗。Repo LINE source 被 clasp 排除、separate checkout 缺失、Orders writer 與 deployed digests 仍 unresolved，沒有猜。狀態只到 `STATIC_PLAN_VALIDATED / PROPOSAL_ONLY`；live adoption、durable outbox runtime、Google write、customer send 與 confirmed leakage 皆為 false/0。Job 現為 `RUNNING / deployed-source-readback-plan`，下一步只做 read-only deployed-source/header inventory，不 deploy 或改 live systems。
 

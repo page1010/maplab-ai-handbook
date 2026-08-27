@@ -1,9 +1,9 @@
 # T-A5-A6-HIDDEN-COST-RECOVERY-001 — 隱藏成本與可加價服務回收
 
 ```yaml
-status: ACTIVE_DEPLOYED_SOURCE_READBACK_PLAN
+status: ACTIVE_PRIVATE_ROOT_HARDENING_PLAN
 assigned_session: 2026-08-28 / A1-A5-A6 Codex
-last_committed_by: Codex / 1b2a2af (no-write case-id integration gates); 4ecda3f (synthetic intake case-id contract); 444c73a (fixed-five join-first shadow); 0ed12cb (live Google join bridge); bfb6854 (10-case evidence join); 70077c0 (50-case calibration); 665eb23 (workflow/workbook); 86c1cf1 (supervisor guard)
+last_committed_by: Codex / b7ccd3e (read-only deployed-source/header inventory); 1b2a2af (no-write case-id integration gates); 4ecda3f (synthetic intake case-id contract); 444c73a (fixed-five join-first shadow); 0ed12cb (live Google join bridge); bfb6854 (10-case evidence join); 70077c0 (50-case calibration); 665eb23 (workflow/workbook); 86c1cf1 (supervisor guard)
 owner_goal: 從真實對話與交付證據找出本來不在標準範圍、MAPLAB 實際代解且未收費的工作，產品化為合理加價服務，提升專案毛利。
 data_class: private-local-only
 ```
@@ -29,6 +29,9 @@ data_class: private-local-only
 - `docs/margin-leak-case-id-integration-plan.md`
 - `scripts/maplab_case_id_integration_plan.py`
 - `tests/test_maplab_case_id_integration_plan.py`
+- `scripts/maplab_deployed_source_inventory.py`
+- `tests/test_maplab_deployed_source_inventory.py`
+- `docs/margin-leak-deployed-source-inventory.md`
 - `workbook/reviews/JOB-A6-LINE-PLATEAU-MARGIN-20260828/validation_receipt.md`
 - private aggregate：`/Users/pagemacmini/.maplab/margin-leak-audit/20260828-initial-aggregate.json`
 
@@ -68,12 +71,13 @@ data_class: private-local-only
 - [x] 從已有 quote＋OrderCharges 的固定五個 2026 Orders 做 hardened join-first shadow；0 unique links 後依 stop-loss 停止歷史 fuzzy backfill。
 - [x] 以 10 個 synthetic holdouts 驗 intake-time `case_id` 五階段 contract；Case Store／SALES_INTAKE 各自 readback、restart／two-connection、migration provenance、late duplicate 與 nested receipt red-team 全 fail closed，沒有 live write。
 - [x] 建立 exact source-to-adapter no-write integration plan；20 個 pinned source anchors、25 個 synthetic fail-closed fixtures、4 個 prior live-header pins 與 7 個 plan gates 全通過，並明列 direct GAS Web App 無法取得 LINE signature header，必須先有 header-capable ingress。沒有 deploy、live write 或 durable outbox overclaim。
+- [x] 完成 read-only deployed-source/header inventory；4/4 fresh full-header hashes match，quote local bundle/binding 與 historical deployment分層，current quote/LINE deployed revision、Orders/OrderCharges writer仍明列 `UNRESOLVED`。Case Store DB/fallback 與 OpenClaw 405 個固定 bundle artifacts 的 `0755/0644` exposure、`REPO_PATH` hash/match、OAuth `0644`＋Apps Script readonly scope缺失均 fail closed；71/71 related tests與三個 final red-teams PASS，無 deploy/write/private egress。
 - [ ] 以 quote、OrderCharges、交付／照片 evidence join，估出 confirmed leakage；未 join 前金額必為 0。
 - [ ] Owner 核准第一批正式品項、價格、標準內含量與生效日後，才另開 live Sheet／GAS 變更任務。
 
 ## Next Bounded Action
 
-建立 read-only deployed-source/header inventory packet：定位分離的 LINE GAS checkout／deployment digest、quote GAS deployment digest、`Orders`／`OrderCharges` authoritative writer，以及目前 Case Store／OpenClaw private artifact roots 與 modes；比較其 digest/header hash 與已 pin 的 static plan。只讀、不 deploy、不改 GAS／Sheets／訊息／價格／歷史資料，不搬 secret。無法由現有授權面讀到的項目明列 `UNRESOLVED`，不得猜。另把 header-capable LINE ingress 設為未來 live proposal 的 Phase-0 必要條件；direct GAS Web App 不可作 LINE webhook authority。
+建立 no-write private-root／deployed-readback hardening plan：盤點 Case Store DB＋fallback、OpenClaw review bundles、`bot_a6/.env`、Google token、quote/LINE GAS binding 的全部 consumers，設計 repo 外 owner-only roots、atomic migration、readback、rollback 與 hash-only Apps Script deployed-source readback。只做 plan／fixture，不 chmod、不搬檔、不重啟、不 deploy、不改 GAS／Sheets／訊息／價格／歷史／credential；無 Apps Script readonly scope與現行 `0644` credential時維持 `UNRESOLVED`。Header-capable LINE ingress仍是 Phase 0，direct GAS不可作 LINE authority。
 
 ## 2026-08-28 Calibration Receipt
 
@@ -134,6 +138,18 @@ data_class: private-local-only
 - Verification：focused 20/20 PASS、related margin/case-id regression 29/29 PASS、三個 independent final audits PASS；implementation `1b2a2af`。
 - Boundary：`STATIC_PLAN_VALIDATED / PROPOSAL_ONLY`；`eligible_for_live_change=false`、`durable_outbox_runtime_validated=false`、live adoption false、confirmed leakage amount 0。下一步只做 read-only deployed-source/header inventory。
 
+## 2026-08-28 Deployed-Source／Header Inventory Receipt
+
+- Method：`margin-deployed-source-inventory-v1`；fingerprint `d282b0fee8655a3cbc075bc332c0eb9ab2e5f18bac05abefdb7d63f97c5f53c0`；changed variable 是從 static plan 改成 local/historical/deployed 三層 truth、fresh full-header hashes與實際 private-root modes。
+- Fresh headers：`SALES_INTAKE=15`、`Orders=29`、`OrderCharges=4`、`MAPLAB_ASSET_LOG=14`，4/4 SHA-256 match pinned plan。Connector metadata/header reads為 2/7（兩次 hash implementation failure照實保留），Google read operations 9、writes 0。
+- GAS truth：quote canonical binding與 8-file local bundle digest verified；historical quote/LINE script/deployment fingerprints均 hash-only pinned。Current quote deployed revision仍 `UNRESOLVED`；separate `scripts/apps-script-line/`缺失，current LINE binding/manifest/version/source digest仍 `UNRESOLVED`。Direct GAS仍不可驗 LINE signature header。
+- Writer truth：`writer-search-v2` 固定掃 67 current source files＋bounded Git selector，0/0 matches；quote GAS只寫 `SALES_INTAKE`，所以 `Orders`／`OrderCharges` authority維持 `AUTHORITATIVE_WRITER_UNRESOLVED`，沒有把零命中冒充「不存在」。
+- Private roots：`REPO_PATH` override存在、salted fingerprint與 canonical repo match；Case Store dir/DB/fallback為 `0755/0644/0644`。OpenClaw review root `0755`，8 個固定 bundle filenames aggregate為 405/405 regular files at `0644`、owner-only 0、symlink 0。Google token metadata mode `0644`、3 scopes、exact Apps Script readonly scope缺失；全部 fail closed，不使用 credential上網。
+- Artifact：`/Users/pagemacmini/.maplab/margin-leak-audit/20260828-deployed-source-inventory-v1.json`；parent/file `0700/0600`；SHA-256 `2110647635fe3223e92bcf5ed421472774b68e339e59c60883f2d683af0dfd21`；body `c23563deae61f54aee6fa3e9e3b8d0e04b26e473556e2487f1e4dbd13c144fbc`。
+- Safety：raw customer/text/Google IDs/secrets 0；Apps Script API、Google/deployment/credential writes、customer send、price write、history mutation、new private egress均 0。Receipt exact type/value/relation、unique manifests、same-key identifier poison、boolean/float count、future timestamp、root/credential forgery均 fail closed。
+- Verification：focused 20/20、related margin suite 71/71、`py_compile`、live receipt reload與三個 independent final red-teams PASS；implementation `b7ccd3e`。
+- Decision：`READ_ONLY_INVENTORY_COMPLETE / LIVE_ADOPTION_HOLD`；`eligible_for_live_change=false`、`deployed_source_truth_complete=false`、confirmed leakage 0。下一步只做 no-write private-root/deployed-readback hardening plan。
+
 ## Resume Prompt
 
-我是 A5/A6 毛利漏損稽核工程師，環境是 `/Users/pagemacmini/maplab-ai-handbook`。先讀 `CURRENT_STATUS.md`、`pitfalls.md`、本卡、validation receipt、`docs/margin-leak-case-id-integration-plan.md`、canonical job 與 private integration receipt。先驗 plan SHA `e93da7d1c480112118d1e803fc1809faa1129db7101a52b9454cda33bbeb2695`、receipt SHA `bfcf5a5f7c887576017513e488a3b658debfc777c92d3cfbf1733de13edc3812`、method fingerprint `201cf84e...`、20 anchors、25 fixtures、4 header pins、20/20 focused tests 與三個 independent final audits PASS。注意這 25 個 static fixtures 不含 LINE signature/envelope runtime tests；那些只能在 header-capable ingress adapter 建成後驗。下一步只做 read-only deployed-source/header inventory packet：分離 LINE GAS、quote GAS、Orders／OrderCharges authoritative writer、Case Store／OpenClaw artifact root/modes；比較 digests/header hashes 並把無法讀到的項目標 `UNRESOLVED`，不得猜。direct GAS Web App 沒有 LINE signature header，未有 header-capable ingress 前不得進 live proposal。禁止 deploy、GAS/Sheet/訊息/價格/歷史 write，禁止重跑 fuzzy/name backfill，私有資料不得送 DeerFlow/OpenRouter。confirmed leakage amount 保持 0。完成後原子更新 job、task card、receipt、CURRENT_STATUS 與 Resume Prompt，只 stage 任務相關檔案。
+我是 A5/A6 毛利漏損稽核工程師，環境是 `/Users/pagemacmini/maplab-ai-handbook`。先讀 `CURRENT_STATUS.md`、`pitfalls.md`、本卡、validation receipt、`docs/margin-leak-case-id-integration-plan.md`、`docs/margin-leak-deployed-source-inventory.md`、canonical job 與 private inventory receipt。先驗 method `d282b0fe...`、receipt SHA `21106476...`、body `c23563de...`、4/4 fresh header pins、67/0/0 writer manifest、Case Store `0755/0644/0644`、OpenClaw 405/405 at `0644`、credential `0644`＋readonly scope absent、focused 20/20、related 71/71與三個 final red-teams PASS。下一步只做 no-write private-root/deployed-readback hardening plan：列全 Case Store DB/fallback、OpenClaw、`.env`、Google token與 GAS binding consumers，設計 repo 外 0700/0600 roots、atomic migration/readback/rollback與 safe hash-only deployed-source readback。不得 chmod/move/restart/deploy，不改 GAS/Sheets/訊息/價格/歷史/credential，不呼叫 Apps Script API；讀不到仍標 `UNRESOLVED`。Direct GAS不可作 LINE authority，header-capable ingress仍是 Phase 0。禁止重跑 fuzzy/name backfill，私有資料不得送 DeerFlow/OpenRouter，confirmed leakage amount保持 0。完成後原子更新 job、task card、receipt、CURRENT_STATUS、pitfalls（若有新教訓）與 Resume Prompt，只 stage任務相關檔案。

@@ -705,3 +705,27 @@
 - 解法：adapter、classified non-adapter、dispatch分成獨立 logical roots；53個 current artifacts與future writes各有 actual-byte ledger/readback/rollback。所有 concrete writers source-pin＋anchor，shared repo只准留 non-private control/reference；backup zero-sensitive gate覆蓋所有 fixed-name classes。
 - 預防：任何 shared namespace migration先做 `current bytes × classification × writer × backup generation` 四維盤點。若 classified count大於 migration count，或 writer未綁 target resolver，禁止進 live gate。
 - 封坑驗證：405 current fixed artifacts與3,240 backup copies完整分類；兩個 non-adapter writers、12 target contracts、3,912 backup copies relation均由 validator鎖定，FINAL4 audits PASS。
+
+## 2026-08-28 — Generation 指標原子替換後的 fsync 失敗是 ambiguous commit，不可刪 target
+
+- 觸發條件：synthetic resolver 已把 `active.json` replace 到新 generation，隨後 parent directory `fsync` 注入 `EIO`；初版共用 error cleanup 把新 generation刪掉，留下 active pointer指向不存在目錄。另初版 rollback只驗 ledger/seal JSON，prior artifact被改寫仍能切回；`stat`後leaf換成FIFO也可能讓blocking open卡死。
+- 根因：把「函式拋錯」等同「指標一定沒提交」，沒有區分 pre-replace與post-replace failure；把 seal metadata自洽當artifact完整；以 stat→pathname open與 replace-capable rename代替 fd/type/no-replace contract。
+- 解法：post-replace error先讀回 exact generation＋epoch；若新 pointer已可見，保留 sealed target並回 ambiguous error，不做破壞清理。Rollback在 publication lock內重新開啟、驗mode/type/nlink並hash ledger全部 artifacts後才CAS。所有 untrusted read open加 `O_NONBLOCK|O_NOFOLLOW`；final generation改為 lock內 exclusive `mkdir`＋copy/seal，active pointer才是publication boundary。
+- 預防：每個 generation state machine固定測 pre-pointer fsync failure、post-pointer fsync failure、tampered prior generation、stat→FIFO swap、repo overlap與 destination create race；cleanup只能刪「已證明未被任何 durable pointer引用」的object。Power-loss未實測不得寫 crash-safe。
+- 封坑驗證：focused 25/25、MAPLAB discovery 120/120及 independent 8/8 adversarial harness PASS；post-pointer EIO後新 generation仍存在可讀，tampered prior拒絕且active不變，FIFO swap在nonblocking path立即fail closed。
+
+## 2026-08-28 — Receipt body hash只能證自洽，不能替代 exact evidence contract
+
+- 觸發條件：prototype receipt初版允許 `>=20` 任意PASS fixtures、額外 metrics、未綁當前implementation的64-hex provenance與任意aware timestamp；攻擊者改成2099、刪必測fixture、加入`/var/folders` path或把script SHA改成全0，再重算body hash仍通過。
+- 根因：把可由攻擊者重算的digest當 authenticity；nested validator只驗shape／下限，不驗exact ordered fixture、keys/types/values、timestamp與current bytes relation。
+- 解法：receipt逐層 exact allowlist：固定21-row name/result/observed matrix、metrics exact key/type/value、固定UTC timestamp、method/plateau/decision exact value；implementation provenance即時重算script/test/doc bytes並比對。Body hash只保留為transport/self-consistency check，不能單獨升級decision。
+- 預防：每個完成receipt都要跑「修改語義後重算body hash」poison matrix：future timestamp、required fixture replacement、path poison、extra metric、boolean-as-int、forged provenance與安全decision翻轉。任一接受就不得更新Task/job為PASS。
+- 封坑驗證：上述poisons分別回 `RECEIPT_TIMESTAMP`、`RECEIPT_FIXTURES`、`RECEIPT_METRICS`、`RECEIPT_IMPLEMENTATION_PROVENANCE`或`RECEIPT_DECISION`；exact receipt SHA `03ef6160...`、body `ce995142...`由三個independent exact-byte audits PASS。
+
+## 2026-08-28 — 用 importlib 驗 dataclass 模組前要先註冊 `sys.modules`
+
+- 觸發條件：governance readback用 `spec_from_file_location`＋`module_from_spec`載入 resolver validator，直接 `exec_module` 時 Python 3.9 的 `dataclasses` 在解析型別註記發生 `NoneType.__dict__`。
+- 根因：動態建立的 module尚未放進 `sys.modules[spec.name]`；`dataclasses`會依 `cls.__module__`回查 namespace，未註冊就拿不到模組物件。這是驗證 harness錯誤，不是 receipt或resolver失敗。
+- 解法：在 `exec_module` 前先做 `sys.modules[spec.name] = module`，再呼叫 `validate_receipt`與current-byte provenance檢查。
+- 預防：所有以 importlib直接載入含 dataclass／forward annotation 的 repo script，都使用同一個 helper順序：create spec → create module → register → execute；不要把 loader失敗誤報成產品測試失敗。
+- 封坑驗證：修正 harness後 exact receipt、SHA與 script/test/doc provenance全數重新驗證通過。

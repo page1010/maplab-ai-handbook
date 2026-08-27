@@ -5,7 +5,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-08-28 Codex A1/A5/A6｜隱藏成本 private-root/deployed-readback static hardening gates 完成；live adoption 維持 HOLD，下一步為 synthetic resolver/copy-ledger runtime prototype。完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-08-28 Codex A1/A5/A6｜隱藏成本 synthetic private-root resolver/copy-ledger G1 完成；live adoption 維持 HOLD，下一步為 G2 backup exclusion/index fixture。完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -20,6 +20,8 @@
 ---
 
 ## 最新事實核對
+
+- 2026-08-28 07:48：**[隱藏成本 synthetic private-root resolver/copy-ledger G1]** — 完成 `margin-private-root-resolver-prototype-v1`（fingerprint `3dd861d0...`）：只在 `TemporaryDirectory` 建 8/8 distinct logical surfaces，含53/53 non-adapter classified artifacts；stream與重新開啟 destination SHA/size exact、ledger/seal、exclusive final generation、generation＋epoch CAS、durable pre-write barrier、pre-write rollback/post-write forward repair均實際執行。21/21 executable receipt scenarios、focused 25/25、MAPLAB discovery 120/120、`py_compile`與三個 independent exact-byte audits PASS；post-pointer fsync ambiguity、tampered rollback、stat→FIFO swap、repo overlap、no-replace race及 receipt timestamp/fixture/metric/provenance forgery全 fail closed。Receipt SHA `03ef6160...`、body `ce995142...`、parent/file `0700/0600`；implementation `c44e8bc`。狀態只到 `SYNTHETIC_RESOLVER_COPY_LEDGER_VALIDATED / HOLD`；live resolver/migration/consumer/SQLite/backup classification仍未驗，current private roots `owner_only=false`，quote/LINE deployed truth、Orders writer與header ingress仍 unresolved，confirmed leakage 0。Residual P1為 extra unledgered file尚未被exact tree gate拒絕但resolver也不可讀；下一步只做 `TemporaryDirectory` G2 backup exclusion/index＋tree-membership fixture，不碰live backup/process/payload/API。
 
 - 2026-08-28 07:05：**[隱藏成本 private-root/deployed-readback static hardening]** — 完成 `margin-private-root-deployed-readback-plan-v1`（fingerprint `fa7086a1...`）：67 source pins、62 consumer anchors、10 exact private-env tracked refs、19+4 Google token consumers、4 installed LaunchAgent files、12 target contracts、39/39 policy fixtures均通過。盤點納入 provider direct reader/copy writer、OpenRouter/local YAML、disabled extensions、Hermes training loop/supervisor/plists、44 adapter bundles、53 non-adapter classified artifacts、dispatch與8代backup。Case Store、bot env、review、dispatch、backup、provider/Google/clasp仍 unsafe/unresolved；Hermes training雖有 `0700/0600` mode histogram，但 UID/ACL/type/hardlink/runtime未驗，誠實維持 `owner_only=false`。Future Apps Script readback只允許 dedicated exact-two readonly scopes、3 GET、version-bound＋double-read，沒有實際 API call。Private receipt SHA `47cb08a3...`、body `c204ea0b...`、parent/file `0700/0600`；focused 17/17、related 88/88、`py_compile`與三個 independent exact-byte red-teams PASS；implementation `5535e89`。狀態只到 `STATIC_DESIGN_INVENTORY_VALIDATED / HOLD`，resolver/copy-ledger runtime、live migration、quote/LINE deployed truth、Orders writer與header ingress均未完成，confirmed leakage仍 0。下一步只做 TemporaryDirectory synthetic resolver＋actual-byte ledger，不碰 live path/process/credential/API。
 

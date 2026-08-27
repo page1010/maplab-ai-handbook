@@ -33,6 +33,12 @@
 - 四項能力已落 skills/(capability-*.md):NotebookLM 專案大腦(**可用**,方法 06-05 已驗證)、Firecrawl 抓站(**待接鑰匙**,啟用步驟已寫)、Owner 聲音生成(**待建**,先本地開源評測再談花錢)、指向性地圖導覽視覺化(**待認領**,三 repo 都沒找到既有實作,等 Owner 指出舊物在哪或當新建)。
 - 工作 E-1:Firecrawl 註冊+MCP 接入(Owner 貼 key 照兩畫面模式)。E-2:語音克隆本地方案評測(可派 hermes/免費算力)。E-3:地圖導覽第一場景=maplabkitchen 店面導覽頁。
 
+## F. 08-27 夜巡新增(A0 檢視離線兩天更新後記)
+
+- F-1 **圓桌(roundtable)資料停在 08-17**:22:10 job 的 top3-gate 連三晚(08-25/26/27)正確擋舊資料,證明 gate 有效,但也代表上游圓桌管線斷更 10 天,要排查該 job 為何沒產新資料。
+- F-2 斷線訊息改版已提交(bot/bot.py,8184710):離線通知導流 hermes A6 窗+說明 launchd 產品線照常;**待 bot 重啟生效**(com.maplab.telegrambot 有 KeepAlive,kill 即重生),重啟後驗證一次。
+- F-3 續接視窗權限已修:Documents/.claude/settings.local.json 白名單加了 a0_reply/a0_reply_from_file/notify_group 三支腳本,08-27 23 時已實測推送成功留收據。
+
 ## 優先序(建議)
 
 1. C-1 殺 gemma4(一條命令)2. B-2 fallback 防斷供 3. A-1 roll-call 對照表 4. B-1/B-3 排查 5. D hermes 對齊稿+接手設計 6. C-2 hermes 預設模型改雲端

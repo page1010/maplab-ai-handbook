@@ -10,6 +10,7 @@
 - 12 rounds／60 loopback Ollama calls；10/60 pass（16.7%）；單輪最高 40%；success streak 0。
 - 12/12 round 的題目不同，沒有固定 canary；這不是可比較實驗。
 - code commit：`86c1cf1 fix(hermes): stop blind LINE reruns on plateau`
+- workflow／workbook／SOP commit：`665eb23 feat(margin): add hidden-cost recovery workflow`
 - 真實無 `--data-root` resume 回：`bounded_pause / plateau_method_review_required`。
 - live readback 保持 `round_count=12`、`attempt=6`、`loopback_ollama_calls=60`、`external_network_calls=0`、`customer_send=false`；證明熔斷後沒有再耗模型或 attempt。
 

@@ -1,9 +1,9 @@
 # T-A5-A6-HIDDEN-COST-RECOVERY-001 — 隱藏成本與可加價服務回收
 
 ```yaml
-status: ACTIVE_JOIN_FIRST_SHADOW
+status: ACTIVE_INTAKE_CASE_ID_CAPTURE
 assigned_session: 2026-08-28 / A1-A5-A6 Codex
-last_committed_by: Codex / 0ed12cb (live Google join bridge); bfb6854 (10-case evidence join); 70077c0 (50-case calibration); 665eb23 (workflow/workbook); 86c1cf1 (supervisor guard)
+last_committed_by: Codex / 444c73a (fixed-five join-first shadow); 0ed12cb (live Google join bridge); bfb6854 (10-case evidence join); 70077c0 (50-case calibration); 665eb23 (workflow/workbook); 86c1cf1 (supervisor guard)
 owner_goal: 從真實對話與交付證據找出本來不在標準範圍、MAPLAB 實際代解且未收費的工作，產品化為合理加價服務，提升專案毛利。
 data_class: private-local-only
 ```
@@ -21,6 +21,7 @@ data_class: private-local-only
 - `scripts/maplab_margin_leak_scan.py`
 - `scripts/maplab_margin_leak_evidence_join.py`
 - `scripts/maplab_margin_google_join_bridge.py`
+- `scripts/maplab_margin_join_first_shadow.py`
 - `scripts/build_hidden_cost_pricing_workbook.mjs`
 - `docs/margin-leak-evidence-join-schema-proposal.md`
 - `workbook/reviews/JOB-A6-LINE-PLATEAU-MARGIN-20260828/validation_receipt.md`
@@ -59,12 +60,13 @@ data_class: private-local-only
 - [x] 本機抽 50 個高優先候選做 taxonomy calibration，留下 hash 與標籤，不複製原文。
 - [x] 固定 10 個 true-candidate hashes 做首次 evidence-location join；明列 join 缺口，不把 request cue 當漏收。
 - [x] 以 live Google read-only bridge 驗 10 案並產 field-level schema proposal；無 live write。
+- [x] 從已有 quote＋OrderCharges 的固定五個 2026 Orders 做 hardened join-first shadow；0 unique links 後依 stop-loss 停止歷史 fuzzy backfill。
 - [ ] 以 quote、OrderCharges、交付／照片 evidence join，估出 confirmed leakage；未 join 前金額必為 0。
 - [ ] Owner 核准第一批正式品項、價格、標準內含量與生效日後，才另開 live Sheet／GAS 變更任務。
 
 ## Next Bounded Action
 
-停止 conversation-first random sample。改做 join-first shadow pilot：從 2026 `Orders` 中固定抽 5 案，條件為 `client_sheet_url` 非空且已有 `OrderCharges`；再於本機 LINE archive 用至少兩個獨立 anchor 反查 conversation。只留 opaque refs、anchor count、四柱狀態與 missing codes；無模型、無 Google write、無 customer send。若 5 案皆無 two-anchor link，不擴大 fuzzy matcher，轉向 intake-time `case_id` capture。
+建立 proposal-only 的 intake-time `case_id` capture contract：以 synthetic fixtures 驗證一個本機 opaque case key 能依序穿過 LINE intake、Case Store／`SALES_INTAKE`、quote creation、`Orders`／`OrderCharges`、`ASSET_LOG` 五個階段，並產 migration/backfill boundary receipt。不得改 live Sheets、訊息、價格或歷史 fuzzy links；若五階段無法保留同一 case key，立即停下修 contract，不提 live adoption。
 
 ## 2026-08-28 Calibration Receipt
 
@@ -94,6 +96,16 @@ data_class: private-local-only
 - Schema proposal：`docs/margin-leak-evidence-join-schema-proposal.md`；proposal-only，沒有修改 live Sheets。
 - 方法結論：conversation-first 隨機樣本缺少 case key；下一輪改從已具 quote＋charge 的 order 往回 join，不再對同一十案重跑模糊配對。
 
+## 2026-08-28 Join-First Shadow Receipt
+
+- Method：`margin-join-first-shadow-v1`；fingerprint `cfe227ba61206a7a1825aa9a960054fe8f9ca6858ac8152819a4ab6c36e09ae0`；固定以 `sha256(method_version|order_id)` 從 6 個 eligible 2026 Orders 取 5 案。
+- Live minimal rows：`Orders=693`、`OrderCharges=184`；本機 LINE archive 3,625 files。五案結果為 3 案沒有 two-anchor candidate、2 案有 8／9 個 ambiguous candidates、unique stable link 0。
+- Stop-loss：全年日期、去低熵 identity、至少 20 字元 Sheet ID、兩種獨立 exact anchor；ambiguous fail closed，不擴 fuzzy matcher。四柱 verified 各 0、5/5 `insufficient_evidence`、confirmed leakage amount 0。
+- Artifact：`/Users/pagemacmini/.maplab/margin-leak-audit/20260828-join-first-shadow-v1.json`；SHA-256 `55ce24ff8eeea3136d14a80764ed4dff57500c4414c2807c433ab47bbd714b52`；mode 0600。
+- Privacy/read-only：Google reads 4；raw text、customer identifiers、source conversation IDs、customer-bearing paths、raw Google IDs、new third-party egress、token writes、model calls、customer send、Google/live price writes 全為 0。
+- Verification：四個 margin modules focused unittest 13/13 PASS、`py_compile` PASS、independent audit PASS；implementation `444c73a`。
+- 方法結論：歷史 archive 無法可靠補出 unique identity chain；依事前 stop-loss 轉向 intake-time `case_id` capture，不再消耗 quota 重跑 name／fuzzy join。
+
 ## Resume Prompt
 
-我是 A5/A6 毛利漏損稽核工程師，環境是 `/Users/pagemacmini/maplab-ai-handbook`。先讀 `CURRENT_STATUS.md`、`pitfalls.md`、本卡、validation receipt、schema proposal、canonical job 與 private Google bridge receipt。先驗 bridge SHA-256 `c757d2c055b678ee05ba931002ff8732b7f0d5134e041c53eb50b30785e15c4a`；live readback 已證實 fixed-ten conversation-first sample 無 stable key，禁止再重跑相同 fuzzy/name 方法。下一步改做 join-first shadow pilot：從 2026 Orders 中以 deterministic hash 固定取 5 筆 `client_sheet_url` 非空且已有 OrderCharges 的案，於本機 LINE archive 用至少兩個獨立 anchor 反查；receipt 只留 opaque refs、anchor count、四柱狀態與 missing codes。私有資料不得送 DeerFlow/OpenRouter；無模型、無 Google write、無 customer send。未同時證明 baseline、delivery、incremental cost、charged fee 前 confirmed amount 必須為 0。每個 bounded action 更新 job、task card、receipt、CURRENT_STATUS 與 Resume Prompt，只 stage 任務相關檔案。
+我是 A5/A6 毛利漏損稽核工程師，環境是 `/Users/pagemacmini/maplab-ai-handbook`。先讀 `CURRENT_STATUS.md`、`pitfalls.md`、本卡、validation receipt、schema proposal、canonical job 與 private join-first receipt。先驗 receipt SHA-256 `55ce24ff8eeea3136d14a80764ed4dff57500c4414c2807c433ab47bbd714b52`；fixed-five 已證實 3 案無 two-anchor candidate、2 案為 ambiguous、unique stable link 0，禁止再重跑 fuzzy/name matcher。下一步只用 synthetic fixtures 建 proposal-only intake-time `case_id` capture contract，使一個 opaque key 穿過 LINE intake、Case Store／SALES_INTAKE、quote、Orders／OrderCharges、ASSET_LOG；不得改 live Sheets、訊息、價格或歷史資料。私有資料不得送 DeerFlow/OpenRouter；無模型、無 customer send。未同時證明 baseline、delivery、incremental cost、charged fee 前 confirmed amount 必須為 0。每個 bounded action 更新 job、task card、receipt、CURRENT_STATUS 與 Resume Prompt，只 stage 任務相關檔案。

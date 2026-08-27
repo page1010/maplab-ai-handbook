@@ -649,3 +649,11 @@
 - 解法：停止增加 keyword、round 或 classifier 版本；先建立本機 read-only join bridge，把 case、quote、charge、asset 的最小 key 在 process 內對應，receipt 只留 hashes、evidence status 與 missing codes。Live readback 若仍 zero stable joins，就立即產 field-level schema proposal，並把下一樣本改為「已有 quote＋charge 的 order 往回找 conversation」，不再對相同 random conversations 加模糊條件。四柱缺一就維持 `insufficient_evidence`、金額 0。
 - 預防：margin-leak pipeline 的第一個 acceptance 不是「候選數」，而是四柱 join coverage；每案必有 baseline scope、actual delivery、incremental cost、charged fee。實驗抽樣要先看 evidence availability：要找漏收金額時優先從 evidence-rich orders 做 join-first，conversation-first 只適合訊號 taxonomy。Pointer、keyword、姓名或回覆語氣只能進 review queue，不可自動成為 leakage。
 - 封坑驗證：固定十案 10/10 source hash resolved；live Google minimal readback 為 `SALES_INTAKE=45`、`Orders=693`、`OrderCharges=184`、2026 quote Sheets=159，但 stable join 仍 0、四柱 verified 各 0。Private-label/source-ID leak audit 0；Google reads 12、writes/token writes/model/send/new third-party egress 0。下一方法改 join-first fixed-five，不得再跑相同 name matcher。
+
+## 2026-08-28 — Two-anchor 候選很多仍不等於 identity join；歷史回填要有停損
+
+- 觸發條件：從已有 quote＋OrderCharges 的固定五個 2026 Orders 往回掃 3,625 個 LINE archives；3 案沒有 two-anchor candidate，另 2 案卻各出現 8／9 個候選，仍沒有唯一可驗的 conversation。
+- 根因：完整日期與客戶／活動 identity 在歷史匯出中會重複；有兩個 exact anchor 只代表 candidate，沒有跨系統 `case_id` 時，增加 fuzzy 條件只會把不確定性包裝成假精準。
+- 解法：unique candidate 才能標 stable；0 candidates 與 ambiguous candidates 分開記錄，ambiguous 一律 fail closed。固定五案 unique joins=0 後立即執行 stop-loss，repair point 改為 intake-time `case_id` capture，不再擴歷史 matcher。
+- 預防：所有新 LINE case 在 intake 建本機 opaque `case_id`，並讓同一 key 穿過 Case Store／SALES_INTAKE、quote、Orders／OrderCharges 與 ASSET_LOG。歷史 backfill 沒有 deterministic key 時只保留 `insufficient_evidence`，不得算漏收金額。
+- 封坑驗證：`margin-join-first-shadow-v1` fixed-five 為 no-candidate=3、ambiguous=2、stable=0、confirmed amount=0；13/13 focused tests、`py_compile` 與 independent audit PASS；receipt SHA-256 `55ce24ff...`，raw/customer/source IDs/Google IDs/third-party egress/model/send/write 全為 0。

@@ -104,3 +104,17 @@ exit 0; plateau_method_review_required; round 12; calls 60; no new attempt
 - Repo checkpoint：`0ed12cb feat(margin): audit live Google join keys`。
 - Schema proposal：`docs/margin-leak-evidence-join-schema-proposal.md`，proposal-only；未改 live Sheet。
 - Next：停止 conversation-first random holdout，改從已有 quote＋OrderCharges 的五個 2026 orders 往回建 local shadow link；two-anchor 不成立就停，不擴 fuzzy matcher。
+
+## 11. Fixed-five join-first shadow（2026-08-28 03:18 Asia/Taipei）
+
+- Plateau review：最近三個 fingerprints 為 calibration `7e65e7be...`、evidence join `9a739a73...`、Google bridge `8c96645e...`，沒有連續相同 method 無改善。本輪只改 join direction，從 evidence-rich Orders 往回找 LINE。
+- Method contract：`margin-join-first-shadow-v1`；fingerprint `cfe227ba61206a7a1825aa9a960054fe8f9ca6858ac8152819a4ab6c36e09ae0`；hypothesis、changed variable、fixed-five holdout、expected delta 與 stop-loss 均已落 receipt。
+- Live readback：`Orders=693`、`OrderCharges=184`、eligible 2026 orders=6、LINE archive=3,625 files；deterministic fixed-five selection manifest `5fe0f00d...`。
+- Identity result：3/5 沒有 two-anchor candidate；2/5 分別有 8 與 9 個 ambiguous candidates；unique stable link 0。全年日期、去 generic/低熵 identity、至少 20 字元 Google Sheet ID、兩種獨立 exact anchors，ambiguous 一律 fail closed。
+- 四證據柱：baseline scope 0、actual delivery 0、incremental cost 0、charged fee 0；5/5 `insufficient_evidence`，confirmed leakage amount 0。
+- Missing codes：四柱未證各 5、`NO_TWO_ANCHOR_LINE_LINK=3`、`AMBIGUOUS_TWO_ANCHOR_LINE_LINK=2`。
+- Privacy/read-only：Google source reads 4；raw text、customer identifiers、source conversation IDs、customer-bearing paths、raw Google IDs、new third-party egress、OAuth token writes、model calls、customer send、Google/live price writes 全為 0。
+- Artifact：`/Users/pagemacmini/.maplab/margin-leak-audit/20260828-join-first-shadow-v1.json`，mode 0600，SHA-256 `55ce24ff8eeea3136d14a80764ed4dff57500c4414c2807c433ab47bbd714b52`。
+- Verification：四個 margin modules focused unittest 13/13 PASS；`py_compile` PASS；independent audit 對日期、identity entropy、prior provenance、manifest、ambiguous split、stdout privacy 複審 PASS。
+- Repo checkpoint：`444c73a feat(margin): pilot join-first shadow links`。
+- Stop-loss decision：沒有 unique two-anchor link，禁止再擴 name/fuzzy matcher；下一 repair point 是 proposal-only intake-time `case_id` capture contract，先用 synthetic five-stage fixture 驗證，不改 live Sheet。

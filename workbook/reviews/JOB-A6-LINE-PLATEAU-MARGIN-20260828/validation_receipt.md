@@ -90,3 +90,17 @@ exit 0; plateau_method_review_required; round 12; calls 60; no new attempt
 - Tests：`python3 -m unittest tests.test_maplab_margin_leak_evidence_join -v` → 2/2 PASS；`python3 -m py_compile scripts/maplab_margin_leak_evidence_join.py` → PASS；private-label/source-ID leak audit → 0。
 - Repo checkpoint：`bfb6854 feat(margin): pilot private evidence joins`。
 - Next：同一十案改用 read-only Google source bridge 取最小 join fields，hash 後才落 receipt；若仍 zero stable joins，產 schema proposal，不改 live Sheet。
+
+## 10. Live Google join-key bridge（2026-08-28 02:48 Asia/Taipei）
+
+- Plateau review：最近三個 methods 為 aggregate scan、`margin-calibration-v1`、`margin-evidence-join-v1`；沒有重跑相同 fingerprint。本輪只改 join source，固定十案不變。
+- Method：`margin-google-join-bridge-v1`；fingerprint `8c96645e45090a62ab6d3a19c3b945fb1f24459d6920e5741edee2e04fdf4ff1`。
+- Live readback：`SALES_INTAKE=45` minimal rows、`Orders=693`、`OrderCharges=184`、2026 quote native Sheets `159`；ASSET_LOG header 無 case/quote/order key。
+- Fixed-ten coverage：2024=2、2025=3、2026=5；`SALES_INTAKE`／`Orders`／quote file name candidates／OrderCharges-via-name candidate 都是 0；stable identity joins 0、four-pillar confirmed 0、confirmed leakage amount 0。
+- First bounded run 先遇到兩個含 `2026` 的 folder（`2026` 與 `2026外燴訂單`）；三層審查後以 exact canonical folder name 解決，沒有請 Owner、沒有擴權，也沒有把第一個 error 算成新方法 attempt。
+- Privacy/read-only：Google source reads 12；Google writes 0、OAuth token writes 0、new third-party private-data egress 0、model calls 0、customer send 0、raw text/identifier/path/Google ID receipt leaks 0。
+- Artifact：`/Users/pagemacmini/.maplab/margin-leak-audit/20260828-google-join-bridge-v1.json`，mode 0600，SHA-256 `c757d2c055b678ee05ba931002ff8732b7f0d5134e041c53eb50b30785e15c4a`。
+- Tests：三個 margin modules focused unittest 6/6 PASS；`py_compile` PASS；private-label/source-ID audit 0。
+- Repo checkpoint：`0ed12cb feat(margin): audit live Google join keys`。
+- Schema proposal：`docs/margin-leak-evidence-join-schema-proposal.md`，proposal-only；未改 live Sheet。
+- Next：停止 conversation-first random holdout，改從已有 quote＋OrderCharges 的五個 2026 orders 往回建 local shadow link；two-anchor 不成立就停，不擴 fuzzy matcher。

@@ -646,6 +646,6 @@
 
 - 觸發條件：50 案 taxonomy calibration 找出 18 個 heuristic true candidates；固定十案再做 evidence join 時，10/10 LINE source rows 都能定位，卻沒有任何一案同時接到 quote content、actual delivery、incremental cost 與 OrderCharges。
 - 根因：LINE conversation ID 只由私有 CSV filename hash 而來；quote folder、`SALES_INTAKE`、`OrderCharges` 與 `MAPLAB_ASSET_LOG` 沒有共用的 stable case/quote/asset key。本機 `.gsheet` pointer 只有檔名 metadata，也不是報價內容或 charged-fee 證據。
-- 解法：停止增加 keyword、round 或 classifier 版本；先建立本機 read-only join bridge，把 case、quote、charge、asset 的最小 key 在 process 內對應，receipt 只留 hashes、evidence status 與 missing codes。四柱缺一就維持 `insufficient_evidence`、金額 0。
-- 預防：margin-leak pipeline 的第一個 acceptance 不是「候選數」，而是四柱 join coverage；每案必有 baseline scope、actual delivery、incremental cost、charged fee。Pointer、keyword 或回覆語氣只能進 review queue，不可自動成為 leakage。
-- 封坑驗證：固定十案 10/10 source hash resolved、四柱 verified 各 0、private-label/source-ID leak audit 0、network/model/send/write 0；下一方法必改 join source，不得重跑相同 classifier。
+- 解法：停止增加 keyword、round 或 classifier 版本；先建立本機 read-only join bridge，把 case、quote、charge、asset 的最小 key 在 process 內對應，receipt 只留 hashes、evidence status 與 missing codes。Live readback 若仍 zero stable joins，就立即產 field-level schema proposal，並把下一樣本改為「已有 quote＋charge 的 order 往回找 conversation」，不再對相同 random conversations 加模糊條件。四柱缺一就維持 `insufficient_evidence`、金額 0。
+- 預防：margin-leak pipeline 的第一個 acceptance 不是「候選數」，而是四柱 join coverage；每案必有 baseline scope、actual delivery、incremental cost、charged fee。實驗抽樣要先看 evidence availability：要找漏收金額時優先從 evidence-rich orders 做 join-first，conversation-first 只適合訊號 taxonomy。Pointer、keyword、姓名或回覆語氣只能進 review queue，不可自動成為 leakage。
+- 封坑驗證：固定十案 10/10 source hash resolved；live Google minimal readback 為 `SALES_INTAKE=45`、`Orders=693`、`OrderCharges=184`、2026 quote Sheets=159，但 stable join 仍 0、四柱 verified 各 0。Private-label/source-ID leak audit 0；Google reads 12、writes/token writes/model/send/new third-party egress 0。下一方法改 join-first fixed-five，不得再跑相同 name matcher。

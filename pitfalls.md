@@ -571,3 +571,42 @@
 - 解法：立刻檢查限定目標目錄，只用 `apply_patch` 補完既有 scaffold 與合法 `agents/openai.yaml`，再跑 focused tests、`quick_validate.py` 與 lifecycle audit；沒有重跑 initializer 覆蓋半成品。
 - 預防：初始化前先驗 `short_description` 為 25–64 字元；任何 setup／initializer non-zero 後都先比對目標目錄與 git diff，不能假設 rollback。需要重試時先判斷是續補、移走隔離，或明確刪除，不可盲目覆寫。
 - 封坑驗證：新 skill 檔案 inventory 無 `TODO`／placeholder；`quick_validate.py` 回 `Skill is valid!`，lifecycle audit 回 `duplicates=0`。
+
+## 2026-08-27 — 要 Owner 指定 `/研究` 等於把 orchestration 責任丟回 Owner
+
+- 觸發條件：DeerFlow 最初只接 `/research-public` 這類明確命令；Owner 指出 A8 生歌／影片／YouTube 與 LINE 多輪訓練不應由他判斷何時叫哪個工具，也不應因 session 結束而停。
+- 根因：把「模型可呼叫」誤當「系統已整合」，缺少自然語言意圖路由、canonical job、續跑 ownership、terminal notification 與 Owner 可見驗收面。
+- 解法：自然語句先由本機 deterministic router 分成 public research、A8、LINE 或 general durable job；完整目標寫進 owner-only `MAPJOB`，公開研究才交 DeerFlow，私有 workflow 交本機 domain worker，30 分鐘 heartbeat 只執行下一個 bounded action。
+- 預防：新增工具時驗收必問四題：Owner 是否只需說成果、job 是否跨 session 存在、誰負責 retry／resume、什麼 artifact/readback 才算完成。缺任何一項都只能標「元件可用」，不能標「工作流已接通」。
+- 封坑驗證：自然 A8／LINE／多來源研究 route tests PASS；公開研究 `MAPJOB-20260827-221144-64831c` 自動啟動 DeerFlow 並完成；LINE `MAPJOB-20260827-224251-d291ad` 自動啟動本機 supervisor。
+
+## 2026-08-27 — DeerFlow 的 long-horizon 能力不是 crash-safe continuation 本身
+
+- 觸發條件：embedded DeerFlow 能做 agent/subagent reasoning，但 process 結束、local model tool loop、middleware name collision 或 config drift 都可能讓一次 run 中斷；只提高 recursion limit 仍會原地重試。
+- 根因：把單次 agent runtime 的長上下文／多步工具能力等同於 durable orchestration；同時讓模型自己重複搜尋，沒有把公開 retrieval、provider gate、config validation 與 canonical receipt 固定在模型外層。
+- 解法：DeerFlow 降為 isolated one-shot public research worker；adapter 先做一次 bounded public retrieval，model tools 為空，再由本機模型綜整。外層 `MAPJOB`、receipt、heartbeat 與 notification 負責 crash-safe continuation。Process-local middleware unique-name compatibility 同時保留 RBAC 與 allowlist 兩道 fail-closed gate。
+- 預防：遇 agent 重複工具或 recursion exhaustion，先問可否把不確定 loop 變成 deterministic bounded step，不先盲目加 recursion。第三方 middleware 相容修補必保留原本兩道政策語意，不能為了能跑而關閉其中一層。
+- 封坑驗證：local/OpenRouter 兩份 config validation 全綠；live public job 99.241 秒完成、五個來源、`tools_used=[]`、artifact 與 receipt hash 留存。
+
+## 2026-08-27 — 移除 LINE sender name 不等於資料已可送雲端
+
+- 觸發條件：既有 LINE 訓練 corpus 已替換 sender name，容易被誤標為 deidentified 後送 OpenRouter／DeerFlow。
+- 根因：姓名只是識別訊號之一；日期、地址、預算、菜單、報價與多輪語意仍可重識別，也屬客戶營運資料。
+- 解法：LINE job 永遠標 `private-local-only`；cache 移到 user-local 0700 目錄、檔案 0600，只接受固定 `http://127.0.0.1:11434/api/generate`，child 移除 cloud keys/proxy，receipt 明列 `external_network_calls=0` 與 loopback calls。
+- 預防：deidentification gate 必逐欄檢查直接識別、準識別與語意重識別，不可只看姓名。未經新 Owner 授權，private corpus 不得因第三方宣稱 ZDR/free 而改走雲端。
+- 封坑驗證：真實單案與 launchd batch 5 均只用 `local/ollama/gemma4:latest`；外網 0、無 customer/Telegram send；外接碟原路徑權限不足時 deterministic fail closed。
+
+## 2026-08-27 — Durable supervisor 必須從逐筆不可變證據重算完成，不可信任 summary
+
+- 觸發條件：獨立審查連續發現同 job 併發覆寫、error handler 繞過 lock、receipt replay、續跑偷降 target、重複 seed、1-case 冒充 full round、diagnostic 累積 promotion，以及 failed sample 藏在完美 aggregate 後仍可完成。
+- 根因：canonical job 與衍生 summary 沒有同一把鎖／CAS；完成狀態信任 caller-supplied aggregates，而不是重新驗證 immutable run、lesson delta 與每筆 evaluation。
+- 解法：加入 job-scoped `flock`、鎖內 reread、stale-writer CAS、canonical transition matrix、immutable qualification contract/seed schedule、run/receipt/delta ID+SHA-256、防重播、exact seed/stage/batch binding，並由 `results[].evaluation` 重算 pass、mean 與 unsupported aggregates。Diagnostic/explicit-stage 永不計正式連勝。
+- 預防：任何可自動進 `COMPLETED` 的 supervisor 都要把 completion 視為安全邊界；狀態只能由不可變逐筆證據導出。錯誤 terminalization 必走同一 lock/CAS，lock busy 只讀回 running，不得寫入。
+- 封坑驗證：59/59 focused tests PASS，包含 forged completion、hidden unsupported、mean mismatch、replay、concurrent lock、stale error、parameter drift 與 honest completion regressions。
+
+## 2026-08-27 — Shell 搜尋字串中的 backtick 仍會被執行
+
+- 觸發條件：用雙引號包住 `rg` regex，pattern 內含 Markdown backtick 的 `web_search`；zsh 先做 command substitution，導致意外嘗試執行 `web_search`。
+- 根因：把送給 `rg` 的人類可讀 pattern 當成純資料，忽略 shell 會先解析雙引號內的 backtick 與 `$()`。
+- 解法：含 Markdown backtick 或 `$` 的搜尋 pattern 一律用單引號包住，或改為固定字串參數；失敗後立即檢查 command output，確認沒有敏感值或寫入副作用。
+- 預防：建構 shell command 前先做 interpolation audit；未知／外來文字不要直接插入 command string。驗證搜尋使用 `rtk rg -n 'pattern-with-`backtick`' ...`，不得讓 shell 先解讀 pattern。

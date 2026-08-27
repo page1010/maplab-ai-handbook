@@ -1,7 +1,7 @@
 # T-A5-A6-HIDDEN-COST-RECOVERY-001 — 隱藏成本與可加價服務回收
 
 ```yaml
-status: ACTIVE_CALIBRATION
+status: ACTIVE_EVIDENCE_JOIN
 assigned_session: 2026-08-28 / A1-A5-A6 Codex
 last_committed_by: Codex / 665eb23 (workflow, workbook, SOP and receipts); 86c1cf1 (supervisor guard)
 owner_goal: 從真實對話與交付證據找出本來不在標準範圍、MAPLAB 實際代解且未收費的工作，產品化為合理加價服務，提升專案毛利。
@@ -53,14 +53,23 @@ data_class: private-local-only
 - [x] 初版 24 項 ADDON_CATALOG 與公開來源／內部邊界。
 - [x] privacy-safe aggregate scanner；無原文、無識別碼、network calls 0。
 - [x] 可填寫的 200-row MARGIN_LEAK_EVENT workbook 與完全成本／漏收公式。
-- [ ] 本機抽 50 個高優先候選做 taxonomy calibration，留下 hash 與標籤，不複製原文。
+- [x] 本機抽 50 個高優先候選做 taxonomy calibration，留下 hash 與標籤，不複製原文。
 - [ ] 以 quote、OrderCharges、交付／照片 evidence join，估出 confirmed leakage；未 join 前金額必為 0。
 - [ ] Owner 核准第一批正式品項、價格、標準內含量與生效日後，才另開 live Sheet／GAS 變更任務。
 
 ## Next Bounded Action
 
-在本機從九類候選各抽分層樣本，共 50 個 conversation hashes；由 A5/A6 標 `true_candidate`、`included`、`false_positive`、`our_rework`、`insufficient_evidence`，只輸出 hash、category、label、evidence path。校正 precision 後再決定是否擴掃；全程 zero cloud/network。
+從 18 個 heuristic `true_candidate` hashes 固定抽 10 案，在本機 join quote／OrderCharges 與 delivery／asset evidence；只輸出 hash、evidence path、decision 與 missing-evidence code。全程 zero cloud/network、無 customer send、無 live price write。
+
+## 2026-08-28 Calibration Receipt
+
+- Method：`margin-calibration-v1`；fingerprint `7e65e7be6eec8e77bf71866928bcdf616bf0cb81948b473c985e739885422b30`。
+- 固定分層 50 案／50 unique hashes：客製、統包、物流、變更、設備各 6；急件、特殊飲食、駐場、清潔各 5。
+- Heuristic labels：`true_candidate=18`、`insufficient_evidence=22`、`false_positive=8`、`included=2`、`our_rework=0`。
+- Artifact：`/Users/pagemacmini/.maplab/margin-leak-audit/20260828-calibration-v1.json`；SHA-256 `812e313c24e449fbdb75210f9060de59bd107622cb1b9bd27ce14b8cadceef85`；mode 0600。
+- Privacy readback：raw text 0、customer identifiers 0、source conversation IDs 0、network 0、model calls 0。
+- 邊界：這是 deterministic triage，不是 human gold，也不是 confirmed leakage；已確認漏收金額仍為 0。
 
 ## Resume Prompt
 
-我是 A5/A6 毛利漏損稽核工程師，環境是 `/Users/pagemacmini/maplab-ai-handbook`。先讀 `CURRENT_STATUS.md`、`pitfalls.md`、本卡與 `workbook/reviews/JOB-A6-LINE-PLATEAU-MARGIN-20260828/validation_receipt.md`。私有 LINE、報價、照片與客資只留本機；公開價格研究才可用 hardened DeerFlow。先驗 private aggregate 與 workbook hash，再做 50 個 hash-only 分層 calibration。命中不是漏收證明；必須 join baseline scope、實際交付、增量成本與 charged fee。不得改 live price、不得對客發送、不得把私密原文外送。每個 bounded action 更新 job、task card、receipt、CURRENT_STATUS 與 Resume Prompt，只 stage 任務相關檔案。
+我是 A5/A6 毛利漏損稽核工程師，環境是 `/Users/pagemacmini/maplab-ai-handbook`。先讀 `CURRENT_STATUS.md`、`pitfalls.md`、本卡、validation receipt、canonical job 與 private calibration receipt。先驗 calibration SHA-256，再從 18 個 heuristic true candidates 固定抽 10 案做本機 evidence join。私有 LINE、報價、照片與客資只留本機；公開價格研究才可用 hardened DeerFlow。命中與 heuristic label 都不是漏收證明；必須 join baseline scope、實際交付、增量成本與 charged fee。不得改 live price、不得對客發送、不得把私密原文外送。每個 bounded action 更新 job、task card、receipt、CURRENT_STATUS 與 Resume Prompt，只 stage 任務相關檔案。

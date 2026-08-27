@@ -65,4 +65,14 @@ exit 0; plateau_method_review_required; round 12; calls 60; no new attempt
 
 ## 7. 未完成／下一步
 
-本輪沒有把候選命中冒充真實漏收。下一個 bounded action 是本機 50 個 hash-only 分層 calibration，再 join quote／OrderCharges／actual delivery／asset evidence。Owner 核准前不改 live price 或對客條款。
+本輪沒有把候選命中冒充真實漏收。50 個 hash-only 分層 calibration 已完成；下一個 bounded action 是固定 10 案 evidence-join pilot，再 join quote／OrderCharges／actual delivery／asset evidence。Owner 核准前不改 live price 或對客條款。
+
+## 8. Durable heartbeat calibration（2026-08-28 01:53 Asia/Taipei）
+
+- Plateau review：此 job 只有一份初始 aggregate receipt，沒有連續兩次相同 calibration method 的無改善紀錄；允許首次 `margin-calibration-v1`，未呼叫模型。
+- Method contract：固定九類 quotas、SHA-256 deterministic sampling、conversation 跨類唯一；label precedence 為 `our_rework → included → true_candidate → false_positive → insufficient_evidence`。
+- 結果：50 samples／50 unique hashes；18 `true_candidate`、22 `insufficient_evidence`、8 `false_positive`、2 `included`、0 `our_rework`。
+- Privacy：raw text 0、customer identifiers 0、source conversation IDs 0、network 0、model calls 0、customer send false、live price write false。
+- Artifact：`/Users/pagemacmini/.maplab/margin-leak-audit/20260828-calibration-v1.json`，mode 0600，SHA-256 `812e313c24e449fbdb75210f9060de59bd107622cb1b9bd27ce14b8cadceef85`。
+- Tests：`python3 -m unittest tests.test_maplab_margin_leak_calibrate -v` → 2/2 PASS；`python3 -m py_compile scripts/maplab_margin_leak_calibrate.py` → PASS。
+- 解讀：label 是 deterministic prelabel，不是 human gold／confirmed leakage；confirmed leakage amount 保持 0。

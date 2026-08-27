@@ -2329,9 +2329,14 @@ async def _a0_maybe_notify_outage(bot, chat_id: int) -> None:
     if already_notified:
         return
     hhmm = _a0_outage_heartbeat_hhmm()
+    # Owner 2026-08-27: 斷線訊息要讓系統「額度滿也照常運作」——不只報離線，
+    # 還要當場把 Owner 導去仍在值班的通道（hermes A6 窗口與 launchd 產品線）。
     text = (
         f"{A0_OUTAGE_NOTICE_LABEL} Fable5 主程式離線（心跳 {hhmm} 起），"
-        f"你的訊息已排隊 {queued} 則，正以同一 session 續接，需數分鐘。"
+        f"你的訊息已排隊 {queued} 則，正以同一 session 續接，需數分鐘。\n"
+        f"急事不用等：hermes 在 A6 bot（@maplab_a6_bot）24 小時值班，額度無關，"
+        f"日常答疑、系統狀態、投資產品判讀都可以先找他。\n"
+        f"每日投資訊號產品線走 launchd 排程，不受 Fable5 離線影響，照常出。"
     )
     try:
         await bot.send_message(chat_id=chat_id, text=text)
@@ -2353,7 +2358,11 @@ async def _a0_maybe_notify_resume_failed(bot, chat_id: int) -> None:
     _a0_write_outage_notice_state(state)
     if already_notified:
         return
-    text = f"{A0_RESUME_FAILED_NOTICE_LABEL} 續接失敗，訊息仍排隊，待主程式喚醒。"
+    text = (
+        f"{A0_RESUME_FAILED_NOTICE_LABEL} 續接失敗（多半是週額度用完或 session 需要人工重連），"
+        f"訊息仍排隊，Fable5 回來會照順序處理。\n"
+        f"現在就要答案的話改問 hermes：A6 bot（@maplab_a6_bot），他不吃 Claude 額度。"
+    )
     try:
         await bot.send_message(chat_id=chat_id, text=text)
     except Exception:

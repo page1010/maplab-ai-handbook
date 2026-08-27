@@ -40,11 +40,33 @@
 
 ## Resume Prompt
 
-我是 A1/A6 Hermes durable-job integration engineer，環境是 `/Users/pagemacmini/maplab-ai-handbook` 與 pinned DeerFlow checkout。
-先讀 `CURRENT_STATUS.md`、`pitfalls.md`、本卡、`.agents/skills/maplab-durable-job-orchestrator/SKILL.md` 與 user skill `deerflow-openrouter-research`。
-Owner 只需描述成果，系統自行判斷工具；`/research-public` 只是診斷 override，不可再要求 Owner 背命令。
-DeerFlow 只處理 public/synthetic research；A8／LINE payload 由 local domain worker處理，DeerFlow最多只看 opaque state/error/receipt metadata。
-每個 job 都在 `workbook/reviews/MAPLAB-DURABLE-JOBS/` 留 owner-only canonical state；heartbeat 每次只做一個 idempotent bounded action。
-完成必須有 artifact/live readback + receipt + Owner surface；process exit、worker chat 或 API 200 都不算。
-OpenRouter ZDR/spend gate 未完成前保持 disabled；本機 Ollama 是目前 live provider。
-先完成 LINE local-only supervisor與 launchd live smoke，再跑全套 tests、重啟 Hermes、更新 validation receipt與 status，只 stage本卡相關檔案並 commit。
+1. 我是 A1/A6 Hermes durable-job integration engineer，環境是 `/Users/pagemacmini/maplab-ai-handbook`。
+2. 先讀 `CURRENT_STATUS.md`、`pitfalls.md`、本卡與 `.agents/skills/maplab-durable-job-orchestrator/SKILL.md`。
+3. 執行層已在 commit `2a5b361e3c09b170ef33b50ee78fd60ced6c3a9f` 落地。
+4. 狀態／pitfalls／receipt 已在 commit `c60cad82f78f87bbdf671ae7daf3aeff2c9e78fa` 落地。
+5. 完整證據入口是 `workbook/reviews/JOB-A6-HERMES-DEERFLOW-DURABLE-20260827/validation_receipt.md`。
+6. Owner 只需描述成果；工具與 provider 由系統判斷，不可要求 Owner 背命令。
+7. `/research-public` 只留診斷 override，不是正常使用入口。
+8. 多來源 public/synthetic research 才可自動路由 hardened DeerFlow。
+9. A8 私有素材與 LINE corpus 必須由本機 domain worker 處理。
+10. DeerFlow/OpenRouter 不得看到 raw LINE、客資、私有媒體、cookie、secret 或登入態。
+11. Canonical jobs 位於 `workbook/reviews/MAPLAB-DURABLE-JOBS/`，檔案 owner-only 且 runtime 內容不進 git。
+12. `MAPLAB durable job continuation` heartbeat 每 30 分鐘只做一個 idempotent bounded action。
+13. 目前 LINE job 是 `MAPJOB-20260827-224251-d291ad`。
+14. 該 job 現為 `RUNNING`，最近一次原因是 `bounded_pause/max_rounds_reached`，不是失敗或完成。
+15. 已完成 2 rounds、success streak 0、target streak 7；不可降低門檻或重播 receipt。
+16. 下一步是 resume 同一 supervisor receipt，再跑下一個 bounded two-round chunk。
+17. LINE data root 固定 `/Users/pagemacmini/.maplab/a6-hermes-training`；目錄 0700、語料檔 0600。
+18. LINE child 只能呼叫 `127.0.0.1:11434/api/generate`，receipt 必須保持 external network calls 0。
+19. `com.maplab.a6bot` 已重載並為 running，帶入 local-only provider 與安全 data root。
+20. `com.maplab.hermes-line-training` 真實 kickstart 已 exit 0；不用把歷史 stderr 當本輪失敗。
+21. Batch 5 僅 1/5 pass 且 1 個 unsupported price；服務健康不等於品質達標。
+22. DeerFlow live proof 是 `MAPJOB-20260827-221144-64831c`／`DFR-20260827-221144-b2879c`。
+23. DeerFlow checkout 必須維持 commit `788a890bd022689ef293e6bbfa2c12988173db6c`。
+24. OpenRouter provider 仍 disabled，直到 authenticated privacy-policy readback 與 Owner spend approval 都存在。
+25. 完成必須有 artifact/live readback、receipt 與 Owner surface；API 200、process exit 或 worker chat 不算。
+26. A8 私人／unlisted upload 可承接 Owner 已明說的授權；公開發布、新花費與新第三方 egress 仍是 gate。
+27. LINE offline training 永遠不授權 customer send；任何 send route 都必須保持 false。
+28. 最後 focused suite 是 59/59 PASS；重改 supervisor 必須重跑同一六模組 suite。
+29. 只 stage 本卡相關檔案；保留既有 unrelated dirty runtime/A8/workbook 變更。
+30. 每次 bounded action 後更新 job、validation receipt、`CURRENT_STATUS.md`、必要的 `pitfalls.md`，並留下新的 Resume Prompt。

@@ -681,3 +681,27 @@
 - 解法：truth固定拆成 `local checkout/binding`、`historical deployment evidence`、`current deployed readback`，讀不到最後一層就 `UNRESOLVED`。Receipt pin完整 source/header manifests、64-hex digests、timestamp/read counts、writer search manifest、quote/LINE relations、credential exact readonly scope與 root modes；`REPO_PATH`只留 salted fingerprint＋matches-root。Case Store同驗 dir/DB/fallback，OpenClaw以固定 bundle filenames做 aggregate mode histogram，不落私有 paths/content。所有 same-key poison與 attacker-rehashed fixtures必須 fail closed。
 - 預防：任何 inventory acceptance都先列「哪些值是現場讀回、哪些是歷史、哪些只是設定」；root audit從每個 consumer與 fallback反推，而不是只 `stat`父目錄。布林不可充整數、`0.0`不可充 count、合法 ISO timestamp也要綁本次 receipt contract；source/header list必驗 exact set＋unique。Local binding、版本 receipt、inbound曾運作都不能替 current deployed revision背書。
 - 封坑驗證：`margin-deployed-source-inventory-v1` focused 20/20、related suite 71/71、live receipt reload與三個 independent red-teams PASS；23 個 adversarial rehashed variants全拒絕。Receipt parent/file 0700/0600、SHA `21106476...`；Case Store `0755/0644/0644`、OpenClaw 405/405 at `0644`、Google credential `0644`且 Apps Script readonly scope缺失均保持 `HOLD`，live change與 confirmed leakage仍為 false/0。
+
+## 2026-08-28 — Private-root hardening 必須沿 runtime import/config graph 追到底，不能只找 `.env`
+
+- 觸發條件：初版 plan 已列 launchd、gateway與 repo `.env`，獨立稽核仍陸續找出 task executor、DeerFlow bridge、provider setup copy writer、OpenRouter YAML、training loop/supervisor與 installed plist 等 active consumers。
+- 根因：把「直接開檔者」當完整 consumer graph，漏掉 inherited env、import chain、child-process config、credential copy writer與 runtime-installed definition；source pin與 anchor數量很多也不能證明沒有 scanner blind spot。
+- 解法：每個私有 root同時建立 concrete consumer anchors、source hashes、tracked-reference exact scanner與 installed-runtime file manifest。Config selector本身、被選中的 YAML/extension registry、讀者、投影者、copy writer與 scheduler都要在同一 drift gate；unexpected tracked ref一律 HOLD。
+- 預防：cold-start hardening checklist固定從 `service definition → launcher → loader → imports → child env/config → writer/copy path → installed copy` 反向與正向各走一次。新增 private env key或 config path時，必先更新 scanner manifest與 regression poison，再准合併。
+- 封坑驗證：10/10 private-env refs、67 source pins、62 consumer anchors、4 installed runtime files exact；OpenRouter YAML/local YAML/extensions drift與 unexpected ref poison均 fail closed，三個 independent final audits PASS。
+
+## 2026-08-28 — Mode histogram 不是 owner-only 證明；不完整時要降級狀態
+
+- 觸發條件：Hermes training root顯示 root/dirs `0700`、files `0600`、symlink 0，初版就標 `owner_only=true`；稽核指出沒有驗 effective UID、parent ownership、ACL、regular type與hardlink。
+- 根因：把 Unix permission bits當完整 ownership/isolation contract，忽略其他使用者擁有、ACL額外授權、FIFO/device、hardlink alias與 runtime binding drift仍可能在相同 mode histogram下存在。
+- 解法：未取得 UID/full-parent、ACL、type、nlink與 runtime binding readback前，狀態固定 `MODE_ONLY...UNRESOLVED`、`owner_only=false`。Target contract可要求完整條件，但不能把 future acceptance倒灌成 current fact。
+- 預防：任何「安全／owner-only／已隔離」布林都必有逐項 evidence fields；缺一不補猜、不用 aggregate mode代替。靜態 plan只能標 design validated，不能標 runtime validated。
+- 封坑驗證：receipt/current validator與文件同步降級；tamper將 training owner翻 true會被 exact validator拒絕，FINAL4 red-team PASS。
+
+## 2026-08-28 — Shared review migration 要以資料分類與實際 writers切根，不能只搬 adapter bundles
+
+- 觸發條件：OpenClaw audit先只規劃44個 adapter bundles，卻已把 shared namespace內另外53個 fixed artifacts及8代424份 backup copies列為 private；兩個 non-adapter writers仍可把 classified artifacts寫回 repo。
+- 根因：以工具來源（adapter/non-adapter）代替資料分類，也只看目前檔案沒有反查 concrete writers與scheduled backup propagation，導致 migration後會立即重新污染。
+- 解法：adapter、classified non-adapter、dispatch分成獨立 logical roots；53個 current artifacts與future writes各有 actual-byte ledger/readback/rollback。所有 concrete writers source-pin＋anchor，shared repo只准留 non-private control/reference；backup zero-sensitive gate覆蓋所有 fixed-name classes。
+- 預防：任何 shared namespace migration先做 `current bytes × classification × writer × backup generation` 四維盤點。若 classified count大於 migration count，或 writer未綁 target resolver，禁止進 live gate。
+- 封坑驗證：405 current fixed artifacts與3,240 backup copies完整分類；兩個 non-adapter writers、12 target contracts、3,912 backup copies relation均由 validator鎖定，FINAL4 audits PASS。

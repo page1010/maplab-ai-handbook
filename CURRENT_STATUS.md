@@ -5,7 +5,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-08-28 Codex A1/A5/A6｜隱藏成本 deployed-source/header read-only inventory 完成；live adoption 維持 HOLD，下一步為 no-write private-root/deployed-readback hardening plan。完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-08-28 Codex A1/A5/A6｜隱藏成本 private-root/deployed-readback static hardening gates 完成；live adoption 維持 HOLD，下一步為 synthetic resolver/copy-ledger runtime prototype。完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -20,6 +20,8 @@
 ---
 
 ## 最新事實核對
+
+- 2026-08-28 07:05：**[隱藏成本 private-root/deployed-readback static hardening]** — 完成 `margin-private-root-deployed-readback-plan-v1`（fingerprint `fa7086a1...`）：67 source pins、62 consumer anchors、10 exact private-env tracked refs、19+4 Google token consumers、4 installed LaunchAgent files、12 target contracts、39/39 policy fixtures均通過。盤點納入 provider direct reader/copy writer、OpenRouter/local YAML、disabled extensions、Hermes training loop/supervisor/plists、44 adapter bundles、53 non-adapter classified artifacts、dispatch與8代backup。Case Store、bot env、review、dispatch、backup、provider/Google/clasp仍 unsafe/unresolved；Hermes training雖有 `0700/0600` mode histogram，但 UID/ACL/type/hardlink/runtime未驗，誠實維持 `owner_only=false`。Future Apps Script readback只允許 dedicated exact-two readonly scopes、3 GET、version-bound＋double-read，沒有實際 API call。Private receipt SHA `47cb08a3...`、body `c204ea0b...`、parent/file `0700/0600`；focused 17/17、related 88/88、`py_compile`與三個 independent exact-byte red-teams PASS；implementation `5535e89`。狀態只到 `STATIC_DESIGN_INVENTORY_VALIDATED / HOLD`，resolver/copy-ledger runtime、live migration、quote/LINE deployed truth、Orders writer與header ingress均未完成，confirmed leakage仍 0。下一步只做 TemporaryDirectory synthetic resolver＋actual-byte ledger，不碰 live path/process/credential/API。
 
 - 2026-08-28 05:06：**[隱藏成本 deployed-source/header inventory]** — 完成 `margin-deployed-source-inventory-v1`（fingerprint `d282b0fe...`），4/4 fresh full-header hashes match；canonical quote binding與 8-file local bundle verified，但 current quote deployed revision仍 `UNRESOLVED`。Separate LINE GAS只有 historical hash-only evidence，`scripts/apps-script-line/`缺失，current binding/manifest/version/source digest仍 `UNRESOLVED`；direct GAS不可驗 LINE signature header。`writer-search-v2`固定 67 current source files＋bounded Git selector為 0/0 matches，quote GAS只寫 `SALES_INTAKE`，Orders/OrderCharges authority維持 `UNRESOLVED`。Private-root readback：`REPO_PATH` salted fingerprint matches canonical repo，Case Store dir/DB/fallback `0755/0644/0644`；OpenClaw root `0755`、405/405 fixed bundle artifacts at `0644`；Google token `0644`且 Apps Script readonly scope absent，未用於 network。Receipt SHA `21106476...`、parent/file 0700/0600；focused 20/20、related 71/71、`py_compile`、live receipt reload與三個 independent red-teams PASS；implementation `b7ccd3e`。狀態為 `READ_ONLY_INVENTORY_COMPLETE / LIVE_ADOPTION_HOLD`，deployed truth、private roots、writer、header-capable ingress仍未達 live gate，confirmed leakage保持 0。下一步只做 no-write consumers/migration/readback/rollback hardening plan，不 chmod/move/restart/deploy/write。
 

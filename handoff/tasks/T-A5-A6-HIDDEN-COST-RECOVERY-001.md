@@ -1,9 +1,9 @@
 # T-A5-A6-HIDDEN-COST-RECOVERY-001 — 隱藏成本與可加價服務回收
 
 ```yaml
-status: ACTIVE_PRIVATE_ROOT_HARDENING_PLAN
+status: ACTIVE_SYNTHETIC_RESOLVER_PROTOTYPE
 assigned_session: 2026-08-28 / A1-A5-A6 Codex
-last_committed_by: Codex / b7ccd3e (read-only deployed-source/header inventory); 1b2a2af (no-write case-id integration gates); 4ecda3f (synthetic intake case-id contract); 444c73a (fixed-five join-first shadow); 0ed12cb (live Google join bridge); bfb6854 (10-case evidence join); 70077c0 (50-case calibration); 665eb23 (workflow/workbook); 86c1cf1 (supervisor guard)
+last_committed_by: Codex / 5535e89 (private-root/deployed-readback static hardening gates); b7ccd3e (read-only deployed-source/header inventory); 1b2a2af (no-write case-id integration gates); 4ecda3f (synthetic intake case-id contract); 444c73a (fixed-five join-first shadow); 0ed12cb (live Google join bridge); bfb6854 (10-case evidence join); 70077c0 (50-case calibration); 665eb23 (workflow/workbook); 86c1cf1 (supervisor guard)
 owner_goal: 從真實對話與交付證據找出本來不在標準範圍、MAPLAB 實際代解且未收費的工作，產品化為合理加價服務，提升專案毛利。
 data_class: private-local-only
 ```
@@ -32,6 +32,9 @@ data_class: private-local-only
 - `scripts/maplab_deployed_source_inventory.py`
 - `tests/test_maplab_deployed_source_inventory.py`
 - `docs/margin-leak-deployed-source-inventory.md`
+- `scripts/maplab_private_root_hardening_plan.py`
+- `tests/test_maplab_private_root_hardening_plan.py`
+- `docs/margin-private-root-deployed-readback-hardening-plan.md`
 - `workbook/reviews/JOB-A6-LINE-PLATEAU-MARGIN-20260828/validation_receipt.md`
 - private aggregate：`/Users/pagemacmini/.maplab/margin-leak-audit/20260828-initial-aggregate.json`
 
@@ -72,12 +75,13 @@ data_class: private-local-only
 - [x] 以 10 個 synthetic holdouts 驗 intake-time `case_id` 五階段 contract；Case Store／SALES_INTAKE 各自 readback、restart／two-connection、migration provenance、late duplicate 與 nested receipt red-team 全 fail closed，沒有 live write。
 - [x] 建立 exact source-to-adapter no-write integration plan；20 個 pinned source anchors、25 個 synthetic fail-closed fixtures、4 個 prior live-header pins 與 7 個 plan gates 全通過，並明列 direct GAS Web App 無法取得 LINE signature header，必須先有 header-capable ingress。沒有 deploy、live write 或 durable outbox overclaim。
 - [x] 完成 read-only deployed-source/header inventory；4/4 fresh full-header hashes match，quote local bundle/binding 與 historical deployment分層，current quote/LINE deployed revision、Orders/OrderCharges writer仍明列 `UNRESOLVED`。Case Store DB/fallback 與 OpenClaw 405 個固定 bundle artifacts 的 `0755/0644` exposure、`REPO_PATH` hash/match、OAuth `0644`＋Apps Script readonly scope缺失均 fail closed；71/71 related tests與三個 final red-teams PASS，無 deploy/write/private egress。
+- [x] 完成 no-write private-root/deployed-readback static hardening gates；67 source pins、62 consumer anchors、10 private-env tracked refs、4 installed runtime files、12 target contracts、39/39 policy fixtures均 exact。Case Store／bot env／review／dispatch／backup／provider credentials仍 fail closed，Hermes training只到 mode-only inventory、`owner_only=false`；resolver/copy-ledger runtime與 live migration均未宣稱完成。17/17 focused、88/88 related與三個 final red-teams PASS。
 - [ ] 以 quote、OrderCharges、交付／照片 evidence join，估出 confirmed leakage；未 join 前金額必為 0。
 - [ ] Owner 核准第一批正式品項、價格、標準內含量與生效日後，才另開 live Sheet／GAS 變更任務。
 
 ## Next Bounded Action
 
-建立 no-write private-root／deployed-readback hardening plan：盤點 Case Store DB＋fallback、OpenClaw review bundles、`bot_a6/.env`、Google token、quote/LINE GAS binding 的全部 consumers，設計 repo 外 owner-only roots、atomic migration、readback、rollback 與 hash-only Apps Script deployed-source readback。只做 plan／fixture，不 chmod、不搬檔、不重啟、不 deploy、不改 GAS／Sheets／訊息／價格／歷史／credential；無 Apps Script readonly scope與現行 `0644` credential時維持 `UNRESOLVED`。Header-capable LINE ingress仍是 Phase 0，direct GAS不可作 LINE authority。
+建立真正的 `TemporaryDirectory` synthetic resolver＋actual-byte copy ledger prototype，涵蓋 Case Store、bot/provider config、Hermes training、adapter review、53 個 non-adapter classified artifacts、dispatch與backup policy。固定 holdout 必測 distinct roots、traversal、ancestor symlink、hardlink、FIFO、duplicate job、`O_EXCL`、interrupted copy、`EXDEV`、file/parent fsync、concurrent writer、generation CAS、pre/post-write rollback與zero-repo-fallback。只用 synthetic bytes／temp roots；不得碰 live path、credential payload、customer data、Apps Script API、Google、launchd、process、權限或部署。未通過前 `resolver_copy_ledger_runtime_validated=false`、HOLD 不變。
 
 ## 2026-08-28 Calibration Receipt
 
@@ -150,6 +154,17 @@ data_class: private-local-only
 - Verification：focused 20/20、related margin suite 71/71、`py_compile`、live receipt reload與三個 independent final red-teams PASS；implementation `b7ccd3e`。
 - Decision：`READ_ONLY_INVENTORY_COMPLETE / LIVE_ADOPTION_HOLD`；`eligible_for_live_change=false`、`deployed_source_truth_complete=false`、confirmed leakage 0。下一步只做 no-write private-root/deployed-readback hardening plan。
 
+## 2026-08-28 Private-Root／Deployed-Readback Static Hardening Receipt
+
+- Method：`margin-private-root-deployed-readback-plan-v1`；fingerprint `fa7086a124459dfa1ca3c872be7e4247d0e490e85dcc2e0ec3838626586bdde2`；changed variable 是從 mode/deployed inventory 改為 consumer-complete target／cutover／readback／rollback contract，沒有重跑 historical join。
+- Exact manifests：67/67 source pins、62/62 consumer anchors、10/10 tracked private-env refs、19+4 Google token consumers、4/4 installed LaunchAgent files、12 target contracts、39/39 generated policy fixtures。OpenRouter YAML、local YAML、disabled extensions、provider copy writer、Hermes loop/supervisor/plists與兩個 non-adapter review writers均納入 drift gate。
+- Current boundary：Case Store、bot env、review、dispatch、backup、provider credentials、shared Google/clasp均維持 unsafe／unresolved；Hermes training只有 `0700/0600` mode histogram，因 UID／ACL／type／hardlink／runtime binding未驗，明確 `owner_only=false`。Quote／LINE current deployed revision、Orders writer與header-capable ingress仍 unresolved。
+- Apps Script future readback：dedicated credential、exact 2 readonly scopes、3 GET、version-bound content與deployment metadata double-read；shared token、clasp、MCP與write methods均禁。這是設計，不是 API receipt。
+- Artifact：`/Users/pagemacmini/.maplab/margin-leak-audit/20260828-private-root-readback-plan-v1.json`；parent/file `0700/0600`；SHA-256 `47cb08a36c5523842a7b81306c63244c79ddd42b5bf90c87b81ea89083752505`；body `c204ea0b98e25b683f05e29f291072a227ba4fe0e795f1a4c8e7bc1515a58733`。
+- Privacy/no-write：credential/env payload、customer rows、raw IDs、network、Apps Script API、chmod/copy/move/restart/deploy/Google/customer send/model/new private egress均 0；只寫 owner-only receipt。
+- Verification：focused 17/17、related suite 88/88、`py_compile`、live receipt reload與三個 independent final audits PASS；implementation `5535e89`。
+- Decision：`STATIC_DESIGN_INVENTORY_VALIDATED / HOLD`；`resolver_copy_ledger_runtime_validated=false`、`eligible_for_live_change=false`、live migration false、confirmed leakage amount 0。下一步只做 synthetic resolver/copy-ledger runtime prototype。
+
 ## Resume Prompt
 
-我是 A5/A6 毛利漏損稽核工程師，環境是 `/Users/pagemacmini/maplab-ai-handbook`。先讀 `CURRENT_STATUS.md`、`pitfalls.md`、本卡、validation receipt、`docs/margin-leak-case-id-integration-plan.md`、`docs/margin-leak-deployed-source-inventory.md`、canonical job 與 private inventory receipt。先驗 method `d282b0fe...`、receipt SHA `21106476...`、body `c23563de...`、4/4 fresh header pins、67/0/0 writer manifest、Case Store `0755/0644/0644`、OpenClaw 405/405 at `0644`、credential `0644`＋readonly scope absent、focused 20/20、related 71/71與三個 final red-teams PASS。下一步只做 no-write private-root/deployed-readback hardening plan：列全 Case Store DB/fallback、OpenClaw、`.env`、Google token與 GAS binding consumers，設計 repo 外 0700/0600 roots、atomic migration/readback/rollback與 safe hash-only deployed-source readback。不得 chmod/move/restart/deploy，不改 GAS/Sheets/訊息/價格/歷史/credential，不呼叫 Apps Script API；讀不到仍標 `UNRESOLVED`。Direct GAS不可作 LINE authority，header-capable ingress仍是 Phase 0。禁止重跑 fuzzy/name backfill，私有資料不得送 DeerFlow/OpenRouter，confirmed leakage amount保持 0。完成後原子更新 job、task card、receipt、CURRENT_STATUS、pitfalls（若有新教訓）與 Resume Prompt，只 stage任務相關檔案。
+我是 A5/A6 毛利漏損稽核工程師，環境是 `/Users/pagemacmini/maplab-ai-handbook`。冷啟動先讀 `CURRENT_STATUS.md`、`pitfalls.md`、本卡、validation receipt、canonical job、`docs/margin-private-root-deployed-readback-hardening-plan.md` 與 private receipt。先驗 implementation `5535e89`、method `fa7086a1...`、receipt SHA `47cb08a3...`、body `c204ea0b...`、67 pins、62 anchors、10 private-env refs、4 installed runtime、12 targets、39/39 fixtures、focused 17/17、related 88/88與三個 final red-teams PASS。現況只到 static design：Hermes training `owner_only=false`，resolver/copy ledger runtime、live migration、quote/LINE deployed truth、Orders writer與header ingress均未完成。下一步只在 `TemporaryDirectory` 建 synthetic logical resolver＋actual-byte ledger，固定測 traversal、ancestor symlink、hardlink/FIFO、duplicate、`O_EXCL`、interrupted/`EXDEV` copy、fsync、concurrency、generation CAS、pre/post-write rollback與zero-repo-fallback。不得讀 credential/customer payload，不碰 live path／mode／process／launchd，不呼叫 Apps Script/Google，不 deploy/send/write價格，不把 private bytes送 DeerFlow/OpenRouter。完成後原子更新 job、Task Card、validation receipt、CURRENT_STATUS、pitfalls（若有新教訓）與 Resume Prompt，只 stage任務相關檔案。

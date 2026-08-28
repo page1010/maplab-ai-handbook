@@ -745,3 +745,19 @@
 - 解法：任何zero-sensitive receipt都先要有逐類正數baseline，再從實際emitted entries重算post-policy zero；unknown class、scan/stat/open error一律fail closed。Exact tree驗證比較files＋dirs＋control files exact set，extra/missing/type/link drift全拒絕；generation、epoch、policy與classifier digest共同CAS。
 - 預防：禁止在validator中硬編安全counter；poison matrix固定放「名稱像repo但不是literal repo」、「unknown future class」、「extra regular/nested/symlink/FIFO」、「scanner error後假零」。Synthetic gate不能代替live backup remediation。
 - 封坑驗證：本機TemporaryDirectory reproducer確認3個poison仍回0、extra unledgered file被忽略；因此G1 decision範圍已降級為ledgered-artifact resolver/copy proof，backup zero-sensitive與exact tree維持未驗。
+
+## 2026-08-28 — Artifact完成但 canonical job／Resume仍指向舊動作，會重跑並重複消耗attempt
+
+- 觸發條件：fixed-three private packet與proposal已產生，前置驗收均PASS，但 `job.json`、job.md、Task Card、CURRENT_STATUS與Resume Prompt仍是 `RUNNING / attempt=9 / 下一步跑fixed-three`；writer又會覆寫同名packet。
+- 根因：把artifact成功視為bounded action完成，沒有把durable control-plane transition納入同一completion transaction；output writer也沒有existing-identity guard，重跑會因timestamp改變SHA並可能再次加attempt。
+- 解法：Owner-review artifact ready後必同步更新canonical job state/attempt/phase/last_result/history/next action、human job summary、Task Card、validation receipt、CURRENT_STATUS與唯一Resume Prompt。Output存在時先驗owner/mode/schema/identity；identity相同只readback no-op，衝突則fail closed，不覆寫。
+- 預防：terminal/gate checklist固定跑全repo active-pointer scan，禁止任何active Resume仍說舊attempt或舊next action；heartbeat只在canonical state確認後通知。Script focused test必含existing exact replay與identity conflict。
+- 封坑驗證：fixed-three replay回 `output_created=false`、SHA維持`f8bcedec...`；job原子轉 `OWNER_REVIEW / attempt=10`，active pointers只等待Owner三選一，fixed-three不再可自動重跑。
+
+## 2026-08-28 — `OrderCharges` row不是已收費證明，欄位語意未權威化前presence與absence都不能算
+
+- 觸發條件：hidden-cost join想以 `OrderCharges` 驗charged fee，但repo文件一處把type描述為service fee／extra／rental／discount／note，另一處又建議 `type=gft, amount=cost` 存內部成本；current authoritative writer、row status、方向、幣別與付款語意仍 unresolved。
+- 根因：把表名當domain semantics，把任何row presence誤當客戶已被加價、absence誤當收費0；也可能把discount、refund、note或內部成本混進收入。
+- 解法：charged-fee pillar必須同案stable case/order/charge key，並驗authoritative writer、唯一row identity、semantic enum、方向、幣別與lifecycle status。正式contract拆 `customer_charge|discount|refund|internal_cost|note` 與 `proposed|approved|invoiced|paid|waived`；partial table或無row一律UNVERIFIED。
+- 預防：所有毛利／漏收算法不得直接sum未權威化的`OrderCharges.amount`；測試固定放discount、refund、gft cost、note、duplicate/wrong-order與partial-table poison。市場估價、文字金額與建議工時也不能替actual cost或charged fee。
+- 封坑驗證：fixed-three三案均固定 `CHARGED_FEE_UNVERIFIED_ORDERCHARGES_SEMANTICS`，confirmed leakage保持0；prospective proposal已把charge semantics與status列為live canary前置決策。

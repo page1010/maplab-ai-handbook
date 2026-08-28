@@ -5,7 +5,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-08-28 Codex A1/A5/A6｜隱藏成本 objective-level plateau熔斷完成；廣版 G2延後，下一步回 fixed-three four-pillar evidence packet。完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-08-28 Codex A1/A5/A6｜隱藏成本 fixed-three 0/3後停止歷史join；prospective case-ID capture進 OWNER_REVIEW。完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -20,6 +20,8 @@
 ---
 
 ## 最新事實核對
+
+- 2026-08-28 08:38：**[隱藏成本 fixed-three exact-anchor stop-loss／Owner review]** — `margin-fixed-three-four-pillar-packet-v1`（fingerprint `6ad1df46...`）鎖定18個 true candidates set digest `686cd542...`的前三案且不得換第4案；3/3 request row＋raw source hashes exact，但 baseline quote content、delivery/asset、actual incremental cost與authoritative charged fee均0/3 verified，故3/3維持`INSUFFICIENT_EVIDENCE`、confirmed leakage 0。`OrderCharges` writer與charge/cost/discount/note語意仍 unresolved，presence/absence皆不當已收費／0。本domain attempt自9→10、consumed=true；歷史join、name/date/fuzzy與infra rounds正式停止。Private packet parent/file `0700/0600`、SHA `f8bcedec...`；sanitized receipt SHA `950dd71f...`／body `862cab4d...`；7/7 focused＋13/13 related＋idempotent replay及三個independent reviews PASS。已產具schema、header-capable production path、10-case／14-day canary、privacy、rollback/readback及三選項的 prospective proposal；job=`OWNER_REVIEW`，Owner未選前不做live Sheet/GAS/header ingress/價格／發訊／發布／外送。Task：`handoff/tasks/T-A5-A6-HIDDEN-COST-RECOVERY-001.md`；proposal：`docs/margin-leak-prospective-case-id-live-capture-owner-review.md`。
 
 - 2026-08-28 08:01：**[隱藏成本 objective-level plateau熔斷／回到商業證據]** — 最近三個 infra methods（`d282b0fe...` deployed inventory、`fa7086a1...` static hardening、`3dd861d0...` resolver G1）雖有不同 fingerprints與supporting delta，但 stable join、four-pillar verified、confirmed leakage、live case-capture readiness的business delta全為0／false。第一性原理五問判定真正阻塞是缺 `case_id → quote_id → OrderCharges → asset_id`，不是backup synthetic index；廣版G2延後為future live-migration precondition，本review `attempt_consumed=false`、attempt維持9/12，下一步改 fixed-three本機four-pillar packet。Runtime反證另確認G1 backup helper接受3個不完整／未知logical sources仍固定回`classified_repo_paths=0`，sealed generation可忽略extra unledgered file；故G1只保留ledgered-artifact resolver/copy proof，backup zero-sensitive與exact tree未驗。Read-only live觀測仍見8代backup、root/index `0755/0644`及env／Case Store／dispatch／`.mcp.json`／cookies等logical entries；本輪沒有讀payload或改backup。Durable-job Skill與job contract已加入objective-delta circuit breaker，artifact：`workbook/reviews/JOB-A6-LINE-PLATEAU-MARGIN-20260828/objective_plateau_review_20260828.md`。
 

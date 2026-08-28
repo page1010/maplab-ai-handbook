@@ -193,3 +193,15 @@ exit 0; plateau_method_review_required; round 12; calls 60; no new attempt
 - Skill/SOP：durable-job Skill與 job contract新增 objective-delta circuit breaker；連續兩步 zero objective delta即強制五問、defer/split nonblocking infra，review/re-route不消耗 domain attempt。
 - Safety：network/model/private payload egress/credential-customer payload reads/live path operations/backup or launchd writes/Google or price writes/customer sends/deployments均0。
 - Artifact：`workbook/reviews/JOB-A6-LINE-PLATEAU-MARGIN-20260828/objective_plateau_review_20260828.md`；三個 independent read-only reviews均同意 broad G2 defer並回到業務證據主線。
+
+## 18. Fixed-three exact-anchor availability／Owner review（2026-08-28 08:38 Asia/Taipei heartbeat）
+
+- Method：`margin-fixed-three-four-pillar-packet-v1`；fingerprint `6ad1df463b57ca15b0b0aba9700735e9bfb3e07608607dabe4472891dcd166c8`；hypothesis=固定三案逐案找exact anchor或在事前stop-loss關閉歷史join，changed variable=不再name/date/fuzzy而只接受opaque exact join，fixed holdout=18案set digest `686cd542...`排序前三，expected delta=至少1案Owner-reviewable，stop-loss=三案後停止。
+- Honest scope：worker驗的是 current exact-anchor availability，不是具成功fixture的通用 four-pillar validator。它重算 calibration SHA／fingerprint、50 unique／18 true candidates、2個source corpus SHA、request evidence row SHA與 candidate derivation；固定案缺source也不換第4案。
+- Readback：3/3 request rows與raw source file hashes exact；explicit Sheet／quote／asset／order anchors均0。Baseline quote content、delivery/asset、incremental cost、charged fee各0/3 verified；3/3=`INSUFFICIENT_EVIDENCE`，four-pillar verified 0，confirmed leakage amount 0。
+- Charge boundary：current `OrderCharges` authoritative writer unresolved；repo文件同時存在customer charge／discount／note與internal `gft cost`語意。Row presence、partial table或absence均不得當charged fee或0，固定 missing code=`CHARGED_FEE_UNVERIFIED_ORDERCHARGES_SEMANTICS`。
+- Attempt／stop：本輪是course correction後第一個domain experiment，`attempt_before=9`、`attempt_after=10`、`attempt_consumed=true`。不跑第4案、不擴matcher、不再infra round；既有packet replay走identity＋SHA readback、`output_created=false`，不覆寫也不再消耗attempt。
+- Private packet：`/Users/pagemacmini/.maplab/margin-leak-audit/20260828-fixed-three-four-pillar-packet-v1.json`；parent/file `0700/0600`；SHA `f8bcedecc8121be7de632560562eb5a1207713bc451143626970ec7f3c52953a`。
+- Sanitized receipt：`workbook/reviews/JOB-A6-LINE-PLATEAU-MARGIN-20260828/fixed_three_four_pillar_receipt.json`；file SHA `950dd71fff8d47d46c7878a884eba44a56b3e0f8babe16ba39e7dd0fb31e9477`；body `862cab4d3504fcb96744265fe449fca6ce1d6056795724c4bd710ae613c662e8`；exact rebuild與recursive path/URL/private marker scan PASS。
+- Verification：focused 7/7、related 13/13、`py_compile`、canonical idempotent replay、三個 independent read-only locator/design/red-team reviews PASS。Network/model/private third-party egress/cloud content read/Google write/customer send/live price write/deployment/backup-permission mutation均0。
+- Owner gate：已產 `docs/margin-leak-prospective-case-id-live-capture-owner-review.md`，SHA `8630e196b96c78a69034a4ed96128f65010a57552413d2e9b54d522092e15c3b`；具schema、production path、future-only 10-case／14-day canary、privacy、rollback/readback及live shadow／local rehearsal／defer三選項。任何選項均尚未執行；job=`OWNER_REVIEW`。

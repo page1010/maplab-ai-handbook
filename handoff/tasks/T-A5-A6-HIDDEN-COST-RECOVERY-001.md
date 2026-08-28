@@ -1,7 +1,7 @@
 # T-A5-A6-HIDDEN-COST-RECOVERY-001 — 隱藏成本與可加價服務回收
 
 ```yaml
-status: ACTIVE_FIXED_THREE_FOUR_PILLAR_PACKET
+status: OWNER_REVIEW_PROSPECTIVE_CASE_ID_CAPTURE
 assigned_session: 2026-08-28 / A1-A5-A6 Codex
 last_committed_by: Codex / 2f5d5b3 (G1 governance handoff); c44e8bc (synthetic private-root resolver/copy-ledger runtime); 5535e89 (private-root/deployed-readback static hardening gates); b7ccd3e (read-only deployed-source/header inventory); 1b2a2af (no-write case-id integration gates); 4ecda3f (synthetic intake case-id contract); 444c73a (fixed-five join-first shadow); 0ed12cb (live Google join bridge); bfb6854 (10-case evidence join); 70077c0 (50-case calibration); 665eb23 (workflow/workbook); 86c1cf1 (supervisor guard)
 owner_goal: 從真實對話與交付證據找出本來不在標準範圍、MAPLAB 實際代解且未收費的工作，產品化為合理加價服務，提升專案毛利。
@@ -38,6 +38,10 @@ data_class: private-local-only
 - `scripts/maplab_private_root_resolver_prototype.py`
 - `tests/test_maplab_private_root_resolver_prototype.py`
 - `docs/margin-private-root-resolver-prototype.md`
+- `scripts/maplab_margin_fixed_three_packet.py`
+- `tests/test_maplab_margin_fixed_three_packet.py`
+- `workbook/reviews/JOB-A6-LINE-PLATEAU-MARGIN-20260828/fixed_three_four_pillar_receipt.json`
+- `docs/margin-leak-prospective-case-id-live-capture-owner-review.md`
 - `workbook/reviews/JOB-A6-LINE-PLATEAU-MARGIN-20260828/objective_plateau_review_20260828.md`
 - `workbook/reviews/JOB-A6-LINE-PLATEAU-MARGIN-20260828/validation_receipt.md`
 - private aggregate：`/Users/pagemacmini/.maplab/margin-leak-audit/20260828-initial-aggregate.json`
@@ -82,12 +86,13 @@ data_class: private-local-only
 - [x] 完成 no-write private-root/deployed-readback static hardening gates；67 source pins、62 consumer anchors、10 private-env tracked refs、4 installed runtime files、12 target contracts、39/39 policy fixtures均 exact。Case Store／bot env／review／dispatch／backup／provider credentials仍 fail closed，Hermes training只到 mode-only inventory、`owner_only=false`；resolver/copy-ledger runtime與 live migration均未宣稱完成。17/17 focused、88/88 related與三個 final red-teams PASS。
 - [x] 完成 `TemporaryDirectory` synthetic resolver＋actual-byte ledger G1；8/8 logical surfaces、53/53 non-adapter fixtures、21/21 executable receipt scenarios、25/25 focused與120/120 MAPLAB discovery tests PASS。Generation＋epoch CAS、exclusive final generation、destination readback、interrupted/EXDEV/fsync/concurrency、durable pre-write barrier、tampered rollback與 receipt forgery均 fail closed。後續 runtime audit確認 backup helper 的 zero classified paths是固定值且 exact tree未驗；因此 G1只保留「ledgered artifacts／resolver」範圍，backup allowlist、tree membership、live resolver/migration/consumer/SQLite皆未完成。
 - [x] 完成 objective-level plateau review；最近三個 infra fingerprints雖不同，但 four-pillar verified、confirmed leakage與 live case capture的 business delta全為0。廣版 G2 延後為 future live-migration precondition，re-route不消耗 domain attempt（維持9/12）。
+- [x] 完成 `margin-fixed-three-four-pillar-packet-v1` exact-anchor availability experiment；固定三案不可替換，3/3 request/source exact hash verified，baseline／delivery／incremental cost／charged fee均0/3 verified，故3/3維持 `INSUFFICIENT_EVIDENCE`、confirmed leakage 0。Attempt 9→10且consumed=true；停止歷史join並產具體 prospective case-id live-capture Owner proposal。
 - [ ] 以 quote、OrderCharges、交付／照片 evidence join，估出 confirmed leakage；未 join 前金額必為 0。
 - [ ] Owner 核准第一批正式品項、價格、標準內含量與生效日後，才另開 live Sheet／GAS 變更任務。
 
 ## Next Bounded Action
 
-只做 fixed-three 本機 four-pillar evidence packet。從18個 calibration `true_candidate` hashes依 `sha256(margin-fixed-three-four-pillar-packet-v1|candidate_hash)` deterministic排序取前3，manifest固定後不得換案。逐案驗 request、baseline quote、actual delivery/asset、incremental cost、charged fee/`OrderCharges` 的 exact source＋hash＋唯一 anchor；raw對話、姓名、電話、地址、報價與素材只留本機，repo只寫hash/status/missing code。缺一柱即 `INSUFFICIENT_EVIDENCE`，不擴 fuzzy/name matcher；不改 live Sheet/GAS/backup，不送客、不寫正式價格、不把 private bytes送 DeerFlow/OpenRouter。若0/3 four-pillar verified，停止歷史 join並提交 prospective case-id live-capture Owner-review proposal。
+State為 `OWNER_REVIEW`，不自動執行。Owner只需在 `docs/margin-leak-prospective-case-id-live-capture-owner-review.md` 選：1) bounded live shadow implementation；2) local-only rehearsal；3) defer。未選前不得再跑歷史第4案、fuzzy/name/date join、另一輪infra，亦不得改 live Sheet/GAS/header ingress/backup／價格、send/publish/delete或私資外送。Owner核准後另開 bounded implementation job，不在本 job重用attempt 10。
 
 ## 2026-08-28 Calibration Receipt
 
@@ -188,6 +193,18 @@ data_class: private-local-only
 - Decision：廣版 G2延後為 future live-migration precondition；本 review `attempt_consumed=false`，job attempt維持9/12，立即回 fixed-three four-pillar evidence packet。安全議題另行處理，不把 hidden-cost job擴成無限 infra工程。
 - Artifact：`workbook/reviews/JOB-A6-LINE-PLATEAU-MARGIN-20260828/objective_plateau_review_20260828.md`。
 
+## 2026-08-28 Fixed-Three Exact-Anchor／Owner-Review Receipt
+
+- Method：`margin-fixed-three-four-pillar-packet-v1`；fingerprint `6ad1df463b57ca15b0b0aba9700735e9bfb3e07608607dabe4472891dcd166c8`；這是 exact-anchor availability experiment，不冒充能驗成功路徑的通用 four-pillar validator。
+- Selection：18個 `true_candidate` 的 exact set digest `686cd542...`；依 `sha256(method|candidate_hash)`固定前三案，不可失敗後換第4案。
+- Readback：request row＋source exact hash `3/3`；baseline quote content、actual delivery/asset、actual incremental cost、authoritative charged fee均 `0/3`。`OrderCharges` writer與charge/cost/discount/note語意仍 unresolved，row presence或absence不得當已收費／0。
+- Decision：3/3 `INSUFFICIENT_EVIDENCE`；four-pillar verified 0、confirmed leakage amount 0；stop historical join，轉 prospective case-id live-capture Owner review。
+- Attempt：`9→10/12`、`attempt_consumed=true`；同packet replay只驗既有SHA並no-op，不覆寫、不再加attempt。
+- Private packet：`/Users/pagemacmini/.maplab/margin-leak-audit/20260828-fixed-three-four-pillar-packet-v1.json`，parent/file `0700/0600`，SHA `f8bcedecc8121be7de632560562eb5a1207713bc451143626970ec7f3c52953a`。
+- Sanitized receipt：`workbook/reviews/JOB-A6-LINE-PLATEAU-MARGIN-20260828/fixed_three_four_pillar_receipt.json`，SHA `950dd71fff8d47d46c7878a884eba44a56b3e0f8babe16ba39e7dd0fb31e9477`，body `862cab4d...`；只含hash/status/missing code/aggregate。
+- Verification：7/7 focused、13/13 related、`py_compile`、idempotent replay與三個 independent read-only reviews PASS；network/model/private egress/Google write/customer send/live price write/deployment/backup-permission mutation均0。
+- Owner artifact：`docs/margin-leak-prospective-case-id-live-capture-owner-review.md`；已列schema、production write path、privacy、10-case／14-day canary、rollback/readback與三個選項；沒有執行任何選項。
+
 ## Resume Prompt
 
-我是 A5/A6 毛利漏損稽核工程師，環境是 `/Users/pagemacmini/maplab-ai-handbook`。冷啟動先讀 `CURRENT_STATUS.md`、`pitfalls.md`、本卡、validation receipt、canonical job與 `objective_plateau_review_20260828.md`。先驗 course-correction method `aac545d0...`、最近三個 infra methods business delta皆0、G1 backup helper false-zero/extra-tree reproducer與 attempt仍9/12。下一步只做 `margin-fixed-three-four-pillar-packet-v1`：從18個 true candidates deterministic固定取3案，逐案本機驗 request、baseline quote、delivery/asset、incremental cost、charged fee；raw私資不進repo或DeerFlow/OpenRouter。缺柱保持 `INSUFFICIENT_EVIDENCE`，不擴 fuzzy matcher；0/3 verified就停止歷史 join並準備 prospective case-id live-capture Owner-review proposal。不得改 live Sheet/GAS/backup、不得送客／發布／寫正式價格。完成後原子更新 job、Task Card、validation receipt、CURRENT_STATUS、pitfalls（若有新教訓）與 Resume Prompt，只 stage任務相關檔案。
+我是 A5/A6 毛利漏損稽核工程師，環境是 `/Users/pagemacmini/maplab-ai-handbook`。冷啟動先讀 `CURRENT_STATUS.md`、`pitfalls.md`、本卡、validation receipt、canonical job、`fixed_three_four_pillar_receipt.json`與 `docs/margin-leak-prospective-case-id-live-capture-owner-review.md`。先驗 private packet SHA `f8bcedec...`、method `6ad1df46...`、eligible digest `686cd542...`、attempt `9→10` consumed、3/3 request、0/3 four-pillar、confirmed leakage 0、7 focused＋13 related tests。State=`OWNER_REVIEW`：fixed-three已完成，禁止重跑／換第4案／fuzzy/name/date join／infra round或再加attempt。只等Owner選 live shadow、local-only rehearsal或defer；未核准不得改 live Sheet/GAS/header ingress/backup／價格、send/publish/delete或把 private bytes送DeerFlow/OpenRouter。Owner核准後另建bounded implementation job，明列authorization、rollback、live readback與no-price/no-send gates。

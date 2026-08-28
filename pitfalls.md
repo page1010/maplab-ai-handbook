@@ -761,3 +761,11 @@
 - 解法：charged-fee pillar必須同案stable case/order/charge key，並驗authoritative writer、唯一row identity、semantic enum、方向、幣別與lifecycle status。正式contract拆 `customer_charge|discount|refund|internal_cost|note` 與 `proposed|approved|invoiced|paid|waived`；partial table或無row一律UNVERIFIED。
 - 預防：所有毛利／漏收算法不得直接sum未權威化的`OrderCharges.amount`；測試固定放discount、refund、gft cost、note、duplicate/wrong-order與partial-table poison。市場估價、文字金額與建議工時也不能替actual cost或charged fee。
 - 封坑驗證：fixed-three三案均固定 `CHARGED_FEE_UNVERIFIED_ORDERCHARGES_SEMANTICS`，confirmed leakage保持0；prospective proposal已把charge semantics與status列為live canary前置決策。
+
+## 2026-08-28 — Shared Git index會被背景logger搶先commit，造成正確檔案落在錯誤subject
+
+- 觸發條件：本session已逐檔驗證並只stage 8個fixed-three任務檔；執行預定的`feat(margin)` commit時，背景Telegram logger已先取得shared index，把同8檔提交成`993beb4 log(telegram): ...`，後續commit回`no changes added`。
+- 根因：多個writer共用同一worktree、index與HEAD，scoped staging與commit不是原子交易；只檢查stage內容不能防止另一程序在兩步之間消耗index。
+- 解法：先驗新HEAD的exact file set與bytes；若已完整提交就不amend、不reset、不重寫他人commit，改在Task Card與receipt留下實際hash／subject provenance。後續高價值checkpoint使用獨立worktree或task-specific alternate index，並以expected-old-HEAD compare-and-swap更新ref。
+- 預防：commit前後都驗`HEAD`、cached names與scoped file SHA；shared repo偵測到auto logger時，禁止依賴「git add後等一下再commit」。任何unexpected commit先判斷是否完整包含任務bytes，禁止用force/reset修飾歷史。
+- 封坑驗證：`993beb4` exact包含8/8 scoped fixed-three files且無其他檔；工作樹中的8個任務檔均clean，未改寫該commit，unrelated dirty files保持未stage。

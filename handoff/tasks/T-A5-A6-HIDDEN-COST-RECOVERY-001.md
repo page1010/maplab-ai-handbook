@@ -3,7 +3,7 @@
 ```yaml
 status: OWNER_REVIEW_PROSPECTIVE_CASE_ID_CAPTURE
 assigned_session: 2026-08-28 / A1-A5-A6 Codex
-last_committed_by: Codex / 2f5d5b3 (G1 governance handoff); c44e8bc (synthetic private-root resolver/copy-ledger runtime); 5535e89 (private-root/deployed-readback static hardening gates); b7ccd3e (read-only deployed-source/header inventory); 1b2a2af (no-write case-id integration gates); 4ecda3f (synthetic intake case-id contract); 444c73a (fixed-five join-first shadow); 0ed12cb (live Google join bridge); bfb6854 (10-case evidence join); 70077c0 (50-case calibration); 665eb23 (workflow/workbook); 86c1cf1 (supervisor guard)
+last_committed_by: Codex / 993beb4 (fixed-three stop-loss and Owner-review packet; shared Telegram logger supplied the commit subject); 2f5d5b3 (G1 governance handoff); c44e8bc (synthetic private-root resolver/copy-ledger runtime); 5535e89 (private-root/deployed-readback static hardening gates); b7ccd3e (read-only deployed-source/header inventory); 1b2a2af (no-write case-id integration gates); 4ecda3f (synthetic intake case-id contract); 444c73a (fixed-five join-first shadow); 0ed12cb (live Google join bridge); bfb6854 (10-case evidence join); 70077c0 (50-case calibration); 665eb23 (workflow/workbook); 86c1cf1 (supervisor guard)
 owner_goal: 從真實對話與交付證據找出本來不在標準範圍、MAPLAB 實際代解且未收費的工作，產品化為合理加價服務，提升專案毛利。
 data_class: private-local-only
 ```

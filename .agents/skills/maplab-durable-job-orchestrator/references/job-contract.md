@@ -17,11 +17,22 @@ Use this contract for `workbook/reviews/MAPLAB-DURABLE-JOBS/<job-id>/job.json` a
 - `deerflow_view`: sanitized metadata only; never copy the raw request when data is not public
 - `attempt`, `max_attempts`, `wall_deadline`, and any spend cap
 - `current_phase`, `last_result`, `next_bounded_action`
+- `objective_metrics_before`, `objective_metrics_after`,
+  `owner_acceptance_delta`, `unlocked_next_action`, and `attempt_consumed` in
+  each bounded-action result; method/test deltas do not substitute for these
 - `artifacts`: absolute paths/URLs plus hashes or readback status
 - `history`: append-only state transition summaries
 - `resume_prompt`: enough for a fresh session to continue without chat memory
 
 All directories are `0700`; files are `0600`. Write atomically. Do not put secrets in a job packet.
+
+`attempt_consumed=false` is allowed once for an objective-plateau review/re-route
+and for pure polling/readback of an already-running external action. The next
+executed domain experiment consumes one attempt. Repeated replanning without
+new evidence cannot avoid the counter. A supporting job split from the main
+objective records a lower priority, attempt/spend cap, parent job, and a rule
+that it cannot displace the main job absent a verified urgent safety issue or
+Owner priority change.
 
 ## State machine
 
@@ -60,7 +71,12 @@ At each wake:
 
 1. Select the oldest/highest-priority nonterminal job whose retry time has arrived.
 2. Read its Task Card, Resume Prompt, domain SOP, and latest receipt.
-3. Run exactly one bounded action or poll an external provider.
-4. Verify and atomically update the job.
-5. Continue on later wakes while state is `RUNNING` or `WAITING_EXTERNAL`.
-6. Notify the Owner only for `OWNER_REVIEW`, `BLOCKED`, `FAILED`, or `COMPLETED`, and deduplicate notifications.
+3. Compare the last three receipts against Owner-facing acceptance. If two
+   consecutive actions have zero objective delta, run the objective-level
+   circuit breaker and re-route before executing more supporting work. The
+   re-route itself records `attempt_consumed=false` and does not increment the
+   domain attempt.
+4. Run exactly one bounded action or poll an external provider.
+5. Verify and atomically update the job.
+6. Continue on later wakes while state is `RUNNING` or `WAITING_EXTERNAL`.
+7. Notify the Owner only for `OWNER_REVIEW`, `BLOCKED`, `FAILED`, or `COMPLETED`, and deduplicate notifications, except for a newly verified urgent safety issue.

@@ -181,3 +181,15 @@ exit 0; plateau_method_review_required; round 12; calls 60; no new attempt
 - Boundary：`SYNTHETIC_RESOLVER_COPY_LEDGER_VALIDATED / HOLD`；`live_resolver_copy_ledger_runtime_validated=false`、`eligible_for_live_change=false`、live migration/consumer/SQLite/writer/header ingress false或 unresolved，current private roots `owner_only=false`，confirmed leakage 0。Injected EXDEV不是實際跨碟，fsync不是 power-loss proof，thread race不是 live writer quiescence。
 - Deferred P1：validator會重驗 ledger列出的全部 artifacts，但尚未拒絕額外 unledgered files；resolver不能讀取額外檔。此項列入 G2/G3 exact tree-membership gate，live adoption前必關閉。
 - Next：只做 G2 `TemporaryDirectory` backup exclusion/index fixture，對 env、Case Store、adapter、53 non-adapter、dispatch、backup index驗 zero classified repo paths及 normalization/traversal/symlink/hardlink/FIFO/stale generation/allowlist drift；不碰 live backup/schedule/plist/process/payload/API。
+
+## 17. Objective-level plateau／course correction（2026-08-28 08:01 Asia/Taipei heartbeat）
+
+- Method：`margin-objective-plateau-review-v1`；fingerprint `aac545d032f904a43bdb34b08f273c78d4a2ec0637c161a58074956bd0c7ae08`；model=`none`，sampling=last-three receipts＋fixed synthetic adversarial readback，evaluator=Owner acceptance/business delta＋第一性原理五問。
+- Objective plateau：`d282b0fe...`、`fa7086a1...`、`3dd861d0...`三個 fingerprints各有 supporting delta，但 stable join、four-pillar verified、confirmed leakage與 live case-capture readiness的before/after均為0／false；`owner_acceptance_delta=0`。廣版 G2不能產生 case key或四柱證據，判定為 infrastructure drift。
+- Runtime contradiction：G1 `validate_backup_index()`接受 `case_store/not-a-generation`、`case_store/repository/private.db`、`backup_policy/arbitrary-new-class`三個 poison，且固定回 `classified_repo_paths=0`；sealed generation加入 extra unledgered regular file後，ledgered artifact read仍PASS。故 G1 scope更正為 ledgered-artifact resolver/copy proof；backup zero-sensitive與exact tree membership未驗。
+- Live read-only observation：8 backup generations；backup root `0755`；current index parent/file `0755/0644`；index logical counts含 non-example env 7、Case Store 2、dispatch 83、`.mcp.json` 1、`cookies.txt` 1、old index 1。沒有讀內容、沒有改 script/plist/schedule/modes/history；此安全問題應另立任務，synthetic G2不會停止 live propagation。
+- First principles：真正目的=four-pillar margin evidence；真正限制=缺 stable case→quote→charge→asset chain；未證假設=G2是分析前置條件；最小實驗=fixed-three local case packets；停止條件=三案後停止，0/3 verified則轉 prospective case-id live-capture Owner review，不再增加 infra round。
+- Decision：`OBJECTIVE_PLATEAU_CONFIRMED / REROUTE`；`attempt_consumed=false`，attempt維持9/12；廣版 G2降為 future live-migration precondition，next route=`margin-fixed-three-four-pillar-packet-v1`。
+- Skill/SOP：durable-job Skill與 job contract新增 objective-delta circuit breaker；連續兩步 zero objective delta即強制五問、defer/split nonblocking infra，review/re-route不消耗 domain attempt。
+- Safety：network/model/private payload egress/credential-customer payload reads/live path operations/backup or launchd writes/Google or price writes/customer sends/deployments均0。
+- Artifact：`workbook/reviews/JOB-A6-LINE-PLATEAU-MARGIN-20260828/objective_plateau_review_20260828.md`；三個 independent read-only reviews均同意 broad G2 defer並回到業務證據主線。

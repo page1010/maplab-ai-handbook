@@ -32,6 +32,35 @@ A small one-turn lookup or edit stays synchronous. An explicit `/research-public
 5. After every bounded action, verify an artifact or live surface, update the job receipt, and either continue automatically or enter a named gate.
 6. Finish only when the Owner can inspect the promised artifact/link and the receipt proves it. A plan, worker chat, process exit, or API 200 alone is not completion.
 
+## Break objective-level plateaus
+
+Method novelty is not outcome progress. Before every bounded action, compare the
+last three receipts against the job's Owner-facing acceptance and primary
+objective metrics, not only method fingerprints or test counts. Read
+[references/objective-plateau-sop.md](references/objective-plateau-sop.md) when
+two consecutive actions changed code, infrastructure, prompts, or synthetic
+proof without advancing an Owner-facing acceptance item.
+
+- Record `objective_metrics_before`, `objective_metrics_after`,
+  `owner_acceptance_delta`, `unlocked_next_action`, and `attempt_consumed`.
+- Two consecutive zero objective deltas trigger the first-principles five
+  questions before any further execution, even when fingerprints differ.
+- Do not spend a domain attempt on the review/re-route itself. State
+  `attempt_consumed=false` and preserve the prior attempt count. This exemption
+  may be used once for the detected plateau; the next executed domain
+  experiment consumes one attempt. A pure poll/readback of an already-running
+  external action does not.
+- Defer or split infrastructure/security work that is not a current blocker.
+  A synthetic gate may continue only when the receipt names the exact
+  immediately executable Owner-facing action it unlocks, proves every other
+  prerequisite is satisfied, and gives a fixed stop condition. A split
+  supporting job gets an explicit lower priority and attempt/spend cap and may
+  not displace the main job unless an urgent verified safety issue or the Owner
+  changes priority.
+- After the circuit breaker, the next action must be the smallest falsifiable
+  experiment against the real objective, not a broader version of the same
+  supporting system.
+
 ## Use authorization already present
 
 Do not ask again for an action the Owner explicitly included in the goal. Examples:

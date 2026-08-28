@@ -729,3 +729,19 @@
 - 解法：在 `exec_module` 前先做 `sys.modules[spec.name] = module`，再呼叫 `validate_receipt`與current-byte provenance檢查。
 - 預防：所有以 importlib直接載入含 dataclass／forward annotation 的 repo script，都使用同一個 helper順序：create spec → create module → register → execute；不要把 loader失敗誤報成產品測試失敗。
 - 封坑驗證：修正 harness後 exact receipt、SHA與 script/test/doc provenance全數重新驗證通過。
+
+## 2026-08-28 — Fingerprint不同、測試全綠仍可能是 objective-level plateau
+
+- 觸發條件：hidden-cost job連續完成 deployed inventory、static hardening、synthetic resolver三個不同 methods；每輪都有新artifact與PASS，但 stable join、four-pillar verified、confirmed leakage、live case capture連續三輪都是0／false，下一步還準備擴大G2 backup fixture。
+- 根因：plateau detector只比較adapter／model／prompt／sampling／evaluator與method fingerprint，把 supporting infrastructure delta誤算成Owner目標進展；沒有逐輪回看Task Card未完成acceptance與business KPI。
+- 解法：receipt強制分 `method_delta`、`supporting_delta`、`objective_delta`；連續兩步 `owner_acceptance_delta=0`就先跑第一性原理五問。Nonblocking infra defer或拆獨立job，下一步必須是針對真正限制的最小可否證實驗。Governance reroute記 `attempt_consumed=false`，不浪費domain attempt。
+- 預防：durable-job Skill與job contract固定記 before/after objective metrics、unlocked next action與attempt accounting；新fingerprint或更多tests不得單獨使用「推進／完成」。每個supporting action都要說出它立即解鎖哪個Owner-facing step，說不出就不跑。
+- 封坑驗證：三個independent reviews一致判定廣版G2為infrastructure drift；job從G2改回fixed-three four-pillar packet，attempt維持9/12，新增objective plateau SOP與可重啟Resume Prompt。
+
+## 2026-08-28 — 安全計數必須從實際 tree 重算，固定回零是假證據
+
+- 觸發條件：G1 `validate_backup_index()`只檢查第一段surface與literal `repo` token，最後直接回 `classified_repo_paths=0`；實測三個不完整／未知logical sources全被接受。sealed generation另可加入未列帳regular file而既有read仍PASS。
+- 根因：把期望結果寫進return value，沒有enumerate/classify emitted index；allowlist以token而非exact manifest／policy digest；sealed verifier只重驗ledger列出的項目，沒有比較expected files、derived dirs、control files與actual tree的完全相等。
+- 解法：任何zero-sensitive receipt都先要有逐類正數baseline，再從實際emitted entries重算post-policy zero；unknown class、scan/stat/open error一律fail closed。Exact tree驗證比較files＋dirs＋control files exact set，extra/missing/type/link drift全拒絕；generation、epoch、policy與classifier digest共同CAS。
+- 預防：禁止在validator中硬編安全counter；poison matrix固定放「名稱像repo但不是literal repo」、「unknown future class」、「extra regular/nested/symlink/FIFO」、「scanner error後假零」。Synthetic gate不能代替live backup remediation。
+- 封坑驗證：本機TemporaryDirectory reproducer確認3個poison仍回0、extra unledgered file被忽略；因此G1 decision範圍已降級為ledgered-artifact resolver/copy proof，backup zero-sensitive與exact tree維持未驗。

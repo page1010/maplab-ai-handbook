@@ -5,7 +5,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-08-28 Codex A1/A5/A6｜隱藏成本 synthetic private-root resolver/copy-ledger G1 完成；live adoption 維持 HOLD，下一步為 G2 backup exclusion/index fixture。完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-08-28 Codex A1/A5/A6｜隱藏成本 objective-level plateau熔斷完成；廣版 G2延後，下一步回 fixed-three four-pillar evidence packet。完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -20,6 +20,8 @@
 ---
 
 ## 最新事實核對
+
+- 2026-08-28 08:01：**[隱藏成本 objective-level plateau熔斷／回到商業證據]** — 最近三個 infra methods（`d282b0fe...` deployed inventory、`fa7086a1...` static hardening、`3dd861d0...` resolver G1）雖有不同 fingerprints與supporting delta，但 stable join、four-pillar verified、confirmed leakage、live case-capture readiness的business delta全為0／false。第一性原理五問判定真正阻塞是缺 `case_id → quote_id → OrderCharges → asset_id`，不是backup synthetic index；廣版G2延後為future live-migration precondition，本review `attempt_consumed=false`、attempt維持9/12，下一步改 fixed-three本機four-pillar packet。Runtime反證另確認G1 backup helper接受3個不完整／未知logical sources仍固定回`classified_repo_paths=0`，sealed generation可忽略extra unledgered file；故G1只保留ledgered-artifact resolver/copy proof，backup zero-sensitive與exact tree未驗。Read-only live觀測仍見8代backup、root/index `0755/0644`及env／Case Store／dispatch／`.mcp.json`／cookies等logical entries；本輪沒有讀payload或改backup。Durable-job Skill與job contract已加入objective-delta circuit breaker，artifact：`workbook/reviews/JOB-A6-LINE-PLATEAU-MARGIN-20260828/objective_plateau_review_20260828.md`。
 
 - 2026-08-28 07:48：**[隱藏成本 synthetic private-root resolver/copy-ledger G1]** — 完成 `margin-private-root-resolver-prototype-v1`（fingerprint `3dd861d0...`）：只在 `TemporaryDirectory` 建 8/8 distinct logical surfaces，含53/53 non-adapter classified artifacts；stream與重新開啟 destination SHA/size exact、ledger/seal、exclusive final generation、generation＋epoch CAS、durable pre-write barrier、pre-write rollback/post-write forward repair均實際執行。21/21 executable receipt scenarios、focused 25/25、MAPLAB discovery 120/120、`py_compile`與三個 independent exact-byte audits PASS；post-pointer fsync ambiguity、tampered rollback、stat→FIFO swap、repo overlap、no-replace race及 receipt timestamp/fixture/metric/provenance forgery全 fail closed。Receipt SHA `03ef6160...`、body `ce995142...`、parent/file `0700/0600`；implementation `c44e8bc`。狀態只到 `SYNTHETIC_RESOLVER_COPY_LEDGER_VALIDATED / HOLD`；live resolver/migration/consumer/SQLite/backup classification仍未驗，current private roots `owner_only=false`，quote/LINE deployed truth、Orders writer與header ingress仍 unresolved，confirmed leakage 0。Residual P1為 extra unledgered file尚未被exact tree gate拒絕但resolver也不可讀；下一步只做 `TemporaryDirectory` G2 backup exclusion/index＋tree-membership fixture，不碰live backup/process/payload/API。
 

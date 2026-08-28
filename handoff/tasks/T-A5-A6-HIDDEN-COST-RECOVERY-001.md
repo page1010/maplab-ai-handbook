@@ -1,9 +1,9 @@
 # T-A5-A6-HIDDEN-COST-RECOVERY-001 — 隱藏成本與可加價服務回收
 
 ```yaml
-status: ACTIVE_SYNTHETIC_BACKUP_EXCLUSION_FIXTURE
+status: ACTIVE_FIXED_THREE_FOUR_PILLAR_PACKET
 assigned_session: 2026-08-28 / A1-A5-A6 Codex
-last_committed_by: Codex / c44e8bc (synthetic private-root resolver/copy-ledger runtime); 5535e89 (private-root/deployed-readback static hardening gates); b7ccd3e (read-only deployed-source/header inventory); 1b2a2af (no-write case-id integration gates); 4ecda3f (synthetic intake case-id contract); 444c73a (fixed-five join-first shadow); 0ed12cb (live Google join bridge); bfb6854 (10-case evidence join); 70077c0 (50-case calibration); 665eb23 (workflow/workbook); 86c1cf1 (supervisor guard)
+last_committed_by: Codex / 2f5d5b3 (G1 governance handoff); c44e8bc (synthetic private-root resolver/copy-ledger runtime); 5535e89 (private-root/deployed-readback static hardening gates); b7ccd3e (read-only deployed-source/header inventory); 1b2a2af (no-write case-id integration gates); 4ecda3f (synthetic intake case-id contract); 444c73a (fixed-five join-first shadow); 0ed12cb (live Google join bridge); bfb6854 (10-case evidence join); 70077c0 (50-case calibration); 665eb23 (workflow/workbook); 86c1cf1 (supervisor guard)
 owner_goal: 從真實對話與交付證據找出本來不在標準範圍、MAPLAB 實際代解且未收費的工作，產品化為合理加價服務，提升專案毛利。
 data_class: private-local-only
 ```
@@ -38,6 +38,7 @@ data_class: private-local-only
 - `scripts/maplab_private_root_resolver_prototype.py`
 - `tests/test_maplab_private_root_resolver_prototype.py`
 - `docs/margin-private-root-resolver-prototype.md`
+- `workbook/reviews/JOB-A6-LINE-PLATEAU-MARGIN-20260828/objective_plateau_review_20260828.md`
 - `workbook/reviews/JOB-A6-LINE-PLATEAU-MARGIN-20260828/validation_receipt.md`
 - private aggregate：`/Users/pagemacmini/.maplab/margin-leak-audit/20260828-initial-aggregate.json`
 
@@ -79,13 +80,14 @@ data_class: private-local-only
 - [x] 建立 exact source-to-adapter no-write integration plan；20 個 pinned source anchors、25 個 synthetic fail-closed fixtures、4 個 prior live-header pins 與 7 個 plan gates 全通過，並明列 direct GAS Web App 無法取得 LINE signature header，必須先有 header-capable ingress。沒有 deploy、live write 或 durable outbox overclaim。
 - [x] 完成 read-only deployed-source/header inventory；4/4 fresh full-header hashes match，quote local bundle/binding 與 historical deployment分層，current quote/LINE deployed revision、Orders/OrderCharges writer仍明列 `UNRESOLVED`。Case Store DB/fallback 與 OpenClaw 405 個固定 bundle artifacts 的 `0755/0644` exposure、`REPO_PATH` hash/match、OAuth `0644`＋Apps Script readonly scope缺失均 fail closed；71/71 related tests與三個 final red-teams PASS，無 deploy/write/private egress。
 - [x] 完成 no-write private-root/deployed-readback static hardening gates；67 source pins、62 consumer anchors、10 private-env tracked refs、4 installed runtime files、12 target contracts、39/39 policy fixtures均 exact。Case Store／bot env／review／dispatch／backup／provider credentials仍 fail closed，Hermes training只到 mode-only inventory、`owner_only=false`；resolver/copy-ledger runtime與 live migration均未宣稱完成。17/17 focused、88/88 related與三個 final red-teams PASS。
-- [x] 完成 `TemporaryDirectory` synthetic resolver＋actual-byte ledger G1；8/8 logical surfaces、53/53 non-adapter fixtures、21/21 executable receipt scenarios、25/25 focused與120/120 MAPLAB discovery tests PASS。Generation＋epoch CAS、exclusive final generation、destination readback、interrupted/EXDEV/fsync/concurrency、durable pre-write barrier、tampered rollback、zero-repo-fallback與 receipt forgery均 fail closed；live resolver/migration/consumer/SQLite/backup classification仍未宣稱完成。
+- [x] 完成 `TemporaryDirectory` synthetic resolver＋actual-byte ledger G1；8/8 logical surfaces、53/53 non-adapter fixtures、21/21 executable receipt scenarios、25/25 focused與120/120 MAPLAB discovery tests PASS。Generation＋epoch CAS、exclusive final generation、destination readback、interrupted/EXDEV/fsync/concurrency、durable pre-write barrier、tampered rollback與 receipt forgery均 fail closed。後續 runtime audit確認 backup helper 的 zero classified paths是固定值且 exact tree未驗；因此 G1只保留「ledgered artifacts／resolver」範圍，backup allowlist、tree membership、live resolver/migration/consumer/SQLite皆未完成。
+- [x] 完成 objective-level plateau review；最近三個 infra fingerprints雖不同，但 four-pillar verified、confirmed leakage與 live case capture的 business delta全為0。廣版 G2 延後為 future live-migration precondition，re-route不消耗 domain attempt（維持9/12）。
 - [ ] 以 quote、OrderCharges、交付／照片 evidence join，估出 confirmed leakage；未 join 前金額必為 0。
 - [ ] Owner 核准第一批正式品項、價格、標準內含量與生效日後，才另開 live Sheet／GAS 變更任務。
 
 ## Next Bounded Action
 
-只做 G2 fixture-only backup exclusion：在 `TemporaryDirectory` patch synthetic allowlist／exclusion，產生下一代 synthetic backup index，要求 non-example env、Case Store DB/fallback、adapter review、53 個 non-adapter classified artifacts、dispatch與backup index 的 classified repo paths 全為 0。固定測 normalization、traversal、symlink、hardlink、FIFO、stale generation、unknown class、allowlist drift與額外 unledgered file。不得碰 live backup root、schedule/plist/process、permission、payload、API、launchd、copy/move/delete或部署；HOLD不變。
+只做 fixed-three 本機 four-pillar evidence packet。從18個 calibration `true_candidate` hashes依 `sha256(margin-fixed-three-four-pillar-packet-v1|candidate_hash)` deterministic排序取前3，manifest固定後不得換案。逐案驗 request、baseline quote、actual delivery/asset、incremental cost、charged fee/`OrderCharges` 的 exact source＋hash＋唯一 anchor；raw對話、姓名、電話、地址、報價與素材只留本機，repo只寫hash/status/missing code。缺一柱即 `INSUFFICIENT_EVIDENCE`，不擴 fuzzy/name matcher；不改 live Sheet/GAS/backup，不送客、不寫正式價格、不把 private bytes送 DeerFlow/OpenRouter。若0/3 four-pillar verified，停止歷史 join並提交 prospective case-id live-capture Owner-review proposal。
 
 ## 2026-08-28 Calibration Receipt
 
@@ -178,6 +180,14 @@ data_class: private-local-only
 - Boundary：這只證明 synthetic G1。`live_resolver_copy_ledger_runtime_validated=false`、`eligible_for_live_change=false`、live migration/consumer/SQLite/writer/header ingress均 false/unresolved，confirmed leakage amount 0。Injected EXDEV不等於真實跨碟，fsync不等於 power-loss proof，現有 private roots仍 `owner_only=false`。
 - Deferred P1：sealed generation會驗 ledger列出的每個 artifact，但尚未拒絕額外 unledgered files；resolver無法讀取額外檔，仍須在G2/G3補 exact tree-membership gate，live adoption前必關閉。
 
+## 2026-08-28 Objective-Level Plateau／Course-Correction Receipt
+
+- Method：`margin-objective-plateau-review-v1`；fingerprint `aac545d032f904a43bdb34b08f273c78d4a2ec0637c161a58074956bd0c7ae08`；changed variable是從 method-fingerprint新穎度改成Owner acceptance與business metric delta。
+- Plateau：deployed inventory `d282b0fe...`、static hardening `fa7086a1...`、resolver G1 `3dd861d0...`三輪的 supporting delta各自成立，但 stable join、four-pillar verified、confirmed leakage與 live capture readiness全為0／false；objective-level plateau成立。
+- Runtime correction：重跑證實 G1 backup helper接受3個不完整／未知 logical sources仍硬回 `classified_repo_paths=0`，sealed generation加 extra unledgered file後既有read仍PASS。G1 ledgered artifact hash/readback仍有效；zero-sensitive backup與 exact tree membership不再視為已驗。
+- Decision：廣版 G2延後為 future live-migration precondition；本 review `attempt_consumed=false`，job attempt維持9/12，立即回 fixed-three four-pillar evidence packet。安全議題另行處理，不把 hidden-cost job擴成無限 infra工程。
+- Artifact：`workbook/reviews/JOB-A6-LINE-PLATEAU-MARGIN-20260828/objective_plateau_review_20260828.md`。
+
 ## Resume Prompt
 
-我是 A5/A6 毛利漏損稽核工程師，環境是 `/Users/pagemacmini/maplab-ai-handbook`。冷啟動先讀 `CURRENT_STATUS.md`、`pitfalls.md`、本卡、validation receipt、canonical job、`docs/margin-private-root-resolver-prototype.md` 與 private receipt。先驗 implementation `c44e8bc`、method `3dd861d0...`、receipt SHA `03ef6160...`、body `ce995142...`、8/8 surfaces、53/53 non-adapter artifacts、21/21 runtime scenarios、focused 25/25、MAPLAB discovery 120/120與三個 independent exact-byte audits PASS。現況只到 synthetic G1：live resolver/migration/consumer/SQLite/backup classification仍未驗，private roots `owner_only=false`，quote/LINE deployed truth、Orders writer與header ingress仍 unresolved；額外 unledgered file是deferred P1。下一步只在 `TemporaryDirectory` 做 G2 backup exclusion/index fixture，覆蓋 env、Case Store、adapter、53 non-adapter、dispatch、backup index及 normalization/traversal/symlink/hardlink/FIFO/stale generation/allowlist drift/exact tree membership。不得讀 credential/customer payload，不碰 live backup/path/mode/process/launchd，不呼叫 Apps Script/Google，不 deploy/send/write價格，不把 private bytes送 DeerFlow/OpenRouter。完成後原子更新 job、Task Card、validation receipt、CURRENT_STATUS、pitfalls（若有新教訓）與 Resume Prompt，只 stage任務相關檔案。
+我是 A5/A6 毛利漏損稽核工程師，環境是 `/Users/pagemacmini/maplab-ai-handbook`。冷啟動先讀 `CURRENT_STATUS.md`、`pitfalls.md`、本卡、validation receipt、canonical job與 `objective_plateau_review_20260828.md`。先驗 course-correction method `aac545d0...`、最近三個 infra methods business delta皆0、G1 backup helper false-zero/extra-tree reproducer與 attempt仍9/12。下一步只做 `margin-fixed-three-four-pillar-packet-v1`：從18個 true candidates deterministic固定取3案，逐案本機驗 request、baseline quote、delivery/asset、incremental cost、charged fee；raw私資不進repo或DeerFlow/OpenRouter。缺柱保持 `INSUFFICIENT_EVIDENCE`，不擴 fuzzy matcher；0/3 verified就停止歷史 join並準備 prospective case-id live-capture Owner-review proposal。不得改 live Sheet/GAS/backup、不得送客／發布／寫正式價格。完成後原子更新 job、Task Card、validation receipt、CURRENT_STATUS、pitfalls（若有新教訓）與 Resume Prompt，只 stage任務相關檔案。

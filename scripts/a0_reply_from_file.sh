@@ -24,3 +24,17 @@ if [[ -n "$REPLY_TO_INBOX_TS" ]]; then
 else
   bash "$REPO_ROOT/scripts/a0_reply.sh" "$MESSAGE"
 fi
+
+# A0 self-restart hook(Owner 2026-08-28 msg 4314:不叫 Owner 動終端機,一切自跑)
+# resume 視窗只放行本目錄腳本,故重啟走「旗標檔+回覆腳本尾端」:旗標存在且
+# 10 分鐘內建立 → 送完回覆後自動執行 a0_bot_restart.sh(KeepAlive 重生新碼)。
+# 過期旗標只清除不執行,避免舊旗標誤觸重啟。
+RESTART_FLAG="/Users/pagemacmini/claude-daily-operations/state/a0_restart_bot.flag"
+if [[ -f "$RESTART_FLAG" ]]; then
+  if [[ -n "$(find "$RESTART_FLAG" -mmin -10 2>/dev/null)" ]]; then
+    rm -f "$RESTART_FLAG"
+    bash "$REPO_ROOT/scripts/a0_bot_restart.sh"
+  else
+    rm -f "$RESTART_FLAG"
+  fi
+fi

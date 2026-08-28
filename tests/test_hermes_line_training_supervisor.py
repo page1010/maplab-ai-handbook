@@ -244,6 +244,111 @@ class HermesLineTrainingSupervisorTests(unittest.TestCase):
         self.assertEqual(resumed_job["attempt"], 1)
         self.assertEqual(resumed_job["current_phase"], "method-redesign")
 
+    def test_method_review_scheduler_preflight_preserves_audited_subphase(self):
+        runner = FakeRoundRunner(self.data_root, [0.4, 0.4, 0.9])
+        first, _ = self.call_supervise(runner, max_rounds=3, target_streak=7)
+        receipt_path = Path(first["supervisor_receipt"])
+        advanced = json.loads(self.job_path.read_text(encoding="utf-8"))
+        advanced["current_phase"] = "method-redesign-schedule-gate"
+        advanced["last_result"] = {
+            "status": "bounded_audit_complete",
+            "audit_method_version": "hermes-line-method-redesign-audit-v7",
+            "execution_eligible": True,
+        }
+        advanced["next_bounded_action"] = "Install and verify the schedule gate; do not run E1."
+        advanced["resume_prompt"] = "Preserve the v7 audit and continue with the schedule gate."
+        private_write(self.job_path, json.dumps(advanced, ensure_ascii=False))
+        before_job = self.job_path.read_bytes()
+        before_receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+        before_runs = sorted(path.name for path in (self.data_root / "runs").glob("*.json"))
+        before_lessons = sorted(path.name for path in (self.data_root / "lesson_deltas").glob("*.md"))
+        self.job = advanced
+
+        second, second_exit = self.call_supervise(runner, max_rounds=1, target_streak=7)
+
+        after_receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+        self.assertEqual(second_exit, 0)
+        self.assertEqual(second["reason"], "plateau_method_review_required")
+        self.assertEqual(len(runner.calls), 2)
+        self.assertEqual(self.job_path.read_bytes(), before_job)
+        self.assertEqual(len(after_receipt["rounds"]), len(before_receipt["rounds"]))
+        self.assertEqual(
+            after_receipt["loopback_ollama_calls"],
+            before_receipt["loopback_ollama_calls"],
+        )
+        self.assertEqual(after_receipt["invocations"], before_receipt["invocations"])
+        self.assertEqual(
+            sorted(path.name for path in (self.data_root / "runs").glob("*.json")),
+            before_runs,
+        )
+        self.assertEqual(
+            sorted(path.name for path in (self.data_root / "lesson_deltas").glob("*.md")),
+            before_lessons,
+        )
+
+    def test_canonical_execution_disabled_prevents_fresh_receipt_or_round(self):
+        disabled = json.loads(self.job_path.read_text(encoding="utf-8"))
+        disabled["state"] = "RUNNING"
+        disabled["current_phase"] = "method-redesign-schedule-gate"
+        disabled["attempt"] = 6
+        disabled["last_result"] = {
+            "status": "bounded_audit_complete",
+            "audit_method_version": "hermes-line-method-redesign-audit-v7",
+            "execution_eligible": False,
+        }
+        disabled["next_bounded_action"] = "Close the schedule gate; do not run E1."
+        private_write(self.job_path, json.dumps(disabled, ensure_ascii=False))
+        self.job = disabled
+        before_job = self.job_path.read_bytes()
+        runner = FakeRoundRunner(self.data_root, [0.9])
+
+        result, exit_code = self.call_supervise(runner, max_rounds=1)
+
+        self.assertEqual(exit_code, 0)
+        self.assertEqual(result["status"], "bounded_pause")
+        self.assertEqual(result["reason"], "canonical_execution_disabled")
+        self.assertEqual(result["loopback_ollama_calls"], 0)
+        self.assertEqual(runner.calls, [])
+        self.assertEqual(self.job_path.read_bytes(), before_job)
+        self.assertFalse((self.data_root / "supervisor_jobs").exists())
+        self.assertFalse((self.data_root / "runs").exists())
+        self.assertFalse((self.data_root / "lesson_deltas").exists())
+
+    def test_named_method_redesign_phase_without_latch_fails_closed(self):
+        disabled = json.loads(self.job_path.read_text(encoding="utf-8"))
+        disabled["state"] = "RUNNING"
+        disabled["current_phase"] = "method-redesign-rubric-calibration"
+        disabled["attempt"] = 6
+        disabled["last_result"] = {"status": "bounded_action_complete"}
+        private_write(self.job_path, json.dumps(disabled, ensure_ascii=False))
+        self.job = disabled
+        before_job = self.job_path.read_bytes()
+        runner = FakeRoundRunner(self.data_root, [0.9])
+
+        result, exit_code = self.call_supervise(runner, max_rounds=1)
+
+        self.assertEqual(exit_code, 0)
+        self.assertEqual(result["reason"], "canonical_execution_disabled")
+        self.assertEqual(runner.calls, [])
+        self.assertEqual(self.job_path.read_bytes(), before_job)
+        self.assertFalse((self.data_root / "supervisor_jobs").exists())
+
+    def test_authorized_attempted_resume_requires_unique_receipt_artifact(self):
+        resumed = json.loads(self.job_path.read_text(encoding="utf-8"))
+        resumed["state"] = "RUNNING"
+        resumed["current_phase"] = "method-redesign-e1"
+        resumed["attempt"] = 6
+        resumed["last_result"] = {
+            "status": "ready",
+            "execution_eligible": True,
+        }
+
+        with self.assertRaisesRegex(
+            MODULE.SupervisorError,
+            "supervisor_receipt_artifact_binding_invalid",
+        ):
+            MODULE.resolve_supervisor_data_root(resumed, str(self.data_root))
+
     def test_legacy_receipt_without_plateau_fields_migrates_without_new_round(self):
         runner = FakeRoundRunner(self.data_root, [0.4, 0.4, 0.9])
         first, _ = self.call_supervise(runner, max_rounds=3, target_streak=7)
@@ -310,6 +415,20 @@ class HermesLineTrainingSupervisorTests(unittest.TestCase):
 
         self.assertEqual(resolved, self.data_root)
         self.assertEqual(first["reason"], "plateau_method_review_required")
+
+    def test_attempted_resume_rejects_cli_root_outside_receipt_binding(self):
+        runner = FakeRoundRunner(self.data_root, [0.4, 0.4])
+        self.call_supervise(runner, max_rounds=2, target_streak=7)
+        resumed_job = json.loads(self.job_path.read_text(encoding="utf-8"))
+
+        with self.assertRaisesRegex(
+            MODULE.SupervisorError,
+            "supervisor_cli_data_root_mismatch",
+        ):
+            MODULE.resolve_supervisor_data_root(
+                resumed_job,
+                str(self.root / "wrong-explicit-root"),
+            )
 
     def test_child_environment_drops_cloud_keys_and_proxies(self):
         with mock.patch.dict(

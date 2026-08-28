@@ -109,11 +109,12 @@ PINNED_SOURCE_SHA256 = {
     "config/deerflow/extensions-disabled.json": "439f9f5a1e91d0c3572bc73a2e31e61ac6c91574801453b8d88b6410b38d5d0f",
     "config/deerflow/hermes-public-research-openrouter.yaml": "e7e8a6f28588b7e03c36fc0ddbed000caf1c64261c706f90ffe4617c8fce017d",
     "config/deerflow/hermes-public-research.yaml": "8789be4a2055fa77eaefb0ca6136bdbc43fd4ea89be7abded3224d227d0d5021",
-    "config/launchd/com.maplab.hermes-line-training.plist": "0f93b994406feba19a8bbb59fdbb6043fb24786e15649db454ebd7bced163bf2",
+    "config/launchd/com.maplab.hermes-line-training.plist": "32803c238c8e1b8eb06428d7155745c435e537d11da10c88ea77aab4e651793b",
     "docs/openclaw/memory-governance.md": "b56f5e71aa5140134e243c3dfd593fd74e2a3070a33310a37b7665b24310ce69",
     "docs/openclaw/output-contract.md": "368fad433ad22bf1f4fbeef3ef05d4baa179d4f9a93eff8f44639a4d430d03ba",
     "docs/margin-leak-deployed-source-inventory.md": "52e152684375c8b3118302fd7f01d32e6befb676189956b1746bc6dc9c4b43bf",
     "launchd/com.maplab.a6bot.plist": "8d656716087dda4f1605982f1e463e28cab7770b7a3123c33c07b786876aff1a",
+    "launchd/com.maplab.hermes-line-training.plist": "32803c238c8e1b8eb06428d7155745c435e537d11da10c88ea77aab4e651793b",
     "launchd/com.maplab.dispatch-backup.plist": "df63ecbd181ceeeb53979b81ef6e0cea01908ad2e681fbea79dc3ba21061317f",
     "launchd/com.maplab.telegrambot.plist": "ed15bb6352ab215cc2aaed6e0d4f1bee37acf5387a270e63be56e9a25bf8b92a",
     "scripts/a6_hermes_activate.sh": "60d6501e3a6219c259f2e3630d5fc744673110902e582ff63d37d3b96345927e",
@@ -129,7 +130,8 @@ PINNED_SOURCE_SHA256 = {
     "scripts/health-check.sh": "94364f81955988ea3a510321fcfa9d1f459dd5c90819aeed877aadf22016818d",
     "scripts/hermes_gateway_setup.sh": "6eee6f1ffa5f9f555e8e1b3ce31e972108c57f522715dca9fded2ac51c75ea97",
     "scripts/hermes_line_training_loop.py": "f543777b014ed4a4119b10fd629b9d76d9239d01a601c51e7355fa8a3c521b0d",
-    "scripts/hermes_line_training_supervisor.py": "cae02f52aa365794f252d849f1e4844b2bd7be7ab39ff3788a0b2e60a318d92e",
+    "scripts/hermes_line_schedule_gate_contract.py": "e99db43ec30c8131e49b0b71603103c34141adb5dd408d43e837cf6eedd26d00",
+    "scripts/hermes_line_training_supervisor.py": "45fc69de36d1931905e54506577b3074a03e9f38cae23dcb3b4f45bef4ce747d",
     "scripts/local_dispatch_backup.sh": "fa448b6a4ceb4ae4e72b4cd3c3ec79a1ae3c7547268bdda905d0ac03ebf9ef81",
     "scripts/maplab_deployed_source_inventory.py": "447c77a36b7de8c2f86cd8fd243cb468cfadf06d5a0c4893e97e5a9148cd467c",
     "scripts/maplab_margin_google_join_bridge.py": "a26cacb27d4d702235d2e0e2dc4ca895e92177038c28fe7ee56d67f14cefb8a8",
@@ -195,8 +197,10 @@ CONSUMERS = (
     Consumer("hermes_line_training", "bot_a6/com.maplab.a6bot.plist", "service_training_root_binding", ("HERMES_LINE_DATA_ROOT", "a6-hermes-training")),
     Consumer("hermes_line_training", "launchd/com.maplab.a6bot.plist", "duplicate_service_training_root_binding", ("HERMES_LINE_DATA_ROOT", "a6-hermes-training")),
     Consumer("hermes_line_training", "bot_a6/hermes_task_executor.py", "training_root_inherited_consumer", ('os.environ.get("HERMES_LINE_DATA_ROOT")',)),
-    Consumer("hermes_line_training", "config/launchd/com.maplab.hermes-line-training.plist", "scheduled_training_root_binding", ("HERMES_LINE_DATA_ROOT", "hermes_line_training_loop.py")),
+    Consumer("hermes_line_training", "config/launchd/com.maplab.hermes-line-training.plist", "scheduled_training_root_binding", ("HERMES_LINE_DATA_ROOT", "hermes_line_training_supervisor.py", "--job-path")),
+    Consumer("hermes_line_training", "launchd/com.maplab.hermes-line-training.plist", "duplicate_scheduled_training_root_binding", ("HERMES_LINE_DATA_ROOT", "hermes_line_training_supervisor.py", "--job-path")),
     Consumer("hermes_line_training", "scripts/hermes_line_training_loop.py", "training_root_resolver", ('os.environ.get("HERMES_LINE_DATA_ROOT")', "DEFAULT_DATA_ROOT")),
+    Consumer("hermes_line_training", "scripts/hermes_line_schedule_gate_contract.py", "scheduled_route_contract_validator", ("HERMES_LINE_DATA_ROOT", "EXPECTED_ARGUMENTS", "raw_loop_side_door")),
     Consumer("hermes_line_training", "scripts/hermes_line_training_supervisor.py", "training_root_child_env_projector", ('"HERMES_LINE_DATA_ROOT": str(data_root)',)),
     Consumer("openclaw_review", "tools/ai_workbook/paths.py", "review_root_definition", ("REVIEWS_DIR = WORKBOOK_DIR / \"reviews\"",)),
     Consumer("openclaw_review", "tools/ai_workbook/openclaw_adapter.py", "bundle_writer", ("from .paths import REVIEWS_DIR", "bundle_dir = REVIEWS_DIR / job_id")),
@@ -260,9 +264,11 @@ PRIVATE_ENV_REFERENCE_CONSUMERS = {
     "bot_a6/hermes_telegram_gateway.py": "free_compute_env_direct_reader",
     "config/deerflow/hermes-public-research-openrouter.yaml": "openrouter_key_placeholder_and_policy_config",
     "config/launchd/com.maplab.hermes-line-training.plist": "scheduled_training_root_binding",
+    "launchd/com.maplab.hermes-line-training.plist": "duplicate_scheduled_training_root_binding",
     "launchd/com.maplab.a6bot.plist": "duplicate_a6_training_root_binding",
     "scripts/hermes_gateway_setup.sh": "free_compute_to_hermes_env_writer",
     "scripts/hermes_line_training_loop.py": "training_root_resolver",
+    "scripts/hermes_line_schedule_gate_contract.py": "scheduled_route_contract_validator",
     "scripts/hermes_line_training_supervisor.py": "training_root_child_env_projector",
 }
 
@@ -349,7 +355,7 @@ EXTERNAL_RUNTIME_CONSUMERS = {
     "hermes_line_training_launchagent": {
         "home_relative_path": "Library/LaunchAgents/com.maplab.hermes-line-training.plist",
         "role": "installed_hermes_line_training_definition",
-        "sha256": "0f93b994406feba19a8bbb59fdbb6043fb24786e15649db454ebd7bced163bf2",
+        "sha256": "32803c238c8e1b8eb06428d7155745c435e537d11da10c88ea77aab4e651793b",
         "expected_mode": 0o644,
     },
     "telegram_launchagent": {
@@ -1914,8 +1920,8 @@ def validate_receipt(receipt: dict[str, Any]) -> None:
         "root_mode": 0o700,
         "directory_count": 4,
         "directory_mode_histogram": {"0700": 4},
-        "file_count": 38,
-        "file_mode_histogram": {"0600": 38},
+        "file_count": 45,
+        "file_mode_histogram": {"0600": 45},
         "symlink_count": 0,
         "owner_only": False,
         "status": "MODE_ONLY_MATCH_OWNERSHIP_TYPE_ACL_AND_RUNTIME_UNRESOLVED",
@@ -2102,7 +2108,7 @@ def validate_receipt(receipt: dict[str, Any]) -> None:
         or type(safety["provider_credential_metadata_reads"]) is not int
         or safety["provider_credential_metadata_reads"] != 2
         or type(safety["training_root_metadata_reads"]) is not int
-        or safety["training_root_metadata_reads"] != 43
+        or safety["training_root_metadata_reads"] != 50
         or type(safety["external_safe_source_hash_reads"]) is not int
         or safety["external_safe_source_hash_reads"] != 3
         or type(safety["external_runtime_config_file_hash_reads"]) is not int

@@ -49,6 +49,8 @@ promotion_boundary: this dev holdout cannot count toward the seven-run promotion
 
 執行順序是「先封 scheduler side door → 零模型校正 rubric → materialize lesson snapshot → render並pin兩側共用輸入 → 再做 prompt-builder-only paired E1」。v7只凍結source-bound計畫與資料manifest，不宣稱prompt已render或E1已ready；把 prompt 與 grader 同時改掉不是單一變因，因此舊契約作廢。
 
+2026-08-28 10:05 readback：scheduler side door已由schedule-gate v1關閉；plain kickstart只增加launchd runs 0→1，job／12 rounds／60 calls／attempt 6／17 run receipts／15 lesson deltas全零delta。這只解除第一項前置，不改E1 eligibility；下一個最小可否證動作是20-case rubric v2零模型校正到至少18/20。
+
 ## 本輪零模型收據
 
 - Sanitized：`hermes_line_method_redesign_receipt_v7.json`，SHA-256 `83725f64524fbf8776e19b09fcbe3c6c653acfcac46dfa1447f8b5abad03590c`，body `f0cac0218e5833e1560fef0bdd5bef8f6fcb5b589a36dadec7285d6a405c384b`。

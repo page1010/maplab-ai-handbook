@@ -793,3 +793,19 @@
 - 解法：產收據前從canonical path重算job、model、supervisor、current lessons、training data與`build_prompt`來源；nested keys／types／timestamps exact驗證。完成後固定記錄 `preimage job SHA → private audit SHA → public receipt SHA/body → updated job SHA`，凍結四份artifact，不以更新後job重產舊audit。
 - 預防：任何method receipt升級control-plane前都跑live-source poison matrix；pair能互相對上但不能對上live preimage就fail closed。Control-plane更新後只驗hash chain與凍結bytes，下一輪才建立新的preimage。
 - 封坑驗證：v7 source/test/private/public/body SHA全exact，7/7 focused與11組pair-forgery／nested payload／type／timestamp poisons全REJECT；red-team P0=0/P1=0。
+
+## 2026-08-28 — Plist bytes通過不等於launchd live route已切換
+
+- 觸發條件：schedule contract在`--repo-only`時回報`route=supervisor-only`／`raw_loop_side_door=false`，但installed file與launchctl cache當下仍是raw loop；若拿該JSON當完成收據會產生runtime overclaim。
+- 根因：checker只讀指定plist bytes，欄位名稱卻沒有標出evidence scope；也沒有把bootout/bootstrap後的live arguments、state、runs與新log bytes納入同一acceptance transaction。
+- 解法：file checker只可輸出`validated_plist_route`、`validated_plists_contain_raw_loop`、`installed_plist_verified`並固定`live_launchd_verified=false`。真正完成必須另驗tracked／installed exact SHA、`launchctl print` exact argv、post-bootstrap runs baseline、plain kickstart runs delta=1、new stdout reason、exit/active/PID及第二次穩定readback。
+- 預防：任何service config收據都拆`file truth`與`loaded runtime truth`；reload可能重置runs，delta只能從post-bootstrap baseline算，禁止把舊exit code或整份歷史log當本輪proof。
+- 封坑驗證：三份plist SHA皆`32803c23...`；live route無raw-loop arg，runs 0→1、exit0、active0，新stdout exact=`canonical_execution_disabled`，第二次readback穩定。
+
+## 2026-08-28 — 停止旗標若只靠last_result，checkpoint漏欄位會把pause變成permission
+
+- 觸發條件：supervisor原本只檢查`last_result.execution_eligible is False`；後續bounded checkpoint若覆寫last_result但漏該欄位，attempt>0又可能因explicit data root在receipt遺失時建立新receipt並重新呼叫模型。
+- 根因：把ephemeral result欄位當durable authorization latch，且CLI data root在resume路徑優先於canonical receipt artifact；「欄位不存在」被默認成可執行。
+- 解法：所有named `method-redesign-*` phase在沒有explicit `execution_eligible=true`時一律fail closed，且在receipt建立、dataset讀取與runner前返回零寫入。真正授權attempt>0 resume時，CLI root必須匹配canonical artifacts內唯一既有`line-training-supervisor-receipt`，missing／duplicate／wrong root皆拒絕。
+- 預防：每個pause gate固定有三種poison：explicit false＋missing receipt、named redesign＋missing latch、explicit true＋missing/wrong receipt binding；斷言runner=0、job bytes／attempt／receipt／run／lesson不變。
+- 封坑驗證：live schedule kickstart reason=`canonical_execution_disabled`；job SHA `606ea077...`、attempt6、receipt `cd076881...`、12 rounds／60 calls／6 invocations、17 runs／15 lessons全部exact不變，focused suite 75/75 PASS。

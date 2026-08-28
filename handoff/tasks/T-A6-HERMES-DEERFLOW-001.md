@@ -53,13 +53,13 @@
 11. Canonical jobs 位於 `workbook/reviews/MAPLAB-DURABLE-JOBS/`，檔案 owner-only 且 runtime 內容不進 git。
 12. `MAPLAB durable job continuation` heartbeat 每 30 分鐘只做一個 idempotent bounded action。
 13. 目前 LINE job 是 `MAPJOB-20260827-224251-d291ad`。
-14. 該 job 現為 `RUNNING / method-redesign-schedule-gate`；LINE-specific active pointer 以 `T-A6-HERMES-LINE-GYM-001.md` 為準。
+14. 該 job 現為 `RUNNING / method-redesign-rubric-calibration`；LINE-specific active pointer 以 `T-A6-HERMES-LINE-GYM-001.md` 為準。
 15. 已完成 12 rounds／60 local calls、總 pass 10/60、success streak 0；不可降低門檻、重播 receipt 或只換 seed 繼續跑。
-16. 固定20案與40個two-shot cases已由v7零模型audit凍結；下一步只封02:20 launchd直通raw loop的side door，reload／kickstart必須零新增round／call／attempt。E1 prompts尚未render、shared inputs／lesson snapshot尚未pin，不得先跑。
+16. 固定20案與40個two-shot cases已由v7零模型audit凍結；02:20 launchd side door已封且zero-call kickstart通過。下一步只做rubric v2零模型校正到至少18/20；E1 prompts尚未render、shared inputs／lesson snapshot尚未pin，不得先跑。
 17. LINE data root 固定 `/Users/pagemacmini/.maplab/a6-hermes-training`；目錄 0700、語料檔 0600。
 18. LINE child 只能呼叫 `127.0.0.1:11434/api/generate`，receipt 必須保持 external network calls 0。
 19. `com.maplab.a6bot` 已重載並為 running，帶入 local-only provider 與安全 data root。
-20. `com.maplab.hermes-line-training` 真實 kickstart 已 exit 0；不用把歷史 stderr 當本輪失敗。
+20. `com.maplab.hermes-line-training` canonical／mirror／installed均為supervisor-only；本次plain kickstart live runs 0→1、exit 0、reason=`canonical_execution_disabled`，job／round／call／attempt／run／lesson零delta。
 21. Batch 5 僅 1/5 pass 且 1 個 unsupported price；服務健康不等於品質達標。
 22. DeerFlow live proof 是 `MAPJOB-20260827-221144-64831c`／`DFR-20260827-221144-b2879c`。
 23. DeerFlow checkout 必須維持 commit `788a890bd022689ef293e6bbfa2c12988173db6c`。
@@ -67,7 +67,7 @@
 25. 完成必須有 artifact/live readback、receipt 與 Owner surface；API 200、process exit 或 worker chat 不算。
 26. A8 私人／unlisted upload 可承接 Owner 已明說的授權；公開發布、新花費與新第三方 egress 仍是 gate。
 27. LINE offline training 永遠不授權 customer send；任何 send route 都必須保持 false。
-28. 2026-08-28 plateau／data-root focused suite 與 margin scanner 合計 34/34 PASS；重改 supervisor 必須包含 plateau zero-call 與 receipt-derived data-root regressions。
+28. 2026-08-28 schedule-gate／plateau／data-root／method-audit／hardening focused suite 75/75 PASS；重改 supervisor 必須包含 plateau zero-call、missing-latch poison與attempt>0 receipt-bound data-root regressions。
 29. 只 stage 本卡相關檔案；保留既有 unrelated dirty runtime/A8/workbook 變更。
 30. 每次 bounded action 後更新 job、validation receipt、`CURRENT_STATUS.md`、必要的 `pitfalls.md`，並留下新的 Resume Prompt。
 

@@ -5,7 +5,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-08-28 Codex A1/A6｜Hermes LINE 已完成零模型 method audit；02:20 schedule side-door 待封，E1 尚不可跑。完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-08-28 Codex A1/A6｜Hermes LINE 02:20 schedule side-door 已封並以零 call kickstart 驗證；下一步是 rubric v2 零模型校正，E1 尚不可跑。完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -20,6 +20,8 @@
 ---
 
 ## 最新事實核對
+
+- 2026-08-28 10:05：**[Hermes LINE supervisor schedule gate／零模型 canary]** — Canonical、mirror、installed `com.maplab.hermes-line-training.plist` 已同為 SHA `32803c23...`，02:20 exact argv 只進 `hermes_line_training_supervisor.py`，帶 canonical job、private data root、`max-rounds=1`、`max-seconds=120`；live `launchctl print` 無 raw-loop arg。Bootstrap 後 runs=0；plain kickstart 後 runs=1、exit 0、active=0，新 stdout reason=`canonical_execution_disabled`。Canary 前後 canonical job bytes `606ea077...`、attempt=6、supervisor receipt `cd076881...`、12 rounds／60 calls／6 invocations、17 physical runs、15 lesson deltas、loop state與current lessons全 exact 不變；新增 model/network/customer send=0。Supervisor 對所有 `method-redesign-*` 缺少明確 true latch 預設 fail closed，attempt>0 的 authorized resume 必須綁唯一既有 supervisor-receipt artifact，logs改0600。75/75 focused tests PASS；sanitized schedule receipt見本job artifacts。Job 現為 `RUNNING / method-redesign-rubric-calibration`，execution仍disabled；只剩 rubric >=18/20、paired runner SHA、rendered prompt manifest、immutable lesson snapshot四個 blockers，不得先 render／跑 E1。
 
 - 2026-08-28 09:35：**[Hermes LINE method redesign／schedule side-door]** — Canonical job `MAPJOB-20260827-224251-d291ad` 的12 supervised rounds／60 calls只有10/60 pass、best 40%、streak 0；physical store 17 receipts中15份 explicit counter合計至少71 calls。Canonical＋installed launchd plist雖同SHA `0f93b994...`，但仍直通 raw loop，supervisor於17:38Z pause後又產5 calls、0/5 pass與1 unsupported price。v7零模型audit已凍結20-case分層holdout、20 mappings／40 unique two-shot cases，排除physical receipts已見77 unique eval IDs與68個已曝露 conversations；E1唯一變因為 `prompt_builder_contract_sha256`，但 baseline／candidate均`NOT_RENDERED`、shared inputs=`NOT_PINNED`、lesson snapshot=`NOT_MATERIALIZED`。本action model/network/send=0、attempt維持6。Private SHA `b604e7fa...`；sanitized receipt SHA `83725f64...`／body `f0cac021...`；source/test `730cff69...`／`7037e192...`，7/7 focused＋11組poison REJECT＋`py_compile` PASS。Job=`RUNNING / method-redesign-schedule-gate`，下一步只把02:20 path改經supervisor並以kickstart證明round=12、calls=60、attempt=6、new calls=0；rubric校正、runner pin、rendered prompt manifest與lesson snapshot仍是後續前置，不得先跑E1。
 

@@ -35,6 +35,7 @@ Owner 目標：降低 Mina 重複回覆時間，讓 Hermes 能依歷史最佳實
 
 - 任兩個 qualification rounds 沒有 verified improvement，停止相同方法；不得只換 seed、sample 或版號繼續消耗 calls。
 - Scheduled path 與人工 resume 都必須經 `hermes_line_training_supervisor.py`；任何直接呼叫 raw loop 的 launchd／cron／automation 都是 side door，必須 fail closed。
+- 2026-08-28 live gate 已驗：canonical／mirror／installed plist同SHA，`launchctl print`為exact supervisor argv；zero-call kickstart只增加一次launchd run，job／round／call／attempt／run／lesson皆不變。後續不得把檔案驗證冒充live readback，也不得讓`method-redesign-*`在沒有explicit true latch時執行。
 - `maplab.hermes.line-evaluator.v1` 只有 lexical／length 診斷價值，不能作 promotion gate。已證明無關內容可高分，裸數字也可能繞過 unsupported-money。
 - 先用人工結構標籤把 rubric v2 校正到至少 18/20 exact agreement；校正不呼叫模型，也不消耗 training attempt。
 - E1 預定只允許變更 `prompt_builder_contract_sha256`；但 v7 尚是 source-bound plan，baseline／candidate full messages 都 `NOT_RENDERED`、shared inputs `NOT_PINNED`、lesson snapshot `NOT_MATERIALIZED`，不得把它說成已可執行的單一變因實驗。
@@ -70,4 +71,4 @@ Owner／Mina 貼客人訊息，Hermes 回草稿；同時顯示「已知／缺欄
 
 Resume Prompt：
 
-> 我是 Hermes LINE 業務教練。先讀 CURRENT_STATUS、pitfalls、active Task Card、durable job、supervisor receipt 與 v7 method redesign receipt。若 job 要求 schedule gate，先驗 launchd 只走 supervisor，kickstart 必須零新增 calls／round／attempt；不得先跑題。若 gate 已完成，依序完成 rubric calibration、immutable lesson snapshot、paired runner SHA 與共用輸入 rendered prompt manifest，五項 blockers全關閉後才可做唯一變因paired test。所有私密 LINE 素材留在本機，禁止 customer send；E1 dev holdout不得計入七連勝。
+> 我是 Hermes LINE 業務教練。先讀 CURRENT_STATUS、pitfalls、active Task Card、durable job、supervisor receipt、v7 method redesign receipt與schedule-gate v1 receipt。Schedule gate已完成，不重跑；下一步只做20-case rubric v2零模型校正到至少18/20，再依序materialize immutable lesson snapshot、pin paired runner SHA與共用輸入 rendered prompt manifest。四項 blockers全關閉後才可把`execution_eligible`改true並做唯一變因paired test。所有私密 LINE 素材留在本機，禁止customer send；E1 dev holdout不得計入七連勝。

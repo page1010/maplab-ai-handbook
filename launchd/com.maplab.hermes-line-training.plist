@@ -1,17 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-  <key>Label</key><string>com.maplab.hermes-line-training</string>
-  <key>ProgramArguments</key>
-  <array>
-    <string>/usr/bin/python3</string>
-    <string>/Users/pagemacmini/maplab-ai-handbook/scripts/hermes_line_training_loop.py</string>
-    <string>--batch</string><string>5</string>
-  </array>
-  <key>StartCalendarInterval</key><dict><key>Hour</key><integer>2</integer><key>Minute</key><integer>20</integer></dict>
-  <key>WorkingDirectory</key><string>/Users/pagemacmini/maplab-ai-handbook</string>
-  <key>StandardOutPath</key><string>/Users/pagemacmini/maplab-ai-handbook/state/hermes_line_training_stdout.log</string>
-  <key>StandardErrorPath</key><string>/Users/pagemacmini/maplab-ai-handbook/state/hermes_line_training_stderr.log</string>
+    <key>Label</key>
+    <string>com.maplab.hermes-line-training</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/bin/python3</string>
+        <string>/Users/pagemacmini/maplab-ai-handbook/scripts/hermes_line_training_supervisor.py</string>
+        <string>--job-path</string>
+        <string>/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/MAPLAB-DURABLE-JOBS/MAPJOB-20260827-224251-d291ad/job.json</string>
+        <string>--data-root</string>
+        <string>/Users/pagemacmini/.maplab/a6-hermes-training</string>
+        <string>--max-rounds</string>
+        <string>1</string>
+        <string>--max-seconds</string>
+        <string>120</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>/Users/pagemacmini/maplab-ai-handbook</string>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>HERMES_LINE_DATA_ROOT</key>
+        <string>/Users/pagemacmini/.maplab/a6-hermes-training</string>
+        <key>HERMES_LINE_PROVIDER</key>
+        <string>local-only</string>
+        <key>PATH</key>
+        <string>/usr/bin:/bin:/usr/sbin:/sbin</string>
+        <key>PYTHONUNBUFFERED</key>
+        <string>1</string>
+    </dict>
+    <key>Umask</key>
+    <integer>63</integer>
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>2</integer>
+        <key>Minute</key>
+        <integer>20</integer>
+    </dict>
+    <key>StandardOutPath</key>
+    <string>/Users/pagemacmini/maplab-ai-handbook/state/hermes_line_training_stdout.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/pagemacmini/maplab-ai-handbook/state/hermes_line_training_stderr.log</string>
 </dict>
 </plist>

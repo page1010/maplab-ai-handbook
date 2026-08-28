@@ -8,12 +8,14 @@
     <key>ProgramArguments</key>
     <array>
         <string>/usr/bin/python3</string>
-        <string>/Users/pagemacmini/maplab-ai-handbook/scripts/hermes_line_training_loop.py</string>
+        <string>/Users/pagemacmini/maplab-ai-handbook/scripts/hermes_line_training_supervisor.py</string>
+        <string>--job-path</string>
+        <string>/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/MAPLAB-DURABLE-JOBS/MAPJOB-20260827-224251-d291ad/job.json</string>
         <string>--data-root</string>
         <string>/Users/pagemacmini/.maplab/a6-hermes-training</string>
-        <string>--batch</string>
-        <string>5</string>
-        <string>--timeout</string>
+        <string>--max-rounds</string>
+        <string>1</string>
+        <string>--max-seconds</string>
         <string>120</string>
     </array>
     <key>WorkingDirectory</key>

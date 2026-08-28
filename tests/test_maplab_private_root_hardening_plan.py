@@ -41,7 +41,7 @@ class CurrentDesignTests(unittest.TestCase):
         self.assertFalse(decision["header_capable_line_ingress_proven"])
 
     def test_consumer_graph_includes_google_and_installed_launchagent_files(self):
-        self.assertEqual(len(self.receipt["consumer_inventory"]), 62)
+        self.assertEqual(len(self.receipt["consumer_inventory"]), 64)
         self.assertTrue(
             all(row["status"] == "MATCH" for row in self.receipt["consumer_inventory"])
         )
@@ -72,7 +72,7 @@ class CurrentDesignTests(unittest.TestCase):
             found = MODULE.scan_private_env_references(ROOT)
         self.assertEqual(found, set(MODULE.PRIVATE_ENV_REFERENCE_CONSUMERS))
         inventory = self.receipt["private_env_reference_consumers"]
-        self.assertEqual(inventory["repo_reference_count"], 10)
+        self.assertEqual(inventory["repo_reference_count"], 12)
         self.assertTrue(inventory["repo_manifest_complete"])
         self.assertTrue(inventory["repo_consumers_all_source_pinned"])
         self.assertEqual(inventory["private_payload_reads"], 0)
@@ -117,8 +117,8 @@ class CurrentDesignTests(unittest.TestCase):
         self.assertFalse(modes["provider_credential"]["owner_only"])
         self.assertEqual(modes["provider_credential"]["source_parent_mode"], 0o755)
         self.assertFalse(modes["hermes_line_training"]["owner_only"])
-        self.assertEqual(modes["hermes_line_training"]["file_count"], 38)
-        self.assertEqual(modes["hermes_line_training"]["file_mode_histogram"], {"0600": 38})
+        self.assertEqual(modes["hermes_line_training"]["file_count"], 45)
+        self.assertEqual(modes["hermes_line_training"]["file_mode_histogram"], {"0600": 45})
         self.assertTrue(all(not value["owner_only"] for value in modes.values()))
 
     def test_target_ownership_and_version_bound_get_only_contracts(self):
@@ -183,11 +183,11 @@ class CurrentDesignTests(unittest.TestCase):
             "private_artifact_hash_reads": 264,
             "private_manifest_metadata_reads": 44,
             "private_review_request_text_reads": 44,
-            "source_file_hash_reads": 67,
-            "source_anchor_text_reads": 62,
+            "source_file_hash_reads": 69,
+            "source_anchor_text_reads": 64,
             "credential_file_metadata_reads": 4,
             "provider_credential_metadata_reads": 2,
-            "training_root_metadata_reads": 43,
+            "training_root_metadata_reads": 50,
             "external_safe_source_hash_reads": 3,
             "external_runtime_config_file_hash_reads": 4,
         }
@@ -396,7 +396,7 @@ class ReceiptValidationTests(unittest.TestCase):
             )
             summary = json.loads(result.stdout)
             self.assertEqual(summary["status"], "STATIC_DESIGN_INVENTORY_VALIDATED")
-            self.assertEqual(summary["consumer_anchors"], 62)
+            self.assertEqual(summary["consumer_anchors"], 64)
             self.assertEqual(summary["shared_credential_references"], 23)
             self.assertEqual(summary["fixture_passed"], 39)
             self.assertFalse(summary["live_change"])

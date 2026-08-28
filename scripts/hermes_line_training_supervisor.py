@@ -835,6 +835,59 @@ def _progress_result(receipt: dict, receipt_path: Path, status: str, reason: str
     }
 
 
+def _preserve_audited_method_redesign_pointer(job: dict) -> bool:
+    """Keep a specific audited subphase from regressing to generic redesign.
+
+    The first plateau transition legitimately creates ``method-redesign``.
+    Once a zero-model audit has advanced the control plane to a named subphase
+    such as ``method-redesign-schedule-gate`` or rubric calibration, a daily
+    scheduler preflight must not overwrite that newer next action merely
+    because the frozen supervisor receipt still requires method review.
+    """
+
+    phase = job.get("current_phase")
+    return isinstance(phase, str) and phase.startswith("method-redesign-")
+
+
+def _canonical_execution_disabled(job: dict) -> bool:
+    """Honor an explicit or redesign-default stop before runtime receipts.
+
+    A named method-redesign subphase is fail-closed: it may resume inference
+    only when the canonical checkpoint explicitly sets ``execution_eligible``
+    to true. This makes the stop survive a checkpoint that accidentally omits
+    the flag instead of treating omission as permission.
+    """
+
+    last_result = job.get("last_result")
+    execution_eligible = (
+        last_result.get("execution_eligible") if isinstance(last_result, dict) else None
+    )
+    if execution_eligible is False:
+        return True
+    phase = job.get("current_phase")
+    return (
+        isinstance(phase, str)
+        and phase.startswith("method-redesign-")
+        and execution_eligible is not True
+    )
+
+
+def _canonical_supervisor_receipt_artifact(job: dict) -> Path:
+    """Return the unique receipt pointer required for an attempted resume."""
+
+    bindings = [
+        item.get("path")
+        for item in (job.get("artifacts") or [])
+        if isinstance(item, dict) and item.get("kind") == "line-training-supervisor-receipt"
+    ]
+    if len(bindings) != 1 or not isinstance(bindings[0], str):
+        raise SupervisorError("supervisor_receipt_artifact_binding_invalid")
+    raw = Path(bindings[0]).expanduser()
+    if not raw.is_absolute() or raw.is_symlink():
+        raise SupervisorError("supervisor_receipt_artifact_path_invalid")
+    return raw
+
+
 def _supervise_locked(
     *,
     job_path: Path,
@@ -951,6 +1004,8 @@ def _supervise_locked(
             "bounded_pause",
             "plateau_method_review_required",
         )
+        if _preserve_audited_method_redesign_pointer(job):
+            return result, 0
         transition_durable_job(
             job_path,
             job,
@@ -1265,6 +1320,19 @@ def supervise(
                 },
                 5 if locked_job["state"] == "FAILED" else 4,
             )
+        if _canonical_execution_disabled(locked_job):
+            return (
+                {
+                    "status": "bounded_pause",
+                    "reason": "canonical_execution_disabled",
+                    "supervisor_receipt": None,
+                    "local_only": True,
+                    "customer_send": False,
+                    "external_network_calls": 0,
+                    "loopback_ollama_calls": 0,
+                },
+                0,
+            )
         try:
             return _supervise_locked(
                 job_path=canonical_path,
@@ -1354,13 +1422,38 @@ def resolve_supervisor_data_root(job: dict, cli_value: str | None = None) -> Pat
     omitted ``HERMES_LINE_DATA_ROOT``.
     """
 
-    if cli_value:
-        return training_loop.resolve_data_root(cli_value)
+    cli_root = training_loop.resolve_data_root(cli_value) if cli_value else None
+
+    # A fail-closed redesign checkpoint must be able to stop even if a
+    # historical receipt was lost. It never reaches receipt creation or a
+    # model call; this root is used only to construct the zero-write result.
+    if _canonical_execution_disabled(job):
+        return cli_root or training_loop.resolve_data_root(None)
+
+    attempt = job.get("attempt", 0)
+    if attempt == 0:
+        if cli_root is not None:
+            return cli_root
+    else:
+        receipt_path = _canonical_supervisor_receipt_artifact(job)
+        if not receipt_path.exists():
+            raise SupervisorError("supervisor_receipt_artifact_missing")
+        if cli_root is not None:
+            expected = (
+                cli_root
+                / "supervisor_jobs"
+                / str(job.get("job_id") or "")
+                / "receipt.json"
+            )
+            if receipt_path.resolve() != expected.resolve():
+                raise SupervisorError("supervisor_cli_data_root_mismatch")
 
     last_result = job.get("last_result")
     receipt_value = (
         last_result.get("supervisor_receipt") if isinstance(last_result, dict) else None
     )
+    if attempt > 0:
+        receipt_value = str(receipt_path)
     if not receipt_value:
         return training_loop.resolve_data_root(None)
     if not isinstance(receipt_value, str):

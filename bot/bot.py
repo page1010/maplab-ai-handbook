@@ -10,6 +10,7 @@ Usage:
 """
 
 import asyncio
+import glob
 import hashlib
 import http.server
 import json
@@ -2776,12 +2777,19 @@ async def _a0_resume_ask(user_message: str, timeout: int = A0_RESUME_TIMEOUT_S) 
     # 旗標，a0_reply.sh 每次都被權限閘攔下，只能靠 bot 轉送最終文字。
     # 2026-08-28 Owner msg 4296「這裡說授權也是授權」: headless resume 按不了
     # 終端機核准，Owner 明令不要再設計成要他按。放行範圍從三支回報腳本擴大到
-    # 整個 maplab-ai-handbook/scripts/ 目錄——只有進了 git、可稽核的腳本能跑，
+    # 整個 maplab-ai-handbook/scripts/ 目錄——只有進了 repo、可稽核的腳本能跑，
     # 其餘命令（任意 shell、系統操作）維持原本閘門。
+    # 實測(2026-08-28 23:15):`Bash(...scripts/:*)` 目錄前綴不匹配目錄下檔案
+    # (`:*` 只涵蓋「空白後的參數」),所以每次 spawn 時 glob 逐支列舉——新腳本
+    # 落地後下一則訊息即放行,不必再重啟 bot。
     # 單一逗號串而非 variadic 多值：--allowedTools 是 variadic 旗標，若用多個
     # 裸值且後面剛好沒有 --model，最後的 prompt 位置參數會被吃進工具清單。
+    _a0_scripts = sorted(
+        glob.glob("/Users/pagemacmini/maplab-ai-handbook/scripts/*.sh")
+    )
     _a0_reply_allow = ",".join(
-        f"Bash({prefix}/Users/pagemacmini/maplab-ai-handbook/scripts/:*)"
+        f"Bash({prefix}{script}:*)"
+        for script in _a0_scripts
         for prefix in ("bash ", "")
     )
     cmd += ["--allowedTools", _a0_reply_allow]

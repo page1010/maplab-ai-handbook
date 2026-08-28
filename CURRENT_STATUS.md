@@ -5,7 +5,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-08-28 Codex A1/A5/A6｜隱藏成本 fixed-three 0/3後停止歷史join；prospective case-ID capture進 OWNER_REVIEW。完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-08-28 Codex A1/A6｜Hermes LINE 已完成零模型 method audit；02:20 schedule side-door 待封，E1 尚不可跑。完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -20,6 +20,8 @@
 ---
 
 ## 最新事實核對
+
+- 2026-08-28 09:35：**[Hermes LINE method redesign／schedule side-door]** — Canonical job `MAPJOB-20260827-224251-d291ad` 的12 supervised rounds／60 calls只有10/60 pass、best 40%、streak 0；physical store 17 receipts中15份 explicit counter合計至少71 calls。Canonical＋installed launchd plist雖同SHA `0f93b994...`，但仍直通 raw loop，supervisor於17:38Z pause後又產5 calls、0/5 pass與1 unsupported price。v7零模型audit已凍結20-case分層holdout、20 mappings／40 unique two-shot cases，排除physical receipts已見77 unique eval IDs與68個已曝露 conversations；E1唯一變因為 `prompt_builder_contract_sha256`，但 baseline／candidate均`NOT_RENDERED`、shared inputs=`NOT_PINNED`、lesson snapshot=`NOT_MATERIALIZED`。本action model/network/send=0、attempt維持6。Private SHA `b604e7fa...`；sanitized receipt SHA `83725f64...`／body `f0cac021...`；source/test `730cff69...`／`7037e192...`，7/7 focused＋11組poison REJECT＋`py_compile` PASS。Job=`RUNNING / method-redesign-schedule-gate`，下一步只把02:20 path改經supervisor並以kickstart證明round=12、calls=60、attempt=6、new calls=0；rubric校正、runner pin、rendered prompt manifest與lesson snapshot仍是後續前置，不得先跑E1。
 
 - 2026-08-28 08:38：**[隱藏成本 fixed-three exact-anchor stop-loss／Owner review]** — `margin-fixed-three-four-pillar-packet-v1`（fingerprint `6ad1df46...`）鎖定18個 true candidates set digest `686cd542...`的前三案且不得換第4案；3/3 request row＋raw source hashes exact，但 baseline quote content、delivery/asset、actual incremental cost與authoritative charged fee均0/3 verified，故3/3維持`INSUFFICIENT_EVIDENCE`、confirmed leakage 0。`OrderCharges` writer與charge/cost/discount/note語意仍 unresolved，presence/absence皆不當已收費／0。本domain attempt自9→10、consumed=true；歷史join、name/date/fuzzy與infra rounds正式停止。Private packet parent/file `0700/0600`、SHA `f8bcedec...`；sanitized receipt SHA `950dd71f...`／body `862cab4d...`；7/7 focused＋13/13 related＋idempotent replay及三個independent reviews PASS。已產具schema、header-capable production path、10-case／14-day canary、privacy、rollback/readback及三選項的 prospective proposal；job=`OWNER_REVIEW`，Owner未選前不做live Sheet/GAS/header ingress/價格／發訊／發布／外送。Task：`handoff/tasks/T-A5-A6-HIDDEN-COST-RECOVERY-001.md`；proposal：`docs/margin-leak-prospective-case-id-live-capture-owner-review.md`。
 

@@ -1,6 +1,6 @@
 # Hermes LINE 業務回覆持續訓練計畫
 
-版本：2026-08-26 v1  
+版本：2026-08-28 v2
 Owner 目標：降低 Mina 重複回覆時間，讓 Hermes 能依歷史最佳實務完成需求釐清、報價前補問與後續追蹤草稿。
 
 ## 資料與基準答案
@@ -31,6 +31,17 @@ Owner 目標：降低 Mina 重複回覆時間，讓 Hermes 能依歷史最佳實
 - 影子測試中 Mina 可直接採用或只需小改：連續 50 題 ≥80%，才考慮半自動草稿。
 - 正式對客自動發送不是本階段目標；先讓 Mina 少打字、可快速確認後送出。
 
+## Plateau 與方法重設規則
+
+- 任兩個 qualification rounds 沒有 verified improvement，停止相同方法；不得只換 seed、sample 或版號繼續消耗 calls。
+- Scheduled path 與人工 resume 都必須經 `hermes_line_training_supervisor.py`；任何直接呼叫 raw loop 的 launchd／cron／automation 都是 side door，必須 fail closed。
+- `maplab.hermes.line-evaluator.v1` 只有 lexical／length 診斷價值，不能作 promotion gate。已證明無關內容可高分，裸數字也可能繞過 unsupported-money。
+- 先用人工結構標籤把 rubric v2 校正到至少 18/20 exact agreement；校正不呼叫模型，也不消耗 training attempt。
+- E1 預定只允許變更 `prompt_builder_contract_sha256`；但 v7 尚是 source-bound plan，baseline／candidate full messages 都 `NOT_RENDERED`、shared inputs `NOT_PINNED`、lesson snapshot `NOT_MATERIALIZED`，不得把它說成已可執行的單一變因實驗。
+- 執行 E1 前須 materialize owner-only immutable lesson snapshot，對20案逐案render baseline／candidate；兩側的 user message、context、two-shot examples與lesson hashes必須相同，只有prompt-builder contract不同，並pin paired runner source SHA。
+- E1 最多 40 次本機 inference；unsafe price／policy、private egress、customer send、manifest drift 任一發生即停。
+- E1 的 20-case holdout 是 development evidence，不能算進七連勝；promotion 必須另用預先封存、互不重疊的 balanced panels。
+
 ## 分階段升級
 
 ### Phase 1：離線 imitation + correction
@@ -51,11 +62,12 @@ Owner／Mina 貼客人訊息，Hermes 回草稿；同時顯示「已知／缺欄
 
 ## 持續運行與接手 Prompt
 
-- 每日 02:20 執行 `scripts/hermes_line_training_loop.py --batch 5`；每週另跑一次 30 題彙總。
-- 主要狀態：`/Volumes/MacExternal/maplab-data/a6-hermes-training/loop_state.json`。
-- 每輪收據：`/Volumes/MacExternal/maplab-data/a6-hermes-training/runs/`。
-- 下一輪教材：`/Volumes/MacExternal/maplab-data/a6-hermes-training/current_lessons.md`。
+- 每日 02:20 只能執行 `scripts/hermes_line_training_supervisor.py` 並帶 canonical job path；禁止 launchd 直接執行 `hermes_line_training_loop.py`。
+- 主要狀態：`/Users/pagemacmini/.maplab/a6-hermes-training/loop_state.json`。
+- 每輪收據：`/Users/pagemacmini/.maplab/a6-hermes-training/runs/`。
+- Supervisor 收據：`/Users/pagemacmini/.maplab/a6-hermes-training/supervisor_jobs/<job_id>/receipt.json`。
+- 下一輪教材：`/Users/pagemacmini/.maplab/a6-hermes-training/current_lessons.md`；method redesign 不直接使用這個可變檔，改 pin 最後一輪 immutable lesson delta。
 
 Resume Prompt：
 
-> 我是 Hermes LINE 業務教練。先讀 manifest、loop_state、current_lessons 與最新 run。找出最低分 stage 與最常見 missed signal，抽取下一批 12 題執行；不得重用 eval 題當 few-shot，不得杜撰價格。完成後比較本輪與前三輪 pass rate、幻覺率、回覆長度，將一條可重用修正寫入 lessons；若連續兩輪退步，縮到該 stage 五題診斷，不要盲目加大 batch。
+> 我是 Hermes LINE 業務教練。先讀 CURRENT_STATUS、pitfalls、active Task Card、durable job、supervisor receipt 與 v7 method redesign receipt。若 job 要求 schedule gate，先驗 launchd 只走 supervisor，kickstart 必須零新增 calls／round／attempt；不得先跑題。若 gate 已完成，依序完成 rubric calibration、immutable lesson snapshot、paired runner SHA 與共用輸入 rendered prompt manifest，五項 blockers全關閉後才可做唯一變因paired test。所有私密 LINE 素材留在本機，禁止 customer send；E1 dev holdout不得計入七連勝。

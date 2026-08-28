@@ -769,3 +769,27 @@
 - 解法：先驗新HEAD的exact file set與bytes；若已完整提交就不amend、不reset、不重寫他人commit，改在Task Card與receipt留下實際hash／subject provenance。後續高價值checkpoint使用獨立worktree或task-specific alternate index，並以expected-old-HEAD compare-and-swap更新ref。
 - 預防：commit前後都驗`HEAD`、cached names與scoped file SHA；shared repo偵測到auto logger時，禁止依賴「git add後等一下再commit」。任何unexpected commit先判斷是否完整包含任務bytes，禁止用force/reset修飾歷史。
 - 封坑驗證：`993beb4` exact包含8/8 scoped fixed-three files且無其他檔；工作樹中的8個任務檔均clean，未改寫該commit，unrelated dirty files保持未stage。
+
+## 2026-08-28 — Plateau guard 只包人工入口不夠；scheduler side-door 會繼續燒 calls
+
+- 觸發條件：Hermes LINE supervisor 已回 `plateau_method_review_required` 並停在12 rounds／60 calls，但 canonical＋installed 02:20 launchd 仍直接呼叫 raw training loop；pause 44分鐘後又多出5 calls、0/5 pass與1個 unsupported price。
+- 根因：只在 supervisor 寫熔斷器，沒有沿 `installed service definition → program arguments → worker` 驗完整 scheduled path；Task Card與training plan還明寫每日直跑 raw loop，造成 active pointer互相衝突。
+- 解法：所有人工、heartbeat、launchd／cron入口都只能進同一 supervisor gate；plist source、installed copy與 launchctl live readback一起驗。Plateau狀態下kickstart必須 round／calls／attempt完全不變，並留下zero-call receipt；direct raw-loop route一律fail closed。
+- 預防：每次新增 guard 時固定掃 canonical config、installed runtime copy、所有 scheduler與Resume Prompt；「code有guard」不等於「生產路徑受guard」。Guard修復前不得執行後續模型實驗。
+- 封坑驗證：method audit已證 repo＋installed plist同SHA但 `program_routes_direct_training_loop=true`、`program_routes_supervisor=false`，post-pause bypass receipt SHA `eb551990...`；next action已改為schedule gate，attempt維持6、audit model calls 0。
+
+## 2026-08-28 — Lexical evaluator 高分不等於業務正確，grader與prompt不能同輪一起改
+
+- 觸發條件：60題中35個score>=75仍未通過，獨立red-team又讓不相干回覆拿到100／pass，並用裸數字變體繞過unsupported-money；舊E1同時想改prompt與grader。
+- 根因：evaluator把詞面命中、長度與部分字串規則誤當「有回答當下問題／下一問正確／不重問／不亂報政策價格」；若grader與prompt一起變，結果無法歸因，也可能只是新grader放寬。
+- 解法：evaluator v1降級為診斷工具；先用固定20-case人工結構標籤把rubric v2校正到至少18/20，再凍結grader。E1只變 `prompt_builder_contract_sha256`，model／holdout／two-shot／seed／lesson snapshot／rubric／acceptance全固定，最多40 local calls；兩側完整rendered prompts與shared input manifest未pin前不得執行。
+- 預防：promotion gate必須先做adversarial calibration；任何single-variable實驗契約若列出兩個changed variables就拒絕執行。Development holdout不得回算七連勝，promotion另用預封存、互不重疊balanced panels。
+- 封坑驗證：v7 receipt凍結20 unique holdout、40 unique two-shot cases、77 prior eval IDs／68 prior conversations exclusion與prompt-builder-only fingerprint；baseline／candidate=`NOT_RENDERED`、shared input=`NOT_PINNED`、lesson snapshot=`NOT_MATERIALIZED`，execution仍因五項明列前置未完成而disabled。
+
+## 2026-08-28 — 收據pair自洽不等於live provenance，control-plane transition必須留下preimage chain
+
+- 觸發條件：red-team同時替換canonical job、model manifest、supervisor receipt、baseline／lesson來源，再重算private/public pair與method fingerprint；舊validator只驗pair equality與body hash時仍接受。
+- 根因：validator沒有把canonical absolute path綁入並即時重算live source bytes；nested payload只驗部分欄位，讓攻擊者以一組相互自洽的假來源繞過。Job更新後又若直接拿新bytes驗凍結preimage，會把正常control-plane transition誤報成篡改。
+- 解法：產收據前從canonical path重算job、model、supervisor、current lessons、training data與`build_prompt`來源；nested keys／types／timestamps exact驗證。完成後固定記錄 `preimage job SHA → private audit SHA → public receipt SHA/body → updated job SHA`，凍結四份artifact，不以更新後job重產舊audit。
+- 預防：任何method receipt升級control-plane前都跑live-source poison matrix；pair能互相對上但不能對上live preimage就fail closed。Control-plane更新後只驗hash chain與凍結bytes，下一輪才建立新的preimage。
+- 封坑驗證：v7 source/test/private/public/body SHA全exact，7/7 focused與11組pair-forgery／nested payload／type／timestamp poisons全REJECT；red-team P0=0/P1=0。

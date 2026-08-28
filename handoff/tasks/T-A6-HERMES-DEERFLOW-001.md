@@ -53,9 +53,9 @@
 11. Canonical jobs 位於 `workbook/reviews/MAPLAB-DURABLE-JOBS/`，檔案 owner-only 且 runtime 內容不進 git。
 12. `MAPLAB durable job continuation` heartbeat 每 30 分鐘只做一個 idempotent bounded action。
 13. 目前 LINE job 是 `MAPJOB-20260827-224251-d291ad`。
-14. 該 job 現為 `RUNNING / method-redesign-rubric-calibration`；LINE-specific active pointer 以 `T-A6-HERMES-LINE-GYM-001.md` 為準。
+14. 該 job 現為 `RUNNING / method-redesign-rubric-annotation-guide`；LINE-specific active pointer 以 `T-A6-HERMES-LINE-GYM-001.md` 為準。
 15. 已完成 12 rounds／60 local calls、總 pass 10/60、success streak 0；不可降低門檻、重播 receipt 或只換 seed 繼續跑。
-16. 固定20案與40個two-shot cases已由v7零模型audit凍結；02:20 launchd side door已封且zero-call kickstart通過。下一步只做rubric v2零模型校正到至少18/20；E1 prompts尚未render、shared inputs／lesson snapshot尚未pin，不得先跑。
+16. 固定20案與40個two-shot cases已由v7零模型audit凍結；02:20 launchd side door已封且zero-call kickstart通過。Readiness audit證明structured human labels=0，blank preflight又缺operational guide；下一步由系統先凍結guide／commercial authority／attestation／coverage gate，不叫Owner先標。E1 prompts尚未render、shared inputs／lesson snapshot尚未pin，不得先跑。
 17. LINE data root 固定 `/Users/pagemacmini/.maplab/a6-hermes-training`；目錄 0700、語料檔 0600。
 18. LINE child 只能呼叫 `127.0.0.1:11434/api/generate`，receipt 必須保持 external network calls 0。
 19. `com.maplab.a6bot` 已重載並為 running，帶入 local-only provider 與安全 data root。

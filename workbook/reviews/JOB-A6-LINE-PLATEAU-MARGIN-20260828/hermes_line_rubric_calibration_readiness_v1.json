@@ -1,11 +1,13 @@
 {
   "schema_version": "maplab.hermes.line-rubric-calibration-readiness.v1",
-  "created_at": "2026-08-28T02:30:25.013832Z",
+  "created_at": "2026-08-28T02:41:15.738890Z",
   "job_id": "MAPJOB-20260827-224251-d291ad",
   "action_class": "deterministic_rubric_preflight",
-  "decision": "OWNER_REVIEW_REQUIRED__STRUCTURED_HUMAN_LABELS_MISSING",
+  "method_version": "hermes-line-rubric-readiness-preflight-v2",
+  "method_fingerprint": "5e7df38f7f934ad345c14b8f19d99009e1ef3f1ef00d281621f9c865411150e9",
+  "decision": "REROUTE_REQUIRED__ANNOTATION_GUIDE_MISSING",
   "plateau_review": {
-    "last_three_shared_partial_method_fingerprint": "b586bae2edb435954ded506059b0a0a9d82e72f542460f119bde1fd2c92afcd5",
+    "last_three_shared_partial_method_fingerprint": "b586bae2f812a92afddfafb9d54f293be712e808c610e0ae79581d4678782275",
     "last_three_pass_rates": [
       0.2,
       0.4,
@@ -20,7 +22,7 @@
     "public_v7_sha256": "83725f64524fbf8776e19b09fcbe3c6c653acfcac46dfa1447f8b5abad03590c",
     "holdout_manifest_sha256": "f512e4067fdfe6d038b96309f6088b630498b3b8f8062b7639a748ca49cce19a",
     "rubric_name_only_spec_sha256": "1804f8f9a9801f2cfe8e80b23750e423caacc2b3d47c1c53811ccf48d6ff5ee3",
-    "job_preimage_sha256": "953b6ef1b5fe04935839471eaf13f73b0cdb966794adbad08106fccaeda341f0"
+    "job_preimage_sha256": "25fdbcd77d24b77e5f20c685a4507e05a7d4203ad9cb131d5066e7dea8cedd80"
   },
   "readiness": {
     "frozen_holdout_case_count": 20,
@@ -30,14 +32,16 @@
     "historical_reference_specimen_count": 10,
     "controlled_negative_specimen_count": 10,
     "calibration_started": false,
+    "annotation_guide_ready": false,
+    "human_review_ready": false,
     "exact_agreement": null,
     "commercial_safety_mismatch_count": null
   },
-  "private_packet_sha256": "e48cb2617a2a67993fcf15c4357a443f77858ae818d3d7e7ed0a32adab042bc6",
+  "private_packet_sha256": "10e41cf26ad327b4f848a9d5818f8c4df140c33655a5619d41c9c3b4b4d89d39",
   "implementation": {
-    "script_sha256": "d520fa3d0b55cc5b9f6d0de29c68db1e00a2ab8d2f80fa5e14f3800f16e0b307",
-    "test_sha256": "818424331f0643bb17b72b8a3aec0e2837930e5c244cdeac5648fc22c8c13856",
-    "focused_test_result": "10 tests PASS + py_compile PASS"
+    "script_sha256": "23c074839a8b750bc1984628891bedf297cf83e8a811a6098cd938f6afd9e9fb",
+    "test_sha256": "3aaefbb45832cb274d8550d98c51b2a87794ddd25ce7923b2b5384adcca10457",
+    "focused_test_result": "13 tests PASS + py_compile PASS"
   },
   "attempt_before": 6,
   "attempt_after": 6,
@@ -50,13 +54,15 @@
   "execution_eligible": false,
   "execution_blockers": [
     "rubric_v2_structured_human_labels_missing",
+    "rubric_v2_annotation_guide_not_frozen",
+    "rubric_v2_criterion_coverage_not_proven",
     "rubric_v2_deterministic_scorer_not_pinned",
     "paired_runner_source_sha256_not_yet_pinned",
     "rendered_prompt_manifest_not_pinned",
     "shared_lesson_snapshot_not_materialized"
   ],
-  "state_recommendation": "OWNER_REVIEW",
-  "owner_action": "A named human reviewer must complete the private 20-item label packet; AI or deterministic prelabels cannot be recorded as human gold.",
-  "next_bounded_action_after_review": "Validate all 20 human label vectors, implement an identity-blind deterministic scorer, and require at least 18/20 exact agreement with zero commercial-safety mismatches before any E1 render or run.",
-  "body_sha256": "cb6536a1a3a8bbc7da6833a126f58f028464cfc4188c5391636d4a1d522167ea"
+  "state_recommendation": "RUNNING",
+  "owner_action_required": false,
+  "next_bounded_action": "Freeze a source-bound operational annotation guide, overall formula, current commercial-authority snapshot, named-human attestation schema, and per-criterion positive/negative coverage gate. Do not request human labels or run E1 yet.",
+  "body_sha256": "52431fa854f7ec8970114051c90243a4c5923de97e4b4a48ca2a9489627065f9"
 }

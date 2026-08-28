@@ -50,10 +50,26 @@ class HermesLineRubricAnnotationPacketTests(unittest.TestCase):
             MODULE.EXPECTED_HASHES["private_v7_sha256"],
         )
         packet = self.build_packet()
+        self.assertEqual(packet["status"], "NEEDS_ANNOTATION_GUIDE")
+        self.assertFalse(packet["annotation_guide_requirements"]["guide_ready"])
+        self.assertFalse(
+            packet["annotation_guide_requirements"]["human_annotation_may_start"]
+        )
         self.assertEqual(len(packet["cases"]), 20)
         self.assertEqual(len({item["case_hash"] for item in packet["cases"]}), 20)
         self.assertEqual(packet["source_structured_human_label_count"], 0)
         self.assertTrue(all(item["human_annotation"]["annotator_role"] is None for item in packet["cases"]))
+
+    def test_plateau_fingerprint_and_rates_are_bound_to_v7_source(self):
+        review = self.private_v7["supervisor_analysis"]["last_three_method_review"]
+        self.assertEqual(
+            review["shared_partial_method_fingerprint"],
+            MODULE.EXPECTED_PARTIAL_METHOD_FINGERPRINT,
+        )
+        self.assertEqual(
+            [item["pass_rate"] for item in review["receipts"]],
+            [0.2, 0.4, 0.2],
+        )
 
     def test_panel_has_historical_and_controlled_negative_specimens(self):
         packet = self.build_packet()
@@ -107,6 +123,31 @@ class HermesLineRubricAnnotationPacketTests(unittest.TestCase):
                 source_hashes=copy.deepcopy(self.source_hashes),
             )
 
+    def test_packet_source_provenance_cannot_be_rewritten(self):
+        mutations = {
+            "source_provenance": lambda packet: packet["source_provenance"].__setitem__(
+                "eval_dataset_sha256", "0" * 64
+            ),
+            "guide_flag": lambda packet: packet["annotation_guide_requirements"].__setitem__(
+                "human_annotation_may_start", True
+            ),
+            "calibration_threshold": lambda packet: packet["calibration_contract"].__setitem__(
+                "minimum_exact_agreement", "1/20"
+            ),
+            "reply_binding": lambda packet: packet["cases"][0].__setitem__(
+                "reply_specimen_sha256", "0" * 64
+            ),
+            "panel_origin": lambda packet: packet["cases"][0].__setitem__(
+                "specimen_origin", "controlled_negative_synthetic_local_only"
+            ),
+        }
+        for name, mutate in mutations.items():
+            packet = self.build_packet()
+            mutate(packet)
+            with self.subTest(name=name):
+                with self.assertRaises(MODULE.AnnotationPacketError):
+                    MODULE.validate_packet(packet)
+
     def test_sanitized_receipt_contains_no_private_payload_or_paths(self):
         packet = self.build_packet()
         receipt = MODULE.build_sanitized_receipt(
@@ -127,23 +168,44 @@ class HermesLineRubricAnnotationPacketTests(unittest.TestCase):
         ):
             self.assertNotIn(token, serialized)
         self.assertFalse(receipt["execution_eligible"])
+        self.assertEqual(receipt["state_recommendation"], "RUNNING")
+        self.assertFalse(receipt["owner_action_required"])
+        self.assertEqual(
+            receipt["method_fingerprint"], MODULE.action_method_fingerprint()
+        )
         self.assertEqual(receipt["model_calls_this_action"], 0)
         self.assertEqual(receipt["attempt_before"], receipt["attempt_after"])
 
     def test_public_receipt_leak_is_rejected_even_with_recomputed_body_hash(self):
-        receipt = MODULE.build_sanitized_receipt(
-            packet_sha256="a" * 64,
-            created_at="2026-08-28T02:17:05Z",
-            job_preimage_sha256="b" * 64,
-            script_sha256="c" * 64,
-            test_sha256="d" * 64,
-        )
-        receipt["owner_action"] = "/Users/example/private reply_specimen"
-        body = dict(receipt)
-        body.pop("body_sha256")
-        receipt["body_sha256"] = MODULE.sha256_text(MODULE.canonical_json(body))
-        with self.assertRaisesRegex(MODULE.AnnotationPacketError, "private_value_leaked"):
-            MODULE.validate_sanitized_receipt(receipt)
+        mutations = {
+            "private_leak": lambda receipt: receipt.__setitem__(
+                "next_bounded_action", "/Users/example/private reply_specimen"
+            ),
+            "plateau_rate": lambda receipt: receipt["plateau_review"].__setitem__(
+                "last_three_pass_rates", [1.0, 1.0, 1.0]
+            ),
+            "execution_blockers": lambda receipt: receipt.__setitem__(
+                "execution_blockers", []
+            ),
+            "unsafe_next_action": lambda receipt: receipt.__setitem__(
+                "next_bounded_action", "Run E1 now."
+            ),
+        }
+        for name, mutate in mutations.items():
+            receipt = MODULE.build_sanitized_receipt(
+                packet_sha256="a" * 64,
+                created_at="2026-08-28T02:17:05Z",
+                job_preimage_sha256="b" * 64,
+                script_sha256="c" * 64,
+                test_sha256="d" * 64,
+            )
+            mutate(receipt)
+            body = dict(receipt)
+            body.pop("body_sha256")
+            receipt["body_sha256"] = MODULE.sha256_text(MODULE.canonical_json(body))
+            with self.subTest(name=name):
+                with self.assertRaises(MODULE.AnnotationPacketError):
+                    MODULE.validate_sanitized_receipt(receipt)
 
     def test_private_writer_is_0600_atomic_and_refuses_conflict(self):
         packet = self.build_packet()
@@ -186,7 +248,7 @@ class HermesLineRubricAnnotationPacketTests(unittest.TestCase):
 
     def test_job_update_requires_exact_live_preimage(self):
         with self.assertRaisesRegex(MODULE.AnnotationPacketError, "job_preimage_changed"):
-            MODULE.update_job_for_owner_review(
+            MODULE.update_job_for_annotation_guide(
                 packet_path=Path("/tmp/private.json"),
                 packet_sha256="a" * 64,
                 receipt_path=Path("/tmp/public.json"),
@@ -194,6 +256,73 @@ class HermesLineRubricAnnotationPacketTests(unittest.TestCase):
                 job_preimage_sha256="0" * 64,
                 created_at="2026-08-28T02:17:05Z",
             )
+
+    def test_active_receipt_binding_refresh_is_idempotent(self):
+        packet_sha = "a" * 64
+        prior_receipt_sha = "b" * 64
+        new_receipt_sha = "c" * 64
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            root.chmod(0o700)
+            job_path = root / "job.json"
+            packet_path = root / "packet.json"
+            receipt_path = root / "receipt.json"
+            packet_path.write_text("{}\n", encoding="utf-8")
+            receipt_path.write_text("{}\n", encoding="utf-8")
+            job = {
+                "schema_version": "maplab.durable-job.v1",
+                "job_id": MODULE.JOB_ID,
+                "state": "RUNNING",
+                "attempt": MODULE.EXPECTED_ATTEMPT,
+                "current_phase": "method-redesign-rubric-annotation-guide",
+                "updated_at": "2026-08-28T02:17:05Z",
+                "last_result": {
+                    "execution_eligible": False,
+                    "private_annotation_preflight_sha256": packet_sha,
+                    "sanitized_readiness_receipt_sha256": prior_receipt_sha,
+                },
+                "artifacts": [
+                    {
+                        "path": str(packet_path),
+                        "kind": "line-rubric-v2-private-annotation-guide-preflight",
+                        "sha256": packet_sha,
+                    },
+                    {
+                        "path": str(receipt_path),
+                        "kind": "line-rubric-v2-sanitized-readiness-receipt",
+                        "sha256": prior_receipt_sha,
+                    },
+                ],
+                "history": [],
+            }
+            MODULE.atomic_replace_json(job_path, job, mode=0o600)
+            with mock.patch.object(MODULE, "JOB_PATH", job_path):
+                self.assertTrue(
+                    MODULE.refresh_active_job_binding(
+                        packet_path=packet_path,
+                        packet_sha256=packet_sha,
+                        receipt_path=receipt_path,
+                        prior_receipt_sha256=prior_receipt_sha,
+                        receipt_sha256=new_receipt_sha,
+                        refreshed_at="2026-08-28T02:30:00Z",
+                    )
+                )
+                self.assertFalse(
+                    MODULE.refresh_active_job_binding(
+                        packet_path=packet_path,
+                        packet_sha256=packet_sha,
+                        receipt_path=receipt_path,
+                        prior_receipt_sha256=prior_receipt_sha,
+                        receipt_sha256=new_receipt_sha,
+                        refreshed_at="2026-08-28T02:31:00Z",
+                    )
+                )
+            updated = json.loads(job_path.read_text(encoding="utf-8"))
+            self.assertEqual(
+                updated["last_result"]["sanitized_readiness_receipt_sha256"],
+                new_receipt_sha,
+            )
+            self.assertEqual(len(updated["history"]), 1)
 
 
 if __name__ == "__main__":

@@ -809,3 +809,11 @@
 - 解法：所有named `method-redesign-*` phase在沒有explicit `execution_eligible=true`時一律fail closed，且在receipt建立、dataset讀取與runner前返回零寫入。真正授權attempt>0 resume時，CLI root必須匹配canonical artifacts內唯一既有`line-training-supervisor-receipt`，missing／duplicate／wrong root皆拒絕。
 - 預防：每個pause gate固定有三種poison：explicit false＋missing receipt、named redesign＋missing latch、explicit true＋missing/wrong receipt binding；斷言runner=0、job bytes／attempt／receipt／run／lesson不變。
 - 封坑驗證：live schedule kickstart reason=`canonical_execution_disabled`；job SHA `606ea077...`、attempt6、receipt `cd076881...`、12 rounds／60 calls／6 invocations、17 runs／15 lessons全部exact不變，focused suite 75/75 PASS。
+
+## 2026-08-28 — Frozen case manifest不等於structured human labels，target也不能自動當全PASS gold
+
+- 觸發條件：active Task／Resume都指示「對frozen 20 structured labels校正rubric」，但private v7的20案只有stage／opaque identity／selection key；eval rows只有context／customer／target，structured label fields實際是0，repo也沒有可執行rubric-v2 scorer。
+- 根因：把「凍結case identity」與「凍結人工判定」混成同一個ready flag；又把真人歷史回覆誤當每項rubric都PASS，忽略歷史回覆本身可能過長、多問或含過時政策。只有criteria名稱與18/20文字也不足以定義grader。
+- 解法：先exact重建20案並做label-availability audit；缺人工labels就fail closed，建立owner-only mixed specimen annotation packet，human provenance與AI／synthetic prelabel分欄。Scorer必須identity-blind，先獨立score內容再由harness比expected vector；overall相同但單項不同仍算disagreement，commercial safety mismatch必須0。
+- 預防：任何`*_ready=true`都要驗artifact schema與count，不准只驗manifest count；Task Card必分case manifest、reply specimens、human labels、scorer rules四個preimages。Historical target只能稱human-authored reference，未經具名真人逐項覆核不得稱human gold。
+- 封坑驗證：exact v7/eval join為20/20 target、0/20 structured labels；private 0600 packet含10 historical-reference＋10 controlled-negative與20 blank review slots，sanitized receipt無raw/path/case hash；10/10 tests PASS，job在任何model/E1 call前轉OWNER_REVIEW、attempt維持6。

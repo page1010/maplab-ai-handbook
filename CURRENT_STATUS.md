@@ -5,7 +5,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-08-28 Codex A1/A6｜Hermes LINE 02:20 schedule side-door 已封並以零 call kickstart 驗證；下一步是 rubric v2 零模型校正，E1 尚不可跑。完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-08-28 Codex A1/A6｜Hermes LINE rubric v2 前置查核證明 frozen 20-case 並沒有 structured human labels；已備妥 owner-only 標註包並停在真正人工 gate，E1 尚不可跑。完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -20,6 +20,8 @@
 ---
 
 ## 最新事實核對
+
+- 2026-08-28 10:30：**[Hermes LINE rubric v2 label-readiness／誠實人工 gate]** — 三個獨立唯讀審查與本機重建一致：v7 只凍結20個case identities，`eval.jsonl`雖有20/20真人歷史回覆，但 structured rubric labels=0、reply calibration specimens=0，repo也沒有rubric-v2 scorer；因此不能把historical target或AI衍生判定冒充human gold，也不能誠實宣稱已校正18/20。已用exact v7/eval/holdout hashes建立owner-only 0600標註包，含10個historical-reference與10個controlled-negative local-only specimens、20個全空human annotation slots；sanitized readiness receipt無case/raw/path。10/10 focused＋`py_compile` PASS；packet SHA `e48cb261...`、receipt SHA `d8a8c573...`／body `cb6536a1...`、source/test `d520fa3d...`／`81842433...`。本action model/network/send=0、attempt維持6、owner acceptance delta=0，沒有render／跑E1。Canonical job=`OWNER_REVIEW / method-redesign-rubric-human-gold-review`；只有Mina／Owner／明確真人reviewer填完七項criteria、unsafe、overall與provenance後，才能回RUNNING實作identity-blind scorer；其前execution保持disabled。
 
 - 2026-08-28 10:05：**[Hermes LINE supervisor schedule gate／零模型 canary]** — Canonical、mirror、installed `com.maplab.hermes-line-training.plist` 已同為 SHA `32803c23...`，02:20 exact argv 只進 `hermes_line_training_supervisor.py`，帶 canonical job、private data root、`max-rounds=1`、`max-seconds=120`；live `launchctl print` 無 raw-loop arg。Bootstrap 後 runs=0；plain kickstart 後 runs=1、exit 0、active=0，新 stdout reason=`canonical_execution_disabled`。Canary 前後 canonical job bytes `606ea077...`、attempt=6、supervisor receipt `cd076881...`、12 rounds／60 calls／6 invocations、17 physical runs、15 lesson deltas、loop state與current lessons全 exact 不變；新增 model/network/customer send=0。Supervisor 對所有 `method-redesign-*` 缺少明確 true latch 預設 fail closed，attempt>0 的 authorized resume 必須綁唯一既有 supervisor-receipt artifact，logs改0600。75/75 focused tests PASS；sanitized schedule receipt見本job artifacts。Job 現為 `RUNNING / method-redesign-rubric-calibration`，execution仍disabled；只剩 rubric >=18/20、paired runner SHA、rendered prompt manifest、immutable lesson snapshot四個 blockers，不得先 render／跑 E1。
 

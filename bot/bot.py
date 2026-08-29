@@ -3339,6 +3339,31 @@ def _start_clip_server() -> None:
 A0_WATCHDOG_INTERVAL_S = int(os.getenv("A0_WATCHDOG_INTERVAL_S", "600"))
 A0_WATCHDOG_STALE_S = int(os.getenv("A0_WATCHDOG_STALE_S", "1200"))
 _A0_WATCHDOG_ATTEMPTS = {}
+A0_DISK_ALERT_PCT = int(os.getenv("A0_DISK_ALERT_PCT", "90"))
+_A0_DISK_ALERT_DATE = {"date": ""}
+
+
+def _a0_disk_alert_text():
+    """主碟水位檢查:超過 A0_DISK_ALERT_PCT 回警示文字,否則 None。
+    每天最多提醒一次(2026-06 磁碟滿曾癱瘓落檔與巡查,Owner 2026-08-29
+    要求水位警報,不要等爆掉才發現)。"""
+    try:
+        usage = shutil.disk_usage("/System/Volumes/Data")
+    except Exception:
+        return None
+    pct = usage.used * 100 // usage.total
+    if pct < A0_DISK_ALERT_PCT:
+        return None
+    today = datetime.now().strftime("%Y-%m-%d")
+    if _A0_DISK_ALERT_DATE["date"] == today:
+        return None
+    _A0_DISK_ALERT_DATE["date"] = today
+    free_gb = usage.free // (1024 ** 3)
+    return (
+        f"【系統警報】主碟已用 {pct}%(剩 {free_gb}G)。"
+        "低於 10% 可用空間時 bot 落檔、收據、log 都會開始寫入失敗"
+        "(六月曾發生)。請 Owner 圈選大戶清理或指示 Fable5 處理。"
+    )
 
 
 def _a0_last_unanswered():
@@ -3385,6 +3410,12 @@ async def _a0_watchdog_loop(app) -> None:
     處理中的訊息不會被搶跑。"""
     while True:
         await asyncio.sleep(A0_WATCHDOG_INTERVAL_S)
+        try:
+            disk_alert = _a0_disk_alert_text()
+            if disk_alert:
+                await app.bot.send_message(chat_id=OWNER_CHAT_ID, text=disk_alert)
+        except Exception:
+            logger.exception("A0 watchdog disk alert failed")
         try:
             pending = _a0_last_unanswered()
             if not pending:

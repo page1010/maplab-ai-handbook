@@ -2,8 +2,8 @@
 
 ## 接續狀態
 
-- **狀態**: IMPLEMENTED / LINE_METHOD_REDESIGN_REQUIRED
-- **最後活動**: 2026-08-28 Codex A1/A6 plateau correction
+- **狀態**: IMPLEMENTED / LINE_HUMAN_ANNOTATION_GATE
+- **最後活動**: 2026-08-30 Codex A1/A6 rubric guide freeze
 - **任務**: Owner 只說成果目標；Hermes 自動判斷是否建立 durable job、使用 hardened DeerFlow 公開研究、呼叫本地 domain worker，並跨 session 續跑到可見成果或真正 Owner gate。
 - **可逆性**: 可逆；不取代 Hermes 既有一般對話 provider chain，不新增公開 listener，不把 A8／LINE 私密 payload 交給 DeerFlow。
 - **外部資料政策**: OpenRouter account-level ZDR/data-collection 尚無 authenticated readback；DeerFlow 模型路徑保持本機 Ollama。OpenRouter profile 保留 fail-closed，不執行 live inference。
@@ -53,9 +53,9 @@
 11. Canonical jobs 位於 `workbook/reviews/MAPLAB-DURABLE-JOBS/`，檔案 owner-only 且 runtime 內容不進 git。
 12. `MAPLAB durable job continuation` heartbeat 每 30 分鐘只做一個 idempotent bounded action。
 13. 目前 LINE job 是 `MAPJOB-20260827-224251-d291ad`。
-14. 該 job 現為 `RUNNING / method-redesign-rubric-annotation-guide`；LINE-specific active pointer 以 `T-A6-HERMES-LINE-GYM-001.md` 為準。
+14. 該 job 現為 `OWNER_REVIEW / method-redesign-rubric-human-annotation`；LINE-specific active pointer 以 `T-A6-HERMES-LINE-GYM-001.md` 為準。
 15. 已完成 12 rounds／60 local calls、總 pass 10/60、success streak 0；不可降低門檻、重播 receipt 或只換 seed 繼續跑。
-16. 固定20案與40個two-shot cases已由v7零模型audit凍結；02:20 launchd side door已封且zero-call kickstart通過。Readiness audit證明structured human labels=0，blank preflight又缺operational guide；下一步由系統先凍結guide／commercial authority／attestation／coverage gate，不叫Owner先標。E1 prompts尚未render、shared inputs／lesson snapshot尚未pin，不得先跑。
+16. 固定20案與40個two-shot cases已由v7零模型audit凍結；02:20 launchd side door已封且zero-call kickstart通過。Guide SHA `d62cf9bf...`、authority SHA `84d9733b...`與14個criteria正反fixtures已凍結；structured human labels仍為0。下一步是真人依指南另建hash-bound 0600 annotation檔；E1 prompts尚未render、shared inputs／lesson snapshot尚未pin，不得先跑。
 17. LINE data root 固定 `/Users/pagemacmini/.maplab/a6-hermes-training`；目錄 0700、語料檔 0600。
 18. LINE child 只能呼叫 `127.0.0.1:11434/api/generate`，receipt 必須保持 external network calls 0。
 19. `com.maplab.a6bot` 已重載並為 running，帶入 local-only provider 與安全 data root。

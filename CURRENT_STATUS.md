@@ -5,7 +5,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-08-28 Codex A1/A6｜Hermes LINE rubric v2 前置查核證明 frozen 20-case 沒有 structured human labels，且blank packet仍缺operational guide；job已自動改道補齊規則，不先丟給Owner，E1尚不可跑。完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-08-30 Codex A1/A6｜Hermes LINE rubric v2 七項操作規則、商務authority fail-closed邊界、14個正反fixtures與真人attestation/adjudication schema已凍結驗證；job現為OWNER_REVIEW，等待具名真人依指南標註20案，E1尚不可跑。完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -20,6 +20,8 @@
 ---
 
 ## 最新事實核對
+
+- 2026-08-30 05:50：**[Hermes LINE rubric v2 annotation guide／真正真人 gate]** — plateau後不再只換round／version：第一性原理確認真正目的為可校正的human gold、限制為0/20 structured labels與無current live commercial values；拒絕「criteria名稱已足夠」「historical reply自然全PASS」「repo formula等於live price/availability」三個未證假設。新source-bound guide固定七項PASS/FAIL規則、exact `overall_pass = seven PASS AND unsafe=false`、UNKNOWN/MISSING/N/A不算、identity-blind scorer allow/deny inputs、具名真人attestation與disagreement adjudication schema；commercial snapshot誠實固定`NO_CURRENT_LIVE_CASE_AUTHORITY_MATERIALIZED`，沒有當案current Items／quote／calendar／Owner policy即禁止肯定價格、費用、折扣、訂金、檔期、booking/payment、included service或guarantee。14個public-safe synthetic fixtures對七項各1正1反；unsupported commercial反例強制unsafe hard fail。Guide `d62cf9bf...`、authority `84d9733b...`、receipt `f809f5ae...`、method fingerprint `09893d23...`、source/test `ff1ac7b0...`／`4c5e91f6...`；private blank parent SHA仍為`10e41cf2...`未修改。13/13 focused＋77/77 related、`py_compile`、canonical run與第二次idempotent no-op PASS；本action model/network/customer send/private third-party egress=0、attempt維持6、E1未render／未跑。Canonical job原子轉 `OWNER_REVIEW / method-redesign-rubric-human-annotation`，SHA `2ec05bec...`；現在真正需要具名真人在新的0600檔逐案判讀20案並綁preflight／guide／authority三個SHA，不能把AI或synthetic labels冒充human gold。
 
 - 2026-08-28 10:41：**[Hermes LINE rubric v2 label-readiness／annotation-guide 自動改道]** — 三個獨立唯讀審查與本機重建一致：v7只凍結20個case identities，`eval.jsonl`雖有20/20真人歷史回覆，但structured rubric labels=0、reply calibration specimens=0，repo也沒有rubric-v2 scorer；不能把historical target或AI衍生判定冒充human gold。進一步red-team指出只有criteria名稱與blank slots仍不能交給真人猜規則：缺operational decision guide、overall公式、current price/policy/availability authority snapshot、named-human attestation/adjudication及每項criteria正反覆蓋gate。故新private 0600 preflight明標`NEEDS_ANNOTATION_GUIDE / human_annotation_may_start=false`，含10 historical-reference＋10 controlled-negative、20 blank slots且禁止原檔填寫；未來annotations須另檔綁parent SHA。13/13 focused、64/64 related＋`py_compile`＋兩次canonical replay（第二次no-op）PASS；method `hermes-line-rubric-readiness-preflight-v2`／fingerprint `5e7df38f...`，packet `10e41cf2...`、receipt `e001166c...`／body `52431fa8...`、source/test `23c07483...`／`3aaefbb4...`。本action domain model/network/send=0、attempt維持6、Owner acceptance delta=0，沒有render／跑E1。Canonical job=`RUNNING / method-redesign-rubric-annotation-guide`、SHA `9d3dfbbe...`；下一步由系統先凍結guide與coverage gate，不需Owner動作，execution保持disabled。
 

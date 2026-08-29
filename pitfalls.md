@@ -817,3 +817,11 @@
 - 解法：先exact重建20案並做label-availability audit；缺人工labels就fail closed。Mixed specimen＋blank slots也不能直接進Owner gate，必須先凍結operational decision guide、overall公式、current commercial authority、named-human attestation/adjudication與每項criteria正反coverage。Human provenance與AI／synthetic prelabel分欄；scorer identity-blind，先獨立score內容再由harness比expected vector。
 - 預防：任何`*_ready=true`都要驗artifact schema、count、guide與coverage，不准只驗manifest count；Task Card必分case manifest、reply specimens、annotation guide／authority、human labels、scorer rules五個preimages。Historical target只能稱human-authored reference，未經具名真人逐項覆核不得稱human gold；blank packet不可原地改，annotations另檔綁parent SHA。
 - 封坑驗證：exact v7/eval join為20/20 target、0/20 structured labels；private 0600 preflight含10 historical-reference＋10 controlled-negative與20 blank slots，但明標`NEEDS_ANNOTATION_GUIDE / human_annotation_may_start=false`；13/13 tests PASS，job在任何model/E1 call前改道`RUNNING / method-redesign-rubric-annotation-guide`、attempt維持6，不把未完成表單丟給Owner。
+
+## 2026-08-30 — Public leak validator不可把安全欄位名稱誤判成私密值
+
+- 觸發條件：annotation guide刻意把`source_row_sha256`列為identity-blind scorer的禁止輸入，但第一版public-safety validator只做literal token blacklist，連安全政策中的欄位名稱也拒絕，reference guide兩個測試因此false positive。
+- 根因：把「敏感欄位的實際值／私密路徑」與「用來描述禁止項目的schema名稱」混為同一級別；context-free substring scan沒有分辨value、path與policy declaration。
+- 解法：public artifact仍拒絕absolute user path、private root、owner/chat identity與帳號資料，但允許在forbidden-input contract中明列安全欄位名稱；真正case hash／row hash值由artifact topology與fixture allowlist另行拒絕。
+- 預防：leak validator測試必同時含一個真私密值應REJECT與一個安全policy-name應PASS；安全掃描採key/value aware或明確allowlist，不以欄位名稱本身證明外洩。
+- 封坑驗證：修正後13/13 focused與77/77 related PASS；guide public-safety poison仍會拒絕`/Users/private/...`，正式guide與receipt不含private path或case payload。

@@ -3367,36 +3367,34 @@ def _a0_disk_alert_text():
 
 
 def _a0_last_unanswered():
-    """最後一則超過 A0_WATCHDOG_STALE_S 秒未見回覆收據的 Owner 私訊。
+    """最舊一則超過 A0_WATCHDOG_STALE_S 秒未見回覆收據的 Owner 私訊。
 
-    回 (ts, chat_id, text) 或 None。只看 inbox 最後一則:更早的漏接會在
-    最新一則補完後於下一輪浮現(收據以 reply_to_inbox_ts 對齊)。"""
-    inbox = _read_tail_lines(A0_INBOX_FILE, 5)
-    if not inbox:
-        return None
-    try:
-        last = json.loads(inbox[-1])
-    except Exception:
-        return None
-    chat_id = int(last.get("chat_id", 0))
-    ts = last.get("ts") or ""
-    if chat_id < 0 or not ts:
-        return None
+    回 (ts, chat_id, text) 或 None。2026-08-30 修正:原版只看 inbox 最後
+    一則,連發多則時只要最新的被回,較早的漏接就永遠不浮現(08-29 晚
+    4348-4361 連發實測);改為掃尾端 10 則、回傳最舊的未回者。"""
     answered = set()
-    for line in _read_tail_lines(A0_REPLIES_FILE, 80):
+    for line in _read_tail_lines(A0_REPLIES_FILE, 120):
         try:
             answered.add(json.loads(line).get("reply_to_inbox_ts"))
         except Exception:
             continue
-    if ts in answered:
-        return None
-    try:
-        age = (datetime.now() - datetime.fromisoformat(ts)).total_seconds()
-    except Exception:
-        return None
-    if age < A0_WATCHDOG_STALE_S:
-        return None
-    return ts, chat_id, str(last.get("text") or "")
+    for raw in _read_tail_lines(A0_INBOX_FILE, 10):
+        try:
+            entry = json.loads(raw)
+        except Exception:
+            continue
+        chat_id = int(entry.get("chat_id", 0))
+        ts = entry.get("ts") or ""
+        if chat_id < 0 or not ts or ts in answered:
+            continue
+        try:
+            age = (datetime.now() - datetime.fromisoformat(ts)).total_seconds()
+        except Exception:
+            continue
+        if age < A0_WATCHDOG_STALE_S:
+            continue
+        return ts, chat_id, str(entry.get("text") or "")
+    return None
 
 
 async def _a0_watchdog_loop(app) -> None:

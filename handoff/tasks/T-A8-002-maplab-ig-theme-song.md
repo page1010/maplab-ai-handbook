@@ -1,8 +1,47 @@
 # T-A8-002 — MAPLAB IG 品牌主題曲
 
+## 🟢 2026-08-29 23:58 Owner 歌詞核准(msg 4359,原文「歌詞通過改成我這樣」)
+
+Owner 逐字定稿如下(**此為 SSOT,取代 repo 舊檔與 Google Doc 舊版;生成前把這份同步回 Google Doc 與 lyrics.txt**):
+
+```
+——Cold Hook(女聲)——
+相聚派對一起來
+讓今天嗨起來
+
+——Verse(女聲輕 Rap,8 小節)——
+品牌活動 有吃有喝有鏡頭
+會議茶點 邊吃邊談握個手
+婚禮的甜 週歲壽筵
+菜單和桌景 都成為風景
+份量、器皿、都找我meeting
+讓來賓邊走邊聊
+和朋友邊喝邊搖
+桌巾拉齊桌緣 季節水果很甜
+等著一聲碰杯 今天主角是誰
+
+——Pre-Chorus(女聲)——
+燈亮起來 人也齊聚
+輕輕碰杯 描繪記憶
+
+——Chorus(女聲+暖和聲)——
+把相聚端上桌
+把心意留在每一口
+光線沿著杯緣走
+歡笑聲直到最後
+
+——Final Tag(輕和聲)——
+MAPLAB 陪著笑聲到最後
+```
+
+Owner 附註:「隨著歌詞改動你的 prompt 與設計可能要微調,可能有的不適合那麼 vocal 輕柔」。
+衍生決定(由歌詞定稿自動落定):Rap 走**混合場景**(品牌活動/會議/婚禮/週歲全入);15 秒 Hook 含 **MAPLAB 音訊 tag**(Final Tag 唱出品牌)。
+Prompt 微調方向:Cold Hook 前置=hook-first 結構確立;Verse 8 小節 Rap 需要 groove 與咬字彈性(behind-the-beat),**輕柔 vocal 只保留 Pre-Chorus/Chorus**,Hook 與 Rap 段要能量;lemon and cream 句已被 Owner 改寫移除,雙語 diction 規則僅在保留英文詞時適用。
+下一步(bounded):同步 Google Doc + lyrics.txt → 依 v2A(102 BPM)/v2B(94 BPM)微調後生成**兩個候選**、留版本/時間/權利收據 → 回 Owner 選曲 gate。未選曲不剪片、未核准平台不發布。
+
 ## 接續狀態
 
-- **狀態**：🟠 OWNER_LYRICS_GATE
+- **狀態**：🟢 LYRICS_APPROVED_PENDING_GENERATION(舊:🟠 OWNER_LYRICS_GATE)
 - **建立日期**：2026-08-25
 - **Owner**：A8 影音內容產線
 - **接續點**：品牌語氣修正版歌詞、exact 15 秒 Hook、City-pop A/B 曲風 prompt、長短版分鏡、Google Doc 審稿面與可驗證 prompt registry 已完成；Owner 新增的 `lemon and cream` 已做兩個私有發音測試，本機 ASR 淘汰候選 A、候選 B exact match 通過。2026-08-27 另完成雙視角第二讀：保留《把相聚端上桌》，提案把 75–90 秒收斂為 62–70 秒，加入 8 小節服務場景 Rap。原本從服務分類出發的 WP 01–10 規劃已被 Owner 指正並 supersede；現改為 Google Drive 真實案例 registry、case-first SOP 與機器 gate，10 案 intake PASS，任何 WP 案仍須逐案補證據。

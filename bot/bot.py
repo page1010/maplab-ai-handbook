@@ -3336,6 +3336,86 @@ def _start_clip_server() -> None:
 
 # ── Main ───────────────────────────────────────────────────────────────────────
 
+A0_WATCHDOG_INTERVAL_S = int(os.getenv("A0_WATCHDOG_INTERVAL_S", "600"))
+A0_WATCHDOG_STALE_S = int(os.getenv("A0_WATCHDOG_STALE_S", "1200"))
+_A0_WATCHDOG_ATTEMPTS = {}
+
+
+def _a0_last_unanswered():
+    """最後一則超過 A0_WATCHDOG_STALE_S 秒未見回覆收據的 Owner 私訊。
+
+    回 (ts, chat_id, text) 或 None。只看 inbox 最後一則:更早的漏接會在
+    最新一則補完後於下一輪浮現(收據以 reply_to_inbox_ts 對齊)。"""
+    inbox = _read_tail_lines(A0_INBOX_FILE, 5)
+    if not inbox:
+        return None
+    try:
+        last = json.loads(inbox[-1])
+    except Exception:
+        return None
+    chat_id = int(last.get("chat_id", 0))
+    ts = last.get("ts") or ""
+    if chat_id < 0 or not ts:
+        return None
+    answered = set()
+    for line in _read_tail_lines(A0_REPLIES_FILE, 80):
+        try:
+            answered.add(json.loads(line).get("reply_to_inbox_ts"))
+        except Exception:
+            continue
+    if ts in answered:
+        return None
+    try:
+        age = (datetime.now() - datetime.fromisoformat(ts)).total_seconds()
+    except Exception:
+        return None
+    if age < A0_WATCHDOG_STALE_S:
+        return None
+    return ts, chat_id, str(last.get("text") or "")
+
+
+async def _a0_watchdog_loop(app) -> None:
+    """2026-08-29 Owner「我任務發了都沒有回覆…幫我看一下然後修好」:resume 被
+    A0_RESUME_TIMEOUT_S 強殺後,_a0_maybe_notify_resume_failed 只通知不重試,
+    訊息就永久漏接(08-29 實錄:4333/4339 兩則連續 timeout after 900s)。
+    這個常駐迴圈每 A0_WATCHDOG_INTERVAL_S 秒檢查一次,發現超時未回就重跑
+    同 session resume,最多重試 3 次。reply_to_inbox_ts 傳空字串:單回標記
+    在首次失敗時已被領走,重試不能再被它擋掉;重覆送出由收據檢查本身防住
+    (有收據就不會進到這裡)。stale 門檻(20 分)刻意大於 resume 逾時(15 分),
+    處理中的訊息不會被搶跑。"""
+    while True:
+        await asyncio.sleep(A0_WATCHDOG_INTERVAL_S)
+        try:
+            pending = _a0_last_unanswered()
+            if not pending:
+                continue
+            ts, chat_id, text = pending
+            attempts = _A0_WATCHDOG_ATTEMPTS.get(ts, 0)
+            if attempts >= 3:
+                continue
+            _A0_WATCHDOG_ATTEMPTS[ts] = attempts + 1
+            logger.warning(
+                "A0 watchdog: inbox ts=%s 未回(第 %d 次補跑)", ts, attempts + 1
+            )
+            wrapped = (
+                "【watchdog 補跑】以下 Owner 訊息因 resume 逾時被強殺而尚未回覆"
+                f"(inbox ts={ts})。請優先在 5 分鐘內用 a0_reply 腳本送出回覆,"
+                "重活拆到回覆之後、或明說改天跑。原訊息:\n" + text
+            )
+            await _a0_resume_or_fallback(app.bot, chat_id, wrapped, "")
+        except Exception:
+            logger.exception("A0 watchdog tick failed")
+
+
+async def _a0_start_watchdog(app) -> None:
+    asyncio.create_task(_a0_watchdog_loop(app))
+    logger.info(
+        "A0 watchdog started (interval=%ss, stale=%ss)",
+        A0_WATCHDOG_INTERVAL_S,
+        A0_WATCHDOG_STALE_S,
+    )
+
+
 def main() -> None:
     if not BOT_TOKEN:
         logger.error("TELEGRAM_BOT_TOKEN not set. Copy bot/.env.example → bot/.env and fill it in.")
@@ -3355,6 +3435,7 @@ def main() -> None:
         .write_timeout(60)
         .connect_timeout(30)
         .pool_timeout(30)
+        .post_init(_a0_start_watchdog)
         .build()
     )
 

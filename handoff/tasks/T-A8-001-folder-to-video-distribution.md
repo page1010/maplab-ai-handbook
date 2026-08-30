@@ -11,6 +11,14 @@ Status: 🟠 AUDIO_REGEN_REQUIRED
 Created: 2026-06-17
 Risk: medium
 
+## 🟢 2026-08-30 Owner 發文線路測試授權(msg 4379/4380)
+
+- Owner 原文(4379):「邦妮兔沒有問題可以測試發文線路，長 短 平台 文案 sop」;(4380):「sop要建立好 前面的影響畫質內容怎麼調整，是不是透過canva做過封面調整都一起做起來」。
+- 授權範圍 = 以邦妮兔案測整條發文線路:長版、短版、各平台**草稿/私人**上傳、平台文案、SOP 成文;Canva 封面調整流程一併納入測試(留 project/export 證據)。
+- 授權**不涵蓋**:任何轉公開(PUBLICATION 仍需 Owner 逐次核准);被退件的 v2 兩支與舊母帶產物只可用於測線路,不得轉公開(商業權利未驗證);新母帶仍受 T-A8-002 的 4359 核准歌詞 + Owner 聽辨 gate 約束。
+- A0 回覆收據:reply_to_inbox_ts=2026-08-30T12:26:33 與 2026-08-30T12:28:07。
+- 測試輪交付:各平台草稿收據(欄位回讀)、hash 鎖定的長/短打包、品牌語氣平台文案一套、SOP v2.1 → 完整版(畫質鐵律+Canva 封面+平台草稿上傳)。
+
 ## 2026-08-27 SOP Convergence Checkpoint
 
 - Owner 確認歷史 MAPLAB 影音曾用 Canva／CapCut 與人工精修；本機亦找到 2025 Canva-like export＋疑似第二 NLE 重編 precedent。因 project／timeline／export receipt 沒保存，不能綁到邦尼兔或重跑；邦尼兔可追溯流程仍只證實 Swift/AppKit＋FFmpeg review。缺 receipt 不等於歷史上沒做過。

@@ -3372,16 +3372,23 @@ def _a0_last_unanswered():
     回 (ts, chat_id, text) 或 None。2026-08-30 修正:原版只看 inbox 最後
     一則,連發多則時只要最新的被回,較早的漏接就永遠不浮現(08-29 晚
     4348-4361 連發實測);改為掃尾端 10 則、回傳最舊的未回者。"""
+    # 2026-08-30 修正:_read_tail_lines 回傳的是 join 過的字串,直接 for 會
+    # 逐字元迭代——數字字元被 json.loads 成 int,.get 炸掉整個 tick(08-30
+    # 08:50 實錄),且 answered 永遠是空集合。必須先 splitlines。
     answered = set()
-    for line in _read_tail_lines(A0_REPLIES_FILE, 120):
+    for line in _read_tail_lines(A0_REPLIES_FILE, 120).splitlines():
         try:
             answered.add(json.loads(line).get("reply_to_inbox_ts"))
         except Exception:
             continue
-    for raw in _read_tail_lines(A0_INBOX_FILE, 10):
+    for raw in _read_tail_lines(A0_INBOX_FILE, 10).splitlines():
         try:
             entry = json.loads(raw)
         except Exception:
+            continue
+        if not isinstance(entry, dict):
+            # 2026-08-30 實錄:inbox 混入非物件行(如純數字)時 json.loads
+            # 成功但回 int,.get 直接炸掉整個 tick,看門狗形同死亡。
             continue
         chat_id = int(entry.get("chat_id", 0))
         ts = entry.get("ts") or ""

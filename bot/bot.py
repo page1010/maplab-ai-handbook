@@ -136,6 +136,12 @@ logging.getLogger("httpcore").setLevel(logging.WARNING)
 
 START_TIME = datetime.now()
 
+# 2026-08-30:CLI 自動更新會換掉 versions/<版號> 執行檔,macOS 把新版號當
+# 新 app、重跳「取用其他App的資料」授權視窗;無人值守的 claude fork 會卡在
+# 看不到的視窗上直到 timeout(Owner 回報的 2.1.218 斷線)。bot 這條線鎖版,
+# 更新改在維護窗手動做並重點一次授權。
+os.environ.setdefault("DISABLE_AUTOUPDATER", "1")
+
 # Semaphore: only one Claude call at a time
 _claude_semaphore = asyncio.Semaphore(1)
 

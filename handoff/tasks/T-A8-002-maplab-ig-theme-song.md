@@ -39,6 +39,12 @@ Owner 附註:「隨著歌詞改動你的 prompt 與設計可能要微調,可能�
 Prompt 微調方向:Cold Hook 前置=hook-first 結構確立;Verse 8 小節 Rap 需要 groove 與咬字彈性(behind-the-beat),**輕柔 vocal 只保留 Pre-Chorus/Chorus**,Hook 與 Rap 段要能量;lemon and cream 句已被 Owner 改寫移除,雙語 diction 規則僅在保留英文詞時適用。
 下一步(bounded):同步 Google Doc + lyrics.txt → 依 v2A(102 BPM)/v2B(94 BPM)微調後生成**兩個候選**、留版本/時間/權利收據 → 回 Owner 選曲 gate。未選曲不剪片、未核准平台不發布。
 
+### 🔴 2026-08-30 斷點缺失事件 + Owner 聽感回饋(msg 4383)
+- Owner 表示已聽過「新歌詞那版」並給出 gate 回饋:**女聲太尖**。但 repo 全查無此次生成的任何紀錄:v2A/v2B 在 prompt registry 仍是 planned、無 suno receipt、無 commit。結論:**確實有人在紀錄線外做了生成、未留斷點收據**(或 Owner 在 Suno 帳號內自行/看到未回報的版本)。
+- 待辦:下次 A8 線開 Suno 時**先盤點帳號 library 全部版本**,把線外生成補建收據(版本/時間/歌詞比對),再繼續 v2A/v2B。
+- Prompt registry 追加 gate 回饋:女聲音域**降 register、走暖聲,不要尖亮**;此回饋適用所有後續候選。
+- 規則重申:任何一次 Suno Create 點擊=一張收據(版本/時間/歌詞 hash/操作者),無收據的版本不得進入選曲 gate。
+
 ## 接續狀態
 
 - **狀態**：🟢 LYRICS_APPROVED_PENDING_GENERATION(舊:🟠 OWNER_LYRICS_GATE)

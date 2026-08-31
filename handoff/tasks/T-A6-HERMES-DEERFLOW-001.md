@@ -9,6 +9,15 @@
 - **外部資料政策**: OpenRouter account-level ZDR/data-collection 尚無 authenticated readback；DeerFlow 模型路徑保持本機 Ollama。OpenRouter profile 保留 fail-closed，不執行 live inference。
 - **Runtime truth**: pinned DeerFlow checkout `788a890bd022689ef293e6bbfa2c12988173db6c`；Ollama `gemma4:latest` live；`MAPLAB durable job continuation` heartbeat 每 30 分鐘接續非終止 job。
 
+## 2026-08-31 Owner 指令窗驗證
+
+- 單一指令窗是 Telegram `@maplab_a6_bot`；私聊直接說成果，群組必須 `@maplab_a6_bot` 或回覆 bot 才會啟動。
+- `com.maplab.a6bot` live readback 為 `running`；2026-08-31 12:25 OpenRouter conversational chain 有成功 provider receipt。
+- 照片接收、owner-only 留檔與 receipt 已有真實 runtime 紀錄；目前只證明收件，不宣稱已理解像素。
+- DeerFlow local public-research profile current status 為 ready，pin/config isolation 通過；OpenRouter-backed DeerFlow 仍因 authenticated policy readback 與 spend approval 缺失而 fail closed。
+- `/capabilities` 已修正為本機 fallback 停用後的真實說法，並列出 DeerFlow status/public-research 能力。
+- 本輪證據：`workbook/reviews/A6-HERMES-COMMAND-WINDOW-20260831/validation_receipt.md`。
+
 ## 第一性原理 5 題（Owner 問「為什麼要自己打研究命令」後重跑）
 
 1. **理想狀態**：Owner 說「A8 生歌＋影片＋上傳 YouTube 給我看」或「Hermes 用 LINE 對話多跑幾輪」後，系統自行選工具、建立 job、持續做與驗證，只有成果或真正決策 gate 才回來。

@@ -17,6 +17,7 @@ from typing import Any, Iterable
 
 
 CONTRACT_VERSION = 2
+LOCAL_FALLBACK_ENABLED = False
 RUNTIME_ROOT = Path.home() / ".local" / "share" / "maplab-a6-hermes"
 STATE_PATH = RUNTIME_ROOT / "gateway_state.json"
 HISTORY_PATH = RUNTIME_ROOT / "conversation.json"
@@ -32,6 +33,8 @@ DEFAULT_ACTIONS = (
     "repo-status",
     "recent-commits",
     "a6-self-test",
+    "deerflow-status",
+    "deerflow-public-research",
 )
 
 
@@ -75,6 +78,7 @@ def save_gateway_state(
         "updated_at": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
         "configured_provider_chain": list(provider_chain),
         "local_fallback": "gemma4:latest",
+        "local_fallback_enabled": LOCAL_FALLBACK_ENABLED,
         "last_provider": last_provider or previous.get("last_provider"),
         "last_provider_at": (
             time.strftime("%Y-%m-%dT%H:%M:%S%z")
@@ -147,6 +151,7 @@ def capability_snapshot(
         "providers": {
             "configured_chain": chain,
             "local_fallback": state.get("local_fallback", "gemma4:latest"),
+            "local_fallback_enabled": LOCAL_FALLBACK_ENABLED,
             "last_provider": state.get("last_provider"),
             "last_provider_at": state.get("last_provider_at"),
         },
@@ -184,6 +189,11 @@ def format_capabilities(
     providers = snap["providers"]
     chain = " → ".join(providers["configured_chain"]) or "尚未載入"
     last = providers.get("last_provider") or "v2 尚無成功回覆樣本"
+    fallback = (
+        f"最後才用 {providers['local_fallback']}"
+        if providers.get("local_fallback_enabled")
+        else "本機 fallback 已停用；上游全失敗時會明確回報失敗"
+    )
     actions = "／".join(snap["local_access"]["actions"])
     return (
         "【hermes】能力真相 v2（runtime readback）\n"
@@ -192,7 +202,7 @@ def format_capabilities(
         f"目前動作：{actions}。\n\n"
         "權限邊界：不是零存取，但沒有任意 shell／SSH；不能下單、轉帳、發布 WordPress、改排程、讀 token 或 .env。"
         "A6 gateway 沒有 Google Sheets／Drive／GitHub API 直連；Telegram token 只由 gateway 使用，不會交給模型。\n\n"
-        f"模型：gateway 會逐一嘗試 {chain}，最後才用 {providers['local_fallback']}；最近成功 provider：{last}。\n"
+        f"模型：gateway 會逐一嘗試 {chain}，{fallback}；最近成功 provider：{last}。\n"
         f"記憶：會跨重啟保存最近 {snap['memory']['history_limit_messages']} 則生成式對話 context，執行任務另有長期檔案 receipt。"
     )
 

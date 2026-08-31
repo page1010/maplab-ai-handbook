@@ -825,3 +825,10 @@
 - 解法：public artifact仍拒絕absolute user path、private root、owner/chat identity與帳號資料，但允許在forbidden-input contract中明列安全欄位名稱；真正case hash／row hash值由artifact topology與fixture allowlist另行拒絕。
 - 預防：leak validator測試必同時含一個真私密值應REJECT與一個安全policy-name應PASS；安全掃描採key/value aware或明確allowlist，不以欄位名稱本身證明外洩。
 - 封坑驗證：修正後13/13 focused與77/77 related PASS；guide public-safety poison仍會拒絕`/Users/private/...`，正式guide與receipt不含private path或case payload。
+
+## 2026-08-31 — Provider 行為改了，能力說明與 runtime state 必須同時改
+
+- 觸發條件：A6 gateway 已依 Owner 指示停用本機 Ollama fallback，但 `/capabilities` 的獨立 runtime formatter 仍宣稱上游失敗後會使用 `gemma4:latest`。
+- 根因：provider fallback policy 在 gateway 與 capability runtime 各自硬編，行為變更只改到執行路徑，沒有把能力投影納入同一驗收。
+- 解法：能力 snapshot 明列 `local_fallback_enabled=false`，formatter 直接說明上游全失敗時會回報失敗；同步把 DeerFlow status／public research 納入預設能力清單。
+- 預防：任何 provider chain、fallback、memory 或 connector 行為變更，都要同輪跑執行路徑與 `/capabilities` truth test；能力頁不是文案，而是 runtime contract。

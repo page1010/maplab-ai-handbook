@@ -13,6 +13,7 @@ class HermesCapabilityRuntimeTest(unittest.TestCase):
             "providers": {
                 "configured_chain": ["provider/a", "provider/b"],
                 "local_fallback": "gemma4:latest",
+                "local_fallback_enabled": False,
                 "last_provider": "provider/b",
             },
             "local_access": {"actions": ["runtime-status", "signal-status"]},
@@ -24,6 +25,8 @@ class HermesCapabilityRuntimeTest(unittest.TestCase):
         self.assertIn("固定白名單", text)
         self.assertIn("provider/a → provider/b", text)
         self.assertIn("最近成功 provider：provider/b", text)
+        self.assertIn("本機 fallback 已停用", text)
+        self.assertNotIn("最後才用 gemma4:latest", text)
         self.assertIn("跨重啟保存最近 12 則", text)
         self.assertIn("照片會私密留檔", text)
         self.assertNotIn("具體模型名稱/版本未知", text)

@@ -526,7 +526,7 @@ projects/maplab-master-data.md → handoff/handoff-to-A5.md → handoff/field-na
 
 ## A6｜業務快反應部隊（Sales Rapid Response Unit）
 
-**狀態：🔴 T-A6-001 **NEEDS_REVIEW**（since 2026-07-19，168h 07-26 觸發；**~1310h** 無 commit，last `ed63f97` 2026-07-08；bot_a6 ✅ 上線 launchd；LINE Developers Console Webhook URL 仍待 Owner 確認 Channel 1654658337；2026-08-25 午後 A1巡查更新）**
+**狀態：🔴 T-A6-001 **NEEDS_REVIEW**（since 2026-07-19，168h 07-26 觸發；**~1446h** 無 commit，last `ed63f97` 2026-07-08；bot_a6 ✅ 上線 launchd；LINE Developers Console Webhook URL 仍待 Owner 確認 Channel 1654658337；2026-08-31 午後 A1巡查更新）**
 
 ```
 你是 MAPLAB A6 業務快反應部隊。
@@ -641,7 +641,7 @@ projects/ai-reply-system.md → skills/superpowers-guide.md → docs/fable-minds
 
 ## A8｜影音內容產線（Content Repurposing Pipeline）
 
-**狀態：🔴 T-A8-001 **NEEDS_REVIEW**（**~1590h/~66.3天**，last `1a2d752` 06-25 08:25，awaiting Owner storyboard review；168h 閾值 07-26 觸發；2026-08-25 午後 A1巡查更新）**
+**狀態：🔴 T-A8-001 **NEEDS_REVIEW**（**~1726h/~71.9天**，last `1a2d752` 06-25 08:25，awaiting Owner storyboard review；168h 閾值 07-26 觸發；2026-08-31 午後 A1巡查更新）**
 
 ```
 你是 MAPLAB A8 影音內容產線（Content Repurposing Pipeline）。

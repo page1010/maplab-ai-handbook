@@ -35,9 +35,10 @@
 
 所有角色冷啟動時，除了角色既有必讀文件，必須追加：
 
-1. `SYSTEM_DIRECTORY_INDEX.md`
-2. `workbook/system_index/system_relation_index.csv`
-3. `skills/system-directory-index/SKILL.md`
+1. `/Users/pagemacmini/claude-daily-operations/state/CROSS_AGENT_START_HERE.md`
+2. `SYSTEM_DIRECTORY_INDEX.md`
+3. `workbook/system_index/system_relation_index.csv`
+4. `skills/system-directory-index/SKILL.md`
 
 冷啟動輸出必須增加：
 
@@ -132,7 +133,7 @@ Directory Index Check
 | NotebookLM Project Brain 包 | `workbook/notebooklm/maplab-project-brain/` | generated sanitized reading pack | Owner、A0、A1、NotebookLM | 只上傳兩個 `.md`；JSON manifest 留 repo audit，禁止 wholesale repo dump |
 | 技能總路由 | `skills/superpowers-guide.md` | canonical skill router | 全角色 | 新動作前重查 |
 | 任務進度技能 | `skills/task-progress-guide.md` | canonical skill | 全角色 | Progress Log、Resume、checkpoint |
-| Session 技能 | `skills/session-lifecycle/SKILL.md` | canonical skill | 全角色 | session 開關與資源衛生 |
+| Session 技能 | `.agents/skills/maplab-session-continuity/SKILL.md` | canonical skill | Claude、Codex、全角色 | shared-start、認領、接棒、收據；舊 `skills/session-lifecycle/` 為指向入口 |
 | Codex／agy 路由 | `skills/codex-offload-guide.md` | tool routing guide | A0、A1、A6、B1、B5 | 需依實際版本更新 |
 | Credential 指南 | `skills/credentials/` | credential route reference | A0、A1、A2–A7、IOS-FB／KOL | 只能存路徑與 scope，不存 secret |
 | Owner Telegram 對話 SOP | `skills/owner-telegram-conversation-sop.md` | canonical skill | 全角色（接 Telegram 線者必讀） | inbox 落檔＋收據回覆＋先 ACK＋同 session 續接＋來源標示；群組要 bot 設管理員（privacy mode） |

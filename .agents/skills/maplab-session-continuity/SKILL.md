@@ -9,9 +9,10 @@ Resume the existing bounded action from durable evidence so prior work moves dir
 
 ## Establish truth before editing
 
-1. Read `CURRENT_STATUS.md`, `pitfalls.md`, the exact Task Card, its latest receipt, and its Resume Prompt.
-2. Compare the Task Card with recent scoped commits, current dirty paths, and any relevant live surface. A backup proves recoverability, not completion.
-3. Read the shared registry:
+1. Read `/Users/pagemacmini/claude-daily-operations/state/CROSS_AGENT_START_HERE.md` and run its one-entry command for this repo.
+2. Read `CURRENT_STATUS.md`, `pitfalls.md`, the exact Task Card, its latest receipt, and its Resume Prompt.
+3. Compare the Task Card with the command's recent commits, dirty paths, and any relevant live surface. A backup proves recoverability, not completion.
+4. Read the shared registry:
 
 ```bash
 python3 /Users/pagemacmini/claude-daily-operations/ops/claude-daily-operations/work_claims.py list

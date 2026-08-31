@@ -243,6 +243,27 @@ PYEOF
 echo "=== MAPLAB 系統巡查 $(date '+%Y-%m-%d %H:%M') ==="
 echo ""
 
+# ── 📌 TL;DR 行動摘要（Owner 2026-07-07 回饋：報告要能一眼行動）──
+# 純新增；只讀既有陣列，不改下方任何區塊。完整清單見本摘要之後。
+echo "📌 【今天你要做的】"
+if [[ ${#owner_actions[@]} -gt 0 ]]; then
+  i=0
+  for entry in "${owner_actions[@]}"; do
+    i=$((i+1)); [[ $i -gt 3 ]] && break
+    # 相容兩種格式：「  → filename: blocker」與「days|filename|blocker」
+    if [[ "$entry" == *"|"* && "$entry" != *"→"* ]]; then
+      IFS='|' read -r _d _f _b <<< "$entry"; echo "  ${i}. ${_f}：${_b}"
+    else
+      echo "  ${i}. ${entry#  → }"
+    fi
+  done
+  [[ ${#owner_actions[@]} -gt 3 ]] && echo "  …另有 $(( ${#owner_actions[@]} - 3 )) 件（見下方【Owner 行動項】）"
+else
+  echo "  ✅ 無待你決策事項"
+fi
+echo "  ─ 統計：進行中 ${#active[@]}｜阻塞 ${#blocked[@]}｜暫停/待開始 ${#paused[@]}｜完成 ${#done_tasks[@]}｜本輪狀態遷移 ${#transitions[@]}"
+echo ""
+
 # Token 檢查
 check_token_expiry
 echo ""

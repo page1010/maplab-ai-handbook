@@ -37,7 +37,9 @@ MAPLAB 陪著笑聲到最後
 Owner 附註:「隨著歌詞改動你的 prompt 與設計可能要微調,可能有的不適合那麼 vocal 輕柔」。
 衍生決定(由歌詞定稿自動落定):Rap 走**混合場景**(品牌活動/會議/婚禮/週歲全入);15 秒 Hook 含 **MAPLAB 音訊 tag**(Final Tag 唱出品牌)。
 Prompt 微調方向:Cold Hook 前置=hook-first 結構確立;Verse 8 小節 Rap 需要 groove 與咬字彈性(behind-the-beat),**輕柔 vocal 只保留 Pre-Chorus/Chorus**,Hook 與 Rap 段要能量;lemon and cream 句已被 Owner 改寫移除,雙語 diction 規則僅在保留英文詞時適用。
-下一步(bounded):同步 Google Doc + lyrics.txt → 依 v2A(102 BPM)/v2B(94 BPM)微調後生成**兩個候選**、留版本/時間/權利收據 → 回 Owner 選曲 gate。未選曲不剪片、未核准平台不發布。
+2026-08-31 Codex 接手：`lyrics.txt`、v3A 102 BPM 與 v3B 94 BPM prompt 已同步本段 Owner 定稿，並把「女聲太尖」轉成低音域暖女聲的明確生成限制；舊 v2 planned 紀錄保留作歷史，不再作生成輸入。Google Doc 與 Suno library 尚待 live readback，不能由本機檔案冒充已同步／已盤點。
+
+下一步(bounded):先反讀 Google Doc 與 Suno library，補建線外生成收據並比對歌詞；再依 v3A/v3B 各生成一個候選，留版本/時間/權利/歌詞 hash/下載檔 hash，回 Owner 選曲 gate。未選曲不剪片、未核准平台不發布。
 
 ### 🔴 2026-08-30 斷點缺失事件 + Owner 聽感回饋(msg 4383)
 - Owner 表示已聽過「新歌詞那版」並給出 gate 回饋:**女聲太尖**。但 repo 全查無此次生成的任何紀錄:v2A/v2B 在 prompt registry 仍是 planned、無 suno receipt、無 commit。結論:**確實有人在紀錄線外做了生成、未留斷點收據**(或 Owner 在 Suno 帳號內自行/看到未回報的版本)。
@@ -47,15 +49,15 @@ Prompt 微調方向:Cold Hook 前置=hook-first 結構確立;Verse 8 小節 Rap 
 
 ## 接續狀態
 
-- **狀態**：🟢 LYRICS_APPROVED_PENDING_GENERATION(舊:🟠 OWNER_LYRICS_GATE)
+- **狀態**：🟢 READY_FOR_LIBRARY_AUDIT_AND_TWO_CANDIDATES（舊：LYRICS_APPROVED_PENDING_GENERATION）
 - **建立日期**：2026-08-25
 - **Owner**：A8 影音內容產線
 - **接續點**：品牌語氣修正版歌詞、exact 15 秒 Hook、City-pop A/B 曲風 prompt、長短版分鏡、Google Doc 審稿面與可驗證 prompt registry 已完成；Owner 新增的 `lemon and cream` 已做兩個私有發音測試，本機 ASR 淘汰候選 A、候選 B exact match 通過。2026-08-27 另完成雙視角第二讀：保留《把相聚端上桌》，提案把 75–90 秒收斂為 62–70 秒，加入 8 小節服務場景 Rap。原本從服務分類出發的 WP 01–10 規劃已被 Owner 指正並 supersede；現改為 Google Drive 真實案例 registry、case-first SOP 與機器 gate，10 案 intake PASS，任何 WP 案仍須逐案補證據。
-- **唯一阻塞**：Owner 尚未選定 Rap 受眾與 15 秒 Hook 是否唱出品牌，也尚未逐句核准《把相聚端上桌》完整歌詞；發音測試不等於核准，未生成完整候選、未渲染正式影片。
+- **唯一阻塞**：沒有新的 Owner 決策 blocker。先完成 Suno library／Google Doc live readback，避免把 8/30 線外版本重複生成；若找不到可追溯版本，按已核准 v3A/v3B 各生成一個候選。未完成 Owner 選曲前不渲染正式影片。
 
 ## Goal
 
-把 MAPLAB 已被 Owner 認可的 IG 視覺語言轉成可重複使用的品牌聲音：一首 75–90 秒主題曲，加一段語意完整的 exact 15 秒 Hook，供 Reels／Shorts／品牌片使用。
+把 MAPLAB 已被 Owner 認可的 IG 視覺語言轉成可重複使用的品牌聲音：一首 62–70 秒主題曲，加一段語意完整的 exact 15 秒 Hook，供 Reels／Shorts／品牌片使用。
 
 ## Evidence Base
 
@@ -95,7 +97,7 @@ Owner 審稿 Google Doc：
 
 ## Next Bounded Action
 
-Owner 先選：① Rap 採混合場景或企業品牌優先；② 15 秒 Hook 只靠畫面 Logo 或增加一次 `MAPLAB` 音訊 tag。選定後把第二讀版本同步到 Google Doc 逐句核稿；只有 Owner 明確回覆 `主題曲歌詞通過` 才可生成兩個候選，留下版本、時間、權利與發音收據，回到 Owner 選曲 gate。
+Owner 已於 msg 4359 完成歌詞核准，也已由定稿落定混合場景 Rap 與 `MAPLAB` 音訊 tag。先反讀 Google Doc 與 Suno library，補齊 8/30 線外生成的版本／時間／歌詞比對收據；再用本卡 v3A/v3B 各生成一個候選並保存 provider Download hash，回到 Owner 選曲 gate。
 
 ## 2026-08-27 Second-read／Series Checkpoint
 
@@ -132,5 +134,5 @@ Owner 先選：① Rap 採混合場景或企業品牌優先；② 15 秒 Hook �
 ```text
 你是 MAPLAB Hip-hop Songwriter。先完整讀 CURRENT_STATUS.md、pitfalls.md、skills/maplab-hiphop-songwriter/SKILL.md、skills/brand-voice-guide.md、skills/a8-produce-to-publish-sop.md 與 handoff/tasks/T-A8-002-maplab-ig-theme-song.md。
 
-Owner 正在審《把相聚端上桌》。先讀 theme_second_read_20260827.md、visual_cut_plan_v3_proposal.md、skills/case-study-production-sop.md、JOB-A8-MAPLAB-MUSIC-SERIES-20260827/wp_music_series_01_10.md、case_first_registry.json 與 case_first_correction_receipt.md；Google Doc 是 https://docs.google.com/document/d/1VicisMW7dVmwkr9wjL-l3hxlwJn3SLGH6-RcHtQHVKI/edit?tab=t.0。先確認 Owner 對「混合場景 vs 企業優先」與「15 秒畫面 Logo vs 音訊 MAPLAB tag」的選擇，再反讀 Google Doc，解決 repo「檸檬和奶油」與文件 `lemon and cream` 的 SSOT 漂移。只有明確回覆「主題曲歌詞通過」才可準備外部生成。一般「繼續／跑完」不是歌詞核准。核准後在有效訂閱下只生成兩個第一輪候選並留 receipt；正式母帶只用 provider Download。未選曲前不交 A8 正式剪片，未核准平台前不發布。WP 音樂系列每次只做一個 Drive 真實案例；先跑 case-first intake/WP gate，不得再用服務分類頁冒充案例。
+Owner 已於 msg 4359 明確核准本卡頂部歌詞，混合場景 Rap 與 `MAPLAB` 音訊 tag 也已落定；2026-08-31 本機 `lyrics.txt`、v3A/v3B prompt 已同步，女聲限制改為低音域暖女聲，舊「檸檬和奶油」版本不得再生成。Google Doc 是 https://docs.google.com/document/d/1VicisMW7dVmwkr9wjL-l3hxlwJn3SLGH6-RcHtQHVKI/edit?tab=t.0。第一個動作不是重寫歌詞，而是 live 反讀 Google Doc 與 Suno library，找出 Owner 8/30 聽到但 repo 無收據的版本；補建版本／時間／歌詞 hash 收據。之後只依 v3A 102 BPM 與 v3B 94 BPM 各生成一個候選，正式母帶只用 provider Download。未選曲前不交 A8 正式剪片，未核准平台前不發布。WP 音樂系列仍一次一個 Drive 真實案例，先跑 case-first intake/WP gate。
 ```

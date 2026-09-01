@@ -1,3 +1,12 @@
+> ⛔ **已作廢（2026-07-23 Owner 裁決）**
+> 本檔要求確認的「Zone B/C 固定金額 NT$2,000/2,500」是多餘的平行版本。
+> **唯一真相**：`docs/business-requirements/quote-pricing-logic.md` 的車馬費公式（Owner 2026-04-09 定版）——
+> 台南市區 ≤30 分車程免費；超過則 max(km×6, 分鐘×50)，由報價 Sheet 的 Maps API（calcTransportFee）自動算。
+> 高雄/嘉義走既有 D 區政策（NT$3,500、低消 NT$25,000）。
+> Zone B/C 不需 Owner 逐一確認——直接用公式或歸入最近級距。任何 agent 不得再據此檔向 Owner 索取確認。
+
+---
+
 # Owner 決策點 — 外送費級距確認
 # 預計閱讀時間：30 秒 | 建立：2026-07-18 A1
 

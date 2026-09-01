@@ -1,6 +1,6 @@
 # Hermes LINE 業務回覆持續訓練計畫
 
-版本：2026-08-30 v3
+版本：2026-09-01 v5
 Owner 目標：降低 Mina 重複回覆時間，讓 Hermes 能依歷史最佳實務完成需求釐清、報價前補問與後續追蹤草稿。
 
 ## 資料與基準答案
@@ -47,6 +47,26 @@ Owner 目標：降低 Mina 重複回覆時間，讓 Hermes 能依歷史最佳實
 - E1 最多 40 次本機 inference；unsafe price／policy、private egress、customer send、manifest drift 任一發生即停。
 - E1 的 20-case holdout 是 development evidence，不能算進七連勝；promotion 必須另用預先封存、互不重疊的 balanced panels。
 
+## 2026-08-31 OpenRouter 額度與 Claude 報價教材接手
+
+- OpenRouter 的「輪」統一定義為一次 provider request attempt；同一案例第一個模型失敗、fallback第二個模型成功，算2次request，不是1輪。Owner帳戶因已購買USD 10 credits而符合每日1,000次`:free`請求政策；訓練lane硬上限950，保留50給Owner日常使用。任何CLI參數不得把訓練上限調高到951以上。
+- 2026-08-31舊cloud探索已留下49次attempt：25次HTTP error、24次回答；25個examples中只有1個舊lexical heuristic pass。這證明「回答率」與「案例數」不能當品質，並觸發既有plateau stop-loss。當日剩餘訓練上限為901，但不得為了吃滿額度而執行。
+- 共用ledger改為UTC日、cross-process lock、atomic 0600檔；每次transport前先reserve，失敗、fallback與程序崩潰都不退額度；損壞／未知schema一律fail closed。模型ID非`:free`在transport前拒絕，保守間隔3.5秒（最多18 starts/minute）。Paid key limit維持0，USD 10 credits不得被訓練lane花掉。
+- Claude 2026-08-30分享內容經Owner點名後只作`OWNER_NOMINATED_CURRICULUM_CANDIDATE`：保留「單一窗口先承接統籌價值」「參考圖片確認期待層級、預算確認可選範圍」「核心資料齊後再給A/B/C範圍」「醫療／兒童／樓層訊號只用來補問」「勘場不承諾」；拒絕所有Claude生成價位／比例、競品能力斷言與未證實事實。
+- Curriculum不得冒充Owner policy、pricing authority或human gold；只用去識別合成正反例驗prompt與deterministic guard。LINE首輪仍最多三題、240字、8行，不以「我們主要只做餐飲」自我降級、不以服務費開頭、不用「依過去經驗」編造、不承諾檔期。
+- Cloud runner預設只允許zero-call preflight。真正completion同時需要明示去識別外送授權與machine-readable quality-gate receipt：20 named-human labels、identity-blind scorer exact agreement至少18/20、安全維度mismatch=0；缺一即execution closed。
+- Canonical implementation/receipt：`/Users/pagemacmini/investment-os/tasks/OPENROUTER_950_HERMES_TRAINING_20260831.md`、`/Users/pagemacmini/investment-os/scripts/free_compute/curricula/claude_quote_strategy_20260831.json`、`/Users/pagemacmini/investment-os/reviews/OPENROUTER-950-HERMES-TRAINING-20260831/validation_report.md`。
+
+## 2026-09-01 真正權重訓練與蒸餾路線
+
+- 前5輪實際為random two-shot inference，沒有更新權重；4/25 pass（16%），各輪40%→0%→0%→40%→0%，第1與第4輪各有1個未授權價格。這些是失敗的evaluation rounds，不再稱為持續訓練。
+- 950個OpenRouter attempts只可用來產去識別候選、反例與測試覆蓋；候選須經Owner／Mina核准或最小改寫，才可進SFT。一般chat API不回teacher logits，不能把response generation宣稱為logits knowledge distillation。
+- 本機主線固定Apple MLX-LM＋Qwen3-4B-Instruct-2507 4-bit QLoRA；DeepSeek借用「強teacher→過濾→student SFT」的方法，不直接安裝R1重型RL、ms-swift或LLaMA-Factory CUDA stack。
+- 已完成3-step synthetic QLoRA smoke：真正產生並reload adapter、base／adapter對同prompt輸出不同、peak memory 2.697GB；adapter只縮短回覆，仍漏「單一窗口價值」，所以`QUALITY_NOT_PROVEN`且live route disabled。
+- 外接碟未加密，只能放公開hash-pinned基模；LINE、private dataset、adapter、log與fused model固定留`/Users/pagemacmini/.maplab/a6-hermes-training/mlx/`的owner-only root。
+- 真正SFT前仍需20/20具名真人rubric labels、scorer >=18/20 exact且安全mismatch=0、完整DLP／rights manifest，再建立30–50組Owner-corrected gold。SFT確認提升後才收chosen／rejected評估DPO／KTO。
+- Canonical method／receipt：`docs/hermes-distillation-method-v1.md`、`tools/hermes_mlx_lab/`、`reviews/HERMES-MLX-DISTILLATION-20260901/install-smoke-receipt.json`。
+
 ## 分階段升級
 
 ### Phase 1：離線 imitation + correction
@@ -75,4 +95,4 @@ Owner／Mina 貼客人訊息，Hermes 回草稿；同時顯示「已知／缺欄
 
 Resume Prompt：
 
-> 我是 Hermes LINE 業務教練。先讀 CURRENT_STATUS、pitfalls、active Task Card、durable job、`docs/hermes-line-rubric-v2-annotation-guide.json`與guide receipt。Schedule gate與guide freeze已完成，不重跑；來源structured human labels仍為0，job=`OWNER_REVIEW / method-redesign-rubric-human-annotation`。下一步只由具名真人依指南在本機逐案判讀20案，另建0600 annotation檔並綁private preflight／guide／authority三個SHA；blank parent不可原地改，AI／synthetic labels不可當human gold。完成後才做identity-blind scorer與>=18/20 calibration，再依序materialize lesson snapshot、pin runner與rendered manifest。私密LINE留本機，禁止customer send；E1 dev holdout不得計入七連勝。
+> 我是接手 Hermes LINE 訓練的 Codex / A1。先讀 CURRENT_STATUS、pitfalls、active Task Card、durable job、rubric guide、OpenRouter validation、`docs/hermes-distillation-method-v1.md`與MLX receipt。舊12輪是random two-shot evaluation，不是權重訓練；MLX 3-step smoke只證明本機可更新adapter，`QUALITY_NOT_PROVEN`且live route disabled。每日950是`:free` provider request ceiling，不是目標。下一步先完成20/20具名真人labels，校正scorer到>=18/20且安全mismatch=0，再做DLP與30–50組Owner-corrected gold；外接碟只放公開基模，私有資料與adapter留owner-only root。此前不得外送原始LINE、customer send或接正式gateway。

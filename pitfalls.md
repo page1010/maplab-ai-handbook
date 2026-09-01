@@ -832,3 +832,19 @@
 - 根因：provider fallback policy 在 gateway 與 capability runtime 各自硬編，行為變更只改到執行路徑，沒有把能力投影納入同一驗收。
 - 解法：能力 snapshot 明列 `local_fallback_enabled=false`，formatter 直接說明上游全失敗時會回報失敗；同步把 DeerFlow status／public research 納入預設能力清單。
 - 預防：任何 provider chain、fallback、memory 或 connector 行為變更，都要同輪跑執行路徑與 `/capabilities` truth test；能力頁不是文案，而是 runtime contract。
+
+## 2026-08-31 — 免費額度要按provider attempts先記帳，不能用案例數或成功數保留日常額度
+
+- 觸發條件：OpenRouter帳戶升為每日1,000次免費模型請求後，舊cloud gym仍把`example attempted`當輪數，counter在response後才寫入；同一案例fallback會消耗多次，程序崩潰、並行runner與壞JSON又可能漏記或歸零。
+- 根因：把產品單位「一題／一輪」混成平台計費單位「一次request attempt」，且採check→network→record的TOCTOU流程，沒有UTC、鎖、原子寫入、檔案權限與free-only硬閘。
+- 解法：訓練lane固定950、Owner reserve 50；共用私有0600 ledger在transport前原子reserve，HTTP錯誤、fallback與crash均計一次，completion只更新status不退額度。每日依UTC換桶、損壞／未知schema fail closed、非`:free`拒絕、3.5秒最小間隔。
+- 預防：每個provider runner摘要必分`examples_attempted`與`provider_requests_this_run`；任何新caller先接同一ledger。額度是ceiling不是KPI，兩輪無固定holdout improvement就停，禁止只為吃滿950繼續呼叫。
+- 封坑驗證：2026-08-31舊49筆完整遷移（25 HTTP errors／24 ok），zero-call preflight讀回used=49／remaining=901／reserve=50；focused mocked tests驗reservation-before-I/O、failure/fallback/crash計數、949並行搶第950、UTC rollover、0600與paid-model阻擋。
+
+## 2026-09-01 — 換樣本重跑推論不是訓練，公開模型與私有adapter也不能混放
+
+- 觸發條件：前5輪被口語稱為訓練，但實際只用random two-shot重跑25題，沒有optimizer、gradient或adapter；結果僅4/25 pass且2次未授權價格。準備安裝QLoRA時又發現大容量外接碟未加密且ownership disabled。
+- 根因：把API／模型推論活動誤當可累積能力，沒有要求可保存的權重delta與固定盲測；儲存規劃又只看容量，沒有分公開基模與會記住私有語料的adapter。
+- 解法：訓練一詞只用於有optimizer step與可reload權重的SFT／QLoRA／偏好學習；每次都做base／adapter同prompt effect probe與獨立holdout。公開hash-pinned模型可放外接碟；LINE、private dataset、adapter、logs與fused weights一律留owner-only私有根目錄，訓練deny network。
+- 預防：receipt固定列`weights_updated`、adapter SHA、base／adapter輸出、holdout結果、egress與artifact storage class；只有effect probe沒有品質提升時明標`INFRASTRUCTURE_PASS / QUALITY_NOT_PROVEN`，不接live route。
+- 封坑驗證：M4／24GB以Qwen3-4B-Instruct-2507在deny-network sandbox完成3個QLoRA steps，adapter可reload、peak memory 2.697GB、files 0600；輸出雖縮短仍漏單一窗口價值，因此正確停在training/eval-only。

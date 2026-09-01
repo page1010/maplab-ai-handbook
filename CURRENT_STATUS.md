@@ -5,7 +5,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-08-30 Codex A1/A6｜Hermes LINE rubric v2 七項操作規則、商務authority fail-closed邊界、14個正反fixtures與真人attestation/adjudication schema已凍結驗證；job現為OWNER_REVIEW，等待具名真人依指南標註20案，E1尚不可跑。完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-09-01 Codex A1/A6｜舊Hermes輪次確認只是random two-shot evaluation、沒有權重更新；Apple MLX-LM＋Qwen3-4B-Instruct-2507隔離training/eval lab已完成synthetic QLoRA smoke，但QUALITY_NOT_PROVEN、live route disabled。Job仍為OWNER_REVIEW，下一步是20案具名真人rubric labels。完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -20,6 +20,8 @@
 ---
 
 ## 最新事實核對
+
+- 2026-09-01：**[Hermes 真正權重訓練底座／品質仍未證明]** — 前5輪重建為random two-shot inference、沒有optimizer或權重delta，僅4/25 pass（16%），分布40%→0%→0%→40%→0%，第1／4輪各1個未授權價格；完整12輪10/60、best40%、streak0。已在M4／24GB隔離安裝Python3.12.13＋MLX0.32.2＋MLX-LM0.31.3，固定`mlx-community/Qwen3-4B-Instruct-2507-4bit` revision `50d42775...`；8 train／2 valid／1 test純合成資料於deny-network sandbox跑3-step QLoRA，adapter可保存／reload、base與adapter輸出不同、peak memory2.697GB、private files0600。Adapter只把回覆縮短，仍漏「先承接單一窗口價值」，故receipt明標`INFRASTRUCTURE_SMOKE_PASS_QUALITY_NOT_PROVEN`，未接Hermes gateway、customer send／private egress=0。外接碟未加密，只放公開hash-pinned基模；私有dataset／adapter／logs留owner-only root。Canonical：`docs/hermes-distillation-method-v1.md`、`tools/hermes_mlx_lab/`、`reviews/HERMES-MLX-DISTILLATION-20260901/install-smoke-receipt.json`。下一步仍是20/20具名真人labels→scorer >=18/20且安全0 mismatch→DLP→30–50組Owner-corrected gold；不得把950 requests或synthetic smoke冒充品質進步。
 
 - 2026-08-30 05:50：**[Hermes LINE rubric v2 annotation guide／真正真人 gate]** — plateau後不再只換round／version：第一性原理確認真正目的為可校正的human gold、限制為0/20 structured labels與無current live commercial values；拒絕「criteria名稱已足夠」「historical reply自然全PASS」「repo formula等於live price/availability」三個未證假設。新source-bound guide固定七項PASS/FAIL規則、exact `overall_pass = seven PASS AND unsafe=false`、UNKNOWN/MISSING/N/A不算、identity-blind scorer allow/deny inputs、具名真人attestation與disagreement adjudication schema；commercial snapshot誠實固定`NO_CURRENT_LIVE_CASE_AUTHORITY_MATERIALIZED`，沒有當案current Items／quote／calendar／Owner policy即禁止肯定價格、費用、折扣、訂金、檔期、booking/payment、included service或guarantee。14個public-safe synthetic fixtures對七項各1正1反；unsupported commercial反例強制unsafe hard fail。Guide `d62cf9bf...`、authority `84d9733b...`、receipt `f809f5ae...`、method fingerprint `09893d23...`、source/test `ff1ac7b0...`／`4c5e91f6...`；private blank parent SHA仍為`10e41cf2...`未修改。13/13 focused＋77/77 related、`py_compile`、canonical run與第二次idempotent no-op PASS；本action model/network/customer send/private third-party egress=0、attempt維持6、E1未render／未跑。Canonical job原子轉 `OWNER_REVIEW / method-redesign-rubric-human-annotation`，SHA `2ec05bec...`；現在真正需要具名真人在新的0600檔逐案判讀20案並綁preflight／guide／authority三個SHA，不能把AI或synthetic labels冒充human gold。
 

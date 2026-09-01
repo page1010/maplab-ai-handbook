@@ -13,7 +13,7 @@
 | **A6 LINE webhook 上線** — T-A6-001 | A6 | 🔴 CRITICAL（~275h） | Owner 填入 Webhook URL → A6 bot 立即開始收 LINE 訊息 | ✋ 需 Owner 操作 LINE Developers Console（Channel 1654658337）填 Webhook URL，5 分鐘內可解 |
 | **B3 廣告試跑點火** — B3-ADCOPY | B3 | ⏸️ 等 Owner 操作 | 操作稿已備 `docs/runbooks/2026-07-07-b3-trial-launch-stepbystep.md`，Owner 在 Meta Ads Manager（帳號 318634712）建立受眾包即可啟動 | ✋ 需 Owner 登入 Meta Ads Manager，無 API，需人工建立冷層受眾包 |
 | **IS 規則引擎核准包** — IS-Layer3 | B1 | ⏸️ 等 Owner 確認 4 參數 | 規則引擎本體已跑（5 條 WARNING 在 escalation_queue），只差 Owner 確認門檻參數 → B1 建 escalation_push.sh | ✋ 需 Owner 確認：SOP1 主題集中度上限（草稿 10%）、SOP2 單標的上限（草稿 15%）、槓桿警戒線（草稿 1.5x）、日跌幅急性警示（草稿未定義） |
-| **A7 Phase 3 上線授權** — T-A7-001 | A7 | 🔴 CRITICAL（~323h，第 23 次警告） | 模板庫完整可用，等 Owner 授權 Mina 開始用 `data/a7-reply-templates.md` 接真實 LINE 對話 | ✋ Owner 三選一：A. 立即授權啟動（Q5 外送費手動補）；B. 先等 A5 建外送費級距（下輪 A5 任務）；C. 暫停 Phase 3（接受現有損耗）|
+| **A7/Hermes LINE→Sheets 邊界重設** — T-A7-001 / T-A6-HERMES-LINE-GYM-001 | A7/A6 | 🟡 LOCAL CONTRACT PASS / LIVE NOT DEPLOYED | 先檢視 `docs/hermes-line-sheets-assistant-flow-v1.md` 與 `*` 樣板；獲授權後只在隔離測試部署 neutral Sheet actions | ✋ live GAS／LINE 測試需 Owner 明示授權；舊 `data/a7-reply-templates.md` 已降為 LEGACY，禁止直接上線 |
 | **A2 廣告現況巡查 + 關鍵字/行銷規劃** — T-A2-006 | A2 | 🟢 不再等 MCP token | 走 `skills/ad-platform-browser-check.md`（瀏覽器唯讀巡查 Meta/Google Ads 現況：活動/受眾/素材），彙整結果餵進關鍵字與行銷整體規劃 | 無（唯讀巡查不需 Owner 操作，需在有 Chrome MCP 的環境如 Mac mini/Cowork 執行） |
 
 **So What（Tier 1 空轉成本估算）**：
@@ -28,7 +28,7 @@
 
 | 任務 | 負責 | 狀態 | 解鎖條件 |
 |------|------|------|---------|
-| A7 QA 迭代（Phase 3 啟動後） | A7 | 🔲 待 Tier1 解鎖 | A7 Phase 3 Owner 授權後，Mina 回傳首週使用回饋 |
+| A7 QA 迭代（隔離測試後） | A7 | 🔲 待 live 測試授權 | neutral Sheet shell 回讀無商務欄位後，再由 Mina 回傳首週草稿微調 |
 | A5 外送費級距建立（Q5 自動計算） | A5 | 🔲 待 Owner 定規格 | Owner 給外送費 base rate / 級距表 |
 | A2 SEO 草稿發布（婚禮 pillar + gender-reveal） | A2 | ⏸️ 等 Owner 核准 | Owner review `workbook/outputs/seo-gap-drafts/` 草稿後授權 WP 發布 |
 | A2/A3 Round 008 圖片插入 + 發布 | A2/A3 | ⏸️ 阻塞（Chrome extension file chooser Not allowed） | Owner 開啟 Codex Chrome extension file URL access |

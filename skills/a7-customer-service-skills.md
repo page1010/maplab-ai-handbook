@@ -1,9 +1,10 @@
 # A7 客服與對話轉單部 — 核心技能書
-版本：v2.0 | 建立：2026-03-26 | 更新：2026-03-29 | 維護：A7
+版本：v3.0-boundary | 建立：2026-03-26 | 邊界更新：2026-09-01 | 維護：A7
 
 > Phase 2 更新：從 20 筆真實 LINE 對話 CSV 驗證重寫。框架版（v1.0）已淘汰。
 > **Quote-ready 規則更新（2026-08-27）**：本檔的「5 項齊全送 A5」是 legacy 規則，只保留 intent、語氣、升級與 follow-up 參考。現行 readiness 唯一依 `docs/a6-a7-customer-to-quote-gym-sop.md` 與 `bot_a6/intake_flow.py`：十類欄位全部明示後才可送 A5 internal draft。
-> > 模板完整版見：data/a7-reply-templates.md
+> **Owner 邊界更新（2026-09-01）**：上述「送 A5」亦已被新路徑取代。Hermes 每輪只問一題，不報價、不選菜、不承諾檔期、不判定飲食安全，只能建立 neutral Google Sheets shell 或寫 revision request。`data/a7-reply-templates.md` 已降為歷史參考；現行唯一 contract 見 `docs/hermes-line-sheets-assistant-flow-v1.md` 與 `config/hermes-line-sheets-assistant-v1.json`。
+> > 歷史模板：data/a7-reply-templates.md（`*` 不可直接使用）
 > >
 > > ---
 > >
@@ -103,8 +104,8 @@
 > > | 具體說明含什麼、不含什麼 | 空泛承諾 |
 > > | 溫暖但有邊界 | 過度熱情、失去專業感 |
 > >
-> > - Q7 試吃：Owner 政策（2026-07-06）— 不提供試吃，AI 可直接回覆固定模板
-> > - - Q10 取消/改期：Owner 政策（2026-07-06）— 颱風等不可抗力可改期不收費；客戶單方取消酌收備料與材料費，AI 可回覆政策說明，實際金額轉 Mina/Owner 確認
+> > - Q7 試吃：舊政策只作歷史參考；Hermes 先登記並交 Mina 核對當下政策，不自主承諾。
+> > - - Q10 取消/改期：只記錄原因與新日期，狀態 `PENDING_MINA`；Hermes 不承諾免費、費用或新檔期。
 > >   - - 價格：客服階段不報具體數字，一律引導報價流程
 > >    
 > >     - ---
@@ -119,9 +120,11 @@
 > >
 > > ## 必讀文件
 > >
-> > - `projects/ai-reply-system.md`（系統架構 + 對話流程圖）
+> > - `docs/hermes-line-sheets-assistant-flow-v1.md`（現行流程、樣板星號與權限）
+> > - - `config/hermes-line-sheets-assistant-v1.json`（machine-readable state／template contract）
+> >   - - `projects/ai-reply-system.md`（歷史系統架構）
 > > - - `handoff/tasks/T-A7-001.md`（Q1–Q10 完整模板 v2.0）
-> >   - - `data/a7-reply-templates.md`（Mina 操作用模板庫）
+> >   - - `data/a7-reply-templates.md`（歷史模板庫；`*` 不可直接使用）
 > >    
 > >     - ---
 > >

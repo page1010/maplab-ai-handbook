@@ -8,6 +8,14 @@
 > 選填欄「當時的合理化」：記下當時給自己的藉口，累積成紅旗清單。
 > 依據：superpowers「NO SKILL WITHOUT A FAILING TEST FIRST」；我們的記憶鏈缺的正是 Verify 階。
 
+## 2026-09-01 — Provider 稽核不得對 home/private roots 做廣域內容搜尋
+
+- 觸發條件：為了盤點 Hermes／OpenRouter provider 設定，子任務對多個 home/private roots 執行廣域內容搜尋；受保護 env 檔的完整 credential assignment 因符合 provider 關鍵字而進入內部工具 transcript。
+- 根因：把「找 provider 設定」誤做成跨私有根目錄的 content scan，沒有先建立 code/docs allowlist，也沒有把 `.env`、credential、token、key stores 排除；presence check 也未限定為 boolean／metadata-only。
+- 解法：立即停止廣域內容搜尋；確認沒有檔案寫入、shell/provider 網路外送或事故新增副本；不回顯值，將現有 credential 標記為需輪替。後續只在明確 `.py`／`.md`／safe JSON 路徑內搜尋 provider 字樣，secret 只回 `present/missing` 與權限／mtime metadata。
+- 預防：任何 provider/credential audit 先列檔名，再套 exact allowlist；禁止把 `~/.maplab`、`~/.openclaw`、`~/.hermes` 或整個 home 當 content-search root。`.env*`、credential/token/key stores 永遠不進內容搜尋，即使只是唯讀。
+- 封坑驗證：provider audit 在執行內容搜尋前先審核 file list，候選中若出現 `.env`、credential、token 或 key store 即 fail closed；本次公開 receipt 以 `rtk rg -n 'OPENROUTER_API_KEY=|sk-or-' workbook/reviews/JOB-A6-HERMES-OPENROUTER-REPLACEMENT-20260901` 應為 0 matches。
+
 ## 2026-08-26 — Telegram CLI 訊息不能把 JSON escape 當成實際換行
 
 - 觸發條件：用 `JSON.stringify()` 把多行訊息拼進 `scripts/notify_owner.sh` 的單一 CLI 引數；Bot API 回 200，但 Telegram Web 顯示的是字面 `\\n`，連 URL 邊界也被 escape 文字污染。
@@ -872,3 +880,47 @@
 - 解法：gateway改typed `EXECUTE | REJECT | CHAT`，EXECUTE/REJECT都走本機executor receipt並立即continue，只有CHAT可進provider；provider前另掃current text＋history DLP。Linked receipt限制在allowlisted DFR task root，綁parent job/request/action，並驗same-task regular artifact與recomputed SHA後才terminal。
 - 預防：安全測試必跨`gateway → executor → receipt/notification`，不能只測router；固定poison含四句危險改寫、private history、wrong parent/action/hash、missing artifact與symlink。任何局部26/26 PASS在end-to-end red-team前不得寫成完成收據。
 - 封坑驗證：task-scoped staged index focused 29/29、canonical live worktree full Hermes 134/134、`py_compile` PASS；兩種環境與 source hashes 分列於 validation receipt。mock provider對客資／LINE對話／電話history為0 calls，假linked receipt維持`WAITING_EXTERNAL`且無notification。
+
+## 2026-09-01 — Hermes在線不代表可用Ollama訓練，記憶體預算也不能只靠口頭約定
+
+- 觸發條件：Owner要求Hermes立刻訓練，隨即明示「不要用本機Ollama，一開跑記憶體吃光」；系統同時存在正常gateway、idle Ollama service與歷史`loopback-ollama-only` supervisor，若把「服務在線」誤當「訓練backend可用」就會走回高記憶體舊路。
+- 根因：先前把gateway/provider availability、training execution eligibility與resource envelope混在同一狀態；synthetic smoke的batch／seq／layers只是shell常數，沒有在讀私有資料前驗labels、DLP、gold、holdout、backend與記憶體限制，也沒有禁止Ollama fallback。
+- 解法：正式LINE權重訓練只允許離線`mlx_lm`，在讀dataset與建立adapter前拒絕任何Ollama env／URL／provider／process fallback及proxy/cloud key。Preflight固定batch1、grad1、seq256、2 layers、<=200 iterations、<=3600秒與<=4GB MLX allocator budget；缺20/20 human labels、DLP/rights PASS、30–50 gold或獨立holdout任一項即NO-GO。未來runner還須逐step讀peak memory與system memory pressure，超限終止process group並隔離未完成adapter；allocator budget不得宣稱為OS硬上限。
+- 預防：Task Card、training plan與Resume Prompt都固定寫「no-Ollama MLX-only」；每次執行前後留backend、env、limits、model/data SHA、peak memory、abort/publish與zero-egress receipt。Idle Ollama service不自動停止，也不因process存在單獨冒充model loaded；真正Ollama引用、fallback或並行memory pressure才fail closed。
+- 封坑驗證：本輪Ollama readback為`models=[]`，訓練／optimizer/model load皆0；私有20案標註簿初始gate=`BLOCKED`且formula errors=0；20,256-record DLP掃描0 parse errors但因rights／retention／review與identifier findings正確BLOCKED；no-Ollama MLX preflight僅做read-only GO/NO-GO，不啟動模型。
+
+## 2026-09-01 — 只監欄位與產物會漏掉商務權限；客服與報價引擎不能共用路由
+
+- 觸發條件：Owner 看見標註工作簿中的「總價99,999／已保留檔期／不用再提供資料」「所有人都可以吃／不必再確認」「固定88,888／一定有空／直接下訂」後，指出系統沒有先按安靜內斂品牌語氣與角色邊界監工，也沒有進經驗學習圈。
+- 根因：把故意設計的負例直接呈現成像候選回覆；更深層是 A7 客服、A6 intake 與 A5 自動報價共用路徑。即使只修文案，舊 `createQuote` 仍會預設訂金、條款、費用與「報價中」，`createQuoteVariants` 仍會選菜與計價。成功檢查只看有表格／有分數，沒有先驗 commercial authority 與品牌語氣。
+- 解法：Owner 最新契約固定為每輪一題；Hermes 只記明示需求並呼叫 neutral `createQuoteShell`／`appendQuoteRevisionRequest`。價格、菜單、檔期、飲食可行性、付款、條款、成交均轉 Mina／Owner。舊 Q1–Q10 逐一標 `*`，歷史模板與 deidentified corpus 只作結構證據，不冒充現行 authority 或逐句 Mina gold。
+- 預防：新商務助理功能必同時鎖四層：模板 contract、runtime route allowlist、Sheets API allowlist、Owner 原句 regression fixtures；任一層仍可帶 amount／menu／deposit／fees／terms／availability 就不得部署。負例在 Owner 介面必明標「禁止輸出」，不可混在待選內容。
+- 封坑驗證：三個 Owner 雷句 deterministic hard fail；九輪 synthetic intake 每輪恰好一題且不重問；最後 payload 為 `createQuoteShell`，`has_price_or_menu=false`，狀態固定 `UNVERIFIED / PENDING_HUMAN / PENDING_MINA`。GAS 只改 repo source，未部署、未建真實 Sheet、未對客發訊。
+
+## 2026-09-01 — 瀏覽器顯示已下載不等於指定路徑已落檔
+
+- 觸發條件：Suno 下載按鈕已觸發且 Chrome 顯示剛下載檔案，但專案 `audio/` 尚沒有指定檔名；同機另有兩套 Chrome，只有桌面版能正確進入原生儲存視窗。
+- 根因：把網頁事件或暫存下載當成檔案收據，也沒有把瀏覽器實例、原生 Save 對話框與最終目的路徑納入同一驗收。
+- 解法：依 Owner 指示用可視畫面操作選單、格式、檔名與原生「儲存」；關閉視窗後再以專案絕對路徑、`file`、`ffprobe`、size 與 SHA-256 回讀，另保存下載完成截圖。
+- 預防：任何登入態媒體下載固定驗四層：正確瀏覽器實例、可視 Save 操作、指定路徑存在、內容 hash/codec/duration；其中一層缺失只能標 `DOWNLOAD_UNVERIFIED`。
+
+## 2026-09-01 — 由繪圖函式重畫 QA 圖不等於從編碼成品抽幀
+
+- 觸發條件：樂齡動作 contact sheet 看似完整，但來源是 renderer 直接重畫 PNG，無法證明 H.264 成品沒有裁切、遮擋、轉場或編碼差異。
+- 根因：把 source-level preview 與 encoded-output evidence 混成同一個視覺 gate。
+- 解法：contact sheet 僅從實際 MP4 以 ffmpeg 抽取代表幀；另以 plain decode 完整跑完 5 支短片與合輯，保留實機 YouTube／手機／TV readback 為獨立 `MISSING`。
+- 預防：所有 A8 視覺收據必寫 `frame_source=encoded_output`、輸出 path/hash 與 timestamp；直接 render 的 preview 只可作診斷，不得升格 acceptance。
+
+## 2026-09-01 — 中文字型 bounds 與人物層級必須 fail closed
+
+- 觸發條件：安全首屏第三行與合輯尾卡在 source canvas 內看似合理，成品卻發生人物頭部遮字或字框溢出。
+- 根因：只用預估行高與固定座標，沒有測真實字型 bounding box、safe zone、人物遮罩與最長警語。
+- 解法：每張卡先量實際 glyph bounds，再驗文字框、人物與 Shorts UI safe zone 無交疊；最長中文警語作固定 regression fixture，超界直接中止渲染。
+- 預防：畫面 acceptance 同時驗 canvas bounds、overlay collision、encoded frame readback 與樂齡可讀性；自動縮字只能在設定下限以上，否則回 `VISUAL_HOLD`。
+
+## 2026-09-01 — 否定句中的高風險動詞不能被當成授權
+
+- 觸發條件：任務文字明寫「未授權上傳／不得公開」，簡單關鍵字路由卻因看到「上傳」「公開」把 publication intent 判為 true。
+- 根因：分類器只做正向 token 命中，沒有區分授權、否定、禁止與尚待確認。
+- 解法：外部寫入權限採 fail-closed 結構欄位；否定或未知一律 `NOT_AUTHORIZED`，只有 Owner 明確肯定句與 action-time confirmation 才能打開該單一步驟。
+- 預防：路由測試固定加入「不要上傳」「未明說公開」「只做草稿」「建立頻道但不發片」等 negation fixtures，並驗 upload、publication、account creation 三個 gate 分開。

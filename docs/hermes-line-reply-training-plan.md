@@ -1,7 +1,16 @@
 # Hermes LINE 業務回覆持續訓練計畫
 
-版本：2026-09-01 v5
-Owner 目標：降低 Mina 重複回覆時間，讓 Hermes 能依歷史最佳實務完成需求釐清、報價前補問與後續追蹤草稿。
+版本：2026-09-01 v6
+Owner 目標：降低 Mina 重複回覆時間；Hermes 只做安靜內斂的一問一答、需求記錄與 Google Sheets 建檔，不報價、不選菜、不承諾檔期、不判定飲食安全。
+
+## 2026-09-01 Owner 最新方向與邊界
+
+- 客戶回覆每輪只問一題；已知欄位不得重問。
+- 價格、菜單、檔期、飲食可行性、付款、條款、成交／未成交都由 Mina／Owner 判斷。
+- Hermes 只可呼叫 `createQuoteShell` 與 `appendQuoteRevisionRequest`；舊 `createQuote`、`createQuoteVariants`、A5 自動選菜／計價不在對客 route。
+- 客人自願給的預算只保存原話，不是必問欄位，不得由 Hermes 正規化後拿去報價或在回覆重複金額。
+- 舊私有 annotation workbook 已關閉，不再是 Owner 下一步；先驗新的 flow、模板、route 與 deterministic guard。
+- Canonical contract：`docs/hermes-line-sheets-assistant-flow-v1.md`、`config/hermes-line-sheets-assistant-v1.json`。
 
 ## 資料與基準答案
 
@@ -9,13 +18,13 @@ Owner 目標：降低 Mina 重複回覆時間，讓 Hermes 能依歷史最佳實
 - 訓練單位：連續客戶訊息 → 下一段真人業務回覆。
 - 去識別化：移除客戶 sender 名稱、以 hash 取代對話 ID；保留業務語意、日期、人數、需求與報價脈絡。
 - 現行資料集：20,256 組；train 15,993、eval 4,263。整個 conversation 只會落在其中一側，避免同案答案洩漏。
-- Gold answer：Mina 當時的真人回覆。歷史答案不是永遠正確；價格或政策衝突時，以目前 A5／Owner 規則覆蓋。
+- Historical reference：Mina 當時的真人回覆。它不是自動 gold；歷史價格、政策、檔期與安全判斷不得覆蓋 Owner 現行邊界。
 
 ## 每日訓練迴圈
 
 1. 從 eval 取 12 題，並按 stage 補足稀少類型，不只抽大量 S_PENDING。
 2. Hermes 讀最近對話與兩個同 stage 訓練案例，產一則手機可直接使用的回覆。
-3. 對照 Mina gold answer，檢查：是否回答當下問題、下一題是否正確、是否重問、日期／人數／預算／飲食是否忠實、是否亂報價格、是否太長。
+3. 對照人工核准 reference，檢查：是否回答當下問題、是否恰好只問下一個必要欄位、是否重問、明示資料是否忠實、是否越權報價／選菜／承諾檔期／判定飲食安全、是否符合安靜內斂語氣。
 4. 失分項自動彙整成 `current_lessons.md`，下一輪載入。
 5. 每輪保存完整的客戶題目、Hermes 回覆、Mina 原答、provider、分數與錯誤原因。
 6. 每週取最低分 stage 做 30 題專項回訓；新規則須有回歸題才可進正式 prompt。
@@ -26,7 +35,9 @@ Owner 目標：降低 Mina 重複回覆時間，讓 Hermes 能依歷史最佳實
 - 必要語意命中率：≥90%。
 - 下一個必要問題正確率：≥90%。
 - 已知欄位重問率：≤5%。
-- 每次最多問三題：≥95%。
+- 有缺欄時每次恰好一題：100%。
+- 三個 Owner 指定越權雷句 hard-fail：100%。
+- Sheet payload forbidden-key 命中：0。
 - 綜合 pass rate：先量 baseline，連續 7 輪 ≥85% 才進 Telegram 私有影子測試。
 - 影子測試中 Mina 可直接採用或只需小改：連續 50 題 ≥80%，才考慮半自動草稿。
 - 正式對客自動發送不是本階段目標；先讓 Mina 少打字、可快速確認後送出。
@@ -66,6 +77,8 @@ Owner 目標：降低 Mina 重複回覆時間，讓 Hermes 能依歷史最佳實
 - 已完成3-step synthetic QLoRA smoke：真正產生並reload adapter、base／adapter對同prompt輸出不同、peak memory 2.697GB；adapter只縮短回覆，仍漏「單一窗口價值」，所以`QUALITY_NOT_PROVEN`且live route disabled。
 - 外接碟未加密，只能放公開hash-pinned基模；LINE、private dataset、adapter、log與fused model固定留`/Users/pagemacmini/.maplab/a6-hermes-training/mlx/`的owner-only root。
 - 真正SFT前仍需20/20具名真人rubric labels、scorer >=18/20 exact且安全mismatch=0、完整DLP／rights manifest，再建立30–50組Owner-corrected gold。SFT確認提升後才收chosen／rejected評估DPO／KTO。
+- Owner明示禁止Hermes權重訓練使用本機Ollama；不得沿用`loopback-ollama-only` supervisor，也不得有Ollama env／URL／provider／process fallback。唯一候選路徑為離線MLX；執行前preflight固定batch1、grad accumulation1、seq256、2 layers、最多200 iterations／3600秒與最多4GB MLX allocator budget，並要求超限終止。Allocator budget不是OS硬上限，正式runner仍須逐step讀peak memory與system memory pressure，失敗adapter隔離且不可publish。
+- 2026-09-01實際DLP零網路掃描20,256 records／40,983,805 bytes，0 invalid JSON、0 scan errors；目前有5,977 high-confidence與7,606 review-required pattern hits，且rights／retention／named review仍PENDING，所以receipt明確`BLOCKED / eligible_for_offline_training=false`。Pattern hits不等於unique persons或已確認外洩；必須在本機完成去識別與具名審閱後重跑，不能把原文送OpenRouter或其他第三方。
 - Canonical method／receipt：`docs/hermes-distillation-method-v1.md`、`tools/hermes_mlx_lab/`、`reviews/HERMES-MLX-DISTILLATION-20260901/install-smoke-receipt.json`。
 
 ## 分階段升級
@@ -96,4 +109,4 @@ Owner／Mina 貼客人訊息，Hermes 回草稿；同時顯示「已知／缺欄
 
 Resume Prompt：
 
-> 我是接手 Hermes LINE 訓練的 Codex / A1。先讀 CURRENT_STATUS、pitfalls、active Task Card、`.agents/skills/sol56-hermes-training-retrospective/SKILL.md`、durable job、rubric guide、OpenRouter validation、`docs/hermes-distillation-method-v1.md`與MLX receipt。先用 What／So What／Now What 重建事實、因果斷點與根治防線。舊12輪是random two-shot evaluation，不是權重訓練；MLX 3-step smoke只證明本機可更新adapter，`QUALITY_NOT_PROVEN`且live route disabled。每日950是`:free` provider request ceiling，不是目標。下一步先完成20/20具名真人labels，校正scorer到>=18/20且安全mismatch=0，再做DLP與30–50組Owner-corrected gold；外接碟只放公開基模，私有資料與adapter留owner-only root。此前不得外送原始LINE、customer send或接正式gateway。
+> 我是接手 Hermes LINE→Sheets 助手的 Codex / A1。先讀 CURRENT_STATUS、pitfalls、active Task Card、`.agents/skills/sol56-hermes-training-retrospective/SKILL.md`、`docs/hermes-line-sheets-assistant-flow-v1.md`、`config/hermes-line-sheets-assistant-v1.json` 與本計畫。先以 Owner 最新邊界驗模板、route、Sheets API 與 regression fixtures：每輪只問一題；不報價、不選菜、不承諾檔期、不判定飲食安全；只建 neutral Sheet shell 或記錄同一 quote_id 的修改原話。舊 annotation workbook 已關閉且不再是 next action。先跑 local tests／dry-run；沒有 live 測試授權不得 `clasp push`、建立真實客戶 Sheet、開啟 LINE sender、執行 optimizer／Ollama 或外送原始 LINE。模型訓練仍受 DLP／rights／human gold／holdout gate 阻擋，不能用 local contract PASS 冒充權重品質。

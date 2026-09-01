@@ -61,3 +61,17 @@
 ## 這個案例留下的永久句子
 
 > 呼叫次數不是學習，輸出改變不是改善，基礎建設通過不是品質通過；只有可重建的權重差異、固定盲測提升與真實人工採用，才能叫訓練成功。
+
+## 2026-09-01 補充：從回覆負例追到整條商務 route
+
+Owner 在看過 annotation workbook 後指出三種大雷：固定報價並保留檔期、宣稱所有人都能吃且不用確認、保證價格與檔期後要求直接下訂。問題不只是模型答錯，也不是工作簿格式；真正根因是監工只看欄位／產物，且客服回覆與會自動帶訂金、費用、菜單、條款的舊報價路徑相連。
+
+本次以 What／So What／Now What 重設為：
+
+- What：負例未先明標禁止，歷史模板被誤當現行 authority，舊 Sheet action 仍有商務副作用。
+- So What：只改 prompt 或回覆字句無法阻止下游自動計價；需沿 customer copy→state→router→payload→Sheet→human approval 查完整因果鏈。
+- Now What：Hermes 每輪只問一題，只能建立 neutral Sheet shell 或記錄客人 revision 原話；模板、route、payload allowlist、三句 regression、pitfall、Task Card、receipt、Resume Prompt 同步更新。
+
+新增永久句子：
+
+> 負例不是候選、歷史不是 authority、安靜文案不是安全 route；客服合格必須一路證明到工具副作用仍不越權。

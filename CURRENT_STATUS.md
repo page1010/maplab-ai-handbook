@@ -5,20 +5,22 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-09-01 Codex A0/A1/A2｜SEO 喚醒已改為 evidence-gated：無模型 probe 先判斷差異，Hermes 只接一個 Task Card 綁定的 proposal-only action；舊 weekly model patrol 已暫停、每日 `all_gaps_drafted` 空轉已卸載。Hermes MLX 訓練 job 仍為 OWNER_REVIEW。完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-09-01 Codex A0/A1｜Hermes Owner 邊界已改為「一問一答，只協助調用 Google Sheets」；禁止報價、選菜、檔期／訂單承諾與飲食安全判定。紅隊已推翻較早的 `LOCAL_CONTRACT_PASS`，目前為 `SHEETS_REDTEAM_BLOCKED / CHECKPOINT_SAVED / LIVE_NOT_DEPLOYED`；接手計畫在 `workbook/reviews/JOB-A6-HERMES-SHEETS-ASSISTANT-20260901/checkpoint_handoff.md`。本機 Ollama fallback 停用，真人標注與 MLX training 均不是 next action。完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
 ## Active Task
 
-- `handoff/tasks/T-A2-HERMES-SEO-COACH-001.md` — `RUNNING`
-- Hermes durable job：`MAPJOB-20260901-120729-7b2afc`
-- Canonical receipt：`workbook/reviews/MAPLAB-DURABLE-JOBS/MAPJOB-20260901-120729-7b2afc/job.json`
-- Safety boundary：公開讀取與 repo proposal/receipt 可執行；live WordPress／Ads／Rank Math write、對客發訊與私密第三方外送均為 0。
+- `handoff/tasks/T-A6-HERMES-LINE-GYM-001.md` — `OPENROUTER_OUTPUT_PASS / OLLAMA_FALLBACK_DISABLED / KEY_ROTATION_REQUIRED / SHEETS_REDTEAM_BLOCKED / CHECKPOINT_SAVED / LIVE_NOT_DEPLOYED`
+- Canonical flow：`docs/hermes-line-sheets-assistant-flow-v1.md`
+- Machine contract：`config/hermes-line-sheets-assistant-v1.json`
+- Validation receipt：`workbook/reviews/JOB-A6-HERMES-SHEETS-ASSISTANT-20260901/validation_report.md`
+- Provider receipt：`workbook/reviews/JOB-A6-HERMES-OPENROUTER-REPLACEMENT-20260901/validation_receipt.md`
+- Safety boundary：Hermes 只可建 `createQuoteShell`／`appendQuoteRevisionRequest` payload；live GAS deploy、真實 Sheet write、LINE 對客發訊、價格／菜單／檔期／飲食判斷與私密第三方外送均為 0。
 
 ## Next Bounded Action
 
-Hermes 交 A2/Codex local SEO worker 只產 `workbook/reviews/JOB-A2-SEO-COACH-20260901/press_conference_faq_jsonld_patch_proposal.md`：正規化 post 879 FAQ JSON-LD 的一個 raw newline，在本機 parser 證明 `2/3 -> 3/3`，保持 visible copy 與固定 holdout 不變；不得寫 live WordPress。
+依 checkpoint 先清除 legacy `scripts/apps-script/Code.gs` abandoned task diff，再完成 isolated GAS 的 schema、簽章、重放、乾淨表、冪等與 case↔quote lineage mocked tests，重寫 receipt 後才可重審。未授權前不得部署、建立真實客戶 Sheet、開啟 LINE sender或外送 raw LINE／客資；不再派真人標注、本機 Ollama 或 MLX training。
 
 ## Resume Prompt
 

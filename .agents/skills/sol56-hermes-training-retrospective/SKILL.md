@@ -69,6 +69,14 @@ retry 與 fallback 各自算一個 provider attempt；同一 example 可以消�
 4. 若結果偏離，是資料、評分、模型、系統 authority、執行 route 還是治理失效？
 5. 下一個實驗要看到什麼結果，才會推翻目前假設？
 
+客服／商務任務還要先做 **authority-first route audit**，不可只審最後一句文案：
+
+```text
+customer copy → extracted state → action router → API payload → downstream side effect → human approval
+```
+
+任一層仍會自動帶價格、菜單、檔期、飲食安全、付款、條款或成交狀態，就不能因表面回覆較保守而判定安全。呈現給 Owner 的 specimen 必須先明標 `APPROVED_PATTERN / PROHIBITED_NEGATIVE / HISTORICAL_REFERENCE`；禁止把負例或過時歷史答案混在候選清單中讓人猜。
+
 依失敗機制選方法，不依 GitHub 熱度選工具：
 
 | 失敗訊號 | 優先處理 | 不要先做 |
@@ -93,6 +101,8 @@ retry 與 fallback 各自算一個 provider attempt；同一 example 可以消�
 2. **Contain**：安全錯誤、資料漂移、manifest 漂移或無改善時 fail closed／停止消耗。
 3. **Correct**：改正真正機制；每次實驗只有一個主要變因。
 4. **Institutionalize**：更新 `pitfalls.md`、Task Card、receipt、Resume Prompt；只有跨任務可重用的判斷才更新 Skill。
+
+若根因是商務 authority 漂移，Institutionalize 必須同輪檢查並同步四層：模板／prompt contract、runtime route allowlist、外部工具或 API payload allowlist、Owner 原句 regression fixtures。只改其中一層不算根治。
 
 若本次任務是唯讀審查，第四層只輸出 `PROPOSED_WRITEBACKS / NOT_APPLIED`；未獲寫入授權不得把建議冒充已回灌。
 

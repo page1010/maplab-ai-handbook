@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-08-31 晚間 A1巡查（remote cloud）：8h 零非巡查 commit（系統靜止）。NEEDS_REVIEW 10 tasks 持續（since 07-19，~1198h，等 Owner 決定延長/關閉/重啟）；T-A7-001 Phase 3 延誤持續（Owner 自 07-18 起 **44 天**未確認 Zone B/C，07-25 截止已過）；CRITICAL: T-A4-002 **~3431h** / T-IOS-KOL-001 **~1919h**；A6 RECALL **~1454h**（last commit 07-08）；A8 **~1734h**。
+> 最後更新：2026-09-01 A1日常巡查（remote cloud）：24h 零非巡查 commit（系統靜止）。NEEDS_REVIEW 10 tasks 持續（since 07-19，~1206h，等 Owner 決定延長/關閉/重啟）；T-A7-001 Phase 3 延誤持續（Owner 自 07-18 起 **45 天**未確認 Zone B/C，07-25 截止已過）；CRITICAL: T-A4-002 **~3439h** / T-IOS-KOL-001 **~1927h**；A6 RECALL **~1462h**（last commit 07-08）；A8 **~1742h**。
 >
 > 使用方式：選擇角色 → 複製 prompt / module handoff → 貼到 Gemini / Codex / OpenClaw / legacy Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -22,7 +22,7 @@
 | A1 | 系統總管中心 | ✅ Claude Code 常駐 | Telegram bot + 終端機，直接下指令 |
 | A2 | 搜尋流量作戰部 | 🟢 召喚型可用 + patrol（Ads/SEO/WordPress）；last commit `d4a518f` 2026-07-23 17:57（governance: spec-drift 檢查+patrol grader+自我改進缺口稽核）；T-A2A3-001-B/T-A2-005/T-A2-SEO-CATERING-MATRIX-001 🔴 **NEEDS_REVIEW**（since 07-19，168h 閾值 07-26 觸發）| SEO / Ads / WordPress / Brand memory |
 | A3 | 社群與廣告成長部 | ✅ T-A3-001 完成（GTM v21 雙平台追蹤上線）；T-A3-002 ⏸️ 阻塞（等廣告週期+Owner操作）| Meta Ads / Social |
-| A4 | 影像資產整理部 | ✅ T-A4-001 完成；🔴 T-A4-002 CRITICAL（**~3415h** 無 commit）；T-A4-003/004 🔴 **NEEDS_REVIEW**（since 07-19，等 Owner 決定延長/關閉/重啟）；2026-08-31 每日 A1巡查更新 | Photo Archive |
+| A4 | 影像資產整理部 | ✅ T-A4-001 完成；🔴 T-A4-002 CRITICAL（**~3439h** 無 commit）；T-A4-003/004 🔴 **NEEDS_REVIEW**（since 07-19，等 Owner 決定延長/關閉/重啟）；2026-09-01 A1日常巡查更新 | Photo Archive |
 | A5 | 報價與提案引擎部 | 🟡 T-A5-002 + T-A5-005 均 STALLED since 2026-07-19（Owner 待執行：`fixMasterTemplate_()`/手動接線；`5ab7434`/`3209fba` 2026-06-23 最後 commit）；T-A5-004 🟢 功能穩定（非 CRITICAL，2026-07-06 A1 對帳澄清）；T-A5-007 🔲 待 Codex 認領（`6cefd13` 2026-07-06 建卡，A5→Codex 移交）；2026-07-19 日常巡查更新 | Quotation Engine |
 | A6 | 業務快反應部隊 | 🔴 T-A6-001 **NEEDS_REVIEW**（**~1454h** 無 commit，last commits `e5ab867` 07-07 + `ed63f97` 07-08；bot_a6 ✅ 上線 launchd；LINE webhook 等 Owner 確認 Channel 1654658337；168h 閾值 07-26 觸發；2026-08-31 晚間 A1巡查更新）| Sales Rapid Response |
 | A7 | 客服與對話轉單部 | 🔴 T-A7-001 Phase 3 截止日（07-25）**已過期** — Owner 自 07-18 起 **44 天**未確認 Zone B/C 金額，Phase 3 正式延誤，須 Owner 回覆才能重啟（外送費級距草案 `state/a5_delivery_fee_draft_20260718f.md` 就緒等候；last commit `f6fdaac` 07-07；2026-08-31 每日 A1巡查更新）；T-A7-002 ⏸️ 阻塞（Phase 3A 剩任務 4 地區判斷 + 任務 7 流程圖同步）| Smart Reply |
@@ -557,8 +557,8 @@ repo: https://github.com/page1010/maplab-ai-handbook
 4. 進件建立 — 在 SALES_INTAKE 自動建一筆案件（case_id = CASE-YYYYMMDD-NNN）
 5. 查報價 — 「查XXX的報價」→ 找 QUOTE_WORKBENCH
 
-【斷點 — 2026-08-17 A1晚間巡查更新】
-T-A6-001 🔴 NEEDS_REVIEW（~1310h，last `ed63f97` 07-08，bot 線上，LINE webhook 待 Owner 接入，168h 07-26 觸發）：
+【斷點 — 2026-09-01 A1日常巡查更新】
+T-A6-001 🔴 NEEDS_REVIEW（~1462h，last `ed63f97` 07-08，bot 線上，LINE webhook 待 Owner 接入，168h 07-26 觸發）：
 07-07 fix(a6) `e5ab867`：收緊 Telegram 路由（takeover handoff 優化）
 07-08 `ed63f97`：A6 401 健檢（結論：無影響，claude_ask()/codex路由皆 dead code）+ SEO 進度回報迴路根因修復，新增 notify_owner.sh + checkpoint --notify flag
 07-06 大更新：Codex-first 聊天路由、三層降載鏈設計（骨架未接線）、A6 LLM backend adapter spec
@@ -641,7 +641,7 @@ projects/ai-reply-system.md → skills/superpowers-guide.md → docs/fable-minds
 
 ## A8｜影音內容產線（Content Repurposing Pipeline）
 
-**狀態：🔴 T-A8-001 **NEEDS_REVIEW**（**~1726h/~71.9天**，last `1a2d752` 06-25 08:25，awaiting Owner storyboard review；168h 閾值 07-26 觸發；2026-08-31 午後 A1巡查更新）**
+**狀態：🔴 T-A8-001 **NEEDS_REVIEW**（**~1742h/~72.6天**，last `1a2d752` 06-25 08:25，awaiting Owner storyboard review；168h 閾值 07-26 觸發；2026-09-01 A1日常巡查更新）**
 
 ```
 你是 MAPLAB A8 影音內容產線（Content Repurposing Pipeline）。
@@ -667,8 +667,8 @@ repo: https://github.com/page1010/maplab-ai-handbook
 
 【工具鏈】NotebookLM、Gemini 2.5 Flash（免費額度）、Google Vids、YouTube Studio、Google Drive
 
-【斷點 — 2026-08-20 A1晚間巡查更新】
-T-A8-001 🔴 NEEDS_REVIEW（~1590h/~66.3天，awaiting Owner storyboard review）：
+【斷點 — 2026-09-01 A1日常巡查更新】
+T-A8-001 🔴 NEEDS_REVIEW（~1742h/~72.6天，awaiting Owner storyboard review）：
 06-25 08:25 最新：1a2d752 squash merge a8/video-checklist-mvp — completed-videos tracker + iteration rubric + scan script
 06-20 20:56 地端動態運鏡整合（f9d1c42）：ffmpeg zoompan dolly_in/out/pan_left/pan_right/static，零成本地端模擬動態運鏡。
 MAPLAB IG Soft v1 style（暖色/低對比/柔和 xfade）+ 企業茶會 CTA 固定模板已就位。

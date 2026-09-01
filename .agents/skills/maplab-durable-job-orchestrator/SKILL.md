@@ -81,6 +81,7 @@ For a private workflow, the local domain worker performs the action and writes a
 
 - A8: read `skills/a8-produce-to-publish-sop.md` and the active A8 Task Card. Continue research, generation, render, full playback QA, packaging, and any already-authorized private/unlisted upload until an Owner-viewable link/artifact exists. Do not treat an intermediate review renderer as final.
 - Hermes LINE: read `docs/hermes-line-reply-training-plan.md` and `handoff/tasks/T-A6-HERMES-LINE-GYM-001.md`. Run bounded repair rounds, update `loop_state.json` and `current_lessons.md`, and continue toward the seven-run threshold. Never connect the training loop to customer sending.
+- SEO patrol: read `handoff/tasks/T-A2-HERMES-SEO-COACH-001.md` and `.agents/skills/maplab-seo-coach-patrol/SKILL.md`. A deterministic public sensor decides material delta first; Hermes queues at most one proposal-only A2/Codex domain action. WordPress/Ads/Rank Math writes, customer messages, and private-data egress remain disabled.
 - Public research: invoke the hardened DeerFlow adapter automatically when deep or multi-source public research materially helps. Preserve sources and a receipt; no slash command is required.
 
 ## Completion and wake-up rules

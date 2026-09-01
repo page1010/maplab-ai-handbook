@@ -25,6 +25,7 @@ except ImportError:  # Direct script/gateway execution.
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 JOB_ROOT = REPO_ROOT / "workbook" / "reviews" / "MAPLAB-DURABLE-JOBS"
+LINKED_RECEIPT_ROOT = REPO_ROOT / "workbook" / "reviews" / "A6-HERMES-TASKS"
 LONG_RUN_RE = re.compile(
     r"(持續|繼續跑|多跑|多輪|幾輪|直到|跑完|全流程|端到端|交付成果|給我看成果|不要停|別停|"
     r"長時間|深入研究|深度研究|至少\s*\d+\s*個?來源|完成後通知|背景跑|自動接續|反覆優化|"
@@ -42,6 +43,39 @@ LINE_TRAINING_RE = re.compile(
     re.IGNORECASE,
 )
 RESEARCH_RE = re.compile(r"(深度研究|多來源|比較研究|工具研究|GitHub|競品研究|查證|研究)", re.IGNORECASE)
+SEO_PATROL_RE = re.compile(
+    r"(\bSEO\b|搜尋引擎|sitemap|canonical|結構化資料|schema|"
+    r"(?:網站|WordPress).{0,18}(?:巡查|巡檢|索引|技術檢查))",
+    re.IGNORECASE,
+)
+SEO_PATROL_ACTION_RE = re.compile(
+    r"(巡查|巡檢|檢查|基線|差異|delta|每週|每日|有變化|派工|優化)",
+    re.IGNORECASE,
+)
+SEO_EXTERNAL_MUTATION_RE = re.compile(
+    r"((?:改|修改|更新|發布|上線|寫入|刪除|調整|出價|啟用|停用|切換|儲存|部署).{0,32}"
+    r"(?:WordPress|\bWP\b|Rank\s*Math|Google\s*Ads|Meta\s*Ads|廣告後台|廣告預算|廣告受眾))|"
+    r"((?:WordPress|\bWP\b|Rank\s*Math|Google\s*Ads|Meta\s*Ads|廣告後台|廣告預算|廣告受眾).{0,32}"
+    r"(?:改|修改|更新|發布|上線|寫入|刪除|調整|出價|啟用|停用|切換|儲存|部署))",
+    re.IGNORECASE,
+)
+SEO_PRIVATE_SOURCE_RE = re.compile(
+    r"(客訊|客資|客戶資料|客戶對話|客戶訊息|客戶紀錄|LINE.{0,12}(?:對話|訊息|紀錄)|瀏覽器登入態|私密資料|私人檔案)",
+    re.IGNORECASE,
+)
+SEO_PRIVATE_USE_RE = re.compile(r"(使用|讀取|分析|匯入|上傳|外送|傳給|交給|提供|同步)", re.IGNORECASE)
+SEO_CUSTOMER_SEND_RE = re.compile(
+    r"((?:傳送|發送|通知|回覆).{0,20}(?:客戶|客人|LINE))|"
+    r"((?:客戶|客人|LINE).{0,20}(?:傳送|發送|通知|回覆))|"
+    r"((?:^|[\s，,；;並])(?:傳|發)\s*(?:給)?\s*(?:客戶|客人|LINE))|"
+    r"((?:客戶|客人|LINE)\s*(?:傳|發)(?:送)?)|"
+    r"(上傳.{0,20}(?:給|到)\s*(?:客戶|客人|LINE))",
+    re.IGNORECASE,
+)
+PRIVATE_THIRD_PARTY_EGRESS_RE = re.compile(
+    r"(OpenRouter|DeerFlow|第三方|外部模型|雲端模型|public\s+research\s+provider)",
+    re.IGNORECASE,
+)
 SMALL_TALK_RE = re.compile(r"^\s*(你好|哈囉|hello|hi|謝謝|thanks|在嗎)[！!。.]?\s*$", re.IGNORECASE)
 FORBIDDEN_DURABLE_RE = re.compile(
     r"(下單|買入|賣出|轉帳|匯款|券商|broker|刪除|rm\s|sudo|"
@@ -83,6 +117,15 @@ def classify_durable_intent(text: str) -> DurableIntent | None:
             adapter="codex-heartbeat+a8-domain-worker",
             reason="A8 media workflow spans generation, QA and delivery",
         )
+    if SEO_PATROL_RE.search(normalized) and (
+        SEO_PATROL_ACTION_RE.search(normalized) or LONG_RUN_RE.search(normalized)
+    ):
+        return DurableIntent(
+            job_type="seo-patrol",
+            data_class="public",
+            adapter="codex-heartbeat+maplab-seo-coach-patrol",
+            reason="SEO patrol requires a material-delta gate and bounded local follow-up",
+        )
     if RESEARCH_RE.search(normalized) and (LONG_RUN_RE.search(normalized) or len(RESEARCH_RE.findall(normalized)) > 1):
         _query, rejection = parse_public_query(f"/research-public {normalized}")
         if not rejection:
@@ -107,6 +150,18 @@ def validate_durable_request(text: str, intent: DurableIntent) -> str | None:
 
     if FORBIDDEN_DURABLE_RE.search(text or ""):
         return "持久任務含交易、刪除、憑證或未核准對客發送要求，已 fail closed"
+    if intent.job_type in {"seo-patrol", "general-agent"} and SEO_EXTERNAL_MUTATION_RE.search(text or ""):
+        return "SEO 持久任務含未核准外部寫入；只允許公開讀取、repo receipt 與 approval-ready proposal"
+    if SEO_CUSTOMER_SEND_RE.search(text or ""):
+        return "持久任務不得對客或 LINE 發訊，已 fail closed"
+    if SEO_PRIVATE_SOURCE_RE.search(text or "") and PRIVATE_THIRD_PARTY_EGRESS_RE.search(text or ""):
+        return "持久任務不得把客訊或私密資料交給第三方模型，已 fail closed"
+    if (
+        intent.job_type == "seo-patrol"
+        and SEO_PRIVATE_SOURCE_RE.search(text or "")
+        and SEO_PRIVATE_USE_RE.search(text or "")
+    ):
+        return "SEO patrol 只接受公開資料；客訊或私密資料使用或外送已 fail closed"
     if intent.job_type == "a8-production" and PUBLICATION_RE.search(text or "") and not MEDIA_PLATFORM_RE.search(text or ""):
         return "公開發布未指定受控影音平台；先只允許生成、QA 與審核包"
     return None
@@ -120,6 +175,14 @@ def infer_authorization(text: str, intent: DurableIntent) -> dict:
         "draft_upload": bool(re.search(r"(上傳|upload).{0,20}(YouTube|TikTok|Instagram|Pinterest)|(?:YouTube|TikTok|Instagram|Pinterest).{0,20}(上傳|upload)", text, re.IGNORECASE)),
         "publication": bool(re.search(r"(發布|公開|publish).{0,20}(YouTube|TikTok|Instagram|Pinterest)|(?:YouTube|TikTok|Instagram|Pinterest).{0,20}(發布|公開|publish)", text, re.IGNORECASE)),
         "offline_training": intent.job_type == "hermes-line-training",
+        "public_site_read": intent.job_type == "seo-patrol",
+        "repo_report_write": intent.job_type == "seo-patrol",
+        "external_system_write": False,
+        "private_third_party_egress": False,
+        "wordpress_write": False,
+        "ads_write": False,
+        "rank_math_write": False,
+        "private_data_egress": False,
         "customer_send": False,
     }
     return authorization
@@ -143,6 +206,13 @@ def acceptance_for(intent: DurableIntent, authorization: dict) -> list[str]:
         ]
     if intent.job_type == "public-research":
         return ["research artifact", "source URLs", "DeerFlow/config/provider receipt"]
+    if intent.job_type == "seo-patrol":
+        return [
+            "public baseline plus previous material-delta comparison",
+            "one bounded SEO artifact tied to the active Task Card",
+            "external_writes=0, customer_send=0, private_third_party_egress=0",
+            "durable receipt and resume prompt",
+        ]
     return ["artifact or live readback matching the Owner goal", "durable receipt", "resume prompt"]
 
 
@@ -233,14 +303,18 @@ def create_durable_job(
         "a8-production": "Codex heartbeat reads the A8 SOP and active Task Card, then executes the first safe unfinished phase.",
         "hermes-line-training": "Start the fixed local multi-round training supervisor against the protected local cache.",
         "public-research": "Start the hardened DeerFlow public-research worker with the current request only.",
+        "seo-patrol": "Read the active A2 SEO Task Card and maplab-seo-coach-patrol Skill, then execute exactly one public-safe bounded action; no material delta means NO_DELTA_NO_DISPATCH.",
         "general-agent": "Codex heartbeat selects and executes the first bounded action from the Owner goal.",
     }[intent.job_type]
+    requester_channel = "telegram" if chat_id is not None else "local-heartbeat"
+    notification_policy = "telegram-terminal" if chat_id is not None else "none"
     job = {
         "schema_version": "maplab.durable-job.v1",
         "job_id": job_id,
         "created_at": now,
         "updated_at": now,
-        "requester": {"channel": "telegram", "owner_user_id": owner_user_id, "chat_id": chat_id, "chat_type": chat_type},
+        "requester": {"channel": requester_channel, "owner_user_id": owner_user_id, "chat_id": chat_id, "chat_type": chat_type},
+        "notification_policy": notification_policy,
         "request": request[:4000],
         "request_sha256": hashlib.sha256(request.encode("utf-8")).hexdigest(),
         "job_type": intent.job_type,
@@ -252,17 +326,28 @@ def create_durable_job(
         "authorization": authorization,
         "acceptance": acceptance_for(intent, authorization),
         "attempt": 0,
-        "max_attempts": 12,
+        "max_attempts": 3 if intent.job_type == "seo-patrol" else 12,
         "wall_deadline": None,
-        "current_phase": "intake",
+        "current_phase": "sensor-delta-intake" if intent.job_type == "seo-patrol" else "intake",
         "last_result": None,
         "next_bounded_action": next_action,
+        "objective_metrics_before": {},
+        "objective_metrics_after": {},
+        "owner_acceptance_delta": 0,
+        "unlocked_next_action": next_action,
+        "attempt_consumed": False,
         "artifacts": [],
         "history": [{"at": now, "from": None, "to": "ACCEPTED", "reason": intent.reason}],
         "resume_prompt": (
             "我是 MAPLAB durable-job executor。先讀 CURRENT_STATUS.md、pitfalls.md、"
             f".agents/skills/maplab-durable-job-orchestrator/SKILL.md 與 {job_dir / 'job.json'}。"
-            "只執行 next_bounded_action；驗證 artifact/live surface 後更新 state、history、next action。"
+            + (
+                "SEO任務另讀handoff/tasks/T-A2-HERMES-SEO-COACH-001.md與"
+                ".agents/skills/maplab-seo-coach-patrol/SKILL.md。"
+                if intent.job_type == "seo-patrol"
+                else ""
+            )
+            + "只執行 next_bounded_action；驗證 artifact/live surface 後更新 state、history、next action。"
             "已有 authorization 不要重問；新 spend、私密資料新第三方、公開發布或不可逆動作才進 OWNER_REVIEW。"
         ),
     }
@@ -294,20 +379,44 @@ def _reconcile_linked_receipt(job_path: Path, job: dict) -> dict:
     if not linked or job.get("state") not in {"ACCEPTED", "RUNNING", "WAITING_EXTERNAL"}:
         return job
     receipt_path = Path(str(linked)).resolve()
+    linked_root = LINKED_RECEIPT_ROOT.resolve()
+    if (
+        receipt_path.name != "receipt.json"
+        or receipt_path.parent.parent != linked_root
+        or not receipt_path.parent.name.startswith("DFR-")
+    ):
+        return job
     try:
         receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
     except (OSError, ValueError):
         return job
+    if (
+        receipt.get("action") != "deerflow-public-research"
+        or receipt.get("parent_job_id") != job.get("job_id")
+        or receipt.get("request_sha256") != job.get("request_sha256")
+    ):
+        return job
     status = receipt.get("status")
     if status not in {"completed", "failed"}:
         return job
+    artifact_path: Path | None = None
+    if status == "completed":
+        artifact_value = receipt.get("artifact_path")
+        artifact_sha256 = receipt.get("artifact_sha256")
+        if not isinstance(artifact_value, str) or not isinstance(artifact_sha256, str):
+            return job
+        artifact_path = Path(artifact_value).resolve()
+        if artifact_path.parent != receipt_path.parent or not artifact_path.is_file():
+            return job
+        if hashlib.sha256(artifact_path.read_bytes()).hexdigest() != artifact_sha256:
+            return job
     artifacts = list(job.get("artifacts") or [])
-    if receipt.get("artifact_path"):
+    if artifact_path is not None:
         artifacts.append(
             {
-                "path": receipt["artifact_path"],
+                "path": str(artifact_path),
                 "sha256": receipt.get("artifact_sha256"),
-                "readback": "pending-owner-notification",
+                "readback": "hash-verified-pending-owner-notification",
             }
         )
     job["artifacts"] = artifacts
@@ -343,6 +452,8 @@ def pending_durable_notifications() -> list[dict]:
         except (OSError, ValueError, TypeError):
             continue
         if job.get("state") not in TERMINAL_STATES:
+            continue
+        if job.get("notification_policy") == "none":
             continue
         marker_path = job_path.parent / "notification.json"
         try:

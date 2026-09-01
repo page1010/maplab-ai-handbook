@@ -14,6 +14,7 @@ import time
 import traceback
 import urllib.error
 import urllib.request
+from dataclasses import dataclass
 from pathlib import Path
 
 try:
@@ -37,6 +38,7 @@ try:
         telegram_summary,
     )
     from .hermes_durable_job_router import (
+        SEO_CUSTOMER_SEND_RE,
         durable_completion_summary,
         mark_durable_notified,
         pending_durable_notifications,
@@ -62,6 +64,7 @@ except ImportError:  # Direct launchd/script execution.
         telegram_summary,
     )
     from hermes_durable_job_router import (
+        SEO_CUSTOMER_SEND_RE,
         durable_completion_summary,
         mark_durable_notified,
         pending_durable_notifications,
@@ -103,6 +106,19 @@ CAPABILITY_MARKERS = (
     "零存取",
 )
 SECRET_VALUES: set[str] = set()
+PROVIDER_PRIVATE_RE = re.compile(
+    r"(客訊|客資|客戶(?:資料|對話|訊息|紀錄)|LINE.{0,12}(?:對話|訊息|紀錄)|"
+    r"瀏覽器登入態|cookie|secret|token|API\s*key|密碼|金鑰|"
+    r"(?<!\d)09\d{8}(?!\d)|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})",
+    re.IGNORECASE,
+)
+
+
+@dataclass(frozen=True)
+class GatewayRoute:
+    disposition: str
+    request: str | None = None
+    reason: str | None = None
 
 
 def register_secret(value: str | None) -> None:
@@ -280,6 +296,9 @@ def answer(
     history: list[dict],
     user_text: str,
 ) -> tuple[str | None, str | None]:
+    if provider_egress_rejection(history, user_text):
+        log("provider egress blocked by private-data DLP")
+        return None, None
     messages = [{"role": "system", "content": system_prompt(chain)}] + history + [
         {"role": "user", "content": user_text}
     ]
@@ -332,6 +351,15 @@ def normalize_command(text: str, bot_username: str | None) -> str:
     )
 
 
+def provider_egress_rejection(history: list[dict], user_text: str) -> str | None:
+    candidate = "\n".join(
+        [item.get("content", "") for item in history if isinstance(item, dict)] + [user_text]
+    )
+    if PROVIDER_PRIVATE_RE.search(candidate):
+        return "訊息或對話歷史含客資、LINE 對話、登入態、憑證或直接識別資料；不得送模型 provider"
+    return None
+
+
 def is_group_addressed(message: dict, bot_username: str | None, bot_id: int | None) -> bool:
     chat_type = (message.get("chat") or {}).get("type")
     if chat_type == "private":
@@ -343,18 +371,32 @@ def is_group_addressed(message: dict, bot_username: str | None, bot_id: int | No
     return bool(bot_id and replied_to.get("id") == bot_id)
 
 
-def extract_action_request(text: str) -> str | None:
+def route_gateway_text(text: str, history: list[dict] | None = None) -> GatewayRoute:
     for prefix in EXECUTE_PREFIXES:
         if text.startswith(prefix):
-            return text[len(prefix) :].strip()
-    action, _reason = classify(text)
+            return GatewayRoute("EXECUTE", request=text[len(prefix) :].strip())
+    if SEO_CUSTOMER_SEND_RE.search(text):
+        return GatewayRoute("REJECT", request=text, reason="gateway 不得執行對客或 LINE 發送")
+    action, reason = classify(text)
     if action:
-        return text
+        return GatewayRoute("EXECUTE", request=text)
+    if reason:
+        return GatewayRoute("REJECT", request=text, reason=reason)
     if text in {"/status", "/runtime"}:
-        return "runtime-status"
+        return GatewayRoute("EXECUTE", request="runtime-status")
     if text in {"/signalstatus", "/signals"}:
-        return "signal-status"
-    return None
+        return GatewayRoute("EXECUTE", request="signal-status")
+    dlp_reason = provider_egress_rejection(history or [], text)
+    if dlp_reason:
+        return GatewayRoute("REJECT", request=text, reason=dlp_reason)
+    return GatewayRoute("CHAT")
+
+
+def extract_action_request(text: str) -> str | None:
+    """Compatibility wrapper; the gateway itself uses the typed route."""
+
+    route = route_gateway_text(text)
+    return route.request if route.disposition == "EXECUTE" else None
 
 
 def _private_write_bytes(path: Path, payload: bytes) -> None:
@@ -551,10 +593,10 @@ def main() -> None:
                     reply = format_capabilities(chain, ACTIONS.keys())
                     tg_call(token, "sendMessage", {"chat_id": chat_id, "text": reply[:MAX_REPLY]})
                     continue
-                request = extract_action_request(text)
-                if request is not None:
+                route = route_gateway_text(text, history)
+                if route.disposition in {"EXECUTE", "REJECT"}:
                     receipt = execute_task(
-                        request,
+                        route.request or text,
                         owner,
                         chat_id=chat_id,
                         chat_type=chat.get("type"),

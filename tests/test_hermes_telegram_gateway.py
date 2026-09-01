@@ -36,6 +36,42 @@ class HermesTelegramGatewayTest(unittest.TestCase):
             "讓 A8 生歌、做影片並上傳 YouTube 給我看",
         )
 
+    def test_gateway_preserves_executor_rejections_instead_of_chat_fallback(self):
+        dangerous = (
+            "每週檢查網站 SEO 並自動調整 Google Ads 出價",
+            "每日 SEO 巡檢並立即啟用 Rank Math 設定",
+            "持續 SEO 巡查並把客戶對話交給 OpenRouter 分析",
+            "持續 SEO 巡查並發 LINE 給客戶",
+        )
+        for text in dangerous:
+            with self.subTest(text=text):
+                route = gateway.route_gateway_text(text, [])
+                self.assertEqual(route.disposition, "REJECT")
+                self.assertEqual(route.request, text)
+                self.assertTrue(route.reason)
+                self.assertIsNone(gateway.extract_action_request(text))
+
+        safe = gateway.route_gateway_text("持續完成公開 SEO 報告並上傳到 Drive 給 Owner", [])
+        self.assertEqual(safe.disposition, "EXECUTE")
+        self.assertEqual(gateway.route_gateway_text("上傳公開報告給客戶", []).disposition, "REJECT")
+        self.assertEqual(gateway.route_gateway_text("把報告上傳到客戶 LINE", []).disposition, "REJECT")
+
+    def test_provider_dlp_blocks_private_current_text_and_history(self):
+        with mock.patch.object(gateway, "openrouter_chat", return_value="should-not-run") as provider:
+            self.assertEqual(
+                gateway.answer("key", ["model"], [], "這是客戶資料與 LINE 對話"),
+                (None, None),
+            )
+            provider.assert_not_called()
+
+        private_history = [{"role": "user", "content": "王小明 0912345678"}]
+        with mock.patch.object(gateway, "openrouter_chat", return_value="should-not-run") as provider:
+            self.assertEqual(
+                gateway.answer("key", ["model"], private_history, "繼續"),
+                (None, None),
+            )
+            provider.assert_not_called()
+
     def test_owner_group_message_requires_mention_or_reply(self):
         base = {"chat": {"type": "supergroup"}, "text": "大家早"}
         self.assertFalse(gateway.is_group_addressed(base, "maplab_a6_bot", 99))

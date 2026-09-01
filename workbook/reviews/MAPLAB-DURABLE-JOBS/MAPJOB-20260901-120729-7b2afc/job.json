@@ -1,0 +1,163 @@
+{
+  "schema_version": "maplab.durable-job.v1",
+  "job_id": "MAPJOB-20260901-120729-7b2afc",
+  "created_at": "2026-09-01T12:07:29+0800",
+  "updated_at": "2026-09-01T12:36:44+0800",
+  "requester": {
+    "channel": "local-heartbeat",
+    "owner_user_id": 0,
+    "chat_id": null,
+    "chat_type": "local"
+  },
+  "notification_policy": "none",
+  "request": "持續完成 MAPLAB 公開網站 SEO 差異巡查與單一細節提案。依 T-A2-HERMES-SEO-COACH-001 與 maplab-seo-coach-patrol，只處理本輪已驗證的 public baseline delta，先產 post 879 FAQ JSON-LD 最小 preview proposal 與 parser receipt。",
+  "request_sha256": "6ba44ccbb3b356f88e8a7ea706d8a188edc187ef253ffa6e1160142d14564fe1",
+  "job_type": "seo-patrol",
+  "adapter": "codex-heartbeat+maplab-seo-coach-patrol",
+  "route_reason": "SEO patrol requires a material-delta gate and bounded local follow-up",
+  "state": "RUNNING",
+  "data_class": "public",
+  "deerflow_view": {
+    "job_type": "seo-patrol",
+    "state": "ACCEPTED",
+    "goal_class": "SEO patrol requires a material-delta gate and bounded local follow-up",
+    "acceptance_count": 4,
+    "data_class": "public"
+  },
+  "authorization": {
+    "research": false,
+    "local_generation": false,
+    "third_party_generation": false,
+    "draft_upload": false,
+    "publication": false,
+    "offline_training": false,
+    "public_site_read": true,
+    "repo_report_write": true,
+    "external_system_write": false,
+    "private_third_party_egress": false,
+    "wordpress_write": false,
+    "ads_write": false,
+    "rank_math_write": false,
+    "private_data_egress": false,
+    "customer_send": false
+  },
+  "acceptance": [
+    "write /Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A2-SEO-COACH-20260901/press_conference_faq_jsonld_patch_proposal.md plus hermes_action_receipt.json",
+    "normalize only one raw newline, prove JSON-LD 2/3 -> 3/3 locally, and read back every fixed holdout unchanged",
+    "external_writes=0, customer_send=0, private_third_party_egress=0",
+    "coach readback before OWNER_REVIEW; no live-fix claim without an authorized WordPress write and public readback"
+  ],
+  "attempt": 0,
+  "max_attempts": 3,
+  "wall_deadline": null,
+  "current_phase": "post-879-jsonld-preview-proposal",
+  "last_result": {
+    "status": "evidence-reconciled-dispatch-ready",
+    "reason": "Replayable no-delta and 64-URL corpus receipts now bind the Owner-requested DETAIL_ACTION to one verified unaccepted public parse failure",
+    "decision": "DETAIL_ACTION",
+    "method_fingerprint": "cd028320bc30cba1c78da38ef1cb2be6a02a11c91b3873b47192463b047de5a0",
+    "corpus_method_fingerprint": "bb802a57fcb5ebcfa9fed1a5cd99b6e5fe3992488c1cee6e52e0e90888aea083",
+    "same_method_verified_delta": false,
+    "same_method_decision": "NO_DELTA_NO_DISPATCH",
+    "corpus_urls": 64,
+    "corpus_all_http_200": true,
+    "press_conference_inbound_sources": 0,
+    "network_scope": "public HTTP GET only; exact requests are bound in the baseline, no-delta, and corpus receipts",
+    "external_writes": 0,
+    "customer_send": 0,
+    "private_third_party_egress": 0,
+    "attempt_consumed": false,
+    "owner_acceptance_delta": 0,
+    "focused_tests": "29/29 PASS on task-scoped staged index",
+    "full_hermes_tests": "134/134 PASS on canonical live worktree",
+    "gateway_provider_calls_on_private_redteam": 0
+  },
+  "next_bounded_action": "產出 workbook/reviews/JOB-A2-SEO-COACH-20260901/press_conference_faq_jsonld_patch_proposal.md：只正規化 post 879 FAQ JSON-LD 的一個 raw newline，在本機 parser 證明 2/3 -> 3/3，保留 visible copy 與所有 holdout；不得寫 live WordPress。",
+  "objective_metrics_before": {
+    "json_ld_valid_blocks": "2/3",
+    "live_external_writes": 0
+  },
+  "objective_metrics_after": {
+    "json_ld_valid_blocks": "2/3",
+    "live_external_writes": 0
+  },
+  "owner_acceptance_delta": 0,
+  "unlocked_next_action": "產出 workbook/reviews/JOB-A2-SEO-COACH-20260901/press_conference_faq_jsonld_patch_proposal.md：只正規化 post 879 FAQ JSON-LD 的一個 raw newline，在本機 parser 證明 2/3 -> 3/3，保留 visible copy 與所有 holdout；不得寫 live WordPress。",
+  "attempt_consumed": false,
+  "artifacts": [
+    {
+      "path": "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A2-SEO-COACH-20260901/public_seo_baseline.json",
+      "sha256": "c20cb0cf201976f91bb7cc88eddb293e6ef0b0a0fade332a11d9964dde22353e",
+      "readback": "verified"
+    },
+    {
+      "path": "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A2-SEO-COACH-20260901/public_seo_no_delta_receipt.json",
+      "sha256": "3b6b264bddc4bb3c4a61fbf26c610f100e799f0c8d0ce1921696395086aa1ef7",
+      "readback": "verified: NO_DELTA_NO_DISPATCH"
+    },
+    {
+      "path": "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A2-SEO-COACH-20260901/public_seo_corpus_audit.json",
+      "sha256": "a97ad42b87dd5ce1e5cb83b8a079d41d564b6e6067de74f730950bb905aead82",
+      "readback": "verified: 64/64 HTTP 200; press-conference inbound=0"
+    },
+    {
+      "path": "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A2-SEO-COACH-20260901/seo_priority_matrix.md",
+      "sha256": "4eb0e80bcb23a911c73c322d0152c539514788ca02f54306005a8c150fa8eec4",
+      "readback": "verified"
+    },
+    {
+      "path": "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A2-SEO-COACH-20260901/hermes_assignment.md",
+      "sha256": "5a2656ad3701ce5944d9afe895f9f74a765986f1fa295ab60d2d7abe10c1d35f",
+      "readback": "verified"
+    },
+    {
+      "path": "/Users/pagemacmini/maplab-ai-handbook/handoff/tasks/T-A2-HERMES-SEO-COACH-001.md",
+      "sha256": "7263db041be8d2e53190068be642745d46a2f8768ba1a6201920933ef7a45842",
+      "readback": "verified"
+    },
+    {
+      "path": "/Users/pagemacmini/maplab-ai-handbook/.agents/skills/maplab-seo-coach-patrol/SKILL.md",
+      "sha256": "cfaa210eacfd0a0dcf17eca80e3b7435f56781db235437f949aba63b094bccf9",
+      "readback": "validated"
+    },
+    {
+      "path": "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A2-SEO-COACH-20260901/validation_receipt.md",
+      "sha256": "7f7b355f4044c733ea76aa14618941c4712cb6b218f200d13924f9b6935b5939",
+      "readback": "verified"
+    }
+  ],
+  "history": [
+    {
+      "at": "2026-09-01T12:07:29+0800",
+      "from": null,
+      "to": "ACCEPTED",
+      "reason": "SEO patrol requires a material-delta gate and bounded local follow-up"
+    },
+    {
+      "at": "2026-09-01T12:07:29+0800",
+      "from": "ACCEPTED",
+      "to": "RUNNING",
+      "reason": "queued-for-heartbeat"
+    },
+    {
+      "at": "2026-09-01T12:08:07+0800",
+      "from": "RUNNING",
+      "to": "RUNNING",
+      "reason": "public baseline read back; Owner-requested DETAIL_ACTION narrowed to one preview-only variable"
+    },
+    {
+      "at": "2026-09-01T12:27:46+0800",
+      "from": "RUNNING",
+      "to": "RUNNING",
+      "reason": "reconciled absolute-path artifacts, replayable no-delta/corpus receipts, exact acceptance, and 134-test source snapshot"
+    },
+    {
+      "at": "2026-09-01T12:36:44+0800",
+      "from": "RUNNING",
+      "to": "RUNNING",
+      "reason": "separated task-scoped staged-index 29-test proof from canonical live-worktree 134-test proof"
+    }
+  ],
+  "resume_prompt": "我是 MAPLAB SEO 教練接手者。先讀 CURRENT_STATUS.md、pitfalls.md、handoff/tasks/T-A2-HERMES-SEO-COACH-001.md、.agents/skills/maplab-seo-coach-patrol/SKILL.md 與本 job.json。做 plateau review 後只執行 next_bounded_action：為 post 879 FAQ JSON-LD raw newline 產最小 preview-only proposal 與 3/3 parser receipt。不得寫 live WordPress、Ads、Rank Math，不得對客發訊，不得外送私密資料。",
+  "job_path": "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/MAPLAB-DURABLE-JOBS/MAPJOB-20260901-120729-7b2afc/job.json"
+}

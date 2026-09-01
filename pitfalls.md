@@ -848,3 +848,27 @@
 - 解法：訓練一詞只用於有optimizer step與可reload權重的SFT／QLoRA／偏好學習；每次都做base／adapter同prompt effect probe與獨立holdout。公開hash-pinned模型可放外接碟；LINE、private dataset、adapter、logs與fused weights一律留owner-only私有根目錄，訓練deny network。
 - 預防：receipt固定列`weights_updated`、adapter SHA、base／adapter輸出、holdout結果、egress與artifact storage class；只有effect probe沒有品質提升時明標`INFRASTRUCTURE_PASS / QUALITY_NOT_PROVEN`，不接live route。
 - 封坑驗證：M4／24GB以Qwen3-4B-Instruct-2507在deny-network sandbox完成3個QLoRA steps，adapter可reload、peak memory 2.697GB、files 0600；輸出雖縮短仍漏單一窗口價值，因此正確停在training/eval-only。
+
+## 2026-09-01 — 排程有成功退出不等於 SEO 有推進
+
+- 觸發條件：SEO draft loop 連續61次只追加`all_gaps_drafted`，weekly Codex patrol又在沒有新證據時重建六檔 bundle；看似每天／每週有活動，Owner-facing SEO acceptance卻沒有變。
+- 根因：把calendar wake當工作理由，沒有model外sensor、material-delta gate、method fingerprint與objective stop-loss；整頁body hash還會被動態HTML製造假delta。
+- 解法：公開技術基線先由deterministic probe比較normalized HTTP/index/canonical/title/meta/H1/schema/alt、WP counts與child sitemap URL-set；baseline過期只代表`sensor due`。只有material delta、未完成驗收、fresh GSC evidence或Owner要求才派Hermes；無delta只留小型`NO_DELTA_NO_DISPATCH` receipt。
+- 預防：兩次owner acceptance delta為0即禁止同方法；`all_gaps_drafted`轉`EXHAUSTED_INPUT`並卸載daily loop。Body SHA只作診斷，不作派工閘；detached worktree receipt未回canonical Task Card/CURRENT_STATUS不算完成。
+- 封坑驗證：新`maplab-seo-coach-patrol` Skill可被discovery找到；public probe固定九URL、child sitemap counts、semantic comparison與JSON-LD parser；即時baseline發現post 879的2/3 schema parse缺陷並把下一步縮成單一變因preview proposal。
+
+## 2026-09-01 — 治理稽核器若只辨識 `tasks/`，會把 canonical `handoff/tasks/` 誤報遺失
+
+- 觸發條件：`CURRENT_STATUS.md` 已明列存在的 `handoff/tasks/T-A2-HERMES-SEO-COACH-001.md`，治理 audit 卻截成 `tasks/T-A2-HERMES-SEO-COACH-001.md` 並回 `active_task_exists=false`。
+- 根因：audit 的 task regex 只從 `tasks/` 子字串開始取值，再直接以 repo root 拼路徑，沒有保留 `handoff/` prefix。
+- 解法：routing automation 改為動態讀 `CURRENT_STATUS.md` 的 `Active Task`，本輪 route 已回 `state=dynamic / routing_aligned=true`；artifact existence 另以 canonical full path readback 驗證，不建立第二份 Task Card。
+- 預防：治理工具應允許 `handoff/tasks/` 或解析 Markdown link target；修正前不得把此單一 false-negative 冒充 Task Card 不存在，也不得用複製檔或第二真相源討好 audit。
+- 封坑狀態：Task Card、durable job、Next Bounded Action 與 Resume Prompt 均已 live readback；audit path parser仍待工具本身修正，收據須明列這個限制。
+
+## 2026-09-01 — Executor 拒絕不等於 gateway fail closed，terminal receipt 也不能只信自述
+
+- 觸發條件：SEO router正確拒絕Ads／Rank Math寫入、客訊外送與對客LINE，但Telegram gateway把`classify()`的rejection丟掉，將原句與history送進OpenRouter；另一條linked-receipt路徑又接受wrong parent、不存在artifact與假SHA並投影`COMPLETED`。
+- 根因：用`str | None`同時表示CHAT、EXECUTE與REJECT，導致拒絕與普通聊天同值；terminal projector只信receipt欄位，沒有綁job/request/action/topology與實際artifact bytes。
+- 解法：gateway改typed `EXECUTE | REJECT | CHAT`，EXECUTE/REJECT都走本機executor receipt並立即continue，只有CHAT可進provider；provider前另掃current text＋history DLP。Linked receipt限制在allowlisted DFR task root，綁parent job/request/action，並驗same-task regular artifact與recomputed SHA後才terminal。
+- 預防：安全測試必跨`gateway → executor → receipt/notification`，不能只測router；固定poison含四句危險改寫、private history、wrong parent/action/hash、missing artifact與symlink。任何局部26/26 PASS在end-to-end red-team前不得寫成完成收據。
+- 封坑驗證：task-scoped staged index focused 29/29、canonical live worktree full Hermes 134/134、`py_compile` PASS；兩種環境與 source hashes 分列於 validation receipt。mock provider對客資／LINE對話／電話history為0 calls，假linked receipt維持`WAITING_EXTERNAL`且無notification。

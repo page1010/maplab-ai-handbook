@@ -35,6 +35,15 @@ class HermesTaskExecutorTest(unittest.TestCase):
         self.assertIsNone(action)
         self.assertTrue(reason)
 
+    def test_seo_durable_route_is_specific_and_rejects_live_mutation(self):
+        self.assertEqual(
+            executor.classify("每週檢查網站 SEO，有 material delta 才派工"),
+            ("durable-job", None),
+        )
+        action, reason = executor.classify("持續檢查 WordPress SEO 並直接改 Rank Math")
+        self.assertIsNone(action)
+        self.assertIn("外部寫入", reason)
+
     def test_rejects_schedule_mutation_but_allows_status_readback(self):
         action, reason = executor.classify("修改 launchd 後看 repo 狀態")
         self.assertIsNone(action)
@@ -69,6 +78,29 @@ class HermesTaskExecutorTest(unittest.TestCase):
             self.assertEqual(receipt["job_type"], "a8-production")
             self.assertEqual(receipt["job_state"], "RUNNING")
             self.assertTrue(Path(receipt["receipt_path"]).exists())
+            popen.assert_not_called()
+
+    def test_local_seo_job_queues_heartbeat_without_message_or_worker(self):
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(
+            durable_router, "JOB_ROOT", Path(tmp)
+        ), mock.patch.object(executor.subprocess, "Popen") as popen:
+            receipt = executor.execute(
+                "每週檢查網站 SEO，有 material delta 才派工",
+                123,
+                chat_id=None,
+                chat_type="local",
+            )
+            saved = json.loads(Path(receipt["receipt_path"]).read_text(encoding="utf-8"))
+            self.assertEqual(receipt["job_type"], "seo-patrol")
+            self.assertEqual(receipt["job_state"], "RUNNING")
+            self.assertIsNone(receipt["worker"])
+            self.assertEqual(saved["requester"]["channel"], "local-heartbeat")
+            self.assertIsNone(saved["requester"]["chat_id"])
+            self.assertEqual(receipt["notification_policy"], "none")
+            self.assertIsNone(receipt["summary"])
+            self.assertEqual(saved["last_result"]["external_writes"], 0)
+            self.assertEqual(saved["last_result"]["customer_send"], 0)
+            self.assertEqual(saved["last_result"]["private_third_party_egress"], 0)
             popen.assert_not_called()
 
     def test_line_goal_starts_a_bounded_local_supervisor_chunk(self):

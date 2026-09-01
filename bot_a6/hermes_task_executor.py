@@ -421,10 +421,21 @@ def _start_durable_job(
         finally:
             os.close(log_fd)
     else:
+        queued_result = {"status": "queued-for-heartbeat", "network_calls": 0}
+        if intent.job_type == "seo-patrol":
+            queued_result.update(
+                {
+                    "external_writes": 0,
+                    "customer_send": 0,
+                    "private_third_party_egress": 0,
+                    "attempt_consumed": False,
+                    "owner_acceptance_delta": 0,
+                }
+            )
         job = transition_job(
             job["job_path"],
             "RUNNING",
-            result={"status": "queued-for-heartbeat", "network_calls": 0},
+            result=queued_result,
             next_action=job["next_bounded_action"],
         )
     return {
@@ -432,11 +443,12 @@ def _start_durable_job(
         "task_id": job["job_id"],
         "status": "accepted" if job["state"] in {"RUNNING", "WAITING_EXTERNAL"} else "failed",
         "action": "durable-job",
-        "policy": "natural-language-durable-route-v1",
+        "policy": "natural-language-durable-route-v2",
         "job_type": job["job_type"],
         "job_state": job["state"],
         "receipt_path": job["job_path"],
-        "summary": telegram_job_summary(job),
+        "summary": telegram_job_summary(job) if chat_id is not None else None,
+        "notification_policy": job.get("notification_policy"),
         "worker": worker_receipt,
     }
 
@@ -488,7 +500,7 @@ def execute(
         "request_sha256": hashlib.sha256(request.encode("utf-8")).hexdigest(),
         "request_chars": len(request),
         "requester": {
-            "channel": "telegram",
+            "channel": "telegram" if chat_id is not None else "local-heartbeat",
             "owner_user_id": owner_user_id,
             "chat_id": chat_id,
             "chat_type": chat_type,

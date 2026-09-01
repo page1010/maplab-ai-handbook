@@ -5,7 +5,24 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-09-01 Codex A1/A6｜舊Hermes輪次確認只是random two-shot evaluation、沒有權重更新；Apple MLX-LM＋Qwen3-4B-Instruct-2507隔離training/eval lab已完成synthetic QLoRA smoke，但QUALITY_NOT_PROVEN、live route disabled。Job仍為OWNER_REVIEW，下一步是20案具名真人rubric labels。完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-09-01 Codex A0/A1/A2｜SEO 喚醒已改為 evidence-gated：無模型 probe 先判斷差異，Hermes 只接一個 Task Card 綁定的 proposal-only action；舊 weekly model patrol 已暫停、每日 `all_gaps_drafted` 空轉已卸載。Hermes MLX 訓練 job 仍為 OWNER_REVIEW。完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+
+---
+
+## Active Task
+
+- `handoff/tasks/T-A2-HERMES-SEO-COACH-001.md` — `RUNNING`
+- Hermes durable job：`MAPJOB-20260901-120729-7b2afc`
+- Canonical receipt：`workbook/reviews/MAPLAB-DURABLE-JOBS/MAPJOB-20260901-120729-7b2afc/job.json`
+- Safety boundary：公開讀取與 repo proposal/receipt 可執行；live WordPress／Ads／Rank Math write、對客發訊與私密第三方外送均為 0。
+
+## Next Bounded Action
+
+Hermes 交 A2/Codex local SEO worker 只產 `workbook/reviews/JOB-A2-SEO-COACH-20260901/press_conference_faq_jsonld_patch_proposal.md`：正規化 post 879 FAQ JSON-LD 的一個 raw newline，在本機 parser 證明 `2/3 -> 3/3`，保持 visible copy 與固定 holdout 不變；不得寫 live WordPress。
+
+## Resume Prompt
+
+我是 MAPLAB SEO 教練接手者。先讀 `CURRENT_STATUS.md`、`pitfalls.md`、`handoff/tasks/T-A2-HERMES-SEO-COACH-001.md`、`.agents/skills/maplab-seo-coach-patrol/SKILL.md` 與 `workbook/reviews/MAPLAB-DURABLE-JOBS/MAPJOB-20260901-120729-7b2afc/job.json`。做 plateau review 後只執行 job 的 `next_bounded_action`：為 post 879 FAQ JSON-LD raw newline 產最小 preview-only proposal 與 3/3 parser receipt。不得寫 live WordPress、Ads、Rank Math，不得對客發訊，不得外送私密資料。
 
 ---
 
@@ -20,6 +37,8 @@
 ---
 
 ## 最新事實核對
+
+- 2026-09-01：**[A2 SEO meaningful wake／Hermes 單一細節派工]** — 新 canonical skill `.agents/skills/maplab-seo-coach-patrol/` 把 `SENSOR_DUE` 與 `ACTIONABLE_DELTA` 分開；固定 public probe 比較 robots、WP published counts、child sitemap URL set/lastmod 及頁面 SEO semantic fields，不以整頁 body hash 派工。Live baseline 為 58 posts／6 pages；獨立 `public_seo_corpus_audit.json` 綁定 64 個 sitemap post/page URLs 全 200，九個高價值 URL 均 200、index/follow、自指 canonical、單一 H1。已驗 `/press-conference-catering/` 的 3 個 JSON-LD blocks 僅 2 個可 parse，且在完整 64 頁 corpus 中 inbound source=0；GSC／ranking／CTR／CWV 維持 `MISSING`。獨立 `public_seo_no_delta_receipt.json` 證明同方法重跑為 `NO_DELTA_NO_DISPATCH`；本次因 Owner 明確指令與既有未驗收 parse failure，派 `DETAIL_ACTION` 到 local-only Hermes job `MAPJOB-20260901-120729-7b2afc`，只做一個 raw newline preview proposal，external writes／customer send／private egress 全為 0。Gateway 已改 typed `EXECUTE/REJECT/CHAT` 並加 provider-history DLP；linked receipt 完成投影須驗 parent/request/action、allowlisted topology、artifact存在與實算SHA。134 個 Hermes tests、skill validation、duplicate audit 均 PASS。舊 daily `com.maplab.seo-loop` 已可逆卸載；舊 weekly Codex patrol 已改寫並暫停，避免固定時間製造六檔 bundle。
 
 - 2026-09-01：**[Sol 5.6 訓練 Hermes 經驗學習 Skill]** — 已把本次核心教訓固化為 repo Skill `.agents/skills/sol56-hermes-training-retrospective/`：What 先分清 provider attempt／evaluation／optimizer step／真正 training run，So What 依因果斷點選 authority／state／SFT／DPO／system regression，Now What 建 Detect／Contain／Correct／Institutionalize 防線；成功必須同時有固定盲測成果與資料、權重、評分、系統 parity 的過程證據。顯式呼叫 `$sol56-hermes-training-retrospective`，亦可由「Hermes 訓練檢討／企業學習蛛網／經驗學習圈／輪次誤導」隱式搜尋；Task Card、訓練計畫與 Resume Prompt 均已接入，避免下個 session 只看到結果、漏掉思考方法。
 
@@ -164,10 +183,11 @@
 | T-A1-V6-P3 | T-A1-V6-P3 | A1 | 🔲 待開始（尚未開始。等 T-A1-V6-P2 完成後啟動。） | handoff/tasks/T-A1-V6-P3.md |
 | T-A1-V7 | 系統進化 — 單一真相源 + 自動同步 + 瘦身 + 自動技能生成 + 自動壓縮 | A1 | 🔄 進行中（Phase 1-4 全部完成 + 6 個修復項全部完成。剩 Phase 5（自動壓縮 ReMe）為加分項。） | handoff/tasks/T-A1-V7.md |
 | T-A2-002-foodsafety-seo-cleanup | T-A2-002 — 食安 + 法規 SEO 字眼清理 | A2 | ⏸️ 阻塞（回溯掃描 + 根因結構性修復已完成，只剩等 Owner 決定 post 698 怎麼改）（58 篇既有文章已全數掃描完成；新產出內容的自動防護缺口已用 F-1 gate 補上（見下方「2026-07-07 根因） | handoff/tasks/T-A2-002-foodsafety-seo-cleanup.md |
-| T-A2-003-weekly-wp-audit | T-A2-003: 每週全站 WP 內容稽核排程 | A2 | 🔲 待開始（腳本已建好（wp-audit.sh / wp-audit-cron.sh）。待 Owner 用 /schedule 建立） | handoff/tasks/T-A2-003-weekly-wp-audit.md |
+| T-A2-003-weekly-wp-audit | T-A2-003: 每週全站 WP 內容稽核排程 | A2 | ⏹️ SUPERSEDED（不再要求 Owner 建模糊週排程；由 evidence-gated SEO coach skill + durable job 接管） | handoff/tasks/T-A2-003-weekly-wp-audit.md |
 | T-A2-004 | 首頁結構優化 — 配合品牌色票微調 + 轉換路徑整理 | A2 | 🔲 待開始（任務卡建立。A0 已完成對標分析和色票微調。） | handoff/tasks/T-A2-004.md |
 | T-A2-005-local-seo-factory | T-A2-005：MAPLAB SEO Factory（地端閉環，Pillar First） | A2 | 🟡 STALLED（since 2026-07-19，48h 無 commit，Owner 可更新最後活動解除）（本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar dry-run 可） | handoff/tasks/T-A2-005-local-seo-factory.md |
-| T-A2-006-ads-seo-wordpress-patrol | T-A2-006 — Ads / SEO / WordPress Patrol | A2 | 🟢 ACTIVE（ICCTN 案例文（post 1829）已上線，QA PASS_WITH_NOTES。下一步：A3 接手 Google ） | handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md |
+| T-A2-006-ads-seo-wordpress-patrol | T-A2-006 — Ads / SEO / WordPress Patrol | A2 | 🟢 ACTIVE（public baseline 完成；後續由 meaningful-wake gate 決定 no-op／細節／計畫） | handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md |
+| T-A2-HERMES-SEO-COACH-001 | Evidence-gated SEO coach + Hermes proposal task | A0/A2/Hermes | 🔄 RUNNING（post 879 FAQ JSON-LD preview-only 單一變因提案） | handoff/tasks/T-A2-HERMES-SEO-COACH-001.md |
 | T-A2-SEO-CATERING-MATRIX-001 | Foreign Catering SEO Benchmark -> MAPLAB Article Matrix | A2 | 🟡 STALLED（since 2026-07-19，48h 無 commit，Owner 可更新最後活動解除）（競品分析工作包已建立於 `workbook/reviews/JOB-A2-SEO-CATERING-COMPETITOR） | handoff/tasks/T-A2-SEO-CATERING-MATRIX-001.md |
 | T-A2A3-001-B | SEO 場景頁面 + 內連結（從 T-A2A3-001 分拆） | A2/A3 | 🟡 STALLED（since 2026-07-19，48h 無 commit，Owner 可更新最後活動解除）（WordPress post `1696` 已建立為未發布草稿並重載驗證：`https://www.maplabkitc） | handoff/tasks/T-A2A3-001-B.md |
 | T-A2A3-001 | SEO 關鍵字頁面補足 | A2/A3 | ⏸️ RM/GSC 部分暫停；案例寫作轉 T-A2A3-001-B（Rank Math 已退訂，已設定好的 SEO 欄位先不要再設定；下一步是依 live URL map 補 To B 真） | handoff/tasks/T-A2A3-001.md |
@@ -200,9 +220,7 @@
 | A1 | T-A1-V6-P2: 等 A6 實際報價測試 | 見 Task Card |
 | A1 | T-A1-V6-P3: 前置 T-A1-V6-P2 需先完成 | 見 Task Card |
 | A2 | T-A2-002-foodsafety-seo-cleanup: 等 Owner 決定 post 698 的「無麩質或低糖選項」FAQ 答案要不要改（A2 唯讀掃描，未動任何文章） | 見 Task Card |
-| A2 | T-A2-003-weekly-wp-audit: 等 Owner 建立排程 | 見 Task Card |
 | A2 | T-A2-005-local-seo-factory: WordPress 寫入憑證與測試站檢核流程待 Owner 確認 | 見 Task Card |
-| A2 | T-A2-006-ads-seo-wordpress-patrol: Meta/Google MCP token 過期，需 Owner 重授權。 | 見 Task Card |
 | A2 | T-A2-SEO-CATERING-MATRIX-001: WP 寫入憑證需 Owner 確認（路徑：`skills/credentials/wordpress-api.md`） | 見 Task Card |
 | A2/A3 | T-A2A3-001-B: WordPress 圖片實體插入未完成，因 Chrome extension file chooser 回 `Not allowed`；需 Owner 開啟 Codex Chrome extension 的 file URL access 後再重試。WordPress 發布、Google Ads / Meta Ads 設定變更仍需 Owner approval。舊 planned slugs 不能當 live URL。 | 見 Task Card |
 | A2/A3 | T-A2A3-001: RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL | 見 Task Card |

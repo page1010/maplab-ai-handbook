@@ -5,6 +5,7 @@
 - Status: OWNER_REVIEW / RUBRIC_V2_HUMAN_ANNOTATION / MLX_LAB_READY_QUALITY_UNPROVEN
 - Active loop: paused at 12 supervised local rounds; daily 02:20 path is supervisor-only and live zero-call canary verified. OpenRouter cloud lane is also execution-gated; its 2026-08-31 preflight made zero calls.
 - Truth source: `/Users/pagemacmini/.maplab/a6-hermes-training/`（private local, owner-only）
+- Learning-loop Skill: `.agents/skills/sol56-hermes-training-retrospective/SKILL.md`（`$sol56-hermes-training-retrospective`；用 What／So What／Now What 把訓練偏差接回成功契約、防復發規則與 Resume Prompt）
 - Success: seven consecutive runs pass_rate >= 0.85 and unsupported price rate = 0
 - Current evidence: 12 supervised local rounds／60 calls，10/60 pass、best 40%、streak 0；另一次受控OpenRouter探索為25 examples／49 provider requests（25 HTTP errors、24 answers），只有1個lexical heuristic pass，不能算新訓練輪或品質進步。v7 已凍結20-case holdout。Source-bound rubric guide SHA `d62cf9bf...` 已固定七項規則、exact overall、fail-closed commercial authority SHA `84d9733b...`、14個各項正反fixtures與具名真人attestation/adjudication；structured human labels仍為0/20。
 - Quota contract: Owner 的 USD 10 credit purchase 對應每日1,000個`:free` request attempts；訓練硬上限950、Owner日常保留50。2026-08-31已用49，私有共用0600 ledger剩901；fallback與失敗都先記一次，paid model本機拒絕，paid key limit維持0。950是上限，不是每日目標。
@@ -17,4 +18,4 @@
 
 ## Resume Prompt
 
-我是接手 Hermes LINE 訓練的 Codex / A1。先讀 `CURRENT_STATUS.md`、`pitfalls.md`、本 Task Card、`docs/hermes-line-reply-training-plan.md`、`docs/hermes-distillation-method-v1.md`、rubric guide、OpenRouter task與MLX install receipt。舊12輪是random two-shot evaluation，不是權重訓練；MLX lab雖已完成真正3-step QLoRA smoke，但只證明底座，不代表品質。每日1,000的單位是provider request attempts；950是ceiling、Owner保留50，不得為吃額度盲跑。下一步只由具名真人在本機逐案標註20個private cases，另建0600檔並綁三個SHA；完成scorer >=18/20且安全0 mismatch後，才做DLP與30–50組Owner-corrected gold。外接碟只放公開基模，私有dataset／adapter／logs留owner-only root；保持live route disabled，不得外送原始LINE或customer send。
+我是接手 Hermes LINE 訓練的 Codex / A1。先讀 `CURRENT_STATUS.md`、`pitfalls.md`、本 Task Card、`.agents/skills/sol56-hermes-training-retrospective/SKILL.md`、`docs/hermes-line-reply-training-plan.md`、`docs/hermes-distillation-method-v1.md`、rubric guide、OpenRouter task與MLX install receipt。舊12輪是random two-shot evaluation，不是權重訓練；MLX lab雖已完成真正3-step QLoRA smoke，但只證明底座，不代表品質。先用 Skill 的 What／So What／Now What 把事實、偏差、根因、方法、結果與防復發入口連成蛛網。每日1,000的單位是provider request attempts；950是ceiling、Owner保留50，不得為吃額度盲跑。下一步只由具名真人在本機逐案標註20個private cases，另建0600檔並綁三個SHA；完成scorer >=18/20且安全0 mismatch後，才做DLP與30–50組Owner-corrected gold。外接碟只放公開基模，私有dataset／adapter／logs留owner-only root；保持live route disabled，不得外送原始LINE或customer send。

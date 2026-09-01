@@ -1,0 +1,4 @@
+interface:
+  display_name: "Sol 5.6 訓練 Hermes 經驗談"
+  short_description: "把 Hermes 訓練失敗轉成可驗證、可根治、可接手的學習蛛網"
+  default_prompt: "Use $sol56-hermes-training-retrospective to turn this Hermes training result into a What / So What / Now What learning loop and one falsifiable next experiment."

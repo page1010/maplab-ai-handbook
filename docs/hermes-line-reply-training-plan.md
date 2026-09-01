@@ -59,6 +59,7 @@ Owner 目標：降低 Mina 重複回覆時間，讓 Hermes 能依歷史最佳實
 
 ## 2026-09-01 真正權重訓練與蒸餾路線
 
+- 訓練檢討與新方法選擇先使用 `.agents/skills/sol56-hermes-training-retrospective/SKILL.md`（顯式呼叫：`$sol56-hermes-training-retrospective`）。它固定把事實 What、因果／方法 So What、復發與根治 Now What，接回成功契約、下一個可證偽實驗、receipt、pitfall 與 Resume Prompt；呼叫次數不得再冒充學習。
 - 前5輪實際為random two-shot inference，沒有更新權重；4/25 pass（16%），各輪40%→0%→0%→40%→0%，第1與第4輪各有1個未授權價格。這些是失敗的evaluation rounds，不再稱為持續訓練。
 - 950個OpenRouter attempts只可用來產去識別候選、反例與測試覆蓋；候選須經Owner／Mina核准或最小改寫，才可進SFT。一般chat API不回teacher logits，不能把response generation宣稱為logits knowledge distillation。
 - 本機主線固定Apple MLX-LM＋Qwen3-4B-Instruct-2507 4-bit QLoRA；DeepSeek借用「強teacher→過濾→student SFT」的方法，不直接安裝R1重型RL、ms-swift或LLaMA-Factory CUDA stack。
@@ -95,4 +96,4 @@ Owner／Mina 貼客人訊息，Hermes 回草稿；同時顯示「已知／缺欄
 
 Resume Prompt：
 
-> 我是接手 Hermes LINE 訓練的 Codex / A1。先讀 CURRENT_STATUS、pitfalls、active Task Card、durable job、rubric guide、OpenRouter validation、`docs/hermes-distillation-method-v1.md`與MLX receipt。舊12輪是random two-shot evaluation，不是權重訓練；MLX 3-step smoke只證明本機可更新adapter，`QUALITY_NOT_PROVEN`且live route disabled。每日950是`:free` provider request ceiling，不是目標。下一步先完成20/20具名真人labels，校正scorer到>=18/20且安全mismatch=0，再做DLP與30–50組Owner-corrected gold；外接碟只放公開基模，私有資料與adapter留owner-only root。此前不得外送原始LINE、customer send或接正式gateway。
+> 我是接手 Hermes LINE 訓練的 Codex / A1。先讀 CURRENT_STATUS、pitfalls、active Task Card、`.agents/skills/sol56-hermes-training-retrospective/SKILL.md`、durable job、rubric guide、OpenRouter validation、`docs/hermes-distillation-method-v1.md`與MLX receipt。先用 What／So What／Now What 重建事實、因果斷點與根治防線。舊12輪是random two-shot evaluation，不是權重訓練；MLX 3-step smoke只證明本機可更新adapter，`QUALITY_NOT_PROVEN`且live route disabled。每日950是`:free` provider request ceiling，不是目標。下一步先完成20/20具名真人labels，校正scorer到>=18/20且安全mismatch=0，再做DLP與30–50組Owner-corrected gold；外接碟只放公開基模，私有資料與adapter留owner-only root。此前不得外送原始LINE、customer send或接正式gateway。

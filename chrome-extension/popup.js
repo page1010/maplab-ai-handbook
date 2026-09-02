@@ -374,6 +374,11 @@ function suggestRoleForTask(text) {
   const t = String(text || '').toLowerCase();
   const routes = [
     {
+      role: 'A8-FITNESS',
+      label: 'A8-FITNESS 華語樂齡節拍導演',
+      score: routeScore(t, ['中高齡', '高齡', '樂齡', '銀髮', '健身', '運動', '跟著動', '跟練', '低衝擊', '扶椅', '坐姿', 'tabata', '瑜珈', '瑜伽', '動作短片']),
+    },
+    {
       role: 'A2',
       label: 'A2 Ads/SEO/WordPress Patrol',
       score: routeScore(t, ['seo', 'ads', 'ad ', 'google ads', 'meta', 'wordpress', 'wp', 'rank math', '品牌', '廣告', '網頁', '官網']),
@@ -597,6 +602,29 @@ function renderModulePanel(role, module) {
   el('moduleAffects').innerHTML = (module.affects || []).map(a => `→ ${escapeHtml(a)}`).join('<br>') || '—';
   renderFreshnessStatus(role, module);
 }
+function isSafeModuleRelativePath(value) {
+  const text = String(value || '');
+  if (!text || text.startsWith('/') || text.startsWith('\\') || text.includes('\\')) return false;
+  return !text.split('/').includes('..');
+}
+function resolveModuleOutputPaths(module) {
+  const base = String(module?.writeback?.default_review_bundle || '');
+  if (!isSafeModuleRelativePath(base)) throw new Error(`unsafe review bundle path: ${base}`);
+  return (module?.output_contract || []).map(output => {
+    if (!isSafeModuleRelativePath(output)) throw new Error(`unsafe output contract path: ${output}`);
+    return `${base.replace(/\/+$/, '')}/${output}`;
+  });
+}
+function evaluateModuleReleaseGate(module, evidence = {}) {
+  const gate = module?.release_gate || {};
+  const required = gate.required_checks || [];
+  if (!required.length) return { state: 'NOT_APPLICABLE', missingChecks: [] };
+  const missingChecks = required.filter(check => evidence[check] !== 'PASS');
+  return {
+    state: missingChecks.length ? (gate.default_state || 'HOLD') : (gate.passing_state || 'OWNER_REVIEW'),
+    missingChecks,
+  };
+}
 function buildModuleHandoff(role, module, recallText, parsed, runtime, base) {
   if (!role || !module) {
     return buildOverviewPrompt(parsed || { version: '?', phase: '?', activeTasks: [], blockers: [] }, cachedOverdue);
@@ -797,16 +825,32 @@ function buildModuleHandoff(role, module, recallText, parsed, runtime, base) {
   lines.push('');
   lines.push('## 7. 輸出契約');
   lines.push('');
-  (module.output_contract || []).forEach(output => lines.push(`- ${output}`));
+  resolveModuleOutputPaths(module).forEach(output => lines.push(`- \`${output}\``));
   lines.push('');
   lines.push(`writeback_default: ${module.writeback?.default_review_bundle || 'workbook/reviews/JOB-xxx/'}`);
+  lines.push(`task_card: ${module.writeback?.task_card || 'handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md'}`);
   lines.push(`relation_graph: ${module.writeback?.task_module_graph || 'workbook/task_modules/role_module_relation_graph.json'}`);
   lines.push('');
-  lines.push('## 8. 禁止事項');
+  lines.push('## 8. 啟動契約');
+  lines.push('');
+  (module.startup_contract || []).forEach(rule => lines.push(`- ${rule}`));
+  lines.push('');
+  lines.push('## 9. 禁止事項');
   lines.push('');
   (module.forbidden_actions || []).forEach(rule => lines.push(`- ${rule}`));
   lines.push('');
-  lines.push('## 9. 即時系統快照');
+  lines.push('## 10. 驗證要求');
+  lines.push('');
+  (module.verification_required || []).forEach(rule => lines.push(`- ${rule}`));
+  lines.push('');
+  lines.push('## 11. Release Gate（預設 fail closed）');
+  lines.push('');
+  const releaseGate = evaluateModuleReleaseGate(module);
+  lines.push(`release_gate_state: ${releaseGate.state}`);
+  lines.push(`release_gate_missing_checks: ${releaseGate.missingChecks.join(', ') || 'none'}`);
+  if (module.release_gate?.rule) lines.push(`release_gate_rule: ${module.release_gate.rule}`);
+  lines.push('');
+  lines.push('## 12. 即時系統快照');
   lines.push('');
   if (parsed) {
     lines.push(`version: ${parsed.version}`);
@@ -822,11 +866,11 @@ function buildModuleHandoff(role, module, recallText, parsed, runtime, base) {
     }
   }
   lines.push('');
-  lines.push('## 10. 角色 Recall 摘要');
+  lines.push('## 13. 角色 Recall 摘要');
   lines.push('');
   lines.push(truncate(recallText || `// ${role} recall unavailable`, 6000));
   lines.push('');
-  lines.push('## 11. 開始前回覆格式');
+  lines.push('## 14. 開始前回覆格式');
   lines.push('');
   lines.push('請先回覆：');
   lines.push('1. 我是什麼角色。');
@@ -932,7 +976,9 @@ async function fetchFromBot() {
   btn.textContent = '⏳ 抓取中…';
   btn.disabled = true;
   try {
-    const resp = await fetch('http://127.0.0.1:9876/clip', { cache: 'no-store' });
+    // 9875 = bot.py 內建 clip server(launchd 常駐)。9876 是 http_bridge.py
+    // daemon(無 launchd、無 /clip 端點),2026-09-02 冷啟動盤查改指常駐服務。
+    const resp = await fetch('http://127.0.0.1:9875/clip', { cache: 'no-store' });
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
     const data = await resp.json();
     if (!data.text) throw new Error('剪貼板是空的');

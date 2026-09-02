@@ -1,5 +1,10 @@
 # Chrome Extension Changelog
 
+## v5.7.1 — 2026-09-02
+變更者：A0 Fable5（冷啟動路徑逐條盤查）
+- **修復「📋 從 Bot 抓取」**：popup.js clip fetch 由 `127.0.0.1:9876` 改為 `9875`。9876 是 `bot/http_bridge.py` daemon（6/11 拆分後無 launchd、6/17 起未運行、且無 `/clip` 端點）；`/clip` 實際由 bot.py 內建 server 於 9875 常駐提供（launchd com.maplab.telegrambot KeepAlive）。
+- **盤查結論**：冷啟動 SOP 落地於 `docs/chrome-extension-coldstart-sop.md`（各路徑逐條驗證指令＋已知缺口：http_bridge 9876/poll 指令橋停擺待 Owner 決定復活與否、investment-os raw 404、COMPOUNDING-PATROL 不在 index）。
+
 ## v5.7.0 — 2026-08-25
 變更者：A1 Codex
 - **指向性地圖入口**：角色召喚區新增離線 `🗺 指向性地圖` 按鈕，直接開啟 Extension 內建地圖，不依賴 GitHub raw 或外部網站。

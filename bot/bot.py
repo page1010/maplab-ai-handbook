@@ -2174,6 +2174,18 @@ async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     caption = update.message.caption or ""
     caption_note = f"\nOwner 附的文字說明：{caption}" if caption else ""
 
+    # 2026-09-03 (Owner approved): tap the same a0_inbox relay that text
+    # messages use, so the A0/Fable5 window (this session or a future
+    # bot-continuation window) can see the photo arrived and Read it
+    # directly with its own Read tool — mirrors handle_message's
+    # _a0_inbox_append call. This does NOT gate or replace the immediate
+    # one-shot Claude analysis below; it only makes the file discoverable
+    # for follow-up work in an ongoing A0 session.
+    inbox_note = f"[📷 圖片] 已存 {local_path}"
+    if caption:
+        inbox_note += f"｜說明：{caption}"
+    _a0_inbox_append(update.effective_chat.id, inbox_note, getattr(update.message, "message_id", None))
+
     try:
         status_snippet = read_file("CURRENT_STATUS.md")[:1500]
     except Exception:

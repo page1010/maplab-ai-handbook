@@ -41,6 +41,7 @@
 ### 5. 來源標示(Owner 永遠知道在跟誰說話)
 - 【<agent> 本人】= agent 主程式親答;【<agent> 本人・同 session 續接】= fallback 續接;【bot 代答】= 罐頭。
 - 說人話三段式:發生什麼/對你的意義/要不要你做。不發收據式流水帳給 Owner。
+- **收據與 commit 編號是系統用語,不進 Telegram**(Owner 2026-09-04 msg 4715 指正,延伸 msg 4642 裁決):reply_to_inbox_ts、output_hash、commit hash、"Reply sent with receipt" 這類完成語只落 `state/system_journal.md` 與 `a0_replies.jsonl`;送給 Owner 的回覆文字從頭到尾都是人話。續接 turn 的最終輸出若會被 bridge 轉發,同樣適用。
 
 ---
 

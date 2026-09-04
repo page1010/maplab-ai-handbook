@@ -18,6 +18,7 @@
 | Q1 | 裝開源拆解工具＋抓 Owner 給的三支參考片＋跑第一份拆解報告 | 看板 T9（draft 4696 積壓） | Owner 一句派工（涉及安裝） | QUEUED | — |
 | Q2 | 把 win-01 複利系統卡推上 agent-hq bus | 132e098（draft 4696 積壓） | 無 | DONE | 2026-09-04 18:55 bot 窗完成：卡已上 bus inbox/win-01/win01-compounding-system-20260904.json（bus commit 71ddca1）。bot 窗本輪實測可用 Write+git 直推 bus，本項不再限主視窗。 |
 | Q3 | 裝富途 OpenD（全程 Demo） | 看板 T6（draft 4696 積壓） | Owner 同意安裝 | QUEUED | — |
+| Q4 | 木地板案例草稿搬進 WP 建草稿（bus drafts/win-01/wp-case-woodfloor-opening-20260903.md → WP draft，供 Owner 後台檢查；SEO 標題/meta/快速索引照稿內註解設定；不發布） | Owner msg 4740 | WP 權限（主視窗） | QUEUED | 注意:上圖前先修照片索引重複計數+同名覆蓋兩缺陷（outbox 回執 defect 1、2） |
 
 ## 紀錄
 

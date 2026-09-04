@@ -24,3 +24,5 @@ Owner 裁決（2026-09-04，Telegram msg 4642）：進度心跳／daily ops／�
 [2026-09-04 18:15:00] [a0-resume] 回覆 msg 4730「有什麼做到一半的任務確認一下」：半成品清單三組——我手上（YouTube 上傳未留存→下一步改 API 上傳、上傳 SOP 壓著等成功、菜單兩圖轉檔未跑、Telegram 富媒體未動工、Hermes Part C 0%、ollama 只剩 root 空殼捷徑）、卡外部（eToro 改版中 403、IBKR 排隊）、等 Owner（7 題決策未回）。優先序建議：先攻 API 上傳→SOP→菜單轉檔。收據 reply_to_inbox_ts=2026-09-04T18:04:57（msg 4730）。
 
 [2026-09-04 18:10:00] [a0-resume] 回覆 msg 4730「有什麼做到一半的任務確認一下」。盤點 7 項:eToro（卡等 Owner 選 等/轉IBKR）、IBKR（排隊未動手）、YouTube 上傳（重查 Studio 確認頻道內容仍空，真卡住非等待）、角色重設計（仍缺對標連結；Higgsfield 算半新開備選）、llama 卸載（主體完成，殘留 /usr/local/bin/ollama 需 Owner sudo）、上傳 SOP（未動筆，理由：流程未驗證成功不寫成標準）、功課單 Part B 四題（等裁決非做到一半）。收據 reply_to_inbox_ts=2026-09-04T18:04:57。
+
+[2026-09-04 18:16:00] [a0-resume] Split-brain 確認（沿[[a0-parallel-resume-splitbrain]]既知模式）:回讀 a0_replies.jsonl 發現同一則 msg 4730 有兩筆收據幾乎同秒送出（ts 1788516359 我這份、1788516362 另一平行 session 的版本，內容不同但都已送進 Telegram），Owner 這題實際收到兩則回覆。未再補發訂正訊息，避免第三則造成更多雜訊；如 Owner 有疑惑會在下一輪澄清。提醒：下一輪開工前應先 ps 查是否有平行 resume 窗口在跑，而非只憑 inbox/replies 比對判斷「這則沒人答」。

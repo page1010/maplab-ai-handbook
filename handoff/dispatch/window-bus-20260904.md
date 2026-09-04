@@ -17,7 +17,7 @@
 |---|---|---|---|---|---|
 | Q1 | 裝開源拆解工具＋抓 Owner 給的三支參考片＋跑第一份拆解報告 | 看板 T9（draft 4696 積壓） | Owner 一句派工（涉及安裝） | QUEUED | — |
 | Q2 | 把 win-01 複利系統卡推上 agent-hq bus | 132e098（draft 4696 積壓） | 無 | DONE | 2026-09-04 18:55 bot 窗完成：卡已上 bus inbox/win-01/win01-compounding-system-20260904.json（bus commit 71ddca1）。bot 窗本輪實測可用 Write+git 直推 bus，本項不再限主視窗。 |
-| Q3 | 裝富途 OpenD（全程 Demo） | 看板 T6（draft 4696 積壓） | Owner 同意安裝 | QUEUED | — |
+| Q3 | 裝富途 OpenD（全程 Demo） | 看板 T6（draft 4696 積壓） | Owner 同意安裝 → 已同意（msg 4746, 2026-09-04 18:29） | QUEUED-READY | bot 窗查訪（18:40）：富途牛牛 GUI 在桌面且運行中；官方 skills futuapi + install-futu-opend 已裝於 ~/.claude/skills；但 FutuOpenD 閘道無進程、/Applications 與 Desktop 無 .app，SDK 版本檢查被沙盒擋。主視窗接手：跑 /install-futu-opend 裝＋啟動 OpenD（127.0.0.1:11111，全程 SIMULATE，不碰 Real），再用 futuapi skill 驗一筆行情快照即可改 DONE。舊證據：investment-os worktree archive/scripts/test_futu_api.py（5 月）曾連過 11111。 |
 | Q4 | 木地板案例草稿搬進 WP 建草稿（bus drafts/win-01/wp-case-woodfloor-opening-20260903.md → WP draft，供 Owner 後台檢查；SEO 標題/meta/快速索引照稿內註解設定；不發布） | Owner msg 4740 | WP 權限（主視窗） | QUEUED | 注意:上圖前先修照片索引重複計數+同名覆蓋兩缺陷（outbox 回執 defect 1、2） |
 
 ## 紀錄

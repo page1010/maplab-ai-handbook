@@ -22,3 +22,4 @@
 ## 紀錄
 
 - 2026-09-04 建檔（主視窗 session）。三筆佇列皆為登記，尚未開跑。
+- 2026-09-04 19:10 Owner 拍板（msg 4738）：Antigravity 納入無額度值班輪替（skills/quota-duty-rotation.md v1.0），bus 已開 inbox/outbox/antigravity 通道；本階段完成，Fable5 接回主導。

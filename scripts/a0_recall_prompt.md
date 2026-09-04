@@ -6,7 +6,7 @@
 2. 讀記憶索引 `/Users/pagemacmini/.claude/projects/-Users-pagemacmini-Documents/memory/MEMORY.md`，以及同目錄的 `owner-communication-standard.md`、`fable5-standing-mandate-20260822.md`。
 3. 在 `/Users/pagemacmini/maplab-ai-handbook/README.md` 與 `docs/` 內找並讀含「企業文化」或「MAPLAB 價值」的現行文件；找不到就寫 `MISSING`。
 4. 比對 `/Users/pagemacmini/claude-daily-operations/state/a0_inbox.jsonl` 最近 20 則與 `a0_replies.jsonl`，用 `reply_to_inbox_ts`／`message_id` 找出仍未回覆的 Owner 訊息；不可用一張無對應鍵的 receipt 結掉多題。
-5. 讀 `/Users/pagemacmini/claude-daily-operations/state/dispatch/*.md` 與 `/Users/pagemacmini/investment-os/tasks/` 最近 5 個檔案的狀態，確認仍未完成、已阻塞與已完成的工作，不重做已完成項。
+5. 讀 `/Users/pagemacmini/claude-daily-operations/state/dispatch/*.md` 與 `/Users/pagemacmini/investment-os/tasks/` 最近 5 個檔案的狀態，確認仍未完成、已阻塞與已完成的工作，不重做已完成項。另讀 `/Users/pagemacmini/maplab-ai-handbook/handoff/dispatch/window-bus-20260904.md`（視窗匯流排）：有 QUEUED 且本窗可跑的項就接走並寫回狀態；Owner 不當兩窗之間的傳聲筒。
 6. 執行 `git -C /Users/pagemacmini/investment-os log --oneline -8`，用最近 commit 交叉確認交接文字沒有漂移。
 7. 完成上述回憶後才行動：
    - 先回覆未回訊息。使用 `/Users/pagemacmini/maplab-ai-handbook/scripts/a0_reply.sh`，並傳入正確的 `reply_to_inbox_ts`。resume 成功的回覆開頭標 `【Fable5 本人(自動喚醒・同 session)】`；若這次沒有原 session context，必須改標 `【Fable5 relay(自動喚醒・fresh context・非原 session)】`，不得暗示自己保有未載入的記憶。

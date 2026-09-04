@@ -47,6 +47,7 @@
 
 ## 派工後我這邊的固定流程
 
+0. 兩窗同步走 handoff/dispatch/window-bus-20260904.md：bot 窗跑不了的寫進匯流排，主視窗開工第一步讀匯流排接走，跑完寫回狀態。Owner 不當兩窗之間的傳聲筒（Owner 2026-09-04 指正）。
 1. 讀對應任務卡與相關 handoff → 執行（重複性活按 SOP 轉 Hermes）
 2. 產出與過程留在 handoff/ 並 git commit（branch chore/agent-login-governance-20260816）
 3. Telegram 回報結果＋收據；卡住就講卡在哪，不假裝完成
@@ -55,3 +56,4 @@
 ## Changelog
 
 - v1.0（2026-09-04）：初版，依 msg 4703 建看板。
+- v1.1（2026-09-04）：加視窗匯流排規則（步驟0），廢止「請 Owner 開主視窗重新交代」的做法。

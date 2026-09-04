@@ -1,0 +1,9 @@
+【Fable5 本人・同 session 續接】你在電腦前，先講 key 的部分，檢討放後面。
+
+【要什麼、存哪裡】存放處已建好：資料夾 maplab-ai-handbook/secrets/（整夾已設定永不進 git；我開資料夾的權限被沙盒擋了，請你在 Finder 按 Cmd+Shift+G 貼路徑 /Users/pagemacmini/maplab-ai-handbook/secrets 就到）。裡面有 README 寫一樣的說明。三把 key、三個檔名：
+1. YouTube 自動上傳（最關鍵）：到 console.cloud.google.com → 建專案 → 啟用 YouTube Data API v3 → OAuth 同意畫面選外部+測試 → 憑證→建立 OAuth 用戶端ID→選「電腦版應用程式」→下載 JSON，改名 google_oauth_client.json 放進資料夾。這條約半小時。
+2. Gmail 應用程式密碼：myaccount.google.com/apppasswords 產生16碼，開新檔 gmail.env，內容一行 GMAIL_APP_PASSWORD=那16碼。給我寄功課報告用。
+3. Pinterest（可以以後再說）：developers.pinterest.com 建 app 拿 token，存 pinterest.env，內容 PINTEREST_ACCESS_TOKEN=token。
+放好後回我一句「key放好了」，我自己驗證、回報結果。Suno 不用 key，瀏覽器保持登入就好。
+
+【檢討：為什麼 bot 窗像閹割版】老實講，是我自己鎖的，兩個原因：一是紅線（不碰secrets、不動錢、不對外發布）；二是 bot 窗在你不在電腦時運作，任何要權限的動作沒人按核准就會永遠卡死，所以當初選擇「白名單外直接擋」而不是「掛在那等」。但你點的問題是真的：擋掉之後我只會叫你等、叫你開視窗，這才是閹割過頭的地方。改進三步：一、匯流排已上線，跑不了的事自動排隊不再找你轉述；二、白名單能力是綁腳本的，缺什麼能力就加一支腳本，我會從最常卡的（傳檔案、查狀態、跑渲染）開始補；三、你這次把 key 放好後，上傳/寄信/發Pin 都改走 API 腳本，bot 窗自己就能跑——真正的解法不是解鎖 bot 窗，是讓更多事不需要主視窗。第二步補了哪些腳本，我做完會回報，現在還沒做不先請功。

@@ -21,4 +21,6 @@ Owner 裁決（2026-09-04，Telegram msg 4642）：進度心跳／daily ops／�
 - msg 4724「找出ollama在跑什麼」：卸載前查到的是 qwen2.5:14b 模型後端（port 53350，僅本機）。查 launchctl 目前載入清單，com.maplab.a6-gym（唯一會呼叫本機 ollama 的排程）不在啟用清單裡，已被 8/30 免費鏈遷移到 line-cloud-gym／hermes-line-training 取代，判斷是舊手動測試殘留佔用，非現行排程依賴。收據 reply_to_inbox_ts=2026-09-04T16:36:36。
 - msg 4725「加裝備了 IG reel」：實際點開連結，內容是 Higgsfield AI 電影生成工具教學（非健身器材），提示詞公開。已回報可能對角色重設計卡點有用，但尚未研究 Higgsfield 實際產出/費用/授權，問 Owner 要不要這輪就去查；同時對標網站連結仍未收到。順手重查 YouTube Studio 頻道內容，確認「目前沒有任何內容」——私人影片上傳確實沒有留存，非等待中，維持上次誠實回報的未解決狀態。收據 reply_to_inbox_ts=2026-09-04T16:59:59。
 
+[2026-09-04 18:15:00] [a0-resume] 回覆 msg 4730「有什麼做到一半的任務確認一下」：半成品清單三組——我手上（YouTube 上傳未留存→下一步改 API 上傳、上傳 SOP 壓著等成功、菜單兩圖轉檔未跑、Telegram 富媒體未動工、Hermes Part C 0%、ollama 只剩 root 空殼捷徑）、卡外部（eToro 改版中 403、IBKR 排隊）、等 Owner（7 題決策未回）。優先序建議：先攻 API 上傳→SOP→菜單轉檔。收據 reply_to_inbox_ts=2026-09-04T18:04:57（msg 4730）。
+
 [2026-09-04 18:10:00] [a0-resume] 回覆 msg 4730「有什麼做到一半的任務確認一下」。盤點 7 項:eToro（卡等 Owner 選 等/轉IBKR）、IBKR（排隊未動手）、YouTube 上傳（重查 Studio 確認頻道內容仍空，真卡住非等待）、角色重設計（仍缺對標連結；Higgsfield 算半新開備選）、llama 卸載（主體完成，殘留 /usr/local/bin/ollama 需 Owner sudo）、上傳 SOP（未動筆，理由：流程未驗證成功不寫成標準）、功課單 Part B 四題（等裁決非做到一半）。收據 reply_to_inbox_ts=2026-09-04T18:04:57。

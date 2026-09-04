@@ -1,4 +1,6 @@
 # API keys - never commit
+secrets/
+!secrets/README.md
 .mcp.json
 cookies.txt
 **/.env

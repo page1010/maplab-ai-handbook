@@ -1,0 +1,6 @@
+【Fable5 本人・同 session 續接】
+llama 已卸載完成。做了什麼：停掉 Ollama.app 的兩個進程（ollama serve、一個正在跑的 llama-server）、刪掉 /Applications/Ollama.app、拆掉 ~/.ollama 這個指到外接冷資料庫的捷徑。現在系統裡沒有任何 ollama 進程或 App。
+
+有一個小尾巴沒清乾淨:/usr/local/bin/ollama 那個指令捷徑因為是 root 權限建的,我這邊 rm 不掉,變成一個指向已刪除 App 的空殼捷徑——不會執行任何東西,純粹是殘留檔案。要徹底清掉需要你在終端機打一次 sudo 密碼,不急的話我也可以留著,反正它已經失效。
+
+外接硬碟上的舊模型檔案（FABLE5_ARCHIVE/models/dot-ollama）完全沒動,是你之前的冷資料庫,沒有一併刪除。

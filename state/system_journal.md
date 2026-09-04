@@ -14,3 +14,9 @@ Owner 裁決（2026-09-04，Telegram msg 4642）：進度心跳／daily ops／�
 [2026-09-04 15:32:53] [memory-watch] 🖥️ [memory-watch] ⚠️ 進入記憶體壓力狀態：
 • Swap 剩 4%（727MB/15360MB）+ 可用記憶體 13% — 雙重壓力
 （raw free 0% 僅供參考：macOS 把閒置 RAM 當快取，raw free 低屬正常）
+[2026-09-04 17:32:53] [memory-watch] 🖥️ [memory-watch] ✅ 記憶體壓力解除（歷時約 2 小時）：可用記憶體 6706MB（27%），swap 剩 9%。
+
+[2026-09-04 18:05:00] [a0-resume] 補跑三則積壓訊息（連續 resume 逾時被強殺遺留）：
+- msg 4723「llama 先卸載」：寫成版控腳本 scripts/uninstall_ollama.sh 並執行——停掉 ollama serve + llama-server 進程、刪 /Applications/Ollama.app、拆 ~/.ollama symlink（外接冷資料 FABLE5_ARCHIVE 未動）。殘留：/usr/local/bin/ollama 是 root 建的 symlink，rm 權限不足，變成失效空殼，需 Owner 跑一次 sudo 才能徹底清掉，已如實告知。收據 reply_to_inbox_ts=2026-09-04T16:32:02。
+- msg 4724「找出ollama在跑什麼」：卸載前查到的是 qwen2.5:14b 模型後端（port 53350，僅本機）。查 launchctl 目前載入清單，com.maplab.a6-gym（唯一會呼叫本機 ollama 的排程）不在啟用清單裡，已被 8/30 免費鏈遷移到 line-cloud-gym／hermes-line-training 取代，判斷是舊手動測試殘留佔用，非現行排程依賴。收據 reply_to_inbox_ts=2026-09-04T16:36:36。
+- msg 4725「加裝備了 IG reel」：實際點開連結，內容是 Higgsfield AI 電影生成工具教學（非健身器材），提示詞公開。已回報可能對角色重設計卡點有用，但尚未研究 Higgsfield 實際產出/費用/授權，問 Owner 要不要這輪就去查；同時對標網站連結仍未收到。順手重查 YouTube Studio 頻道內容，確認「目前沒有任何內容」——私人影片上傳確實沒有留存，非等待中，維持上次誠實回報的未解決狀態。收據 reply_to_inbox_ts=2026-09-04T16:59:59。

@@ -11,6 +11,9 @@ case "${1:-}" in
   # Owner-ordered one-offs (msg 4781) routed via this already-allowlisted name;
   # fixed absolute targets only, no passthrough.
   fixperms)   exec /usr/bin/python3 /Users/pagemacmini/maplab-ai-handbook/scripts/a0_fixperms.py ;;
+  # syntax-check + guarded dry-run of the (state-guarded) morning meeting script
+  mmcheck)    bash -n /Users/pagemacmini/claude-daily-operations/ops/claude-daily-operations/morning_meeting.sh && echo "syntax OK" \
+              && bash /Users/pagemacmini/claude-daily-operations/ops/claude-daily-operations/morning_meeting.sh && echo "guarded run OK" ;;
   install-q1) exec bash /Users/pagemacmini/maplab-ai-handbook/scripts/a0_install_tools.sh q1 ;;
   install-q3) exec bash /Users/pagemacmini/maplab-ai-handbook/scripts/a0_install_tools.sh q3 ;;
   *) echo "usage: a0_sys_probe.sh <port|launchd|disk> [arg]"; exit 2 ;;

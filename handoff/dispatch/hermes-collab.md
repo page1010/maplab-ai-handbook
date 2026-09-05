@@ -5,3 +5,4 @@
 - 進度監控外包：用 hermes 免費鏈定時摘要 agent-bus / win-01 進度，異常才進晨會（規劃中，設計稿待寫）
 - 圖形辨識全自動閘（Owner msg 4780：不走人眼、排程完成）：兩個不同家視覺模型獨立辨識＋比對，一致定案、不一致走保守規則（中性 alt／疑似他牌 logo 直接棄用）；掛每小時排程輪詢辨識佇列，免費鏈 403 下輪重試。下一步=hermes 視覺上游調用腳本（木地板 17 張當首發批）
 - 報價 gym R5：等 Owner 給品項 Sheet 後開跑
+- 狀態回寫接入（Owner msg 4782）：hermes 經 bot_a6 排程定時更新 agent-bus shared/agent-status.md 的 hermes 行——調用腳本未寫，與視覺閘腳本同批做

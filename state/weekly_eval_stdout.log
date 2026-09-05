@@ -22,3 +22,12 @@
 [eval] Running Codex maker (2026-08-16)…
 [eval] Codex maker finished (rc=0)
 [eval] NO_DELTA — eval stable. Silent exit.
+[eval] weekly_eval_compounding.py START — 2026-08-23
+[eval] Running Codex maker (2026-08-23)…
+[eval] Codex maker finished (rc=0)
+[eval] NO_DELTA — eval stable. Silent exit.
+[eval] weekly_eval_compounding.py START — 2026-08-30
+[eval] Running Codex maker (2026-08-30)…
+[eval] Codex maker exit -1
+STDERR: TIMEOUT after 600s
+[eval] TELEGRAM_BOT_TOKEN/CHAT_ID not set — skip notification

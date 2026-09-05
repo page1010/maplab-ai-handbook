@@ -286,3 +286,123 @@
 [2026-08-21 03:00:14] ✅ INDEX rebuilt → /Users/pagemacmini/maplab-ai-handbook/state/dispatch_backup_index.json
 [2026-08-21 03:00:15] === dispatch backup done ===
 [2026-08-21 03:00:15] 外接碟未掛載或不可寫，跳過外接碟備份（正常，外接碟可能已拔走）
+[2026-08-22 03:00:04] === dispatch backup 20260822 start ===
+[2026-08-22 03:00:10] ✅ rsync maplab-ai-handbook done
+[2026-08-22 03:00:10] ✅ rsync agent-hq done
+[2026-08-22 03:00:15] ✅ rsync new-project done
+[2026-08-22 03:00:15] rebuilding INDEX...
+[2026-08-22 03:00:15] ✅ INDEX rebuilt → /Users/pagemacmini/maplab-ai-handbook/state/dispatch_backup_index.json
+[2026-08-22 03:00:15] === dispatch backup done ===
+[2026-08-22 03:00:15] 外接碟未掛載或不可寫，跳過外接碟備份（正常，外接碟可能已拔走）
+[2026-08-23 03:00:02] === dispatch backup 20260823 start ===
+[2026-08-23 03:00:09] ✅ rsync maplab-ai-handbook done
+[2026-08-23 03:00:09] ✅ rsync agent-hq done
+[2026-08-23 03:00:13] ✅ rsync new-project done
+[2026-08-23 03:00:13] rebuilding INDEX...
+[2026-08-23 03:00:13] ✅ INDEX rebuilt → /Users/pagemacmini/maplab-ai-handbook/state/dispatch_backup_index.json
+[2026-08-23 03:00:13] === dispatch backup done ===
+[2026-08-23 03:00:14] 外接碟未掛載或不可寫，跳過外接碟備份（正常，外接碟可能已拔走）
+[2026-08-24 03:00:04] === dispatch backup 20260824 start ===
+[2026-08-24 03:00:10] ✅ rsync maplab-ai-handbook done
+[2026-08-24 03:00:10] ✅ rsync agent-hq done
+[2026-08-24 03:00:16] ✅ rsync new-project done
+[2026-08-24 03:00:16] rebuilding INDEX...
+[2026-08-24 03:00:16] ✅ INDEX rebuilt → /Users/pagemacmini/maplab-ai-handbook/state/dispatch_backup_index.json
+[2026-08-24 03:00:17] === dispatch backup done ===
+[2026-08-24 03:00:17] 外接碟未掛載或不可寫，跳過外接碟備份（正常，外接碟可能已拔走）
+[2026-08-25 03:00:04] === dispatch backup 20260825 start ===
+[2026-08-25 03:00:11] ✅ rsync maplab-ai-handbook done
+[2026-08-25 03:00:11] ✅ rsync agent-hq done
+[2026-08-25 03:00:17] ✅ rsync new-project done
+[2026-08-25 03:00:17] rebuilding INDEX...
+[2026-08-25 03:00:17] ✅ INDEX rebuilt → /Users/pagemacmini/maplab-ai-handbook/state/dispatch_backup_index.json
+[2026-08-25 03:00:18] === dispatch backup done ===
+[2026-08-25 03:00:18] 外接碟未掛載或不可寫，跳過外接碟備份（正常，外接碟可能已拔走）
+[2026-08-26 03:00:05] === dispatch backup 20260826 start ===
+[2026-08-26 03:00:11] ✅ rsync maplab-ai-handbook done
+[2026-08-26 03:00:11] ✅ rsync agent-hq done
+[2026-08-26 03:00:17] ✅ rsync new-project done
+[2026-08-26 03:00:17] rebuilding INDEX...
+[2026-08-26 03:00:17] ✅ INDEX rebuilt → /Users/pagemacmini/maplab-ai-handbook/state/dispatch_backup_index.json
+[2026-08-26 03:00:18] === dispatch backup done ===
+[2026-08-26 03:00:18] 外接碟未掛載或不可寫，跳過外接碟備份（正常，外接碟可能已拔走）
+[2026-08-27 03:00:04] === dispatch backup 20260827 start ===
+[2026-08-27 03:00:12] ✅ rsync maplab-ai-handbook done
+[2026-08-27 03:00:12] ✅ rsync agent-hq done
+[2026-08-27 03:00:18] ✅ rsync new-project done
+[2026-08-27 03:00:18] rebuilding INDEX...
+[2026-08-27 03:00:18] ✅ INDEX rebuilt → /Users/pagemacmini/maplab-ai-handbook/state/dispatch_backup_index.json
+[2026-08-27 03:00:19] === dispatch backup done ===
+[2026-08-27 03:00:19] 外接碟未掛載或不可寫，跳過外接碟備份（正常，外接碟可能已拔走）
+[2026-08-28 03:00:02] === dispatch backup 20260828 start ===
+[2026-08-28 03:00:10] ✅ rsync maplab-ai-handbook done
+[2026-08-28 03:00:10] ✅ rsync agent-hq done
+[2026-08-28 03:00:17] ✅ rsync new-project done
+[2026-08-28 03:00:17] rebuilding INDEX...
+[2026-08-28 03:00:17] ✅ INDEX rebuilt → /Users/pagemacmini/maplab-ai-handbook/state/dispatch_backup_index.json
+[2026-08-28 03:00:17] === dispatch backup done ===
+[2026-08-28 03:00:17] 外接碟未掛載或不可寫，跳過外接碟備份（正常，外接碟可能已拔走）
+[2026-08-29 03:00:05] === dispatch backup 20260829 start ===
+[2026-08-29 03:00:12] ✅ rsync maplab-ai-handbook done
+[2026-08-29 03:00:12] ✅ rsync agent-hq done
+[2026-08-29 03:00:19] ✅ rsync new-project done
+[2026-08-29 03:00:19] rebuilding INDEX...
+[2026-08-29 03:00:19] ✅ INDEX rebuilt → /Users/pagemacmini/maplab-ai-handbook/state/dispatch_backup_index.json
+[2026-08-29 03:00:19] === dispatch backup done ===
+[2026-08-29 03:00:19] 外接碟未掛載或不可寫，跳過外接碟備份（正常，外接碟可能已拔走）
+[2026-08-30 03:00:02] === dispatch backup 20260830 start ===
+[2026-08-30 03:00:09] ✅ rsync maplab-ai-handbook done
+[2026-08-30 03:00:09] ✅ rsync agent-hq done
+[2026-08-30 03:00:16] ✅ rsync new-project done
+[2026-08-30 03:00:16] rebuilding INDEX...
+[2026-08-30 03:00:16] ✅ INDEX rebuilt → /Users/pagemacmini/maplab-ai-handbook/state/dispatch_backup_index.json
+[2026-08-30 03:00:17] === dispatch backup done ===
+[2026-08-30 03:00:17] 外接碟未掛載或不可寫，跳過外接碟備份（正常，外接碟可能已拔走）
+[2026-08-31 03:00:02] === dispatch backup 20260831 start ===
+[2026-08-31 03:00:10] ✅ rsync maplab-ai-handbook done
+[2026-08-31 03:00:10] ✅ rsync agent-hq done
+[2026-08-31 03:00:17] ✅ rsync new-project done
+[2026-08-31 03:00:17] rebuilding INDEX...
+[2026-08-31 03:00:17] ✅ INDEX rebuilt → /Users/pagemacmini/maplab-ai-handbook/state/dispatch_backup_index.json
+[2026-08-31 03:00:18] === dispatch backup done ===
+[2026-08-31 03:00:18] 外接碟未掛載或不可寫，跳過外接碟備份（正常，外接碟可能已拔走）
+[2026-09-01 03:00:05] === dispatch backup 20260901 start ===
+[2026-09-01 03:00:12] ✅ rsync maplab-ai-handbook done
+[2026-09-01 03:00:13] ✅ rsync agent-hq done
+[2026-09-01 03:00:19] ✅ rsync new-project done
+[2026-09-01 03:00:19] rebuilding INDEX...
+[2026-09-01 03:00:20] ✅ INDEX rebuilt → /Users/pagemacmini/maplab-ai-handbook/state/dispatch_backup_index.json
+[2026-09-01 03:00:20] === dispatch backup done ===
+[2026-09-01 03:00:20] 外接碟未掛載或不可寫，跳過外接碟備份（正常，外接碟可能已拔走）
+[2026-09-02 03:00:01] === dispatch backup 20260902 start ===
+[2026-09-02 03:00:11] ✅ rsync maplab-ai-handbook done
+[2026-09-02 03:00:11] ✅ rsync agent-hq done
+[2026-09-02 03:00:19] ✅ rsync new-project done
+[2026-09-02 03:00:19] rebuilding INDEX...
+[2026-09-02 03:00:19] ✅ INDEX rebuilt → /Users/pagemacmini/maplab-ai-handbook/state/dispatch_backup_index.json
+[2026-09-02 03:00:20] === dispatch backup done ===
+[2026-09-02 03:00:20] 外接碟未掛載或不可寫，跳過外接碟備份（正常，外接碟可能已拔走）
+[2026-09-03 03:00:02] === dispatch backup 20260903 start ===
+[2026-09-03 03:00:09] ✅ rsync maplab-ai-handbook done
+[2026-09-03 03:00:09] ✅ rsync agent-hq done
+[2026-09-03 03:00:16] ✅ rsync new-project done
+[2026-09-03 03:00:16] rebuilding INDEX...
+[2026-09-03 03:00:16] ✅ INDEX rebuilt → /Users/pagemacmini/maplab-ai-handbook/state/dispatch_backup_index.json
+[2026-09-03 03:00:17] === dispatch backup done ===
+[2026-09-03 03:00:17] 外接碟未掛載或不可寫，跳過外接碟備份（正常，外接碟可能已拔走）
+[2026-09-04 03:00:00] === dispatch backup 20260904 start ===
+[2026-09-04 03:00:10] ✅ rsync maplab-ai-handbook done
+[2026-09-04 03:00:10] ✅ rsync agent-hq done
+[2026-09-04 03:00:21] ✅ rsync new-project done
+[2026-09-04 03:00:21] rebuilding INDEX...
+[2026-09-04 03:00:21] ✅ INDEX rebuilt → /Users/pagemacmini/maplab-ai-handbook/state/dispatch_backup_index.json
+[2026-09-04 03:00:22] === dispatch backup done ===
+[2026-09-04 03:00:22] 外接碟未掛載或不可寫，跳過外接碟備份（正常，外接碟可能已拔走）
+[2026-09-05 03:00:03] === dispatch backup 20260905 start ===
+[2026-09-05 03:00:11] ✅ rsync maplab-ai-handbook done
+[2026-09-05 03:00:11] ✅ rsync agent-hq done
+[2026-09-05 03:00:17] ✅ rsync new-project done
+[2026-09-05 03:00:17] rebuilding INDEX...
+[2026-09-05 03:00:17] ✅ INDEX rebuilt → /Users/pagemacmini/maplab-ai-handbook/state/dispatch_backup_index.json
+[2026-09-05 03:00:18] === dispatch backup done ===
+[2026-09-05 03:00:19] 外接碟未掛載或不可寫，跳過外接碟備份（正常，外接碟可能已拔走）

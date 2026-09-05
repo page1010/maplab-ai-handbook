@@ -24,7 +24,25 @@
 
 ## Resume Prompt
 
-我是 MAPLAB SEO 教練接手者。先讀 `CURRENT_STATUS.md`、`pitfalls.md`、`handoff/tasks/T-A2-HERMES-SEO-COACH-001.md`、`.agents/skills/maplab-seo-coach-patrol/SKILL.md` 與 `workbook/reviews/MAPLAB-DURABLE-JOBS/MAPJOB-20260901-120729-7b2afc/job.json`。做 plateau review 後只執行 job 的 `next_bounded_action`：為 post 879 FAQ JSON-LD raw newline 產最小 preview-only proposal 與 3/3 parser receipt。不得寫 live WordPress、Ads、Rank Math，不得對客發訊，不得外送私密資料。
+我是接手 Hermes LINE→Sheets 邊界修正的 Codex / A1。先讀 `CURRENT_STATUS.md`、`pitfalls.md`、`handoff/tasks/T-A6-HERMES-LINE-GYM-001.md`、`workbook/reviews/JOB-A6-HERMES-SHEETS-ASSISTANT-20260901/checkpoint_handoff.md`、`docs/hermes-line-sheets-assistant-flow-v1.md` 與 `config/hermes-line-sheets-assistant-v1.json`。Hermes 每輪只問一題，只協助調用 Sheets，不報價、不選菜、不承諾檔期／訂單、不判定飲食安全。先清除 legacy GAS abandoned diff並完成 isolated GAS mocked gates；沒有 live 測試授權不得部署、建立真實客戶 Sheet、開啟 LINE sender或外送 raw LINE／客資。
+
+---
+
+## Parallel Active Task — A8-FITNESS 華語樂齡節拍 MVP
+
+- Task Card：`handoff/tasks/T-A8-FITNESS-MVP-001.md`
+- Status：`PRIVATE_MVP_RENDERED_UNVERIFIED / PT_REQUIRED`
+- Durable heartbeat：每 30 分鐘在目前 Codex task 執行一個有檔案收據的 bounded action；不得新增 Suno 費用、再按 Create、上傳或公開。
+- Current evidence：DeerFlow public research 已完成；A8-FITNESS role／SOP／Extension module 已建立；5 支 17.5 秒動作短片與 1 支 107.5 秒合輯正在安全修正版重渲染。Suno variant A 已用 Chrome 可視流程與原生 Save 存成 32.280 秒 WAV，SHA-256 `7245ce245774c6b52fb40a56cb2cea218dfc82e6e8f6e58e34b678348144cc9f`。
+- External boundary：YouTube 表單已填 `跟著動｜華語樂齡節拍`／`@跟著動樂齡節拍` 並顯示可用；final Create 尚未點，需 action-time confirmation。影片 upload／private／unlisted／public publication 全部 `NOT_AUTHORIZED`。
+
+### A8-FITNESS Next Bounded Action
+
+凍結安全修正版 exact MP4 hashes，從 encoded output 抽幀並產六份 fail-closed acceptance diagnostics；actual-audio human listen、目標裝置 readback、具名 PT hash-bound review 與 Owner publication gate 未齊前不得升 `QA_PASS`。
+
+### A8-FITNESS Resume Prompt
+
+我是 MAPLAB A8-FITNESS 華語樂齡節拍導演，環境 `/Users/pagemacmini/maplab-ai-handbook`。先讀 `AGENT_CORE.md`、`CURRENT_STATUS.md`、`pitfalls.md`、`handoff/tasks/T-A8-FITNESS-MVP-001.md`、`recalls/A8-FITNESS_recall.md`、`skills/a8-senior-fitness-video-sop.md` 與 `skills/a8-produce-to-publish-sop.md`。目前是 `PRIVATE_MVP_RENDERED_UNVERIFIED / PT_REQUIRED`；只執行 Task Card 的 next bounded action。Suno variant A 已下載但 human listen／final mix／voice rights仍 MISSING；YouTube final Create需 Owner 即時確認，影片上傳與公開未授權。缺資料不猜，不把 renderer preview、enabled button、local test 或 UI rights 字樣冒充成 encoded acceptance、頻道已建立、獨立法律判定或 PT_PASS。
 
 ---
 
@@ -337,3 +355,5 @@
 ## 2026-08-16 weekly-eval: 520/540 | NO_DELTA
 
 ## 2026-08-23 weekly-eval: 520/540 | NO_DELTA
+
+## 2026-08-30 weekly-eval: 520/540 | NO_DELTA

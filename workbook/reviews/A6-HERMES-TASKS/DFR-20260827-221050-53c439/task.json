@@ -1,0 +1,17 @@
+{
+  "schema_version": 4,
+  "task_id": "DFR-20260827-221050-53c439",
+  "created_at": "2026-08-27T22:10:50+0800",
+  "request": "[redacted-auto-routed-public-research]",
+  "request_sha256": "cd596feec86250c2a5e961234512bf4678bedde3f98da7dcc8dcccdbfabf1d52",
+  "request_chars": 60,
+  "requester": {
+    "channel": "telegram",
+    "owner_user_id": 0,
+    "chat_id": null,
+    "chat_type": null
+  },
+  "action": "deerflow-public-research",
+  "policy": "public-research-auto-route-v2",
+  "parent_job_id": "MAPJOB-20260827-221050-21a51e"
+}

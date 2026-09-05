@@ -13,7 +13,7 @@ import hashlib
 import json
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any
 
 
@@ -99,6 +99,14 @@ CODE_SURFACES = [
 ]
 
 
+def validate_safe_relative_path(value: str, field_name: str) -> str:
+    """Reject absolute/traversal paths before they enter a portable role module."""
+    path = PurePosixPath(value)
+    if not value or value.startswith(("/", "\\")) or "\\" in value or ".." in path.parts:
+        raise ValueError(f"{field_name} must be a safe repo-relative POSIX path: {value!r}")
+    return value
+
+
 @dataclass
 class RoleModule:
     role_id: str
@@ -116,6 +124,11 @@ class RoleModule:
     affects: list[str] = field(default_factory=list)
     recall_path: str | None = None
     risk_level: str = "medium"
+    forbidden_actions_extra: list[str] = field(default_factory=list)
+    verification_required_extra: list[str] = field(default_factory=list)
+    task_card_path: str | None = None
+    default_review_bundle: str | None = None
+    release_gate: dict[str, Any] = field(default_factory=dict)
 
     @property
     def module_id(self) -> str:
@@ -124,6 +137,21 @@ class RoleModule:
 
     def to_module(self) -> dict[str, Any]:
         recall_path = self.recall_path or f"recalls/{self.role_id}_recall.md"
+        task_card_path = self.task_card_path or next(
+            (path for path in self.project_docs if path.startswith("handoff/tasks/")),
+            str(TASK_CARD_PATH.relative_to(ROOT)),
+        )
+        default_review_bundle = self.default_review_bundle or f"workbook/reviews/JOB-{self.role_id}-xxx/"
+        output_contract = self.output_contract or [
+            "task_summary.md",
+            "output.md",
+            "relation_update.json",
+            "review_request.md",
+        ]
+        validate_safe_relative_path(task_card_path, "task_card_path")
+        validate_safe_relative_path(default_review_bundle, "default_review_bundle")
+        for output_path in output_contract:
+            validate_safe_relative_path(output_path, "output_contract")
         read_first = COMMON_READ_FIRST + [recall_path]
         read_first += self.project_docs + self.extra_read_first + self.skills + COMMON_GOVERNANCE
         read_first = dedupe(read_first)
@@ -160,17 +188,12 @@ class RoleModule:
                 "State the current task, expected output path, affected roles, and unresolved blockers before acting.",
             ]
             + self.startup_contract_extra,
-            "output_contract": self.output_contract
-            or [
-                "task_summary.md",
-                "output.md or output.json",
-                "relation_update.json",
-                "review_request.md",
-            ],
+            "output_contract": output_contract,
+            "output_contract_rule": "Every output_contract entry is a safe POSIX path relative to writeback.default_review_bundle; missing files remain MISSING.",
             "writeback": {
-                "default_review_bundle": "workbook/reviews/JOB-xxx/",
+                "default_review_bundle": default_review_bundle,
                 "task_module_graph": "workbook/task_modules/role_module_relation_graph.json",
-                "task_card": str(TASK_CARD_PATH.relative_to(ROOT)),
+                "task_card": task_card_path,
                 "status_rule": "Update CURRENT_STATUS.md only for major status changes; otherwise write a review bundle or task output first.",
             },
             "affects": self.affects,
@@ -179,13 +202,16 @@ class RoleModule:
                 "Do not push main or overwrite truth sources unless the task explicitly allows it.",
                 "Do not read secrets/.env/API keys unless the module marks the source as a1_only and the Owner has approved the operation.",
                 "Do not treat old repo notes as live facts when APIs/UI can be checked.",
-            ],
+            ]
+            + self.forbidden_actions_extra,
             "verification_required": [
                 "List source files actually read.",
                 "List outputs created and exact paths.",
                 "List affected agents/tasks/files.",
                 "Produce review bundle or explain why no bundle was needed.",
-            ],
+            ]
+            + self.verification_required_extra,
+            "release_gate": self.release_gate,
             "risk_level": self.risk_level,
         }
 
@@ -505,6 +531,100 @@ ROLES = [
         ],
         affects=["A4 assets", "A3 social calendar", "A2 SEO video titles", "YouTube/Shorts publishing queue"],
         risk_level="medium",
+    ),
+    RoleModule(
+        "A8-FITNESS",
+        "Senior Fitness Follow-Along Director",
+        "華語樂齡節拍導演（A8 子角色）",
+        "把公開運動指引、專業審核、華語教練口令、主要活動區圖示、節拍音樂、動作短片與合輯收斂成可驗證的中高齡跟著動內容；預設只做私人 MVP。",
+        [
+            "senior_fitness_research",
+            "movement_safety_card",
+            "mandarin_coaching_cues",
+            "fitness_motion_short",
+            "shorts_to_compilation",
+            "suno_instrumental_brief",
+            "youtube_channel_package",
+        ],
+        [
+            "handoff/tasks/T-A8-FITNESS-MVP-001.md",
+            "projects/a8-senior-fitness-follow-along.md",
+        ],
+        [
+            "skills/a8-senior-fitness-video-sop.md",
+            "skills/a8-produce-to-publish-sop.md",
+            "skills/a8-video-pipeline-skills.md",
+            "skills/brand-voice-guide.md",
+        ],
+        recall_path="recalls/A8-FITNESS_recall.md",
+        task_card_path="handoff/tasks/T-A8-FITNESS-MVP-001.md",
+        default_review_bundle="workbook/reviews/JOB-A8-SENIOR-FITNESS-MVP-20260901/",
+        output_contract=[
+            "research/research_brief.md",
+            "prompts/movement_plan.json",
+            "qa/movement_safety_review.json",
+            "prompts/cue_sheet.md",
+            "prompts/audio_prompts.md",
+            "receipts/audio_rights_receipt.json",
+            "render/01-chair-march.mp4",
+            "render/02-chair-side-tap.mp4",
+            "render/03-chair-heel-raise.mp4",
+            "render/04-seated-knee-extension.mp4",
+            "render/05-seated-chest-open.mp4",
+            "render/a8-fitness-mvp-compilation-107.5s.mp4",
+            "receipts/acceptance/01-chair-march.json",
+            "receipts/acceptance/02-chair-side-tap.json",
+            "receipts/acceptance/03-chair-heel-raise.json",
+            "receipts/acceptance/04-seated-knee-extension.json",
+            "receipts/acceptance/05-seated-chest-open.json",
+            "receipts/acceptance/compilation.json",
+            "qa/target_device_readback.json",
+            "platform/platform_copy.md",
+            "resume_prompt.md",
+        ],
+        startup_contract_extra=[
+            "Call the work general movement education, not medical treatment, rehabilitation, a personal prescription, or guaranteed fall prevention.",
+            "Keep a stable chair or seated regression and the stop conditions visible in every movement card.",
+            "Treat AI body motion as private review until a qualified human professional approves the movement or each frame.",
+        ],
+        affects=[
+            "A8 video pipeline",
+            "DeerFlow public research receipts",
+            "Suno audio generation",
+            "YouTube channel and upload gates",
+            "A2 video search metadata",
+            "A3 social calendar",
+        ],
+        risk_level="high",
+        forbidden_actions_extra=[
+            "Do not claim treatment, rehabilitation, spot fat loss, age reversal, or guaranteed fall prevention.",
+            "Do not publish AI-generated body movement without qualified human movement review or frame-by-frame approval.",
+            "Do not send sung coaching cues to Suno until the Owner approves the exact lyrics.",
+            "Do not upload a video or make it public merely because channel creation was approved.",
+        ],
+        verification_required_extra=[
+            "Verify a stable chair or seated regression, pain and cardiopulmonary stop conditions, and a non-medical disclaimer for every movement.",
+            "Record PT or qualified senior-fitness review as PASS or MISSING; never infer it from a render.",
+            "Verify five independent short hashes, one compilation hash, and six separate acceptance receipts.",
+            "Read back the actual Suno audio, rights state, target-device audio clarity, and YouTube channel identity before advancing gates.",
+        ],
+        release_gate={
+            "default_state": "HOLD",
+            "passing_state": "OWNER_PUBLICATION_REVIEW",
+            "required_checks": [
+                "qualified_movement_professional_review",
+                "six_acceptance_receipts",
+                "audio_rights_and_human_listen",
+                "target_device_readback",
+            ],
+            "evidence_paths": {
+                "qualified_movement_professional_review": "qa/movement_safety_review.json",
+                "six_acceptance_receipts": "receipts/acceptance/",
+                "audio_rights_and_human_listen": "receipts/audio_rights_receipt.json",
+                "target_device_readback": "qa/target_device_readback.json",
+            },
+            "rule": "Only exact PASS for every required check may advance to OWNER_PUBLICATION_REVIEW; missing, unknown, absent, or any other value stays HOLD. This gate never authorizes upload or publication.",
+        },
     ),
     RoleModule(
         "B1",
@@ -947,8 +1067,10 @@ SCHEMA = {
         "read_first",
         "startup_contract",
         "output_contract",
+        "output_contract_rule",
         "writeback",
         "affects",
+        "release_gate",
     ],
     "properties": {
         "schema_version": {"type": "string"},
@@ -966,11 +1088,28 @@ SCHEMA = {
         "source_policy": {"type": "object"},
         "source_freshness": {"type": "object"},
         "startup_contract": {"type": "array", "items": {"type": "string"}},
-        "output_contract": {"type": "array", "items": {"type": "string"}},
-        "writeback": {"type": "object"},
+        "output_contract": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "pattern": r"^(?!/)(?!.*(?:^|/)\.\.(?:/|$))(?!.*\\).+$",
+            },
+        },
+        "output_contract_rule": {"type": "string"},
+        "writeback": {
+            "type": "object",
+            "required": ["default_review_bundle", "task_module_graph", "task_card", "status_rule"],
+            "properties": {
+                "default_review_bundle": {"type": "string", "pattern": r"^(?!/)(?!.*(?:^|/)\.\.(?:/|$))(?!.*\\).+/$"},
+                "task_module_graph": {"type": "string"},
+                "task_card": {"type": "string", "pattern": r"^(?!/)(?!.*(?:^|/)\.\.(?:/|$))(?!.*\\).+$"},
+                "status_rule": {"type": "string"},
+            },
+        },
         "affects": {"type": "array", "items": {"type": "string"}},
         "forbidden_actions": {"type": "array", "items": {"type": "string"}},
         "verification_required": {"type": "array", "items": {"type": "string"}},
+        "release_gate": {"type": "object"},
         "risk_level": {"type": "string"},
     },
 }
@@ -1009,10 +1148,8 @@ def build_graph(modules: list[dict[str, Any]]) -> dict[str, Any]:
     node("task:T-A1-EXT-001", "task", "GitHub dynamic role modules for Chrome/Gemini/Codex/OpenClaw/Hermes", str(TASK_CARD_PATH.relative_to(ROOT)))
     node("output:role-module-index", "output", "Role module index", "chrome-extension/task-modules/index.json")
     node("output:relationship-table", "output", "Role module relationship table", "workbook/task_modules/role_module_relationships.csv")
-    node("output:relationship-xlsx", "output", "Role module relationship workbook", "workbook/task_modules/role_module_relationships.xlsx")
     edge("task:T-A1-EXT-001", "output:role-module-index", "produces")
     edge("task:T-A1-EXT-001", "output:relationship-table", "produces")
-    edge("task:T-A1-EXT-001", "output:relationship-xlsx", "produces")
 
     for surface in CODE_SURFACES:
         surface_id = f"code:{surface['id']}"
@@ -1130,7 +1267,8 @@ def build_doc(modules: list[dict[str, Any]]) -> str:
         "- `chrome-extension/task-modules/{role}.json` — one portable role module per agent.",
         "- `chrome-extension/config/task-modules.json` — extension config pointer.",
         "- `workbook/task_modules/role_module_relation_graph.json` — directed impact graph.",
-        "- `workbook/task_modules/role_module_relationships.csv` and `.xlsx` — Excel-readable relationship table.",
+        "- `workbook/task_modules/role_module_relationships.csv` — generated relationship table; it opens directly in spreadsheet apps.",
+        "- `workbook/task_modules/role_module_relationships.xlsx` is a historical file and is not generated or declared current by this builder.",
         "",
         "## Markdown Refresh Model",
         "",
@@ -1158,6 +1296,9 @@ def build_doc(modules: list[dict[str, Any]]) -> str:
                 f"- Task types: {', '.join(module['task_types'])}",
                 f"- Affects: {'; '.join(module['affects'])}",
                 f"- Module file: `chrome-extension/task-modules/{module['role_id']}.json`",
+                f"- Task Card: `{module['writeback']['task_card']}`",
+                f"- Default review bundle: `{module['writeback']['default_review_bundle']}`",
+                "- Output contract paths are relative to the default review bundle.",
             ]
         )
         if role_handbooks:
@@ -1193,7 +1334,7 @@ Owner request：把網路上 GitHub Chrome Extension 動態連結改成任務模
 
 - 建立平台中立的 role task module，不再把 Claude tab 注入當唯一入口。
 - 全角色覆蓋：{", ".join(m["role_id"] for m in modules)}。
-- 輸出指向性關聯圖、Excel/CSV 對照表、程式檔關聯面。
+- 輸出指向性關聯圖、CSV 對照表、程式檔關聯面。
 
 ## Generated Outputs
 
@@ -1203,7 +1344,6 @@ Owner request：把網路上 GitHub Chrome Extension 動態連結改成任務模
 - `chrome-extension/task-modules/{{role}}.json` for every generated role module
 - `workbook/task_modules/role_module_relation_graph.json`
 - `workbook/task_modules/role_module_relationships.csv`
-- `workbook/task_modules/role_module_relationships.xlsx`
 
 ## Guardrails
 
@@ -1320,8 +1460,13 @@ def main() -> None:
                 "chrome-extension/task-modules/index.json",
                 "workbook/task_modules/role_module_relation_graph.json",
                 "workbook/task_modules/role_module_relationships.csv",
-                "workbook/task_modules/role_module_relationships.xlsx",
                 str(TASK_CARD_PATH.relative_to(ROOT)),
+            ],
+            "excluded_outputs": [
+                {
+                    "path": "workbook/task_modules/role_module_relationships.xlsx",
+                    "reason": "Historical/stale workbook; this builder does not generate or refresh XLSX.",
+                }
             ],
         },
     )

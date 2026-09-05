@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/Users/pagemacmini/maplab-ai-handbook/bot_a6/hermes_deerflow_bridge.py", line 512, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/Users/pagemacmini/maplab-ai-handbook/bot_a6/hermes_deerflow_bridge.py", line 507, in main
+    return invoke(args.provider, args.thread_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pagemacmini/maplab-ai-handbook/bot_a6/hermes_deerflow_bridge.py", line 259, in invoke
+    for event in client.stream(
+                 ^^^^^^^^^^^^^^
+  File "/Volumes/MacExternal/MAPLAB_WORKSPACE/tools/deer-flow/backend/packages/harness/deerflow/client.py", line 729, in stream
+    yield from self._stream_without_trace_context(message, thread_id=thread_id, **kwargs)
+  File "/Volumes/MacExternal/MAPLAB_WORKSPACE/tools/deer-flow/backend/packages/harness/deerflow/client.py", line 906, in _stream_without_trace_context
+    self._ensure_agent(config, context=context)
+  File "/Volumes/MacExternal/MAPLAB_WORKSPACE/tools/deer-flow/backend/packages/harness/deerflow/client.py", line 418, in _ensure_agent
+    self._agent = create_agent(**kwargs)
+                  ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Volumes/MacExternal/MAPLAB_WORKSPACE/tools/deer-flow/backend/.venv/lib/python3.12/site-packages/langchain/agents/factory.py", line 1082, in create_agent
+    raise AssertionError(msg)
+AssertionError: Please remove duplicate middleware instances.

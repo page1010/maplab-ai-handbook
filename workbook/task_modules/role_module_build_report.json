@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-06-29T08:45:19+08:00",
-  "module_count": 31,
-  "relationship_rows": 660,
-  "graph_nodes": 351,
-  "graph_edges": 963,
+  "generated_at": "2026-09-01T13:14:14+08:00",
+  "module_count": 32,
+  "relationship_rows": 683,
+  "graph_nodes": 364,
+  "graph_edges": 997,
   "missing_sources": [
     "broker_api",
     "proposed_orders",
@@ -15,7 +15,12 @@
     "chrome-extension/task-modules/index.json",
     "workbook/task_modules/role_module_relation_graph.json",
     "workbook/task_modules/role_module_relationships.csv",
-    "workbook/task_modules/role_module_relationships.xlsx",
     "handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md"
+  ],
+  "excluded_outputs": [
+    {
+      "path": "workbook/task_modules/role_module_relationships.xlsx",
+      "reason": "Historical/stale workbook; this builder does not generate or refresh XLSX."
+    }
   ]
 }

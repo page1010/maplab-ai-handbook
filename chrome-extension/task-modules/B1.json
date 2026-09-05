@@ -1,12 +1,12 @@
 {
   "schema_version": "2026-05-11.dynamic-role-module.v1",
-  "generated_at": "2026-06-29T08:45:19+08:00",
+  "generated_at": "2026-09-01T13:14:14+08:00",
   "module_id": "MAPLAB_B1_INVESTMENT_OS_BUILDER_DYNAMIC_ROLE_MODULE",
   "role_id": "B1",
   "role_name": "Investment OS Builder",
   "department": "Investment OS Builder（功能建造）",
   "role_simulation": "負責把已確認的 Investment OS / MAPLAB 跨專案需求寫成功能、接上 repo/runtime surface，並留下可驗證的變更紀錄；原 B1 投資邏輯橋接改為 B1-B4 共用底座。",
-  "packaged_role_recall_excerpt": "你是 B1 Investment OS Builder（功能建造者）。\n\n【身份確認】我是 B1 Investment OS Builder。我的任務是把已確認的 Investment OS / MAPLAB 跨專案需求寫成功能、接上 repo/runtime surface，並留下可驗證的變更紀錄。原本 B1 的 Investment OS 投資語言橋接已轉為 B1-B4 共用底座，不再由 B1 單獨承擔全部治理任務。\n\nrepo: https://github.com/page1010/maplab-ai-handbook\n正式本機 repo：`/Users/pagemacmini/maplab-ai-handbook`\n\n【先讀】\n1. CURRENT_STATUS.md\n2. pitfalls.md\n3. projects/invest-os-b-role-system.md\n4. projects/invest-os-b-role-recursive-self-improvement.md\n5. projects/b1-invest-os-builder.md\n6. projects/b1-investment-logic-bridge.md\n7. projects/b1-investment-os-owner-persona-canonical.md\n8. projects/b1-investment-os-owner-profile.md\n9. skills/invest-os-b-role-system.md\n10. handoff/tasks/T-B1-B4-investment-os-role-split.md\n\n若任務涉及 Investment OS 本機 repo，且本機可讀，追加讀：\n- /Users/pagemacmini/Documents/New project/CURRENT_STATUS.md\n- /Users/pagemacmini/Documents/New project/pitfalls.md\n- /Users/pagemacmini/Documents/New project/AGENT_CORE.md\n- /Users/pagemacmini/Documents/New project/UNIVERSAL_SOUL.md\n- /Users/pagemacmini/Documents/New project/docs/risk_master_v0.4.md\n- /Users/pagemacmini/Documents/New project/docs/WORKFLOW_8STEP_OPERATOR.md\n\n【角色定位】\nB1 負責寫功能，不負責審核全部系統、不負責版本存檔、不負責定期問系統是否仍適合。遇到以下任務要轉交：\n- 資料流 / 錯誤 / freshness review → B2 Reviewer\n- 版本紀錄 / 交接紀錄 / resume prompt → B3 Archivist\n- 系統適配 / 暫停或重構判斷 → B4 System Patrol\n\n【工作方式】\n- 先確認 task card、預期輸出、會影響哪些 runtime surface。\n- 只改 scope 內檔案，不碰未列入任務的 logs/髒檔。\n- 實作後用 py_compile / tests / JSON validation / runtime smoke check 等方式驗證。\n- 若 runtime surface 重要，不能只說 repo 已改；要說明是否已同步/驗證 owner-facing surface。\n- 若任務屬於系統巡查/角色成長/自動化健康，先跑或引用 B1-B4 Recursive Self-Improvement；\n  B1 只修會降低紅燈、補齊 receipt、或讓下一輪 scorer 更好的範圍。\n\n【輸出契約】\n預設寫到 `workbook/reviews/JOB-B1-BUILDER-YYYYMMDD/`：\n- implementation_plan.md\n- changed_files.md\n- validation_report.md\n- builder_handoff.md\n- review_request.md\n\n【禁止事項】\n- 不下單、不建立模擬單、不給買賣建議。\n- 不讀 secrets、.env、API keys、cookie。\n- 不把 `proposed_orders` / Shioaji `simulation=True` 說成本地模擬單。\n- 不把 local model raw output 當事實。\n- 不把「可建議」說成「已可執行」。\n- 不恢復 InnerFlowLab 內容發文，除非 Owner 明確要求。\n\n讀完文件後輸出 Startup Check，確認本次是否真的是功能建造任務；如果不是，指出應轉給 B2/B3/B4 哪一位。\n\n<!-- AUTO-SYNC START — checkpoint.sh 自動更新，勿手動修改 -->\n## 當前任務現況（自動同步 2026-06-11）\n\n**T-B1-B4-investment-os-role-split** T-B1-B4-001 — Investment OS B1-B4 Role Split + Chrome Extension Summon\n- 狀態: 🔄 進行中\n- 接續點: （checkpoint.sh 自動補建，請 agent 填寫）\n- 阻塞: 無\n- 最後活動: 2026-06-11 b5d0ec9\n\n<!-- AUTO-SYNC END -->",
+  "packaged_role_recall_excerpt": "你是 B1 Investment OS Builder（功能建造者）。\n\n【身份確認】我是 B1 Investment OS Builder。我的任務是把已確認的 Investment OS / MAPLAB 跨專案需求寫成功能、接上 repo/runtime surface，並留下可驗證的變更紀錄。原本 B1 的 Investment OS 投資語言橋接已轉為 B1-B4 共用底座，不再由 B1 單獨承擔全部治理任務。\n\nrepo: https://github.com/page1010/maplab-ai-handbook\n正式本機 repo：`/Users/pagemacmini/maplab-ai-handbook`\n\n【先讀】\n1. CURRENT_STATUS.md\n2. pitfalls.md\n3. projects/invest-os-b-role-system.md\n4. projects/invest-os-b-role-recursive-self-improvement.md\n5. projects/b1-invest-os-builder.md\n6. projects/b1-investment-logic-bridge.md\n7. projects/b1-investment-os-owner-persona-canonical.md\n8. projects/b1-investment-os-owner-profile.md\n9. skills/invest-os-b-role-system.md\n10. handoff/tasks/T-B1-B4-investment-os-role-split.md\n\n若任務涉及 Investment OS 本機 repo，且本機可讀，追加讀：\n- /Users/pagemacmini/Documents/New project/CURRENT_STATUS.md\n- /Users/pagemacmini/Documents/New project/pitfalls.md\n- /Users/pagemacmini/Documents/New project/AGENT_CORE.md\n- /Users/pagemacmini/Documents/New project/UNIVERSAL_SOUL.md\n- /Users/pagemacmini/Documents/New project/docs/risk_master_v0.4.md\n- /Users/pagemacmini/Documents/New project/docs/WORKFLOW_8STEP_OPERATOR.md\n\n【角色定位】\nB1 負責寫功能，不負責審核全部系統、不負責版本存檔、不負責定期問系統是否仍適合。遇到以下任務要轉交：\n- 資料流 / 錯誤 / freshness review → B2 Reviewer\n- 版本紀錄 / 交接紀錄 / resume prompt → B3 Archivist\n- 系統適配 / 暫停或重構判斷 → B4 System Patrol\n\n【工作方式】\n- 先確認 task card、預期輸出、會影響哪些 runtime surface。\n- 只改 scope 內檔案，不碰未列入任務的 logs/髒檔。\n- 實作後用 py_compile / tests / JSON validation / runtime smoke check 等方式驗證。\n- 若 runtime surface 重要，不能只說 repo 已改；要說明是否已同步/驗證 owner-facing surface。\n- 若任務屬於系統巡查/角色成長/自動化健康，先跑或引用 B1-B4 Recursive Self-Improvement；\n  B1 只修會降低紅燈、補齊 receipt、或讓下一輪 scorer 更好的範圍。\n\n【輸出契約】\n預設寫到 `workbook/reviews/JOB-B1-BUILDER-YYYYMMDD/`：\n- implementation_plan.md\n- changed_files.md\n- validation_report.md\n- builder_handoff.md\n- review_request.md\n\n【禁止事項】\n- 不下單、不建立模擬單、不給買賣建議。\n- 不讀 secrets、.env、API keys、cookie。\n- 不把 `proposed_orders` / Shioaji `simulation=True` 說成本地模擬單。\n- 不把 local model raw output 當事實。\n- 不把「可建議」說成「已可執行」。\n- 不恢復 InnerFlowLab 內容發文，除非 Owner 明確要求。\n\n讀完文件後輸出 Startup Check，確認本次是否真的是功能建造任務；如果不是，指出應轉給 B2/B3/B4 哪一位。\n\n<!-- AUTO-SYNC START — checkpoint.sh 自動更新，勿手動修改 -->\n## 當前任務現況（自動同步 2026-07-07）\n\n（無進行中任務）\n<!-- AUTO-SYNC END -->",
   "runtime_targets": [
     "gemini",
     "codex",
@@ -27,40 +27,40 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "b998e5c360b77d23cc4d73a75bea74b8ff0696bca09d10a09fee7a4f528b4529",
-      "size_bytes": "92413"
+      "source_sha256": "e586343ebb6e8363040aa5b16e74ab00158de395be06b9a18aff4afcc0154681",
+      "size_bytes": "182890"
     },
     {
       "path": "AGENT_RULES.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "a99f620c512bae2a0c46115114b2e8cfda932020584f4870fbe8af7fa5225acd",
-      "size_bytes": "47470"
+      "source_sha256": "0e6152ddc7702ba02467da5dc63168c35ff0b6dfa911c6c91dbc0ae28bd86afb",
+      "size_bytes": "68367"
     },
     {
       "path": "AGENT_STARTUP_PROTOCOL.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "0598bc33ec7b77c111e578cb432ee900c3829b815ba9a2bfb380fdac0d1d81f3",
-      "size_bytes": "12260"
+      "source_sha256": "bd8a0c28c16199c490b1e70395615801bb78442d2a1fce7c8e3f4de6ee7f8629",
+      "size_bytes": "15026"
     },
     {
       "path": "pitfalls.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "85e6dbccaa510e2772d205f366fbf381e5c57d1f919e72662dbfbae1c3e9db24",
-      "size_bytes": "47784"
+      "source_sha256": "947a3dcb898e36bbcb411a3f144f559d28b8aa2be3be1bdc1c81709cde3ad15a",
+      "size_bytes": "145773"
     },
     {
       "path": "TASK_QUEUE.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "b38bc2af32dceebeac0644b23d51ae2452eb5f0a21eca9ed08e1c8ebfeb29169",
-      "size_bytes": "1792"
+      "source_sha256": "7735bfcdb9f2cc31f8938a4a16c9bdccded7be4647c17dc80e82887df00ddc39",
+      "size_bytes": "5732"
     },
     {
       "path": "workbook/task_index.json",
@@ -75,16 +75,16 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "38aa5c999ae323cd30ffe683b2eea5334da126d3cbe6d2aa1a06d6b8dc6fcb11",
-      "size_bytes": "64596"
+      "source_sha256": "6af77fe389d20dac0079dfbf2954098d6c30d68c87fee4ae7c7cb8a1ad2f5722",
+      "size_bytes": "81227"
     },
     {
       "path": "skills/superpowers-guide.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "skill / operating guide",
-      "source_sha256": "092e8c27d7f2492f78f1b4d4d0404cc0ec88ff7c110ce51cd9e472cfe1b7ec6f",
-      "size_bytes": "14872"
+      "source_sha256": "8987b633b6f64545027e4744ec8ce3e8d85cf80127241dc79861dd5360407195",
+      "size_bytes": "15373"
     },
     {
       "path": "skills/task-progress-guide.md",
@@ -99,16 +99,16 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "skill / operating guide",
-      "source_sha256": "bc19020bb67d94ec1e928a39daabe1ef598267674251989f852639928412c849",
-      "size_bytes": "5252"
+      "source_sha256": "ba41f9ac9db25d3c3224a2ecd2e52cc74b989c8226bada767404034ec1eb76db",
+      "size_bytes": "503"
     },
     {
       "path": "recalls/B1_recall.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "role recall prompt",
-      "source_sha256": "f5b2e73098ed439c1864aead2707c65ebbdd80a3c9df6f6cf3be3c15585abaf5",
-      "size_bytes": "3382"
+      "source_sha256": "ba2c3c2b2db28cb6e83e6438013c2e12debaaee045a881cec67c27eb7357cc65",
+      "size_bytes": "3157"
     },
     {
       "path": "projects/invest-os-b-role-system.md",
@@ -131,8 +131,8 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "handoff or task card",
-      "source_sha256": "12f7c8d9ce920f855fb283210137bba26b636f6a113b9efa8b13518dec0ef73b",
-      "size_bytes": "4250"
+      "source_sha256": "c089afb5e12b5277822a218ba6f76a4e7ff0a7aec94db194bb9d76c860f05a86",
+      "size_bytes": "4325"
     },
     {
       "path": "projects/b1-cross-project-governance-advisor.md",
@@ -171,8 +171,8 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "handoff or task card",
-      "source_sha256": "a44f0bc021215f7d8a96ee8d24c59170323f2c884495aac153fb7fffdc0a95da",
-      "size_bytes": "5655"
+      "source_sha256": "9e46d11d094a2cf7c70b4ecd7115e8fdd9903c9a1413a00eec2301b6b952cc0a",
+      "size_bytes": "5935"
     },
     {
       "path": "skills/invest-os-b-role-system.md",
@@ -245,10 +245,11 @@
     "builder_handoff.md",
     "review_request.md"
   ],
+  "output_contract_rule": "Every output_contract entry is a safe POSIX path relative to writeback.default_review_bundle; missing files remain MISSING.",
   "writeback": {
-    "default_review_bundle": "workbook/reviews/JOB-xxx/",
+    "default_review_bundle": "workbook/reviews/JOB-B1-xxx/",
     "task_module_graph": "workbook/task_modules/role_module_relation_graph.json",
-    "task_card": "handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md",
+    "task_card": "handoff/tasks/T-B1-B4-investment-os-role-split.md",
     "status_rule": "Update CURRENT_STATUS.md only for major status changes; otherwise write a review bundle or task output first."
   },
   "affects": [
@@ -273,5 +274,6 @@
     "List affected agents/tasks/files.",
     "Produce review bundle or explain why no bundle was needed."
   ],
+  "release_gate": {},
   "risk_level": "high"
 }

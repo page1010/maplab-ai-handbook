@@ -24,7 +24,7 @@ import json
 import re
 import sys
 from dataclasses import dataclass
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any, Iterable
 
 
@@ -45,6 +45,10 @@ RUNTIME_LABELS = {
     "gemini": "Gemini",
     "openclaw": "OpenClaw",
     "hermes": "Hermes",
+}
+
+ROLE_RELATION_ALIASES = {
+    "A8-FITNESS": {"A8"},
 }
 
 
@@ -90,6 +94,11 @@ ROUTES: tuple[Route, ...] = (
     Route("A5", "A5 報價與提案引擎", ("quotation", "quote", "報價", "菜單", "成本", "毛利", "items", "proposal")),
     Route("A6", "A6 業務快反應部隊", ("sales", "telegram", "急件", "業務", "回覆", "casequote", "linecases")),
     Route("A7", "A7 客服與對話轉單部", ("customer", "service", "faq", "客服", "對話", "line", "補問", "轉單")),
+    Route(
+        "A8-FITNESS",
+        "A8-FITNESS 華語樂齡節拍導演",
+        ("中高齡", "高齡", "樂齡", "銀髮", "健身", "運動", "跟著動", "跟練", "低衝擊", "扶椅", "坐姿", "tabata", "瑜珈", "瑜伽"),
+    ),
     Route("A8", "A8 影音內容產線", ("video", "reel", "shorts", "影片", "短影音", "剪輯", "higgsfield")),
     Route("B1", "B1 Investment OS Builder", ("build", "implement", "feature", "bug", "修復", "功能", "實作", "runtime")),
     Route("B2", "B2 Investment OS Reviewer", ("review", "freshness", "dataflow", "驗證", "審查", "資料流", "錯誤", "證據")),
@@ -169,11 +178,43 @@ def load_role_module(role: str, entries: dict[str, dict[str, Any]]) -> dict[str,
 
 def role_matches(value: str, role: str) -> bool:
     tokens = {item.strip() for item in value.split(";") if item.strip()}
-    if role in tokens:
+    accepted_roles = {role, *ROLE_RELATION_ALIASES.get(role, set())}
+    if tokens.intersection(accepted_roles):
         return True
     if role.startswith("IOS-") and "ALL-IOS" in tokens:
         return True
     return False
+
+
+def _safe_relative_posix(value: str, field_name: str) -> PurePosixPath:
+    path = PurePosixPath(value)
+    if not value or value.startswith(("/", "\\")) or "\\" in value or ".." in path.parts:
+        raise ValueError(f"{field_name} must be a safe repo-relative POSIX path: {value!r}")
+    return path
+
+
+def resolve_output_contract(module: dict[str, Any]) -> list[str]:
+    """Resolve module outputs to verifiable repo-relative paths."""
+    writeback = module.get("writeback") or {}
+    base_text = str(writeback.get("default_review_bundle") or "")
+    base = _safe_relative_posix(base_text, "writeback.default_review_bundle")
+    resolved: list[str] = []
+    for item in module.get("output_contract") or []:
+        relative = _safe_relative_posix(str(item), "output_contract")
+        resolved.append((base / relative).as_posix())
+    return resolved
+
+
+def evaluate_release_gate(module: dict[str, Any], evidence: dict[str, str] | None = None) -> dict[str, Any]:
+    """Fail closed unless every declared release check is an exact PASS."""
+    gate = module.get("release_gate") or {}
+    required = [str(item) for item in gate.get("required_checks") or []]
+    if not required:
+        return {"state": "NOT_APPLICABLE", "missing_checks": []}
+    observed = evidence or {}
+    missing = [check for check in required if observed.get(check) != "PASS"]
+    state = str(gate.get("default_state") or "HOLD") if missing else str(gate.get("passing_state") or "OWNER_REVIEW")
+    return {"state": state, "missing_checks": missing}
 
 
 def load_relation_rows(role: str) -> list[dict[str, str]]:
@@ -287,8 +328,11 @@ def build_handoff(task: str, role: str, runtime: str, module: dict[str, Any], re
     skills = module.get("skill_group", [])
     affects = module.get("affects", [])
     output_contract = module.get("output_contract", [])
+    startup = module.get("startup_contract", [])
     forbidden = module.get("forbidden_actions", [])
     verification = module.get("verification_required", [])
+    writeback = module.get("writeback") or {}
+    release_gate = evaluate_release_gate(module)
 
     lines: list[str] = [
         f"# MAPLAB {role} Extension-style Runtime Handoff",
@@ -300,6 +344,10 @@ def build_handoff(task: str, role: str, runtime: str, module: dict[str, Any], re
         f"department: {module.get('department', '?')}",
         f"module_id: {module.get('module_id', '?')}",
         f"module_generated_at: {module.get('generated_at', '?')}",
+        f"task_card_path: {writeback.get('task_card', '?')}",
+        f"default_review_bundle: {writeback.get('default_review_bundle', '?')}",
+        f"release_gate_state: {release_gate['state']}",
+        f"release_gate_missing_checks: {', '.join(release_gate['missing_checks']) or 'none'}",
         f"canonical_maplab_repo: {ROOT}",
         f"canonical_investment_os_repo: {INVESTMENT_OS_ROOT}",
         "",
@@ -364,8 +412,11 @@ def build_handoff(task: str, role: str, runtime: str, module: dict[str, Any], re
     lines.extend(["", "## 9. 影響範圍"])
     lines.extend(f"- {item}" for item in affects) if affects else lines.append("- 依 relation index 的 downstream 判斷")
     lines.extend(["", "## 10. 預期產出"])
-    lines.extend(f"- {item}" for item in output_contract) if output_contract else lines.append("- review bundle + validation receipt + handoff")
-    lines.extend(["", "## 11. 禁止事項"])
+    resolved_outputs = resolve_output_contract(module) if output_contract else []
+    lines.extend(f"- `{item}`" for item in resolved_outputs) if resolved_outputs else lines.append("- review bundle + validation receipt + handoff")
+    lines.extend(["", "## 11. 啟動契約"])
+    lines.extend(f"- {item}" for item in startup) if startup else lines.append("- 依角色 recall 與必讀 SOP 執行")
+    lines.extend(["", "## 12. 禁止事項"])
     common_forbidden = [
         "不得讀或輸出 .env、password、token、cookie、OTP、API key value。",
         "不得把 generated index 當作 live truth。",
@@ -373,7 +424,7 @@ def build_handoff(task: str, role: str, runtime: str, module: dict[str, Any], re
     ]
     for item in [*common_forbidden, *map(str, forbidden)]:
         lines.append(f"- {item}")
-    lines.extend(["", "## 12. 驗證要求"])
+    lines.extend(["", "## 13. 驗證要求"])
     for item in verification:
         lines.append(f"- {item}")
     if not verification:
@@ -388,7 +439,7 @@ def build_handoff(task: str, role: str, runtime: str, module: dict[str, Any], re
     lines.extend(
         [
             "",
-            "## 13. 啟動輸出（先回覆後直接執行）",
+            "## 14. 啟動輸出（先回覆後直接執行）",
             "請先輸出以下 Startup Check；任務清楚且無高風險 blocker 時，輸出後直接繼續，不要等待 Owner 重複確認：",
             "",
             "```text",
@@ -412,7 +463,7 @@ def build_handoff(task: str, role: str, runtime: str, module: dict[str, Any], re
             "- Proposed scope:",
             "```",
             "",
-            "## 14. 執行與複利格式",
+            "## 15. 執行與複利格式",
             "每個重要發現使用 What／So What／Now What。",
             "完成後輸出 Index Loop Back：下一個 Agent 是否找得到、角色關聯是否更新、是否新增 prevention、Owner 負擔是否下降。",
             "",

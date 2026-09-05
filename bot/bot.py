@@ -1399,19 +1399,7 @@ async def hermes_ask(
 
 
 def _format_hermes_receipt(fallback_reason: str, toolsets: str = "") -> str:
-    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    return (
-        "🟡 Claude primary unavailable，Hermes fallback 接手\n"
-        f"- primary_failed_reason: {_trim(fallback_reason, 220)}\n"
-        "- fallback=Hermes\n"
-        f"- model: {_hermes_model_label()}\n"
-        f"- toolsets: {toolsets or 'none'}\n"
-        f"- agent: A1 Telegram bot -> Hermes fallback\n"
-        f"- date: {now}\n"
-        "- memory_sources: compact memory card with anchors to CURRENT_STATUS.md, pitfalls.md, company-values, agent-behavior-framework, latest Telegram log\n"
-        "- allowed_actions: Telegram fallback 只做 read/draft/smoke/image-analysis；live send/delete/publish/secrets/computer-control 需最後確認\n"
-        "- next_check: 回覆後檢查 Telegram receipt、bot log、gemma4 validator"
-    )
+    return f"🟡 [Hermes/{_hermes_model_label()}]"
 
 
 def _local_runtime_question_answer(text: str) -> str:

@@ -56,6 +56,17 @@ class HermesTelegramGatewayTest(unittest.TestCase):
         self.assertEqual(gateway.route_gateway_text("上傳公開報告給客戶", []).disposition, "REJECT")
         self.assertEqual(gateway.route_gateway_text("把報告上傳到客戶 LINE", []).disposition, "REJECT")
 
+        chat_cases = (
+            "你好，今天過得如何？",
+            "幫我規劃一下下週的宣傳排程",
+            "這段文案有什麼可以改善的地方？",
+        )
+        for text in chat_cases:
+            with self.subTest(text=text):
+                route = gateway.route_gateway_text(text, [])
+                self.assertEqual(route.disposition, "CHAT")
+                self.assertIsNone(route.reason)
+
     def test_provider_dlp_blocks_private_current_text_and_history(self):
         with mock.patch.object(gateway, "openrouter_chat", return_value="should-not-run") as provider:
             self.assertEqual(
@@ -71,6 +82,17 @@ class HermesTelegramGatewayTest(unittest.TestCase):
                 (None, None),
             )
             provider.assert_not_called()
+
+    def test_openrouter_exhaustion_has_no_ollama_fallback(self):
+        self.assertFalse(hasattr(gateway, "local_ollama_chat"))
+        with mock.patch.object(gateway, "system_prompt", return_value="synthetic-only"), mock.patch.object(
+            gateway, "openrouter_chat", return_value=None
+        ) as provider, mock.patch.object(gateway, "log"):
+            self.assertEqual(
+                gateway.answer("key", ["model-a:free"], [], "synthetic smoke"),
+                (None, None),
+            )
+        provider.assert_called_once()
 
     def test_owner_group_message_requires_mention_or_reply(self):
         base = {"chat": {"type": "supergroup"}, "text": "大家早"}

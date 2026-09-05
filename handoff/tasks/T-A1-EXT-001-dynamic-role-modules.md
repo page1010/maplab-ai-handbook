@@ -1,19 +1,13 @@
 # T-A1-EXT-001 — GitHub Dynamic Role Task Modules
 
-## 接續狀態
-- **狀態**: 🔒 AUTO_CLOSED（2026-08-04，NEEDS_REVIEW 無回應逾 7 天，Owner 可回覆「重開 T-A1-EXT-001-dynamic-role-modules」重啟）
-- **最後活動**: 2026-07-19 5230457
-- **接續點**: （checkpoint.sh 自動補建，請 agent 填寫）
-- **阻塞**: 無
-
 狀態：🔄 in_progress
 Owner request：把網路上 GitHub Chrome Extension 動態連結改成任務模組，讓 Gemini / Codex / OpenClaw 都能接角色、知道讀什麼、影響誰、產出去哪裡。
 
 ## Scope
 
 - 建立平台中立的 role task module，不再把 Claude tab 注入當唯一入口。
-- 全角色覆蓋：A0, A1, A2, A3, A4, A5, A6, A7, A8, B1, B2, B3, B4, IOS-MOMENTUM, IOS-KOL, IOS-FB, IOS-ALPHA, IOS-BLACKSWAN, IOS-INVENTORY, IOS-MACRO, IOS-CHIP, IOS-LEFT, IOS-RIGHT, IOS-EVIDENCE, IOS-SIM, IOS-FAMILY, IOS-HEDGE, IOS-SURFACE, IOS-HYGIENE, IOS-SELL, WIN。
-- 輸出指向性關聯圖、Excel/CSV 對照表、程式檔關聯面。
+- 全角色覆蓋：A0, A1, A2, A3, A4, A5, A6, A7, A8, A8-FITNESS, B1, B2, B3, B4, IOS-MOMENTUM, IOS-KOL, IOS-FB, IOS-ALPHA, IOS-BLACKSWAN, IOS-INVENTORY, IOS-MACRO, IOS-CHIP, IOS-LEFT, IOS-RIGHT, IOS-EVIDENCE, IOS-SIM, IOS-FAMILY, IOS-HEDGE, IOS-SURFACE, IOS-HYGIENE, IOS-SELL, WIN。
+- 輸出指向性關聯圖、CSV 對照表、程式檔關聯面。
 
 ## Generated Outputs
 
@@ -23,7 +17,6 @@ Owner request：把網路上 GitHub Chrome Extension 動態連結改成任務模
 - `chrome-extension/task-modules/{role}.json` for every generated role module
 - `workbook/task_modules/role_module_relation_graph.json`
 - `workbook/task_modules/role_module_relationships.csv`
-- `workbook/task_modules/role_module_relationships.xlsx`
 
 ## Guardrails
 

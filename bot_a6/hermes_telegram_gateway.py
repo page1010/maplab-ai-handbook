@@ -83,10 +83,9 @@ FREE_ENV = Path.home() / ".maplab" / "free_compute.env"
 FALLBACK_CHAIN = [
     "google/gemma-4-31b-it:free",
     "nvidia/nemotron-3-super-120b-a12b:free",
-    "google/gemma-4-26b-a4b-it:free",
+    "z-ai/glm-5.2:free",
+    "minimax/minimax-m3:free",
 ]
-LOCAL_OLLAMA_MODEL = "gemma4:latest"
-LOCAL_OLLAMA_URL = "http://127.0.0.1:11434/api/generate"
 MAX_HISTORY = 12
 MAX_REPLY = 3500
 MAX_PHOTO_BYTES = 20 * 1024 * 1024
@@ -191,7 +190,7 @@ def system_prompt(chain: list[str] | None = None) -> str:
         "你是 Hermes，在 Owner-authorized A6 Telegram gateway 值班。回覆開頭固定標【hermes】；你不是 Fable5，也不冒充其他代理。\n"
         "能力真相：gateway 能回 Telegram、接收照片、保存最近 12 則生成式對話 context，並透過固定 argv 白名單執行有 receipt 的本機讀取/測試。"
         "這不是零存取，但也不是任意 shell 或 SSH。gateway 持有 Telegram 連線，模型看不到 token。"
-        f"設定 provider 鏈：{provider_text}；最終本地 fallback：{LOCAL_OLLAMA_MODEL}。不得說模型完全未知。\n"
+        f"設定 provider 鏈：{provider_text}；本地 fallback 已停用（Owner 2026-08-30）。不得說模型完全未知。\n"
         "執行規則：當 runtime 能直接查時，不要叫 Owner 開終端機、不要叫 Owner 貼輸出、不要說等 Fable5/Codex 額度。"
         "A6 gateway 沒有 Google Sheets/Drive/GitHub API 直連；不得把缺少直連誇大成所有本機檔案都不能讀。\n"
         "資料規則：手冊中的日期快照只算歷史背景，不能當成今天狀態；current/latest/目前必須以 runtime action 或新 receipt 為準。"
@@ -230,23 +229,6 @@ def openrouter_chat(key: str, model: str, messages: list[dict], timeout: int = 1
     if not choices:
         return None
     content = (choices[0].get("message") or {}).get("content")
-    return content.strip() if content and content.strip() else None
-
-
-def local_ollama_chat(messages: list[dict]) -> str | None:
-    prompt = "\n\n".join(
-        f"{item.get('role', 'user')}: {item.get('content', '')}" for item in messages
-    )
-    request = urllib.request.Request(
-        LOCAL_OLLAMA_URL,
-        data=json.dumps(
-            {"model": LOCAL_OLLAMA_MODEL, "prompt": prompt, "stream": False}
-        ).encode(),
-        headers={"Content-Type": "application/json"},
-    )
-    with urllib.request.urlopen(request, timeout=180) as response:
-        data = json.loads(response.read().decode())
-    content = data.get("response")
     return content.strip() if content and content.strip() else None
 
 
@@ -314,16 +296,9 @@ def answer(
                 return reply, model
             log(f"model {model} empty reply")
     else:
-        log("openrouter key unavailable; trying local fallback")
-    try:
-        reply = local_ollama_chat(messages)
-    except (urllib.error.URLError, OSError, ValueError, TypeError) as exc:
-        log(f"local fallback {LOCAL_OLLAMA_MODEL} error={type(exc).__name__}")
-        return None, None
-    if reply:
-        log(f"answered provider=local/{LOCAL_OLLAMA_MODEL}")
-        return reply, f"local/{LOCAL_OLLAMA_MODEL}"
-    log(f"local fallback {LOCAL_OLLAMA_MODEL} empty reply")
+        log("openrouter key unavailable")
+    # Owner 2026-08-30: 本機 ollama fallback 停用,鏈盡即回報失敗
+    log("provider chain exhausted; local fallback disabled")
     return None, None
 
 
@@ -380,7 +355,7 @@ def route_gateway_text(text: str, history: list[dict] | None = None) -> GatewayR
     action, reason = classify(text)
     if action:
         return GatewayRoute("EXECUTE", request=text)
-    if reason:
+    if reason and reason != "不在目前的安全動作白名單":
         return GatewayRoute("REJECT", request=text, reason=reason)
     if text in {"/status", "/runtime"}:
         return GatewayRoute("EXECUTE", request="runtime-status")
@@ -389,6 +364,7 @@ def route_gateway_text(text: str, history: list[dict] | None = None) -> GatewayR
     dlp_reason = provider_egress_rejection(history or [], text)
     if dlp_reason:
         return GatewayRoute("REJECT", request=text, reason=dlp_reason)
+    # Fall through to CHAT — executor will reject; gateway loop decides
     return GatewayRoute("CHAT")
 
 
@@ -594,7 +570,7 @@ def main() -> None:
                     tg_call(token, "sendMessage", {"chat_id": chat_id, "text": reply[:MAX_REPLY]})
                     continue
                 route = route_gateway_text(text, history)
-                if route.disposition in {"EXECUTE", "REJECT"}:
+                if route.disposition == "EXECUTE":
                     receipt = execute_task(
                         route.request or text,
                         owner,
@@ -608,27 +584,41 @@ def main() -> None:
                     )
                     tg_call(token, "sendMessage", {"chat_id": chat_id, "text": telegram_summary(receipt)[:MAX_REPLY]})
                     continue
-                if key is None:
-                    key = load_free_env_key()
-                reply, provider = answer(key, chain, history, text)
-                if reply is None:
-                    reply = (
-                        "【hermes】這次 provider 鏈與本地 fallback 都沒有成功回覆。A6 gateway 與安全執行器仍在線；"
-                        "你可以直接叫我跑 runtime-status、signal-status、repo-status 或 a6-self-test，會立即回 receipt。"
+                if route.disposition == "REJECT":
+                    receipt = execute_task(
+                        route.request or text,
+                        owner,
+                        chat_id=chat_id,
+                        chat_type=chat.get("type"),
+                        openrouter_key=key,
                     )
-                else:
-                    if not reply.startswith("【hermes】"):
-                        reply = "【hermes】" + reply
-                    history = (
-                        history
-                        + [
-                            {"role": "user", "content": text},
-                            {"role": "assistant", "content": reply},
-                        ]
-                    )[-MAX_HISTORY:]
-                    save_history(history)
-                    save_gateway_state(chain, last_provider=provider, bot_username=bot_username)
-                tg_call(token, "sendMessage", {"chat_id": chat_id, "text": reply[:MAX_REPLY]})
+                    log(
+                        f"executor task={receipt['task_id']} status={receipt['status']} "
+                        f"action={receipt.get('action')}"
+                    )
+                    tg_call(token, "sendMessage", {"chat_id": chat_id, "text": telegram_summary(receipt)[:MAX_REPLY]})
+                    continue
+                # CHAT disposition — handle as general-chat for private, reject for group
+                chat_type = chat.get("type")
+                if chat_type == "private":
+                    # Use general-chat action for free-form conversation in private
+                    receipt = execute_task(
+                        f"general-chat: {text}",
+                        owner,
+                        chat_id=chat_id,
+                        chat_type=chat_type,
+                        openrouter_key=key,
+                    )
+                    log(
+                        f"executor task={receipt['task_id']} status={receipt['status']} "
+                        f"action={receipt.get('action')}"
+                    )
+                    tg_call(token, "sendMessage", {"chat_id": chat_id, "text": telegram_summary(receipt)[:MAX_REPLY]})
+                    continue
+                # Group chat without @mention/reply should have been filtered earlier,
+                # but if it reaches here, treat as unaddressed
+                log(f"ignore unaddressed group chat={chat.get('id')}")
+                continue
         except KeyboardInterrupt:
             raise
         except Exception:

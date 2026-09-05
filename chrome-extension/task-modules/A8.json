@@ -1,12 +1,12 @@
 {
   "schema_version": "2026-05-11.dynamic-role-module.v1",
-  "generated_at": "2026-08-27T00:14:26+08:00",
+  "generated_at": "2026-09-01T13:14:14+08:00",
   "module_id": "MAPLAB_A8_CONTENT_REPURPOSING_PIPELINE_DYNAMIC_ROLE_MODULE",
   "role_id": "A8",
   "role_name": "Content Repurposing Pipeline",
   "department": "影音內容產線",
   "role_simulation": "把 A4/A2/A3 素材與內容轉成多平台影音、短影音與分發稿。",
-  "packaged_role_recall_excerpt": "你是 MAPLAB A8 影音內容產線（Content Repurposing Pipeline）。\n你負責：圖文轉影音、多平台影片分發、影片企劃腳本、影音素材生成、剪輯指導、影片發布。\n\n【身份確認】我是 A8 影音內容產線，運行在 Claude tab。\n\nrepo: https://github.com/page1010/maplab-ai-handbook\n先讀 CURRENT_STATUS.md，再讀 AGENT_RULES.md 確認你的角色。\n\n【API 存取三層備援】\n1. MCP 可用 → 直接用\n2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token\n3. Chrome tab 環境 → 自行開啟需要的網頁分頁，用截圖讀取\n\n【角色定位】\nA8 是「一次產出、多平台分發」的影音再製產線。\n服務兩個專案：MAPLAB（外燴活動）+ InnerFlowLab（個人品牌）。\n\n核心產線流程：\n```\n一篇文章 / 一組照片\n    │\n    ├─① NotebookLM → Audio Overview（10-15 分鐘 podcast 對話音檔）\n    │                  → 上傳 YouTube 當 Podcast 影片（配靜態圖）\n    │\n    ├─② Gemini Flash → 拆成 3-5 段 Shorts 腳本（每段一個重點）\n    │       ↓\n    │   Google Vids → 每段腳本 + 對應照片 → 30-60 秒 Shorts\n    │\n    └─③ 原文本身 → WordPress / Substack 發佈\n```\n\n多平台分發：\n- YouTube（長片 podcast + Shorts）\n- Instagram Reels（= Shorts 同素材，改比例/字幕樣式）\n- Threads（配 Shorts 截圖 + 金句，A3 工具可發）\n- TikTok（= Shorts 同素材，直接上傳）\n- Facebook Reels（選擇性）\n\n【工具鏈】\n- NotebookLM — 文章 → podcast 式對話音檔（Audio Overview）\n- Gemini 2.5 Flash（免費額度）— 文章 → Shorts 腳本拆段\n- Google Vids（Workspace）— 腳本 + 圖片 → 影片組裝\n- ffmpeg zoompan — 影像/照片 → 地端慢速運鏡與動態生成（免費且保密）\n- Google Drive — 素材存取\n- YouTube Studio — 上傳、排程、SEO 標籤\n- Google Photos — 素材庫\n\n【兩條內容線】\n| 內容線 | 素材來源 | 影音產出 |\n|--------|---------|---------|\n| MAPLAB 外燴 | 活動照片 + 品項照片 + 場景頁文章 | 「30 秒看懂戶外婚宴外燴」之類的 Shorts |\n| InnerFlowLab | Substack 文章（英文） | NotebookLM podcast + Shorts 金句片段 |\n\n【注意事項】\n- NotebookLM Audio Overview 英文效果最好 → InnerFlowLab 英文線最適合\n- Google Vids 確認 Workspace 帳號已開通\n- Shorts 演算法偏好前 3 秒有吸引力 → 腳本 prompt 加「開頭要 hook」\n- A8 是基礎設施，不歸某個專案專屬\n\n【斷點】\n🟠 `T-A8-001-folder-to-video-distribution` 現為 `AUDIO_REGEN_REQUIRED`。\n邦尼兔 correction v2 已由 acceptance gate 退件；`sop_regression_20260826/` 只是一支 raw／timing／one-pass 內部回歸片，不是可發布新歌。下一步先從 Owner 現行 Google Doc 鎖定唯一歌詞並重生母帶；actual-audio ASR＋Owner 真人聽辨通過後才進正式剪輯。\n\n【正式影音 SSOT（2026-08-27）】\n- final 一律讀 `skills/a8-produce-to-publish-sop.md` v2.0+；本地 enhanced renderer 永遠是 review-only。\n- CapCut／核准 NLE＝正式人工 waveform timeline 與 editable project；Canva＝cover／intro／outro／overlay，不單獨證明歌詞同步。\n- 無 NLE 時只能走 evidence-complete `ffmpeg_one_pass`：raw originals、explicit crop、無 blur、單次有損視訊編碼、timing map、lineage、output hash。\n- 狀態只能依序：`AUDIO_SELECTED → TIMING_LOCKED → EDIT_READY → RENDERED_UNVERIFIED → QA_PASS → OWNER_VIDEO_GATE → APPROVED_FOR_UPLOAD`。\n- `a8_video_acceptance.py` 未回 `ok=true`，不得上傳平台草稿，也不得要求 Owner 審發布。\n\n【必讀】\nCURRENT_STATUS.md → pitfalls.md → handoff/tasks/T-A8-001-folder-to-video-distribution.md → skills/a8-produce-to-publish-sop.md → skills/a8-video-pipeline-skills.md\n\n【協作】\n- A2 寫完文章 → 通知 A8 → A8 做影音再製\n- A4 照片分類完 → A8 拉高分照片當 Shorts 素材\n- A3 社群發布節奏 → A8 配合 Shorts 排程\n- B1（InnerFlowLab）寫完文章 → A8 做英文 podcast + Shorts\n\n【可用工具】NotebookLM、Gemini Flash API、Google Vids、YouTube Data API、YouTube Analytics、Google Drive、ffmpeg zoompan\n\n【輸出物】影片腳本、podcast 音檔、Shorts 影片、字幕稿、發布排程、影片 SEO metadata、Pinterest cover / pin metadata、platform receipts, review_draft_manifest.json\n\n讀完文件後輸出 Startup Check，確認角色再開工。必拿：skills/task-progress-guide.md + skills/a8-video-pipeline-skills.md\n\n---\n\n注意：下方 AUTO-SYNC 區塊仍是 2026-04-19 舊快照；以本檔【斷點】、`CURRENT_STATUS.md` 與 `handoff/tasks/T-A8-001-folder-to-video-distribution.md` 為準。\n\n<!-- AUTO-SYNC START — checkpoint.sh 自動更新，勿手動修改 -->\n## 當前任務現況（自動同步 2026-04-19）\n\n（無進行中任務）\n<!-- AUTO-SYNC END -->",
+  "packaged_role_recall_excerpt": "你是 MAPLAB A8 影音內容產線（Content Repurposing Pipeline）。\n你負責：圖文轉影音、多平台影片分發、影片企劃腳本、影音素材生成、剪輯指導、影片發布。\n\n【身份確認】我是 A8 影音內容產線，運行在 Claude tab。\n\nrepo: https://github.com/page1010/maplab-ai-handbook\n先讀 CURRENT_STATUS.md，再讀 AGENT_RULES.md 確認你的角色。\n\n【API 存取三層備援】\n1. MCP 可用 → 直接用\n2. MCP 不可用 → 讀 skills/credentials/ 對應技能書，用 curl + OAuth token\n3. Chrome tab 環境 → 自行開啟需要的網頁分頁，用截圖讀取\n\n【角色定位】\nA8 是「一次產出、多平台分發」的影音再製產線。\n服務兩個專案：MAPLAB（外燴活動）+ InnerFlowLab（個人品牌）。\n\n核心產線流程：\n```\n一篇文章 / 一組照片\n    │\n    ├─① NotebookLM → Audio Overview（10-15 分鐘 podcast 對話音檔）\n    │                  → 上傳 YouTube 當 Podcast 影片（配靜態圖）\n    │\n    ├─② Gemini Flash → 拆成 3-5 段 Shorts 腳本（每段一個重點）\n    │       ↓\n    │   Google Vids → 每段腳本 + 對應照片 → 30-60 秒 Shorts\n    │\n    └─③ 原文本身 → WordPress / Substack 發佈\n```\n\n多平台分發：\n- YouTube（長片 podcast + Shorts）\n- Instagram Reels（= Shorts 同素材，改比例/字幕樣式）\n- Threads（配 Shorts 截圖 + 金句，A3 工具可發）\n- TikTok（= Shorts 同素材，直接上傳）\n- Facebook Reels（選擇性）\n\n【工具鏈】\n- NotebookLM — 文章 → podcast 式對話音檔（Audio Overview）\n- Gemini 2.5 Flash（免費額度）— 文章 → Shorts 腳本拆段\n- Google Vids（Workspace）— 腳本 + 圖片 → 影片組裝\n- ffmpeg zoompan — 影像/照片 → 地端慢速運鏡與動態生成（免費且保密）\n- Google Drive — 素材存取\n- YouTube Studio — 上傳、排程、SEO 標籤\n- Google Photos — 素材庫\n\n【兩條內容線】\n| 內容線 | 素材來源 | 影音產出 |\n|--------|---------|---------|\n| MAPLAB 外燴 | 活動照片 + 品項照片 + 場景頁文章 | 「30 秒看懂戶外婚宴外燴」之類的 Shorts |\n| InnerFlowLab | Substack 文章（英文） | NotebookLM podcast + Shorts 金句片段 |\n\n【注意事項】\n- NotebookLM Audio Overview 英文效果最好 → InnerFlowLab 英文線最適合\n- Google Vids 確認 Workspace 帳號已開通\n- Shorts 演算法偏好前 3 秒有吸引力 → 腳本 prompt 加「開頭要 hook」\n- A8 是基礎設施，不歸某個專案專屬\n\n【斷點】\n🟠 `T-A8-001-folder-to-video-distribution` 現為 `AUDIO_REGEN_REQUIRED`。\n邦尼兔 correction v2 已由 acceptance gate 退件；`sop_regression_20260826/` 只是一支 raw／timing／one-pass 內部回歸片，不是可發布新歌。下一步先從 Owner 現行 Google Doc 鎖定唯一歌詞並重生母帶；actual-audio ASR＋Owner 真人聽辨通過後才進正式剪輯。\n\n【正式影音 SSOT（2026-08-27）】\n- final 一律讀 `skills/a8-produce-to-publish-sop.md` v2.1+；本地 enhanced renderer 永遠是 review-only。\n- Owner 確認歷史 MAPLAB 曾用 Canva／CapCut 人工精修；缺工程 receipt 只能寫「無法重播／歸因」，不得寫成「以前沒做」。\n- CapCut／核准 NLE＝正式人工 waveform timeline 與可重開 project；Canva／Google Vids 若沒有等效 project/timeline/export/reopen receipt，只算 cover／overlay／協作 draft，不單獨證明歌詞同步。\n- 無 NLE 時只能走 evidence-complete `ffmpeg_one_pass`：raw originals、explicit crop、無 blur、單次有損視訊編碼、timing map、lineage、output hash。\n- `a8_platform_formats.py export` 已拒絕；只讀 `specs`，`review-export` 產物不得上傳。\n- `QA_PASS` 另需 tool chain、polish recipe、rights、structured target-device、per-platform package；第三方處理、草稿上傳、公開、訊息發送分別核准。\n- 狀態只能依序：`AUDIO_SELECTED → TIMING_LOCKED → EDIT_READY → RENDERED_UNVERIFIED → QA_PASS → OWNER_VIDEO_GATE → APPROVED_FOR_UPLOAD`。\n- `a8_video_acceptance.py` 未回 `ok=true`，不得上傳平台草稿，也不得要求 Owner 審發布。\n\n【必讀】\nCURRENT_STATUS.md → pitfalls.md → handoff/tasks/T-A8-001-folder-to-video-distribution.md → skills/a8-produce-to-publish-sop.md → skills/a8-video-pipeline-skills.md\n\n【協作】\n- A2 寫完文章 → 通知 A8 → A8 做影音再製\n- A4 照片分類完 → A8 拉高分照片當 Shorts 素材\n- A3 社群發布節奏 → A8 配合 Shorts 排程\n- B1（InnerFlowLab）寫完文章 → A8 做英文 podcast + Shorts\n\n【可用工具】NotebookLM、Gemini Flash API、Google Vids、YouTube Data API、YouTube Analytics、Google Drive、ffmpeg zoompan\n\n【輸出物】影片腳本、podcast 音檔、Shorts 影片、字幕稿、發布排程、影片 SEO metadata、Pinterest cover / pin metadata、platform receipts, review_draft_manifest.json\n\n讀完文件後輸出 Startup Check，確認角色再開工。必拿：skills/task-progress-guide.md + skills/a8-video-pipeline-skills.md\n\n---\n\n注意：下方 AUTO-SYNC 區塊仍是 2026-04-19 舊快照；以本檔【斷點】、`CURRENT_STATUS.md` 與 `handoff/tasks/T-A8-001-folder-to-video-distribution.md` 為準。\n\n<!-- AUTO-SYNC START — checkpoint.sh 自動更新，勿手動修改 -->\n## 當前任務現況（自動同步 2026-04-19）\n\n（無進行中任務）\n<!-- AUTO-SYNC END -->",
   "runtime_targets": [
     "gemini",
     "codex",
@@ -26,16 +26,16 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "46e615d69529fc838eb9c70be09899eb993336dea4fcd0c6e8a0039092017e63",
-      "size_bytes": "149595"
+      "source_sha256": "e586343ebb6e8363040aa5b16e74ab00158de395be06b9a18aff4afcc0154681",
+      "size_bytes": "182890"
     },
     {
       "path": "AGENT_RULES.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "74b269c6ba0503f5f0af6a10eef9fdcb3a19b91e8b9f355bb56c363d2b90daee",
-      "size_bytes": "67915"
+      "source_sha256": "0e6152ddc7702ba02467da5dc63168c35ff0b6dfa911c6c91dbc0ae28bd86afb",
+      "size_bytes": "68367"
     },
     {
       "path": "AGENT_STARTUP_PROTOCOL.md",
@@ -50,16 +50,16 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "fbc292c4d756b2178d43d9ccc643638eae1e9356738738fc895485860262a053",
-      "size_bytes": "80604"
+      "source_sha256": "947a3dcb898e36bbcb411a3f144f559d28b8aa2be3be1bdc1c81709cde3ad15a",
+      "size_bytes": "145773"
     },
     {
       "path": "TASK_QUEUE.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "73c4a81f00263b614c1790a1c49c9db17d305be1968919b090761c1a5fa02c6f",
-      "size_bytes": "5682"
+      "source_sha256": "7735bfcdb9f2cc31f8938a4a16c9bdccded7be4647c17dc80e82887df00ddc39",
+      "size_bytes": "5732"
     },
     {
       "path": "workbook/task_index.json",
@@ -98,24 +98,24 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "skill / operating guide",
-      "source_sha256": "bc19020bb67d94ec1e928a39daabe1ef598267674251989f852639928412c849",
-      "size_bytes": "5252"
+      "source_sha256": "ba41f9ac9db25d3c3224a2ecd2e52cc74b989c8226bada767404034ec1eb76db",
+      "size_bytes": "503"
     },
     {
       "path": "recalls/A8_recall.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "role recall prompt",
-      "source_sha256": "4bdd363cd5c237dc9f5aa5b8afa5e97ac02776e9366bdbf18f6a0c61fbcc07d4",
-      "size_bytes": "4961"
+      "source_sha256": "5eb4a8c4f1de2f3ad1ab7e1c644147cb53f2dd5251f746d4be5a7b628776abfb",
+      "size_bytes": "5470"
     },
     {
       "path": "handoff/tasks/T-A8-001-folder-to-video-distribution.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "handoff or task card",
-      "source_sha256": "6df8a37bbe52b37ffa706900e96b558e56e0e99a3ca3eada81bfecc82046f64c",
-      "size_bytes": "22761"
+      "source_sha256": "8304f78191cb4edb530448c5ebe54b4939a6e804e8406e3b325dabaa3b64614b",
+      "size_bytes": "24799"
     },
     {
       "path": "projects/maplab-pipeline.md",
@@ -138,16 +138,16 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "skill / operating guide",
-      "source_sha256": "cc4aa8ed1abd1f6e90791856aa6a9951e1ca680ccb3e0fe64d465f1a95fbe89a",
-      "size_bytes": "34953"
+      "source_sha256": "32e7f391fb95f195772a7bc84e3f2da849d361c363947167fe84d463814bdfc6",
+      "size_bytes": "39496"
     },
     {
       "path": "skills/a8-video-pipeline-skills.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "skill / operating guide",
-      "source_sha256": "cd081986fdfcd8787f48669ccf3507be9c231ce22d812dc3e8839aba4ecff478",
-      "size_bytes": "22322"
+      "source_sha256": "16efb1edaeff9978d10c08aae6e54ceb38a9707a429f35c9da4a844e4fddf448",
+      "size_bytes": "23814"
     },
     {
       "path": "skills/media-limit-workaround.md",
@@ -243,10 +243,11 @@
     "platform_copy.md",
     "review_request.md"
   ],
+  "output_contract_rule": "Every output_contract entry is a safe POSIX path relative to writeback.default_review_bundle; missing files remain MISSING.",
   "writeback": {
-    "default_review_bundle": "workbook/reviews/JOB-xxx/",
+    "default_review_bundle": "workbook/reviews/JOB-A8-xxx/",
     "task_module_graph": "workbook/task_modules/role_module_relation_graph.json",
-    "task_card": "handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md",
+    "task_card": "handoff/tasks/T-A8-001-folder-to-video-distribution.md",
     "status_rule": "Update CURRENT_STATUS.md only for major status changes; otherwise write a review bundle or task output first."
   },
   "affects": [
@@ -267,5 +268,6 @@
     "List affected agents/tasks/files.",
     "Produce review bundle or explain why no bundle was needed."
   ],
+  "release_gate": {},
   "risk_level": "medium"
 }

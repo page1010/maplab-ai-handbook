@@ -214,6 +214,7 @@ else
 fi
 
 if [[ $ERRORS -gt 0 ]]; then
-    bash "$NOTIFY" "⚠️ [dispatch-backup] $ERRORS 個備份來源找不到，請確認路徑" 2>/dev/null \
-        || log "NOTIFY_FAILED"
+    # 2026-09-04 Owner 裁決（msg 4642）：daily ops 訊息不進 Owner 線，改寫記事本
+    printf '[%s] [dispatch-backup] ⚠️ %s 個備份來源找不到，請確認路徑\n' "$(ts)" "$ERRORS" \
+        >> "$REPO_ROOT/state/system_journal.md"
 fi

@@ -1,0 +1,16 @@
+{
+  "schema_version": 2,
+  "task_id": "A6H-20260903-102543-304eff",
+  "created_at": "2026-09-03T10:25:43+0800",
+  "request": "你這邊session對接的hermes agent 實際上叫什麼maplabcloud?",
+  "request_sha256": "54d6a08dae81edbfbb1b3208bfeb21a060f60e43e9b8e113f410831e75d707e2",
+  "request_chars": 44,
+  "requester": {
+    "channel": "telegram",
+    "owner_user_id": 1077768811,
+    "chat_id": 1077768811,
+    "chat_type": "private"
+  },
+  "action": null,
+  "policy": "fixed-argv-allowlist-v2"
+}

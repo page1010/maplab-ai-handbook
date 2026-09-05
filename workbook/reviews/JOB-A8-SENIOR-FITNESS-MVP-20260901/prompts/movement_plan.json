@@ -1,0 +1,67 @@
+{
+  "schema_version": "maplab.a8.fitness-movement-plan.v1",
+  "project": "跟著動｜華語樂齡節拍",
+  "status": "PRIVATE_MVP_READY_PT_REQUIRED",
+  "tempo_bpm": 96,
+  "short_seconds": 17.5,
+  "compilation_seconds": 107.5,
+  "moves": [
+    {
+      "id": "M1",
+      "name": "扶椅小踏步",
+      "target_ring": "髖部／大腿",
+      "cue": "手輕扶穩，左右小踏步。身體拉高、腳尖朝前，自然呼吸。",
+      "regression": "坐姿輪流抬腳",
+      "risk": "高跌倒風險者只做坐姿；椅穩固無輪且抵牆"
+    },
+    {
+      "id": "M2",
+      "name": "扶椅側點步",
+      "target_ring": "髖外側／大腿外側",
+      "cue": "單手輕扶椅背，小步向側點地，不交叉腳；重心留在支撐腳，膝蓋朝前。",
+      "regression": "坐姿側點腳、縮小距離",
+      "risk": "膝或髖疼痛立即停止"
+    },
+    {
+      "id": "M3",
+      "name": "扶椅慢抬踵",
+      "target_ring": "小腿／腳踝",
+      "cue": "單手輕扶椅背，前腳掌留地、腳跟慢抬慢放；不彈、不晃。下一段先暫停並坐穩。",
+      "regression": "坐姿抬腳跟",
+      "risk": "腳踝不穩或近期跌倒者先做專業評估"
+    },
+    {
+      "id": "M4",
+      "name": "坐姿輪流伸膝",
+      "target_ring": "大腿前側",
+      "cue": "先暫停，坐穩再開始；單腳慢伸慢收，吐氣伸、吸氣回，膝蓋不鎖死。",
+      "regression": "腳跟貼地向前滑",
+      "risk": "疼痛、術後或關節置換者不硬做"
+    },
+    {
+      "id": "M5",
+      "name": "坐姿開胸夾背",
+      "target_ring": "上背／肩胛周圍",
+      "cue": "肘低於肩、肩膀放鬆，小幅向後收。",
+      "regression": "手放腿上，只做輕微肩部後收",
+      "risk": "肩痛縮小幅度或停止；無阻力時只稱活動度／姿勢練習"
+    }
+  ],
+  "stop_conditions": [
+    "胸痛或胸悶",
+    "暈眩或快暈倒",
+    "噁心",
+    "異常或嚴重喘",
+    "心悸",
+    "疼痛或任何不適"
+  ],
+  "visual_safety": {
+    "first_screen": "unobstructed safety copy; no figure over text",
+    "shorts_ui_safe_zone": "essential copy left of right action rail and above bottom overlay",
+    "m3": "toes remain on a visible floor line while heels lift",
+    "m4_regression": "heel remains on a visible floor line during slide",
+    "m5": "scapular squeeze arrows; regression visibly rests both hands on thighs",
+    "m3_to_m4_bridge": "pause and sit steadily before M4"
+  },
+  "public_gate": "PT_PASS plus rights plus actual-audio QA plus target-device QA plus Owner publication approval"
+}

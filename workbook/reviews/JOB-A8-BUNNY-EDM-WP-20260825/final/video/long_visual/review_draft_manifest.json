@@ -1,0 +1,51 @@
+{
+  "asset_dir": "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/wp_assets",
+  "out_dir": "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/final/video/long_visual",
+  "case_label": "台南畢業典禮外燴",
+  "category": "graduation",
+  "cta_line": "台南畢業典禮、親子活動茶點｜官方 LINE 洽詢檔期 @maplab",
+  "title": "邦尼兔・把祝福點亮",
+  "images": [
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/wp_assets/bunny-graduation-catering-01.webp",
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/wp_assets/bunny-graduation-catering-02.webp",
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/wp_assets/maplab-daycare-graduation-catering-dessert-table.webp",
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/wp_assets/maplab-daycare-graduation-catering-desserts.webp",
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/wp_assets/maplab-daycare-graduation-catering-menu.webp"
+  ],
+  "scene_lines": [
+    "燈光亮　準備登場｜小小腳步走向下一站",
+    "畢業帽輕輕戴｜把今天的勇氣收進小口袋",
+    "甜點桌亮起來｜老師家長和孩子把笑聲留下來",
+    "邦尼兔把祝福點亮｜手牽手全場一起唱",
+    "新的故事現在要出發｜MAPLAB把祝福放進這一場"
+  ],
+  "scene_motions": [
+    "dolly_out",
+    "dolly_out",
+    "dolly_out",
+    "dolly_out",
+    "dolly_out"
+  ],
+  "card_motion": "dolly_out",
+  "frame_modes": [
+    "intro",
+    "scene",
+    "scene",
+    "scene",
+    "scene",
+    "scene",
+    "outro"
+  ],
+  "video": "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/final/video/long_visual/a8-short-review-draft.mp4",
+  "cover": "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/final/video/long_visual/a8-short-review-cover.jpg",
+  "watermark": "MAPLAB Kitchen",
+  "subtitle_overlay": "swift_appkit_rendered",
+  "visual_template": "MAPLAB IG Soft v1",
+  "visual_preset": "maplab_ig_soft",
+  "counter": "hidden",
+  "transition": "xfade",
+  "transition_effect": "fade",
+  "transition_seconds": 0.3,
+  "audio": "none_local_draft_add_platform_licensed_music_before_publish",
+  "status": "review_draft_rendered"
+}

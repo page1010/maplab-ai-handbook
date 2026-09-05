@@ -1,6 +1,6 @@
 window.HERMES_STATUS = {
   "schema_version": "maplab.hermes_patrol_reaction.v1",
-  "generated_at": "2026-08-21T09:00:05+08:00",
+  "generated_at": "2026-09-05T09:00:06+08:00",
   "repo": "/Users/pagemacmini/maplab-ai-handbook",
   "source": {
     "patrol_script": "scripts/patrol.sh",
@@ -23,7 +23,7 @@ window.HERMES_STATUS = {
   "chrome_extension": {
     "runtime_selector_has_hermes": true,
     "prompt_builder_has_hermes_instruction": true,
-    "module_count": 31,
+    "module_count": 32,
     "modules_with_hermes_target": [
       "A0",
       "A1",
@@ -34,6 +34,7 @@ window.HERMES_STATUS = {
       "A6",
       "A7",
       "A8",
+      "A8-FITNESS",
       "B1",
       "B2",
       "B3",
@@ -59,14 +60,14 @@ window.HERMES_STATUS = {
     "module_gap": false
   },
   "counts": {
-    "total": 46,
-    "blocked": 3,
+    "total": 59,
+    "blocked": 2,
     "active": 0,
     "stale_active": 0,
-    "unmarked": 23,
+    "unmarked": 33,
     "paused_or_not_started": 8,
-    "done": 12,
-    "owner_related": 30
+    "done": 16,
+    "owner_related": 32
   },
   "signals": {
     "google_oauth_invalid_grant_seen": false,
@@ -76,20 +77,20 @@ window.HERMES_STATUS = {
   "reaction_cards": [
     {
       "id": "long-blocked-three-layer-review",
-      "severity": "high",
+      "severity": "medium",
       "owner_role": "A0/A1",
       "target_task_card": "handoff/tasks/",
-      "why": "3 blocked tasks are older than 14 days: T-A2A3-001, T-A3-002, T-A7-002.",
+      "why": "2 blocked tasks are older than 14 days: T-A2A3-001, T-A3-002.",
       "next_step": "Run three-layer blocker review and split false blockers into direct-do / delegated / true Owner action.",
       "next_step_patch_hint": "每張卡改寫接續點：誰負責、下一個命令、何時才需要 Owner。",
-      "codex_followup_prompt": "你是 MAPLAB A0/A1，運行在 Codex。\n先讀 CURRENT_STATUS.md、pitfalls.md、workbook/hermes/patrol/latest.json，再讀相關 Task Card。\n\n觸發 reaction: long-blocked-three-layer-review\n原因: 3 blockers are stale\n本輪目標: patch the top stale task cards with concrete next steps\n\n輸出：更新相對角色下一步或產 task packet；若需要 Owner，必須是 5 分鐘內可完成的具體行動。"
+      "codex_followup_prompt": "你是 MAPLAB A0/A1，運行在 Codex。\n先讀 CURRENT_STATUS.md、pitfalls.md、workbook/hermes/patrol/latest.json，再讀相關 Task Card。\n\n觸發 reaction: long-blocked-three-layer-review\n原因: 2 blockers are stale\n本輪目標: patch the top stale task cards with concrete next steps\n\n輸出：更新相對角色下一步或產 task packet；若需要 Owner，必須是 5 分鐘內可完成的具體行動。"
     },
     {
       "id": "task-card-status-normalization",
       "severity": "medium",
       "owner_role": "A1",
       "target_task_card": "handoff/tasks/",
-      "why": "23 task cards have unmarked status, so patrol cannot decide reliably.",
+      "why": "33 task cards have unmarked status, so patrol cannot decide reliably.",
       "next_step": "Normalize 接續狀態 blocks from existing task-card evidence.",
       "next_step_patch_hint": "補狀態、最後活動、接續點、阻塞；缺資料標缺資料，不要腦補。",
       "codex_followup_prompt": "你是 MAPLAB A1，運行在 Codex。\n先讀 CURRENT_STATUS.md、pitfalls.md、workbook/hermes/patrol/latest.json，再讀相關 Task Card。\n\n觸發 reaction: task-card-status-normalization\n原因: task card metadata is unmarked\n本輪目標: normalize status blocks for the unmarked cards\n\n輸出：更新相對角色下一步或產 task packet；若需要 Owner，必須是 5 分鐘內可完成的具體行動。"
@@ -103,7 +104,7 @@ window.HERMES_STATUS = {
         "path": "handoff/tasks/T-A3-002.md",
         "status": "⏸️ 阻塞中",
         "last_activity": "2026-03-29",
-        "days_ago": 145,
+        "days_ago": 160,
         "bucket": "blocked",
         "owner_related": true,
         "next_step": "受眾輪廓分析完成（693筆 Orders）。待執行：嘉義加入廣告地區、興趣條件精簡、策略一冷受眾上線。",
@@ -115,23 +116,11 @@ window.HERMES_STATUS = {
         "path": "handoff/tasks/T-A2A3-001.md",
         "status": "⏸️ RM/GSC 部分暫停；案例寫作轉 T-A2A3-001-B",
         "last_activity": "2026-05-24 A2 live WordPress B2B fact check",
-        "days_ago": 89,
+        "days_ago": 104,
         "bucket": "blocked",
         "owner_related": true,
         "next_step": "Rank Math 已退訂，已設定好的 SEO 欄位先不要再設定；下一步是依 live URL map 補 To B 真案例",
         "blocker": "RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL"
-      },
-      {
-        "task_id": "T-A7-002",
-        "agent": "A7",
-        "path": "handoff/tasks/T-A7-002.md",
-        "status": "⏸️ 阻塞中（任務 9 已解除，其餘阻塞未變）",
-        "last_activity": "2026-07-06（A1 — 任務 9 Owner 政策落地）",
-        "days_ago": 46,
-        "bucket": "blocked",
-        "owner_related": true,
-        "next_step": "任務 6（Q1-Q10 實裝）+ 任務 9（Owner 政策確認）+ 任務 10（技能書 v2.0）已完成。Phase 3A 剩任務 4（地區判斷）、7（流程圖同步）。Phase 3B/3C 全部待外部條件。",
-        "blocker": "任務 1/2/3 需 LINE bot 後台權限；任務 5/8 需 TimeTree 權限（任務 9 已解除）"
       }
     ],
     "active": [],
@@ -142,7 +131,7 @@ window.HERMES_STATUS = {
         "path": "handoff/tasks/T-A5-004.md",
         "status": "🟢 功能穩定（核心功能已可用且無需再動；~1500h+ 無 commit 是「沒事做」不是「壞掉」— 2026-07-06 A1 對帳澄清：先前 CURRENT_STATUS.md 任務表把「久無 commit」誤標為 🔴 CRITICAL，已改為反映實際狀態）",
         "last_activity": "2026-04-09 f67672d（6 項 Owner feedback 修復）",
-        "days_ago": 134,
+        "days_ago": 149,
         "bucket": "unmarked",
         "owner_related": true,
         "next_step": "Slide 可用。剩餘：品牌色票更新（CREAM/GOLD/DGOLD）、GAS 舊版檔案清理、Items english_name 確認 — 皆為優化項，非阻塞",
@@ -154,7 +143,7 @@ window.HERMES_STATUS = {
         "path": "handoff/tasks/T-A2-005-local-seo-factory.md",
         "status": "🔒 AUTO_CLOSED（2026-08-03，NEEDS_REVIEW 無回應逾 7 天，Owner 可回覆「重開 T-A2-005-local-seo-factory」重啟）",
         "last_activity": "2026-05-04 local-seo-factory-initial",
-        "days_ago": 109,
+        "days_ago": 124,
         "bucket": "unmarked",
         "owner_related": true,
         "next_step": "本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar dry-run 可產生 draft payload。下一步：接 WordPress 實站憑證做 `--publish` 驗證 + 把 56 篇歸屬表餵入 Linker。",
@@ -166,7 +155,7 @@ window.HERMES_STATUS = {
         "path": "handoff/tasks/T-B1-001.md",
         "status": "🟢 召喚型可用",
         "last_activity": "2026-05-21",
-        "days_ago": 92,
+        "days_ago": 107,
         "bucket": "unmarked",
         "owner_related": true,
         "next_step": "B1 轉為 Investment OS 投資邏輯橋接顧問（召喚型）；InnerFlowLab/Substack 發文自動化已永久暫停。僅 Owner/A1 明確召喚時才啟動。",
@@ -178,7 +167,7 @@ window.HERMES_STATUS = {
         "path": "handoff/tasks/T-A2A3-001-B.md",
         "status": "🔒 AUTO_CLOSED（2026-08-03，NEEDS_REVIEW 無回應逾 7 天，Owner 可回覆「重開 T-A2A3-001-B」重啟）",
         "last_activity": "2026-05-27 A2 Round 009 WordPress draft saved",
-        "days_ago": 86,
+        "days_ago": 101,
         "bucket": "unmarked",
         "owner_related": true,
         "next_step": "WordPress post `1696` 已建立為未發布草稿並重載驗證：`https://www.maplabkitchen.com/wp-admin/post.php?post=1696&action=edit`。內容已含 Round 008 的 21 則案例段、圖片 slot、檔名、Alt、Caption；Report：`workbook/reviews/JOB-A2-B2B-CASE-ADS-20260526/reports/wp_draft_round_009.md`。Round 008 的 `ads_landing_settings_round_008.md` 仍是 Google/Meta Ads 設定建議來源；Meta",
@@ -190,7 +179,7 @@ window.HERMES_STATUS = {
         "path": "handoff/tasks/T-A1-RTK-001.md",
         "status": "🟢 已上線",
         "last_activity": "2026-05-31",
-        "days_ago": 82,
+        "days_ago": 97,
         "bucket": "unmarked",
         "owner_related": false,
         "next_step": "Codex hook 已掛（`~/.codex/RTK.md`）、驗收通過（patrol diff 一致）、git 排除生效。任務完成，無後續。",
@@ -202,7 +191,7 @@ window.HERMES_STATUS = {
         "path": "handoff/tasks/T-A4-003-photo-alt-pipeline.md",
         "status": "🔒 AUTO_CLOSED（2026-08-03，NEEDS_REVIEW 無回應逾 7 天，Owner 可回覆「重開 T-A4-003-photo-alt-pipeline」重啟）",
         "last_activity": "2026-06-11",
-        "days_ago": 71,
+        "days_ago": 86,
         "bucket": "unmarked",
         "owner_related": true,
         "next_step": "等 36,676 張處理完 → Owner 改 Drive 串流 → 釋出 ~433GB",
@@ -214,7 +203,7 @@ window.HERMES_STATUS = {
         "path": "handoff/tasks/T-A4-004-photo-classify.md",
         "status": "🔒 AUTO_CLOSED（2026-08-03，NEEDS_REVIEW 無回應逾 7 天，Owner 可回覆「重開 T-A4-004-photo-classify」重啟）",
         "last_activity": "2026-06-11",
-        "days_ago": 71,
+        "days_ago": 86,
         "bucket": "unmarked",
         "owner_related": true,
         "next_step": "批次跑完後 `--status` 查進度，續開下一批直到 ~98,400 張完成",
@@ -226,7 +215,7 @@ window.HERMES_STATUS = {
         "path": "handoff/tasks/T-A2-SEO-CATERING-MATRIX-001.md",
         "status": "🔒 AUTO_CLOSED（2026-08-03，NEEDS_REVIEW 無回應逾 7 天，Owner 可回覆「重開 T-A2-SEO-CATERING-MATRIX-001」重啟）",
         "last_activity": "2026-06-17",
-        "days_ago": 65,
+        "days_ago": 80,
         "bucket": "unmarked",
         "owner_related": true,
         "next_step": "競品分析工作包已建立於 `workbook/reviews/JOB-A2-SEO-CATERING-COMPETITOR-MATRIX-20260617/`；文章矩陣撰寫尚未開始。",
@@ -240,7 +229,7 @@ window.HERMES_STATUS = {
         "path": "handoff/tasks/T-A6-002.md",
         "status": "💤 暫停",
         "last_activity": "2026-04-07",
-        "days_ago": 136,
+        "days_ago": 151,
         "bucket": "paused",
         "owner_related": true,
         "next_step": "原計畫拆 Sheet 做訓練資料，04-07 重新規劃方向。等 Owner 決定是否需要 LINE 訓練資料及取得方式。",
@@ -249,24 +238,12 @@ window.HERMES_STATUS = {
     ],
     "not_started": [
       {
-        "task_id": "T-A2-003-weekly-wp-audit",
-        "agent": "A2",
-        "path": "handoff/tasks/T-A2-003-weekly-wp-audit.md",
-        "status": "🔲 待開始",
-        "last_activity": "2026-04-07",
-        "days_ago": 136,
-        "bucket": "not_started",
-        "owner_related": true,
-        "next_step": "腳本已建好（wp-audit.sh / wp-audit-cron.sh）。待 Owner 用 /schedule 建立 cron 排程。",
-        "blocker": "等 Owner 建立排程"
-      },
-      {
         "task_id": "T-A1-V6-P3",
         "agent": "A1",
         "path": "handoff/tasks/T-A1-V6-P3.md",
         "status": "🔲 待開始",
         "last_activity": "2026-04-08（建卡）",
-        "days_ago": 135,
+        "days_ago": 150,
         "bucket": "not_started",
         "owner_related": false,
         "next_step": "尚未開始。等 T-A1-V6-P2 完成後啟動。",
@@ -278,7 +255,7 @@ window.HERMES_STATUS = {
         "path": "handoff/tasks/T-A5-006.md",
         "status": "🔲 待開始",
         "last_activity": "2026-04-08（建卡）",
-        "days_ago": 135,
+        "days_ago": 150,
         "bucket": "not_started",
         "owner_related": false,
         "next_step": "尚未開始。等 T-A5-005 完成後啟動。",
@@ -290,7 +267,7 @@ window.HERMES_STATUS = {
         "path": "handoff/tasks/T-GBP-001.md",
         "status": "🔲 待開始",
         "last_activity": "2026-04-08（建卡）",
-        "days_ago": 135,
+        "days_ago": 150,
         "bucket": "not_started",
         "owner_related": true,
         "next_step": "尚未開始。等 Owner 準備新圖片。",
@@ -302,11 +279,23 @@ window.HERMES_STATUS = {
         "path": "handoff/tasks/T-A2-004.md",
         "status": "🔲 待開始",
         "last_activity": "2026-04-15",
-        "days_ago": 128,
+        "days_ago": 143,
         "bucket": "not_started",
         "owner_related": false,
         "next_step": "任務卡建立。A0 已完成對標分析和色票微調。",
         "blocker": "無"
+      },
+      {
+        "task_id": "T-A1-SYNC-GUARD-001",
+        "agent": "A1",
+        "path": "handoff/tasks/T-A1-SYNC-GUARD-001.md",
+        "status": "🔲 待開始",
+        "last_activity": "2026-05-31",
+        "days_ago": 97,
+        "bucket": "not_started",
+        "owner_related": false,
+        "next_step": "問題已實證（本地積壓 14 commits vs. launchd 推 5 commits → 分岔），修復方案已規劃，尚未執行。",
+        "blocker": "無（可自主執行）"
       }
     ]
   },
@@ -323,7 +312,7 @@ window.HERMES_STATUS = {
       "skills/experience-log.md when a reusable Hermes/Codex routing lesson appears"
     ]
   },
-  "raw_patrol_excerpt": "🔴 每日自動巡查（repo 健康 FAIL，需處理）— 2026-08-21 09:00\n\n=== MAPLAB 系統巡查 2026-08-21 09:00 ===\n\n⚠️ Google token check error: ERROR\n\n【⚡ 本輪狀態遷移（四態狀態機，SECTION 25）】\n  🔄→🟡 STALLED: T-IOS-KOL-001（最後活動 61d 前）\n  → 已自動寫回 Task Card，無需 Owner 操作（可逆，SECTION 24）\n\n【Owner 行動項】\n  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 決定 post 698 的「無麩質或低糖選項」FAQ 答案要不要改（A2 唯讀掃描，未動任何文章）\n  → T-A2A3-001: RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL\n  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）\n  → T-A7-001: Owner 確認 Zone B（NT$2,000？）+ Zone C（NT$2,500？）兩個數字\n  → T-HQ-001: Owner pending（非 B1 blocking）\n\n【阻塞中 — 等外部條件（⏸️/⏳/🔍）】\n  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 決定 post 698 的「無麩質或低糖選項」FAQ 答案要不要改（A2 唯讀掃描，未動任何文章） [45d ago]\n  ⏸️ T-A2A3-001 (A2): RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL [89d ago]\n  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [145d ago]\n  ⏸️ T-A7-001 (A7): Owner 確認 Zone B（NT$2,000？）+ Zone C（NT$2,500？）兩個數字 [33d ago]\n  ⏸️ T-A7-002 (A7): 任務 1/2/3 需 LINE bot 後台權限；任務 5/8 需 TimeTree 權限（任務 9 已解除） [45d ago]\n  ⏸️ T-HQ-001 (??): Owner pending（非 B1 blocking） [57d ago]\n\n【進行中（🔄 IN_PROGRESS / 🟡 STALLED）】\n  ❓ T-A1-GIT-SYNC-001-checkpoint-pull-before-commit (A1): 狀態未標記 [日期不明]\n  ❓ T-A1-PATROL-GRADER-001-wire-grader-into-patrol (A1): 狀態未標記 [日期不明]\n  ❓ T-A1-RTK-001 (A1): 狀態未標記 [82d ago]\n  ❓ T-A2-006-ads-seo-wordpress-patrol (A2): 狀態未標記 [32d ago]\n  ⏳ T-A4-002 (A4): IN_PROGRESS — 187GB Takeout（5 個 ZIP）確認存在 Drive，尚未解?? [125d ago]\n  ❓ T-A5-004 (A5): 狀態未標記 [134d ago]\n  ❓ T-B1-001 (??): 狀態未標記 [91d ago]\n  ❓ T-B1-DASH-001 (??): 狀態未標記 [61d ago]\n  ⏳ T-IOS-KOL-001 (??): IN_PROGRESS — - **接續點**：四個每日時段（02:30/08:30/14:30/21: [61d ago]\n\n【暫停/待開始】\n  🔲 T-A1-SYNC-GUARD-001 (A1): 待開始\n  🔲 T-A1-V6-P3 (A1): 待開始\n  🔲 T-A2-003-weekly-wp-audit (A2): 待開始\n  🔲 T-A2-004 (A2): 待開始\n  🔲 T-A5-006 (A5): 待開始\n  🔲 T-A5-007-codex-takeover (A5): 待開始\n  💤 T-A6-002 (A6): 暫停中 [135d ago]\n  🔲 T-GBP-001 (??): 待開始\n\n【自動關閉（🔒 AUTO_CLOSED — Owner 可回覆「重開 T-XXX」重啟）】\n  🔒 T-A1-EXT-001-dynamic-role-modules (A1): 自動關閉（Owner 可回覆「重開 T-A1-EXT-001-dynamic-role-modules」重啟）\n  🔒 T-A1-LEARNING-LOOP-001 (A1): 自動關閉（Owner 可回覆「重開 T-A1-LEARNING-LOOP-001」重啟）\n  🔒 T-A1-V6-P2 (A1): 自動關閉（Owner 可回覆「重開 T-A1-V6-P2」重啟）\n  🔒 T-A1-V7 (A1): 自動關閉（Owner 可回覆「重開 T-A1-V7」重啟）\n  🔒 T-A2-005-local-seo-factory (A2): 自動關閉（Owner 可回覆「重開 T-A2-005-local-seo-factory」重啟）\n  🔒 T-A2-SEO-CATERING-MATRIX-001 (A2): 自動關閉（Owner 可回覆「重開 T-A2-SEO-CATERING-MATRIX-001」重啟）\n  🔒 T-A2A3-001-B (A2): 自動關閉（Owner 可回覆「重開 T-A2A3-001-B」重啟）\n  🔒 T-A4-003-photo-alt-pipeline (A4): 自動關閉（Owner 可回覆「重開 T-A4-003-photo-alt-pipeline」重啟）\n  🔒 T-A4-004-photo-classify (A4): 自動關閉（Owner 可回覆「重開 T-A4-004-photo-classify」重啟）\n  🔒 T-A5-002 (A5): 自動關閉（Owner 可回覆「重開 T-A5-002」重啟）\n  🔒 T-A5-005 (A5): 自動關閉（Owner 可回覆「重開 T-A5-005」重啟）\n  🔒 T-A6-001 (A6): 自動關閉（Owner 可回覆「重開 T-A6-001」重啟）\n  🔒 T-A8-001-folder-to-video-distribution (A8): 自動關閉（Owner 可回覆「重開 T-A8-001-folder-to-video-distribution」重啟）\n  🔒 T-B1-B4-investment-os-role-split (??): 自動關閉（Owner 可回覆「重開 T-B1-B4-investment-os-role-split」重啟）\n\n【已完成】9 張 Task Card\n  （最近異動 3 張，其餘見 handoff/tasks/）\n  ✅ T-A1-QUOTA-VALUE-CYCLE-001\n  ✅ T-A4-001\n  ✅ T-A2-007-seo-trio-review-20260707\n\n【投資 OS 守夜人 + IS-HS】\n  🔴 nightwatch 今日有警示：\n    \n    - **夜間備料 progress_digest**：125h 前(上限 36h)｜progress_digest_2026-08-16.md\n    - **影子教練巡查 shadow_findings.jsonl**：107h 前(上限 48h)｜shadow_findings.jsonl\n    - **影子教練『真實發現』新鮮度**：stale_genuine_findings｜last_genuine=2026-08-16T12:56:22+00:00｜上限 24h\n    - **本地模型影子 local_model_findings.jsonl**：107h 前(上限 72h)｜local_model_findings.jsonl\n  🔴 escalation_queue: 13 條 open+未推播（見 projects/investment-os-continuous-iteration-plan.md ④）\n  🔴 IS-HS: 25/100（新鮮度=50% 警報通暢度=0%）\n\n【B3 廣告觀察】\n  ⚪ B3 廣告尚未啟動（Owner 去 Meta 建受眾包後，回報一句話或 UTM 有 b3 流量自動偵測）\n  → 啟動後：回報「B3 開始跑了」或 GA4 出現 utm_source=meta_b3 流量\n  → A1 偵測到後自動開始每日成效摘要並進例會\n\n── repo 健康關卡（獨立 grader）──\n🔴 PATROL GRADER：FAIL（有硬問題必須處理）\n❌ FAIL：本地 main 落後 origin 68 個 commit（>=10，同步已失控，先 pull）\n⚠️  WARN：本地有 32 個未 push 的 commit\n⚠️  WARN：2 張進行中任務卡 >7 天無 commit（patrol.sh 詳列）\n",
+  "raw_patrol_excerpt": "🔴 每日自動巡查（repo 健康 FAIL，需處理）— 2026-09-05 09:00\n\n=== MAPLAB 系統巡查 2026-09-05 09:00 ===\n\n⚠️ Google token check error: ERROR\n\n【⚡ 本輪狀態遷移（四態狀態機，SECTION 25）】\n  🔄→🟡 STALLED: T-IOS-KOL-001（最後活動 76d 前）\n  → 已自動寫回 Task Card，無需 Owner 操作（可逆，SECTION 24）\n\n【Owner 行動項】\n  → T-A2-002-foodsafety-seo-cleanup: 等 Owner 決定 post 698 的「無麩質或低糖選項」FAQ 答案要不要改（A2 唯讀掃描，未動任何文章）\n  → T-A2A3-001: RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL\n  → T-A3-002: 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作）\n  → T-HQ-001: Owner pending（非 B1 blocking）\n\n【阻塞中 — 等外部條件（⏸️/⏳/🔍）】\n  ⏸️ T-A2-002-foodsafety-seo-cleanup (A2): 等 Owner 決定 post 698 的「無麩質或低糖選項」FAQ 答案要不要改（A2 唯讀掃描，未動任何文章） [60d ago]\n  ⏸️ T-A2A3-001 (A2): RM/GSC 驗證需 Owner/A1 另開；目前不可把舊 planned slug 當 live URL [104d ago]\n  ⏸️ T-A3-002 (A3): 執行需登入 Meta Ads Manager（等廣告週期 + Owner 操作） [160d ago]\n  ⏸️ T-HQ-001 (??): Owner pending（非 B1 blocking） [72d ago]\n\n【進行中（🔄 IN_PROGRESS / 🟡 STALLED）】\n  ❓ T-A1-DIRECTIONAL-MAP-001 (A1): 狀態未標記 [日期不明]\n  ❓ T-A1-EXT-001-dynamic-role-modules (A1): 狀態未標記 [日期不明]\n  ❓ T-A1-GIT-SYNC-001-checkpoint-pull-before-commit (A1): 狀態未標記 [日期不明]\n  ❓ T-A1-PATROL-GRADER-001-wire-grader-into-patrol (A1): 狀態未標記 [日期不明]\n  ❓ T-A1-RTK-001 (A1): 狀態未標記 [97d ago]\n  ❓ T-A2-003-weekly-wp-audit (A2): 狀態未標記 [4d ago]\n  ❓ T-A2-006-ads-seo-wordpress-patrol (A2): 狀態未標記 [4d ago]\n  ❓ T-A2-HERMES-SEO-COACH-001 (A2): 狀態未標記 [日期不明]\n  ⏳ T-A4-002 (A4): IN_PROGRESS — 187GB Takeout（5 個 ZIP）確認存在 Drive，尚未解?? [140d ago]\n  ❓ T-A5-004 (A5): 狀態未標記 [149d ago]\n  ❓ T-A5-A6-HIDDEN-COST-RECOVERY-001 (A5): 狀態未標記 [日期不明]\n  ❓ T-A6-003-hermes-governed-executor (A6): 狀態未標記 [日期不明]\n  ❓ T-A6-HERMES-DEERFLOW-001 (A6): 狀態未標記 [5d ago]\n  ❓ T-A6-HERMES-LINE-GYM-001 (A6): 狀態未標記 [日期不明]\n  🟡 T-A7-001 (A7): STALLED — 先檢視 `docs/hermes-line-sheets-assistant-flow-v1.md` 與 [3d ago]\n  🟡 T-A7-002 (A7): STALLED — 現行流程改讀 `docs/hermes-line-sheets-assistant-flow-v [3d ago]\n  ❓ T-A8-001-folder-to-video-distribution (A8): 狀態未標記 [8d ago]\n  ❓ T-A8-002-maplab-ig-theme-song (A8): 狀態未標記 [日期不明]\n  ❓ T-A8-FITNESS-HERMES-CONTINUATION (A8): 狀態未標記 [日期不明]\n  ❓ T-A8-FITNESS-MVP-001 (A8): 狀態未標記 [日期不明]\n  ❓ T-B1-001 (??): 狀態未標記 [106d ago]\n  ❓ T-B1-DASH-001 (??): 狀態未標記 [76d ago]\n  ⏳ T-IOS-KOL-001 (??): IN_PROGRESS — - **接續點**：四個每日時段（02:30/08:30/14:30/21: [76d ago]\n\n【暫停/待開始】\n  🔲 T-A1-SYNC-GUARD-001 (A1): 待開始\n  🔲 T-A1-V6-P3 (A1): 待開始\n  🔲 T-A2-004 (A2): 待開始\n  🔲 T-A5-006 (A5): 待開始\n  🔲 T-A5-007-codex-takeover (A5): 待開始\n  💤 T-A6-002 (A6): 暫停中 [151d ago]\n  🔲 T-CODEX-CHATGPT-EXPORT-INGEST-001 (??): 待開始\n  🔲 T-GBP-001 (??): 待開始\n\n【自動關閉（🔒 AUTO_CLOSED — Owner 可回覆「重開 T-XXX」重啟）】\n  🔒 T-A1-LEARNING-LOOP-001 (A1): 自動關閉（Owner 可回覆「重開 T-A1-LEARNING-LOOP-001」重啟）\n  🔒 T-A1-V6-P2 (A1): 自動關閉（Owner 可回覆「重開 T-A1-V6-P2」重啟）\n  🔒 T-A1-V7 (A1): 自動關閉（Owner 可回覆「重開 T-A1-V7」重啟）\n  🔒 T-A2-005-local-seo-factory (A2): 自動關閉（Owner 可回覆「重開 T-A2-005-local-seo-factory」重啟）\n  🔒 T-A2-SEO-CATERING-MATRIX-001 (A2): 自動關閉（Owner 可回覆「重開 T-A2-SEO-CATERING-MATRIX-001」重啟）\n  🔒 T-A2A3-001-B (A2): 自動關閉（Owner 可回覆「重開 T-A2A3-001-B」重啟）\n  🔒 T-A4-003-photo-alt-pipeline (A4): 自動關閉（Owner 可回覆「重開 T-A4-003-photo-alt-pipeline」重啟）\n  🔒 T-A4-004-photo-classify (A4): 自動關閉（Owner 可回覆「重開 T-A4-004-photo-classify」重啟）\n  🔒 T-A5-002 (A5): 自動關閉（Owner 可回覆「重開 T-A5-002」重啟）\n  🔒 T-A5-005 (A5): 自動關閉（Owner 可回覆「重開 T-A5-005」重啟）\n  🔒 T-A6-001 (A6): 自動關閉（Owner 可回覆「重開 T-A6-001」重啟）\n  🔒 T-B1-B4-investment-os-role-split (??): 自動關閉（Owner 可回覆「重開 T-B1-B4-investment-os-role-split」重啟）\n\n【已完成】12 張 Task Card\n  （最近異動 3 張，其餘見 handoff/tasks/）\n  ✅ T-A1-IG-GITHUB-TOOL-RADAR-001\n  ✅ T-A1-SCREENSHOT-TOOLS-SKILLS-002\n  ✅ T-A1-DEERFLOW-SKILLS-001\n\n【投資 OS 守夜人 + IS-HS】\n  🔴 nightwatch 今日有警示：\n    \n    - **夜間備料 progress_digest**：485h 前(上限 36h)｜progress_digest_2026-08-16.md\n    - **Hermes 投資問題包**：485h 前(上限 200h)｜invest_question_pack_2026-08-16.md\n    - **影子教練巡查 shadow_findings.jsonl**：467h 前(上限 48h)｜shadow_findings.jsonl\n    - **影子教練『真實發現』新鮮度**：stale_genuine_findings｜last_genuine=2026-08-16T12:56:22+00:00｜上限 24h\n  🔴 escalation_queue: 13 條 open+未推播（見 projects/investment-os-continuous-iteration-plan.md ④）\n  🔴 IS-HS: 25/100（新鮮度=50% 警報通暢度=0%）\n\n【B3 廣告觀察】\n  ⚪ B3 廣告尚未啟動（Owner 去 Meta 建受眾包後，回報一句話或 UTM 有 b3 流量自動偵測）\n  → 啟動後：回報「B3 開始跑了」或 GA4 出現 utm_source=meta_b3 流量\n  → A1 偵測到後自動開始每日成效摘要並進例會\n\n── repo 健康關卡（獨立 grader）──\n🔴 PATROL GRADER：FAIL（有硬問題必須處理）\n❌ FAIL：本地 main 落後 origin 36 個 commit（>=10，同步已失控，先 pull）\n⚠️  WARN：本地有 242 個未 push 的 commit\n⚠️  WARN：2 張進行中任務卡 >7 天無 commit（patrol.sh 詳列）\n",
   "reaction_ledger": {
     "schema_version": "maplab.learning_loop.reaction_ledger.v1",
     "ledger_path": "workbook/learning_loop/reaction_ledger.jsonl",

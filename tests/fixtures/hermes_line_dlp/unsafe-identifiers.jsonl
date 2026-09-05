@@ -1,0 +1,2 @@
+{"conversation_id_hash":"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc","stage":"S2_DATA","customer_name":"測試王小明","customer":"這是合成測試：電話 0912-345-678，信箱 fake@example.test。","target":"收到。"}
+{"conversation_id_hash":"dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd","stage":"S3_QUOTE_INTRO","context":"這是合成測試：地址台北市中正區測試路一段 99 號，LINE ID: synthetic_user。","customer":"請聯絡測試陳小姐。","target":"收到。"}

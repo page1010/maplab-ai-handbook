@@ -1,6 +1,6 @@
 # GitHub Dynamic Role Task Modules
 
-Generated: 2026-06-29T08:45:19+08:00
+Generated: 2026-09-01T13:14:14+08:00
 
 ## Purpose
 
@@ -19,7 +19,8 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - `chrome-extension/task-modules/{role}.json` — one portable role module per agent.
 - `chrome-extension/config/task-modules.json` — extension config pointer.
 - `workbook/task_modules/role_module_relation_graph.json` — directed impact graph.
-- `workbook/task_modules/role_module_relationships.csv` and `.xlsx` — Excel-readable relationship table.
+- `workbook/task_modules/role_module_relationships.csv` — generated relationship table; it opens directly in spreadsheet apps.
+- `workbook/task_modules/role_module_relationships.xlsx` is a historical file and is not generated or declared current by this builder.
 
 ## Markdown Refresh Model
 
@@ -38,6 +39,9 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: dispatch, owner_briefing, cross_system_handoff, status_review
 - Affects: A1; A2-A8; B1-B4; Telegram; Chrome side panel; Google Drive/Sheets connectors
 - Module file: `chrome-extension/task-modules/A0.json`
+- Task Card: `handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md`
+- Default review bundle: `workbook/reviews/JOB-A0-xxx/`
+- Output contract paths are relative to the default review bundle.
 
 ### A1 — System Orchestrator
 
@@ -47,6 +51,9 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: governance, repo_edit, task_module_build, relation_graph, runtime_debug
 - Affects: chrome-extension; tools/ai_workbook; bot_a6; CURRENT_STATUS; handoff/tasks
 - Module file: `chrome-extension/task-modules/A1.json`
+- Task Card: `handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md`
+- Default review bundle: `workbook/reviews/JOB-A1-xxx/`
+- Output contract paths are relative to the default review bundle.
 
 ### A2 — Ads SEO WordPress Patrol
 
@@ -56,6 +63,9 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: seo_audit, ads_seo_wordpress_patrol, brand_memory_check, wordpress_live_status, rankmath_recovery, wordpress_draft, internal_linking, schema_planning
 - Affects: WordPress pages/posts; Rank Math metadata; Google Ads / Meta Ads read-only review; A3 ad landing pages; A4 asset needs; Google indexing workflow; Investment OS-style evidence discipline
 - Module file: `chrome-extension/task-modules/A2.json`
+- Task Card: `handoff/tasks/T-A2-006-ads-seo-wordpress-patrol.md`
+- Default review bundle: `workbook/reviews/JOB-A2-xxx/`
+- Output contract paths are relative to the default review bundle.
 
 ### A3 — Ads Growth Studio
 
@@ -65,6 +75,9 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: ad_campaign_plan, creative_matrix, tracking_pixel, landing_page_alignment, roi_review
 - Affects: A2 landing pages; Meta Ads; Google Ads; GTM/Pixel; A4 creative asset selection
 - Module file: `chrome-extension/task-modules/A3.json`
+- Task Card: `handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md`
+- Default review bundle: `workbook/reviews/JOB-A3-xxx/`
+- Output contract paths are relative to the default review bundle.
 
 ### A4 — Photo Archive
 
@@ -74,6 +87,9 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: photo_index, asset_classification, drive_folder_map, alt_text_draft, material_shortlist
 - Affects: A2 WordPress images; A3 creative packs; A6 proposal materials; A8 video pipeline; Google Drive MAPLAB_ASSETS
 - Module file: `chrome-extension/task-modules/A4.json`
+- Task Card: `handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md`
+- Default review bundle: `workbook/reviews/JOB-A4-xxx/`
+- Output contract paths are relative to the default review bundle.
 
 ### A5 — Quotation Engine
 
@@ -83,6 +99,9 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: quote_data_review, item_master_update, pricing_logic, sheet_schema_check, proposal_inputs
 - Affects: A6 quote workflow; A7 customer answers; Google Sheets master data; Slides quotation system
 - Module file: `chrome-extension/task-modules/A5.json`
+- Task Card: `handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md`
+- Default review bundle: `workbook/reviews/JOB-A5-xxx/`
+- Output contract paths are relative to the default review bundle.
 
 ### A6 — Sales Rapid Response
 
@@ -92,6 +111,9 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: telegram_dispatch, openclaw_short_task, quote_intake, proposal_draft, review_bundle
 - Affects: Telegram bot; OpenClaw workspace; A5 quote data; A4 materials; A7 reply handoff
 - Module file: `chrome-extension/task-modules/A6.json`
+- Task Card: `handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md`
+- Default review bundle: `workbook/reviews/JOB-A6-xxx/`
+- Output contract paths are relative to the default review bundle.
 
 ### A7 — Service Desk
 
@@ -101,6 +123,9 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: customer_reply, faq_flow, lead_qualification, handoff_to_quote, reply_training
 - Affects: A6 intake; A5 quote requirements; LINE/Telegram responses; A2/A3 FAQ insights
 - Module file: `chrome-extension/task-modules/A7.json`
+- Task Card: `handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md`
+- Default review bundle: `workbook/reviews/JOB-A7-xxx/`
+- Output contract paths are relative to the default review bundle.
 
 ### A8 — Content Repurposing Pipeline
 
@@ -110,6 +135,21 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: video_script, shorts_plan, podcast_outline, content_repurpose, publishing_queue
 - Affects: A4 assets; A3 social calendar; A2 SEO video titles; YouTube/Shorts publishing queue
 - Module file: `chrome-extension/task-modules/A8.json`
+- Task Card: `handoff/tasks/T-A8-001-folder-to-video-distribution.md`
+- Default review bundle: `workbook/reviews/JOB-A8-xxx/`
+- Output contract paths are relative to the default review bundle.
+
+### A8-FITNESS — Senior Fitness Follow-Along Director
+
+- Department: 華語樂齡節拍導演（A8 子角色）
+- Simulation: 把公開運動指引、專業審核、華語教練口令、主要活動區圖示、節拍音樂、動作短片與合輯收斂成可驗證的中高齡跟著動內容；預設只做私人 MVP。
+- Runtime targets: gemini, codex, openclaw, hermes
+- Task types: senior_fitness_research, movement_safety_card, mandarin_coaching_cues, fitness_motion_short, shorts_to_compilation, suno_instrumental_brief, youtube_channel_package
+- Affects: A8 video pipeline; DeerFlow public research receipts; Suno audio generation; YouTube channel and upload gates; A2 video search metadata; A3 social calendar
+- Module file: `chrome-extension/task-modules/A8-FITNESS.json`
+- Task Card: `handoff/tasks/T-A8-FITNESS-MVP-001.md`
+- Default review bundle: `workbook/reviews/JOB-A8-SENIOR-FITNESS-MVP-20260901/`
+- Output contract paths are relative to the default review bundle.
 
 ### B1 — Investment OS Builder
 
@@ -119,6 +159,9 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: feature_build, repo_runtime_wiring, dashboard_telegram_surface, safe_file_only_fix, task_card_execution, investment_logic_implementation
 - Affects: Chrome side panel; Investment OS repo/runtime surfaces; Telegram/Dashboard report surfaces; Investment OS investment logic prompt bridge; Investment OS owner profile summon context; B2 Reviewer; B3 Archivist; B4 System Patrol
 - Module file: `chrome-extension/task-modules/B1.json`
+- Task Card: `handoff/tasks/T-B1-B4-investment-os-role-split.md`
+- Default review bundle: `workbook/reviews/JOB-B1-xxx/`
+- Output contract paths are relative to the default review bundle.
 
 ### B2 — Investment OS Reviewer
 
@@ -128,6 +171,9 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: dataflow_review, error_review, source_freshness_review, report_contract_review, owner_visible_surface_check, risk_boundary_review
 - Affects: Investment OS dataflow; Telegram/Dashboard report surfaces; OpenClaw report contracts; B1 Builder review request; B3 Archivist handoff; Chrome side panel
 - Module file: `chrome-extension/task-modules/B2.json`
+- Task Card: `handoff/tasks/T-B1-B4-investment-os-role-split.md`
+- Default review bundle: `workbook/reviews/JOB-B2-xxx/`
+- Output contract paths are relative to the default review bundle.
 
 ### B3 — Investment OS Archivist
 
@@ -137,6 +183,9 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: version_note, handoff_checkpoint, resume_prompt, status_writeback_plan, pitfalls_append, review_bundle_index
 - Affects: CURRENT_STATUS.md; handoff/tasks; workbook/reviews; pitfalls.md; B1/B2/B4 handoff quality; Chrome side panel
 - Module file: `chrome-extension/task-modules/B3.json`
+- Task Card: `handoff/tasks/T-B1-B4-investment-os-role-split.md`
+- Default review bundle: `workbook/reviews/JOB-B3-xxx/`
+- Output contract paths are relative to the default review bundle.
 
 ### B4 — Investment OS System Patrol
 
@@ -146,6 +195,9 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: system_fit_patrol, pause_resume_review, workflow_suitability_check, overbuild_detection, role_routing_review, owner_surface_review
 - Affects: Investment OS workflow suitability; MAPLAB governance docs; Chrome side panel; B1 Builder scope; B2 Reviewer focus; B3 Archivist writeback
 - Module file: `chrome-extension/task-modules/B4.json`
+- Task Card: `handoff/tasks/T-B1-B4-investment-os-role-split.md`
+- Default review bundle: `workbook/reviews/JOB-B4-xxx/`
+- Output contract paths are relative to the default review bundle.
 
 ### IOS-MOMENTUM — Daily Momentum Manager
 
@@ -155,6 +207,9 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: momentum_scan, limit_up_review, top3_shortlist, chip_merge, pm_brief_quality
 - Affects: Daily Momentum Telegram PM Brief; Momentum Dashboard section; OpenClaw research dispatch; B2 freshness review; B1 runtime repair
 - Module file: `chrome-extension/task-modules/IOS-MOMENTUM.json`
+- Task Card: `handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md`
+- Default review bundle: `workbook/reviews/JOB-IOS-MOMENTUM-xxx/`
+- Output contract paths are relative to the default review bundle.
 
 ### IOS-KOL — Influencer Radar Manager
 
@@ -164,6 +219,9 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: kol_digest, youtube_rss, notebooklm_packet, operation_notes, source_quality_review, third_layer_research
 - Affects: KOL Telegram digest; KOL shadow Dashboard evidence; NotebookLM/OpenClaw worker packets; B2 report quality review
 - Module file: `chrome-extension/task-modules/IOS-KOL.json`
+- Task Card: `handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md`
+- Default review bundle: `workbook/reviews/JOB-IOS-KOL-xxx/`
+- Output contract paths are relative to the default review bundle.
 - Role-specific handbook: `docs/ios-kol/third-layer-research-method.md`
 
 ### IOS-FB — FB Social Intelligence Manager
@@ -174,6 +232,9 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: fb_radar, source_route_health, social_candidate_review, price_proof_manifest
 - Affects: FB Radar evidence; social source route health; B2 low-signal review; B1 route repair
 - Module file: `chrome-extension/task-modules/IOS-FB.json`
+- Task Card: `handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md`
+- Default review bundle: `workbook/reviews/JOB-IOS-FB-xxx/`
+- Output contract paths are relative to the default review bundle.
 
 ### IOS-ALPHA — Cross-Source Alpha Manager
 
@@ -183,6 +244,9 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: alpha_convergence, polymarket_watch, cross_source_event, research_task_creation
 - Affects: Alpha Dashboard; convergence phone card; Polymarket hybrid strategy; local model shadow findings
 - Module file: `chrome-extension/task-modules/IOS-ALPHA.json`
+- Task Card: `handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md`
+- Default review bundle: `workbook/reviews/JOB-IOS-ALPHA-xxx/`
+- Output contract paths are relative to the default review bundle.
 
 ### IOS-BLACKSWAN — Black Swan Monitor
 
@@ -192,6 +256,9 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: black_swan_watch, tail_risk_monitor, hedge_signal_review, risk_regime_alert
 - Affects: Black swan alert; hedge playbook; Macro/Risk Dashboard; B2 risk-boundary review
 - Module file: `chrome-extension/task-modules/IOS-BLACKSWAN.json`
+- Task Card: `handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md`
+- Default review bundle: `workbook/reviews/JOB-IOS-BLACKSWAN-xxx/`
+- Output contract paths are relative to the default review bundle.
 
 ### IOS-INVENTORY — Real Position Review Manager
 
@@ -201,6 +268,9 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: live_position_review, broker_snapshot_freshness, position_research, risk_card
 - Affects: Real position Telegram risk card; Inventory Dashboard; broker-free research handoff; B2 risk review
 - Module file: `chrome-extension/task-modules/IOS-INVENTORY.json`
+- Task Card: `handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md`
+- Default review bundle: `workbook/reviews/JOB-IOS-INVENTORY-xxx/`
+- Output contract paths are relative to the default review bundle.
 
 ### IOS-MACRO — Macro Master
 
@@ -210,6 +280,9 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: macro_regime, fred_bls_review, risk_weather, macro_dashboard
 - Affects: Macro Dashboard; risk weather card; B2 freshness review; B4 regime workflow fit
 - Module file: `chrome-extension/task-modules/IOS-MACRO.json`
+- Task Card: `handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md`
+- Default review bundle: `workbook/reviews/JOB-IOS-MACRO-xxx/`
+- Output contract paths are relative to the default review bundle.
 
 ### IOS-CHIP — Chip Flow Manager
 
@@ -219,6 +292,9 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: chip_refresh, twse_t86, margin_balance, chip_anomaly, after_1600_merge
 - Affects: Chip merge; Momentum/Inventory/Macro downstream cards; B2 dataflow review
 - Module file: `chrome-extension/task-modules/IOS-CHIP.json`
+- Task Card: `handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md`
+- Default review bundle: `workbook/reviews/JOB-IOS-CHIP-xxx/`
+- Output contract paths are relative to the default review bundle.
 
 ### IOS-LEFT — Left-Side Research Manager
 
@@ -228,6 +304,9 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: left_side_research, expectation_gap, public_fact_questions, research_evidence_packet
 - Affects: Left-side Dashboard; OpenClaw research packet; B2 evidence review
 - Module file: `chrome-extension/task-modules/IOS-LEFT.json`
+- Task Card: `handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md`
+- Default review bundle: `workbook/reviews/JOB-IOS-LEFT-xxx/`
+- Output contract paths are relative to the default review bundle.
 
 ### IOS-RIGHT — Right-Side Execution Manager
 
@@ -237,6 +316,9 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: right_side_shortlist, opening_playbook, stock_future_watch, execution_boundary
 - Affects: Trader Dashboard; opening playbook Telegram; B2 action-boundary review
 - Module file: `chrome-extension/task-modules/IOS-RIGHT.json`
+- Task Card: `handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md`
+- Default review bundle: `workbook/reviews/JOB-IOS-RIGHT-xxx/`
+- Output contract paths are relative to the default review bundle.
 
 ### IOS-EVIDENCE — Research Evidence Manager
 
@@ -246,6 +328,9 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: evidence_matrix, source_quality, fact_inference_split, openclaw_validation
 - Affects: Research Evidence Dashboard; OpenClaw/Hermes evidence packets; B2 review contracts
 - Module file: `chrome-extension/task-modules/IOS-EVIDENCE.json`
+- Task Card: `handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md`
+- Default review bundle: `workbook/reviews/JOB-IOS-EVIDENCE-xxx/`
+- Output contract paths are relative to the default review bundle.
 
 ### IOS-SIM — Simulation Ledger Manager
 
@@ -255,6 +340,9 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: local_simulation_ledger, roi_review, simulation_boundary, sim_dashboard
 - Affects: Simulation Dashboard; local ledger reports; B2 broker-boundary review
 - Module file: `chrome-extension/task-modules/IOS-SIM.json`
+- Task Card: `handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md`
+- Default review bundle: `workbook/reviews/JOB-IOS-SIM-xxx/`
+- Output contract paths are relative to the default review bundle.
 
 ### IOS-FAMILY — Family Fund Manager
 
@@ -264,6 +352,9 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: family_fund_dashboard, account_level_summary, capital_bucket_review, fund_readback
 - Affects: Family fund Dashboard; account-level charts; B2 source separation review
 - Module file: `chrome-extension/task-modules/IOS-FAMILY.json`
+- Task Card: `handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md`
+- Default review bundle: `workbook/reviews/JOB-IOS-FAMILY-xxx/`
+- Output contract paths are relative to the default review bundle.
 
 ### IOS-HEDGE — After-Hours Hedge Manager
 
@@ -273,6 +364,9 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: after_hours_watch, hedge_playbook, global_futures_monitor, watch_only_boundary
 - Affects: After-hours hedge brief; Black swan and Macro downstream; B2 risk boundary review
 - Module file: `chrome-extension/task-modules/IOS-HEDGE.json`
+- Task Card: `handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md`
+- Default review bundle: `workbook/reviews/JOB-IOS-HEDGE-xxx/`
+- Output contract paths are relative to the default review bundle.
 
 ### IOS-SURFACE — Surface Contract Steward
 
@@ -282,6 +376,9 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: telegram_contract, dashboard_readability, surface_renderer_review, runtime_readback
 - Affects: Chrome side panel; Telegram PM Brief format; Dashboard readability; B1 shared renderer fixes
 - Module file: `chrome-extension/task-modules/IOS-SURFACE.json`
+- Task Card: `handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md`
+- Default review bundle: `workbook/reviews/JOB-IOS-SURFACE-xxx/`
+- Output contract paths are relative to the default review bundle.
 
 ### IOS-HYGIENE — System Hygiene Steward
 
@@ -291,6 +388,9 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: dirty_worktree_inventory, keep_drop_decision, cleanup_handoff, scheduled_hygiene
 - Affects: dirty worktree inventory; B4 cleanup patrol; B3 archive handoff; B1 cleanup script repair
 - Module file: `chrome-extension/task-modules/IOS-HYGIENE.json`
+- Task Card: `handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md`
+- Default review bundle: `workbook/reviews/JOB-IOS-HYGIENE-xxx/`
+- Output contract paths are relative to the default review bundle.
 
 ### IOS-SELL — Position Sentinel
 
@@ -300,6 +400,9 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: position_scan, rsi_check, macd_check, ma_cross_check, sell_alert_dispatch
 - Affects: Telegram sell-signal alert; B1 indicator pipeline repair; B2 signal quality review; B3 alert archive
 - Module file: `chrome-extension/task-modules/IOS-SELL.json`
+- Task Card: `handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md`
+- Default review bundle: `workbook/reviews/JOB-IOS-SELL-xxx/`
+- Output contract paths are relative to the default review bundle.
 
 ### WIN — Windows Evidence Collector
 
@@ -309,6 +412,9 @@ GitHub stores JSON/Markdown task data. Chrome/Gemini/Codex/OpenClaw consume the 
 - Task types: evidence_collection, market_data_brief, windows_ui_capture, news_brief, packet_delivery
 - Affects: data/windows_agent_bridge/inbox; B2 cross-validation
 - Module file: `chrome-extension/task-modules/WIN.json`
+- Task Card: `handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md`
+- Default review bundle: `workbook/reviews/JOB-WIN-xxx/`
+- Output contract paths are relative to the default review bundle.
 
 ## Relationship Rule
 

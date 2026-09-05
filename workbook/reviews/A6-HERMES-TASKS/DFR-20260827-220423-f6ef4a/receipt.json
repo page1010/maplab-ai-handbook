@@ -1,0 +1,48 @@
+{
+  "schema_version": 4,
+  "task_id": "DFR-20260827-220423-f6ef4a",
+  "created_at": "2026-08-27T22:04:23+0800",
+  "request": "[redacted-auto-routed-public-research]",
+  "request_sha256": "cd596feec86250c2a5e961234512bf4678bedde3f98da7dcc8dcccdbfabf1d52",
+  "request_chars": 60,
+  "requester": {
+    "channel": "telegram",
+    "owner_user_id": 0,
+    "chat_id": null,
+    "chat_type": null
+  },
+  "action": "deerflow-public-research",
+  "policy": "public-research-auto-route-v2",
+  "parent_job_id": "MAPJOB-20260827-220423-5efaeb",
+  "status": "failed",
+  "provider": "local",
+  "input_classification": "public",
+  "network_calls": 0,
+  "next": "background one-shot worker will update this receipt",
+  "started_at": "2026-08-27T22:04:23+0800",
+  "provider_gate": "local-only provider; no external model transmission",
+  "deerflow_commit": "788a890bd022689ef293e6bbfa2c12988173db6c",
+  "config_sha256": "0e983c6e53b348ce6fef250f8c91458e0c4e4788166383d183d52178eecbcc05",
+  "enabled_tools": [
+    "web_search"
+  ],
+  "disabled_capabilities": [
+    "memory",
+    "sandbox",
+    "file-read",
+    "file-write",
+    "bash",
+    "browser",
+    "image-search",
+    "MCP",
+    "scheduler",
+    "IM",
+    "tracing",
+    "skills",
+    "subagents"
+  ],
+  "finished_at": "2026-08-27T22:04:25+0800",
+  "elapsed_seconds": 1.993,
+  "reason": "RuntimeError: DeerFlow worker exited 1",
+  "clean_shutdown": true
+}

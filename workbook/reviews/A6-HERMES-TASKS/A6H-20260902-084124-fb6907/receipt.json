@@ -1,0 +1,19 @@
+{
+  "schema_version": 2,
+  "task_id": "A6H-20260902-084124-fb6907",
+  "created_at": "2026-09-02T08:41:24+0800",
+  "request": "早安 你在哪一台電腦 今天規劃是什麼",
+  "request_sha256": "06a26c6a5a0784773b6252da2e5939ad76a97598ee4ae0906182fad2a7a47222",
+  "request_chars": 18,
+  "requester": {
+    "channel": "telegram",
+    "owner_user_id": 1077768811,
+    "chat_id": 1077768811,
+    "chat_type": "private"
+  },
+  "action": null,
+  "policy": "fixed-argv-allowlist-v2",
+  "status": "rejected",
+  "finished_at": "2026-09-02T08:41:24+0800",
+  "reason": "不在目前的安全動作白名單"
+}

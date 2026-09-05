@@ -1,6 +1,6 @@
 {
   "schema_version": "2026-05-11.dynamic-role-module.v1",
-  "generated_at": "2026-06-29T08:45:19+08:00",
+  "generated_at": "2026-09-01T13:14:14+08:00",
   "module_id": "MAPLAB_IOS-CHIP_CHIP_FLOW_MANAGER_DYNAMIC_ROLE_MODULE",
   "role_id": "IOS-CHIP",
   "role_name": "Chip Flow Manager",
@@ -26,40 +26,40 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "b998e5c360b77d23cc4d73a75bea74b8ff0696bca09d10a09fee7a4f528b4529",
-      "size_bytes": "92413"
+      "source_sha256": "e586343ebb6e8363040aa5b16e74ab00158de395be06b9a18aff4afcc0154681",
+      "size_bytes": "182890"
     },
     {
       "path": "AGENT_RULES.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "a99f620c512bae2a0c46115114b2e8cfda932020584f4870fbe8af7fa5225acd",
-      "size_bytes": "47470"
+      "source_sha256": "0e6152ddc7702ba02467da5dc63168c35ff0b6dfa911c6c91dbc0ae28bd86afb",
+      "size_bytes": "68367"
     },
     {
       "path": "AGENT_STARTUP_PROTOCOL.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "0598bc33ec7b77c111e578cb432ee900c3829b815ba9a2bfb380fdac0d1d81f3",
-      "size_bytes": "12260"
+      "source_sha256": "bd8a0c28c16199c490b1e70395615801bb78442d2a1fce7c8e3f4de6ee7f8629",
+      "size_bytes": "15026"
     },
     {
       "path": "pitfalls.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "85e6dbccaa510e2772d205f366fbf381e5c57d1f919e72662dbfbae1c3e9db24",
-      "size_bytes": "47784"
+      "source_sha256": "947a3dcb898e36bbcb411a3f144f559d28b8aa2be3be1bdc1c81709cde3ad15a",
+      "size_bytes": "145773"
     },
     {
       "path": "TASK_QUEUE.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "b38bc2af32dceebeac0644b23d51ae2452eb5f0a21eca9ed08e1c8ebfeb29169",
-      "size_bytes": "1792"
+      "source_sha256": "7735bfcdb9f2cc31f8938a4a16c9bdccded7be4647c17dc80e82887df00ddc39",
+      "size_bytes": "5732"
     },
     {
       "path": "workbook/task_index.json",
@@ -74,16 +74,16 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "core governance",
-      "source_sha256": "38aa5c999ae323cd30ffe683b2eea5334da126d3cbe6d2aa1a06d6b8dc6fcb11",
-      "size_bytes": "64596"
+      "source_sha256": "6af77fe389d20dac0079dfbf2954098d6c30d68c87fee4ae7c7cb8a1ad2f5722",
+      "size_bytes": "81227"
     },
     {
       "path": "skills/superpowers-guide.md",
       "load_mode": "read",
       "exists": "true",
       "purpose": "skill / operating guide",
-      "source_sha256": "092e8c27d7f2492f78f1b4d4d0404cc0ec88ff7c110ce51cd9e472cfe1b7ec6f",
-      "size_bytes": "14872"
+      "source_sha256": "8987b633b6f64545027e4744ec8ce3e8d85cf80127241dc79861dd5360407195",
+      "size_bytes": "15373"
     },
     {
       "path": "skills/task-progress-guide.md",
@@ -98,8 +98,8 @@
       "load_mode": "read",
       "exists": "true",
       "purpose": "skill / operating guide",
-      "source_sha256": "bc19020bb67d94ec1e928a39daabe1ef598267674251989f852639928412c849",
-      "size_bytes": "5252"
+      "source_sha256": "ba41f9ac9db25d3c3224a2ecd2e52cc74b989c8226bada767404034ec1eb76db",
+      "size_bytes": "503"
     },
     {
       "path": "recalls/IOS_strategy_role_recall.md",
@@ -192,8 +192,9 @@
     "merge_receipt.md",
     "downstream_role_handoff.md"
   ],
+  "output_contract_rule": "Every output_contract entry is a safe POSIX path relative to writeback.default_review_bundle; missing files remain MISSING.",
   "writeback": {
-    "default_review_bundle": "workbook/reviews/JOB-xxx/",
+    "default_review_bundle": "workbook/reviews/JOB-IOS-CHIP-xxx/",
     "task_module_graph": "workbook/task_modules/role_module_relation_graph.json",
     "task_card": "handoff/tasks/T-A1-EXT-001-dynamic-role-modules.md",
     "status_rule": "Update CURRENT_STATUS.md only for major status changes; otherwise write a review bundle or task output first."
@@ -215,5 +216,6 @@
     "List affected agents/tasks/files.",
     "Produce review bundle or explain why no bundle was needed."
   ],
+  "release_gate": {},
   "risk_level": "medium"
 }

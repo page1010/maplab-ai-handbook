@@ -16,3 +16,6 @@
 {"step": "digest_read", "found": true, "has_delta": false, "ts": "2026-08-09"}
 {"step": "codex_maker", "rc": 0, "stdout_chars": 469, "ts": "2026-08-16"}
 {"step": "digest_read", "found": true, "has_delta": false, "ts": "2026-08-16"}
+{"step": "codex_maker", "rc": 0, "stdout_chars": 486, "ts": "2026-08-23"}
+{"step": "digest_read", "found": true, "has_delta": false, "ts": "2026-08-23"}
+{"step": "codex_maker", "rc": -1, "stderr": "TIMEOUT after 600s", "ts": "2026-08-30"}

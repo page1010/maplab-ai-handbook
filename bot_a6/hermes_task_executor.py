@@ -140,6 +140,13 @@ ACTIONS = {
         20,
         "讀取指定 DeerFlow job 的 owner-only receipt",
     ),
+
+    "general-chat": Action(
+        "general-chat",
+        (PYTHON, str(REPO_ROOT / "bot_a6" / "hermes_telegram_gateway.py"), "chat-fallback"),
+        30,
+        "透過模型進行自由形式的文字回覆（僅限 Owner 私聊，仍會產生 receipt）",
+    ),
 }
 
 ALIASES = {
@@ -163,6 +170,14 @@ ALIASES = {
     "recent-commits": ("recent-commits", "最近commit", "最近提交", "版本紀錄"),
     "a6-self-test": ("a6-self-test", "測試a6", "a6測試", "測試hermes", "自我測試"),
     "deerflow-status": ("deerflow-status", "deerflow狀態", "研究引擎狀態"),
+    "general-chat": (
+        "一般聊天",
+        "自由對話",
+        "聊天",
+        "chat",
+        "general-chat",
+        "閒聊",
+    ),
 }
 
 
@@ -540,28 +555,66 @@ def execute(
         }
     else:
         action = ACTIONS[action_name]
-        try:
-            proc = subprocess.run(
-                action.argv,
-                cwd=REPO_ROOT,
-                capture_output=True,
-                text=True,
-                timeout=action.timeout,
-                check=False,
-                env={"PATH": "/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin", "LANG": "zh_TW.UTF-8"},
-            )
-            output = ((proc.stdout or "") + (proc.stderr or ""))[:MAX_OUTPUT_CHARS]
+        if action_name == "general-chat":
+            # Free-form chat via the gateway's chat-fallback mode
+            # Extract the actual user message from "general-chat: <message>"
+            user_message = request
+            if request.startswith("general-chat: "):
+                user_message = request[len("general-chat: "):]
+            # Use the same answer function as the gateway loop
+            from .hermes_telegram_gateway import answer, load_history, save_history, save_gateway_state
+            history = load_history()
+            key = openrouter_key or load_free_env_key()
+            chain = load_chain()
+            reply, provider = answer(key, chain, history, user_message)
+            if reply is None:
+                reply = (
+                    "【hermes】這次設定的免費 provider 鏈都沒有成功回覆。A6 gateway 與安全執行器仍在線；"
+                    "你可以直接叫我跑 runtime-status、signal-status、repo-status 或 a6-self-test，會立即回 receipt。"
+                )
+            else:
+                if not reply.startswith("【hermes】"):
+                    reply = "【hermes】" + reply
+                history = (
+                    history
+                    + [
+                        {"role": "user", "content": user_message},
+                        {"role": "assistant", "content": reply},
+                    ]
+                )[-MAX_HISTORY:]
+                save_history(history)
+                save_gateway_state(chain, last_provider=provider)
+            output = reply
             receipt = {
                 **task,
-                "status": "completed" if proc.returncode == 0 else "failed",
+                "status": "completed",
                 "finished_at": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
                 "description": action.description,
-                "returncode": proc.returncode,
                 "output": output,
-                "output_truncated": len((proc.stdout or "") + (proc.stderr or "")) > MAX_OUTPUT_CHARS,
             }
-        except subprocess.TimeoutExpired:
-            receipt = {**task, "status": "failed", "finished_at": time.strftime("%Y-%m-%dT%H:%M:%S%z"), "reason": f"worker timeout after {action.timeout}s"}
+        else:
+            try:
+                proc = subprocess.run(
+                    action.argv,
+                    cwd=REPO_ROOT,
+                    capture_output=True,
+                    text=True,
+                    timeout=action.timeout,
+                    check=False,
+                    env={"PATH": "/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin", "LANG": "zh_TW.UTF-8"},
+                )
+                output = ((proc.stdout or "") + (proc.stderr or ""))[:MAX_OUTPUT_CHARS]
+                receipt = {
+                    **task,
+                    "status": "completed" if proc.returncode == 0 else "failed",
+                    "finished_at": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
+                    "description": action.description,
+                    "returncode": proc.returncode,
+                    "output": output,
+                    "output_truncated": len((proc.stdout or "") + (proc.stderr or "")) > MAX_OUTPUT_CHARS,
+                }
+            except subprocess.TimeoutExpired:
+                receipt = {**task, "status": "failed", "finished_at": time.strftime("%Y-%m-%dT%H:%M:%S%z"), "reason": f"worker timeout after {action.timeout}s"}
     _write_json(task_dir / "receipt.json", receipt)
     _write_receipt_markdown(task_dir, receipt)
     receipt["receipt_path"] = str(task_dir / "receipt.json")

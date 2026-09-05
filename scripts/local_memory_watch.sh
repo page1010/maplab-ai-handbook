@@ -45,8 +45,11 @@ open('$LOG_FILE', 'w').writelines(kept)
 " 2>/dev/null || true
 }
 
+# 2026-09-04 Owner 裁決（msg 4642）：記憶體診斷屬系統自言自語，不進 Owner 線。
+# 原 notify() 改寫 system_journal.md；朔源翻記事本，狀態機邏輯照舊。
+JOURNAL="$REPO_ROOT/state/system_journal.md"
 notify() {
-    bash "$NOTIFY" "$1" 2>/dev/null || log "NOTIFY_FAILED（Telegram 推播失敗）"
+    printf '[%s] [memory-watch] %s\n' "$(ts)" "$1" >> "$JOURNAL"
 }
 
 # ── 讀取記憶體統計（macOS vm_stat）─────────────────────────

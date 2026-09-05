@@ -70,3 +70,17 @@ Owner 裁決（2026-09-04，Telegram msg 4642）：進度心跳／daily ops／�
 [2026-09-05 17:35:00] [a0-resume] 回覆 msg 4797（供應商資料庫）＋全數產出同輪交付（共 5 則 Telegram：承諾回覆、詢價稿×2、統包分析、IG 名單兩批）。1) 詢價稿：攝影（方案/時薪/低消/產出/加時/檔期）＋花藝（開幕設計款/大小報價/色系/前置/鮮花vs綠植/佈撤）入庫 data/vendor-db/inquiry-scripts-20260905.md。2) 統包分析：五固定欄位（方案價位/前置/現場條件/發票統編/出包備案）＋工序銜接表、責任切分、發票鏈、配合價毛利。3) IG 名單經 4 個平行 web 研究 agent 查證（反編造規則：連結須實際出現在搜尋結果/抓取頁）：花藝 5、主持 5、攝影 10（1–7 活動紀錄佐證、8–10 如實標婚攝/商攝為主）、音響 5（在地不公開價、高雄台中有公開日租價，行情 8k–35k/次）；全入庫 data/vendor-db/vendor-list-20260905.md 含來源與排除紀錄。收據 reply_to_inbox_ts=2026-09-05T16:49:28（×5 則）。下輪照舊＋若 Owner 挑定廠商即可直接發詢價稿。
 
 [2026-09-05 17:05:00] [a0-resume] 回覆 msg 4804（Owner 已 GUI 登入 OpenD）→ 富途 Q3 全案結案。驗收鏈：port 11111 LISTEN（probe port）→ scripts/a0_futu_smoke.py（唯讀 OpenQuoteContext，無 trade context、無 unlock）→ probe futu-smoke 實測 SNAPSHOT OK: HK.00700 last=442.8（資料時間 9/4 收盤）。window-bus Q3→DONE、needs-owner 撤 OpenD 行。註：settings.json 新 allow 規則中 python3 直呼仍被擋（規則格式待下輪查證），probe 固定路由照常可用。收據 reply_to_inbox_ts=2026-09-05T16:58:29。下輪：Q1 三支片拆解、hermes 視覺閘、盯 win-01 修稿回執、投資線何時接行情由 Owner 派。
+
+[2026-09-05 18:34:48] [progress-heartbeat] 🫀 進度心跳 09-05 18:34 ⚠️有停滯
+• system_operations → ⏸ 閒置 2.8h（operator-driven，無 ops 任務時本就不 commit；非卡住）
+• investment_os → ⚠️停滯 28.0h（autonomous 專案無 commit）→ 確認排程在跑
+• maplab_kitchen → 推進（1.6h 前有 commit，dirty=207）→ 續跑
+• agent_bus_win01 → 在線(win-01) → 可派工
+
+[2026-09-05 20:05] [a0/Fable5] msg 4809（watchdog 補跑）結案：先回覆（開場模板/定價規則/R8/R9 入檔＋認領 #1-#9 資料蒐集），後續同 turn 交付 #1-#9 選後追問題組兩則（純文字，依 quote-gym SOP v3 一次性5W2H＋業務白名單，問句不斷言）。正本存 data/line-intake/line-opening-and-question-sets-20260905.md。待 Owner 裁定：每人1000-2000價格帶可否對客直講（未裁定前不主動報數字）。原始 resume 曾被 watchdog 判逾時砍掉重跑——首則回覆已壓在補跑窗內送出。
+
+[2026-09-05 19:34:50] [progress-heartbeat] 🫀 進度心跳 09-05 19:34 ⚠️有停滯
+• system_operations → ⏸ 閒置 3.8h（operator-driven，無 ops 任務時本就不 commit；非卡住）
+• investment_os → ⚠️停滯 29.0h（autonomous 專案無 commit）→ 確認排程在跑
+• maplab_kitchen → ⏸ 等待 2.6h（地端排程遷移暫停(預期):6 巡邏+a6-gym 已 disabled,無自動 commit 屬正常；正常等待，非卡住）
+• agent_bus_win01 → 在線(win-01) → 可派工

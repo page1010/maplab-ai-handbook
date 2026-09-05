@@ -1,0 +1,308 @@
+== Q1 teardown toolchain ==
+Sat Sep  5 15:38:43 CST 2026
+==> Auto-updating Homebrew...
+Adjust how often this is run with `$HOMEBREW_AUTO_UPDATE_SECS` or disable with
+`$HOMEBREW_NO_AUTO_UPDATE=1`. Hide these hints with `$HOMEBREW_NO_ENV_HINTS=1` (see `man brew`).
+==> Homebrew collects anonymous analytics.
+Read the analytics documentation (and how to opt-out) here:
+  https://docs.brew.sh/Analytics
+No analytics have been recorded yet (nor will be during this `brew` run).
+
+==> Homebrew is run entirely by unpaid volunteers. Please consider donating:
+  https://github.com/Homebrew/brew#-donations
+
+==> Auto-updated Homebrew!
+Updated 3 taps (oven-sh/bun, homebrew/core and homebrew/cask).
+==> New Formulae
+budget-tracker: Feature rich TUI budget tracker app
+ffmpeg@8: Play, record, convert, and stream select audio and video codecs
+glci: Run GitLab CI/CD pipelines locally
+jcode: AI coding agent harness for the terminal
+linecast: Weather, tides, the sun, the moon, and maps, drawn for the terminal
+oven-sh/bun/bun@1.4.1
+oven-sh/bun/bun@1.4.2
+pixivbiu: Pixiv client. Easy to search, browse, and download artworks
+plink-ng: Whole-genome association analysis toolset (PLINK 2.0)
+readwise-cli: Command-line interface for Readwise and Reader
+robot-framework-robocop: Static code analysis tool (linter) and code formatter for Robot Framework
+sabiql: Fast, safe-by-design, driverless, Vim-first DB TUI with ER diagrams
+shpool: Persistent shell session manager
+skillspector: Security scanner for AI agent skills
+speedtest-go: CLI and Go API to Test Internet Speed using speedtest.net
+tailcat: Netcat-like tool over Tailscale's data plane, without its control plane
+tgrep: Trigram-indexed grep for fast regex search in large codebases
+virglrenderer: VirGL virtual OpenGL renderer
+==> New Casks
+afterglow: Classic After Dark screen savers emulator
+airstats: Menu bar system monitor
+arm-performix: Performance analysis toolkit for Arm server and cloud environments
+clawd-on-desk: Desktop pet that reacts to AI coding agents
+db-pro: Query, explore, and manage your databases with built-in AI
+diskboard: Disk benchmark and S.M.A.R.T. health monitor
+dockdoor-pro: Dock replacement with widgets, profiles and window previews
+droppy: Drag and drop file shelf
+font-asap-sharp
+font-nevermind
+font-valley-sans
+mac-performance-monitor: Menu bar performance monitor with recorded history and analytics
+macshot-offline: Screenshot and screen recording tool without upload integrations
+mangodisk: Disk cleaner and storage analyser
+markviewer: Minimal markdown editor
+quarkclouddrive: Cloud storage and file management platform
+sjmcl: Minecraft launcher built with the community
+sxitch: Tree-based app switcher
+tabularis: Lightweight database management tool
+tcp-viewer: Packet capture and inspection tool
+terminal-browser: Terminal-based web browser
+token-monitor: Monitor token usage, costs, and limits across AI coding tools
+tone3000: Amp modeling plug-in for Neural Amp Modeler captures and impulse responses
+vernier-graphical-analysis: Instrument data analysis tool
+waku: Native desktop app for coding agents
+
+You have 45 outdated formulae and 1 outdated cask installed.
+
+yt-dlp 2026.3.17_2 is already installed but outdated (so it will be upgraded).
+ffmpeg 8.1.2_1 is already installed but outdated (so it will be upgraded).
+whisper-cpp 1.8.6 is already installed but outdated (so it will be upgraded).
+Warning: The following taps are not trusted:
+  oven-sh/bun
+
+Homebrew is currently ignoring formulae, casks and commands from these taps because tap trust is required.
+
+Prefer trusting only the specific formulae, casks or commands you need.
+Trust installed formulae from these taps with:
+  brew trust --formula oven-sh/bun/bun
+Trust other specific casks and commands with:
+  brew trust --cask <user>/<tap>/<cask>
+  brew trust --command <user>/<tap>/<command>
+Whole-tap trust is broader and includes all current and future formulae,
+casks and commands from the listed taps. Trust whole taps with:
+  brew trust oven-sh/bun
+Untap them with:
+  brew untap oven-sh/bun
+To disable trust checks:
+  export HOMEBREW_NO_REQUIRE_TAP_TRUST=1
+This is not recommended and will be removed in a later release.
+For more information, see:
+  https://docs.brew.sh/Tap-Trust
+==> Downloading bottle manifests
+✔︎ Bottle Manifest yt-dlp (2026.8.19)
+✔︎ Bottle Manifest whisper-cpp (1.9.2)
+✔︎ Bottle Manifest ffmpeg (9.0.1_1)
+==> Would install 3 formulae:
+yt-dlp ffmpeg whisper-cpp
+==> Would upgrade 8 dependencies for yt-dlp:
+certifi
+jpeg-turbo
+libtiff
+little-cms2
+sqlite
+deno
+openssl@3
+python@3.14
+==> Would upgrade 9 dependencies for ffmpeg:
+dav1d
+mpg123
+lame
+libvpx
+openssl@3
+sdl3
+sdl2-compat
+svt-av1
+x265
+==> Would upgrade 4 dependencies for whisper-cpp:
+libomp
+ggml
+sdl3
+sdl2-compat
+==> Fetching downloads for: yt-dlp, ffmpeg and whisper-cpp
+✔︎ Bottle sqlite (3.53.4)
+✔︎ Bottle python@3.14 (3.14.7)
+✔︎ Bottle dav1d (1.5.4)
+✔︎ Bottle lame (4.0)
+✔︎ Bottle Manifest certifi (2026.7.22)
+✔︎ Bottle Manifest jpeg-turbo (3.2.0)
+✔︎ Bottle Manifest openssl@3 (3.6.4)
+✔︎ Bottle Manifest libvpx (1.17.0)
+✔︎ Bottle Manifest libtiff (4.7.2)
+✔︎ Bottle Manifest little-cms2 (2.19.1)
+✔︎ Bottle Manifest deno (2.9.6)
+✔︎ Bottle Manifest mpg123 (1.33.7)
+✔︎ Bottle svt-av1 (4.2.0)
+✔︎ Bottle certifi (2026.7.22)
+✔︎ Bottle Manifest sdl3 (3.4.16)
+✔︎ Bottle Manifest x265 (4.3)
+✔︎ Bottle little-cms2 (2.19.1)
+✔︎ Bottle Manifest ggml (0.23.0)
+✔︎ Bottle Manifest libomp (23.1.0)
+✔︎ Bottle Manifest sdl2-compat (2.32.72)
+✔︎ Bottle ggml (0.23.0)
+✔︎ Bottle mpg123 (1.33.7)
+✔︎ Bottle jpeg-turbo (3.2.0)
+✔︎ Bottle libtiff (4.7.2)
+✔︎ Bottle sdl2-compat (2.32.72)
+✔︎ Bottle libomp (23.1.0)
+✔︎ Bottle libvpx (1.17.0)
+✔︎ Bottle sdl3 (3.4.16)
+✔︎ Bottle whisper-cpp (1.9.2)
+✔︎ Bottle x265 (4.3)
+✔︎ Bottle yt-dlp (2026.8.19)
+✔︎ Bottle openssl@3 (3.6.4)
+✔︎ Bottle ffmpeg (9.0.1_1)
+✔︎ Bottle deno (2.9.6)
+==> Upgrading yt-dlp
+  2026.3.17_2 -> 2026.8.19 
+==> Installing dependencies for yt-dlp: certifi, jpeg-turbo, libtiff, little-cms2, sqlite, deno, openssl@3 and python@3.14
+==> Upgrading yt-dlp dependency: certifi
+==> Pouring certifi--2026.7.22.all.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/certifi/2026.7.22: 44 files, 21.9KB
+==> Upgrading yt-dlp dependency: jpeg-turbo
+==> Pouring jpeg-turbo--3.2.0.arm64_tahoe.bottle.1.tar.gz
+🍺  /opt/homebrew/Cellar/jpeg-turbo/3.2.0: 47 files, 4.1MB
+==> Upgrading yt-dlp dependency: libtiff
+==> Pouring libtiff--4.7.2.arm64_tahoe.bottle.2.tar.gz
+🍺  /opt/homebrew/Cellar/libtiff/4.7.2: 493 files, 9.0MB
+==> Upgrading yt-dlp dependency: little-cms2
+==> Pouring little-cms2--2.19.1.arm64_tahoe.bottle.1.tar.gz
+🍺  /opt/homebrew/Cellar/little-cms2/2.19.1: 23 files, 1.4MB
+==> Upgrading yt-dlp dependency: sqlite
+==> Pouring sqlite--3.53.4.arm64_tahoe.bottle.1.tar.gz
+🍺  /opt/homebrew/Cellar/sqlite/3.53.4: 13 files, 5.3MB
+==> Upgrading yt-dlp dependency: deno
+==> Pouring deno--2.9.6.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/deno/2.9.6: 12 files, 125MB
+==> Upgrading yt-dlp dependency: openssl@3
+==> Pouring openssl@3--3.6.4.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/openssl@3/3.6.4: 7,639 files, 37.7MB
+==> Upgrading yt-dlp dependency: python@3.14
+==> Pouring python@3.14--3.14.7.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/python@3.14/3.14.7: 3,776 files, 74.4MB
+==> Installing yt-dlp
+==> Pouring yt-dlp--2026.8.19.arm64_tahoe.bottle.1.tar.gz
+🍺  /opt/homebrew/Cellar/yt-dlp/2026.8.19: 1,698 files, 20.9MB
+==> Upgrading ffmpeg
+  8.1.2_1 -> 9.0.1_1 
+==> Installing dependencies for ffmpeg: dav1d, mpg123, lame, sdl3, svt-av1 and x265
+==> Upgrading ffmpeg dependency: dav1d
+==> Pouring dav1d--1.5.4.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/dav1d/1.5.4: 16 files, 959.6KB
+==> Upgrading ffmpeg dependency: mpg123
+==> Pouring mpg123--1.33.7.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/mpg123/1.33.7: 34 files, 1.9MB
+==> Upgrading ffmpeg dependency: lame
+==> Pouring lame--4.0.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/lame/4.0: 29 files, 1.9MB
+==> Upgrading ffmpeg dependency: sdl3
+==> Pouring sdl3--3.4.16.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/sdl3/3.4.16: 103 files, 6.3MB
+==> Upgrading ffmpeg dependency: svt-av1
+==> Pouring svt-av1--4.2.0.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/svt-av1/4.2.0: 23 files, 3.3MB
+==> Upgrading ffmpeg dependency: x265
+==> Pouring x265--4.3.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/x265/4.3: 12 files, 17.3MB
+==> Installing ffmpeg
+==> Pouring ffmpeg--9.0.1_1.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/ffmpeg/9.0.1_1: 290 files, 53.8MB
+==> Upgrading whisper-cpp
+  1.8.6 -> 1.9.2 
+==> Installing dependencies for whisper-cpp: libomp and ggml
+==> Upgrading whisper-cpp dependency: libomp
+==> Pouring libomp--23.1.0.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libomp/23.1.0: 11 files, 1.8MB
+==> Upgrading whisper-cpp dependency: ggml
+==> Pouring ggml--0.23.0.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/ggml/0.23.0: 38 files, 4.8MB
+==> Installing whisper-cpp
+==> Pouring whisper-cpp--1.9.2.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/whisper-cpp/1.9.2: 33 files, 8.9MB
+==> Cleanup
+Removing: /opt/homebrew/Cellar/whisper-cpp/1.8.6... (24 files, 7.8MB)
+Removing: /opt/homebrew/Cellar/ffmpeg/8.1.2_1... (287 files, 53.5MB)
+Removing: /opt/homebrew/Cellar/yt-dlp/2026.3.17_2... (2,024 files, 26.7MB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/whisper-cpp--1.8.6... (2.9MB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/ffmpeg--8.1.2_1... (21.2MB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/whisper-cpp_bottle_manifest--1.8.6... (31.2KB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/ffmpeg_bottle_manifest--8.1.2_1... (39.4KB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/yt-dlp--2026.3.17_2... (5.4MB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/yt-dlp_bottle_manifest--2026.3.17_2... (26.1KB)
+Disable this behaviour by setting `HOMEBREW_NO_INSTALL_CLEANUP=1`.
+Hide these hints with `HOMEBREW_NO_ENV_HINTS=1` (see `man brew`).
+==> `brew cleanup` has not been run in the last 30 days, running now...
+Disable this behaviour by setting `HOMEBREW_NO_INSTALL_CLEANUP=1`.
+Hide these hints with `HOMEBREW_NO_ENV_HINTS=1` (see `man brew`).
+Removing: /opt/homebrew/Cellar/ca-certificates/2026-05-14... (4 files, 200.9KB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/ca-certificates--2026-05-14... (112KB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/ca-certificates--2026-07-16... (110.9KB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/ca-certificates_bottle_manifest--2026-05-14... (1.7KB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/ca-certificates_bottle_manifest--2026-07-16-2... (9.4KB)
+Removing: /opt/homebrew/Cellar/certifi/2026.5.20... (40 files, 23.8KB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/certifi--2026.5.20... (5.7KB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/certifi_bottle_manifest--2026.5.20... (1.9KB)
+Removing: /opt/homebrew/Cellar/dav1d/1.5.3... (16 files, 940KB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/dav1d--1.5.3... (364.6KB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/dav1d_bottle_manifest--1.5.3... (7.6KB)
+Removing: /opt/homebrew/Cellar/deno/2.8.2... (12 files, 138.4MB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/deno--2.8.2... (46.7MB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/deno_bottle_manifest--2.8.2... (16.3KB)
+Removing: /opt/homebrew/Cellar/ggml/0.15.1... (38 files, 3.3MB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/ggml--0.15.1... (1MB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/ggml_bottle_manifest--0.15.1... (16.6KB)
+Removing: /opt/homebrew/Cellar/jpeg-turbo/3.1.4.1... (47 files, 3.7MB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/jpeg-turbo--3.1.4.1... (1.1MB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/jpeg-turbo_bottle_manifest--3.1.4.1... (8.4KB)
+Removing: /opt/homebrew/Cellar/lame/3.100... (28 files, 2.3MB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/lame--3.100... (792.0KB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/lame_bottle_manifest--3.100... (16KB)
+Removing: /opt/homebrew/Cellar/libomp/22.1.7... (11 files, 1.8MB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/libomp--22.1.7... (590KB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/libomp_bottle_manifest--22.1.7... (12.4KB)
+Removing: /opt/homebrew/Cellar/libtiff/4.7.1_1... (488 files, 9.0MB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/libtiff--4.7.1_1... (1.9MB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/libtiff_bottle_manifest--4.7.1_1... (12.6KB)
+Removing: /opt/homebrew/Cellar/little-cms2/2.19... (23 files, 1.5MB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/little-cms2--2.19... (433.7KB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/little-cms2_bottle_manifest--2.19... (13KB)
+Removing: /opt/homebrew/Cellar/mpg123/1.33.6... (34 files, 2MB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/mpg123--1.33.6... (646.6KB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/mpg123_bottle_manifest--1.33.6... (8.3KB)
+Removing: /opt/homebrew/Cellar/openssl@3/3.6.3... (7,633 files, 37.7MB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/openssl@3--3.6.3... (10.9MB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/openssl@3_bottle_manifest--3.6.3-1... (12.0KB)
+Removing: /opt/homebrew/Cellar/python@3.14/3.14.5... (4,111 files, 82.5MB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/python@3.14--3.14.5... (19.2MB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/python@3.14_bottle_manifest--3.14.5-1... (31.1KB)
+Removing: /opt/homebrew/Cellar/sdl3/3.4.12... (103 files, 6.3MB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/sdl3--3.4.12... (1.6MB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/sdl3_bottle_manifest--3.4.12-1... (22.8KB)
+Removing: /opt/homebrew/Cellar/sqlite/3.53.2... (13 files, 5.3MB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/sqlite--3.53.2... (2.4MB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/sqlite_bottle_manifest--3.53.2... (11.8KB)
+Removing: /opt/homebrew/Cellar/svt-av1/4.1.0... (23 files, 3.1MB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/svt-av1--4.1.0... (1.3MB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/svt-av1_bottle_manifest--4.1.0... (7.6KB)
+Removing: /opt/homebrew/Cellar/x265/4.2... (12 files, 17.0MB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/x265--4.2... (5.1MB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/x265_bottle_manifest--4.2... (7.6KB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/portable-ruby-4.0.6.arm64_big_sur.bottle.tar.gz... (12.7MB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/Cask/cli_mac_arm64.tar.gz--1.0.14,6049473256882176.tar.gz... (39.2MB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/bootsnap/cbcc7a28608961f53179008c4df6fbdd0012109a271c795809dd4641a0f4d195... (1,067 files, 9.8MB)
+Removing: /Users/pagemacmini/Library/Caches/Homebrew/bootsnap/4d4f04dd5cb2b3d1cc2088fdde2e7ea415ab6a872c50a809c9bfa164253517b3... (1,040 files, 9.3MB)
+Removing: /opt/homebrew/var/homebrew/tmp/.cellar/libvpx... (21 files, 4.4MB)
+Removing: /opt/homebrew/var/homebrew/tmp/.cellar/sdl2-compat... (116 files, 3.3MB)
+==> Caveats
+zsh completions have been installed to:
+  /opt/homebrew/share/zsh/site-functions
+==> ffmpeg
+ffmpeg-full includes additional tools and libraries that are not included in the regular ffmpeg formula.
+==> whisper-cpp
+whisper-cpp requires GGML model files to work. These are not downloaded by default.
+To obtain model files (.bin), visit one of these locations:
+
+  https://huggingface.co/ggerganov/whisper.cpp/tree/main
+  https://ggml.ggerganov.com/
+-- versions --
+ffmpeg 9.0.1_1
+whisper-cpp 1.9.2
+yt-dlp 2026.8.19
+exit=0

@@ -18,5 +18,7 @@ case "${1:-}" in
   install-q3) exec bash /Users/pagemacmini/maplab-ai-handbook/scripts/a0_install_tools.sh q3 ;;
   # launch the installed OpenD GUI for Owner login (no credentials touched here)
   opend-open) /usr/bin/open -a /Applications/Futu_OpenD.app && echo "opened" ;;
+  # read-only quote snapshot via OpenD (no trade context, no unlock)
+  futu-smoke) exec /usr/bin/python3 /Users/pagemacmini/maplab-ai-handbook/scripts/a0_futu_smoke.py ;;
   *) echo "usage: a0_sys_probe.sh <port|launchd|disk> [arg]"; exit 2 ;;
 esac

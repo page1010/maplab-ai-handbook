@@ -16,5 +16,7 @@ case "${1:-}" in
               && bash /Users/pagemacmini/claude-daily-operations/ops/claude-daily-operations/morning_meeting.sh && echo "guarded run OK" ;;
   install-q1) exec bash /Users/pagemacmini/maplab-ai-handbook/scripts/a0_install_tools.sh q1 ;;
   install-q3) exec bash /Users/pagemacmini/maplab-ai-handbook/scripts/a0_install_tools.sh q3 ;;
+  # launch the installed OpenD GUI for Owner login (no credentials touched here)
+  opend-open) /usr/bin/open -a /Applications/Futu_OpenD.app && echo "opened" ;;
   *) echo "usage: a0_sys_probe.sh <port|launchd|disk> [arg]"; exit 2 ;;
 esac

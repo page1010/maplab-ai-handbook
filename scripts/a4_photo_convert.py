@@ -21,8 +21,10 @@ import sys
 import tempfile
 from pathlib import Path
 
+# Root per win-01 photo_alt_index.csv — case folders live in the pagewu1010
+# Drive under 2026maplab外燴紀錄/, NOT the lb99104 MAPLAB_ASSETS tree.
 ASSETS_ROOT = Path(
-    "/Users/pagemacmini/Library/CloudStorage/GoogleDrive-lb99104@gmail.com/我的雲端硬碟/MAPLAB/MAPLAB_ASSETS"
+    "/Users/pagemacmini/Library/CloudStorage/GoogleDrive-pagewu1010@gmail.com/我的雲端硬碟/2026maplab外燴紀錄"
 )
 OUT_ROOT = Path("/Users/pagemacmini/maplab-ai-handbook/data/photo_convert")
 IMG_EXTS = {".heic", ".jpg", ".jpeg", ".png"}

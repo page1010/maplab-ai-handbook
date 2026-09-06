@@ -109,7 +109,7 @@ Owner 裁決（2026-09-04，Telegram msg 4642）：進度心跳／daily ops／�
 • maplab_kitchen → 推進（0.8h 前有 commit，dirty=14）→ 續跑
 • agent_bus_win01 → 在線(win-01) → 可派工
 
-[2026-09-06 22:35] [a0/Fable5] msg 4862「今天是不是沒有發win-os任務」：據實回答=對，a0 今天沒發新卡（量能吃在持倉轉錄/蛛網重建/金鑰查案）；但 win-01 未停工——自走日更兩管線今天都有跑（photo-alt 做到木地板開幕批、tag-triage 批次4 完成 5 NOINDEX，進度 20/33），唯一卡點=ad_ok 348 列等 Owner 圈規則。已即時補發新卡 inbox/win-01/win01-asset-folders-index-paths-20260906.json（承接其 9/5 稽核兩個不卡 Owner 項目：193 根目錄素材歸夾提案[只提案不動檔]、photo_alt_index 改 Drive 相對路徑重比對；9/8 中午前交）。承諾入巡查：每日看一眼 win-01 是否需發卡。回覆已送（收據 ts 2026-09-06T21:31:20）。
+[2026-09-06 23:00] [a0/Fable5] msg 4867 antigravity/YouTube 專案確認：1) 已發卡 inbox/antigravity/antigravity-youtube-archive-confirm-20260906.json（存檔位置+檔案清單、影像/音樂方向各一頁摘要落檔供 Owner 確認、9/8 前回報；明定 agy 唯讀邊界未驗證不得寫入型 shell）；2) Owner 裁定歌詞鐵則已立規則卡 inbox/win-01/win01-music-series-lyrics-rule-20260906.json：歌詞不進 WP、另存獨立檔走 Owner 定稿、文章只放曲風/BPM/氛圍、既有草稿含歌詞立即抽出；3) 線序收攏=antigravity 存檔+方向摘要→Owner 確認→歌詞定稿→A8 才燒 Suno（主題曲二讀完成、額度 2500 未動）。回覆已送（收據 ts 2026-09-06T21:33:11）。agy --print 直查在本窗被沙盒擋（需審批），拿不到即時答案已據實告知 Owner「稍後試、有結果再報」——本輪無結果；追蹤點：9/8 antigravity 未回寫→升級（改由主程式窗跑 agy 或報 Owner）。「今天是不是沒有發win-os任務」：據實回答=對，a0 今天沒發新卡（量能吃在持倉轉錄/蛛網重建/金鑰查案）；但 win-01 未停工——自走日更兩管線今天都有跑（photo-alt 做到木地板開幕批、tag-triage 批次4 完成 5 NOINDEX，進度 20/33），唯一卡點=ad_ok 348 列等 Owner 圈規則。已即時補發新卡 inbox/win-01/win01-asset-folders-index-paths-20260906.json（承接其 9/5 稽核兩個不卡 Owner 項目：193 根目錄素材歸夾提案[只提案不動檔]、photo_alt_index 改 Drive 相對路徑重比對；9/8 中午前交）。承諾入巡查：每日看一眼 win-01 是否需發卡。回覆已送（收據 ts 2026-09-06T21:31:20）。
 
 [2026-09-06 22:15] [a0/Fable5] msg 4857「👌ok」：Owner 確認釣魚判定回報。回條已送（收據 ts 2026-09-06T21:30:34）：金鑰線收尾（Owner 僅剩閒時確認三月舊鑰已刪→GitHub 警報標 Revoked）；重申排程——9/7 早巡查、9/8 16:45 前快照入庫查核、蛛網第二輪。無新工作展開。
 
@@ -129,4 +129,10 @@ Owner 裁決（2026-09-04，Telegram msg 4642）：進度心跳／daily ops／�
 • system_operations → ⏸ 閒置 9.4h（operator-driven，無 ops 任務時本就不 commit；非卡住）
 • investment_os → ⚠️停滯 49.1h（autonomous 專案無 commit）→ 確認排程在跑
 • maplab_kitchen → ⏸ 等待 2.3h（地端排程遷移暫停(預期):6 巡邏+a6-gym 已 disabled,無自動 commit 屬正常；正常等待，非卡住）
+• agent_bus_win01 → 在線(win-01) → 可派工
+
+[2026-09-06 21:35:33] [progress-heartbeat] 🫀 進度心跳 09-06 21:35 ⚠️有停滯
+• system_operations → ⏸ 閒置 15.4h（operator-driven，無 ops 任務時本就不 commit；非卡住）
+• investment_os → ⚠️停滯 55.1h（autonomous 專案無 commit）→ 確認排程在跑
+• maplab_kitchen → 推進（0.0h 前有 commit，dirty=14）→ 續跑
 • agent_bus_win01 → 在線(win-01) → 可派工

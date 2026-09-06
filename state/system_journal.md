@@ -77,6 +77,8 @@ Owner 裁決（2026-09-04，Telegram msg 4642）：進度心跳／daily ops／�
 • maplab_kitchen → 推進（1.6h 前有 commit，dirty=207）→ 續跑
 • agent_bus_win01 → 在線(win-01) → 可派工
 
+[2026-09-06 10:55] [a0/Fable5] msg 4822「庫存更新 圖片3張」：查證 maplab bot 今日零收圖（launchd_stdout 最後收圖 9/3）、a0_inbox 無 [📷 圖片] 條目→三張截圖未進本窗，研判在 investmentos bot 端（其儲存區本沙盒不可讀）。已回 Owner 二選一（轉傳本對話=快；或 invest 端收=慢），並發 P0 卡 invest-positions-refresh-20260906（9/8 16:45 ledger 重跑前更新持股快照，接續 13 條逾期警報歸檔案）。附帶發現：bot/bot.log 最後寫入停在 05:08 重啟（其後 log 走 launchd_stdout），且 05:08 前有 NetworkError 斷線重啟紀錄——bot 本體現正常收發。
+
 [2026-09-06 10:35] [a0/Fable5] msg 4821 結案：Owner 指「系統巡查沒人結案」＝com.maplab.patrol 每日 09:00 巡查連兩日 IS-HS 25/100 紅燈，主因 investment-os runtime_escalation_queue.jsonl 有 13 條 open 警報（6/29-7/1 開、deadline 7/17、逾期 51 天、owner_role=risk-master 無人排程收單）。a0 依 Owner 指令將 13 條以 RESOLVED_STALE 歸檔（原始資料保留、理由註明 7/1 快照過期；09-08 16:45 ledger 重跑仍超限者應重開）。佇列值日規則（過期單 24h 內升級或結案）補進 bus invest-exposure-alert-fix 卡第 5 條。註：昨 msg 4815 曝險空話訊息源頭 e9517d60 即其中一條。明日巡查 escalation 欄應轉綠，待驗證。
 
 [2026-09-06 09:10] [a0/Fable5] msg 4815 結案（三發）：①早報總經調整五點（週日誤當交易日/油價快照91.48與playbook 88-90打架/持股快照16天/USDTWD沒查照出報/升級條件無門檻）。②即時新聞複判版已交付：Brent 實收約96週漲9%（早報低估）、美軍週六癱毀三艘伊朗油輪=升級非降溫、9/7美股勞動節休市台股開=台股當第一棒、給明確門檻(Brent 100/10Y 4.9/DXY 100)。③跨帳戶曝險訊息溯源=investment-os calc_exposure_ledger.py（launchd 平日16:45、走telbotfin），模板有數字但 regime=UNKNOWN+deadline 停 7/17=無效訊息。派工：bus inbox/invest 兩張卡（invest-morningbrief-fixes-20260906 六項、invest-exposure-alert-fix-20260906 四項）。待 Owner：曝險推播門檻圈選。

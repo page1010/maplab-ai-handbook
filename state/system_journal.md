@@ -116,3 +116,11 @@ Owner 裁決（2026-09-04，Telegram msg 4642）：進度心跳／daily ops／�
 [2026-09-06 12:10] [a0/Fable5] msg 4839「建檔了但沒有回饋與追蹤、沒有蛛網新聞搜尋確認共振」：認兩個洞並補齊。1) 蛛網掃描（10 節點即時新聞）已交 Owner 兩則判讀——共振：新興2605（VLCC 日租歷史新高 64.7 萬美元/波灣戰險抽單）、記憶體鏈 SKHY/MU/NVDA/光聖（HBM +20-40%、美光賣到 2027）；背離：TSLA（Cybercab 失望+NHTSA 查案 9/4 -6%，兩帳戶合計 5.4 萬美元＝美元部位 37%）、IBIT（BTC 7.97 萬偏軟、升息計價）、GRAB 價外買權；自走：SPCX（Q2 +92%、PT 280）、PLTR（PwC 案 +9%、PE 150）、勝德（無題材+Q1 轉虧+佔台股 79.9%→黃旗）。未掃節點已向 Owner 揭露（CRM/AAPL/PANW/DIOD/BL/NNOX/SRFM/NOK/正崴/0050）。2) 追蹤點入檔：9/7 早巡查佇列、9/8 16:45 前查核 invest 快照入庫（未動→向 Owner 催辦）、重算後整理重開警報清單給 Owner；invest 卡加 CRDO 獨弱查因+勝德黃旗（requirement 6）。收據三筆掛 ts 2026-09-06T11:00:33。
 
 [2026-09-06 13:40] [a0/Fable5] msg 4844 Owner 裁定蛛網流程：「分析事實然後尋找共振」——事實層先建檔、判讀引用事實編號、事實在前判讀在後分則交付。已認上一則不算建檔（事實判讀混發）並重建：investment-os state/spiderweb_20260906.md（流程五條+事實層 F1-F11+共振層逐條引 F#+未掃節點明列）。交付 Owner 三則：認錯+流程、事實層 F1-F11、共振層（收據皆掛 ts 2026-09-06T13:12:38）。此格式為之後每輪蛛網的固定格式。
+
+[2026-09-06 21:50] [a0/Fable5] msg 4851/4853 GitHub 金鑰警報（Owner 截圖 Gmail）：警報指 f8b9664 掃進的 data/takeout-menu/terms/.page.html 第 12 行 Google API 金鑰。查證兩把鑰：1) Sites 頁面 _at_config 公用內嵌鑰（每個訪客可見，無害，定性=存錯地方）→ 兩個 .page.html 已 git rm；2) 追查時挖出 archive/raw/telegram-logs/2026-03-29.md:707 存有三月外洩事件的舊 Gemini 金鑰原文——當時 git-filter-repo 抹了 571 commits 後，bot 自動存檔的對話紀錄又把鑰原文帶回倉庫，一放五個月（定性=一直在那）→ 已遮罩（連 worktree 副本），commit 145c54f 已推。全倉庫 AIza 全長樣式掃描=0。Owner 待辦：確認三月 Gemini 鑰是否已輪換（已換→GitHub 警報標 Revoked 關閉；未換→Google AI Studio 自行換新，鑰值不經任何 bot）。教訓入檔：a) 網頁原始碼存檔（.page.html 類）一律不進倉庫；b) telegram 自動對話存檔寫入前須過金鑰遮罩（scrub 事件的對話本身就含鑰原文）；c) 大掃把 commit 的秘密掃描要含全長 AIza/內嵌 web key 樣式，昨晚我掃過說乾淨是漏檢。歷史 blob 不再動（私倉+公用鑰/待確認死鑰），不強推打擾其他 agent。
+
+[2026-09-06 15:35:17] [progress-heartbeat] 🫀 進度心跳 09-06 15:35 ⚠️有停滯
+• system_operations → ⏸ 閒置 9.4h（operator-driven，無 ops 任務時本就不 commit；非卡住）
+• investment_os → ⚠️停滯 49.1h（autonomous 專案無 commit）→ 確認排程在跑
+• maplab_kitchen → ⏸ 等待 2.3h（地端排程遷移暫停(預期):6 巡邏+a6-gym 已 disabled,無自動 commit 屬正常；正常等待，非卡住）
+• agent_bus_win01 → 在線(win-01) → 可派工

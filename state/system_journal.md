@@ -109,6 +109,8 @@ Owner 裁決（2026-09-04，Telegram msg 4642）：進度心跳／daily ops／�
 • maplab_kitchen → 推進（0.8h 前有 commit，dirty=14）→ 續跑
 • agent_bus_win01 → 在線(win-01) → 可派工
 
+[2026-09-06 23:55] [a0/Fable5] msg 4875 Owner 核准 ad_ok 348 張改互審雙重辨識：機制定案=第一道 win-01 逐張分類（face NONE/ADULT/CHILD、face_prominent、logo、note；卡 win01-adok-dualcheck-pass1-20260906 已發，日 50 張、9/13 全量、首批 9/8 前）+第二道 Mac 本地視覺模型（A4 gemma 管線）獨立辨識+a0 比對。放行規則：兩道一致無人臉→YES；一致成人→YES 但限遠景/背影/餐桌用法；兒童一律打碼/貼圖不放原圖；兩道衝突→不放行、短清單升級 Owner 裁。放行動作集中 a0 改索引留紀錄。回覆已送（收據 ts 2026-09-06T22:39:39）。a0 待辦（已承諾 Owner）：9/7 拿首批照片跑 gemma 冒煙測試驗辨識品質並回報。
+
 [2026-09-06 23:35] [a0/Fable5] watchdog 補跑：照片訊息 msg 4851（inbox ts 21:19:26，GitHub 警報信截圖）無收據被判未回。實質處理早在 msg 4853/4855 完成（兩鑰查證+清理+釣魚判定），本輪只補一則對帳回條（結論重述：真警報非釣魚、倉庫清零、Owner 僅剩 Revoked 一步），收據掛 ts 2026-09-06T21:19:26。無新工作。
 
 [2026-09-06 23:20] [a0/Fable5] msg 4868「348廣告素材放行是什麼，發我可以審核的檔案」：認溝通缺失（先前只丟名詞無附審核物）。已做 Owner 決策單 handoff/adok-approval-decision-sheet-20260906.md：定義（348 張照片的人臉/logo 合規審核從來沒人跑過，非照片問題）、風險分層（無人臉 69/成人 216/兒童 53/CHECK 10，統計自 photo_alt_index.csv 348 列）、場景分佈、三選項 A規則放行(建議)/B只放無人臉69/C逐張縮圖審。重點已直接貼進 Telegram（Owner 反映看不到超連結，故不依賴連結），回一個字母即生效；放行動作=a0 改 ad_ok 欄位留審核紀錄，win-01 只讀。回覆已送（收據 ts 2026-09-06T21:36:20）。待 Owner 回 A/B/C。

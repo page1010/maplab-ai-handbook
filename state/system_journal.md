@@ -109,6 +109,8 @@ Owner 裁決（2026-09-04，Telegram msg 4642）：進度心跳／daily ops／�
 • maplab_kitchen → 推進（0.8h 前有 commit，dirty=14）→ 續跑
 • agent_bus_win01 → 在線(win-01) → 可派工
 
+[2026-09-06 23:35] [a0/Fable5] watchdog 補跑：照片訊息 msg 4851（inbox ts 21:19:26，GitHub 警報信截圖）無收據被判未回。實質處理早在 msg 4853/4855 完成（兩鑰查證+清理+釣魚判定），本輪只補一則對帳回條（結論重述：真警報非釣魚、倉庫清零、Owner 僅剩 Revoked 一步），收據掛 ts 2026-09-06T21:19:26。無新工作。
+
 [2026-09-06 23:20] [a0/Fable5] msg 4868「348廣告素材放行是什麼，發我可以審核的檔案」：認溝通缺失（先前只丟名詞無附審核物）。已做 Owner 決策單 handoff/adok-approval-decision-sheet-20260906.md：定義（348 張照片的人臉/logo 合規審核從來沒人跑過，非照片問題）、風險分層（無人臉 69/成人 216/兒童 53/CHECK 10，統計自 photo_alt_index.csv 348 列）、場景分佈、三選項 A規則放行(建議)/B只放無人臉69/C逐張縮圖審。重點已直接貼進 Telegram（Owner 反映看不到超連結，故不依賴連結），回一個字母即生效；放行動作=a0 改 ad_ok 欄位留審核紀錄，win-01 只讀。回覆已送（收據 ts 2026-09-06T21:36:20）。待 Owner 回 A/B/C。
 
 [2026-09-06 23:00] [a0/Fable5] msg 4867 antigravity/YouTube 專案確認：1) 已發卡 inbox/antigravity/antigravity-youtube-archive-confirm-20260906.json（存檔位置+檔案清單、影像/音樂方向各一頁摘要落檔供 Owner 確認、9/8 前回報；明定 agy 唯讀邊界未驗證不得寫入型 shell）；2) Owner 裁定歌詞鐵則已立規則卡 inbox/win-01/win01-music-series-lyrics-rule-20260906.json：歌詞不進 WP、另存獨立檔走 Owner 定稿、文章只放曲風/BPM/氛圍、既有草稿含歌詞立即抽出；3) 線序收攏=antigravity 存檔+方向摘要→Owner 確認→歌詞定稿→A8 才燒 Suno（主題曲二讀完成、額度 2500 未動）。回覆已送（收據 ts 2026-09-06T21:33:11）。agy --print 直查在本窗被沙盒擋（需審批），拿不到即時答案已據實告知 Owner「稍後試、有結果再報」——本輪無結果；追蹤點：9/8 antigravity 未回寫→升級（改由主程式窗跑 agy 或報 Owner）。「今天是不是沒有發win-os任務」：據實回答=對，a0 今天沒發新卡（量能吃在持倉轉錄/蛛網重建/金鑰查案）；但 win-01 未停工——自走日更兩管線今天都有跑（photo-alt 做到木地板開幕批、tag-triage 批次4 完成 5 NOINDEX，進度 20/33），唯一卡點=ad_ok 348 列等 Owner 圈規則。已即時補發新卡 inbox/win-01/win01-asset-folders-index-paths-20260906.json（承接其 9/5 稽核兩個不卡 Owner 項目：193 根目錄素材歸夾提案[只提案不動檔]、photo_alt_index 改 Drive 相對路徑重比對；9/8 中午前交）。承諾入巡查：每日看一眼 win-01 是否需發卡。回覆已送（收據 ts 2026-09-06T21:31:20）。

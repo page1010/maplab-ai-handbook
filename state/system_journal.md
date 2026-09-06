@@ -109,6 +109,8 @@ Owner 裁決（2026-09-04，Telegram msg 4642）：進度心跳／daily ops／�
 • maplab_kitchen → 推進（0.8h 前有 commit，dirty=14）→ 續跑
 • agent_bus_win01 → 在線(win-01) → 可派工
 
+[2026-09-07 08:05] [a0/Fable5] msg 4878 Owner 傳 IG reel 問三題：查證=ryanfreedom76 推廣 Capafy（技能市集，股票分析為其一技能）。1) 付費：免費試用額度後按技能計價（時數制例 $3/hr 最低 2hr、亦有訂閱/買斷）；「留言傳連結」=行銷漏斗。2) 借鏡：Capafy 平台與技能皆閉源（GitHub 只有上架工具倉），借鏡價值低；改指向三個同邏輯開源專案：TradingAgents（多代理辯論裁決，與蛛網事實層+共振層同構）、FinRobot、financial-research-analyst-agent（11 代理+RAG）。3) 台股：邏輯層=既有蛛網流程代理化（基本面讀 MOPS、籌碼讀證交所/櫃買 API、新聞代理、裁決代理），資料層有免費官方源。已承諾 Owner：做 TradingAgents 代理分工 vs investment-os 現有零件的拆解報告（缺塊+補齊順序），排在今日既有任務之後、給 Owner 過目再決定是否排開發。回覆已送（收據 ts 2026-09-07T07:48:30）。
+
 [2026-09-06 23:55] [a0/Fable5] msg 4875 Owner 核准 ad_ok 348 張改互審雙重辨識：機制定案=第一道 win-01 逐張分類（face NONE/ADULT/CHILD、face_prominent、logo、note；卡 win01-adok-dualcheck-pass1-20260906 已發，日 50 張、9/13 全量、首批 9/8 前）+第二道 Mac 本地視覺模型（A4 gemma 管線）獨立辨識+a0 比對。放行規則：兩道一致無人臉→YES；一致成人→YES 但限遠景/背影/餐桌用法；兒童一律打碼/貼圖不放原圖；兩道衝突→不放行、短清單升級 Owner 裁。放行動作集中 a0 改索引留紀錄。回覆已送（收據 ts 2026-09-06T22:39:39）。a0 待辦（已承諾 Owner）：9/7 拿首批照片跑 gemma 冒煙測試驗辨識品質並回報。
 
 [2026-09-06 23:35] [a0/Fable5] watchdog 補跑：照片訊息 msg 4851（inbox ts 21:19:26，GitHub 警報信截圖）無收據被判未回。實質處理早在 msg 4853/4855 完成（兩鑰查證+清理+釣魚判定），本輪只補一則對帳回條（結論重述：真警報非釣魚、倉庫清零、Owner 僅剩 Revoked 一步），收據掛 ts 2026-09-06T21:19:26。無新工作。

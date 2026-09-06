@@ -110,3 +110,5 @@ Owner 裁決（2026-09-04，Telegram msg 4642）：進度心跳／daily ops／�
 • agent_bus_win01 → 在線(win-01) → 可派工
 
 [2026-09-06 11:25] [a0/Fable5] msg 4833「我是傳在這個對話喔 請再次確認」：Owner 正確——三張庫存截圖 10:15 即進 maplab bot（inbox 4823-4825），a0 前一輪查詢時 a0_inbox/相簿目錄尚未同步到本窗（時間差），非 Owner 傳錯。已讀三圖並照圖轉錄：海外 app 11 筆（TSLA 100股/SPCX 100股/ANET 10股+GRAB/IBIT/NOK 選擇權；清單在 167 USD 處截斷，已請 Owner 視情況補圖）、複委託外幣 13 筆（美國小計約 8.7 萬 USD）、台股現股 7 筆（總市值 2,541,770）。轉錄檔只存本機 investment-os state/positions_snapshot_20260906_owner_screenshots.md（截圖數字不入遠端 repo），bus P0 卡 invest-positions-refresh-20260906 已更新為「讀轉錄檔入庫、as_of 改 9/6、趕 9/8 16:45 重跑」。回覆已送（收據 ts 2026-09-06T10:16:06）。
+
+[2026-09-06 11:40] [a0/Fable5] watchdog 補跑：三張照片訊息（inbox 10:15:15/16/18）先前無收據被判未回。已對 10:15:15 送出正式回條（同一則涵蓋三張圖，內容為「已讀已轉錄、9/8 前入庫、app 清單如有截斷再補圖」）；10:15:16 與 10:15:18 兩筆收據由 a0 手動併掛同一 output_hash 寫入 a0_replies.jsonl（附 note 欄說明），避免對 Owner 連發三則重複訊息。此為收據簿補記，非新工作。

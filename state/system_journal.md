@@ -77,6 +77,8 @@ Owner 裁決（2026-09-04，Telegram msg 4642）：進度心跳／daily ops／�
 • maplab_kitchen → 推進（1.6h 前有 commit，dirty=207）→ 續跑
 • agent_bus_win01 → 在線(win-01) → 可派工
 
+[2026-09-06 10:35] [a0/Fable5] msg 4821 結案：Owner 指「系統巡查沒人結案」＝com.maplab.patrol 每日 09:00 巡查連兩日 IS-HS 25/100 紅燈，主因 investment-os runtime_escalation_queue.jsonl 有 13 條 open 警報（6/29-7/1 開、deadline 7/17、逾期 51 天、owner_role=risk-master 無人排程收單）。a0 依 Owner 指令將 13 條以 RESOLVED_STALE 歸檔（原始資料保留、理由註明 7/1 快照過期；09-08 16:45 ledger 重跑仍超限者應重開）。佇列值日規則（過期單 24h 內升級或結案）補進 bus invest-exposure-alert-fix 卡第 5 條。註：昨 msg 4815 曝險空話訊息源頭 e9517d60 即其中一條。明日巡查 escalation 欄應轉綠，待驗證。
+
 [2026-09-06 09:10] [a0/Fable5] msg 4815 結案（三發）：①早報總經調整五點（週日誤當交易日/油價快照91.48與playbook 88-90打架/持股快照16天/USDTWD沒查照出報/升級條件無門檻）。②即時新聞複判版已交付：Brent 實收約96週漲9%（早報低估）、美軍週六癱毀三艘伊朗油輪=升級非降溫、9/7美股勞動節休市台股開=台股當第一棒、給明確門檻(Brent 100/10Y 4.9/DXY 100)。③跨帳戶曝險訊息溯源=investment-os calc_exposure_ledger.py（launchd 平日16:45、走telbotfin），模板有數字但 regime=UNKNOWN+deadline 停 7/17=無效訊息。派工：bus inbox/invest 兩張卡（invest-morningbrief-fixes-20260906 六項、invest-exposure-alert-fix-20260906 四項）。待 Owner：曝險推播門檻圈選。
 
 [2026-09-05 20:05] [a0/Fable5] msg 4809（watchdog 補跑）結案：先回覆（開場模板/定價規則/R8/R9 入檔＋認領 #1-#9 資料蒐集），後續同 turn 交付 #1-#9 選後追問題組兩則（純文字，依 quote-gym SOP v3 一次性5W2H＋業務白名單，問句不斷言）。正本存 data/line-intake/line-opening-and-question-sets-20260905.md。待 Owner 裁定：每人1000-2000價格帶可否對客直講（未裁定前不主動報數字）。原始 resume 曾被 watchdog 判逾時砍掉重跑——首則回覆已壓在補跑窗內送出。
@@ -97,4 +99,10 @@ Owner 裁決（2026-09-04，Telegram msg 4642）：進度心跳／daily ops／�
 • system_operations → ⏸ 閒置 2.4h（operator-driven，無 ops 任務時本就不 commit；非卡住）
 • investment_os → ⚠️停滯 42.0h（autonomous 專案無 commit）→ 確認排程在跑
 • maplab_kitchen → ⏸ 等待 12.0h（地端排程遷移暫停(預期):6 巡邏+a6-gym 已 disabled,無自動 commit 屬正常；正常等待，非卡住）
+• agent_bus_win01 → 在線(win-01) → 可派工
+
+[2026-09-06 09:35:04] [progress-heartbeat] 🫀 進度心跳 09-06 09:35 ⚠️有停滯
+• system_operations → ⏸ 閒置 3.4h（operator-driven，無 ops 任務時本就不 commit；非卡住）
+• investment_os → ⚠️停滯 43.0h（autonomous 專案無 commit）→ 確認排程在跑
+• maplab_kitchen → 推進（0.8h 前有 commit，dirty=14）→ 續跑
 • agent_bus_win01 → 在線(win-01) → 可派工

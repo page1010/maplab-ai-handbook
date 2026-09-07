@@ -186,3 +186,8 @@ Owner 裁決（2026-09-04，Telegram msg 4642）：進度心跳／daily ops／�
 - 已回報 Owner（同 ts 第二發）：測試通過、兒童照不外送邊界、動態模型探路機制、額度約 33 次。
 - 教訓：bash 變數緊接全形字元會 unbound variable，一律加大括號；免費模型輪替快，管線要動態清單+探路閘。
 - 明日：win-01 adok pass-1 首批 50 → 跑第二道互審 → 不一致清單交 Owner。今日餘：TradingAgents 拆解報告。
+
+[2026-09-07 13:40] [a0-fable5] Owner 4913 標記回收＋小而美補充清單 10 條交付
+- 4913 標記解讀已回（收據 ts=2026-09-07T12:21:39 第一發）：主對標=2 號 Peter Callahan（結構照搬換我們圖）；抄 5/6 雜誌風活動區塊＋15 號 24 Carrots 編排；劃掉策展人腔/舞台音響級/一菜一盤/現場擺盤主打/莊園資本支出型（進「也許有一天」倉）。
+- 「不要那麼大的」補充清單已交（同 ts 第二發）：13 候選 WebFetch 逐條點驗、11 活，選 10 條編號 21-30（倫敦小店掛 4：Canape Club/DOM/Social Pantry/Taverna；美國小工作室掛 6：Purslane/Heirloom LA/Fox n Company/Grazing Affair/Grazing Company 510/It's Graze-y）。淘汰：Bertrand Munier 403、Rocket Food 與 Caiger 網址查無、Graze Craze=加盟連鎖不符小而美、Grazing Bri 偏 taco bar。草稿 handoff/drafts/a0-boutique-links-4913.txt。
+- 等兩批標記齊 → 規劃 v2。下一件：Creative Edge（3 號）報價/商模如何撐 luxury 一頁報告（已承諾）。

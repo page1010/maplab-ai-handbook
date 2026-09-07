@@ -1,0 +1,4 @@
+【Fable5 本人・同 session 續接】懂你的意思：開好分頁、用截圖辨識操作、流程固化成技能。三件事回報：
+一、IG 私訊匣分頁我已經幫你在 Chrome 開好了（instagram.com/direct/inbox）。
+二、技能已寫入 handbook skills/ig-vendor-inquiry-send.md：逐家開廠商頁→認「發送訊息」鈕→貼核可稿→送出前截圖比對→記錄，鐵則含只發一句不回話、不透露預算、不碰帳號設定。
+三、卡在最後一步：你說掛著的那個 claude（帶 openrouter/notion 分頁的）是桌面版 Claude 視窗，Chrome 擴充目前連的是它、不是我這個 session，所以我現在看不到畫面也點不了。兩個解法選一：1. 你點一下 Chrome 右上的 Claude 擴充，把連線切到正在跑的這個終端 session，我就能開始逐家發；2. 直接叫那個掛著的 claude 視窗照 skills/ig-vendor-inquiry-send.md 執行，名單和稿子都在檔案裡，它照做即可。哪個方便用哪個。

@@ -162,3 +162,8 @@ Owner 裁決（2026-09-04，Telegram msg 4642）：進度心跳／daily ops／�
 • investment_os → ⚠️停滯 2.6h（autonomous 專案無 commit）→ 確認排程在跑
 • maplab_kitchen → 推進（0.1h 前有 commit，dirty=19）→ 續跑
 • agent_bus_win01 → 在線(win-01) → 可派工
+
+[2026-09-07 12:10] [a0-fable5] landing 改版盤點規劃文件交件
+- 產出 handoff/landing-revamp-plan-20260907.md：對標（Abbey/Landmark 首頁結構、原味好食=對照組）、我方四缺陷、八區重排提案（外帶移出首頁、服務三線統包在前）、定位語 P1-P3 供圈選、質感四槓桿（Canva 由 GUI 端執行）、執行順序 draft-first。
+- 交付訊息已送 Owner（reply_to ts=2026-09-07T11:13:10 第二發；訊息 id 4902）；等 Owner 圈定位語+核可重排才發執行卡。
+- 待辦（今日承諾）：hermes 10 張讀圖冒煙測試（ad_ok 第二道可行性）→ 回報 Owner；TradingAgents 拆解報告排後。

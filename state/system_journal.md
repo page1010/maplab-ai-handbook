@@ -337,3 +337,15 @@ Owner 裁決（2026-09-04，Telegram msg 4642）：進度心跳／daily ops／�
 • investment_os → 推進（0.2h 前有 commit，dirty=822）→ 續跑
 • maplab_kitchen → 推進（0.1h 前有 commit，dirty=33）→ 續跑
 • agent_bus_win01 → 在線(win-01) → 可派工
+
+[2026-09-07 21:55] [a0-resume] msg 4972「我發那個md檔了」處理
+- 語意：Owner 把 skills/ig-vendor-inquiry-send.md 交給桌面 Claude（4963 提到掛著
+  openrouter/notion 那個）執行 IG 發送；本窗 claude-in-chrome/computer-use MCP 已斷線，
+  無瀏覽器通道。
+- 觀察：data/vendor-db/sent-log.md 於 21:50:59 出現（untracked，執行端所寫），記攝1安德/
+  攝2澤于/攝3瑪思三家「已發」；疑點＝條目標時間 22:0X 但當下實際時間 21:51，時間對不上。
+- 已回 4972（收據 ts=2026-09-07T21:47:30）：如實轉述 log 內容、聲明本窗無法親驗、請 Owner
+  開 IG 私訊匣肉眼確認前三家；經 Owner 確認第一則真發成才依 4967 規矩把 skill 草案轉正。
+- 未動 sent-log.md（執行端仍在寫入，避免競態；由執行端自行 commit 或完工後我彙整）。
+- 下輪續接檢核點：sent-log 是否補齊 11 家、Owner 是否確認肉眼看到訊息、skill 轉正與最終
+  一則總結回報（已發X/跳過Y＋原因）。

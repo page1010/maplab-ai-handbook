@@ -109,6 +109,8 @@ Owner 裁決（2026-09-04，Telegram msg 4642）：進度心跳／daily ops／�
 • maplab_kitchen → 推進（0.8h 前有 commit，dirty=14）→ 續跑
 • agent_bus_win01 → 在線(win-01) → 可派工
 
+[2026-09-07 10:45] [a0/Fable5] msg 4898 Owner 頒布 FDE 章程（引 Palantir FDE/Citadel 商業工程）：所有 agent＝前線部署工程師、Owner＝唯一 user。已落檔 docs/agent-fde-charter-20260907.md：原型對應表+五條可稽核守則（急迫性同步/交成品不交名詞[4868 反例入檔]/回饋回灌[Owner 親改→語氣筆記為範例]/設身處地/前線自主核心守門）。落地=掛進各 agent recall prompt 必讀與新卡引用、journal 違例檢討拿它當量尺（待辦：下次動 AGENT_RECALL_PROMPTS.md 時逐 agent 補引用）。記憶檔 agent-fde-charter 已存。回覆已送（收據 ts 2026-09-07T10:30:48）。今日既排工作不受影響。
+
 [2026-09-07 08:35] [a0/Fable5] msg 4881 今日排程+win-01 確認卡+hermes 協作+10 篇圈題：1) 確認卡 win01-daily-confirm-20260907 已發（今日序:adok 首批50張最優先、拉 WP 最新版 diff Owner 親改處做語氣筆記、SEO 新篇暫停等圈題、既有兩卡與日更照舊）。2) hermes 檢核 348 方案已提 Owner：hermes 免費鏈當第二道，今天 10 張冒煙測讀圖辨臉，過關用它、不過退回 Mac 本地視覺模型；規則不變（一致才放行、衝突升級）。3) 接下來 10 篇主題已送 Owner 圈選（案例為主每篇擴一組關鍵字群）：Clea開幕茶會/喜多多性別派對/官田性別揭曉/東門教會證婚/三立論壇/南科科林/遊學說明會/善化抓周/派對空間抓周/日照中心；另五案（音樂會/美術館/國泰原美/建商/訊聯）押後待身分還原。4) a0 今日序：hermes 冒煙測試→快照入庫稽核 prep→TradingAgents 拆解報告。回覆已送（收據 ts 2026-09-07T08:15:40）。
 
 [2026-09-07 08:05] [a0/Fable5] msg 4878 Owner 傳 IG reel 問三題：查證=ryanfreedom76 推廣 Capafy（技能市集，股票分析為其一技能）。1) 付費：免費試用額度後按技能計價（時數制例 $3/hr 最低 2hr、亦有訂閱/買斷）；「留言傳連結」=行銷漏斗。2) 借鏡：Capafy 平台與技能皆閉源（GitHub 只有上架工具倉），借鏡價值低；改指向三個同邏輯開源專案：TradingAgents（多代理辯論裁決，與蛛網事實層+共振層同構）、FinRobot、financial-research-analyst-agent（11 代理+RAG）。3) 台股：邏輯層=既有蛛網流程代理化（基本面讀 MOPS、籌碼讀證交所/櫃買 API、新聞代理、裁決代理），資料層有免費官方源。已承諾 Owner：做 TradingAgents 代理分工 vs investment-os 現有零件的拆解報告（缺塊+補齊順序），排在今日既有任務之後、給 Owner 過目再決定是否排開發。回覆已送（收據 ts 2026-09-07T07:48:30）。
@@ -145,4 +147,10 @@ Owner 裁決（2026-09-04，Telegram msg 4642）：進度心跳／daily ops／�
 • system_operations → ⏸ 閒置 15.4h（operator-driven，無 ops 任務時本就不 commit；非卡住）
 • investment_os → ⚠️停滯 55.1h（autonomous 專案無 commit）→ 確認排程在跑
 • maplab_kitchen → 推進（0.0h 前有 commit，dirty=14）→ 續跑
+• agent_bus_win01 → 在線(win-01) → 可派工
+
+[2026-09-07 08:35:42] [progress-heartbeat] 🫀 進度心跳 09-07 08:35
+• system_operations → ⏸ 閒置 2.4h（operator-driven，無 ops 任務時本就不 commit；非卡住）
+• investment_os → 推進（0.6h 前有 commit，dirty=804）→ 續跑
+• maplab_kitchen → 推進（0.3h 前有 commit，dirty=15）→ 續跑
 • agent_bus_win01 → 在線(win-01) → 可派工

@@ -1,5 +1,5 @@
 #!/bin/bash
-# hermes 免費鏈讀圖冒煙測 v2：先查即時免費多模態模型清單，逐一試跑 10 張，429 換下一個
+# hermes 免費鏈讀圖冒煙測 v3：PARSE_FAIL/空內容視為探路失敗換下一模型；保留原始回應供診斷
 # 邊界: 只送成人場景照片; 兒童照片一律走本地模型不外送; 金鑰只 source 不回顯不落地
 set -u
 ENV_FILE="$HOME/.maplab/free_compute.env"
@@ -55,13 +55,13 @@ call_one () {  # $1=model $2=photo $3=tag ; echoes "HTTPcode<TAB>content"
   /usr/bin/python3 - "$REQ" "$MODEL" "$PROMPT" "$B64" <<'PYEOF'
 import json, sys
 req_path, model, prompt, b64 = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
-payload = {"model": model, "max_tokens": 200,
+payload = {"model": model, "max_tokens": 2000,
   "messages": [{"role": "user", "content": [
     {"type": "text", "text": prompt},
     {"type": "image_url", "image_url": {"url": "data:image/jpeg;base64," + b64}}]}]}
 json.dump(payload, open(req_path, "w"))
 PYEOF
-  local RESP="$TMPDIR_S/resp_$TAG.json"
+  local RESP="$TMPDIR_S/resp_${TAG}_$(echo "$MODEL" | tr '/:' '__').json"
   local HTTP
   HTTP=$(curl -sS -o "$RESP" -w "%{http_code}" --max-time 90 \
     -H "Authorization: Bearer $OPENROUTER_API_KEY" \
@@ -71,18 +71,37 @@ PYEOF
   local CONTENT
   CONTENT=$(/usr/bin/python3 - "$RESP" <<'PYEOF'
 import json, sys
+import re
 try:
     d = json.load(open(sys.argv[1]))
-    if "choices" in d:
-        print(d["choices"][0]["message"]["content"].replace("\n"," ").replace("\t"," ")[:400])
+    if "choices" in d and d["choices"]:
+        msg = d["choices"][0].get("message", {}) or {}
+        c = (msg.get("content") or "") + " " + (msg.get("reasoning") or "")
+        m = re.search(r'\{[^{}]*"face"[^{}]*\}', c)
+        if m:
+            print("JSON:" + m.group(0).replace("\n", " ").replace("\t", " "))
+        else:
+            c = c.replace("\n", " ").replace("\t", " ").strip()
+            print(("NOJSON:" + c[:250]) if c else "EMPTY_CONTENT")
     else:
         print("ERR:" + str(d.get("error", {}).get("message", ""))[:200])
 except Exception:
-    print("PARSE_FAIL")
+    try:
+        raw = open(sys.argv[1], "rb").read(300).decode("utf-8", "replace")
+        print("RAWHEAD:" + raw.replace("\n", " ").replace("\t", " "))
+    except Exception:
+        print("PARSE_FAIL_NO_FILE")
 PYEOF
 )
   rm -f "$REQ"
   echo "HTTP${HTTP}	${CONTENT}"
+}
+
+probe_ok () {  # $1=probe output line; PASS 需 HTTP200 且內容看得出在回 JSON/關鍵字
+  case "$1" in
+    HTTP200*face*|HTTP200*FACE*|HTTP200*"{"*) return 0 ;;
+    *) return 1 ;;
+  esac
 }
 
 : > "$RESULTS"
@@ -93,10 +112,7 @@ while IFS= read -r MODEL; do
   echo "== 試模型: ${MODEL} (先打 1 張探路) =="
   PROBE=$(call_one "$MODEL" "${PHOTOS[0]}" "00")
   echo "probe: $PROBE"
-  case "$PROBE" in
-    HTTP200*) WINNER="$MODEL" ;;
-    *) continue ;;
-  esac
+  if probe_ok "$PROBE"; then WINNER="$MODEL"; else continue; fi
   echo "== $MODEL 探路通過，跑滿 10 張 =="
   i=0
   for P in "${PHOTOS[@]}"; do
@@ -112,4 +128,5 @@ done < "$TMPDIR_S/vision_free.txt"
 echo ""
 echo "== results (model=$WINNER) =="
 cat "$RESULTS" 2>/dev/null || echo "(no full run — all models failed probe)"
-rm -rf "$TMPDIR_S"
+find "$TMPDIR_S" -name "img_*.jpg" -delete
+echo "(原始回應保留在 $TMPDIR_S 供診斷)"

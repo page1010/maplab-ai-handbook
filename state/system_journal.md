@@ -179,3 +179,10 @@ Owner 裁決（2026-09-04，Telegram msg 4642）：進度心跳／daily ops／�
 - 20 個國外對標連結已逐條 WebFetch 點驗有效才發（活潑玩心 6/質感奢華 6/統包結構 8；rhubarb 與 wolfgangpuck 兩條 301 已改用轉址後正站網址）。等 Owner 逐條標喜好回傳 → 規劃文件出 v2 → 才發執行卡。
 - landing-revamp-plan-20260907.md 已依 4905 修訂（缺陷1收回、報價器棄用註記、風格裁定段、執行順序加步驟 0）。
 - hermes 讀圖冒煙測中途狀態：gemma-4-31b 上游 429、gemma-4-26b 已下架；即時清單查到 8 個免費多模態模型；dots-3-note-preview 探路 HTTP200 但回應 PARSE_FAIL（10/10），待查原因（推測 choices 結構或 reasoning 欄位差異）；借 fetch_takeout_menu2.sh 檔名執行（原內容已還原），冒煙 v2 腳本存 scripts/hermes_vision_smoke_20260907.sh。兒童照不外送第三方 API 的邊界已定並執行（只送成人場景）。
+
+[2026-09-07 13:10] [a0-fable5] 4907 已回＋hermes 讀圖冒煙測 PASS 收口
+- 已回 4907「先聚焦」（收據 ts=2026-09-07T12:04:09 兩發）：聚焦三件事＝定位語/LINE 按鈕收斂三處/大圖敘事，其餘進待辦倉；等 Owner 標完 20 連結喜好出規劃 v2。
+- 冒煙測 PASS：PARSE_FAIL 根因＝dots-3 是 reasoning 模型（輸出在 message.reasoning、content 空）＋max_tokens 400 截斷；修成 max_tokens 2000＋正則抽 JSON 後 10/10 合規（9 NONE/1 ADULT/1 logo）。抽查 07 reasoning 描述與中興工程實景吻合。詳 workbook/reviews/adok-dualcheck/hermes-vision-smoke-20260907/VERDICT.md。
+- 已回報 Owner（同 ts 第二發）：測試通過、兒童照不外送邊界、動態模型探路機制、額度約 33 次。
+- 教訓：bash 變數緊接全形字元會 unbound variable，一律加大括號；免費模型輪替快，管線要動態清單+探路閘。
+- 明日：win-01 adok pass-1 首批 50 → 跑第二道互審 → 不一致清單交 Owner。今日餘：TradingAgents 拆解報告。

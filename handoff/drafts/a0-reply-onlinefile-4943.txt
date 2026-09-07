@@ -1,0 +1,9 @@
+【Fable5 本人・同 session 續接】線上直接看的連結來了，手機點開就是排好版的：
+
+供應商名單（花藝5/主持5/攝影10/音響5，含IG連結）：
+https://github.com/page1010/maplab-ai-handbook/blob/chore/agent-login-governance-20260816/data/vendor-db/vendor-list-20260905.md
+
+詢價稿三份（攝影/花藝/音響，複製即可發）：
+https://github.com/page1010/maplab-ai-handbook/blob/chore/agent-login-governance-20260816/data/vendor-db/inquiry-scripts-20260905.md
+
+兩件事說清楚：一、你貼回來那段 md 是我每輪結束的內部收尾摘要被 bot 轉發到你這——這就是「同內容兩則」的真正源頭，我已把收尾改成一行純文字，之後不會再有。二、你說回覆過也挑過——你 9/4 有交代過「我看完會給你心得，你可以幫我發訊息詢價」，但你挑了哪幾家的那則我在文字紀錄裡撈不到，可能是用圖片發的。麻煩看連結名單直接回我編號（例如：花藝1、攝影3、音響2），我就逐家把詢價稿發出去；IG 帳號的發送管道用你方便的方式安排。

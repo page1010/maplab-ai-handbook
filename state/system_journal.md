@@ -290,6 +290,19 @@ Owner 裁決（2026-09-04，Telegram msg 4642）：進度心跳／daily ops／�
   ig-send-plan-20260907.md。IG 代發全自動（win-01 瀏覽器自動化或 Meta API）列入閉環待辦。
 - 待 Owner：回「開」啟動開分頁；或指定其他發送管道。
 
+## 2026-09-07 21:35 — Owner msg 4955（全發授權＋IG發送管道卡點）
+- Owner：不用先報你們挑，全部都發（草稿沒問題）；跑單幫也發；不聯絡PRO360/Tasker；
+  只找有IG的；外地攝影師先跳過。
+- 查證：擴列中許竣宇/翁志宏/梧桐映像/GLAM SHUTTER/上茗創意/友人映像皆無可查得IG（僅
+  PRO360/電話），照 Owner 規則排除；僅擴7約瑟夫整合行銷確認有IG。
+- 定案送出名單＝原攝1-10（本已是南部在地個人/小型接案、等同跑單幫）＋擴7＝共11家。
+- 卡點誠實回報：本 session 在此 Mac 上未授權/未登入任何IG存取管道（computer-use 僅
+  granted Finder+Hermes，無瀏覽器分頁），無法實際點送出，避免讓 Owner 誤以為已發送
+  （不得宣稱完成未做之事）。已回（收據 ts=2026-09-07T21:26:54 ×2：單行預告＋定案清單
+  與管道二選一）：選項1 Owner/店裡人手動用官方IG逐家貼；選項2 若此Mac有瀏覽器已登入
+  官方IG，授權後可代點視窗貼文字，仍由 Owner 按最終送出把關。
+- 待 Owner：選發送管道（自己發 / 授權瀏覽器代操作）。
+
 [2026-09-07 19:36:09] [progress-heartbeat] 🫀 進度心跳 09-07 19:36
 • system_operations → ⏸ 閒置 13.4h（operator-driven，無 ops 任務時本就不 commit；非卡住）
 • investment_os → 推進（0.2h 前有 commit，dirty=822）→ 續跑

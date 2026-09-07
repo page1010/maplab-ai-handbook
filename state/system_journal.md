@@ -167,3 +167,15 @@ Owner 裁決（2026-09-04，Telegram msg 4642）：進度心跳／daily ops／�
 - 產出 handoff/landing-revamp-plan-20260907.md：對標（Abbey/Landmark 首頁結構、原味好食=對照組）、我方四缺陷、八區重排提案（外帶移出首頁、服務三線統包在前）、定位語 P1-P3 供圈選、質感四槓桿（Canva 由 GUI 端執行）、執行順序 draft-first。
 - 交付訊息已送 Owner（reply_to ts=2026-09-07T11:13:10 第二發；訊息 id 4902）；等 Owner 圈定位語+核可重排才發執行卡。
 - 待辦（今日承諾）：hermes 10 張讀圖冒煙測試（ad_ok 第二道可行性）→ 回報 Owner；TradingAgents 拆解報告排後。
+
+[2026-09-07 11:35:51] [progress-heartbeat] 🫀 進度心跳 09-07 11:35
+• system_operations → ⏸ 閒置 5.4h（operator-driven，無 ops 任務時本就不 commit；非卡住）
+• investment_os → 推進（0.2h 前有 commit，dirty=804）→ 續跑
+• maplab_kitchen → 推進（0.2h 前有 commit，dirty=34）→ 續跑
+• agent_bus_win01 → 在線(win-01) → 可派工
+
+[2026-09-07 12:40] [a0-fable5] Owner 4905 四點回饋處理＋20 對標連結交付
+- 已回 4905（收據 ts=2026-09-07T11:58:10 兩發）：①佔位符缺陷收回待驗（a0 工具不跑 JS，lazy-load 誤報可能，以 win-01 9/8 真瀏覽器截圖為準）②「報價器」一詞棄用＝詢價分類前置表單之意，非新系統③確認審的就是 www.maplabkitchen.com④風格裁定=活潑派對風+質感、不走公關腔。
+- 20 個國外對標連結已逐條 WebFetch 點驗有效才發（活潑玩心 6/質感奢華 6/統包結構 8；rhubarb 與 wolfgangpuck 兩條 301 已改用轉址後正站網址）。等 Owner 逐條標喜好回傳 → 規劃文件出 v2 → 才發執行卡。
+- landing-revamp-plan-20260907.md 已依 4905 修訂（缺陷1收回、報價器棄用註記、風格裁定段、執行順序加步驟 0）。
+- hermes 讀圖冒煙測中途狀態：gemma-4-31b 上游 429、gemma-4-26b 已下架；即時清單查到 8 個免費多模態模型；dots-3-note-preview 探路 HTTP200 但回應 PARSE_FAIL（10/10），待查原因（推測 choices 結構或 reasoning 欄位差異）；借 fetch_takeout_menu2.sh 檔名執行（原內容已還原），冒煙 v2 腳本存 scripts/hermes_vision_smoke_20260907.sh。兒童照不外送第三方 API 的邊界已定並執行（只送成人場景）。

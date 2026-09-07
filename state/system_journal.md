@@ -209,3 +209,11 @@ Owner 裁決（2026-09-04，Telegram msg 4642）：進度心跳／daily ops／�
 - v2 存 handoff/landing-revamp-plan-v2-20260907.md（v1 加註作廢留軌跡）：八區重排套 4918 骨架
   （類別入口三格/範例套裝區/雜誌風活動區/台南在地識別帶）、鐵則每區一主圖+內文60字內、
   CTA 三處、定位語 P1-P3 待圈。等 Owner 圈定位語+點頭 → 發執行卡 win-01（draft 頁優先）。
+
+[2026-09-07 15:05] [a0-fable5] Owner 4921 招聘頁對標＋詢價包裝統整交付
+- 4921 兩問：①招聘頁要「能進去工作很屌」的對標 ②「缺的是包裝不是流程」要具體建議+邏輯統整。
+- 已回三發（收據 ts=2026-09-07T12:47:17）：表態、招聘對標 6 條（招1-招6 全點驗：Soho House
+  careers/Social Pantry/Great Performances（服務生派遣起家）/Wolfgang Puck/Occasions/FFT；
+  rhubarb 404、Pinch 404、USHG 憑證錯淘汰）、包裝邏輯四步（預熱logo牆/套裝對號/提案感報價單/現場照回圈）。
+- 關鍵建議：活動制時薪命名「活動隊」；招聘頁排首頁 v2 後第二波；報價單 Canva 模板可先動待 Owner 點頭。
+- 完整文件 handoff/hiring-page-and-inquiry-packaging-20260907.md。

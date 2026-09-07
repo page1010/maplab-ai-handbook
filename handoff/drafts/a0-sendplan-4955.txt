@@ -1,0 +1,9 @@
+【Fable5 本人・同 session 續接】清單和查證結果如下，發送這步我先說實話：我還沒有能在IG介面打字送出的手，所以還沒發，不冒稱。
+
+一、規則照辦：四份稿都沒有我方報價或預算數字，只問對方價格；都發不預選；北部攝影師（吳鑫、默德）照你指示排除；PRO360/Tasker不聯絡。
+
+二、發送清單21家（都有IG、逐家對應稿）：花藝稿發 flowers_tainan、timesflower、muc_studio_99、meetforever_2017、lumos.flower.lab；主持稿發 s12248、believe_see、zhen_zhen1105、love_one_creative、grace.mc.md；攝影稿發 amedeephotography、cheyu20、maasimage、tyoudoii_photography、sixpence_photo、chianmi.tw、et.photo__、s.j_zheng、taiwansam_wedding、jihan_tainan、joseph.studio（這家攝影+LOGO設計一條龍，會加問診所印刷物插旗）。
+
+三、跑單幫查證：許竣宇、翁志宏、梧桐映像、上茗創意、友人映像、GLAM SHUTTER 這六家在公開網路搜不到IG帳號——IG站內搜尋才找得到，我不猜帳號亂發。官方IG站內搜名字出來後就能發同一份攝影稿。老莫攝影沒有IG，走官網表單發。音響四家沒有IG，走官網/電話。
+
+四、官方IG發送方式：官方IG登在你的桌面Chrome和手機，我的白名單通道只能「開分頁」不能打字。最快做法——你回一個「開」，我立刻把官方IG收件匣＋21家分頁分三批開到桌面Chrome，每家該貼哪份稿上面已對好，你貼上送出一家約10秒。同時我把「IG代發全自動」列入自動化清單（win-01瀏覽器自動化或Meta官方API），做起來之後這種發送就不用你動手了。

@@ -254,3 +254,13 @@ Owner 裁決（2026-09-04，Telegram msg 4642）：進度心跳／daily ops／�
   可點連結；說明其 9/4 msg 4656 已授權代發詢價、但其「挑過哪幾家」的訊息文字紀錄撈不到
   （疑圖片），請 Owner 依名單回編號，回了就逐家發詢價稿（IG 發送管道依 Owner 安排）。
 - 待 Owner：回廠商編號；發送管道指定。
+
+## 2026-09-07 17:20 — Owner msg 4946（格式終裁：GitHub 連結作廢）
+- Owner：GitHub blob 連結根本打不開，要求上 Google 雲端硬碟開可讀超連結、連到各家 IG 分頁。
+- 查證：Drive 掛載夾為 symlink → /Volumes/MacExternal（外接碟同步），在 sandbox 白名單外，
+  寫不進去；OAuth token 禁碰，headless 無法產分享連結。硬闖不做。
+- 已回（收據 ts=2026-09-07T16:37:16，單發）：認錯＋說明 Drive 權限限制，改用已驗證可點格式
+  ——24 家廠商（花5/主5/攝10/音4）逐行 raw URL 直貼 Telegram，Owner 點 IG 評風格後回編號。
+- 記憶 owner-communication-standard 已更新：GitHub blob 規則作廢；給 Owner 的清單/連結
+  一律 raw URL 貼訊息本體。
+- 待 Owner：回廠商編號 → 逐家發詢價稿（9/4 msg 4656 已授權；IG 管道依 Owner 安排）。

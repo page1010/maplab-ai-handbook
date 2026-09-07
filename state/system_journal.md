@@ -291,6 +291,16 @@ Owner 裁決（2026-09-04，Telegram msg 4642）：進度心跳／daily ops／�
 - 下一步：等 Owner 拉分頁＋Chrome 擴充連上 → 逐家開 IG 私訊貼攝影詢價稿（僅發送，
   最後送出前逐家可視確認；不碰帳號設定、不回廠商訊息）。
 
+## 2026-09-07 22:00 — msg 4963/4966（技能入庫；開工卡在擴充連線）
+- 4963：IG私訊匣分頁已用 a0_open_tabs.sh 開好；技能寫入 skills/ig-vendor-inquiry-send.md
+  （前置條件/逐家流程/鐵則/現行名單稿件版本）。已回覆並 push（72b961b）。
+- 4966：Owner 稱有「agent專用IG」已登入、叫開工。已回覆更正：a0 從未註冊任何IG帳號；
+  開工第一步＝截圖確認登入帳號名回報。目前 claude-in-chrome / computer-use / osascript
+  三路全不通（MCP 掛桌面版 Claude、osascript 需核准），本 session 無瀏覽器視野，
+  不假稱已發。給 Owner 兩條 GUI 路：①擴充切連線到 Claude Code；②桌面 claude 視窗
+  直接照技能檔執行。等工具亮或 Owner 下一則。
+- 風險註記：來歷不明的「agent專用IG」對外發商務訊息，帳號名先查證再發（技能第2步涵蓋）。
+
 ## 2026-09-07 21:55 — Owner msg 4955（授權都發＋官方IG＋不報價給廠商）
 - Owner 裁定：稿沒問題；不向廠商透露我方報價（我們挑廠商）；全部都發；用官方 IG 發；
   跑單幫也發但找 IG 帳號（不聯絡 PRO360/Tasker）；北部（外地）攝影師先不用。
@@ -320,4 +330,10 @@ Owner 裁決（2026-09-04，Telegram msg 4642）：進度心跳／daily ops／�
 • system_operations → ⏸ 閒置 13.4h（operator-driven，無 ops 任務時本就不 commit；非卡住）
 • investment_os → 推進（0.2h 前有 commit，dirty=822）→ 續跑
 • maplab_kitchen → ⏸ 等待 2.6h（地端排程遷移暫停(預期):6 巡邏+a6-gym 已 disabled,無自動 commit 屬正常；正常等待，非卡住）
+• agent_bus_win01 → 在線(win-01) → 可派工
+
+[2026-09-07 21:36:15] [progress-heartbeat] 🫀 進度心跳 09-07 21:36
+• system_operations → ⏸ 閒置 15.4h（operator-driven，無 ops 任務時本就不 commit；非卡住）
+• investment_os → 推進（0.2h 前有 commit，dirty=822）→ 續跑
+• maplab_kitchen → 推進（0.1h 前有 commit，dirty=33）→ 續跑
 • agent_bus_win01 → 在線(win-01) → 可派工

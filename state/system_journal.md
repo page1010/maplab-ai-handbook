@@ -191,3 +191,12 @@ Owner 裁決（2026-09-04，Telegram msg 4642）：進度心跳／daily ops／�
 - 4913 標記解讀已回（收據 ts=2026-09-07T12:21:39 第一發）：主對標=2 號 Peter Callahan（結構照搬換我們圖）；抄 5/6 雜誌風活動區塊＋15 號 24 Carrots 編排；劃掉策展人腔/舞台音響級/一菜一盤/現場擺盤主打/莊園資本支出型（進「也許有一天」倉）。
 - 「不要那麼大的」補充清單已交（同 ts 第二發）：13 候選 WebFetch 逐條點驗、11 活，選 10 條編號 21-30（倫敦小店掛 4：Canape Club/DOM/Social Pantry/Taverna；美國小工作室掛 6：Purslane/Heirloom LA/Fox n Company/Grazing Affair/Grazing Company 510/It's Graze-y）。淘汰：Bertrand Munier 403、Rocket Food 與 Caiger 網址查無、Graze Craze=加盟連鎖不符小而美、Grazing Bri 偏 taco bar。草稿 handoff/drafts/a0-boutique-links-4913.txt。
 - 等兩批標記齊 → 規劃 v2。下一件：Creative Edge（3 號）報價/商模如何撐 luxury 一頁報告（已承諾）。
+
+[2026-09-07 14:05] [a0-fable5] Creative Edge 調研一頁報告交付
+- 報告存 handoff/creative-edge-research-20260907.md，摘要已發 Owner（收據 ts=2026-09-07T12:21:39 第三發）。
+- 核心結論：CE 全網不公開價（Franklin Report 成本 4/5、「管理層不給價」）＝逐案客製私下報價當過濾器；
+  收入主體=精品品牌/美術館 B2B 回頭客（Hermes/Chanel/MoMA）；賣「食物即設計」整包、毛利在設計費；
+  50 正職+時薪服務生壓固定成本。已更正我先前「最低消+人頭價」的初判（過濾機制存在但形式不同）。
+- 可抄三項已列：企業 logo 信任牆、finger food=可拍設計作品、不公開價但詢價入口清楚（現行流程本質同、缺包裝）。
+- 誠實聲明：具體數字公開管道查無；詢價信實測涉對外身分，待 Owner 點頭。
+- 今日餘：TradingAgents 拆解報告。

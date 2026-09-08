@@ -34,7 +34,22 @@ C. 貼回階段
 ## FB 粉專私訊
 同一套流程理論上適用（messenger.com 網頁版介面），但未實測過，首次執行時比照 IG 逐步截圖驗證。
 
-## 外部方案備考（2026-09-08 查證）
+## 裁決（Owner msg 4986，2026-09-08）
+走免費自家流程，不接外部服務。外部方案只吸收做法，不引入依賴。
+
+## 從外部方案吸收的做法（Chatwoot／Meta API 研究後留下的）
+- 對話狀態機（學 Chatwoot 的 open/resolved）：集中表每家標一個狀態
+  「尚未回覆／待Owner答／待貼回／已貼回／已結案」，一眼看出卡在誰手上。
+- 類別標籤（學 Chatwoot 的 labels）：廠商編號本身就是標籤（攝/花/主/擴），
+  貼回與統計都按類別分組進行。
+- 24小時回覆窗（學 Meta 官方政策精神）：廠商回覆後盡量在 24 小時內完成
+  抄錄→Owner答→貼回一輪；抄錄完成當下就提醒 Owner，不積壓。
+- 節流（學 Meta 200則/小時上限精神）：逐家慢速操作、每家之間留間隔，
+  行為貼近人工，不做批量連發。
+- 罐頭回覆庫（學 Chatwoot 的 canned responses）：Owner 重複用到的回覆句
+  沉淀到 data/vendor-db/ 下的模板檔，下次同類問題直接引用 Owner 已核可版本。
+
+## 外部方案備考（2026-09-08 查證，僅存檔參考）
 - 量大時的正規解：Chatwoot（開源自架，IG/FB 走 Meta 官方 API 進統一收件匣，含 REST API/webhook 可接 agent）github.com/chatwoot/chatwoot
 - 其底層：Meta Instagram Messaging API，需專業帳號綁 FB 粉專＋App Review（數週）、200則/小時上限。
 - 非官方庫（instagrapi 等）動官方帳號有封號風險，否決不用。

@@ -2,7 +2,7 @@
 
 - Owner: A0（格式守門）；Owner 裁定來源 msg 2026-09-07「hermes額度用上…有意義的產出先做，比如照片命名整理…在你監控好格式的情況下」
 - Executor: Hermes（OpenRouter free-only 鏈，經 bot_a6/hermes_call；OLLAMA 禁用照舊）
-- Status: READY（與 LINE lane 完全隔離：無客資、無報價、無對外發送）
+- Status: **DONE 2026-09-09**（Owner msg 5018 令即辦；執行者=Fable5 本人非 hermes——20 夾 slug 手工裁定+deterministic 腳本一次跑完 348 列，5 條格式閘全 PASS，hermes 額度 0。交付與驗收紀錄=workbook/outputs/photo-naming-348-20260909.md；提案檔=agent-bus shared/seo/photo_rename_proposal_20260909.csv/.txt。實際改名照紅線未執行，等互審+Owner 放行。）
 - 章程: docs/agent-fde-charter-20260907.md（急迫性同步、交成品、回饋回灌）
 
 ## 任務定義

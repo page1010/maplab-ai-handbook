@@ -30,7 +30,8 @@
 
 標題 MAP LAB KITCHEN + Quotation → 客戶資訊六欄 → SAVORY/DESSERT/BEVERAGES
 分組＋數量 → 費用摘要 Item/Amount(TWD)/Notes → 服務範圍★七點 → 條款 →
-銀行資訊置底（中國信託／圖管實業社）。幣別一律 TWD 禁 NTD。
+銀行資訊置底（中國信託／**圖蕾實業社**——2026-09-09 authoritative Drive 校正，
+舊模板寫「圖管」為誤）。幣別一律 TWD 禁 NTD。
 **成本與毛利絕不出現在對外文件**；外燴人均制與外帶單品制絕不混用。
 範例成品：data/a6-logs/2026-09-09-clinic-openhouse-quotation-formatted-draft.md。
 
@@ -49,8 +50,10 @@
 2. 客戶資訊頁（12.4 六欄）
 3. 菜單頁 ×2-3：SAVORY／DESSERT／BEVERAGES 分組，每品項配 A4 相片庫照片（等 A4 照片分類產出）
 4. 費用摘要頁（Item/Amount/Notes）
-5. 服務範圍★七點頁
-6. 條款＋銀行資訊頁
+5. **加購項頁（Owner 5095 裁定 2026-09-10）：攝影／花藝／插旗等加購項併入
+   同一張報價 slide 不另出版，並配一張示意圖說明加購內容（此點已核定）**
+6. 服務範圍★七點頁
+7. 條款＋銀行資訊頁
 製作方式：QUOTE_DRAFT Sheet 資料 → GAS 文字替換模板（T-SLIDE-004，尚待實作）；
 實作前先人工複製文學館成交版 Slide 改內容。禁止：成本毛利、NTD、未授權相片。
 

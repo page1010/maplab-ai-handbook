@@ -8,7 +8,8 @@ PY=/Users/pagemacmini/maplab-ai-handbook/bot/venv/bin/python
 ST=/Users/pagemacmini/maplab-ai-handbook/scripts/sheet_tail.py
 SID=1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg
 
-for TAB in ITEM_MASTER PRICE_MASTER MENU_MASTER Items; do
+# 2026-09-09 接通確認：實際分頁名（無 ITEM_MASTER/PRICE_MASTER；品項正典=Items 126列）
+for TAB in Items QUOTE_DRAFT OrderLines TERMS_MASTER; do
   echo "=== TAB: $TAB ==="
   "$PY" "$ST" --sheet-id "$SID" --tab "$TAB" --rows 5 --show-cols ALL 2>&1 | head -12
 done

@@ -30,10 +30,19 @@ SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
 
 
 def fetch_values(sheet_id: str, tab: str, cols: str, token_path: Path) -> list[list[str]]:
+    import json as _json
+
     from google.oauth2.credentials import Credentials
     from googleapiclient.discovery import build
 
-    creds = Credentials.from_authorized_user_file(str(token_path), scopes=SCOPES)
+    # 2026-09-09 接通修復：token 檔的 expiry 是 epoch int，google-auth 只吃
+    # ISO 字串（int-expiry bug，見 memory google-rest-write-channel）。
+    # 直接丟棄 expiry 讓 library 視為過期並自動 refresh；值不印出、不回寫。
+    info = _json.loads(Path(token_path).read_text())
+    info.pop("expiry", None)
+    # 不強指 SCOPES：token 授的是完整 spreadsheets+drive，refresh 時指定
+    # 較窄的 readonly 會被 Google 回 invalid_scope。本腳本仍只做 values.get 唯讀。
+    creds = Credentials.from_authorized_user_info(info)
     service = build("sheets", "v4", credentials=creds, cache_discovery=False)
     result = (
         service.spreadsheets()

@@ -420,7 +420,12 @@ def _build_basic_high_margin_quote_payload(user_message: str, user_name: str = "
             "indoorOutdoor": tracking["indoor_outdoor"],
             "serviceFormat": tracking["service_format"],
             "totalItems": len(menu),
-            "depositAmount": int(total_revenue * 0.5),
+            # Owner 裁決 2026-09-03（A5_DESIGN_REVIEW Q3）：訂金分級——
+            # 一般單 20%，急件（急/英文版）50%。歷史單實務約 17-20%；
+            # 舊碼寫死 50% 是把急件規則泛化，已更正。
+            "depositAmount": int(total_revenue * (
+                0.5 if any(t in compact for t in ("急", "英文")) or "english" in compact.lower()
+                else 0.2)),
             "dietaryNotes": "｜".join(notes),
         },
         "variants": [
@@ -434,7 +439,17 @@ def _build_basic_high_margin_quote_payload(user_message: str, user_name: str = "
                 "foodRevenue": total_revenue,
                 "totalCost": food_cost,
                 "totalRevenue": total_revenue,
-                "foodNote": "totalRevenue 依 foodCost * 5 後百元進位；食材成本佔比約 20%。",
+                "foodNote": (
+                    "totalRevenue 依 foodCost * 5 後百元進位（內部草稿啟發式）。"
+                    "Owner 裁決 2026-09-03（Q1/Q2）：本引擎僅供 Mina 內部參考，"
+                    "不對客；正式定價以人頭套餐檔位（約 700-1500/人）為準，"
+                    "估計毛利 <66% 需警示（歷史 334 份回推中位 76.6%）。"
+                    + (
+                        f"⚠️人頭單價檢查：{int(total_revenue / headcount)}/人"
+                        + ("（超出 700-1500 歷史檔位帶，請 Mina 覆核）"
+                           if not 700 <= total_revenue / headcount <= 1500 else "（帶內）")
+                    )
+                ),
                 "decorNote": "桌面餐檯佈置。",
                 "internalNote": "；".join(notes),
             }

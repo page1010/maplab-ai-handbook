@@ -101,6 +101,36 @@ rm -f "$DAILY"/.req.json "$DAILY"/.req_m.json "$DAILY"/.resp.json
 } > "$BRIEF"
 echo "$(date +%F) model=$USED brief=brief_$TODAY.md $(echo "$OUT" | /usr/bin/python3 -c "import json,sys; d=json.load(sys.stdin); print('\"title_zh\": '+d.get('title_zh',''))")" >> "$DAILY/meeting_log.md"
 
+# 進度板自動記錄（Owner 5077 要求）：失敗只警告不擋晨會
+BOARD_TMP="$DAILY/.board_row.json"
+printf '%s' "$OUT" > "$BOARD_TMP"
+/usr/bin/python3 - "$BOARD_TMP" "$TODAY" "$USED" <<'PYEOF' || echo "[warn] 進度板寫入失敗(不影響晨會產出,下輪補)"
+import json, sys, urllib.request, urllib.parse
+brief = json.load(open(sys.argv[1]))
+today, used = sys.argv[2], sys.argv[3]
+tok = json.load(open("/Users/pagemacmini/.claude/mcp-keys/google-token.json"))
+data = urllib.parse.urlencode({
+    "client_id": tok["client_id"], "client_secret": tok["client_secret"],
+    "refresh_token": tok["refresh_token"], "grant_type": "refresh_token"}).encode()
+r = urllib.request.urlopen(urllib.request.Request("https://oauth2.googleapis.com/token", data=data), timeout=60)
+access = json.load(r)["access_token"]
+sid = "1EUnKAB5ptjIpYnEewld8erfbWWrAbfX9o85toHJhmZw"
+row = [[today[4:6] + "/" + today[6:8], "晨會產出：" + brief.get("title_zh", "?"),
+        "brief 完成,待燒 Suno", "",
+        "基底 " + str(brief.get("base_style_id", "?")) + " " + str(brief.get("bpm", "?"))
+        + "BPM｜道具:" + str(brief.get("cover_prop", "?")) + "｜model=" + used]]
+vb = json.dumps({"values": row}).encode()
+rng = urllib.parse.quote("board!A1")
+req = urllib.request.Request(
+    "https://sheets.googleapis.com/v4/spreadsheets/" + sid + "/values/" + rng
+    + ":append?valueInputOption=RAW&insertDataOption=INSERT_ROWS",
+    data=vb, headers={"Authorization": "Bearer " + access, "Content-Type": "application/json"},
+    method="POST")
+d = json.load(urllib.request.urlopen(req, timeout=60))
+print("[board] 進度板已記一列")
+PYEOF
+rm -f "$BOARD_TMP"
+
 cd "$HB" && git pull --rebase --autostash >/dev/null 2>&1
 git -C "$HB" add data/music-style-db/daily/ && git -C "$HB" commit -m "晨會brief $TODAY (MAP TABLE RADIO)" >/dev/null 2>&1 && git -C "$HB" push origin chore/agent-login-governance-20260816 >/dev/null 2>&1 && echo "[git] pushed" || echo "[git] 未推送(留本地,下輪補)"
 

@@ -1,6 +1,16 @@
-# MAPLAB 音樂頻道企劃 v1（Suno + hermes 音樂風格資料庫 → YouTube 全自動日更）
+# MAPLAB 音樂頻道企劃 v1.1（Suno + hermes 音樂風格資料庫 → YouTube 全自動日更）
 建立：2026-09-09 | 開案：Owner msg 5045 | 維護：A0(Fable5) | 執行線：A8(音樂影音專屬)+hermes
-狀態：v1 企劃＋20首試聽批次已定義，等 Owner 圈頻道名與試聽回饋
+狀態：v1.1——Owner msg 5048 全權授權 Fable5（含開頻道與命名）；每日晨會機制已上線，首場已跑
+
+## ○、v1.1 裁定紀錄（Owner 5048 全權授權後，Fable5 依 a0-decision-autonomy-rule 自裁並留檔）
+
+1. **頻道名裁定：MAP TABLE RADIO**（副標 by maplabkitchen）。理由：保留 map 字根扣品牌、TABLE 直指餐桌 BGM 定位、RADIO 給日更電台感；搜尋 maplab 可同時撈到頻道與外燴站。Owner 若記起原「map什麼」提案可隨時翻案改名（頻道未建立前零成本）。
+2. **引流心機裁定（Owner 5048「埋下一個心機,設法引流到我的外燴站」）**——三層：
+   - 表層：每支影片描述前兩行固定格式=「一句真實派對場景故事」+「這樣的派對真實存在——台南外燴 maplabkitchen：外燴站連結」。聽歌的人裡會辦活動的那群自然點進去。
+   - 中層：**曲名一律用台南真實派對場景命名**（例：赤崁樓新人誓約的第一支舞）——搜尋「台南 開幕 音樂」「婚禮 BGM」的長尾流量=正在籌辦派對的人=外燴潛在客群，頻道本身就是獲客漏斗。
+   - 深層：封面微動畫的餐桌道具對應真實案例；日後案例文章上線後，描述加一行「這場派對的完整紀錄」連到 WP 案例頁，形成 頻道→案例→詢價 的閉環。
+3. **每日晨會機制（Owner 5048「每天早上跟hermes開會並執行」）**：scripts/yt_daily_hermes_meeting.sh——Fable5 主持、hermes(免費鏈,日耗1-2次)出當日曲目 brief（Suno prompt/曲名/含心機描述/封面道具/明日備忘），冪等（同日重跑自動跳過），產出落 data/music-style-db/daily/brief_YYYYMMDD.md 並自動 commit push。觸發雙保險：①每日第一輪 bot resume 開場必跑（已寫入 handoff RESUME 區）②launchd 定時（com.maplab.mtr-daily-meeting 07:2x）待主視窗一次性安裝。首場 2026-09-09 已跑成：nemotron-3-super 出「赤崁樓新人誓約的第一支舞」（B5 婚宴基底,118BPM）。
+4. **開頻道技術事實**：YouTube API 無建頻道端點，channel 建立本身必須 Google 帳號 GUI 一次；建成後 uploads 走 token 現有 youtube.upload scope 全自動。故「開頻道」一步=Owner 手機點一次或授權主視窗 GUI 操作，其餘 Fable5 全包。
 
 ## 一、對標（三個成功模型，各取一塊）
 

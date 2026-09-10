@@ -32,7 +32,7 @@
 ## 分頁3：對外報價單（客戶版，照文學館成交版格式）
 
 格式規範（SECTION 12.4）：TWD（禁NTD）；SAVORY/DESSERT/BEVERAGES 分組＋數量＋金額；
-費用摘要 Item/Amount/Notes；條款；銀行資訊置底（中國信託 圖管實業社）。
+費用摘要 Item/Amount/Notes；條款；銀行資訊置底（中國信託 圖蕾實業社）。
 本分頁不含任何成本與毛利欄。
 
 ## 紅線（承 a6-quote-pipeline-sop）

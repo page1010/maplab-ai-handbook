@@ -6,7 +6,8 @@
 <title>【離線草稿】MAPLAB 首頁改版 v2 — 390px 手機優先（未發布）</title>
 <style>
   :root{
-    --ink:#2b2620; --paper:#faf6f0; --card:#ffffff; --accent:#b5543a;
+    --ink:#2e2318; --paper:#faf6f0; --card:#ffffff; --accent:#8B5E3C;
+    --gold:#C4A265; --deep:#5a3a1a; --tint:#f0e6d8;
     --muted:#8a8074; --line:#06c755;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
@@ -40,7 +41,8 @@
   .hero .sub{font-size:15px;color:var(--muted);margin-bottom:20px;}
   @media(min-width:768px){
     .hero{display:grid;grid-template-columns:1fr 1fr;align-items:center;}
-    .hero .art{max-height:88vh;aspect-ratio:auto;}
+    .hero .art{max-height:88vh;aspect-ratio:auto;background:var(--tint);}
+    .hero .art img{object-fit:contain;}
     .hero h1{font-size:34px;}
   }
 
@@ -59,17 +61,18 @@
   }
   .logo-tile:hover{filter:saturate(100%) contrast(100%);}
 
-  /* categories */
+  /* categories — 企業色卡片,圖不裁切(contain)避免切到字 */
   .cats{display:grid;gap:16px;}
   @media(min-width:768px){.cats{grid-template-columns:repeat(3,1fr);}}
-  .cat{position:relative;border-radius:14px;overflow:hidden;background:#000;}
-  .cat .ph{aspect-ratio:4/5;overflow:hidden;}
+  .cat{border-radius:14px;overflow:hidden;background:var(--tint);display:block;text-decoration:none;}
+  .cat .ph{aspect-ratio:4/5;overflow:hidden;background:var(--tint);}
   @media(min-width:768px){.cat .ph{aspect-ratio:3/4;}}
-  .cat .ph img{height:100%;object-fit:cover;opacity:.85;}
+  .cat .ph img{height:100%;object-fit:contain;}
   .cat .label{
-    position:absolute;left:0;right:0;bottom:0;padding:18px 16px;color:#fff;
-    background:linear-gradient(transparent,rgba(0,0,0,.72));
+    padding:16px;color:#fff;background:var(--accent);
   }
+  .cat:nth-child(2) .label{background:var(--deep);}
+  .cat:nth-child(3) .label{background:var(--gold);color:var(--ink);}
   .cat .label b{font-size:19px;display:block;}
   .cat .label span{font-size:13px;opacity:.92;}
 
@@ -77,8 +80,8 @@
   .packs{display:grid;gap:16px;}
   @media(min-width:768px){.packs{grid-template-columns:repeat(3,1fr);}}
   .pack{background:var(--card);border-radius:14px;overflow:hidden;}
-  .pack .ph{aspect-ratio:16/10;overflow:hidden;}
-  .pack .ph img{height:100%;object-fit:cover;}
+  .pack .ph{aspect-ratio:16/10;overflow:hidden;background:var(--tint);}
+  .pack .ph img{height:100%;object-fit:contain;}
   .pack .txt{padding:14px 16px 18px;}
   .pack .txt b{font-size:17px;}
   .pack .txt p{font-size:14px;color:var(--muted);margin:4px 0 10px;}
@@ -87,23 +90,17 @@
   /* magazine */
   .mag{background:var(--card);}
   .mag article{margin-top:18px;}
-  .mag .ph{aspect-ratio:16/9;overflow:hidden;border-radius:12px;}
-  .mag .ph img{height:100%;object-fit:cover;}
+  .mag .ph{aspect-ratio:16/9;overflow:hidden;border-radius:12px;background:var(--tint);}
+  .mag .ph img{height:100%;object-fit:contain;}
   .mag h3{font-size:18px;margin:12px 0 4px;}
   .mag p{font-size:14px;color:var(--muted);}
 
-  /* local band */
-  .local{position:relative;color:#fff;padding:0;}
-  .local .ph{aspect-ratio:16/10;overflow:hidden;}
-  @media(min-width:768px){.local .ph{max-height:60vh;}}
-  .local .ph img{height:100%;object-fit:cover;}
-  .local .overlay{
-    position:absolute;inset:0;display:flex;flex-direction:column;
-    justify-content:center;align-items:center;text-align:center;
-    background:rgba(30,24,18,.45);padding:20px;
-  }
-  .local .overlay h2{font-size:22px;}
-  .local .overlay p{font-size:14px;max-width:34em;}
+  /* local band — 企業深棕底,圖不裁切,文字不壓圖 */
+  .local{background:var(--deep);color:#fff;text-align:center;}
+  .local .ph{max-width:520px;margin:0 auto 18px;border-radius:12px;overflow:hidden;background:var(--tint);aspect-ratio:4/5;}
+  .local .ph img{height:100%;object-fit:contain;}
+  .local h2{font-size:22px;}
+  .local p{font-size:14px;max-width:34em;margin:6px auto 0;opacity:.94;}
 
   /* menu */
   .menu ul{list-style:none;display:grid;gap:10px;margin-top:14px;}
@@ -142,7 +139,7 @@
   <div class="panel">
     <div class="kicker">MAPLAB KITCHEN</div>
     <h1>台南最會辦派對的外燴團隊<br>企劃、視覺、餐桌一次到位</h1>
-    <p class="sub">到府外燴・企業茶會・派對餐桌設計</p>
+    <p class="sub">台南外燴・派對統籌・企業茶會</p>
     <a class="btn-line" href="https://lin.ee/IP8nt4n">聊聊你的活動</a>
   </div>
 </header>
@@ -228,11 +225,9 @@
 <!-- 6. 台南在地識別帶 -->
 <section class="local">
   <div class="ph"><img src="https://www.maplabkitchen.com/wp-content/uploads/2025/07/tainan-holiday-catering-party-1024x1536.jpg" alt="台南在地活動場景"></div>
-  <div class="overlay">
-    <div class="kicker" style="color:#f4c9a8">TAINAN BASED</div>
-    <h2>台南的場地，我們熟門熟路</h2>
-    <p>從老屋庭院到會議中心，在地團隊替你把場地條件想在前面。</p>
-  </div>
+  <div class="kicker" style="color:var(--gold)">TAINAN BASED</div>
+  <h2>台南的場地，我們熟門熟路</h2>
+  <p>從老屋庭院到會議中心，在地團隊替你把場地條件想在前面。</p>
 </section>
 
 <!-- 7. 菜單客製三類（無餐盒；外帶不上首頁，已裁定） -->

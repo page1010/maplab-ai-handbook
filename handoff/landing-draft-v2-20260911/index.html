@@ -3,256 +3,316 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>【離線草稿】MAPLAB 首頁改版 v2 — 390px 手機優先（未發布）</title>
+<title>【離線草稿】MAPLAB 首頁改版 v3 — 對標視覺重排（未發布）</title>
 <style>
+  /* v3 視覺層對齊 Owner 標記四站(#2 petercallahan/#15 24carrots/#21 canapeclub/#23 socialpantry):
+     襯線大標、滿版照片壓白字、細字距 kicker、髮絲線分隔、單一米色畫布+深棕色帶、
+     去掉圓角卡片與彩色標籤條、logo 直接落畫布不放灰磚。
+     R6:cover 只用於「純照片」;帶字海報一律 contain 不裁切。 */
   :root{
-    --ink:#2e2318; --paper:#faf6f0; --card:#ffffff; --accent:#8B5E3C;
-    --gold:#C4A265; --deep:#5a3a1a; --tint:#f0e6d8;
-    --muted:#8a8074; --line:#06c755;
+    --ink:#3a2c1e; --paper:#f7f2ea; --accent:#8B5E3C;
+    --gold:#C4A265; --deep:#5A3A1A; --line:#06C755;
+    --muted:#8d8172; --hair:rgba(139,94,60,.22);
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{
-    font-family:"PingFang TC","Noto Sans TC",-apple-system,sans-serif;
+    font-family:"Georgia","Songti TC","Noto Serif TC",serif;
     background:var(--paper); color:var(--ink);
-    font-size:16px; line-height:1.7; overflow-x:hidden;
+    font-size:16px; line-height:1.9; overflow-x:hidden;
   }
   img{display:block;width:100%;height:auto;}
-  section{padding:48px 20px;}
-  h1,h2,h3{font-weight:700;letter-spacing:.02em;}
-  h2{font-size:22px;margin-bottom:8px;}
-  .kicker{font-size:13px;color:var(--accent);letter-spacing:.25em;margin-bottom:6px;}
-  .note{font-size:13px;color:var(--muted);}
+  section{padding:72px 24px;}
+  @media(min-width:768px){section{padding:120px 48px;}}
+  .wrap{max-width:1060px;margin:0 auto;}
+  h1,h2,h3{font-weight:500;letter-spacing:.04em;line-height:1.5;}
+  h2{font-size:26px;}
+  @media(min-width:768px){h2{font-size:36px;}}
+  .kicker{
+    font-family:"Avenir Next","PingFang TC",sans-serif;
+    font-size:11px;letter-spacing:.4em;text-transform:uppercase;
+    color:var(--accent);margin-bottom:16px;
+  }
+  .note{font-family:"PingFang TC",sans-serif;font-size:12px;color:var(--muted);letter-spacing:.05em;}
+  .hairline{border:0;border-top:1px solid var(--hair);max-width:1060px;margin:0 auto;}
   .btn-line{
     display:inline-block;background:var(--line);color:#fff;text-decoration:none;
-    font-size:17px;font-weight:700;padding:14px 28px;border-radius:999px;
+    font-family:"PingFang TC",sans-serif;font-size:15px;font-weight:600;
+    letter-spacing:.12em;padding:15px 36px;border-radius:999px;
   }
-  /* draft banner */
-  .draftbar{background:#333;color:#fff;text-align:center;font-size:12px;padding:6px 10px;}
+  .textlink{
+    font-family:"Avenir Next","PingFang TC",sans-serif;
+    font-size:12px;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--accent);text-decoration:none;border-bottom:1px solid var(--hair);
+    padding-bottom:4px;
+  }
+  .draftbar{font-family:"PingFang TC",sans-serif;background:#333;color:#fff;text-align:center;font-size:12px;padding:6px 10px;}
 
-  /* hero */
-  .hero{padding:0;position:relative;}
-  .hero .art{aspect-ratio:683/1024;overflow:hidden;}
-  .hero .art img{height:100%;object-fit:cover;}
-  .hero .panel{
-    padding:28px 22px 40px;text-align:center;background:var(--paper);
+  /* hero — 滿版純照片(無內嵌字,可 cover)+深棕漸層壓白襯線大標(對標 #23/#15 首屏) */
+  .hero{position:relative;min-height:86vh;display:flex;align-items:flex-end;justify-content:center;padding:0;}
+  .hero img{position:absolute;inset:0;height:100%;object-fit:cover;}
+  .hero .scrim{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(58,44,30,.05) 30%,rgba(58,44,30,.72));}
+  .hero .panel{position:relative;text-align:center;color:#fff;padding:0 24px 88px;max-width:760px;}
+  .hero .brand{
+    font-family:"Avenir Next","PingFang TC",sans-serif;
+    font-size:12px;letter-spacing:.55em;text-transform:uppercase;
+    color:var(--gold);margin-bottom:22px;
   }
-  .hero h1{font-size:26px;line-height:1.45;margin-bottom:10px;}
-  .hero .sub{font-size:15px;color:var(--muted);margin-bottom:20px;}
+  .hero h1{font-size:30px;line-height:1.6;margin-bottom:14px;text-shadow:0 1px 12px rgba(0,0,0,.35);}
+  .hero .sub{
+    font-family:"Avenir Next","PingFang TC",sans-serif;
+    font-size:13px;letter-spacing:.3em;margin-bottom:34px;opacity:.92;
+  }
   @media(min-width:768px){
-    .hero{display:grid;grid-template-columns:1fr 1fr;align-items:center;}
-    .hero .art{max-height:88vh;aspect-ratio:auto;background:var(--tint);}
-    .hero .art img{object-fit:contain;}
-    .hero h1{font-size:34px;}
+    .hero{min-height:92vh;}
+    .hero h1{font-size:50px;letter-spacing:.06em;}
+    .hero .sub{font-size:14px;}
   }
 
-  /* trust band */
-  .trust{background:var(--card);text-align:center;}
-  .trust .big{font-size:30px;font-weight:800;color:var(--accent);}
-  .logo-grid{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px;
-  }
-  @media(min-width:768px){.logo-grid{grid-template-columns:repeat(6,1fr);}}
-  .logo-tile{
-    height:48px;display:flex;align-items:center;justify-content:center;
-    background:#f2ede6;border-radius:8px;font-size:12px;color:#5a5348;
-    filter:saturate(85%) contrast(95%);transition:filter .2s;
-    padding:4px;text-align:center;
-  }
-  .logo-tile:hover{filter:saturate(100%) contrast(100%);}
+  /* 開場陳述 — 居中窄欄襯線句(對標 #2「Modern Luxury Worldwide」帶) */
+  .intro{text-align:center;}
+  .intro h2{max-width:22em;margin:0 auto 18px;}
+  .intro p{font-family:"PingFang TC",sans-serif;font-size:15px;color:var(--muted);letter-spacing:.08em;max-width:30em;margin:0 auto;}
 
-  /* categories — 企業色卡片,圖不裁切(contain)避免切到字 */
-  .cats{display:grid;gap:16px;}
+  /* 類別入口 — 照片壓字磚(對標 #23 首屏四格:照片+白襯線字+箭頭,無彩色標籤條) */
+  .cats{display:grid;gap:20px;max-width:1060px;margin:28px auto 0;}
   @media(min-width:768px){.cats{grid-template-columns:repeat(3,1fr);}}
-  .cat{border-radius:14px;overflow:hidden;background:var(--tint);display:block;text-decoration:none;}
-  .cat .ph{aspect-ratio:4/5;overflow:hidden;background:var(--tint);}
-  @media(min-width:768px){.cat .ph{aspect-ratio:3/4;}}
-  .cat .ph img{height:100%;object-fit:contain;}
-  .cat .label{
-    padding:16px;color:#fff;background:var(--accent);
+  .cat{position:relative;display:block;overflow:hidden;text-decoration:none;aspect-ratio:4/3;}
+  @media(min-width:768px){.cat{aspect-ratio:3/4;}}
+  .cat img{position:absolute;inset:0;height:100%;object-fit:cover;transition:transform .6s;}
+  .cat:hover img{transform:scale(1.04);}
+  .cat .scrim{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(58,44,30,0) 45%,rgba(58,44,30,.7));}
+  .cat .label{position:absolute;left:22px;right:22px;bottom:20px;color:#fff;}
+  .cat .label b{font-weight:500;font-size:21px;letter-spacing:.08em;display:block;}
+  .cat .label span{font-family:"PingFang TC",sans-serif;font-size:13px;letter-spacing:.04em;opacity:.9;display:block;margin-top:4px;}
+  .cat .label i{font-style:normal;font-size:18px;display:block;margin-top:10px;}
+
+  /* 範例套裝 — 照片+襯線品名+一句話+細字距詢價(對標 #21 套裝區,無圓角卡片) */
+  .packs{display:grid;gap:36px;max-width:1060px;margin:34px auto 0;}
+  @media(min-width:768px){.packs{grid-template-columns:repeat(3,1fr);gap:28px;}}
+  .pack{text-align:center;}
+  .pack .ph{aspect-ratio:4/5;overflow:hidden;margin-bottom:18px;}
+  .pack .ph img{height:100%;object-fit:cover;}
+  .pack b{font-weight:500;font-size:19px;letter-spacing:.08em;}
+  .pack p{font-family:"PingFang TC",sans-serif;font-size:13.5px;color:var(--muted);letter-spacing:.04em;margin:6px 0 14px;}
+
+  /* 雜誌風近期活動 — 不對稱編輯排版(對標 #5/#6 雜誌區塊+#23 case studies) */
+  .mag{background:#fdfbf7;}
+  .mag article{max-width:1060px;margin:44px auto 0;}
+  .mag .ph{aspect-ratio:16/10;overflow:hidden;}
+  .mag .ph img{height:100%;object-fit:cover;}
+  .mag h3{font-size:21px;margin:16px 0 6px;}
+  .mag p{font-family:"PingFang TC",sans-serif;font-size:14px;color:var(--muted);letter-spacing:.04em;max-width:38em;}
+  @media(min-width:768px){
+    .mag article{display:grid;grid-template-columns:7fr 5fr;gap:44px;align-items:center;}
+    .mag article:nth-of-type(2){grid-template-columns:5fr 7fr;}
+    .mag article:nth-of-type(2) .ph{order:2;}
+    .mag h3{margin-top:0;font-size:24px;}
   }
-  .cat:nth-child(2) .label{background:var(--deep);}
-  .cat:nth-child(3) .label{background:var(--gold);color:var(--ink);}
-  .cat .label b{font-size:19px;display:block;}
-  .cat .label span{font-size:13px;opacity:.92;}
 
-  /* packages */
-  .packs{display:grid;gap:16px;}
-  @media(min-width:768px){.packs{grid-template-columns:repeat(3,1fr);}}
-  .pack{background:var(--card);border-radius:14px;overflow:hidden;}
-  .pack .ph{aspect-ratio:16/10;overflow:hidden;background:var(--tint);}
-  .pack .ph img{height:100%;object-fit:contain;}
-  .pack .txt{padding:14px 16px 18px;}
-  .pack .txt b{font-size:17px;}
-  .pack .txt p{font-size:14px;color:var(--muted);margin:4px 0 10px;}
-  .pack a{color:var(--accent);text-decoration:none;font-weight:700;font-size:15px;}
+  /* 台南在地帶 — 滿版照片+深棕壓色+白襯線(對標 #23 倫敦橋在地識別) */
+  .local{position:relative;min-height:64vh;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;}
+  .local img{position:absolute;inset:0;height:100%;object-fit:cover;}
+  .local .scrim{position:absolute;inset:0;background:rgba(90,58,26,.58);}
+  .local .txt{position:relative;max-width:640px;padding:0 24px;}
+  .local h2{color:#fff;margin:14px 0 12px;}
+  .local p{font-family:"PingFang TC",sans-serif;font-size:14.5px;letter-spacing:.06em;opacity:.94;}
+  .local .kicker{color:var(--gold);}
 
-  /* magazine */
-  .mag{background:var(--card);}
-  .mag article{margin-top:18px;}
-  .mag .ph{aspect-ratio:16/9;overflow:hidden;border-radius:12px;background:var(--tint);}
-  .mag .ph img{height:100%;object-fit:contain;}
-  .mag h3{font-size:18px;margin:12px 0 4px;}
-  .mag p{font-size:14px;color:var(--muted);}
+  /* 信任帶 — 大字陳述+logo 名直接落畫布(對標 #2 OUR CLIENTS:無灰磚無框) */
+  .trust{text-align:center;}
+  .trust .big{font-size:24px;letter-spacing:.06em;margin-bottom:6px;}
+  @media(min-width:768px){.trust .big{font-size:32px;}}
+  .logo-row{
+    display:flex;flex-wrap:wrap;justify-content:center;gap:26px 34px;
+    max-width:900px;margin:36px auto 0;
+  }
+  .logo-row span{
+    font-family:"Avenir Next","PingFang TC",sans-serif;
+    font-size:13px;letter-spacing:.22em;color:var(--accent);opacity:.85;
+  }
 
-  /* local band — 企業深棕底,圖不裁切,文字不壓圖 */
-  .local{background:var(--deep);color:#fff;text-align:center;}
-  .local .ph{max-width:520px;margin:0 auto 18px;border-radius:12px;overflow:hidden;background:var(--tint);aspect-ratio:4/5;}
-  .local .ph img{height:100%;object-fit:contain;}
-  .local h2{font-size:22px;}
-  .local p{font-size:14px;max-width:34em;margin:6px auto 0;opacity:.94;}
+  /* 菜單 — 髮絲線清單,無卡片 */
+  .menu ul{list-style:none;max-width:640px;margin:26px auto 0;}
+  .menu li{padding:20px 4px;border-top:1px solid var(--hair);}
+  .menu li:last-child{border-bottom:1px solid var(--hair);}
+  .menu li b{font-weight:500;font-size:18px;letter-spacing:.1em;display:block;}
+  .menu li span{font-family:"PingFang TC",sans-serif;font-size:13.5px;color:var(--muted);letter-spacing:.04em;}
 
-  /* menu */
-  .menu ul{list-style:none;display:grid;gap:10px;margin-top:14px;}
-  @media(min-width:768px){.menu ul{grid-template-columns:repeat(3,1fr);}}
-  .menu li{background:var(--card);border-radius:10px;padding:14px 16px;font-size:15px;}
-  .menu li b{display:block;font-size:16px;}
+  /* faq — 髮絲線,無卡片 */
+  .faq{max-width:640px;margin:0 auto;}
+  .faq details{border-top:1px solid var(--hair);padding:16px 4px;}
+  .faq details:last-of-type{border-bottom:1px solid var(--hair);}
+  .faq summary{font-size:16px;letter-spacing:.06em;cursor:pointer;}
+  .faq p{font-family:"PingFang TC",sans-serif;font-size:14px;color:var(--muted);margin-top:8px;letter-spacing:.04em;}
 
-  /* faq */
-  .faq details{background:var(--card);border-radius:10px;padding:12px 16px;margin-top:10px;}
-  .faq summary{font-weight:700;font-size:15px;cursor:pointer;}
-  .faq p{font-size:14px;color:var(--muted);margin-top:8px;}
+  /* 終末 CTA — 深棕色帶(對標 #15/#23 深色收尾帶) */
+  .final{text-align:center;background:var(--deep);color:#fff;}
+  .final .kicker{color:var(--gold);}
+  .final h2{color:#fff;margin-bottom:26px;}
 
-  /* final cta */
-  .final{text-align:center;background:var(--ink);color:#fff;}
-  .final h2{font-size:22px;margin-bottom:14px;}
-
-  /* floating LINE */
   .fab{
     position:fixed;right:14px;bottom:18px;z-index:50;
-    background:var(--line);color:#fff;text-decoration:none;font-weight:700;
-    padding:12px 18px;border-radius:999px;font-size:15px;
+    background:var(--line);color:#fff;text-decoration:none;font-weight:600;
+    font-family:"PingFang TC",sans-serif;
+    padding:12px 18px;border-radius:999px;font-size:14px;letter-spacing:.08em;
     box-shadow:0 4px 14px rgba(0,0,0,.25);
   }
-  footer{padding:28px 20px 90px;text-align:center;font-size:12px;color:var(--muted);}
+  footer{font-family:"PingFang TC",sans-serif;padding:34px 24px 96px;text-align:center;font-size:12px;color:var(--muted);letter-spacing:.06em;}
 </style>
 </head>
 <body>
 
-<div class="draftbar">離線改版草稿 v2（2026-09-11）— 僅供 Owner 檢查 RWD，未發布、不代表線上內容</div>
+<div class="draftbar">離線改版草稿 v3（2026-09-11）— 僅供 Owner 檢查，未發布、不代表線上內容</div>
 
-<!-- 1. Hero：定位語 P2（Owner 5032 圈定）＋單一 CTA -->
+<!-- 1. Hero：滿版照片+定位語 P2（Owner 5032 圈定）+單一 CTA -->
 <header class="hero">
-  <div class="art">
-    <img src="https://www.maplabkitchen.com/wp-content/uploads/2025/07/tainan-outdoor-catering-dessert-table-683x1024.avif" alt="台南戶外外燴甜點桌">
-  </div>
+  <img src="https://www.maplabkitchen.com/wp-content/uploads/2026/06/maplab-brand-conference-beauty-summit-meta-1.avif" alt="品牌發表會外燴餐檯現場">
+  <div class="scrim"></div>
   <div class="panel">
-    <div class="kicker">MAPLAB KITCHEN</div>
+    <div class="brand">MAPLAB KITCHEN</div>
     <h1>台南最會辦派對的外燴團隊<br>企劃、視覺、餐桌一次到位</h1>
-    <p class="sub">台南外燴・派對統籌・企業茶會</p>
+    <div class="sub">台南外燴・派對統籌・企業茶會</div>
     <a class="btn-line" href="https://lin.ee/IP8nt4n">聊聊你的活動</a>
   </div>
 </header>
 
-<!-- 2. 信任帶：可查證大數＋原生 logo 牆（示意：等高容器＋統一濾鏡，手機3欄/桌機6欄） -->
+<!-- 2. 開場陳述：居中窄欄一句話 -->
+<section class="intro">
+  <div class="kicker">Tainan · Party Catering</div>
+  <h2>把每一次相聚，辦成值得拍下來的事件</h2>
+  <p>從企劃、視覺到餐桌陳列，一個團隊做完整件事。</p>
+</section>
+
+<hr class="hairline">
+
+<!-- 3. 類別入口：三格照片壓字，各自進案例（骨架=首頁終點站/分類進案例） -->
+<section>
+  <div class="wrap">
+    <div class="kicker" style="text-align:center">Choose Your Scene</div>
+    <h2 style="text-align:center">你的場合，我們都辦過</h2>
+    <div class="cats">
+      <a class="cat" href="#">
+        <img src="https://www.maplabkitchen.com/wp-content/uploads/2026/06/maplab-tech-factory-opening-tokyo-electron-1.webp" alt="企業品牌活動外燴">
+        <div class="scrim"></div>
+        <div class="label"><b>企業活動</b><span>品牌發表・尾牙家庭日</span><i>→</i></div>
+      </a>
+      <a class="cat" href="#">
+        <img src="https://www.maplabkitchen.com/wp-content/uploads/2026/06/maplab-art-museum-opening-miyazaki-story.webp" alt="開幕茶會外燴">
+        <div class="scrim"></div>
+        <div class="label"><b>開幕茶會</b><span>開幕日的第一印象</span><i>→</i></div>
+      </a>
+      <a class="cat" href="#">
+        <img src="https://www.maplabkitchen.com/wp-content/uploads/2026/06/maplab-old-money-style-birthday-party.avif" alt="私人派對外燴">
+        <div class="scrim"></div>
+        <div class="label"><b>私人派對</b><span>婚禮・周歲・入厝</span><i>→</i></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 4. 範例套裝：照片說話+一句話+詢價（對標 #21 範例套裝） -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="kicker" style="text-align:center">Popular Setups</div>
+    <h2 style="text-align:center">先看場景，再詢價</h2>
+    <div class="packs">
+      <div class="pack">
+        <div class="ph"><img src="https://www.maplabkitchen.com/wp-content/uploads/2026/06/maplab-reviews-canape-spread.avif" alt="手指食物派對"></div>
+        <b>手指食物派對</b>
+        <p>一口一件、邊聊邊吃，社交場合的主角</p>
+        <a class="textlink" href="https://lin.ee/IP8nt4n">詢價 →</a>
+      </div>
+      <div class="pack">
+        <div class="ph"><img src="https://www.maplabkitchen.com/wp-content/uploads/2026/06/maplab-tainan-buffet-menu.avif" alt="自助餐檯"></div>
+        <b>自助餐檯</b>
+        <p>人多也從容，動線與餐檯一起設計</p>
+        <a class="textlink" href="https://lin.ee/IP8nt4n">詢價 →</a>
+      </div>
+      <div class="pack">
+        <div class="ph"><img src="https://www.maplabkitchen.com/wp-content/uploads/2026/06/maplab-tangdezhang-exhibition-food-event-story-1.avif" alt="甜點桌"></div>
+        <b>甜點桌</b>
+        <p>視覺主場，甜點桌就是你的活動佈景</p>
+        <a class="textlink" href="https://lin.ee/IP8nt4n">詢價 →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. 雜誌風近期活動：不對稱編輯排版（Owner 喜歡 #5/#6 的區塊） -->
+<section class="mag">
+  <div class="wrap">
+    <div class="kicker">Recent Events</div>
+    <h2>最近的餐桌現場</h2>
+    <article>
+      <div class="ph"><img src="https://www.maplabkitchen.com/wp-content/uploads/2026/06/maplab-icc-tainan-catering-table-overview-02.avif" alt="企業茶會外燴現場"></div>
+      <div>
+        <h3>（示意）派對現場小專題標題</h3>
+        <p>正式版由最近 2-3 場實際活動各寫一篇圖文小專題；本格文字為版位示意，不代表實際場次。</p>
+      </div>
+    </article>
+    <article>
+      <div class="ph"><img src="https://www.maplabkitchen.com/wp-content/uploads/2026/06/maplab-white-theme-birthday-party.avif" alt="白色主題派對外燴"></div>
+      <div>
+        <h3>（示意）第二篇小專題標題</h3>
+        <p>同上，實際內容從真實活動紀錄挑選，照片說話、文字極簡。</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- 6. 台南在地識別帶：滿版照片壓深棕（對標 #23 在地識別） -->
+<section class="local">
+  <img src="https://www.maplabkitchen.com/wp-content/uploads/2026/06/maplab-university-emba-concert-tea-break.avif" alt="台南戶外樹下長桌外燴">
+  <div class="scrim"></div>
+  <div class="txt">
+    <div class="kicker">Tainan Based</div>
+    <h2>台南的場地，我們熟門熟路</h2>
+    <p>從老屋庭院到會議中心，在地團隊替你把場地條件想在前面。</p>
+  </div>
+</section>
+
+<!-- 7. 信任帶：可查證大數+logo 名直接落畫布（正式版換彩色 logo 原檔） -->
 <section class="trust">
-  <div class="kicker">TRUSTED BY</div>
+  <div class="kicker">Trusted By</div>
   <div class="big">900+ 份活動提案的經驗</div>
   <p class="note">（實際完成場次數字待核定後並列；絕不編數）</p>
-  <div class="logo-grid">
-    <div class="logo-tile">工研院</div>
-    <div class="logo-tile">成大醫院</div>
-    <div class="logo-tile">奇美醫院</div>
-    <div class="logo-tile">聯華電子</div>
-    <div class="logo-tile">中鋼</div>
-    <div class="logo-tile">富邦</div>
-    <div class="logo-tile">和泰汽車</div>
-    <div class="logo-tile">誠品</div>
-    <div class="logo-tile">樂高</div>
-    <div class="logo-tile">VOLVO</div>
-    <div class="logo-tile">中興工程</div>
-    <div class="logo-tile">興富發</div>
+  <div class="logo-row">
+    <span>工研院</span><span>成大醫院</span><span>奇美醫院</span><span>聯華電子</span>
+    <span>中鋼</span><span>富邦</span><span>和泰汽車</span><span>誠品</span>
+    <span>樂高</span><span>VOLVO</span><span>中興工程</span><span>興富發</span>
   </div>
-  <p class="note" style="margin-top:12px">示意：正式版每格換彩色 logo 原檔，統一濾鏡 saturate 85%／contrast 95%，hover 回全彩；現牆約 40 家全保留。</p>
+  <p class="note" style="margin-top:26px">示意：正式版每格換 logo 原檔直接落畫布（不放底磚），現牆約 40 家全保留。</p>
 </section>
 
-<!-- 3. 類別入口：三格，每格一張大圖一句話 -->
-<section>
-  <div class="kicker">CHOOSE YOUR SCENE</div>
-  <h2>你的場合，我們都辦過</h2>
-  <div class="cats" style="margin-top:16px">
-    <a class="cat" href="#">
-      <div class="ph"><img src="https://www.maplabkitchen.com/wp-content/uploads/2025/06/Luxury-Automotive-Brand-Event-Catering-Porsche.webp.avif" alt="企業品牌活動外燴"></div>
-      <div class="label"><b>企業活動</b><span>品牌發表・尾牙家庭日，企劃到餐桌一手包</span></div>
-    </a>
-    <a class="cat" href="#">
-      <div class="ph"><img src="https://www.maplabkitchen.com/wp-content/uploads/2025/07/tainan-brand-event-catering-4.avif" alt="開幕茶會外燴"></div>
-      <div class="label"><b>開幕茶會</b><span>開幕日的第一印象，交給熟門熟路的團隊</span></div>
-    </a>
-    <a class="cat" href="#">
-      <div class="ph"><img src="https://www.maplabkitchen.com/wp-content/uploads/2025/07/tainan-candybar-party-catering-683x1024.avif" alt="私人派對 candy bar"></div>
-      <div class="label"><b>私人派對</b><span>婚禮・周歲・入厝，把相聚辦成值得拍的事件</span></div>
-    </a>
-  </div>
-</section>
+<hr class="hairline">
 
-<!-- 4. 範例套裝區：三種套裝各一張照片＋一句話＋詢價 -->
-<section style="padding-top:0">
-  <div class="kicker">POPULAR SETUPS</div>
-  <h2>先看場景，再詢價</h2>
-  <div class="packs" style="margin-top:16px">
-    <div class="pack">
-      <div class="ph"><img src="https://www.maplabkitchen.com/wp-content/uploads/2025/07/moment-feast-party-catering-3-683x1024.avif" alt="手指食物派對"></div>
-      <div class="txt"><b>手指食物派對</b><p>一口一件、邊聊邊吃，社交場合的主角</p><a href="https://lin.ee/IP8nt4n">詢價 →</a></div>
-    </div>
-    <div class="pack">
-      <div class="ph"><img src="https://www.maplabkitchen.com/wp-content/uploads/2025/06/Christmas-Party-Holiday-Buffet-Catering-Taiwan.webp.avif" alt="自助餐檯"></div>
-      <div class="txt"><b>自助餐檯</b><p>人多也從容，動線與餐檯一起設計</p><a href="https://lin.ee/IP8nt4n">詢價 →</a></div>
-    </div>
-    <div class="pack">
-      <div class="ph"><img src="https://www.maplabkitchen.com/wp-content/uploads/2025/07/tainan-outdoor-catering-dessert-table-683x1024.avif" alt="甜點桌"></div>
-      <div class="txt"><b>甜點桌</b><p>視覺主場，甜點桌就是你的活動佈景</p><a href="https://lin.ee/IP8nt4n">詢價 →</a></div>
-    </div>
-  </div>
-</section>
-
-<!-- 5. 雜誌風近期活動（一場一篇圖文小專題） -->
-<section class="mag">
-  <div class="kicker">RECENT EVENTS</div>
-  <h2>最近的餐桌現場</h2>
-  <article>
-    <div class="ph"><img src="https://www.maplabkitchen.com/wp-content/uploads/2025/06/Children-Birthday-Party-Catering-Decoration-Taiwan.webp.avif" alt="生日派對外燴現場"></div>
-    <h3>（示意）派對現場小專題標題</h3>
-    <p>正式版由最近 2-3 場實際活動各寫一篇圖文小專題；本格文字為版位示意，不代表實際場次。</p>
-  </article>
-  <article>
-    <div class="ph"><img src="https://www.maplabkitchen.com/wp-content/uploads/2025/06/Outdoor-After-Party-Buffet-Poolside-Catering.webp.avif" alt="戶外池畔派對外燴"></div>
-    <h3>（示意）第二篇小專題標題</h3>
-    <p>同上，實際內容從真實活動紀錄挑選，照片說話、文字極簡。</p>
-  </article>
-</section>
-
-<!-- 6. 台南在地識別帶 -->
-<section class="local">
-  <div class="ph"><img src="https://www.maplabkitchen.com/wp-content/uploads/2025/07/tainan-holiday-catering-party-1024x1536.jpg" alt="台南在地活動場景"></div>
-  <div class="kicker" style="color:var(--gold)">TAINAN BASED</div>
-  <h2>台南的場地，我們熟門熟路</h2>
-  <p>從老屋庭院到會議中心，在地團隊替你把場地條件想在前面。</p>
-</section>
-
-<!-- 7. 菜單客製三類（無餐盒；外帶不上首頁，已裁定） -->
-<section class="menu">
-  <div class="kicker">MENU</div>
+<!-- 8. 菜單三類：髮絲線清單（無餐盒；外帶不上首頁，已裁定） -->
+<section class="menu" style="text-align:center">
+  <div class="kicker">Menu</div>
   <h2>菜單跟著場合客製</h2>
   <ul>
-    <li><b>手指食物</b>站著吃也優雅的一口料理</li>
-    <li><b>自助餐檯</b>澎湃與動線兼顧的經典檯面</li>
-    <li><b>甜點桌</b>拍照打卡的視覺重心</li>
+    <li><b>手指食物</b><span>站著吃也優雅的一口料理</span></li>
+    <li><b>自助餐檯</b><span>澎湃與動線兼顧的經典檯面</span></li>
+    <li><b>甜點桌</b><span>拍照打卡的視覺重心</span></li>
   </ul>
 </section>
 
-<!-- 8. 見證＋FAQ -->
-<section class="faq" style="padding-top:0">
-  <div class="kicker">FAQ</div>
-  <h2>常見問題</h2>
-  <details><summary>怎麼詢價？</summary><p>點任一 LINE 按鈕，告訴我們日期、人數與場地，由專人回覆報價。</p></details>
-  <details><summary>服務範圍？</summary><p>以台南為主；其他縣市請於 LINE 詢問。</p></details>
-  <details><summary>可以客製菜單嗎？</summary><p>可以，依活動場景與預算規劃品項。</p></details>
-  <p class="note" style="margin-top:12px">（見證區：正式版從實際客戶回饋截圖區實錄挑選，草稿不虛構引言，故本版暫略。）</p>
+<!-- 9. FAQ -->
+<section style="padding-top:0">
+  <div class="faq">
+    <div class="kicker">FAQ</div>
+    <h2 style="margin-bottom:18px">常見問題</h2>
+    <details><summary>怎麼詢價？</summary><p>點任一 LINE 按鈕，告訴我們日期、人數與場地，由專人回覆報價。</p></details>
+    <details><summary>服務範圍？</summary><p>以台南為主；其他縣市請於 LINE 詢問。</p></details>
+    <details><summary>可以客製菜單嗎？</summary><p>可以，依活動場景與預算規劃品項。</p></details>
+    <p class="note" style="margin-top:14px">（見證區：正式版從實際客戶回饋實錄挑選，草稿不虛構引言，故本版暫略。）</p>
+  </div>
 </section>
 
-<!-- 終末 CTA -->
+<!-- 終末 CTA：深棕色帶 -->
 <section class="final">
+  <div class="kicker">Get In Touch</div>
   <h2>下一場聚會，交給我們</h2>
   <a class="btn-line" href="https://lin.ee/IP8nt4n">用 LINE 聊聊你的活動</a>
 </section>

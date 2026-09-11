@@ -8,8 +8,14 @@
 
 0. **續接檢查閘(任何 session/視窗動草稿前)**:先讀該任務資料夾的 TASK_BRIEF.md;
    不存在=先從歷史(telegram log 原話+裁定)建檔再動工,**不得只憑 session 摘要或衍生
-   規劃檔開工**——摘要只帶結論不帶來源,是 9/11 重做一份的根因。回報 Owner 時列出
-   本輪讀了哪些需求檔,可被抽查。
+   規劃檔開工**——摘要只帶結論不帶來源,是 9/11 重做一份的根因。
+   **執法=決定論腳本,不靠 Owner 開口問(Owner 5144)**:
+   - 動工前:bash scripts/task_gate.sh check <任務夾> → 列 R# 需求條目+落已讀收據
+     (收據綁 TASK_BRIEF 當前 sha256,brief 一改舊收據即失效)。
+   - 交付前:bash scripts/task_gate.sh verify <任務夾> → 驗收據版本+COVERAGE.md
+     逐條對照(每個 R# 寫怎麼滿足+內含 brief 全 hash);任一缺=GATE FAIL 不得交付。
+   - 防作弊:hash 只有跑 check 才拿得到;空跑產不出逐條對照;.gate 收據與 COVERAGE.md
+     入 git 留痕,對照與成品不符=事後可稽核的造假證據。TASK_BRIEF 需求必用 R1. R2. 格式。
    **原話入檔規則**:Owner 的偏好/裁定在收到的當回合就抄進正典檔(含 msg id 來源),
    不只留在 telegram log;散檔=下個 session 讀不到。
 1. **對標庫先讀**:handoff/benchmark-owner-marks-20260907.md(Owner 逐號標記的
@@ -45,3 +51,5 @@
   並要求實開四站對齊視覺層(Owner 5132:基準是「喜歡哪些、為什麼」的討論,非 30 條清單)。
 - v1.2(2026-09-11):新增步驟〇續接檢查閘+原話入檔規則(Owner 5141 檢討:
   需求散檔+摘要只帶結論→跨 session 沒讀到需求又做一份;根治=任務級 TASK_BRIEF 必讀必建)。
+- v1.3(2026-09-11):檢查閘改決定論執法 scripts/task_gate.sh(Owner 5144:自己問+防作弊,
+  不靠 Owner 抽查);五案自測全過(check OK/無對照 FAIL/全對照 PASS/空條目 FAIL/改版舊收據 FAIL)。

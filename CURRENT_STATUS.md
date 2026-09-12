@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-09-12 A1午後巡查（remote cloud）｜8h 零非巡查 commit（系統靜止）；NEEDS_REVIEW 10 tasks 持續等 Owner 決定（~1582h since 07-19）；T-A7-001 Phase 3 延誤（07-25截止已過，第56天）；CRITICAL: T-A4-002 ~3815h / T-IOS-KOL-001 ~2303h / A6 ~1838h；A8 ~2118h；各 agent 狀態與 CURRENT_STATUS 一致，無新異常｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-09-12 A1晚間巡查（remote cloud）｜8h 零非巡查 commit（系統靜止）；NEEDS_REVIEW 10 tasks 持續等 Owner 決定（~1590h since 07-19）；T-A7-001 Phase 3 延誤（07-25截止已過，第56天）；CRITICAL: T-A4-002 ~3823h / T-IOS-KOL-001 ~2311h / A6 ~1846h；A8 ~2126h；各 agent 狀態與 CURRENT_STATUS 一致，無新異常｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 

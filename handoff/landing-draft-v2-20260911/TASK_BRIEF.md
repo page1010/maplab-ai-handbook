@@ -226,3 +226,9 @@ R26. 現況盤點(post-sitemap.xml 實抓,2026-09-14):全站 56 篇文章;首頁
 - 檢討:5298 版陰影只有 .06/.10、金線 2px、底色 #fffdf8 與米色頁面太接近→手機截圖上看不出差異,等於沒改。
 - 二修:數字 27px→**36px** 粗體(font-weight 700)、卡片底改**純白 #fff**、金線 2px→**3px**、陰影加重(0 2px 4px .10 + 0 18px 38px .20)、padding/間距同步加大;場景卡字 15→16px。直角語彙不變。
 - QA:重跑 landing_v5_preview.sh,裁 trustbar 區目檢兩視口=卡片明顯浮出、數字一眼可見,Drive 同兩固定連結已最新。等 Owner:立體感點頭+「最會辦」A/B。
+
+## R30(2026-09-14 5307)上線直令+量測教學+提案送審程序
+
+- Owner 5307 原話(2026-09-14T18:15:21):「1.上線 舊首頁弄成草稿不要砍到看不到,設一個鬧鐘一個月後看成效2.去google consle 拿藏在網頁的東西 每個區塊與圖片做成像調查,我要知道看到第幾頁跳出率最高,黏著度最高,cta 最好 我們用這個追蹤素材與文字效果--你告訴我對不對我是這麼學的 3. 根據你提出的2.3.4.立即修改,修改前寫下全貌與任務目標,你看到什麼,要如何改,今天做什麼,萬一你沒額度,留下接手的線索。你的提案先送codex antigravity 給你回饋再動手」
+- 判讀與執行:①上線=直令,~~等圈 A/B~~ 改為照現版(最會辦)上;win01-homepage-golive-20260914 卡已發(agent-bus 95c7cb2),含:憑證自復原步驟/4 張 IG 截圖上 media/新頁 draft 驗證/page_on_front 切換/**1250 轉草稿不刪**/回滾程序;資產打包 shared/landing-v5-golive-20260914(index.html sha 8b1ca03f+terms 13/14/15/17)。②鬧鐘=FABLE5_HANDOFF 頂部 ⏰ 行(2026-10-14 滿月覆盤,指標見 PROPOSAL §0);CronCreate 活不過 session 重啟故不用。③量測教學已答:方向對、工具修正=SC 只看進站前,區塊/跳出/黏著/CTA 要 GA4+Microsoft Clarity(=W5)。④提案=handoff/seo-fix-20260914/PROPOSAL.md(全貌/目標/所見/改法/今天/接手線索),已送 codex(cdo state/codex_jobs/JOB-CODEX-seo-fix-review-20260914-1825)+antigravity(agent-bus inbox 卡),回饋回來才動 W1-W5。⑤等回饋期間交 W4 第一批:5 篇標題/meta 稿入 agent-bus shared/seo/title-meta-drafts-20260914.md(含註冊表自證+win-01 核對點;picnic/menu 叢集暫緩等裁決)。
+- 欠稿餘額:W2 企業茶會主文+W3 三組合併全文(等 codex/antigravity 回饋確認合併目標後產,避免白寫)。

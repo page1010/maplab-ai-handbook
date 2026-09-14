@@ -21,19 +21,17 @@ C0 晨會 brief → C1 封面靜圖 → C2 微動畫 loop → C3 音影合成 �
 
 - 腳本:`scripts/mtr_cover_gen.sh`(讀當日 brief,零額度程式繪製)。
 - 規格:2560x1440 PNG(YT 頻道橫幅/影片縮圖皆夠用),存 `data/music-style-db/covers/cover_YYYYMMDD.png`,並自動上 Drive anyone-reader 印連結。
-- 視覺母題(固定):台南騎樓下的派對長桌 — 深綠暮色漸層天、暖橘長桌、吊燈三盞(靠右)、盤杯燭光、蒸氣;左上頻道名 MAP TABLE RADIO + 曲名(serif 大字)+ BPM 行;右下 by maplabkitchen。
+- 視覺母題(v2 定版,Owner 5255「cyberpunk風一點」):台南騎樓下的派對長桌 — **藍青→霓虹紫夜空**、暖橘長桌+吊燈三盞(暖色=品牌識別保留)、**騎樓柱掛霓虹燈牌x2(洋紅/青,抽象霓虹管不寫假店名)**、**桌緣青色霓虹收邊**、盤杯燭光、蒸氣;左上頻道名 MAP TABLE RADIO + 曲名(serif 大字+**青/洋紅色差殘影**)+ BPM 行;右下 by maplabkitchen。燈牌必須掛在柱上不浮空(9/14 v1 浮空霓虹教訓)。
 - 每日變化:只換 `cover_prop` 一件桌上道具(brief 的 next_variation_note 驅動),其他不動 — 對齊 Lofi Girl「同場景微變化」策略。
 - 字型鐵律:標題必須逐字驗證字形(pick() 依序試 Songti.ttc face 0-5、PingFang.ttc face 0-3,每個字 getmask 有 bbox 才收)。Songti 預設 face 缺 鹽/頭/慶 等繁字,9/14 v1 已踩過。避免「・」(無字形),分隔用「/」。
 - **GATE C1(人工必看)**:Read 輸出 PNG 目檢 — ①標題每字完整無豆腐 ②文字不與吊燈/道具相撞 ③無客戶照片、無 logo、無客戶資訊 ④道具與當日 brief 相符。沒看圖不得把連結交給 Owner(9/14 v1 缺字教訓)。
 
-## C2 封面微動畫 loop(範本已定,待首跑)
+## C2 封面微動畫 loop(已實作+首跑通過 9/14)
 
-- 工具:ffmpeg(已確認安裝)。零額度。
-- 作法:靜圖為底,subtle 動態即可(對齊 Lofi Girl 微動畫感):
-  - 基本款(先用這個):緩慢 zoompan 呼吸 + 燭光/吊燈亮度脈動(fade 疊層),20 秒無縫 loop,1920x1080 30fps,H.264 yuv420p。
-  - 指令範本:zoompan 從 1.0 緩放到 1.03 再回(loop 對稱),或兩張亮度變體圖 crossfade 往返。
-- 產出:`data/music-style-db/covers/loop_YYYYMMDD.mp4`。
-- **GATE C2**:可播放、首尾幀一致(loop 無縫)、無破圖;檔案 <50MB。
+- 工具:ffmpeg(/opt/homebrew/bin/ffmpeg)。零額度。已併入 `scripts/mtr_cover_gen.sh` 自動接在 C1 後跑。
+- 作法(類 Lofi Girl 微動畫,Owner 5255):靜圖呼吸變焦 — zoompan z=1.02+0.012*sin(2π·on/600),25fps 600 幀=24 秒,sin 全週期→首尾同幀無縫;1920x1080 H.264 yuv420p。後續可加燭光/霓虹脈動疊層(v3 備選)。
+- 產出:`data/music-style-db/covers/loop_YYYYMMDD.mp4` + `loop_preview_YYYYMMDD.png`(6 秒處抽幀供目檢)。
+- **GATE C2**:可播放、sin 全週期保證首尾同幀、preview 抽幀目檢無破圖;檔案 <50MB。
 
 ## C3 音影合成(等 A8 Suno 音檔)
 
@@ -60,6 +58,6 @@ C0 晨會 brief → C1 封面靜圖 → C2 微動畫 loop → C3 音影合成 �
 
 1. YouTube 頻道未建 — Owner GUI 一次(唯一人工步驟)。
 2. Suno 音檔 0/20 — 等 A8 開跑。
-3. C2 loop 首跑未執行 — 樣張靜圖已過 GATE C1(9/14),下輪補跑 loop 範本驗 GATE C2。
+(C2 loop 已於 9/14 首跑通過 GATE C2,cyberpunk v2 靜圖同日過 GATE C1。)
 
 頻道建好+第一首音檔到位 → 當天可出第一支影片。

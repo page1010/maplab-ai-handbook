@@ -1,8 +1,11 @@
 #!/bin/bash
-# mtr_cover_gen.sh v1 — MAP TABLE RADIO 每日封面靜圖產生器(SOP 段 C1,Owner 5250)
-# 讀當日 brief JSON(title_zh/cover_prop/bpm)→ 程式繪製 2560x1440 封面母圖 v1(騎樓派對餐桌)
-# → data/music-style-db/covers/cover_YYYYMMDD.png,並上 Drive anyone-reader 印連結。
-# 安全邊界:不用客戶照片、不打 logo;token 只 source 不回顯;只寫 covers/ 目錄。
+# mtr_cover_gen.sh v2 — MAP TABLE RADIO 每日封面產生器(SOP 段 C1+C2,Owner 5250/5255)
+# v2(Owner 5255):封面定義偏 cyberpunk — 暮色改藍紫霓虹天、騎樓柱掛霓虹燈牌(洋紅/青)、
+# 桌緣霓虹收邊、標題青/洋紅色差殘影;桌面暖橘與吊燈保留(維持 maplabkitchen 暖色識別)。
+# 同檔加跑 C2 微動畫 loop(類 lofi girl 呼吸鏡頭,ffmpeg zoompan 24s 無縫)。
+# 產出:covers/cover_YYYYMMDD.png + covers/loop_YYYYMMDD.mp4 + loop_preview_YYYYMMDD.png,
+# 皆上 Drive anyone-reader 印連結。
+# 安全邊界:不用客戶照片、不打 logo、燈牌只做抽象霓虹管不寫假店名;token 只 source 不回顯。
 set -u
 HB="/Users/pagemacmini/maplab-ai-handbook"
 DAILY="$HB/data/music-style-db/daily"
@@ -11,11 +14,13 @@ mkdir -p "$COVERS"
 TODAY=$(date +%Y%m%d)
 BRIEF="$DAILY/brief_$TODAY.md"
 OUT="$COVERS/cover_$TODAY.png"
+LOOP="$COVERS/loop_$TODAY.mp4"
+PREVIEW="$COVERS/loop_preview_$TODAY.png"
 [ -f "$BRIEF" ] || { echo "FATAL: 今日 brief 不存在 $BRIEF(先跑晨會)"; exit 1; }
 
 /usr/bin/python3 - "$BRIEF" "$OUT" <<'PYEOF'
 import json, re, sys, math
-from PIL import Image, ImageDraw, ImageFont, ImageFilter
+from PIL import Image, ImageDraw, ImageFont
 
 brief_path, out_path = sys.argv[1], sys.argv[2]
 raw = open(brief_path, encoding="utf-8").read()
@@ -28,11 +33,17 @@ bpm = meta.get("bpm", "")
 W, H = 2560, 1440
 img = Image.new("RGB", (W, H))
 d = ImageDraw.Draw(img)
-# 天色漸層:深綠暮色 -> 暖褐(品牌暖橘+深綠)
-top, bot = (24, 52, 43), (46, 30, 20)
+# 天色:深藍青 -> 霓虹紫 -> 暖褐地平線(cyberpunk 夜空,桌區仍回暖色)
+c1, c2, c3 = (14, 40, 54), (46, 24, 58), (46, 30, 20)
 for y in range(H):
     t = y / H
-    d.line([(0, y), (W, y)], fill=tuple(int(a + (b - a) * t) for a, b in zip(top, bot)))
+    if t < 0.55:
+        k = t / 0.55
+        col = tuple(int(a + (b - a) * k) for a, b in zip(c1, c2))
+    else:
+        k = (t - 0.55) / 0.45
+        col = tuple(int(a + (b - a) * k) for a, b in zip(c2, c3))
+    d.line([(0, y), (W, y)], fill=col)
 
 ov = Image.new("RGBA", (W, H), (0, 0, 0, 0))
 od = ImageDraw.Draw(ov)
@@ -43,17 +54,28 @@ def glow(cx, cy, r, color, steps=14, amax=110):
         a = int(amax * (1 - i / (steps + 1)) ** 2)
         od.ellipse([cx - rr, cy - rr, cx + rr, cy + rr], fill=color + (a,))
 
-# 吊燈三盞(靠右,避開左側標題區)
+def neon_rrect(box, color, glow_layers=5):
+    for g in range(glow_layers, 0, -1):
+        pad = g * 5
+        a = int(90 * (1 - g / (glow_layers + 1)))
+        od.rounded_rectangle([box[0] - pad, box[1] - pad, box[2] + pad, box[3] + pad],
+                             radius=18 + pad, outline=color + (a,), width=6)
+    od.rounded_rectangle(box, radius=18, outline=color + (235,), width=6)
+
+# 吊燈三盞(靠右,暖光=品牌識別保留)
 for lx in (W * 0.58, W * 0.72, W * 0.86):
     od.line([(lx, 0), (lx, H * 0.24)], fill=(20, 14, 10, 255), width=8)
     glow(lx, H * 0.27, 130, (242, 166, 90), amax=140)
     od.ellipse([lx - 44, H * 0.24, lx + 44, H * 0.24 + 78], fill=(250, 196, 120, 255))
     od.ellipse([lx - 26, H * 0.245, lx + 26, H * 0.245 + 46], fill=(255, 232, 180, 255))
 
-# 長桌(桌面+垂布)
+# 長桌(桌面+垂布,暖橘保留)
 od.rectangle([W * 0.06, H * 0.70, W * 0.94, H * 0.755], fill=(217, 129, 78, 255))
 od.rectangle([W * 0.06, H * 0.755, W * 0.94, H * 0.97], fill=(163, 84, 45, 255))
 od.rectangle([W * 0.06, H * 0.755, W * 0.94, H * 0.775], fill=(140, 70, 38, 255))
+# 桌緣霓虹收邊(青色 rim = cyberpunk 點綴)
+od.line([(W * 0.06, H * 0.700), (W * 0.94, H * 0.700)], fill=(90, 230, 255, 90), width=10)
+od.line([(W * 0.06, H * 0.700), (W * 0.94, H * 0.700)], fill=(150, 245, 255, 170), width=4)
 # 桌上物:盤、杯、燭光
 for px in (0.18, 0.34, 0.62, 0.82):
     od.ellipse([W * px - 90, H * 0.706, W * px + 90, H * 0.748], fill=(245, 232, 216, 255))
@@ -66,7 +88,7 @@ for cx in (0.41, 0.55):
     od.ellipse([W * cx - 8, H * 0.668, W * cx + 8, H * 0.694], fill=(255, 236, 170, 255))
     od.rectangle([W * cx - 12, H * 0.694, W * cx + 12, H * 0.706], fill=(214, 190, 160, 255))
 
-# 當日道具位(桌面右三分之一):火花棒插杯=發光星芒;其他道具=暖金星點簇
+# 當日道具位(桌面右三分之一):發光星芒(brief cover_prop 驅動)
 sx, sy = W * 0.62, H * 0.60
 od.rectangle([sx - 26, sy + 55, sx + 26, H * 0.71], fill=(210, 225, 220, 90))
 od.line([(sx, sy), (sx, sy + 90)], fill=(120, 90, 60, 255), width=7)
@@ -84,17 +106,30 @@ for bx in (W * 0.34, W * 0.47):
         od.arc([bx - 40, H * 0.50 - s * 55, bx + 40, H * 0.62 - s * 55],
                200, 340 if s % 2 == 0 else 320, fill=(255, 255, 255, 46), width=10)
 
-# 騎樓框(左右柱+頂梁,再壓四角暗角)
+# 騎樓框(左右柱+頂梁+圓角)
 od.rectangle([0, 0, W * 0.045, H], fill=(16, 11, 8, 255))
 od.rectangle([W * 0.955, 0, W, H], fill=(16, 11, 8, 255))
 od.rectangle([0, 0, W, H * 0.06], fill=(16, 11, 8, 255))
 od.pieslice([W * 0.045 - 260, H * 0.06 - 10, W * 0.045 + 260, H * 0.06 + 510], 180, 270, fill=(16, 11, 8, 255))
 od.pieslice([W * 0.955 - 260, H * 0.06 - 10, W * 0.955 + 260, H * 0.06 + 510], 270, 360, fill=(16, 11, 8, 255))
 
+# 霓虹燈牌x2:掛在騎樓柱上(不浮空=9/14 v1 教訓),抽象霓虹管不寫假店名
+lb = [W * 0.045 + 8, H * 0.42, W * 0.045 + 92, H * 0.66]
+od.rounded_rectangle(lb, radius=18, fill=(12, 9, 16, 255))
+neon_rrect(lb, (255, 70, 170))
+for i in range(3):
+    yy = H * (0.46 + i * 0.055)
+    od.line([(lb[0] + 20, yy), (lb[2] - 20, yy)], fill=(255, 120, 200, 210), width=5)
+rb = [W * 0.955 - 92, H * 0.34, W * 0.955 - 8, H * 0.56]
+od.rounded_rectangle(rb, radius=18, fill=(9, 12, 16, 255))
+neon_rrect(rb, (70, 220, 255))
+for i in range(3):
+    yy = H * (0.38 + i * 0.05)
+    od.line([(rb[0] + 20, yy), (rb[2] - 20, yy)], fill=(140, 240, 255, 210), width=5)
+
 img = Image.alpha_composite(img.convert("RGBA"), ov)
 
-# 文字層:頻道名+曲名+BPM(不打 logo、不用客戶資訊)
-# 字型逐字驗證:挑第一個「標題每個字都有字形」的face(Songti 某些 face 缺鹽/頭/慶等繁字)
+# 文字層:字型逐字驗證(Songti 部分 face 缺鹽/頭/慶等繁字,9/14 教訓)
 td = ImageDraw.Draw(img)
 CAND = [("/System/Library/Fonts/Supplemental/Songti.ttc", i) for i in range(6)] + \
        [("/System/Library/Fonts/PingFang.ttc", i) for i in range(4)]
@@ -116,8 +151,10 @@ except Exception:
 tag = "M A P   T A B L E   R A D I O"
 td.text((W * 0.075 + 3, H * 0.115 + 3), tag, font=eng, fill=(0, 0, 0, 120))
 td.text((W * 0.075, H * 0.115), tag, font=eng, fill=(242, 205, 148, 255))
-td.line([(W * 0.075, H * 0.175), (W * 0.075 + 620, H * 0.175)], fill=(196, 162, 101, 220), width=4)
-td.text((W * 0.075 + 4, H * 0.215 + 4), title, font=serif, fill=(0, 0, 0, 140))
+td.line([(W * 0.075, H * 0.175), (W * 0.075 + 620, H * 0.175)], fill=(120, 235, 255, 220), width=4)
+# 標題:青/洋紅色差殘影(cyberpunk chromatic)+ 主字奶油白
+td.text((W * 0.075 - 5, H * 0.215), title, font=serif, fill=(90, 230, 255, 150))
+td.text((W * 0.075 + 5, H * 0.215 + 3), title, font=serif, fill=(255, 70, 170, 140))
 td.text((W * 0.075, H * 0.215), title, font=serif, fill=(255, 244, 228, 255))
 sub = f"{bpm} BPM / instrumental" if bpm else "instrumental"
 td.text((W * 0.075, H * 0.335), sub, font=serif_s, fill=(226, 188, 138, 255))
@@ -129,15 +166,28 @@ PYEOF
 rc=$?
 [ $rc -eq 0 ] || { echo "FATAL: 繪圖失敗 rc=$rc"; exit $rc; }
 
+# C2 微動畫 loop(類 lofi girl):呼吸變焦 24s 無縫,25fps 600 幀,sin 全週期=首尾同幀
+FFMPEG="/opt/homebrew/bin/ffmpeg"
+if [ -x "$FFMPEG" ]; then
+  "$FFMPEG" -y -loglevel error -loop 1 -i "$OUT" \
+    -vf "zoompan=z='1.02+0.012*sin(2*PI*on/600)':d=600:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=1920x1080:fps=25" \
+    -frames:v 600 -c:v libx264 -preset medium -crf 20 -pix_fmt yuv420p "$LOOP" \
+    && echo "[ok] loop -> $LOOP (24s seamless)" \
+    || echo "[warn] loop 產出失敗,靜圖照常交付"
+  [ -f "$LOOP" ] && "$FFMPEG" -y -loglevel error -ss 6 -i "$LOOP" -frames:v 1 "$PREVIEW" \
+    && echo "[ok] preview -> $PREVIEW"
+else
+  echo "[warn] ffmpeg 不在 /opt/homebrew/bin,跳過 loop"
+fi
+
 # 上 Drive anyone-reader(venv python;token 不回顯)
-"$HB/bot/venv/bin/python" - "$OUT" <<'PYEOF' 2>&1 | grep -v FutureWarning
-import json, socket, sys, time
-socket.setdefaulttimeout(180)
+"$HB/bot/venv/bin/python" - "$OUT" "$LOOP" <<'PYEOF' 2>&1 | grep -v FutureWarning
+import json, os, socket, sys, time
+socket.setdefaulttimeout(300)
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 
-path = sys.argv[1]
 info = json.load(open("/Users/pagemacmini/.claude/mcp-keys/google-token.json"))
 info.pop("expiry", None)
 creds = Credentials.from_authorized_user_info(info)
@@ -147,16 +197,20 @@ def retry(fn, n=3):
     for i in range(n):
         try:
             return fn()
-        except Exception as e:
+        except Exception:
             if i == n - 1:
                 raise
             time.sleep(5)
 
-name = path.split("/")[-1]
-media = MediaFileUpload(path, mimetype="image/png")
-f = retry(lambda: drive.files().create(body={"name": f"MTR-{name}"}, media_body=media, fields="id").execute())
-fid = f["id"]
-retry(lambda: drive.permissions().create(fileId=fid, body={"type": "anyone", "role": "reader"}).execute())
-print(f"[drive] https://drive.google.com/file/d/{fid}/view")
+for path in sys.argv[1:]:
+    if not os.path.exists(path):
+        continue
+    name = path.split("/")[-1]
+    mime = "video/mp4" if path.endswith(".mp4") else "image/png"
+    media = MediaFileUpload(path, mimetype=mime, resumable=True)
+    f = retry(lambda: drive.files().create(body={"name": f"MTR-{name}"}, media_body=media, fields="id").execute())
+    fid = f["id"]
+    retry(lambda: drive.permissions().create(fileId=fid, body={"type": "anyone", "role": "reader"}).execute())
+    print(f"[drive] {name} https://drive.google.com/file/d/{fid}/view")
 PYEOF
 echo "[done] mtr_cover_gen $TODAY"

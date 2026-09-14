@@ -50,7 +50,7 @@ with sync_playwright() as p:
     browser.close()
 PYEOF
 
-# 上 Drive anyone-reader(venv python;token 不回顯)
+# 上 Drive:固定更新同一組 file id(連結不變,Owner 手上舊連結永遠開到最新版;token 不回顯)
 "$HB/bot/venv/bin/python" - "$OUTDIR/landing_v5_mobile_$TODAY.png" "$OUTDIR/landing_v5_desktop_$TODAY.png" <<'PYEOF' 2>&1 | grep -v FutureWarning
 import json, os, socket, sys, time
 socket.setdefaulttimeout(300)
@@ -72,14 +72,18 @@ def retry(fn, n=3):
                 raise
             time.sleep(5)
 
+FIDS = {
+    "mobile": "1BSptKalvaAho9qTZQG36nw3zPOisJA0p",
+    "desktop": "1PCo73QhVfDeGpDIj7EUY0sRh5bUNIAFK",
+}
 for path in sys.argv[1:]:
     if not os.path.exists(path):
         continue
     name = path.split("/")[-1]
+    kind = "mobile" if "mobile" in name else "desktop"
+    fid = FIDS[kind]
     media = MediaFileUpload(path, mimetype="image/png", resumable=True)
-    f = retry(lambda: drive.files().create(body={"name": name}, media_body=media, fields="id").execute())
-    fid = f["id"]
-    retry(lambda: drive.permissions().create(fileId=fid, body={"type": "anyone", "role": "reader"}).execute())
-    print(f"[drive] {name} https://drive.google.com/file/d/{fid}/view")
+    retry(lambda: drive.files().update(fileId=fid, media_body=media, body={"name": name}).execute())
+    print(f"[drive-updated] {name} https://drive.google.com/file/d/{fid}/view")
 PYEOF
 echo "[done] landing_v5_preview $TODAY"

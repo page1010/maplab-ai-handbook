@@ -114,6 +114,8 @@
     font-family:"Avenir Next","PingFang TC",sans-serif;
     font-size:13px;letter-spacing:.22em;color:var(--accent);opacity:.85;
   }
+  .trust .sub{font-family:"PingFang TC",sans-serif;font-size:14px;color:var(--muted);letter-spacing:.06em;margin-top:8px;}
+  .trust .logo-wall{max-width:880px;margin:36px auto 0;filter:grayscale(1);opacity:.85;mix-blend-mode:multiply;}
 
   /* v5 新增三塊:輕量信任條(R21)/好評實錄(R17)/報價三步(R18) */
   .trustbar{font-family:"Avenir Next","PingFang TC",sans-serif;text-align:center;padding:26px 24px;border-bottom:1px solid var(--hair);}
@@ -178,7 +180,7 @@
     <span><b>2016</b>&nbsp;年深耕台南</span>
     <span>開幕・企業・婚宴・私人派對</span>
   </div>
-  <div class="brands">工研院・成大醫院・聯華電子・中鋼・誠品・VOLVO 等品牌合作</div>
+  <!-- (5277)文字品牌列撤除:企業感要 logo 牆不是文字,合作名單移至下方 logo 牆區 -->
 </div>
 
 <!-- 2. 開場一句 -->
@@ -259,7 +261,7 @@
     <div class="shot"><img loading="lazy" decoding="async" src="../../data/takeout-menu/terms/terms_15.png" alt="台南生日派對外燴 客人IG回饋 鹹甜食區餐檯"></div>
     <div class="shot"><img loading="lazy" decoding="async" src="../../data/takeout-menu/terms/terms_17.png" alt="台南外帶派對盒 客人私訊回饋 餐點大家都好滿意"></div>
   </div>
-  <p class="note">婚宴、開幕茶會、生日派對到外帶派對盒——都是客人自己發的分享，原樣截圖。</p>
+  <!-- (5277 拿掉)原註記「都是客人自己發的分享,原樣截圖」=對 Owner 的查核語氣,非對客文案 -->
 </section>
 
 <hr class="hairline">
@@ -275,7 +277,15 @@
   </div>
 </section>
 
-<!-- 6.(v5 併入首屏下信任條 R21)原 900+ 信任帶與十二家品牌列上移精選;避免同數字出現兩次 -->
+<!-- 6. 合作企業 logo 牆(Owner 5277 回歸+升級):圖=現站首頁既有 logo 牆(自家已發布資產,約 38 家真實合作
+     名單,alt 出處 wp-image-1502);灰階+multiply 混入米底=對標站/管顧站的單色低調質感。
+     名單定案後用向量原檔重建(win-01 已備 7 家,見 agent-bus drafts/win-01/logos/README)。 -->
+<section class="trust">
+  <div class="kicker">Trusted By</div>
+  <div class="big">合作過的企業與機構</div>
+  <p class="sub">科技、醫療、車廠到公部門的正式場合。</p>
+  <img class="logo-wall" loading="lazy" decoding="async" src="https://www.maplabkitchen.com/wp-content/uploads/2026/03/corporate-our-parters.webp" alt="多家企業與機構合作品牌 Logo 展示 涵蓋科技醫療與建設產業">
+</section>
 
 <hr class="hairline">
 

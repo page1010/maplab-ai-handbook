@@ -164,7 +164,18 @@ R26. 現況盤點(post-sitemap.xml 實抓,2026-09-14):全站 56 篇文章;首頁
   (slug 可見重疊例:vs-restaurant 與 vs-restaurant-private-room 兩篇;venue-guide/
   venue-selection-2026/wai-hui-chang-di-tui-jian-2023 三篇搶同一詞;buffet-menu 與
   buffet-vs-traditional);無搜尋意圖→改寫或 301 到最近支柱文。不直接刪,301 保權重。
-- 待 Owner:匯出 Search Console 近 12 個月頁面報表(或主視窗通道恢復由我拉)→出 56 篇去留清單。
+- ~~待 Owner:匯出 Search Console 近 12 個月頁面報表(或主視窗通道恢復由我拉)→出 56 篇去留清單。~~
+  **→ 5289(2026-09-14T17:04:34)已解:google-token 本就含 webmasters.readonly,SC API 直拉成功
+  (Chrome cookie 複本與 AppleScript 兩路都被擋,不需再試)。數據=data/sc-probe/*.csv
+  (218 頁+60 關鍵字,2025-09-14~2026-09-13)。56 篇去留清單已交付 Owner:
+  https://docs.google.com/spreadsheets/d/1wygavr781-MkPAUOi3JovnU3_R6nTZXeiPzoe7A7CN4/edit**
+- 5289 數據結論:教學文=流量主力(野餐盒 476/場地2023 334/費用指南 217/週歲 154/開幕 144/
+  性別揭曉 125/開幕點子 114/長輩壽宴 103);合併三組(場地三篇/餐廳比較兩篇/buffet 兩篇);
+  14 篇整年 0 點擊逐篇標處置。「台南外燴」平均排名 7.5=改版後主指標。
+- ⚠️ 待修:http://maplabkitchen.com/ 整年 23788 曝光 0.65% CTR(排名 17.8)=http→https
+  轉址/canonical 要查,進 WP 輪一併處理。
+- R24 前提更新:**招募頁已存在**(join-maplab-catering-partner,整年 7 點擊)——頁尾直接連它,
+  不需新建 WP 草稿頁。
 
 ## 目前狀態(2026-09-13 11:1x)
 

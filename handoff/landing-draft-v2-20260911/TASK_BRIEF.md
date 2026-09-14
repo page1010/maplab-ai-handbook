@@ -204,3 +204,5 @@ R26. 現況盤點(post-sitemap.xml 實抓,2026-09-14):全站 56 篇文章;首頁
 - 現站前台事實:首頁=page id 1250(slug homepage-v2)、**Elementor 製**(hello-elementor 主題+ehf header/footer)→REST 改 content 不會改變渲染;可行路=建新頁承載 landing HTML→驗證→settings 切 page_on_front(一鍵可回滾回 1250)。http 三變體轉址實測都到 https://www.maplabkitchen.com/(hop 狀態碼 301/302 交 win-01 查)。
 - win-01 狀態:heartbeat 活(17:25)但 status=stalled、9/12 03:45 後 outbox 無產出、inbox 壓 4 張舊卡;上輪 dispatch-refresh 回執=「timeout 1400s 中斷」。已發卡 win01-seo-inventory-execute-20260914(第 0 條=先回報停擺原因),5296 後修訂:合併草稿/meta 由 mac-a0 用自有 Hermes 1000 次產出,win 的 Hermes 歸 win 用;Claude 額度只買「動站」。
 - **關鍵字註冊表(5296 交付)**:Sheet「關鍵字註冊表」分頁+本資料夾 KEYWORD_REGISTRY.md。規則三條:寫新文先查表;一意圖一主文;要搶已註冊詞先裁決。首頁主詞=台南外燴/台南外燴推薦/台南到府外燴/小型外燴台南。
+- Owner 5298 原話(2026-09-14T17:56:39):「不對 更早之前就申請agent專用還有存在notion 更何況第二條路是chrome用我預設密碼也可以進去 所以你沒有推託的理由 不過要先給我看最終成果900+ 是否有立體感？ 還有沒有不恰當用字」
+- 5298 交付:①stat 三卡立體感=實底 #fffdf8+border-top 2px 金線+雙層柔影(0 1px 2px/0 10px 26px),直角語彙不變,兩視口 QA 目檢 PASS;②用字全頁掃描=U+3000 0/NTD 0/無保證·第一·唯一·頂級·絕對;唯一上呈點=首屏「台南**最**會辦派對的外燴團隊」的最高級用語(公平會舉證風險),已給 Owner 圈 A 保留/B 改「專辦」。③win-01 於 17:55 接走 SEO 盤點卡(state=running)=原生 WP 通道復活,切換走 win-01。等 Owner:圈 A/B+整頁點頭→啟動切換。

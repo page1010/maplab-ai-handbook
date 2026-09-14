@@ -194,3 +194,13 @@ R26. 現況盤點(post-sitemap.xml 實抓,2026-09-14):全站 56 篇文章;首頁
 1. Owner 圈 v4 QA 截圖:OK → 進 WP draft(標題/meta/網址全不動,只換首頁內容);要改 → 圈點直接改。
 2. 上線前抄 Search Console 帶流量字存檔;上線後兩週盯曲線,掉字回舊版(WP 版本紀錄)。
 3. 小肚肚成交後:三場合入口的開幕格換真案例。
+
+## R27(2026-09-14 5294+5296)上線授權+關鍵字註冊表+win-01 派工
+
+- Owner 5294 原話(2026-09-14T17:35:30):「1.你今天負責讓landing page 上線，2.規劃修改win os 確認他的狀態與協作狀態讓他做seo盤點並發任務過去給他跟Hermes 協作可以有效把額度花在刀口嗎？」
+- Owner 5296 原話(2026-09-14T17:50:30):「那邊是win的hermes. ,你有自己的hermes有自己的1000次要用 首頁好了給我確認，要付seo關鍵字設定的說明與存檔，讓我們自己寫文不要搶自己關鍵字」
+- 5294=等待中的「上」授權;5296 追加程序:**首頁好了先給 Owner 確認再切**。確認包(手機+桌機最新截圖,固定兩條 Drive 連結)已於 5296b 送出,等 Owner 點頭。
+- **上線通道事實(重要)**:WP 上稿密碼(NOTION_TOKEN→Notion vault→App Password)依 WIN01_AUTONOMY_20260820 設計**只存在 win-01 runtime**;Mac 整機查過(launchd plists/keychain/shell profiles/bot .env/mcp-keys)確無。故切換執行=win-01,或屆時另議一次性授權。
+- 現站前台事實:首頁=page id 1250(slug homepage-v2)、**Elementor 製**(hello-elementor 主題+ehf header/footer)→REST 改 content 不會改變渲染;可行路=建新頁承載 landing HTML→驗證→settings 切 page_on_front(一鍵可回滾回 1250)。http 三變體轉址實測都到 https://www.maplabkitchen.com/(hop 狀態碼 301/302 交 win-01 查)。
+- win-01 狀態:heartbeat 活(17:25)但 status=stalled、9/12 03:45 後 outbox 無產出、inbox 壓 4 張舊卡;上輪 dispatch-refresh 回執=「timeout 1400s 中斷」。已發卡 win01-seo-inventory-execute-20260914(第 0 條=先回報停擺原因),5296 後修訂:合併草稿/meta 由 mac-a0 用自有 Hermes 1000 次產出,win 的 Hermes 歸 win 用;Claude 額度只買「動站」。
+- **關鍵字註冊表(5296 交付)**:Sheet「關鍵字註冊表」分頁+本資料夾 KEYWORD_REGISTRY.md。規則三條:寫新文先查表;一意圖一主文;要搶已註冊詞先裁決。首頁主詞=台南外燴/台南外燴推薦/台南到府外燴/小型外燴台南。

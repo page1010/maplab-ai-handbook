@@ -119,16 +119,17 @@
 
   /* v5 新增三塊:輕量信任條(R21)/好評實錄(R17)/報價三步(R18) */
   /* (5283)數字框框恢復:v5 併信任條時被我壓成一行純文字,Owner 指正=有說服力的數字要框凸顯 */
-  /* (5298)立體感:實底白卡+雙層柔影浮出米色底,金線壓頂;沿用全站直角語彙不加圓角 */
-  .trustbar{font-family:"Avenir Next","PingFang TC",sans-serif;text-align:center;padding:34px 24px 36px;border-bottom:1px solid var(--hair);}
-  .trustbar .nums{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;font-size:12.5px;letter-spacing:.14em;}
+  /* (5298→5303)立體感二修:前版陰影太含蓄手機上看不出,Owner 指正;
+     改純白卡+3px 金線+重雙層影+數字加大到 36px,直角語彙不變 */
+  .trustbar{font-family:"Avenir Next","PingFang TC",sans-serif;text-align:center;padding:38px 24px 42px;border-bottom:1px solid var(--hair);}
+  .trustbar .nums{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;font-size:12.5px;letter-spacing:.14em;}
   .trustbar .nums span{
-    border:1px solid var(--hair);border-top:2px solid var(--gold);
-    padding:18px 26px 16px;min-width:150px;background:#fffdf8;
-    box-shadow:0 1px 2px rgba(58,44,30,.06),0 10px 26px rgba(58,44,30,.10);
+    border:1px solid var(--hair);border-top:3px solid var(--gold);
+    padding:22px 30px 20px;min-width:158px;background:#fff;
+    box-shadow:0 2px 4px rgba(58,44,30,.10),0 18px 38px rgba(58,44,30,.20);
   }
-  .trustbar .nums b{display:block;font-weight:600;font-size:27px;letter-spacing:.04em;color:var(--accent);margin-bottom:6px;}
-  .trustbar .nums .scenes b{font-size:15px;letter-spacing:.1em;padding-top:9px;}
+  .trustbar .nums b{display:block;font-weight:700;font-size:36px;letter-spacing:.03em;color:var(--accent);margin-bottom:7px;}
+  .trustbar .nums .scenes b{font-size:16px;letter-spacing:.1em;padding-top:13px;}
   .trustbar .brands{margin-top:10px;font-size:11.5px;letter-spacing:.2em;color:var(--muted);}
   .reviews{text-align:center;}
   .review-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;max-width:1060px;margin:40px auto 0;}

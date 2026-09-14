@@ -118,9 +118,12 @@
   .trust .logo-wall{max-width:880px;margin:36px auto 0;filter:grayscale(1);opacity:.85;mix-blend-mode:multiply;}
 
   /* v5 新增三塊:輕量信任條(R21)/好評實錄(R17)/報價三步(R18) */
-  .trustbar{font-family:"Avenir Next","PingFang TC",sans-serif;text-align:center;padding:26px 24px;border-bottom:1px solid var(--hair);}
-  .trustbar .nums{display:flex;justify-content:center;gap:12px 38px;flex-wrap:wrap;font-size:13px;letter-spacing:.16em;}
-  .trustbar .nums b{font-weight:600;color:var(--accent);}
+  /* (5283)數字框框恢復:v5 併信任條時被我壓成一行純文字,Owner 指正=有說服力的數字要框凸顯 */
+  .trustbar{font-family:"Avenir Next","PingFang TC",sans-serif;text-align:center;padding:30px 24px;border-bottom:1px solid var(--hair);}
+  .trustbar .nums{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;font-size:12.5px;letter-spacing:.14em;}
+  .trustbar .nums span{border:1px solid var(--hair);padding:16px 26px;min-width:150px;background:rgba(255,255,255,.45);}
+  .trustbar .nums b{display:block;font-weight:600;font-size:27px;letter-spacing:.04em;color:var(--accent);margin-bottom:6px;}
+  .trustbar .nums .scenes b{font-size:15px;letter-spacing:.1em;padding-top:9px;}
   .trustbar .brands{margin-top:10px;font-size:11.5px;letter-spacing:.2em;color:var(--muted);}
   .reviews{text-align:center;}
   .review-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;max-width:1060px;margin:40px auto 0;}
@@ -176,9 +179,9 @@
      品牌列=v4 十二家中精選六家,完整名單見 git v4 版。 -->
 <div class="trustbar">
   <div class="nums">
-    <span><b>900+</b>&nbsp;份活動提案</span>
-    <span><b>2016</b>&nbsp;年深耕台南</span>
-    <span>開幕・企業・婚宴・私人派對</span>
+    <span><b>900+</b>份活動提案</span>
+    <span><b>2016</b>年深耕台南</span>
+    <span class="scenes"><b>開幕・企業・婚宴・派對</b>服務場景</span>
   </div>
   <!-- (5277)文字品牌列撤除:企業感要 logo 牆不是文字,合作名單移至下方 logo 牆區 -->
 </div>

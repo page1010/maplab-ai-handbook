@@ -33,6 +33,7 @@
 | A2 SEO 草稿發布（婚禮 pillar + gender-reveal） | A2 | ⏸️ 等 Owner 核准 | Owner review `workbook/outputs/seo-gap-drafts/` 草稿後授權 WP 發布 |
 | A2/A3 Round 008 圖片插入 + 發布 | A2/A3 | ⏸️ 阻塞（Chrome extension file chooser Not allowed） | Owner 開啟 Codex Chrome extension file URL access |
 | T-HQ-001 三個 launchctl load | HQ | ⏳ 代碼完成，等 Owner 執行 | Owner 跑三個 `launchctl load` 指令（見 T-HQ-001.md） |
+| weekly-eval-compounding 修復（Owner 5247 追問，2026-09-14 開卡） | A0/Fable5 | 🔴 連三週失敗（08-30 timeout、09-06/09-14 Codex models cache 壞：missing field base_instructions；且 TELEGRAM token 未設=失敗通知靜默） | 清 Codex models cache 或升級 codex-cli 後手動重跑 `scripts/weekly_eval_compounding.py` 驗證；補 launchd plist 的 TELEGRAM_BOT_TOKEN/CHAT_ID 環境變數讓失敗會叫人；09-21（週一 01:00）排程驗收 |
 
 ---
 

@@ -3,10 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>【離線草稿】MAPLAB 首頁改版 v4 — 單一動線場景版（未發布）</title>
+<title>【離線草稿】MAPLAB 首頁改版 v5 — 場景×信任×成交版（未發布）</title>
 <style>
-  /* v4:R13 單一動線=先看場景再詢價,menu 併進場景;R11 全真素材真連結;
-     R12 首屏只載 hero 一張圖,其餘 lazy;R14 統包低調帶入;R15 三場合入口。
+  /* v5:R21 序=首屏→輕量信任條→場景流→好評實錄→報價三步→FAQ→CTA(ibest 五段×5180 先看場景);
+     R17 好評實錄=真實 IG 回饋截圖;R18 報價三步。承 v4:R13 單一動線,R11 全真素材真連結,
+     R12 首屏只載 hero 一張圖,其餘 lazy;R14 統包低調帶入。
      視覺層沿用 v3 對標語彙(襯線大標/滿版照壓白字/細字距 kicker/髮絲線/深棕帶)。
      R6:cover 只用於純照片;R10:本版十張圖全部對得到實際案場文章。 */
   :root{
@@ -114,6 +115,24 @@
     font-size:13px;letter-spacing:.22em;color:var(--accent);opacity:.85;
   }
 
+  /* v5 新增三塊:輕量信任條(R21)/好評實錄(R17)/報價三步(R18) */
+  .trustbar{font-family:"Avenir Next","PingFang TC",sans-serif;text-align:center;padding:26px 24px;border-bottom:1px solid var(--hair);}
+  .trustbar .nums{display:flex;justify-content:center;gap:12px 38px;flex-wrap:wrap;font-size:13px;letter-spacing:.16em;}
+  .trustbar .nums b{font-weight:600;color:var(--accent);}
+  .trustbar .brands{margin-top:10px;font-size:11.5px;letter-spacing:.2em;color:var(--muted);}
+  .reviews{text-align:center;}
+  .review-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;max-width:1060px;margin:40px auto 0;}
+  @media(min-width:768px){.review-grid{grid-template-columns:repeat(4,1fr);gap:20px;}}
+  .review-grid .shot{aspect-ratio:9/16;overflow:hidden;border:1px solid var(--hair);}
+  .review-grid img{height:100%;object-fit:cover;object-position:top;}
+  .reviews .note{font-family:"PingFang TC",sans-serif;font-size:13px;color:var(--muted);letter-spacing:.06em;margin-top:14px;}
+  .steps{max-width:1060px;margin:40px auto 0;display:grid;gap:32px;text-align:left;}
+  @media(min-width:768px){.steps{grid-template-columns:repeat(3,1fr);gap:44px;}}
+  .step{border-top:1px solid var(--hair);padding-top:20px;}
+  .step .no{font-family:"Avenir Next","PingFang TC",sans-serif;font-size:12px;letter-spacing:.3em;color:var(--gold);}
+  .step b{display:block;font-weight:500;font-size:18px;letter-spacing:.08em;margin:8px 0 6px;}
+  .step p{font-family:"PingFang TC",sans-serif;font-size:13.5px;color:var(--muted);letter-spacing:.04em;}
+
   .faq{max-width:640px;margin:0 auto;}
   .faq details{border-top:1px solid var(--hair);padding:16px 4px;}
   .faq details:last-of-type{border-bottom:1px solid var(--hair);}
@@ -136,7 +155,7 @@
 </head>
 <body>
 
-<div class="draftbar">離線改版草稿 v4（2026-09-13）— 僅供 Owner 檢查，未發布、不代表線上內容</div>
+<div class="draftbar">離線改版草稿 v5（2026-09-14）— 僅供 Owner 檢查，未發布、不代表線上內容</div>
 
 <!-- 1. Hero：首屏唯一圖片(R12 2.5s)。圖=美妝品牌高峰會現場,出處=corporate-catering-tainan 文章 -->
 <header class="hero">
@@ -149,6 +168,18 @@
     <a class="btn-line" href="https://lin.ee/IP8nt4n">聊聊你的活動</a>
   </div>
 </header>
+
+<!-- 1b. 輕量信任條(v5 R21,ibest 信任背書前置)。數字皆實數:提案 932 份、品牌標誌 est 2016。
+     Google 星等:本沙盒查證不了 GBP 實際星等,依 R8 不虛構暫不放,查證後可補一格。
+     品牌列=v4 十二家中精選六家,完整名單見 git v4 版。 -->
+<div class="trustbar">
+  <div class="nums">
+    <span><b>900+</b>&nbsp;份活動提案</span>
+    <span><b>2016</b>&nbsp;年深耕台南</span>
+    <span>開幕・企業・婚宴・私人派對</span>
+  </div>
+  <div class="brands">工研院・成大醫院・聯華電子・中鋼・誠品・VOLVO 等品牌合作</div>
+</div>
 
 <!-- 2. 開場一句 -->
 <section class="intro">
@@ -216,6 +247,23 @@
 
 <!-- 4.(已撤)三場合入口 R15「你的場合，我們會準備什麼」— Owner 5258 裁定先不要放,2026-09-14 移除 -->
 
+<!-- 4b. 好評實錄(v5 R17 回歸):四張=客人公開發佈的 IG 回饋原樣截圖,不虛構引言;
+     來源=data/takeout-menu/terms/(Owner 自站訂購須知頁素材,8/31 下載);
+     兒童清晰臉部的兩張(terms_04/11)落選。正式進 WP 時四張上傳媒體庫改站內 URL。 -->
+<section class="reviews">
+  <div class="kicker">Reviews</div>
+  <h2>客人辦完活動怎麼說</h2>
+  <div class="review-grid">
+    <div class="shot"><img loading="lazy" decoding="async" src="../../data/takeout-menu/terms/terms_13.png" alt="台南戶外婚宴外燴 客人IG回饋 真心推薦"></div>
+    <div class="shot"><img loading="lazy" decoding="async" src="../../data/takeout-menu/terms/terms_14.png" alt="台南開幕茶會外燴 客人IG回饋 擺盤超美賓客掃光"></div>
+    <div class="shot"><img loading="lazy" decoding="async" src="../../data/takeout-menu/terms/terms_15.png" alt="台南生日派對外燴 客人IG回饋 鹹甜食區餐檯"></div>
+    <div class="shot"><img loading="lazy" decoding="async" src="../../data/takeout-menu/terms/terms_17.png" alt="台南外帶派對盒 客人私訊回饋 餐點大家都好滿意"></div>
+  </div>
+  <p class="note">婚宴、開幕茶會、生日派對到外帶派對盒——都是客人自己發的分享，原樣截圖。</p>
+</section>
+
+<hr class="hairline">
+
 <!-- 5. 台南在地帶。圖=大學 EMBA 音樂會茶歇,出處=corporate-tea-party-desserts 文章 -->
 <section class="local">
   <img loading="lazy" decoding="async" src="https://www.maplabkitchen.com/wp-content/uploads/2026/06/maplab-university-emba-concert-tea-break.avif" alt="台南到府外燴 戶外樹下長桌茶歇">
@@ -227,14 +275,21 @@
   </div>
 </section>
 
-<!-- 6. 信任帶:900+ 提案為實數(932 份);logo 名直接落畫布 -->
-<section class="trust">
-  <div class="kicker">Trusted By</div>
-  <div class="big">900+ 份活動提案的經驗</div>
-  <div class="logo-row">
-    <span>工研院</span><span>成大醫院</span><span>奇美醫院</span><span>聯華電子</span>
-    <span>中鋼</span><span>富邦</span><span>和泰汽車</span><span>誠品</span>
-    <span>樂高</span><span>VOLVO</span><span>中興工程</span><span>興富發</span>
+<!-- 6.(v5 併入首屏下信任條 R21)原 900+ 信任帶與十二家品牌列上移精選;避免同數字出現兩次 -->
+
+<hr class="hairline">
+
+<!-- 6b. 報價三步(v5 R18):回答「怎麼知道報價/可以買到什麼」;三步=Owner 自站服務流程圖節錄 -->
+<section>
+  <div class="wrap" style="text-align:center">
+    <div class="kicker">How It Works</div>
+    <h2>怎麼報價</h2>
+    <div class="steps">
+      <div class="step"><span class="no">STEP 1</span><b>LINE 告訴我們</b><p>日期、人數、場合與場地，一句話就能開始。</p></div>
+      <div class="step"><span class="no">STEP 2</span><b>收到菜單提案</b><p>菜單跟著場合客製，看得到吃什麼、多少錢。</p></div>
+      <div class="step"><span class="no">STEP 3</span><b>確認檔期</b><p>付訂保留檔期，活動當天我們提前到場設置佈置。</p></div>
+    </div>
+    <a class="btn-line" href="https://lin.ee/IP8nt4n" style="margin-top:44px">LINE 詢價</a>
   </div>
 </section>
 

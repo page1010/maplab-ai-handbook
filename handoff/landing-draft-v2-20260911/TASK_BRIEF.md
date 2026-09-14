@@ -94,7 +94,12 @@ R22. **執行授權**:R16「先提案經 Owner 圈選才動工」的閘,對「�
   皆客人公開發佈原樣截圖;terms_04/11 因兒童清晰臉部落選)、原 900+ 信任帶併入上方信任條、
   報價三步(LINE 告知→菜單提案→付訂確認檔期,節錄自 Owner 自站服務流程圖)、FAQ、CTA 收尾。
 - 好評圖暫用 repo 相對路徑(../../data/takeout-menu/terms/);進 WP 時上傳媒體庫換站內 URL。
-- 待補:本窗無瀏覽器,390/1280 機器閘+QA 截圖由主視窗補跑(含 5258 移除段驗證)。
+- ~~待補:本窗無瀏覽器,390/1280 機器閘+QA 截圖由主視窗補跑~~
+  **→ 5274(2026-09-14T11:31:52)Owner 要預覽圖回手機,bot 窗實測自己能跑:系統 python3 有
+  playwright+已裝 Chrome(channel=chrome)。390x844(scale2)/1280x800 真視口 full_page 截圖
+  已交付,目檢=四場景照+四好評圖+在地帶背景全載入、無截斷。QA 截圖 Drive:
+  mobile=1BSptKalvaAho9qTZQG36nw3zPOisJA0p,desktop=1PCo73QhVfDeGpDIj7EUY0sRh5bUNIAFK。
+  兩個截圖教訓入 scripts/landing_v5_preview.sh 註解:大窗截圖破壞 vh 比例;lazy 圖要先捲動觸發。**
 
 ## 目前狀態(2026-09-13 11:1x)
 

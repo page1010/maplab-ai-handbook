@@ -1,9 +1,10 @@
 ## 2026-09-17 接續結果指標（原任務 win01-homepage-golive-20260914）
 
-- **LIVE_DEPLOYMENT_CONFIRMED / PUBLIC_UI_QA_COMPLETE / FIXES_REQUIRED**。Owner 5307 的上線直令完整保留；本輪只驗收已上線頁面，沒有重新發布或改 WordPress。
+- **LIVE_DEPLOYMENT_CONFIRMED / PUBLIC_UI_QA_COMPLETE / REMAINING_FIXES_REQUIRED**。Owner 5307 的上線直令完整保留。09-17 上午驗收沒有改 WordPress；16:00 依 Owner 新截圖修正兩個錯字，已儲存並讀回正式頁。
 - 現站首頁為 page **2033**（publish／elementor_canvas，公開 REST modified `2026-09-16T21:34:01`）；父代理 09-17 約 08:37 後台可視 readback 確認 page **1250 仍保留為草稿**。不把舊 bus `blocked` 當成尚未發布。
 - 獨立匿名瀏覽器 390×844／1280×800 已留真正 live 全頁截圖：無橫捲、11/11 實圖載入、九個 LINE href 一致、七條站內連結 HTTP 200、三個 FAQ 在兩視口均完成開關。沒有發 LINE 訊息或更新 Drive。
-- 已定位待修：live「怎麼報僺」「設置佉置」與兩處 alt 異常字；FAQ「大量例」與 local「20 例」不一致；正文 14.5px／流程 13.5px／連結 12px 未達既有 16px 門檻；R24 招募／案例總覽入口尚缺。因此不能宣稱整體 QA_PASS 或轉化改善。
+- 09-17 16:00 已修並 live 驗證：「怎麼報僺」→「怎麼報價」、「設置佉置」→「設置佈置」，只改兩個字；390／1280 視口回讀正確且無橫捲，公開 REST modified=`2026-09-17T16:00:59`。收據與接續 Prompt：`reviews/HOMEPAGE-TYPO-20260917/README.md`。
+- 剩餘待修：兩處 alt 異常字；FAQ「大量例」與 local「20 例」不一致；正文 14.5px／流程 13.5px／連結 12px 未達既有 16px 門檻；R24 招募／案例總覽入口尚缺。本次圈選錯字已完成，但不能宣稱整體 QA_PASS 或轉化改善。
 - 正典接續收據與 Resume：`reviews/TASK-RECOVERY-20260917/README.md`；量測 `live-results.json`；八張 live screenshots 與 artifact manifest 均在同目錄。下一步只修現有頁的已證缺項，再回填原 job/claim 的交付狀態；不重建 landing、不遺失 5307 原授權。10/14 成效回顧意圖仍需由原任務確保排程落地。
 - 原始需求、研究、Owner 原話與歷次裁定全部保留如下；舊 `COVERAGE.md`／gate hash 是歷史驗收，不冒充本輪全部 R1–R30 已過。
 

@@ -1,0 +1,16 @@
+{
+  "generatedAt": "2026-09-17T00:41:08.561Z",
+  "taskId": "win01-homepage-golive-20260914",
+  "files": [
+    {"file":"live-1280-faq-open.png","bytes":48942,"sha256":"f04c0e83fe6fb8cd62ef1ca7bffb02c5da4b4e9eadd0efacb2af9b169ea759e2"},
+    {"file":"live-1280-full.png","bytes":4388530,"sha256":"155b38a9f177acaf257f14ce33bfe9c667de10b7713686698af5e41340217254"},
+    {"file":"live-1280-quote-section.png","bytes":100989,"sha256":"261223ea380baa6b9ba17371425e5917c4760c00a43284d06410eb24606bb4cb"},
+    {"file":"live-1280-top.png","bytes":1119694,"sha256":"16c1c837acd21e442ba0ada9c0ed020e0777f22df817d905a23ea5b569be4e85"},
+    {"file":"live-390-faq-open.png","bytes":48782,"sha256":"d0e17bbf9b294d2f5c149a9f25e739f246edbc7af6b2bfca9bd6c6c76ca6da21"},
+    {"file":"live-390-full.png","bytes":1849972,"sha256":"c8e9491371e0642184d9a9e9516ac2a49d6fa40381155d44362bfe75951e942d"},
+    {"file":"live-390-quote-section.png","bytes":77464,"sha256":"292cc3819682b9067c8a2a9ae085b94e0805feebe93d0746c447d9bd6621a488"},
+    {"file":"live-390-top.png","bytes":388456,"sha256":"6248d1460ddb5bbf0462272afe11eb5e117b1fc9b92ac8f7e71fedd1d22d1e4a"},
+    {"file":"live-results.json","bytes":32722,"sha256":"e0372fa88dd17be28bc6eca1a7c629abc1347135af75fc4aab8afd0769b7691f"},
+    {"file":"live_qa.js","bytes":5594,"sha256":"6f195046631d59d35d25541f379060472a3c00de5e1c42805902fa3886ebdc21"}
+  ]
+}

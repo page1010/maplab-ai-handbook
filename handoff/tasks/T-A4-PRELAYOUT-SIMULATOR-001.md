@@ -7,6 +7,19 @@
 
 ## Acceptance
 
+### Owner scope correction — 2026-09-18 second turn
+
+Goal (latest Owner correction): inventory ALL equipment and maximize feasible event count and service volume, subject to menu/service quality, safety, transport, labor and turnaround constraints. Four simultaneous events of differing headcounts is a test case, NOT a fixed upper bound. Morning equipment may serve an evening event only after return, cleaning/inspection and transport buffers. The intended product is a proportional drag-and-place table/equipment "paper-doll" planner, followed by menu/conversation-assisted, human-readable staff picking/return instructions. Owner asks to reuse prior A4/A5 recognition/renaming search, verify Mina login and include finished setup photos and alternative evidence. Annual 100–200 events and hundreds of historical cases are Owner estimates, not yet audited denominators.
+
+First-principles review before execution:
+1. Ideal: enter each event's time/site/table/menu/headcount once; derive compatible packing/layout plans against one shared equipment pool, maximizing feasible service and showing shortages, turnaround opportunities and eligible idle alternatives. Staff can identify the exact item, quantity, shelf, event, pick/return time and corresponding diagram.
+2. Observed vs desired: previous 12-photo pack validated provenance only, not representative coverage or inventory completeness.
+3. Real vs assumed limits: pre-layout-only is a removable method constraint. Finished setup/closeup/storage/packing/purchase evidence can help; present count, dimensions and availability need independent current evidence.
+4. Minimal redesign: reuse current photo/quote indices, separate visual recognition from equipment identity/count/availability, then deterministic shared-resource constraints. No weight-training claim, new cloud provider or synthetic inventory promoted as real.
+5. Live proof: query existing local index/schema and source counts, verify signed-in Mina Photos, copy selected real candidates with hashes and record unreviewed coverage. Independent reviewer tests counts/duplicates and four-event constraints.
+
+This turn deliverables: expanded searchable/copyable candidate pool + documented coverage; corporate-culture rule for purpose-first alternate evidence; multi-event input/output and stop conditions. No production dispatch or purchasing.
+
 1. Visually confirmed pre-layout photos copied into one discoverable folder with source URL/path, original filename, hash, date evidence, quote match confidence and missing fields.
 2. Capture date and event date remain separate; dates from renamed year buckets are not EXIF proof. Ambiguous candidate quotes remain candidates.
 3. Equipment catalog distinguishes photo-observed type, measured dimensions, stock count and dish capacity. Unknowns remain null, not invented.
@@ -43,3 +56,23 @@ Refresh private generated handoff with `rtk proxy python3 scripts/prelayout_coll
 Run `rtk proxy python3 -m unittest discover -s tests -p test_prelayout_collection_report.py -v`, verify hashes and report idempotence, then update receipt.
 Simulated fit requires measured equipment footprint, height, shelf area and current stock; none yet measured. Do not infer from perspective photos or a shopping screenshot.
 No cloud publication, source-file mutation, customer messaging, or unapproved data egress. Continue this task, not stale SEO/LINE work.
+
+## 收尾與接續備忘 — 2026-09-18 18:1x(Writer: Fable5 bot 窗代跑;Owner 5369 指示入卡)
+
+Owner 原話(msg 5369, 2026-09-18T17:13:21):「當他寫紀錄讓他記得收尾與接續並注明你的意見與看法」。以下事實與意見分開標,codex 恢復額度後讀本節即接手,不需口頭交接。
+
+### 事實(Fable5 已代跑,有憑證)
+
+- 上節「Next Bounded Action」的 25 檔批次已由 Fable5 於 2026-09-18 執行完畢。報告:私有庫 資料/backup-batch-20260918-review.md;逐檔 sha256 與來源路徑:擴充候選/備份批次-20260918/staging-manifest.tsv。原檔零改動。
+- 備份夾實際位置已定位:~/Library/CloudStorage/GoogleDrive-lb99104@gmail.com/我的雲端硬碟/MAPLAB/MAPLAB_ASSETS/備份-2026maplab外燴紀錄-20260720,遞迴實數 492 檔(帳面 472 過時)。
+- 批次結果:24 張獨立影像全數人工目視,**0 張真空桌預擺照**;唯一入選 B15=0718 服飾店開幕「場地素桌 pre-setup」新類別(併桌未鋪巾)。19 張成品桌/食物、3 張無桌、1 張跨夾重複。
+- 重複實證:0621說事實木地板開幕 與 20260621說事實木地板開幕 兩夾含相同檔案(IMG_1400.HEIC sha256 一致)→ 472/492 非獨立數,去重未做。
+- 日期證據:24/25 檔 EXIF/HEIC creation 與夾名日期完全吻合(2026-06-12~07-19);B23 無 EXIF。
+- H002/H004/H005 未推進:2025 標註案與本 2026 備份夾無交集,未硬湊。
+- collection.json / verification.json 未動(保護 hash 鏈);本備忘與批次報告為新增檔,由 codex 決定如何併入 coverage。collection report 腳本與 unittest 未重跑(Fable5 bot 窗無 rtk proxy 通道)。
+
+### 【Fable5 意見】(僅供裁定,主導權在 codex)
+
+1. **本案瓶頸不是照片,是量尺。** 主庫多年 12 張+本批 0 張,證實團隊只拍成品桌;空桌預擺照存量趨近枯竭。模擬器需要的器具尺寸/庫存只能靠實測(器具量測清單.md 等 Owner/現場),照片降級為佈局參考即可,不建議再花大批檔次撈空桌照。
+2. **下批抽樣改法**:每夾改抽「拍攝時間最早的 1 張」(比檔名排序更可能落在擺桌前)+ _根目錄散檔 夾(約 200 檔)抽查;動工前先做 0621/20260621 兩夾去重。
+3. **收尾標準建議明訂進卡**:蒐集線可宣告階段性關閉(佈局參考已足量:本批另有 10 張成品桌全景可用),模擬器動工不必等 492 檔全審完;SIMULATOR_NOT_IMPLEMENTED 的解鎖條件建議寫成「首批 ≥N 件實測器具入冊」而非「照片蒐集完成」,避免無限期蒐集。

@@ -7,3 +7,5 @@
 20260918,20-gym-seed.job.md,OK,data/free-quota/gym-seeds/inquiry_20260918.md (nemotron-3-super-120b-a12b:free)
 20260918,20-gym-seed.job.md,OK,data/free-quota/gym-seeds/inquiry_20260918.md (nemotron-3-super-120b-a12b:free | 審ISSUES)
 20260918,weekly_review,OK,weekly_review_20260918.md (nemotron-3-super-120b-a12b:free)
+20260918,vision-smoke-T-A4,OK,新居入厝.jpg (gemma-4-31b-it:free)
+20260918,vision-smoke-T-A4,ERR:HTTPError,純白主題風生日派對.jpg (gemma-4-31b-it:free)

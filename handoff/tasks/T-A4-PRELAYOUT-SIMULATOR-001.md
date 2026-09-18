@@ -118,3 +118,11 @@ Owner 原話(msg 5380, 2026-09-18T17:35:48):「用這個training 把路徑寫進
 - **429 真因(實測診斷)**:昨晚與今晚重試同樣 429;帳上今日僅 ~11 次呼叫;純文字呼叫同 429,錯誤 metadata 明寫「google/gemma-4-31b-it:free is temporarily rate-limited upstream」(Google AI Studio 端免費池壅塞,全平台共用)——與本帳額度無關。原「額度被日報引擎用盡」判斷=錯誤,已向 Owner 更正。
 - 附帶發現:minimax/minimax-m3:free 已下架(404,只剩付費版)——free_quota_daily.sh 的 MODELS 清單待更新。
 - **批次策略修正**:140 張不必為額度分天;瓶頸=免費池壅塞。對策=重試+退避、離峰時段執行;備援選項=OpenRouter 綁自有 Google AI Studio 金鑰(BYOK)取得獨立限流=**Owner 決定**。
+
+### Owner 5395 裁示 — 「不要錢就做」→ 決定直連 Google API(2026-09-18T21:02:08)
+
+- Owner 授權:不用錢就開獨立限流那條;確認目標=Google 家(gemini/gemma)的視覺辨識。
+- **Fable5 決定(留錄):跳過 OpenRouter BYOK,直連 Google 官方 Gemini API**。理由:①BYOK 仍要同一把 Google 鑰,月額度內雖免手續費(pay-as-you-go 月列價 $25k 內)但多一層依賴;②Gemini API 免費層官方確認:flash 系列免費且含影像輸入、gemma 4 免費、金鑰免費建;③直連可換更強的 gemini flash 檔次。
+- 缺口:全機查無現成 Google 金鑰(env 檔僅 OPENROUTER_API_KEY;3 月舊鑰已清除)。**待 Owner**:aistudio.google.com/apikey 建鑰(30 秒瀏覽器),存 TextEdit 純文字檔 gemini_key.txt 至「文件」資料夾——不經 Telegram;Fable5 收進 ~/.maplab/free_compute.env 後刪原檔。
+- 免費層資料條款:內容可能被 Google 用於產品改進(與 OpenRouter 免費版同級)→外送邊界不變:僅無人像器皿照。
+- 鑰到位後:改 t_a4_vision_prelabel.sh 直連 Gemini API,140 張批次開跑(不分天,重試+退避)。

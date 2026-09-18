@@ -4,3 +4,4 @@
 2026-09-12 model=nvidia/nemotron-3-super-120b-a12b:free brief=brief_20260912.md "title_zh": 北門觀光夜市的彩色氣球派對
 2026-09-13 model=nvidia/nemotron-3-super-120b-a12b:free brief=brief_20260913.md "title_zh": 東門市場早餐攤的備餐節奏
 2026-09-14 model=nvidia/nemotron-3-super-120b-a12b:free brief=brief_20260914.md "title_zh": 鹽水蜂炮祭前夜的街頭慶典
+2026-09-18 model=nvidia/nemotron-3-super-120b-a12b:free brief=brief_20260918.md "title_zh": 安平樹屋生日派對的音樂盒旋律

@@ -46,6 +46,14 @@
 
 ---
 
+## Parallel task pointer — A4 外燴預擺（2026-09-18）
+
+- Task Card: `handoff/tasks/T-A4-PRELAYOUT-SIMULATOR-001.md`; `FIRST_BATCH_VERIFIED / COLLECTION_INCOMPLETE / SIMULATOR_NOT_IMPLEMENTED`.
+- Private entry: `/Users/pagemacmini/Documents/MAPLAB_外燴預擺/README.md`; 12 photos with per-photo notes, four candidate quote readbacks, original-preserving hash checks.
+- Receipt: `reviews/PRELAYOUT-20260918/receipt.md`; six tests PASS; next bounded action and Resume Prompt are in the Task Card. This pointer does not replace the independent Hermes/A8 tasks above.
+
+---
+
 ## 系統版本
 
 - **Version**: v6.0

@@ -100,8 +100,8 @@ Owner 原話(msg 5380, 2026-09-18T17:35:48):「用這個training 把路徑寫進
 
 - 裁定拆分:**「認器皿」可外包**(逐張照片→器皿清單預標註,餵給淘寶搜圖當關鍵字);**「淘寶連結+報價+長寬高」不可外包**(模型上不了淘寶,必須瀏覽器實搜,仍歸 codex)。
 - 辨識層通道優先序:①地端視覺模型(手動開 Ollama,零外送,最合規)②OpenRouter 免費視覺模型當備援——送出前必先裁到器皿本體、去人臉(沿用 5380 裁定;整張含人私照不得送)。
-- Fable5 已代跑(2026-09-18 晚):①140 檔由 Drive 唯讀下載至私有庫 training-外燴照片擺設/(同名檔加 _dupN 改名、download-manifest.tsv 逐檔 sha256)。②地端路線實測不通:Ollama binary/app/~/.ollama 已全數移除(8/30 拔除),只剩外接碟模型檔;要走地端須重裝 Ollama=Owner 決定。③OpenRouter 煙霧測試:gemma-4-31b-it:free 對「新居入厝.jpg」(Fable5 目視確認無人像後才送)輸出 18 類器皿逐件清單(名稱/材質/數量/相對大小線索,無捏造絕對尺寸)=品質可用;第二張 429(當日免費額度已被日常引擎用盡)。報告:私有庫 資料/openrouter-vision-smoke-20260918.md;可重跑腳本:scripts/t_a4_vision_prelabel.sh(計入 free-quota usage_log 同帳)。
-- 批次化待辦:140 張全標≈140 呼叫,與每日 120 上限同帳,需分 2 天或壓縮抽樣;送出前每張須先目視確認無人像(有人像者留給地端或人工)。執行者=Fable5 後續回合或 codex。
+- Fable5 已代跑(2026-09-18 晚):①140 檔由 Drive 唯讀下載至私有庫 training-外燴照片擺設/(同名檔加 _dupN 改名、download-manifest.tsv 逐檔 sha256)。②地端路線實測不通:Ollama binary/app/~/.ollama 已全數移除(8/30 拔除),只剩外接碟模型檔;要走地端須重裝 Ollama=Owner 決定。③OpenRouter 煙霧測試:gemma-4-31b-it:free 對「新居入厝.jpg」(Fable5 目視確認無人像後才送)輸出 18 類器皿逐件清單(名稱/材質/數量/相對大小線索,無捏造絕對尺寸)=品質可用;第二張 429(~~當日免費額度已被日常引擎用盡~~ 5389 更正:實為 gemma 免費模型上游壅塞,見下)。報告:私有庫 資料/openrouter-vision-smoke-20260918.md;可重跑腳本:scripts/t_a4_vision_prelabel.sh(計入 free-quota usage_log 同帳)。
+- 批次化待辦:140 張全標≈140 呼叫,~~與每日 120 上限同帳,需分 2 天或壓縮抽樣~~(5389 更正:帳號實際日限 1000,額度不是瓶頸,不必分天);送出前每張須先目視確認無人像(有人像者留給地端或人工)。執行者=Fable5 後續回合或 codex。
 
 ### Owner 5388 追問 — 「找圖找尺寸報價整理」可否全給 OpenRouter(2026-09-18T17:50:20)
 
@@ -111,3 +111,10 @@ Owner 原話(msg 5380, 2026-09-18T17:35:48):「用這個training 把路徑寫進
   - **台灣/國際商城通,且抽取成功**:搜尋命中 FU 潮流餐具、外星人餐具、樂天、Amazon 等商品頁;實抓 twchungfu.com 三層圓型點心盤架商品頁,完整取得 名稱/尺寸(圓直徑16.5cm×寬24.5cm×高41cm)/價格 NT$619/材質金屬——符合候選證據層格式(尺寸+標價+真實連結)。
 - 修正後可用鏈(不必等 codex 也能推進):**OpenRouter 認器皿出關鍵字 → Fable5 網頁通道搜台灣商城抓 尺寸+標價+連結 → OpenRouter/Fable5 整理入 equipment catalog**。台灣在地標價作重置成本備註反而比淘寶價更貼近「台南行情×1.35」基準;淘寶以圖搜物降級為 codex 可選的補充比對層。
 - 邊界不變:文字關鍵字搜尋不涉照片外送;若要以圖搜物仍須裁到器皿本體、無人臉,且只能走 codex 瀏覽器。
+
+### Owner 5389 指正 — 免費額度事實更正(2026-09-18T17:57:06「應該不是吧 每日上限有1000次呼叫!?」)
+
+- **Owner 正確**:官方 auth/key 查證=本帳號 is_free_tier=False(儲值過),依 OpenRouter 官方文件免費模型日限=**1000 次/日**(未儲值 $10 才是 50/日);另有 20 次/分鐘。腳本 free_quota_daily.sh 的 MAX_CALLS=120 是我們自設的內部保守上限,非平台限制。
+- **429 真因(實測診斷)**:昨晚與今晚重試同樣 429;帳上今日僅 ~11 次呼叫;純文字呼叫同 429,錯誤 metadata 明寫「google/gemma-4-31b-it:free is temporarily rate-limited upstream」(Google AI Studio 端免費池壅塞,全平台共用)——與本帳額度無關。原「額度被日報引擎用盡」判斷=錯誤,已向 Owner 更正。
+- 附帶發現:minimax/minimax-m3:free 已下架(404,只剩付費版)——free_quota_daily.sh 的 MODELS 清單待更新。
+- **批次策略修正**:140 張不必為額度分天;瓶頸=免費池壅塞。對策=重試+退避、離峰時段執行;備援選項=OpenRouter 綁自有 Google AI Studio 金鑰(BYOK)取得獨立限流=**Owner 決定**。

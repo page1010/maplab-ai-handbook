@@ -36,6 +36,12 @@ newsletter 案例:hooks 把每個 session 的 id/名稱/目錄寫進檔案,重�
 - **桌面版背景 computer use(beta,macOS 15+,Settings→General 開)**:Claude 可背景點 GUI 不佔滑鼠鍵盤。潛在用途=Drive「改串流」偏好設定的 GUI 授權(external-drive 線卡點)、GA4/Clarity 若 win-01 卡登入牆時的本機備援。
 - /claude-api cost-optimize、hillclimb:等有量化壓額度需求時再用。
 
+## D. newsletter 下半段補充(5317,2026-09-14T20:14:04;2026-09-18 補入)
+- **D1(升版時優先驗證)2.1.259 平行 session 修復**:多視窗不再互蓋 ~/.claude.json(workspace trust 重問、MCP/專案狀態消失的元凶)。我們 bot 常態開平行續接窗(split-brain 實錄多次),升版後此項直接受益;連同 2.1.267「/model 與 --resume 後快取命中改善」一起驗證。
+- **D2 bypassPermissions 只認 user settings(2.1.257)**:專案 .claude/settings.json 裡的 defaultMode: bypassPermissions 會被忽略。主視窗檢查現行設定位置,有放專案層的要搬 ~/.claude/settings.json。
+- **D3 額度檢討工具**:/skill-doctor 找沒在用的 skill(省 context)、/cost 看快取命中率與 miss 原因、PreModelSwitch/PostModelSwitch hooks 可記錄或攔模型切換(配合「換模型收尾」慣例可留審計線)。留給週四 22:00 額度紀律檢討時用。
+
 ## 執行順序建議
-1. 主視窗回歸時:查版本→套 A1+A2(低風險純設定)→A3 併入 codex 修卡設計。
-2. Owner 只需一句「照 A 做」即可,無需逐項圈。
+1. 主視窗回歸時:查版本→套 A1+A2(低風險純設定)→A3 併入 codex 修卡設計→檢查 D2 設定位置。
+2. 升版後驗證 D1;額度檢討日用 D3。
+3. Owner 只需一句「照 A 做」即可,無需逐項圈。

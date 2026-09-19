@@ -6,3 +6,4 @@
 2026-09-14 model=nvidia/nemotron-3-super-120b-a12b:free brief=brief_20260914.md "title_zh": 鹽水蜂炮祭前夜的街頭慶典
 2026-09-18 model=nvidia/nemotron-3-super-120b-a12b:free brief=brief_20260918.md "title_zh": 安平樹屋生日派對的音樂盒旋律
 2026-09-19 model=nvidia/nemotron-3-super-120b-a12b:free brief=brief_20260919.md "title_zh": 安平漁港寶貝滿月彩球歡迎派對
+2026-09-20 model=nvidia/nemotron-3-super-120b-a12b:free brief=brief_20260920.md "title_zh": 安平漁港早市的魚貨備餐時光

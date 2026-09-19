@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7A5C3E"/>
+    </marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="800" fill="#FAF9F5"/>
+  <text x="70" y="70" font-family="Arial, sans-serif" font-size="32" font-weight="700" fill="#3D2B1F">
+    MAPLAB Catering Setup Guide
+  </text>
+  <text x="70" y="105" font-family="Arial, sans-serif" font-size="16" fill="#7A5C3E">
+    CONCEPT PREVIEW — top-down schematic, not a real-event photo
+  </text>
+
+  <g filter="url(#shadow)">
+    <rect x="90" y="180" rx="18" ry="18" width="820" height="390" fill="#F0EBE3" stroke="#C9A96E" stroke-width="2"/>
+  </g>
+
+  <text x="110" y="165" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#3A3A2E">MAIN SERVICE TABLE</text>
+
+  <rect x="120" y="215" rx="14" width="300" height="315" fill="#EDE5D8" stroke="#8FA68E" stroke-width="2"/>
+  <text x="145" y="250" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#3A3A2E">SAVORY ZONE</text>
+  <text x="145" y="277" font-family="Arial, sans-serif" font-size="14" fill="#333333">Low + mid height, fast pickup</text>
+
+  <rect x="455" y="215" rx="14" width="425" height="315" fill="#F5ECE7" stroke="#D9C4B8" stroke-width="2"/>
+  <text x="480" y="250" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#3A3A2E">DESSERT / VISUAL FOCUS</text>
+  <text x="480" y="277" font-family="Arial, sans-serif" font-size="14" fill="#333333">Mid + high layers, controlled decoration</text>
+
+  <!-- savory vessels -->
+  <g fill="#FAF7F2" stroke="#7A5C3E" stroke-width="2">
+    <rect x="150" y="315" rx="12" width="100" height="55"/>
+    <rect x="270" y="315" rx="12" width="110" height="55"/>
+    <rect x="160" y="410" rx="12" width="205" height="65"/>
+  </g>
+  <text x="160" y="303" font-family="Arial, sans-serif" font-size="13" fill="#7A5C3E">MID</text>
+  <text x="172" y="448" font-family="Arial, sans-serif" font-size="13" fill="#7A5C3E">LOW / REFILL-FRIENDLY</text>
+
+  <!-- dessert vessels -->
+  <g fill="#FAF7F2" stroke="#7A5C3E" stroke-width="2">
+    <rect x="490" y="390" rx="12" width="120" height="70"/>
+    <rect x="640" y="350" rx="12" width="110" height="110"/>
+    <rect x="780" y="300" rx="12" width="65" height="160"/>
+  </g>
+  <text x="515" y="380" font-family="Arial, sans-serif" font-size="13" fill="#7A5C3E">LOW</text>
+  <text x="665" y="338" font-family="Arial, sans-serif" font-size="13" fill="#7A5C3E">MID</text>
+  <text x="792" y="288" font-family="Arial, sans-serif" font-size="13" fill="#7A5C3E">HIGH</text>
+
+  <!-- flower marker -->
+  <circle cx="735" cy="305" r="24" fill="#D9C4B8" stroke="#8FA68E" stroke-width="2"/>
+  <text x="706" y="310" font-family="Arial, sans-serif" font-size="11" fill="#3A3A2E">FLOWER</text>
+
+  <!-- drinks -->
+  <g filter="url(#shadow)">
+    <rect x="960" y="220" rx="18" width="170" height="270" fill="#EDE5D8" stroke="#8FA68E" stroke-width="2"/>
+  </g>
+  <text x="982" y="255" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#3A3A2E">DRINKS</text>
+  <text x="982" y="280" font-family="Arial, sans-serif" font-size="13" fill="#333333">Separate bottleneck</text>
+  <circle cx="1010" cy="345" r="28" fill="#FAF7F2" stroke="#7A5C3E" stroke-width="2"/>
+  <circle cx="1080" cy="345" r="28" fill="#FAF7F2" stroke="#7A5C3E" stroke-width="2"/>
+  <rect x="995" y="410" rx="8" width="100" height="35" fill="#FAF7F2" stroke="#7A5C3E" stroke-width="2"/>
+
+  <!-- guest flow -->
+  <path d="M130 620 C320 690, 650 690, 865 620" fill="none" stroke="#7A5C3E" stroke-width="5" marker-end="url(#arrow)"/>
+  <text x="380" y="705" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#7A5C3E">GUEST FLOW</text>
+
+  <!-- refill flow -->
+  <path d="M840 545 C930 565, 980 560, 1030 520" fill="none" stroke="#8FA68E" stroke-width="5" stroke-dasharray="9 8" marker-end="url(#arrow)"/>
+  <text x="910" y="585" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#3A3A2E">REFILL ACCESS</text>
+
+  <!-- legends -->
+  <rect x="70" y="735" width="1060" height="1" fill="#C9A96E"/>
+  <text x="70" y="770" font-family="Arial, sans-serif" font-size="14" fill="#333333">
+    Principle: safety &amp; flow first → deterministic layout → styling layer → human approval → post-event learning receipt
+  </text>
+</svg>

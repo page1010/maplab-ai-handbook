@@ -19,6 +19,12 @@ if [[ -z "$MESSAGE" ]]; then
   exit 1
 fi
 
+# 額度自估尾巴(Owner msg 5557):估算器存在才掛,失敗不擋送信。
+QUOTA_TAIL="$(/usr/bin/python3 "$REPO_ROOT/scripts/a0_quota_estimate.py" 2>/dev/null || true)"
+if [[ -n "$QUOTA_TAIL" ]]; then
+  MESSAGE="$MESSAGE"$'\n\n'"$QUOTA_TAIL"
+fi
+
 if [[ -n "$REPLY_TO_INBOX_TS" ]]; then
   bash "$REPO_ROOT/scripts/a0_reply.sh" "$MESSAGE" "$REPLY_TO_INBOX_TS"
 else

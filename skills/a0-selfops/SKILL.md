@@ -17,7 +17,8 @@ Owner 原話:「我們不是說好不要做到讓我按一下,我去按也是授
 
 - **執行面**:一切本機動作寫成 `maplab-ai-handbook/scripts/*.sh` 進 git(可稽核);bot.py resume 白名單(commit beaec1d 起)放行整個 scripts/ 目錄——只有版控腳本能跑,任意 shell 仍受閘。
 - **bot 自助重啟**:用 Write 建旗標檔 `claude-daily-operations/state/a0_restart_bot.flag`,然後照常用 `a0_reply_from_file.sh` 送回覆——腳本尾端偵測到 10 分鐘內的旗標,送完回覆後自動執行 `scripts/a0_bot_restart.sh`(精準 pkill 全路徑 bot.py;launchd com.maplab.telegrambot KeepAlive=true 於 30 秒內重生,載入最新 bot.py)。重啟紀錄在 `state/a0_bot_restart.log`。
-- **驗證**:重啟後下一輪先讀 a0_bot_restart.log 與 launchd_stderr.log 確認重生,再跑原本被閘的動作。
+- **同輪新腳本點火(run-script 旗標鉤子,2026-09-20 msg 5527 首用)**:白名單在喚醒時展開,當輪新建的腳本直呼必被閘。解法=用 Write 建 `claude-daily-operations/state/a0_run_script.flag`(單行=腳本全路徑+參數),照常送回覆——`a0_reply_from_file.sh` 尾端偵測到 10 分鐘內旗標,只放行 `scripts/*.sh` 路徑,送完回覆後 nohup 背景執行,全程稽核於 `state/a0_selfops_run.log`(過期/目錄外一律拒絕留痕)。已成功用於警報器啟動與 IG 抓取。
+- **驗證**:重啟後下一輪先讀 a0_bot_restart.log 與 launchd_stderr.log 確認重生,再跑原本被閘的動作;run-script 鉤子則下一輪讀 a0_selfops_run.log 與目標產出驗證。
 
 ## 邊界(不因自助而放寬)
 

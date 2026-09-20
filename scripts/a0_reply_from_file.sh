@@ -38,3 +38,33 @@ if [[ -f "$RESTART_FLAG" ]]; then
     rm -f "$RESTART_FLAG"
   fi
 fi
+
+# A0 selfops run-script hook(同上 Owner 鐵律;2026-09-20 msg 5527 首用)
+# resume 視窗的腳本白名單在喚醒當下取樣,同一輪新建的腳本會被舊快照擋住。
+# 旗標檔補這個時間差:內容=本目錄下 .sh 腳本路徑+參數,10 分鐘內建立才執行,
+# 目錄外一律拒絕,背景執行不擋回覆,紀錄在 state/a0_selfops_run.log。
+RUN_FLAG="/Users/pagemacmini/claude-daily-operations/state/a0_run_script.flag"
+RUN_LOG="/Users/pagemacmini/claude-daily-operations/state/a0_selfops_run.log"
+if [[ -f "$RUN_FLAG" ]]; then
+  if [[ -n "$(find "$RUN_FLAG" -mmin -10 2>/dev/null)" ]]; then
+    RUN_LINE="$(head -n 1 "$RUN_FLAG")"
+    rm -f "$RUN_FLAG"
+    RUN_SCRIPT="${RUN_LINE%% *}"
+    case "$RUN_SCRIPT" in
+      "$REPO_ROOT/scripts/"*.sh)
+        if [[ -f "$RUN_SCRIPT" ]]; then
+          echo "[$(date '+%Y-%m-%dT%H:%M:%S')] run: $RUN_LINE" >> "$RUN_LOG"
+          nohup bash $RUN_LINE >> "$RUN_LOG" 2>&1 &
+          disown 2>/dev/null || true
+        else
+          echo "[$(date '+%Y-%m-%dT%H:%M:%S')] skip missing: $RUN_LINE" >> "$RUN_LOG"
+        fi
+        ;;
+      *)
+        echo "[$(date '+%Y-%m-%dT%H:%M:%S')] reject outside scripts/: $RUN_LINE" >> "$RUN_LOG"
+        ;;
+    esac
+  else
+    rm -f "$RUN_FLAG"
+  fi
+fi

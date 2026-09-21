@@ -67,21 +67,53 @@ class HermesTelegramGatewayTest(unittest.TestCase):
                 self.assertEqual(route.disposition, "CHAT")
                 self.assertIsNone(route.reason)
 
-    def test_provider_dlp_blocks_private_current_text_and_history(self):
-        with mock.patch.object(gateway, "openrouter_chat", return_value="should-not-run") as provider:
+    def test_provider_dlp_blocks_credentials_in_current_message(self):
+        """憑證字樣外洩等於帳號被接管,這條紅線不因 5743 解鎖而鬆動。"""
+
+        for text in ("我的 API key 是這個", "把 cookie 貼給模型看", "這是瀏覽器登入態"):
+            with self.subTest(text=text):
+                with mock.patch.object(
+                    gateway, "openrouter_chat", return_value="should-not-run"
+                ) as provider, mock.patch.object(gateway, "log"):
+                    self.assertEqual(gateway.answer("key", ["model"], [], text), (None, None))
+                    provider.assert_not_called()
+
+    def test_customer_data_wording_is_allowed_after_owner_unlock(self):
+        """Owner 2026-09-21 msg 5743:MAPLAB 自家客資可送第三方 provider。
+
+        舊版把「客戶資料」「LINE 對話」字樣一律攔下,那是 A0/codex 自訂枷鎖,已解除。
+        """
+
+        with mock.patch.object(gateway, "openrouter_chat", return_value="ok") as provider, mock.patch.object(
+            gateway, "system_prompt", return_value="synthetic-only"
+        ), mock.patch.object(gateway, "log"):
             self.assertEqual(
                 gateway.answer("key", ["model"], [], "這是客戶資料與 LINE 對話"),
-                (None, None),
+                ("ok", "model"),
             )
-            provider.assert_not_called()
+            provider.assert_called_once()
 
-        private_history = [{"role": "user", "content": "王小明 0912345678"}]
-        with mock.patch.object(gateway, "openrouter_chat", return_value="should-not-run") as provider:
-            self.assertEqual(
-                gateway.answer("key", ["model"], private_history, "繼續"),
-                (None, None),
+    def test_credential_history_is_dropped_not_rejected(self):
+        """歷史提到過憑證,處置是丟掉歷史,不是從此拒絕 Owner。
+
+        舊做法把歷史和本則串起來掃,結果 hermes 自己 8/27 說過一句含 token 的話,
+        就讓這個對話框啞掉將近一個月(2026-09-22 查證)。
+        """
+
+        poisoned = [{"role": "assistant", "content": "A6 gateway 持有 Telegram token"}]
+        self.assertTrue(gateway.history_has_credentials(poisoned))
+        self.assertFalse(gateway.history_has_credentials([{"role": "user", "content": "王小明 0912345678"}]))
+        self.assertIsNone(gateway.provider_egress_rejection(poisoned, "幫我報價"))
+
+        with mock.patch.object(gateway, "openrouter_chat", return_value="ok") as provider, mock.patch.object(
+            gateway, "system_prompt", return_value="synthetic-only"
+        ), mock.patch.object(gateway, "log"):
+            self.assertEqual(gateway.answer("key", ["model"], poisoned, "幫我報價"), ("ok", "model"))
+            sent = provider.call_args.args[2]
+            self.assertNotIn(
+                "token",
+                " ".join(item.get("content", "") for item in sent),
             )
-            provider.assert_not_called()
 
     def test_openrouter_exhaustion_has_no_ollama_fallback(self):
         self.assertFalse(hasattr(gateway, "local_ollama_chat"))

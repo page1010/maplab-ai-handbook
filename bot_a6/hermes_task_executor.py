@@ -147,7 +147,25 @@ ACTIONS = {
         30,
         "透過模型進行自由形式的文字回覆（僅限 Owner 私聊，仍會產生 receipt）",
     ),
+    "quote-intake": Action(
+        "quote-intake",
+        ("/usr/bin/true",),
+        10,
+        "受理報價需求：原文建案卷、轉交 A0 代產，本動作不產生任何價格",
+    ),
 }
+
+# hermes 的 fail-closed 紅線第一條就是不報價。但「不報價」不等於「不回話」——
+# 2026-08-27 與 09-21 兩次 Owner 在這個對話框要報價,都只換到一句拒絕。
+# 這個動作只做三件事:把需求原文建成案卷、記下時間、回一句「已受理,交 A0 代產」。
+# 用 2026-08-27 與 09-21 兩則真實被拒的 Owner 原話當回歸素材:8/27 那則只寫
+# 「預算20000」,第一版正則抓不到它,所以「預算+金額」和「報 N 人」要獨立成條。
+QUOTE_INTENT_RE = re.compile(
+    r"(報價|估價|開價|多少錢|抓預算|毛利|"
+    r"預算\s*\d{3,}|預算.{0,12}(反推|抓|做|配|內)|"
+    r"\d{3,}\s*(塊|元)|每人\s*\d+|人數\s*\d+|報\s*\d+\s*人)",
+)
+QUOTE_INTAKE_ROOT = Path.home() / ".maplab" / "quote_intake"
 
 ALIASES = {
     "runtime-status": (
@@ -201,6 +219,8 @@ def classify(request: str) -> tuple[str | None, str | None]:
     for action_name, aliases in ALIASES.items():
         if any(re.sub(r"\s+", "", alias).lower() in normalized for alias in aliases):
             return action_name, None
+    if QUOTE_INTENT_RE.search(request or ""):
+        return "quote-intake", None
     return None, "不在目前的安全動作白名單"
 
 
@@ -495,8 +515,14 @@ def execute(
     chat_id: int | None = None,
     chat_type: str | None = None,
     openrouter_key: str | None = None,
+    forced_rejection: str | None = None,
 ) -> dict:
     action_name, early_rejection = classify(request)
+    # 呼叫端(gateway)已經有更精確的拒絕理由時,一律沿用它,不得被這裡的
+    # 二次分類覆寫成「不在目前的安全動作白名單」——覆寫會讓收據上的原因是假的,
+    # 每次故障排查都被導向錯的方向(2026-09-22 誤診兩次的根因)。
+    if forced_rejection:
+        action_name, early_rejection = None, forced_rejection
     if action_name == "durable-job" and early_rejection is None:
         return _start_durable_job(
             request,
@@ -558,6 +584,35 @@ def execute(
                 },
                 ensure_ascii=False,
                 indent=2,
+            ),
+        }
+    elif action_name == "quote-intake":
+        intake_path = QUOTE_INTAKE_ROOT / f"{task_id}.md"
+        _write_text(
+            intake_path,
+            "\n".join(
+                [
+                    f"# 報價需求受理 {task_id}",
+                    "",
+                    f"- 受理時間:{now}",
+                    "- 狀態:待 A0 代產(hermes 不報價,紅線不動)",
+                    "",
+                    "## Owner 需求原文",
+                    "",
+                    request,
+                    "",
+                ]
+            ),
+        )
+        receipt = {
+            **task,
+            "status": "completed",
+            "finished_at": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
+            "description": ACTIONS[action_name].description,
+            "output": (
+                "【hermes】已收到報價需求並建成案卷,原文完整留存。\n"
+                "我不報價(這是固定紅線),已標記為待 A0 代產,A0 下一輪續接時會看到這筆。\n"
+                f"案卷:{intake_path}"
             ),
         }
     else:

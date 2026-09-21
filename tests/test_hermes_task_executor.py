@@ -124,6 +124,54 @@ class HermesTaskExecutorTest(unittest.TestCase):
         self.assertEqual(popen.call_args.kwargs["env"]["HERMES_LINE_PROVIDER"], "local-only")
         self.assertNotIn("OPENROUTER_API_KEY", popen.call_args.kwargs["env"])
 
+    def test_quote_request_is_accepted_as_intake_without_any_price(self):
+        """hermes 不報價的紅線不動,但「不報價」不等於「不回話」。"""
+
+        # 兩則真實被拒過的 Owner 原話當回歸素材(2026-08-27 / 09-21)
+        request = "幫我報10人周歲派對，預算20000，先找到A4的sheets"
+        self.assertEqual(executor.classify(request), ("quote-intake", None))
+        self.assertEqual(
+            executor.classify("用預算反推 菜色以雷同的品項抓預算 抓完毛利 30000塊 人數100人"),
+            ("quote-intake", None),
+        )
+        # 狀態類問句不得被誤收成報價
+        self.assertNotEqual(executor.classify("幫我查 Hermes runtime 狀態")[0], "quote-intake")
+
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(
+            executor, "QUOTE_INTAKE_ROOT", Path(tmp) / "intake"
+        ), mock.patch.object(executor, "TASK_ROOT", Path(tmp) / "tasks"):
+            receipt = executor.execute(request, 123, chat_id=456)
+            intake = list((Path(tmp) / "intake").glob("*.md"))
+            self.assertEqual(len(intake), 1)
+            body = intake[0].read_text(encoding="utf-8")
+
+        self.assertEqual(receipt["action"], "quote-intake")
+        self.assertEqual(receipt["status"], "completed")
+        self.assertIn("待 A0 代產", receipt["output"])
+        self.assertIn(request, body)
+        # 受理不等於報價:案卷與回覆都不得出現任何價格數字以外的承諾
+        self.assertNotIn("報價單", receipt["output"])
+
+    def test_caller_rejection_reason_is_never_masked_by_reclassification(self):
+        """收據上的原因必須是真原因。
+
+        舊版在 REJECT 分支又跑一次 classify(),把閘道給的真理由覆寫成
+        「不在目前的安全動作白名單」,2026-09-22 因此誤診兩次。
+        """
+
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(
+            executor, "TASK_ROOT", Path(tmp) / "tasks"
+        ):
+            receipt = executor.execute(
+                "持續 SEO 巡查並發 LINE 給客戶",
+                123,
+                chat_id=456,
+                forced_rejection="對客發送不在允許範圍",
+            )
+        self.assertEqual(receipt["status"], "rejected")
+        self.assertEqual(receipt["reason"], "對客發送不在允許範圍")
+        self.assertNotIn("白名單", receipt["reason"])
+
 
 if __name__ == "__main__":
     unittest.main()

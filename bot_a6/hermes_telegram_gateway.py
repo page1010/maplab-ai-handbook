@@ -105,10 +105,12 @@ CAPABILITY_MARKERS = (
     "零存取",
 )
 SECRET_VALUES: set[str] = set()
+# 2026-09-22 msg 5743 裁決落地:MAPLAB 自家客資(LINE 對話、客戶名單、報價往來)可送
+# 第三方 provider,原本的「客資字樣一律攔」是 A0/codex 自訂枷鎖,已由 Owner 解除。
+# 仍攔的只有憑證類——外洩等於帳號被接管,不在 5743 射程。
+# 他人客資(未來 B2B)與兒童照/私有客照另有各自的閘,不靠這條正則。
 PROVIDER_PRIVATE_RE = re.compile(
-    r"(客訊|客資|客戶(?:資料|對話|訊息|紀錄)|LINE.{0,12}(?:對話|訊息|紀錄)|"
-    r"瀏覽器登入態|cookie|secret|token|API\s*key|密碼|金鑰|"
-    r"(?<!\d)09\d{8}(?!\d)|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})",
+    r"(瀏覽器登入態|cookie|secret|token|API\s*key|密碼|金鑰)",
     re.IGNORECASE,
 )
 
@@ -251,6 +253,20 @@ def initialize_private_runtime() -> None:
         log(f"legacy conversation quarantined path={quarantine}")
 
 
+def quarantine_history_file() -> str:
+    """把含憑證字樣的對話歷史搬進 quarantine,並留一份空歷史給後續使用。"""
+
+    timestamp = time.strftime("%Y%m%d-%H%M%S")
+    target = QUARANTINE_ROOT / f"credential-history-{timestamp}.json"
+    try:
+        payload = json.loads(HISTORY_PATH.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        payload = {"unreadable_history_path": str(HISTORY_PATH)}
+    write_private_json(target, payload)
+    write_private_json(HISTORY_PATH, [])
+    return str(target)
+
+
 def load_history() -> list[dict]:
     try:
         payload = json.loads(HISTORY_PATH.read_text(encoding="utf-8"))
@@ -281,6 +297,11 @@ def answer(
     if provider_egress_rejection(history, user_text):
         log("provider egress blocked by private-data DLP")
         return None, None
+    # 縱深防禦:呼叫端已經會隔離含憑證字樣的歷史,但這裡是唯一真的把資料送出去的
+    # 地方,所以自己再擋一次——歷史有憑證字樣就不帶歷史,而不是拒絕本則。
+    if history_has_credentials(history):
+        log("history dropped before egress reason=credential-wording")
+        history = []
     messages = [{"role": "system", "content": system_prompt(chain)}] + history + [
         {"role": "user", "content": user_text}
     ]
@@ -326,12 +347,25 @@ def normalize_command(text: str, bot_username: str | None) -> str:
     )
 
 
-def provider_egress_rejection(history: list[dict], user_text: str) -> str | None:
-    candidate = "\n".join(
-        [item.get("content", "") for item in history if isinstance(item, dict)] + [user_text]
+def history_has_credentials(history: list[dict]) -> bool:
+    """對話歷史裡有憑證字樣時,歷史本身要隔離不外送。
+
+    歷史「提到過」金鑰不等於這一則要外送金鑰;舊做法把歷史和本則串起來掃,
+    只要歷史被污染就永久拒絕 Owner——2026-08-26 的殘留歷史就這樣讓這個對話框
+    啞掉將近一個月(2026-09-22 查證)。正確處置是丟掉歷史、本則照常處理。
+    """
+
+    return any(
+        PROVIDER_PRIVATE_RE.search(item.get("content", ""))
+        for item in history
+        if isinstance(item, dict)
     )
-    if PROVIDER_PRIVATE_RE.search(candidate):
-        return "訊息或對話歷史含客資、LINE 對話、登入態、憑證或直接識別資料；不得送模型 provider"
+
+
+def provider_egress_rejection(history: list[dict], user_text: str) -> str | None:
+    # 只看本則:歷史的處置是隔離(見 history_has_credentials),不是拒絕本則。
+    if PROVIDER_PRIVATE_RE.search(user_text):
+        return "本則訊息含登入態或憑證字樣；不得送模型 provider"
     return None
 
 
@@ -505,6 +539,9 @@ def main() -> None:
     )
     offset = None
     history = load_history()
+    if history_has_credentials(history):
+        log(f"history quarantined reason=credential-wording path={quarantine_history_file()}")
+        history = []
     while True:
         try:
             delivered = drain_background_notifications(token)
@@ -591,6 +628,7 @@ def main() -> None:
                         chat_id=chat_id,
                         chat_type=chat.get("type"),
                         openrouter_key=key,
+                        forced_rejection=route.reason,
                     )
                     log(
                         f"executor task={receipt['task_id']} status={receipt['status']} "
@@ -627,4 +665,46 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    import sys
+    if len(sys.argv) > 1 and sys.argv[1] == "chat-fallback":
+        # Chat fallback mode for general-chat action
+        user_message = " ".join(sys.argv[2:]) if len(sys.argv) > 2 else ""
+        if not user_message:
+            print("【hermes】收到空訊息，請提供內容。")
+            sys.exit(1)
+        
+        # Initialize runtime
+        initialize_private_runtime()
+        
+        # Load key and chain
+        key = load_free_env_key()
+        chain = load_chain()
+        history = load_history()
+        if history_has_credentials(history):
+            log(f"history quarantined reason=credential-wording path={quarantine_history_file()}")
+            history = []
+
+        # Get answer from model
+        reply, provider = answer(key, chain, history, user_message)
+        if reply is None:
+            reply = (
+                "【hermes】這次設定的免費 provider 鏈都沒有成功回覆。A6 gateway 與安全執行器仍在線；"
+                "你可以直接叫我跑 runtime-status、signal-status、repo-status 或 a6-self-test，會立即回 receipt。"
+            )
+        else:
+            if not reply.startswith("【hermes】"):
+                reply = "【hermes】" + reply
+            history = (
+                history
+                + [
+                    {"role": "user", "content": user_message},
+                    {"role": "assistant", "content": reply},
+                ]
+            )[-MAX_HISTORY:]
+            save_history(history)
+            save_gateway_state(chain, last_provider=provider)
+        
+        print(reply)
+        sys.exit(0)
+    
     main()

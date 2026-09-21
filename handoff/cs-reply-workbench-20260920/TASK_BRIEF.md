@@ -35,6 +35,25 @@
 4. **驗收門檻=gym 通過率 90%**(Owner 5587 新設;歷史紀錄=詢價 gym 4 輪全 PASS,先前無「9成」數字承諾,自此以 90% 為門檻,測集=真實歷史來訊留出集)。
 5. **回饋回寫閉環升為必要需求**(原 v2 提前):三選項被棄用+Owner/Mina 自寫版本→逐筆回寫資料庫,附「為什麼選項不好」差異分析欄→定期回灌模板庫與生成規則。
 
+## 架構定案:辨識與回寫(SSOT,msg 5590,2026-09-21T10:35:57)
+
+> 4.我現在想到的 他使用截圖辨識對吧？我們的已經接到客人訊息了 有寫一個sheet 收單向訊息,在這個架構少用得到嗎？用不到要如何辨識並即時回饋,再掃掃搜搜其他專案做法？
+
+**自家收單管線實況(2026-09-21 盤點,檔證見 scripts/apps-script/LineWebhook.gs 與 bot_a6/case_store.py):**
+- 收訊=LINE OA webhook → Apps Script doPost(LockService+message.id 去重)→ 外燴系統試算表 CONVERSATION_LOG 分頁 appendRow;8 欄=msg_id/case_id(手填)/timestamp/speaker/message/source/line_user_id/reply_to_msg_id。
+- A6 bot 唯讀索引(case_store.py,spreadsheets.readonly → 本機 SQLite;/linecases 指令)。
+- **缺口①:無任何回覆欄/回寫機制**;LINE API 不提供我方回覆內容(line-quote-assistant.md:64,132)→ **回寫責任天然落在鍵盤端**(唯一知道實際送出內容的元件)。
+- **缺口②:管線活性最後確認=2026-05-19**(SYSTEM_DIRECTORY_INDEX.md:585);9/21 已排唯讀探測(scripts/a0_convlog_tail.sh,只讀 timestamp/source 欄)。
+
+**定案(截圖辨識降備援):**
+1. 辨識「現在在回哪個客人」三層:主力=鍵盤面板列 CONVERSATION_LOG 最近未回來訊點選載入;輔助=長按複製客人末句→鍵盤讀剪貼簿→比對 sheet 鎖定客人;備援=截圖 OCR(僅 sheet 漏接來源;必須本機辨識不送雲)。
+2. 回寫閉環落點=CONVERSATION_LOG 表尾加四欄:options_shown(當時三選項)/chosen_or_custom(選用或自寫版本)/diff_analysis(為什麼選項不好)/replied_at。鍵盤送出即回寫,呼應 5587 硬需求⑤。
+
+**外部專案掃描結論(2026-09-21):**
+- 截圖/剪貼簿派(Freemie、github.com/maneesh888/open-keyboard、github.com/pavan-marthala/ai_keyboard):iOS 鍵盤讀不到宿主畫面才被迫用截圖;我們有 webhook,不採為主力。
+- Android 通知監聽派(github.com/DevsOnFlutter/reflex、github.com/it5prasoon/Auto-Reply-Android,NotificationListenerService+RemoteInput):等於重做 webhook 已有的事;僅當 webhook 漏接補位選項,P2。
+- LINE OA 內建自動回覆:關鍵字罐頭,無真實資料學習、無人在迴路,不符需求;但 webhook 與人工聊天模式可並存=我們現行架構的官方依據。
+
 ## 目標成品(Owner 描述拆解)
 
 1. **接入客人來訊的資料庫**:來訊集中一處,可瀏覽、可搜尋。

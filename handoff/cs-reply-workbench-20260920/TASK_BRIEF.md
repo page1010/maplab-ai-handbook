@@ -123,6 +123,20 @@
 2. **用我們的資料訓練的模擬回覆**:每則來訊自動附 2-3 個草稿選項。
 3. **業務快速回覆**:點一下複製貼上;LINE 官方 API 不在第一版(審核/費用/自動發訊風險)。
 
+## 資料位置地圖(冷啟動必讀・認領本案先讀這節,2026-09-21 補,回 Owner 5644)
+
+> Owner 5644 指令:發派資料相關任務前先問認領人;冷啟動文件要寫清楚資料在哪。全局版在
+> 手冊根目錄 SYSTEM_DIRECTORY_INDEX.md(冷啟動強制讀取順序第 2 條,§A/§B 節);本節為本案專用摘錄。
+
+| 資料 | 位置 | 說明 |
+|---|---|---|
+| 逐檔 LINE 對話 CSV(原始,雙向) | /Volumes/MacExternal/外接硬碟 讀取專用/line_oa_chat_csv_260622_213421/ | 3,625 檔,LINE OA Manager 2026-06-22 靜態匯出;欄位=傳送者類型(Account/User)/名稱/日期/時間/內容;自動回應標「自動回應訊息」。**在外接碟 MacExternal,不在本機家目錄也不在 Drive**(9/21 phase1/1b 盲找教訓) |
+| 對話索引(去識別) | data/line_booking_pairs.csv | 2,634 線頭+成交標記(confirmed 62 對到 TimeTree);filename 欄指向上列逐檔 CSV;副本在 /Volumes/MacExternal/maplab-data/ |
+| 已抽取配對(含業務回覆側) | workbook/a6-training/generated_local/training_samples.jsonl + manifest.json | 2026-06-25 產,20,244 對(train 16,317/val 2,037/test 2,016),S0-S6 漏斗 13 類標註;清洗可先吃這份不必重掃原始 CSV |
+| 高頻需求模板 | data/line_ask_corpus.md | 10 條(程式化計數,次數和 376) |
+| OA 官方預設 #1-#5 正典 | handoff/cs-reply-workbench-20260920/oa_presets_v20260921.md | 5617 原話;模板比對用 |
+| gold 清洗產出(內容不進 repo) | ~/.maplab/gold_replies/ | 客資紅線:對話內容只留本機,repo 只進統計數字 |
+
 ## 既有資產(不從零開始)
 
 - hermes quote gym:~~gold=357 則真實回覆模板~~(**舊值,5600 稽核判定查無實體,見「gold 資產稽核」節**)→ 可核實資產=**line_ask_corpus.md 10 條高頻真實需求模板**(源自 3,625 份 LINE 對話程式化計數)+**line_booking_pairs.csv 2,635 列真實成交對話配對**、SOP v3(一次性5W2H)、R1-R9 模擬紀錄(PASS 有放水結構,見稽核節)、R5 品項 Sheet、定價/訂金裁決已入檔。

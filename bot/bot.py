@@ -10,6 +10,7 @@ Usage:
 """
 
 import asyncio
+import time
 import glob
 import hashlib
 import http.server
@@ -2413,6 +2414,19 @@ A0_WAIT_TIMEOUT_S = float(os.getenv("A0_WAIT_TIMEOUT_S", "150"))
 A0_WAIT_POLL_INTERVAL_S = float(os.getenv("A0_WAIT_POLL_INTERVAL_S", "5"))
 
 A0_RESUME_LABEL = "【Fable5 本人・同 session 續接】"
+# 2026-09-21 Owner「用 opus 應該還有額度吧，寫成不會斷的，要註明由 opus 接手」：
+# Fable 額度用完時 resume 會回 "You've reached your Fable 5 limit"，過去 bot 只會
+# 一直重試 Fable、每則都失敗、Owner 收不到任何回覆（9/17、9/21 實錄）。
+# 改為：同一個 session 換 Opus 續跑，回覆明確標示由 Opus 接手。
+A0_FALLBACK_MODEL = os.getenv("A0_FALLBACK_MODEL", "claude-opus-5")
+A0_FALLBACK_LABEL = "【Opus 接手・同 session 續接（Fable 額度用完）】"
+A0_QUOTA_MARKER_RE = re.compile(
+    r"reached your .{0,20}limit|usage limit|rate.?limit|quota|out of (credits|tokens)",
+    re.IGNORECASE,
+)
+# Fable 耗盡後的冷卻窗：窗內直接走 Opus，不每則先撞一次 Fable 牆。
+A0_PRIMARY_COOLDOWN_S = int(os.getenv("A0_PRIMARY_COOLDOWN_S", "1800"))
+_A0_PRIMARY_EXHAUSTED_AT: float = 0.0
 BOT_FALLBACK_LABEL = "【bot 代答，非 Fable5】"
 
 # ── A0/Fable5 fresh-context relay (Owner 22:35 2026-08-22) ──────────────────
@@ -2759,7 +2773,11 @@ A0_RESUME_PRELUDE = (
 )
 
 
-async def _a0_resume_ask(user_message: str, timeout: int = A0_RESUME_TIMEOUT_S) -> ModelResult:
+async def _a0_resume_ask(
+    user_message: str,
+    timeout: int = A0_RESUME_TIMEOUT_S,
+    model_override: Optional[str] = None,
+) -> ModelResult:
     """Headlessly resume A0's own Claude Code session so the reply keeps full
     context, instead of a stateless one-shot.
 
@@ -2770,6 +2788,8 @@ async def _a0_resume_ask(user_message: str, timeout: int = A0_RESUME_TIMEOUT_S) 
     caller can decide how to handle a failed/empty resume.
     """
     session_id, model = _a0_session_config()
+    if model_override:
+        model = model_override
     if not session_id:
         return ModelResult(ok=False, answer="⚠️ 沒有可用的 A0 session id", failure_kind="no_session")
 
@@ -2899,9 +2919,29 @@ async def _a0_resume_or_fallback(bot, chat_id: int, text: str, reply_to_inbox_ts
         relay_label = A0_FRESH_RELAY_LABEL
         relay_log_label = "a0-fresh-relay"
     else:
-        relay_result = await _a0_resume_ask(text)
+        global _A0_PRIMARY_EXHAUSTED_AT
+        in_cooldown = (time.time() - _A0_PRIMARY_EXHAUSTED_AT) < A0_PRIMARY_COOLDOWN_S
+        if in_cooldown:
+            relay_result = ModelResult(ok=False, answer="", failure_kind="resume_failed",
+                                       stderr="primary model in quota cooldown")
+        else:
+            relay_result = await _a0_resume_ask(text)
         relay_label = A0_RESUME_LABEL
         relay_log_label = "a0-resume"
+        quota_hit = in_cooldown or (
+            not relay_result.ok and A0_QUOTA_MARKER_RE.search(relay_result.stderr or "")
+        )
+        if quota_hit and A0_FALLBACK_MODEL:
+            if not in_cooldown:
+                _A0_PRIMARY_EXHAUSTED_AT = time.time()
+                logger.warning("A0 primary model quota exhausted — falling back to %s (same session)",
+                               A0_FALLBACK_MODEL)
+            relay_result = await _a0_resume_ask(text, model_override=A0_FALLBACK_MODEL)
+            relay_label = A0_FALLBACK_LABEL
+            relay_log_label = "a0-resume-opus-fallback"
+            if not relay_result.ok and A0_QUOTA_MARKER_RE.search(relay_result.stderr or ""):
+                # 備援也用完了：冷卻歸零，下一則重新先試主模型（可能已重置）
+                _A0_PRIMARY_EXHAUSTED_AT = 0.0
     if relay_result.ok:
         answer = _sanitize_for_telegram(f"{relay_label}\n{relay_result.answer}")
         MAX = 4096

@@ -15,17 +15,41 @@ class _Completed:
 
 
 class _Worker:
+    """正常完工的 worker。
+
+    2026-09-21 commit ccbc159 起,supervise 會把「0 token」或「答案是上游錯誤字串」
+    判成失敗(失敗不再冒充成功),所以正常案例的 usage 必須帶 total_tokens——
+    舊 fixture 留著空 usage,從那天起這支測試就一直是紅的(2026-09-22 查明)。
+    """
+
     pid = 99999
     returncode = 0
+    answer = "研究結果"
+    usage = {"total_tokens": 4096}
 
     def communicate(self, input=None, timeout=None):
         return (
-            json.dumps({"answer": "研究結果", "model": bridge.LOCAL_MODEL, "tools_used": [], "usage": {}}),
+            json.dumps(
+                {
+                    "answer": self.answer,
+                    "model": bridge.LOCAL_MODEL,
+                    "tools_used": [],
+                    "usage": self.usage,
+                }
+            ),
             "",
         )
 
     def poll(self):
         return 0
+
+
+class _ZeroTokenWorker(_Worker):
+    usage = {}
+
+
+class _UpstreamErrorWorker(_Worker):
+    answer = "The provider is temporarily unavailable after multiple retries."
 
 
 class HermesDeerFlowBridgeTest(unittest.TestCase):
@@ -77,6 +101,24 @@ class HermesDeerFlowBridgeTest(unittest.TestCase):
                 self.assertEqual(kwargs["env"]["PYTHON_DOTENV_DISABLED"], "1")
                 self.assertNotIn("A6_BOT_TOKEN", kwargs["env"])
                 self.assertIn(f"dfr-{task_dir.name}", args[0])
+
+    def test_failed_generation_is_never_reported_as_completed(self):
+        """Owner 2026-09-21「失敗不再冒充成功」:0 token 或上游錯誤字串一律算失敗。"""
+
+        for worker in (_ZeroTokenWorker(), _UpstreamErrorWorker()):
+            with self.subTest(worker=type(worker).__name__):
+                with tempfile.TemporaryDirectory() as tmp, mock.patch.object(bridge, "TASK_ROOT", Path(tmp)):
+                    task_dir = self._task(Path(tmp))
+                    with mock.patch.object(bridge, "_git_commit", return_value=bridge.EXPECTED_COMMIT), mock.patch.object(
+                        bridge, "provider_gate", return_value=(True, "ok")
+                    ), mock.patch.object(
+                        bridge.subprocess, "run", return_value=_Completed(returncode=0)
+                    ), mock.patch.object(bridge.subprocess, "Popen", return_value=worker):
+                        self.assertEqual(bridge.supervise(str(task_dir), "local"), 1)
+                    receipt = json.loads((task_dir / "receipt.json").read_text(encoding="utf-8"))
+                    self.assertEqual(receipt["status"], "failed")
+                    self.assertIn("model provider failed", receipt["reason"])
+                    self.assertFalse((task_dir / "research.md").exists())
 
 if __name__ == "__main__":
     unittest.main()

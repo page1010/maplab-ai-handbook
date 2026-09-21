@@ -33,6 +33,76 @@ DEERFLOW_EXTENSIONS = REPO_ROOT / "config" / "deerflow" / "extensions-disabled.j
 EXPECTED_COMMIT = "788a890bd022689ef293e6bbfa2c12988173db6c"
 LOCAL_MODEL = "hermes-local-gemma4"
 OPENROUTER_MODEL = "hermes-openrouter-gemma4-zdr"
+# 2026-09-21：Hermes 免費鏈接班本機 Ollama（Owner「hermes 就是 ollama 的接班」）
+DEERFLOW_HERMES_CONFIG = REPO_ROOT / "config" / "deerflow" / "hermes-public-research-freechain.yaml"
+HERMES_MODEL = "hermes-freechain"
+HERMES_ENV_FILE = Path.home() / ".hermes" / "profiles" / "maplabcloud" / ".env"
+PROVIDERS = ("hermes", "local", "openrouter")
+
+
+def _load_hermes_key() -> bool:
+    """把 Hermes maplabcloud 的 OpenRouter 金鑰載入本程序環境（值不印出、不寫檔）。"""
+    if os.environ.get("OPENROUTER_API_KEY"):
+        return True
+    try:
+        for line in HERMES_ENV_FILE.read_text(encoding="utf-8").splitlines():
+            m = re.match(r"\s*(?:export\s+)?OPENROUTER_API_KEY\s*=\s*['\"]?([^'\"\s]+)", line)
+            if m:
+                os.environ["OPENROUTER_API_KEY"] = m.group(1)
+                return True
+    except OSError:
+        pass
+    return False
+
+
+
+# 2026-09-21：DDGS 後端不穩定，約半數呼叫會退回同一批與問題無關的熱門網站
+# （youtube/twitch/udio/suno/manus/character.ai…），同一查詢時好時壞。
+# 對策：結果需含問句關鍵詞才採用，否則換下一個後端重抓；全部落空則回傳最佳一組，
+# 由模型依證據缺口誠實回報（模型已驗證不會對無關證據編造）。
+_SEARCH_BACKENDS = ("duckduckgo", "bing", "brave", "duckduckgo,bing,brave", "auto")
+
+
+def _query_terms(query: str) -> list[str]:
+    cjk = re.findall(r"[\u4e00-\u9fff]{2,}", query)
+    terms: list[str] = []
+    for chunk in cjk:
+        terms += [chunk[i:i + 2] for i in range(0, max(1, len(chunk) - 1), 2)]
+    terms += [w.lower() for w in re.findall(r"[A-Za-z][A-Za-z0-9]{2,}", query)]
+    seen: list[str] = []
+    for t in terms:
+        if t not in seen:
+            seen.append(t)
+    return seen[:24]
+
+
+def _relevance(results: list[dict], terms: list[str]) -> int:
+    hits = 0
+    for item in results:
+        blob = (str(item.get("title", "")) + " " + str(item.get("body", "")) + " " + str(item.get("href", ""))).lower()
+        if sum(1 for t in terms if t in blob) >= 2:
+            hits += 1
+    return hits
+
+
+def _relevant_search(search_fn, query: str, min_hits: int = 2) -> list[dict]:
+    terms = _query_terms(query)
+    best: list[dict] = []
+    best_score = -1
+    for backend in _SEARCH_BACKENDS:
+        try:
+            results = search_fn(query, max_results=5, backend=backend, region="wt-wt", safesearch="moderate") or []
+        except Exception:
+            continue
+        score = _relevance(results, terms)
+        if score > best_score:
+            best, best_score = results, score
+        if score >= min_hits:
+            break
+    return best
+
+def _model_for(provider: str) -> str:
+    return {"local": LOCAL_MODEL, "openrouter": OPENROUTER_MODEL, "hermes": HERMES_MODEL}[provider]
 MAX_QUERY_CHARS = 1500
 MAX_ANSWER_CHARS = 40_000
 WALL_TIMEOUT_SECONDS = 600
@@ -141,6 +211,10 @@ def _ollama_models() -> set[str]:
 
 
 def provider_gate(provider: str) -> tuple[bool, str]:
+    if provider == "hermes":
+        if not _load_hermes_key():
+            return False, "Hermes maplabcloud OPENROUTER_API_KEY is unavailable"
+        return True, "Hermes OpenRouter free chain (public evidence only)"
     if provider == "local":
         if "gemma4:latest" not in _ollama_models():
             return False, "local Ollama gemma4:latest is unavailable"
@@ -161,6 +235,8 @@ def config_for_provider(provider: str) -> Path:
         return DEERFLOW_LOCAL_CONFIG
     if provider == "openrouter":
         return DEERFLOW_OPENROUTER_CONFIG
+    if provider == "hermes":
+        return DEERFLOW_HERMES_CONFIG
     raise ValueError("unknown DeerFlow provider")
 
 
@@ -195,6 +271,8 @@ def validate_config(provider: str) -> int:
     # .env file, so disable implicit dotenv loading before any DeerFlow import.
     os.environ["PYTHON_DOTENV_DISABLED"] = "1"
     os.environ["DEER_FLOW_EXTENSIONS_CONFIG_PATH"] = str(DEERFLOW_EXTENSIONS)
+    if provider == "hermes":
+        _load_hermes_key()
     if provider == "openrouter" and not os.environ.get("OPENROUTER_API_KEY"):
         os.environ["OPENROUTER_API_KEY"] = "validation-placeholder-not-for-network"
     from deerflow.config.app_config import AppConfig
@@ -203,7 +281,7 @@ def validate_config(provider: str) -> int:
     config = AppConfig.from_file(str(config_path))
     tools = [tool.name for tool in config.tools]
     models = [model.name for model in config.models]
-    expected_models = [LOCAL_MODEL] if provider == "local" else [OPENROUTER_MODEL]
+    expected_models = [_model_for(provider)]
     checks = {
         "memory_disabled": not config.memory.enabled and not config.memory.injection_enabled,
         "database_memory_only": config.database.backend == "memory" and config.run_events.backend == "memory",
@@ -258,7 +336,7 @@ def invoke(provider: str, thread_id: str) -> int:
     query, rejection = parse_public_query(f"/research-public {question}")
     if rejection or query is None:
         raise ValueError(rejection or "invalid public query")
-    model_name = LOCAL_MODEL if provider == "local" else OPENROUTER_MODEL
+    model_name = _model_for(provider)
     config_path = config_for_provider(provider)
     os.environ["PYTHON_DOTENV_DISABLED"] = "1"
     os.environ["DEER_FLOW_EXTENSIONS_CONFIG_PATH"] = str(DEERFLOW_EXTENSIONS)
@@ -267,7 +345,10 @@ def invoke(provider: str, thread_id: str) -> int:
     # evidence pack is untrusted input and never includes local/private state.
     from deerflow.community.ddg_search.tools import _search_text
 
-    raw_sources = _search_text(query, max_results=5, backend="auto", region="wt-wt", safesearch="moderate")
+    # 2026-09-21 修：backend="auto" 含 wikipedia 引擎時，DeerFlow 會依問句推測語系區域，
+    # 中文問句被推成 cn-zh（中國），台灣題目因此抓回整批無關站（twitch/抖音站等）。
+    # 排除 wikipedia 引擎即不做區域推測；實測同題改抓到法規資料庫與 YouTube 官方說明。
+    raw_sources = _relevant_search(_search_text, query)
     sources = []
     for item in raw_sources[:5]:
         url = str(item.get("href") or item.get("link") or "")[:1000]
@@ -423,7 +504,7 @@ def supervise(task_dir_raw: str, provider: str) -> int:
                     "DEER_FLOW_EXTENSIONS_CONFIG_PATH": str(DEERFLOW_EXTENSIONS),
                     **(
                         {"OPENROUTER_API_KEY": os.environ["OPENROUTER_API_KEY"]}
-                        if provider == "openrouter" and os.environ.get("OPENROUTER_API_KEY")
+                        if provider in ("openrouter", "hermes") and os.environ.get("OPENROUTER_API_KEY")
                         else {}
                     ),
                 },
@@ -466,7 +547,7 @@ def supervise(task_dir_raw: str, provider: str) -> int:
             "DEER_FLOW_EXTENSIONS_CONFIG_PATH": str(DEERFLOW_EXTENSIONS),
             "NO_PROXY": "127.0.0.1,localhost",
         }
-        if provider == "openrouter":
+        if provider in ("openrouter", "hermes"):
             child_env["OPENROUTER_API_KEY"] = os.environ["OPENROUTER_API_KEY"]
         process = subprocess.Popen(
             (
@@ -502,6 +583,10 @@ def supervise(task_dir_raw: str, provider: str) -> int:
             raise RuntimeError(f"DeerFlow worker exited {process.returncode}")
         payload = json.loads((stdout or "").strip().splitlines()[-1])
         answer = str(payload["answer"])[:MAX_ANSWER_CHARS]
+        # 2026-09-21：上游壅塞時 DeerFlow 會把錯誤字串當成答案回傳，過去被標成 completed。
+        if re.search(r"provider is temporarily unavailable|after multiple retries|Upstream error", answer, re.I) \
+                or not (payload.get("usage") or {}).get("total_tokens"):
+            raise RuntimeError("model provider failed; answer is an error string, not research")
         artifact = task_dir / "research.md"
         _private_write(artifact, answer + "\n")
         urls = sorted(set((payload.get("sources") or []) + re.findall(r"https?://[^\s<>)\]]+", answer)))[:20]
@@ -517,7 +602,7 @@ def supervise(task_dir_raw: str, provider: str) -> int:
                 "artifact_path": str(artifact),
                 "artifact_sha256": _sha256_file(artifact),
                 "answer_preview": answer[:1200],
-                "network_calls": "one bounded public DDGS retrieval plus local Ollama" if provider == "local" else "one bounded public DDGS retrieval plus gated OpenRouter",
+                "network_calls": {"local": "one bounded public DDGS retrieval plus local Ollama", "hermes": "one bounded public DDGS retrieval plus Hermes OpenRouter free chain"}.get(provider, "one bounded public DDGS retrieval plus gated OpenRouter"),
                 "clean_shutdown": process.poll() is not None,
             }
         )
@@ -549,13 +634,13 @@ def main(argv: list[str] | None = None) -> int:
     subparsers = parser.add_subparsers(dest="command", required=True)
     subparsers.add_parser("status")
     validate_parser = subparsers.add_parser("validate-config")
-    validate_parser.add_argument("--provider", choices=("local", "openrouter"), default="local")
+    validate_parser.add_argument("--provider", choices=PROVIDERS, default="local")
     invoke_parser = subparsers.add_parser("invoke")
-    invoke_parser.add_argument("--provider", choices=("local", "openrouter"), required=True)
+    invoke_parser.add_argument("--provider", choices=PROVIDERS, required=True)
     invoke_parser.add_argument("--thread-id", required=True)
     supervise_parser = subparsers.add_parser("supervise")
     supervise_parser.add_argument("--task-dir", required=True)
-    supervise_parser.add_argument("--provider", choices=("local", "openrouter"), required=True)
+    supervise_parser.add_argument("--provider", choices=PROVIDERS, required=True)
     args = parser.parse_args(argv)
     if args.command == "status":
         print(json.dumps(status_payload(), ensure_ascii=False, indent=2))

@@ -237,8 +237,15 @@ def _write_receipt_markdown(task_dir: Path, receipt: dict) -> None:
 
 
 def _deerflow_provider(openrouter_key: str | None) -> tuple[str | None, str | None, dict[str, str]]:
-    provider = os.environ.get("HERMES_DEERFLOW_PROVIDER", "local").strip().lower()
+    # 2026-09-21 Owner「hermes 就是 ollama 的接班」：本機 Ollama 已於 9/4 卸載，
+    # 預設引擎改為 Hermes 免費鏈（公開資料研究；Owner 9/12 msg 5228 已接受雲端隱私取捨）。
+    provider = os.environ.get("HERMES_DEERFLOW_PROVIDER", "hermes").strip().lower()
     child_env: dict[str, str] = {}
+    if provider == "hermes":
+        # bridge 會自行從 Hermes maplabcloud 設定載入金鑰；若呼叫端已有則沿用
+        if openrouter_key:
+            child_env["OPENROUTER_API_KEY"] = openrouter_key
+        return provider, None, child_env
     if provider == "local":
         return provider, None, child_env
     if provider != "openrouter":
@@ -561,36 +568,27 @@ def execute(
             user_message = request
             if request.startswith("general-chat: "):
                 user_message = request[len("general-chat: "):]
-            # Use the same answer function as the gateway loop
-            from .hermes_telegram_gateway import answer, load_history, save_history, save_gateway_state
-            history = load_history()
-            key = openrouter_key or load_free_env_key()
-            chain = load_chain()
-            reply, provider = answer(key, chain, history, user_message)
-            if reply is None:
-                reply = (
-                    "【hermes】這次設定的免費 provider 鏈都沒有成功回覆。A6 gateway 與安全執行器仍在線；"
-                    "你可以直接叫我跑 runtime-status、signal-status、repo-status 或 a6-self-test，會立即回 receipt。"
-                )
-            else:
-                if not reply.startswith("【hermes】"):
-                    reply = "【hermes】" + reply
-                history = (
-                    history
-                    + [
-                        {"role": "user", "content": user_message},
-                        {"role": "assistant", "content": reply},
-                    ]
-                )[-MAX_HISTORY:]
-                save_history(history)
-                save_gateway_state(chain, last_provider=provider)
-            output = reply
+            # Call the gateway's chat fallback directly via subprocess
+            # to avoid circular import between executor and gateway
+            from subprocess import run
+            result = run(
+                (PYTHON, str(REPO_ROOT / "bot_a6" / "hermes_telegram_gateway.py"), "chat-fallback", user_message),
+                cwd=REPO_ROOT,
+                capture_output=True,
+                text=True,
+                timeout=action.timeout,
+                check=False,
+                env={"PATH": "/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin", "LANG": "zh_TW.UTF-8"},
+            )
+            output = result.stdout.strip() or result.stderr.strip()
             receipt = {
                 **task,
-                "status": "completed",
+                "status": "completed" if result.returncode == 0 else "failed",
                 "finished_at": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
                 "description": action.description,
-                "output": output,
+                "returncode": result.returncode,
+                "output": output[:MAX_OUTPUT_CHARS],
+                "output_truncated": len(output) > MAX_OUTPUT_CHARS,
             }
         else:
             try:

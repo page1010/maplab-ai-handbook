@@ -43,7 +43,7 @@
 - 收訊=LINE OA webhook → Apps Script doPost(LockService+message.id 去重)→ 外燴系統試算表 CONVERSATION_LOG 分頁 appendRow;8 欄=msg_id/case_id(手填)/timestamp/speaker/message/source/line_user_id/reply_to_msg_id。
 - A6 bot 唯讀索引(case_store.py,spreadsheets.readonly → 本機 SQLite;/linecases 指令)。
 - **缺口①:無任何回覆欄/回寫機制**;LINE API 不提供我方回覆內容(line-quote-assistant.md:64,132)→ **回寫責任天然落在鍵盤端**(唯一知道實際送出內容的元件)。
-- **缺口②:管線活性最後確認=2026-05-19**(SYSTEM_DIRECTORY_INDEX.md:585);9/21 已排唯讀探測(scripts/a0_convlog_tail.sh,只讀 timestamp/source 欄)。
+- ~~缺口②:管線活性最後確認=2026-05-19~~(舊值,SYSTEM_DIRECTORY_INDEX.md:585 記載過時)→ **9/21 10:44 唯讀探測實證管線活著**:CONVERSATION_LOG 共 6,851 資料列,最新來訊 2026/9/21 上午 10:16(當日 7 筆);探測工具=scripts/a0_convlog_tail.sh(只讀 timestamp/source 欄+bot 代答推播判讀,經旗標鉤子執行)。
 
 **定案(截圖辨識降備援):**
 1. 辨識「現在在回哪個客人」三層:主力=鍵盤面板列 CONVERSATION_LOG 最近未回來訊點選載入;輔助=長按複製客人末句→鍵盤讀剪貼簿→比對 sheet 鎖定客人;備援=截圖 OCR(僅 sheet 漏接來源;必須本機辨識不送雲)。

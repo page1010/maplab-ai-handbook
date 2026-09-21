@@ -41,7 +41,8 @@
 - **Q3 gym 90% 前置四整改要不要現在就動**(清洗 2,635→真 gold 庫)— 我的建議:先動,不必等 #1-#8,兩件事平行。
 - **Q4 「A7 還是 a6」線別** — 預設 A6/hermes(訓練資產都在這條);A7 若另有所指請明示。
 - **Q5 v1 第0步來訊落點** — 我的建議:直接唯讀接 CONVERSATION_LOG(不必 LINE 匯出);你點頭我就開工。
-- **Q6 Owner+Mina 手機是 iOS 還是 Android** — 影響鍵盤能不能讀剪貼簿/截圖(iOS 鍵盤限制多),決定 R7 輔助層做法。
+- ~~Q6 Owner+Mina 手機是 iOS 還是 Android~~ → **已解(msg 5622,2026-09-21T14:45):Owner=Android,Mina=iOS,iOS 優先**。封裝方案已上呈:Xcode 殼 app+鍵盤延伸(底層開源框架或 Owner repo)→TestFlight 邀請 Mina 的 Apple ID→設定開完整取用(連網+剪貼簿)→大腦留 Mac mini,手機走 Tailscale 私有通道回連(客資不過第三方雲),斷線 fail-closed 退回內建 #1-#5 離線模板。**新錢關待裁:Apple 開發者帳號年費 99 美金(TestFlight 必要)——Owner 是否有現成帳號/是否註冊**。後續要 Mina 的 Apple ID 信箱。Android 版排 iOS 後(側載免費)。
+- **新資產(msg 5620,2026-09-21T14:44 圖):外帶 PARTY SNACKS 菜單含單價版**(小漢堡系列 15 入 $1215 起、烙烤三明治 12 入、手工 PIZZA 10 吋、法式鹹派 9 吋、水耕沙拉、炸物等,全品項單價+最低訂購量+兩週前預訂規則)——修正先前「外帶菜單無單價」認知(那是網站版);此圖=配 #5 模板發送的客面菜單,第三階報價助手(R9)關鍵素材。檔:data/telegram-photos/20260921_144459_AQADEhJrG1ksiFV-.jpg。
 - **Q7 這輪範圍確認** — 先專注 v1 手機鍵盤(R1-R8),報價鏈(R9)當展望暫不動,對嗎?
 
 ---

@@ -20,7 +20,9 @@ FAIL=0
 echo "=== a0 reply threading check $(date '+%Y-%m-%d %H:%M:%S') ==="
 
 echo "--- 語法檢查 ---"
-for s in scripts/a0_reply.sh scripts/notify_owner.sh scripts/a0_reply_from_file.sh; do
+# a0_bot_restart.sh 也納入語法檢查:它是自助重啟的唯一通道,壞掉的話會「靜默不重啟」,
+# 跟假收據同一種坑,而且沙盒裡不能直接 bash -n,只能靠這支常設煞車幫我擋。
+for s in scripts/a0_reply.sh scripts/notify_owner.sh scripts/a0_reply_from_file.sh scripts/a0_bot_restart.sh; do
   if bash -n "$REPO_ROOT/$s" 2>&1; then
     echo "OK   $s"
   else

@@ -41,6 +41,16 @@ mkdir -p "$HOME/.maplab"
     echo "--- unknown item must say 需人工 ---"
     cd "$REPO" && "$PY" bot_a6/quote_calc.py items --item "神秘新菜=1" ; echo "exit=$?"
 
+    echo "--- system prompt 真的載到經驗庫了嗎 (Owner msg 5774 的回寫要能生效) ---"
+    cd "$REPO" && "$PY" -c "
+import bot_a6.hermes_telegram_gateway as g
+p = g.system_prompt()
+for marker in ('內部試算', '報價經驗庫', 'Owner msg 5774', '外帶售價', '已作廢', '需人工'):
+    print(('OK   ' if marker in p else 'MISS ') + marker)
+print('system_prompt chars:', len(p))
+print('playbook chars:', len(g.load_quote_playbook()))
+"
+
     echo "--- unittest (test_hermes*) ---"
     # tail 要夠長：只留 25 行時第二個 FAIL 會被切掉，害我以為只壞一項（2026-09-22）。
     cd "$REPO" && "$PY" -m unittest discover -s tests -p 'test_hermes*.py' 2>&1 | tail -n 120

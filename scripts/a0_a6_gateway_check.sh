@@ -47,10 +47,21 @@ import bot_a6.hermes_telegram_gateway as g
 p = g.system_prompt()
 # 最後兩個是經驗庫的尾段(§3.2 與 §5 收尾):它們在 prompt 裡才代表沒被截斷。
 for marker in ('內部試算', '報價經驗庫', 'Owner msg 5774', '外帶售價', '已作廢', '需人工',
-               'Owner msg 5824', '算完之後的固定收尾'):
+               'Owner msg 5824', '算完之後的固定收尾',
+               '方法一：用外帶單反推 item 成本', '方法二：雷同品項類推'):
     print(('OK   ' if marker in p else 'MISS ') + marker)
 print('system_prompt chars:', len(p))
 print('playbook chars:', len(g.load_quote_playbook()))
+"
+
+    echo "--- 成本佔比帶 (Owner msg 5845 SOP 方法二的機械煞車:跳出帶外=抓錯單位/品項) ---"
+    cd "$REPO" && "$PY" -c "
+import bot_a6.quote_calc as q
+b = q.cost_share_band()
+print('帶 %.0f%%-%.0f%%  實際 %.1f%%-%.1f%%' % (b['low']*100, b['high']*100, b['min_share']*100, b['max_share']*100))
+print('帶外品項:', [r['key'] for r in b['outliers']] or '無')
+for r in sorted(q.margin_table(), key=lambda r: r['margin_rate']):
+    print('  %-22s 成本佔比 %5.1f%%  %s' % (r['key'], (1-r['margin_rate'])*100, '推估' if r['estimated'] else '實數'))
 "
 
     echo "--- ref H4-OWNER (Owner msg 5824:砍蝦棗、多澱粉類；外帶推導成本必須被點名) ---"

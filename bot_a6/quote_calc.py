@@ -94,6 +94,36 @@ def margin_table(book: dict | None = None) -> list[dict]:
     return sorted(rows, key=lambda row: row["margin_rate"], reverse=True)
 
 
+# 全表實測跨幅 28.6%(pizza)～70.6%(水耕沙拉盆,實數,Owner 已知的低毛利品)。
+# 帶寬刻意放在實測之外一點:這條煞車要抓的是「差 8 倍」等級的單位認錯(薄餅若當整張=6.25%),
+# 不是去評論某道菜毛利低。把帶設成緊貼實測會把沙拉盆誤報成錯誤。
+# 註:2026-09-22 我曾對 Owner 講「全表 22-56%」,那是錯的(漏掉沙拉盆 70.6%、低端也講錯),
+# 已更正。下次要引用跨幅一律現算 cost_share_band(),不要背數字。
+COST_SHARE_LOW = 0.20
+COST_SHARE_HIGH = 0.75
+
+
+def cost_share_band(book: dict | None = None, *, low: float = COST_SHARE_LOW, high: float = COST_SHARE_HIGH) -> dict:
+    """食材成本佔售價的合理帶。這是「反推」與「類推」唯一的機械煞車。
+
+    Owner msg 5845 要求把找成本的兩個方法寫進 SOP;方法本身會出錯(2026-09-22 就錯過兩次:
+    借錯品項的 30 元/件、以及差 8 倍的「份/片」),而兩次都是靠**整張表的成本佔比帶**抓出來的——
+    全表每一項的食材成本都落在售價的兩成到六成之間,誰跳出這個帶就是單位或品項認錯了。
+    所以把這條檢查留成程式,不留成我下輪還記不記得。
+    """
+    rows = margin_table(book)
+    enriched = [dict(row, cost_share=round(1 - row["margin_rate"], 4)) for row in rows]
+    shares = [row["cost_share"] for row in enriched]
+    return {
+        "low": low,
+        "high": high,
+        "min_share": min(shares),
+        "max_share": max(shares),
+        "outliers": [row for row in enriched if not low <= row["cost_share"] <= high],
+        "note": "食材成本佔售價落在帶外=反推或類推抓錯單位/品項,一律回「需人工」不得報價",
+    }
+
+
 def menu_sum_ceiling(book: dict | None = None) -> dict:
     """照菜單價逐項加總時的毛利率天花板=最高毛利那一項的毛利率。
 

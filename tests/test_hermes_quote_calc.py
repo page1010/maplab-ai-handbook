@@ -217,6 +217,54 @@ class QuoteEstimateRoutingTest(unittest.TestCase):
         self.assertIn("對外定價決定", output)
         self.assertIn(request, case_body)
 
+    def test_cost_share_band_catches_unit_mistakes_without_flagging_the_salad_bowl(self):
+        """Owner msg 5845:把「外帶單反推」與「雷同品項類推」寫進 SOP。
+
+        兩個方法都會出錯,而 2026-09-22 的兩次錯都是靠整張表的成本佔比抓出來的,
+        所以這條煞車要留成程式:帶寬 20-75% 要能抓到「差 8 倍」級別的單位認錯
+        (薄餅若當整張 8 吋 = 成本只佔 6.25%),同時不能把水耕沙拉盆 70.6%(實數、
+        Owner 已知的低毛利品)誤報成錯誤。
+        """
+        band = quote_calc.cost_share_band()
+        self.assertEqual(band["outliers"], [])
+        self.assertLess(band["low"], band["min_share"])
+        self.assertGreater(band["high"], band["max_share"])
+        # 帶不准鬆到抓不出當天那個差 8 倍的疑點。
+        flatbread = quote_calc.lookup("打拋豬薄餅")
+        whole_round_share = (quote_calc._cost_per_piece(flatbread) / flatbread["pieces_per_unit"]) / (
+            flatbread["price"] / flatbread["pieces_per_unit"]
+        )
+        self.assertLess(whole_round_share, band["low"])
+
+    def test_sop_documents_both_cost_finding_methods(self):
+        """SOP 要真的寫著這兩個方法,而且要能載進 hermes 的 system prompt——
+
+        Owner 要的是「寫進 sop」,不是我在收據上講一遍。經驗庫是每則訊息現讀的,
+        所以這支測試釘的是檔案內容與載入路徑,不是我的記憶。
+        """
+        playbook = (Path(__file__).resolve().parents[1] / "bot_a6" / "QUOTE_PLAYBOOK.md").read_text(
+            encoding="utf-8"
+        )
+        for marker in (
+            "找 item 成本的兩個方法",
+            "方法一：用外帶單反推 item 成本",
+            "方法二：雷同品項類推",
+            "找成本的優先順序",
+            "雙路徑檢查",
+            "成本佔比帶",
+            "來源字串寫全名",
+        ):
+            self.assertIn(marker, playbook, marker)
+        # 優先順序:實數 > 外帶反推 > 類推 > 需人工。順序講反了整個方法就變成預設編價。
+        # 比對用章節標題不用關鍵詞:Owner 原話裡就有「雷同品項類推」,拿關鍵詞比會比到他的引言
+        # 而不是方法段落(第一版就是這樣紅的)。
+        self.assertLess(
+            playbook.index("items_master 同品實數"), playbook.index("方法一：用外帶單反推 item 成本")
+        )
+        self.assertLess(
+            playbook.index("方法一：用外帶單反推 item 成本"), playbook.index("方法二：雷同品項類推")
+        )
+
     def test_catering_plan_must_name_its_takeout_derived_costs(self):
         """Owner msg 5824:「這是外燴的單,如果要拿外帶售價參考值取 50%,本來就不是外帶,你沒問我覺得我會被打」。
 

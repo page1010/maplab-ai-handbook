@@ -22,6 +22,11 @@ YouTube 寄給 maplabkitchen 的版權通知截圖。內容逐項照抄：
 **msg 5896（文字,ts 2026-09-22T19:17:21）**
 「你看下個主題怎麼才能製作我們外燴場景專屬音訊CD，以這為目的規劃下張專輯，各種場景一個純音樂，短的，唱跳開幕嘻哈歌手感的先緩緩那個有歌詞問題再討論如何協作，」
 
+**msg 5901（文字,ts 2026-09-22T19:47:08）— aesthetic 修正,本檔第 6 節依此改版**
+「不用那麼道龐克 但在這次CD 我指的是專輯製作，總結出的 promot與曲目製作找尋合適的感覺做我們專用影片配樂 太賽博風很難搭真實場景影片」
+
+這則定了三件事：①**「CD」＝專輯製作,不是實體光碟**（第 8 節原本要問的第三題就此結案,不必再問 Owner)②**這批不用道龐克命名**（第 6.0 節記錄範圍變更)③**不能賽博**,要「找尋合適的感覺」＝曲風整個換成真實質感（第 6.5 節的共用 prompt 就是這句的落地)。
+
 ---
 
 ## 2. 為什麼是現在做（這不是選配）
@@ -96,23 +101,86 @@ YouTube 寄給 maplabkitchen 的版權通知截圖。內容逐項照抄：
 
 ---
 
-## 6. 編號與命名（**候選,待 Owner 點頭**）
+## 6. 編號與命名（**改版:Owner msg 5901 撤掉道龐克**）
 
-現有到 **MTR-017**,所以這批從 **MTR-018** 接。命名照鐵則第 2 條：道教法器／道術詞 ＋ 電氣詞,不帶 prompt 線索。
+### 6.0 規則範圍變更（不刪舊規,只縮範圍）
 
-| 代號 | 場景 | 候選名 | 取名理由 |
+~~原案：命名照鐵則第 2 條（道教法器／道術詞 ＋ 電氣詞),候選名 周天籤／南極丹／開光碼／安宅符／合香線／玄壇訊／淨爐霓／火醮霓／路引碼。~~
+
+**Owner msg 5901（2026-09-22T19:47:08）原話：「不用那麼道龐克 但在這次CD 我指的是專輯製作，總結出的 promot與曲目製作找尋合適的感覺做我們專用影片配樂 太賽博風很難搭真實場景影片」**
+
+- **鐵則第 2 條（道龐克命名,Owner 2026-09-21 18:28）沒有廢止**,繼續管 MAP TABLE RADIO 的公開發歌。
+- **這批（外燴影片配樂庫）例外**：改用白話、一看就知道用在哪的名字。理由是用途不同——公開發歌要的是神秘感,配樂庫要的是剪輯的人一眼抓對檔案。
+- 鐵則第 1 條（入庫必填）與「曲名不得帶 prompt 線索」**照舊適用**：名字不帶曲風／樂器／BPM／人聲技法。
+
+### 6.1 曲目表
+
+現有到 **MTR-017**,這批從 **MTR-018** 接。
+
+| 代號 | 場景 | 曲名 | 該有的感覺 |
 |---|---|---|---|
-| MTR-018 | 抓周 | 周天籤 | 道教周天;抓周＝抓籤,雙關但不直說 |
-| MTR-019 | 生日 · 壽宴 | 南極丹 | 南極仙翁＝壽星;丹 |
-| MTR-020 | 開幕 | 開光碼 | 道教開光＝開幕;碼 |
-| MTR-021 | 入厝 | 安宅符 | 道教安宅;符 |
-| MTR-022 | 婚禮 · 訂婚 | 合香線 | 合香;線 |
-| MTR-023 | 企業茶會 | 玄壇訊 | 玄壇;訊 |
-| MTR-024 | 診所 open house | 淨爐霓 | 道教淨爐＝潔淨;霓 |
-| MTR-025 | 派對空間 | 火醮霓 | 廟會醮典的熱鬧;霓 |
-| MTR-026 | 外帶 | 路引碼 | 路引＝道教通行文書,對應「帶走」;碼 |
+| MTR-018 | 抓周 | 小手 | 好奇、明亮 |
+| MTR-019 | 長輩壽宴 | 加菜 | 暖、有年紀 |
+| MTR-020 | 開幕 | 第一杯 | 有面子、微醺 |
+| MTR-021 | 入厝 | 新灶 | 安穩、乾淨 |
+| MTR-022 | 婚禮 · 訂婚 | 牽手 | 收斂的甜,留白給致詞 |
+| MTR-023 | 企業茶會 | 換名片 | 中性、專業、不搶戲 |
+| MTR-024 | 診所 open house | 早診 | 明亮、潔淨、低刺激 |
+| MTR-025 | 派對空間 | 續攤 | 有律動但不吵,可整晚循環 |
+| MTR-026 | 外帶 | 提回家 | 輕快、日常、最短 |
 
 （場景清單若增減,代號順推,不留空號。）
+
+**編號前綴建議沿用 MTR,不另開一套**：入庫規矩維持一份（鐵則第 1 條),只在 registry 多標一欄 `use: 影片配樂` 與公開發歌區分。另開新前綴＝多一套規矩要維護,收益只有「看起來分得比較開」。Owner 要另開再改。
+
+---
+
+## 6.5 總結出的 prompt（Owner msg 5901 指名要的東西）
+
+### 6.5.1 共用底（九首的 DNA,先寫這段再接各首差異）
+
+```
+warm organic acoustic instrumental, nylon string guitar and felt piano,
+upright bass, brushed drums, light hand percussion, natural room tone,
+analog tape warmth, sparse arrangement with open midrange for voiceover,
+unobtrusive background score, seamless loop
+```
+
+**永遠接在後面的否定串**（這段比正面描述更重要,Suno 不寫死就會自己加東西）：
+
+```
+no vocals, no synth lead, no neon retrowave, no cyberpunk,
+no heavy sub bass, no big drop
+```
+
+三個關鍵詞的理由,不是審美是功能：
+- `open midrange for voiceover` → 第 5 節第 4 條的中頻留空,不寫這句一配旁白就得把音樂壓到聽不見。
+- `no cyberpunk` / `no neon retrowave` → **Owner msg 5901 親點：太賽博風很難搭真實場景影片。** 外燴影片拍的是真的桌子、真的菜、真的人,畫面裡沒有霓虹,音樂一賽博就變成兩層皮。
+- `no big drop` → 這是配樂不是作品,高潮會蓋掉剪輯自己的節奏。
+
+### 6.5.2 各首差異（接在共用底後面,只加這幾個字）
+
+| 代號 | 曲名 | 差異 prompt | BPM |
+|---|---|---|---|
+| MTR-018 | 小手 | `celesta and glockenspiel, pizzicato strings, playful curious mood` | 95–105 |
+| MTR-019 | 加菜 | `warm felt piano lead, soft string pad, nostalgic and tender` | 80–90 |
+| MTR-020 | 第一杯 | `light muted trumpet, subtle funk guitar, confident and celebratory` | 105–115 |
+| MTR-021 | 新灶 | `fingerpicked acoustic guitar, warm pad, settled and hopeful` | 85–95 |
+| MTR-022 | 牽手 | `solo piano with light strings, restrained and tender, lots of space` | 75–85 |
+| MTR-023 | 換名片 | `soft rhodes, brushed kit, neutral professional, almost furniture music` | 95–105 |
+| MTR-024 | 早診 | `marimba and soft piano, bright clean and very gentle, low stimulation` | 85–95 |
+| MTR-025 | 續攤 | `organic house groove, live bass, light shaker, steady all-night loop` | 108–115 |
+| MTR-026 | 提回家 | `ukulele and shaker, brisk and everyday, short and light` | 105–115 |
+
+**未定＝不寫死**：以上樂器是「找感覺」的起點不是規格,第一輪出來由 Owner 聽過再收斂。BPM 給範圍不給單一值,同理。
+
+### 6.5.3 與既有視覺鐵律的關係（**不自動降級,兩條並存**）
+
+`STYLE_REGISTRY.md` 實戰第 6 節有一條 Owner 定的視覺鐵律「**不要老派,寧願 Cyberpunk**」（平行時空賽博老台南)。**那一條沒有被本規劃取代**,它管的是 **MAP TABLE RADIO 自己生成的畫面**;本規劃管的是 **真實場景外燴影片的配樂**。兩者是不同 domain,各自成立。
+
+要合併或改寫那條鐵律,得 Owner 另外說一次——本檔不代為判定。
+
+---
 
 ---
 
@@ -129,11 +197,14 @@ YouTube 寄給 maplabkitchen 的版權通知截圖。內容逐項照抄：
 
 ---
 
-## 8. 待 Owner 圈選（只有三件）
+## 8. 待 Owner 圈選（剩兩件）
 
 1. **場景清單**（第 4 節九個)：刪哪個、補哪個。
-2. **候選曲名**（第 6 節)：可用 / 要改。
-3. **「CD」的意思**：我按「影片配樂 ＋ 現場可循環」兩用做（第 5 節第 1 條已兼顧)。若你要的是實體光碟／可交付的成品碟,說一聲,那要多一層母帶排序與碟面設計。
+2. **曲名**（第 6.1 節白話版)：可用 / 要改。
+
+~~3. 「CD」的意思：是否為實體光碟。~~ → **msg 5901 已答：指專輯製作,不做實體碟。** 第 5 節第 1 條的「60s 母帶＋無縫循環」照舊保留,因為那條的價值是同一份母帶能同時餵 Shorts 與派對空間現場,與是否壓碟無關。
+
+（第 6.5 節的 prompt 不列入待圈選——那是起點不是定案,第一輪出來聽過再收斂,見 6.5.2 結尾。）
 
 ---
 

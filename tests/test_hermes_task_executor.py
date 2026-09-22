@@ -125,15 +125,23 @@ class HermesTaskExecutorTest(unittest.TestCase):
         self.assertNotIn("OPENROUTER_API_KEY", popen.call_args.kwargs["env"])
 
     def test_quote_request_is_accepted_as_intake_without_any_price(self):
-        """hermes 不報價的紅線不動,但「不報價」不等於「不回話」。"""
+        """hermes 不報價的紅線不動,但「不報價」不等於「不回話」。
 
-        # 兩則真實被拒過的 Owner 原話當回歸素材(2026-08-27 / 09-21)
-        request = "幫我報10人周歲派對，預算20000，先找到A4的sheets"
-        self.assertEqual(executor.classify(request), ("quote-intake", None))
+        Owner msg 5774 之後分兩路:人數與預算都問到了就走 quote-estimate(程式算,不是模型編);
+        缺任一項才停在 quote-intake 受理。兩路都不准出現模型生成的價格。
+        """
+        # 真實被拒過的 Owner 原話當回歸素材(2026-08-27 / 09-21),兩則都帶人數+預算
+        self.assertEqual(
+            executor.classify("幫我報10人周歲派對，預算20000，先找到A4的sheets"),
+            ("quote-estimate", None),
+        )
         self.assertEqual(
             executor.classify("用預算反推 菜色以雷同的品項抓預算 抓完毛利 30000塊 人數100人"),
-            ("quote-intake", None),
+            ("quote-estimate", None),
         )
+        # 講不清楚的照舊只受理,不猜人數也不猜預算
+        request = "幫我報個價，先找到A4的sheets"
+        self.assertEqual(executor.classify(request), ("quote-intake", None))
         # 狀態類問句不得被誤收成報價
         self.assertNotEqual(executor.classify("幫我查 Hermes runtime 狀態")[0], "quote-intake")
 

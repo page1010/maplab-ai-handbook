@@ -32,6 +32,7 @@ try:
         validate_durable_request,
         write_job,
     )
+    from . import quote_calc
 except ImportError:  # Direct launchd/script execution.
     from hermes_deerflow_bridge import (
         DEERFLOW_PYTHON,
@@ -46,6 +47,7 @@ except ImportError:  # Direct launchd/script execution.
         validate_durable_request,
         write_job,
     )
+    import quote_calc
 
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -153,6 +155,12 @@ ACTIONS = {
         10,
         "受理報價需求：原文建案卷、轉交 A0 代產，本動作不產生任何價格",
     ),
+    "quote-estimate": Action(
+        "quote-estimate",
+        ("/usr/bin/true",),
+        20,
+        "報價試算：以有 source 的價目表做零 LLM 算術，產出毛利率與件數（內部試算，不對客）",
+    ),
 }
 
 # hermes 的 fail-closed 紅線第一條就是不報價。但「不報價」不等於「不回話」——
@@ -161,7 +169,8 @@ ACTIONS = {
 # 用 2026-08-27 與 09-21 兩則真實被拒的 Owner 原話當回歸素材:8/27 那則只寫
 # 「預算20000」,第一版正則抓不到它,所以「預算+金額」和「報 N 人」要獨立成條。
 QUOTE_INTENT_RE = re.compile(
-    r"(報價|估價|開價|多少錢|抓預算|毛利|"
+    # 「報個價」「報一下價」中間會夾字,只寫「報價」會漏掉(2026-09-22 實測)。
+    r"(報.{0,3}價|估價|開價|多少錢|抓預算|毛利|"
     r"預算\s*\d{3,}|預算.{0,12}(反推|抓|做|配|內)|"
     r"\d{3,}\s*(塊|元)|每人\s*\d+|人數\s*\d+|報\s*\d+\s*人)",
 )
@@ -220,6 +229,11 @@ def classify(request: str) -> tuple[str | None, str | None]:
         if any(re.sub(r"\s+", "", alias).lower() in normalized for alias in aliases):
             return action_name, None
     if QUOTE_INTENT_RE.search(request or ""):
+        # 人數與預算都問到了就直接試算（Owner msg 5774：沒人有額度時 a6 要能幫 Owner 算）；
+        # 缺任一項就退回受理，由 hermes 照經驗庫把缺的那幾題問回來，不猜。
+        facts = quote_calc.parse_brief(request or "")["facts"]
+        if facts.get("pax") and facts.get("budget"):
+            return "quote-estimate", None
         return "quote-intake", None
     return None, "不在目前的安全動作白名單"
 
@@ -508,6 +522,86 @@ def _deerflow_job_readback(task_id: str) -> dict:
     return payload
 
 
+def _quote_estimate_output(request: str, task_id: str, now: str) -> str:
+    """報價試算的文字輸出。每個數字都出自 quote_calc(有 source 的價目表),模型不參與算術。"""
+    brief = quote_calc.parse_brief(request)
+    facts = brief["facts"]
+    pax = int(facts["pax"])
+    budget = float(facts["budget"])
+    target = facts.get("target_margin")
+    book = quote_calc.load_price_book()
+    ceiling = quote_calc.menu_sum_ceiling(book)
+
+    lines = [
+        "【hermes 報價試算・內部用,不得直接發給客人】",
+        f"讀到的需求:{pax} 人／預算 {budget:.0f} 元"
+        + (f"／目標毛利 {target:.0%}" if target else "")
+        + (f"／日期 {facts['event_date']}" if facts.get("event_date") else ""),
+        "",
+        f"逐項加總的毛利率天花板:{ceiling['ceiling_rate']:.1%}(最高毛利品項={ceiling['ceiling_item']})。"
+        "砍件數不會改變毛利率。",
+    ]
+    if target and target > ceiling["ceiling_rate"]:
+        cost_cap = quote_calc.cost_budget_for_margin(budget, float(target))
+        lines += [
+            f"→ 目標 {target:.0%} 高於天花板,逐項加總做不到。唯一路徑=整案價收滿 {budget:.0f},"
+            f"食材成本壓在 {cost_cap:.0f} 元以內。",
+            "→ 換報價法屬對外定價決定,要 Owner 拍板,我不自裁。",
+        ]
+
+    matched = [
+        plan
+        for plan in quote_calc.reference_plans(book)
+        if plan.get("pax") == pax and plan.get("package_price") in (None, budget)
+    ]
+    if matched:
+        lines += ["", f"同規模算過的配置({len(matched)} 組),以下為程式重算結果:"]
+        for plan in matched:
+            result = quote_calc.run_reference_plan(plan["name"], book)
+            lines += [
+                "",
+                f"[{plan['name']}] {plan['label']}(來源 {plan['source']})",
+                quote_calc.render(result),
+            ]
+    else:
+        lines += [
+            "",
+            "這個規模我沒有算過的既有配置。菜色要你或 Owner 先定(選菜不是我的權責),"
+            "定好我就用 scale 指令放大到剛好達標,連風險一起報。",
+        ]
+
+    if brief["missing"]:
+        lines += ["", "還沒問到的必要事實:" + "、".join(brief["missing"])]
+    lines += [
+        "",
+        f"案卷:{QUOTE_INTAKE_ROOT / (task_id + '.md')}",
+        f"受理時間:{now}",
+        "對客發送、選菜、定價方法三件仍由人決定。",
+    ]
+    output = "\n".join(lines)
+    _write_text(
+        QUOTE_INTAKE_ROOT / f"{task_id}.md",
+        "\n".join(
+            [
+                f"# 報價試算 {task_id}",
+                "",
+                f"- 受理時間:{now}",
+                "- 狀態:hermes 已用價目表試算(內部),待 A0 覆核與 Owner 定案",
+                "",
+                "## Owner 需求原文",
+                "",
+                request,
+                "",
+                "## hermes 試算輸出",
+                "",
+                output,
+                "",
+            ]
+        ),
+    )
+    return output
+
+
 def execute(
     request: str,
     owner_user_id: int,
@@ -614,6 +708,14 @@ def execute(
                 "我不報價(這是固定紅線),已標記為待 A0 代產,A0 下一輪續接時會看到這筆。\n"
                 f"案卷:{intake_path}"
             ),
+        }
+    elif action_name == "quote-estimate":
+        receipt = {
+            **task,
+            "status": "completed",
+            "finished_at": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
+            "description": ACTIONS[action_name].description,
+            "output": _quote_estimate_output(request, task_id, now),
         }
     else:
         action = ACTIONS[action_name]

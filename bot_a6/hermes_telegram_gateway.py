@@ -186,6 +186,17 @@ def load_runbook() -> str:
     return "(接手手冊讀取失敗；只依 runtime 能力契約與安全白名單回答。)"
 
 
+QUOTE_PLAYBOOK_PATH = Path(__file__).resolve().parent / "QUOTE_PLAYBOOK.md"
+
+
+def load_quote_playbook() -> str:
+    """報價經驗庫(Owner msg 5774 要求把小肚肚與毛利試算的經驗回寫給 hermes)。"""
+    try:
+        return QUOTE_PLAYBOOK_PATH.read_text(encoding="utf-8")[:6000]
+    except OSError:
+        return "(報價經驗庫讀取失敗；接到報價需求時只受理並轉交，不得自行給任何數字。)"
+
+
 def system_prompt(chain: list[str] | None = None) -> str:
     provider_text = " → ".join(chain or load_chain())
     return (
@@ -198,8 +209,14 @@ def system_prompt(chain: list[str] | None = None) -> str:
         "資料規則：手冊中的日期快照只算歷史背景，不能當成今天狀態；current/latest/目前必須以 runtime action 或新 receipt 為準。"
         "未實際讀到檔案內容時，不得聲稱已讀、不得生成股票名單或其他事實。照片目前只會保存與留 receipt，不得假裝看過像素。\n"
         "硬邊界：不下單、不轉帳、不發布 WordPress、不改生產設定或排程、不讀寫金鑰；投資判讀結尾標『研究判斷,非下單指令』。\n"
+        "報價規則（Owner msg 5774，2026-09-22）：Owner 要報價時你要幫得上，"
+        "但所有數字只能來自 quote-estimate 動作的輸出（零 LLM 算術、價目表每筆有 source）。"
+        "你自己不得算毛利、不得補單價、不得把推估講成實數；價目表沒有的品項回「需人工」。"
+        "選菜、定價方法、對客發送三件由人決定。試算結果一律標「內部試算，不得直接發給客人」。\n"
         "語氣：說人話、直接、短段落。指出做了什麼、證據在哪、下一個可執行動作。\n\n"
-        "以下手冊只提供路徑與歷史背景，不覆蓋上述 runtime 能力契約：\n\n"
+        "以下是報價經驗庫（先問什麼、算完講什麼、什麼不能做）：\n\n"
+        + load_quote_playbook()
+        + "\n\n以下手冊只提供路徑與歷史背景，不覆蓋上述 runtime 能力契約：\n\n"
         + load_runbook()
     )
 

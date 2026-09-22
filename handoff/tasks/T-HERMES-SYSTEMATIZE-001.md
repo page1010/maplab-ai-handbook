@@ -91,6 +91,9 @@
 ## 5. hermes 工作清單(先一支,驗收過再加)
 
 ### JOB-1(已寫入隊列,尚未執行)
+- **工作單(五欄格式,2026-09-22 補):`handoff/tasks/T-HERMES-SYSTEMATIZE-001-JOB-1.md`**
+  ——依 AGENT_RULES SECTION 27 第三節,結果·指標·期限·權限·回報點齊全,派工前跑
+  `python3 scripts/check_work_order.py` 驗過(exit 0)。下面這幾行是規格摘要,**派工以工作單為準**。
 - 檔案:`data/free-quota/queue/32-style-taxonomy.job.md`
 - 等級:C
 - 做什麼:讀 `data/music-style-db/style_registry.jsonl` 既有 14 首的 style_prompt,歸納出**風格分類樹草案 v0**(3-5 個大類,每類給判別特徵、代表曲代號、可複用的 prompt 骨架),並列出歸不進去的邊界案例。

@@ -85,6 +85,19 @@ for r in sorted(q.margin_table(), key=lambda r: r['margin_rate']):
     # tail 要夠長：只留 25 行時第二個 FAIL 會被切掉，害我以為只壞一項（2026-09-22）。
     cd "$REPO" && "$PY" -m unittest discover -s tests -p 'test_hermes*.py' 2>&1 | tail -n 120
 
+    # SECTION 27 第三節的機械檢查（2026-09-22 落成）：五欄模板與 check_work_order.py
+    # 走這裡是因為沙盒只放行本腳本這條 Python 通道，不是因為它跟 a6 同一套。
+    echo "--- unittest (test_work_order_template) ---"
+    cd "$REPO" && "$PY" -m unittest discover -s tests -p 'test_work_order_template.py' 2>&1 | tail -n 40
+
+    echo "--- 派工檢查器實跑：模板本身必須被擋 (exit 2 = 不准派工) ---"
+    cd "$REPO" && "$PY" scripts/check_work_order.py handoff/tasks/_WORK_ORDER_TEMPLATE.md
+    echo "exit=$?"
+
+    echo "--- 派工檢查器實跑：現行工作單 JOB-1 必須過 (exit 0 = 可派工) ---"
+    cd "$REPO" && "$PY" scripts/check_work_order.py handoff/tasks/T-HERMES-SYSTEMATIZE-001-JOB-1.md
+    echo "exit=$?"
+
     echo "=== end ==="
 } >"$LOG" 2>&1
 

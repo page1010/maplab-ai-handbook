@@ -1282,6 +1282,13 @@ IN_PROGRESS ──[48h]──► STALLED ──[7d]──► NEEDS_REVIEW ──
 
 **為什麼寫成硬規則**：win-01 曾七張卡連續 picked-and-failed，真因是 executor 結束沒寫終態、finalizer 只能補 blocked、blocked 又被壓不重試——那正是第 5 欄缺失造成的，不是 agent 不夠好。呼應 SECTION 25（任務卡四態 FSM）與 SECTION 20（部門進度回報）。
 
+**模板與機械檢查（2026-09-22 落成，本節從「只有規則」變成閉環）**：
+
+- 模板：`handoff/tasks/_WORK_ORDER_TEMPLATE.md`（五欄 ＋ 動作可逆性 ＋ done／blocked 兩個終態的定義位）
+- 檢查：`python3 scripts/check_work_order.py handoff/tasks/<TASK_ID>.md` —— **exit 2 ＝ 缺欄，不准派工**（fail-closed，與報價引擎「需人工」同精神）；只驗欄位在不在、有沒有真填、第五欄有沒有把 done 與 blocked 都定義出來，不評內容好壞（那是人的事）
+- 測試：`tests/test_work_order_template.py`（含「拿模板本身去驗必須 exit 2」與逐欄拔掉都要被抓到）
+- **派工前跑一次檢查器，沒過就不准送出工作單。** 這條規則自己也照第四節辦：SOP 必配機械檢查。
+
 ### 四、04 在我們這裡要更嚴：**第二次就寫 SOP，不等第三次**
 
 外部規則是「三次重複」，我們的一次成本是 Owner 被客人打（msg 5824 原話「你沒問我覺得我會被打」）。所以：**同一類指正出現第二次，當輪就要進 SOP，並附一個機械檢查（測試或腳本），不准只留心得。**

@@ -51,6 +51,11 @@ print('system_prompt chars:', len(p))
 print('playbook chars:', len(g.load_quote_playbook()))
 "
 
+    # 每輪續接必看：收據上向 Owner 承諾「A0 下一輪續接時會看到這筆」，不查就是空頭承諾。
+    # 只列檔名與時間，案卷內容含客人需求＝不進 repo、不進 Telegram（2026-09-22）。
+    echo "--- quote_intake 新案卷 (只列檔名時間，不印內容) ---"
+    ls -l "$HOME/.maplab/quote_intake" 2>&1 | tail -n 10 || echo "no intake dir"
+
     echo "--- unittest (test_hermes*) ---"
     # tail 要夠長：只留 25 行時第二個 FAIL 會被切掉，害我以為只壞一項（2026-09-22）。
     cd "$REPO" && "$PY" -m unittest discover -s tests -p 'test_hermes*.py' 2>&1 | tail -n 120

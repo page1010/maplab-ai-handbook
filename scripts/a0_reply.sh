@@ -67,7 +67,27 @@ if [[ -z "$REPLY_TO_INBOX_TS" ]]; then
   exit 1
 fi
 
-bash "$REPO_ROOT/scripts/notify_owner.sh" "$MESSAGE"
+# Owner 2026-09-22 msg 5882：「只看得到成果和單向對他說話，沒有辦法溝通了」
+# 成因之一在這裡：ts 是參數帶進來時（A0 回覆一律這樣呼叫），原本完全不去查
+# message_id，所以 (a) 收據裡的 message_id 永遠是 null、(b) 送出去的是獨立訊息，
+# Telegram 上看不出它在回哪一句 —— 看起來就只是一坨成果。
+# 改成不論 ts 從哪來，都回頭抓那一則的 message_id，拿去做 Telegram 引用回覆。
+# 抓不到就照舊（fail-soft），回覆管道不新增失敗點。
+if [[ "$MESSAGE_ID_JSON" == "null" && -f "$INBOX_FILE" ]]; then
+  MID=$(jq -r --arg ts "$REPLY_TO_INBOX_TS" \
+    'select(.ts == $ts) | if (.message_id? != null) then .message_id else empty end' \
+    "$INBOX_FILE" 2>/dev/null | tail -n 1 || true)
+  if [[ -n "$MID" ]]; then
+    MESSAGE_ID_JSON="$MID"
+  fi
+fi
+
+REPLY_TO_MESSAGE_ID=""
+if [[ "$MESSAGE_ID_JSON" != "null" ]]; then
+  REPLY_TO_MESSAGE_ID="$MESSAGE_ID_JSON"
+fi
+
+bash "$REPO_ROOT/scripts/notify_owner.sh" "$MESSAGE" "$REPLY_TO_MESSAGE_ID"
 
 mkdir -p "$(dirname "$REPLIES_FILE")"
 TS=$(date +%s)

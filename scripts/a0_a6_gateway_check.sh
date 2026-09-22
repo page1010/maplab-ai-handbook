@@ -102,6 +102,12 @@ for r in sorted(q.margin_table(), key=lambda r: r['margin_rate']):
     cd "$REPO" && "$PY" scripts/check_work_order.py handoff/tasks/T-ANTIGRAVITY-CHILLOUT-LOGO-001.md
     echo "exit=$?"
 
+    # Owner msg 5882「只看得到成果和單向對他說話」→ 回覆引用管道的常設檢查。
+    # 走這裡是因為 resume 視窗的腳本白名單在喚醒當下取樣，同輪新建的腳本自己跑不了。
+    echo "--- 回覆引用管道 (a0_reply_thread_check) ---"
+    bash "$REPO/scripts/a0_reply_thread_check.sh"
+    echo "exit=$?"
+
     echo "=== end ==="
 } >"$LOG" 2>&1
 

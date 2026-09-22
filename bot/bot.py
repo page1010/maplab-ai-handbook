@@ -2676,6 +2676,45 @@ def _is_a0_answer_command(text: str) -> bool:
     return bool(re.match(r"^\s*代答", text or ""))
 
 
+# ── 短問快答（Owner 2026-09-22 msg 5882）─────────────────────────────────────
+# Owner:「當我跟他溝通順便檢查他回覆我telegram 只看得到成果和單向對他說話,
+# 沒有辦法溝通了」。成因之一在路由:每一則訊息都被當成一個批次工作,喚醒 A0 的
+# session(A0_RESUME_TIMEOUT_S 預設 900 秒),再回一份長報告;而 _a0_claim_single_reply
+# 保證同一則只自動回一次。結果就是想追問一句、改一個字,都要付十五分鐘批次的代價。
+#
+# 對話所需的零件本來就在(每個 chat 留 20 則 _get_history、claude_ask_with_fallback
+# 會把歷史帶進 prompt),只是預設全部倒給 A0。這裡補一條 opt-in 的短路:
+#   Owner 主動在句首打「聊」或「短」→ 不進重批次,直接用對話歷史秒回。
+# 設計上刻意只在 Owner 自己打那個字時才生效,所以不會誤傷正常工作指令;
+# 不想要就把前綴拿掉,路由完全回到原狀(可逆)。
+#
+# 兩條治理規矩:
+#   1) 這條路的答案是 bot 答的,不是 Fable5 本人,所以掛【bot 代答】標籤
+#      (owner-communication-standard:標清楚誰在說話)。
+#   2) 短問不落 a0_inbox 工作線,也因此不寫 a0_replies 收據 —— 兩邊都不寫才不會
+#      讓 watchdog 把閒聊當成「未回覆的 Owner 指令」去逼 A0 補跑。對話內容仍由
+#      log_and_commit 進 CONVERSATION_LOG,A0 續接時看得到。
+CHAT_MODE_LABEL = "【bot 代答・短問快答】"
+CHAT_MODE_TIMEOUT_S = int(os.getenv("CHAT_MODE_TIMEOUT_S", "120"))
+
+
+def _parse_chat_mode(text: str) -> tuple[bool, str]:
+    """回傳 (是否短問模式, 去掉前綴後的問題)。
+
+    只認句首的「聊」或「短」,而且後面必須是分隔符(空白或冒號逗號頓號)或整則
+    到此結束。這一條很重要:如果只比對「開頭是聊或短」,那「短期目標是什麼」會被
+    切成前綴+「期目標是什麼」、「聊天記錄在哪」會被切成前綴+「天記錄在哪」——
+    正常工作指令被誤判成閒聊,還被改寫了內容。寧可讓 Owner 多打一個空白。
+
+    前綴後面沒有內容時仍回 True(讓呼叫端回一句「你想問什麼」,而不是把裸前綴
+    丟去問模型)。
+    """
+    match = re.match(r"^\s*(?:聊|短)(?:\s*[：:，,、]\s*|\s+|$)", text or "")
+    if not match:
+        return False, ""
+    return True, (text or "")[match.end():].strip()
+
+
 def _a0_has_replied_for(reply_to_inbox_ts: str) -> bool:
     """True when A0_REPLIES_FILE has a receipt *paired* to this exact inbox
     message via its "reply_to_inbox_ts" field (scripts/a0_reply.sh writes
@@ -3026,6 +3065,25 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     text = update.message.text or ""
     chat_id = update.effective_chat.id
     message_id = getattr(update.message, "message_id", None)
+
+    # 短問快答(Owner msg 5882):句首「聊」/「短」= 不進 A0 重批次,直接秒回。
+    # 刻意放在 _a0_inbox_append 之前 —— 閒聊不落工作線,watchdog 才不會把它當成
+    # 未回覆的 Owner 指令去逼 A0 補跑。詳見 _parse_chat_mode 上方的註解。
+    chat_mode, chat_question = _parse_chat_mode(text)
+    if chat_mode:
+        if not chat_question:
+            await update.message.reply_text(
+                f"{CHAT_MODE_LABEL}\n這則只有前綴、沒有問題。要問什麼直接接在後面就好。"
+            )
+            return
+        answer = await claude_ask_with_fallback(
+            chat_id, chat_question, timeout=CHAT_MODE_TIMEOUT_S
+        )
+        reply = f"{CHAT_MODE_LABEL}\n{answer.text}"
+        await send_long(update, reply)
+        log_and_commit(text, reply, "chat-mode")
+        return
+
     reply_to_inbox_ts = _a0_inbox_append(chat_id, text, message_id)
 
     # 2026-08-22 (Owner decision, TELEGRAM_ROUTING.md): this bot is the

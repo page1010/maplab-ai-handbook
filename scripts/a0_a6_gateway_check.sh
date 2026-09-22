@@ -104,6 +104,13 @@ for r in sorted(q.margin_table(), key=lambda r: r['margin_rate']):
 
     # Owner msg 5882「只看得到成果和單向對他說話」→ 回覆引用管道的常設檢查。
     # 走這裡是因為 resume 視窗的腳本白名單在喚醒當下取樣，同輪新建的腳本自己跑不了。
+    echo "--- py_compile bot.py (短問快答路由改動) ---"
+    cd "$REPO" && "$PY" -m py_compile "$REPO/bot/bot.py" \
+        && echo "bot.py py_compile OK" || echo "bot.py py_compile FAILED"
+
+    echo "--- unittest (test_chat_mode_routing:工作指令不可被誤判成閒聊) ---"
+    cd "$REPO" && "$PY" -m unittest discover -s bot -p 'test_chat_mode_routing.py' 2>&1 | tail -n 40
+
     echo "--- 回覆引用管道 (a0_reply_thread_check) ---"
     bash "$REPO/scripts/a0_reply_thread_check.sh"
     echo "exit=$?"

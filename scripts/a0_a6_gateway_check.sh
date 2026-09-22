@@ -48,7 +48,8 @@ p = g.system_prompt()
 # 最後兩個是經驗庫的尾段(§3.2 與 §5 收尾):它們在 prompt 裡才代表沒被截斷。
 for marker in ('內部試算', '報價經驗庫', 'Owner msg 5774', '外帶售價', '已作廢', '需人工',
                'Owner msg 5824', '算完之後的固定收尾',
-               '方法一：用外帶單反推 item 成本', '方法二：雷同品項類推'):
+               '方法一：用外帶單反推 item 成本', '方法二：雷同品項類推',
+               '資訊不全時怎麼交件', '算不出來的不給單價'):
     print(('OK   ' if marker in p else 'MISS ') + marker)
 print('system_prompt chars:', len(p))
 print('playbook chars:', len(g.load_quote_playbook()))

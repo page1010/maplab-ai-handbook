@@ -194,8 +194,10 @@ def load_quote_playbook() -> str:
     # 上限 12000:2026-09-22 加完 §3.2 後經驗庫已 5,614 字元,原本的 6000 再加一條就會把
     # §4 指令表與 §5 收尾靜靜切掉——而被切掉的部分不會報錯,只會讓 hermes 少守一條規則。
     # 同一天才被 tail -n 25 咬過一次,不重複犯:截斷點要留足餘裕,並由 gateway check 驗尾段還在。
+    # 2026-09-22 再放寬到 16000:加完 §0.1 後經驗庫已 10,xxx 字元,離 12000 只剩一節的距離。
+    # 這條就是 §0.1 自己講的「留一點空間」用在自己身上——等頂到天花板才改,就是等它先無聲壞掉。
     try:
-        return QUOTE_PLAYBOOK_PATH.read_text(encoding="utf-8")[:12000]
+        return QUOTE_PLAYBOOK_PATH.read_text(encoding="utf-8")[:16000]
     except OSError:
         return "(報價經驗庫讀取失敗；接到報價需求時只受理並轉交，不得自行給任何數字。)"
 

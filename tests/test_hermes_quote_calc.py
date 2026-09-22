@@ -4,6 +4,7 @@ from pathlib import Path
 from unittest import mock
 
 from bot_a6 import hermes_task_executor as executor
+from bot_a6 import hermes_telegram_gateway as gateway
 from bot_a6 import quote_calc
 
 
@@ -324,6 +325,26 @@ class QuoteEstimateRoutingTest(unittest.TestCase):
         # 拼盤本身仍然不准被報價
         with self.assertRaises(quote_calc.QuoteError):
             quote_calc.plan_by_items([("混合炸物拼盤", 1)], package_price=30000, pax=100)
+
+    def test_sop_tells_hermes_how_to_deliver_with_incomplete_information(self):
+        """Owner msg 5851:「依照需求用現有資訊然後留一點空間與猜測」要變成 hermes 的通則。
+
+        這條測試釘兩件事:①方法寫在 §0.1(§0 之後、§1 之前)=它管所有題目不只管找成本;
+        ②經驗庫載入上限要留得下它,不然規則存在檔案裡卻沒進 system prompt,等於沒寫。
+        """
+        playbook = (Path(__file__).resolve().parents[1] / "bot_a6" / "QUOTE_PLAYBOOK.md").read_text(
+            encoding="utf-8"
+        )
+        for marker in ("資訊不全時怎麼交件", "算不出來的不給單價", "框不是猜的，是算的",
+                       "沒有標記的猜測不行", "留的空間要說出它是空間", "人指定的數字鎖死"):
+            self.assertIn(marker, playbook, marker)
+        self.assertLess(playbook.index("三行分工"), playbook.index("資訊不全時怎麼交件"))
+        self.assertLess(playbook.index("資訊不全時怎麼交件"), playbook.index("動工前必問"))
+        prompt = gateway.system_prompt()
+        self.assertIn("資訊不全時怎麼交件", prompt)
+        # 尾段也要還在=整份沒被切掉,而且要留得下再一節的餘裕(不是剛好塞得進去)
+        self.assertIn("算完之後的固定收尾", prompt)
+        self.assertGreater(len(gateway.load_quote_playbook()), len(playbook) - 1)
 
     def test_estimate_for_an_unseen_size_asks_for_the_menu_instead_of_inventing_one(self):
         with tempfile.TemporaryDirectory() as tmp, mock.patch.object(

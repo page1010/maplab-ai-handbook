@@ -42,6 +42,28 @@ class QuoteCalcTest(unittest.TestCase):
         self.assertEqual(whole_plan["food_cost"], cut_plan["food_cost"])
         self.assertEqual(cut_plan["pieces"], whole_plan["pieces"] * 2)
 
+    def test_flatbread_cost_unit_is_per_piece_not_per_whole_round(self):
+        """薄餅的「份」是一片還是整張 8 吋,決定成本差 8 倍。已交叉驗證=一片。
+
+        依據:items_master APP026 法式黑松露野菇烤薄餅 20/份,菜單同品 $320/8 片 → 40/片,
+        20 正好是 40 的 50%,與 Owner msg 5800 的「成本=外帶售價 50%」吻合。
+        若「份」指整張,成本會是 2.5/片(毛利 93.75%),與全表其他品項的食材成本佔比完全不合。
+        這支測試把結論釘住,免得下輪又當成未解問題重新猜一次。
+        """
+        flatbread = quote_calc.lookup("打拋豬薄餅")
+        self.assertEqual(flatbread["pieces_per_unit"], 8)
+        per_piece = quote_calc._cost_per_piece(flatbread)
+        # 落在「一片」的量級(20 出頭),不是「整張」的量級(個位數)
+        self.assertGreater(per_piece, 15)
+        self.assertLess(per_piece, 30)
+        # 嚴格套 50% 規則的值與現行推估差距要很小,否則這條交叉驗證就不成立
+        strict_half = flatbread["price"] * 0.5 / flatbread["pieces_per_unit"]
+        self.assertLess(abs(per_piece - strict_half) / strict_half, 0.05)
+
+        # 全表沒有任何品項的食材成本佔售價低於 10%——這是上面反證的基礎
+        for row in quote_calc.margin_table():
+            self.assertLess(row["margin_rate"], 0.9, row["key"])
+
     def test_retired_plan_is_neither_listed_nor_runnable(self):
         """Owner msg 5800「why 開了 60% 的」——作廢版不得再出現在選項裡。"""
 

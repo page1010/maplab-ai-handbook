@@ -299,6 +299,32 @@ class QuoteEstimateRoutingTest(unittest.TestCase):
         self.assertEqual(shrimp["units"], 50)
         self.assertGreater(h4["takeout_basis_cost_share"], h3["takeout_basis_cost_share"])
 
+    def test_owner_5846_shrimp_60_leaves_a_real_budget_for_the_unpriced_platter(self):
+        """Owner 要加一個不在價目表的「混合炸物拼盤」,正解不是編價,也不是回一句需人工就收工。
+
+        拼盤的單價我算不出來(第四順位=需人工),但「還剩多少食材成本可以花」與
+        「每件成本要壓在多少以內才補得回每人 3 件」不必知道內容就算得出來。
+        這條測試釘的是:拼盤絕不能偷偷出現在配置裡,而額度框一定要算得出來。
+        """
+        h5 = quote_calc.run_reference_plan("H5-OWNER")
+        lines = {line["key"]: line for line in h5["lines"]}
+        self.assertEqual(lines["梅子醬蝦棗"]["units"], 60)
+        self.assertNotIn("混合炸物拼盤", lines)
+        head = quote_calc.headroom_for_addition(h5)
+        self.assertEqual(head["cost_ceiling"], 6000.0)
+        self.assertGreater(head["cost_headroom"], 0)
+        # 每人 2.72 件還沒到 3,所以「還缺幾件」與「每件上限」兩個數字都必須給出來
+        self.assertEqual(head["pieces_needed"], 28)
+        self.assertAlmostEqual(head["max_cost_per_piece"], head["cost_headroom"] / 28, places=2)
+        # 額度剛好用滿=踩在 80% 下限上,不會跌破;超一塊就破線
+        self.assertEqual(round(1 - head["cost_ceiling"] / h5["revenue"], 4), 0.8)
+        # 不足一件要進位成一件,不然會少備
+        h5_fewer = dict(h5, pieces=271, pieces_per_pax=2.71)
+        self.assertEqual(quote_calc.headroom_for_addition(h5_fewer)["pieces_needed"], 29)
+        # 拼盤本身仍然不准被報價
+        with self.assertRaises(quote_calc.QuoteError):
+            quote_calc.plan_by_items([("混合炸物拼盤", 1)], package_price=30000, pax=100)
+
     def test_estimate_for_an_unseen_size_asks_for_the_menu_instead_of_inventing_one(self):
         with tempfile.TemporaryDirectory() as tmp, mock.patch.object(
             executor, "QUOTE_INTAKE_ROOT", Path(tmp) / "intake"

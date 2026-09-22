@@ -67,6 +67,14 @@ for r in sorted(q.margin_table(), key=lambda r: r['margin_rate']):
     echo "--- ref H4-OWNER (Owner msg 5824:砍蝦棗、多澱粉類；外帶推導成本必須被點名) ---"
     cd "$REPO" && "$PY" bot_a6/quote_calc.py ref H4-OWNER
 
+    echo "--- ref H5-OWNER (Owner msg 5846:蝦棗鎖 60；拼盤不在表=不編價，只算剩餘額度) ---"
+    cd "$REPO" && "$PY" bot_a6/quote_calc.py ref H5-OWNER
+    echo "--- headroom H5-OWNER (拼盤可用食材額度與每件成本上限) ---"
+    cd "$REPO" && "$PY" bot_a6/quote_calc.py headroom H5-OWNER
+    echo "--- 拼盤本身仍必須擋下來 (不在價目表) ---"
+    cd "$REPO" && "$PY" bot_a6/quote_calc.py items --item 混合炸物拼盤=1 --package-price 30000 --pax 100
+    echo "exit=$?"
+
     # 每輪續接必看：收據上向 Owner 承諾「A0 下一輪續接時會看到這筆」，不查就是空頭承諾。
     # 只列檔名與時間，案卷內容含客人需求＝不進 repo、不進 Telegram（2026-09-22）。
     echo "--- quote_intake 新案卷 (只列檔名時間，不印內容) ---"

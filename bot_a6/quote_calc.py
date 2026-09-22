@@ -237,6 +237,43 @@ def cost_budget_for_margin(package_price: float, target_margin: float) -> float:
     return package_price * (1 - target_margin)
 
 
+def headroom_for_addition(
+    result: dict,
+    *,
+    target_margin: float | None = None,
+    pieces_per_pax_target: float = 3.0,
+    book: dict | None = None,
+) -> dict:
+    """已定的配置之外,還剩多少食材成本可以加一個新品項,以及那筆錢每件要壓在多少以內。
+
+    Owner msg 5846(2026-09-22):「我會出蝦棗60 + 混合的炸物拼盤 增加品項的感覺」。
+    拼盤不在價目表,我不得替它編價(SOP §2.1 第四順位=回「需人工」);
+    但「還剩多少可以花」與「每件成本上限」這兩個數字不必知道拼盤內容就算得出來。
+    先把框算給 Owner,他給內容我再算單價——這才是不編價又不擺爛的做法。
+    """
+    book = book or load_price_book()
+    floor = target_margin if target_margin is not None else book["rules"]["target_margin_floor"]
+    ceiling = cost_budget_for_margin(result["revenue"], floor)
+    headroom = ceiling - result["food_cost"]
+    out = {
+        "target_margin": floor,
+        "cost_ceiling": round(ceiling, 2),
+        "cost_spent": result["food_cost"],
+        "cost_headroom": round(headroom, 2),
+        "pieces_now": result["pieces"],
+    }
+    pax = result.get("pax")
+    if pax:
+        need = pax * pieces_per_pax_target - result["pieces"]
+        need = int(need) + (1 if need > int(need) else 0)  # 不足一件也要算一件
+        out["pieces_per_pax_now"] = result["pieces_per_pax"]
+        out["pieces_per_pax_target"] = pieces_per_pax_target
+        out["pieces_needed"] = max(0, need)
+        if out["pieces_needed"] > 0:
+            out["max_cost_per_piece"] = round(headroom / out["pieces_needed"], 2)
+    return out
+
+
 def scale_mix_to_margin(
     mix: list[tuple[str, int]],
     package_price: float,
@@ -432,6 +469,10 @@ def main(argv: list[str] | None = None) -> int:
     external = sub.add_parser("external", help="外部品項在地價 ×1.35")
     external.add_argument("--local-base", type=float, required=True)
 
+    head = sub.add_parser("headroom", help="某配置之外還剩多少食材成本可加新品項(不編新品項的價)")
+    head.add_argument("name", help="既有配置名稱")
+    head.add_argument("--pieces-per-pax", type=float, default=3.0)
+
     args = parser.parse_args(argv)
     try:
         if args.cmd == "margin-table":
@@ -454,6 +495,10 @@ def main(argv: list[str] | None = None) -> int:
             print(json.dumps(parse_brief(args.text), ensure_ascii=False, indent=2))
         elif args.cmd == "external":
             print(json.dumps(external_item_price(args.local_base), ensure_ascii=False, indent=2))
+        elif args.cmd == "headroom":
+            plan = run_reference_plan(args.name)
+            out = headroom_for_addition(plan, pieces_per_pax_target=args.pieces_per_pax)
+            print(json.dumps(out, ensure_ascii=False, indent=2))
     except QuoteError as exc:
         print(f"需人工:{exc}")
         return 2

@@ -98,6 +98,10 @@ for r in sorted(q.margin_table(), key=lambda r: r['margin_rate']):
     cd "$REPO" && "$PY" scripts/check_work_order.py handoff/tasks/T-HERMES-SYSTEMATIZE-001-JOB-1.md
     echo "exit=$?"
 
+    echo "--- 派工檢查器實跑：antigravity logo 工作單必須過 (exit 0 = 可派工) ---"
+    cd "$REPO" && "$PY" scripts/check_work_order.py handoff/tasks/T-ANTIGRAVITY-CHILLOUT-LOGO-001.md
+    echo "exit=$?"
+
     echo "=== end ==="
 } >"$LOG" 2>&1
 

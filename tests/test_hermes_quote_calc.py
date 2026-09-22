@@ -217,6 +217,40 @@ class QuoteEstimateRoutingTest(unittest.TestCase):
         self.assertIn("對外定價決定", output)
         self.assertIn(request, case_body)
 
+    def test_catering_plan_must_name_its_takeout_derived_costs(self):
+        """Owner msg 5824:「這是外燴的單,如果要拿外帶售價參考值取 50%,本來就不是外帶,你沒問我覺得我會被打」。
+
+        本檔 rules.never 早就寫著「外燴整案價與外帶單品價不混用」,我卻讓三明治成本從外帶售價推導
+        進來、還標成實數。這支測試把 Owner 的糾正交給程式擋:整案價(外燴)模式下,凡成本基礎是
+        外帶推導的品項都要被點名並報出佔食材成本比重,且不得再標成實數。
+        """
+        h4 = quote_calc.run_reference_plan("H4-OWNER")
+        self.assertEqual(h4["takeout_basis_items"], ["薯泥蛋沙拉三明治_切小", "蛋沙拉三明治_切小"])
+        self.assertGreater(h4["takeout_basis_cost_share"], 0.4)
+        self.assertTrue(any("Owner msg 5824" in w for w in h4["warnings"]))
+        for line in quote_calc.load_price_book()["menu_lines"]:
+            if line.get("cost_basis") == "外帶售價推導":
+                self.assertTrue(line["cost_estimated"], line["key"])
+        # 菜單價加總模式不是外燴整案價,不掛這條警語(免得每張外帶單都跳無關的警告)。
+        takeout_only = quote_calc.plan_by_items([("蛋沙拉三明治", 1)])
+        self.assertFalse(any("Owner msg 5824" in w for w in takeout_only["warnings"]))
+
+    def test_owner_5824_cut_shrimp_add_starch_holds_the_floor_but_barely_moves_it(self):
+        """砍蝦棗、多澱粉類照做了,但要誠實報出「幾乎沒動到毛利」這件事。
+
+        蝦棗一件 17,切小三明治一件 16.67,兩者差 2%,所以一件換一件幾乎等值:
+        H3 5,922/80.3%/312 件 → H4 5,872/80.4%/310 件。真正的收穫是甲殼類件數砍半與澱粉佔比拉高,
+        不是毛利。同時代價要寫死:H4 把更多件數壓在外帶推導成本上(27% → 41%)。
+        """
+        h3 = quote_calc.run_reference_plan("H3-OWNER")
+        h4 = quote_calc.run_reference_plan("H4-OWNER")
+        floor = quote_calc.load_price_book()["rules"]["target_margin_floor"]
+        self.assertGreaterEqual(h4["margin_rate"], floor)
+        self.assertLess(h4["margin_rate"] - h3["margin_rate"], 0.005)
+        shrimp = {line["key"]: line for line in h4["lines"]}["梅子醬蝦棗"]
+        self.assertEqual(shrimp["units"], 50)
+        self.assertGreater(h4["takeout_basis_cost_share"], h3["takeout_basis_cost_share"])
+
     def test_estimate_for_an_unseen_size_asks_for_the_menu_instead_of_inventing_one(self):
         with tempfile.TemporaryDirectory() as tmp, mock.patch.object(
             executor, "QUOTE_INTAKE_ROOT", Path(tmp) / "intake"

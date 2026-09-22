@@ -51,6 +51,9 @@ print('system_prompt chars:', len(p))
 print('playbook chars:', len(g.load_quote_playbook()))
 "
 
+    echo "--- ref H4-OWNER (Owner msg 5824:砍蝦棗、多澱粉類；外帶推導成本必須被點名) ---"
+    cd "$REPO" && "$PY" bot_a6/quote_calc.py ref H4-OWNER
+
     # 每輪續接必看：收據上向 Owner 承諾「A0 下一輪續接時會看到這筆」，不查就是空頭承諾。
     # 只列檔名與時間，案卷內容含客人需求＝不進 repo、不進 Telegram（2026-09-22）。
     echo "--- quote_intake 新案卷 (只列檔名時間，不印內容) ---"

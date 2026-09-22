@@ -120,6 +120,8 @@ def plan_by_items(items: list[tuple[str, int]], *, package_price: float | None =
     total_menu_price = 0.0
     total_pieces = 0
     estimated_keys = []
+    takeout_basis_keys = []
+    takeout_basis_cost = 0.0
     for name, units in items:
         if units <= 0:
             raise QuoteError(f"品項「{name}」的數量必須大於 0")
@@ -132,6 +134,9 @@ def plan_by_items(items: list[tuple[str, int]], *, package_price: float | None =
         total_pieces += pieces
         if line.get("price_estimated") or line.get("cost_estimated"):
             estimated_keys.append(line["key"])
+        if line.get("cost_basis") == "外帶售價推導":
+            takeout_basis_keys.append(line["key"])
+            takeout_basis_cost += cost
         lines.append(
             {
                 "key": line["key"],
@@ -176,6 +181,22 @@ def plan_by_items(items: list[tuple[str, int]], *, package_price: float | None =
         result["warnings"].append(
             "含推估成本品項(" + "、".join(result["estimated_items"]) + "),報價前要廚房試做抓實數與最低訂購量"
         )
+    # Owner msg 5824(2026-09-22):「這是外燴的單,如果要拿外帶售價參考值取 50%,本來就不是外帶,
+    # 你沒問我覺得我會被打」。外帶售價推導出來的成本只是參考值,套進外燴單要先問過。
+    # 這條交給程式擋,不靠我下輪還記得——本檔 rules.never 早就寫了「外燴整案價與外帶單品價不混用」,
+    # 我卻讓成本從外帶價推導進來,等於自己破自己的規則。
+    result["takeout_basis_items"] = sorted(set(takeout_basis_keys))
+    if takeout_basis_keys:
+        result["takeout_basis_cost"] = round(takeout_basis_cost, 2)
+        share = takeout_basis_cost / total_cost if total_cost else 0.0
+        result["takeout_basis_cost_share"] = round(share, 4)
+        if package_price is not None:
+            result["warnings"].append(
+                "本案是外燴整案價,但「"
+                + "、".join(result["takeout_basis_items"])
+                + f"」的成本是從外帶售價推導的參考值(佔食材成本 {share:.0%}),"
+                "外燴實際成本要先問 Owner/廚房才可報價(Owner msg 5824)"
+            )
     return result
 
 

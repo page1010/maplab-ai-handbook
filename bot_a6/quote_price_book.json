@@ -83,7 +83,9 @@
       "price_estimated": false,
       "cost_per_unit": 400,
       "cost_source": "Owner msg 5800(2026-09-22):三明治成本以外帶售價的 50% 計算 → 800×50%=400/組。舊值 30/件誤植=借 items_master APP030『日式醬蛋沙拉小漢堡』的成本卻標成實數,Owner 當場抓出,已作廢",
-      "cost_estimated": false,
+      "cost_basis": "外帶售價推導",
+      "cost_estimated": true,
+      "cost_basis_note": "Owner msg 5824:這是外燴的單,外帶售價 50% 只是參考值,套進外燴前必須問過。原先標 cost_estimated: false 是錯的(規則推導出來的數字不是實數),已改 true",
       "tags": ["蛋奶素可", "無牛"]
     },
     {
@@ -96,7 +98,9 @@
       "price_estimated": false,
       "cost_per_unit": 400,
       "cost_source": "Owner msg 5800:切小一點提高毛利。同一組食材成本 400 元切成 24 件 → 16.67/件;成本不變、件數加倍",
-      "cost_estimated": false,
+      "cost_basis": "外帶售價推導",
+      "cost_estimated": true,
+      "cost_basis_note": "Owner msg 5824:外燴單不得直接沿用外帶推導值,待廚房實數",
       "tags": ["蛋奶素可", "無牛", "切小件"]
     },
     {
@@ -109,7 +113,9 @@
       "price_estimated": false,
       "cost_per_unit": 410,
       "cost_source": "Owner msg 5800:三明治成本=外帶售價 50% → 820×50%=410/組(舊值 25/件為推估,已由規則取代)",
-      "cost_estimated": false,
+      "cost_basis": "外帶售價推導",
+      "cost_estimated": true,
+      "cost_basis_note": "Owner msg 5824:外燴單不得直接沿用外帶推導值,待廚房實數",
       "tags": ["蛋奶素可", "無牛"]
     },
     {
@@ -122,7 +128,9 @@
       "price_estimated": false,
       "cost_per_unit": 410,
       "cost_source": "Owner msg 5800:切小一點提高毛利。410 元食材切 24 件 → 17.08/件",
-      "cost_estimated": false,
+      "cost_basis": "外帶售價推導",
+      "cost_estimated": true,
+      "cost_basis_note": "Owner msg 5824:外燴單不得直接沿用外帶推導值,待廚房實數",
       "tags": ["蛋奶素可", "無牛", "切小件"]
     },
     {
@@ -252,6 +260,27 @@
       ]
     },
     {
+      "name": "H4-OWNER",
+      "label": "Owner msg 5824 砍蝦棗、多澱粉類版",
+      "pax": 100,
+      "package_price": 30000,
+      "source": "Owner msg 5824(2026-09-22):「貴的應該是蝦棗 砍他的數量多澱粉類」。蝦棗 100→50 份,澱粉件數由切小三明治補上(全表每件食材成本最低者 16.67)",
+      "notes": [
+        "澱粉類件數佔比 H3 68% → H4 84%(薄餅 96 + 三明治 144 + 派皮 4 + pizza 16 = 260/310)",
+        "甲殼類由 100 件砍到 50 件,對有蝦過敏或不吃蝦的客人風險同步下降",
+        "⚠ 代價:H4 把件數壓在三明治上,而三明治成本正是 Owner msg 5824 質疑的外帶推導值,外燴實數未確認前不得對外報"
+      ],
+      "mix": [
+        {"key": "梅子醬蝦棗", "units": 50},
+        {"key": "打拋豬薄餅", "units": 12},
+        {"key": "蛋沙拉三明治_切小", "units": 5},
+        {"key": "薯泥蛋沙拉三明治_切小", "units": 1},
+        {"key": "綠咖喱小鹹派", "units": 4},
+        {"key": "沙嗲雞肉披薩", "units": 1},
+        {"key": "三杯雞pizza", "units": 1}
+      ]
+    },
+    {
       "name": "A-60",
       "label": "同案滿預算版／菜單價加總／毛利 60%（已作廢）",
       "pax": 100,
@@ -277,12 +306,14 @@
     "currency": "TWD",
     "margin_definition": "毛利率 = 1 - 食材成本 / 售價;食材成本不含人工、場佈、運送、耗材",
     "sandwich_cost_method": "三明治類食材成本 = 外帶售價 × 50%(Owner msg 5800 定);切小只加倍 pieces_per_unit,單位成本不變",
+    "takeout_reference_rule": "外帶售價推導出來的成本(cost_basis=外帶售價推導)只能當參考值。這是外燴單,套用前必須問 Owner/廚房拿外燴實際成本(Owner msg 5824:「這是外燴的單 如果要拿外帶售價參考值取50% 本來就不是外帶你沒問我覺得我會被打」)。程式會在整案價模式自動列出這類品項與其佔食材成本比重",
     "target_margin_floor": 0.8,
     "target_margin_floor_source": "Owner msg 5771,並於 msg 5800 重申「是不是有寫要 80% 以上」",
     "never": [
       "不得憑印象補價;不在本檔的品項一律回「需人工」",
       "對外檔不得出現成本、毛利、×1.35",
-      "外燴整案價與外帶單品價不混用"
+      "外燴整案價與外帶單品價不混用",
+      "外帶售價推導的成本不得標成實數(cost_estimated 必須 true),也不得未經 Owner/廚房確認就用在外燴報價"
     ]
   }
 }

@@ -17,6 +17,10 @@ Step 5. Session 結束前在 `workbook/owner_requirements_panel.md` 寫一筆紀
 > ⚠️ CURRENT_STATUS.md 的資訊優先於所有其他文件。若衝突，以 CURRENT_STATUS 為準。
 > ⚠️ 任務清楚 → 直接執行，不要用「確認需求」當拖延藉口。
 > ⚠️ 有寫但沒測，等於沒完成；有測但沒 receipt，等於下一個 session 無法信任。
+> ⚠️ **回話前必跑五問 → 見 `CULTURE_DECISION_LOGIC.md`（Owner msg 5939，2026-09-23，與本檔同級）。**
+> 「不要丟給我有答案的問題」：能寫出「為什麼要」和「為什麼不要」兩邊理由 = 已有能力裁決 → 自己裁決、做完報結果。
+> 只有四類必須上呈：**不可逆／對外發布／動錢或進真倉／動到別人的機器帳號客資**，且上呈時要附建議不得丟空問題。
+> 對 Owner 說話不得只丟任務編號，必須同時講「這是什麼／要達成什麼／卡在誰」；可讀版任務板 = `handoff/TASK_BOARD_READABLE.md`。
 
 ### NotebookLM／Gemini Notebook 導航 fallback（Owner 2026-08-25）
 

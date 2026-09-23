@@ -100,6 +100,15 @@ if led_path.exists():
                      f"{b.get('exit_reason')} 淨 {pnl} | " + "；".join(legs))
     lines.append(f"[ORB 累計淨損益] {round(tot,2)} TWD")
 
+    # 2026-09-23 加(回 5981):Owner 問「目標 100 沒觸發過,那我們到底是怎麼出場的?
+    # 賺錢的單是哪裡來的?」帳本 leg 層的 exit.avg_price 全是 None,所以必須把整顆
+    # basket 原文攤開來看,出場理由到底記在哪一層、有沒有記。沒有就要說沒有。
+    if orb:
+        last_win = [b for b in orb if (b.get("pnl") or {}).get("net_pnl", 0) > 0]
+        if last_win:
+            lines.append("[賺錢那顆 ORB 原文] " + json.dumps(last_win[-1], ensure_ascii=False)[:2500])
+        lines.append("[賠錢那顆 ORB 原文] " + json.dumps(orb[-1], ensure_ascii=False)[:2500])
+
     # 事件檔裡 cycle_summary 實際存了什麼欄位 —— 決定「能不能用錄下來的資料重播做移動停利測試」。
     if ev_path.exists():
         with ev_path.open() as f:

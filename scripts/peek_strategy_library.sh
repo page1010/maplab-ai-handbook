@@ -53,6 +53,21 @@ case "$MODE" in
     KW="${2:?需要關鍵字}"
     grep -rn "$KW" "$DIR" --include='*.md' --include='*.csv' | head -60
     ;;
+  findall)
+    # 2026-09-23 加(回 5993):Owner 說「我和 codex 有一個研究馬克羊和權證小哥的套利交易方案」。
+    # 5986 那輪只 grep 了 quant_strategy_logic/ 一個目錄就說「查無套利策略」——範圍開太小。
+    # 這個模式改掃整個 investment-os(仍唯讀,仍不碰 secrets/.env/.git)。
+    KW="${2:?需要關鍵字}"
+    grep -rln "$KW" /Users/pagemacmini/investment-os \
+      --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=secrets \
+      --exclude-dir=venv --exclude-dir=.venv --exclude='*.env' 2>/dev/null | head -40
+    ;;
+  findbranch)
+    # 列 investment-os 的分支與最近 commit,用來找 codex 開在別的分支上的研究。
+    git -C /Users/pagemacmini/investment-os branch -a --sort=-committerdate 2>&1 | head -30
+    echo "---- 近期 commit ----"
+    git -C /Users/pagemacmini/investment-os log --all --oneline -30 2>&1
+    ;;
   sec)
     FROM="${2:?需要起始行號}"
     N="${3:-80}"

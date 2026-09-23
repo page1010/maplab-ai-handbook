@@ -1,0 +1,21 @@
+a0: win-os 是席位不是 agent(Owner msg 6004)
+
+Owner 原話:「win-os 指的是在windows上跑的claude session管理者,不一定什麼模型」。
+
+更正 6002 那輪的分類:當時把 win-01 跟 codex/openclaw/a6 並列成「別的 agent」,錯了。
+win-os(= repo 裡的 win-01,同一台)是一個席位——Windows 機器上的 Claude session
+管理者,裡面跑哪個模型由那台自己的 CLI 決定。
+
+查證(支持 Owner 的說法):
+- agent-bus/heartbeat/win-01.json 欄位是 active_sessions,「model」字樣 0 次。
+- agent-bus/worker_win01.sh 「model」字樣 0 次,呼叫 claude -p 不帶 --model。
+
+命名裁決:對 Owner 的文字寫 win-os;檔案側維持 win-01(machine_id / 卡號 win01-* /
+diag/win-01/ 已寫死,改字串會讓跑中的卡對不上)。
+
+順手查到的現況(誠實記錄,非好消息):heartbeat 17:25 顯示 busy 掛 seo-cases-drive-batch,
+但 16:55 exec rc=1「OAuth session expired」、17:18 hermes 接手 rc=124 逾時無收據
+——席位仍登不進去,今日零產出。heartbeat busy 只代表卡被撿走,查現況要看
+diag/win-01/*.exec-tail.log。
+
+Co-Authored-By: Claude <noreply@anthropic.com>

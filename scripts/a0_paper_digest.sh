@@ -24,6 +24,7 @@ lines = []
 
 kinds = Counter()
 orders, halts, decisions, notifies = [], [], Counter(), 0
+fees = []
 if ev_path.exists():
     with ev_path.open() as f:
         for raw in f:
@@ -46,6 +47,8 @@ if ev_path.exists():
                 decisions[f"{e.get('market')}:{d}"] += 1
             elif ev == "notification_result":
                 notifies += 1
+            elif ev == "native_simulation_fee_readback":
+                fees.append(json.dumps(e, ensure_ascii=False))
 else:
     lines.append(f"當日事件檔不存在:{ev_path}")
 
@@ -61,6 +64,8 @@ if decisions:
     for k, n in decisions.most_common(15):
         lines.append(f"  {k}: {n}")
 lines.append(f"[Telegram 通知] {notifies} 則")
+lines.append(f"[原生模擬費用回讀] {len(fees)} 筆")
+lines += [f"  {x[:900]}" for x in fees]
 
 if led_path.exists():
     led = json.loads(led_path.read_text())

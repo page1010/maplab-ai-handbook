@@ -31,7 +31,33 @@ fi
 if [ -d "$ROOT" ]; then
   echo "OK   2026maplab外燴紀錄 存在"
 else
-  echo "MISS 2026maplab外燴紀錄 不存在 -> win-01 的 D:\\ 夾在 Mac 上不是同一個位置,需另找路徑"
+  echo "MISS 2026maplab外燴紀錄 不在預期位置。"
+  echo
+  echo "--- 雲端硬碟第一層有什麼(只列名字,不遞迴、不做 du/find 全掃)---"
+  ls -1 "$DRIVE" 2>/dev/null | head -60
+  echo
+  echo "--- 第一層裡名字含「外燴」或「maplab」或「紀錄」的 ---"
+  ls -1 "$DRIVE" 2>/dev/null | grep -iE '外燴|maplab|紀錄|2026' || echo "(第一層沒有明顯候選,可能在更深一層或根本不在這顆帳號)"
+  echo
+  echo "--- 往下探一層:候選父夾裡有沒有 2026maplab外燴紀錄 ---"
+  FOUND=""
+  for cand in "MAPLAB" "外燴照片（擺設）" "外燴 訂單"; do
+    [ -d "$DRIVE/$cand" ] || continue
+    echo "[$cand] 第一層:"
+    ls -1 "$DRIVE/$cand" 2>/dev/null | head -30 | sed 's/^/    /'
+    if [ -d "$DRIVE/$cand/2026maplab外燴紀錄" ]; then
+      echo "  >>> 命中:$DRIVE/$cand/2026maplab外燴紀錄"
+      FOUND="$DRIVE/$cand/2026maplab外燴紀錄"
+    fi
+    echo
+  done
+  if [ -n "$FOUND" ]; then
+    echo "找到真實路徑 -> $FOUND"
+    echo "請把 ROOT 改成這個值後重跑本探針。"
+  else
+    echo "結論:兩層之內都找不到 2026maplab外燴紀錄。"
+    echo "在找到真實路徑之前,#36 的圖片工不動手,也不憑猜測往下做。"
+  fi
   exit 2
 fi
 

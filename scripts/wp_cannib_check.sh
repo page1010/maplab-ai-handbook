@@ -25,6 +25,8 @@ set -uo pipefail
 
 SITE="https://www.maplabkitchen.com"
 POSITIVE_CONTROL="外燴"      # 這個站不可能查不到「外燴」
+# 決定性偵測器:一個不可能命中的亂碼。search 若有生效,它一定回 0 筆。
+NEGATIVE_CONTROL="zzqxjwvk9713nope"
 
 if [ "${1:-}" = "--selftest" ]; then
   set -- "$POSITIVE_CONTROL" "日照中心" "教會"
@@ -37,11 +39,13 @@ if [ "$#" -eq 0 ]; then
   exit 64
 fi
 
-SITE="$SITE" POSITIVE_CONTROL="$POSITIVE_CONTROL" /usr/bin/python3 - "$@" <<'PY'
+SITE="$SITE" POSITIVE_CONTROL="$POSITIVE_CONTROL" NEGATIVE_CONTROL="$NEGATIVE_CONTROL" \
+  /usr/bin/python3 - "$@" <<'PY'
 import json, os, sys, urllib.parse, urllib.request
 
 SITE = os.environ["SITE"]
 POS  = os.environ["POSITIVE_CONTROL"]
+NEG  = os.environ["NEGATIVE_CONTROL"]
 TERMS = sys.argv[1:]
 UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
                     "(KHTML, like Gecko) Chrome/120.0 Safari/537.36"}
@@ -84,17 +88,37 @@ if n_cp >= PER_PAGE:
     print(f"註:per_page={PER_PAGE},回滿即代表「>= {PER_PAGE}」,不是剛好 {PER_PAGE}。")
 print()
 
-# 陽性對照:管線活著的證明
+# ── 陰性對照:唯一決定性的偵測器 ──
+# 一串不可能命中的亂碼。search 有生效就必定回 0 筆;
+# 若它回了東西(尤其回成 CONTROL 那份預設清單),就是 search 被整個忽略。
+# 這比陽性對照可靠:陽性對照會被「全站都命中」的高頻詞汙染(見下)。
+try:
+    neg_ids, neg_n = fetch("posts", NEG)
+except Exception as e:
+    print(f"✗ 陰性對照查詢失敗:{e}")
+    sys.exit(4)
+if neg_n != 0:
+    print(f"✗ 陰性對照「{NEG}」回了 {neg_n} 筆(應為 0),"
+          f"與 CONTROL 相同={neg_ids == ctrl_posts}。")
+    print(LESSON)
+    sys.exit(3)
+print(f"✓ 陰性對照「{NEG}」回 0 筆 → search 參數確實有送達並生效。")
+
+# 陽性對照:只證明「站上找得到東西」,不用來判定 search 死活。
 try:
     pos_ids, pos_n = fetch("posts", POS)
 except Exception as e:
     print(f"✗ 陽性對照「{POS}」查詢失敗:{e}")
     sys.exit(4)
-if pos_n == 0 or pos_ids == ctrl_posts:
-    print(f"✗ 陽性對照「{POS}」異常(筆數={pos_n},與 CONTROL 相同={pos_ids == ctrl_posts})。")
+if pos_n == 0:
+    print(f"✗ 陽性對照「{POS}」回 0 筆 — 這個站不可能查不到「外燴」,管線有問題。")
     print(LESSON)
     sys.exit(3)
-print(f"✓ 陽性對照「{POS}」:posts {pos_n} 筆,ID 集合與 CONTROL 不同 → search 確實有生效。")
+if pos_ids == ctrl_posts:
+    print(f"註:陽性對照「{POS}」的 ID 集合與 CONTROL 相同。在陰性對照已通過的前提下,"
+          f"這代表「全站每篇都命中這個詞」,不是靜默失敗。")
+else:
+    print(f"✓ 陽性對照「{POS}」:posts {pos_n} 筆。")
 print()
 
 rows, bad = [], False
@@ -106,15 +130,13 @@ for t in TERMS:
         rows.append((t, "ERR", "ERR", f"查詢失敗:{e}"))
         bad = True
         continue
-    silent = (p_n and p_ids == ctrl_posts) or (g_n and g_ids == ctrl_pages)
-    if silent:
-        rows.append((t, p_n, g_n, "✗ 與 CONTROL 相同 = 靜默失敗"))
-        bad = True
-    elif p_n == 0 and g_n == 0:
+    if p_n == 0 and g_n == 0:
         rows.append((t, 0, 0, "站內空白,可取用"))
     else:
+        # 陰性對照已證明 search 生效,所以「與 CONTROL 同集合」是高頻詞,不是失敗。
+        same = (p_n and p_ids == ctrl_posts) or (g_n and g_ids == ctrl_pages)
         sat = "(已達上限,實為 >=)" if max(p_n, g_n) >= PER_PAGE else ""
-        rows.append((t, p_n, g_n, f"站內已有佔位{sat}"))
+        rows.append((t, p_n, g_n, f"{'全站高頻詞' if same else '站內已有佔位'}{sat}"))
 
 w = max([len(r[0]) for r in rows] + [8])
 print(f"{'查詢詞'.ljust(w)}  posts  pages  判讀")
@@ -122,8 +144,8 @@ for t, p, g, note in rows:
     print(f"{t.ljust(w)}  {str(p).rjust(5)}  {str(g).rjust(5)}  {note}")
 
 if bad:
-    print(LESSON)
-    sys.exit(3)
+    print("\n✗ 有查詢失敗,這張表不完整,不得當數據使用。")
+    sys.exit(4)
 
-print("\n✓ 全部查詢通過 CONTROL 對照,結果可當數據使用。")
+print("\n✓ 陰性對照通過 + 全部查詢成功,結果可當數據使用。")
 PY

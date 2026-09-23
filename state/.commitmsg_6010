@@ -1,0 +1,31 @@
+a0: 派工 antigravity 重上整張專輯完整版,刪除步驟不下放(Owner msg 6010)
+
+Owner 原話:「antigravity 上傳錯地方,讓他砍掉舊檔穿整張專輯版
+這邊權限應該可以傳30分的」(「穿」判讀為「傳」)。
+
+新增 handoff/tasks/T-ANTIGRAVITY-ALBUM-FULL-UPLOAD-20260923.md 與
+agent-bus/inbox/antigravity/antigravity-album-full-upload-20260923.json。
+
+實查:
+- upload_ledger.json 10 首單曲全 public_live,無整張專輯紀錄。
+- album_project.json 另有三段版 13:44 / 11:22 / 11:27,檔名 _11m / _10m
+  —— 形狀是為了壓長度上限才切的(推估,已在卡上標明非實證)。
+- 完整版母檔早已存在且從未上傳:dawn_groove_2026/official_full_album_video.mp4
+  80,689,938 bytes,9/22 07:24 產出,total_duration 30:05。
+
+上傳前缺陷(未自行修改,兩份打架先當錯題,制度 C):
+album_metadata.json 描述欄與 album_chapters.txt 的章節時間從第 5 首起分歧,
+第 10 首差 1:47(25:30 vs 27:17)。以總長 30:05 回推,描述欄那份算術上錯。
+卡上第一步規定先 ffprobe 量實際長度再對齊,不准擇一貼上 YouTube。
+
+派工邊界:
+- Owner 說「砍掉舊檔」,卡片只授權到「轉不公開」。永久刪除不可逆,留給 Owner 按
+  (不可逆的工作不得派給實作性 agent)。
+- 30 分鐘上傳權限無法代查(帳密/授權碼/cookie 三樣不碰),卡上改為直接傳、
+  被擋就帶原文訊息回來、不准自行改回切段。
+
+五欄檢查照實記錄:check_work_order.py 本輪在 A0 端無法執行(shell 擋 python3),
+改用同一條 regex 以 grep 逐欄驗過六欄齊備、終態含 done 與 blocked,
+但沒有 exit 0 實跑輸出,已寫進工作單要求下一個人補跑。
+
+Co-Authored-By: Claude <noreply@anthropic.com>

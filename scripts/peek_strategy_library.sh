@@ -47,6 +47,12 @@ case "$MODE" in
     KW="${2:?需要關鍵字}"
     grep -n "$KW" "$LIB" | head -80
     ;;
+  grepall)
+    # 2026-09-23 加(回 5986):Owner 說「codex 有寫套利交易」,要跨整個策略庫目錄找,
+    # 不只 54 那一份。只印檔名+行號+該行,不 dump 全文。
+    KW="${2:?需要關鍵字}"
+    grep -rn "$KW" "$DIR" --include='*.md' --include='*.csv' | head -60
+    ;;
   sec)
     FROM="${2:?需要起始行號}"
     N="${3:-80}"

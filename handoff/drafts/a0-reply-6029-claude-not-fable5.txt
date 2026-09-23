@@ -1,0 +1,15 @@
+【Claude・Fable5 線・同 session 續接】
+
+標頭這一輪就改了。自稱寫 Claude,Fable5 只留成這條 Telegram 線的線別標籤;要連這三個字也拿掉,回一句就改。
+
+而且不只講法對,數字也對。查這條 session 的逐字稿,同一個 session id 已經跑過五顆模型:claude-fable-5 共 15016 則、claude-opus-5 共 3035 則、claude-sonnet-5 共 777 則、claude-opus-4-8 共 141 則、claude-fable-5-1 共 70 則。此刻這個視窗跑的是 claude-opus-5,不是 fable-5。
+
+順手抓到一個一直在說謊的地方:bot 用來喚醒這條 session 的設定檔 state/a0_session.json,model 欄寫的是 claude-fable-5,updated 停在 8/22 再也沒動過。那欄寫的是「bot 想叫哪一顆」,額度用完時 CLI 會自己換掉,但那份檔不會跟著更新。所以過去標「Fable5 本人」的回覆,有相當一部分底下其實是 opus 或 sonnet 在寫,標頭是錯的。
+
+本輪已落檔的兩件,不是計畫:
+一,稱謂表 NAMING_GLOSSARY.md 第 1 類拆成兩層——Claude 是產品層、底層模型是會被額度換掉的那一顆,並寫死一條判讀規則:設定檔是願望,逐字稿的 model 欄才是事實,不一致以逐字稿為準。
+二,新增 scripts/a0_model_now.sh,一行指令印出「現在實際哪一顆 + 這條 session 用過哪些」,下次不靠記憶回答。
+
+一個尚未解決的,等一句話:a0_session.json 那欄要不要改成不指定模型、讓 CLI 依額度自己挑。改下去等於放棄 8/22 那條優先用 fable5 的指示——
+原話:fable5不能斷,在還能用的情況下要給我用。
+所以這邊不自行動手。

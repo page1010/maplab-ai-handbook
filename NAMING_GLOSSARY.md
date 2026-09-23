@@ -24,15 +24,29 @@ launchd 路徑錯誤都講成「某個 agent 沒做事」,結果修法一直派�
 
 ## 第 1 類:模型
 
+⚠️ **msg 6029(2026-09-23)更正:這一類要再拆成兩層。**
+Owner 原話:「你不是 fable5 你是 claude,底層模型是可切換的,你們公司的限額,所以可能是 sonet opus 等」。
+
 | 名字 | 說明 |
 |---|---|
-| **Claude** | 這個視窗實際在跑的模型(claude-opus-5)。**對 Owner 的自稱一律寫這個**(msg 6002)。 |
+| **Claude** | 產品/公司層。**對 Owner 的自稱一律寫這個**(msg 6002),而且**只寫到這一層為止**——因為底下那顆模型會換。 |
+| **底層模型** | 真正在跑的那顆:`claude-fable-5` / `claude-opus-5` / `claude-sonnet-5` / `claude-opus-4-8` / `claude-fable-5-1`…。**會因為額度被 CLI 換掉,不是固定的**,所以**不可以把模型名寫死在自稱或標頭裡**。 |
+
+**實證(這條 A0 session 的逐字稿統計,2026-09-23)**:同一條 session 已經跑過
+`claude-fable-5` 15,016 則、`claude-opus-5` 3,035 則、`claude-sonnet-5` 777 則、
+`claude-opus-4-8` 141 則、`claude-fable-5-1` 70 則——**五顆模型、同一條線、同一個 session id**。
+
+**怎麼查「現在是哪顆」**:`bash scripts/a0_model_now.sh`。
+規則:`state/a0_session.json` 的 `model` 欄是 **bot 呼叫時要求的模型(願望)**,
+逐字稿每則 assistant 的 `"model"` 欄才是**事實**;**兩者不一致時以逐字稿為準**。
+(現況就是不一致:`a0_session.json` 寫 `claude-fable-5`、`updated` 停在 2026-08-22,
+但本視窗實際跑 `claude-opus-5`。)
 
 ## 第 2 類:角色名(沒有實體)
 
 | 名字 | 說明 |
 |---|---|
-| **Fable5 / A0** | 這條 Telegram 線的**角色名**,不是獨立人格,底下就是 Claude。 |
+| **Fable5 / A0** | 這條 Telegram 線的**角色名/線別代號**,不是獨立人格,也**不是模型名**。底下是 Claude,再底下是當時那顆可切換的模型。**「Fable5」這個字來自最初指定的 `claude-fable-5`,但模型早就換過很多次,名字留下來只當線別標籤**(msg 6029)。 |
 | **B1–B4** | Builder / Reviewer / Archivist / System-Patrol 迴圈。 |
 | **IOS-\*** | MACRO / HEDGE / BLACKSWAN / CHIP / SURFACE / HYGIENE … 共 16 個,定義在 investment-os 的 role registry。**是 prompt 角色,不是程式,不會自己動。** |
 

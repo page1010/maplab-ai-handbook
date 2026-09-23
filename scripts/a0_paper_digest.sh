@@ -100,6 +100,35 @@ if led_path.exists():
                      f"{b.get('exit_reason')} 淨 {pnl} | " + "；".join(legs))
     lines.append(f"[ORB 累計淨損益] {round(tot,2)} TWD")
 
+    # 2026-09-23 加(回 5999):Owner 說「順勢的打法不可能是加碼腿賺錢母單賠錢 你一定是錯的」。
+    # 5986 那輪把「第三腿賺 +81、前兩腿 -2/0」講成加碼腿有 edge。要驗這句話,
+    # 必須看到每一腿是「哪一組」(ORB_BASE_50_100 還是 ORB_PYRAMID_50_100)、
+    # 幾點進、幾點出、出場理由是什麼。上面那行摘要看不到組別也看不到時間,所以加這塊。
+    lines.append("[ORB 逐腿明細] lane / 進場時間 / 進場價 / 出場時間 / 出場價 / 出場理由")
+    for b in orb:
+        lines.append(f"  == {str(b.get('opened_at'))[:10]} basket={b.get('id')} "
+                     f"basket_exit_reason={b.get('exit_reason')} ==")
+        for l in b.get("legs", []):
+            en = l.get("entry") or {}
+            ex = l.get("exit") or {}
+            en_at = ""
+            for step in (en.get("lifecycle") or []):
+                if step.get("event") in ("filled", "fill", "submitted"):
+                    en_at = str(step.get("at"))[11:19]
+            # leg 上的出場記在 'exits'(複數、list),不是 'exit'——上面那行一直印 None
+            # 就是因為讀錯欄位。這裡把 exits 整串攤開,才看得到哪一腿幾點出、為什麼出。
+            lines.append(f"    {l.get('strategy_id')}{' +ADDON' if l.get('addon') else ''} "
+                         f"{l.get('side')}{l.get('qty')} 進 {en_at} @{en.get('avg_price')} "
+                         f"停損價={l.get('stop_price')} 停利價={l.get('target_price')}")
+            for x in (l.get("exits") or []):
+                x_at = ""
+                for step in (x.get("lifecycle") or []):
+                    if step.get("event") in ("filled", "fill", "submitted"):
+                        x_at = str(step.get("at"))[11:19]
+                lines.append(f"       出 {x_at} @{x.get('avg_price')} "
+                             f"qty={x.get('filled_qty')} reason={x.get('reason')} "
+                             f"xkeys={sorted(x.keys())}")
+
     # 2026-09-23 加(回 5981):Owner 問「目標 100 沒觸發過,那我們到底是怎麼出場的?
     # 賺錢的單是哪裡來的?」帳本 leg 層的 exit.avg_price 全是 None,所以必須把整顆
     # basket 原文攤開來看,出場理由到底記在哪一層、有沒有記。沒有就要說沒有。

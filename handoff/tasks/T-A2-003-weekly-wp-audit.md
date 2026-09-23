@@ -6,15 +6,15 @@
 
 > **Agent 冷啟動時第一個看的區塊。每次 checkpoint 必須更新。**
 
-- **狀態**: 🔲 待開始
-- **最後活動**: 2026-04-07
-- **接續點**: 腳本已建好（wp-audit.sh / wp-audit-cron.sh）。待 Owner 用 /schedule 建立 cron 排程。
-- **阻塞**: 等 Owner 建立排程
+- **狀態**: 🟪 SUPERSEDED
+- **最後活動**: 2026-09-01
+- **接續點**: 舊 `wp-audit.sh` / `wp-audit-cron.sh` 只保留為歷史內容合規工具；新的 canonical 入口是 `.agents/skills/maplab-seo-coach-patrol/` 與 `T-A2-HERMES-SEO-COACH-001`。
+- **阻塞**: 無；不得再要求 Owner 建立已被取代的排程。
 
 ---
 
 ## 狀態（舊）
-PENDING — 待 Owner 用 schedule skill 建立實際排程
+SUPERSEDED — 舊腳本宣稱與實作不一致，不能再當全站 SEO 健康真相。
 
 ## 背景
 T-A2-002 完成後，建立了 `scripts/wp-audit.sh` 和 `scripts/wp-audit-cron.sh`。
@@ -29,11 +29,8 @@ prompt: 執行 bash scripts/wp-audit-cron.sh，如果有違規就回報 Owner �
 ```
 
 ## 執行方式
-Owner 在 Claude Code terminal 執行：
-```
-/schedule
-```
-按照上方 taskId / description / cronExpression / prompt 建立排程。
+
+不要再由本 Task Card 建立排程。公開技術基線改由無模型 sensor/probe 先判斷；只有 material delta、未完成驗收、fresh performance evidence 或 Owner 明確要求才喚醒 SEO 教練/Hermes。
 
 ## 腳本位置
 - `scripts/wp-audit.sh` — 單篇或全站稽核

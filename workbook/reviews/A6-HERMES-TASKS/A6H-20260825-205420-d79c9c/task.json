@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "task_id": "A6H-20260825-205420-d79c9c",
+  "created_at": "2026-08-25T20:54:20+0800",
+  "request": "recent-commits",
+  "requester": {
+    "channel": "telegram",
+    "owner_user_id": 1077768811
+  },
+  "action": "recent-commits",
+  "policy": "fixed-argv-allowlist-v1"
+}

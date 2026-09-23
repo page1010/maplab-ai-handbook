@@ -9,7 +9,7 @@ func die(_ message: String) -> Never {
 
 let args = CommandLine.arguments
 guard args.count >= 6 else {
-    die("usage: a8_render_story_frame.swift input_image output_png title subtitle watermark [scene_tag] [mode]")
+    die("usage: a8_render_story_frame.swift input_image output_png title subtitle watermark [scene_tag] [mode] [width] [height]")
 }
 
 let inputURL = URL(fileURLWithPath: args[1])
@@ -19,6 +19,8 @@ let subtitle = args[4]
 let watermark = args[5]
 let sceneTag = args.count >= 7 ? args[6] : ""
 let mode = args.count >= 8 ? args[7] : "scene"
+let canvasWidth = args.count >= 9 ? CGFloat(Double(args[8]) ?? 1080) : 1080
+let canvasHeight = args.count >= 10 ? CGFloat(Double(args[9]) ?? 1920) : 1920
 
 let isClear = args[1] == "clear" || args[1] == "transparent"
 let sourceImage: NSImage?
@@ -31,7 +33,8 @@ if isClear {
     sourceImage = img
 }
 
-let canvasSize = NSSize(width: 1080, height: 1920)
+let canvasSize = NSSize(width: canvasWidth, height: canvasHeight)
+let isLandscape = canvasSize.width > canvasSize.height
 let canvas = NSImage(size: canvasSize)
 
 let cream = NSColor(calibratedRed: 0.98, green: 0.97, blue: 0.94, alpha: 1.0)
@@ -102,11 +105,11 @@ if let img = sourceImage {
     NSBezierPath(rect: NSRect(origin: .zero, size: canvasSize)).fill()
 }
 
-let titleFont = font(["PingFangTC-Semibold", "PingFang TC Semibold", "Heiti TC"], size: 54, weight: .semibold)
-let subtitleFont = font(["PingFangTC-Regular", "PingFang TC", "Heiti TC"], size: 36, weight: .regular)
-let smallFont = font(["PingFangTC-Medium", "PingFang TC", "Heiti TC"], size: 28, weight: .medium)
-let brandFont = font(["AvenirNext-DemiBold", "HelveticaNeue-Medium"], size: 32, weight: .medium)
-let scriptFont = font(["AvenirNext-Regular", "HelveticaNeue"], size: 25, weight: .regular)
+let titleFont = font(["PingFangTC-Semibold", "PingFang TC Semibold", "Heiti TC"], size: isLandscape ? 52 : 54, weight: .semibold)
+let subtitleFont = font(["PingFangTC-Regular", "PingFang TC", "Heiti TC"], size: isLandscape ? 34 : 36, weight: .regular)
+let smallFont = font(["PingFangTC-Medium", "PingFang TC", "Heiti TC"], size: isLandscape ? 24 : 28, weight: .medium)
+let brandFont = font(["AvenirNext-DemiBold", "HelveticaNeue-Medium"], size: isLandscape ? 28 : 32, weight: .medium)
+let scriptFont = font(["AvenirNext-Regular", "HelveticaNeue"], size: isLandscape ? 22 : 25, weight: .regular)
 
 func drawBrandRule(y: CGFloat, width: CGFloat = 220, x: CGFloat = 72) {
     warmGold.withAlphaComponent(0.92).setFill()
@@ -116,7 +119,9 @@ func drawBrandRule(y: CGFloat, width: CGFloat = 220, x: CGFloat = 72) {
 func drawWatermark(color: NSColor = NSColor(calibratedWhite: 1.0, alpha: 0.82)) {
     drawText(
         watermark,
-        in: NSRect(x: 645, y: 68, width: 365, height: 46),
+        in: isLandscape
+            ? NSRect(x: canvasSize.width - 480, y: 48, width: 410, height: 42)
+            : NSRect(x: 645, y: 68, width: 365, height: 46),
         font: brandFont,
         color: color,
         alignment: .right
@@ -129,29 +134,35 @@ if mode == "intro" {
 
     drawText(
         watermark,
-        in: NSRect(x: 72, y: canvasSize.height - 170, width: 500, height: 55),
+        in: isLandscape
+            ? NSRect(x: 72, y: canvasSize.height - 118, width: 560, height: 48)
+            : NSRect(x: 72, y: canvasSize.height - 170, width: 500, height: 55),
         font: brandFont,
         color: darkBrown,
         lineSpacing: 3
     )
-    drawBrandRule(y: canvasSize.height - 210, width: 180)
+    drawBrandRule(y: canvasSize.height - (isLandscape ? 142 : 210), width: 180)
     drawText(
         title,
-        in: NSRect(x: 72, y: canvasSize.height - 430, width: 850, height: 130),
-        font: font(["PingFangTC-Semibold", "PingFang TC Semibold", "Heiti TC"], size: 62, weight: .semibold),
+        in: isLandscape
+            ? NSRect(x: 72, y: canvasSize.height - 320, width: canvasSize.width - 144, height: 108)
+            : NSRect(x: 72, y: canvasSize.height - 430, width: 850, height: 130),
+        font: font(["PingFangTC-Semibold", "PingFang TC Semibold", "Heiti TC"], size: isLandscape ? 58 : 62, weight: .semibold),
         color: darkBrown,
         lineSpacing: 8
     )
     drawText(
         subtitle,
-        in: NSRect(x: 72, y: canvasSize.height - 535, width: 800, height: 95),
+        in: isLandscape
+            ? NSRect(x: 72, y: canvasSize.height - 405, width: canvasSize.width - 220, height: 72)
+            : NSRect(x: 72, y: canvasSize.height - 535, width: 800, height: 95),
         font: subtitleFont,
         color: darkBrown.withAlphaComponent(0.86),
         lineSpacing: 8
     )
     drawText(
         "SINCE 2016",
-        in: NSRect(x: 72, y: 88, width: 360, height: 44),
+        in: NSRect(x: 72, y: isLandscape ? 48 : 88, width: 360, height: 44),
         font: smallFont,
         color: darkBrown.withAlphaComponent(0.72)
     )
@@ -159,41 +170,49 @@ if mode == "intro" {
     warmCream.withAlphaComponent(0.86).setFill()
     NSBezierPath(rect: NSRect(origin: .zero, size: canvasSize)).fill()
 
-    let outroTitleFont = font(["PingFangTC-Semibold", "PingFang TC Semibold", "Heiti TC"], size: 43, weight: .semibold)
-    let outroSubtitleFont = font(["PingFangTC-Regular", "PingFang TC", "Heiti TC"], size: 33, weight: .regular)
+    let outroTitleFont = font(["PingFangTC-Semibold", "PingFang TC Semibold", "Heiti TC"], size: isLandscape ? 44 : 43, weight: .semibold)
+    let outroSubtitleFont = font(["PingFangTC-Regular", "PingFang TC", "Heiti TC"], size: isLandscape ? 30 : 33, weight: .regular)
 
     drawText(
         title,
-        in: NSRect(x: 72, y: canvasSize.height - 455, width: 936, height: 190),
+        in: isLandscape
+            ? NSRect(x: 72, y: canvasSize.height - 330, width: canvasSize.width - 144, height: 160)
+            : NSRect(x: 72, y: canvasSize.height - 455, width: 936, height: 190),
         font: outroTitleFont,
         color: darkBrown,
         lineSpacing: 12
     )
-    drawBrandRule(y: canvasSize.height - 490, width: 230)
+    drawBrandRule(y: canvasSize.height - (isLandscape ? 360 : 490), width: 230)
     drawText(
         subtitle,
-        in: NSRect(x: 72, y: canvasSize.height - 602, width: 820, height: 90),
+        in: isLandscape
+            ? NSRect(x: 72, y: canvasSize.height - 450, width: canvasSize.width - 220, height: 78)
+            : NSRect(x: 72, y: canvasSize.height - 602, width: 820, height: 90),
         font: outroSubtitleFont,
         color: darkBrown.withAlphaComponent(0.84),
         lineSpacing: 8
     )
     drawText(
         watermark,
-        in: NSRect(x: 72, y: 88, width: 430, height: 48),
+        in: NSRect(x: 72, y: isLandscape ? 48 : 88, width: 430, height: 48),
         font: brandFont,
         color: darkBrown.withAlphaComponent(0.80)
     )
 } else {
+    let topBandHeight: CGFloat = isLandscape ? 235 : 305
+    let bottomBandHeight: CGFloat = isLandscape ? 130 : 178
     darkBrown.withAlphaComponent(0.18).setFill()
-    NSBezierPath(rect: NSRect(x: 0, y: canvasSize.height - 305, width: canvasSize.width, height: 305)).fill()
+    NSBezierPath(rect: NSRect(x: 0, y: canvasSize.height - topBandHeight, width: canvasSize.width, height: topBandHeight)).fill()
 
     darkBrown.withAlphaComponent(0.13).setFill()
-    NSBezierPath(rect: NSRect(x: 0, y: 0, width: canvasSize.width, height: 178)).fill()
+    NSBezierPath(rect: NSRect(x: 0, y: 0, width: canvasSize.width, height: bottomBandHeight)).fill()
 
-    drawBrandRule(y: canvasSize.height - 112, width: 145)
+    drawBrandRule(y: canvasSize.height - (isLandscape ? 82 : 112), width: 145)
     drawText(
         title,
-        in: NSRect(x: 72, y: canvasSize.height - 190, width: 870, height: 78),
+        in: isLandscape
+            ? NSRect(x: 72, y: canvasSize.height - 145, width: canvasSize.width - 144, height: 64)
+            : NSRect(x: 72, y: canvasSize.height - 190, width: 870, height: 78),
         font: titleFont,
         color: .white,
         lineSpacing: 4
@@ -201,7 +220,9 @@ if mode == "intro" {
 
     drawText(
         subtitle,
-        in: NSRect(x: 72, y: canvasSize.height - 266, width: 850, height: 82),
+        in: isLandscape
+            ? NSRect(x: 72, y: canvasSize.height - 210, width: canvasSize.width - 144, height: 64)
+            : NSRect(x: 72, y: canvasSize.height - 266, width: 850, height: 82),
         font: subtitleFont,
         color: NSColor(calibratedWhite: 1.0, alpha: 0.92),
         lineSpacing: 7
@@ -210,7 +231,7 @@ if mode == "intro" {
     if !sceneTag.isEmpty {
         drawText(
             sceneTag,
-            in: NSRect(x: 72, y: 92, width: 230, height: 44),
+            in: NSRect(x: 72, y: isLandscape ? 58 : 92, width: 230, height: 44),
             font: smallFont,
             color: NSColor(calibratedWhite: 1.0, alpha: 0.70)
         )
@@ -218,7 +239,7 @@ if mode == "intro" {
     drawWatermark()
     drawText(
         "Catering Design",
-        in: NSRect(x: 72, y: 70, width: 380, height: 40),
+        in: NSRect(x: 72, y: isLandscape ? 36 : 70, width: 380, height: 40),
         font: scriptFont,
         color: NSColor(calibratedWhite: 1.0, alpha: 0.66)
     )

@@ -1,0 +1,5 @@
+【Fable5 本人・同 session 續接】
+
+補一句收尾:mail 不用上了,你貼的兩段已經涵蓋重點,第二段的具名 session 加 SessionStart/SessionEnd hooks 正是我剛說「治斷線」方案的來源。
+
+這個 bot 窗沒有信箱通道,如果 mail 裡還有額度或帳務相關的段落,貼過來我再補判讀。提案檔我現在就寫,寫完入庫給你過目。

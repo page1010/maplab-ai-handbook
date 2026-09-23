@@ -1,0 +1,161 @@
+{
+  "attempt_after": 10,
+  "attempt_before": 9,
+  "attempt_consumed": true,
+  "body_sha256": "862cab4d3504fcb96744265fe449fca6ce1d6056795724c4bd710ae613c662e8",
+  "business_artifact_created": false,
+  "confirmed_leakage_amount": 0,
+  "created_at": "2026-08-28T00:35:26.837534+00:00",
+  "decision": "STOP_HISTORICAL_JOIN__OWNER_REVIEW_PROSPECTIVE_CAPTURE",
+  "evidence_summary": {
+    "actual_delivery_verified": 0,
+    "baseline_scope_verified": 0,
+    "charged_fee_verified": 0,
+    "decision_counts": {
+      "INSUFFICIENT_EVIDENCE": 3
+    },
+    "four_pillar_verified_count": 0,
+    "incremental_cost_verified": 0,
+    "missing_evidence_code_counts": {
+      "ACTUAL_DELIVERY_UNVERIFIED_NO_STABLE_ASSET_JOIN": 3,
+      "BASELINE_SCOPE_UNVERIFIED_NO_EXACT_QUOTE_CONTENT_JOIN": 3,
+      "CHARGED_FEE_UNVERIFIED_NO_EXACT_ORDER_JOIN": 3,
+      "CHARGED_FEE_UNVERIFIED_ORDERCHARGES_SEMANTICS": 3,
+      "INCREMENTAL_COST_UNVERIFIED_NO_COST_LEDGER_JOIN": 3,
+      "NO_STABLE_CASE_QUOTE_CHARGE_ASSET_JOIN_KEY": 3
+    },
+    "request_rows_verified": 3
+  },
+  "method_contract": {
+    "acceptance": "three frozen candidates, exact source readback, explicit missing codes, no private path/text output, and no inferred leakage without all gates",
+    "adapter": "maplab-margin-fixed-three-local-worker",
+    "changed_variable": "freeze three candidates, re-read exact request/source hashes, and accept only opaque exact joins; no name, date, keyword, or fuzzy identity inference",
+    "evaluator": "request row plus baseline quote content, delivery asset, incremental cost, and authoritative charged-fee evidence; every join exact and unique",
+    "expected_delta": "at least one owner-reviewable four-pillar case packet",
+    "fingerprint": "6ad1df463b57ca15b0b0aba9700735e9bfb3e07608607dabe4472891dcd166c8",
+    "fixed_holdout": {
+      "eligible_count": 18,
+      "eligible_set_digest": "686cd542e5bf9e0e854db1c6b7439aec637246fd63c5b725326eea2a1eec9d8f",
+      "eligible_set_digest_serialization": "sorted candidate hashes, LF after every hash",
+      "selected_candidate_hashes": [
+        "57a804c32dd8d931e6f95300185dd4582ab98dafd336bccea7848d07ee89e2b7",
+        "cb81a77a9373f4b709bb1525eaacb81ad229c1adf0719ef6a207af23a2ac8240",
+        "946d2d88375f5ec9459bc32ee565ba1786d1ed884d4c46b229c2987e752e285c"
+      ],
+      "selected_count": 3
+    },
+    "hypothesis": "Candidate-specific exact anchors may recover at least one complete historical request-to-quote-to-delivery-to-cost-to-charge chain.",
+    "method_version": "margin-fixed-three-four-pillar-packet-v1",
+    "sampling": "sha256(method_version|candidate_hash), ascending",
+    "stop_loss": "stop after exactly three; if zero verify, stop historical joining and route prospective case-id live capture to Owner review"
+  },
+  "objective_metrics_after": {
+    "confirmed_leakage_amount": 0,
+    "four_pillar_verified_count": 0,
+    "owner_reviewable_case_packet_count": 0
+  },
+  "objective_metrics_before": {
+    "confirmed_leakage_amount": 0,
+    "four_pillar_verified_count": 0,
+    "owner_reviewable_case_packet_count": 0
+  },
+  "owner_acceptance_delta": 0,
+  "privacy": {
+    "backup_or_permission_write": false,
+    "contains_customer_bearing_paths": false,
+    "contains_customer_identifiers": false,
+    "contains_raw_text": false,
+    "contains_raw_urls_or_provider_ids": false,
+    "contains_source_conversation_ids": false,
+    "customer_send": false,
+    "google_write": false,
+    "live_price_write": false,
+    "model_calls": 0,
+    "network_calls": 0,
+    "third_party_private_egress": 0
+  },
+  "private_packet_sha256": "f8bcedecc8121be7de632560562eb5a1207713bc451143626970ec7f3c52953a",
+  "sample_count": 3,
+  "samples": [
+    {
+      "actual_delivery_status": "UNVERIFIED",
+      "baseline_scope_status": "UNVERIFIED",
+      "candidate_hash": "57a804c32dd8d931e6f95300185dd4582ab98dafd336bccea7848d07ee89e2b7",
+      "category": "logistics_access",
+      "charged_fee_status": "UNVERIFIED",
+      "decision_label": "INSUFFICIENT_EVIDENCE",
+      "four_pillar_verified": false,
+      "incremental_cost_status": "UNVERIFIED",
+      "missing_evidence_codes": [
+        "BASELINE_SCOPE_UNVERIFIED_NO_EXACT_QUOTE_CONTENT_JOIN",
+        "ACTUAL_DELIVERY_UNVERIFIED_NO_STABLE_ASSET_JOIN",
+        "INCREMENTAL_COST_UNVERIFIED_NO_COST_LEDGER_JOIN",
+        "CHARGED_FEE_UNVERIFIED_NO_EXACT_ORDER_JOIN",
+        "CHARGED_FEE_UNVERIFIED_ORDERCHARGES_SEMANTICS",
+        "NO_STABLE_CASE_QUOTE_CHARGE_ASSET_JOIN_KEY"
+      ],
+      "request_row_sha256": "38611683cfa0a4dd1246666693184fa81a658d7834863fa4428ba2078903c611",
+      "request_status": "VERIFIED_REQUEST_ROW_HASH",
+      "selection_key": "037c0d7b4c0de05c80a8747cbd0bc0f691879eb1123d06e2b55f408e1f10dd81",
+      "source_file_sha256": "e2cbd194755c3b38b81153a2cbf5169ee285d36fd7b150b575d464ecc7d8cbca"
+    },
+    {
+      "actual_delivery_status": "UNVERIFIED",
+      "baseline_scope_status": "UNVERIFIED",
+      "candidate_hash": "cb81a77a9373f4b709bb1525eaacb81ad229c1adf0719ef6a207af23a2ac8240",
+      "category": "cleanup_waste",
+      "charged_fee_status": "UNVERIFIED",
+      "decision_label": "INSUFFICIENT_EVIDENCE",
+      "four_pillar_verified": false,
+      "incremental_cost_status": "UNVERIFIED",
+      "missing_evidence_codes": [
+        "BASELINE_SCOPE_UNVERIFIED_NO_EXACT_QUOTE_CONTENT_JOIN",
+        "ACTUAL_DELIVERY_UNVERIFIED_NO_STABLE_ASSET_JOIN",
+        "INCREMENTAL_COST_UNVERIFIED_NO_COST_LEDGER_JOIN",
+        "CHARGED_FEE_UNVERIFIED_NO_EXACT_ORDER_JOIN",
+        "CHARGED_FEE_UNVERIFIED_ORDERCHARGES_SEMANTICS",
+        "NO_STABLE_CASE_QUOTE_CHARGE_ASSET_JOIN_KEY"
+      ],
+      "request_row_sha256": "6bbbb167b2a2d57f3af6ef52fcb92541784eb78299b2b91db15bc27940363c7f",
+      "request_status": "VERIFIED_REQUEST_ROW_HASH",
+      "selection_key": "1329092904aeda6b6505a70ba68cebbb73e995e1a8d69f813259509698de2ec6",
+      "source_file_sha256": "c0df5fc6d40aa6110a96e51f78141d64fc36340176651979e1ff8df328e2f896"
+    },
+    {
+      "actual_delivery_status": "UNVERIFIED",
+      "baseline_scope_status": "UNVERIFIED",
+      "candidate_hash": "946d2d88375f5ec9459bc32ee565ba1786d1ed884d4c46b229c2987e752e285c",
+      "category": "onsite_service",
+      "charged_fee_status": "UNVERIFIED",
+      "decision_label": "INSUFFICIENT_EVIDENCE",
+      "four_pillar_verified": false,
+      "incremental_cost_status": "UNVERIFIED",
+      "missing_evidence_codes": [
+        "BASELINE_SCOPE_UNVERIFIED_NO_EXACT_QUOTE_CONTENT_JOIN",
+        "ACTUAL_DELIVERY_UNVERIFIED_NO_STABLE_ASSET_JOIN",
+        "INCREMENTAL_COST_UNVERIFIED_NO_COST_LEDGER_JOIN",
+        "CHARGED_FEE_UNVERIFIED_NO_EXACT_ORDER_JOIN",
+        "CHARGED_FEE_UNVERIFIED_ORDERCHARGES_SEMANTICS",
+        "NO_STABLE_CASE_QUOTE_CHARGE_ASSET_JOIN_KEY"
+      ],
+      "request_row_sha256": "383455dd8656ba472fd56eeac2cb2a7b23d3559000aaf6c4cb51e5adb03c80d9",
+      "request_status": "VERIFIED_REQUEST_ROW_HASH",
+      "selection_key": "3a44e6971f09523289d387f36b329339aa0c35be4761f353ccc04d0c77d8ce57",
+      "source_file_sha256": "62f5c5e1b56e3aa32e6adbc03854bd80ecddc16130a13e188335765f1dd2ea6c"
+    }
+  ],
+  "schema_version": "maplab.margin-leak.fixed-three.sanitized.v1",
+  "source_receipts": {
+    "calibration_fingerprint": "7e65e7be6eec8e77bf71866928bcdf616bf0cb81948b473c985e739885422b30",
+    "calibration_sha256": "812e313c24e449fbdb75210f9060de59bd107622cb1b9bd27ce14b8cadceef85",
+    "calibration_source_manifest_sha256": "bb4f062f0003389d67f5a01954c80775a93f515007e648233aae59e4ca371df6",
+    "local_quote_pointer_manifest_sha256": null,
+    "local_quote_pointer_scan_status": "NOT_REQUIRED_NO_EXACT_SHEET_ANCHOR",
+    "ordercharges_authoritative_writer": "UNRESOLVED",
+    "ordercharges_semantics": "UNRESOLVED_MIXED_CHARGE_COST_DISCOUNT_NOTE",
+    "raw_source_manifest_sha256": "392680859dd861289ef0a4a288cc7fba8fad09284c82bcb6abdc167e44fed487"
+  },
+  "supporting_delta": "fixed historical hypothesis closed at three-case stop-loss",
+  "unique_candidate_hashes": 3,
+  "unlocked_next_action": "Owner decision on prospective case-id live-capture pilot"
+}

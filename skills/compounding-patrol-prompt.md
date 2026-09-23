@@ -140,3 +140,5 @@ cat skills/compounding-patrol-prompt.md | grep -A 999 '【召回】' | grep -B 9
 | 版本 | 日期 | 變更 |
 |------|------|------|
 | v1.0 | 2026-07-12 | 初建（A0/Fable5 交棒任務） |
+
+<!-- 權限前提 2026-09-13:本 prompt 由 launchd com.maplab.compounding-patrol 經 scripts/compounding_patrol_run.sh 執行(claude -p --dangerously-skip-permissions);Cowork 排程情境會因工具核准而靜默失敗,勿依賴。 -->

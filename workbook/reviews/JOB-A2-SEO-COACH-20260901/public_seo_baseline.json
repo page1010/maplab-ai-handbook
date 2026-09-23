@@ -1,0 +1,316 @@
+{
+  "comparison": {
+    "decision": "BASELINE_CREATED",
+    "previous_method_fingerprint": null,
+    "previous_path": null,
+    "verified_delta": null
+  },
+  "generated_at": "2026-09-01T03:58:27+00:00",
+  "method_fields": {
+    "acceptance": "http-index-canonical-title-description-h1-schema-alt-v1",
+    "evaluator": "deterministic-field-checks-v1",
+    "model": "none",
+    "probe_version": "maplab-public-seo-probe-v1",
+    "sampling": "none",
+    "timeout_seconds": 20.0,
+    "urls": [
+      "https://www.maplabkitchen.com/",
+      "https://www.maplabkitchen.com/corporate-catering-tainan/",
+      "https://www.maplabkitchen.com/corporate-tea-party-desserts/",
+      "https://www.maplabkitchen.com/tainan-corporate-opening-tea-catering/",
+      "https://www.maplabkitchen.com/brand-esg-catering-service/",
+      "https://www.maplabkitchen.com/press-conference-catering/",
+      "https://www.maplabkitchen.com/vip-expo-catering-business-meeting/",
+      "https://www.maplabkitchen.com/daxin-art-museum-opening-catering/",
+      "https://www.maplabkitchen.com/icc-tainan-catering/"
+    ],
+    "worker": "stdlib-public-http"
+  },
+  "method_fingerprint": "cd028320bc30cba1c78da38ef1cb2be6a02a11c91b3873b47192463b047de5a0",
+  "pages": [
+    {
+      "body_sha256": "ce9a2edf906ecb94bcfd58367d96fb4e87f4c50af45d21e876118abb88fd122c",
+      "canonical": "https://www.maplabkitchen.com/",
+      "content_type": "text/html; charset=UTF-8",
+      "description": "週歲派對、婚禮、企業活動的美感外燴首選 在台南這座充滿人情味的城市，MAPLAB Kitchen 將「美感設計」與「在地溫度」完美結合，為每一場派對創造難忘的餐桌體驗。品牌由 Page 與 Mina 共同創立，一位是走過澳洲廚房、擅長整合流程的料理企劃者，一位是從甜點市集到婚禮現場、擅長空間布置與接待的靈魂角色。MAPLAB Kitchen 不是只賣餐點的外燴品牌，而是將設計、美味與細膩服務，帶進每一次「台南外燴」的場景中。",
+      "final_url": "https://www.maplabkitchen.com/",
+      "findings": [],
+      "h1": [
+        "台南外燴｜MAPLAB Kitchen CATERING SERVICE"
+      ],
+      "images": 22,
+      "images_missing_alt": 0,
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "schema_blocks": 2,
+      "schema_errors": [],
+      "schema_invalid_blocks": 0,
+      "schema_valid_blocks": 2,
+      "status": 200,
+      "title": "台南外燴推薦｜台南到府外燴、台南派對外燴與企業茶會｜MAPLAB",
+      "url": "https://www.maplabkitchen.com/"
+    },
+    {
+      "body_sha256": "ffcc0c4e6ecbfd282caf38fcde9d59062fe7a6322ec8857cc58a38c7ed6f07f6",
+      "canonical": "https://www.maplabkitchen.com/corporate-catering-tainan/",
+      "content_type": "text/html; charset=UTF-8",
+      "description": "MAPLAB Kitchen 提供台南企業外燴、公司茶會、會議茶點、開幕茶會與品牌活動餐點規劃，協助行政、公關與活動窗口穩定安排現場。",
+      "final_url": "https://www.maplabkitchen.com/corporate-catering-tainan/",
+      "findings": [],
+      "h1": [
+        "台南企業外燴推薦｜會議茶點、開幕茶會與品牌活動規劃｜MAPLAB"
+      ],
+      "images": 21,
+      "images_missing_alt": 0,
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "schema_blocks": 2,
+      "schema_errors": [],
+      "schema_invalid_blocks": 0,
+      "schema_valid_blocks": 2,
+      "status": 200,
+      "title": "台南企業外燴推薦｜會議茶點、開幕茶會與品牌活動規劃｜MAPLAB",
+      "url": "https://www.maplabkitchen.com/corporate-catering-tainan/"
+    },
+    {
+      "body_sha256": "9dc3ecade9a81262020c1fba1878d178e8c8c1db0bbe1b35ce2967737d0ed1bb",
+      "canonical": "https://www.maplabkitchen.com/corporate-tea-party-desserts/",
+      "content_type": "text/html; charset=UTF-8",
+      "description": "台南會議茶點外燴適合研討會、學校講座、企業會議與內部訓練，MAPLAB Kitchen 協助規劃好拿取、不中斷交流的餐點與飲品。",
+      "final_url": "https://www.maplabkitchen.com/corporate-tea-party-desserts/",
+      "findings": [],
+      "h1": [
+        "台南會議茶點外燴｜研討會、講座與企業活動餐點｜MAPLAB"
+      ],
+      "images": 16,
+      "images_missing_alt": 0,
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "schema_blocks": 3,
+      "schema_errors": [],
+      "schema_invalid_blocks": 0,
+      "schema_valid_blocks": 3,
+      "status": 200,
+      "title": "台南會議茶點外燴｜研討會、講座與企業活動餐點｜MAPLAB",
+      "url": "https://www.maplabkitchen.com/corporate-tea-party-desserts/"
+    },
+    {
+      "body_sha256": "f5810e4a3445d3ea24ade9e83e61719ce313224d20028e16ec18984521112e08",
+      "canonical": "https://www.maplabkitchen.com/tainan-corporate-opening-tea-catering/",
+      "content_type": "text/html; charset=UTF-8",
+      "description": "台南開幕茶會外燴規劃，從開幕典禮流程、貴賓接待、茶點配置到取餐動線，協助品牌、診所與公司活動呈現穩定第一印象。",
+      "final_url": "https://www.maplabkitchen.com/tainan-corporate-opening-tea-catering/",
+      "findings": [],
+      "h1": [
+        "台南開幕茶會外燴｜開幕典禮流程與品牌接待餐點｜MAPLAB"
+      ],
+      "images": 11,
+      "images_missing_alt": 0,
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "schema_blocks": 2,
+      "schema_errors": [],
+      "schema_invalid_blocks": 0,
+      "schema_valid_blocks": 2,
+      "status": 200,
+      "title": "台南開幕茶會外燴｜開幕典禮流程與品牌接待餐點｜MAPLAB",
+      "url": "https://www.maplabkitchen.com/tainan-corporate-opening-tea-catering/"
+    },
+    {
+      "body_sha256": "5eda189e5db7c87d4b9675c0fe5d7b7c13250a6ebcba538fc619d03e883205f2",
+      "canonical": "https://www.maplabkitchen.com/brand-esg-catering-service/",
+      "content_type": "text/html; charset=UTF-8",
+      "description": "台南品牌活動外燴規劃，適合發表會、VIP 接待、賞車活動、建案活動與展覽開幕，依品牌調性安排餐點、飲品與桌面節奏。",
+      "final_url": "https://www.maplabkitchen.com/brand-esg-catering-service/",
+      "findings": [],
+      "h1": [
+        "台南品牌活動外燴｜發表會、VIP 接待與展覽開幕餐點｜MAPLAB"
+      ],
+      "images": 12,
+      "images_missing_alt": 0,
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "schema_blocks": 2,
+      "schema_errors": [],
+      "schema_invalid_blocks": 0,
+      "schema_valid_blocks": 2,
+      "status": 200,
+      "title": "台南品牌活動外燴｜發表會、VIP 接待與展覽開幕餐點｜MAPLAB",
+      "url": "https://www.maplabkitchen.com/brand-esg-catering-service/"
+    },
+    {
+      "body_sha256": "b23af2b644c51482724064469bf63e00a9d2c92e3fddefdc91afd03c013f7e7f",
+      "canonical": "https://www.maplabkitchen.com/press-conference-catering/",
+      "content_type": "text/html; charset=UTF-8",
+      "description": "記者會餐點推薦找 MAPLAB！提供具記憶點的高質感外燴服務，場地動線規劃與專業品牌公關活動餐飲，讓活動完美落地。",
+      "final_url": "https://www.maplabkitchen.com/press-conference-catering/",
+      "findings": [
+        "invalid_json_ld"
+      ],
+      "h1": [
+        "記者會餐點推薦｜讓品牌活動更有記憶點的關鍵一刻"
+      ],
+      "images": 6,
+      "images_missing_alt": 0,
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "schema_blocks": 3,
+      "schema_errors": [
+        "block_2:Invalid control character at@441"
+      ],
+      "schema_invalid_blocks": 1,
+      "schema_valid_blocks": 2,
+      "status": 200,
+      "title": "記者會餐點推薦：5 步打造高質感品牌活動餐飲｜MAPLAB",
+      "url": "https://www.maplabkitchen.com/press-conference-catering/"
+    },
+    {
+      "body_sha256": "9077cd809ef6cd3496718baa273764d9e42dcc2f304f27b3408a403429e29f54",
+      "canonical": "https://www.maplabkitchen.com/vip-expo-catering-business-meeting/",
+      "content_type": "text/html; charset=UTF-8",
+      "description": "MAPLAB 提供專業展覽外燴與 VIP 點心吧服務，適合展場接待、品牌開幕與商務洽談。完整菜單、流程規劃與實例照片。打造最舒適商務派對 用美食為公司業務打開大門",
+      "final_url": "https://www.maplabkitchen.com/vip-expo-catering-business-meeting/",
+      "findings": [],
+      "h1": [
+        "展覽外燴推薦｜VIP 點心吧與商務派對接待首選服務:MAPLAB Kitchen"
+      ],
+      "images": 6,
+      "images_missing_alt": 0,
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "schema_blocks": 2,
+      "schema_errors": [],
+      "schema_invalid_blocks": 0,
+      "schema_valid_blocks": 2,
+      "status": 200,
+      "title": "台南展覽外燴推薦 2026｜VIP 點心吧、商務接待、品牌活動外燴 - MAPLAB",
+      "url": "https://www.maplabkitchen.com/vip-expo-catering-business-meeting/"
+    },
+    {
+      "body_sha256": "92044384286b066f9804dcc7d863cdf55bd2a0f828584fb1474091ac418378f0",
+      "canonical": "https://www.maplabkitchen.com/daxin-art-museum-opening-catering/",
+      "content_type": "text/html; charset=UTF-8",
+      "description": "台南開幕茶會外燴怎麼安排？MAPLAB 為大新美術館展覽開幕規劃餐點與現場動線，適合藝文空間、品牌發表與企業開幕。",
+      "final_url": "https://www.maplabkitchen.com/daxin-art-museum-opening-catering/",
+      "findings": [],
+      "h1": [
+        "大新美術館開幕外燴｜展覽開幕茶會餐點案例｜MAPLAB Kitchen"
+      ],
+      "images": 18,
+      "images_missing_alt": 0,
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "schema_blocks": 2,
+      "schema_errors": [],
+      "schema_invalid_blocks": 0,
+      "schema_valid_blocks": 2,
+      "status": 200,
+      "title": "台南展覽開幕茶會外燴案例｜大新美術館開幕餐點規劃",
+      "url": "https://www.maplabkitchen.com/daxin-art-museum-opening-catering/"
+    },
+    {
+      "body_sha256": "59692ab8e88a0d775a1391d1754a15985a3f6f343eb37d7c59b8c09a8be967f8",
+      "canonical": "https://www.maplabkitchen.com/icc-tainan-catering/",
+      "content_type": "text/html; charset=UTF-8",
+      "description": "大臺南會展中心外燴與企業茶點案例。MAPLAB Kitchen 提供台南會展活動餐點、手指食物、飲品與貴賓接待餐桌配置，適合會議、展覽、開幕與品牌活動。",
+      "final_url": "https://www.maplabkitchen.com/icc-tainan-catering/",
+      "findings": [],
+      "h1": [
+        "大臺南會展中心活動外燴｜企業茶點與貴賓接待｜MAPLAB"
+      ],
+      "images": 10,
+      "images_missing_alt": 0,
+      "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+      "schema_blocks": 2,
+      "schema_errors": [],
+      "schema_invalid_blocks": 0,
+      "schema_valid_blocks": 2,
+      "status": 200,
+      "title": "大臺南會展中心活動外燴｜企業茶點與貴賓接待｜MAPLAB",
+      "url": "https://www.maplabkitchen.com/icc-tainan-catering/"
+    }
+  ],
+  "robots": {
+    "body_sha256": "786328b38f3e84b4cfdee38841c44fac4f114912effaec009faee7f3b6c560d6",
+    "content_type": "text/plain; charset=utf-8",
+    "final_url": "https://www.maplabkitchen.com/robots.txt",
+    "status": 200,
+    "text": "User-agent: *\nDisallow: /wp-admin/\nAllow: /wp-admin/admin-ajax.php\n\nSitemap: https://www.maplabkitchen.com/sitemap_index.xml\n",
+    "url": "https://www.maplabkitchen.com/robots.txt"
+  },
+  "scope": "public-read-only",
+  "site": "https://www.maplabkitchen.com/",
+  "sitemap": {
+    "children": [
+      {
+        "body_sha256": "0a0e453c8121c85925841e3584102802ed035b9d93071e34065abe2a97f9c4b5",
+        "content_type": "text/xml; charset=UTF-8",
+        "final_url": "https://www.maplabkitchen.com/post-sitemap.xml",
+        "latest_lastmod": "2026-08-26T03:15:27+00:00",
+        "status": 200,
+        "url": "https://www.maplabkitchen.com/post-sitemap.xml",
+        "url_count": 58,
+        "urls_sha256": "6aeaf814acb2c5a9a4350779a8ed1603689a3fa0ecacd6072fca5922c2b56b25"
+      },
+      {
+        "body_sha256": "66e0e616ae2ef4fb1405df6c899a2f88367a6c47944af0518a116f31eb96deec",
+        "content_type": "text/xml; charset=UTF-8",
+        "final_url": "https://www.maplabkitchen.com/page-sitemap.xml",
+        "latest_lastmod": "2026-08-18T14:43:50+00:00",
+        "status": 200,
+        "url": "https://www.maplabkitchen.com/page-sitemap.xml",
+        "url_count": 6,
+        "urls_sha256": "6e32f560e09adc660ac569d212c8a9b127ab188ba93015deac443b17b4614000"
+      },
+      {
+        "body_sha256": "25911f393307b20ebc1752905e06c3da286a287f01f448abb6e3d404f64a1837",
+        "content_type": "text/xml; charset=UTF-8",
+        "final_url": "https://www.maplabkitchen.com/elementor-hf-sitemap.xml",
+        "latest_lastmod": "2026-01-19T05:29:05+00:00",
+        "status": 200,
+        "url": "https://www.maplabkitchen.com/elementor-hf-sitemap.xml",
+        "url_count": 2,
+        "urls_sha256": "f174bcb5b588f423f0b9fde3e2bc7679e9e3489efc6cf82da10529d8c3016a89"
+      },
+      {
+        "body_sha256": "67fc40c60dc8b5a4931b76ea083365496a3768e7a4000177efd68274706ae634",
+        "content_type": "text/xml; charset=UTF-8",
+        "final_url": "https://www.maplabkitchen.com/local-sitemap.xml",
+        "latest_lastmod": "2025-05-21T03:17:29+00:00",
+        "status": 200,
+        "url": "https://www.maplabkitchen.com/local-sitemap.xml",
+        "url_count": 1,
+        "urls_sha256": "6515a3fce914695fe1633c148d9f23bb283836dc19f2572e9179832aeda0138a"
+      }
+    ],
+    "index": {
+      "body_sha256": "b0846685bc378dfeed2db304e07e6221eb460b3fb0a409f80f0d54d49e298b19",
+      "child_sitemaps": [
+        "https://www.maplabkitchen.com/post-sitemap.xml",
+        "https://www.maplabkitchen.com/page-sitemap.xml",
+        "https://www.maplabkitchen.com/elementor-hf-sitemap.xml",
+        "https://www.maplabkitchen.com/local-sitemap.xml"
+      ],
+      "content_type": "text/xml; charset=UTF-8",
+      "final_url": "https://www.maplabkitchen.com/sitemap_index.xml",
+      "lastmods": [
+        "2026-08-26T03:15:27+00:00",
+        "2026-08-18T14:43:50+00:00",
+        "2026-01-19T05:29:05+00:00",
+        "2025-05-21T03:17:29+00:00"
+      ],
+      "status": 200,
+      "url": "https://www.maplabkitchen.com/sitemap_index.xml"
+    }
+  },
+  "wordpress": {
+    "pages": {
+      "body_sha256": "3086c5a6ed315cbecbb74bb3a5fc868466a60163501ea9a19efb750263a828f1",
+      "final_url": "https://www.maplabkitchen.com/wp-json/wp/v2/pages?status=publish&per_page=1",
+      "status": 200,
+      "total": 6,
+      "total_pages": 6,
+      "url": "https://www.maplabkitchen.com/wp-json/wp/v2/pages?status=publish&per_page=1"
+    },
+    "posts": {
+      "body_sha256": "85eaa5eb5e9912421b027aa45b7f4988c2c52811f58b18833b628a1c13d3a6e1",
+      "final_url": "https://www.maplabkitchen.com/wp-json/wp/v2/posts?status=publish&per_page=1",
+      "status": 200,
+      "total": 58,
+      "total_pages": 58,
+      "url": "https://www.maplabkitchen.com/wp-json/wp/v2/posts?status=publish&per_page=1"
+    }
+  }
+}

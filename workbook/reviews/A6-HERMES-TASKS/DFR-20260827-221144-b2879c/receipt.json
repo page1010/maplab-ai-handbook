@@ -1,0 +1,63 @@
+{
+  "schema_version": 4,
+  "task_id": "DFR-20260827-221144-b2879c",
+  "created_at": "2026-08-27T22:11:44+0800",
+  "request": "[redacted-auto-routed-public-research]",
+  "request_sha256": "cd596feec86250c2a5e961234512bf4678bedde3f98da7dcc8dcccdbfabf1d52",
+  "request_chars": 60,
+  "requester": {
+    "channel": "telegram",
+    "owner_user_id": 0,
+    "chat_id": null,
+    "chat_type": null
+  },
+  "action": "deerflow-public-research",
+  "policy": "public-research-auto-route-v2",
+  "parent_job_id": "MAPJOB-20260827-221144-64831c",
+  "status": "completed",
+  "provider": "local",
+  "input_classification": "public",
+  "network_calls": "one bounded public DDGS retrieval plus local Ollama",
+  "next": "background one-shot worker will update this receipt",
+  "started_at": "2026-08-27T22:11:45+0800",
+  "provider_gate": "local-only provider; no external model transmission",
+  "deerflow_commit": "788a890bd022689ef293e6bbfa2c12988173db6c",
+  "config_sha256": "8789be4a2055fa77eaefb0ca6136bdbc43fd4ea89be7abded3224d227d0d5021",
+  "enabled_tools": [],
+  "public_retrieval": "single bounded ddgs:auto prefetch before model invocation",
+  "disabled_capabilities": [
+    "memory",
+    "sandbox",
+    "file-read",
+    "file-write",
+    "bash",
+    "browser",
+    "image-search",
+    "MCP",
+    "scheduler",
+    "IM",
+    "tracing",
+    "skills",
+    "subagents"
+  ],
+  "finished_at": "2026-08-27T22:13:23+0800",
+  "elapsed_seconds": 99.241,
+  "model": "hermes-local-gemma4",
+  "tools_used": [],
+  "usage": {
+    "input_tokens": 3553,
+    "output_tokens": 1687,
+    "total_tokens": 5240
+  },
+  "sources": [
+    "https://blog.csdn.net/gitblog_00478/article/details/163994827",
+    "https://deerflow.one/github",
+    "https://github.com/bytedance/deer-flow",
+    "https://github.com/yjianv/deer-flow",
+    "https://www.linkstartai.com/zh/github-picks/deer-flow"
+  ],
+  "artifact_path": "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/A6-HERMES-TASKS/DFR-20260827-221144-b2879c/research.md",
+  "artifact_sha256": "d643a8c0ba1473a1a1df9d771a21c53fda2b26485d0e1cd04a84e4e27b277888",
+  "answer_preview": "根據您提供的公開證據包，我已針對 DeerFlow 的「持久化任務設計」（durable task design）進行了深入研究。請注意，本次分析僅基於您提供的有限證據片段，因此對該特定機制的描述深度可能受限。\n\n### 深入研究報告：DeerFlow 的任務狀態管理機制\n\n根據現有的公開資訊，DeerFlow 在其系統架構中確實涉及了與任務生命週期和狀態相關的持久化處理。\n\n**核心發現（基於一個主要技術來源）：**\n證據包中最具技術性的描述來自 `bytedance/deer-flow` 的 GitHub 頁面 [citation:GitHub - bytedance/deer-flow](https://github.com/bytedance/deer-flow)。該片段指出，DeerFlow 在任務執行期間會為中介層（middleware）、生命週期或系統模型觀察提供一個**「任務範圍的擴展儲存區」（task-scoped extension store）** [citation:GitHub - bytedance/deer-flow](https://github.com/bytedance/deer-flow)。此外，它還提到服務會在 **Gateway 持久化準備就緒後**接收應用範圍的運行時依賴（app-scoped runtime dependencies），並在活動運行流動耗盡後反向停止 [citation:GitHub - bytedance/deer-flow](https://github.com/bytedance/deer-flow)。\n\n這段描述暗示了其任務設計的核心概念是：\n1.  **範圍隔離性 (Scope Isolation)**：使用「任務範圍」的儲存區，確保不同任務間的狀態數據不會互相干擾。\n2.  **依賴管理與持久化 (Dependency & Persistence)**：系統在 Gateway 層級完成持久化準備後，才將運行時依賴注入給服務層，這體現了對長期、複雜工作流穩健性的設計考量。\n\n**其他來源的補充資訊：**\n其他證據片段提供了 DeerFlow 的宏觀能力描述，例如它基於 LangGraph 構建多智能體工作流 [citation:DeerFlow：字节跳动开源 SuperAgent...](https://www.linkstartai.com/zh/github-picks/deer-flow)，以及其能夠進行多輪檢索和交叉驗證以生成結構化報告 [citation:DeerFlow 深度研究框架完整指南...](https://blog.csdn.net/gitblog_00478/article/details/163994827)。這些功能（如複雜工作流、多輪檢索）本身就**需要**",
+  "clean_shutdown": true
+}

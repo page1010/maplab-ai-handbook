@@ -60,7 +60,8 @@ PYEOF
 log "$RESULT"
 
 if [[ "$RESULT" != "OK" ]]; then
-    bash "$NOTIFY" "$RESULT" 2>/dev/null || log "NOTIFY_FAILED（Telegram 推播失敗）"
+    # 2026-09-04 Owner 裁決（msg 4642）：真警示保留推播，但一律標【需你處理】
+    bash "$NOTIFY" "【需你處理】$RESULT" 2>/dev/null || log "NOTIFY_FAILED（Telegram 推播失敗）"
     log "推播已觸發"
 else
     log "✅ 無 open CRITICAL，靜默"

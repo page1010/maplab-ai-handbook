@@ -1,0 +1,29 @@
+a0: 建立 NAMING_GLOSSARY.md 稱謂表 + 作廢假的 DEPRECATED.md(Owner msg 6005)
+
+Owner 原話:「先釐清這些稱謂才能發現問題出在哪裡」。
+
+新增 NAMING_GLOSSARY.md(repo 根目錄),把所有稱謂分成五層,
+每層附「壞掉的樣子」與「修法」,並記下 2026-09-23 17:3x 的實查狀態:
+- 模型:Claude(claude-opus-5)——唯一會判斷的一層。
+- 角色名:Fable5(=A0)、B1-B4、IOS-* 16 角色,無實體。
+- 席位:win-os(檔案側 win-01)、mac-mini、invest。
+- 程式:bot.py、bot_a6 閘道、run_spread_paper.py、agent-bus 搬運腳本。
+- 別家 app:codex、antigravity、hermes、openclaw。
+
+釐清後浮出四個問題(全部不在模型層):
+1. bot/DEPRECATED.md 宣告 bot.py 已棄用、plist 已 unload,實際 PID 89665
+   由 launchd com.maplab.telegrambot 常駐,撐著整條 Telegram 線
+   —— 照該文件動手會切斷 Owner 與 A0 的唯一通道。本 commit 已在該檔最上方
+   加作廢警告並把舊內容降為歷史紀錄。
+2. invest 席位 heartbeat 停在 2026-08-21T00:15:25,約 33 天無人發現。
+3. win-os 席位 OAuth 過期(16:55 rc=1、17:18 hermes rc=124 逾時)。
+4. launchd compounding-patrol / sched-daily-standup / sched-runtime-health
+   LastExitStatus=32512 即 exit 127(找不到執行檔);line-cloud-gym exit 1。
+
+病根:席位層與程式層的故障一律被講成「某個 agent 沒做事」,修法因此派到錯的層。
+查現況正確做法:席位看 diag/<machine>/*.exec-tail.log 與 heartbeat 時間戳
+(不看 status,它會說 busy);程式看 launchctl LastExitStatus;模型才看回答內容。
+
+未做不宣稱:invest 席位與三個 127 排程尚未修復,本輪只有診斷。
+
+Co-Authored-By: Claude <noreply@anthropic.com>

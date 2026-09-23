@@ -103,3 +103,12 @@ IOS-FB 在跑 FB Radar / social source route health / candidate review 前，必
 1. collection route 是 Owner Chrome logged-in、A0/Notion credential handoff，或明確公開資料路由。
 2. report 使用的是本次收集或明確標為 historical / shadow sample 的資料。
 3. 若缺登入，輸出 `source_route_health.md` 的 `auth_missing`，不要用歷史樣本生成「今日報告」。
+
+---
+
+## 政策協調：agent 專用帳號唯讀例外（2026-08-15）
+
+上面「不用 agent 自己帳號替代 Owner 帳號」這條，在**Owner 指定的 agent 專用服務帳號 + 唯讀穿越登入牆**情境下，
+由 `skills/agent-login/SKILL.md` 明文放寬（僅限其 §7 清單服務、僅唯讀、其餘紅線全保留）。
+需要登入才看得到的 FB 影片 / Suno 等任務，改讀 `skills/agent-login/SKILL.md`（openclaw 持久 profile `:18800`）。
+本頁其餘規則（禁冒用 Owner 個人帳號、禁寫入/送出/花錢/改設定、憑證不落地）不變。

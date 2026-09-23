@@ -1,0 +1,63 @@
+{
+  "schema_version": 4,
+  "task_id": "DFR-20260901-122529-0f23b8",
+  "created_at": "2026-09-01T12:25:29+0800",
+  "request": "[redacted-auto-routed-public-research]",
+  "request_sha256": "a4b1c7b0a609d5abee2f067ff9b80b0737ce5ee8b4936871ee6d86e69fdd764e",
+  "request_chars": 115,
+  "requester": {
+    "channel": "local-heartbeat",
+    "owner_user_id": 0,
+    "chat_id": null,
+    "chat_type": "codex"
+  },
+  "action": "deerflow-public-research",
+  "policy": "public-research-auto-route-v2",
+  "parent_job_id": "MAPJOB-20260901-122529-220f31",
+  "status": "completed",
+  "provider": "local",
+  "input_classification": "public",
+  "network_calls": "one bounded public DDGS retrieval plus local Ollama",
+  "next": "background one-shot worker will update this receipt",
+  "started_at": "2026-09-01T12:25:30+0800",
+  "provider_gate": "local-only provider; no external model transmission",
+  "deerflow_commit": "788a890bd022689ef293e6bbfa2c12988173db6c",
+  "config_sha256": "8789be4a2055fa77eaefb0ca6136bdbc43fd4ea89be7abded3224d227d0d5021",
+  "enabled_tools": [],
+  "public_retrieval": "single bounded ddgs:auto prefetch before model invocation",
+  "disabled_capabilities": [
+    "memory",
+    "sandbox",
+    "file-read",
+    "file-write",
+    "bash",
+    "browser",
+    "image-search",
+    "MCP",
+    "scheduler",
+    "IM",
+    "tracing",
+    "skills",
+    "subagents"
+  ],
+  "finished_at": "2026-09-01T12:27:55+0800",
+  "elapsed_seconds": 145.773,
+  "model": "hermes-local-gemma4",
+  "tools_used": [],
+  "usage": {
+    "input_tokens": 3789,
+    "output_tokens": 2000,
+    "total_tokens": 5789
+  },
+  "sources": [
+    "http://rportal.lib.ntnu.edu.tw/bitstreams/357ae383-bfd0-436a-b5ad-063306fa96bb/download",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC11840285/",
+    "https://rps.researchcommons.org/cgi/viewcontent.cgi?article=1376&context=journal",
+    "https://toaj.stpi.niar.org.tw/file/article/download/4b1141f98c0e86d7018c10a45784006a",
+    "https://www.researchgate.net/publication/365277244_congWHO2020shentihuodongzhiyinguandiantantaojiliyupinghengnengliduigaolingzhezhizhongyaoxing"
+  ],
+  "artifact_path": "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/A6-HERMES-TASKS/DFR-20260901-122529-0f23b8/research.md",
+  "artifact_sha256": "6343d3707636efb95925ef8f4d58b565dc4d93f30d51686453f263f5376264f3",
+  "answer_preview": "根據您提供的公開證據包，我已針對「中高齡華語跟練 MVP」的公開資料研究進行了分析。請注意，由於資料來源的性質（學術研究論文），我只能提取學術研究中提及的指引和概念，無法提供即時、可操作的「MVP」級別的課程內容，特別是關於具體動作的風險評估。\n\n以下是根據證據包的分析結果，並嚴格區分了學術研究的發現、來源聲明和資訊缺口。\n\n---\n\n### 🍎 體能活動指引與學術發現 (WHO/CDC 等)\n\n**1. 國際指引的關注重點：**\n證據包顯示，國際衛生組織（WHO）的指引在探討高齡者體能時，特別強調了**肌力（Strength）**與**平衡能力（Balance）**的重要性 [citation:從WHO2020身體活動指引觀點探討肌力與平衡能力對高齡者之重要性](https://www.researchgate.net/publication/365277244_congWHO2020shentihuodongzhiyinguandiantantaojiliyupinghengnengliduigaolingzhezhizhongyaoxing)。此外，有研究比較了來自世界衛生組織（WHO）、疾病控制與預防中心（CDC）等機構的公共衛生活動建議，指出這些建議之間存在相似點與差異點 [citation:A Comparison of Physical Activity and Exercise Recommendations for Public Health: Inconsistent Activity Messages Are Being Conveyed to the General Public - PMC](https://pmc.ncbi.nlm.nih.gov/articles/PMC11840285/)。\n\n**2. 適用邊界（根據學術研究推論）：**\n*   **適用對象：** 主要針對「高齡者」群體 [citation:從WHO2020身體活動指引觀點探討肌力與平衡能力對高齡者之重要性](https://www.researchgate.net/publication/365277244_congWHO2020shentihuodongzhiyinguandiantantaojiliyupinghengnengliduigaolingzhezhizhongyaoxing)。\n*   **研究焦點：** 體適能評估、功能性體適能、肌力與平衡能力的維持與提升 [citation:國立臺灣師範大學運動與休閒學院 體育學系 博士學位論文 驗證社區高齡者功能性體適能快速評估 與多元性運動介入效益之研究...](http://rportal.lib.ntnu.edu.tw/bitstreams/357ae383-bfd0-436a-b5ad-0633",
+  "clean_shutdown": true
+}

@@ -1,0 +1,39 @@
+{
+  "candidate_id": "taste",
+  "kind": "skill",
+  "identity": {
+    "status": "upstream_verified",
+    "url": "https://github.com/tyfarrago-hub/taste"
+  },
+  "license": {
+    "status": "unclear",
+    "id": null
+  },
+  "maintenance": "active",
+  "fit": "low",
+  "overlap": "duplicate",
+  "runtime": {
+    "ready": false,
+    "smoke": "not_run"
+  },
+  "data": {
+    "max_allowed": "public",
+    "egress": "unknown"
+  },
+  "credentials": [
+    "none"
+  ],
+  "side_effects": [
+    "dependency_install",
+    "local_files"
+  ],
+  "evidence": {
+    "social_url": "https://www.instagram.com/jasonxtsai/p/Dcda5y2CegR/",
+    "official_urls": [
+      "https://github.com/tyfarrago-hub/taste/commit/acbb3e9c9051e096cb9e5e5cc1af88d56bc05459",
+      "https://github.com/tyfarrago-hub/taste/blob/acbb3e9c9051e096cb9e5e5cc1af88d56bc05459/CREDITS.md"
+    ],
+    "checked_at": "2026-08-27"
+  },
+  "note": "Whole-pack rejection: duplicates pinned Impeccable, contains unresolved placeholders and install/write instructions, and its provenance manifest does not match upstream license history or byte-identical files."
+}

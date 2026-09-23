@@ -49,6 +49,8 @@ body { width:430px; background:#0d0f14; color:#e8ecf4; font-family:'JetBrains Mo
 .task-actions { display:flex; align-items:center; gap:8px; }
 .btn-route { flex:0 0 auto; padding:8px 10px; background:#2b2414; border:1px solid #5a4218; border-radius:4px; color:#e8a838; font-family:inherit; font-size:11px; font-weight:700; cursor:pointer; }
 .btn-route:hover { border-color:#e8a838; color:#f5c15a; }
+.btn-map { width:100%; padding:9px 10px; margin-top:8px; background:#172234; border:1px solid #355b87; border-radius:5px; color:#9fd1ff; font-family:inherit; font-size:11px; font-weight:700; cursor:pointer; }
+.btn-map:hover { background:#1d2d44; border-color:#6a9ae8; color:#d3ebff; }
 .task-route-status { flex:1; font-size:10px; color:#9baab8; line-height:1.5; min-width:0; }
 .runtime-selector { display:flex; align-items:center; gap:10px; }
 .runtime-selector label { font-size:10px; color:#7a8a9d; text-transform:uppercase; flex-shrink:0; }
@@ -92,7 +94,7 @@ hr { border:none; border-top:1px solid #1a2030; }
   <div class="logo">⬡ MAPLAB COMMANDER</div>
   <div class="header-right">
     <span class="overdue-badge" id="overdueCount"></span>
-    <span class="version" id="versionBadge">v5.6.1</span>
+    <span class="version" id="versionBadge">v5.7.0</span>
   </div>
 </div>
 <div class="body">
@@ -124,6 +126,7 @@ hr { border:none; border-top:1px solid #1a2030; }
       </select>
     </div>
     <div class="role-status" id="roleStatus"></div>
+    <button class="btn-map" id="openSystemMapBtn">🗺 指向性地圖｜角色・流程・產物・資料</button>
   </div>
   <div class="task-panel">
     <div class="section-label">召喚任務</div>

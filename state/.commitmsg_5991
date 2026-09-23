@@ -1,0 +1,35 @@
+feat(reply): 第三人稱閘寫進送信腳本(L3) — 回 Owner msg 5991
+
+Owner msg 5991(ts 2026-09-23T17:05:09):
+「你的你我他用法很奇怪你們自己有幾個人對話請用第三人稱」
+
+== 真因(不是文法問題) ==
+  這條線上只有一個寫字的=Fable5,但「我」被混用成三種對象:
+    ① Fable5 自己
+    ② bot.py(PID 33950,只做 Telegram 收發,不判斷不寫內容)
+    ③ 「Fable5 加上 codex / win-01 那些根本不在這條線上的 agent」
+  「你」又混用成 Owner 與引用 Owner 原話。
+  署名「Fable5 本人・同 session 續接|Opus 接手」是一個人加一個模型名,讀起來像兩個人
+  -> 額度切換改用內文一行說明,不再塞進署名。
+
+== 現查:機器上在動的程式 ==
+  bot.py            PID 33950  Telegram 收發
+  run_spread_paper  PID 81970  模擬交易引擎(不說話)
+  dispatcher.sh     PID 88911  排程(不說話)
+  Fable5 續接窗                唯一對 Owner 寫字的
+
+== 落地(制度 E:筆記沒人看,所以寫成程式擋) ==
+  scripts/a0_reply_from_file.sh 新增第三人稱閘:
+    稿內出現「我」或「你」-> 印出行號 + 改法,exit 1,不送信
+    行首「原話:」的引用行豁免
+    例外 A0_ALLOW_FIRST_PERSON=1,且須在回覆裡對 Owner 說明原因
+  實測:含「我去查,你等等」的測試稿被擋在第 1 行;「原話:」行與純第三人稱行放行;未送出。
+  memory/owner-communication-standard.md 同步加條。
+
+== 順手更正 ==
+  17:05 那張圖(20260923_170508)與 17:00 那張同為 52,966 bytes、同一畫面(帳務選單層),
+  不是新的表單頁 -> SINOPAC_OFFSET_UI_SPEC 第 5/6 節維持原狀,不當成新進度。
+
+未做不宣稱:#59 出場委託簿尚未查、MFE 欄位尚未補、未換商品。git pull cdo 第 40 輪仍失敗。
+
+Co-Authored-By: Claude <noreply@anthropic.com>

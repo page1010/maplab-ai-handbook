@@ -1,0 +1,121 @@
+{
+  "schema_version": "maplab.hermes.line-schedule-gate-receipt.v1",
+  "receipt_id": "HERMES-LINE-SCHEDULE-GATE-20260828-V1",
+  "job_id": "MAPJOB-20260827-224251-d291ad",
+  "created_at": "2026-08-28T02:04:58Z",
+  "decision": "SCHEDULE_GATE_INSTALLED_ZERO_CALL_VERIFIED",
+  "scope": "02:20 LaunchAgent supervisor route and zero-write canary only; E1 was not run",
+  "plateau_review": {
+    "audit_method_version": "hermes-line-method-redesign-audit-v7",
+    "experiment_method_version": "line-reply-e1-prompt-only-v1",
+    "attempt_consumed": false,
+    "new_training_round_started": false
+  },
+  "deployment": {
+    "previous_installed_plist_sha256": "0f93b994406feba19a8bbb59fdbb6043fb24786e15649db454ebd7bced163bf2",
+    "tracked_and_installed_plist_sha256": "32803c238c8e1b8eb06428d7155745c435e537d11da10c88ea77aab4e651793b",
+    "plutil_lint": "PASS",
+    "bootout_exit_code": 0,
+    "bootstrap_exit_code": 0,
+    "kickstart_exit_code": 0,
+    "log_modes": {
+      "stdout": "0600",
+      "stderr": "0600"
+    }
+  },
+  "live_launchd_readback": {
+    "verified": true,
+    "active_count": 0,
+    "state": "not running",
+    "post_bootstrap_runs_baseline": 0,
+    "post_kickstart_runs": 1,
+    "runs_delta": 1,
+    "last_exit_code": 0,
+    "calendar": {
+      "Hour": 2,
+      "Minute": 20
+    },
+    "argument_contract": [
+      "/usr/bin/python3",
+      "scripts/hermes_line_training_supervisor.py",
+      "--job-path",
+      "workbook/reviews/MAPLAB-DURABLE-JOBS/MAPJOB-20260827-224251-d291ad/job.json",
+      "--data-root",
+      "owner-private/a6-hermes-training",
+      "--max-rounds",
+      "1",
+      "--max-seconds",
+      "120"
+    ],
+    "raw_loop_argument_present": false,
+    "raw_or_supervisor_pid_after_completion": false,
+    "new_stdout_reason": "canonical_execution_disabled",
+    "new_stderr_bytes": 0,
+    "log_readback": {
+      "stdout_inode": 60467129,
+      "stdout_offset_before": 2564,
+      "stdout_offset_after": 2779,
+      "stderr_inode": 60467130,
+      "stderr_offset_before": 1049,
+      "stderr_offset_after": 1049,
+      "parsed_only_new_bytes": true
+    }
+  },
+  "before_after_invariants": {
+    "job_sha256_before": "606ea0779b031ea3941e0a23e68ea441bb08447430385338f44b9810388ccffd",
+    "job_sha256_after_kickstart": "606ea0779b031ea3941e0a23e68ea441bb08447430385338f44b9810388ccffd",
+    "attempt_before": 6,
+    "attempt_after": 6,
+    "phase_before": "method-redesign-schedule-gate",
+    "phase_after_kickstart": "method-redesign-schedule-gate",
+    "execution_eligible_before": false,
+    "execution_eligible_after_kickstart": false,
+    "supervisor_receipt_sha256_before": "cd0768818c4ee098c54089188df572b4d91a2355014a8585292fd55771d29846",
+    "supervisor_receipt_sha256_after": "cd0768818c4ee098c54089188df572b4d91a2355014a8585292fd55771d29846",
+    "supervised_rounds_before": 12,
+    "supervised_rounds_after": 12,
+    "supervised_loopback_calls_before": 60,
+    "supervised_loopback_calls_after": 60,
+    "supervisor_invocations_before": 6,
+    "supervisor_invocations_after": 6,
+    "physical_run_manifest": {
+      "count_before": 17,
+      "count_after": 17,
+      "sha256_before": "c149f5058d8f56db71c686f24f15174616f1fd0dd06b4adfb0dc96f97c5e9f3b",
+      "sha256_after": "c149f5058d8f56db71c686f24f15174616f1fd0dd06b4adfb0dc96f97c5e9f3b"
+    },
+    "lesson_manifest": {
+      "count_before": 15,
+      "count_after": 15,
+      "sha256_before": "ca360a36d9d6c0925651407e46b250981ff381a8bc163a4ea1dd8123aa16e02b",
+      "sha256_after": "ca360a36d9d6c0925651407e46b250981ff381a8bc163a4ea1dd8123aa16e02b"
+    },
+    "loop_state_sha256_before": "d1f529dfd8708de48d33760cf708f63b4642175bb84f121c92e1638f4b5e23c4",
+    "loop_state_sha256_after": "d1f529dfd8708de48d33760cf708f63b4642175bb84f121c92e1638f4b5e23c4",
+    "current_lessons_sha256_before": "babc6656dc312bf42bcef11437ae5e27783b286663fb830594ec545ab7db3ac9",
+    "current_lessons_sha256_after": "babc6656dc312bf42bcef11437ae5e27783b286663fb830594ec545ab7db3ac9"
+  },
+  "implementation_receipts": {
+    "schedule_contract_sha256": "e99db43ec30c8131e49b0b71603103c34141adb5dd408d43e837cf6eedd26d00",
+    "supervisor_sha256": "45fc69de36d1931905e54506577b3074a03e9f38cae23dcb3b4f45bef4ce747d",
+    "schedule_contract_test_sha256": "b72971ea5d9382aefaf99bd0995d001d5f4dff3bf991c646cd01ba8d3250b2b1",
+    "supervisor_test_sha256": "9927e403291a25b7fb4180bbc04cbca81712eac57779f0bd25ffcafdd50c4ce5",
+    "hardening_plan_sha256": "fcf5b7c2f812ccba49a68ca8a8015a426f558c0705e5b70c702fba72964df0d2",
+    "hardening_test_sha256": "1640c6e34747ff01d261d5ba215d494b24aca2aa4a18a123f1895c31ba996321",
+    "focused_test_result": "75 tests PASS"
+  },
+  "safety": {
+    "model_calls_this_action": 0,
+    "external_network_calls": 0,
+    "private_third_party_egress": false,
+    "customer_send": false,
+    "owner_action_required": false
+  },
+  "remaining_execution_blockers": [
+    "rubric_v2_not_calibrated_18_of_20",
+    "paired_runner_source_sha256_not_yet_pinned",
+    "rendered_prompt_manifest_not_pinned",
+    "shared_lesson_snapshot_not_materialized"
+  ],
+  "next_bounded_action": "Calibrate frozen rubric v2 against 20 structured labels with zero model calls; do not render or run E1."
+}

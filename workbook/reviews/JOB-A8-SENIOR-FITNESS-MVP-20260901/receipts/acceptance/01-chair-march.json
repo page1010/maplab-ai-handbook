@@ -1,0 +1,158 @@
+{
+  "schema_version": "maplab.a8.video-acceptance/v2",
+  "job_id": "JOB-A8-SENIOR-FITNESS-MVP-20260901::01-chair-march",
+  "state": "RENDERED_UNVERIFIED",
+  "state_history": [
+    "AUDIO_SELECTED",
+    "TIMING_LOCKED",
+    "EDIT_READY",
+    "RENDERED_UNVERIFIED"
+  ],
+  "classification": "PRIVATE_MVP_DIAGNOSTIC_NOT_FOR_UPLOAD",
+  "diagnostic_only": true,
+  "generated_at": "2026-09-01T13:18:00+0800",
+  "candidate": {
+    "name": "扶椅小踏步"
+  },
+  "approvals": {
+    "lyrics": {
+      "path": "MISSING",
+      "sha256": "MISSING",
+      "status": "MISSING"
+    },
+    "audio": {
+      "path": "../../audio/suno-variant-a-32s.wav",
+      "sha256": "7245ce245774c6b52fb40a56cb2cea218dfc82e6e8f6e58e34b678348144cc9f",
+      "qa": {
+        "actual_audio_asr_pass": false,
+        "brand_exact_tokens_pass": false,
+        "human_listen_pass": false,
+        "note": "Exact Suno WAV is mixed at volume 0.11, but the exact rendered output has no named-human full-listen or unintended-vocal check."
+      }
+    },
+    "third_party_processing": {
+      "status": "APPROVED",
+      "scope": "One Suno Create within existing plan/credits only; no new spend or plan change."
+    },
+    "draft_upload": {
+      "status": "NOT_REQUESTED",
+      "authorization": "NOT_AUTHORIZED"
+    },
+    "publication": {
+      "status": "NOT_REQUESTED",
+      "authorization": "NOT_AUTHORIZED"
+    },
+    "message_send": {
+      "status": "NOT_REQUESTED",
+      "authorization": "NOT_AUTHORIZED"
+    }
+  },
+  "timing": {
+    "alignment": {
+      "path": "MISSING",
+      "sha256": "MISSING"
+    },
+    "approved_lyrics_match": false,
+    "cues": [],
+    "max_onset_error_ms": 999999,
+    "max_tail_error_ms": 999999,
+    "hook_lead_in_ms": 0,
+    "starts_mid_word": false,
+    "note": "Spoken coaching timing has not been verified against the exact mixed output."
+  },
+  "sources": [
+    {
+      "raw_path": "MISSING",
+      "raw_sha256": "MISSING",
+      "is_proxy": false,
+      "privacy_status": "MISSING",
+      "trim": {
+        "in_ms": 0,
+        "out_ms": 0
+      },
+      "layout": "generated_vector_frames_no_canonical_raw_source_receipt",
+      "crop_strategy": "none"
+    }
+  ],
+  "edit": {
+    "engine": "ffmpeg_one_pass",
+    "timeline_receipt": {
+      "path": "../01-chair-march-lineage.json",
+      "sha256": "76ded027da4341d9fb50366f2a84facdd7f18b17ae3cc5e66f6b2e28ac430cf1"
+    },
+    "no_intermediate_video": true,
+    "lyric_and_marketing_tracks_separate": false,
+    "note": "One-pass candidate render; canonical text-track separation evidence is missing."
+  },
+  "encoding": {
+    "actual_lossy_video_encode_depth": 1,
+    "max_lossy_video_encode_depth": 1,
+    "lineage": {
+      "path": "../01-chair-march-lineage.json",
+        "sha256": "76ded027da4341d9fb50366f2a84facdd7f18b17ae3cc5e66f6b2e28ac430cf1"
+    }
+  },
+  "output": {
+    "path": "../../render/01-chair-march.mp4",
+    "sha256": "f1c5bbe8c34a0e5cd972f231b4dabb610550d15fc358e992c8291ebccb275bd8",
+    "duration_ms": 17500
+  },
+  "visual_qa": {
+    "timeline_contact_sheet": {
+      "path": "../../qa/movement-contact-sheet.jpg",
+      "sha256": "ccd75192f22b876a9471c9eeaa3cd478b65c13fd5e2e489013e43c275699f799"
+    },
+    "encoded_machine_decode": {
+      "verdict": "PASS",
+      "full_decode": true,
+      "filters_or_setpts_used": false,
+      "note": "Machine decode is not human full playback."
+    },
+    "full_playback": {},
+    "target_device_pass": false,
+    "blur_sidebars_absent": true,
+    "blind_crop_absent": true
+  },
+  "rights": {
+    "status": "MISSING_PUBLIC_RIGHTS",
+    "receipt": {
+      "path": "../audio_rights_receipt.json",
+      "sha256": "59e0585d0d183c9f1302bb6ab561523b8501c0d119b4a2a3d79650bd29b5c5b2"
+    },
+    "note": "Suno account UI readback does not clear placeholder coaching voice or exact final output."
+  },
+  "fitness_domain_gate": {
+    "movement_safety_review": {
+      "path": "../../qa/movement_safety_review.json",
+        "sha256": "b31d956f491c2a513d8f3f000d3f6b805b8cb67319482657c4a087b5725e79c4"
+    },
+    "verdict": "PT_REQUIRED",
+    "reviewer": "MISSING",
+    "qualification": "MISSING",
+    "exact_video_verdict": "MISSING",
+    "ok": false
+  },
+  "delivery": {
+    "targets": [
+      "youtube_shorts"
+    ],
+    "exports": [],
+    "upload_authorization": "NOT_AUTHORIZED",
+    "publication_authorization": "NOT_AUTHORIZED"
+  },
+  "diagnostic_missing": [
+    "approved_lyrics_or_spoken_cue_approval_binding",
+    "prompt_free_actual_audio_check",
+    "named_human_full_audio_listen",
+    "spoken_cue_alignment",
+    "canonical_raw_source_receipt",
+    "separate_text_tracks_evidence",
+    "full_playback_1x",
+    "full_playback_0.5x",
+    "target_device_readback",
+    "qualified_movement_safety_verdict",
+    "public_voice_rights",
+    "owner_video_gate",
+    "platform_package"
+  ]
+}

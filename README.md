@@ -167,3 +167,20 @@ maplab-ai-handbook/
 - MAPLAB A6 報價路徑、Investment OS 研究路徑、外部記憶回收路徑
 - 任務拆解流水線、輸出契約、Approval Gate 與接手入口
 - 後續可接 A6 dispatcher、Investment OS PM brief 與 Chrome Extension profile 召喚
+
+## A0 Continuity Watchdog
+
+`scripts/a0_continuity_tick.sh` 是 A0/Fable5 的 10 分鐘 continuity tick。它只在 `/Users/pagemacmini/claude-daily-operations/state/a0_heartbeat.json` 已至少 600 秒未更新、且 `a0_resume.lock` 沒有活 PID 時，讀 `a0_session.json` 的 `session_id` 並用固定模型 `claude-fable-5` 接續；resume 非額度型失敗才改 fresh。每次結果寫入 `a0_continuity_status.json`，Claude stdout/stderr 寫入有時間戳的 `a0_continuity.log`（超過 2MB 輪替成 `.1`）。
+
+安全驗證與安裝：
+
+```bash
+bash tests/test_a0_continuity_tick.sh
+DRY_RUN=1 bash scripts/a0_continuity_tick.sh
+plutil -lint config/launchd/com.maplab.a0-continuity.plist
+cp config/launchd/com.maplab.a0-continuity.plist "$HOME/Library/LaunchAgents/com.maplab.a0-continuity.plist"
+launchctl bootstrap "gui/$(id -u)" "$HOME/Library/LaunchAgents/com.maplab.a0-continuity.plist"
+launchctl list com.maplab.a0-continuity
+```
+
+`DRY_RUN=1` 仍會執行 heartbeat、quota、lock 與路徑檢查並寫 status/log，但不會啟動 Claude。卸載使用 `launchctl bootout "gui/$(id -u)/com.maplab.a0-continuity"`；watchdog 不改 Claude 權限、不碰券商，也不直接發 Telegram。

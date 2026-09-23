@@ -1,0 +1,35 @@
+{
+  "candidate_id": "ui-inspiration-list",
+  "kind": "reference",
+  "identity": {
+    "status": "social_only",
+    "url": "https://www.instagram.com/jayte.genai/reel/DbLMNb_TnSe/"
+  },
+  "license": {
+    "status": "not_applicable",
+    "id": null
+  },
+  "maintenance": "unclear",
+  "fit": "medium",
+  "overlap": "partial",
+  "runtime": {
+    "ready": false,
+    "smoke": "not_applicable"
+  },
+  "data": {
+    "max_allowed": "public",
+    "egress": "none"
+  },
+  "credentials": [
+    "none"
+  ],
+  "side_effects": [
+    "none"
+  ],
+  "evidence": {
+    "social_url": "https://www.instagram.com/jayte.genai/reel/DbLMNb_TnSe/",
+    "official_urls": [],
+    "checked_at": "2026-08-27"
+  },
+  "note": "The Reel is a design-reference claim whose exact list is hidden behind a comment prompt. No comment was sent, so it is retained only as a cited reference and not guessed into an install task."
+}

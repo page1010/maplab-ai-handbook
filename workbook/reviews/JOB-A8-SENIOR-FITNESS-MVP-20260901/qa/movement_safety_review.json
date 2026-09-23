@@ -1,0 +1,58 @@
+{
+  "schema_version": "maplab.a8.fitness-movement-safety-review/v1",
+  "job_id": "JOB-A8-SENIOR-FITNESS-MVP-20260901",
+  "status": "PT_REQUIRED",
+  "ok": false,
+  "classification": "PRIVATE_MVP_RENDERED_UNVERIFIED",
+  "reviewer": {
+    "name": "MISSING",
+    "qualification": "MISSING",
+    "credential_or_organization": "MISSING"
+  },
+  "review_date": "MISSING",
+  "review_scope": "MISSING",
+  "movements": [
+    {
+      "id": "M1",
+      "name": "扶椅小踏步",
+      "video_sha256": "f1c5bbe8c34a0e5cd972f231b4dabb610550d15fc358e992c8291ebccb275bd8",
+      "verdict": "MISSING",
+      "safety_notes": "MISSING"
+    },
+    {
+      "id": "M2",
+      "name": "扶椅側點步",
+      "video_sha256": "68bee59e8f60bfad2a0adb68d95913df7d4fc9007b3995d101c40a8257409911",
+      "verdict": "MISSING",
+      "safety_notes": "MISSING"
+    },
+    {
+      "id": "M3",
+      "name": "扶椅慢抬踵",
+      "video_sha256": "8b30441b6ddf117b8d6044c896098d0e2a5a0f9a4c6a768f9e80e7dfafd1a6f8",
+      "verdict": "MISSING",
+      "safety_notes": "MISSING"
+    },
+    {
+      "id": "M4",
+      "name": "坐姿輪流伸膝",
+      "video_sha256": "564af61c790f2bfc67bcc2caeeef76509ec37a3e53e5d837707e8f126554364c",
+      "verdict": "MISSING",
+      "safety_notes": "MISSING"
+    },
+    {
+      "id": "M5",
+      "name": "坐姿開胸夾背",
+      "video_sha256": "33defeed5a4c3f7e8da2c2ac5988036f7f0e50f243918fd647ad7fb19d7fea7c",
+      "verdict": "MISSING",
+      "safety_notes": "MISSING"
+    }
+  ],
+  "compilation": {
+    "video_sha256": "31027675a7b16891df4e1621c9bedd41ff3322d64338ba0d812f5b1e68faf5b1",
+    "verdict": "MISSING",
+    "transition_safety_notes": "MISSING"
+  },
+  "required_verdict_for_publication": "PASS",
+  "rule": "The video hashes bind the exact private MVP candidates only. Do not replace any reviewer or verdict MISSING with PASS until a named Taiwan physical therapist or qualified older-adult fitness professional reviews those exact videos. This template is not an attestation."
+}

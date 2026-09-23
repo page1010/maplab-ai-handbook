@@ -1,7 +1,7 @@
 # A8 影音內容產線技能書（Video Pipeline Skills）
 
 > 負責角色：A8 影音內容產線
-> 建立：2026-04-19 | 版本：v2.4（2026-06-17）
+> 建立：2026-04-19 | 版本：v2.7（2026-08-27）
 
 ---
 
@@ -9,12 +9,29 @@
 
 A8 的工作不是「想到影片題目」，而是把 MAPLAB 現有資料夾、案例文章、照片與短影片，變成可審核、可上傳、可分發、可回收成下一版素材規則的影音產線。
 
+> Final SSOT：正式音訊、人工歌詞校時、工具工程收據、人工美感配方、原檔畫質、完整播放與 upload gate 一律以 `skills/a8-produce-to-publish-sop.md` v2.1+ 為準。本技能書的 dry-run／review renderer 不能自行升格為 final。
+
+### 0.1 歷史工具事實與本技能書的定位
+
+- Owner 確認歷史 MAPLAB 影音曾用 Canva／CapCut 與人工精修；本機 2025 開幕 Reel 也留下 Canva-like export＋疑似第二個 NLE 重編的 precedent。
+- 該 precedent 沒保存 design/project ID、timeline 或 export receipt，不能證明曾套用到邦尼兔，也不能直接重跑。邦尼兔 repo receipt 目前只證實 Swift/AppKit＋FFmpeg review。
+- 所以本技能書保留所有 local draft 能力，但正式成片必另外保存實際工具鏈、工程重開、polish recipe 與 output hash。缺收據要寫「無法歸因／重播」，不得寫成「歷史上沒做過」。
+
 本技能書適用於：
 
 - Owner 給一個 IG / TikTok / YouTube Shorts 參考，要求研究底層流程。
 - A8 需要從 Google Drive / repo review bundle / A4 素材資料夾取案例。
 - A8 要把一組照片或文章變成 YouTube Shorts、TikTok、IG Reels、Pinterest 封面。
 - A8 要先 dry-run，再把正式上傳交給 Owner / A1 approval。
+
+### 上游交接邊界
+
+A8 不兼任 WordPress 作者或歌詞作者。A2 先交付 customer-ready 活動介紹；Songwriter 再交付 Owner 選定的音訊母帶與 15 秒 hook 建議；A8 才開始剪輯。上游若仍混有 SEO 工程語、素材分級或未選曲狀態，退回對應 session 修正，不把那些內容帶進字幕；歌曲本身若含日期，必須在 songwriter handoff 標明並於發布前另行確認，不能拿 WordPress 的無日期規範偷偷改寫音檔。
+
+對音樂案例固定交兩種成品：
+
+- 長版：16:9，全曲，歌詞字幕或節奏字幕；素材少時可用核准靜幀的慢速 zoom-out 與細微構圖變化。
+- 短版：9:16，精準 15.0 秒，只取一段辨識度最高的 hook；不能把兩至三分鐘完整歌直接當 Short。
 
 ---
 
@@ -79,11 +96,15 @@ A8 要把 MAPLAB 版本寫成：
 | 工具 | A8 用途 | 產出 |
 |---|---|---|
 | Gemini / GPT | 拆腳本、字幕、平台 metadata、封面文案 | `storyboard.md` / `platform_metadata.md` |
-| Google Vids / Canva / CapCut | 正式組片、字幕、封面字卡 | 9:16 mp4 + cover |
+| CapCut / 核准 NLE | 正式人工 timeline、waveform 校時、字幕、組片 | editable project + timeline receipt + mp4 |
+| Canva | 正式封面、開場／結尾字卡、overlay 素材；不能單獨證明歌詞同步 | design receipt + cover/overlay export |
+| Google Vids | 可做協作草稿；能否當 final 取決於是否能留下等效 timeline/encode evidence | draft 或 evidence-complete export |
 | Higgsfield / 其他 AI video tool | 只在需要生成動態鏡頭或 AI motion 時使用 | 生成片段，必須保留 prompt 與來源 |
 | NotebookLM | 長文或英文內容轉 podcast；中文 MAPLAB 案例非優先 | podcast outline / audio |
 | ffmpeg dry-run | 本機快速驗證比例、素材順序、基本影片可出 | proof mp4 + cover |
 | 地端模型（qwen/gemma） | 低成本備援：資料夾初判、storyboard 草稿、platform metadata、privacy checklist | draft only，需 validator / 人工審核 |
+
+`tools/ai_workbook/a8_platform_formats.py` 只以 `specs` 提供平台尺寸與安全區。舊 final `export` 已 fail-closed；`review-export` 會在 manifest 標 `REVIEW_ONLY_NOT_FOR_UPLOAD`，因底層 blind crop／多代 H.264 不符合正式畫質規則。
 
 ### Step 3.5：地端模型備援邊界
 
@@ -290,10 +311,15 @@ CTA 類別預設：
 | `brand_event` | `台南品牌活動、發表會規劃｜官方 LINE 洽詢檔期 @maplab` |
 | `wedding` | `台南婚禮茶會、婚禮外燴｜官方 LINE 洽詢檔期 @maplab` |
 | `birthday` | `台南慶生派對、週歲茶點｜官方 LINE 洽詢檔期 @maplab` |
+| `graduation` | `台南畢業典禮、親子活動茶點｜官方 LINE 洽詢檔期 @maplab` |
 | `private_party` | `台南派對餐敘、私宅外燴｜官方 LINE 洽詢檔期 @maplab` |
 | `art_wine` | `台南藝文活動、品酒茶會｜官方 LINE 洽詢檔期 @maplab` |
 | `custom_box` | `台南客製餐盒、外帶點心｜官方 LINE 洽詢檔期 @maplab` |
 | `general` | `台南外燴設計、活動茶點｜官方 LINE 洽詢檔期 @maplab` |
+
+平台文案 invariant：category 必須同時決定 CTA、YouTube title/description、TikTok caption/hashtags 與 Pinterest board。產出後 grep 不得含其他 seed case 的場地或活動詞；`graduation` 至少驗證不含「大臺南會展中心／企業會議／動線穩」。
+
+素材 privacy invariant：A/B/C 分級完成後，正式 review draft 必須用 `--asset-file` 逐一白名單指定 A 級素材；不能只靠 `--asset-dir` 的排序假設排除 C 級檔案。
 
 ### Step 4.6：MAPLAB IG Soft v1 視覺規格
 
@@ -327,21 +353,24 @@ MAPLAB IG Soft v1：
 
 ### Step 5：正式組片
 
-正式版本優先用 Google Vids / Canva / CapCut：
+正式版本預設用 CapCut／核准 NLE；Canva 負責封面與品牌 overlay，Google Vids 可做協作組片。Canva Video／Google Vids 若能留下等效 project/timeline/export/reopen receipt，也可成為正式 editor；否則只算 draft 或 overlay。若不用這些 editor，只能採 `ffmpeg_one_pass` 等效路徑，且仍需完整 timing／lineage／playback receipt：
 
-1. 建 9:16 專案。
-2. 匯入 dry-run 選出的 A 級素材。
-3. 加 3-5 段字幕，每段 6-12 字，前 3 秒有 hook。
-4. 字幕不要蓋食物主體；優先上方 1/3 或左下留白。
-5. 匯出 1080x1920 H.264 mp4。
-6. 另存封面 1080x1920 jpg/png。
+1. 母帶先過 prompt-free ASR＋真人完整聽辨；品牌詞 exact-token 不過就停止，不准先剪。
+2. 建 9:16／16:9 專案，直接綁 raw originals 與 SHA-256，不匯入 review draft 或 H.264 proxy 當 final source。
+3. 在 waveform 上逐句建立核准歌詞 `text/start_ms/end_ms`；禁止固定等分場景。hook 首字前保留 0.2–0.5 秒，不能從字中間開始。
+4. 歌詞字幕與行銷 overlay 分軌；30fps onset 誤差 ≤100ms、tail ≤200ms。
+5. 直式素材進長版採 split-screen 或實色品牌側欄；禁模糊側欄。照片 full-fit 或人工 subject-safe crop；禁盲目中心裁切。
+6. NLE 保存 app version、editable project／timeline 與 reopen PASS；Canva／Google Vids 保存本機 design/project receipt、頁面或 timeline snapshot、export hash。FFmpeg 例外路徑保存單一 filtergraph，且只允許一次有損視訊編碼。
+7. 保存可重跑的人工精修配方：motion、字體層級、字幕 safe zone、色票、封面小尺寸辨識、長短版構圖與音樂權利 receipt。
+8. 匯出後對同一 hash 以 1×、0.5× 完整播放，逐 target-device 留結構化記錄，並為每個目標平台綁 video／cover／metadata／safe-zone package；再跑 `a8_video_acceptance.py`，只有 `QA_PASS` 才能交 Owner 審片。
 
 正式版必要元素：
 
-- 簡短字幕：每幕 6-12 個中文字，不能遮食物主體。
+- 核准歌詞字幕：逐句對齊實際人聲；行銷短句另軌且不能冒充歌詞。
 - 授權配樂：低音量、不要搶過畫面；優先平台授權音樂庫。
 - 浮水印：每幕保留 `MAPLAB Kitchen` 或正式 logo，位置低調。
 - 封面：小尺寸仍可讀，主題需含地區 + 場景。
+- 證據：raw hashes、timing map、editable timeline／filtergraph、encode lineage、full-playback readback、output hash。
 
 MAPLAB 短影音腳本模板：
 
@@ -425,5 +454,5 @@ A8 每次完成都要回寫：
 不得把「上傳成功」當作唯一完成標準。A8 完成標準是：
 
 ```text
-素材來源可追溯 + dry-run 可驗證 + 正式版本可審核 + 發布需有 receipt + 失敗原因可回收
+素材來源可追溯 + actual-audio 通過 + 人工 timing 鎖定 + 正式 timeline 可重開 + 一次有損輸出 + 全片播放通過 + 發布需有 receipt + 失敗原因可回收
 ```

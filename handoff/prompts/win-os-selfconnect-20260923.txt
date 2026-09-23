@@ -1,0 +1,50 @@
+角色:win-01(win-os 席位)的 bus 執行者。工作目錄 C:\agent-bus。本輪只做自檢與一張卡,不要擴張範圍。
+
+第一步 自檢並回報,不可跳過:
+1. 先確認登入是活的:執行 claude --version,再問一句最小提問看有沒有正常回答。
+   前一次失敗原因是 OAuth session expired(2026-09-19 起,mac 端 diag 記到 rc=1),
+   若這一步仍失敗就停在這裡,把錯誤訊息原文照抄回報,不要重試超過兩次、不要嘗試任何帳號輸入。
+2. git pull,列出 inbox\win-01\ 底下所有 state 不是 done 的卡片檔名與 state。
+3. 把第 1、2 項的結果寫成一份回報,存到 C:\agent-bus\drafts\win-01\win01-selfcheck-20260923.md,
+   然後 git add / commit / push,讓 mac 端看得到。
+
+第二步 本輪指定卡:win01-ga4-clarity-install-20260918。
+【2026-09-23 21:25 更新】這張卡已解除封鎖,state 改回 pending,可以直接做。
+Owner 已於 2026-09-23T21:20:51 給出 Clarity 專案識別碼 ymth0sxpjr,
+mac-a0 也驗過有效(抓 https://www.clarity.ms/tag/ymth0sxpjr 得 HTTP 200 / 726 bytes)。
+卡上原第 1 步「新建 GA4 資產」已作廢不要做——首頁本來就有 Site Kit 管的 G-GCK6LKMZ25,
+重建會變成兩套追蹤碼互相污染。原第 2 步「建 Clarity 專案」也已由 Owner 完成。
+仍然不變的紅線:不要嘗試登入任何帳號、不要猜密碼、不要重複重試觸發鎖定。
+
+第三步 佈碼路線已經改了,不要再去找 WPCode:
+站上並沒有安裝 WPCode / Code Snippets / HFCM(2026-09-18 win-01 自己盤點的結果),
+管追蹤標籤的是 Site Kit 1.188.0。
+建議路線=在既有的 GTM 容器 GTM-T2Z52GP 新增一個 Custom HTML tag,貼 Clarity 片段,
+觸發條件選 All Pages,然後 Submit/Publish 容器;
+完全不動 WordPress,也不需要裝外掛,要停用隨時可停。
+GTM 進不去時才退回第二方案:用站上已有的 Header Footer Elementor 做 header 注入。
+
+要貼的整段片段已經寫好,不要自己重打(打錯一個字元就是白裝):
+maplab-ai-handbook/handoff/prompts/clarity-tag-ymth0sxpjr.html
+片段本體如下,HTML 註解那幾行可以不貼:
+
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "ymth0sxpjr");
+</script>
+
+第四步 回驗才算完成:
+佈完之後抓 https://www.maplabkitchen.com/ 的 HTML 以及 GTM 容器本體
+https://www.googletagmanager.com/gtm.js?id=GTM-T2Z52GP,
+兩邊搜 clarity 字樣要從 0 變成有,把實際命中行貼進回執。沒有回驗數據不算 done。
+
+紅線:
+不碰任何金融任務。帳密、授權碼、cookie 一律不輸入也不讀出、不寫進任何檔案。
+不刪頁、不改 WP 使用者權限、不動 Google Ads / Meta Ads / GTM 的付費與預算開關。
+不 publish,最多到草稿;對外發布一律等 Owner。
+產出一律寫 C:\agent-bus\drafts\win-01\,檔名含卡片 id 與日期。
+回執寫回 C:\agent-bus\outbox\win-01\,必含終態 done / partial / blocked;
+blocked 要寫卡在哪一步與錯誤訊息原文,不要只寫失敗。

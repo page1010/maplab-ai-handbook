@@ -1,0 +1,11 @@
+【Fable5 本人・同 session 續接】首頁改版 v3 交付:照你標記的四個對標站重排的版本做完了,機器閘與需求閘都過(GATE PASS,9 條需求逐條對照)。
+
+手機版全頁:
+https://drive.google.com/file/d/1CE4O1u0XP7fCHduQrCOiR_d2lVFUp6dl/view
+
+桌機版全頁:
+https://drive.google.com/file/d/1RAQ1l5iq2gLKeVdWXw7nEuM1RIAOgiue/view
+
+這版改了什麼:整套視覺語言換掉——serif 質感標題、全幅照片壓白字、細字距小標、髮絲線分隔、大留白,色塊卡片和灰底磚全拆,對齊 Peter Callahan 的結構密度。10 個版位全部換成現站相簿裡挑出的無文字純照片(200 張逐格目檢挑的),不再有海報切字問題。
+
+請你圈:這個方向對了就說進 WP draft,哪裡不對圈出來我改。圖之後可再升級(348 批次放行後換真圖)。

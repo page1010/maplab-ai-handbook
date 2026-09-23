@@ -35,9 +35,10 @@
 
 所有角色冷啟動時，除了角色既有必讀文件，必須追加：
 
-1. `SYSTEM_DIRECTORY_INDEX.md`
-2. `workbook/system_index/system_relation_index.csv`
-3. `skills/system-directory-index/SKILL.md`
+1. `/Users/pagemacmini/claude-daily-operations/state/CROSS_AGENT_START_HERE.md`
+2. `SYSTEM_DIRECTORY_INDEX.md`
+3. `workbook/system_index/system_relation_index.csv`
+4. `skills/system-directory-index/SKILL.md`
 
 冷啟動輸出必須增加：
 
@@ -121,11 +122,21 @@ Directory Index Check
 | 動態角色索引 | `chrome-extension/task-modules/index.json` | generated runtime index | A0、A1、Chrome Extension、Codex、Gemini、OpenClaw | 缺 B5／新模組時標記 drift |
 | 角色 Module | `chrome-extension/task-modules/*.json` | generated routing envelope | 對應角色、runtime | 來源 hash 不同即 stale |
 | 角色關聯圖 | `workbook/task_modules/role_module_relation_graph.json` | generated relation view | A0、A1、B3、B4、Extension | 不得當唯一真相 |
+| MAPLAB 指向性地圖 manifest | `config/system-map/maplab-directional-map.json` | canonical navigation schema | A0–A8、Owner、Extension、Codex、Claude、Hermes、OpenClaw | 非投資域；所有視覺與 NotebookLM 包由此重建 |
+| MAPLAB 指向性地圖 | `docs/system-map/index.html` | generated owner view | Owner、A0–A8、全 runtime | 七視角；不可直接手改 HTML |
+| Graphify-compatible 關聯圖 | `docs/system-map/maplab-directional-map.graph.json` | generated nodes/edges | A1、Codex、Graphify／graph tooling | 管地址與依賴，不取代 CURRENT_STATUS／receipt |
+| Graphify 程式依賴圖 | `graphify-out/graph.json` | generated AST graph | A1、Codex、Claude、Graphify | 1820 nodes／3262 edges／147 communities；改 code 後跑 `graphify update .` |
+| Graphify 互動圖／目錄樹 | `graphify-out/graph.html` / `graphify-out/GRAPH_TREE.html` | generated navigation views | Owner、A0、A1、工程 agent | 程式層；角色／SOP／Sheet 仍看 canonical map |
+| Graphify 查詢記憶 | `graphify-out/memory/` / `graphify-out/reflections/LESSONS.md` | generated feedback loop | A1、Codex、Claude | useful／dead_end／corrected；不得存 secrets 或客戶 raw data |
+| MAPLAB Project Brain（NotebookLM） | `https://notebook.google.com/notebook/68114d21-ebc9-4116-a88a-52cc31cbe9a7` | verified citation navigation | Owner、A0、A1、找不到路徑的 agent | 只作 SOP／路徑／角色／交接導航；現況仍需 live refresh |
+| NotebookLM／地端模型路由 | `config/notebooklm/maplab-project-brain-router.json` | generated machine-readable route | Hermes、Ollama、OpenClaw、Codex、Claude | online browser operator＋offline `maplab-sop-router.md` |
+| NotebookLM Project Brain 包 | `workbook/notebooklm/maplab-project-brain/` | generated sanitized reading pack | Owner、A0、A1、NotebookLM | 只上傳兩個 `.md`；JSON manifest 留 repo audit，禁止 wholesale repo dump |
 | 技能總路由 | `skills/superpowers-guide.md` | canonical skill router | 全角色 | 新動作前重查 |
 | 任務進度技能 | `skills/task-progress-guide.md` | canonical skill | 全角色 | Progress Log、Resume、checkpoint |
-| Session 技能 | `skills/session-lifecycle/SKILL.md` | canonical skill | 全角色 | session 開關與資源衛生 |
+| Session 技能 | `.agents/skills/maplab-session-continuity/SKILL.md` | canonical skill | Claude、Codex、全角色 | shared-start、認領、接棒、收據；舊 `skills/session-lifecycle/` 為指向入口 |
 | Codex／agy 路由 | `skills/codex-offload-guide.md` | tool routing guide | A0、A1、A6、B1、B5 | 需依實際版本更新 |
 | Credential 指南 | `skills/credentials/` | credential route reference | A0、A1、A2–A7、IOS-FB／KOL | 只能存路徑與 scope，不存 secret |
+| Owner Telegram 對話 SOP | `skills/owner-telegram-conversation-sop.md` | canonical skill | 全角色（接 Telegram 線者必讀） | inbox 落檔＋收據回覆＋先 ACK＋同 session 續接＋來源標示；群組要 bot 設管理員（privacy mode） |
 | 本索引技能 | `skills/system-directory-index/SKILL.md` | navigation skill | 全角色 | 冷啟動追加讀取 |
 
 ---
@@ -194,6 +205,8 @@ Drive 搜尋名稱：`Investment OS`
 
 - `CURRENT_STATUS.md`
 - `SYSTEM_DIRECTORY_INDEX.md`
+- `docs/system-map/index.html`
+- `config/system-map/maplab-directional-map.json`
 - 關聯表 CSV
 - `handoff/a0-briefing.md`
 - `workbook/owner_requirements_panel.md`
@@ -204,6 +217,7 @@ Drive 搜尋名稱：`Investment OS`
 ## A1 系統總管
 
 - 全局治理文件
+- 指向性地圖 manifest／generator／build report
 - Task Cards、task index、relation graph
 - Review bundles、pitfalls、decisions
 - Drive operational source metadata
@@ -211,6 +225,7 @@ Drive 搜尋名稱：`Investment OS`
 
 ## A2 SEO／搜尋流量
 
+- 指向性地圖 A2 workflow／A2↔A3↔A4↔A8 產物交接
 - SEO project／skills／Task Cards
 - A3 landing／ads 關係
 - A4 assets
@@ -219,36 +234,42 @@ Drive 搜尋名稱：`Investment OS`
 
 ## A3 社群／廣告
 
+- 指向性地圖 A3 workflow／平台 readback 與 approval gate
 - A2 landing pages、A4 assets、A5/A7 FAQ／conversion insight
 - Drive：外燴案例、廣告策略、素材
 - Credential：Meta／Google Ads／GTM
 
 ## A4 影像資產
 
+- 指向性地圖 A4 workflow／MAPLAB_ASSET_LOG／本機素材索引血緣
 - Drive：外燴案例、Items Photos、ASSET_LOG
 - GitHub：photo pipeline、visual spec、A4 Task Cards
 - 下游：A2、A3、A5、A6、A8
 
 ## A5 報價引擎
 
+- 指向性地圖 A5 workflow／Items→QUOTE_DRAFT→Sheet/Slides 血緣
 - Drive：核心 Sheet、Items、報價單、Proposals、訂單資料夾
 - GitHub：master data、quotation skills、Task Cards
 - 下游：A6、A7、Slides／GAS
 
 ## A6 業務快反應
 
+- 指向性地圖 A6 workflow／A7→A5→A6 交接
 - Drive：A6 回覆訓練、核心 Sheet、LINE cases、報價單
 - GitHub：A6 task card、quote SOP、Codex routing
 - 上游：A5、A4、A7
 
 ## A7 客服
 
+- 指向性地圖 A7 workflow／CONVERSATION_LOG→需求→洞察血緣
 - Drive：LINE CSV、ai_reply_system、A6 回覆訓練、訂單結果
 - GitHub：A7 templates、AI reply project、Task Cards
 - 下游：A5、A6、A2、A3
 
 ## A8 影音
 
+- 指向性地圖 A8 workflow／brief→素材→歌詞／曲風→合法音軌→影片→發布 receipt
 - Drive：外燴案例、Mina 精修素材、Items Photos
 - GitHub：A8 skills／Task Card
 - 上游：A2、A3、A4
@@ -542,3 +563,63 @@ content_indexable=false
 3. GitHub、Drive、Runtime 分別承擔治理、營運、即時真相。
 4. Drive mirror 不凌駕 GitHub，live Sheet 不被舊 repo note 取代。
 5. 找資料後必須回到 What／So What／Now What，再 loop back 檢查是否真的變好。
+
+
+---
+
+# A6 LINE 資料流與回覆預訓練資產（本輪發現 2026-07-30，DRAFT）
+
+> 只新增，不覆寫既有段落。目的：把「A6 現在 live 在收 LINE 訊息的那條路徑」與「A6 回覆模型的預訓練資產」釘死位置，未來不必重找。
+> ⚠️ 關鍵區別：**live 收訊息的 sheet** 與 **預訓練用的歷史匯出** 是**兩個不同的東西**，不可混為一談（見下方 A/B）。
+
+## A. Live LINE 收訊息路徑（webhook 已在運作，客戶→OA 單向）
+
+| 項目 | 內容 |
+|---|---|
+| Webhook 程式碼 | `scripts/apps-script/LineWebhook.gs`（GAS，`doPost` → LockService + `message.id` 去重 → 直接 `appendRow`，不走 trigger queue） |
+| 部署 URL / ID | `https://script.google.com/macros/s/AKfycbz_zA_tG2fxNRlvrRMsJyMAzbnpNC-IL8oKqc5h94kyhExsIOuuo7LujbrSuZGK_eap/exec` |
+| LINE Channel | `1654658337`（金鑰在 Notion「MAPLAB API Keys」+ `bot/.env`；不進 git） |
+| 落點 Sheet ID | `1fn_woqYI_RY9ggGHVidB5SMygAzwe4CL_SOPLhe91Jg`（Drive 名稱 `MAPLAB_外燴系統_v0.1`；與報價系統同一份試算表） |
+| 落點分頁 | `CONVERSATION_LOG` |
+| 欄位 | `msg_id, case_id, timestamp, speaker, message, source, line_user_id, reply_to_msg_id`（`case_id` 多數空白，需業務回填） |
+| 現況 | 試算表本身 modifiedTime 2026-07-29（但那是 DASHBOARD 分頁自動更新，非 CONVERSATION_LOG）。CONVERSATION_LOG 最後**獨立確認**有 LINE inbound 是 **2026-05-19**（見 CURRENT_STATUS + T-A6-001 驗收）。**⚠️ 未確認今日仍有新 inbound 列**（Drive 全文渲染被大小截斷、只回傳 dashboard 分頁）→ 待直接讀 CONVERSATION_LOG 分頁尾列補證。 |
+| 重大限制 | LINE Messaging API webhook **只收得到客戶傳給 OA 的訊息，收不到業務從 OA Manager 後台回的訊息**（根因見 `handoff/tasks/T-A6-002.md`）。這條 live 路徑只有**半邊對話**。 |
+
+## B. 回覆預訓練資產（一次性歷史匯出，靜態，含雙向）
+
+| 項目 | 內容 |
+|---|---|
+| 原始來源 | `/Volumes/MacExternal/外接硬碟 讀取專用/line_oa_chat_csv_260622_213421/`（LINE OA Manager 對話匯出，3,625 個 CSV；資料夾名時戳 2026-06-22，dir mtime 2026-06-22 = **靜態 dump，非 live**） |
+| 產出資料集 | `workbook/a6-training/generated_local/training_samples.jsonl`（run_ts 2026-06-25）+ `manifest.json`（統計）+ `qa_examples_deidentified.json` + `training_pairs_raw.json` |
+| 規模 | 20,244 筆 CSV pairs（總監督樣本 20,370；train 16,317 / val 2,037 / test 2,016）；**含業務回覆側**（with_account_target=20,370） |
+| 階段標註 | S0_OPENING → S6_PREDAY 銷售漏斗 13 類（S3_QUOTE_SEND 8,415 筆最多；S3_MENU_ADJUST 僅 3 筆＝稀疏） |
+| 訂單配對 | `data/line_booking_pairs.csv`（2,634 列，62 筆對到 TimeTree；mtime 2026-06-23；PII 已去識別，另有副本移至 `/Volumes/MacExternal/maplab-data/`） |
+| 模型/評估「gym」 | `scripts/a6_gym_runner.py`（Ollama `qwen2.5:14b` 產建議回覆 vs 真實員工回覆，算可用率）；排程 `launchd/com.maplab.a6-gym.plist`；log `state/a6_gym_log.jsonl` + `state/a6_gym_stdout.log` |
+| ⚠️ 可用率現況（誠實） | gym log 實測每輪可用率約 **0%–20%**（啟發式評分器），**不是 8 成**。repo 裡的「80%」是 A5 報價**毛利率**，非模型回覆準確率。Owner 記憶中的「~8 成可用模型」目前**在 gym 評估裡查無實證**，需再確認是指哪個指標/哪次結果。 |
+| 相關 skill/doc | `projects/line-conversation-training.md`、`projects/ai-reply-system.md`、`skills/a6-local-quote-model-tuning.md`、`skills/a6-qa-examples.md`、`skills/a6-telegram-window.md`（業務輸入視窗操作手冊）、`bot_a6/`（線上 A6 bot）、`local_model_evolution/`（模型演化骨架，2026-07-19 remote 跑因無 Ollama runtime 標 baseline blocked） |
+
+## A vs B 結論
+
+- **A（live 收訊息）** 和 **B（預訓練資料）** 是兩個不同的東西：B 來自 2026-06-22 的靜態 CSV 匯出，**不是**從 live sheet 流出來的。
+- Owner 推論「在 sheet 就代表 webhook 接好了」需拆開看：預訓練 pairs 不在 live sheet；而 live sheet（CONVERSATION_LOG）就算在寫，也只有客戶單向那半邊。
+- 閉環要吃 live 流時：可用 A 拿到客戶訊息，但**業務採用/修改後的回覆（校正訊號）目前沒有任何 live 路徑在捕捉**——這正是新「業務輸入視窗 app」要補的缺口。
+
+---
+
+# 工具與帳號能力清單（Capability Registry · v1.0 · 2026-08-15）
+
+> 指向性導覽：只寫「有什麼、怎麼取用」，**零帳密、零檔案路徑、零 vault page id**。
+> 取用一律透過技能介面（技能內部才解析路徑/憑證/登入態）。消費端呼叫技能即可，拿不到也不需要原始路徑。
+
+| 能力 / 帳號 | 是什麼 | 狀態 | 透過哪個技能取用 |
+|-------------|--------|------|------------------|
+| agent 專用 FB 帳號 | 供 agent 穿越 FB 登入牆做唯讀收集的專用身分（非 Owner 個人帳號） | ✅ 已建、憑證在保管室（僅遮罩顯示） | `agent-login`（不寫帳密） |
+| FB Radar / KOL 情報 feed | 登入態下抓 ~20 財經 KOL 第一手貼文；**接解讀層（playbook/持股情報），非搶快交易** | ✅ 程式在／⏳ 登入 session 待重登 | `agent-login`（登入態）→ FB Radar 流程 |
+| quota-meter | 讀 Claude 方案用量（週 + 5 小時窗），寫預算閘給 daily-ops | ✅ 可用 | `quota-meter` |
+| A8 音樂（MiniMax / Suno） | A8 影音產線的配樂 / 音樂生成 | ⏳ 帳號待指定 | `agent-login`（登入）+ `a8-video-pipeline` / `a8-local-motion-integration` |
+| agent-login | 登入牆穿越的統一介面（`open` / `get-cred`）；唯讀 + 注入防禦 | ✅ v1.1 | `agent-login` |
+| arb 引擎 / rr_framework | investment-os 的套利 / 風報比框架（參考、非執行） | 參考層 · **無獨立技能封裝** | ⚠️ 本體不在本機(Cowork 孤兒),待匯出成真 crypto-stock-engine repo;現況僅介面/對齊說明 |
+| 處置雷達 | 處置股 / 風險標的偵測 | 參考層 · **無獨立技能封裝** | investment-os runtime 內模組（同上，尚未封裝成技能 → 建議後續封裝） |
+| daily-ops cycles | 每日營運循環（預算閘、巡查、狀態回寫） | ✅ 運行中 | daily-operations 循環 / 技能 |
+
+**規則**：本清單只指向「用哪個技能」。任何人（或 agent）需要實際帳密 / 路徑 / 登入態時，呼叫對應技能，由技能內部解析——**導覽頁與其他文件不再寫死 vault id 或檔案路徑**。狀態標「待確認」者表示尚未核對到確切技能名，屬誠實標示、待補。

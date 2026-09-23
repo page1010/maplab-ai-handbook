@@ -6,7 +6,7 @@
 
 > **Agent 冷啟動時第一個看的區塊。每次 checkpoint 必須更新。**
 
-- **狀態**: 🟡 STALLED（since 2026-07-19，48h 無 commit，Owner 可更新最後活動解除）
+- **狀態**: 🔒 AUTO_CLOSED（2026-08-03，NEEDS_REVIEW 無回應逾 7 天，Owner 可回覆「重開 T-A2-005-local-seo-factory」重啟）
 - **最後活動**: 2026-05-04 local-seo-factory-initial
 - **接續點**: 本地 SEO Factory 骨架已建（Planner→Auditor 七階段）、三大 Pillar dry-run 可產生 draft payload。下一步：接 WordPress 實站憑證做 `--publish` 驗證 + 把 56 篇歸屬表餵入 Linker。
 - **阻塞**: WordPress 寫入憑證與測試站檢核流程待 Owner 確認

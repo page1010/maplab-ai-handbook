@@ -1,0 +1,107 @@
+# MAPLAB Graphify corpus boundary
+# Keep the active non-investment codebase queryable without indexing runtime,
+# secrets, customer material, generated copies, or historical noise.
+
+# Graphify/generated outputs (prevent self-indexing loops)
+graphify-out/
+config/system-map/maplab-directional-map.json
+config/system-map/maplab-directional-map.schema.json
+docs/system-map/index.html
+docs/system-map/build-report.json
+docs/system-map/maplab-directional-map.graph.json
+chrome-extension/system-map/
+workbook/notebooklm/
+
+# Historical and generated work products
+archive/
+trash/
+outputs/
+handoff/archive/
+handoff/review-bundles/
+workbook/reviews/
+workbook/outputs/
+workbook/telegram-dispatch/
+workbook/hermes/
+workbook/a8/
+workbook/a6-training/
+tests/fixtures/
+
+# This repo uses the canonical manifest + NotebookLM pack for governance/docs.
+# Keep Graphify incremental updates on the same AST-only corpus as the first build.
+*.md
+*.txt
+*.rst
+*.html
+
+# Runtime, logs, databases, caches and local bridges
+.a0links/
+.claude/
+data/
+logs/
+state/
+**/__pycache__/
+*.pyc
+*.log
+*.jsonl
+*.db
+*.sqlite
+*.sqlite3
+*.bak
+*.tmp
+
+# Secrets and session material
+.env
+**/.env
+**/.env.*
+**/*token*.json
+**/*cookie*
+**/*session*
+**/*credentials*
+bot_a6/hermes_conv.json
+bot_a6/hermes_gateway.log
+
+# Media/binary artifacts do not belong in the architecture graph
+*.mp3
+*.mp4
+*.mov
+*.m4a
+*.wav
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.gif
+*.pdf
+*.docx
+*.xlsx
+*.zip
+
+# Investment OS is explicitly outside this MAPLAB map iteration
+local_model_evolution/
+tools/invest_os/
+# Mixed MAPLAB/Investment dispatcher: exclude the whole file because Graphify
+# ignores by file, not by symbol. Role/Telegram routing stays in the manifest.
+bot/bot.py
+**/*investment-os*
+**/*investment_os*
+**/*invest-os*
+**/IOS-*
+**/ios-*
+bot/*stock*
+bot/*investment*
+bot/*ios*
+scripts/twse_*
+scripts/is_rules_*
+chrome-extension/task-modules/B1.json
+chrome-extension/task-modules/B2.json
+chrome-extension/task-modules/B3.json
+chrome-extension/task-modules/B4.json
+handoff/tasks/T-B1*
+projects/b1-*
+projects/b2-*
+projects/b3-*
+projects/b4-*
+recalls/B1_recall.md
+recalls/B2_recall.md
+recalls/B3_recall.md
+recalls/B4_recall.md

@@ -1,0 +1,46 @@
+{
+  "asset_dir": "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-party/oriented",
+  "out_dir": "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-party/review",
+  "case_label": "台南週歲派對外燴",
+  "category": "birthday",
+  "cta_line": "台南慶生派對、週歲茶點｜官方 LINE 洽詢檔期 @maplab",
+  "title": "台南週歲派對外燴",
+  "images": [
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-party/oriented/party_01.jpg",
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-party/oriented/party_02.jpg",
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-party/oriented/party_03.jpg",
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-party/oriented/party_04.jpg"
+  ],
+  "scene_lines": [
+    "抓周日的主題餐桌",
+    "甜點桌是今天的主角",
+    "慕斯杯排成暖色系",
+    "留得下照片的一天"
+  ],
+  "scene_motions": [
+    "dolly_in",
+    "pan_right",
+    "pan_left",
+    "dolly_out"
+  ],
+  "frame_modes": [
+    "intro",
+    "scene",
+    "scene",
+    "scene",
+    "scene",
+    "outro"
+  ],
+  "video": "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-party/review/a8-short-review-draft.mp4",
+  "cover": "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-party/review/a8-short-review-cover.jpg",
+  "watermark": "MAPLAB Kitchen",
+  "subtitle_overlay": "swift_appkit_rendered",
+  "visual_template": "MAPLAB IG Soft v1",
+  "visual_preset": "maplab_ig_soft",
+  "counter": "hidden",
+  "transition": "xfade",
+  "transition_effect": "fade",
+  "transition_seconds": 0.35,
+  "audio": "none_local_draft_add_platform_licensed_music_before_publish",
+  "status": "review_draft_rendered"
+}

@@ -1,0 +1,9 @@
+【Claude・Fable5 線・同 session 續接】
+
+補一句更正,因為剛推卡的時候撞到新事實:win-os 那台不是全死的。
+
+heartbeat 21:10 寫的是 env-blocked:auth-expired+hermes-covering——它自己的 claude 登入確實還是過期,但 hermes 正在代打,而且 21:10 剛把另一張卡 seo-cases-drive-batch-20260910 做完並推回 bus。上一則說「那台從 9/19 到現在死著」只講對一半。
+
+不過結論不變,原因換一個:剛解封的 clarity 卡它會撿走,可是 GTM 那道關要 Google 帳號登入,hermes 一樣過不去——代打能過的是程式關,過不了的是帳號關。
+
+所以還是建議走 A,三分鐘的事。差別只在:那台不是沒人在,是撞到同一道牆。

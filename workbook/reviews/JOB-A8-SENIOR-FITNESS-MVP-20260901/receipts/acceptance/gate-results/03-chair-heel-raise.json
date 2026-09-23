@@ -1,0 +1,77 @@
+{
+  "schema_version": "maplab.a8.video-acceptance-gate-result/v1",
+  "generated_at": "2026-09-01T13:20:00+0800",
+  "state": "RENDERED_UNVERIFIED",
+  "ok": false,
+  "expected_fail_closed": true,
+  "verifier": {
+    "tool": "tools/ai_workbook/a8_video_acceptance.py",
+    "exit_code": 1,
+    "receipt": "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A8-SENIOR-FITNESS-MVP-20260901/receipts/acceptance/03-chair-heel-raise.json",
+    "ok": false,
+    "error_count": 12,
+    "errors": [
+      {
+        "code": "LYRICS_BINDING_INVALID",
+        "message": "approved lyrics file does not exist: /Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A8-SENIOR-FITNESS-MVP-20260901/receipts/acceptance/MISSING"
+      },
+      {
+        "code": "AUDIO_ASR_FAILED",
+        "message": "selected audio requires prompt-free actual-audio ASR PASS"
+      },
+      {
+        "code": "BRAND_TOKEN_FAILED",
+        "message": "all required brand tokens must pass exact-token listening/ASR"
+      },
+      {
+        "code": "HUMAN_LISTEN_MISSING",
+        "message": "selected audio requires a named human full-listen PASS"
+      },
+      {
+        "code": "LYRIC_ALIGNMENT_MISSING",
+        "message": "lyric alignment file does not exist: /Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A8-SENIOR-FITNESS-MVP-20260901/receipts/acceptance/MISSING"
+      },
+      {
+        "code": "LYRICS_AUDIO_MISMATCH",
+        "message": "timed/sung lines must exactly match the approved lyrics binding"
+      },
+      {
+        "code": "SOURCE_PRIVACY_UNAPPROVED",
+        "message": "every raw source needs an APPROVED privacy verdict"
+      },
+      {
+        "code": "SOURCE_TRIM_INVALID",
+        "message": "every source needs a valid safe in/out window"
+      },
+      {
+        "code": "RAW_PROVENANCE_UNBOUND",
+        "message": "raw source path/hash does not match"
+      },
+      {
+        "code": "TEXT_TRACKS_CONFLATED",
+        "message": "lyrics and marketing overlays must be separate tracks"
+      },
+      {
+        "code": "FULL_PLAYBACK_MISSING",
+        "message": "full playback at 1x requires duration and PASS"
+      },
+      {
+        "code": "TARGET_DEVICE_QA_MISSING",
+        "message": "target-device visual QA must pass"
+      }
+    ]
+  },
+  "fitness_domain_gate": {
+    "ok": false,
+    "movement_safety_review": "../../../qa/movement_safety_review.json",
+    "status": "PT_REQUIRED",
+    "reviewer": "MISSING",
+    "qualification": "MISSING",
+    "exact_video_verdict": "MISSING"
+  },
+  "authorization": {
+    "upload": "NOT_AUTHORIZED",
+    "publication": "NOT_AUTHORIZED"
+  },
+  "verdict": "PRIVATE_MVP_RENDERED_UNVERIFIED"
+}

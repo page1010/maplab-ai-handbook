@@ -1,4 +1,20 @@
 # MAPLAB A1 系統總管中心
+
+## Claude ↔ Codex 共同入口（2026-08-31 起）
+
+本檔被 Claude Code 自動讀取後，第一個實際動作是讀：
+
+`/Users/pagemacmini/claude-daily-operations/state/CROSS_AGENT_START_HERE.md`
+
+接著執行：
+
+```bash
+python3 /Users/pagemacmini/claude-daily-operations/ops/claude-daily-operations/cross_agent_start.py \
+  --agent claude \
+  --repo /Users/pagemacmini/maplab-ai-handbook
+```
+
+輸出的 `workset_digest`、Task Card、receipt、next bounded action、recent commits 與 dirty paths，是 Claude 與 Codex 共用的接手畫面。讀完再進入本檔的角色流程；與下方舊 session／直接 push 敘述衝突時，以共同入口的 exact-file claim、receipt、scoped commit 與 Owner release gate 為準。
 # 本文件是 Claude Code terminal 開機自動讀取的唯一入口
 # 動態狀態由 checkpoint.sh 自動維護，不在本文件手寫
 
@@ -13,9 +29,10 @@ repo: https://github.com/page1010/maplab-ai-handbook
 
 ## 啟動流程（Cold-start，所有 session 必做）
 
-**必讀（2 檔，~170 行）：**
-1. `CURRENT_STATUS.md` — 全局狀態（唯一真相源，與其他文件衝突時以此為準）
-2. 你的 Task Card（`handoff/tasks/T-A1-*.md`）— 接續點 + 下一步
+**共同入口＋任務證據：**
+1. `CROSS_AGENT_START_HERE.md` 的 executable brief — 雙方一致的工作清單與 dirty-work discovery
+2. `CURRENT_STATUS.md`、`pitfalls.md` — 專案背景與教訓
+3. brief 指向的 Task Card＋latest receipt — 本輪接續點與完成證據
 
 **快掃（確認環境）：**
 ```bash
@@ -25,6 +42,7 @@ git log --oneline -5
 
 **輸出 Startup Check：**
 - 我是 A1 系統總管
+- Shared workset digest
 - Task Card 接續點
 - 接下來做的第一件事
 
@@ -62,7 +80,7 @@ git log --oneline -5
 | A0 調度派遣 | `skills/a0-proactive-dispatch-guide.md` |
 | 阻塞審查 / 任務上報 Owner 前 / 巡檢 | `AGENT_RULES.md` Section 16 + `skills/a0-proactive-dispatch-guide.md` |
 | API 認證問題 | `skills/credentials/` 目錄下對應技能書 |
-| Session 交接 / context 滿 / RAM 偏高 / idle session / 重複開同名任務 | `skills/session-handoff.md` + `skills/session-lifecycle/` |
+| Session 交接 / context 滿 / RAM 偏高 / idle session / 重複開同名任務 | `.agents/skills/maplab-session-continuity/SKILL.md` |
 | 存檔流程 | `skills/save-checkpoint/SKILL.md` |
 | Sheets 資料清理 | `skills/sheets-data-cleaning-guide.md` |
 | Extension 更新 | `skills/extension-update/` |
@@ -104,35 +122,13 @@ git log --oneline -5
 
 ---
 
-【強制存檔規則 — 所有角色必須遵守】
-1. 每次完成有意義的變更後，執行：
+【強制存檔規則 — 所有角色共同接續】
 
-```bash
-# 預設：直接 commit & push 到 main branch (因為 Git 擁有歷史與回溯功能，有問題直接回滾即可)
-bash scripts/checkpoint.sh "角色名" "做了什麼"
-
-# 加上 --branch：當需要特別進行手動合併審核或建立暫存分支時才使用
-bash scripts/checkpoint.sh "角色名" "做了什麼" --branch
-```
-
-例如：
-```bash
-bash scripts/checkpoint.sh "B1" "重構 Browser Bridge"               # 直接進 main
-bash scripts/checkpoint.sh "A5" "QUOTE_DRAFT 模板修正" --branch      # 存到 agent/A5-20260611
-```
-
-**Owner approve（若有使用 --branch 模式分支）：**
-```bash
-bash scripts/approve.sh agent/A5-20260611   # 確認後一鍵 merge 進 main
-```
-
-⚠️ **預設（直接進 main）**：所有角色的一般開發與變更，皆預設直接 push 進 main，確保完整記錄與存檔。
-⚠️ **--branch 分支模式**：當修改高風險的核心邏輯、重大架構變更或需要團隊人工 code review 時使用。
-
-2. 改 Extension → 必須更新 CHANGELOG
-3. 狀態變了 → 必須更新 RECALL_PROMPTS + CURRENT_STATUS
-4. Session 結束前必須至少執行一次 checkpoint.sh
-5. 沒有例外，Mac mini 故障時下一個 Claude Code 要能從紀錄接手
+1. 開工前 claim exact Task Card；一個 claim 對應一個 bounded action。
+2. 完成後留下 readable receipt、更新 Task Card Resume Prompt，並 stage exact owned files。
+3. 建立 scoped local commit；push／merge 是 Owner 明確授權的 release step。
+4. 用 `work_claims.py checkpoint` 寫回 `ready | owner_gate | blocked | complete` 與下一步。
+5. Extension、公開內容或 owner-facing 狀態有實質變化時，同步對應 CHANGELOG／CURRENT_STATUS／RECALL；一般中繼證據寫進 Task Card 與 receipt，讓狀態頁保持可讀。
 
 ---
 

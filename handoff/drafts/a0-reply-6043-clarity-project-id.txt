@@ -1,0 +1,31 @@
+【Claude・Fable5 線・同 session 續接】
+
+識別碼收到,而且驗過是活的:抓 clarity.ms/tag/ymth0sxpjr 回 HTTP 200、726 bytes、內容裡就帶著這組 id。所以專案是真的,沒打錯字。
+
+但要先講清楚一件事免得誤會:識別碼有效不等於站上裝好了。同一分鐘實查首頁,clarity 字樣還是 0 次。裝碼這一步還沒發生。
+
+裝碼卡在哪:這一段要進 GTM 後台按,那要 Google 帳號登入;走 WordPress 那條要 WP Admin。帳密、授權碼、cookie 三樣這端一律不碰,所以按鈕不是這端能按的。
+
+兩條路,建議走第一條:
+
+A. Owner 自己在 GTM 貼,大概三分鐘。路徑:開 tagmanager.google.com,選容器 GTM-T2Z52GP,左邊「代碼 Tags」→「新增」→ 代碼類型選「自訂 HTML」→ 把下面整段貼進去 → 觸發條件選「All Pages」→ 儲存 → 右上角「提交」再「發布」。
+
+B. 等 win-os 那台做。它從 9/19 到現在 OAuth 還是死的,要 Owner 先在那台開一次 claude 登入,登入之後才輪得到它做這件事——等於還是要動一次手,而且比 A 慢。
+
+要貼的整段(照抄,不要重打,打錯一個字元就是白裝):
+
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "ymth0sxpjr");
+</script>
+
+貼完回一句「貼好了」,這端立刻跑同一支腳本回驗,要看到 clarity 從 0 變成有才算數,回驗結果會直接貼回來。
+
+這一輪這端實際做掉的四件(不是計畫):
+一,那張卡從 blocked 改回 pending,識別碼與驗證證據都寫進卡裡。
+二,卡上原本「新建 GA4 資產」那一步標成作廢——首頁本來就有 Site Kit 管的 G-GCK6LKMZ25,再建一個會變兩套追蹤碼互相污染。
+三,片段存成檔案 handoff/prompts/clarity-tag-ymth0sxpjr.html,以後不用再重打。
+四,給 win-os 的那段 prompt 補上識別碼與這段片段,它一登入就能直接做,不必再問。

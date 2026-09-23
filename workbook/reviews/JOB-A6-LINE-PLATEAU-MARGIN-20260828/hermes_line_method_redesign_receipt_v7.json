@@ -1,0 +1,312 @@
+{
+  "schema_version": "maplab.hermes.line-method-redesign-sanitized.v7",
+  "created_at": "2026-08-28T01:35:58.577495+00:00",
+  "job_id": "MAPJOB-20260827-224251-d291ad",
+  "audit_method_version": "hermes-line-method-redesign-audit-v7",
+  "private_audit_sha256": "b604e7fa4e59d1986a45fdea4f6a6107408284a92dd676dbf762324ae8e6e891",
+  "attempt_before": 6,
+  "attempt_after": 6,
+  "attempt_consumed": false,
+  "model_calls_this_action": 0,
+  "external_network_calls": 0,
+  "customer_send": false,
+  "private_third_party_egress": false,
+  "last_three_method_review": {
+    "status": "UNRECONSTRUCTABLE_MISSING_REQUIRED_METHOD_FIELDS",
+    "missing_fields": [
+      "prompt_sha256",
+      "lesson_sha256",
+      "sampling_manifest_sha256",
+      "acceptance_version",
+      "model_digest"
+    ],
+    "shared_partial_method_fingerprint": "b586bae2f812a92afddfafb9d54f293be712e808c610e0ae79581d4678782275",
+    "receipts": [
+      {
+        "receipt_sha256": "36100e71c0e08b81bac314e8f17571000c189016bee5f74c80e0e3c264de8165",
+        "pass_rate": 0.2,
+        "unsupported_price_rate": 0.0,
+        "lowest_stage": "S2_DATA",
+        "seed": 202608271409,
+        "model": "gemma4:latest",
+        "evaluator_version": "maplab.hermes.line-evaluator.v1",
+        "output_lesson_delta_sha256": "0f2c808f7602f70c2e7831db380377edf640cd8a31f40e6f743d67abeefba2e4",
+        "partial_method_fingerprint": "b586bae2f812a92afddfafb9d54f293be712e808c610e0ae79581d4678782275"
+      },
+      {
+        "receipt_sha256": "25eac1e31e812714c317f79467d2d09810455944397527c2cc3b9c9d78947c25",
+        "pass_rate": 0.4,
+        "unsupported_price_rate": 0.0,
+        "lowest_stage": "S2_DATA",
+        "seed": 202608271410,
+        "model": "gemma4:latest",
+        "evaluator_version": "maplab.hermes.line-evaluator.v1",
+        "output_lesson_delta_sha256": "5b3823f1f23ada429ffbfeeeff9ace13f3b54ee8c733e7057e4dc85a9472aa12",
+        "partial_method_fingerprint": "b586bae2f812a92afddfafb9d54f293be712e808c610e0ae79581d4678782275"
+      },
+      {
+        "receipt_sha256": "f300ce70f804f42bd2b2b199345f44c6d10837b1e898de90d959787acb62d2ae",
+        "pass_rate": 0.2,
+        "unsupported_price_rate": 0.0,
+        "lowest_stage": "S2_DATA",
+        "seed": 202608271411,
+        "model": "gemma4:latest",
+        "evaluator_version": "maplab.hermes.line-evaluator.v1",
+        "output_lesson_delta_sha256": "38072d923ccdd98a15a05778b3a3306bfa6d287780b3fc29efdad6f99d00fad2",
+        "partial_method_fingerprint": "b586bae2f812a92afddfafb9d54f293be712e808c610e0ae79581d4678782275"
+      }
+    ]
+  },
+  "call_accounting": {
+    "round_count": 12,
+    "supervised_loopback_calls": 60,
+    "observed_loopback_calls_including_post_pause": 65,
+    "physical_run_receipt_count": 17,
+    "physical_explicit_call_count_lower_bound": 71,
+    "physical_receipts_missing_call_counter": 2,
+    "explicit_calls_outside_supervisor": 11
+  },
+  "supervised_failure_taxonomy": {
+    "result_count": 60,
+    "unique_case_count": 60,
+    "pass_count": 10,
+    "pass_rate": 0.1667,
+    "mean_score": 78.53,
+    "failure_buckets": {
+      "failed": 50,
+      "high_score_but_failed": 35,
+      "length_gate_failed": 39,
+      "question_gate_failed": 3,
+      "score_below_75": 15,
+      "signal_coverage_failed": 16,
+      "unsupported_money": 2
+    },
+    "stage_counts": {
+      "S0_OPENING": 1,
+      "S2_DATA": 17,
+      "S3_QUOTE_SEND": 3,
+      "S4_PAYMENT": 4,
+      "S_PENDING": 35
+    }
+  },
+  "post_pause_bypass": {
+    "detected": true,
+    "run_count": 1,
+    "loopback_ollama_calls": 5,
+    "runs": [
+      {
+        "receipt_sha256": "eb5519907206e996b4808dc800ed59e48f8f367475fddfbaadbac81bd1ed8cc3",
+        "created_at": "2026-08-27T18:22:30.866844+00:00",
+        "loopback_ollama_calls": 5,
+        "pass_rate": 0.0,
+        "unsupported_price_count": 1
+      }
+    ],
+    "metrics": {
+      "result_count": 5,
+      "unique_case_count": 5,
+      "pass_count": 0,
+      "pass_rate": 0.0,
+      "mean_score": 83.0,
+      "failure_buckets": {
+        "failed": 5,
+        "high_score_but_failed": 5,
+        "length_gate_failed": 5,
+        "unsupported_money": 1
+      },
+      "stage_counts": {
+        "S2_DATA": 1,
+        "S_PENDING": 4
+      }
+    }
+  },
+  "schedule_analysis": {
+    "repo_plist_sha256": "0f93b994406feba19a8bbb59fdbb6043fb24786e15649db454ebd7bced163bf2",
+    "installed_plist_sha256": "0f93b994406feba19a8bbb59fdbb6043fb24786e15649db454ebd7bced163bf2",
+    "repo_and_installed_match": true,
+    "training_loop_sha256": "f543777b014ed4a4119b10fd629b9d76d9239d01a601c51e7355fa8a3c521b0d",
+    "supervisor_script_sha256": "cae02f52aa365794f252d849f1e4844b2bd7be7ab39ff3788a0b2e60a318d92e",
+    "program_routes_direct_training_loop": true,
+    "program_routes_supervisor": false,
+    "plateau_guard_present_in_scheduled_path": false,
+    "schedule_bypass_proven": true,
+    "calendar": {
+      "Hour": 2,
+      "Minute": 20
+    }
+  },
+  "fixed_holdout": {
+    "selection": "sha256(method_version|role|stage|record_id), ascending; unique conversation; exclude every record and conversation exposed by prior physical runs",
+    "stage_quotas": {
+      "data": {
+        "stage": "S2_DATA",
+        "count": 4
+      },
+      "dietary": {
+        "stage": "S2_DIETARY",
+        "count": 4
+      },
+      "quote_intro": {
+        "stage": "S3_QUOTE_INTRO",
+        "count": 2
+      },
+      "quote_send": {
+        "stage": "S3_QUOTE_SEND",
+        "count": 2
+      },
+      "payment": {
+        "stage": "S4_PAYMENT",
+        "count": 4
+      },
+      "followup": {
+        "stage": "S_PENDING",
+        "count": 4
+      }
+    },
+    "case_count": 20,
+    "unique_case_count": 20,
+    "unique_conversation_count": 20,
+    "case_manifest_sha256": "f512e4067fdfe6d038b96309f6088b630498b3b8f8062b7639a748ca49cce19a",
+    "eval_sha256": "24ef3187892c4fd65d6e96bb6dac9b43f54c6c4ce5629a33f3c183d3b5cafbe7",
+    "eval_record_count": 4263,
+    "prior_result_occurrences_excluded": 85,
+    "prior_unique_case_ids_excluded": 77,
+    "prior_exposure_manifest_sha256": "92a9ef22e3baf57f53d267550dbf8cabcdb4520bbf8fa59d1e5de9ba53278d18",
+    "prior_exposed_conversation_count": 68,
+    "prior_exposed_conversation_manifest_sha256": "97e0628d4dee9799f05c07f2da577e601711c2f1f1fedb9cf171cd86e4ebf88c"
+  },
+  "fixed_few_shot": {
+    "per_holdout_case": 2,
+    "mapping_count": 20,
+    "case_count": 40,
+    "unique_case_count": 40,
+    "unique_conversation_count": 40,
+    "case_manifest_sha256": "0bac0a213060b8a4dcf2be660c5286036c2ba02e03db6b05bf4e3856ab6e19ab",
+    "train_sha256": "1368a37084e5c4bb1539ec0ef8aa64827c3a17f56c84a9f8e2a7212f41f0e5db",
+    "train_record_count": 15993,
+    "prior_few_shot_exposure_status": "UNRECONSTRUCTABLE_LEGACY_RUNS_DID_NOT_RECORD_EXAMPLE_IDS"
+  },
+  "experiment_contract": {
+    "method_version": "line-reply-e1-prompt-only-v1",
+    "hypothesis": "A structured known/missing/forbidden short-reply prompt improves paired rubric passes without increasing unsupported claims.",
+    "target_failure_bucket": [
+      "answer_relevance",
+      "reask_known",
+      "excessive_length",
+      "unsupported_policy_or_price"
+    ],
+    "changed_variable": "prompt_builder_contract_sha256 only",
+    "adapter": "planned hermes-line paired local runner; execution disabled until schedule gate and rubric calibration",
+    "execution_eligible": false,
+    "execution_blockers": [
+      "scheduled_path_plateau_guard_not_installed",
+      "rubric_v2_not_calibrated_18_of_20",
+      "paired_runner_source_sha256_not_yet_pinned",
+      "rendered_prompt_manifest_not_pinned",
+      "shared_lesson_snapshot_not_materialized"
+    ],
+    "fixed_holdout_manifest_sha256": "f512e4067fdfe6d038b96309f6088b630498b3b8f8062b7639a748ca49cce19a",
+    "fixed_few_shot_manifest_sha256": "0bac0a213060b8a4dcf2be660c5286036c2ba02e03db6b05bf4e3856ab6e19ab",
+    "seed_schedule_sha256": "530303cbbb0b85138a26fc9d400ddc5242259b26a656af286024341300c6263b",
+    "baseline_prompt_builder_source_sha256": "079310ee280aeb3ce3ee7eb36b4d8314734f6731e5a7d252059955dd1402099c",
+    "baseline_training_loop_sha256": "f543777b014ed4a4119b10fd629b9d76d9239d01a601c51e7355fa8a3c521b0d",
+    "candidate_prompt_builder_spec_sha256": "41cd740c1e2e2a2b2ce7f987d7b1586d2b913ce0c2733ee7ea5ee6cd41011e2b",
+    "baseline": "planned source-bound legacy build_prompt contract; full per-case messages are not rendered or pinned yet",
+    "candidate": "planned structured known/missing/forbidden prompt contract; full per-case messages are not rendered or pinned yet",
+    "baseline_render_status": "NOT_RENDERED",
+    "candidate_render_status": "NOT_RENDERED",
+    "shared_input_manifest_status": "NOT_PINNED",
+    "model": "gemma4:latest",
+    "model_digest": "c6eb396dbd5992bbe3f5cdb947e8bbc0ee413d7c17e2beaae69f5d569cf982eb",
+    "inference_parameters": {
+      "temperature": 0,
+      "paired_seed_schedule": [
+        700000,
+        700001,
+        700002,
+        700003,
+        700004,
+        700005,
+        700006,
+        700007,
+        700008,
+        700009,
+        700010,
+        700011,
+        700012,
+        700013,
+        700014,
+        700015,
+        700016,
+        700017,
+        700018,
+        700019
+      ]
+    },
+    "lesson_sha256": "babc6656dc312bf42bcef11437ae5e27783b286663fb830594ec545ab7db3ac9",
+    "lesson_snapshot_status": "NOT_MATERIALIZED",
+    "last_supervised_lesson_delta_sha256": "38072d923ccdd98a15a05778b3a3306bfa6d287780b3fc29efdad6f99d00fad2",
+    "evaluator_version": "maplab.hermes.line-rubric.v2",
+    "evaluator_spec_sha256": "1804f8f9a9801f2cfe8e80b23750e423caacc2b3d47c1c53811ccf48d6ff5ee3",
+    "evaluator_precondition": "freeze structured human rubric labels and reach at least 18/20 exact agreement before inference",
+    "acceptance_version": "line-reply-e1-acceptance-v1",
+    "acceptance_spec_sha256": "4252c6e7b7261fb92737a3192b3d5a84b7c5938abfcc9c5ae77956f2a6b1f408",
+    "expected_delta": "candidate net paired pass improvement >=4/20; no stage regresses by more than one case",
+    "stop_loss": "maximum 40 local inferences; stop immediately on unsupported price/policy, private egress, customer send, manifest drift, or rubric calibration below 18/20",
+    "acceptance": {
+      "version": "line-reply-e1-acceptance-v1",
+      "paired_net_pass_improvement_min": "4/20",
+      "correct_answer_and_next_question_min": "18/20",
+      "reask_known_max": "1/20",
+      "at_most_three_questions_min": "19/20",
+      "unsafe_claims": 0,
+      "max_stage_regression": 1
+    },
+    "promotion_boundary": "this 20-case E1 is development evidence only and cannot count toward the seven-run promotion streak",
+    "method_fingerprint": "86ca256bfbc78972eadfa611c93bb3466964163bceb9e1a6c9f0dbfc4d6abca5"
+  },
+  "objective_metrics_before": {
+    "success_streak": 0,
+    "best_pass_rate": 0.4,
+    "fixed_holdout_ready": false,
+    "post_pause_unguarded_calls": 5
+  },
+  "objective_metrics_after": {
+    "success_streak": 0,
+    "best_pass_rate": 0.4,
+    "fixed_holdout_ready": true,
+    "post_pause_unguarded_calls": 5
+  },
+  "owner_acceptance_delta": 0,
+  "supporting_delta": "exact 20-case holdout and 40-case two-shot manifests frozen; direct-schedule plateau bypass proven",
+  "business_artifact_created": false,
+  "unlocked_next_action": "install and verify a fail-closed schedule gate before rubric calibration or E1 inference",
+  "first_principles": {
+    "true_owner_outcome": "stable draft-quality LINE replies that save Mina time with zero unsupported claims and no automatic customer send",
+    "current_constraint": "non-comparable random samples, an uncalibrated lexical evaluator, mutable prompt inputs, and a daily direct loop that bypasses the supervisor pause",
+    "unproved_assumptions": "more rounds teach the model; lexical score represents business correctness; the scheduled path honors the durable-job plateau state",
+    "smallest_falsifiable_experiment": "after the schedule gate, rubric calibration, immutable lesson snapshot, and shared-input rendered prompt manifest, run paired baseline/candidate on the exact 20-case holdout with prompt-builder contract as the only changed variable",
+    "stop_condition": "stop at 40 local calls or immediately on any unsafe claim, manifest drift, private egress, customer send, or rubric calibration below 18/20"
+  },
+  "decision": "AUDIT_COMPLETE__SCHEDULE_GATE_REQUIRED_BEFORE_E1",
+  "next_bounded_action": "Implement and test a fail-closed scheduled-path guard; installed launchd must make zero model calls when an active supervisor receipt has method_review_required=true. Do not run E1 yet.",
+  "implementation_provenance": {
+    "audit_script_sha256": "730cff691743fe02ee556da5a304173fee02cd3d4379d3b9c4dc50c69f803f2d",
+    "audit_test_sha256": "7037e1925a3f3572ea9aadc3d4dc273ad30389eaf04e05ffb89d1456211d522c",
+    "canonical_job_sha256": "519e4c20ade26ede5215f2b792685898c03143099058ed7d3328e8302d06f0dd",
+    "model_manifest_sha256": "c6eb396dbd5992bbe3f5cdb947e8bbc0ee413d7c17e2beaae69f5d569cf982eb",
+    "supervisor_receipt_sha256": "cd0768818c4ee098c54089188df572b4d91a2355014a8585292fd55771d29846",
+    "required_method_fields": [
+      "adapter",
+      "model_digest",
+      "prompt_sha256",
+      "lesson_sha256",
+      "sampling_manifest_sha256",
+      "evaluator_version",
+      "acceptance_version"
+    ],
+    "rubric_v2_spec_sha256": "1804f8f9a9801f2cfe8e80b23750e423caacc2b3d47c1c53811ccf48d6ff5ee3",
+    "acceptance_spec_sha256": "4252c6e7b7261fb92737a3192b3d5a84b7c5938abfcc9c5ae77956f2a6b1f408"
+  },
+  "body_sha256": "f0cac0218e5833e1560fef0bdd5bef8f6fcb5b589a36dadec7285d6a405c384b"
+}

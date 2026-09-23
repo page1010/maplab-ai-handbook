@@ -1,0 +1,121 @@
+{
+  "schema_version": "maplab.a8.fitness-audio-rights/v1",
+  "job_id": "JOB-A8-SENIOR-FITNESS-MVP-20260901",
+  "generated_at": "2026-09-04T12:45:10+0800",
+  "status": "MISSING_PUBLIC_RIGHTS",
+  "ok": false,
+  "selected_music_candidate": {
+    "title": "跟著動｜96 BPM 樂齡節拍｜Instrumental MVP",
+    "variant": "A",
+    "source_song_url": "https://suno.com/song/a7641ee9-b921-46f8-b6a0-ca3f976bbf3c",
+    "download_path": "../audio/suno-variant-a-32s.wav",
+    "sha256": "7245ce245774c6b52fb40a56cb2cea218dfc82e6e8f6e58e34b678348144cc9f",
+    "duration_seconds": 32.28,
+    "codec": "pcm_s16le",
+    "sample_rate_hz": 48000,
+    "channels": 2,
+    "bytes": 6197932,
+    "source_overwritten": false,
+    "download_method": "Chrome visible UI download followed by native macOS Save dialog",
+    "download_visual_receipt": {
+      "path": "../qa/suno-download-complete.jpg",
+      "sha256": "6e314c454b537ec8c31b86ae222030781dd855cd16ca42363de3fc44f0e850c7"
+    },
+    "generation_scope": "one authorized Suno Create produced two private variants; this receipt binds variant A only",
+    "human_full_listen": "MISSING",
+    "prompt_free_vocal_or_asr_check": "MISSING",
+    "final_mix_binding": {
+      "status": "PRIVATE_MVP_MIXED_UNVERIFIED",
+      "music_volume": 0.22,
+      "outputs": [
+        {
+          "path": "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A8-SENIOR-FITNESS-MVP-20260901/render/01-chair-march.mp4",
+          "sha256": "55b6c8e4975fc52434bbef7aede5304439e9e30612e2876c52054da1194d8282"
+        },
+        {
+          "path": "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A8-SENIOR-FITNESS-MVP-20260901/render/02-chair-side-tap.mp4",
+          "sha256": "eddff13661fb986f9827fa08b97af478300257580be0decf87654c07dd35c761"
+        },
+        {
+          "path": "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A8-SENIOR-FITNESS-MVP-20260901/render/03-chair-heel-raise.mp4",
+          "sha256": "454bec52ad1c3d7aa66622488df41332d836567ec07522f303fd1f315715d90c"
+        },
+        {
+          "path": "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A8-SENIOR-FITNESS-MVP-20260901/render/04-seated-knee-extension.mp4",
+          "sha256": "ceb95cb565df61a9cf5c689a057e711c07c60cad75a14e30cdb7dd6ef7532c26"
+        },
+        {
+          "path": "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A8-SENIOR-FITNESS-MVP-20260901/render/05-seated-chest-open.mp4",
+          "sha256": "485ce6f1efbcfe8fa77968896b852d8da024112a30cd87769142aded36d390f9"
+        },
+        {
+          "path": "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A8-SENIOR-FITNESS-MVP-20260901/render/a8-fitness-mvp-compilation-107.5s.mp4",
+          "sha256": "8c15df8e3fe9b1a8c12323978059c7fb296f3454511833c6246c2526ea876c03"
+        }
+      ]
+    },
+    "verdict": "MIXED_PRIVATE_UNVERIFIED"
+  },
+  "suno_account_ui_readback": {
+    "readback_date": "2026-09-01",
+    "plan": "Pro Annual",
+    "renewal_date_shown": "2027-08-25",
+    "credits_before_generation_shown": "2480/2500",
+    "commercial_use_text_shown": "commercial use rights for new songs made",
+    "evidence_boundary": "Account UI readback only. It is not an independent legal determination and does not clear coaching voice or the exact final mixed output.",
+    "independent_terms_verification": "MISSING",
+    "legal_advice": false
+  },
+  "voice": {
+    "01-chair-march": {
+      "engine": "macOS say",
+      "voice": "Meijia",
+      "rate": 195,
+      "rights": "PRIVATE_MVP_PLACEHOLDER_ONLY; not cleared for public or commercial use"
+    },
+    "02-chair-side-tap": {
+      "engine": "macOS say",
+      "voice": "Meijia",
+      "rate": 195,
+      "rights": "PRIVATE_MVP_PLACEHOLDER_ONLY; not cleared for public or commercial use"
+    },
+    "03-chair-heel-raise": {
+      "engine": "macOS say",
+      "voice": "Meijia",
+      "rate": 195,
+      "rights": "PRIVATE_MVP_PLACEHOLDER_ONLY; not cleared for public or commercial use"
+    },
+    "04-seated-knee-extension": {
+      "engine": "macOS say",
+      "voice": "Meijia",
+      "rate": 195,
+      "rights": "PRIVATE_MVP_PLACEHOLDER_ONLY; not cleared for public or commercial use"
+    },
+    "05-seated-chest-open": {
+      "engine": "macOS say",
+      "voice": "Meijia",
+      "rate": 195,
+      "rights": "PRIVATE_MVP_PLACEHOLDER_ONLY; not cleared for public or commercial use"
+    },
+    "compilation_intro": {
+      "engine": "macOS say",
+      "voice": "Meijia",
+      "rate": 195,
+      "rights": "PRIVATE_MVP_PLACEHOLDER_ONLY; not cleared for public or commercial use"
+    },
+    "compilation_outro": {
+      "engine": "macOS say",
+      "voice": "Meijia",
+      "rate": 195,
+      "rights": "PRIVATE_MVP_PLACEHOLDER_ONLY; not cleared for public or commercial use"
+    }
+  },
+  "music": {
+    "current_rendered_outputs": "Suno variant A mixed at volume 0.11 under the placeholder coaching voice",
+    "suno_variant_a": "hash-bound private mix candidate",
+    "commercial_rights_verdict": "UI_READBACK_PRESENT_NOT_INDEPENDENTLY_VERIFIED"
+  },
+  "publication_authorization": "NOT_AUTHORIZED",
+  "upload_authorization": "NOT_AUTHORIZED",
+  "rule": "Suno download, account UI readback, and a hash-bound private mix do not clear the macOS placeholder voice, satisfy human listening, or authorize upload/publication. Keep ok=false until every exact-output audio and rights gate is evidence-bound."
+}

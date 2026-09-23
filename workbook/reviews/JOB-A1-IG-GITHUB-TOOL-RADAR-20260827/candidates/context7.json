@@ -1,0 +1,39 @@
+{
+  "candidate_id": "context7",
+  "kind": "tool",
+  "identity": {
+    "status": "official_verified",
+    "url": "https://github.com/upstash/context7"
+  },
+  "license": {
+    "status": "verified_open",
+    "id": "MIT"
+  },
+  "maintenance": "active",
+  "fit": "medium",
+  "overlap": "partial",
+  "runtime": {
+    "ready": false,
+    "smoke": "not_run"
+  },
+  "data": {
+    "max_allowed": "public",
+    "egress": "external_service"
+  },
+  "credentials": [
+    "api_key"
+  ],
+  "side_effects": [
+    "dependency_install",
+    "network_read"
+  ],
+  "evidence": {
+    "social_url": "https://www.instagram.com/jayte.genai/reel/DcJK_hHprkV/",
+    "official_urls": [
+      "https://github.com/upstash/context7/commit/9a384f099011d6299df530fd8d7a22510b2004d5",
+      "https://context7.com/docs/security/data-privacy"
+    ],
+    "checked_at": "2026-08-27"
+  },
+  "note": "Public library documentation only. Pinned audit commit 9a384f099011d6299df530fd8d7a22510b2004d5; results still require official-doc verification."
+}

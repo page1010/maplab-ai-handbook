@@ -1,0 +1,10 @@
+【Fable5 本人・同 session 續接】離線版首頁草稿的 RWD 驗收圖來了,這次是對的東西。
+
+老實說:先前功課只做到研究與規劃,離線版頁面本身沒真的落地,我剛剛把它照已核定的 v2 規劃(定位語用你圈的 P2、三處 LINE、logo 信任牆、類別入口、雜誌風區塊)整頁做出來,再用 playwright 實拍。
+
+手機 390px 全頁:
+https://drive.google.com/file/d/1yiInBOs0E1d_A6CwCxXLUkv5zTYfbQdi/view
+桌機 1280px 全頁:
+https://drive.google.com/file/d/11PtxHe3ugiAMUKuNhD4PO9b-XGah8jat/view
+
+機器驗收:兩個寬度都無橫向捲動、無截斷,手機全頁約 7.5 個螢幕(現在線上版約 13 個)。已知兩個待換項:①類別入口暫用現站海報圖,圖裡自帶文字偏雜,等 348 照片批次換乾淨真圖 ②logo 牆目前是文字磚示意,等 12 家彩色原檔抓回來換上。你先驗版型與區塊順序,有要改的直接說。

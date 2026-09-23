@@ -1,0 +1,20 @@
+{
+  "schema_version": 2,
+  "task_id": "A6H-20260826-181433-26d05c",
+  "created_at": "2026-08-26T18:14:33+0800",
+  "request": "現在動能名單狀態如何？請直接查，不要叫我跑終端機。",
+  "requester": {
+    "channel": "telegram",
+    "owner_user_id": 1077768811,
+    "chat_id": 1077768811,
+    "chat_type": "private"
+  },
+  "action": "signal-status",
+  "policy": "fixed-argv-allowlist-v2",
+  "status": "completed",
+  "finished_at": "2026-08-26T18:14:34+0800",
+  "description": "讀取 16:20 動能名單的 launchd 與最新報告實況",
+  "returncode": 0,
+  "output": "【hermes runtime】16:20 動能名單實況\nlaunchd：not running, last_exit=1；runs=18。\n報告：最新檔案日期 2026-05-22，mtime 2026-06-16T16:19:50+08:00，路徑 /Users/pagemacmini/investment-os/reports/limit_up_chip_story/limit_up_chip_story_2026-05-22.md；不是今天 2026-08-26 的產出，不能當今日名單。\n判定依據是本機 launchd 與檔案 mtime，不採用手冊中的歷史快照。\n",
+  "output_truncated": false
+}

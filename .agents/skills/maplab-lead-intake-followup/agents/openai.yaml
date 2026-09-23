@@ -1,0 +1,6 @@
+interface:
+  display_name: "MAPLAB Lead Intake + Follow-up"
+  short_description: "Route form, DM, and price leads without漏單"
+  default_prompt: "Use $maplab-lead-intake-followup to normalize this lead, apply the quote-ready gate, and prepare the next human-reviewed action."
+policy:
+  allow_implicit_invocation: true

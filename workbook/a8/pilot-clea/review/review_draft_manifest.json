@@ -1,0 +1,46 @@
+{
+  "asset_dir": "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-clea/oriented",
+  "out_dir": "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-clea/review",
+  "case_label": "台南開幕茶會・女裝選品店",
+  "category": "opening",
+  "cta_line": "台南開幕茶會、品牌活動｜官方 LINE 洽詢檔期 @maplab",
+  "title": "台南開幕茶會外燴",
+  "images": [
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-clea/oriented/clea_01.jpg",
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-clea/oriented/clea_02.jpg",
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-clea/oriented/clea_03.jpg",
+    "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-clea/oriented/clea_04.jpg"
+  ],
+  "scene_lines": [
+    "開幕當天的迎賓茶桌",
+    "一口甜點配一杯熱茶",
+    "選品與茶點並排的午後",
+    "讓開幕多一點停留"
+  ],
+  "scene_motions": [
+    "dolly_in",
+    "pan_right",
+    "pan_left",
+    "dolly_out"
+  ],
+  "frame_modes": [
+    "intro",
+    "scene",
+    "scene",
+    "scene",
+    "scene",
+    "outro"
+  ],
+  "video": "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-clea/review/a8-short-review-draft.mp4",
+  "cover": "/Users/pagemacmini/maplab-ai-handbook/workbook/a8/pilot-clea/review/a8-short-review-cover.jpg",
+  "watermark": "MAPLAB Kitchen",
+  "subtitle_overlay": "swift_appkit_rendered",
+  "visual_template": "MAPLAB IG Soft v1",
+  "visual_preset": "maplab_ig_soft",
+  "counter": "hidden",
+  "transition": "xfade",
+  "transition_effect": "fade",
+  "transition_seconds": 0.35,
+  "audio": "none_local_draft_add_platform_licensed_music_before_publish",
+  "status": "review_draft_rendered"
+}

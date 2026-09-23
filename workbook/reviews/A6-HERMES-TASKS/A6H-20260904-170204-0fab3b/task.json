@@ -1,0 +1,16 @@
+{
+  "schema_version": 2,
+  "task_id": "A6H-20260904-170204-0fab3b",
+  "created_at": "2026-09-04T17:02:04+0800",
+  "request": "https://www.instagram.com/reel/Db2uYOtpaxQ/?igsi=M3RibnJldXhobHUy",
+  "request_sha256": "00c7b38e1f992768e3a65f4f8c1ec7ec61977ada9ae26de0b541cfc4730c4c2a",
+  "request_chars": 65,
+  "requester": {
+    "channel": "telegram",
+    "owner_user_id": 1077768811,
+    "chat_id": 1077768811,
+    "chat_type": "private"
+  },
+  "action": null,
+  "policy": "fixed-argv-allowlist-v2"
+}

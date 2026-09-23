@@ -1,0 +1,22 @@
+{
+  "schema_version": "maplab.a8.actual-audio-asr/v1",
+  "classification": "INTERNAL_DIAGNOSTIC_NOT_PUBLISHABLE",
+  "engine": "mlx-community/whisper-small-mlx",
+  "initial_prompt": null,
+  "language": "zh",
+  "artifact_sha256": "aacc5ddd5b80dabbf7f1360fbd2f1339e78abc6313f3c459443a5eeaa844413d",
+  "text": "把你吐吧祝福天亮手牽手全唱一起唱強大的第一站就在這一場新的故事現在要出發",
+  "segments": [
+    {"start_ms": 0, "end_ms": 2880, "text": "把你吐吧祝福天亮"},
+    {"start_ms": 2880, "end_ms": 6340, "text": "手牽手全唱一起唱"},
+    {"start_ms": 6340, "end_ms": 9720, "text": "強大的第一站就在這一場"},
+    {"start_ms": 9720, "end_ms": 13320, "text": "新的故事現在要出發"}
+  ],
+  "verdict": "FAIL",
+  "failures": [
+    "邦尼兔 exact-token failed",
+    "祝福點亮 was not exact",
+    "長大的第一站 was not exact",
+    "sung named hook does not match the bound public-safe lyrics"
+  ]
+}

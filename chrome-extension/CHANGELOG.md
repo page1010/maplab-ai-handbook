@@ -1,5 +1,17 @@
 # Chrome Extension Changelog
 
+## v5.7.1 — 2026-09-02
+變更者：A0 Fable5（冷啟動路徑逐條盤查）
+- **修復「📋 從 Bot 抓取」**：popup.js clip fetch 由 `127.0.0.1:9876` 改為 `9875`。9876 是 `bot/http_bridge.py` daemon（6/11 拆分後無 launchd、6/17 起未運行、且無 `/clip` 端點）；`/clip` 實際由 bot.py 內建 server 於 9875 常駐提供（launchd com.maplab.telegrambot KeepAlive）。
+- **盤查結論**：冷啟動 SOP 落地於 `docs/chrome-extension-coldstart-sop.md`（各路徑逐條驗證指令＋已知缺口：http_bridge 9876/poll 指令橋停擺待 Owner 決定復活與否、investment-os raw 404、COMPOUNDING-PATROL 不在 index）。
+
+## v5.7.0 — 2026-08-25
+變更者：A1 Codex
+- **指向性地圖入口**：角色召喚區新增離線 `🗺 指向性地圖` 按鈕，直接開啟 Extension 內建地圖，不依賴 GitHub raw 或外部網站。
+- **單一資料源**：`docs/system-map/index.html` 與 `chrome-extension/system-map/index.html` 改由 `config/system-map/maplab-directional-map.json` 同步生成，避免兩份地圖人工漂移。
+- **七個管理視角**：系統總圖、Repo／地址、角色與派工、A2–A8 工作流、產物血緣、能力／工具／硬體、治理／記憶／證據。
+- **NotebookLM 安全包**：同一生成器建立帶 source hash 與去敏紀錄的 MAPLAB Project Brain source pack；不把整個 repo、secrets、客戶 raw data 或 runtime logs 直接上傳。
+
 ## v5.6.1 — 2026-06-05
 變更者：A1 Codex
 - **交接目標拆細**：runtime selector 從 4 個粗分類擴充為 Claude Code、Codex、GPT/ChatGPT、Claude Chrome tab、Antigravity、Gemini、OpenClaw、Hermes、Gemini Chrome tab。

@@ -1,6 +1,6 @@
 # AGENT_RULES.md — MAPLAB AI 全域行為準則
 
-版本：v5.0 | 建立：2026-03-12 | 更新：2026-06-11
+版本：v5.1 | 建立：2026-03-12 | 更新：2026-08-28
 
 ---
 
@@ -17,6 +17,20 @@ Step 5. Session 結束前在 `workbook/owner_requirements_panel.md` 寫一筆紀
 > ⚠️ CURRENT_STATUS.md 的資訊優先於所有其他文件。若衝突，以 CURRENT_STATUS 為準。
 > ⚠️ 任務清楚 → 直接執行，不要用「確認需求」當拖延藉口。
 > ⚠️ 有寫但沒測，等於沒完成；有測但沒 receipt，等於下一個 session 無法信任。
+> ⚠️ **回話前必跑五問 → 見 `CULTURE_DECISION_LOGIC.md`（Owner msg 5939，2026-09-23，與本檔同級）。**
+> 「不要丟給我有答案的問題」：能寫出「為什麼要」和「為什麼不要」兩邊理由 = 已有能力裁決 → 自己裁決、做完報結果。
+> 只有四類必須上呈：**不可逆／對外發布／動錢或進真倉／動到別人的機器帳號客資**，且上呈時要附建議不得丟空問題。
+> 對 Owner 說話不得只丟任務編號，必須同時講「這是什麼／要達成什麼／卡在誰」；可讀版任務板 = `handoff/TASK_BOARD_READABLE.md`。
+
+### NotebookLM／Gemini Notebook 導航 fallback（Owner 2026-08-25）
+
+當 agent 已讀 cold-start 文件、查過 `SYSTEM_DIRECTORY_INDEX.md`／`skills/superpowers-guide.md` 並用本機搜尋仍找不到精確 SOP、路徑、角色或交接產物時，下一步先問 MAPLAB Project Brain：
+
+- Notebook：`https://notebook.google.com/notebook/68114d21-ebc9-4116-a88a-52cc31cbe9a7`
+- 機器可讀路由：`config/notebooklm/maplab-project-brain-router.json`
+- 地端離線 fallback：`workbook/notebooklm/maplab-project-brain/maplab-sop-router.md`
+
+回答必含 `FOUND`／`NEEDS_LIVE_REFRESH`／`NOT_IN_PACK`、精確 repo path、必讀檔案、輸入、輸出／交接、approval gate、evidence path、下一個 bounded action 與引用。NotebookLM 只負責導航與來源綜合；CURRENT_STATUS、Task Card、runtime/UI readback、commit 和 receipt 才能確認現況或完成。
 
 ---
 
@@ -690,6 +704,7 @@ ID:698 發現一篇 SEO 文章的 FAQ 區塊含自定義 HTML + `<script type="a
 遇到以下任何一個情境，**必須**先跑 `skills/first-principles-check/SKILL.md` 的 5 題 checklist，才能動手：
 
 - 正在修**第 3 次同一個錯誤**
+- 同一 method fingerprint 已跑兩次，固定驗證沒有改善，仍準備增加 round／attempt／token
 - Owner 說「為什麼要這樣？」或「這不對吧」
 - 版號連跳（v3.1 → v3.2 → v3.3 ...）卻在解同一個問題
 - 即將接受「流程本來就是這樣」的說法
@@ -699,6 +714,10 @@ ID:698 發現一篇 SEO 文章的 FAQ 區塊含自定義 HTML + `<script type="a
 ### 違反後果
 
 未跑 checklist 就動手，且事後確認是思考問題造成的錯誤 → 在 `skills/pitfalls/SKILL.md` 追加 pattern，並在 `skills/first-principles-check/SKILL.md` 追加失敗案例。
+
+### Plateau 執行閘門
+
+同方法兩輪無改善即凍結。重新啟動前必須在 Task Card 或 receipt 寫出 `hypothesis`、`changed_variable`、`fixed_holdout`、`baseline`、`expected_delta`、`stop_loss` 與 `method_version`；缺任一欄位不得消耗新的模型呼叫。完整規則見 `docs/OPERATING_CULTURE.md` 原則 7。
 
 ### 關聯
 - `skills/first-principles-check/SKILL.md`（完整 checklist）
@@ -1225,3 +1244,73 @@ IN_PROGRESS ──[48h]──► STALLED ──[7d]──► NEEDS_REVIEW ──
 - SECTION 24（可逆先行）— 建立/複製到 WORKSPACE 屬可逆動作，直接做。
 - Step 6 Startup Check — `輸出根目錄` 缺欄＝開工檢查不過。
 - 邊界：不碰 Google Drive 同步（另一任務）；與 MacExternal 既有 `maplab-data/` 等並存不覆蓋。
+
+---
+
+## SECTION 27 — 放手治理（Owner msg 5862/5863 截圖回寫，2026-09-22）
+
+**來源**：Owner msg 5862（2026-09-22 14:08）「看照片整理內文做公司治理優化 我截圖的是我覺得我們用得上的 包含高階agent 換位思考，及向下管理的技巧」＋ msg 5863（14:13）「hermes 是你的副手 終有一天讓他負責管理實作性agent」。截圖三張＝IG `@boss.fdao`「老闆放手」10 條中的 01-04、09-10，原圖存 `data/telegram-photos/20260922_1407*.jpg`。
+**只有 6 條進得了這一節**（他截的那 6 條）；05-08 他沒截＝不在本節，不要替他補。
+
+### 一、Owner 截的六條（原文摘要）
+
+| # | 標題 | 原文要點 |
+|---|---|---|
+| 01 | 不要成為最後批准人 | 低風險、可逆的決定交給負責人；你只保留高風險、不可逆的。「老闆的價值不是批准更多，而是令更少事情需要你批准。」 |
+| 02 | 不要替團隊解題 | 有人問「怎麼辦？」先問：問題核心是什麼？你有哪兩個方案？建議先做哪個？「直接給答案，團隊只會學會等你。」 |
+| 03 | 交代結果，不只交代任務 | 寫清**結果、指標、期限、權限、回報點**；只說「你負責」只會換來更多追問。 |
+| 04 | 三次重複，就寫成 SOP | 把腦內做法變成一頁流程／checklist／範本。「沒有系統的公司，只能靠最忙的人維持運作。」 |
+| 09 | 把副手養成領導者 | 給他完整範圍、指標、權限與**負責結果**的機會。「只會替你執行的人，永遠不會成為真正的領導者。」 |
+| 10 | 為可逆錯誤保留空間 | 可逆決策讓團隊快試快改，只對高成本／不可逆加強審批。「零錯誤文化，最後只會得到零決定。」 |
+
+### 二、換位思考：這六條是寫給老闆的，Owner 這裡的老闆是他，不是我
+
+**所以要換位的是我。** 01/10 在這個系統裡不是「我要少批准」，而是**我不要一直把可逆的事送上去等他批准**——每一次「等 Owner 一句話」都是把他變成瓶頸。判斷式只有一句：
+
+> **這件事錯了能不能自己收回？能 → 自己做、留紀錄、回報做了什麼。不能 → 才上呈，且附兩個方案與建議。**
+
+已有制度：SECTION 24（可逆先行）定義判準，msg 5773 selfops 授權自家模組自己修／自己重啟／自己驗。**紅線（不可逆）不變**：動錢與進真倉、對外發布、金鑰輪替、他人客資、別人的機器與帳號、macOS 系統服務。
+
+**02 換位後的形態＝上呈的格式**。我要東西的時候不准只丟問題回去，必須是：問題核心一句、兩個可行方案、我建議哪個、以及「給我什麼我就能定案」。
+（**自我檢核：msg 5846 那輪我只給了額度框就等他填拼盤內容，沒給兩個方案與建議。照 02 應該提兩案＋建議，讓他只要回 A 或 B。這是缺口，不是已完成事項。**）
+
+### 三、向下管理：03 的五欄是硬性欄位，缺欄＝不准派工
+
+所有工作單／task card／給 B 級與實作性 agent 的指令，必含：
+
+1. **結果**（不是任務名稱，是完成後世界長什麼樣）
+2. **指標**（怎麼量、數字或可驗證輸出）
+3. **期限**
+4. **權限**（能動哪些檔／能不能重啟／能不能提交）
+5. **回報點**（什麼時候回報、回報寫哪裡、**什麼叫 done 什麼叫 blocked**）
+
+**為什麼寫成硬規則**：win-01 曾七張卡連續 picked-and-failed，真因是 executor 結束沒寫終態、finalizer 只能補 blocked、blocked 又被壓不重試——那正是第 5 欄缺失造成的，不是 agent 不夠好。呼應 SECTION 25（任務卡四態 FSM）與 SECTION 20（部門進度回報）。
+
+**模板與機械檢查（2026-09-22 落成，本節從「只有規則」變成閉環）**：
+
+- 模板：`handoff/tasks/_WORK_ORDER_TEMPLATE.md`（五欄 ＋ 動作可逆性 ＋ done／blocked 兩個終態的定義位）
+- 檢查：`python3 scripts/check_work_order.py handoff/tasks/<TASK_ID>.md` —— **exit 2 ＝ 缺欄，不准派工**（fail-closed，與報價引擎「需人工」同精神）；只驗欄位在不在、有沒有真填、第五欄有沒有把 done 與 blocked 都定義出來，不評內容好壞（那是人的事）
+- 測試：`tests/test_work_order_template.py`（含「拿模板本身去驗必須 exit 2」與逐欄拔掉都要被抓到）
+- **派工前跑一次檢查器，沒過就不准送出工作單。** 這條規則自己也照第四節辦：SOP 必配機械檢查。
+
+### 四、04 在我們這裡要更嚴：**第二次就寫 SOP，不等第三次**
+
+外部規則是「三次重複」，我們的一次成本是 Owner 被客人打（msg 5824 原話「你沒問我覺得我會被打」）。所以：**同一類指正出現第二次，當輪就要進 SOP，並附一個機械檢查（測試或腳本），不准只留心得。**
+已照此辦：`bot_a6/QUOTE_PLAYBOOK.md` §2.1（msg 5845 找成本兩法）、§0.1（msg 5851 資訊不全交件法），各配 `quote_calc.cost_share_band()`／`headroom_for_addition()` 與 gateway check 關鍵字驗證。
+
+### 五、09 ＋ msg 5863：hermes 是副手，三階段養成（現況誠實標記）
+
+Owner 定調：**hermes 是我的副手，終有一天讓他負責管理實作性 agent。** 這是方向授權，不是現在就改線。
+
+| 階段 | 範圍 | 指標 | 現況 |
+|---|---|---|---|
+| S1 受理 | 接需求、問清必問清單、建案卷、明說需人工 | 案卷完整、不編價 | **已具備**（msg 5774 起） |
+| S2 自算 | 自己跑 `quote_calc` 出內部試算與額度框，不必 A0 代產 | 數字全部有 source；推估標記正確 | **程式已具備，端到端未驗**——`~/.maplab/quote_intake/` 至今不存在＝零筆真實需求進過那個框（任務 #21，只有 Owner 在 a6 框打一句話能證） |
+| S3 管實作 | 對實作性 agent 派工並驗收，用第三節五欄 | 派出的工作單五欄齊全率、終態回寫率 | **未開始**。前置＝S2 驗過 + 五欄模板落地 + 失敗要能自己收回（可逆） |
+
+**升級門檻寫死**：S2 未驗過不得進 S3；S3 只能派**可逆**工作（改檔、產草稿、跑測試），不可逆動作永遠回到 Owner。副手可以犯可逆的錯（第 10 條），但不可逆的錯不留給任何 agent 犯。
+
+### 關聯
+- SECTION 24 可逆先行（01/10 的判準）｜SECTION 25 任務卡四態（03 第 5 欄的機制）｜SECTION 20 進度回報 SOP
+- `bot_a6/QUOTE_PLAYBOOK.md` §0.1／§2.1（04 的既有落地）
+- 原始截圖：`data/telegram-photos/20260922_140756_*.jpg`、`_140758_*.jpg`、`_140800_*.jpg`

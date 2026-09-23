@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-Hant">
+<meta charset="utf-8">
+<title>A8 internal regression QA player</title>
+<style>
+  body { margin: 0; background: #2c2c2c; color: #faf7f2; font: 16px system-ui; display: grid; place-items: center; min-height: 100vh; }
+  main { display: grid; gap: 12px; justify-items: center; }
+  video { max-height: 78vh; max-width: 92vw; background: #000; }
+  button { padding: 8px 14px; margin: 0 4px; }
+  output { font-variant-numeric: tabular-nums; }
+</style>
+<main>
+  <strong>INTERNAL QA • NOT FOR UPLOAD</strong>
+  <video controls preload="auto" src="../maplab-bunny-alignment-regression-INTERNAL-NOT-PUBLISHABLE.mp4?v=aacc5ddd"></video>
+  <div>
+    <button id="play1" type="button">Play full 1×</button>
+    <button id="play05" type="button">Play full 0.5×</button>
+  </div>
+  <output id="state">ready</output>
+</main>
+<script>
+  const video = document.querySelector('video');
+  const state = document.querySelector('#state');
+  const playFromStart = (rate) => {
+    video.pause();
+    video.currentTime = 0;
+    video.playbackRate = rate;
+    video.play();
+  };
+  document.querySelector('#play1').addEventListener('click', () => playFromStart(1));
+  document.querySelector('#play05').addEventListener('click', () => playFromStart(0.5));
+  const update = () => {
+    state.value = `${video.currentTime.toFixed(2)} / ${video.duration.toFixed(2)} sec • ${video.playbackRate}× • ${video.ended ? 'ended' : video.paused ? 'paused' : 'playing'}`;
+  };
+  video.addEventListener('timeupdate', update);
+  video.addEventListener('ratechange', update);
+  video.addEventListener('ended', update);
+  video.addEventListener('loadedmetadata', update);
+</script>
+</html>

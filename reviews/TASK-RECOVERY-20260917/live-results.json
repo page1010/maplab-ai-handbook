@@ -1,0 +1,1020 @@
+{
+  "verifiedAt": "2026-09-17T00:38:10.651Z",
+  "scope": "public-read-only; isolated anonymous browser; no external writes",
+  "views": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "httpStatus": 200,
+      "metrics": {
+        "url": "https://www.maplabkitchen.com/",
+        "title": "台南外燴推薦｜台南到府外燴、台南派對外燴與企業茶會｜MAPLAB - MAPLABKITCHEN",
+        "bodyClass": "home wp-singular page-template page-template-elementor_canvas page page-id-2033 wp-custom-logo wp-embed-responsive wp-theme-hello-elementor ehf-header ehf-footer ehf-template-hello-elementor ehf-stylesheet-hello-elementor theme-default elementor-default elementor-template-canvas elementor-kit-31",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "scrollWidth": 390,
+        "scrollHeight": 6901,
+        "horizontalOverflow": false,
+        "overflowElements": [],
+        "h1": [
+          "台南最會辦派對的外燴團隊\n企劃、視覺、餐桌一次到位"
+        ],
+        "headings": [
+          "先看場景，再詢價",
+          "開幕茶會",
+          "企業茶會・會議茶點",
+          "品牌發表・VIP 接待",
+          "私人派對",
+          "客人辦完活動怎麼說",
+          "台南的場地，我們熟門熟路",
+          "怎麼報僺",
+          "常見問題",
+          "下一場聚會，交給我們"
+        ],
+        "canonical": "https://www.maplabkitchen.com/",
+        "draftbarElements": 0,
+        "images": [
+          {
+            "src": "https://www.maplabkitchen.com/wp-content/uploads/2026/06/maplab-brand-conference-beauty-summit-meta-1.avif",
+            "alt": "台南外燴 品牌高峰會餐檯現場",
+            "complete": true,
+            "naturalWidth": 986,
+            "naturalHeight": 1200
+          },
+          {
+            "src": "https://www.maplabkitchen.com/wp-content/uploads/2026/06/maplab-art-museum-opening-daxin-hero-3.avif",
+            "alt": "台南開幕茶會外燴 美術館開幕現場",
+            "complete": true,
+            "naturalWidth": 1200,
+            "naturalHeight": 901
+          },
+          {
+            "src": "https://www.maplabkitchen.com/wp-content/uploads/2026/06/maplab-icc-tainan-catering-table-overview-02.avif",
+            "alt": "台南企業茶會外燴 大臺南會展中心茶點檯",
+            "complete": true,
+            "naturalWidth": 1800,
+            "naturalHeight": 2400
+          },
+          {
+            "src": "https://www.maplabkitchen.com/wp-content/uploads/2025/09/car-showroom-catering-long-table-setup.webp.webp",
+            "alt": "台南品牌活動外燴 汽車展間長桌餐檯",
+            "complete": true,
+            "naturalWidth": 3024,
+            "naturalHeight": 4032
+          },
+          {
+            "src": "https://www.maplabkitchen.com/wp-content/uploads/2025/05/tainan-birthday-party-candy-bar-baby-event.avif",
+            "alt": "台南派對外燴 週歲派對甜點桌",
+            "complete": true,
+            "naturalWidth": 1366,
+            "naturalHeight": 768
+          },
+          {
+            "src": "https://www.maplabkitchen.com/wp-content/uploads/2026/09/terms_13.webp",
+            "alt": "台南戶外婚宴外燴 客人IG回饋 真心推薦",
+            "complete": true,
+            "naturalWidth": 812,
+            "naturalHeight": 1426
+          },
+          {
+            "src": "https://www.maplabkitchen.com/wp-content/uploads/2026/09/terms_14.webp",
+            "alt": "台南開幕茶會外燴 客人IG回饋 擺盤超美賓客掃光",
+            "complete": true,
+            "naturalWidth": 828,
+            "naturalHeight": 1454
+          },
+          {
+            "src": "https://www.maplabkitchen.com/wp-content/uploads/2026/09/terms_15.webp",
+            "alt": "台南生日派對外燴 客人IG回饋 鹹甜食區餐檯",
+            "complete": true,
+            "naturalWidth": 838,
+            "naturalHeight": 1452
+          },
+          {
+            "src": "https://www.maplabkitchen.com/wp-content/uploads/2026/09/terms_17.webp",
+            "alt": "台南外帶派對盒 客人私訊回饋 餐點大家都好滿意",
+            "complete": true,
+            "naturalWidth": 848,
+            "naturalHeight": 1470
+          },
+          {
+            "src": "https://www.maplabkitchen.com/wp-content/uploads/2026/06/maplab-university-emba-concert-tea-break.avif",
+            "alt": "台南到府外燴 戶外樹下長桌茶ꭇ",
+            "complete": true,
+            "naturalWidth": 900,
+            "naturalHeight": 1200
+          },
+          {
+            "src": "https://www.maplabkitchen.com/wp-content/uploads/2026/03/corporate-our-parters.webp",
+            "alt": "多家企業與機構合作品牌 Logo 展示 涵蓋科技醫療與建設甡業",
+            "complete": true,
+            "naturalWidth": 1366,
+            "naturalHeight": 768
+          }
+        ],
+        "lineCTAs": [
+          {
+            "text": "聊聊你的活動",
+            "href": "https://lin.ee/IP8nt4n",
+            "class": "btn-line",
+            "rect": {
+              "x": 108.59375,
+              "y": 579.328125,
+              "width": 172.8125,
+              "height": 58.5
+            }
+          },
+          {
+            "text": "LINE 詢價",
+            "href": "https://lin.ee/IP8nt4n",
+            "class": "textlink",
+            "rect": {
+              "x": 174.78125,
+              "y": 1862.390625,
+              "width": 78.6875,
+              "height": 24
+            }
+          },
+          {
+            "text": "LINE 詢價",
+            "href": "https://lin.ee/IP8nt4n",
+            "class": "textlink",
+            "rect": {
+              "x": 174.78125,
+              "y": 2280.625,
+              "width": 78.6875,
+              "height": 24
+            }
+          },
+          {
+            "text": "LINE 詢價",
+            "href": "https://lin.ee/IP8nt4n",
+            "class": "textlink",
+            "rect": {
+              "x": 174.78125,
+              "y": 2698.859375,
+              "width": 78.6875,
+              "height": 24
+            }
+          },
+          {
+            "text": "LINE 詢價",
+            "href": "https://lin.ee/IP8nt4n",
+            "class": "textlink",
+            "rect": {
+              "x": 174.78125,
+              "y": 3117.09375,
+              "width": 78.6875,
+              "height": 24
+            }
+          },
+          {
+            "text": "LINE 詢價",
+            "href": "https://lin.ee/IP8nt4n",
+            "class": "btn-line",
+            "rect": {
+              "x": 118.515625,
+              "y": 5817.6875,
+              "width": 152.953125,
+              "height": 58.5
+            }
+          },
+          {
+            "text": "用 LINE 聊聊你的活動",
+            "href": "https://lin.ee/IP8nt4n",
+            "class": "btn-line",
+            "rect": {
+              "x": 73.125,
+              "y": 6552.140625,
+              "width": 243.75,
+              "height": 58.5
+            }
+          },
+          {
+            "text": "聊聊你的場合 →",
+            "href": "https://lin.ee/IP8nt4n",
+            "class": "textlink",
+            "rect": {
+              "x": 139.96875,
+              "y": 6783.234375,
+              "width": 110.046875,
+              "height": 21
+            }
+          },
+          {
+            "text": "LINE 詢價",
+            "href": "https://lin.ee/IP8nt4n",
+            "class": "fab",
+            "rect": {
+              "x": 268.375,
+              "y": 788,
+              "width": 107.625,
+              "height": 38
+            }
+          }
+        ],
+        "internalLinks": [
+          {
+            "text": "看開幕茶會紀錄 →",
+            "href": "https://www.maplabkitchen.com/daxin-art-museum-opening-catering/"
+          },
+          {
+            "text": "看企業茶會紀錄 →",
+            "href": "https://www.maplabkitchen.com/icc-tainan-catering/"
+          },
+          {
+            "text": "看品牌發表紀錄 →",
+            "href": "https://www.maplabkitchen.com/brand-esg-catering-service/"
+          },
+          {
+            "text": "看週歲派對紀錄 →",
+            "href": "https://www.maplabkitchen.com/catering-one-year-old-party-tainan/"
+          },
+          {
+            "text": "",
+            "href": "https://www.maplabkitchen.com/tainan-catering-line-inquiry-guide/"
+          },
+          {
+            "text": "",
+            "href": "https://www.maplabkitchen.com/tainan-catering-cost-guide/"
+          },
+          {
+            "text": "",
+            "href": "https://www.maplabkitchen.com/tainan-custom-catering-menu/"
+          }
+        ],
+        "visibleTextUnder16px": [
+          {
+            "tag": "DIV",
+            "class": "brand",
+            "text": "MAPLAB KITCHEN",
+            "fontSize": "12px"
+          },
+          {
+            "tag": "DIV",
+            "class": "sub",
+            "text": "台南外燴・派對統籌・企業茶會",
+            "fontSize": "13px"
+          },
+          {
+            "tag": "A",
+            "class": "btn-line",
+            "text": "聊聊你的活動",
+            "fontSize": "15px"
+          },
+          {
+            "tag": "DIV",
+            "class": "kicker",
+            "text": "Tainan · Party Catering",
+            "fontSize": "11px"
+          },
+          {
+            "tag": "P",
+            "class": "",
+            "text": "每個場景都是我們辦過的現場，菜單跟著場合客製。",
+            "fontSize": "15px"
+          },
+          {
+            "tag": "P",
+            "class": "",
+            "text": "大新美術館開幕，從剪綵到迎賓茶點的動線由我們統籌。菜單跟著儀式走：迎賓一口點心，剪綵後開檯。",
+            "fontSize": "14.5px"
+          },
+          {
+            "tag": "A",
+            "class": "textlink",
+            "text": "看開幕茶會紀錄 →",
+            "fontSize": "12px"
+          },
+          {
+            "tag": "A",
+            "class": "textlink",
+            "text": "LINE 詢價",
+            "fontSize": "12px"
+          },
+          {
+            "tag": "P",
+            "class": "",
+            "text": "大臺南會展中心的企業接待，茶點跟著議程分批上檯，中場不斷線。菜單依人數與時段客製。",
+            "fontSize": "14.5px"
+          },
+          {
+            "tag": "A",
+            "class": "textlink",
+            "text": "看企業茶會紀錄 →",
+            "fontSize": "12px"
+          },
+          {
+            "tag": "A",
+            "class": "textlink",
+            "text": "LINE 詢價",
+            "fontSize": "12px"
+          },
+          {
+            "tag": "P",
+            "class": "",
+            "text": "汽車展間的公益發表會，長桌餐檯配著品牌視覺一起設計。菜單跟著品牌調性與來賓名單走。",
+            "fontSize": "14.5px"
+          },
+          {
+            "tag": "A",
+            "class": "textlink",
+            "text": "看品牌發表紀錄 →",
+            "fontSize": "12px"
+          },
+          {
+            "tag": "A",
+            "class": "textlink",
+            "text": "LINE 詢價",
+            "fontSize": "12px"
+          },
+          {
+            "tag": "P",
+            "class": "",
+            "text": "週歲、生日到婚禮迎賓，甜點桌就是全場的合照背景。菜單跟著主題色和年齡層客製。",
+            "fontSize": "14.5px"
+          },
+          {
+            "tag": "A",
+            "class": "textlink",
+            "text": "看週歲派對紀錄 →",
+            "fontSize": "12px"
+          },
+          {
+            "tag": "A",
+            "class": "textlink",
+            "text": "LINE 詢價",
+            "fontSize": "12px"
+          },
+          {
+            "tag": "DIV",
+            "class": "kicker",
+            "text": "Reviews",
+            "fontSize": "11px"
+          },
+          {
+            "tag": "DIV",
+            "class": "kicker",
+            "text": "Tainan Based",
+            "fontSize": "11px"
+          },
+          {
+            "tag": "P",
+            "class": "",
+            "text": "從老屋庭院到會議中心，在地團隊替你把場地條件想在前面。",
+            "fontSize": "14.5px"
+          },
+          {
+            "tag": "DIV",
+            "class": "kicker",
+            "text": "Trusted By",
+            "fontSize": "11px"
+          },
+          {
+            "tag": "P",
+            "class": "sub",
+            "text": "科技、醫療、車廠到公部門的正式場合。",
+            "fontSize": "14px"
+          },
+          {
+            "tag": "DIV",
+            "class": "kicker",
+            "text": "How It Works",
+            "fontSize": "11px"
+          },
+          {
+            "tag": "SPAN",
+            "class": "no",
+            "text": "STEP 1",
+            "fontSize": "12px"
+          },
+          {
+            "tag": "P",
+            "class": "",
+            "text": "日期、人數、場合與場地，一句話就能開始。",
+            "fontSize": "13.5px"
+          },
+          {
+            "tag": "SPAN",
+            "class": "no",
+            "text": "STEP 2",
+            "fontSize": "12px"
+          },
+          {
+            "tag": "P",
+            "class": "",
+            "text": "菜單跟著場合客製，看得到吃什麼、多少錢。",
+            "fontSize": "13.5px"
+          },
+          {
+            "tag": "SPAN",
+            "class": "no",
+            "text": "STEP 3",
+            "fontSize": "12px"
+          },
+          {
+            "tag": "P",
+            "class": "",
+            "text": "付訂保留檔期，活動當天我們提前到場設置佉置。",
+            "fontSize": "13.5px"
+          },
+          {
+            "tag": "A",
+            "class": "btn-line",
+            "text": "LINE 詢價",
+            "fontSize": "15px"
+          },
+          {
+            "tag": "DIV",
+            "class": "kicker",
+            "text": "FAQ",
+            "fontSize": "11px"
+          },
+          {
+            "tag": "A",
+            "class": "textlink",
+            "text": "詢問指南",
+            "fontSize": "12px"
+          },
+          {
+            "tag": "A",
+            "class": "textlink",
+            "text": "費用說明",
+            "fontSize": "12px"
+          },
+          {
+            "tag": "A",
+            "class": "textlink",
+            "text": "菜單設計 大量例",
+            "fontSize": "12px"
+          },
+          {
+            "tag": "DIV",
+            "class": "kicker",
+            "text": "Get In Touch",
+            "fontSize": "11px"
+          },
+          {
+            "tag": "A",
+            "class": "btn-line",
+            "text": "用 LINE 聊聊你的活動",
+            "fontSize": "15px"
+          },
+          {
+            "tag": "A",
+            "class": "textlink",
+            "text": "聊聊你的場合 →",
+            "fontSize": "12px"
+          },
+          {
+            "tag": "A",
+            "class": "fab",
+            "text": "LINE 詢價",
+            "fontSize": "14px"
+          }
+        ],
+        "navigationTiming": [
+          {
+            "duration": 194.5,
+            "domContentLoaded": 193.5,
+            "responseEnd": 164.19999980926514
+          }
+        ],
+        "disclaimer": "Browser timing is a single local run, not a field CWV or mobile-network performance certification."
+      },
+      "faq": [
+        {
+          "question": "怎麼詢價？",
+          "open": true,
+          "answer": "點任一 LINE 按鈕，告訴我們日期、人數與場地。詳見詢問指南。",
+          "closeVerified": true
+        },
+        {
+          "question": "費用怎麼抓？",
+          "open": true,
+          "answer": "依人數、菜單與場地條件報價，預算概念見費用說明。",
+          "closeVerified": true
+        },
+        {
+          "question": "可以客製菜單嗎？",
+          "open": true,
+          "answer": "可以，菜單本來就跟著場合設計，靈感見菜單設計 大量例。",
+          "closeVerified": true
+        }
+      ]
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "httpStatus": 200,
+      "metrics": {
+        "url": "https://www.maplabkitchen.com/",
+        "title": "台南外燴推薦｜台南到府外燴、台南派對外燴與企業茶會｜MAPLAB - MAPLABKITCHEN",
+        "bodyClass": "home wp-singular page-template page-template-elementor_canvas page page-id-2033 wp-custom-logo wp-embed-responsive wp-theme-hello-elementor ehf-header ehf-footer ehf-template-hello-elementor ehf-stylesheet-hello-elementor theme-default elementor-default elementor-template-canvas elementor-kit-31",
+        "viewport": {
+          "width": 1280,
+          "height": 800
+        },
+        "scrollWidth": 1280,
+        "scrollHeight": 7064,
+        "horizontalOverflow": false,
+        "overflowElements": [],
+        "h1": [
+          "台南最會辦派對的外燴團隊\n企劃、視覺、餐桌一次到位"
+        ],
+        "headings": [
+          "先看場景，再詢價",
+          "開幕茶會",
+          "企業茶會・會議茶點",
+          "品牌發表・VIP 接待",
+          "私人派對",
+          "客人辦完活動怎麼說",
+          "台南的場地，我們熟門熟路",
+          "怎麼報僺",
+          "常見問題",
+          "下一場聚會，交給我們"
+        ],
+        "canonical": "https://www.maplabkitchen.com/",
+        "draftbarElements": 0,
+        "images": [
+          {
+            "src": "https://www.maplabkitchen.com/wp-content/uploads/2026/06/maplab-brand-conference-beauty-summit-meta-1.avif",
+            "alt": "台南外燴 品牌高峰會餐檯現場",
+            "complete": true,
+            "naturalWidth": 986,
+            "naturalHeight": 1200
+          },
+          {
+            "src": "https://www.maplabkitchen.com/wp-content/uploads/2026/06/maplab-art-museum-opening-daxin-hero-3.avif",
+            "alt": "台南開幕茶會外燴 美術館開幕現場",
+            "complete": true,
+            "naturalWidth": 1200,
+            "naturalHeight": 901
+          },
+          {
+            "src": "https://www.maplabkitchen.com/wp-content/uploads/2026/06/maplab-icc-tainan-catering-table-overview-02.avif",
+            "alt": "台南企業茶會外燴 大臺南會展中心茶點檯",
+            "complete": true,
+            "naturalWidth": 1800,
+            "naturalHeight": 2400
+          },
+          {
+            "src": "https://www.maplabkitchen.com/wp-content/uploads/2025/09/car-showroom-catering-long-table-setup.webp.webp",
+            "alt": "台南品牌活動外燴 汽車展間長桌餐檯",
+            "complete": true,
+            "naturalWidth": 3024,
+            "naturalHeight": 4032
+          },
+          {
+            "src": "https://www.maplabkitchen.com/wp-content/uploads/2025/05/tainan-birthday-party-candy-bar-baby-event.avif",
+            "alt": "台南派對外燴 週歲派對甜點桌",
+            "complete": true,
+            "naturalWidth": 1366,
+            "naturalHeight": 768
+          },
+          {
+            "src": "https://www.maplabkitchen.com/wp-content/uploads/2026/09/terms_13.webp",
+            "alt": "台南戶外婚宴外燴 客人IG回饋 真心推薦",
+            "complete": true,
+            "naturalWidth": 812,
+            "naturalHeight": 1426
+          },
+          {
+            "src": "https://www.maplabkitchen.com/wp-content/uploads/2026/09/terms_14.webp",
+            "alt": "台南開幕茶會外燴 客人IG回饋 擺盤超美賓客掃光",
+            "complete": true,
+            "naturalWidth": 828,
+            "naturalHeight": 1454
+          },
+          {
+            "src": "https://www.maplabkitchen.com/wp-content/uploads/2026/09/terms_15.webp",
+            "alt": "台南生日派對外燴 客人IG回饋 鹹甜食區餐檯",
+            "complete": true,
+            "naturalWidth": 838,
+            "naturalHeight": 1452
+          },
+          {
+            "src": "https://www.maplabkitchen.com/wp-content/uploads/2026/09/terms_17.webp",
+            "alt": "台南外帶派對盒 客人私訊回饋 餐點大家都好滿意",
+            "complete": true,
+            "naturalWidth": 848,
+            "naturalHeight": 1470
+          },
+          {
+            "src": "https://www.maplabkitchen.com/wp-content/uploads/2026/06/maplab-university-emba-concert-tea-break.avif",
+            "alt": "台南到府外燴 戶外樹下長桌茶ꭇ",
+            "complete": true,
+            "naturalWidth": 900,
+            "naturalHeight": 1200
+          },
+          {
+            "src": "https://www.maplabkitchen.com/wp-content/uploads/2026/03/corporate-our-parters.webp",
+            "alt": "多家企業與機構合作品牌 Logo 展示 涵蓋科技醫療與建設甡業",
+            "complete": true,
+            "naturalWidth": 1366,
+            "naturalHeight": 768
+          }
+        ],
+        "lineCTAs": [
+          {
+            "text": "聊聊你的活動",
+            "href": "https://lin.ee/IP8nt4n",
+            "class": "btn-line",
+            "rect": {
+              "x": 553.59375,
+              "y": 589.5,
+              "width": 172.8125,
+              "height": 58.5
+            }
+          },
+          {
+            "text": "LINE 詢價",
+            "href": "https://lin.ee/IP8nt4n",
+            "class": "textlink",
+            "rect": {
+              "x": 897.4375,
+              "y": 1653.828125,
+              "width": 78.6875,
+              "height": 24
+            }
+          },
+          {
+            "text": "LINE 詢價",
+            "href": "https://lin.ee/IP8nt4n",
+            "class": "textlink",
+            "rect": {
+              "x": 260.78125,
+              "y": 2068.234375,
+              "width": 78.6875,
+              "height": 24
+            }
+          },
+          {
+            "text": "LINE 詢價",
+            "href": "https://lin.ee/IP8nt4n",
+            "class": "textlink",
+            "rect": {
+              "x": 897.4375,
+              "y": 2482.640625,
+              "width": 78.6875,
+              "height": 24
+            }
+          },
+          {
+            "text": "LINE 詢價",
+            "href": "https://lin.ee/IP8nt4n",
+            "class": "textlink",
+            "rect": {
+              "x": 260.78125,
+              "y": 2897.046875,
+              "width": 78.6875,
+              "height": 24
+            }
+          },
+          {
+            "text": "LINE 詢價",
+            "href": "https://lin.ee/IP8nt4n",
+            "class": "btn-line",
+            "rect": {
+              "x": 563.515625,
+              "y": 5761.015625,
+              "width": 152.953125,
+              "height": 58.5
+            }
+          },
+          {
+            "text": "用 LINE 聊聊你的活動",
+            "href": "https://lin.ee/IP8nt4n",
+            "class": "btn-line",
+            "rect": {
+              "x": 518.125,
+              "y": 6677.46875,
+              "width": 243.75,
+              "height": 58.5
+            }
+          },
+          {
+            "text": "聊聊你的場合 →",
+            "href": "https://lin.ee/IP8nt4n",
+            "class": "textlink",
+            "rect": {
+              "x": 584.96875,
+              "y": 6946.5625,
+              "width": 110.046875,
+              "height": 21
+            }
+          },
+          {
+            "text": "LINE 詢價",
+            "href": "https://lin.ee/IP8nt4n",
+            "class": "fab",
+            "rect": {
+              "x": 1158.375,
+              "y": 744,
+              "width": 107.625,
+              "height": 38
+            }
+          }
+        ],
+        "internalLinks": [
+          {
+            "text": "看開幕茶會紀錄 →",
+            "href": "https://www.maplabkitchen.com/daxin-art-museum-opening-catering/"
+          },
+          {
+            "text": "看企業茶會紀錄 →",
+            "href": "https://www.maplabkitchen.com/icc-tainan-catering/"
+          },
+          {
+            "text": "看品牌發表紀錄 →",
+            "href": "https://www.maplabkitchen.com/brand-esg-catering-service/"
+          },
+          {
+            "text": "看週歲派對紀錄 →",
+            "href": "https://www.maplabkitchen.com/catering-one-year-old-party-tainan/"
+          },
+          {
+            "text": "",
+            "href": "https://www.maplabkitchen.com/tainan-catering-line-inquiry-guide/"
+          },
+          {
+            "text": "",
+            "href": "https://www.maplabkitchen.com/tainan-catering-cost-guide/"
+          },
+          {
+            "text": "",
+            "href": "https://www.maplabkitchen.com/tainan-custom-catering-menu/"
+          }
+        ],
+        "visibleTextUnder16px": [
+          {
+            "tag": "DIV",
+            "class": "brand",
+            "text": "MAPLAB KITCHEN",
+            "fontSize": "12px"
+          },
+          {
+            "tag": "DIV",
+            "class": "sub",
+            "text": "台南外燴・派對統籌・企業茶會",
+            "fontSize": "14px"
+          },
+          {
+            "tag": "A",
+            "class": "btn-line",
+            "text": "聊聊你的活動",
+            "fontSize": "15px"
+          },
+          {
+            "tag": "DIV",
+            "class": "kicker",
+            "text": "Tainan · Party Catering",
+            "fontSize": "11px"
+          },
+          {
+            "tag": "P",
+            "class": "",
+            "text": "每個場景都是我們辦過的現場，菜單跟著場合客製。",
+            "fontSize": "15px"
+          },
+          {
+            "tag": "P",
+            "class": "",
+            "text": "大新美術館開幕，從剪綵到迎賓茶點的動線由我們統籌。菜單跟著儀式走：迎賓一口點心，剪綵後開檯。",
+            "fontSize": "14.5px"
+          },
+          {
+            "tag": "A",
+            "class": "textlink",
+            "text": "看開幕茶會紀錄 →",
+            "fontSize": "12px"
+          },
+          {
+            "tag": "A",
+            "class": "textlink",
+            "text": "LINE 詢價",
+            "fontSize": "12px"
+          },
+          {
+            "tag": "P",
+            "class": "",
+            "text": "大臺南會展中心的企業接待，茶點跟著議程分批上檯，中場不斷線。菜單依人數與時段客製。",
+            "fontSize": "14.5px"
+          },
+          {
+            "tag": "A",
+            "class": "textlink",
+            "text": "看企業茶會紀錄 →",
+            "fontSize": "12px"
+          },
+          {
+            "tag": "A",
+            "class": "textlink",
+            "text": "LINE 詢價",
+            "fontSize": "12px"
+          },
+          {
+            "tag": "P",
+            "class": "",
+            "text": "汽車展間的公益發表會，長桌餐檯配著品牌視覺一起設計。菜單跟著品牌調性與來賓名單走。",
+            "fontSize": "14.5px"
+          },
+          {
+            "tag": "A",
+            "class": "textlink",
+            "text": "看品牌發表紀錄 →",
+            "fontSize": "12px"
+          },
+          {
+            "tag": "A",
+            "class": "textlink",
+            "text": "LINE 詢價",
+            "fontSize": "12px"
+          },
+          {
+            "tag": "P",
+            "class": "",
+            "text": "週歲、生日到婚禮迎賓，甜點桌就是全場的合照背景。菜單跟著主題色和年齡層客製。",
+            "fontSize": "14.5px"
+          },
+          {
+            "tag": "A",
+            "class": "textlink",
+            "text": "看週歲派對紀錄 →",
+            "fontSize": "12px"
+          },
+          {
+            "tag": "A",
+            "class": "textlink",
+            "text": "LINE 詢價",
+            "fontSize": "12px"
+          },
+          {
+            "tag": "DIV",
+            "class": "kicker",
+            "text": "Reviews",
+            "fontSize": "11px"
+          },
+          {
+            "tag": "DIV",
+            "class": "kicker",
+            "text": "Tainan Based",
+            "fontSize": "11px"
+          },
+          {
+            "tag": "P",
+            "class": "",
+            "text": "從老屋庭院到會議中心，在地團隊替你把場地條件想在前面。",
+            "fontSize": "14.5px"
+          },
+          {
+            "tag": "DIV",
+            "class": "kicker",
+            "text": "Trusted By",
+            "fontSize": "11px"
+          },
+          {
+            "tag": "P",
+            "class": "sub",
+            "text": "科技、醫療、車廠到公部門的正式場合。",
+            "fontSize": "14px"
+          },
+          {
+            "tag": "DIV",
+            "class": "kicker",
+            "text": "How It Works",
+            "fontSize": "11px"
+          },
+          {
+            "tag": "SPAN",
+            "class": "no",
+            "text": "STEP 1",
+            "fontSize": "12px"
+          },
+          {
+            "tag": "P",
+            "class": "",
+            "text": "日期、人數、場合與場地，一句話就能開始。",
+            "fontSize": "13.5px"
+          },
+          {
+            "tag": "SPAN",
+            "class": "no",
+            "text": "STEP 2",
+            "fontSize": "12px"
+          },
+          {
+            "tag": "P",
+            "class": "",
+            "text": "菜單跟著場合客製，看得到吃什麼、多少錢。",
+            "fontSize": "13.5px"
+          },
+          {
+            "tag": "SPAN",
+            "class": "no",
+            "text": "STEP 3",
+            "fontSize": "12px"
+          },
+          {
+            "tag": "P",
+            "class": "",
+            "text": "付訂保留檔期，活動當天我們提前到場設置佉置。",
+            "fontSize": "13.5px"
+          },
+          {
+            "tag": "A",
+            "class": "btn-line",
+            "text": "LINE 詢價",
+            "fontSize": "15px"
+          },
+          {
+            "tag": "DIV",
+            "class": "kicker",
+            "text": "FAQ",
+            "fontSize": "11px"
+          },
+          {
+            "tag": "A",
+            "class": "textlink",
+            "text": "詢問指南",
+            "fontSize": "12px"
+          },
+          {
+            "tag": "A",
+            "class": "textlink",
+            "text": "費用說明",
+            "fontSize": "12px"
+          },
+          {
+            "tag": "A",
+            "class": "textlink",
+            "text": "菜單設計 大量例",
+            "fontSize": "12px"
+          },
+          {
+            "tag": "DIV",
+            "class": "kicker",
+            "text": "Get In Touch",
+            "fontSize": "11px"
+          },
+          {
+            "tag": "A",
+            "class": "btn-line",
+            "text": "用 LINE 聊聊你的活動",
+            "fontSize": "15px"
+          },
+          {
+            "tag": "A",
+            "class": "textlink",
+            "text": "聊聊你的場合 →",
+            "fontSize": "12px"
+          },
+          {
+            "tag": "A",
+            "class": "fab",
+            "text": "LINE 詢價",
+            "fontSize": "14px"
+          }
+        ],
+        "navigationTiming": [
+          {
+            "duration": 99.29999995231628,
+            "domContentLoaded": 98.09999990463257,
+            "responseEnd": 79.19999980926514
+          }
+        ],
+        "disclaimer": "Browser timing is a single local run, not a field CWV or mobile-network performance certification."
+      },
+      "faq": [
+        {
+          "question": "怎麼詢價？",
+          "open": true,
+          "answer": "點任一 LINE 按鈕，告訴我們日期、人數與場地。詳見詢問指南。",
+          "closeVerified": true
+        },
+        {
+          "question": "費用怎麼抓？",
+          "open": true,
+          "answer": "依人數、菜單與場地條件報價，預算概念見費用說明。",
+          "closeVerified": true
+        },
+        {
+          "question": "可以客製菜單嗎？",
+          "open": true,
+          "answer": "可以，菜單本來就跟著場合設計，靈感見菜單設計 大量例。",
+          "closeVerified": true
+        }
+      ]
+    }
+  ],
+  "consoleErrors": [
+    "Framing 'https://www.google.com/' violates the following report-only Content Security Policy directive: \"frame-ancestors 'self'\". The violation has been logged, but no further action has been taken.\n"
+  ],
+  "pageErrors": []
+}

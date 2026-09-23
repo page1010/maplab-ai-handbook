@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  A0 未回訊息看門狗 — 每 10 分鐘檢查 a0_inbox,超過 20 分鐘未回就
+  直接 resume A0 session 補處理(scripts/a0_watchdog.sh)。
+  安裝:cp 到 ~/Library/LaunchAgents/ 後 launchctl load。
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.maplab.a0watchdog</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/pagemacmini/maplab-ai-handbook/scripts/a0_watchdog.sh</string>
+    </array>
+    <key>StartInterval</key>
+    <integer>600</integer>
+    <key>RunAtLoad</key>
+    <false/>
+    <key>StandardOutPath</key>
+    <string>/Users/pagemacmini/claude-daily-operations/state/a0_watchdog_launchd.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/pagemacmini/claude-daily-operations/state/a0_watchdog_launchd.log</string>
+</dict>
+</plist>

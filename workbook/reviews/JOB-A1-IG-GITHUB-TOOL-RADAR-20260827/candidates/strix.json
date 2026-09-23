@@ -1,0 +1,40 @@
+{
+  "candidate_id": "strix",
+  "kind": "tool",
+  "identity": {
+    "status": "official_verified",
+    "url": "https://github.com/usestrix/strix"
+  },
+  "license": {
+    "status": "verified_open",
+    "id": "Apache-2.0"
+  },
+  "maintenance": "active",
+  "fit": "medium",
+  "overlap": "partial",
+  "runtime": {
+    "ready": false,
+    "smoke": "not_run"
+  },
+  "data": {
+    "max_allowed": "synthetic",
+    "egress": "external_service"
+  },
+  "credentials": [
+    "llm_key"
+  ],
+  "side_effects": [
+    "dependency_install",
+    "network_read",
+    "security_scan"
+  ],
+  "evidence": {
+    "social_url": "https://www.instagram.com/jayte.genai/reel/DcJK_hHprkV/",
+    "official_urls": [
+      "https://github.com/usestrix/strix/commit/bfaaa904f29ad976a751cc894c0cf534d89bc6ff",
+      "https://github.com/usestrix/strix/blob/main/docs/advanced/configuration.mdx"
+    ],
+    "checked_at": "2026-08-27"
+  },
+  "note": "Active autonomous pentesting surface; telemetry is on by default and external LLM processing may receive target-derived content."
+}

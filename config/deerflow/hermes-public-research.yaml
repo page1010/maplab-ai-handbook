@@ -1,0 +1,122 @@
+# Hermes -> DeerFlow local cold-path profile.
+# This file contains no credentials and can be validated or run without loading
+# an OpenRouter key.
+config_version: 36
+log_level: warning
+
+logging:
+  enhance:
+    enabled: false
+    format: text
+
+token_usage:
+  enabled: true
+
+token_budget:
+  enabled: true
+  max_tokens: 30000
+  max_input_tokens: 26000
+  max_output_tokens: 4000
+  warn_threshold: 0.7
+  hard_stop_threshold: 1.0
+
+max_recursion_limit: 24
+
+# One-shot Hermes research must never reuse DeerFlow's checkout-level SQLite
+# checkpoint.  Durable orchestration lives in MAPLAB's own job receipts.
+database:
+  backend: memory
+
+run_events:
+  backend: memory
+
+models:
+  - name: hermes-local-gemma4
+    display_name: Hermes local Gemma 4
+    use: langchain_ollama:ChatOllama
+    model: gemma4:latest
+    base_url: http://127.0.0.1:11434
+    num_predict: 2000
+    num_ctx: 8192
+    temperature: 0.1
+    reasoning: false
+    context_window: 8192
+    supports_thinking: false
+    supports_vision: false
+
+# Retrieval is performed once by the deterministic supervisor.  The model sees
+# a bounded public evidence pack and receives no callable tools, preventing an
+# 8B local model from entering an unbounded search loop.
+tool_groups: []
+tools: []
+
+# Required by AppConfig, but denied twice below and never exposed to the model.
+sandbox:
+  use: deerflow.sandbox.local:LocalSandboxProvider
+  allow_host_bash: false
+
+memory:
+  enabled: false
+  injection_enabled: false
+  manager_class: noop
+
+title:
+  enabled: false
+
+summarization:
+  enabled: false
+
+skills:
+  path: /Users/pagemacmini/maplab-ai-handbook/config/deerflow/no-skills
+  deferred_discovery: false
+
+subagent_runtime:
+  max_running: 1
+  max_queued: 1
+  admission_policy: reject
+  queue_timeout_seconds: 1
+
+subagents:
+  timeout_seconds: 300
+  max_turns: 12
+  max_total_per_run: 1
+  token_budget:
+    enabled: true
+    max_tokens: 12000
+    warn_threshold: 0.7
+    hard_stop_threshold: 1.0
+
+scheduler:
+  enabled: false
+
+mcp_tasks:
+  enabled: false
+
+guardrails:
+  # The bridge gives this policy middleware a distinct runtime name from the
+  # RBAC adapter, preserving both fail-closed gates despite an upstream naming
+  # collision in the pinned DeerFlow/LangChain combination.
+  enabled: true
+  fail_closed: true
+  provider:
+    use: deerflow.guardrails.builtin:AllowlistProvider
+    config:
+      allowed_tools: []
+
+authorization:
+  enabled: true
+  fail_closed: true
+  default_role: guest
+  provider:
+    use: deerflow.authz.rbac:RbacAuthorizationProvider
+    config:
+      roles:
+        guest:
+          tools: {allow: []}
+          models:
+            allow:
+              - hermes-local-gemma4
+          routes:
+            allow: false
+          sandbox:
+            allow: false

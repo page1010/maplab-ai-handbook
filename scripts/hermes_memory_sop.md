@@ -21,6 +21,17 @@ Hermes 有兩層記憶：
    - `holographic`（本地，無需 API key）← 推薦
    - `honcho`、`mem0`、`hindsight`（需 API key）
 
+## MAPLAB SOP／路徑導航（2026-08-25）
+
+Hermes 或其他地端模型找不到精確 SOP、repo path、角色或交接產物時：
+
+1. 先讀 `config/notebooklm/maplab-project-brain-router.json`。
+2. 無瀏覽器能力時，直接讀 `workbook/notebooklm/maplab-project-brain/maplab-sop-router.md`，只輸出 `FOUND`／`NEEDS_LIVE_REFRESH`／`NOT_IN_PACK`。
+3. 有 A0／A1／Codex Browser／OpenClaw browser operator 時，依 router 的 `prompt_template` 將問題交給 MAPLAB Project Brain。
+4. 回答只用來指路；涉及現況、發布、核准、外部平台或完成狀態時，必須回 repo/runtime/UI/receipt 再驗證。
+
+地端模型不得自行登入 Google、讀 cookie 或假裝已詢問 NotebookLM；沒有 browser operator 就明確走 local fallback。
+
 ## 啟用步驟（需 Owner 批准後執行）
 
 ### 步驟一：確認已安裝 holographic provider

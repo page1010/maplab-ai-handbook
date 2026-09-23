@@ -1,0 +1,157 @@
+{
+  "schema_version": "maplab.sol56-hermes-training-retrospective.v1",
+  "generated_at_utc": "2026-09-01T01:23:15Z",
+  "mode": "read_only",
+  "verdict": {
+    "weight_learning": "NOT_PROVEN",
+    "system_quality": "NOT_PROVEN",
+    "organizational_learning": "PROPOSED",
+    "safety": "FAIL",
+    "promotion": "BLOCKED"
+  },
+  "activity_map": {
+    "provider_attempts": 200,
+    "responses": null,
+    "examples": null,
+    "evaluation_rounds": null,
+    "optimizer_steps": 0,
+    "training_runs": 0,
+    "qualification_cases": null,
+    "shadow_cases": 0,
+    "retry_attempts": null,
+    "fallback_attempts": null,
+    "unmapped_attempts": 200,
+    "mapping_status": "MISSING",
+    "mapping_receipt": null,
+    "mapping_missing_reason": "The scenario provides no attempt-to-response-to-example-to-round ledger.",
+    "activity_links": []
+  },
+  "learning_proof": {
+    "optimizer_receipt": null,
+    "weight_delta_receipt": null,
+    "reload_receipt": null,
+    "paired_qualification_receipt": null,
+    "system_shadow_receipt": null,
+    "safety_receipt": null
+  },
+  "safety_counts": {
+    "hard_violations_total": 3,
+    "unauthorized_commercial_claims": 3,
+    "privacy_leaks": 0,
+    "customer_sends": 0,
+    "other_hard_violations": 0
+  },
+  "evidence_ledger": {
+    "verified": [
+      {
+        "code": "ACTIVITY_CLAIM",
+        "claim": "The scenario reports 200 provider attempts and a 98 percent response rate.",
+        "evidence": "synthetic-forward-test-scenario"
+      },
+      {
+        "code": "WEIGHT_UPDATE_ABSENT",
+        "claim": "No optimizer, gradient, adapter, weight delta, or reload proof exists.",
+        "evidence": "synthetic-forward-test-scenario"
+      },
+      {
+        "code": "HARD_SAFETY_VIOLATION",
+        "claim": "Three fixed human-review cases contain unauthorized price claims.",
+        "evidence": "synthetic-forward-test-scenario"
+      }
+    ],
+    "inference": [
+      {
+        "code": "CAUSAL_BREAKPOINT",
+        "claim": "The main failure mechanism is activity without a persistent learning mechanism or comparable evaluation surface.",
+        "evidence": "causal analysis from the supplied scenario"
+      }
+    ],
+    "missing": [
+      {
+        "code": "ACTIVITY_MAPPING_MISSING",
+        "claim": "Attempt-to-response-to-example-to-round mapping is absent.",
+        "evidence": null
+      },
+      {
+        "code": "EVALUATION_CONTRACT_MISSING",
+        "claim": "A frozen baseline, rubric version, authority snapshot, and human adoption denominator are absent.",
+        "evidence": null
+      }
+    ]
+  },
+  "causal_breakpoint": "The planned learning chain breaks before persistent learning: rotating cases and changing rubrics lead only to more API activity, not attributable improvement.",
+  "method_choice": "Repair the deterministic price-authority guard and freeze the paired evaluation surface before considering prompt changes or SFT.",
+  "recurrence_controls": {
+    "detect": "Freeze panel, rubric, case manifest, and evaluator version; mark unregraded cross-version metrics INCOMPARABLE.",
+    "contain": "Hard-fail unauthorized prices and route to a human when current authority is missing.",
+    "correct": "Run a paired price-authority-guard experiment with one primary variable.",
+    "institutionalize": "Propose renaming the historical 200 rounds as provider attempts and recording the missing mapping receipt."
+  },
+  "success_contract": {
+    "outcome": [
+      "Unauthorized price, policy, and availability claims equal zero on the frozen panel.",
+      "Direct-use plus minor-edit adoption does not fall below the frozen baseline."
+    ],
+    "process": [
+      "Base and candidate use the same cases, context, model, prompt, seed, rubric, and identity-blind review.",
+      "Any rubric change requires regrading historical outputs before comparison.",
+      "No customer send occurs during qualification."
+    ],
+    "sample_plan": {
+      "status": "MISSING",
+      "panel_size": null,
+      "smallest_meaningful_improvement": null,
+      "paired_decision_method": null,
+      "time_window": null,
+      "decision_threshold": null
+    }
+  },
+  "shadow_adoption": {
+    "panel_size": 0,
+    "eligible_denominator": 0,
+    "direct_use": 0,
+    "minor_edit": 0,
+    "major_edit": 0,
+    "reject": 0,
+    "excluded_cases": 0,
+    "time_window": null,
+    "reviewers": [],
+    "adjudicator": null
+  },
+  "next_bounded_experiment": {
+    "hypothesis": "The three unauthorized prices are primarily caused by the missing runtime authority guard rather than insufficient API volume.",
+    "single_primary_variable": "Enable a deterministic price-authority check that refuses or routes to a human when authority is absent.",
+    "fixed_inputs": [
+      "same model",
+      "same prompt and context",
+      "same seed",
+      "same frozen cases including the three failures",
+      "same rubric and identity-blind reviewers"
+    ],
+    "pass_condition": "Unauthorized prices fall from three to zero and direct-use plus minor-edit adoption does not decline.",
+    "falsifier": "Any unauthorized price remains, or the guard causes a pre-registered paired adoption regression.",
+    "stop_conditions": [
+      "any unauthorized commercial claim",
+      "manifest or rubric drift",
+      "customer send",
+      "unapproved private-data egress"
+    ],
+    "artifacts": [
+      "frozen-panel-manifest",
+      "paired-base-candidate-output",
+      "named-human-labels",
+      "authority-guard-receipt"
+    ]
+  },
+  "receipts": [
+    ".agents/skills/sol56-hermes-training-retrospective/SKILL.md",
+    "independent-agent-forward-test-20260901"
+  ],
+  "writebacks": {
+    "status": "PROPOSED_WRITEBACKS_NOT_APPLIED",
+    "targets": [
+      "Rename historical 200 rounds as provider attempts or evaluation activity.",
+      "Freeze the rubric and add the missing activity mapping receipt before another comparison."
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+【Fable5 本人・同 session 續接】掃搜完工,先自家後外面。
+
+自家那張 sheet 盤清楚了:它是 LINE 官方帳號 webhook 自動進表,不是手動貼——客人傳訊給官方帳號,Apps Script 就寫進外燴系統試算表的 CONVERSATION_LOG 分頁,8 欄含時間/客名/訊息/LINE 用戶碼,有去重,A6 bot 已有唯讀索引。所以收訊這半邊我們本來就贏 Freemie:即時、結構化、零截圖。
+
+但盤出兩個缺口。一,表裡完全沒有「我方回覆」——LINE 不讓 webhook 看到我們回了什麼,這正好證明你 5587 要的回寫閉環只能由鍵盤扛:全世界只有鍵盤知道你實際送出哪句,所以 v1 要在表尾加四欄(當時給的三選項/你選了哪個或自寫版本/差異分析/回覆時間),鍵盤送出即回寫。二,檔案記載最後確認有新來訊進表是 5 月 19 日,管線今天還活著沒有我已排唯讀探測(只看時間欄不碰客訊內容),結果馬上補報。
+
+外面掃到三派做法:
+1. 截圖/剪貼簿派=Freemie 同路人(開源有 Open Keyboard、ai keyboard)。因為 iOS 鍵盤天生讀不到聊天畫面,他們只能靠這招。我們不必。
+2. Android 通知監聽派(reflex、Auto-Reply-Android):聽系統通知直接抓來訊,免截圖。但這等於重做我們 webhook 已有的事,只在 webhook 漏接時才有價值。
+3. LINE 官方內建自動回覆:只有關鍵字罐頭訊息,沒有真實資料學習、沒有人在迴路,不符你的要求。
+
+定案:我們的組合=webhook 收訊(第3派的正規版)+鍵盤出稿(第1派的殼)+面板點選或剪貼簿辨識當前客人,截圖辨識確定降為備援。已寫進需求檔。參考連結:github.com/maneesh888/open-keyboard、github.com/DevsOnFlutter/reflex、github.com/it5prasoon/Auto-Reply-Android

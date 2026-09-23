@@ -1,0 +1,32 @@
+a0: 分支治理實查——沒有人負責收斂(Owner msg 6021)
+
+Owner 原話:「會不會是治理問題…你存你的他存他的 所有分支不就沒有一個確定版本,
+假設我們要壓縮出貨系統給客人要用誰的,沒有一個角色一個人來檢查這個分支有沒有
+重複的功能,能不能收成一條…凡走過必留下痕跡,留下好的抉擇也是痕跡的一環」
+
+新增 handoff/BRANCH_GOVERNANCE_AUDIT_20260923.md。實查四個 repo:
+
+- investment-os:23 條遠端分支,main 停在 2026-07-16(69 天);
+  vs research/markyang-finance-20260911 分岔 302 / 82 —— 兩條都不是可出貨版本。
+- maplab-ai-handbook:47 條遠端分支;chore/agent-login-governance-20260816
+  領先 main 588 個 commit、main 另有 90 個它沒有;origin/main 最近提交
+  全部是 patrol(a1) 的 all clear —— 巡邏在一條沒人做事的線上宣告正常。
+  實證:今天建的 NAMING_GLOSSARY.md 在 origin/main 上不存在。
+- claude-daily-operations:工作區不在 main(ops/relocate-register-20260803),
+  22 檔已改未提交 + 約 150 檔從未進版控(hermes_duty 值班表、operations 每日紀錄、
+  codex 交叉稽核 36 份逐字稿)—— 這些痕跡只有一份,活在本機硬碟上。
+  連續 49 輪 git pull cdo 失敗是同一個原因。
+- agent-bus:只有 main、零分岔 —— 反例,證明單線可行。
+
+根因:分支是免費的,合併要付代價,而沒有任何角色被指派去付那個代價。
+建議制度五條(出貨只認 main tag / 每條分支一張卡、到期封 tag 不刪 /
+設整合官每週收斂 / 重複功能先用 git 算檔案交集 / 好的抉擇與被否決的理由都入檔)。
+
+止血順序建議:①cdo 那 150 個未進版控的紀錄先入版控(唯一只有一份的那批,
+但 cdo 是共用 repo,依規不自行 commit,等 Owner 一句話)②handbook 588 commit
+併回 main ③investment-os 主幹裁定等 codex 額度。
+
+未做不宣稱:以上三件全部尚未執行,本輪只有實查與提案。
+A0 自己就是累犯(588 個 commit 一次都沒併回去),已寫進檔案第六節。
+
+Co-Authored-By: Claude <noreply@anthropic.com>

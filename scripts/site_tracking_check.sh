@@ -13,6 +13,32 @@
 
 set -uo pipefail
 
+# --verify-clarity-id <id>:驗「Owner 給的 Clarity 專案識別碼是不是真的活的」。
+#   做法=抓 https://www.clarity.ms/tag/<id>。真專案會回 200 且內容是 clarity 的 tag 腳本;
+#   假的/打錯的 id 會回非 200 或空內容。
+#   這一步跟「站上有沒有裝」是兩件事,不可混講:id 有效 ≠ 已佈碼。
+if [ "${1:-}" = "--verify-clarity-id" ]; then
+  CID="${2:-}"
+  if [ -z "$CID" ]; then
+    echo "[ERR] --verify-clarity-id 要帶專案識別碼"
+    exit 2
+  fi
+  echo "=== 驗 Clarity 專案識別碼:$CID"
+  tmp=$(mktemp)
+  code=$(curl -s -L --max-time 30 -o "$tmp" -w '%{http_code}' "https://www.clarity.ms/tag/${CID}")
+  size=$(wc -c < "$tmp" | tr -d ' ')
+  hit=$(grep -c "$CID" "$tmp")
+  echo "HTTP=$code BYTES=$size 內容含該 id 次數=$hit"
+  if [ "$code" = "200" ] && [ "$size" -gt 200 ]; then
+    echo "  → 識別碼有效(clarity 回得出 tag 腳本)。注意:這只證明 id 是真的,不代表站上已佈碼。"
+    rm -f "$tmp"
+    exit 0
+  fi
+  echo "  ✗ 識別碼查無有效回應,先跟 Owner 核對字串再佈碼"
+  rm -f "$tmp"
+  exit 3
+fi
+
 URLS=("$@")
 if [ ${#URLS[@]} -eq 0 ]; then
   URLS=("https://maplabkitchen.com/")

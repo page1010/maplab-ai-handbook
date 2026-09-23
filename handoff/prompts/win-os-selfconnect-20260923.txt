@@ -9,16 +9,32 @@
    然後 git add / commit / push,讓 mac 端看得到。
 
 第二步 本輪指定卡:win01-ga4-clarity-install-20260918。
-這張卡已由 mac-a0 於 2026-09-23 20:05 從 pending 改成 blocked,解除條件是拿到 Clarity project id。
-在 project id 還沒給之前:不要嘗試登入任何帳號、不要猜密碼、不要重複重試觸發鎖定。
-拿到 project id 之後才進第三步。
+【2026-09-23 21:25 更新】這張卡已解除封鎖,state 改回 pending,可以直接做。
+Owner 已於 2026-09-23T21:20:51 給出 Clarity 專案識別碼 ymth0sxpjr,
+mac-a0 也驗過有效(抓 https://www.clarity.ms/tag/ymth0sxpjr 得 HTTP 200 / 726 bytes)。
+卡上原第 1 步「新建 GA4 資產」已作廢不要做——首頁本來就有 Site Kit 管的 G-GCK6LKMZ25,
+重建會變成兩套追蹤碼互相污染。原第 2 步「建 Clarity 專案」也已由 Owner 完成。
+仍然不變的紅線:不要嘗試登入任何帳號、不要猜密碼、不要重複重試觸發鎖定。
 
 第三步 佈碼路線已經改了,不要再去找 WPCode:
 站上並沒有安裝 WPCode / Code Snippets / HFCM(2026-09-18 win-01 自己盤點的結果),
 管追蹤標籤的是 Site Kit 1.188.0。
 建議路線=在既有的 GTM 容器 GTM-T2Z52GP 新增一個 Custom HTML tag,貼 Clarity 片段,
-觸發條件選 All Pages,完全不動 WordPress,也不需要裝外掛,要停用隨時可停。
+觸發條件選 All Pages,然後 Submit/Publish 容器;
+完全不動 WordPress,也不需要裝外掛,要停用隨時可停。
 GTM 進不去時才退回第二方案:用站上已有的 Header Footer Elementor 做 header 注入。
+
+要貼的整段片段已經寫好,不要自己重打(打錯一個字元就是白裝):
+maplab-ai-handbook/handoff/prompts/clarity-tag-ymth0sxpjr.html
+片段本體如下,HTML 註解那幾行可以不貼:
+
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "ymth0sxpjr");
+</script>
 
 第四步 回驗才算完成:
 佈完之後抓 https://www.maplabkitchen.com/ 的 HTML 以及 GTM 容器本體

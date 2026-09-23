@@ -31,7 +31,10 @@ if [[ "${A0_ALLOW_FIRST_PERSON:-0}" != "1" ]]; then
   if [[ -n "$BAD_LINES" ]]; then
     echo "❌ 第三人稱閘擋下(Owner msg 5991):下列行出現「我」或「你」" >&2
     echo "$BAD_LINES" >&2
-    echo "   改法:Owner 寫「Owner」、自己寫「Fable5」、其他 agent 寫名字、程式寫程式名。" >&2
+    # 2026-09-23 Owner msg 6002(ts 17:29:15):「fable5 背後是 opus5運行,所以要自稱claude」。
+    # 自稱從「Fable5」改為「Claude」——Claude=寫字的模型本身,Fable5=這條線的角色名,
+    # bot.py=收發程式,codex/win-01/openclaw/a6=別的 agent。四個詞各指一個對象,不混用。
+    echo "   改法:Owner 寫「Owner」、自己寫「Claude」、其他 agent 寫名字、程式寫程式名。" >&2
     echo "   不用「我們」,要講誰就點名。引用 Owner 原話的行,行首加「原話:」即豁免。" >&2
     exit 1
   fi

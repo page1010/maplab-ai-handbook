@@ -19,6 +19,24 @@ if [[ -z "$MESSAGE" ]]; then
   exit 1
 fi
 
+# 第三人稱閘(Owner msg 5991,2026-09-23T17:05:09)
+# Owner 原話:「你的你我他用法很奇怪你們自己有幾個人對話請用第三人稱」。
+# 真因:這條線上只有一個寫字的(Fable5),但「我」被混用成三種對象——Fable5 自己、
+# bot.py 這支收發程式、以及「Fable5 加上 codex/win-01 那些不在這條線上的 agent」;
+# 「你」又混用成 Owner 與引用 Owner 原話。制度 E:筆記沒人看,所以寫成程式擋下來。
+# 規則:回覆稿不得出現 我/你(含我們/你們)。要引用 Owner 原話的行,行首寫「原話:」即豁免。
+# 真有例外:A0_ALLOW_FIRST_PERSON=1 bash ...,但要在回覆裡對 Owner 說明為什麼。
+if [[ "${A0_ALLOW_FIRST_PERSON:-0}" != "1" ]]; then
+  BAD_LINES="$(grep -n '[我你]' "$MSG_FILE" | grep -v '^[0-9]*:原話:' || true)"
+  if [[ -n "$BAD_LINES" ]]; then
+    echo "❌ 第三人稱閘擋下(Owner msg 5991):下列行出現「我」或「你」" >&2
+    echo "$BAD_LINES" >&2
+    echo "   改法:Owner 寫「Owner」、自己寫「Fable5」、其他 agent 寫名字、程式寫程式名。" >&2
+    echo "   不用「我們」,要講誰就點名。引用 Owner 原話的行,行首加「原話:」即豁免。" >&2
+    exit 1
+  fi
+fi
+
 # 額度自估尾巴(Owner msg 5557):估算器存在才掛,失敗不擋送信。
 QUOTA_TAIL="$(/usr/bin/python3 "$REPO_ROOT/scripts/a0_quota_estimate.py" 2>/dev/null || true)"
 if [[ -n "$QUOTA_TAIL" ]]; then

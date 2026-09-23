@@ -72,6 +72,24 @@ end repeat
 end repeat
 return out
 end tell"
+elif [ "${1:-}" = "shot" ]; then
+  # ⭐ shot [W T] — 截圖。Owner msg 6066:「你不要自己腦補 你至少桌面截圖
+  #   你又不截圖只看程式碼」。讀網址、讀原始碼、讀參數都只是**推**,
+  #   畫面上那行紅字才是**看到**。帶 W T 會先把那個分頁切到前景再截。
+  # 存放邊界:截圖會拍到 Owner 整個桌面(信件、後台、帳號頁),
+  #   **一律存在 repo 外的 ~/.maplab/screenshots/,絕不入版控、絕不外傳**。
+  mkdir -p "$HOME/.maplab/screenshots"
+  OUT="$HOME/.maplab/screenshots/shot_$(date +%Y%m%d_%H%M%S).png"
+  if [ -n "${2:-}" ] && [ -n "${3:-}" ]; then
+    osascript -e "tell application \"${OWNER_APP}\"
+set active tab index of window ${2} to ${3}
+activate
+end tell" >/dev/null
+    sleep 2
+  fi
+  screencapture -x -o "$OUT" 2>&1 || { echo "截圖失敗(可能缺螢幕錄製權限)"; exit 2; }
+  if [ -s "$OUT" ]; then echo "$OUT"; else echo "截圖檔是空的:$OUT"; exit 2; fi
+  exit 0
 elif [ "${1:-}" = "history-when" ] && [ -n "${2:-}" ]; then
   # 印出含關鍵字的網址「最後一次造訪時間」,用來判斷一個結帳頁在那邊放多久了。
   # 只印 host+path 與時間,query 一律砍掉(同 history-find 的理由:網址裡有權杖)。

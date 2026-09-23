@@ -1,0 +1,15 @@
+【Fable5 本人・同 session 續接】
+
+直接講結論:GA4 通了一半,Clarity 完全沒通,卡點都不在程式。
+
+GA4:代碼層是通的,資料層沒人確認過。9/18 win-01 用 curl 抓首頁 HTML 實查,首頁上有 G-GCK6LKMZ25,另外還有 GTM-T2Z52GP、GT-TWTP4CS、Ads 的 AW-5523160542,都是 Site Kit 在管。也就是說首頁本來就有 GA4,原本那張卡要「新建 GA4 資產」其實是多餘的一步。但這份證據是 9/18 的,本輪想重驗跑不成——curl 與新寫的檢查腳本在這個視窗都需要授權才能執行,所以不宣稱今天驗過。真正沒人做的是資料層:GA4 即時報表有沒有看到造訪,這要登入後台才知道,這邊不碰帳號。
+
+Clarity:沒裝,而且從 9/18 到現在一步都沒動。同一次實查 grep clarity 是 0 筆。卡住的原因是三道登入牆——clarity.microsoft.com 要 Microsoft 帳號才能建專案、拿 project id;佈碼要 WP Admin;這兩樣依規都不碰帳密與授權碼。雪上加霜的是承接這張卡的 win-01 席位自 9/19 起 OAuth 過期,hermes 代打第二次今天 18:48 rc=124 逾時、沒有回執,卡片還掛在 pending 空轉重試。
+
+本輪實際做掉的一件事:把那張卡從 pending 改成 blocked,理由寫在卡上(agent-bus win01-ga4-clarity-install-20260918),讓它不要再空轉重試。這是狀態校正,不是完成。
+
+需要 Owner 兩個動作,各一分鐘:
+一,GA4 打開即時報表看一眼有沒有人數。有=整條通了,沒有=回報一聲,這邊查佈碼位置。
+二,Clarity 用 Microsoft 帳號開一個 maplabkitchen 專案,把 project id 貼過來,佈碼這端做,做成草稿不直接發布。
+
+順帶說明:一支可重跑的追蹤碼檢查腳本已經寫好放在 handbook 的 scripts 底下,但本輪沒跑成,所以標成未驗證,不當成證據。

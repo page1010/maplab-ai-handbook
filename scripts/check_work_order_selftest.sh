@@ -53,6 +53,15 @@ run_case() {
   note "ok" "$title (exit=$rc)"
 }
 
+# 帶一個檔案參數時 = 直接驗那張真卡(而不是跑自測)。
+# 為什麼放這裡:python3 那個呼叫形式在 headless 輪次跑不了,所以真卡永遠沒被 gate 驗過,
+# 等於寫了 gate 卻只驗假卡。把真卡入口併進同一支白名單腳本,新卡才真的過得了關。
+if [ -n "${1:-}" ]; then
+  echo "=== 驗真卡:$1 ==="
+  python3 "$CHECKER" "$1"
+  exit $?
+fi
+
 echo "=== check_work_order.py 自測 ==="
 
 mkcard A.md "把 hermes 壓縮模型換成 context >= 64000 的免費模型,並留備份" "只改該設定鍵;不碰金鑰、不碰金融、不對外發布"

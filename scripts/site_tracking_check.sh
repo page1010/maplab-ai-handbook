@@ -39,6 +39,32 @@ if [ "${1:-}" = "--verify-clarity-id" ]; then
   exit 3
 fi
 
+# --verify-gtm <GTM-ID> <要找的字串>:GTM 注入的標籤「不會」出現在頁面 HTML 裡,
+#   curl 頁面永遠看不到,所以不能用頁面結果判「沒裝」。真正的證據在容器腳本
+#   https://www.googletagmanager.com/gtm.js?id=<GTM-ID> —— 而且只有「已發布」的版本才會進去。
+#   容器裡找得到 = 代碼層真的通了;找不到 = 標籤存了但沒發布,或裝在別的容器。
+if [ "${1:-}" = "--verify-gtm" ]; then
+  GID="${2:-}"; NEEDLE="${3:-}"
+  if [ -z "$GID" ] || [ -z "$NEEDLE" ]; then
+    echo "[ERR] 用法: --verify-gtm <GTM-ID> <要找的字串>"
+    exit 2
+  fi
+  echo "=== 驗 GTM 容器是否已發布含「${NEEDLE}」的標籤:$GID"
+  tmp=$(mktemp)
+  code=$(curl -s -L --max-time 30 -o "$tmp" -w '%{http_code}' "https://www.googletagmanager.com/gtm.js?id=${GID}")
+  size=$(wc -c < "$tmp" | tr -d ' ')
+  hit=$(grep -c "$NEEDLE" "$tmp")
+  cla=$(grep -c "clarity" "$tmp")
+  echo "HTTP=$code BYTES=$size 含「${NEEDLE}」次數=$hit 含 clarity 字樣次數=$cla"
+  rm -f "$tmp"
+  if [ "$code" = "200" ] && [ "$hit" -gt 0 ]; then
+    echo "  → 已發布:容器裡找得到,代碼層通了(資料層仍要看後台即時報表)"
+    exit 0
+  fi
+  echo "  ✗ 容器裡找不到。可能=標籤存了但容器沒按「發布」,或裝到別的容器/其他路徑去了"
+  exit 3
+fi
+
 URLS=("$@")
 if [ ${#URLS[@]} -eq 0 ]; then
   URLS=("https://maplabkitchen.com/")

@@ -3,7 +3,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-09-22 A1晚間巡查（remote cloud）｜8h 零非巡查 commit（系統靜止）；NEEDS_REVIEW 10 tasks 持續等 Owner 決定（~1933h since 07-19）；T-A7-001 Phase 3 延誤（07-25截止已過，第66天）；CRITICAL: T-A4-002 ~4165h / T-IOS-KOL-001 ~2653h / A6 ~2188h；A8 ~2468h；各 agent 狀態與 CURRENT_STATUS 一致，無新異常｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-09-23 A1晚間巡查（remote cloud）｜⚠️ main 分支靜止，但 A0 detached-HEAD 有 28 commits（msg 5975-6050，含 588-commit 大合併、Clarity 上線）尚未併回 main；NEEDS_REVIEW 10 tasks ~1957h；T-A7-001 Phase 3 第67天延誤；CRITICAL: T-A4-002 ~4189h / T-IOS-KOL-001 ~2677h / A6 ~2212h；A8 ~2492h｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 ---
 
@@ -341,6 +341,7 @@
 | ✅ A1巡查 2026-09-22 | 24h 零非巡查 commit（僅 3 個 09-21 巡查 commit），系統持續靜止。各 agent 狀態與 CURRENT_STATUS 一致，無新異常。10 項 NEEDS_REVIEW 任務 **~1917h**（since 07-19，等 Owner 決定延長/關閉/重啟）；T-A7-001 Phase 3 延誤（Owner 自 07-18 起第 **66 天**，07-25 截止已過）；T-A4-002 CRITICAL **~4149h** / T-IOS-KOL-001 CRITICAL **~2637h** / A6 RECALL **~2172h**（last commit 07-08）；A8 **~2452h**。RECALL 更新：A4 ~4125h→~4149h；A6 ~2148h→~2172h；A7 第65天→第66天；A8 ~2428h→~2452h。 | 無立即行動；T-A7-001 請 Owner 儘速確認 Zone B（NT$2,000？）+ Zone C（NT$2,500？）以重啟 Phase 3 |
 | ✅ A1巡查 2026-09-22 午後 | 8h 零非巡查 commit（僅早晨 daily 巡查 commit），系統持續靜止。各 agent 狀態與 CURRENT_STATUS 一致，無新異常。10 項 NEEDS_REVIEW 任務 **~1925h**（since 07-19，等 Owner 決定延長/關閉/重啟）；T-A7-001 Phase 3 延誤（Owner 自 07-18 起第 **66 天**，07-25 截止已過）；T-A4-002 CRITICAL **~4157h** / T-IOS-KOL-001 CRITICAL **~2645h** / A6 RECALL **~2180h**（last commit 07-08）；A8 **~2460h**。RECALL 更新：A4 ~4149h→~4157h；A6 ~2172h→~2180h；A7 第66天（持續）；A8 ~2452h→~2460h。 | 無立即行動；T-A7-001 請 Owner 儘速確認 Zone B（NT$2,000？）+ Zone C（NT$2,500？）以重啟 Phase 3 |
 | ✅ A1巡查 2026-09-22 晚間 | 8h 零非巡查 commit（僅午後 d91ace2 巡查 commit），系統持續靜止。各 agent 狀態與 CURRENT_STATUS 一致，無新異常。10 項 NEEDS_REVIEW 任務 **~1933h**（since 07-19，等 Owner 決定延長/關閉/重啟）；T-A7-001 Phase 3 延誤（Owner 自 07-18 起第 **66 天**，07-25 截止已過）；T-A4-002 CRITICAL **~4165h** / T-IOS-KOL-001 CRITICAL **~2653h** / A6 RECALL **~2188h**（last commit 07-08）；A8 **~2468h**。RECALL 更新：A4 ~4157h→~4165h；A6 ~2180h→~2188h；A7 第66天（持續）；A8 ~2460h→~2468h。 | 無立即行動；T-A7-001 請 Owner 儘速確認 Zone B（NT$2,000？）+ Zone C（NT$2,500？）以重啟 Phase 3 |
+| ⚠️ A1巡查 2026-09-23 晚間 | **分支警告**：main 分支從昨晚（09-22 晚間，174d896）至今 24h+ 無新 commit。但 A0 agent 在 detached HEAD 上有 28 commits 回應 Owner msg 5975-6050，包括：① 588 commit 工作分支大合併回 detached HEAD（38220a4）② Investment OS 套利研究（ORB 分析、永豐大小台價差策略、馬克羊套利庫）③ Win-OS 席位定義/NAMING_GLOSSARY.md ④ Clarity 追蹤上線（ymth0sxpjr）⑤ 分支治理掃描腳本 branch_governance_check.sh ⑥ 今日需求卡盤點（6050，22:04 UTC+8）。這批工作**尚未合併回 main**，main 分支未能反映今日的 A0 active 狀態。無 A2-A8 agent 自主 commit；各長期追蹤指標：10 項 NEEDS_REVIEW 任務 **~1957h**（since 07-19，等 Owner 決定延長/關閉/重啟）；T-A7-001 Phase 3 延誤（Owner 自 07-18 起第 **67 天**，07-25 截止已過）；T-A4-002 CRITICAL **~4189h** / T-IOS-KOL-001 CRITICAL **~2677h** / A6 RECALL **~2212h**（last commit 07-08）；A8 **~2492h**。 | ⚠️ A0 detached-HEAD 工作（28 commits）尚未合併回 main — 請 Owner 確認是否需要整合回 main；T-A7-001 Zone B/C 仍待確認 |
 | A7 | T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 5/8 需 TimeTree 權限（任務 9 已解除） | 見 Task Card |
 | Owner | T-GBP-001: 等 Owner 準備新圖片 | 見 Task Card |
 |  | T-HQ-001: Owner pending（非 B1 blocking） | 見 Task Card |

@@ -1,0 +1,7 @@
+file '/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A8-SENIOR-FITNESS-MVP-20260901/render/00-compilation-intro-10s.mp4'
+file '/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A8-SENIOR-FITNESS-MVP-20260901/render/01-chair-march.mp4'
+file '/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A8-SENIOR-FITNESS-MVP-20260901/render/02-chair-side-tap.mp4'
+file '/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A8-SENIOR-FITNESS-MVP-20260901/render/03-chair-heel-raise.mp4'
+file '/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A8-SENIOR-FITNESS-MVP-20260901/render/04-seated-knee-extension.mp4'
+file '/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A8-SENIOR-FITNESS-MVP-20260901/render/05-seated-chest-open.mp4'
+file '/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A8-SENIOR-FITNESS-MVP-20260901/render/99-compilation-outro-10s.mp4'

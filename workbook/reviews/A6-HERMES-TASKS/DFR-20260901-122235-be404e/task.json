@@ -1,0 +1,17 @@
+{
+  "schema_version": 4,
+  "task_id": "DFR-20260901-122235-be404e",
+  "created_at": "2026-09-01T12:22:35+0800",
+  "request": "[redacted-auto-routed-public-research]",
+  "request_sha256": "390c125d3b6bd53d59598bfeb88bfe33e90b31715fae1cb175d6a11759495e07",
+  "request_chars": 183,
+  "requester": {
+    "channel": "local-heartbeat",
+    "owner_user_id": 0,
+    "chat_id": null,
+    "chat_type": "codex"
+  },
+  "action": "deerflow-public-research",
+  "policy": "public-research-auto-route-v2",
+  "parent_job_id": "MAPJOB-20260901-122235-885e41"
+}

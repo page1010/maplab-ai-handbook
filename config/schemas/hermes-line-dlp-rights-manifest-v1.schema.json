@@ -1,0 +1,261 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://maplab.local/schemas/hermes-line-dlp-rights-manifest-v1.schema.json",
+  "title": "Hermes LINE DLP and data-rights manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "manifest_id",
+    "created_at",
+    "dataset",
+    "authority",
+    "data_subject_rights",
+    "retention",
+    "storage",
+    "egress",
+    "review"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "maplab.hermes.line-dlp-rights-manifest.v1"
+    },
+    "manifest_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{2,127}$"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "dataset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dataset_id",
+        "data_class",
+        "source_kind",
+        "contains_raw_customer_text",
+        "files"
+      ],
+      "properties": {
+        "dataset_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{2,127}$"
+        },
+        "data_class": {
+          "enum": ["private_line_derived", "synthetic"]
+        },
+        "source_kind": {
+          "enum": ["line_oa_export", "synthetic"]
+        },
+        "contains_raw_customer_text": {
+          "type": "boolean"
+        },
+        "files": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["logical_name", "sha256", "record_count", "byte_count"],
+            "properties": {
+              "logical_name": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]{0,63}$"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "record_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "byte_count": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "controller_id",
+        "attested_by",
+        "attested_at",
+        "allowed_uses",
+        "prohibited_uses"
+      ],
+      "properties": {
+        "status": {
+          "enum": ["PENDING", "APPROVED", "REVOKED", "EXPIRED"]
+        },
+        "controller_id": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 128
+        },
+        "attested_by": {
+          "type": ["string", "null"],
+          "minLength": 2,
+          "maxLength": 128
+        },
+        "attested_at": {
+          "type": ["string", "null"],
+          "format": "date-time"
+        },
+        "allowed_uses": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "offline_training",
+              "offline_evaluation",
+              "private_shadow_drafting",
+              "quality_audit"
+            ]
+          }
+        },
+        "prohibited_uses": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "external_model_egress",
+              "third_party_sharing",
+              "customer_auto_send",
+              "sale_or_ad_targeting",
+              "production_inference"
+            ]
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {"const": "APPROVED"}
+            }
+          },
+          "then": {
+            "properties": {
+              "attested_by": {"type": "string", "minLength": 2},
+              "attested_at": {"type": "string", "format": "date-time"}
+            }
+          }
+        }
+      ]
+    },
+    "data_subject_rights": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "access_export",
+        "correction",
+        "deletion",
+        "withdrawal_or_objection",
+        "contact_route_id"
+      ],
+      "properties": {
+        "access_export": {"type": "boolean"},
+        "correction": {"type": "boolean"},
+        "deletion": {"type": "boolean"},
+        "withdrawal_or_objection": {"type": "boolean"},
+        "contact_route_id": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 128
+        }
+      }
+    },
+    "retention": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "policy_id", "expires_at", "deletion_sla_days"],
+      "properties": {
+        "status": {
+          "enum": ["PENDING", "ACTIVE", "EXPIRED"]
+        },
+        "policy_id": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 128
+        },
+        "expires_at": {
+          "type": ["string", "null"],
+          "format": "date-time"
+        },
+        "deletion_sla_days": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 365
+        }
+      }
+    },
+    "storage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["owner_only", "allowed_root_fingerprint"],
+      "properties": {
+        "owner_only": {"type": "boolean"},
+        "allowed_root_fingerprint": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "egress": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "network_allowed",
+        "third_party_allowed",
+        "customer_send_allowed"
+      ],
+      "properties": {
+        "network_allowed": {"type": "boolean"},
+        "third_party_allowed": {"type": "boolean"},
+        "customer_send_allowed": {"type": "boolean"}
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "free_text_review_status",
+        "reviewed_by",
+        "reviewed_at",
+        "method",
+        "known_identifier_dictionary_sha256"
+      ],
+      "properties": {
+        "free_text_review_status": {
+          "enum": ["PENDING", "APPROVED", "REJECTED"]
+        },
+        "reviewed_by": {
+          "type": ["string", "null"],
+          "minLength": 2,
+          "maxLength": 128
+        },
+        "reviewed_at": {
+          "type": ["string", "null"],
+          "format": "date-time"
+        },
+        "method": {
+          "enum": ["deterministic_plus_named_human", "synthetic_fixture"]
+        },
+        "known_identifier_dictionary_sha256": {
+          "type": ["string", "null"],
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "schema_version": "maplab.seo-no-delta-receipt.v1",
+  "generated_at": "2026-09-01T04:25:10+00:00",
+  "scope": "public-read-only",
+  "baseline": {
+    "path": "/Users/pagemacmini/maplab-ai-handbook/workbook/reviews/JOB-A2-SEO-COACH-20260901/public_seo_baseline.json",
+    "sha256": "c20cb0cf201976f91bb7cc88eddb293e6ef0b0a0fade332a11d9964dde22353e",
+    "generated_at": "2026-09-01T03:58:27+00:00"
+  },
+  "method_fields": {
+    "acceptance": "http-index-canonical-title-description-h1-schema-alt-v1",
+    "evaluator": "deterministic-field-checks-v1",
+    "model": "none",
+    "probe_version": "maplab-public-seo-probe-v1",
+    "sampling": "none",
+    "timeout_seconds": 20,
+    "urls": [
+      "https://www.maplabkitchen.com/",
+      "https://www.maplabkitchen.com/corporate-catering-tainan/",
+      "https://www.maplabkitchen.com/corporate-tea-party-desserts/",
+      "https://www.maplabkitchen.com/tainan-corporate-opening-tea-catering/",
+      "https://www.maplabkitchen.com/brand-esg-catering-service/",
+      "https://www.maplabkitchen.com/press-conference-catering/",
+      "https://www.maplabkitchen.com/vip-expo-catering-business-meeting/",
+      "https://www.maplabkitchen.com/daxin-art-museum-opening-catering/",
+      "https://www.maplabkitchen.com/icc-tainan-catering/"
+    ],
+    "worker": "stdlib-public-http"
+  },
+  "method_fingerprint": "cd028320bc30cba1c78da38ef1cb2be6a02a11c91b3873b47192463b047de5a0",
+  "previous_method_fingerprint": "cd028320bc30cba1c78da38ef1cb2be6a02a11c91b3873b47192463b047de5a0",
+  "verified_delta": false,
+  "decision": "NO_DELTA_NO_DISPATCH",
+  "wordpress": {
+    "posts": {
+      "status": 200,
+      "total": 58
+    },
+    "pages": {
+      "status": 200,
+      "total": 6
+    }
+  },
+  "sitemap_children": [
+    {
+      "url": "https://www.maplabkitchen.com/post-sitemap.xml",
+      "status": 200,
+      "url_count": 58,
+      "urls_sha256": "6aeaf814acb2c5a9a4350779a8ed1603689a3fa0ecacd6072fca5922c2b56b25"
+    },
+    {
+      "url": "https://www.maplabkitchen.com/page-sitemap.xml",
+      "status": 200,
+      "url_count": 6,
+      "urls_sha256": "6e32f560e09adc660ac569d212c8a9b127ab188ba93015deac443b17b4614000"
+    },
+    {
+      "url": "https://www.maplabkitchen.com/elementor-hf-sitemap.xml",
+      "status": 200,
+      "url_count": 2,
+      "urls_sha256": "f174bcb5b588f423f0b9fde3e2bc7679e9e3489efc6cf82da10529d8c3016a89"
+    },
+    {
+      "url": "https://www.maplabkitchen.com/local-sitemap.xml",
+      "status": 200,
+      "url_count": 1,
+      "urls_sha256": "6515a3fce914695fe1633c148d9f23bb283836dc19f2572e9179832aeda0138a"
+    }
+  ],
+  "monitored_page_count": 9,
+  "press_conference_catering": {
+    "status": 200,
+    "canonical": "https://www.maplabkitchen.com/press-conference-catering/",
+    "robots": "follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large",
+    "schema_blocks": 3,
+    "schema_valid_blocks": 2,
+    "schema_invalid_blocks": 1,
+    "findings": [
+      "invalid_json_ld"
+    ]
+  },
+  "external_writes": 0,
+  "customer_send": 0,
+  "private_third_party_egress": 0,
+  "spend": 0
+}

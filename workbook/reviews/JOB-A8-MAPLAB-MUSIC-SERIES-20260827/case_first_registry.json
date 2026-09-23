@@ -1,0 +1,332 @@
+{
+  "schema_version": "1.0",
+  "sop": "skills/case-study-production-sop.md#case-first-intake-gate",
+  "source_root": "https://drive.google.com/drive/folders/1pKfGSOZXBpG7qXcJrW5T7aoHX4nqB1Tt",
+  "verified_at": "2026-08-27",
+  "cases": [
+    {
+      "sequence": 1,
+      "case_id": "A8CASE-20260717-BUNNY-GRADUATION",
+      "source_kind": "drive_case",
+      "internal_label": "0717邦尼兔-托嬰畢業典禮",
+      "event_date": "2026-07-17",
+      "drive_folder_id": "1-QvMeLHYD4csqdRsv5aTBUXtrXiqosbL",
+      "drive_folder_url": "https://drive.google.com/drive/folders/1-QvMeLHYD4csqdRsv5aTBUXtrXiqosbL",
+      "asset_inventory": {"images": 22, "videos": 6, "documents": 0, "folders": 0, "total": 28},
+      "source_integrity": {"inventory": "verified_connector_inventory", "unrelated_private_document_detected": false},
+      "identity_status": "verified_existing_receipt",
+      "public_name_status": "public_safe_anonymous",
+      "public_safe_title": "台南托嬰畢業典禮外燴｜把成長的祝福放進甜點桌",
+      "fact_chain": {
+        "event_anchor": "verified_existing_receipt",
+        "quote_or_equivalent": "verified_existing_receipt",
+        "asset_log": "pending",
+        "visual_qa": "verified_existing_receipt"
+      },
+      "seo": {
+        "cluster": "graduation_family_event",
+        "primary_keyword": "台南畢業典禮外燴",
+        "secondary_keywords": ["托嬰畢業典禮茶點", "畢業典禮甜點桌"],
+        "keyword_status": "final_verified",
+        "delivery_route": "existing_post_music_extension",
+        "live_owner": "tainan-daycare-graduation-catering",
+        "collision_check": "verified"
+      },
+      "music_style": "明亮華語電子舞曲 × kawaii future-bass 慶典感",
+      "readiness": "existing_public_case_audio_regen_gate",
+      "next_action": "以 Owner 核准歌詞重生正式母帶，不重寫已發布文章"
+    },
+    {
+      "sequence": 2,
+      "case_id": "A8CASE-20260718-CLEA-OPENING",
+      "source_kind": "drive_case",
+      "internal_label": "0718-服飾店開幕茶會Clea'",
+      "event_date": "2026-07-18",
+      "drive_folder_id": "109Me7KABT1vHZ8tkqriF84Lgo3DTT5sX",
+      "drive_folder_url": "https://drive.google.com/drive/folders/109Me7KABT1vHZ8tkqriF84Lgo3DTT5sX",
+      "asset_inventory": {"images": 19, "videos": 3, "documents": 3, "folders": 1, "total": 26},
+      "source_integrity": {"inventory": "verified_connector_inventory", "unrelated_private_document_detected": false},
+      "identity_status": "verified_a2_triangulation",
+      "public_name_status": "pending_exact_branch_confirmation",
+      "public_safe_title": "台南開幕茶會外燴案例｜服飾選品店的迎賓茶點",
+      "fact_chain": {
+        "event_anchor": "verified",
+        "quote_or_equivalent": "pending",
+        "asset_log": "pending",
+        "visual_qa": "pending"
+      },
+      "seo": {
+        "cluster": "opening_tea_case",
+        "primary_keyword": "台南開幕茶會外燴案例",
+        "secondary_keywords": ["店面開幕茶會", "品牌開幕外燴", "迎賓茶點"],
+        "keyword_status": "candidate_not_final",
+        "delivery_route": "opening_pillar_proof_module",
+        "live_owner": "tainan-corporate-opening-tea-catering",
+        "collision_check": "pending_live_rest"
+      },
+      "music_style": "Nu-disco × city-pop，門打開與迎賓上升感",
+      "readiness": "a2_research_ready",
+      "next_action": "確認實際分店、補 ASSET_LOG 與逐圖 QA，再判斷新增案例文或回填 pillar"
+    },
+    {
+      "sequence": 3,
+      "case_id": "A8CASE-20260726-FIRST-BIRTHDAY-PARTYSPACE",
+      "source_kind": "drive_case",
+      "internal_label": "0726派對空間2館-抓周慶生",
+      "event_date": "2026-07-26",
+      "drive_folder_id": "1kfum6M-7VmHLNrSg0g8M_aspMEsN0uZk",
+      "drive_folder_url": "https://drive.google.com/drive/folders/1kfum6M-7VmHLNrSg0g8M_aspMEsN0uZk",
+      "asset_inventory": {"images": 14, "videos": 0, "documents": 1, "folders": 1, "total": 16},
+      "source_integrity": {"inventory": "verified_connector_inventory", "unrelated_private_document_detected": false},
+      "identity_status": "verified_private_event_anchor",
+      "public_name_status": "public_safe_anonymous",
+      "public_safe_title": "台南週歲派對外燴案例｜抓周甜點桌與家庭聚會",
+      "fact_chain": {
+        "event_anchor": "verified",
+        "quote_or_equivalent": "waived_private_family",
+        "asset_log": "pending",
+        "visual_qa": "pending"
+      },
+      "seo": {
+        "cluster": "first_birthday",
+        "primary_keyword": "台南週歲派對外燴案例",
+        "secondary_keywords": ["台南抓周外燴", "週歲甜點桌"],
+        "keyword_status": "candidate_not_final",
+        "delivery_route": "first_birthday_pillar_proof_module",
+        "live_owner": "catering-one-year-old-party-tainan",
+        "collision_check": "pending_live_rest"
+      },
+      "music_style": "Acoustic pop × light boom-bap，大人聲線的家庭儀式感",
+      "readiness": "a2_research_ready",
+      "next_action": "完成 14 張 HEIC 視覺 QA；沒有真影片時，歌曲先不進 A8 長短片"
+    },
+    {
+      "sequence": 4,
+      "case_id": "A8CASE-20260816-MUSEUM-FIRST-BIRTHDAY",
+      "source_kind": "drive_case",
+      "internal_label": "0816-美術館二館抓周",
+      "event_date": "2026-08-16",
+      "drive_folder_id": "1FI_ATrxSbs5PWwQ6dcIdKkprcRVAKXik",
+      "drive_folder_url": "https://drive.google.com/drive/folders/1FI_ATrxSbs5PWwQ6dcIdKkprcRVAKXik",
+      "asset_inventory": {"images": 20, "videos": 6, "documents": 0, "folders": 0, "total": 26},
+      "source_integrity": {"inventory": "verified_connector_inventory", "unrelated_private_document_detected": false},
+      "identity_status": "folder_label_only",
+      "public_name_status": "withheld_until_venue_verification",
+      "public_safe_title": "台南抓周外燴案例｜美術館場域的週歲聚會",
+      "fact_chain": {
+        "event_anchor": "pending",
+        "quote_or_equivalent": "pending",
+        "asset_log": "pending",
+        "visual_qa": "pending"
+      },
+      "seo": {
+        "cluster": "first_birthday_venue",
+        "primary_keyword": "台南美術館抓周外燴",
+        "secondary_keywords": ["台南抓周場地", "週歲派對外燴"],
+        "keyword_status": "candidate_not_final",
+        "delivery_route": "first_birthday_pillar_or_case_gap",
+        "live_owner": "catering-one-year-old-party-tainan",
+        "collision_check": "pending_live_rest_and_gsc"
+      },
+      "music_style": "Ambient acoustic pop × soft broken beat，空間感與家庭儀式並重",
+      "readiness": "inventory_only",
+      "next_action": "用報價／事件資料確認場館全名與公開邊界，再做 venue keyword 查重"
+    },
+    {
+      "sequence": 5,
+      "case_id": "A8CASE-20260809-GUANTIAN-GENDER-REVEAL",
+      "source_kind": "drive_case",
+      "internal_label": "0809外燴性別官田",
+      "event_date": "2026-08-09",
+      "drive_folder_id": "1LfioPhDbpr2AayWW5_J7dCzVPlaG49SE",
+      "drive_folder_url": "https://drive.google.com/drive/folders/1LfioPhDbpr2AayWW5_J7dCzVPlaG49SE",
+      "asset_inventory": {"images": 15, "videos": 7, "documents": 0, "folders": 0, "total": 22},
+      "source_integrity": {"inventory": "verified_connector_inventory", "unrelated_private_document_detected": false},
+      "identity_status": "folder_label_only",
+      "public_name_status": "public_safe_anonymous",
+      "public_safe_title": "台南性別揭曉派對外燴案例｜戶外聚會與倒數時刻",
+      "fact_chain": {
+        "event_anchor": "pending",
+        "quote_or_equivalent": "pending",
+        "asset_log": "pending",
+        "visual_qa": "pending"
+      },
+      "seo": {
+        "cluster": "gender_reveal_family_event",
+        "primary_keyword": "台南性別揭曉派對外燴案例",
+        "secondary_keywords": ["台南性別派對", "戶外家庭派對外燴"],
+        "keyword_status": "candidate_not_final",
+        "delivery_route": "gender_reveal_existing_page_proof",
+        "live_owner": "gender-reveal-party-tips",
+        "collision_check": "pending_live_rest"
+      },
+      "music_style": "Pastel synth-pop × light UK garage，期待與倒數的彈性節拍",
+      "readiness": "inventory_only",
+      "next_action": "先以 quote/event anchor 確認案型，再檢查 7 支影片的人臉與揭曉隱私"
+    },
+    {
+      "sequence": 6,
+      "case_id": "A8CASE-20260815-ALLFORKIDS-CONCERT",
+      "source_kind": "drive_case",
+      "internal_label": "0815all for kids 音樂會",
+      "event_date": "2026-08-15",
+      "drive_folder_id": "1hVDM_3Ef0zav169Avftb2liyb32V0_ah",
+      "drive_folder_url": "https://drive.google.com/drive/folders/1hVDM_3Ef0zav169Avftb2liyb32V0_ah",
+      "asset_inventory": {"images": 6, "videos": 2, "documents": 0, "folders": 0, "total": 8},
+      "source_integrity": {"inventory": "verified_connector_inventory", "unrelated_private_document_detected": false},
+      "identity_status": "folder_label_only",
+      "public_name_status": "withheld_until_official_source_check",
+      "public_safe_title": "台南音樂會茶點外燴案例｜親子活動的中場招待",
+      "fact_chain": {
+        "event_anchor": "pending",
+        "quote_or_equivalent": "pending",
+        "asset_log": "pending",
+        "visual_qa": "pending"
+      },
+      "seo": {
+        "cluster": "concert_family_event",
+        "primary_keyword": "台南音樂會茶點外燴",
+        "secondary_keywords": ["親子音樂會茶點", "表演活動外燴"],
+        "keyword_status": "candidate_not_final",
+        "delivery_route": "case_gap_candidate_or_social_only",
+        "live_owner": null,
+        "collision_check": "pending_live_rest_and_gsc"
+      },
+      "music_style": "Playful chamber-pop × light breakbeat，保留現場音樂感與中場活力",
+      "readiness": "inventory_only",
+      "next_action": "確認活動官方資料與素材是否足以支撐案例文；8 件不足時可只做 social proof"
+    },
+    {
+      "sequence": 7,
+      "case_id": "A8CASE-20260815-CATHAY-YUANMEI",
+      "source_kind": "drive_case",
+      "internal_label": "0815國泰原美",
+      "event_date": "2026-08-15",
+      "drive_folder_id": "1CvsJ1oTY5pITDBVVIG-T6357_4_cfE4v",
+      "drive_folder_url": "https://drive.google.com/drive/folders/1CvsJ1oTY5pITDBVVIG-T6357_4_cfE4v",
+      "asset_inventory": {"images": 17, "videos": 1, "documents": 0, "folders": 0, "total": 18},
+      "source_integrity": {"inventory": "verified_connector_inventory", "unrelated_private_document_detected": false},
+      "identity_status": "folder_label_only",
+      "public_name_status": "withheld_until_event_type_and_naming_verified",
+      "public_safe_title": null,
+      "fact_chain": {
+        "event_anchor": "pending",
+        "quote_or_equivalent": "pending",
+        "asset_log": "pending",
+        "visual_qa": "pending"
+      },
+      "seo": {
+        "cluster": "property_vip_event_unconfirmed",
+        "primary_keyword": null,
+        "secondary_keywords": [],
+        "keyword_status": "withheld_until_identity",
+        "delivery_route": "identity_first_then_choose_existing_vip_or_gap",
+        "live_owner": "vip-expo-catering-business-meeting",
+        "collision_check": "not_started"
+      },
+      "music_style": "暫不定；待確認是建案接待、品牌活動或私人場次",
+      "readiness": "inventory_only_identity_blocked",
+      "next_action": "先由報價／事件紀錄還原活動類型，不能由建案名稱直接猜 SEO 意圖"
+    },
+    {
+      "sequence": 8,
+      "case_id": "A8CASE-20260815-DEVELOPER-MUSEUM",
+      "source_kind": "drive_case",
+      "internal_label": "0815-0816建商美術館",
+      "event_date": "2026-08-15",
+      "drive_folder_id": "1D2Erf3phicJ0B_pXciPrwn4tl1ZGoP0I",
+      "drive_folder_url": "https://drive.google.com/drive/folders/1D2Erf3phicJ0B_pXciPrwn4tl1ZGoP0I",
+      "asset_inventory": {"images": 48, "videos": 6, "documents": 0, "folders": 0, "total": 54},
+      "source_integrity": {"inventory": "verified_connector_inventory", "unrelated_private_document_detected": false},
+      "identity_status": "folder_label_only",
+      "public_name_status": "withheld_until_event_type_and_venue_verified",
+      "public_safe_title": null,
+      "fact_chain": {
+        "event_anchor": "pending",
+        "quote_or_equivalent": "pending",
+        "asset_log": "pending",
+        "visual_qa": "pending"
+      },
+      "seo": {
+        "cluster": "property_museum_vip_unconfirmed",
+        "primary_keyword": null,
+        "secondary_keywords": [],
+        "keyword_status": "withheld_until_identity",
+        "delivery_route": "identity_first_then_vip_or_museum_case",
+        "live_owner": "vip-expo-catering-business-meeting",
+        "collision_check": "not_started"
+      },
+      "music_style": "暫不定；若為建案 VIP 接待再評 Lounge house × art-pop",
+      "readiness": "inventory_only_identity_blocked",
+      "next_action": "先確認兩日是否同案、場館與客戶公開權限；54 件素材再做分日與人臉 QA"
+    },
+    {
+      "sequence": 9,
+      "case_id": "A8CASE-20260731-CELL-BRAND-EVENT",
+      "source_kind": "drive_case",
+      "internal_label": "0731-訊聯細胞",
+      "event_date": "2026-07-31",
+      "drive_folder_id": "1F_J7AaKIuQeThWnIG1eSZyc1gxnZPPrs",
+      "drive_folder_url": "https://drive.google.com/drive/folders/1F_J7AaKIuQeThWnIG1eSZyc1gxnZPPrs",
+      "asset_inventory": {"images": 15, "videos": 2, "documents": 0, "folders": 0, "total": 17},
+      "source_integrity": {"inventory": "verified_connector_inventory", "unrelated_private_document_detected": false},
+      "identity_status": "folder_label_only",
+      "public_name_status": "withheld_until_event_type_and_brand_permission_verified",
+      "public_safe_title": null,
+      "fact_chain": {
+        "event_anchor": "pending",
+        "quote_or_equivalent": "pending",
+        "asset_log": "pending",
+        "visual_qa": "pending"
+      },
+      "seo": {
+        "cluster": "corporate_brand_event_unconfirmed",
+        "primary_keyword": null,
+        "secondary_keywords": [],
+        "keyword_status": "withheld_until_identity",
+        "delivery_route": "identity_first_then_corporate_case",
+        "live_owner": "corporate-catering-tainan",
+        "collision_check": "not_started"
+      },
+      "music_style": "暫不定；確認活動型態後再選 clean electro-funk 或 neo-soul",
+      "readiness": "inventory_only_identity_blocked",
+      "next_action": "只用官方來源描述公司；活動目的、健康／醫療說法與品牌露出需另查證"
+    },
+    {
+      "sequence": 10,
+      "case_id": "A8CASE-20260729-DAYCARE-OPENING",
+      "source_kind": "drive_case",
+      "internal_label": "0729日照中心開幕",
+      "event_date": "2026-07-29",
+      "drive_folder_id": "1aBCqsJefJpnYbUyxpjrr2twVNqcaghOC",
+      "drive_folder_url": "https://drive.google.com/drive/folders/1aBCqsJefJpnYbUyxpjrr2twVNqcaghOC",
+      "asset_inventory": {"images": 7, "videos": 6, "documents": 1, "folders": 0, "total": 14},
+      "source_integrity": {
+        "inventory": "verified_connector_inventory",
+        "unrelated_private_document_detected": true,
+        "contamination_action": "excluded_from_case_facts"
+      },
+      "identity_status": "folder_label_only",
+      "public_name_status": "public_safe_anonymous",
+      "public_safe_title": "台南日照中心開幕茶會外燴案例｜社區照護空間的迎賓茶點",
+      "fact_chain": {
+        "event_anchor": "pending",
+        "quote_or_equivalent": "pending",
+        "asset_log": "pending",
+        "visual_qa": "pending"
+      },
+      "seo": {
+        "cluster": "opening_tea_community_care",
+        "primary_keyword": "台南日照中心開幕茶會外燴",
+        "secondary_keywords": ["機構開幕茶會", "社區照護活動茶點"],
+        "keyword_status": "candidate_not_final",
+        "delivery_route": "opening_pillar_proof_module",
+        "live_owner": "tainan-corporate-opening-tea-catering",
+        "collision_check": "pending_live_rest"
+      },
+      "music_style": "Organic neo-soul × gentle city-pop，溫暖、明亮、社區感",
+      "readiness": "inventory_only_contamination_flagged",
+      "next_action": "排除無關私人文件，只從照片／影片與報價事件鏈還原活動後再寫稿"
+    }
+  ]
+}

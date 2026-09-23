@@ -1,0 +1,18 @@
+a0: 自稱改為 Claude(Owner msg 6002)
+
+Owner 原話:「fable5 背後是 opus5運行,所以要自稱claude」。
+
+改動:
+- scripts/a0_reply_from_file.sh:第三人稱閘的改法提示從「自己寫 Fable5」
+  改為「自己寫 Claude」,並註明四個詞各指一個對象——Claude=寫字的模型本身、
+  Fable5=這條線的角色名、bot.py=收發程式、codex/win-01/openclaw/a6=別的 agent。
+- handoff/drafts/a0-reply-6002-self-name-claude.txt:本輪回覆稿。
+
+標頭處理(窄讀):續接開場仍規定開頭標「【Fable5 本人・同 session 續接】」,
+本輪把該行當線別標籤保留、內文自稱全改 Claude;已向 Owner 提出若要連標頭一起改,
+建議「【Claude・Fable5 線・同 session 續接】」,未獲回覆前不自行改。
+
+制度 E 紀錄:這則回覆的初稿被第三人稱閘擋下(exit 1)——該行為了解釋規則
+直接寫出被禁字。閘確實在運作,L3 不是紙上規則。
+
+Co-Authored-By: Claude <noreply@anthropic.com>

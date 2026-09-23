@@ -1,0 +1,22 @@
+{
+  "schema_version": "maplab.margin-leak.aggregate-summary.v1",
+  "as_of": "2026-08-28",
+  "data_class": "private-local-aggregate",
+  "contains_raw_text": false,
+  "contains_customer_identifiers": false,
+  "network_calls": 0,
+  "total_rows": 20256,
+  "unique_conversations": 2491,
+  "categories": [
+    {"category": "custom_scope", "matched_rows": 1419, "unique_conversations": 972},
+    {"category": "third_party_turnkey", "matched_rows": 838, "unique_conversations": 686},
+    {"category": "logistics_access", "matched_rows": 561, "unique_conversations": 455},
+    {"category": "revision_change_order", "matched_rows": 589, "unique_conversations": 363},
+    {"category": "equipment_consumables", "matched_rows": 602, "unique_conversations": 348},
+    {"category": "time_rush", "matched_rows": 477, "unique_conversations": 269},
+    {"category": "dietary_separation", "matched_rows": 154, "unique_conversations": 104},
+    {"category": "onsite_service", "matched_rows": 110, "unique_conversations": 75},
+    {"category": "cleanup_waste", "matched_rows": 56, "unique_conversations": 44}
+  ],
+  "interpretation": "Overlapping keyword candidates only. Not confirmed leakage, not customer identities, and not a basis for retroactive charging."
+}

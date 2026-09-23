@@ -1,0 +1,70 @@
+{
+  "schema": "maplab.hermes.mlx.install-smoke.v1",
+  "created_at": "2026-09-01T09:06:26+08:00",
+  "status": "INFRASTRUCTURE_SMOKE_PASS_QUALITY_NOT_PROVEN",
+  "live_route_enabled": false,
+  "hardware": {
+    "chip": "Apple M4",
+    "unified_memory_gb": 24,
+    "architecture": "arm64"
+  },
+  "runtime": {
+    "python": "3.12.13",
+    "mlx": "0.32.2",
+    "mlx_lm": "0.31.3",
+    "path": "/Users/pagemacmini/.maplab/a6-hermes-training/mlx/runtime/.venv"
+  },
+  "student": {
+    "repo": "mlx-community/Qwen3-4B-Instruct-2507-4bit",
+    "revision": "50d427756c6b1b2fe0c0a10f67fbda1fc8e82c1b",
+    "path": "/Volumes/MacExternal/MAPLAB_PUBLIC_MODELS/huggingface/mlx-community/Qwen3-4B-Instruct-2507-4bit",
+    "config_sha256": "574349e5a343236546fda55e4744a76e181f534182d7dc60ff1bad7e7a502849",
+    "weights_sha256": "2a73c6c248601ab904e035548abd8e6abb65ea27dcb5f342fb0a8910eb44173f",
+    "tokenizer_sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+  },
+  "smoke_training": {
+    "data_class": "synthetic_only",
+    "train_examples": 8,
+    "validation_examples": 2,
+    "test_examples": 1,
+    "network_policy": "sandbox_deny_network",
+    "fine_tune_type": "lora_on_4bit_base",
+    "mask_prompt": true,
+    "iterations": 3,
+    "trainable_parameters": 918000,
+    "trainable_fraction_percent": 0.023,
+    "peak_memory_gb": 2.697,
+    "test_loss": 5.059,
+    "test_perplexity": 157.419
+  },
+  "adapter": {
+    "path": "/Users/pagemacmini/.maplab/a6-hermes-training/mlx/adapters/synthetic-smoke-qwen3-4b-instruct-2507-20260901",
+    "config_sha256": "4e4c93fae4aded471b7619c92ddf5dc891b79ee0fd5df16e25a928b531898099",
+    "weights_sha256": "73815f7755b4d450e26b1b7ce7d4a44683801dce578f1cd2cd533aed087c0117",
+    "file_mode": "0600"
+  },
+  "effect_probe": {
+    "base_output": "1. 請問茶會地點預計在哪裡？ 2. 預算範圍約是多少？ 3. 有無忌口或特殊飲食需求（如素食、過敏等）？",
+    "adapter_output": "請問茶會地點在哪？預算範圍約多少？是否有飲食禁忌（如素食、過敏）？",
+    "adapter_effect_observed": true,
+    "business_quality_pass": false,
+    "note": "The adapter shortened the response but still omitted the requested single-window value statement. This is infrastructure evidence only."
+  },
+  "privacy": {
+    "external_volume_encrypted": false,
+    "external_volume_allowed_content": "public_models_and_public_cache_only",
+    "private_artifact_root_mode": "0700",
+    "private_data_used": false,
+    "customer_send": false,
+    "third_party_egress": false
+  },
+  "promotion_gates_remaining": [
+    "20_of_20_named_human_rubric_labels",
+    "identity_blind_scorer_exact_agreement_at_least_18_of_20",
+    "zero_safety_mismatch",
+    "complete_dlp_and_data_rights_manifest",
+    "30_to_50_owner_corrected_gold_examples",
+    "independent_holdout_improvement",
+    "50_case_human_shadow"
+  ]
+}

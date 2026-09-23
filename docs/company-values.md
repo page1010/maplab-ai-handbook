@@ -108,6 +108,13 @@
 **長期目標記住：**
 > 可驗證、可觀測、能自我維持、會複利的系統。不是短期瞎忙。每次用 Claude token 問自己：這個動作讓系統長期更自主，還是只解決今天的問題？
 
+**同方法重跑熔斷（2026-08-28 Owner 校正）：**
+
+- 同一 method fingerprint 連續兩次沒有可驗證改善，凍結後續模型呼叫；輪數與 token 消耗不是進度。
+- 第三次遇到同類失敗，先跑第一性原理 5 題、建立 failure taxonomy、固定 holdout 與 stop-loss。
+- 新 attempt 必須有明確 hypothesis 與單一 changed variable；沒有換方法，不得換 seed 後繼續算成新實驗。
+- 完整操作契約見 `docs/OPERATING_CULTURE.md` 原則 7；Supervisor／heartbeat 必須用程式閘門實現，不只靠 Agent 自律。
+
 **延伸閱讀：**
 - `skills/session-lifecycle/SKILL.md` §「資源衛生」— session/Chrome/RAM 管理
 - `AGENT_RULES.md` §「資源衛生」— Chrome browser session 規則
@@ -191,6 +198,7 @@
 | v1.2 | 2026-06-17 | 新增未提交變更判讀文化：先追需求、可用性、治理狀態，再補強提交或封存標記 | Owner 校正：不是清掉 dirty changes，而是回收成學習與治理訊號 |
 | v1.3 | 2026-06-18 | 新增測試與 receipt 硬條款，要求 cold-start 先列測試計畫與 receipt 路徑，收尾必列 Tests run | Owner 校正：有寫沒做、沒測試、沒落檔都違反企業文化 |
 | v1.4 | 2026-07-20 | 新增「七、憑證選型」：唯讀例行查詢優先用瀏覽器既有登入態，不依賴會定期過期的 API 通行證 | Owner 校正：Google/Meta Ads token 過期是重複維護負擔，應從根本改路徑 |
+| v1.5 | 2026-08-28 | 新增同方法重跑熔斷：兩輪無改善即停止，重啟需 failure taxonomy、固定 holdout、單一變因與 stop-loss | Owner 對 12 輪 LINE 盲跑的校正 |
 
 ---
 

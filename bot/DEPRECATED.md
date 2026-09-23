@@ -1,4 +1,19 @@
-# ⚠️ 本文件描述過期 — bot/bot.py 實際為 A1 遠端讀檔終端，PID active via launchd
+# 🛑 本文件已作廢,不要照它動手 — bot.py 正在生產線上跑
+
+**2026-09-23 17:4x 實查(Owner msg 6005「先釐清這些稱謂才能發現問題出在哪裡」):**
+
+- `bot/bot.py` **活著**,PID **89665**,由 launchd `com.maplab.telegrambot` 常駐
+  (`launchctl list` 顯示 PID 89665 / LastExitStatus 0)。
+- 它是 **a0/Fable5 線唯一的 Telegram 收發程式**:收訊息寫進
+  `claude-daily-operations/state/a0_inbox.jsonl`,再用 `claude -p --resume` 叫醒既有 session。
+- **下面那句「com.maplab.telegrambot.plist 已 unload」是錯的**——plist 已載入且在跑。
+- **照下面內容拆掉 bot.py 或 unload plist = 直接切斷 Owner 與 A0 的唯一通道。**
+
+以下保留當歷史紀錄,**不是現況**。稱謂與分層見 repo 根目錄 `NAMING_GLOSSARY.md`。
+
+---
+
+# (歷史)⚠️ 本文件描述過期 — bot/bot.py 實際為 A1 遠端讀檔終端，PID active via launchd
 
 建立日期：2026-03-27
 棄用日期：2026-03-27

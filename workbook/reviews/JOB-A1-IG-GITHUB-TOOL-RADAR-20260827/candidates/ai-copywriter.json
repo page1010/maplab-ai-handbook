@@ -1,0 +1,38 @@
+{
+  "candidate_id": "ai-copywriter",
+  "kind": "skill",
+  "identity": {
+    "status": "upstream_verified",
+    "url": "https://github.com/mikiarlo3/ai-copywriter"
+  },
+  "license": {
+    "status": "verified_open",
+    "id": "MIT"
+  },
+  "maintenance": "active",
+  "fit": "medium",
+  "overlap": "substantial",
+  "runtime": {
+    "ready": true,
+    "smoke": "not_run"
+  },
+  "data": {
+    "max_allowed": "approved_brand",
+    "egress": "none"
+  },
+  "credentials": [
+    "none"
+  ],
+  "side_effects": [
+    "local_files"
+  ],
+  "evidence": {
+    "social_url": "https://www.instagram.com/jasonxtsai/p/DbxxjhQCegU/",
+    "official_urls": [
+      "https://github.com/mikiarlo3/ai-copywriter/commit/08b53b1ad39887cd94cbaab61cac3b6aae2d8518",
+      "https://github.com/mikiarlo3/ai-copywriter/blob/08b53b1ad39887cd94cbaab61cac3b6aae2d8518/LICENSE"
+    ],
+    "checked_at": "2026-08-27"
+  },
+  "note": "Do not install globally. Its anti-AI audit idea may merit an offline A/B quality evaluation, but the broad skill overlaps MAPLAB brand/SEO controls and its clickbait/viral defaults conflict with brand voice."
+}

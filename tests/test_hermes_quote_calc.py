@@ -1,0 +1,360 @@
+import tempfile
+import unittest
+from pathlib import Path
+from unittest import mock
+
+from bot_a6 import hermes_task_executor as executor
+from bot_a6 import hermes_telegram_gateway as gateway
+from bot_a6 import quote_calc
+
+
+class QuoteCalcTest(unittest.TestCase):
+    def test_every_number_in_the_price_book_has_a_source(self):
+        """紅線「絕不編價」的機械化檢查:沒有 source 的數字不准存在。"""
+
+        book = quote_calc.load_price_book()
+        for line in book["menu_lines"]:
+            self.assertTrue(line["price_source"].strip(), line["key"])
+            self.assertTrue(line["cost_source"].strip(), line["key"])
+            self.assertGreater(line["price"], 0, line["key"])
+            self.assertGreater(quote_calc._unit_cost(line), 0, line["key"])
+        for service in book["service_lines"]:
+            self.assertTrue(service["source"].strip(), service["key"])
+
+    def test_sandwich_cost_is_half_the_takeout_price_and_cutting_small_doubles_pieces(self):
+        """Owner msg 5800:三明治成本以外帶售價的 50% 計算,切小一點提高毛利。"""
+
+        whole = quote_calc.lookup("蛋沙拉三明治")
+        self.assertEqual(quote_calc._unit_cost(whole), whole["price"] * 0.5)
+        self.assertEqual(whole["pieces_per_unit"], 12)
+
+        cut = quote_calc.lookup("蛋沙拉三明治_切小")
+        # 切小:單位成本不變、件數加倍 → 每件成本砍半
+        self.assertEqual(quote_calc._unit_cost(cut), quote_calc._unit_cost(whole))
+        self.assertEqual(cut["pieces_per_unit"], whole["pieces_per_unit"] * 2)
+        self.assertAlmostEqual(
+            quote_calc._cost_per_piece(cut), quote_calc._cost_per_piece(whole) / 2
+        )
+
+        # 切小本身不改毛利率(售價與成本同一組不動);它買的是件數
+        same_units = [("蛋沙拉三明治", 3)], [("蛋沙拉三明治_切小", 3)]
+        whole_plan = quote_calc.plan_by_items(same_units[0], package_price=30000, pax=100)
+        cut_plan = quote_calc.plan_by_items(same_units[1], package_price=30000, pax=100)
+        self.assertEqual(whole_plan["food_cost"], cut_plan["food_cost"])
+        self.assertEqual(cut_plan["pieces"], whole_plan["pieces"] * 2)
+
+    def test_flatbread_cost_unit_is_per_piece_not_per_whole_round(self):
+        """薄餅的「份」是一片還是整張 8 吋,決定成本差 8 倍。已交叉驗證=一片。
+
+        依據:items_master APP026 法式黑松露野菇烤薄餅 20/份,菜單同品 $320/8 片 → 40/片,
+        20 正好是 40 的 50%,與 Owner msg 5800 的「成本=外帶售價 50%」吻合。
+        若「份」指整張,成本會是 2.5/片(毛利 93.75%),與全表其他品項的食材成本佔比完全不合。
+        這支測試把結論釘住,免得下輪又當成未解問題重新猜一次。
+        """
+        flatbread = quote_calc.lookup("打拋豬薄餅")
+        self.assertEqual(flatbread["pieces_per_unit"], 8)
+        per_piece = quote_calc._cost_per_piece(flatbread)
+        # 落在「一片」的量級(20 出頭),不是「整張」的量級(個位數)
+        self.assertGreater(per_piece, 15)
+        self.assertLess(per_piece, 30)
+        # 嚴格套 50% 規則的值與現行推估差距要很小,否則這條交叉驗證就不成立
+        strict_half = flatbread["price"] * 0.5 / flatbread["pieces_per_unit"]
+        self.assertLess(abs(per_piece - strict_half) / strict_half, 0.05)
+
+        # 全表沒有任何品項的食材成本佔售價低於 10%——這是上面反證的基礎
+        for row in quote_calc.margin_table():
+            self.assertLess(row["margin_rate"], 0.9, row["key"])
+
+    def test_retired_plan_is_neither_listed_nor_runnable(self):
+        """Owner msg 5800「why 開了 60% 的」——作廢版不得再出現在選項裡。"""
+
+        self.assertNotIn("A-60", [plan["name"] for plan in quote_calc.reference_plans()])
+        with self.assertRaises(quote_calc.QuoteError) as ctx:
+            quote_calc.run_reference_plan("A-60")
+        self.assertIn("已作廢", str(ctx.exception))
+
+    def test_owner_piece_count_plan_holds_the_80_percent_floor(self):
+        """H3 是照 Owner msg 5800 四條配的,毛利率必須守住他定的下限。"""
+
+        book = quote_calc.load_price_book()
+        floor = book["rules"]["target_margin_floor"]
+        result = quote_calc.run_reference_plan("H3-OWNER")
+        self.assertGreaterEqual(result["margin_rate"], floor)
+        # 便宜的多、貴的少:件數最多的那幾項必須是每件成本最低的那幾項
+        by_pieces = sorted(result["lines"], key=lambda row: row["pieces"], reverse=True)
+        self.assertIn(by_pieces[0]["key"], ("梅子醬蝦棗", "打拋豬薄餅"))
+        pizza = [row for row in result["lines"] if "pizza" in row["key"] or "披薩" in row["key"]]
+        self.assertTrue(pizza)
+        for row in pizza:
+            self.assertEqual(row["units"], 1)
+
+    def test_unknown_item_is_never_priced_by_guessing(self):
+        with self.assertRaises(quote_calc.QuoteError):
+            quote_calc.lookup("神秘新菜")
+        with self.assertRaises(quote_calc.QuoteError):
+            quote_calc.plan_by_items([("神秘新菜", 1)])
+
+    def test_menu_sum_ceiling_matches_highest_margin_item(self):
+        """Owner msg 5771「毛利必須高於80%」的答案是數學事實,不是方案。"""
+
+        ceiling = quote_calc.menu_sum_ceiling()
+        rows = quote_calc.margin_table()
+        self.assertAlmostEqual(ceiling["ceiling_rate"], rows[0]["margin_rate"])
+        self.assertLess(ceiling["ceiling_rate"], 0.8)
+
+    def test_cutting_piece_count_does_not_change_margin_rate(self):
+        """砍件數不改毛利率(收入與成本等比降)——這條講錯過一次就會誤導 Owner。"""
+
+        half = quote_calc.plan_by_items([("梅子醬蝦棗", 50), ("綠咖喱小鹹派", 20)])
+        full = quote_calc.plan_by_items([("梅子醬蝦棗", 100), ("綠咖喱小鹹派", 40)])
+        self.assertEqual(half["margin_rate"], full["margin_rate"])
+        self.assertEqual(full["pieces"], half["pieces"] * 2)
+
+    def test_h1_falls_under_the_80_floor_once_owners_sandwich_rule_applies(self):
+        """H1 原呈 Owner 的是食材 5,920／80.3%,件數與倍率不變但成本基礎變了。
+
+        Owner msg 5800 把三明治成本改成外帶售價的 50%(蛋沙拉 360→400、薯泥 300→410),
+        H1 的食材成本升到 6,070 → 毛利率 79.8%,**跌破他自己定的 80% 下限**。
+        這是他的新規則帶出來的後果,不是算錯,所以釘住新數字並要 Owner 知道 H1 已不合格。
+        """
+        result = quote_calc.run_reference_plan("H1-80")
+        self.assertEqual(result["food_cost"], 6070)
+        self.assertEqual(result["margin_rate"], 0.7977)
+        self.assertLess(
+            result["margin_rate"], quote_calc.load_price_book()["rules"]["target_margin_floor"]
+        )
+        # 件數與倍率沒被這條規則動到
+        self.assertEqual(result["pieces"], 276)
+        self.assertEqual(result["price_multiple_vs_menu"], 1.97)
+        self.assertEqual(result["pieces_per_pax"], 2.76)
+        joined = " ".join(result["warnings"])
+        self.assertIn("不得列菜單單價", joined)
+        self.assertIn("輕食小點", joined)
+
+    def test_reference_plan_h2_still_clears_the_floor(self):
+        """H2 原 85.3%,套上 5800 的三明治成本後 84.8%,仍在 80% 之上。"""
+
+        result = quote_calc.run_reference_plan("H2-85")
+        self.assertEqual(result["food_cost"], 4566)
+        self.assertEqual(result["margin_rate"], 0.8478)
+        self.assertEqual(result["pieces"], 212)
+        self.assertGreaterEqual(result["margin_rate"], 0.8)
+
+    def test_scale_keeps_menu_choice_with_the_human_and_refuses_impossible_margins(self):
+        scaled = quote_calc.scale_mix_to_margin(
+            [("梅子醬蝦棗", 10), ("綠咖喱小鹹派", 4)], 30000, 100, 0.8
+        )
+        self.assertGreaterEqual(scaled["margin_rate"], 0.8)
+        self.assertLessEqual(scaled["food_cost"], scaled["cost_budget"])
+        # 沙拉盆食材 600/盆,整案價 1,000 元要 80% 毛利=成本上限 200 元,一輪都配不下。
+        with self.assertRaises(quote_calc.QuoteError) as ctx:
+            quote_calc.scale_mix_to_margin([("水耕沙拉盆", 1)], 1000, 10, 0.8)
+        self.assertIn("做不到", str(ctx.exception))
+
+    def test_change_order_reports_margin_points_not_just_new_number(self):
+        before = quote_calc.run_reference_plan("H1-80")
+        after = quote_calc.plan_by_items(
+            [(item["key"], item["units"]) for item in quote_calc.reference_plans()[0]["mix"]]
+            + [("水耕沙拉盆", 1)],
+            package_price=30000,
+            pax=100,
+        )
+        delta = quote_calc.change_order(before, after)
+        self.assertEqual(delta["food_cost_delta"], 600)
+        self.assertLess(delta["margin_points_delta"], 0)
+        self.assertAlmostEqual(delta["margin_points_delta"], -2.0, places=1)
+
+    def test_external_item_price_follows_the_local_base_times_1_35_rule(self):
+        """小肚肚案 Owner msg 5197:緞帶在地 1,000 → 對外 1,350。"""
+
+        priced = quote_calc.external_item_price(1000)
+        self.assertEqual(priced["external_price"], 1350)
+        self.assertEqual(priced["markup"], 1.35)
+
+    def test_parse_brief_lists_what_is_still_missing_instead_of_guessing(self):
+        parsed = quote_calc.parse_brief("用預算反推 30000塊 人數100人 毛利要80% 10月上旬")
+        self.assertEqual(parsed["facts"]["pax"], 100)
+        self.assertEqual(parsed["facts"]["budget"], 30000)
+        self.assertEqual(parsed["facts"]["target_margin"], 0.8)
+        self.assertEqual(parsed["missing"], [])
+
+        vague = quote_calc.parse_brief("幫我報個價")
+        self.assertEqual(vague["facts"], {})
+        self.assertEqual(len(vague["missing"]), 3)
+
+        per_pax = quote_calc.parse_brief("40人 每人300元")
+        self.assertEqual(per_pax["facts"]["budget"], 12000)
+        self.assertTrue(per_pax["facts"]["budget_from_per_pax"])
+
+
+class QuoteEstimateRoutingTest(unittest.TestCase):
+    def test_full_brief_routes_to_estimate_and_vague_one_stays_intake(self):
+        """Owner msg 5774:人數+預算齊了就要幫他算,不要只回一句已受理。"""
+
+        self.assertEqual(
+            executor.classify("用預算反推 菜色以雷同的品項抓預算 抓完毛利 30000塊 人數100人")[0],
+            "quote-estimate",
+        )
+        self.assertEqual(executor.classify("幫我報個價")[0], "quote-intake")
+        self.assertEqual(executor.classify("幫我報10人周歲派對，預算20000")[0], "quote-estimate")
+
+    def test_estimate_receipt_carries_real_numbers_and_the_no_send_marker(self):
+        request = "用預算反推 抓完毛利 毛利要80% 30000塊 人數100人"
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(
+            executor, "QUOTE_INTAKE_ROOT", Path(tmp) / "intake"
+        ), mock.patch.object(executor, "TASK_ROOT", Path(tmp) / "tasks"):
+            receipt = executor.execute(request, 123, chat_id=456)
+            intake = list((Path(tmp) / "intake").glob("*.md"))
+            self.assertEqual(len(intake), 1)
+            case_body = intake[0].read_text(encoding="utf-8")
+
+        self.assertEqual(receipt["status"], "completed")
+        self.assertEqual(receipt["action"], "quote-estimate")
+        output = receipt["output"]
+        self.assertIn("不得直接發給客人", output)
+        self.assertIn("80.3%", output)
+        self.assertIn("276 件", output)
+        self.assertIn("天花板", output)
+        self.assertIn("對外定價決定", output)
+        self.assertIn(request, case_body)
+
+    def test_cost_share_band_catches_unit_mistakes_without_flagging_the_salad_bowl(self):
+        """Owner msg 5845:把「外帶單反推」與「雷同品項類推」寫進 SOP。
+
+        兩個方法都會出錯,而 2026-09-22 的兩次錯都是靠整張表的成本佔比抓出來的,
+        所以這條煞車要留成程式:帶寬 20-75% 要能抓到「差 8 倍」級別的單位認錯
+        (薄餅若當整張 8 吋 = 成本只佔 6.25%),同時不能把水耕沙拉盆 70.6%(實數、
+        Owner 已知的低毛利品)誤報成錯誤。
+        """
+        band = quote_calc.cost_share_band()
+        self.assertEqual(band["outliers"], [])
+        self.assertLess(band["low"], band["min_share"])
+        self.assertGreater(band["high"], band["max_share"])
+        # 帶不准鬆到抓不出當天那個差 8 倍的疑點。
+        flatbread = quote_calc.lookup("打拋豬薄餅")
+        whole_round_share = (quote_calc._cost_per_piece(flatbread) / flatbread["pieces_per_unit"]) / (
+            flatbread["price"] / flatbread["pieces_per_unit"]
+        )
+        self.assertLess(whole_round_share, band["low"])
+
+    def test_sop_documents_both_cost_finding_methods(self):
+        """SOP 要真的寫著這兩個方法,而且要能載進 hermes 的 system prompt——
+
+        Owner 要的是「寫進 sop」,不是我在收據上講一遍。經驗庫是每則訊息現讀的,
+        所以這支測試釘的是檔案內容與載入路徑,不是我的記憶。
+        """
+        playbook = (Path(__file__).resolve().parents[1] / "bot_a6" / "QUOTE_PLAYBOOK.md").read_text(
+            encoding="utf-8"
+        )
+        for marker in (
+            "找 item 成本的兩個方法",
+            "方法一：用外帶單反推 item 成本",
+            "方法二：雷同品項類推",
+            "找成本的優先順序",
+            "雙路徑檢查",
+            "成本佔比帶",
+            "來源字串寫全名",
+        ):
+            self.assertIn(marker, playbook, marker)
+        # 優先順序:實數 > 外帶反推 > 類推 > 需人工。順序講反了整個方法就變成預設編價。
+        # 比對用章節標題不用關鍵詞:Owner 原話裡就有「雷同品項類推」,拿關鍵詞比會比到他的引言
+        # 而不是方法段落(第一版就是這樣紅的)。
+        self.assertLess(
+            playbook.index("items_master 同品實數"), playbook.index("方法一：用外帶單反推 item 成本")
+        )
+        self.assertLess(
+            playbook.index("方法一：用外帶單反推 item 成本"), playbook.index("方法二：雷同品項類推")
+        )
+
+    def test_catering_plan_must_name_its_takeout_derived_costs(self):
+        """Owner msg 5824:「這是外燴的單,如果要拿外帶售價參考值取 50%,本來就不是外帶,你沒問我覺得我會被打」。
+
+        本檔 rules.never 早就寫著「外燴整案價與外帶單品價不混用」,我卻讓三明治成本從外帶售價推導
+        進來、還標成實數。這支測試把 Owner 的糾正交給程式擋:整案價(外燴)模式下,凡成本基礎是
+        外帶推導的品項都要被點名並報出佔食材成本比重,且不得再標成實數。
+        """
+        h4 = quote_calc.run_reference_plan("H4-OWNER")
+        self.assertEqual(h4["takeout_basis_items"], ["薯泥蛋沙拉三明治_切小", "蛋沙拉三明治_切小"])
+        self.assertGreater(h4["takeout_basis_cost_share"], 0.4)
+        self.assertTrue(any("Owner msg 5824" in w for w in h4["warnings"]))
+        for line in quote_calc.load_price_book()["menu_lines"]:
+            if line.get("cost_basis") == "外帶售價推導":
+                self.assertTrue(line["cost_estimated"], line["key"])
+        # 菜單價加總模式不是外燴整案價,不掛這條警語(免得每張外帶單都跳無關的警告)。
+        takeout_only = quote_calc.plan_by_items([("蛋沙拉三明治", 1)])
+        self.assertFalse(any("Owner msg 5824" in w for w in takeout_only["warnings"]))
+
+    def test_owner_5824_cut_shrimp_add_starch_holds_the_floor_but_barely_moves_it(self):
+        """砍蝦棗、多澱粉類照做了,但要誠實報出「幾乎沒動到毛利」這件事。
+
+        蝦棗一件 17,切小三明治一件 16.67,兩者差 2%,所以一件換一件幾乎等值:
+        H3 5,922/80.3%/312 件 → H4 5,872/80.4%/310 件。真正的收穫是甲殼類件數砍半與澱粉佔比拉高,
+        不是毛利。同時代價要寫死:H4 把更多件數壓在外帶推導成本上(27% → 41%)。
+        """
+        h3 = quote_calc.run_reference_plan("H3-OWNER")
+        h4 = quote_calc.run_reference_plan("H4-OWNER")
+        floor = quote_calc.load_price_book()["rules"]["target_margin_floor"]
+        self.assertGreaterEqual(h4["margin_rate"], floor)
+        self.assertLess(h4["margin_rate"] - h3["margin_rate"], 0.005)
+        shrimp = {line["key"]: line for line in h4["lines"]}["梅子醬蝦棗"]
+        self.assertEqual(shrimp["units"], 50)
+        self.assertGreater(h4["takeout_basis_cost_share"], h3["takeout_basis_cost_share"])
+
+    def test_owner_5846_shrimp_60_leaves_a_real_budget_for_the_unpriced_platter(self):
+        """Owner 要加一個不在價目表的「混合炸物拼盤」,正解不是編價,也不是回一句需人工就收工。
+
+        拼盤的單價我算不出來(第四順位=需人工),但「還剩多少食材成本可以花」與
+        「每件成本要壓在多少以內才補得回每人 3 件」不必知道內容就算得出來。
+        這條測試釘的是:拼盤絕不能偷偷出現在配置裡,而額度框一定要算得出來。
+        """
+        h5 = quote_calc.run_reference_plan("H5-OWNER")
+        lines = {line["key"]: line for line in h5["lines"]}
+        self.assertEqual(lines["梅子醬蝦棗"]["units"], 60)
+        self.assertNotIn("混合炸物拼盤", lines)
+        head = quote_calc.headroom_for_addition(h5)
+        self.assertEqual(head["cost_ceiling"], 6000.0)
+        self.assertGreater(head["cost_headroom"], 0)
+        # 每人 2.72 件還沒到 3,所以「還缺幾件」與「每件上限」兩個數字都必須給出來
+        self.assertEqual(head["pieces_needed"], 28)
+        self.assertAlmostEqual(head["max_cost_per_piece"], head["cost_headroom"] / 28, places=2)
+        # 額度剛好用滿=踩在 80% 下限上,不會跌破;超一塊就破線
+        self.assertEqual(round(1 - head["cost_ceiling"] / h5["revenue"], 4), 0.8)
+        # 不足一件要進位成一件,不然會少備
+        h5_fewer = dict(h5, pieces=271, pieces_per_pax=2.71)
+        self.assertEqual(quote_calc.headroom_for_addition(h5_fewer)["pieces_needed"], 29)
+        # 拼盤本身仍然不准被報價
+        with self.assertRaises(quote_calc.QuoteError):
+            quote_calc.plan_by_items([("混合炸物拼盤", 1)], package_price=30000, pax=100)
+
+    def test_sop_tells_hermes_how_to_deliver_with_incomplete_information(self):
+        """Owner msg 5851:「依照需求用現有資訊然後留一點空間與猜測」要變成 hermes 的通則。
+
+        這條測試釘兩件事:①方法寫在 §0.1(§0 之後、§1 之前)=它管所有題目不只管找成本;
+        ②經驗庫載入上限要留得下它,不然規則存在檔案裡卻沒進 system prompt,等於沒寫。
+        """
+        playbook = (Path(__file__).resolve().parents[1] / "bot_a6" / "QUOTE_PLAYBOOK.md").read_text(
+            encoding="utf-8"
+        )
+        for marker in ("資訊不全時怎麼交件", "算不出來的不給單價", "框不是猜的，是算的",
+                       "沒有標記的猜測不行", "留的空間要說出它是空間", "人指定的數字鎖死"):
+            self.assertIn(marker, playbook, marker)
+        self.assertLess(playbook.index("三行分工"), playbook.index("資訊不全時怎麼交件"))
+        self.assertLess(playbook.index("資訊不全時怎麼交件"), playbook.index("動工前必問"))
+        prompt = gateway.system_prompt()
+        self.assertIn("資訊不全時怎麼交件", prompt)
+        # 尾段也要還在=整份沒被切掉,而且要留得下再一節的餘裕(不是剛好塞得進去)
+        self.assertIn("算完之後的固定收尾", prompt)
+        self.assertGreater(len(gateway.load_quote_playbook()), len(playbook) - 1)
+
+    def test_estimate_for_an_unseen_size_asks_for_the_menu_instead_of_inventing_one(self):
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(
+            executor, "QUOTE_INTAKE_ROOT", Path(tmp) / "intake"
+        ), mock.patch.object(executor, "TASK_ROOT", Path(tmp) / "tasks"):
+            receipt = executor.execute("人數 37人 預算 18000", 123, chat_id=456)
+        output = receipt["output"]
+        self.assertIn("選菜不是我的權責", output)
+        self.assertNotIn("H1-80", output)
+
+
+if __name__ == "__main__":
+    unittest.main()

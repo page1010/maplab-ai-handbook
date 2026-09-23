@@ -2,6 +2,8 @@
 
 版本：v1.0 | 建立：2026-03-24 | 維護：A2
 
+> 定位：本檔只提供「文件與實際狀態不一致」的診斷方法。跨 Claude／Codex 的認領、接棒、存檔與 release 規則，以 `.agents/skills/maplab-session-continuity/SKILL.md` 為唯一維護來源。
+
 ## 何時用
 
 - Session 中斷後接手，不確定上一個 Agent 做到哪

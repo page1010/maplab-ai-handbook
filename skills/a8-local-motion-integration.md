@@ -63,3 +63,36 @@
 
 1.  **地端 MP4 產出**：合成出的各分鏡影片片段將使用 ffmpeg `xfade=fade`（0.35s 轉場）拼接成完整的 9:16 短片。
 2.  **音軌與發布**：本地產出的草稿影片為無聲。上傳至 YouTube Shorts / TikTok / Instagram 前，必須使用平台內建的授權音樂庫配樂，嚴禁在本地封裝未授權配樂。
+
+---
+
+## 6. 影像方向自動校正 (Auto-Orient)｜2026-07-27 新增
+
+**根因**：手機/相機照片常帶 EXIF Orientation 旗標（6＝需轉正、8 等），但 **ffmpeg 影像輸入與 PIL `Image.open` 預設不套用該旗標**，讀原始 pixel，於是帶旗標的照片在出圖／出片時側躺。2026-07-25 週歲甜點桌 MVP 即中此坑（4 張 hero 皆 `orientation=6`）。
+
+**診斷方法**：讀 EXIF tag 274。
+
+```python
+from PIL import Image
+Image.open(p).getexif().get(274)   # 1=正常, 6/8=帶旋轉旗標
+```
+
+**固定解（永久、系統性）**：在 A8 所有影像步驟最前面呼叫可重用模組
+`tools/ai_workbook/a8_auto_orient.py` — 依每張 EXIF 旗標自動轉正（`ImageOps.exif_transpose`），**非固定角度盲轉**（不同照片旗標不同，盲轉會把本來正的轉歪）。
+
+```python
+from a8_auto_orient import auto_orient_image      # PIL 流程
+im = auto_orient_image(Image.open(path))
+# 批次： python3 a8_auto_orient.py --in <DIR|FILE> --out <DIR> --report
+```
+
+ffmpeg 純命令流可先用本模組批次轉正後再餵 ffmpeg（本管線採此法，最穩）。無 EXIF 但明顯側躺者，才用手動覆寫做 fallback。
+
+**驗證（混向樣本）**：orient=6 與 orient=1 混跑，確認側的轉正、正的不動。
+
+```
+ROTATED orient=6 (4000,3000)->(3000,4000)  20260719_100114.jpg
+kept    orient=1 (3072,4096)->(3072,4096)  IMG_20260719_095845.jpg
+```
+
+結論：帶旗標者正確轉正（長短邊互換）、已正者原樣保留，無過度旋轉。此步驟必須重用於所有 A8 出圖／出片。

@@ -1,0 +1,260 @@
+{
+  "schema_version": "2026-08-25.notebooklm-source-pack.v1",
+  "generated_at": "2026-08-25T00:00:00+08:00",
+  "build_base_commit": "15b585cbb664",
+  "directional_map_manifest_sha256": "c1c88b1905f8cf1220bbd81eca657c4b62287a351ba04dc5048b8fb657b09383",
+  "notebook_url": "https://notebook.google.com/notebook/68114d21-ebc9-4116-a88a-52cc31cbe9a7",
+  "upload_files": [
+    "workbook/notebooklm/maplab-project-brain/maplab-project-brain.md",
+    "workbook/notebooklm/maplab-project-brain/maplab-sop-router.md"
+  ],
+  "audit_file": "workbook/notebooklm/maplab-project-brain/source-manifest.json",
+  "allowed_sensitivity": [
+    "public",
+    "internal_governance",
+    "sanitized_operational_summary"
+  ],
+  "excluded_patterns": [
+    ".env",
+    "token",
+    "secret",
+    "credentials",
+    "cookie",
+    "session",
+    "broker",
+    "position",
+    "ledger",
+    "customer raw",
+    "runtime log",
+    "sqlite",
+    "private key"
+  ],
+  "sources": [
+    {
+      "path": "config/system-map/maplab-directional-map.json",
+      "sha256": "c1c88b1905f8cf1220bbd81eca657c4b62287a351ba04dc5048b8fb657b09383",
+      "bytes": 31752,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "governance"
+    },
+    {
+      "path": "docs/company-values.md",
+      "sha256": "20111f9d52eff61799b0817d78125e1c2062cd7d815e83b7f2d8d79aaeccf087",
+      "bytes": 18153,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "governance"
+    },
+    {
+      "path": "AGENT_RULES.md",
+      "sha256": "74b269c6ba0503f5f0af6a10eef9fdcb3a19b91e8b9f355bb56c363d2b90daee",
+      "bytes": 67915,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "governance"
+    },
+    {
+      "path": "AGENT_STARTUP_PROTOCOL.md",
+      "sha256": "bd8a0c28c16199c490b1e70395615801bb78442d2a1fce7c8e3f4de6ee7f8629",
+      "bytes": 15026,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "governance"
+    },
+    {
+      "path": "SYSTEM_DIRECTORY_INDEX.md",
+      "sha256": "dcfea8fe6c4bc4934a6a6f8dd1551c78d001e5e010b7c9253325c318f51754eb",
+      "bytes": 36184,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "governance"
+    },
+    {
+      "path": "skills/capability-map-guide-visualization.md",
+      "sha256": "229a913612d1cac388fa085a86f82d4bccc456caa9e9b4db37474c45f1ada83a",
+      "bytes": 2835,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "governance"
+    },
+    {
+      "path": "skills/capability-notebooklm-project-brain.md",
+      "sha256": "24c40f304dae34b36d8886d5047f18490b20a05c2af5f7f08aa88678766f1b65",
+      "bytes": 3762,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "governance"
+    },
+    {
+      "path": "docs/extension/dynamic-role-task-modules.md",
+      "sha256": "d9a38910aa461f798c5c0fe695a5271990e1593a8af1d73b1f1848f97a8ab9e3",
+      "bytes": 18461,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "governance"
+    },
+    {
+      "path": "skills/superpowers-guide.md",
+      "sha256": "8987b633b6f64545027e4744ec8ce3e8d85cf80127241dc79861dd5360407195",
+      "bytes": 15373,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/task-progress-guide.md",
+      "sha256": "a0a8dce530f8b02cba8dba5cdd461d0c1e7a972373da867edebe06ec9b7b7eb5",
+      "bytes": 10792,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/troubleshooting-hub.md",
+      "sha256": "25069e3f9f68de89305f258f28e1af847a8527411faaab7261e04349e6a476a7",
+      "bytes": 3027,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/verification-checklist-guide.md",
+      "sha256": "f819a1875dfb479ab442575f7ec261a8a8da858e6d7e15c5d250b8350732a4ed",
+      "bytes": 1845,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/agent-output-convention.md",
+      "sha256": "6592a5cac7bf3a004ad5c2ad66ce92e19d187df5ba11ff62b871c8fbdf636c71",
+      "bytes": 2274,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/wp-article-standard.md",
+      "sha256": "19b61daf2f71b132d75f7fc412f4619266ac28287698f236b67e642ee492114c",
+      "bytes": 9396,
+      "classification": "internal_governance",
+      "redactions": 1,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/seo-session-checklist.md",
+      "sha256": "794e3a4c87c594191b98dde847fe8d7d177a9c530861a5c1a3a766b782abff2d",
+      "bytes": 6471,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/a3-social-ads-skills.md",
+      "sha256": "a8e17d3db7e8b735c411f4fc1f8536d40e3844afda85e3b94cd2dc84c91dd7a0",
+      "bytes": 2452,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/a4-fact-first-asset-matching.md",
+      "sha256": "998b7e9f8705e5107d4258e856d78052ae71ad479cfc5272bda9505662ad8331",
+      "bytes": 3569,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/a4-photo-asset-skills.md",
+      "sha256": "0fce02d9b74f5133ed9d46d4a0a588eccd2068db285cf56cdde21d5eec733dda",
+      "bytes": 3902,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/a5-quotation-engine-skills.md",
+      "sha256": "cd3ead7a6c39ed2573afcbda72c7aea27ceffda0a2c15b27959d7f3d073ae727",
+      "bytes": 5448,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/a6-rapid-quote-sop.md",
+      "sha256": "4f791577c50f44e8eca3abea59d644f1b444d304a7ce2ccddeffa1aad204b633",
+      "bytes": 18629,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/a7-customer-service-skills.md",
+      "sha256": "bacb62669a4b530f6ea62faa98db9f44bee55ea25a60640591efe862078f28a2",
+      "bytes": 6692,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/a8-video-pipeline-skills.md",
+      "sha256": "16efb1edaeff9978d10c08aae6e54ceb38a9707a429f35c9da4a844e4fddf448",
+      "bytes": 23814,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/a8-produce-to-publish-sop.md",
+      "sha256": "32e7f391fb95f195772a7bc84e3f2da849d361c363947167fe84d463814bdfc6",
+      "bytes": 39496,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/maplab-hiphop-songwriter/SKILL.md",
+      "sha256": "4b25c2786b2389c939a80b384b62839cc4c779ea24e335c21559b3162d58dea3",
+      "bytes": 3744,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/ai-model-guide.md",
+      "sha256": "eb7e0918010114537b13deac0999b9cf458b38b18d9d812574eb20de1616a690",
+      "bytes": 8289,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "skills/mcp-usage-guide.md",
+      "sha256": "1bceedbfe36229f978dd1d1df989fd29133f29de816915a367782aaa7a9e1dee",
+      "bytes": 7248,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "docs/cross-project-agent-summon-workflow-map.md",
+      "sha256": "5cb6790893cd78c9d71126c7937ef8d6ac624792a5b4217800c36370d6b8f9ba",
+      "bytes": 10262,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    },
+    {
+      "path": "scripts/hermes_memory_sop.md",
+      "sha256": "8fa49c548e289addd65eab2a962dc78f8494618d3e1a288309b45a7ff53f7557",
+      "bytes": 3546,
+      "classification": "internal_governance",
+      "redactions": 0,
+      "group": "sop_router"
+    }
+  ],
+  "total_redactions": 1,
+  "not_live_truth": true
+}

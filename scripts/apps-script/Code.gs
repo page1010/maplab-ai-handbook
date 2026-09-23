@@ -353,6 +353,236 @@ function createQuote(formData) {
 }
 
 // ─────────────────────────────────────────
+// Hermes intake-only adapter: neutral Google Sheets quote shell
+// ─────────────────────────────────────────
+
+/**
+ * Create an internal quote shell from explicit intake facts only.
+ *
+ * This is the only Sheets action the customer-facing Hermes route may call.
+ * It does not calculate or populate prices, fees, deposits, menu items,
+ * availability, payment state, or contract terms.  Mina must review the shell
+ * before any formal quote is sent to a customer.
+ */
+function createQuoteShell(body) {
+  assertQuoteShellPayload_(body);
+
+  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  var now = new Date();
+  var eventDate = new Date(body.eventDate + 'T00:00:00+08:00');
+  if (isNaN(eventDate.getTime())) {
+    throw new Error('活動日期格式無法解析：' + body.eventDate);
+  }
+
+  var dateSuffix = Utilities.formatDate(eventDate, 'Asia/Taipei', 'yyyyMMdd');
+  var fileLabel = body.clientName || body.caseId;
+  var newFileName = dateSuffix + '_' + fileLabel + '_待Mina報價';
+  var yearFolder = ensureDriveFolder_(eventDate.getFullYear().toString());
+  var sourceFile = DriveApp.getFileById(SPREADSHEET_ID);
+  var newFile = sourceFile.makeCopy(newFileName, yearFolder);
+  var newSs = SpreadsheetApp.openById(newFile.getId());
+
+  var sheets = newSs.getSheets();
+  var quoteSheet = null;
+  var itemsSheet = null;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].getName() === TEMPLATE_SHEET_NAME) quoteSheet = sheets[i];
+    if (sheets[i].getName() === 'Items') itemsSheet = sheets[i];
+  }
+  if (!quoteSheet) throw new Error('新檔案中找不到 QUOTE_DRAFT 分頁。');
+
+  newSs.setActiveSheet(quoteSheet);
+  for (var j = 0; j < sheets.length; j++) {
+    var sheetName = sheets[j].getName();
+    if (sheetName !== TEMPLATE_SHEET_NAME && sheetName !== 'Items') {
+      try { newSs.deleteSheet(sheets[j]); } catch (deleteErr) {
+        Logger.log('[createQuoteShell] 刪除分頁失敗: ' + deleteErr.message);
+      }
+    }
+  }
+  quoteSheet.setName('報價單');
+  if (itemsSheet) itemsSheet.hideSheet();
+
+  // Clear every commercial value or formula that could have survived in the
+  // master copy.  Mina may deliberately fill these cells later; Hermes leaves
+  // menu, quantity, amount, cost, margin, fee, deposit, and terms empty.
+  quoteSheet.getRange('D7:F20').clearContent();
+  quoteSheet.getRange('E22:H30').clearContent();
+  quoteSheet.getRange('I7:J31').clearContent();
+  quoteSheet.getRange('C32:F55').clearContent();
+  quoteSheet.getRange('K10:L15').clearContent();
+
+  quoteSheet.getRange('D2').setValue(body.clientName || '');
+  quoteSheet.getRange('B3').setValue(body.company || '');
+  quoteSheet.getRange('F2').setValue(body.eventDate);
+  quoteSheet.getRange('D3').setValue(body.venue);
+  quoteSheet.getRange('F3').setValue(body.eventTime);
+  quoteSheet.getRange('D4').setValue(body.businessCategory);
+  quoteSheet.getRange('F4').setValue(body.headcount);
+  quoteSheet.getRange('D5').setValue(body.serviceFormat);
+  quoteSheet.getRange('F5').clearContent();
+
+  quoteSheet.getRange('H1').setValue(body.caseId);
+  quoteSheet.getRange('H2').setValue(Utilities.formatDate(now, 'Asia/Taipei', 'yyyy-MM-dd HH:mm'));
+  quoteSheet.getRange('M2').setValue('CaseID');
+  quoteSheet.getRange('N2').setValue(body.caseId);
+  quoteSheet.getRange('M3').setValue('建立時間');
+  quoteSheet.getRange('N3').setValue(Utilities.formatDate(now, 'Asia/Taipei', 'yyyy-MM-dd HH:mm'));
+  quoteSheet.getRange('M5').setValue('報價狀態');
+  quoteSheet.getRange('N5').setValue('待 Mina 報價');
+  quoteSheet.getRange('N5').setDataValidation(
+    SpreadsheetApp.newDataValidation()
+      .requireValueInList(['待 Mina 報價', '報價中', '成交', '未成交結案'], true)
+      .setAllowInvalid(false)
+      .build()
+  );
+  quoteSheet.getRange('M7').setValue('付款狀態');
+  quoteSheet.getRange('N7').clearContent().clearDataValidations();
+  quoteSheet.getRange('M9').setValue('版本');
+  quoteSheet.getRange('N9').setValue('hermes-intake-shell-v1');
+
+  quoteSheet.getRange('K10').setValue('飲食需求（客述）');
+  quoteSheet.getRange('L10').setValue(body.dietaryNotesVerbatim);
+  quoteSheet.getRange('K11').setValue('搬運條件（客述）');
+  quoteSheet.getRange('L11').setValue(body.logisticsNotesVerbatim);
+  quoteSheet.getRange('K12').setValue('場地型態');
+  quoteSheet.getRange('L12').setValue(body.indoorOutdoor);
+  quoteSheet.getRange('K13').setValue('檔期狀態');
+  quoteSheet.getRange('L13').setValue('UNVERIFIED');
+  quoteSheet.getRange('K14').setValue('飲食審查');
+  quoteSheet.getRange('L14').setValue('PENDING_HUMAN');
+  quoteSheet.getRange('K15').setValue('商務審查');
+  quoteSheet.getRange('L15').setValue('PENDING_MINA');
+
+  var newUrl = newSs.getUrl();
+  var intakeForm = {
+    intakeOnly: true,
+    source: 'hermes-sheets-intake-v1',
+    clientName: body.clientName || '',
+    company: body.company || '',
+    phone: '',
+    eventType: body.businessCategory,
+    eventDate: body.eventDate,
+    location: body.venue,
+    pax: body.headcount,
+    dietaryNotes: body.dietaryNotesVerbatim
+  };
+  writeToIntake_(ss, body.caseId, intakeForm, newUrl, now);
+  SpreadsheetApp.flush();
+
+  return {
+    success: true,
+    caseId: body.caseId,
+    fileName: newFileName,
+    spreadsheetId: newFile.getId(),
+    url: newUrl,
+    status: 'NEEDS_MINA_QUOTE'
+  };
+}
+
+function assertQuoteShellPayload_(body) {
+  var allowed = {
+    action: true,
+    schemaVersion: true,
+    caseId: true,
+    source: true,
+    clientName: true,
+    company: true,
+    contactRef: true,
+    businessCategory: true,
+    eventDate: true,
+    eventTime: true,
+    venue: true,
+    indoorOutdoor: true,
+    headcount: true,
+    serviceFormat: true,
+    dietaryNotesVerbatim: true,
+    logisticsNotesVerbatim: true,
+    availabilityStatus: true,
+    dietaryReviewStatus: true,
+    commercialReviewStatus: true
+  };
+  for (var key in body) {
+    if (Object.prototype.hasOwnProperty.call(body, key) && !allowed[key]) {
+      throw new Error('createQuoteShell 不接受欄位：' + key);
+    }
+  }
+
+  var required = [
+    'caseId', 'businessCategory', 'eventDate', 'eventTime', 'venue',
+    'indoorOutdoor', 'headcount', 'serviceFormat',
+    'dietaryNotesVerbatim', 'logisticsNotesVerbatim'
+  ];
+  for (var i = 0; i < required.length; i++) {
+    var name = required[i];
+    if (body[name] === undefined || body[name] === null || body[name] === '') {
+      throw new Error('createQuoteShell 缺少欄位：' + name);
+    }
+  }
+  if (body.action !== 'createQuoteShell') throw new Error('createQuoteShell action 不符');
+  if (body.schemaVersion !== 'hermes-line-sheets-assistant-v1') throw new Error('createQuoteShell schemaVersion 不符');
+  if (!isFinite(Number(body.headcount)) || Number(body.headcount) < 1) throw new Error('headcount 必須為正整數');
+  if (body.availabilityStatus !== 'UNVERIFIED') throw new Error('檔期必須維持 UNVERIFIED');
+  if (body.dietaryReviewStatus !== 'PENDING_HUMAN') throw new Error('飲食必須由真人審查');
+  if (body.commercialReviewStatus !== 'PENDING_MINA') throw new Error('商務內容必須由 Mina 審查');
+}
+
+/**
+ * Append the customer's requested change to the same case/quote lineage.
+ * Hermes records the customer's words only; Mina decides the actual revision.
+ */
+function appendQuoteRevisionRequest(body) {
+  var allowed = {
+    action: true,
+    schemaVersion: true,
+    caseId: true,
+    quoteId: true,
+    revisionNo: true,
+    customerChangeVerbatim: true,
+    changeStatus: true
+  };
+  for (var key in body) {
+    if (Object.prototype.hasOwnProperty.call(body, key) && !allowed[key]) {
+      throw new Error('appendQuoteRevisionRequest 不接受欄位：' + key);
+    }
+  }
+  if (body.action !== 'appendQuoteRevisionRequest') throw new Error('revision action 不符');
+  if (body.schemaVersion !== 'hermes-sheets-revision-v1') throw new Error('revision schemaVersion 不符');
+  if (!body.caseId || !body.quoteId || !body.customerChangeVerbatim) {
+    throw new Error('revision 缺少 caseId／quoteId／customerChangeVerbatim');
+  }
+  if (Number(body.revisionNo) < 1) throw new Error('revisionNo 必須大於零');
+  if (body.changeStatus !== 'PENDING_MINA') throw new Error('changeStatus 必須維持 PENDING_MINA');
+
+  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  var sheet = ss.getSheetByName('QUOTE_REVISIONS');
+  if (!sheet) {
+    sheet = ss.insertSheet('QUOTE_REVISIONS');
+    sheet.getRange(1, 1, 1, 8).setValues([[
+      'created_at', 'case_id', 'quote_id', 'revision_no',
+      'customer_change_verbatim', 'change_status', 'source', 'reviewed_by'
+    ]]);
+  }
+  var createdAt = Utilities.formatDate(new Date(), 'Asia/Taipei', 'yyyy-MM-dd HH:mm:ss');
+  sheet.appendRow([
+    createdAt,
+    body.caseId,
+    body.quoteId,
+    Number(body.revisionNo),
+    body.customerChangeVerbatim,
+    'PENDING_MINA',
+    'hermes-sheets-revision-v1',
+    ''
+  ]);
+  return {
+    caseId: body.caseId,
+    quoteId: body.quoteId,
+    revisionNo: Number(body.revisionNo),
+    status: 'PENDING_MINA'
+  };
+}
+
+// ─────────────────────────────────────────
 // A5 adapter: 一次產出多版報價副本
 // ─────────────────────────────────────────
 
@@ -645,17 +875,19 @@ function writeToIntake_(ss, caseId, formData, sheetUrl, now) {
   // L/M 欄使用 IMPORTRANGE 形成動態連結（2026-04-08 Owner 需求）
   // 原本是靜態字串 + 手動 syncQuoteStatus_ 拉取，改為 live formula。
   // 首次使用時 SALES_INTAKE 會彈出 #REF! → 需點「允許存取」授權一次這個 source sheet。
+  var intakeOnly = formData.intakeOnly === true;
+  var quoteStatusFallback = intakeOnly ? '待 Mina 報價' : '報價中';
   var quoteStatusFormula   = quoteId
-    ? '=IFERROR(IMPORTRANGE("' + quoteId + '","報價單!N5"),"報價中")'
+    ? '=IFERROR(IMPORTRANGE("' + quoteId + '","報價單!N5"),"' + quoteStatusFallback + '")'
     : '';
-  var paymentStatusFormula = quoteId
+  var paymentStatusFormula = quoteId && !intakeOnly
     ? '=IFERROR(IMPORTRANGE("' + quoteId + '","報價單!N7"),"未匯")'
     : '';
 
   var row = [
     caseId,                      // A: case_id
     createdAt,                   // B: created_at
-    'quote-system-v3.8-verified',// C: source
+    formData.source || 'quote-system-v3.8-verified',// C: source
     formData.clientName,         // D: client_name
     formData.company    || '',   // E: company
     formData.phone      || '',   // F: phone
@@ -667,7 +899,9 @@ function writeToIntake_(ss, caseId, formData, sheetUrl, now) {
     quoteStatusFormula,          // L: quote_status (IMPORTRANGE live link)
     paymentStatusFormula,        // M: payment_status (IMPORTRANGE live link)
     '',                          // N: （預留）
-    ''                           // O: notes
+    intakeOnly
+      ? 'availability=UNVERIFIED;dietary=PENDING_HUMAN;commercial=PENDING_MINA'
+      : ''                       // O: notes
   ];
 
   // 用 setValues 寫入一整列（含 = 開頭的 IMPORTRANGE 字串會被解析為 formula）

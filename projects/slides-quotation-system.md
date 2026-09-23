@@ -654,7 +654,7 @@ A4 目前的 Gemini Vision 分類 Prompt 產出：category / keywords / alt_text
 7. **英文條款**：Terms and Conditions of Service Agreement（4 Articles）
 8. **Vendor Information**：銀行帳號放於文件最底部（Row 44）
    - 銀行：中國信託 CTCBTWTP / 西台南分行
-   - 戶名：圖管實業社
+   - 戶名：圖蕾實業社（2026-09-09 Drive 正本校正，舊寫「圖管」為誤）
    - 帳號：222540645172
 
 ### 12.5 報價系統格式維持目標（教訓 1）

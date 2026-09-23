@@ -1,0 +1,2 @@
+{"conversation_id_hash":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","stage":"S2_DATA","context":"客戶詢問大型活動流程，日期與人數尚待確認。","customer":"想先了解準備流程。","target":"可以，請先確認活動日期與預估人數。"}
+{"conversation_id_hash":"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb","stage":"S2_DIETARY","context":"活動需要無蛋奶選項。","customer":"有素食需求。","target":"可以，請再確認份數與其他過敏原。"}

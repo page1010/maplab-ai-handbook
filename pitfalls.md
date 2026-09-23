@@ -8,6 +8,46 @@
 > 選填欄「當時的合理化」：記下當時給自己的藉口，累積成紅旗清單。
 > 依據：superpowers「NO SKILL WITHOUT A FAILING TEST FIRST」；我們的記憶鏈缺的正是 Verify 階。
 
+## 2026-09-01 — Provider 稽核不得對 home/private roots 做廣域內容搜尋
+
+- 觸發條件：為了盤點 Hermes／OpenRouter provider 設定，子任務對多個 home/private roots 執行廣域內容搜尋；受保護 env 檔的完整 credential assignment 因符合 provider 關鍵字而進入內部工具 transcript。
+- 根因：把「找 provider 設定」誤做成跨私有根目錄的 content scan，沒有先建立 code/docs allowlist，也沒有把 `.env`、credential、token、key stores 排除；presence check 也未限定為 boolean／metadata-only。
+- 解法：立即停止廣域內容搜尋；確認沒有檔案寫入、shell/provider 網路外送或事故新增副本；不回顯值，將現有 credential 標記為需輪替。後續只在明確 `.py`／`.md`／safe JSON 路徑內搜尋 provider 字樣，secret 只回 `present/missing` 與權限／mtime metadata。
+- 預防：任何 provider/credential audit 先列檔名，再套 exact allowlist；禁止把 `~/.maplab`、`~/.openclaw`、`~/.hermes` 或整個 home 當 content-search root。`.env*`、credential/token/key stores 永遠不進內容搜尋，即使只是唯讀。
+- 封坑驗證：provider audit 在執行內容搜尋前先審核 file list，候選中若出現 `.env`、credential、token 或 key store 即 fail closed；本次公開 receipt 以 `rtk rg -n 'OPENROUTER_API_KEY=|sk-or-' workbook/reviews/JOB-A6-HERMES-OPENROUTER-REPLACEMENT-20260901` 應為 0 matches。
+
+## 2026-08-26 — Telegram CLI 訊息不能把 JSON escape 當成實際換行
+
+- 觸發條件：用 `JSON.stringify()` 把多行訊息拼進 `scripts/notify_owner.sh` 的單一 CLI 引數；Bot API 回 200，但 Telegram Web 顯示的是字面 `\\n`，連 URL 邊界也被 escape 文字污染。
+- 根因：JSON 字串的 `\\n` 是兩個可見字元，不會在一般 shell 雙引號引數中自動還原成 newline；只驗 HTTP 200／`message_id`，沒有檢查送出的 `result.text` 與 Telegram 可見畫面。
+- 解法：補發時使用 bash ANSI-C quoting `$'...\\n...'` 讓 shell 在呼叫腳本前產生真實換行；以 Bot API `result.text | split("\\n")` 驗證行數，再用 Telegram Web 反讀正式訊息與連結。
+- 預防：多行 Telegram 訊息優先由 stdin／message file 或明確的 newline-safe 介面傳入；若仍用 CLI 引數，禁止直接塞 JSON escape。完成判準必含 `message_id`、實際 line count 與 Telegram Web 可見文字。
+- 封坑驗證：正式訊息 `message_id=4130` 的 Bot API readback 為 26 lines，Telegram Web 顯示三個獨立連結；格式不良的 `message_id=4129` 只能標失敗樣本，不得當交付完成。
+
+## 2026-08-25 — Graphify 首建與 incremental update 必須共用同一 corpus 邊界
+
+- 觸發條件：先用 `graphify extract . --code-only` 產生 2,203-node AST 圖，之後依全域規則跑 `graphify update .`，圖卻膨脹為 7,332 nodes／622 communities，大量 `skills`、`docs`、`handoff` Markdown 被當成 code-like 節點。
+- 根因：首建的 `--code-only` 只是當次參數，incremental update 仍依 `.graphifyignore` 決定 corpus；當 ignore 沒有排除文件時，首建與後續更新來自兩個不同集合。
+- 解法：`.graphifyignore` 明確排除 `*.md`／`*.txt`／`*.html`、歷史／generated／runtime／secrets／customer raw 與 Investment OS 路徑；另外排除會記錄 Graphify 自身統計的 canonical manifest/schema，避免地圖索引自己的數字形成 self-reference。以 `graphify extract . --code-only --force` 重建，再連跑兩次 `graphify update .` 驗證穩定。文件／角色／SOP 由 canonical manifest 與 NotebookLM safe pack 管理。
+- 預防：新 repo 建 Graphify 前先寫 `.graphifyignore`；首建後立刻再跑一次 update，若 nodes 大幅增長就停下修 corpus，不把膨脹圖當正常 freshness。
+- 封坑驗證：`graphify update .` 應顯示 `No code-graph topology changes detected`；`graphify diagnose multigraph --graph graphify-out/graph.json --json` 應為 1820 nodes／3262 edges 且 missing／dangling／self-loop／collapsed 全為 0。
+
+## 2026-08-25 — 去敏替換文字本身不能再長得像 secret assignment
+
+- 觸發條件：NotebookLM safe pack 已把一個設定值換成 `[REDACTED_CONFIG_VALUE]`，但保留 `token=[REDACTED_CONFIG_VALUE]` 形狀，後續 secret scan 仍命中 1 筆。
+- 根因：只考慮人眼看不到原值，沒有把 redaction output 再餵回同一組偵測 regex 做 idempotence 驗證。
+- 解法：assignment 類遮罩改成 `token value redacted`，不保留 `:`／`=`；unit test 強制所有 redacted sample 再掃一次必須為 0 matches。
+- 預防：任何 sanitizer 都要通過 `sanitize → rescan`；遮罩字串不可符合原始敏感值 pattern。
+- 封坑驗證：`python3 -m unittest tools.ai_workbook.test_build_directional_system_map.DirectionalSystemMapTest.test_secret_value_redaction_preserves_policy_words -v` 必須 PASS，且兩個 NotebookLM upload packs 的 secret-value scan 為 0。
+
+## 2026-08-25 — WordPress 公開稿不能兼作產線審核包
+
+- 觸發條件：Owner 再次發現文章含「快速導覽」「公開草稿只選無人畫面」、日期、圖片佔位與寫歌／剪片流程；整檔貼進 WordPress 時，客人會看到 agent 的內部自言自語。
+- 根因：A2 文案、素材審核、Songwriter 與 A8 剪片共用同一份 Markdown，把「給客人看的內容」與「給下一位 agent 的證據」誤當成同一交付物；舊 WP SOP 又把 TOC 當成所有文章的固定模板。
+- 解法：公開正文固定放 `wp_draft.md`，SEO metadata、日期、內鏈驗證、素材分級與媒體狀態放 `wp_internal_notes.md`；WordPress → Songwriter → A8 改為依序交接。短案例不強塞 TOC，案例日期預設不公開。
+- 預防：建立或上傳 WordPress 草稿前先跑 customer-ready gate，並只把 `wp_draft.md` 送進 public surface；任何含 `Owner`、`repo`、路徑、待補、素材排除、生成工具或日期的檔案都留在內部包。
+- 封坑驗證：`python3 tools/ai_workbook/a8_public_copy_gate.py workbook/reviews/JOB-A8-BUNNY-EDM-WP-20260825/wp_draft.md --forbid-dates` 應回 `"ok": true`；`python -m pytest -q tests/test_a8_public_copy_gate.py` 應 3/3 PASS。
+
 ## 2026-06-20 — Unattended long-running tasks need hardcoded constraint/error-handling, not "agent will notice"
 
 - 觸發條件：研究一支「AI agent 無人介入連跑 27 小時」的影片（`docs/references/ai-agent-long-running-go-feature-rubric.md`）後，發現 MAPLAB 目前沒有任何規則明確規定 `/go` 類、cron、background task 等無人長跑任務的安全邊界；長跑迴圈若配上既有的高風險操作（例如會清空目錄的 deploy 腳本），一旦無人看管下重複執行，錯誤會被放大成大規模事故。
@@ -383,6 +423,29 @@
 - 解法：① 新增 `scripts/notify_owner.sh`，用既有 A1 bot Telegram 憑證即時推播；② `scripts/checkpoint.sh` 新增 `--notify` flag，里程碑完成時呼叫即時推播，不必等每日 patrol；③ `scripts/patrol.sh` 的「已完成」區塊改成超過 5 張時仍列出最近異動的 3 張，不再整批消音；④ 補建 `handoff/tasks/T-A2-007-seo-trio-review-20260707.md`（正確格式，✅ 已完成）；⑤ SOP 寫進 `AGENT_RULES.md` SECTION 20，明定 WHO/WHAT 管道/HOW OFTEN。
 - 預防：任何完成一個 Owner 明確派工的多步驟任務，**在同一次 checkpoint 裡就要決定要不要 `--notify`**，不要假設「有 commit 就等於有回報」——commit 只進 git 歷史，不會主動出現在 Owner 眼前。新建 Task Card 一律用既有的 `- **狀態**:` bullet 格式（照抄 `handoff/tasks/T-A2-001.md` 的接續狀態區塊），不要自創格式，否則巡查工具解析不到、等於沒寫。
 
+## 2026-07-31 — 額度複利不能退化成重複 checkpoint
+
+- 觸發條件：Owner 要求在訂閱額度重置前主動尋找高價值工作並提交報告；稽核發現規格與 Quota Sentinel 骨架存在，但沒有 request ledger、teacher-job planner、runner 或 reset report，重置後可觀測的固定消耗主要是 25 次重複 Telegram checkpoint，實際紅燈沒有被修掉。
+- 根因：把「排程有跑／報告有寫」當作「系統有複利」，沒有以 Owner utility、step change、output receipt、tests 和 no-delta suppression 作為額度准入 gate。
+- 解法：建立 `quota_value_cycle.py`，把不耗模型的 rate-limit snapshot、36 小時 activation window、15% reserve、價值評分、同 revision 完成去重、no-delta 七天 cooldown、強制 output receipt 與 post-reset report 接成一條閉環。
+- 預防：任何「利用剩餘額度」排程都必須先回答：本輪會替 Owner 新增什麼可用能力、哪個檔案／畫面能驗證、測試是什麼、與上一輪有何 delta。答不出來就停止，不得再產生 inventory-only checkpoint。
+- 封坑驗證：本機 watcher 不呼叫模型也能持續留下 used/reset/source；pre-reset automation 只有 gate=`ready` 才做一個高價值 job；`done` 沒有 output path 會被 controller 拒絕；重置後報告列出每個 output/test/commit，零成果時明確標紅而不是報成功。
+
+## 2026-08-26 — 客戶頁的日期／內部語與平台上傳成功必須分開驗證
+
+- 觸發條件：Owner 再次指出公開 WP 不應露出日期、工程用快速導覽或「草稿只選無人畫面」這類內部語；同一案又遇到 YouTube file chooser 與 Pinterest Google 登入失敗，容易把素材完成誤報成平台完成。
+- 根因：內容產線把內部 release plan、客戶可讀 copy、平台 upload state 混在同一個完成判斷；圖片也只看「有插入」，沒有要求每張扮演不同資訊角色並逐張驗 alt。
+- 解法：公開前固定做兩個獨立 gate。Content gate 只掃客戶會看到的 title／body／caption／CTA／image alt，預設不曝光日期與內部流程語，WP 至少三張不同角色照片；Platform gate 必須拿到 platform ID、可讀 URL 與欄位 readback，file chooser `Not allowed`、登入未建立、HTTP 200 或空對話框都只記 `BLOCKED`。
+- 預防：每案只維護一份 `platform_metadata.md`，發布後另寫 release receipt；WordPress、長片、Short、Pin、Telegram 各自有狀態，任一平台阻擋不重做內容，也不把部分完成包成「全部上傳完成」。
+
+## 2026-08-26 — 人設手冊不是 runtime capability；Telegram 授權不能拿 chat id 當 sender id
+
+- 觸發條件：Owner 問 Hermes 權限、模型與記憶，A6 bot 連續回答「本機零存取、無持久記憶、模型未知」，叫 Owner 自己跑 launchctl/cat；Owner 在群組說話或傳照片時，gateway 沒看、沒回、沒開工。
+- 根因：三個錯誤疊在一起。① system prompt 把 2026-08-25 runbook 稱為「知識邊界」，模型把舊角色限制覆蓋真實 gateway 能力。② 私聊授權用 `chat.id == owner_user_id`，群組 chat id 必然不同，所以 Owner 本人也被忽略。③ poller 只取 `message.text`，沒有 text 就直接 continue，照片更新被靜默丟掉；安全 executor 雖已存在，卻只認 `/do`，自然語句仍被 LLM 接走。
+- 解法：能力題改由 runtime deterministic readback；provider、last provider、history 與固定 actions 寫 private state。授權改查 `message.from.id`，群組另要求 @bot 或 reply。照片走 `getFile` 私密保存＋bytes/hash receipt。安全 alias 可由自然語句直接觸發；手冊快照降級為歷史背景，current 必須跑 readback。
+- 預防：任何 agent 入口都要分開記錄 `surface capability / model capability / connector capability`；不得用 persona 散文回答權限。Telegram handler 的測試矩陣至少包含 private text、group mention、group reply、non-owner、photo、unknown action；Owner 問「現在」時，沒有 runtime evidence 就不得用「應該」補空白。
+- 封坑驗證：能力題可見回覆必含 `能力真相 v2`、`不是零存取`、provider chain 與持久記憶；自然語句狀態題必回 `A6H-*` receipt；group/photo focused tests 必 PASS，live eye proof 未拿到前分項標 `MISSING`，不得把 code path 當 UI 完成。
+
 ## 2026-07-09 — 同一張 Task Card 藏兩個「狀態」欄位，且互相矛盾（第三個活例）
 
 - 觸發條件：驗收 T-A4-001（S11/2024 補跑）時發現，這張卡在檔案上半部只有「最後活動/接續點/阻塞」，完全沒有「狀態」欄位；`scripts/patrol.sh` 的 `grep -m1` 因此往下抓到檔案中段一段 2026-04-15 遺留的舊格式區塊（`Task ID`/`任務名稱` 那組），把早已過時的「🔄 進行中（S11/2024 補跑執行中）」當成現況——這是繼 `T-A2-SEO-CATERING-MATRIX-001.md`（`**Status**:` 英文無 bullet 格式）、`T-A2-007` 補建（session task list 沒寫進 Task Card）之後，第三個「Task Card 格式跟巡查解析器對不上」的活例。
@@ -412,3 +475,459 @@
   2. 可用性測試失敗時，回報格式：「問題：指定模型 X 無法使用（錯誤：Y）；備選方案：A=等待 Owner 取得授權，B=改用 Z（但有哪些差異），C=暫停任務；請 Owner 選擇。」
   3. 揭露替代不等於合規——合規的唯一標準是「先試指定模型，失敗才回報並等裁決」。
 - 封坑驗證：`TOKEN=$(grep CLAUDE_CODE_OAUTH_TOKEN /Users/pagemacmini/maplab-ai-handbook/bot/.env | cut -d'=' -f2) && echo "test" | CLAUDE_CODE_OAUTH_TOKEN="$TOKEN" claude --model claude-fable-5 --print 2>&1 | grep -q "." && echo PASS || echo FAIL`（指定模型可用時應回 PASS；若 FAIL 才進備選方案流程，不得自行替代）。
+
+## 2026-08-03 — Google OAuth「測試 7 天過期」診斷指錯專案；真相來源要查活的 Console，不是紙面
+
+- 觸發條件：A8 影音產線「帶字幕 mp4 上傳 Drive `/publish/`」被 `invalid_grant` 擋住。既有交接文件與 Owner 印象都說「OAuth 卡在測試模式、refresh token 每 7 天過期」。Owner 問「一定要我重授權嗎？能不能走 Notion 金鑰保管室路徑？」，先前沒得到清楚定案。
+- 根因（兩層）：
+  1. **指錯專案**：任務描述與部分文件把 token 寫成 `./auth/token_owner.json`／`token_spouse.json`（那是**相片產線 `maplab-pipeline`**），但 A8 產線實際用的是 GCP 專案 **`maplab-ai`** 的單一 `~/.claude/mcp-keys/google-token.json`。兩個是不同專案、不同 token 檔——真相來源混亂。
+  2. **紙面 vs 活的來源**：實查 Console 才確認：`maplab-pipeline` 早已「實際運作中」（紅鯡魚），而真正在用的 `maplab-ai` 才是「測試」狀態——這才是 7 天過期真因。
+- 解法（已執行）：直接在 Cloud Console 把專案 `maplab-ai` 的 OAuth 同意畫面**發布為「實際運作中」**（可逆，有「返回測試」）；根因消除。此後只需 Owner 跑一次 `python3 ~/.claude/mcp-keys/reauth_google.py` 點「允許」，新 refresh token 即長期有效。
+- 治理教訓：
+  - **OAuth user-token 不適合當「金鑰保管室」的靜態祕密管理**。保管室能治理的是不過期的 API key／App Password；OAuth refresh token 是動態的，測試模式下會被 Google 每 7 天作廢——抄進 Notion 也沒用。凡問「能不能走 Notion 路徑繞過重授權」，答案是不能，要治本得靠「同意畫面上線 + 一次授權」。
+  - **涉及外部服務狀態，先查活的來源（Console）再下結論**；一次現場查核就推翻了紙面診斷。
+  - 憑證文件要**明標所屬 GCP 專案與 token 檔路徑**，避免多產線共用「Google OAuth」字眼卻指不同專案。
+- 預防：遇 `invalid_grant`，第一步先確認「是哪條產線／哪個 GCP 專案／哪個 token 檔」，再查該專案 Console 的發布狀態；測試模式先發布上線再重授權，不要只重授權（測試模式下 7 天後照樣復發）。
+
+## 2026-08-23 — macOS `wc -c` 輸出未正規化會讓 byte-size gate 靜默失效
+
+- 觸發條件：A0 Continuity Watchdog 實作 2MB log rotation 時，先把 `wc -c < file` 的結果直接拿去做只含數字的 regex 與算術判斷；在 macOS/BSD `wc` 上，數字可能帶前置空白，因此 rotation gate 會被靜默跳過。
+- 根因：把 CLI 的人類可讀輸出誤當成已正規化的 machine value；測試只覆蓋行為路徑，沒有先用超小門檻驗證 rotation side effect。
+- 解法：`wc -c` 後先用 `tr -d '[:space:]'` 正規化，再做整數檢查與 `> LOG_MAX_BYTES` 判斷。
+- 預防：任何把 BSD/GNU CLI 輸出餵給 regex、JSON 或算術式的 gate，都先去除格式空白並用實際 side effect 做 smoke；不要只看 exit code。
+- 封坑驗證：用隔離 temp state 設 `A0_LOG_MAX_BYTES=1` 連跑兩次 alive tick，`a0_continuity.log` 與 `a0_continuity.log.1` 都必須存在且非空；不得碰真實 A0 heartbeat。
+
+## 2026-08-25 — Google Drive connector 可讀不代表能建立 Google Doc
+
+- 觸發條件：A2→Songwriter 單案已能用 connector 讀 Drive 資料夾、Sheet 與既有文件，但建立 Owner 審稿 Google Doc 時回缺少 scope。
+- 根因：把同一個 connector 的讀取成功誤當成完整寫入授權；Drive/Docs actions 的 OAuth scopes 可以不對稱。
+- 解法：先讓 create action fail closed，不重複送內容；改用已登入的 Google Docs 瀏覽器建立文件，再用 Google Docs API 讀回標題與全文作 durable proof。
+- 預防：每條 Google 產線把 `read / create / edit / upload` 分開做 capability probe。建立審稿面前先測 create scope；若只有 read，使用已登入瀏覽器完成可逆的草稿建立，最後仍以 API 或可讀畫面反讀，不把「輸入已完成」當成「內容已保存」。
+
+## 2026-08-25 — WordPress 用 WebP 不等於 Google Docs 審稿面可直接上傳
+
+- 觸發條件：文章 bundle 已有兩張可公開 WebP，瀏覽器也完成檔案選取，但 Google Docs 畫面回「不支援的圖片類型」；只看上傳流程或雲端儲存狀態會把空行誤報成照片已加入。
+- 根因：把 WordPress 的最佳圖片格式直接沿用到 Google Docs，沒有在審稿面做格式相容性與 inline object 反讀；同一張素材在不同交付面有不同媒體能力。
+- 解法：WordPress 保留 WebP；只為 Google Docs 審稿面轉一份 JPEG 再插入，最後用 Docs API 驗證 `inlineObjectCount` 與正文引用數都等於預期值。
+- 預防：案例文章有圖片時，驗收必須同時檢查「公開稿 image markup／WP asset」與「Owner 審稿面 inline image object」；Google Docs 上傳先用 JPEG/PNG，不把 file chooser 成功或空白段落當成圖片證明。
+
+## 2026-08-26 — 對話中的子群人數不可覆寫活動總人數
+
+- 觸發條件：客戶先說「60 人」，後續補充「4 位素食／1 位過敏」，以最後一個 `數字+人/位` 當總人數的 parser 會把案件人數改成 4 或 1。
+- 根因：欄位抽取只有字面 regex，未區分總參加人數與素食、過敏、工作人員、搬運協助等子群語意。
+- 解法：人數候選需排除鄰近素食、過敏、工作／服務人員、搬運詞彙；完整需求收齊前由 quote-ready gate 禁止進 A5 報價。
+- 預防：Gym 必測「總人數在前、子群人數在後」的多輪案例；報價 payload 必須保留 `case_id + event_date + headcount`，不得只靠自然語言重新猜測。
+- 封坑驗證：`python3 -m unittest -v tests.test_a6_intake_flow`，其中 dietary count regression 必須維持總人數 60。
+
+# 2026-08-26｜把「不能發完成通知」誤寫成「不必通知」
+
+- 觸發條件：跨平台發布仍缺 YouTube／TikTok／Pinterest 等連結或 Owner 手勢。
+- 根因：把完成訊息的 all-done gate 錯誤套用到所有 Telegram 狀態回報，導致 Owner 不知道缺件。
+- 解法：分成缺件通知與完成通知；前者列平台、缺件、Owner 最短動作，後者只在核准平台全數回讀後發。
+- 預防：每次發布 receipt 必填平台矩陣與 `BLOCKER_MESSAGE_STATUS`；Telegram 送出前仍需 Owner 當下確認。
+
+## 2026-08-26 — 規格通過與稀疏抽幀不能取代完整成品視覺辨識
+
+- 觸發條件：邦尼兔長／短片尺寸、秒數、音軌與少量 start/mid/end 抽幀都正常，但 Owner 實看發現裁切不對、模糊，而且沒有用案例夾內的真實影片。
+- 根因：產線只餵 WordPress 衍生 WebP；又把 ffprobe、render success 與稀疏抽幀誤當成視覺品質驗收。長版重剪時，renderer 預設 `limit=5` 還會把明列的後五個素材靜默截掉。
+- 解法：回到 Drive 原始 28 件素材，逐張／逐片建立 contact sheet 與隱私 allowlist；短版改為 2 支原始直式影片＋3 張原始高解析照片，長版改為 3 支影片＋7 張原始高解析照片；成品用完整時間軸 contact sheet 實際辨識後才送審。
+- 預防：每支成品必留「原始盤點＋allowlist manifest＋完整時間軸 contact sheet＋視覺辨識 readback」四件證據；manifest 素材數不足即退件。案例有原始影片時，低解析 WP WebP 不得成為唯一影片來源。
+
+## 2026-08-26 — Google OAuth token 的 expiry 型別會漂移，下載器不可直接改共享憑證
+
+- 觸發條件：Drive 案例素材下載器沿用舊 helper 時，token 的 `expiry` 是整數 timestamp，而 helper 只接受 ISO 字串，refresh 前即失敗。
+- 根因：把不同版本 OAuth client 寫出的 token schema 當成固定格式，並企圖直接沿用會寫回共享 token 的 helper。
+- 解法：下載器獨立正規化整數／字串 expiry，只在記憶體 refresh access token，不改寫共享 auth 檔；下載結果以 folder allowlist、SHA-256 manifest、0700/0600 權限驗收。
+- 預防：外部憑證 helper 必先測 schema variant；讀取既有 token 可共用，寫回與 refresh side effect 必須明確隔離。
+
+## 2026-08-27 — 曾經做過的人工精修若沒有 project／timing receipt，就無法變成可重跑 SOP
+
+- 觸發條件：Owner 指出新片歌詞拖拍、畫質退化，並追問以前用過 Canva／CapCut 等做法為何沒留下；現行文件一份把 local renderer 寫成 review，另一份又寫成「產片一律用」，造成 review draft 被交成 final candidate。
+- 根因：歷史上 Canva／CapCut 與人工精修曾被使用或規劃，但 editable project、逐句歌詞時間碼、tool version、polish recipe、raw hash、encode lineage 與完整播放收據沒有一起保存；SOP 之間也沒有 final SSOT。這讓後續 session 只能看到工具名稱與 review MP4，無法重播當時人工判斷。
+- 解法：證據分成 Owner-confirmed、file-verified、inferred、planned-only；缺 receipt 只代表無法歸因／重播，不得改寫成沒做過。正式狀態維持不可跳級；CapCut／Canva／Google Vids 完整影片路徑必留 project/timeline/version/reopen，人工 motion／typography／cover 配方也進 gate；one-pass FFmpeg 必留 raw hashes／filtergraph／lineage。舊 platform exporter 因盲裁與多代有損已 fail-closed。
+- 預防：任何「之前有做過」的好做法，只有在 SOP 同時寫明輸入、實際工具鏈、可重開產物、精修配方、驗收閾值、機器 gate 與失敗回復點後，才可作為下一次可重跑地基；但不能因地基缺收據就否定 Owner 對歷史實作的確認。音訊未過 actual-audio ASR＋真人聽辨時，不得先剪正式片。
+- 封坑驗證：`python3 -m unittest tests.test_a8_video_acceptance tests.test_a8_platform_formats_guard tests.test_a8_one_pass_timeline -v` 必須全過；舊 `export` 必須拒絕、`review-export` 必標不可上傳；現行 v2 acceptance 仍必回 `ok=false`。
+
+## 2026-08-27 — 第三方 `doctor` 可能先安裝依賴，不能把名稱當成唯讀保證
+
+- 觸發條件：依 DeerFlow `Install.md` 執行 `make doctor`，原預期只做健康檢查，實際先由 uv 建立 `.venv` 並安裝 222 個 backend packages，才輸出 nginx／model key 診斷。
+- 根因：把 `doctor` 這個人類可讀名稱當成無副作用語意，沒有先讀 Makefile target 與 `scripts/doctor.py` 的 dependency bootstrap 路徑；第三方專案命令的實際 side effect 只能由 source 或隔離實跑證明。
+- 解法：本次確認所有寫入都限制在外接碟的 pinned DeerFlow checkout；未啟動服務、未開 port、未裝 nginx 或 Docker。Receipt 明列 `.venv`／222 packages 是 setup side effect，不把 doctor 描述成 read-only。
+- 預防：執行第三方 `setup`／`doctor`／`check`／`verify` 前先讀對應 Makefile target；若可能下載、建 venv、build image 或改 config，先放到隔離目錄、設輸出邊界並在 commentary 明示。完成判準同時看 filesystem diff、process/port 與 tool output，不能只看命令名稱或 exit code。
+- 封坑驗證：DeerFlow preflight helper 本身保持離線，只讀 anchor/config/env 名稱並回 JSON；`make doctor` 的 package side effect 與 nginx blocker 必須在 validation receipt 分開列出。
+
+## 2026-08-27 — 第三方 Skill 顯示安裝成功，不代表符合 Codex 可發現格式
+
+- 觸發條件：用官方 skill-installer 從 pinned GitHub commit 安裝 `watch` 與 `impeccable`，下載器均回 installed，但 `quick_validate.py` 隨即拒絕 `version`、`argument-hint`、`user-invocable`、`homepage` 等額外 frontmatter 欄位。
+- 根因：上游以跨 harness 格式發布；下載成功只證明檔案抵達，不證明當前 Codex 的 frontmatter schema、工具路徑或安全政策相容。
+- 解法：保留 `name`、`description`、`license`、`allowed-tools`，把 provenance/version/argument hint 移入合法 `metadata`；記錄 immutable source commit，另加私有資料、hook、自動安裝與 cleanup 的本機護欄，再重跑 validator 與實際 smoke。
+- 預防：所有外部 skill 都走 `pin commit → install → quick_validate → realistic smoke → lifecycle audit`；任何一步沒過都不能標已上線。不要把 `npx ... install` 或 installer 的 success line 當完成證據。
+- 封坑驗證：`watch`、`impeccable` 與三個新 MAPLAB routers 共 5 個 validator 全 PASS；lifecycle audit 回 `skills=14 duplicates=0`；watch 以無網路 ASR 的 2 秒本機影片成功抽出 4 frames。
+
+## 2026-08-27 — 索引檔存在且可解析，不代表索引對目前 HEAD 新鮮
+
+- 觸發條件：Project knowledge preflight 初版只檢查 `graphify-out/graph.json`／HTML 存在與 NotebookLM pack hash，一度回整體 `ready`；獨立架構稽核再讀 `GRAPH_REPORT.md` 才發現 Graphify built commit 是 `e5d931d4`，已落後 repo HEAD。
+- 根因：把 artifact presence/integrity 與 source freshness 混成同一個布林值；NotebookLM pack hash 對齊也不能替 Graphify 或 live runtime 背書。
+- 解法：preflight 分開回 `routes.graphify` 與 `routes.notebooklm`，解析 Graphify built commit 並與 `git rev-parse HEAD` 比對；graph stale 時相關回答只能 `NEEDS_LIVE_REFRESH`，NotebookLM 仍可獨立 `ready`。
+- 預防：每種 index/快取/生成物都要同時留 `source identity + built-at version/hash + refresh command`；查詢前逐 route 判 freshness，不做「有檔案就 PASS」。在 dirty worktree 不為了消掉警告偷偷重建 generated artifact。
+- 封坑驗證：`python3 .agents/skills/maplab-project-knowledge-router/scripts/preflight.py --repo-root . --json` 必須回 Graphify `needs_refresh`、NotebookLM `ready`，並列出 built commit、HEAD、兩個 pack hash verdict 與各自 refresh command。
+
+## 2026-08-27 — Skill initializer 失敗也可能留下半套 scaffold
+
+- 觸發條件：用 `init_skill.py` 建新 skill 時，`short_description` 少於介面規定的 25–64 字元；命令回 non-zero，但目標目錄與 `SKILL.md` 已先建立。
+- 根因：誤以為初始化器會原子化失敗，把 non-zero 當成「完全沒有寫入」，沒有先檢查實際檔案 inventory。
+- 解法：立刻檢查限定目標目錄，只用 `apply_patch` 補完既有 scaffold 與合法 `agents/openai.yaml`，再跑 focused tests、`quick_validate.py` 與 lifecycle audit；沒有重跑 initializer 覆蓋半成品。
+- 預防：初始化前先驗 `short_description` 為 25–64 字元；任何 setup／initializer non-zero 後都先比對目標目錄與 git diff，不能假設 rollback。需要重試時先判斷是續補、移走隔離，或明確刪除，不可盲目覆寫。
+- 封坑驗證：新 skill 檔案 inventory 無 `TODO`／placeholder；`quick_validate.py` 回 `Skill is valid!`，lifecycle audit 回 `duplicates=0`。
+
+## 2026-08-27 — 要 Owner 指定 `/研究` 等於把 orchestration 責任丟回 Owner
+
+- 觸發條件：DeerFlow 最初只接 `/research-public` 這類明確命令；Owner 指出 A8 生歌／影片／YouTube 與 LINE 多輪訓練不應由他判斷何時叫哪個工具，也不應因 session 結束而停。
+- 根因：把「模型可呼叫」誤當「系統已整合」，缺少自然語言意圖路由、canonical job、續跑 ownership、terminal notification 與 Owner 可見驗收面。
+- 解法：自然語句先由本機 deterministic router 分成 public research、A8、LINE 或 general durable job；完整目標寫進 owner-only `MAPJOB`，公開研究才交 DeerFlow，私有 workflow 交本機 domain worker，30 分鐘 heartbeat 只執行下一個 bounded action。
+- 預防：新增工具時驗收必問四題：Owner 是否只需說成果、job 是否跨 session 存在、誰負責 retry／resume、什麼 artifact/readback 才算完成。缺任何一項都只能標「元件可用」，不能標「工作流已接通」。
+- 封坑驗證：自然 A8／LINE／多來源研究 route tests PASS；公開研究 `MAPJOB-20260827-221144-64831c` 自動啟動 DeerFlow 並完成；LINE `MAPJOB-20260827-224251-d291ad` 自動啟動本機 supervisor。
+
+## 2026-08-27 — DeerFlow 的 long-horizon 能力不是 crash-safe continuation 本身
+
+- 觸發條件：embedded DeerFlow 能做 agent/subagent reasoning，但 process 結束、local model tool loop、middleware name collision 或 config drift 都可能讓一次 run 中斷；只提高 recursion limit 仍會原地重試。
+- 根因：把單次 agent runtime 的長上下文／多步工具能力等同於 durable orchestration；同時讓模型自己重複搜尋，沒有把公開 retrieval、provider gate、config validation 與 canonical receipt 固定在模型外層。
+- 解法：DeerFlow 降為 isolated one-shot public research worker；adapter 先做一次 bounded public retrieval，model tools 為空，再由本機模型綜整。外層 `MAPJOB`、receipt、heartbeat 與 notification 負責 crash-safe continuation。Process-local middleware unique-name compatibility 同時保留 RBAC 與 allowlist 兩道 fail-closed gate。
+- 預防：遇 agent 重複工具或 recursion exhaustion，先問可否把不確定 loop 變成 deterministic bounded step，不先盲目加 recursion。第三方 middleware 相容修補必保留原本兩道政策語意，不能為了能跑而關閉其中一層。
+- 封坑驗證：local/OpenRouter 兩份 config validation 全綠；live public job 99.241 秒完成、五個來源、`tools_used=[]`、artifact 與 receipt hash 留存。
+
+## 2026-08-27 — 移除 LINE sender name 不等於資料已可送雲端
+
+- 觸發條件：既有 LINE 訓練 corpus 已替換 sender name，容易被誤標為 deidentified 後送 OpenRouter／DeerFlow。
+- 根因：姓名只是識別訊號之一；日期、地址、預算、菜單、報價與多輪語意仍可重識別，也屬客戶營運資料。
+- 解法：LINE job 永遠標 `private-local-only`；cache 移到 user-local 0700 目錄、檔案 0600，只接受固定 `http://127.0.0.1:11434/api/generate`，child 移除 cloud keys/proxy，receipt 明列 `external_network_calls=0` 與 loopback calls。
+- 預防：deidentification gate 必逐欄檢查直接識別、準識別與語意重識別，不可只看姓名。未經新 Owner 授權，private corpus 不得因第三方宣稱 ZDR/free 而改走雲端。
+- 封坑驗證：真實單案與 launchd batch 5 均只用 `local/ollama/gemma4:latest`；外網 0、無 customer/Telegram send；外接碟原路徑權限不足時 deterministic fail closed。
+
+## 2026-08-27 — Durable supervisor 必須從逐筆不可變證據重算完成，不可信任 summary
+
+- 觸發條件：獨立審查連續發現同 job 併發覆寫、error handler 繞過 lock、receipt replay、續跑偷降 target、重複 seed、1-case 冒充 full round、diagnostic 累積 promotion，以及 failed sample 藏在完美 aggregate 後仍可完成。
+- 根因：canonical job 與衍生 summary 沒有同一把鎖／CAS；完成狀態信任 caller-supplied aggregates，而不是重新驗證 immutable run、lesson delta 與每筆 evaluation。
+- 解法：加入 job-scoped `flock`、鎖內 reread、stale-writer CAS、canonical transition matrix、immutable qualification contract/seed schedule、run/receipt/delta ID+SHA-256、防重播、exact seed/stage/batch binding，並由 `results[].evaluation` 重算 pass、mean 與 unsupported aggregates。Diagnostic/explicit-stage 永不計正式連勝。
+- 預防：任何可自動進 `COMPLETED` 的 supervisor 都要把 completion 視為安全邊界；狀態只能由不可變逐筆證據導出。錯誤 terminalization 必走同一 lock/CAS，lock busy 只讀回 running，不得寫入。
+- 封坑驗證：59/59 focused tests PASS，包含 forged completion、hidden unsupported、mean mismatch、replay、concurrent lock、stale error、parameter drift 與 honest completion regressions。
+
+## 2026-08-27 — Shell 搜尋字串中的 backtick 仍會被執行
+
+- 觸發條件：用雙引號包住 `rg` regex，pattern 內含 Markdown backtick 的 `web_search`；zsh 先做 command substitution，導致意外嘗試執行 `web_search`。
+- 根因：把送給 `rg` 的人類可讀 pattern 當成純資料，忽略 shell 會先解析雙引號內的 backtick 與 `$()`。
+- 解法：含 Markdown backtick 或 `$` 的搜尋 pattern 一律用單引號包住，或改為固定字串參數；失敗後立即檢查 command output，確認沒有敏感值或寫入副作用。
+- 預防：建構 shell command 前先做 interpolation audit；未知／外來文字不要直接插入 command string。驗證搜尋使用 `rtk rg -n 'pattern-with-`backtick`' ...`，不得讓 shell 先解讀 pattern。
+
+## 2026-08-27 — Durable job 與私有 worker receipt 是兩個 ownership root，驗證工具不可混用
+
+- 觸發條件：heartbeat 驗證 LINE round 時，先到 user-local `supervisor_jobs` 目錄尋找 job lock，又把該 repo 外路徑交給 `git status`，分別得到 lock 不存在與 `outside repository`。
+- 根因：混淆 canonical control plane 與 private data plane；job state／lock 位於 repo 的 ignored `MAPLAB-DURABLE-JOBS/<job-id>/`，run／lesson／supervisor receipt 才位於 user-local 0700 cache。
+- 解法：canonical `job.json` 與 `.line-training-supervisor.lock` 用 repo path 驗證；user-local run、delta、receipt 用 `stat`／SHA-256 驗證。`git status` 只接 repo 內 path，不拿它查外部資料根。
+- 預防：每個 durable adapter 的 Resume Prompt 必列出 control root、data root、lock path 與各自驗證工具；完成檢查先按 ownership root 分組，不用單一命令跨兩個根。
+
+## 2026-08-27 — Live 服務頁與案例資料夾都不能單獨證明真實案例
+
+- 觸發條件：規劃 WP／音樂 01–10 時，先從十個 live 服務分類頁定題與曲風，沒有先逐案對應 Google Drive 活動資料夾、活動身分與素材；後續又發現一個案例夾混入無關私人文件。
+- 根因：把「內容 owner 存在」誤當「案例證據存在」，也把「檔案位於案例夾」誤當「檔案屬於該案例」。這會讓關鍵字、專名與曲風在事實鏈完成前被過早定案。
+- 解法：案例產線固定走 `Drive folder ID/inventory → event/quote anchor → TimeTree/外燴系統 → ASSET_LOG file ID → visual QA → 公開來源三角 → live SEO collision/pillar route → title/keyword/style`；無關私密文件標記後排除，不引用或摘要。十個案例逐案選 existing post、pillar proof、new gap 或 social-only，不自動建十個 slug。
+- 預防：任何案例 registry 先跑 `scripts/maplab_case_first_gate.py --level intake`；進 WP 前再跑 `--level wp --case-id ...`。服務頁不能作 `source_kind`，final keyword 必須同時有 verified identity 與 live collision proof。
+- 封坑驗證：`tests.test_maplab_case_first_gate` 7/7 PASS；真實 10 案 intake PASS；服飾店開幕案例在分店、ASSET_LOG、visual QA 與 live collision 未齊時由 WP gate 正確拒絕。
+
+## 2026-08-28 — 多跑不同樣本不等於訓練，也不等於換方法
+
+- 觸發條件：Hermes LINE supervisor 連跑 12 rounds／60 次本機推論，總通過率只有 10/60；每輪換問題與 seed，卻沒有固定 canary、單一 changed variable、可比較 baseline 或 stop-loss。
+- 根因：把 worker activity、round count 與新 lesson 檔誤當品質進展；現行流程其實是 random two-shot prompt evaluation，不是權重訓練或 retrieval learning。總分又主要被長度 gate 支配，failure taxonomy 與真實業務正確性沒有分開。
+- 解法：Supervisor 新增 plateau guard；兩個未通過 qualification rounds 後切到 `method-redesign`，後續 resume 零模型呼叫、零 attempt。下一版先固定 20 案分層 canary、校正 rubric，再做 baseline/candidate 單一變因比較。
+- 預防：每次新實驗必填 hypothesis、failure bucket、changed variable、fixed holdout、expected delta、stop-loss 與 method version；同方法兩輪無改善後禁止只換 seed／樣本繼續跑。第三次同錯必跑第一性原理 5 題並更新 regression set。
+- 封坑驗證：34/34 focused tests PASS；真實 job 在不帶 `--data-root` 的 resume 回 `plateau_method_review_required`，round 仍 12、attempt 仍 6、loopback calls 仍 60。
+
+## 2026-08-28 — Durable resume 不可依賴呼叫者記得私有 data root
+
+- 觸發條件：以 canonical job path 直接續跑 LINE supervisor 時，CLI 未帶 `--data-root`，程式退回舊外接碟預設並回 `permissions_not_private`；同一任務因入口不同讀到不同資料根。
+- 根因：資料根只存在 launchd／shell 參數，沒有從 canonical supervisor receipt 回推；把狀態責任留給下一位操作者記命令。
+- 解法：resume 先驗證 owner-only supervisor receipt，再從 receipt 的 `data_root` 綁回相同 private dataset；CLI explicit value 只保留初始設定／診斷用途，receipt path 與 job id／data root 必須一致。
+- 預防：任何 durable job 的 provider、data root、model digest 與 contract 都要由 canonical receipt 自我恢復；環境變數只能 bootstrap，不能成為跨 session 單一真相源。
+- 封坑驗證：`test_resume_derives_private_data_root_from_canonical_receipt` PASS；實機無參數 resume 成功讀回 user-local 0700/0600 root，且 plateau guard 阻止任何新增模型呼叫。
+
+## 2026-08-28 — 找到客戶要求不等於找到可收費漏損；缺 join key 時應停掉分類迴圈
+
+- 觸發條件：50 案 taxonomy calibration 找出 18 個 heuristic true candidates；固定十案再做 evidence join 時，10/10 LINE source rows 都能定位，卻沒有任何一案同時接到 quote content、actual delivery、incremental cost 與 OrderCharges。
+- 根因：LINE conversation ID 只由私有 CSV filename hash 而來；quote folder、`SALES_INTAKE`、`OrderCharges` 與 `MAPLAB_ASSET_LOG` 沒有共用的 stable case/quote/asset key。本機 `.gsheet` pointer 只有檔名 metadata，也不是報價內容或 charged-fee 證據。
+- 解法：停止增加 keyword、round 或 classifier 版本；先建立本機 read-only join bridge，把 case、quote、charge、asset 的最小 key 在 process 內對應，receipt 只留 hashes、evidence status 與 missing codes。Live readback 若仍 zero stable joins，就立即產 field-level schema proposal，並把下一樣本改為「已有 quote＋charge 的 order 往回找 conversation」，不再對相同 random conversations 加模糊條件。四柱缺一就維持 `insufficient_evidence`、金額 0。
+- 預防：margin-leak pipeline 的第一個 acceptance 不是「候選數」，而是四柱 join coverage；每案必有 baseline scope、actual delivery、incremental cost、charged fee。實驗抽樣要先看 evidence availability：要找漏收金額時優先從 evidence-rich orders 做 join-first，conversation-first 只適合訊號 taxonomy。Pointer、keyword、姓名或回覆語氣只能進 review queue，不可自動成為 leakage。
+- 封坑驗證：固定十案 10/10 source hash resolved；live Google minimal readback 為 `SALES_INTAKE=45`、`Orders=693`、`OrderCharges=184`、2026 quote Sheets=159，但 stable join 仍 0、四柱 verified 各 0。Private-label/source-ID leak audit 0；Google reads 12、writes/token writes/model/send/new third-party egress 0。下一方法改 join-first fixed-five，不得再跑相同 name matcher。
+
+## 2026-08-28 — Two-anchor 候選很多仍不等於 identity join；歷史回填要有停損
+
+- 觸發條件：從已有 quote＋OrderCharges 的固定五個 2026 Orders 往回掃 3,625 個 LINE archives；3 案沒有 two-anchor candidate，另 2 案卻各出現 8／9 個候選，仍沒有唯一可驗的 conversation。
+- 根因：完整日期與客戶／活動 identity 在歷史匯出中會重複；有兩個 exact anchor 只代表 candidate，沒有跨系統 `case_id` 時，增加 fuzzy 條件只會把不確定性包裝成假精準。
+- 解法：unique candidate 才能標 stable；0 candidates 與 ambiguous candidates 分開記錄，ambiguous 一律 fail closed。固定五案 unique joins=0 後立即執行 stop-loss，repair point 改為 intake-time `case_id` capture，不再擴歷史 matcher。
+- 預防：所有新 LINE case 在 intake 建本機 opaque `case_id`，並讓同一 key 穿過 Case Store／SALES_INTAKE、quote、Orders／OrderCharges 與 ASSET_LOG。歷史 backfill 沒有 deterministic key 時只保留 `insufficient_evidence`，不得算漏收金額。
+- 封坑驗證：`margin-join-first-shadow-v1` fixed-five 為 no-candidate=3、ambiguous=2、stable=0、confirmed amount=0；13/13 focused tests、`py_compile` 與 independent audit PASS；receipt SHA-256 `55ce24ff...`，raw/customer/source IDs/Google IDs/third-party egress/model/send/write 全為 0。
+
+## 2026-08-28 — 把兩個 destination 合成一個 synthetic PASS，會製造假的端到端證明
+
+- 觸發條件：intake-time `case_id` contract 初版把 Case Store 與 `SALES_INTAKE` 合成單一 `atomic_pair` node，並只用 process-local `RLock` 驗 concurrency；14/14 tests 雖過，獨立稽核仍可構造「其中一邊沒寫」與「worker restart 後重複 mint」兩個 false-positive。
+- 根因：把設計意圖的 distributed atomicity 當成已驗事實，也把 thread safety 當 crash-safe idempotency。真實系統中兩個 destination 不可能因一個記憶體 node 就原子完成；語法合法的 post-cutover key 也不等於有 intake provenance。
+- 解法：拆成 `case_store`／`sales_intake` 兩個獨立且唯一的 acknowledgement，coverage 必須兩者皆在且 key 相同；quote gate 的檢查與 insert 留在同一把 `RLock`，late duplicate ack 一律拒絕。新增 owner-only synthetic SQLite intake ledger，以 source-event primary key、case unique constraint、`BEGIN IMMEDIATE` 與 FULL sync 驗 restart／two-connection race；post-cutover link 直接查 ledger 的 event→case，不接受 caller boolean。Receipt 寫入前逐層比對 exact key/value allowlist、timestamp 與 body/fixture hashes，`OrderCharges` schema proposal 補齊 `case_id`／`quote_id`／idempotency key。
+- 預防：任何「穿過 N 階段」的 acceptance 必須逐 destination 留獨立 receipt/readback，不能用 composite boolean 代替；任何「可重跑／併發安全」宣稱至少測 fresh process/connection、unique constraint 與 commit-before-ack。Synthetic PASS 只能進 separate live review，不得直接部署。
+- 封坑驗證：fixed 10 scenarios 必須 10/10，包含 missing Case Store、missing `SALES_INTAKE`、one-side mismatch、restart 與 two-connection race；16/16 contract tests、29/29 margin focused suite、`py_compile` 與 independent red-team 全 PASS，live write/send/model/network 仍為 0。
+
+## 2026-08-28 — 靜態 plan／receipt 的 key allowlist 不等於安全，也不等於可上線
+
+- 觸發條件：case-id integration validator 初版雖通過 tests，獨立 red-team 仍能以相同 keys 污染 plateau values、把 boolean 塞進 integer count、讓 unknown data class fail open、漏測 model override、把 symlinked LINE checkout誤判為缺失；plan 還一度要求 direct GAS Web App 驗 LINE header，但該 event object根本不提供 request headers。
+- 根因：只驗 shape、present fragments與 HTTP body，沒有驗 exact value/type/body relation；把 repo source當 deployed truth、把 command prefix當 privacy contract、把 conceptual state machine當 durable runtime；也沒有先確認 ingress platform是否具備安全要求所需的原始 header/body能力。
+- 解法：source、plan與完整 prior header皆 pin SHA；receipt逐層 exact key/value/type、fixture manifest、method fingerprint與 deterministic body hash；source/plan drift一律 HOLD。Private route拒絕 unknown class、cloud/non-loopback、cloud/proxy/provider/model overrides、repo sink與 unsafe modes。LINE 必須先有 header-capable ingress，以 untouched raw body驗 `x-line-signature`，再送 nonce/replay-bounded authenticated internal envelope；direct/unsigned GAS輸入 fail closed。
+- 預防：任何 static plan receipt都必須明寫 `PROPOSAL_ONLY`、`eligible_for_live_change=false`與 `durable_*_validated=false`；測試要包含 attacker recompute body hash、same-key poison、boolean-as-int、symlink/path-layout change、unknown enum與 source/plan drift。開始設計 auth前先核對平台能否取得所需 request metadata；不能取得就換 ingress，不得寫不可實作的 SOP。
+- 封坑驗證：20/20 source anchors、25/25 static fixtures、4/4 prior header pins、7/7 plan gates；focused 20/20 與 related margin 29/29 PASS，三個 independent final audits PASS。現有 fixtures 明列不含 signature/envelope runtime proof。Receipt parent/file 0700/0600，SHA `bfcf5a5f...`；live adoption、durable outbox runtime、Google write、customer send 與 confirmed leakage 仍為 false/0。
+
+## 2026-08-28 — 部署盤點不能把 local／historical 當 current truth；mode receipt 要驗完整 consumer root
+
+- 觸發條件：deployed-source inventory 初版只記 quote local binding、Case Store DB 與 OpenClaw root；獨立 red-team 連續構造 raw script ID、任意 digest、duplicate manifest、boolean/float count、future timestamp、writer/quote/LINE state矛盾、credential safety翻轉與 same-key客資污染。後續又發現 `REPO_PATH`、Case Store fallback與 405 個 OpenClaw artifact file modes未納入，原本的「無 override／0755/0644」敘述不完整。
+- 根因：把 receipt body hash誤當真實性驗證，只驗 keys與部分算術，沒有逐欄 exact type/value/relation與唯一 manifest；把 root mode當整個 data plane mode，也沒有追每個 env consumer、fallback與既有 artifact。另把歷史 deployment receipt、local clasp binding與 current deployed source混成單一「已部署」概念。
+- 解法：truth固定拆成 `local checkout/binding`、`historical deployment evidence`、`current deployed readback`，讀不到最後一層就 `UNRESOLVED`。Receipt pin完整 source/header manifests、64-hex digests、timestamp/read counts、writer search manifest、quote/LINE relations、credential exact readonly scope與 root modes；`REPO_PATH`只留 salted fingerprint＋matches-root。Case Store同驗 dir/DB/fallback，OpenClaw以固定 bundle filenames做 aggregate mode histogram，不落私有 paths/content。所有 same-key poison與 attacker-rehashed fixtures必須 fail closed。
+- 預防：任何 inventory acceptance都先列「哪些值是現場讀回、哪些是歷史、哪些只是設定」；root audit從每個 consumer與 fallback反推，而不是只 `stat`父目錄。布林不可充整數、`0.0`不可充 count、合法 ISO timestamp也要綁本次 receipt contract；source/header list必驗 exact set＋unique。Local binding、版本 receipt、inbound曾運作都不能替 current deployed revision背書。
+- 封坑驗證：`margin-deployed-source-inventory-v1` focused 20/20、related suite 71/71、live receipt reload與三個 independent red-teams PASS；23 個 adversarial rehashed variants全拒絕。Receipt parent/file 0700/0600、SHA `21106476...`；Case Store `0755/0644/0644`、OpenClaw 405/405 at `0644`、Google credential `0644`且 Apps Script readonly scope缺失均保持 `HOLD`，live change與 confirmed leakage仍為 false/0。
+
+## 2026-08-28 — Private-root hardening 必須沿 runtime import/config graph 追到底，不能只找 `.env`
+
+- 觸發條件：初版 plan 已列 launchd、gateway與 repo `.env`，獨立稽核仍陸續找出 task executor、DeerFlow bridge、provider setup copy writer、OpenRouter YAML、training loop/supervisor與 installed plist 等 active consumers。
+- 根因：把「直接開檔者」當完整 consumer graph，漏掉 inherited env、import chain、child-process config、credential copy writer與 runtime-installed definition；source pin與 anchor數量很多也不能證明沒有 scanner blind spot。
+- 解法：每個私有 root同時建立 concrete consumer anchors、source hashes、tracked-reference exact scanner與 installed-runtime file manifest。Config selector本身、被選中的 YAML/extension registry、讀者、投影者、copy writer與 scheduler都要在同一 drift gate；unexpected tracked ref一律 HOLD。
+- 預防：cold-start hardening checklist固定從 `service definition → launcher → loader → imports → child env/config → writer/copy path → installed copy` 反向與正向各走一次。新增 private env key或 config path時，必先更新 scanner manifest與 regression poison，再准合併。
+- 封坑驗證：10/10 private-env refs、67 source pins、62 consumer anchors、4 installed runtime files exact；OpenRouter YAML/local YAML/extensions drift與 unexpected ref poison均 fail closed，三個 independent final audits PASS。
+
+## 2026-08-28 — Mode histogram 不是 owner-only 證明；不完整時要降級狀態
+
+- 觸發條件：Hermes training root顯示 root/dirs `0700`、files `0600`、symlink 0，初版就標 `owner_only=true`；稽核指出沒有驗 effective UID、parent ownership、ACL、regular type與hardlink。
+- 根因：把 Unix permission bits當完整 ownership/isolation contract，忽略其他使用者擁有、ACL額外授權、FIFO/device、hardlink alias與 runtime binding drift仍可能在相同 mode histogram下存在。
+- 解法：未取得 UID/full-parent、ACL、type、nlink與 runtime binding readback前，狀態固定 `MODE_ONLY...UNRESOLVED`、`owner_only=false`。Target contract可要求完整條件，但不能把 future acceptance倒灌成 current fact。
+- 預防：任何「安全／owner-only／已隔離」布林都必有逐項 evidence fields；缺一不補猜、不用 aggregate mode代替。靜態 plan只能標 design validated，不能標 runtime validated。
+- 封坑驗證：receipt/current validator與文件同步降級；tamper將 training owner翻 true會被 exact validator拒絕，FINAL4 red-team PASS。
+
+## 2026-08-28 — Shared review migration 要以資料分類與實際 writers切根，不能只搬 adapter bundles
+
+- 觸發條件：OpenClaw audit先只規劃44個 adapter bundles，卻已把 shared namespace內另外53個 fixed artifacts及8代424份 backup copies列為 private；兩個 non-adapter writers仍可把 classified artifacts寫回 repo。
+- 根因：以工具來源（adapter/non-adapter）代替資料分類，也只看目前檔案沒有反查 concrete writers與scheduled backup propagation，導致 migration後會立即重新污染。
+- 解法：adapter、classified non-adapter、dispatch分成獨立 logical roots；53個 current artifacts與future writes各有 actual-byte ledger/readback/rollback。所有 concrete writers source-pin＋anchor，shared repo只准留 non-private control/reference；backup zero-sensitive gate覆蓋所有 fixed-name classes。
+- 預防：任何 shared namespace migration先做 `current bytes × classification × writer × backup generation` 四維盤點。若 classified count大於 migration count，或 writer未綁 target resolver，禁止進 live gate。
+- 封坑驗證：405 current fixed artifacts與3,240 backup copies完整分類；兩個 non-adapter writers、12 target contracts、3,912 backup copies relation均由 validator鎖定，FINAL4 audits PASS。
+
+## 2026-08-28 — Generation 指標原子替換後的 fsync 失敗是 ambiguous commit，不可刪 target
+
+- 觸發條件：synthetic resolver 已把 `active.json` replace 到新 generation，隨後 parent directory `fsync` 注入 `EIO`；初版共用 error cleanup 把新 generation刪掉，留下 active pointer指向不存在目錄。另初版 rollback只驗 ledger/seal JSON，prior artifact被改寫仍能切回；`stat`後leaf換成FIFO也可能讓blocking open卡死。
+- 根因：把「函式拋錯」等同「指標一定沒提交」，沒有區分 pre-replace與post-replace failure；把 seal metadata自洽當artifact完整；以 stat→pathname open與 replace-capable rename代替 fd/type/no-replace contract。
+- 解法：post-replace error先讀回 exact generation＋epoch；若新 pointer已可見，保留 sealed target並回 ambiguous error，不做破壞清理。Rollback在 publication lock內重新開啟、驗mode/type/nlink並hash ledger全部 artifacts後才CAS。所有 untrusted read open加 `O_NONBLOCK|O_NOFOLLOW`；final generation改為 lock內 exclusive `mkdir`＋copy/seal，active pointer才是publication boundary。
+- 預防：每個 generation state machine固定測 pre-pointer fsync failure、post-pointer fsync failure、tampered prior generation、stat→FIFO swap、repo overlap與 destination create race；cleanup只能刪「已證明未被任何 durable pointer引用」的object。Power-loss未實測不得寫 crash-safe。
+- 封坑驗證：focused 25/25、MAPLAB discovery 120/120及 independent 8/8 adversarial harness PASS；post-pointer EIO後新 generation仍存在可讀，tampered prior拒絕且active不變，FIFO swap在nonblocking path立即fail closed。
+
+## 2026-08-28 — Receipt body hash只能證自洽，不能替代 exact evidence contract
+
+- 觸發條件：prototype receipt初版允許 `>=20` 任意PASS fixtures、額外 metrics、未綁當前implementation的64-hex provenance與任意aware timestamp；攻擊者改成2099、刪必測fixture、加入`/var/folders` path或把script SHA改成全0，再重算body hash仍通過。
+- 根因：把可由攻擊者重算的digest當 authenticity；nested validator只驗shape／下限，不驗exact ordered fixture、keys/types/values、timestamp與current bytes relation。
+- 解法：receipt逐層 exact allowlist：固定21-row name/result/observed matrix、metrics exact key/type/value、固定UTC timestamp、method/plateau/decision exact value；implementation provenance即時重算script/test/doc bytes並比對。Body hash只保留為transport/self-consistency check，不能單獨升級decision。
+- 預防：每個完成receipt都要跑「修改語義後重算body hash」poison matrix：future timestamp、required fixture replacement、path poison、extra metric、boolean-as-int、forged provenance與安全decision翻轉。任一接受就不得更新Task/job為PASS。
+- 封坑驗證：上述poisons分別回 `RECEIPT_TIMESTAMP`、`RECEIPT_FIXTURES`、`RECEIPT_METRICS`、`RECEIPT_IMPLEMENTATION_PROVENANCE`或`RECEIPT_DECISION`；exact receipt SHA `03ef6160...`、body `ce995142...`由三個independent exact-byte audits PASS。
+
+## 2026-08-28 — 用 importlib 驗 dataclass 模組前要先註冊 `sys.modules`
+
+- 觸發條件：governance readback用 `spec_from_file_location`＋`module_from_spec`載入 resolver validator，直接 `exec_module` 時 Python 3.9 的 `dataclasses` 在解析型別註記發生 `NoneType.__dict__`。
+- 根因：動態建立的 module尚未放進 `sys.modules[spec.name]`；`dataclasses`會依 `cls.__module__`回查 namespace，未註冊就拿不到模組物件。這是驗證 harness錯誤，不是 receipt或resolver失敗。
+- 解法：在 `exec_module` 前先做 `sys.modules[spec.name] = module`，再呼叫 `validate_receipt`與current-byte provenance檢查。
+- 預防：所有以 importlib直接載入含 dataclass／forward annotation 的 repo script，都使用同一個 helper順序：create spec → create module → register → execute；不要把 loader失敗誤報成產品測試失敗。
+- 封坑驗證：修正 harness後 exact receipt、SHA與 script/test/doc provenance全數重新驗證通過。
+
+## 2026-08-28 — Fingerprint不同、測試全綠仍可能是 objective-level plateau
+
+- 觸發條件：hidden-cost job連續完成 deployed inventory、static hardening、synthetic resolver三個不同 methods；每輪都有新artifact與PASS，但 stable join、four-pillar verified、confirmed leakage、live case capture連續三輪都是0／false，下一步還準備擴大G2 backup fixture。
+- 根因：plateau detector只比較adapter／model／prompt／sampling／evaluator與method fingerprint，把 supporting infrastructure delta誤算成Owner目標進展；沒有逐輪回看Task Card未完成acceptance與business KPI。
+- 解法：receipt強制分 `method_delta`、`supporting_delta`、`objective_delta`；連續兩步 `owner_acceptance_delta=0`就先跑第一性原理五問。Nonblocking infra defer或拆獨立job，下一步必須是針對真正限制的最小可否證實驗。Governance reroute記 `attempt_consumed=false`，不浪費domain attempt。
+- 預防：durable-job Skill與job contract固定記 before/after objective metrics、unlocked next action與attempt accounting；新fingerprint或更多tests不得單獨使用「推進／完成」。每個supporting action都要說出它立即解鎖哪個Owner-facing step，說不出就不跑。
+- 封坑驗證：三個independent reviews一致判定廣版G2為infrastructure drift；job從G2改回fixed-three four-pillar packet，attempt維持9/12，新增objective plateau SOP與可重啟Resume Prompt。
+
+## 2026-08-28 — 安全計數必須從實際 tree 重算，固定回零是假證據
+
+- 觸發條件：G1 `validate_backup_index()`只檢查第一段surface與literal `repo` token，最後直接回 `classified_repo_paths=0`；實測三個不完整／未知logical sources全被接受。sealed generation另可加入未列帳regular file而既有read仍PASS。
+- 根因：把期望結果寫進return value，沒有enumerate/classify emitted index；allowlist以token而非exact manifest／policy digest；sealed verifier只重驗ledger列出的項目，沒有比較expected files、derived dirs、control files與actual tree的完全相等。
+- 解法：任何zero-sensitive receipt都先要有逐類正數baseline，再從實際emitted entries重算post-policy zero；unknown class、scan/stat/open error一律fail closed。Exact tree驗證比較files＋dirs＋control files exact set，extra/missing/type/link drift全拒絕；generation、epoch、policy與classifier digest共同CAS。
+- 預防：禁止在validator中硬編安全counter；poison matrix固定放「名稱像repo但不是literal repo」、「unknown future class」、「extra regular/nested/symlink/FIFO」、「scanner error後假零」。Synthetic gate不能代替live backup remediation。
+- 封坑驗證：本機TemporaryDirectory reproducer確認3個poison仍回0、extra unledgered file被忽略；因此G1 decision範圍已降級為ledgered-artifact resolver/copy proof，backup zero-sensitive與exact tree維持未驗。
+
+## 2026-08-28 — Artifact完成但 canonical job／Resume仍指向舊動作，會重跑並重複消耗attempt
+
+- 觸發條件：fixed-three private packet與proposal已產生，前置驗收均PASS，但 `job.json`、job.md、Task Card、CURRENT_STATUS與Resume Prompt仍是 `RUNNING / attempt=9 / 下一步跑fixed-three`；writer又會覆寫同名packet。
+- 根因：把artifact成功視為bounded action完成，沒有把durable control-plane transition納入同一completion transaction；output writer也沒有existing-identity guard，重跑會因timestamp改變SHA並可能再次加attempt。
+- 解法：Owner-review artifact ready後必同步更新canonical job state/attempt/phase/last_result/history/next action、human job summary、Task Card、validation receipt、CURRENT_STATUS與唯一Resume Prompt。Output存在時先驗owner/mode/schema/identity；identity相同只readback no-op，衝突則fail closed，不覆寫。
+- 預防：terminal/gate checklist固定跑全repo active-pointer scan，禁止任何active Resume仍說舊attempt或舊next action；heartbeat只在canonical state確認後通知。Script focused test必含existing exact replay與identity conflict。
+- 封坑驗證：fixed-three replay回 `output_created=false`、SHA維持`f8bcedec...`；job原子轉 `OWNER_REVIEW / attempt=10`，active pointers只等待Owner三選一，fixed-three不再可自動重跑。
+
+## 2026-08-28 — `OrderCharges` row不是已收費證明，欄位語意未權威化前presence與absence都不能算
+
+- 觸發條件：hidden-cost join想以 `OrderCharges` 驗charged fee，但repo文件一處把type描述為service fee／extra／rental／discount／note，另一處又建議 `type=gft, amount=cost` 存內部成本；current authoritative writer、row status、方向、幣別與付款語意仍 unresolved。
+- 根因：把表名當domain semantics，把任何row presence誤當客戶已被加價、absence誤當收費0；也可能把discount、refund、note或內部成本混進收入。
+- 解法：charged-fee pillar必須同案stable case/order/charge key，並驗authoritative writer、唯一row identity、semantic enum、方向、幣別與lifecycle status。正式contract拆 `customer_charge|discount|refund|internal_cost|note` 與 `proposed|approved|invoiced|paid|waived`；partial table或無row一律UNVERIFIED。
+- 預防：所有毛利／漏收算法不得直接sum未權威化的`OrderCharges.amount`；測試固定放discount、refund、gft cost、note、duplicate/wrong-order與partial-table poison。市場估價、文字金額與建議工時也不能替actual cost或charged fee。
+- 封坑驗證：fixed-three三案均固定 `CHARGED_FEE_UNVERIFIED_ORDERCHARGES_SEMANTICS`，confirmed leakage保持0；prospective proposal已把charge semantics與status列為live canary前置決策。
+
+## 2026-08-28 — Shared Git index會被背景logger搶先commit，造成正確檔案落在錯誤subject
+
+- 觸發條件：本session已逐檔驗證並只stage 8個fixed-three任務檔；執行預定的`feat(margin)` commit時，背景Telegram logger已先取得shared index，把同8檔提交成`993beb4 log(telegram): ...`，後續commit回`no changes added`。
+- 根因：多個writer共用同一worktree、index與HEAD，scoped staging與commit不是原子交易；只檢查stage內容不能防止另一程序在兩步之間消耗index。
+- 解法：先驗新HEAD的exact file set與bytes；若已完整提交就不amend、不reset、不重寫他人commit，改在Task Card與receipt留下實際hash／subject provenance。後續高價值checkpoint使用獨立worktree或task-specific alternate index，並以expected-old-HEAD compare-and-swap更新ref。
+- 預防：commit前後都驗`HEAD`、cached names與scoped file SHA；shared repo偵測到auto logger時，禁止依賴「git add後等一下再commit」。任何unexpected commit先判斷是否完整包含任務bytes，禁止用force/reset修飾歷史。
+- 封坑驗證：`993beb4` exact包含8/8 scoped fixed-three files且無其他檔；工作樹中的8個任務檔均clean，未改寫該commit，unrelated dirty files保持未stage。
+
+## 2026-08-28 — Plateau guard 只包人工入口不夠；scheduler side-door 會繼續燒 calls
+
+- 觸發條件：Hermes LINE supervisor 已回 `plateau_method_review_required` 並停在12 rounds／60 calls，但 canonical＋installed 02:20 launchd 仍直接呼叫 raw training loop；pause 44分鐘後又多出5 calls、0/5 pass與1個 unsupported price。
+- 根因：只在 supervisor 寫熔斷器，沒有沿 `installed service definition → program arguments → worker` 驗完整 scheduled path；Task Card與training plan還明寫每日直跑 raw loop，造成 active pointer互相衝突。
+- 解法：所有人工、heartbeat、launchd／cron入口都只能進同一 supervisor gate；plist source、installed copy與 launchctl live readback一起驗。Plateau狀態下kickstart必須 round／calls／attempt完全不變，並留下zero-call receipt；direct raw-loop route一律fail closed。
+- 預防：每次新增 guard 時固定掃 canonical config、installed runtime copy、所有 scheduler與Resume Prompt；「code有guard」不等於「生產路徑受guard」。Guard修復前不得執行後續模型實驗。
+- 封坑驗證：method audit已證 repo＋installed plist同SHA但 `program_routes_direct_training_loop=true`、`program_routes_supervisor=false`，post-pause bypass receipt SHA `eb551990...`；next action已改為schedule gate，attempt維持6、audit model calls 0。
+
+## 2026-08-28 — Lexical evaluator 高分不等於業務正確，grader與prompt不能同輪一起改
+
+- 觸發條件：60題中35個score>=75仍未通過，獨立red-team又讓不相干回覆拿到100／pass，並用裸數字變體繞過unsupported-money；舊E1同時想改prompt與grader。
+- 根因：evaluator把詞面命中、長度與部分字串規則誤當「有回答當下問題／下一問正確／不重問／不亂報政策價格」；若grader與prompt一起變，結果無法歸因，也可能只是新grader放寬。
+- 解法：evaluator v1降級為診斷工具；先用固定20-case人工結構標籤把rubric v2校正到至少18/20，再凍結grader。E1只變 `prompt_builder_contract_sha256`，model／holdout／two-shot／seed／lesson snapshot／rubric／acceptance全固定，最多40 local calls；兩側完整rendered prompts與shared input manifest未pin前不得執行。
+- 預防：promotion gate必須先做adversarial calibration；任何single-variable實驗契約若列出兩個changed variables就拒絕執行。Development holdout不得回算七連勝，promotion另用預封存、互不重疊balanced panels。
+- 封坑驗證：v7 receipt凍結20 unique holdout、40 unique two-shot cases、77 prior eval IDs／68 prior conversations exclusion與prompt-builder-only fingerprint；baseline／candidate=`NOT_RENDERED`、shared input=`NOT_PINNED`、lesson snapshot=`NOT_MATERIALIZED`，execution仍因五項明列前置未完成而disabled。
+
+## 2026-08-28 — 收據pair自洽不等於live provenance，control-plane transition必須留下preimage chain
+
+- 觸發條件：red-team同時替換canonical job、model manifest、supervisor receipt、baseline／lesson來源，再重算private/public pair與method fingerprint；舊validator只驗pair equality與body hash時仍接受。
+- 根因：validator沒有把canonical absolute path綁入並即時重算live source bytes；nested payload只驗部分欄位，讓攻擊者以一組相互自洽的假來源繞過。Job更新後又若直接拿新bytes驗凍結preimage，會把正常control-plane transition誤報成篡改。
+- 解法：產收據前從canonical path重算job、model、supervisor、current lessons、training data與`build_prompt`來源；nested keys／types／timestamps exact驗證。完成後固定記錄 `preimage job SHA → private audit SHA → public receipt SHA/body → updated job SHA`，凍結四份artifact，不以更新後job重產舊audit。
+- 預防：任何method receipt升級control-plane前都跑live-source poison matrix；pair能互相對上但不能對上live preimage就fail closed。Control-plane更新後只驗hash chain與凍結bytes，下一輪才建立新的preimage。
+- 封坑驗證：v7 source/test/private/public/body SHA全exact，7/7 focused與11組pair-forgery／nested payload／type／timestamp poisons全REJECT；red-team P0=0/P1=0。
+
+## 2026-08-28 — Plist bytes通過不等於launchd live route已切換
+
+- 觸發條件：schedule contract在`--repo-only`時回報`route=supervisor-only`／`raw_loop_side_door=false`，但installed file與launchctl cache當下仍是raw loop；若拿該JSON當完成收據會產生runtime overclaim。
+- 根因：checker只讀指定plist bytes，欄位名稱卻沒有標出evidence scope；也沒有把bootout/bootstrap後的live arguments、state、runs與新log bytes納入同一acceptance transaction。
+- 解法：file checker只可輸出`validated_plist_route`、`validated_plists_contain_raw_loop`、`installed_plist_verified`並固定`live_launchd_verified=false`。真正完成必須另驗tracked／installed exact SHA、`launchctl print` exact argv、post-bootstrap runs baseline、plain kickstart runs delta=1、new stdout reason、exit/active/PID及第二次穩定readback。
+- 預防：任何service config收據都拆`file truth`與`loaded runtime truth`；reload可能重置runs，delta只能從post-bootstrap baseline算，禁止把舊exit code或整份歷史log當本輪proof。
+- 封坑驗證：三份plist SHA皆`32803c23...`；live route無raw-loop arg，runs 0→1、exit0、active0，新stdout exact=`canonical_execution_disabled`，第二次readback穩定。
+
+## 2026-08-28 — 停止旗標若只靠last_result，checkpoint漏欄位會把pause變成permission
+
+- 觸發條件：supervisor原本只檢查`last_result.execution_eligible is False`；後續bounded checkpoint若覆寫last_result但漏該欄位，attempt>0又可能因explicit data root在receipt遺失時建立新receipt並重新呼叫模型。
+- 根因：把ephemeral result欄位當durable authorization latch，且CLI data root在resume路徑優先於canonical receipt artifact；「欄位不存在」被默認成可執行。
+- 解法：所有named `method-redesign-*` phase在沒有explicit `execution_eligible=true`時一律fail closed，且在receipt建立、dataset讀取與runner前返回零寫入。真正授權attempt>0 resume時，CLI root必須匹配canonical artifacts內唯一既有`line-training-supervisor-receipt`，missing／duplicate／wrong root皆拒絕。
+- 預防：每個pause gate固定有三種poison：explicit false＋missing receipt、named redesign＋missing latch、explicit true＋missing/wrong receipt binding；斷言runner=0、job bytes／attempt／receipt／run／lesson不變。
+- 封坑驗證：live schedule kickstart reason=`canonical_execution_disabled`；job SHA `606ea077...`、attempt6、receipt `cd076881...`、12 rounds／60 calls／6 invocations、17 runs／15 lessons全部exact不變，focused suite 75/75 PASS。
+
+## 2026-08-28 — Frozen case manifest不等於structured human labels，target也不能自動當全PASS gold
+
+- 觸發條件：active Task／Resume都指示「對frozen 20 structured labels校正rubric」，但private v7的20案只有stage／opaque identity／selection key；eval rows只有context／customer／target，structured label fields實際是0，repo也沒有可執行rubric-v2 scorer。
+- 根因：把「凍結case identity」與「凍結人工判定」混成同一個ready flag；又把真人歷史回覆誤當每項rubric都PASS，忽略歷史回覆本身可能過長、多問或含過時政策。只有criteria名稱與18/20文字也不足以定義grader。
+- 解法：先exact重建20案並做label-availability audit；缺人工labels就fail closed。Mixed specimen＋blank slots也不能直接進Owner gate，必須先凍結operational decision guide、overall公式、current commercial authority、named-human attestation/adjudication與每項criteria正反coverage。Human provenance與AI／synthetic prelabel分欄；scorer identity-blind，先獨立score內容再由harness比expected vector。
+- 預防：任何`*_ready=true`都要驗artifact schema、count、guide與coverage，不准只驗manifest count；Task Card必分case manifest、reply specimens、annotation guide／authority、human labels、scorer rules五個preimages。Historical target只能稱human-authored reference，未經具名真人逐項覆核不得稱human gold；blank packet不可原地改，annotations另檔綁parent SHA。
+- 封坑驗證：exact v7/eval join為20/20 target、0/20 structured labels；private 0600 preflight含10 historical-reference＋10 controlled-negative與20 blank slots，但明標`NEEDS_ANNOTATION_GUIDE / human_annotation_may_start=false`；13/13 tests PASS，job在任何model/E1 call前改道`RUNNING / method-redesign-rubric-annotation-guide`、attempt維持6，不把未完成表單丟給Owner。
+
+## 2026-08-30 — Public leak validator不可把安全欄位名稱誤判成私密值
+
+- 觸發條件：annotation guide刻意把`source_row_sha256`列為identity-blind scorer的禁止輸入，但第一版public-safety validator只做literal token blacklist，連安全政策中的欄位名稱也拒絕，reference guide兩個測試因此false positive。
+- 根因：把「敏感欄位的實際值／私密路徑」與「用來描述禁止項目的schema名稱」混為同一級別；context-free substring scan沒有分辨value、path與policy declaration。
+- 解法：public artifact仍拒絕absolute user path、private root、owner/chat identity與帳號資料，但允許在forbidden-input contract中明列安全欄位名稱；真正case hash／row hash值由artifact topology與fixture allowlist另行拒絕。
+- 預防：leak validator測試必同時含一個真私密值應REJECT與一個安全policy-name應PASS；安全掃描採key/value aware或明確allowlist，不以欄位名稱本身證明外洩。
+- 封坑驗證：修正後13/13 focused與77/77 related PASS；guide public-safety poison仍會拒絕`/Users/private/...`，正式guide與receipt不含private path或case payload。
+
+## 2026-08-31 — Provider 行為改了，能力說明與 runtime state 必須同時改
+
+- 觸發條件：A6 gateway 已依 Owner 指示停用本機 Ollama fallback，但 `/capabilities` 的獨立 runtime formatter 仍宣稱上游失敗後會使用 `gemma4:latest`。
+- 根因：provider fallback policy 在 gateway 與 capability runtime 各自硬編，行為變更只改到執行路徑，沒有把能力投影納入同一驗收。
+- 解法：能力 snapshot 明列 `local_fallback_enabled=false`，formatter 直接說明上游全失敗時會回報失敗；同步把 DeerFlow status／public research 納入預設能力清單。
+- 預防：任何 provider chain、fallback、memory 或 connector 行為變更，都要同輪跑執行路徑與 `/capabilities` truth test；能力頁不是文案，而是 runtime contract。
+
+## 2026-08-31 — 免費額度要按provider attempts先記帳，不能用案例數或成功數保留日常額度
+
+- 觸發條件：OpenRouter帳戶升為每日1,000次免費模型請求後，舊cloud gym仍把`example attempted`當輪數，counter在response後才寫入；同一案例fallback會消耗多次，程序崩潰、並行runner與壞JSON又可能漏記或歸零。
+- 根因：把產品單位「一題／一輪」混成平台計費單位「一次request attempt」，且採check→network→record的TOCTOU流程，沒有UTC、鎖、原子寫入、檔案權限與free-only硬閘。
+- 解法：訓練lane固定950、Owner reserve 50；共用私有0600 ledger在transport前原子reserve，HTTP錯誤、fallback與crash均計一次，completion只更新status不退額度。每日依UTC換桶、損壞／未知schema fail closed、非`:free`拒絕、3.5秒最小間隔。
+- 預防：每個provider runner摘要必分`examples_attempted`與`provider_requests_this_run`；任何新caller先接同一ledger。額度是ceiling不是KPI，兩輪無固定holdout improvement就停，禁止只為吃滿950繼續呼叫。
+- 封坑驗證：2026-08-31舊49筆完整遷移（25 HTTP errors／24 ok），zero-call preflight讀回used=49／remaining=901／reserve=50；focused mocked tests驗reservation-before-I/O、failure/fallback/crash計數、949並行搶第950、UTC rollover、0600與paid-model阻擋。
+
+## 2026-09-01 — 換樣本重跑推論不是訓練，公開模型與私有adapter也不能混放
+
+- 觸發條件：前5輪被口語稱為訓練，但實際只用random two-shot重跑25題，沒有optimizer、gradient或adapter；結果僅4/25 pass且2次未授權價格。準備安裝QLoRA時又發現大容量外接碟未加密且ownership disabled。
+- 根因：把API／模型推論活動誤當可累積能力，沒有要求可保存的權重delta與固定盲測；儲存規劃又只看容量，沒有分公開基模與會記住私有語料的adapter。
+- 解法：訓練一詞只用於有optimizer step與可reload權重的SFT／QLoRA／偏好學習；每次都做base／adapter同prompt effect probe與獨立holdout。公開hash-pinned模型可放外接碟；LINE、private dataset、adapter、logs與fused weights一律留owner-only私有根目錄，訓練deny network。
+- 預防：receipt固定列`weights_updated`、adapter SHA、base／adapter輸出、holdout結果、egress與artifact storage class；只有effect probe沒有品質提升時明標`INFRASTRUCTURE_PASS / QUALITY_NOT_PROVEN`，不接live route。
+- 封坑驗證：M4／24GB以Qwen3-4B-Instruct-2507在deny-network sandbox完成3個QLoRA steps，adapter可reload、peak memory 2.697GB、files 0600；輸出雖縮短仍漏單一窗口價值，因此正確停在training/eval-only。
+
+## 2026-09-01 — 排程有成功退出不等於 SEO 有推進
+
+- 觸發條件：SEO draft loop 連續61次只追加`all_gaps_drafted`，weekly Codex patrol又在沒有新證據時重建六檔 bundle；看似每天／每週有活動，Owner-facing SEO acceptance卻沒有變。
+- 根因：把calendar wake當工作理由，沒有model外sensor、material-delta gate、method fingerprint與objective stop-loss；整頁body hash還會被動態HTML製造假delta。
+- 解法：公開技術基線先由deterministic probe比較normalized HTTP/index/canonical/title/meta/H1/schema/alt、WP counts與child sitemap URL-set；baseline過期只代表`sensor due`。只有material delta、未完成驗收、fresh GSC evidence或Owner要求才派Hermes；無delta只留小型`NO_DELTA_NO_DISPATCH` receipt。
+- 預防：兩次owner acceptance delta為0即禁止同方法；`all_gaps_drafted`轉`EXHAUSTED_INPUT`並卸載daily loop。Body SHA只作診斷，不作派工閘；detached worktree receipt未回canonical Task Card/CURRENT_STATUS不算完成。
+- 封坑驗證：新`maplab-seo-coach-patrol` Skill可被discovery找到；public probe固定九URL、child sitemap counts、semantic comparison與JSON-LD parser；即時baseline發現post 879的2/3 schema parse缺陷並把下一步縮成單一變因preview proposal。
+
+## 2026-09-01 — 治理稽核器若只辨識 `tasks/`，會把 canonical `handoff/tasks/` 誤報遺失
+
+- 觸發條件：`CURRENT_STATUS.md` 已明列存在的 `handoff/tasks/T-A2-HERMES-SEO-COACH-001.md`，治理 audit 卻截成 `tasks/T-A2-HERMES-SEO-COACH-001.md` 並回 `active_task_exists=false`。
+- 根因：audit 的 task regex 只從 `tasks/` 子字串開始取值，再直接以 repo root 拼路徑，沒有保留 `handoff/` prefix。
+- 解法：routing automation 改為動態讀 `CURRENT_STATUS.md` 的 `Active Task`，本輪 route 已回 `state=dynamic / routing_aligned=true`；artifact existence 另以 canonical full path readback 驗證，不建立第二份 Task Card。
+- 預防：治理工具應允許 `handoff/tasks/` 或解析 Markdown link target；修正前不得把此單一 false-negative 冒充 Task Card 不存在，也不得用複製檔或第二真相源討好 audit。
+- 封坑狀態：Task Card、durable job、Next Bounded Action 與 Resume Prompt 均已 live readback；audit path parser仍待工具本身修正，收據須明列這個限制。
+
+## 2026-09-01 — Executor 拒絕不等於 gateway fail closed，terminal receipt 也不能只信自述
+
+- 觸發條件：SEO router正確拒絕Ads／Rank Math寫入、客訊外送與對客LINE，但Telegram gateway把`classify()`的rejection丟掉，將原句與history送進OpenRouter；另一條linked-receipt路徑又接受wrong parent、不存在artifact與假SHA並投影`COMPLETED`。
+- 根因：用`str | None`同時表示CHAT、EXECUTE與REJECT，導致拒絕與普通聊天同值；terminal projector只信receipt欄位，沒有綁job/request/action/topology與實際artifact bytes。
+- 解法：gateway改typed `EXECUTE | REJECT | CHAT`，EXECUTE/REJECT都走本機executor receipt並立即continue，只有CHAT可進provider；provider前另掃current text＋history DLP。Linked receipt限制在allowlisted DFR task root，綁parent job/request/action，並驗same-task regular artifact與recomputed SHA後才terminal。
+- 預防：安全測試必跨`gateway → executor → receipt/notification`，不能只測router；固定poison含四句危險改寫、private history、wrong parent/action/hash、missing artifact與symlink。任何局部26/26 PASS在end-to-end red-team前不得寫成完成收據。
+- 封坑驗證：task-scoped staged index focused 29/29、canonical live worktree full Hermes 134/134、`py_compile` PASS；兩種環境與 source hashes 分列於 validation receipt。mock provider對客資／LINE對話／電話history為0 calls，假linked receipt維持`WAITING_EXTERNAL`且無notification。
+
+## 2026-09-01 — Hermes在線不代表可用Ollama訓練，記憶體預算也不能只靠口頭約定
+
+- 觸發條件：Owner要求Hermes立刻訓練，隨即明示「不要用本機Ollama，一開跑記憶體吃光」；系統同時存在正常gateway、idle Ollama service與歷史`loopback-ollama-only` supervisor，若把「服務在線」誤當「訓練backend可用」就會走回高記憶體舊路。
+- 根因：先前把gateway/provider availability、training execution eligibility與resource envelope混在同一狀態；synthetic smoke的batch／seq／layers只是shell常數，沒有在讀私有資料前驗labels、DLP、gold、holdout、backend與記憶體限制，也沒有禁止Ollama fallback。
+- 解法：正式LINE權重訓練只允許離線`mlx_lm`，在讀dataset與建立adapter前拒絕任何Ollama env／URL／provider／process fallback及proxy/cloud key。Preflight固定batch1、grad1、seq256、2 layers、<=200 iterations、<=3600秒與<=4GB MLX allocator budget；缺20/20 human labels、DLP/rights PASS、30–50 gold或獨立holdout任一項即NO-GO。未來runner還須逐step讀peak memory與system memory pressure，超限終止process group並隔離未完成adapter；allocator budget不得宣稱為OS硬上限。
+- 預防：Task Card、training plan與Resume Prompt都固定寫「no-Ollama MLX-only」；每次執行前後留backend、env、limits、model/data SHA、peak memory、abort/publish與zero-egress receipt。Idle Ollama service不自動停止，也不因process存在單獨冒充model loaded；真正Ollama引用、fallback或並行memory pressure才fail closed。
+- 封坑驗證：本輪Ollama readback為`models=[]`，訓練／optimizer/model load皆0；私有20案標註簿初始gate=`BLOCKED`且formula errors=0；20,256-record DLP掃描0 parse errors但因rights／retention／review與identifier findings正確BLOCKED；no-Ollama MLX preflight僅做read-only GO/NO-GO，不啟動模型。
+
+## 2026-09-01 — 只監欄位與產物會漏掉商務權限；客服與報價引擎不能共用路由
+
+- 觸發條件：Owner 看見標註工作簿中的「總價99,999／已保留檔期／不用再提供資料」「所有人都可以吃／不必再確認」「固定88,888／一定有空／直接下訂」後，指出系統沒有先按安靜內斂品牌語氣與角色邊界監工，也沒有進經驗學習圈。
+- 根因：把故意設計的負例直接呈現成像候選回覆；更深層是 A7 客服、A6 intake 與 A5 自動報價共用路徑。即使只修文案，舊 `createQuote` 仍會預設訂金、條款、費用與「報價中」，`createQuoteVariants` 仍會選菜與計價。成功檢查只看有表格／有分數，沒有先驗 commercial authority 與品牌語氣。
+- 解法：Owner 最新契約固定為每輪一題；Hermes 只記明示需求並呼叫 neutral `createQuoteShell`／`appendQuoteRevisionRequest`。價格、菜單、檔期、飲食可行性、付款、條款、成交均轉 Mina／Owner。舊 Q1–Q10 逐一標 `*`，歷史模板與 deidentified corpus 只作結構證據，不冒充現行 authority 或逐句 Mina gold。
+- 預防：新商務助理功能必同時鎖四層：模板 contract、runtime route allowlist、Sheets API allowlist、Owner 原句 regression fixtures；任一層仍可帶 amount／menu／deposit／fees／terms／availability 就不得部署。負例在 Owner 介面必明標「禁止輸出」，不可混在待選內容。
+- 封坑驗證：三個 Owner 雷句 deterministic hard fail；九輪 synthetic intake 每輪恰好一題且不重問；最後 payload 為 `createQuoteShell`，`has_price_or_menu=false`，狀態固定 `UNVERIFIED / PENDING_HUMAN / PENDING_MINA`。GAS 只改 repo source，未部署、未建真實 Sheet、未對客發訊。
+
+## 2026-09-01 — 瀏覽器顯示已下載不等於指定路徑已落檔
+
+- 觸發條件：Suno 下載按鈕已觸發且 Chrome 顯示剛下載檔案，但專案 `audio/` 尚沒有指定檔名；同機另有兩套 Chrome，只有桌面版能正確進入原生儲存視窗。
+- 根因：把網頁事件或暫存下載當成檔案收據，也沒有把瀏覽器實例、原生 Save 對話框與最終目的路徑納入同一驗收。
+- 解法：依 Owner 指示用可視畫面操作選單、格式、檔名與原生「儲存」；關閉視窗後再以專案絕對路徑、`file`、`ffprobe`、size 與 SHA-256 回讀，另保存下載完成截圖。
+- 預防：任何登入態媒體下載固定驗四層：正確瀏覽器實例、可視 Save 操作、指定路徑存在、內容 hash/codec/duration；其中一層缺失只能標 `DOWNLOAD_UNVERIFIED`。
+
+## 2026-09-01 — 由繪圖函式重畫 QA 圖不等於從編碼成品抽幀
+
+- 觸發條件：樂齡動作 contact sheet 看似完整，但來源是 renderer 直接重畫 PNG，無法證明 H.264 成品沒有裁切、遮擋、轉場或編碼差異。
+- 根因：把 source-level preview 與 encoded-output evidence 混成同一個視覺 gate。
+- 解法：contact sheet 僅從實際 MP4 以 ffmpeg 抽取代表幀；另以 plain decode 完整跑完 5 支短片與合輯，保留實機 YouTube／手機／TV readback 為獨立 `MISSING`。
+- 預防：所有 A8 視覺收據必寫 `frame_source=encoded_output`、輸出 path/hash 與 timestamp；直接 render 的 preview 只可作診斷，不得升格 acceptance。
+
+## 2026-09-01 — 中文字型 bounds 與人物層級必須 fail closed
+
+- 觸發條件：安全首屏第三行與合輯尾卡在 source canvas 內看似合理，成品卻發生人物頭部遮字或字框溢出。
+- 根因：只用預估行高與固定座標，沒有測真實字型 bounding box、safe zone、人物遮罩與最長警語。
+- 解法：每張卡先量實際 glyph bounds，再驗文字框、人物與 Shorts UI safe zone 無交疊；最長中文警語作固定 regression fixture，超界直接中止渲染。
+- 預防：畫面 acceptance 同時驗 canvas bounds、overlay collision、encoded frame readback 與樂齡可讀性；自動縮字只能在設定下限以上，否則回 `VISUAL_HOLD`。
+
+## 2026-09-01 — 否定句中的高風險動詞不能被當成授權
+
+- 觸發條件：任務文字明寫「未授權上傳／不得公開」，簡單關鍵字路由卻因看到「上傳」「公開」把 publication intent 判為 true。
+- 根因：分類器只做正向 token 命中，沒有區分授權、否定、禁止與尚待確認。
+- 解法：外部寫入權限採 fail-closed 結構欄位；否定或未知一律 `NOT_AUTHORIZED`，只有 Owner 明確肯定句與 action-time confirmation 才能打開該單一步驟。
+- 預防：路由測試固定加入「不要上傳」「未明說公開」「只做草稿」「建立頻道但不發片」等 negation fixtures，並驗 upload、publication、account creation 三個 gate 分開。
+
+## 2026-09-18 — 相片同名、分類年份與報價數字不能當成身份證明
+
+- 觸發條件：用 `IMG_*.JPG` 找歷史預擺照、按年份桶命名，或直接把照片上的180／25當客人人數。
+- 根因：手機會重複使用檔名；已改名素材可能缺EXIF；拍攝日、活動日、檔案mtime和匯入年份不同。人數、每道份數和點心總件數也不是同一欄。舊AI ALT甚至會把空器皿描述成已有餐點。
+- 解法：本輪同名Takeout圖與目標圖目視不符，已排除。逐張保存來源、SHA、像素、EXIF或相簿日期的證據層級；只改新副本。報價儲存格原文與候選案件對照分開，缺單位不補cm；頁面縮圖不冒充原檔。
+- 預防：照片+quote連結必須有獨立案件／菜單／事件證據；候選年份可推定但另列，不能提升成EXIF已核。目視檢查後才收入預擺資料夾；容量、占地尺寸與庫存需實測，不能由透視圖或展示數量推定。

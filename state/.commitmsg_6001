@@ -1,0 +1,52 @@
+feat(arb): 找到套利策略庫 v0.3 與馬克羊專案(都在分支上)+ 提出三條可做策略 — 回 Owner msg 6001
+
+Owner msg 6001(ts 2026-09-23T17:24:09):
+「大小台互抵是在套利策略用到,你還是沒找到馬克羊的專案對吧,你不同意54條,
+  是另一條線但你什麼都沒說,什麼策略都沒提供,我們是到市場找機會不是當噴子。
+  先重看企業文化正念思考,複利人生」
+
+== 🔴 三件事 Owner 都說對了 ==
+
+1) **互抵確實是套利策略的一部分**
+   investment-os 分支 `task/arb-strategy-lib-v0.3-card`,`tasks/T-ARB-STRATEGY-LIB-V0.3.md`,
+   commit 59c65218(2026-08-02),STATUS=blocked。
+   **S1 =「等值契約乘數套利(大台 TXF×200 / 小台 MXF×50 / 微台 TMF×10 等值曝險偏離)」,
+   分級 A 可鎖定,卡上有 XS 骨架。互抵就是這條的出場通道**(兩腿一次沖掉、免手續費免期交稅)。
+   卡上第 7 節 gating 未知**第 5 項原文=「互抵 / 下單 API」** -> #57 不是獨立小任務,是這張卡的第 5 號上線閘。
+   架構:第 4 角色 A-Desk v0.1(A1 Scanner→A2 Dispatcher→A3 Risk-State),
+   沙盒 NT$50 萬 / 中央資金 42 萬占用,Phase 1 只監控不下單、不得跳級。
+   S10=TMF-SR 夜盤 Z-score(C 統計)。**S2~S9 全部 waiting_evidence**(v0.3 全文只在 Owner 手上)。
+
+2) **馬克羊專案在分支上,不在 main**
+   `origin/research/markyang-finance-20260911`:reports/kol_auto_test/20260916/full_strategy_coverage.md
+   (48 條完整覆蓋表:MY 31 + WB 17,逐條含來源/測試方式/狀態/資料門檻)、experiment_registry.json、
+   config/kol_pair_mechanisms.json、config/markyang_spread_radar.example.json、reports/markyang_events/。
+   **同一種錯的第三次**:一次範圍只開一個資料夾、一次只開一個分支。
+   **「掃全 repo」不等於「掃全分支」**——codex 習慣開 private branch + Draft PR 不併 main。
+
+3) **54 條是另一條線**
+   reports/quant_strategy_logic 的 54 條 FinLab = **選股線**;套利庫 v0.3 = **價差線**。
+   資料源/成本結構/驗收方式都不同,前幾輪拿選股線的話回套利線的問題,講混了,已更正。
+
+== ⭐ 最重的一條:「到市場找機會不是當噴子」 ==
+  前幾輪連續在講:處置股四條路三條判死、權證小哥近三月 -4.94%、加碼腿扣成本是負的、
+  spread_paper 策略成交 0 筆。**每句都查證過、都沒錯,加起來卻一條可做的事都沒有。**
+  全部正確的批評不是工作成果;它的實際功能是證明 Fable5 沒錯,不是幫 Owner 賺錢。
+  已入記憶 find-opportunities-not-snipe(L1)並定下格式:
+  **判死一條,同一則回覆必須附至少一條可做的替代,三段式=做什麼/為什麼選它/下一步哪一件事。**
+
+== 本輪實際提出的三條(全部標明還沒做)==
+  #63 S1 等值契約乘數 -> spread_paper 現只跑微台,加小台腿,Phase 1 收 20 交易日訊號
+      (選它:A 級是 30 條裡唯一可鎖定;骨架已在卡上;MY-TW-EQ 已接原生模擬=它的縮小版)
+  #64 現多期空持有套利 -> 每日數學雷達掃溢價>持有成本的標的,零下單
+      (選它:MYE_CASH_FUTURES_BASIS_CARRY 與 WB_CARRY 是兩份研究的交集)
+  #65 股期結算上下界 -> 抓一檔近月到期日重播,驗上下界公式算不算得出來
+      (選它:邊界來自制度不是預測,且不需券源)
+  #66 🔴 請 Owner 貼 v0.3 全文(S2~S9 唯一死結)+ 另七項 gating
+
+== 誠實項 ==
+  企業文化「正念思考/複利人生」**檔案沒找到**(cdo/handbook/agent-bus/investment-os 四庫搜過,
+  只在 Owner 自己的訊息紀錄命中),已請 Owner 指路,**不裝有讀**。
+  #63/#64/#65 全部尚未動工,只有選題與下一步。
+
+Co-Authored-By: Claude <noreply@anthropic.com>

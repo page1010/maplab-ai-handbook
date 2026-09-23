@@ -79,6 +79,16 @@
 |---|---|---|---|
 | F-1 | 無食安/法規紅線用詞（無麩質/Gluten-free/ESG 認證/SDG/醫療級/第三方認證） | 🤖 | `seo_publish_gate.py` `FOOD_SAFETY_BANNED_WORDS` 清單，來源 T-A2-002 |
 
+### G. 真實案例身分與 SEO 路由
+
+| # | 項目 | 自動化 | 說明 |
+|---|---|---|---|
+| G-1 | 案例 registry 的 `source_kind=drive_case`，有 canonical folder ID／URL、日期與非零影像 inventory | 🤖 | `maplab_case_first_gate.py --level intake`；服務分類頁不能冒充案例 |
+| G-2 | 活動身分由報價／事件／ASSET_LOG／原始素材鏈確認；資料夾內無關私密文件已排除 | 🤖＋👁 | 混入的無關文件不得成為文案來源 |
+| G-3 | 公開名稱已由 2–3 個來源確認，或私人家庭案採匿名 public-safe 名稱 | 👁 | 未確認時不得把內部資料夾名直接寫入標題 |
+| G-4 | 已判定是補 existing pillar、既有文章、new gap 或 social-only，且 live collision check 通過 | 🤖＋👁 | 十個真實案例不等於十個新 slug |
+| G-5 | `maplab_case_first_gate.py --level wp --case-id ...` PASS | 🤖 | 未 PASS 不進 WP draft；先補證據，不先寫再猜 |
+
 ---
 
 ## 執行流程
@@ -103,3 +113,4 @@ FAIL → 列出缺陷清單 → 修復 → 重跑閘門
 | v1.0 | 2026-07-03 | A-1 ~ A-3, B-1 ~ B-4, C-1 ~ C-3, D-1 ~ D-4, E-1 ~ E-4 | 內容忠實度未核對；佔位連結未解析；精選圖未附帶 |
 | v1.1 | 2026-07-07 | F-1（食安/法規紅線用詞，獨立於 E-1 品牌語氣禁用詞） | T-A2-002 回溯掃描發現既有文章（post 698）含「無麩質」，且此風險從未被自動擋在新內容產出關卡上 |
 | v1.2 | 2026-07-09 | C-4（Elementor 頁改動路徑） | 週度技能複利：把 2026-05-11 舊踩坑（Elementor raw content 不等於前台）與 2026-07-07 新決策（新頁不強制 Elementor）一併折進閘門，避免同一坑重複踩 |
+| v1.3 | 2026-08-27 | G-1 ~ G-5（case-first 真實案例／來源污染／SEO 路由閘門） | 先從服務分類規劃 01–10，未先鎖 Google Drive 真實案例與事實鏈；另發現案例夾混有無關私人文件 |

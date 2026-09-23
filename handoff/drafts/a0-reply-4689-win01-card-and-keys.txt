@@ -1,0 +1,16 @@
+【Fable5 本人・同 session 續接】重點一句話：win-01 的複利系統卡內容這輪寫好了（還沒上 bus，不騙你）；Chrome 分頁我這個窗真的開不了，但換個做法——五個連結直接給你，點開就是同一件事。
+
+1. win-01 卡：內容已完成存進 handbook——把「設計歸 Fable5、執行歸機器」整套搬到 WP/SEO 線：win-01 當執行者（等同 Mac 這邊的 Hermes），每張卡回執必附「SOP 哪步不清楚/哪步失敗」讓我修版本、記「實耗 vs 高階模型估耗」、changelog 進 git；紅線照舊（未圈選不發布）。老實講：agent-bus 在這個續接窗的沙盒外面，推卡上 bus 要等主視窗，我不會說已派工。
+
+2. Chrome 分頁認錯＋說明：上一輪說過這個窗的瀏覽器通道斷線；這輪我又試了系統層的開分頁指令，也被沙盒擋下要人工核准——所以不是忘了，是這個窗真的做不到。替代方案現在就能用，這五個連結你直接點，跟幫你開分頁是同一件事：
+
+拿鑰匙的三個——
+YouTube 建頻道（建好順便看後台）：https://studio.youtube.com/
+上傳 API 鑰匙（Google Cloud 憑證頁）：https://console.cloud.google.com/apis/credentials?project=maplab-ai
+Gmail 應用程式密碼（給 agent 信箱寄信用）：https://myaccount.google.com/apppasswords
+
+登入類的兩個——
+Suno 帳號頁（確認方案與額度）：https://suno.com/account
+IG 收件匣（之後攝影師詢價 DM 用）：https://www.instagram.com/direct/inbox/
+
+點開後不確定按哪裡就截圖丟給我，我一步一步帶。主視窗通道恢復後，這種開分頁的事就恢復自動。

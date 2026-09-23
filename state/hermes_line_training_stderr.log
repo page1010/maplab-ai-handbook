@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/Users/pagemacmini/maplab-ai-handbook/scripts/hermes_line_training_loop.py", line 113, in <module>
+    raise SystemExit(main())
+  File "/Users/pagemacmini/maplab-ai-handbook/scripts/hermes_line_training_loop.py", line 81, in main
+    train, evaluation = load_jsonl(DATA_ROOT / "train.jsonl"), load_jsonl(DATA_ROOT / "eval.jsonl")
+  File "/Users/pagemacmini/maplab-ai-handbook/scripts/hermes_line_training_loop.py", line 26, in load_jsonl
+    with path.open(encoding="utf-8") as handle:
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1242, in open
+    return io.open(self, mode, buffering, encoding, errors, newline,
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1110, in _opener
+    return self._accessor.open(self, flags, mode)
+PermissionError: [Errno 1] Operation not permitted: '/Volumes/MacExternal/maplab-data/a6-hermes-training/train.jsonl'

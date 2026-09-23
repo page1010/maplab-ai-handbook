@@ -1,0 +1,27 @@
+{
+  "schema_version": "maplab.a8.youtube-channel-form/v1",
+  "job_id": "JOB-A8-SENIOR-FITNESS-MVP-20260901",
+  "state": "FORM_READY_CONFIRMATION_REQUIRED",
+  "ok": false,
+  "form": {
+    "signed_in": true,
+    "channel_name": "跟著動｜華語樂齡節拍",
+    "handle": "@跟著動樂齡節拍",
+    "handle_availability_readback": "AVAILABLE_GREEN_CHECK",
+    "create_button": "ENABLED_NOT_CLICKED"
+  },
+  "visual_receipt": {
+    "path": "../qa/youtube-channel-form-ready.jpg",
+    "sha256": "e1a9037bb2d69b8e69165a2fd004faf931998976542abaab2be769ea6d2e1735"
+  },
+  "authorization": {
+    "channel_creation": "APPROVED_SUBJECT_TO_ACTION_TIME_CONFIRMATION",
+    "action_time_confirmation": "MISSING",
+    "video_upload": "NOT_AUTHORIZED",
+    "publication": "NOT_AUTHORIZED"
+  },
+  "channel_url": "MISSING",
+  "channel_id": "MISSING",
+  "post_create_signed_in_readback": "MISSING",
+  "rule": "Do not click the final Create button until Owner gives action-time confirmation. An enabled button and available handle do not prove channel creation."
+}

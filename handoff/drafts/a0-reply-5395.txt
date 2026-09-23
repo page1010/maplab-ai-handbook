@@ -1,0 +1,7 @@
+【Fable5 本人・同 session 續接】
+
+不用錢,做。而且我查完決定走更直接的路:不綁OpenRouter,直連Google官方API——金鑰免費建、免費層本身就含影像辨識,還少一層轉手。對,我們要的就是Google家的視覺辨識;我們現在用的gemma本來就是Google出的,直連後還能改用更強的gemini flash免費檔。
+
+只剩一個缺口:全機查過沒有現成的Google金鑰(三月那把已清除),而建金鑰需要瀏覽器登入Google帳號,我這窗做不到。請你有空時在Mac上花30秒:瀏覽器開 aistudio.google.com/apikey,登入後按「建立API金鑰」。
+
+金鑰不要貼進Telegram(老規矩)。複製後用TextEdit存成純文字檔,檔名 gemini_key.txt,放進「文件」資料夾就好;我下一輪自己收進設定檔、把那個檔刪掉。鑰一到我就改批次腳本直連,140張開跑。免費層唯一代價是Google可能拿內容改進產品,和OpenRouter免費版同級——我們只送無人像的器皿照,邊界不變。

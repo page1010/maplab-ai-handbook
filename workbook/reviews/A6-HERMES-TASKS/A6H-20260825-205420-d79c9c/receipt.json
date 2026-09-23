@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "task_id": "A6H-20260825-205420-d79c9c",
+  "created_at": "2026-08-25T20:54:20+0800",
+  "request": "recent-commits",
+  "requester": {
+    "channel": "telegram",
+    "owner_user_id": 1077768811
+  },
+  "action": "recent-commits",
+  "policy": "fixed-argv-allowlist-v1",
+  "status": "completed",
+  "finished_at": "2026-08-25T20:54:21+0800",
+  "description": "讀取最近八筆 commit",
+  "returncode": 0,
+  "output": "a47e7c0 (HEAD -> chore/agent-login-governance-20260816) feat(A6): add governed Hermes task executor\n7f351e7 feat(a8): audit distribution and draft IG theme song\neeac67c fix(a2): show bunny case photos and CTA in review\n0aca6cc feat(content): gate daycare case at article and lyric review\n0dcbde1 fix(A6): fall back locally after free models exhaust\n905fc4a feat(A8): separate WP song and video handoffs\ndc95a58 docs(A6,A8): record Hermes and bunny EDM live proofs\n260e63d feat(A8): prepare bunny graduation EDM review loop\n",
+  "output_truncated": false
+}

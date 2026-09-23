@@ -10,6 +10,9 @@ Usage:
 """
 
 import asyncio
+import time
+import glob
+import hashlib
 import http.server
 import json
 import logging
@@ -25,12 +28,14 @@ from collections import deque
 from dataclasses import dataclass
 from pathlib import Path
 from datetime import datetime
+from zoneinfo import ZoneInfo
 from typing import Any, Optional
 
 from dotenv import load_dotenv
 from telegram import Update
 from telegram.ext import (
     Application,
+    ChatMemberHandler,
     CommandHandler,
     MessageHandler,
     ContextTypes,
@@ -76,6 +81,23 @@ DISPATCH_DIR = Path(
     os.getenv("MAPLAB_DISPATCH_DIR", str(REPO_PATH / "workbook" / "telegram-dispatch"))
 )
 
+# ── Stock Discussion Group ingress (Owner 2026-08-24) ───────────────────────────
+# The bot is already a member of the group chat -5589898264 (see
+# claude-daily-operations/state/a0_groups.json) and receives Owner's own
+# messages there (bots never see other bots' messages, so anything reaching
+# handle_group_message is always a human). Owner's ruling from 能力測試 D:
+# general group chit-chat must stay completely silent — only an explicit
+# 研調:/辯論:/討論: trigger (optionally after an @bot mention) gets any
+# reply at all. See handle_group_message() below.
+STOCK_DISCUSSION_GROUP_BOT_USERNAME = os.getenv("STOCK_DISCUSSION_GROUP_BOT_USERNAME", "maplab_claude_bot")
+INVESTMENT_OS_DIR = Path(os.getenv("INVESTMENT_OS_DIR", "/Users/pagemacmini/investment-os"))
+INVESTMENT_OS_VENV_PYTHON = Path(
+    os.getenv("INVESTMENT_OS_VENV_PYTHON", str(INVESTMENT_OS_DIR / ".venv" / "bin" / "python"))
+)
+DISCUSSION_ORCHESTRATOR_RELATIVE_SCRIPT = "scripts/run_stock_discussion.py"
+DISCUSSION_ORCHESTRATOR_TIMEOUT_S = int(os.getenv("DISCUSSION_ORCHESTRATOR_TIMEOUT_S", "1500"))
+TAIPEI_TZ = ZoneInfo("Asia/Taipei")
+
 # ── Clipboard Server ────────────────────────────────────────────────────────────
 CLIP_FILE = Path("/tmp/maplab_clip.json")
 CLIP_SERVER_PORT = 9875
@@ -114,6 +136,12 @@ logging.getLogger("httpx").setLevel(logging.WARNING)
 logging.getLogger("httpcore").setLevel(logging.WARNING)
 
 START_TIME = datetime.now()
+
+# 2026-08-30:CLI 自動更新會換掉 versions/<版號> 執行檔,macOS 把新版號當
+# 新 app、重跳「取用其他App的資料」授權視窗;無人值守的 claude fork 會卡在
+# 看不到的視窗上直到 timeout(Owner 回報的 2.1.218 斷線)。bot 這條線鎖版,
+# 更新改在維護窗手動做並重點一次授權。
+os.environ.setdefault("DISABLE_AUTOUPDATER", "1")
 
 # Semaphore: only one Claude call at a time
 _claude_semaphore = asyncio.Semaphore(1)
@@ -341,8 +369,33 @@ def _falsey_env(name: str, default: str = "") -> bool:
     return os.getenv(name, default).strip().lower() in {"0", "false", "no", "off"}
 
 
+LOCAL_MODEL_POLICY_FILE = Path(
+    os.getenv(
+        "LOCAL_MODEL_POLICY_FILE",
+        "/Users/pagemacmini/claude-daily-operations/state/local_model_policy.json",
+    )
+)
+
+
+def _local_model_disabled(model: str) -> bool:
+    """Owner 2026-08-22 memory policy: models listed in disabled_models must not be loaded."""
+    try:
+        policy = json.loads(LOCAL_MODEL_POLICY_FILE.read_text(encoding="utf-8"))
+        disabled = {str(m).strip() for m in policy.get("disabled_models", [])}
+        base = model.split(":")[0]
+        return model in disabled or any(d.split(":")[0] == base for d in disabled)
+    except Exception:
+        return False
+
+
 def _hermes_fallback_enabled() -> bool:
-    return not _falsey_env("HERMES_FALLBACK_ENABLED", "1")
+    if _falsey_env("HERMES_FALLBACK_ENABLED", "1"):
+        return False
+    model = os.getenv("HERMES_FALLBACK_MODEL", HERMES_FALLBACK_MODEL)
+    if _local_model_disabled(model):
+        logger.warning("hermes fallback skipped: model %s disabled by local_model_policy", model)
+        return False
+    return True
 
 
 def _runtime_path(base_path: str = "") -> str:
@@ -655,6 +708,33 @@ def _dispatch_catalog() -> dict[str, DispatchRoute]:
                 "if Sheet/GAS write is required, route through A5 and report the real artifact URL only after creation",
             ),
         ),
+        "research": DispatchRoute(
+            task_type="investment-research-note",
+            title="投資研究筆記歸檔任務",
+            primary_role="B3",
+            roles=("B3", "A1"),
+            worker="Codex writes/updates workbook/stock-notes/ cards as B3 Investment OS Archivist; no trading action",
+            runtime_target="codex",
+            task_cards=(
+                "handoff/tasks/T-B1-B4-investment-os-role-split.md",
+                "workbook/stock-notes/",
+            ),
+            goal=(
+                "把 Owner 討論過的個股敘事、財務快照、風險點、來源連結整理成 workbook/stock-notes/ 卡片，"
+                "並附上與 Owner 現有持股的機會成本比較觀點，供後續覆核追蹤（漲跌/敘事是否兌現）。"
+            ),
+            data_needed=(
+                "ticker, company name, sector narrative",
+                "revenue/growth snapshot and PE or valuation estimate with source and query date",
+                "opportunity-cost comparison against Owner's current holdings",
+                "chip/institutional flow signal if available, and risk points",
+            ),
+            guardrails=(
+                "不下單、不建立模擬單、不給買賣建議 — 只整理事實與研究觀點，最終決策由 Owner 判斷",
+                "every number must carry its source link and the date it was pulled",
+                "flag when a narrative claim cannot be verified rather than presenting it as fact",
+            ),
+        ),
         "patrol": DispatchRoute(
             task_type="system-patrol-dispatch",
             title="系統巡查/任務推進派工",
@@ -717,38 +797,23 @@ def _dispatch_has_any(haystack: str, markers: tuple[str, ...]) -> bool:
     return any(marker in haystack for marker in markers)
 
 
-def _route_from_dispatch_context(context_text: str) -> Optional[DispatchRoute]:
-    catalog = _dispatch_catalog()
-    context = _dispatch_norm(context_text)
-    if _dispatch_has_any(
-        context,
-        (
-            "投放成效判讀",
-            "googleads",
-            "google廣告",
-            "metaads",
-            "meta廣告",
-            "廣告成效",
-            "roas",
-            "cpc",
-            "cpa",
-        ),
-    ):
-        return catalog["ads"]
-    if _dispatch_has_any(context, ("報價任務", "quote", "試算", "毛利", "競品菜單")):
-        return catalog["quote"]
-    if _dispatch_has_any(context, ("系統巡查", "任務推進", "三層阻塞審查", "taskcard", "任務卡")):
-        return catalog["patrol"]
-    return None
-
-
 def _dispatch_route_for_text(text: str, context_text: str = "") -> Optional[DispatchRoute]:
     normalized = _dispatch_norm(text)
     if not normalized:
         return None
 
     catalog = _dispatch_catalog()
-    quote_markers = ("報價", "quote", "試算", "毛利", "成本", "競品菜單")
+    quote_markers = ("報價", "quote", "試算", "毛利", "競品菜單")
+    research_markers = (
+        "個股",
+        "股票",
+        "股價",
+        "本益比",
+        "籌碼面",
+        "法人佈局",
+        "持股",
+        "機會成本",
+    )
     ads_markers = (
         "google廣告",
         "googleads",
@@ -762,21 +827,9 @@ def _dispatch_route_for_text(text: str, context_text: str = "") -> Optional[Disp
         "ctr",
     )
     patrol_markers = ("巡查", "任務推進", "任務卡", "taskcard", "三層阻塞審查")
-    followup_markers = (
-        "誰做",
-        "召喚了嗎",
-        "召喚了",
-        "派工",
-        "派給",
-        "貼到codex",
-        "丟給codex",
-        "openclaw",
-        "hermes",
-        "不是回覆",
-        "要做",
-        "去做",
-    )
 
+    if _dispatch_has_any(normalized, research_markers):
+        return catalog["research"]
     if _dispatch_has_any(normalized, quote_markers):
         return catalog["quote"]
     if _dispatch_has_any(normalized, ads_markers) or (
@@ -786,8 +839,13 @@ def _dispatch_route_for_text(text: str, context_text: str = "") -> Optional[Disp
         return catalog["ads"]
     if _dispatch_has_any(normalized, patrol_markers) or ("角色" in normalized and "巡查" in normalized):
         return catalog["patrol"]
-    if _dispatch_has_any(normalized, followup_markers) or "召喚" in normalized:
-        return _route_from_dispatch_context(context_text) or catalog["generic"]
+    # NOTE(2026-08-21): removed the vague followup_markers/context-guess branch
+    # (words like 派工/要做/去做/召喚 + stale _route_from_dispatch_context).
+    # It kept reusing a contaminated recent-log snippet, so once one message
+    # got misfiled (e.g. into ads-performance-review), every ambiguous
+    # follow-up all evening re-inherited that same wrong label instead of
+    # reaching real Claude. Ambiguous text now falls through to
+    # _run_claude_guarded (real Claude judges it) instead of a regex guess.
     return None
 
 
@@ -1342,19 +1400,7 @@ async def hermes_ask(
 
 
 def _format_hermes_receipt(fallback_reason: str, toolsets: str = "") -> str:
-    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    return (
-        "🟡 Claude primary unavailable，Hermes fallback 接手\n"
-        f"- primary_failed_reason: {_trim(fallback_reason, 220)}\n"
-        "- fallback=Hermes\n"
-        f"- model: {_hermes_model_label()}\n"
-        f"- toolsets: {toolsets or 'none'}\n"
-        f"- agent: A1 Telegram bot -> Hermes fallback\n"
-        f"- date: {now}\n"
-        "- memory_sources: compact memory card with anchors to CURRENT_STATUS.md, pitfalls.md, company-values, agent-behavior-framework, latest Telegram log\n"
-        "- allowed_actions: Telegram fallback 只做 read/draft/smoke/image-analysis；live send/delete/publish/secrets/computer-control 需最後確認\n"
-        "- next_check: 回覆後檢查 Telegram receipt、bot log、gemma4 validator"
-    )
+    return f"🟡 [Hermes/{_hermes_model_label()}]"
 
 
 def _local_runtime_question_answer(text: str) -> str:
@@ -1925,11 +1971,20 @@ async def _run_claude_background(
     system_extra: str,
     log_label: str,
     log_user_msg: str,
+    reply_prefix: str = "",
 ) -> None:
-    """Background task: call Claude then push result via send_message."""
+    """Background task: call Claude then push result via send_message.
+
+    reply_prefix (optional) is prepended to the outbound text so callers that
+    route here as a fallback (e.g. after an A0-session resume attempt fails)
+    can stamp an explicit identity label — the bot must never let a one-shot
+    fallback answer read as if it came from Fable5/A0 itself.
+    """
     async with _claude_semaphore:
         model_answer = await claude_ask_with_fallback(chat_id, user_message, system_extra)
         text = _sanitize_for_telegram(model_answer.text)
+        if reply_prefix:
+            text = f"{reply_prefix}{text}"
         MAX = 4096
         for i in range(0, len(text), MAX):
             await bot.send_message(chat_id=chat_id, text=text[i:i + MAX])
@@ -1949,6 +2004,7 @@ async def _run_claude_guarded(
     system_extra: str,
     log_label: str,
     log_user_msg: str,
+    reply_prefix: str = "",
 ) -> None:
     """Reply immediately, then run Claude in background. Reports busy if semaphore is taken."""
     if _claude_semaphore.locked():
@@ -1957,7 +2013,7 @@ async def _run_claude_guarded(
     await update.message.reply_text("⏳ 處理中…")
     asyncio.create_task(
         _run_claude_background(
-            context.bot, chat_id, user_message, system_extra, log_label, log_user_msg
+            context.bot, chat_id, user_message, system_extra, log_label, log_user_msg, reply_prefix
         )
     )
 
@@ -2107,6 +2163,18 @@ async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     caption = update.message.caption or ""
     caption_note = f"\nOwner 附的文字說明：{caption}" if caption else ""
 
+    # 2026-09-03 (Owner approved): tap the same a0_inbox relay that text
+    # messages use, so the A0/Fable5 window (this session or a future
+    # bot-continuation window) can see the photo arrived and Read it
+    # directly with its own Read tool — mirrors handle_message's
+    # _a0_inbox_append call. This does NOT gate or replace the immediate
+    # one-shot Claude analysis below; it only makes the file discoverable
+    # for follow-up work in an ongoing A0 session.
+    inbox_note = f"[📷 圖片] 已存 {local_path}"
+    if caption:
+        inbox_note += f"｜說明：{caption}"
+    _a0_inbox_append(update.effective_chat.id, inbox_note, getattr(update.message, "message_id", None))
+
     try:
         status_snippet = read_file("CURRENT_STATUS.md")[:1500]
     except Exception:
@@ -2125,39 +2193,1182 @@ async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     await _run_claude_guarded(update, context, chat_id, user_message, system_extra, "photo", log_msg)
 
 
-async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    if not is_owner(update):
-        await deny(update)
+A0_INBOX_FILE = Path(
+    os.getenv(
+        "A0_INBOX_FILE",
+        "/Users/pagemacmini/claude-daily-operations/state/a0_inbox.jsonl",
+    )
+)
+
+
+def _a0_inbox_append(chat_id: int, text: str, message_id: Optional[int] = None, source: Optional[str] = None) -> str:
+    """Append-only tap for the A0 dispatch window; must never break the bot.
+
+    Returns the "ts" string written for this entry (even if the write
+    itself failed) so callers can use the exact same value as
+    reply_to_inbox_ts when correlating a later receipt in A0_REPLIES_FILE —
+    see scripts/a0_reply.sh and _a0_has_replied_for().
+
+    `source` (Owner 2026-08-24): callers tapping a Stock Discussion Group
+    message pass source="group" so A0 can see the entry has a negative
+    chat_id (see handle_group_message) without it ever being routed through
+    the offline resume/relay path — that path is guarded separately by
+    chat_id<0 checks in _a0_resume_or_fallback/_a0_wait_then_maybe_resume.
+    """
+    ts = datetime.now().isoformat(timespec="seconds")
+    try:
+        A0_INBOX_FILE.parent.mkdir(parents=True, exist_ok=True)
+        entry = {"ts": ts, "chat_id": chat_id, "text": text[:4000]}
+        if message_id is not None:
+            entry["message_id"] = message_id
+        if source is not None:
+            entry["source"] = source
+        with A0_INBOX_FILE.open("a", encoding="utf-8") as f:
+            f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+    except Exception:
+        logger.exception("a0 inbox append failed")
+    return ts
+
+
+def _is_a0_direct(text: str) -> bool:
+    return bool(re.match(r"^\s*@?[Aa]0\b", text))
+
+
+A0_HEARTBEAT_FILE = Path(
+    os.getenv(
+        "A0_HEARTBEAT_FILE",
+        "/Users/pagemacmini/claude-daily-operations/state/a0_heartbeat.json",
+    )
+)
+A0_ALIVE_MAX_AGE_S = int(os.getenv("A0_ALIVE_MAX_AGE_S", "180"))
+
+
+def _a0_alive() -> bool:
+    """True when the Fable5 A0 window has written a heartbeat recently."""
+    try:
+        age = datetime.now().timestamp() - A0_HEARTBEAT_FILE.stat().st_mtime
+        return age <= A0_ALIVE_MAX_AGE_S
+    except Exception:
+        return False
+
+
+# ── A0/Fable5 offline notice (Owner 2026-08-23 14:15 + 14:53) ───────────────
+#
+# Owner ruling: "新 context 不是人物代碼而是問題" — the problem was never
+# which persona label the offline path used, it was that the bot kept
+# spinning up brand-new Fable5 contexts. Priority is avoiding that next time,
+# not decorating it. While A0 looks offline the bot must not generate any
+# new-context Fable5 persona at all; it queues silently and continues the
+# *same* session. The one thing Owner still wants to see is a single,
+# non-Fable5 notice per outage — not one per queued message — telling them
+# the bot noticed A0 is down and is queuing/continuing, not answering as
+# Fable5 itself.
+
+A0_OUTAGE_NOTICE_FILE = Path(
+    os.getenv(
+        "A0_OUTAGE_NOTICE_FILE",
+        "/Users/pagemacmini/claude-daily-operations/state/a0_outage_notice.json",
+    )
+)
+A0_OUTAGE_NOTICE_LABEL = "【bot 通知，非 Fable5】"
+A0_RESUME_FAILED_NOTICE_LABEL = "【bot 通知，非 Fable5】"
+
+
+def _a0_outage_key() -> str:
+    """Identifies "this outage period": the mtime of the last heartbeat A0
+    actually wrote. Stable for as long as A0 stays offline (the heartbeat
+    file doesn't change while nobody is writing it) and automatically
+    becomes a new value the moment A0 comes back and writes a fresh
+    heartbeat — so a stale notice-state entry can never be mistaken for the
+    current outage. Missing heartbeat file entirely still yields a stable
+    (if degenerate) key so notice-once behaviour still holds."""
+    try:
+        return str(A0_HEARTBEAT_FILE.stat().st_mtime)
+    except Exception:
+        return "no-heartbeat-file"
+
+
+def _a0_outage_heartbeat_hhmm() -> str:
+    """HH:MM of the last A0 heartbeat, for the outage notice text. Never
+    raises — falls back to "?" when the heartbeat file is missing/unreadable."""
+    try:
+        return datetime.fromtimestamp(A0_HEARTBEAT_FILE.stat().st_mtime).strftime("%H:%M")
+    except Exception:
+        return "?"
+
+
+def _a0_read_outage_notice_state() -> dict:
+    try:
+        return json.loads(A0_OUTAGE_NOTICE_FILE.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+
+def _a0_write_outage_notice_state(state: dict) -> None:
+    try:
+        A0_OUTAGE_NOTICE_FILE.parent.mkdir(parents=True, exist_ok=True)
+        A0_OUTAGE_NOTICE_FILE.write_text(json.dumps(state, ensure_ascii=False), encoding="utf-8")
+    except Exception:
+        logger.exception("a0 outage notice state write failed")
+
+
+def _a0_clear_outage_notice_state() -> None:
+    """Called once A0 is confirmed alive again, so the next outage starts
+    from a clean slate instead of inheriting stale notified/failed flags."""
+    try:
+        if A0_OUTAGE_NOTICE_FILE.exists():
+            A0_OUTAGE_NOTICE_FILE.unlink()
+    except Exception:
+        logger.exception("a0 outage notice state clear failed")
+
+
+async def _a0_maybe_notify_outage(bot, chat_id: int) -> None:
+    """Send the "A0 is offline, your message is queued and being handled via
+    the same session" notice — but only once per outage period. Every
+    subsequent message during the same outage just silently bumps the queued
+    count in state; Owner explicitly asked for no repeat noise ("之後同一
+    離線期內的訊息不再重複通知，只靜默排隊+續接"). Never raises."""
+    key = _a0_outage_key()
+    state = _a0_read_outage_notice_state()
+    queued = int(state.get("queued", 0)) + 1 if state.get("key") == key else 1
+    already_notified = state.get("key") == key and state.get("notified")
+    state = {"key": key, "notified": True, "queued": queued, "failed_notified": state.get("failed_notified") if state.get("key") == key else False}
+    _a0_write_outage_notice_state(state)
+    if already_notified:
         return
-    text = update.message.text or ""
-    chat_id = update.effective_chat.id
-    local_answer = _local_runtime_question_answer(text)
-    if local_answer:
-        await update.message.reply_text(local_answer)
-        _record_history(chat_id, text, local_answer)
-        log_and_commit(text, local_answer, "runtime-local")
+    hhmm = _a0_outage_heartbeat_hhmm()
+    # Owner 2026-08-27: 斷線訊息要讓系統「額度滿也照常運作」——不只報離線，
+    # 還要當場把 Owner 導去仍在值班的通道（hermes A6 窗口與 launchd 產品線）。
+    text = (
+        f"{A0_OUTAGE_NOTICE_LABEL} Fable5 主程式離線（心跳 {hhmm} 起），"
+        f"你的訊息已排隊 {queued} 則，正以同一 session 續接，需數分鐘。\n"
+        f"急事不用等：hermes 在 A6 bot（@maplab_a6_bot）24 小時值班，額度無關，"
+        f"日常答疑、系統狀態、投資產品判讀都可以先找他。\n"
+        f"每日投資訊號產品線走 launchd 排程，不受 Fable5 離線影響，照常出。"
+    )
+    try:
+        await bot.send_message(chat_id=chat_id, text=text)
+    except Exception:
+        logger.exception("a0 outage notice send failed")
+
+
+async def _a0_maybe_notify_resume_failed(bot, chat_id: int) -> None:
+    """Same once-per-outage discipline as _a0_maybe_notify_outage, but for
+    the "the same-session resume itself came back empty/failed" case (Owner
+    2026-08-23: 續接結果若為空/失敗 → 不代答，只在 log 記錄，並每離線期一次
+    補一句通知). Never raises."""
+    key = _a0_outage_key()
+    state = _a0_read_outage_notice_state()
+    already_notified = state.get("key") == key and state.get("failed_notified")
+    state = dict(state) if state.get("key") == key else {}
+    state["key"] = key
+    state["failed_notified"] = True
+    _a0_write_outage_notice_state(state)
+    if already_notified:
+        return
+    text = (
+        f"{A0_RESUME_FAILED_NOTICE_LABEL} 續接失敗（多半是週額度用完或 session 需要人工重連），"
+        f"訊息仍排隊，Fable5 回來會照順序處理。\n"
+        f"現在就要答案的話改問 hermes：A6 bot（@maplab_a6_bot），他不吃 Claude 額度。"
+    )
+    try:
+        await bot.send_message(chat_id=chat_id, text=text)
+    except Exception:
+        logger.exception("a0 resume-failed notice send failed")
+
+
+# ── A0/Fable5 session resume (Owner 2026-08-22 21:32 + 21:37) ───────────────
+#
+# 21:32: a heartbeat-triggered stateless one-shot fallback has no prior
+# context, so it's useless — "切了沒前文的模型沒意義". When A0 looks offline
+# (or Owner forces it with a leading "代答"), the bot must headlessly RESUME
+# A0's own Claude Code session (`claude -p --resume <session_id>`) instead of
+# starting a fresh one-shot, and every outbound reply must say plainly
+# whether it is Fable5 (resumed) or not (bot fallback).
+#
+# 21:37 follow-up: an immediate "📨 已收到" ack while A0 is alive reads as
+# noise ("ack 被視為洗板"). The bot now stays silent while A0 looks alive and
+# gives it up to A0_WAIT_TIMEOUT_S to actually answer via its own reply
+# channel (scripts/a0_reply.sh, which appends a receipt to A0_REPLIES_FILE).
+# No receipt by the deadline ⇒ A0 didn't actually pick the message up, so the
+# bot resumes A0's session itself.
+
+A0_SESSION_FILE = Path(
+    os.getenv(
+        "A0_SESSION_FILE",
+        "/Users/pagemacmini/claude-daily-operations/state/a0_session.json",
+    )
+)
+A0_SESSION_ID_DEFAULT = os.getenv("A0_SESSION_ID", "3a3df70f-b5ce-4c45-9d85-6651d7022e4b")
+A0_RESUME_MODEL_DEFAULT = os.getenv("A0_RESUME_MODEL", "claude-fable-5")
+A0_RESUME_CWD = os.getenv("A0_RESUME_CWD", "/Users/pagemacmini/Documents")
+A0_RESUME_TIMEOUT_S = int(os.getenv("A0_RESUME_TIMEOUT_S", "900"))
+
+A0_REPLIES_FILE = Path(
+    os.getenv(
+        "A0_REPLIES_FILE",
+        "/Users/pagemacmini/claude-daily-operations/state/a0_replies.jsonl",
+    )
+)
+A0_WAIT_TIMEOUT_S = float(os.getenv("A0_WAIT_TIMEOUT_S", "150"))
+A0_WAIT_POLL_INTERVAL_S = float(os.getenv("A0_WAIT_POLL_INTERVAL_S", "5"))
+
+A0_RESUME_LABEL = "【Fable5 本人・同 session 續接】"
+# 2026-09-21 Owner「用 opus 應該還有額度吧，寫成不會斷的，要註明由 opus 接手」：
+# Fable 額度用完時 resume 會回 "You've reached your Fable 5 limit"，過去 bot 只會
+# 一直重試 Fable、每則都失敗、Owner 收不到任何回覆（9/17、9/21 實錄）。
+# 改為：同一個 session 換 Opus 續跑，回覆明確標示由 Opus 接手。
+A0_FALLBACK_MODEL = os.getenv("A0_FALLBACK_MODEL", "claude-opus-5")
+A0_FALLBACK_LABEL = "【Opus 接手・同 session 續接（Fable 額度用完）】"
+A0_QUOTA_MARKER_RE = re.compile(
+    r"reached your .{0,20}limit|usage limit|rate.?limit|quota|out of (credits|tokens)",
+    re.IGNORECASE,
+)
+# Fable 耗盡後的冷卻窗：窗內直接走 Opus，不每則先撞一次 Fable 牆。
+A0_PRIMARY_COOLDOWN_S = int(os.getenv("A0_PRIMARY_COOLDOWN_S", "1800"))
+_A0_PRIMARY_EXHAUSTED_AT: float = 0.0
+BOT_FALLBACK_LABEL = "【bot 代答，非 Fable5】"
+
+# ── A0/Fable5 fresh-context relay (Owner 22:35 2026-08-22) ──────────────────
+#
+# VERIFIED 22:32: `claude -p --resume <session>` was timing out at 180s
+# because that session's context sits at ~98% — every resume has to reload a
+# huge amount of prior transcript before it can even start answering. Owner
+# 22:35: "想清楚後派工給 codex 幫助你" → fix is a fresh-context relay that
+# takes the place of resume as the *default* routing: instead of resuming the
+# near-full session, spin up a brand-new one-shot `claude -p` call whose
+# system prompt is assembled from FABLE5_HANDOFF.md's RESUME PROMPT section +
+# standing memory + the most recent inbox/reply exchanges — cheap to load,
+# and enough for a genuinely fresh Fable5 context to answer sensibly (or say
+# "不知道") without pretending it has the old session's live working memory.
+#
+# `--resume` is kept as an opt-in via A0_RELAY_MODE=resume for cases where
+# the live session actually is healthy and worth reconnecting to.
+#
+# ── REVERSED — Owner ruling 2026-08-23 14:15 + 14:53 ────────────────────────
+#
+# "新 context 不是人物代碼而是問題" — the fresh-context relay above is exactly
+# the "new Fable5 persona" Owner wants stopped by default: offline handling
+# must not synthesize a brand-new context that speaks as Fable5. Default
+# routing flips back to `resume` (the SAME live session, not a new one) —
+# the 22:35 timeout concern is addressed instead by raising
+# A0_RESUME_TIMEOUT_S (180 → 900) rather than by inventing a new persona.
+# The fresh-context relay path stays in the code (still selectable) but is
+# opt-in ONLY: it fires solely when A0_RELAY_MODE is explicitly set to
+# "fresh" in the environment, and doing so logs a warning every time. Any
+# other value (unset, "resume", or anything else) uses resume — the default
+# must never silently reach the fresh path.
+
+A0_RELAY_MODE = os.getenv("A0_RELAY_MODE", "resume").strip().lower()  # "resume" (default) | "fresh" (explicit opt-in only, warns)
+A0_FRESH_RELAY_TIMEOUT_S = int(os.getenv("A0_FRESH_RELAY_TIMEOUT_S", "120"))
+
+FABLE5_HANDOFF_FILE = Path(
+    os.getenv(
+        "FABLE5_HANDOFF_FILE",
+        "/Users/pagemacmini/claude-daily-operations/state/FABLE5_HANDOFF.md",
+    )
+)
+FABLE5_HANDOFF_HEAD_LINES = int(os.getenv("FABLE5_HANDOFF_HEAD_LINES", "40"))
+FABLE5_MEMORY_DIR = Path(
+    os.getenv(
+        "FABLE5_MEMORY_DIR",
+        "/Users/pagemacmini/.claude/projects/-Users-pagemacmini-Documents/memory",
+    )
+)
+FABLE5_MEMORY_FILES = (
+    "owner-communication-standard.md",
+    "fable5-standing-mandate-20260822.md",
+)
+A0_RECENT_EXCHANGE_COUNT = int(os.getenv("A0_RECENT_EXCHANGE_COUNT", "10"))
+
+A0_FRESH_RELAY_LABEL = "【Fable5 本人(新 context)】"
+
+
+def _read_head_lines(path: Path, n: int) -> str:
+    """First n lines of path; never raises — missing/unreadable file → ""."""
+    try:
+        lines = path.read_text(encoding="utf-8").splitlines()
+        return "\n".join(lines[:n])
+    except Exception:
+        return ""
+
+
+def _read_tail_lines(path: Path, n: int) -> str:
+    """Last n non-blank lines of path; never raises — "" on any failure."""
+    try:
+        lines = [ln for ln in path.read_text(encoding="utf-8").splitlines() if ln.strip()]
+        return "\n".join(lines[-n:])
+    except Exception:
+        return ""
+
+
+def _read_fable5_memory_files() -> str:
+    """Full text of the standing-mandate / communication-standard memory
+    files, concatenated with headers. Missing individual files are skipped
+    silently (never raises)."""
+    parts = []
+    for name in FABLE5_MEMORY_FILES:
+        try:
+            content = (FABLE5_MEMORY_DIR / name).read_text(encoding="utf-8")
+        except Exception:
+            continue
+        parts.append(f"### {name}\n{content}")
+    return "\n\n".join(parts)
+
+
+def _a0_fresh_relay_system_prompt() -> str:
+    """Assemble the system prompt for the fresh-context Fable5 relay:
+    FABLE5_HANDOFF.md's RESUME PROMPT header + standing memory + the most
+    recent inbox/reply exchanges, so a brand-new one-shot session has enough
+    to answer like Fable5 without resuming the near-full live session."""
+    handoff = _read_head_lines(FABLE5_HANDOFF_FILE, FABLE5_HANDOFF_HEAD_LINES)
+    memory = _read_fable5_memory_files()
+    recent_inbox = _read_tail_lines(A0_INBOX_FILE, A0_RECENT_EXCHANGE_COUNT)
+    recent_replies = _read_tail_lines(A0_REPLIES_FILE, A0_RECENT_EXCHANGE_COUNT)
+    return (
+        "=== FABLE5_HANDOFF.md（前"
+        f"{FABLE5_HANDOFF_HEAD_LINES}行，含 RESUME PROMPT）===\n"
+        f"{handoff}\n\n"
+        "=== memory 索引全文（owner-communication-standard, "
+        "fable5-standing-mandate-20260822）===\n"
+        f"{memory}\n\n"
+        f"=== 最近 {A0_RECENT_EXCHANGE_COUNT} 則 a0_inbox（Owner 訊息）===\n"
+        f"{recent_inbox}\n\n"
+        f"=== 最近 {A0_RECENT_EXCHANGE_COUNT} 則 a0_replies（Fable5 回覆收據）===\n"
+        f"{recent_replies}\n\n"
+        "=== 指令 ===\n"
+        "你是 Fable5 本人（全新 context，沒有先前 session 的記憶，只有以上摘要可用）。"
+        "用說人話三段式回 Owner（發生什麼／對你的意義／要不要你做）；不知道就說不知道；"
+        "不要宣稱已派工或已稽核；回覆開頭必須標「【Fable5 本人(新 context)】」。"
+    )
+
+
+async def _a0_fresh_relay_ask(user_message: str, timeout: int = A0_FRESH_RELAY_TIMEOUT_S) -> ModelResult:
+    """Default A0 routing since 2026-08-22 22:35: a fresh-context one-shot
+    Claude session (not a `--resume` of the near-full live session) primed
+    with FABLE5_HANDOFF.md + standing memory + recent inbox/replies via
+    --system-prompt (falling back to prepending the prompt inline if this
+    CLI build rejects the flag). Never raises — failures come back as
+    ModelResult(ok=False, ...) so the caller can fall back further."""
+    system_prompt = _a0_fresh_relay_system_prompt()
+    _, model = _a0_session_config()
+    model = model or A0_RESUME_MODEL_DEFAULT
+
+    env = os.environ.copy()
+    if CLAUDE_OAUTH_TOKEN:
+        env["CLAUDE_CODE_OAUTH_TOKEN"] = CLAUDE_OAUTH_TOKEN
+    env["PATH"] = _runtime_path(env.get("PATH", ""))
+
+    def _build_cmd(inline_system: bool) -> list:
+        cmd = ["claude", "-p", "--output-format", "text"]
+        if model:
+            cmd += ["--model", model]
+        if inline_system:
+            cmd.append(f"{system_prompt}\n\n=== Owner 訊息 ===\n{user_message}")
+        else:
+            cmd += ["--system-prompt", system_prompt, user_message]
+        return cmd
+
+    async def _run(cmd):
+        proc = await asyncio.create_subprocess_exec(
+            *cmd,
+            cwd=A0_RESUME_CWD,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+            env=env,
+        )
+        try:
+            return proc, await asyncio.wait_for(proc.communicate(), timeout=timeout)
+        except asyncio.TimeoutError:
+            # Codex route-A minimal fix: asyncio.wait_for() only abandons
+            # the communicate() *read*, it does not touch the child process
+            # — without an explicit kill()+wait() here the subprocess kept
+            # running as an orphan and its output (if it ever finished)
+            # could not be told apart from a fresh attempt's output. Kill
+            # and reap it here, inside _run(), while `proc` is still in
+            # scope, then re-raise so the caller's existing TimeoutError
+            # handling builds the ModelResult. Late output from this
+            # process is never read again, so it can never be sent.
+            proc.kill()
+            await proc.wait()
+            raise
+
+    try:
+        try:
+            proc, (stdout, stderr) = await _run(_build_cmd(inline_system=False))
+        except asyncio.TimeoutError:
+            return ModelResult(
+                ok=False,
+                answer=f"⚠️ Fable5 fresh relay 逾時（{timeout}秒）",
+                failure_kind="timeout",
+                stderr=f"timeout after {timeout}s",
+            )
+
+        err = stderr.decode(errors="replace").strip()
+        if proc.returncode != 0 and re.search(r"unknown option|unrecognized option", err, re.IGNORECASE):
+            # This CLI build doesn't accept --system-prompt; retry with the
+            # prompt folded into the message instead of failing outright.
+            try:
+                proc, (stdout, stderr) = await _run(_build_cmd(inline_system=True))
+            except asyncio.TimeoutError:
+                return ModelResult(
+                    ok=False,
+                    answer=f"⚠️ Fable5 fresh relay 逾時（{timeout}秒）",
+                    failure_kind="timeout",
+                    stderr=f"timeout after {timeout}s",
+                )
+            err = stderr.decode(errors="replace").strip()
+
+        if proc.returncode != 0:
+            out = stdout.decode(errors="replace").strip()
+            diagnostic = _trim(err or out or "未知錯誤", 500)
+            return ModelResult(
+                ok=False,
+                answer=f"⚠️ fresh relay 錯誤: {_trim(diagnostic, 300)}",
+                failure_kind="fresh_relay_failed",
+                stderr=diagnostic,
+            )
+        answer = _sanitize_for_telegram(stdout.decode(errors="replace"))
+        if not answer:
+            return ModelResult(
+                ok=False, answer="⚠️ fresh relay 無回應（空輸出）",
+                failure_kind="fresh_relay_empty", stderr="empty stdout",
+            )
+        return ModelResult(ok=True, answer=answer)
+    except FileNotFoundError:
+        return ModelResult(
+            ok=False,
+            answer="⚠️ 找不到 claude 命令，請確認已安裝 Claude Code",
+            failure_kind="cli_missing",
+            stderr="claude command not found",
+        )
+    except Exception as e:
+        err = str(e)
+        return ModelResult(ok=False, answer=f"⚠️ fresh relay 呼叫失敗: {err}", failure_kind="fresh_relay_error", stderr=err)
+
+
+def _a0_session_config() -> tuple[str, str]:
+    """Resolve (session_id, model) for `claude -p --resume`.
+
+    A0_SESSION_FILE (kept fresh by A0 itself) wins when present and has
+    usable fields; otherwise falls back to the A0_SESSION_ID / A0_RESUME_MODEL
+    defaults (env-overridable, hardcoded default session id otherwise).
+    A missing/corrupt file must never break message handling.
+    """
+    session_id = A0_SESSION_ID_DEFAULT
+    model = A0_RESUME_MODEL_DEFAULT
+    try:
+        data = json.loads(A0_SESSION_FILE.read_text(encoding="utf-8"))
+        file_session = str(data.get("session_id") or "").strip()
+        file_model = str(data.get("model") or "").strip()
+        if file_session:
+            session_id = file_session
+        if file_model:
+            model = file_model
+    except Exception:
+        pass
+    return session_id, model
+
+
+def _is_a0_answer_command(text: str) -> bool:
+    """Owner prefixes a message with 代答 to force the resume/fallback path
+    immediately, without waiting to see whether A0 answers on its own."""
+    return bool(re.match(r"^\s*代答", text or ""))
+
+
+# ── 短問快答（Owner 2026-09-22 msg 5882）─────────────────────────────────────
+# Owner:「當我跟他溝通順便檢查他回覆我telegram 只看得到成果和單向對他說話,
+# 沒有辦法溝通了」。成因之一在路由:每一則訊息都被當成一個批次工作,喚醒 A0 的
+# session(A0_RESUME_TIMEOUT_S 預設 900 秒),再回一份長報告;而 _a0_claim_single_reply
+# 保證同一則只自動回一次。結果就是想追問一句、改一個字,都要付十五分鐘批次的代價。
+#
+# 對話所需的零件本來就在(每個 chat 留 20 則 _get_history、claude_ask_with_fallback
+# 會把歷史帶進 prompt),只是預設全部倒給 A0。這裡補一條 opt-in 的短路:
+#   Owner 主動在句首打「聊」或「短」→ 不進重批次,直接用對話歷史秒回。
+# 設計上刻意只在 Owner 自己打那個字時才生效,所以不會誤傷正常工作指令;
+# 不想要就把前綴拿掉,路由完全回到原狀(可逆)。
+#
+# 兩條治理規矩:
+#   1) 這條路的答案是 bot 答的,不是 Fable5 本人,所以掛【bot 代答】標籤
+#      (owner-communication-standard:標清楚誰在說話)。
+#   2) 短問不落 a0_inbox 工作線,也因此不寫 a0_replies 收據 —— 兩邊都不寫才不會
+#      讓 watchdog 把閒聊當成「未回覆的 Owner 指令」去逼 A0 補跑。對話內容仍由
+#      log_and_commit 進 CONVERSATION_LOG,A0 續接時看得到。
+CHAT_MODE_LABEL = "【bot 代答・短問快答】"
+CHAT_MODE_TIMEOUT_S = int(os.getenv("CHAT_MODE_TIMEOUT_S", "120"))
+
+
+def _parse_chat_mode(text: str) -> tuple[bool, str]:
+    """回傳 (是否短問模式, 去掉前綴後的問題)。
+
+    只認句首的「聊」或「短」,而且後面必須是分隔符(空白或冒號逗號頓號)或整則
+    到此結束。這一條很重要:如果只比對「開頭是聊或短」,那「短期目標是什麼」會被
+    切成前綴+「期目標是什麼」、「聊天記錄在哪」會被切成前綴+「天記錄在哪」——
+    正常工作指令被誤判成閒聊,還被改寫了內容。寧可讓 Owner 多打一個空白。
+
+    前綴後面沒有內容時仍回 True(讓呼叫端回一句「你想問什麼」,而不是把裸前綴
+    丟去問模型)。
+    """
+    match = re.match(r"^\s*(?:聊|短)(?:\s*[：:，,、]\s*|\s+|$)", text or "")
+    if not match:
+        return False, ""
+    return True, (text or "")[match.end():].strip()
+
+
+def _a0_has_replied_for(reply_to_inbox_ts: str) -> bool:
+    """True when A0_REPLIES_FILE has a receipt *paired* to this exact inbox
+    message via its "reply_to_inbox_ts" field (scripts/a0_reply.sh writes
+    this — Codex route-A minimal fix, 2026-08-22).
+
+    Previously this only checked receipt.ts >= since_ts, which is coarse:
+    any receipt written after the message arrived counted, even one that
+    was actually answering a *different*, later Owner message that happened
+    to get a fast reply first. Matching on the paired reply_to_inbox_ts
+    instead means a receipt only counts for the inbox message it actually
+    answered. Receipts without a reply_to_inbox_ts field (legacy format)
+    never match — never raises: a missing/corrupt file just means "no
+    receipt yet".
+    """
+    if not reply_to_inbox_ts:
+        return False
+    try:
+        if not A0_REPLIES_FILE.exists():
+            return False
+        lines = A0_REPLIES_FILE.read_text(encoding="utf-8").splitlines()
+        for line in reversed(lines[-200:]):
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                entry = json.loads(line)
+            except Exception:
+                continue
+            if entry.get("reply_to_inbox_ts") == reply_to_inbox_ts:
+                return True
+        return False
+    except Exception:
+        return False
+
+
+A0_HANDLED_DIR = Path(
+    os.getenv(
+        "A0_HANDLED_DIR",
+        "/Users/pagemacmini/claude-daily-operations/state/a0_handled",
+    )
+)
+
+
+def _a0_claim_single_reply(reply_to_inbox_ts: str, chat_id: int) -> bool:
+    """Atomically claim the right to auto-answer one inbox message, so the
+    bot never sends two automatic replies (fresh-relay/resume/fallback) for
+    the same Owner message — Codex route-A minimal fix, 2026-08-22.
+
+    Uses O_CREAT|O_EXCL to create a marker file named after a hash of
+    (chat_id, reply_to_inbox_ts); this is safe across concurrent asyncio
+    tasks (e.g. the immediate "代答" path racing the wait-timer path for the
+    same message) because file creation with O_EXCL is atomic at the OS
+    level. Returns True the first time a given message is claimed, False on
+    every subsequent attempt for that same message.
+
+    Fails open (returns True) on any filesystem error: this guard's job is
+    to prevent *duplicate* replies, not to gate whether Owner gets answered
+    at all, so a marker-directory outage must not silently swallow a
+    message.
+    """
+    try:
+        A0_HANDLED_DIR.mkdir(parents=True, exist_ok=True)
+        key = f"{chat_id}:{reply_to_inbox_ts}"
+        digest = hashlib.sha256(key.encode("utf-8")).hexdigest()[:32]
+        marker = A0_HANDLED_DIR / f"{digest}.claimed"
+        fd = os.open(str(marker), os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+        try:
+            os.write(fd, key.encode("utf-8"))
+        finally:
+            os.close(fd)
+        return True
+    except FileExistsError:
+        return False
+    except Exception:
+        logger.exception("a0 single-reply claim failed; proceeding anyway")
+        return True
+
+
+# Short "續接開場" prelude prepended to every same-session resume call (Owner
+# 2026-08-23 14:15 + 14:53, item 3): tell the resumed session plainly that
+# it is the bot continuing A0's own session while A0 itself is offline —
+# not a new persona — and what to actually do about it (pull, read the
+# handoff's RESUME PROMPT, diff a0_inbox/a0_replies, answer only this one
+# message with a receipt) rather than claim work that hasn't happened.
+A0_RESUME_PRELUDE = (
+    "【續接開場】你是 bot，在 A0/Fable5 主程式離線期間以「同一個」既有 session 續接——"
+    "不是開新 context、不是新的 Fable5 人格。請依序：\n"
+    "1) 先執行 git pull cdo；\n"
+    "2) 讀 handoff 檔案最頂部的 RESUME PROMPT 區段；\n"
+    "3) 比對 a0_inbox 與 a0_replies，找出尚未回覆的訊息；\n"
+    "4) 只回覆 Owner 這一則訊息（用 scripts/a0_reply.sh 留收據）。\n"
+    "回覆開頭必須標「【Fable5 本人・同 session 續接】」；"
+    "不得宣稱已派工、已稽核或已完成任何實際上還沒做的事。\n\n"
+    "=== Owner 訊息 ===\n"
+)
+
+
+async def _a0_resume_ask(
+    user_message: str,
+    timeout: int = A0_RESUME_TIMEOUT_S,
+    model_override: Optional[str] = None,
+) -> ModelResult:
+    """Headlessly resume A0's own Claude Code session so the reply keeps full
+    context, instead of a stateless one-shot.
+
+    Calls `claude -p --resume <session_id> --output-format text [--model ...]`
+    with cwd=A0_RESUME_CWD, prefixed with A0_RESUME_PRELUDE so the resumed
+    session knows this is a same-session continuation, not a new context.
+    Never raises — failures come back as ModelResult(ok=False, ...) so the
+    caller can decide how to handle a failed/empty resume.
+    """
+    session_id, model = _a0_session_config()
+    if model_override:
+        model = model_override
+    if not session_id:
+        return ModelResult(ok=False, answer="⚠️ 沒有可用的 A0 session id", failure_kind="no_session")
+
+    env = os.environ.copy()
+    if CLAUDE_OAUTH_TOKEN:
+        env["CLAUDE_CODE_OAUTH_TOKEN"] = CLAUDE_OAUTH_TOKEN
+    env["PATH"] = _runtime_path(env.get("PATH", ""))
+
+    cmd = ["claude", "-p", "--resume", session_id, "--output-format", "text"]
+    # 2026-08-25 Owner「解決腳本推送問題」: resume 視窗過去沒有任何 permission
+    # 旗標，a0_reply.sh 每次都被權限閘攔下，只能靠 bot 轉送最終文字。
+    # 2026-08-28 Owner msg 4296「這裡說授權也是授權」: headless resume 按不了
+    # 終端機核准，Owner 明令不要再設計成要他按。放行範圍從三支回報腳本擴大到
+    # 整個 maplab-ai-handbook/scripts/ 目錄——只有進了 repo、可稽核的腳本能跑，
+    # 其餘命令（任意 shell、系統操作）維持原本閘門。
+    # 實測(2026-08-28 23:15):`Bash(...scripts/:*)` 目錄前綴不匹配目錄下檔案
+    # (`:*` 只涵蓋「空白後的參數」),所以每次 spawn 時 glob 逐支列舉——新腳本
+    # 落地後下一則訊息即放行,不必再重啟 bot。
+    # 單一逗號串而非 variadic 多值：--allowedTools 是 variadic 旗標，若用多個
+    # 裸值且後面剛好沒有 --model，最後的 prompt 位置參數會被吃進工具清單。
+    _a0_scripts = sorted(
+        glob.glob("/Users/pagemacmini/maplab-ai-handbook/scripts/*.sh")
+    )
+    _a0_reply_allow = ",".join(
+        f"Bash({prefix}{script}:*)"
+        for script in _a0_scripts
+        for prefix in ("bash ", "")
+    )
+    cmd += ["--allowedTools", _a0_reply_allow]
+    if model:
+        cmd += ["--model", model]
+    cmd.append(A0_RESUME_PRELUDE + user_message)
+
+    try:
+        proc = await asyncio.create_subprocess_exec(
+            *cmd,
+            cwd=A0_RESUME_CWD,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+            env=env,
+        )
+        try:
+            stdout, stderr = await asyncio.wait_for(proc.communicate(), timeout=timeout)
+        except asyncio.TimeoutError:
+            # Codex route-A minimal fix: a bare kill() leaves the child a
+            # zombie and leaves its late stdout unread/unbounded — always
+            # kill *and* wait() so the subprocess is fully reaped before we
+            # give up on it. Late output from this process must never be
+            # used; we return here without reading stdout/stderr again.
+            proc.kill()
+            await proc.wait()
+            return ModelResult(
+                ok=False,
+                answer=f"⚠️ Fable5 session resume 逾時（{timeout}秒）",
+                failure_kind="timeout",
+                stderr=f"timeout after {timeout}s",
+            )
+        if proc.returncode != 0:
+            err = stderr.decode(errors="replace").strip()
+            out = stdout.decode(errors="replace").strip()
+            diagnostic = _trim(err or out or "未知錯誤", 500)
+            return ModelResult(
+                ok=False,
+                answer=f"⚠️ resume 錯誤: {_trim(diagnostic, 300)}",
+                failure_kind="resume_failed",
+                stderr=diagnostic,
+            )
+        answer = _sanitize_for_telegram(stdout.decode(errors="replace"))
+        if not answer:
+            return ModelResult(ok=False, answer="⚠️ resume 無回應（空輸出）", failure_kind="resume_empty", stderr="empty stdout")
+        return ModelResult(ok=True, answer=answer)
+    except FileNotFoundError:
+        return ModelResult(
+            ok=False,
+            answer="⚠️ 找不到 claude 命令，請確認已安裝 Claude Code",
+            failure_kind="cli_missing",
+            stderr="claude command not found",
+        )
+    except Exception as e:
+        err = str(e)
+        return ModelResult(ok=False, answer=f"⚠️ resume 呼叫失敗: {err}", failure_kind="resume_error", stderr=err)
+
+
+async def _a0_resume_or_fallback(bot, chat_id: int, text: str, reply_to_inbox_ts: str = "") -> None:
+    """Shared relay chain: try to reach A0/Fable5 first — via a same-session
+    resume of A0's own live session by default (A0_RELAY_MODE unset/"resume"),
+    or via the fresh-context relay ONLY when A0_RELAY_MODE is explicitly set
+    to "fresh" (Owner 2026-08-23 ruling: offline handling must never
+    synthesize a new-context Fable5 persona by default). Used both when A0
+    looks offline immediately and when the wait timer (see
+    _a0_wait_then_maybe_resume) expires with no reply receipt.
+
+    reply_to_inbox_ts identifies which a0_inbox.jsonl entry this automatic
+    answer is for. When present, this claims a single-reply marker (Codex
+    route-A minimal fix, 2026-08-22) before doing any relay work, so the
+    immediate "代答" path and the wait-timer path can never both send an
+    automatic answer for the same Owner message — the second claimant just
+    logs and returns."""
+    if chat_id < 0:
+        # Group chat_ids are always negative in Telegram. Group ingress
+        # (Stock Discussion Group, see handle_group_message) is dispatched
+        # entirely through its own trigger/orchestrator path and must never
+        # synthesize an A0/Fable5 "代答" into a group — general group
+        # chit-chat stays silent (能力測試 D) and even Owner's own group
+        # messages only get a reply when they hit a research/debate trigger.
+        # As of 2026-08-24 no caller actually reaches this function with a
+        # negative chat_id (handle_group_message never calls it), but this
+        # guard is defense-in-depth against any future code path doing so.
+        logger.info("A0 relay/fallback skipped for group chat_id=%s (group ingress never auto-answers via A0 relay)", chat_id)
+        return
+    if reply_to_inbox_ts and not _a0_claim_single_reply(reply_to_inbox_ts, chat_id):
+        logger.info("A0 auto-reply already claimed for chat_id=%s reply_to_inbox_ts=%s; skipping duplicate", chat_id, reply_to_inbox_ts)
+        return
+    # A0 actually looking offline (not just an Owner-forced "代答" while A0 is
+    # alive) is what "an outage" means for notice purposes — send the single
+    # once-per-outage "queued, continuing on same session" notice here.
+    if not _a0_alive():
+        await _a0_maybe_notify_outage(bot, chat_id)
+    git_pull_silent()
+    if A0_RELAY_MODE == "fresh":
+        logger.warning(
+            "A0_RELAY_MODE=fresh explicitly set — using new-context fresh relay "
+            "instead of same-session resume; this path is opt-in only and "
+            "never the default (Owner 2026-08-23 ruling)."
+        )
+        relay_result = await _a0_fresh_relay_ask(text)
+        relay_label = A0_FRESH_RELAY_LABEL
+        relay_log_label = "a0-fresh-relay"
+    else:
+        global _A0_PRIMARY_EXHAUSTED_AT
+        in_cooldown = (time.time() - _A0_PRIMARY_EXHAUSTED_AT) < A0_PRIMARY_COOLDOWN_S
+        if in_cooldown:
+            relay_result = ModelResult(ok=False, answer="", failure_kind="resume_failed",
+                                       stderr="primary model in quota cooldown")
+        else:
+            relay_result = await _a0_resume_ask(text)
+        relay_label = A0_RESUME_LABEL
+        relay_log_label = "a0-resume"
+        quota_hit = in_cooldown or (
+            not relay_result.ok and A0_QUOTA_MARKER_RE.search(relay_result.stderr or "")
+        )
+        if quota_hit and A0_FALLBACK_MODEL:
+            if not in_cooldown:
+                _A0_PRIMARY_EXHAUSTED_AT = time.time()
+                logger.warning("A0 primary model quota exhausted — falling back to %s (same session)",
+                               A0_FALLBACK_MODEL)
+            relay_result = await _a0_resume_ask(text, model_override=A0_FALLBACK_MODEL)
+            relay_label = A0_FALLBACK_LABEL
+            relay_log_label = "a0-resume-opus-fallback"
+            if not relay_result.ok and A0_QUOTA_MARKER_RE.search(relay_result.stderr or ""):
+                # 備援也用完了：冷卻歸零，下一則重新先試主模型（可能已重置）
+                _A0_PRIMARY_EXHAUSTED_AT = 0.0
+    if relay_result.ok:
+        answer = _sanitize_for_telegram(f"{relay_label}\n{relay_result.answer}")
+        MAX = 4096
+        for i in range(0, len(answer), MAX):
+            await bot.send_message(chat_id=chat_id, text=answer[i:i + MAX])
+        _record_history(chat_id, text, answer)
+        log_and_commit(text, answer, relay_log_label)
         return
 
-    dispatch_context = _latest_telegram_log_snippet(limit=3500)
-    dispatch_route = _dispatch_route_for_text(text, dispatch_context)
-    if dispatch_route:
-        packet = _write_dispatch_packet(text, dispatch_context, route=dispatch_route)
-        receipt = _dispatch_receipt(packet)
-        await update.message.reply_text(receipt)
-        _record_history(chat_id, text, receipt)
-        log_and_commit(text, receipt, "dispatch-local")
-        asyncio.create_task(_run_openclaw_dispatch_background(context.bot, chat_id, packet))
+    logger.warning("A0 relay failed (%s, mode=%s): %s", relay_result.failure_kind, A0_RELAY_MODE, relay_result.stderr)
+
+    if A0_RELAY_MODE != "fresh":
+        # Same-session resume (the default path): Owner 2026-08-23 item 3 —
+        # an empty/failed resume must never be papered over with a bot
+        # one-shot answer standing in for Fable5. Just log it and, once per
+        # outage, tell Owner the message is still queued.
+        await _a0_maybe_notify_resume_failed(bot, chat_id)
         return
-    git_pull_silent()
+
+    # Fresh-context relay (explicit opt-in only) failing still falls back to
+    # a clearly-labelled one-shot bot answer, as before opt-in was required.
+    try:
+        await bot.send_message(
+            chat_id=chat_id,
+            text=(
+                "⚠️ Fable5 fresh-context relay 失敗，訊息已存入 A0 inbox 待其上線處理。\n"
+                "以下為 bot 一次性代答（非 Fable5 本人，不含派工）："
+            ),
+        )
+    except Exception:
+        logger.exception("offline notice failed")
     try:
         status_snippet = read_file("CURRENT_STATUS.md")[:1500]
     except Exception:
         status_snippet = ""
     system_extra = (
-        "以下是目前 MAPLAB 專案狀態摘要（供參考）：\n\n"
+        "你是 bot 的一次性代答模型，不是 Fable5/A0 本人；不得自稱 Fable5、"
+        "不得宣稱已派工或已稽核。以下是目前 MAPLAB 專案狀態摘要（供參考）：\n\n"
         f"{status_snippet}"
     )
-    await _run_claude_guarded(update, context, chat_id, text, system_extra, "", text)
+    await _run_claude_background(
+        bot, chat_id, text, system_extra, "bot-fallback", text,
+        reply_prefix=f"{BOT_FALLBACK_LABEL}\n",
+    )
+
+
+async def _a0_wait_then_maybe_resume(bot, chat_id: int, text: str, reply_to_inbox_ts: str) -> None:
+    """A0 looked alive, so stay silent (no ack) and give it up to
+    A0_WAIT_TIMEOUT_S to actually answer through scripts/a0_reply.sh. If no
+    receipt paired to reply_to_inbox_ts shows up in A0_REPLIES_FILE by the
+    deadline, treat A0 as having missed the message and resume its session
+    headlessly."""
+    if chat_id < 0:
+        # Same group-chat_id guard as _a0_resume_or_fallback — see that
+        # function's docstring. No caller reaches this with a negative
+        # chat_id as of 2026-08-24; defense-in-depth only.
+        logger.info("A0 wait-then-resume skipped for group chat_id=%s", chat_id)
+        return
+    loop = asyncio.get_event_loop()
+    deadline = loop.time() + A0_WAIT_TIMEOUT_S
+    poll = max(A0_WAIT_POLL_INTERVAL_S, 0.01)
+    while loop.time() < deadline:
+        if _a0_has_replied_for(reply_to_inbox_ts):
+            return
+        await asyncio.sleep(min(poll, max(deadline - loop.time(), 0)))
+    if _a0_has_replied_for(reply_to_inbox_ts):
+        return
+    await _a0_resume_or_fallback(bot, chat_id, text, reply_to_inbox_ts)
+
+
+async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    # Group/supergroup messages are routed to handle_group_message (registered
+    # before this handler — see main()) and must never reach the private-chat
+    # deny()/A0-relay flow below, even if handler registration order ever
+    # changes: deny() replying "⛔ 未授權" into a group would violate 能力測試
+    # D's "一般群聊保持靜默" ruling. Defense-in-depth only as of 2026-08-24.
+    if getattr(update.effective_chat, "type", None) in ("group", "supergroup"):
+        return
+    if not is_owner(update):
+        await deny(update)
+        return
+    text = update.message.text or ""
+    chat_id = update.effective_chat.id
+    message_id = getattr(update.message, "message_id", None)
+
+    # 短問快答(Owner msg 5882):句首「聊」/「短」= 不進 A0 重批次,直接秒回。
+    # 刻意放在 _a0_inbox_append 之前 —— 閒聊不落工作線,watchdog 才不會把它當成
+    # 未回覆的 Owner 指令去逼 A0 補跑。詳見 _parse_chat_mode 上方的註解。
+    chat_mode, chat_question = _parse_chat_mode(text)
+    if chat_mode:
+        if not chat_question:
+            await update.message.reply_text(
+                f"{CHAT_MODE_LABEL}\n這則只有前綴、沒有問題。要問什麼直接接在後面就好。"
+            )
+            return
+        answer = await claude_ask_with_fallback(
+            chat_id, chat_question, timeout=CHAT_MODE_TIMEOUT_S
+        )
+        reply = f"{CHAT_MODE_LABEL}\n{answer.text}"
+        await send_long(update, reply)
+        log_and_commit(text, reply, "chat-mode")
+        return
+
+    reply_to_inbox_ts = _a0_inbox_append(chat_id, text, message_id)
+
+    # 2026-08-22 (Owner decision, TELEGRAM_ROUTING.md): this bot is the
+    # Fable5 finance working-meeting line. Every Owner message goes to the
+    # A0/Fable5 window when it is alive. The keyword dispatch classifier
+    # (quote-intake / ads-performance-review / OpenClaw packets) is OFF on
+    # this line — Owner: "派工是無用那請把它關掉", "不要自己幫我報價".
+    # Explicit slash commands (/codex_dispatch etc.) are unaffected.
+    #
+    # See the "A0/Fable5 session resume" block above for the 21:32 + 21:37
+    # decisions this routing implements: no ack noise while A0 is alive, a
+    # bounded silent wait for A0's own reply receipt, and a context-preserving
+    # session resume (not a stateless one-shot) whenever the bot has to step
+    # in — unless Owner forces an immediate answer with a "代答" prefix.
+    force_answer_now = _is_a0_answer_command(text)
+    a0_is_alive = _a0_alive()
+    if a0_is_alive:
+        # Heartbeat is fresh again ⇒ any prior outage is over. Clear the
+        # once-per-outage notice state so the *next* outage gets its own
+        # fresh notice instead of silently reusing a stale "already
+        # notified" flag (Owner 2026-08-23: 心跳恢復後清除).
+        _a0_clear_outage_notice_state()
+
+    if a0_is_alive and not force_answer_now:
+        asyncio.create_task(_a0_wait_then_maybe_resume(context.bot, chat_id, text, reply_to_inbox_ts))
+        return
+
+    if not force_answer_now:
+        local_answer = _local_runtime_question_answer(text)
+        if local_answer:
+            await update.message.reply_text(local_answer)
+            _record_history(chat_id, text, local_answer)
+            log_and_commit(text, local_answer, "runtime-local")
+            return
+
+    # A0 offline (or Owner forced an immediate answer): resume A0's own
+    # session so the reply keeps full context; fall back to a clearly
+    # labelled one-shot only if the resume itself fails.
+    await _a0_resume_or_fallback(context.bot, chat_id, text, reply_to_inbox_ts)
+
+
+
+async def on_my_chat_member(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """2026-08-24: bot 被拉進/踢出群組時,記 log 並落 A0 inbox(含群組 chat_id),
+    讓 A0/Fable5 知道討論群入口在哪。不回覆群組、不做其他事。"""
+    cm = update.my_chat_member
+    if cm is None:
+        return
+    chat = cm.chat
+    status = cm.new_chat_member.status if cm.new_chat_member else "?"
+    by = cm.from_user.id if cm.from_user else "?"
+    title = getattr(chat, "title", None) or ""
+    logger.info(f"my_chat_member: chat={chat.id} type={chat.type} title={title!r} status={status} by={by}")
+    try:
+        _a0_inbox_append(chat.id, f"[群組事件] bot 在 {chat.type} '{title}' 狀態→{status}(操作者 {by})", None)
+    except Exception as e:  # pragma: no cover
+        logger.warning(f"my_chat_member inbox append failed: {e}")
+
+
+# ── Stock Discussion Group ingress (Owner 2026-08-24) ───────────────────────────
+#
+# The bot is already a member of group chat_id -5589898264 and receives
+# Owner's own messages there (bots never see other bots' messages — see
+# claude-daily-operations/state/a0_groups.json). Owner's ruling from 能力測試
+# D: general group chit-chat must stay completely silent; only Owner's own
+# messages starting with 研調:/研調：/辯論:/辯論：/討論:/討論： (optionally after an
+# @bot mention) trigger anything, and everything else — including any
+# message from a non-Owner group member — gets no reply at all, not even
+# deny(). On trigger, this spawns investment-os's
+# scripts/run_stock_discussion.py as a background subprocess (never blocks
+# the polling loop) and always follows the ack with either a summary or a
+# one-line failure — never silent after acking.
+
+_GROUP_TRIGGER_KEYWORDS = ("研調", "辯論", "討論")
+_GROUP_TRIGGER_RE = re.compile(r"^(研調|辯論|討論)[:：]\s*(.*)$", re.DOTALL)
+_GROUP_MENTION_RE = re.compile(
+    rf"^\s*@{re.escape(STOCK_DISCUSSION_GROUP_BOT_USERNAME)}\b\s*", re.IGNORECASE
+)
+# 討論 is treated as a plain-language alias for 研調 (research mode); 辯論 is
+# the only trigger that maps to debate mode. The ack line only ever shows
+# "開工(研調)" or "開工(辯論)" per this task's spec — 討論 shows as 研調.
+_GROUP_TRIGGER_MODE = {"研調": "research", "討論": "research", "辯論": "debate"}
+_GROUP_MODE_ACK_LABEL = {"research": "研調", "debate": "辯論"}
+
+# In-process concurrency guard + reply-to-summary follow-up tracking. Both
+# are best-effort, in-memory, reset on bot restart — acceptable because the
+# orchestrator itself is idempotent per (text, date) via its own Phase 1
+# file lock (see run_stock_discussion.topic_id_for/phase1_locked), so a bot
+# restart mid-run only risks a duplicate *trigger*, not corrupted output.
+_GROUP_DISCUSSION_RUNNING: set[str] = set()
+_GROUP_TOPICS: dict[str, dict[str, str]] = {}
+_GROUP_MSG_TO_TOPIC: dict[int, str] = {}
+
+
+def _stock_discussion_today() -> str:
+    """Asia/Taipei today, matching investment-os's
+    scripts/run_stock_discussion.py:today_str() default so the bot's id8 and
+    the orchestrator's own topic_id land on the same date."""
+    return datetime.now(TAIPEI_TZ).date().isoformat()
+
+
+def _stock_discussion_topic_id(text: str, date_str: str) -> str:
+    """Replicates run_stock_discussion.topic_id_for() exactly:
+    sha256(text+date)[:16]. Duplicated rather than imported because bot.py
+    runs out of bot/venv in this repo, not investment-os's own .venv — see
+    investment-os/scripts/run_stock_discussion.py:topic_id_for and
+    investment-os/scripts/discussion_ingress_stub.md."""
+    return hashlib.sha256((text + date_str).encode("utf-8")).hexdigest()[:16]
+
+
+def _group_trigger_match(text: str) -> Optional["re.Match[str]"]:
+    """Group-chat trigger detection (Owner 2026-08-24): text starting with
+    研調:/研調：/辯論:/辯論：/討論:/討論：(full- or half-width colon), or the same
+    prefixes after an @bot-username mention. Returns the match against the
+    prefix-stripped text (group 1 = keyword, group 2 = statement with the
+    prefix removed), or None when nothing matches — everything else in the
+    group must stay silent."""
+    stripped = _GROUP_MENTION_RE.sub("", text or "", count=1)
+    return _GROUP_TRIGGER_RE.match(stripped.lstrip())
+
+
+def _group_discussion_out_dir(date_str: str, topic_id: str, mode: str) -> Path:
+    """Mirrors run_stock_discussion.run()'s out_dir selection: research mode
+    uses reports/discussion/<date>/<topic_id>/, debate mode uses
+    .../<topic_id>__debate/ (see that module's `mode` handling)."""
+    name = topic_id if mode == "research" else f"{topic_id}__{mode}"
+    return INVESTMENT_OS_DIR / "reports" / "discussion" / date_str / name
+
+
+def _read_group_discussion_summary(date_str: str, topic_id: str, mode: str) -> str:
+    """Reads the orchestrator's summary.txt (<=3 lines, always written by
+    run()); falls back to the first 3 non-empty lines of integrated.md if
+    summary.txt is somehow missing. Never raises — returns "" on any
+    failure so the caller can post a clear failure line instead."""
+    out_dir = _group_discussion_out_dir(date_str, topic_id, mode)
+    try:
+        text = (out_dir / "summary.txt").read_text(encoding="utf-8").strip()
+        if text:
+            return text
+    except Exception:
+        pass
+    try:
+        lines = [ln.strip() for ln in (out_dir / "integrated.md").read_text(encoding="utf-8").splitlines() if ln.strip()]
+        return "\n".join(lines[:3])
+    except Exception:
+        return ""
+
+
+async def _run_group_discussion_orchestrator(
+    bot, chat_id: int, id8: str, topic_id: str, statement_text: str, mode: str, date_str: str
+) -> None:
+    """Runs investment-os/scripts/run_stock_discussion.py as a background
+    subprocess (asyncio.create_subprocess_exec — never blocks the polling
+    loop) with --send-telegram (TelbotFin renders the same integrated
+    result to Owner's private chat, unchanged from the existing manual
+    flow), then posts a <=3-line summary — or, on any failure/timeout, one
+    failure line — back to the SAME group. Never silent after the ack."""
+    cmd = [
+        str(INVESTMENT_OS_VENV_PYTHON),
+        DISCUSSION_ORCHESTRATOR_RELATIVE_SCRIPT,
+        "--text", statement_text,
+        "--today", date_str,
+        "--send-telegram",
+    ]
+    if mode == "debate":
+        cmd += ["--mode", "debate"]
+    try:
+        try:
+            proc = await asyncio.create_subprocess_exec(
+                *cmd,
+                cwd=str(INVESTMENT_OS_DIR),
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE,
+            )
+        except Exception as e:
+            await bot.send_message(chat_id=chat_id, text=f"topic-id {id8} 失敗:{_trim(str(e), 80)},稍後重試")
+            return
+        try:
+            stdout, stderr = await asyncio.wait_for(proc.communicate(), timeout=DISCUSSION_ORCHESTRATOR_TIMEOUT_S)
+        except asyncio.TimeoutError:
+            proc.kill()
+            await proc.wait()
+            await bot.send_message(chat_id=chat_id, text=f"topic-id {id8} 失敗:逾時{DISCUSSION_ORCHESTRATOR_TIMEOUT_S}秒,稍後重試")
+            return
+        if proc.returncode != 0:
+            err = (stderr.decode(errors="replace") or stdout.decode(errors="replace") or "未知錯誤").strip()
+            await bot.send_message(chat_id=chat_id, text=f"topic-id {id8} 失敗:{_trim(err, 80)},稍後重試")
+            return
+        summary_text = _read_group_discussion_summary(date_str, topic_id, mode)
+        if not summary_text:
+            await bot.send_message(chat_id=chat_id, text=f"topic-id {id8} 失敗:找不到整合結果,稍後重試")
+            return
+        msg = await bot.send_message(chat_id=chat_id, text=f"【Fable5 整合】topic-id {id8}\n{summary_text}")
+        msg_id = getattr(msg, "message_id", None)
+        if msg_id is not None:
+            _GROUP_MSG_TO_TOPIC[msg_id] = topic_id
+    except Exception as e:
+        logger.exception("group discussion orchestrator run failed")
+        try:
+            await bot.send_message(chat_id=chat_id, text=f"topic-id {id8} 失敗:{_trim(str(e), 80)},稍後重試")
+        except Exception:
+            logger.exception("group discussion failure notice send failed")
+    finally:
+        _GROUP_DISCUSSION_RUNNING.discard(topic_id)
+
+
+async def _dispatch_group_discussion(bot, chat_id: int, statement_text: str, mode: str) -> None:
+    """Acks in the group with the topic-id, then spawns the orchestrator in
+    the background. A second trigger for a topic_id already running gets a
+    "仍在進行" ack instead of a duplicate run (concurrency guard, Owner
+    2026-08-24 spec)."""
+    date_str = _stock_discussion_today()
+    topic_id = _stock_discussion_topic_id(statement_text, date_str)
+    id8 = topic_id[:8]
+    if topic_id in _GROUP_DISCUSSION_RUNNING:
+        await bot.send_message(chat_id=chat_id, text=f"topic-id {id8} 仍在進行")
+        return
+    _GROUP_DISCUSSION_RUNNING.add(topic_id)
+    ack_label = _GROUP_MODE_ACK_LABEL.get(mode, "研調")
+    ack_msg = await bot.send_message(chat_id=chat_id, text=f"收到 topic-id {id8} 開工({ack_label})")
+    ack_msg_id = getattr(ack_msg, "message_id", None)
+    if ack_msg_id is not None:
+        _GROUP_MSG_TO_TOPIC[ack_msg_id] = topic_id
+    _GROUP_TOPICS[topic_id] = {"text": statement_text, "mode": mode, "date": date_str, "id8": id8}
+    asyncio.create_task(_run_group_discussion_orchestrator(bot, chat_id, id8, topic_id, statement_text, mode, date_str))
+
+
+async def _handle_group_followup(bot, chat_id: int, parent_message_id: int, new_text: str) -> None:
+    """Owner replying (in the group) to the bot's ack or summary message for
+    a prior topic is treated as a follow-up: re-run the orchestrator with
+    the original topic text plus an explicit "追問(承接 topic-id <parent
+    id8>): <new text>" continuation, so the new topic's own input_pack
+    carries a legible reference back to the parent discussion (Owner
+    2026-08-24: "new topic whose text references the parent id8"). Reuses
+    the parent's mode (研調 stays 研調, 辯論 stays 辯論)."""
+    parent_topic_id = _GROUP_MSG_TO_TOPIC.get(parent_message_id)
+    parent = _GROUP_TOPICS.get(parent_topic_id) if parent_topic_id else None
+    if parent is None:
+        return
+    parent_id8 = parent.get("id8") or (parent_topic_id or "")[:8]
+    followup_text = f"{parent['text']}\n追問(承接 topic-id {parent_id8}): {new_text.strip()}"
+    await _dispatch_group_discussion(bot, chat_id, followup_text, parent.get("mode", "research"))
+
+
+async def handle_group_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Registered before handle_message (see main()) so it exclusively
+    handles every group/supergroup text message — handle_message never sees
+    them. General group chit-chat, and anything from a non-Owner sender,
+    stays completely silent per 能力測試 D: no reply, no deny(), not even an
+    inbox tap for non-Owner senders. Owner's own group messages are tapped
+    to the same a0_inbox.jsonl used for the private line (tagged
+    source="group") so A0 has visibility, but — per this task's spec — that
+    tap must never feed the offline resume/relay path; see the chat_id<0
+    guards in _a0_resume_or_fallback/_a0_wait_then_maybe_resume."""
+    if update.message is None:
+        return
+    text = update.message.text or ""
+    chat_id = update.effective_chat.id
+    message_id = getattr(update.message, "message_id", None)
+    sender_id = update.effective_user.id if update.effective_user else None
+
+    if sender_id != OWNER_CHAT_ID:
+        # Non-owner group member: fully silent. No deny(), no inbox tap —
+        # this bot only ever acts on Owner's own group messages.
+        return
+
+    _a0_inbox_append(chat_id, text, message_id, source="group")
+
+    reply_to = getattr(update.message, "reply_to_message", None)
+    reply_to_id = getattr(reply_to, "message_id", None) if reply_to is not None else None
+    if reply_to_id is not None and reply_to_id in _GROUP_MSG_TO_TOPIC:
+        await _handle_group_followup(context.bot, chat_id, reply_to_id, text)
+        return
+
+    match = _group_trigger_match(text)
+    if match is None:
+        return  # 一般群聊保持靜默 — no trigger, no reply at all.
+    keyword = match.group(1)
+    statement = (match.group(2) or "").strip()
+    if not statement:
+        # Trigger prefix with nothing after it — nothing to research; stay
+        # silent rather than spawn a run on empty input.
+        return
+    mode = _GROUP_TRIGGER_MODE.get(keyword, "research")
+    await _dispatch_group_discussion(context.bot, chat_id, statement, mode)
 
 
 async def on_error(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -2229,6 +3440,122 @@ def _start_clip_server() -> None:
 
 # ── Main ───────────────────────────────────────────────────────────────────────
 
+A0_WATCHDOG_INTERVAL_S = int(os.getenv("A0_WATCHDOG_INTERVAL_S", "600"))
+A0_WATCHDOG_STALE_S = int(os.getenv("A0_WATCHDOG_STALE_S", "1200"))
+_A0_WATCHDOG_ATTEMPTS = {}
+A0_DISK_ALERT_PCT = int(os.getenv("A0_DISK_ALERT_PCT", "90"))
+_A0_DISK_ALERT_DATE = {"date": ""}
+
+
+def _a0_disk_alert_text():
+    """主碟水位檢查:超過 A0_DISK_ALERT_PCT 回警示文字,否則 None。
+    每天最多提醒一次(2026-06 磁碟滿曾癱瘓落檔與巡查,Owner 2026-08-29
+    要求水位警報,不要等爆掉才發現)。"""
+    try:
+        usage = shutil.disk_usage("/System/Volumes/Data")
+    except Exception:
+        return None
+    pct = usage.used * 100 // usage.total
+    if pct < A0_DISK_ALERT_PCT:
+        return None
+    today = datetime.now().strftime("%Y-%m-%d")
+    if _A0_DISK_ALERT_DATE["date"] == today:
+        return None
+    _A0_DISK_ALERT_DATE["date"] = today
+    free_gb = usage.free // (1024 ** 3)
+    return (
+        f"【系統警報】主碟已用 {pct}%(剩 {free_gb}G)。"
+        "低於 10% 可用空間時 bot 落檔、收據、log 都會開始寫入失敗"
+        "(六月曾發生)。請 Owner 圈選大戶清理或指示 Fable5 處理。"
+    )
+
+
+def _a0_last_unanswered():
+    """最舊一則超過 A0_WATCHDOG_STALE_S 秒未見回覆收據的 Owner 私訊。
+
+    回 (ts, chat_id, text) 或 None。2026-08-30 修正:原版只看 inbox 最後
+    一則,連發多則時只要最新的被回,較早的漏接就永遠不浮現(08-29 晚
+    4348-4361 連發實測);改為掃尾端 10 則、回傳最舊的未回者。"""
+    # 2026-08-30 修正:_read_tail_lines 回傳的是 join 過的字串,直接 for 會
+    # 逐字元迭代——數字字元被 json.loads 成 int,.get 炸掉整個 tick(08-30
+    # 08:50 實錄),且 answered 永遠是空集合。必須先 splitlines。
+    answered = set()
+    for line in _read_tail_lines(A0_REPLIES_FILE, 120).splitlines():
+        try:
+            answered.add(json.loads(line).get("reply_to_inbox_ts"))
+        except Exception:
+            continue
+    for raw in _read_tail_lines(A0_INBOX_FILE, 10).splitlines():
+        try:
+            entry = json.loads(raw)
+        except Exception:
+            continue
+        if not isinstance(entry, dict):
+            # 2026-08-30 實錄:inbox 混入非物件行(如純數字)時 json.loads
+            # 成功但回 int,.get 直接炸掉整個 tick,看門狗形同死亡。
+            continue
+        chat_id = int(entry.get("chat_id", 0))
+        ts = entry.get("ts") or ""
+        if chat_id < 0 or not ts or ts in answered:
+            continue
+        try:
+            age = (datetime.now() - datetime.fromisoformat(ts)).total_seconds()
+        except Exception:
+            continue
+        if age < A0_WATCHDOG_STALE_S:
+            continue
+        return ts, chat_id, str(entry.get("text") or "")
+    return None
+
+
+async def _a0_watchdog_loop(app) -> None:
+    """2026-08-29 Owner「我任務發了都沒有回覆…幫我看一下然後修好」:resume 被
+    A0_RESUME_TIMEOUT_S 強殺後,_a0_maybe_notify_resume_failed 只通知不重試,
+    訊息就永久漏接(08-29 實錄:4333/4339 兩則連續 timeout after 900s)。
+    這個常駐迴圈每 A0_WATCHDOG_INTERVAL_S 秒檢查一次,發現超時未回就重跑
+    同 session resume,最多重試 3 次。reply_to_inbox_ts 傳空字串:單回標記
+    在首次失敗時已被領走,重試不能再被它擋掉;重覆送出由收據檢查本身防住
+    (有收據就不會進到這裡)。stale 門檻(20 分)刻意大於 resume 逾時(15 分),
+    處理中的訊息不會被搶跑。"""
+    while True:
+        await asyncio.sleep(A0_WATCHDOG_INTERVAL_S)
+        try:
+            disk_alert = _a0_disk_alert_text()
+            if disk_alert:
+                await app.bot.send_message(chat_id=OWNER_CHAT_ID, text=disk_alert)
+        except Exception:
+            logger.exception("A0 watchdog disk alert failed")
+        try:
+            pending = _a0_last_unanswered()
+            if not pending:
+                continue
+            ts, chat_id, text = pending
+            attempts = _A0_WATCHDOG_ATTEMPTS.get(ts, 0)
+            if attempts >= 3:
+                continue
+            _A0_WATCHDOG_ATTEMPTS[ts] = attempts + 1
+            logger.warning(
+                "A0 watchdog: inbox ts=%s 未回(第 %d 次補跑)", ts, attempts + 1
+            )
+            wrapped = (
+                "【watchdog 補跑】以下 Owner 訊息因 resume 逾時被強殺而尚未回覆"
+                f"(inbox ts={ts})。請優先在 5 分鐘內用 a0_reply 腳本送出回覆,"
+                "重活拆到回覆之後、或明說改天跑。原訊息:\n" + text
+            )
+            await _a0_resume_or_fallback(app.bot, chat_id, wrapped, "")
+        except Exception:
+            logger.exception("A0 watchdog tick failed")
+
+
+async def _a0_start_watchdog(app) -> None:
+    asyncio.create_task(_a0_watchdog_loop(app))
+    logger.info(
+        "A0 watchdog started (interval=%ss, stale=%ss)",
+        A0_WATCHDOG_INTERVAL_S,
+        A0_WATCHDOG_STALE_S,
+    )
+
+
 def main() -> None:
     if not BOT_TOKEN:
         logger.error("TELEGRAM_BOT_TOKEN not set. Copy bot/.env.example → bot/.env and fill it in.")
@@ -2248,6 +3575,7 @@ def main() -> None:
         .write_timeout(60)
         .connect_timeout(30)
         .pool_timeout(30)
+        .post_init(_a0_start_watchdog)
         .build()
     )
 
@@ -2272,7 +3600,13 @@ def main() -> None:
     app.add_handler(CommandHandler("reset", reset_cmd))
     app.add_handler(CommandHandler("clip", clip_cmd))
     app.add_handler(MessageHandler(filters.PHOTO, handle_photo))
+    # Registered BEFORE handle_message and in the same default handler group
+    # (0): PTB dispatches only the first matching handler per group per
+    # update, so any group/supergroup text message is fully claimed here and
+    # never reaches handle_message's private-chat deny()/A0-relay flow.
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND & filters.ChatType.GROUPS, handle_group_message))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
+    app.add_handler(ChatMemberHandler(on_my_chat_member, ChatMemberHandler.MY_CHAT_MEMBER))
     app.add_error_handler(on_error)
 
     logger.info(f"Bot running — owner={OWNER_CHAT_ID}")

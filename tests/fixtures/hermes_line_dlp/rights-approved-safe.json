@@ -1,0 +1,65 @@
+{
+  "schema_version": "maplab.hermes.line-dlp-rights-manifest.v1",
+  "manifest_id": "hermes-line-synthetic-safe-rights-v1",
+  "created_at": "2026-09-01T00:00:00Z",
+  "dataset": {
+    "dataset_id": "hermes-line-synthetic-safe",
+    "data_class": "synthetic",
+    "source_kind": "synthetic",
+    "contains_raw_customer_text": false,
+    "files": [
+      {
+        "logical_name": "safe",
+        "sha256": "5511aaeeaedf17dfd544d2e7afa9b0d62a239b9c5269149725bcbf43c0f6de76",
+        "record_count": 2,
+        "byte_count": 538
+      }
+    ]
+  },
+  "authority": {
+    "status": "APPROVED",
+    "controller_id": "MAPLAB_SYNTHETIC_TEST",
+    "attested_by": "synthetic-test-steward",
+    "attested_at": "2026-09-01T00:00:00Z",
+    "allowed_uses": [
+      "offline_training",
+      "offline_evaluation"
+    ],
+    "prohibited_uses": [
+      "customer_auto_send",
+      "external_model_egress",
+      "production_inference",
+      "sale_or_ad_targeting",
+      "third_party_sharing"
+    ]
+  },
+  "data_subject_rights": {
+    "access_export": true,
+    "correction": true,
+    "deletion": true,
+    "withdrawal_or_objection": true,
+    "contact_route_id": "synthetic-test-route"
+  },
+  "retention": {
+    "status": "ACTIVE",
+    "policy_id": "synthetic-test-retention-v1",
+    "expires_at": "2099-01-01T00:00:00Z",
+    "deletion_sla_days": 30
+  },
+  "storage": {
+    "owner_only": true,
+    "allowed_root_fingerprint": "83d669e276bc22249d70bbd71d4771aa8cf3b870437b948e5cb5efc4f359c083"
+  },
+  "egress": {
+    "network_allowed": false,
+    "third_party_allowed": false,
+    "customer_send_allowed": false
+  },
+  "review": {
+    "free_text_review_status": "APPROVED",
+    "reviewed_by": "synthetic-test-reviewer",
+    "reviewed_at": "2026-09-01T00:00:00Z",
+    "method": "synthetic_fixture",
+    "known_identifier_dictionary_sha256": null
+  }
+}

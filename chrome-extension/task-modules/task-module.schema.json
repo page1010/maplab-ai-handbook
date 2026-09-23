@@ -10,8 +10,10 @@
     "read_first",
     "startup_contract",
     "output_contract",
+    "output_contract_rule",
     "writeback",
-    "affects"
+    "affects",
+    "release_gate"
   ],
   "properties": {
     "schema_version": {
@@ -74,11 +76,37 @@
     "output_contract": {
       "type": "array",
       "items": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\).+$"
       }
     },
+    "output_contract_rule": {
+      "type": "string"
+    },
     "writeback": {
-      "type": "object"
+      "type": "object",
+      "required": [
+        "default_review_bundle",
+        "task_module_graph",
+        "task_card",
+        "status_rule"
+      ],
+      "properties": {
+        "default_review_bundle": {
+          "type": "string",
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\).+/$"
+        },
+        "task_module_graph": {
+          "type": "string"
+        },
+        "task_card": {
+          "type": "string",
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\).+$"
+        },
+        "status_rule": {
+          "type": "string"
+        }
+      }
     },
     "affects": {
       "type": "array",
@@ -97,6 +125,9 @@
       "items": {
         "type": "string"
       }
+    },
+    "release_gate": {
+      "type": "object"
     },
     "risk_level": {
       "type": "string"

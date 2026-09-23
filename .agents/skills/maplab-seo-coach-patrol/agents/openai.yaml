@@ -1,0 +1,4 @@
+interface:
+  display_name: "MAPLAB SEO Coach Patrol"
+  short_description: "Evidence-led SEO wakeups and Hermes dispatch"
+  default_prompt: "Use $maplab-seo-coach-patrol to decide whether this SEO wakeup has a verified delta, run the public baseline when due, and dispatch at most one bounded public-safe task to Hermes."

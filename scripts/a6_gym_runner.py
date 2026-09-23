@@ -54,7 +54,9 @@ def ollama_generate(prompt: str, system: str = "") -> str | None:
         "system": system,
         "stream": False,
         "keep_alive": "5m",
-        "options": {"temperature": 0.4, "num_predict": 256},
+        # num_ctx 8192: 縮 context 省記憶體(原預設 32768). 本任務 prompt 短、num_predict 256 足夠。
+        # 回退: 移除 "num_ctx" 這行即恢復模型預設 context。
+        "options": {"temperature": 0.4, "num_predict": 256, "num_ctx": 8192},
     }
     data = json.dumps(payload).encode("utf-8")
     req = urllib.request.Request(OLLAMA_URL, data=data, headers={"Content-Type": "application/json"})

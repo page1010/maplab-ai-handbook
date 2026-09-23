@@ -1,6 +1,6 @@
 [
   {"item_id":"APP001","category":"餐食小點","standard_name":"普羅旺斯香料烤澳洲白玉薯塊","default_price":"","default_cost":"20","unit":"份"},
-  {"item_id":"APP003","category":"餐食小點","standard_name":"法式燻燻鵝胸葡萄小串","default_price":"","default_cost":"40","unit":"個"},
+  {"item_id":"APP003","category":"餐食小點","standard_name":"法式櫻桃鴨胸葡萄小串","old_name":"法式燻燻鵝胸葡萄小串","name_note":"2026-09-03 Owner更正：是鴨胸沒有鵝，舊名為前幾個版本辨識錯誤；本檔為地端備份，A4 Sheet 源頭待同步改名","default_price":"","default_cost":"40","unit":"個"},
   {"item_id":"APP004","category":"餐食小點","standard_name":"法式經典迷你鹹派盛合","default_price":"","default_cost":"20","unit":"份"},
   {"item_id":"APP005","category":"餐食小點","standard_name":"紫蘇豆果最中餅","default_price":"","default_cost":"30","unit":"份"},
   {"item_id":"APP006","category":"餐食小點","standard_name":"經典義式奶油培根筆管麵","default_price":"","default_cost":"50","unit":"份"},

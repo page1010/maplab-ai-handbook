@@ -1,0 +1,20 @@
+Failed to search web: No results found.
+Traceback (most recent call last):
+  File "/Users/pagemacmini/maplab-ai-handbook/bot_a6/hermes_deerflow_bridge.py", line 512, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/Users/pagemacmini/maplab-ai-handbook/bot_a6/hermes_deerflow_bridge.py", line 507, in main
+    return invoke(args.provider, args.thread_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pagemacmini/maplab-ai-handbook/bot_a6/hermes_deerflow_bridge.py", line 259, in invoke
+    for event in client.stream(
+                 ^^^^^^^^^^^^^^
+  File "/Volumes/MacExternal/MAPLAB_WORKSPACE/tools/deer-flow/backend/packages/harness/deerflow/client.py", line 729, in stream
+    yield from self._stream_without_trace_context(message, thread_id=thread_id, **kwargs)
+  File "/Volumes/MacExternal/MAPLAB_WORKSPACE/tools/deer-flow/backend/packages/harness/deerflow/client.py", line 966, in _stream_without_trace_context
+    for item in self._agent.stream(
+                ^^^^^^^^^^^^^^^^^^^
+  File "/Volumes/MacExternal/MAPLAB_WORKSPACE/tools/deer-flow/backend/.venv/lib/python3.12/site-packages/langgraph/pregel/main.py", line 3011, in stream
+    raise GraphRecursionError(msg)
+langgraph.errors.GraphRecursionError: Recursion limit of 24 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.
+For troubleshooting, visit: https://docs.langchain.com/oss/python/langgraph/errors/GRAPH_RECURSION_LIMIT

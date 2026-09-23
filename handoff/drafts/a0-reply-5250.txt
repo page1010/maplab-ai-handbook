@@ -1,0 +1,12 @@
+【Fable5 本人・同 session 續接】
+
+收到。BGM 封面已進 SOP,而且不只寫文件,封面產生器今天實跑成功了。
+
+今天樣張(鹽水蜂炮祭前夜的街頭慶典,道具:煙火棒):
+https://drive.google.com/file/d/1iz3PZasGzw1K0Pcx9eAC1_T3Wo-6xvL7/view
+
+1. 封面產生器落地:每天自動讀晨會 brief 畫 2560x1440 封面,騎樓長桌+吊燈+每日換一件道具,零額度、不用客戶照、不打 logo,畫完自動上 Drive 給連結。
+
+2. SOP 已入手冊(skills/mtr-cover-to-yt-sop.md):brief→封面→微動畫 loop(ffmpeg 已確認裝好)→合音檔→YT 上傳,每段有驗收關卡,一律先上未公開、你圈選才轉公開。
+
+3. 到「能發 YT」只剩兩件:YouTube 頻道要你手機點一次建立(沒有 API 能代建);音檔等 A8 的 Suno 額度開跑(0/20)。這兩件到位,當天就能出第一支。

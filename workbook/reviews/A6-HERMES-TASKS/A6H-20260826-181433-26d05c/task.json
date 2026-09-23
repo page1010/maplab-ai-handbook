@@ -1,0 +1,14 @@
+{
+  "schema_version": 2,
+  "task_id": "A6H-20260826-181433-26d05c",
+  "created_at": "2026-08-26T18:14:33+0800",
+  "request": "現在動能名單狀態如何？請直接查，不要叫我跑終端機。",
+  "requester": {
+    "channel": "telegram",
+    "owner_user_id": 1077768811,
+    "chat_id": 1077768811,
+    "chat_type": "private"
+  },
+  "action": "signal-status",
+  "policy": "fixed-argv-allowlist-v2"
+}

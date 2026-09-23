@@ -1,0 +1,65 @@
+fix(research): 掃全 investment-os 找到馬克羊/權證小哥套利研究 — 回 Owner msg 5993
+
+Owner msg 5993(ts 2026-09-23T17:12:05):
+「我和 codex有一個研究馬克羊和權證小哥的套利交易方案你有找到嗎?你有讀嗎?」
+
+== 🔴 上一輪的錯:搜尋範圍開太小 ==
+  5986 那輪只 grep 了 reports/quant_strategy_logic/ **一個子目錄**,
+  就下結論「策略庫裡沒有套利策略」。研究根本不在那個目錄。
+  改掃整個 investment-os 立刻找到。**「查無」講的是搜尋範圍,不是事實。**
+  這是 memory/research-check-internal-first 同一種錯的第二次,已回寫該記憶。
+
+== 工具補強 ==
+  scripts/peek_strategy_library.sh 新增兩個模式:
+    findall <關鍵字>  掃全 investment-os(排除 .git/node_modules/secrets/venv/*.env)
+    findbranch        列分支與近期 commit,找 codex 開在別的分支上的研究
+
+== 找到的檔案 ==
+  tasks/WARRANT_BROTHER_RESEARCH_20260914.md      權證小哥公開策略研究與回測
+  tasks/MARKYANG_FINANCE_BOOK_20260911.md
+  tasks/MARKYANG_EVENT_STRATEGIES_20260912.md
+  tasks/MARKYANG_FB_RADAR_20260912.md
+  tasks/STRATEGY_DISCOVERY_MAP_20260912.md
+  tasks/SPREAD_PAPER_TRADING_20260915.md          「日常價差、套利與對沖的券商模擬執行」
+  docs/governance/DISPOSITION_EVENT_STRATEGY_RESEARCH.md
+  ai_team/task_packets/20260911_markyang_finance/、20260912_markyang_events/
+  scripts/{markyang_research,markyang_corpus,assemble_markyang_book,
+           warrant_brother_corpus,build_warrant_brother_reader,render_warrant_brother_reader}.py
+
+== ⭐ 最關鍵發現 ==
+  SPREAD_PAPER 卡第 60 行:「依權證小哥、馬克羊已交付報告,選出不用等颱風的策略」
+  -> **Owner 問的方案就是現在在跑的 spread_paper 引擎的上游。**
+  5986 那輪說「真正的套利線是 spread_paper」只對一半,沒認出它的來源正是這份研究。
+  48 條來源已映射完:馬克羊家族 31 條 + 權證小哥 17 條。
+
+== 回測實數(權證小哥) ==
+  近三月 出關後持有五日  n=99  平均淨 **-4.94%**
+  跌20%+均線 proxy      n=3   平均淨 **+7.09%**,但三筆全集中在六月
+  2026-08-10 新制後 跌20% 組 **零訊號**;formal OOS = **0**
+  素材:140 官方 Shorts + 6 教學 = 146 份 ASR 共 8.71 小時;39 支有證據段落;
+       17 張戰術卡;18 頁研究書;TWSE 419 筆歷史處置;197 標的取到 196 份價格
+
+== ⭐ 這份研究不是「還沒做」,是「做完發現大部分做不到」 ==
+  DISPOSITION_EVENT_STRATEGY_RESEARCH 自己標明=事件驅動,**非價差套利**。四條路逐條判定:
+    防禦性避雷(提前減碼避開被關)      🟢 可行
+    出關後方向單                      🟠 半可行,扣費後未驗
+    處置期硬闖續強                    🔴 判死
+    放空倒貨腿                        🔴 做不到
+  判死理由是**制度不是技術**:再次處置全額預收款券鎖資金、2 分鐘分盤撮合、
+  不可當沖、信用受限、無券源。**此結論是 codex 那輪自己下的,不是本輪補的。**
+
+== 真正的套利腿在馬克羊那邊 ==
+  markyang_spread_radar -> 現在的大小微台價差、SPY/IVV、股票期貨配對。
+  權證小哥唯一沾相對價值的是**雙刀**(比值對均線選方向+盤中判讀),
+  卡上明寫**那是單腿,不能冒充雙腿套利**。
+  spread_paper 累計=驗收帳 -2,204 TWD / -18.37 USD,**策略成交 0 筆**(配管驗收非績效)。
+
+== 讀到哪 ==
+  讀完:WARRANT_BROTHER 卡、DISPOSITION 研究、STRATEGY_DISCOVERY_MAP
+  讀七成:SPREAD_PAPER 卡(637 行讀到 452)
+  未讀:三張 MARKYANG 卡、兩包 task_packets、六支程式 -> 開任務 #60
+
+未做不宣稱:#59 出場委託簿尚未查、MFE 欄位尚未補、未換商品。
+git pull cdo 第 41 輪仍失敗。
+
+Co-Authored-By: Claude <noreply@anthropic.com>

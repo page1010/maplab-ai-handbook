@@ -1,0 +1,33 @@
+【Fable5 本人・同 session 續接】
+
+收到,而且你這句戳到一個我差點做錯的地方。道龐克那套名字跟賽博風,是給音樂頻道自己生成的畫面用的——那種霓虹濕地板的假街景,配賽博音樂剛好。但我們外燴影片拍的是真的桌子、真的菜、真的人在台南,那個世界沒有霓虹。音樂一賽博就變成兩層皮。名字我撤掉,曲風也整個換掉。
+
+先講一件我不會偷偷做的事:我們檔案裡有一條你定的「不要老派,寧願 Cyberpunk」鐵律。我不拿你現在這句去蓋掉它,兩條各管各的——生成畫面那邊照舊賽博,真實場景影片這邊走真實質感。哪天你要合併再說。
+
+另外「CD 我指的是專輯製作」這句解掉我上一封問的第三題了,不用做實體碟。
+
+總結出的 prompt,九首共用這一段當底,這就是整張的 DNA:
+
+warm organic acoustic instrumental, nylon string guitar and felt piano, upright bass, brushed drums, light hand percussion, natural room tone, analog tape warmth, sparse arrangement with open midrange for voiceover, unobtrusive background score, seamless loop
+
+後面永遠接這串不要的:
+
+no vocals, no synth lead, no neon retrowave, no cyberpunk, no heavy sub bass, no big drop
+
+中間那句 open midrange 是留給旁白的空間,不寫的話你一配音就得把音樂壓到聽不見。
+
+九首的名字改成白話的,一看就知道用在哪:
+
+018 抓周 - 小手 / 好奇的、亮的,玻璃琴加撥弦
+019 長輩壽宴 - 加菜 / 暖的、有年紀,鋼琴加尼龍弦
+020 開幕 - 第一杯 / 有面子、微醺,帶一點銅管
+021 入厝 - 新灶 / 安穩乾淨,指彈吉他
+022 婚禮訂婚 - 牽手 / 收斂的甜,留白給致詞
+023 企業茶會 - 換名片 / 中性專業,幾乎不搶戲
+024 診所開幕 - 早診 / 明亮潔淨,馬林巴
+025 派對空間 - 續攤 / 有律動但不吵,可以放整晚
+026 外帶 - 提回家 / 輕快日常,最短
+
+編號我建議還是留 MTR,不另開一套——入庫規矩一份就好,只是在資料庫多標一欄「用途:影片配樂」跟公開發歌的分開。你要另開我再改。
+
+規劃檔我現在就照這版改,場景清單跟名字一起等你圈。

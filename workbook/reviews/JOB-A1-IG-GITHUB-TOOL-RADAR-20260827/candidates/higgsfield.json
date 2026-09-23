@@ -1,0 +1,41 @@
+{
+  "candidate_id": "higgsfield",
+  "kind": "service",
+  "identity": {
+    "status": "official_verified",
+    "url": "https://higgsfield.ai/mcp"
+  },
+  "license": {
+    "status": "verified_proprietary",
+    "id": "Higgsfield Terms of Use"
+  },
+  "maintenance": "active",
+  "fit": "medium",
+  "overlap": "partial",
+  "runtime": {
+    "ready": false,
+    "smoke": "not_run"
+  },
+  "data": {
+    "max_allowed": "synthetic",
+    "egress": "external_service"
+  },
+  "credentials": [
+    "oauth"
+  ],
+  "side_effects": [
+    "network_read",
+    "external_write",
+    "paid_generation"
+  ],
+  "evidence": {
+    "social_url": "https://www.instagram.com/jasonxtsai/p/Dcda5y2CegR/",
+    "official_urls": [
+      "https://higgsfield.ai/mcp",
+      "https://higgsfield.ai/privacy-policy",
+      "https://higgsfield.ai/creator-hub/help-center/credits/how-credits-work"
+    ],
+    "checked_at": "2026-08-27"
+  },
+  "note": "No install or connection. Non-Enterprise inputs and outputs may be used for training; MCP requires OAuth/subscription and metered credits without a native session cap."
+}

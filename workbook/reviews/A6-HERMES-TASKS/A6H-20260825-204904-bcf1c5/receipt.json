@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "task_id": "A6H-20260825-204904-bcf1c5",
+  "created_at": "2026-08-25T20:49:04+0800",
+  "request": "repo-status",
+  "requester": {
+    "channel": "telegram",
+    "owner_user_id": 1077768811
+  },
+  "action": "repo-status",
+  "policy": "fixed-argv-allowlist-v1",
+  "status": "completed",
+  "finished_at": "2026-08-25T20:49:04+0800",
+  "description": "讀取 MAPLAB repo 的未提交變更摘要",
+  "returncode": 0,
+  "output": " M bot_a6/hermes_telegram_gateway.py\n M local-control-plane/hermes_status.js\n M local-control-plane/hermes_status.json\n M state/.mem_watchdog_last_action\n M state/dispatch_backup.log\n M state/dispatch_backup_index.json\n M state/eval_baseline.json\n M state/is_health_trend.jsonl\n M state/memory_watch.log\n M state/runtime_alarm.log\n M state/seo_loop_run.jsonl\n M state/seo_loop_stdout.log\n M state/weekly_eval_run.jsonl\n M state/weekly_eval_stdout.log\n M workbook/hermes/patrol/latest.json\n M workbook/hermes/patrol/latest.md\n M workbook/hermes/patrol/telegram_decision_card.md\n M workbook/learning_loop/reaction_ledger_summary.md\n M workbook/telegram-dispatch/index.jsonl\n?? .a0links/\n?? bot_a6/hermes_conv.json\n?? bot_a6/hermes_gateway.log\n?? bot_a6/hermes_task_executor.py\n?? tests/fixtures/\n?? tests/test_hermes_task_executor.py\n?? workbook/a8/pilot-bunny/review_rap/beatmux_test.mp4\n?? workbook/hermes/patrol/history/20260822-090005.json\n?? workbook/hermes/patrol/history/20260823-090005.json\n?? workbook/hermes/patrol/history/20260824-090007.json\n?? workbook/hermes/patrol/history/20260825-090005.json\n?? workbook/outputs/eval-digests/2026-08-23.md\n?? workbook/reviews/A6-HERMES-TASKS/\n?? workbook/telegram-dispatch/TG-DISPATCH-20260821-140627-ads-performance-review/\n?? workbook/telegram-dispatch/TG-DISPATCH-20260821-143916-quote-intake/\n?? workbook/telegram-dispatch/TG-DISPATCH-20260821-150649-ads-performance-review/\n?? workbook/telegram-dispatch/TG-DISPATCH-20260821-162402-ads-performance-review/\n?? workbook/telegram-dispatch/TG-DISPATCH-20260821-162533-ads-performance-review/\n?? workbook/telegram-dispatch/TG-DISPATCH-20260821-162750-ads-performance-review/\n?? workbook/telegram-dispatch/TG-DISPATCH-20260821-183319-investment-research-note/\n?? workbook/telegram-dispatch/TG-DISPATCH-20260821-185312-ads-performance-review/\n?? workbook/telegram-dispatch/TG-DISPATCH-20260821-190049-ads-performance-review/\n?? workbook/telegram-dispatch/TG-DISPATCH-20260822-110756-quote-intake/\n",
+  "output_truncated": false
+}

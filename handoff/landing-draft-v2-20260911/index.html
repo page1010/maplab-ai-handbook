@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>【離線草稿】MAPLAB 首頁改版 v5 — 場景×信任×成交版（未發布）</title>
+<style>
+  /* v5:R21 序=首屏→輕量信任條→場景流→好評實錄→報價三步→FAQ→CTA(ibest 五段×5180 先看場景);
+     R17 好評實錄=真實 IG 回饋截圖;R18 報價三步。承 v4:R13 單一動線,R11 全真素材真連結,
+     R12 首屏只載 hero 一張圖,其餘 lazy;R14 統包低調帶入。
+     視覺層沿用 v3 對標語彙(襯線大標/滿版照壓白字/細字距 kicker/髮絲線/深棕帶)。
+     R6:cover 只用於純照片;R10:本版十張圖全部對得到實際案場文章。 */
+  :root{
+    --ink:#3a2c1e; --paper:#f7f2ea; --accent:#8B5E3C;
+    --gold:#C4A265; --deep:#5A3A1A; --line:#06C755;
+    --muted:#8d8172; --hair:rgba(139,94,60,.22);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:"Georgia","Songti TC","Noto Serif TC",serif;
+    background:var(--paper); color:var(--ink);
+    font-size:16px; line-height:1.9; overflow-x:hidden;
+  }
+  img{display:block;width:100%;height:auto;}
+  section{padding:72px 24px;}
+  @media(min-width:768px){section{padding:110px 48px;}}
+  .wrap{max-width:1060px;margin:0 auto;}
+  h1,h2,h3{font-weight:500;letter-spacing:.04em;line-height:1.5;}
+  h2{font-size:26px;}
+  @media(min-width:768px){h2{font-size:36px;}}
+  .kicker{
+    font-family:"Avenir Next","PingFang TC",sans-serif;
+    font-size:11px;letter-spacing:.4em;text-transform:uppercase;
+    color:var(--accent);margin-bottom:16px;
+  }
+  .hairline{border:0;border-top:1px solid var(--hair);max-width:1060px;margin:0 auto;}
+  .btn-line{
+    display:inline-block;background:var(--line);color:#fff;text-decoration:none;
+    font-family:"PingFang TC",sans-serif;font-size:15px;font-weight:600;
+    letter-spacing:.12em;padding:15px 36px;border-radius:999px;
+  }
+  .textlink{
+    font-family:"Avenir Next","PingFang TC",sans-serif;
+    font-size:12px;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--accent);text-decoration:none;border-bottom:1px solid var(--hair);
+    padding-bottom:4px;
+  }
+  .draftbar{font-family:"PingFang TC",sans-serif;background:#333;color:#fff;text-align:center;font-size:12px;padding:6px 10px;}
+
+  /* hero — 首屏唯一圖片(R12),fetchpriority high */
+  .hero{position:relative;min-height:86vh;display:flex;align-items:flex-end;justify-content:center;padding:0;}
+  .hero img{position:absolute;inset:0;height:100%;object-fit:cover;}
+  .hero .scrim{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(58,44,30,.05) 30%,rgba(58,44,30,.72));}
+  .hero .panel{position:relative;text-align:center;color:#fff;padding:0 24px 88px;max-width:760px;}
+  .hero .brand{
+    font-family:"Avenir Next","PingFang TC",sans-serif;
+    font-size:12px;letter-spacing:.55em;text-transform:uppercase;
+    color:var(--gold);margin-bottom:22px;
+  }
+  .hero h1{font-size:30px;line-height:1.6;margin-bottom:14px;text-shadow:0 1px 12px rgba(0,0,0,.35);}
+  .hero .sub{
+    font-family:"Avenir Next","PingFang TC",sans-serif;
+    font-size:13px;letter-spacing:.3em;margin-bottom:34px;opacity:.92;
+  }
+  @media(min-width:768px){
+    .hero{min-height:92vh;}
+    .hero h1{font-size:50px;letter-spacing:.06em;}
+    .hero .sub{font-size:14px;}
+  }
+
+  .intro{text-align:center;}
+  .intro h2{max-width:22em;margin:0 auto 18px;}
+  .intro p{font-family:"PingFang TC",sans-serif;font-size:15px;color:var(--muted);letter-spacing:.08em;max-width:30em;margin:0 auto;}
+
+  /* 場景流 — 雜誌式左右交錯,每格=真實照+一句做了什麼+菜單邏輯+真文章連結+LINE(R13) */
+  .scene{max-width:1060px;margin:44px auto 0;}
+  .scene .ph{aspect-ratio:16/10;overflow:hidden;}
+  .scene .ph img{height:100%;object-fit:cover;}
+  .scene h3{font-size:22px;margin:18px 0 8px;}
+  .scene p{font-family:"PingFang TC",sans-serif;font-size:14.5px;color:var(--muted);letter-spacing:.04em;max-width:38em;margin-bottom:16px;}
+  .scene .links a{margin-right:22px;}
+  @media(min-width:768px){
+    .scene{display:grid;grid-template-columns:7fr 5fr;gap:44px;align-items:center;}
+    .scene:nth-of-type(even){grid-template-columns:5fr 7fr;}
+    .scene:nth-of-type(even) .ph{order:2;}
+    .scene h3{margin-top:0;font-size:25px;}
+  }
+
+  /* 三場合入口 — 沒案例前開發需求(R15),髮絲線三欄無卡片 */
+  .occasions{display:grid;gap:36px;max-width:1060px;margin:40px auto 0;}
+  @media(min-width:768px){.occasions{grid-template-columns:repeat(3,1fr);gap:44px;}}
+  .occ{border-top:1px solid var(--hair);padding-top:22px;}
+  .occ b{font-weight:500;font-size:19px;letter-spacing:.1em;display:block;margin-bottom:10px;}
+  .occ ul{list-style:none;font-family:"PingFang TC",sans-serif;font-size:13.5px;color:var(--muted);letter-spacing:.04em;margin-bottom:16px;}
+  .occ li{padding:3px 0;}
+
+  .local{position:relative;min-height:64vh;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;}
+  .local img{position:absolute;inset:0;height:100%;object-fit:cover;}
+  .local .scrim{position:absolute;inset:0;background:rgba(90,58,26,.58);}
+  .local .txt{position:relative;max-width:640px;padding:0 24px;}
+  .local h2{color:#fff;margin:14px 0 12px;}
+  .local p{font-family:"PingFang TC",sans-serif;font-size:14.5px;letter-spacing:.06em;opacity:.94;}
+  .local .kicker{color:var(--gold);}
+
+  .trust{text-align:center;}
+  .trust .big{font-size:24px;letter-spacing:.06em;margin-bottom:6px;}
+  @media(min-width:768px){.trust .big{font-size:32px;}}
+  .logo-row{
+    display:flex;flex-wrap:wrap;justify-content:center;gap:26px 34px;
+    max-width:900px;margin:36px auto 0;
+  }
+  .logo-row span{
+    font-family:"Avenir Next","PingFang TC",sans-serif;
+    font-size:13px;letter-spacing:.22em;color:var(--accent);opacity:.85;
+  }
+  .trust .sub{font-family:"PingFang TC",sans-serif;font-size:14px;color:var(--muted);letter-spacing:.06em;margin-top:8px;}
+  .trust .logo-wall{max-width:880px;margin:36px auto 0;filter:grayscale(1);opacity:.85;mix-blend-mode:multiply;}
+
+  /* v5 新增三塊:輕量信任條(R21)/好評實錄(R17)/報價三步(R18) */
+  /* (5283)數字框框恢復:v5 併信任條時被我壓成一行純文字,Owner 指正=有說服力的數字要框凸顯 */
+  /* (5298→5303)立體感二修:前版陰影太含蓄手機上看不出,Owner 指正;
+     改純白卡+3px 金線+重雙層影+數字加大到 36px,直角語彙不變 */
+  .trustbar{font-family:"Avenir Next","PingFang TC",sans-serif;text-align:center;padding:38px 24px 42px;border-bottom:1px solid var(--hair);}
+  .trustbar .nums{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;font-size:12.5px;letter-spacing:.14em;}
+  .trustbar .nums span{
+    border:1px solid var(--hair);border-top:3px solid var(--gold);
+    padding:22px 30px 20px;min-width:158px;background:#fff;
+    box-shadow:0 2px 4px rgba(58,44,30,.10),0 18px 38px rgba(58,44,30,.20);
+  }
+  .trustbar .nums b{display:block;font-weight:700;font-size:36px;letter-spacing:.03em;color:var(--accent);margin-bottom:7px;}
+  .trustbar .nums .scenes b{font-size:16px;letter-spacing:.1em;padding-top:13px;}
+  .trustbar .brands{margin-top:10px;font-size:11.5px;letter-spacing:.2em;color:var(--muted);}
+  .reviews{text-align:center;}
+  .review-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;max-width:1060px;margin:40px auto 0;}
+  @media(min-width:768px){.review-grid{grid-template-columns:repeat(4,1fr);gap:20px;}}
+  .review-grid .shot{aspect-ratio:9/16;overflow:hidden;border:1px solid var(--hair);}
+  .review-grid img{height:100%;object-fit:cover;object-position:top;}
+  .reviews .note{font-family:"PingFang TC",sans-serif;font-size:13px;color:var(--muted);letter-spacing:.06em;margin-top:14px;}
+  .steps{max-width:1060px;margin:40px auto 0;display:grid;gap:32px;text-align:left;}
+  @media(min-width:768px){.steps{grid-template-columns:repeat(3,1fr);gap:44px;}}
+  .step{border-top:1px solid var(--hair);padding-top:20px;}
+  .step .no{font-family:"Avenir Next","PingFang TC",sans-serif;font-size:12px;letter-spacing:.3em;color:var(--gold);}
+  .step b{display:block;font-weight:500;font-size:18px;letter-spacing:.08em;margin:8px 0 6px;}
+  .step p{font-family:"PingFang TC",sans-serif;font-size:13.5px;color:var(--muted);letter-spacing:.04em;}
+
+  .faq{max-width:640px;margin:0 auto;}
+  .faq details{border-top:1px solid var(--hair);padding:16px 4px;}
+  .faq details:last-of-type{border-bottom:1px solid var(--hair);}
+  .faq summary{font-size:16px;letter-spacing:.06em;cursor:pointer;}
+  .faq p{font-family:"PingFang TC",sans-serif;font-size:14px;color:var(--muted);margin-top:8px;letter-spacing:.04em;}
+
+  .final{text-align:center;background:var(--deep);color:#fff;}
+  .final .kicker{color:var(--gold);}
+  .final h2{color:#fff;margin-bottom:26px;}
+
+  .fab{
+    position:fixed;right:14px;bottom:18px;z-index:50;
+    background:var(--line);color:#fff;text-decoration:none;font-weight:600;
+    font-family:"PingFang TC",sans-serif;
+    padding:12px 18px;border-radius:999px;font-size:14px;letter-spacing:.08em;
+    box-shadow:0 4px 14px rgba(0,0,0,.25);
+  }
+  footer{font-family:"PingFang TC",sans-serif;padding:40px 24px 96px;text-align:center;font-size:13px;color:var(--muted);letter-spacing:.06em;line-height:2.1;}
+</style>
+</head>
+<body>
+
+<div class="draftbar">離線改版草稿 v5（2026-09-14）— 僅供 Owner 檢查，未發布、不代表線上內容</div>
+
+<!-- 1. Hero：首屏唯一圖片(R12 2.5s)。圖=美妝品牌高峰會現場,出處=corporate-catering-tainan 文章 -->
+<header class="hero">
+  <img src="https://www.maplabkitchen.com/wp-content/uploads/2026/06/maplab-brand-conference-beauty-summit-meta-1.avif" alt="台南外燴 品牌高峰會餐檯現場" fetchpriority="high">
+  <div class="scrim"></div>
+  <div class="panel">
+    <div class="brand">MAPLAB KITCHEN</div>
+    <h1>台南最會辦派對的外燴團隊<br>企劃、視覺、餐桌一次到位</h1>
+    <div class="sub">台南外燴・派對統籌・企業茶會</div>
+    <a class="btn-line" href="https://lin.ee/IP8nt4n">聊聊你的活動</a>
+  </div>
+</header>
+
+<!-- 1b. 輕量信任條(v5 R21,ibest 信任背書前置)。數字皆實數:提案 932 份、品牌標誌 est 2016。
+     Google 星等:本沙盒查證不了 GBP 實際星等,依 R8 不虛構暫不放,查證後可補一格。
+     品牌列=v4 十二家中精選六家,完整名單見 git v4 版。 -->
+<div class="trustbar">
+  <div class="nums">
+    <span><b>900+</b>份活動提案</span>
+    <span><b>2016</b>年深耕台南</span>
+    <span class="scenes"><b>開幕・企業・婚宴・派對</b>服務場景</span>
+  </div>
+  <!-- (5277)文字品牌列撤除:企業感要 logo 牆不是文字,合作名單移至下方 logo 牆區 -->
+</div>
+
+<!-- 2. 開場一句 -->
+<section class="intro">
+  <div class="kicker">Tainan · Party Catering</div>
+  <h2>先看場景，再詢價</h2>
+  <p>每個場景都是我們辦過的現場，菜單跟著場合客製。</p>
+</section>
+
+<hr class="hairline">
+
+<!-- 3. 場景流(R13):四格,全真實照+真文章連結。菜單區已取消,菜單邏輯寫進各場景 -->
+<section style="padding-top:56px">
+  <div class="wrap">
+
+    <article class="scene">
+      <div class="ph"><img loading="lazy" decoding="async" src="https://www.maplabkitchen.com/wp-content/uploads/2026/06/maplab-art-museum-opening-daxin-hero-3.avif" alt="台南開幕茶會外燴 美術館開幕現場"></div>
+      <div>
+        <h3>開幕茶會</h3>
+        <p>大新美術館開幕，從剪綵到迎賓茶點的動線由我們統籌。菜單跟著儀式走：迎賓一口點心，剪綵後開檯。</p>
+        <div class="links">
+          <a class="textlink" href="https://www.maplabkitchen.com/daxin-art-museum-opening-catering/">看開幕茶會紀錄 →</a>
+          <a class="textlink" href="https://lin.ee/IP8nt4n" style="color:var(--line);border-color:var(--line)">LINE 詢價</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="scene">
+      <div class="ph"><img loading="lazy" decoding="async" src="https://www.maplabkitchen.com/wp-content/uploads/2026/06/maplab-icc-tainan-catering-table-overview-02.avif" alt="台南企業茶會外燴 大臺南會展中心茶點檯"></div>
+      <div>
+        <h3>企業茶會・會議茶點</h3>
+        <p>大臺南會展中心的企業接待，茶點跟著議程分批上檯，中場不斷線。菜單依人數與時段客製。</p>
+        <div class="links">
+          <a class="textlink" href="https://www.maplabkitchen.com/icc-tainan-catering/">看企業茶會紀錄 →</a>
+          <a class="textlink" href="https://lin.ee/IP8nt4n" style="color:var(--line);border-color:var(--line)">LINE 詢價</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="scene">
+      <div class="ph"><img loading="lazy" decoding="async" src="https://www.maplabkitchen.com/wp-content/uploads/2025/09/car-showroom-catering-long-table-setup.webp.webp" alt="台南品牌活動外燴 汽車展間長桌餐檯"></div>
+      <div>
+        <h3>品牌發表・VIP 接待</h3>
+        <p>汽車展間的公益發表會，長桌餐檯配著品牌視覺一起設計。菜單跟著品牌調性與來賓名單走。</p>
+        <div class="links">
+          <a class="textlink" href="https://www.maplabkitchen.com/brand-esg-catering-service/">看品牌發表紀錄 →</a>
+          <a class="textlink" href="https://lin.ee/IP8nt4n" style="color:var(--line);border-color:var(--line)">LINE 詢價</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="scene">
+      <div class="ph"><img loading="lazy" decoding="async" src="https://www.maplabkitchen.com/wp-content/uploads/2025/05/tainan-birthday-party-candy-bar-baby-event.avif" alt="台南派對外燴 週歲派對甜點桌"></div>
+      <div>
+        <h3>私人派對</h3>
+        <p>週歲、生日到婚禮迎賓，甜點桌就是全場的合照背景。菜單跟著主題色和年齡層客製。</p>
+        <div class="links">
+          <a class="textlink" href="https://www.maplabkitchen.com/catering-one-year-old-party-tainan/">看週歲派對紀錄 →</a>
+          <a class="textlink" href="https://lin.ee/IP8nt4n" style="color:var(--line);border-color:var(--line)">LINE 詢價</a>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- 4.(已撤)三場合入口 R15「你的場合，我們會準備什麼」— Owner 5258 裁定先不要放,2026-09-14 移除 -->
+
+<!-- 4b. 好評實錄(v5 R17 回歸):四張=客人公開發佈的 IG 回饋原樣截圖,不虛構引言;
+     來源=data/takeout-menu/terms/(Owner 自站訂購須知頁素材,8/31 下載);
+     兒童清晰臉部的兩張(terms_04/11)落選。正式進 WP 時四張上傳媒體庫改站內 URL。 -->
+<section class="reviews">
+  <div class="kicker">Reviews</div>
+  <h2>客人辦完活動怎麼說</h2>
+  <div class="review-grid">
+    <div class="shot"><img loading="lazy" decoding="async" src="../../data/takeout-menu/terms/terms_13.png" alt="台南戶外婚宴外燴 客人IG回饋 真心推薦"></div>
+    <div class="shot"><img loading="lazy" decoding="async" src="../../data/takeout-menu/terms/terms_14.png" alt="台南開幕茶會外燴 客人IG回饋 擺盤超美賓客掃光"></div>
+    <div class="shot"><img loading="lazy" decoding="async" src="../../data/takeout-menu/terms/terms_15.png" alt="台南生日派對外燴 客人IG回饋 鹹甜食區餐檯"></div>
+    <div class="shot"><img loading="lazy" decoding="async" src="../../data/takeout-menu/terms/terms_17.png" alt="台南外帶派對盒 客人私訊回饋 餐點大家都好滿意"></div>
+  </div>
+  <!-- (5277 拿掉)原註記「都是客人自己發的分享,原樣截圖」=對 Owner 的查核語氣,非對客文案 -->
+</section>
+
+<hr class="hairline">
+
+<!-- 5. 台南在地帶。圖=大學 EMBA 音樂會茶歇,出處=corporate-tea-party-desserts 文章 -->
+<section class="local">
+  <img loading="lazy" decoding="async" src="https://www.maplabkitchen.com/wp-content/uploads/2026/06/maplab-university-emba-concert-tea-break.avif" alt="台南到府外燴 戶外樹下長桌茶歇">
+  <div class="scrim"></div>
+  <div class="txt">
+    <div class="kicker">Tainan Based</div>
+    <h2>台南的場地，我們熟門熟路</h2>
+    <p>從老屋庭院到會議中心，在地團隊替你把場地條件想在前面。</p>
+  </div>
+</section>
+
+<!-- 6. 合作企業 logo 牆(Owner 5277 回歸+升級):圖=現站首頁既有 logo 牆(自家已發布資產,約 38 家真實合作
+     名單,alt 出處 wp-image-1502);灰階+multiply 混入米底=對標站/管顧站的單色低調質感。
+     名單定案後用向量原檔重建(win-01 已備 7 家,見 agent-bus drafts/win-01/logos/README)。 -->
+<section class="trust">
+  <div class="kicker">Trusted By</div>
+  <div class="big">合作過的企業與機構</div>
+  <p class="sub">科技、醫療、車廠到公部門的正式場合。</p>
+  <img class="logo-wall" loading="lazy" decoding="async" src="https://www.maplabkitchen.com/wp-content/uploads/2026/03/corporate-our-parters.webp" alt="多家企業與機構合作品牌 Logo 展示 涵蓋科技醫療與建設產業">
+</section>
+
+<hr class="hairline">
+
+<!-- 6b. 報價三步(v5 R18):回答「怎麼知道報價/可以買到什麼」;三步=Owner 自站服務流程圖節錄 -->
+<section>
+  <div class="wrap" style="text-align:center">
+    <div class="kicker">How It Works</div>
+    <h2>怎麼報價</h2>
+    <div class="steps">
+      <div class="step"><span class="no">STEP 1</span><b>LINE 告訴我們</b><p>日期、人數、場合與場地，一句話就能開始。</p></div>
+      <div class="step"><span class="no">STEP 2</span><b>收到菜單提案</b><p>菜單跟著場合客製，看得到吃什麼、多少錢。</p></div>
+      <div class="step"><span class="no">STEP 3</span><b>確認檔期</b><p>付訂保留檔期，活動當天我們提前到場設置佈置。</p></div>
+    </div>
+    <a class="btn-line" href="https://lin.ee/IP8nt4n" style="margin-top:44px">LINE 詢價</a>
+  </div>
+</section>
+
+<hr class="hairline">
+
+<!-- 7. FAQ:三題,答案連真文章 -->
+<section>
+  <div class="faq">
+    <div class="kicker">FAQ</div>
+    <h2 style="margin-bottom:18px">常見問題</h2>
+    <details><summary>怎麼詢價？</summary><p>點任一 LINE 按鈕，告訴我們日期、人數與場地。詳見<a class="textlink" href="https://www.maplabkitchen.com/tainan-catering-line-inquiry-guide/">詢問指南</a>。</p></details>
+    <details><summary>費用怎麼抓？</summary><p>依人數、菜單與場地條件報價，預算概念見<a class="textlink" href="https://www.maplabkitchen.com/tainan-catering-cost-guide/">費用說明</a>。</p></details>
+    <details><summary>可以客製菜單嗎？</summary><p>可以，菜單本來就跟著場合設計，靈感見<a class="textlink" href="https://www.maplabkitchen.com/tainan-custom-catering-menu/">菜單設計 20 例</a>。</p></details>
+  </div>
+</section>
+
+<!-- 8. 終末 CTA -->
+<section class="final">
+  <div class="kicker">Get In Touch</div>
+  <h2>下一場聚會，交給我們</h2>
+  <a class="btn-line" href="https://lin.ee/IP8nt4n">用 LINE 聊聊你的活動</a>
+</section>
+
+<!-- 頁尾三行=統包低調收尾(R14) -->
+<footer>
+  MAPLAB Kitchen｜台南外燴・到府外燴・企業茶會<br>
+  派對統籌：企劃、視覺、餐桌，一個團隊做完整件事<br>
+  <a class="textlink" href="https://lin.ee/IP8nt4n">聊聊你的場合 →</a>
+</footer>
+
+<a class="fab" href="https://lin.ee/IP8nt4n">LINE 詢價</a>
+
+</body>
+</html>

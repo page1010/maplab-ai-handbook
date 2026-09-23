@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.maplab.quota-value-snapshot</string>
+	<key>ProcessType</key>
+	<string>Background</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/opt/homebrew/bin/python3</string>
+		<string>/Users/pagemacmini/maplab-ai-handbook/local_model_evolution/bin/quota_value_cycle.py</string>
+		<string>--state-dir</string>
+		<string>/Users/pagemacmini/.codex/quota-value-cycle</string>
+		<string>snapshot</string>
+	</array>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>StandardErrorPath</key>
+	<string>/Users/pagemacmini/.codex/quota-value-cycle/snapshot.stderr.log</string>
+	<key>StandardOutPath</key>
+	<string>/Users/pagemacmini/.codex/quota-value-cycle/snapshot.stdout.log</string>
+	<key>StartCalendarInterval</key>
+	<dict>
+		<key>Minute</key>
+		<integer>26</integer>
+	</dict>
+	<key>WorkingDirectory</key>
+	<string>/Users/pagemacmini/maplab-ai-handbook</string>
+</dict>
+</plist>

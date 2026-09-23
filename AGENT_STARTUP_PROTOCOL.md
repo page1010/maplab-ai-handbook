@@ -52,6 +52,8 @@
 ### Step 5. 讀 skills/superpowers-guide.md 路由表 + 必拿技能
 查「任務類型 → 建議預讀技能書」，選擇最適合當前任務的技能書。
 
+若讀完路由表並以本機搜尋仍找不到精確 SOP／路徑／交接產物，先依 `config/notebooklm/maplab-project-brain-router.json` 問 MAPLAB Project Brain。沒有瀏覽器能力的地端模型先讀 `workbook/notebooklm/maplab-project-brain/maplab-sop-router.md`；不得因 NotebookLM 回答就跳過 live state、Task Card 或 receipt 驗證。
+
 **Superpowers 規則**：
 - **必拿**：skills/task-progress-guide.md — 所有任務都必須讀，不可跳過
 - **必讀**：skills/session-lifecycle/SKILL.md — session 開關、Chrome tab 清理、禁止 keep-awake，全角色共用

@@ -26,6 +26,18 @@ echo "路徑:$DIR"
 if [ ! -d "$DIR" ]; then
   echo "✗ 收件匣目錄不存在。"
   echo "  這不等於「沒有新案」,而是「查不到」——兩者不可混為一談。"
+  echo
+  echo "  2026-09-23 實跑結論(第一次真的跑起來,exit 2):目錄真的不存在。"
+  echo "  意思是 a6 hermes 那個框從來沒有收過一筆真實報價需求"
+  echo "  (bot_a6/hermes_task_executor.py 只有收到需求才會建案卷)。"
+  echo
+  echo "  ⭐ 所以「收件匣空的」不等於「沒有報價案在跑」。現行報價案全部是 A0 手算,"
+  echo "  檔案在 repo 內、不在這個收件匣,查的時候要去這幾個地方:"
+  echo "    outputs/a6-quote-20260921-seasia-100pax/QUOTE.md   <- 主報價單(CASE-20260921-001)"
+  echo "    bot_a6/quote_price_book.json                       <- 價目與各版本 SSOT(H3/H4/H5-OWNER)"
+  echo "    handoff/drafts/a0-reply-*-h3-table.txt 等           <- 各版試算的當回合原文"
+  echo "  最新版本與缺口請看 handoff/TASK_BOARD_READABLE.md 的任務 #17。"
+  echo
   echo "  下一步:確認路徑有沒有被搬動,或這台機器是不是本來就沒有這個收件匣。"
   exit 2
 fi

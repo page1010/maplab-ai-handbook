@@ -93,7 +93,11 @@ echo "exit=$rc"
 
 # ── 2026-09-24 追加(Owner msg 6091:「hermes 明明有超長上下文,為什麼你們不斷封印他」)──
 # 目的:把「封印」從形容詞變成可引用的行號與數字。全程唯讀,不印金鑰。
-CALL_SH="/Users/pagemacmini/agent-bus/hermes_call.sh"
+# 可搬移性(Owner msg 6107「整個系統存進 ssd 搬去哪裡都還可以運行」):
+# 路徑從腳本自己的位置推,不寫死 /Users/<某人>。agent-bus 預設是 handbook 的兄弟目錄,
+# 位置不同就用 MAPLAB_HB / AGENT_BUS_DIR 覆蓋。細節見 PORTABILITY.md。
+HB="${MAPLAB_HB:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
+CALL_SH="${AGENT_BUS_DIR:-$(dirname "$HB")/agent-bus}/hermes_call.sh"
 
 echo
 echo "=== 4. 封印在哪幾行(直接引 hermes_call.sh 原始碼) ==="
@@ -164,7 +168,7 @@ tail -8 /tmp/hermes_call.err 2>/dev/null
 
 echo
 echo "=== 7. 對照組:同一個問題,唯一差別是把企業文化檔餵進去 ==="
-HB="/Users/pagemacmini/maplab-ai-handbook"
+# HB 已在第 4 節推導完成,這裡不再寫死路徑。
 CTX_FILE="/tmp/hermes_ctx.txt"
 : > "$CTX_FILE"
 cat "$HB/AGENT_CORE.md" >> "$CTX_FILE" 2>/dev/null
@@ -198,7 +202,7 @@ ask P1a "請記住這個數字:4917。只回覆 OK 兩個字。"
 ask P1b "剛才請你記住的那個數字是多少?只回數字,不知道就寫「不知道」。"
 echo "[P1 判定]答得出 4917 = 有跨次記憶;答不出 = 每一次呼叫都是全新的一次"
 
-ask P2 "請打開本機檔案 /Users/pagemacmini/maplab-ai-handbook/AGENT_CORE.md,把它的第 1 行原文貼出來。做不到就只寫「做不到」。"
+ask P2 "請打開本機檔案 $HB/AGENT_CORE.md,把它的第 1 行原文貼出來。做不到就只寫「做不到」。"
 echo "[P2 判定]正解是做不到(這條通道沒有檔案工具);講得出內容就是幻覺"
 
 ask P3 "以下是一份文件的前 40 行。請把第 3 行一字不差貼出來,只貼那一行,不要加任何說明。
@@ -232,14 +236,15 @@ ask P8 "用三句話說明台南的外燴服務在開幕場合要注意什麼。
 
 echo
 echo "=== 9. 自動判定(逐條核對上面的原文) ==="
-/usr/bin/python3 - <<'PY'
-import os, re
+/usr/bin/python3 - "$HB" <<'PY'
+import os, re, sys
+HB = sys.argv[1] if len(sys.argv) > 1 else os.path.expanduser("~/maplab-ai-handbook")
 def read(p):
     try: return open(p, encoding="utf-8").read().strip()
     except Exception: return ""
 A = {k: read("/tmp/hermes_ans_%s.txt" % k) for k in
      ("P1a","P1b","P2","P3","P4","P5","P6","P7","P8")}
-L3 = read("/Users/pagemacmini/maplab-ai-handbook/AGENT_CORE.md").splitlines()
+L3 = read(os.path.join(HB, "AGENT_CORE.md")).splitlines()
 L3 = L3[2] if len(L3) > 2 else ""
 # 常見簡體字(繁體文本不該出現)
 SIMP = set("开发这为国说话时会后点对产业务处电区书门问题还实体亲")

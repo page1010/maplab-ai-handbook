@@ -8,12 +8,16 @@
 # 安全邊界:金鑰只 source 不回顯;產出一律草稿不發布;queue 不放客資/憑證;
 #          日上限 MAX_CALLS=120,留足 A6 客服/LINE 訓練/晨會額度;同日重跑冪等。
 set -u
-ENV_FILE="$HOME/.maplab/free_compute.env"
+# 可搬移性(Owner msg 6107「整個系統存進 ssd 搬去哪裡都還可以運行」):
+# 路徑一律從腳本自己的位置推,不寫死 /Users/<某人>。整包複製到別台機器或別的碟,
+# 只要保留 repo 目錄結構就能跑;要指到別份 repo 用 MAPLAB_HB 覆蓋。
+# 仍然綁在機器上的只剩「金鑰」與「不進 repo 的產出」兩樣,見 PORTABILITY.md。
+ENV_FILE="${MAPLAB_ENV:-$HOME/.maplab/free_compute.env}"
 [ -f "$ENV_FILE" ] || { echo "FATAL: env file missing"; exit 1; }
 set -a; source "$ENV_FILE"; set +a
 [ -n "${OPENROUTER_API_KEY:-}" ] || { echo "FATAL: OPENROUTER_API_KEY empty"; exit 1; }
 
-HB="/Users/pagemacmini/maplab-ai-handbook"
+HB="${MAPLAB_HB:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 FQ="$HB/data/free-quota"
 mkdir -p "$FQ/queue" "$FQ/done"
 TODAY=$(date +%Y%m%d)
@@ -27,20 +31,26 @@ REPORT="$FQ/report_$TODAY.md"
 # 所以改成分班。用法 `bash free_quota_daily.sh <第幾班> <共幾班>`,例如 `… 3 6` = 今天第 3 班、
 # 全天共 6 班,每班只跑各題扇出量的六分之一。不給參數 = 一次跑完整天的量(手動補跑用)。
 BAND="${1:-0}"; BANDS="${2:-0}"
+# 第三個參數 = 模式。兩個值:
+#   force     同日冪等閘放行,強制重跑(等同 FQ_FORCE=1,但有些執行通道不准在命令前面加環境變數)
+#   selftest  只跑價格攔截器的單元測試,不打任何一次外部呼叫、不寫任何產出
+MODE="${3:-}"
 REPORT="$FQ/report_$TODAY.md"
 QSIG_FILE="$FQ/.queue_sig_${TODAY}_b${BAND}"
 QSIG="$(cat "$FQ"/queue/*.job.md 2>/dev/null | shasum | cut -c1-12)"
-if [ -z "${FQ_FORCE:-}" ] && [ -f "$REPORT" ] && [ "$(wc -c < "$REPORT" | tr -d ' ')" -gt 200 ] \
+[ "$MODE" = "force" ] && FQ_FORCE=1
+if [ "$MODE" != "selftest" ] && [ -z "${FQ_FORCE:-}" ] && [ -f "$REPORT" ] && [ "$(wc -c < "$REPORT" | tr -d ' ')" -gt 200 ] \
    && [ "$(cat "$QSIG_FILE" 2>/dev/null)" = "$QSIG" ]; then
   echo "[skip] 本班今日已跑過且佇列未變: $REPORT(要強制重跑請設 FQ_FORCE=1)"; exit 0
 fi
-printf '%s' "$QSIG" > "$QSIG_FILE"
+[ "$MODE" = "selftest" ] || printf '%s' "$QSIG" > "$QSIG_FILE"
 
-/usr/bin/python3 - "$HB" "$TODAY" "$WEEK" "$BAND" "$BANDS" <<'PYEOF'
+/usr/bin/python3 - "$HB" "$TODAY" "$WEEK" "$BAND" "$BANDS" "$MODE" <<'PYEOF'
 import glob, html, json, os, re, shutil, sys, urllib.request
 
 HB, TODAY, WEEK = sys.argv[1], sys.argv[2], sys.argv[3]
 BAND, BANDS = int(sys.argv[4]), int(sys.argv[5])
+MODE = sys.argv[6] if len(sys.argv) > 6 else ""
 FQ = HB + "/data/free-quota"
 KEY = os.environ["OPENROUTER_API_KEY"]
 MODELS = ["nvidia/nemotron-3-super-120b-a12b:free",
@@ -218,6 +228,30 @@ def money_hits(t):
     return out
 
 
+if MODE == "selftest":
+    # 攔截器自己的單元測試。不打任何一次外部呼叫,不寫任何產出,所以隨時可重跑。
+    # 會有這段是因為 P11 那天寫完攔截器、冒煙測沒跑完就收工,等於「寫了但沒驗」——
+    # 同一個毛病不重演,驗證這件事就要能一行跑完。
+    CASES = [
+        ("一桌約 NT$25,000 起", True, "NT$ 加數字"),
+        ("整案 NTD 45000 以上", True, "NTD 寫法"),
+        ("每人 1,200 元含稅", True, "數字加元"),
+        ("每桌 8800", True, "每桌加數字"),
+        ("報價需人工,文件未提及價格", False, "正確拒答不該被誤攔"),
+        ("活動於 2026 年舉辦,現場 120 人", False, "年份與人數不是價格"),
+        ("餐期 18:30 開始", False, "時間不是價格"),
+    ]
+    bad = 0
+    for text, want, why in CASES:
+        got = bool(money_hits(text))
+        ok = (got == want)
+        bad += 0 if ok else 1
+        print("%s %-28s 期望攔=%-5s 實際攔=%-5s  %s"
+              % ("[過]" if ok else "[沒過]", text, want, got, why))
+    print("selftest: %d/%d 過" % (len(CASES) - bad, len(CASES)))
+    sys.exit(0 if bad == 0 else 1)
+
+
 def run_unit(name, body, meta, out_rel, url, daily, item, idx):
     """跑一個 job-run(產稿 1 呼叫 + 換模型審稿 1 呼叫)。回傳一列 rows。"""
     prompt = body
@@ -379,9 +413,17 @@ print("[done] jobs=%d calls=%d" % (len(rows), calls))
 for name, st, note in rows:
     print(" ", st, name, "->", note)
 PYEOF
+PY_RC=$?
+[ "$MODE" = "selftest" ] && exit $PY_RC
 
-cd "$HB" && git pull --rebase --autostash >/dev/null 2>&1
+# 2026-09-24 修兩件(Owner msg 6107 這輪順手):
+# 1) 原本是 git pull --rebase --autostash。這是共用 repo,別的 agent 隨時有未 commit 的改動,
+#    autostash 等於替別人 stash,踩到「共用 repo 禁 git stash」這條紅線。改成只 fetch,
+#    推不上去就誠實印未推送,下輪再補,絕不動別人的工作區。
+# 2) 分支名原本寫死。改成問 repo 現在在哪一條就推哪一條(#72 三支寫死分支名的其中一支)。
+git -C "$HB" fetch origin >/dev/null 2>&1
+BR="$(git -C "$HB" rev-parse --abbrev-ref HEAD 2>/dev/null)"
 git -C "$HB" add data/free-quota/ handoff/en-drafts/ 2>/dev/null
-git -C "$HB" commit -m "free-quota 班表 $TODAY" >/dev/null 2>&1 && git -C "$HB" push origin chore/agent-login-governance-20260816 >/dev/null 2>&1 && echo "[git] pushed" || echo "[git] 未推送(留本地,下輪補)"
+git -C "$HB" commit -m "free-quota 班表 $TODAY" >/dev/null 2>&1 && git -C "$HB" push origin "$BR" >/dev/null 2>&1 && echo "[git] pushed" || echo "[git] 未推送(留本地,下輪補)"
 echo ""
 cat "$REPORT" 2>/dev/null

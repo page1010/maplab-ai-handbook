@@ -5,7 +5,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-09-23 A1晚間巡查（remote cloud）｜系統今日活躍：28 A0 commits（msg 5975-6050，588-commit 大合併 + Clarity 上線 + Investment OS 套利研究）；NEEDS_REVIEW 10 tasks ~1957h；T-A7-001 Phase 3 第67天延誤；CRITICAL: T-A4-002 ~4189h / T-IOS-KOL-001 ~2677h / A6 ~2212h；A8 ~2492h；無新異常｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-09-24 A1每日巡查（remote cloud）｜系統今日活躍：4 A0 commits（msg 6059-6066，亞航 prebook 失敗 + Chrome history 安全修補 + SOP 看過才能說）；NEEDS_REVIEW 10 tasks ~1981h；T-A7-001 Phase 3 第68天延誤；CRITICAL: T-A4-002 ~4213h / T-IOS-KOL-001 ~2701h / A6 ~2236h；A8 ~2516h；安全修正：history-find token 洩露漏洞已修補（097122b）；無新異常｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 > **合併註記（2026-09-23，工作分支併回 main）**：上面那行是 main 側巡查寫的最新狀態，保留為現值。
 > 下面這行與其後的 Active Task 區塊來自工作分支 `chore/agent-login-governance-20260816`，main 側先前沒有，
@@ -440,6 +440,7 @@
 | ✅ A1巡查 2026-09-23 | 24h 零非巡查 commit，系統持續靜止。各 agent 狀態與 CURRENT_STATUS 一致，無新異常。10 項 NEEDS_REVIEW 任務 **~1941h**（since 07-19，等 Owner 決定延長/關閉/重啟）；T-A7-001 Phase 3 延誤（Owner 自 07-18 起第 **67 天**，07-25 截止已過）；T-A4-002 CRITICAL **~4173h** / T-IOS-KOL-001 CRITICAL **~2661h** / A6 RECALL **~2196h**（last commit 07-08）；A8 **~2476h**。RECALL 更新：A4 ~4165h→~4173h；A6 ~2188h→~2196h；A7 第66天→第67天；A8 ~2468h→~2476h。 | 無立即行動；T-A7-001 請 Owner 儘速確認 Zone B（NT$2,000？）+ Zone C（NT$2,500？）以重啟 Phase 3 |
 | ✅ A1巡查 2026-09-23 午後 | 8h 零非巡查 commit（僅早上 902afb4 每日巡查），系統持續靜止。各 agent 狀態與 CURRENT_STATUS 一致，無新異常。10 項 NEEDS_REVIEW 任務 **~1949h**（since 07-19，等 Owner 決定延長/關閉/重啟）；T-A7-001 Phase 3 延誤（Owner 自 07-18 起第 **67 天**，07-25 截止已過）；T-A4-002 CRITICAL **~4181h** / T-IOS-KOL-001 CRITICAL **~2669h** / A6 RECALL **~2204h**（last commit 07-08）；A8 **~2484h**。 | 無立即行動；T-A7-001 請 Owner 儘速確認 Zone B（NT$2,000？）+ Zone C（NT$2,500？）以重啟 Phase 3 |
 | ✅ A1巡查 2026-09-23 晚間 | **系統活躍**：今日 A0 共 28 commits（回應 Owner msg 5975-6050）。主要事件：① 588 commit 工作分支大合併（38220a4）② Investment OS 套利研究（ORB 分析、永豐大小台價差策略、馬克羊套利庫）③ Win-OS 席位定義/NAMING_GLOSSARY.md（6002-6005）④ Clarity 追蹤上線（ymth0sxpjr，6043）⑤ 分支治理掃描腳本 branch_governance_check.sh（bb8a9df）⑥ 今日需求卡盤點（6050，22:04 UTC+8）。無 A2-A8 agent 自主 commit；各 agent 狀態與 CURRENT_STATUS 一致，無新異常。10 項 NEEDS_REVIEW 任務 **~1957h**（since 07-19，等 Owner 決定延長/關閉/重啟）；T-A7-001 Phase 3 延誤（Owner 自 07-18 起第 **67 天**，07-25 截止已過）；T-A4-002 CRITICAL **~4189h** / T-IOS-KOL-001 CRITICAL **~2677h** / A6 RECALL **~2212h**（last commit 07-08）；A8 **~2492h**。 | A0 今日正常回應 Owner 指令；T-A7-001 Zone B/C 仍待確認 |
+| ✅ A1巡查 2026-09-24 | **系統活躍**：今日 A0 共 4 commits（回應 Owner msg 6059-6066）。主要事件：① 亞航 ANA prebook 失敗排查 + a0_chrome_tab.sh 分頁唯讀工具（ce6f080，6059）② 瀏覽紀錄零筆確認 + 三通道查找補齊（e5483b3，6060）③ 安全修補：history-find 會印出權杖的洞已修復（097122b，6065）④ SOP 更新：看過才能說——先截圖辨識，不准腦補（cbabe75，Owner 6066）。無 A2-A8 agent 自主 commit；各 agent 狀態與 CURRENT_STATUS 一致，無新異常。10 項 NEEDS_REVIEW 任務 **~1981h**（since 07-19，等 Owner 決定延長/關閉/重啟）；T-A7-001 Phase 3 延誤（Owner 自 07-18 起第 **68 天**，07-25 截止已過）；T-A4-002 CRITICAL **~4213h** / T-IOS-KOL-001 CRITICAL **~2701h** / A6 RECALL **~2236h**（last commit 07-08）；A8 **~2516h**。RECALL 更新：A4 ~4189h→~4213h；A6 ~2212h→~2236h；A7 第67天→第68天；A8 ~2492h→~2516h。 | A0 今日正常回應 Owner 指令；安全漏洞已修補；T-A7-001 Zone B/C 仍待確認 |
 | A7 | T-A7-002: 任務 1/2/3 需 LINE bot 後台權限；任務 5/8 需 TimeTree 權限（任務 9 已解除） | 見 Task Card |
 | Owner | T-GBP-001: 等 Owner 準備新圖片 | 見 Task Card |
 |  | T-HQ-001: Owner pending（非 B1 blocking） | 見 Task Card |

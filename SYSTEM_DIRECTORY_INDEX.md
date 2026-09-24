@@ -60,6 +60,24 @@ Directory Index Check
 - Planned writeback:
 ```
 
+## 1.0 立標準權：誰可以開新規則、新路徑、新檔案
+
+來源 Owner 訊息 6108（2026-09-24 22:02），原話：
+
+> 建立了這麼多文件目的就是新來的看著照做ok , 不要亂搞。建立標準與新的路徑都只有最前沿的模型
+
+拆成兩條可執行的規定：
+
+| 動作 | 誰可以做 | 怎麼算合規 |
+|---|---|---|
+| 照現有文件做事 | 全部角色、全部模型、全部免費鏈 | 找不到規定時回報卡住，不得自己補一條 |
+| 立新標準、開新路徑、新增治理檔 | 只有最前沿模型那一席（A0／Fable5 線） | 新檔必須同一輪登錄進本索引，否則視同沒建立 |
+
+判斷「這是照做還是立標準」的一句話測試：**產出是不是會變成別人下次的依據。**
+會，就是立標準，非前沿席位一律只能寫成提案交上來；不會，就是照做，放手做。
+
+非前沿席位的產出一律帶「草稿未審」標記，能寫、能算、能整理，但不會自動變成規則。
+
 ## 1.1 冷啟動判斷規則
 
 - 先依「使用部門／角色」欄位找候選資料。
@@ -103,6 +121,20 @@ Directory Index Check
 | 系統全貌快照 | `docs/system-panorama-2026-07-12.md` | dated snapshot | A0、A1、B4、Remote worker | 只能當歷史基線 |
 | 使用者價值量尺 | `projects/investment-os-value-definition.md` | canonical product intent | B1–B5、IOS 角色、A0、A1 | Investment OS 功能優先級量尺 |
 | Owner 需求紀錄 | `workbook/owner_requirements_panel.md` | governance receipt | A0、A1、B3、B5 | 若近期未更新，需標 stale |
+| 這間公司在做什麼＋agent 核心紀律 | `AGENT_CORE.md` | canonical governance | 全角色 | 冷啟動第一份；§0 寫死外燴本業與兩套價格不混用 |
+| Claude Code 專案指示 | `CLAUDE.md` | canonical governance | 所有 Claude Code session | 覆蓋預設行為，優先於一般說明 |
+| 稱謂與代號 SSOT | `NAMING_GLOSSARY.md` | canonical governance | 全角色 | 報修分層與角色稱謂以此為準 |
+| 看過才能說 SOP | `SOP_SEE_BEFORE_YOU_SAY.md` | canonical procedure | 全角色 | 取像階梯與兩道 GUI 鎖的解法 |
+| Owner 偏好 | `A0_USER_PREFERENCES.md` | canonical governance | A0、全對 Owner 發話角色 | 回覆格式與禁用寫法 |
+| 文化決策邏輯 | `CULTURE_DECISION_LOGIC.md` | canonical governance | 全角色 | 兩條規則打架時的裁決順序 |
+| repo 同步規則 | `REPO_SYNC_RULES.md` | canonical procedure | 全開發角色 | 共用 repo 禁 stash、出貨只認 main |
+| 可搬移性 | `PORTABILITY.md` | canonical governance | 全開發角色 | .md 三層（規格／服從／強制）＋寫死路徑缺口 |
+| agent 名冊 | `AGENTS.md` | canonical governance | 全角色 | 席位與職掌 |
+| repo 入口說明 | `README.md` | reference | 新進角色 | 只是入口，規則不在這裡 |
+| 版本紀錄 | `CHANGELOG.md` | reference | A0、B3 | 歷史用，不當現行規則 |
+| 本機模型演化 orchestrator prompt | `LOCAL_MODEL_EVOLUTION_ORCHESTRATOR_PROMPT.md` | prompt template | A1、B5 | 樣板，非規則 |
+| Remote codex 角色啟動 prompt | `REMOTE_CODEX_ROLE_LAUNCHER_PROMPT.md` | prompt template | codex 席位 | 樣板，非規則 |
+| Remote codex 索引 prompt | `REMOTE_CODEX_SYSTEM_INDEX_PROMPT.md` | prompt template | codex 席位 | 樣板，非規則 |
 
 ## 3.2 任務、交接與證據
 

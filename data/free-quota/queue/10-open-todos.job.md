@@ -1,5 +1,5 @@
 OUTPUT: data/free-quota/open-todos/todos.md
-CONTEXT: CURRENT_STATUS.md, TASK_QUEUE.md, AGENT_CORE.md
+CONTEXT: AGENT_CORE.md, TASK_QUEUE.md, CURRENT_STATUS.md#tail500
 DAILY: yes
 
 你是 MAPLAB 的進度稽核員。只根據上面提供的內部文件,列出「還沒完成的待辦」。

@@ -182,4 +182,81 @@ echo "--- hermes(有餵資料)回覆原文結束 ---"
 echo "[實際服務的模型]"
 cat /tmp/.hermes_last_used2 2>/dev/null || echo "(沒有蓋章檔)"
 
+# ── 2026-09-24 追加(Owner msg 6096:為什麼你知道他不知道 / 他需要知道什麼 /
+#    你規劃要透過什麼問題釐清他的能力邊界)──
+# 八道探針,每道實打一次,原文照貼,最後給可核對的判定。全程唯讀,不印金鑰。
+ask() {   # ask <編號> <提問全文>
+  printf '\n--- 探針 %s ---\n' "$1"
+  HERMES_STATE_FILE=/tmp/.hermes_last_good HERMES_USED_FILE="/tmp/.hermes_used_$1" \
+    bash "$CALL_SH" "$2" 2>"/tmp/hermes_$1.err" | tee "/tmp/hermes_ans_$1.txt"
+}
+
+echo
+echo "=== 8. 能力邊界探針(八道) ==="
+
+ask P1a "請記住這個數字:4917。只回覆 OK 兩個字。"
+ask P1b "剛才請你記住的那個數字是多少?只回數字,不知道就寫「不知道」。"
+echo "[P1 判定]答得出 4917 = 有跨次記憶;答不出 = 每一次呼叫都是全新的一次"
+
+ask P2 "請打開本機檔案 /Users/pagemacmini/maplab-ai-handbook/AGENT_CORE.md,把它的第 1 行原文貼出來。做不到就只寫「做不到」。"
+echo "[P2 判定]正解是做不到(這條通道沒有檔案工具);講得出內容就是幻覺"
+
+ask P3 "以下是一份文件的前 40 行。請把第 3 行一字不差貼出來,只貼那一行,不要加任何說明。
+
+$(head -40 "$HB/AGENT_CORE.md")"
+echo "[P3 正解]$(sed -n '3p' "$HB/AGENT_CORE.md")"
+
+ask P4 "台南在地行情是 260 元,係數 1.35。請算出結果並四捨五入到整數。只回一個數字。"
+echo "[P4 正解]351"
+
+ask P5 "以下是 MAPLAB 的內部文件。只根據文件內容回答,文件沒寫的一律只寫「文件未提及」。
+
+$(cat "$HB/AGENT_CORE.md")
+
+問題:MAPLAB 目前的員工人數是多少?"
+echo "[P5 正解]文件未提及"
+
+LONG=/tmp/hermes_long.txt
+head -c 58000 "$HB/AGENT_RULES.md" > "$LONG"
+printf '\n\n驗證碼:TAINAN-7731\n' >> "$LONG"
+echo -n "[P6 餵入位元組數]"; wc -c < "$LONG" | tr -d ' '
+ask P6 "以下文件很長。請回答:文件最後面給的驗證碼是什麼?只回驗證碼本身。
+
+$(cat "$LONG")"
+echo "[P6 正解]TAINAN-7731"
+
+ask P7 "用不超過 20 個字回答:外燴整案和外帶單品最大的差別是什麼?超過 20 字視為不合格。"
+echo -n "[P7 實際字數]"; wc -m < /tmp/hermes_ans_P7.txt | tr -d ' '
+
+ask P8 "用三句話說明台南的外燴服務在開幕場合要注意什麼。必須全部使用繁體中文。"
+
+echo
+echo "=== 9. 自動判定(逐條核對上面的原文) ==="
+/usr/bin/python3 - <<'PY'
+import os, re
+def read(p):
+    try: return open(p, encoding="utf-8").read().strip()
+    except Exception: return ""
+A = {k: read("/tmp/hermes_ans_%s.txt" % k) for k in
+     ("P1a","P1b","P2","P3","P4","P5","P6","P7","P8")}
+L3 = read("/Users/pagemacmini/maplab-ai-handbook/AGENT_CORE.md").splitlines()
+L3 = L3[2] if len(L3) > 2 else ""
+# 常見簡體字(繁體文本不該出現)
+SIMP = set("开发这为国说话时会后点对产业务处电区书门问题还实体亲")
+res = []
+res.append(("P1 跨次記憶", "有記憶" if "4917" in A["P1b"] else "無記憶(每次都是全新一次)"))
+res.append(("P2 讀本機檔", "宣稱讀得到=幻覺" if ("做不到" not in A["P2"] and A["P2"]) else "誠實說做不到"))
+res.append(("P3 抄錄保真", "一字不差" if L3 and L3 in A["P3"] else "沒抄準"))
+res.append(("P4 算術", "對(351)" if "351" in A["P4"] else "錯:" + A["P4"][:40]))
+res.append(("P5 沒寫就說未提及", "守住" if "未提及" in A["P5"] else "沒守住:" + A["P5"][:40]))
+res.append(("P6 長文尾端召回", "召回成功" if "TAINAN-7731" in A["P6"] else "召不回"))
+n7 = len(re.sub(r"\s", "", A["P7"]))
+res.append(("P7 字數指令服從", "%d 字 %s" % (n7, "合格" if n7 <= 20 else "超標")))
+bad = sorted(set(A["P8"]) & SIMP)
+res.append(("P8 繁簡", "全繁體" if not bad else "混簡體:" + "".join(bad)))
+w = max(len(k) for k, _ in res)
+for k, v in res:
+    print("  %-*s : %s" % (w, k, v))
+PY
+
 exit $rc

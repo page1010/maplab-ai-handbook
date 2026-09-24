@@ -136,6 +136,8 @@ Directory Index Check
 | NotebookLM／地端模型路由 | `config/notebooklm/maplab-project-brain-router.json` | generated machine-readable route | Hermes、Ollama、OpenClaw、Codex、Claude | online browser operator＋offline `maplab-sop-router.md` |
 | NotebookLM Project Brain 包 | `workbook/notebooklm/maplab-project-brain/` | generated sanitized reading pack | Owner、A0、A1、NotebookLM | 只上傳兩個 `.md`；JSON manifest 留 repo audit，禁止 wholesale repo dump |
 | Hermes 讀取地圖 | `HERMES_READ_MAP.md` | canonical hermes entry route | Hermes（win-os／macmini 兩席）、A0、派工者 | Owner 訊息 6088；企業文化讀順序＋資料位置＋避開清單＋卡住回報三段＋可派唯讀工作;避開股票程式單,金鑰／他人客資／兒童照仍全面禁止 |
+| Hermes 能力邊界實測 | `HERMES_CAPABILITY_BOUNDARY.md` | canonical:派工前先看會什麼不會什麼 | 派工者、A0、Hermes | Owner 訊息 6096；八道探針實測(無記憶／無檔案工具／抄錄一字不差／58KB 尾端召得回／沒寫就說未提及)＋每次呼叫必帶的 4.3KB 開機包＋下一批 P9~P14 探針規格。重跑=`scripts/verify_hermes_model_fix.sh` 第 8、9 節 |
+| Hermes 每日班表 | `data/free-quota/HERMES_DAILY_1000.md` | canonical:每天派幾件、幾點跑 | A0、派工者 | Owner 訊息 6092/6093；20 個場景＋6 班時段;來回口徑理論 2 次/件 vs 實測 4.0 次/件兩個都留,件數落在 250~500 之間未定案 |
 | 技能總路由 | `skills/superpowers-guide.md` | canonical skill router | 全角色 | 新動作前重查 |
 | 任務進度技能 | `skills/task-progress-guide.md` | canonical skill | 全角色 | Progress Log、Resume、checkpoint |
 | Session 技能 | `.agents/skills/maplab-session-continuity/SKILL.md` | canonical skill | Claude、Codex、全角色 | shared-start、認領、接棒、收據；舊 `skills/session-lifecycle/` 為指向入口 |

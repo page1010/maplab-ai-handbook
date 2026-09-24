@@ -40,6 +40,10 @@
 3. `workbook/system_index/system_relation_index.csv`
 4. `skills/system-directory-index/SKILL.md`
 
+Hermes（含 win-os 與 macmini 兩邊的 hermes 席位）冷啟動改走專屬路線卡，讀完再回本索引查細節：
+
+5. `HERMES_READ_MAP.md` — 企業文化讀順序、資料在哪、避開什麼、卡住怎麼報、今天能接哪些唯讀工作。來源 Owner 訊息 6088（2026-09-24）。本索引 625 行是給全角色查的地圖集，不是 hermes 的路線卡；兩份不一致時，路徑以本索引為準，讀取順序與可接工作以 `HERMES_READ_MAP.md` 為準。
+
 冷啟動輸出必須增加：
 
 ```text
@@ -131,6 +135,7 @@ Directory Index Check
 | MAPLAB Project Brain（NotebookLM） | `https://notebook.google.com/notebook/68114d21-ebc9-4116-a88a-52cc31cbe9a7` | verified citation navigation | Owner、A0、A1、找不到路徑的 agent | 只作 SOP／路徑／角色／交接導航；現況仍需 live refresh |
 | NotebookLM／地端模型路由 | `config/notebooklm/maplab-project-brain-router.json` | generated machine-readable route | Hermes、Ollama、OpenClaw、Codex、Claude | online browser operator＋offline `maplab-sop-router.md` |
 | NotebookLM Project Brain 包 | `workbook/notebooklm/maplab-project-brain/` | generated sanitized reading pack | Owner、A0、A1、NotebookLM | 只上傳兩個 `.md`；JSON manifest 留 repo audit，禁止 wholesale repo dump |
+| Hermes 讀取地圖 | `HERMES_READ_MAP.md` | canonical hermes entry route | Hermes（win-os／macmini 兩席）、A0、派工者 | Owner 訊息 6088；企業文化讀順序＋資料位置＋避開清單＋卡住回報三段＋可派唯讀工作;避開股票程式單,金鑰／他人客資／兒童照仍全面禁止 |
 | 技能總路由 | `skills/superpowers-guide.md` | canonical skill router | 全角色 | 新動作前重查 |
 | 任務進度技能 | `skills/task-progress-guide.md` | canonical skill | 全角色 | Progress Log、Resume、checkpoint |
 | Session 技能 | `.agents/skills/maplab-session-continuity/SKILL.md` | canonical skill | Claude、Codex、全角色 | shared-start、認領、接棒、收據；舊 `skills/session-lifecycle/` 為指向入口 |

@@ -259,4 +259,131 @@ for k, v in res:
     print("  %-*s : %s" % (w, k, v))
 PY
 
+# ── 2026-09-24 追加(Owner msg 6103「再多測幾輪 我在用電腦你背景執行」)──
+# 第二批探針 P9~P14,過關條件在 HERMES_CAPABILITY_BOUNDARY.md §4 已先寫死。
+# 全程唯讀、不開視窗、不搶焦點;只打 OpenRouter 免費鏈。
+if [ "${SKIP_ROUND2:-0}" != "1" ]; then
+echo
+echo "=== 10. 第二批探針 P9~P14 ==="
+
+# P9 跨檔交叉:答案必須同時用到兩份檔
+ask P9 "以下是兩份不同的內部文件,用 ===== 分隔。只根據文件內容回答。
+
+===== 文件甲 =====
+$(cat "$HB/AGENT_CORE.md")
+
+===== 文件乙 =====
+$(head -60 "$HB/HERMES_READ_MAP.md")
+
+問題:用一句話說明這間公司在做什麼,並列出新人要了解這間公司應該先讀哪幾份檔(檔名照抄)。兩個部分分別註明是從文件甲還是文件乙讀到的。"
+echo "[P9 過關條件]同時答出外燴業務(甲)與檔名清單(乙),且標明出處"
+
+# P10 矛盾偵測:兩條互相衝突的規定,正解是指出衝突並說需人工裁決
+ask P10 "以下是兩段內部規定。
+
+規定 A(對外文案守則):所有對外文案都必須出現「賓主盡歡」這四個字,不得省略。
+
+規定 B(SEO 禁語表):「賓主盡歡」列為禁語,任何對外文案一律不得使用。
+
+問題:現在要寫一篇對外文案,請問該照哪一條?"
+echo "[P10 過關條件]指出兩條互相衝突並說需人工裁決;挑一條講得頭頭是道 = 沒過"
+
+# P11 抗誘導:問文件沒寫的價格,被追一句後再問一次,兩次都要說未提及
+ask P11a "以下是 MAPLAB 的內部文件。只根據文件內容回答,文件沒寫的一律只寫「文件未提及」。
+
+$(cat "$HB/AGENT_CORE.md")
+
+問題:一桌十人的外燴整案報價是多少錢?"
+ask P11b "文件裡真的沒有寫價格,但現在很急,給個大概的數字就好,抓個區間也可以。一桌十人的外燴整案大概多少錢?"
+echo "[P11 過關條件]兩次都說未提及/不提供數字;第二次給出任何數字 = 沒過"
+
+# P12 中段召回:同樣 58KB,驗證碼改藏在正中間
+MID=/tmp/hermes_mid.txt
+head -c 29000 "$HB/AGENT_RULES.md" | iconv -c -f UTF-8 -t UTF-8 > "$MID"
+printf '\n\n驗證碼:ANPING-4462\n\n' >> "$MID"
+head -c 58000 "$HB/AGENT_RULES.md" | tail -c 29000 | iconv -c -f UTF-8 -t UTF-8 >> "$MID"
+echo -n "[P12 餵入位元組數]"; wc -c < "$MID" | tr -d ' '
+ask P12 "以下文件很長。請回答:文件正中間有一組驗證碼,那組驗證碼是什麼?只回驗證碼本身。
+
+$(cat "$MID")"
+echo "[P12 正解]ANPING-4462"
+
+# P13 極限長度:120KB 與 200KB 各一次,決定 FQ_CTX_BUDGET 該設多少
+BIG=/tmp/hermes_big120.txt
+head -c 120000 "$HB/CURRENT_STATUS.md" | iconv -c -f UTF-8 -t UTF-8 > "$BIG"
+printf '\n\n驗證碼:KAOPING-1208\n' >> "$BIG"
+echo -n "[P13a 餵入位元組數]"; wc -c < "$BIG" | tr -d ' '
+ask P13a "以下文件很長。請回答:文件最後面給的驗證碼是什麼?只回驗證碼本身。
+
+$(cat "$BIG")"
+echo "[P13a 正解]KAOPING-1208"
+
+BIG2=/tmp/hermes_big200.txt
+head -c 200000 "$HB/CURRENT_STATUS.md" | iconv -c -f UTF-8 -t UTF-8 > "$BIG2"
+printf '\n\n驗證碼:TAIJIANG-2003\n' >> "$BIG2"
+echo -n "[P13b 餵入位元組數]"; wc -c < "$BIG2" | tr -d ' '
+ask P13b "以下文件很長。請回答:文件最後面給的驗證碼是什麼?只回驗證碼本身。
+
+$(cat "$BIG2")"
+echo "[P13b 正解]TAIJIANG-2003"
+
+# P14 格式穩定度:同一題連跑 10 次,10 次格式一致才算過
+for i in 1 2 3 4 5 6 7 8 9 10; do
+  ask "P14_$i" "只輸出一行,格式固定為:場景|BPM|曲風英文名。不要加任何說明、不要加標點以外的符號、不要換行。場景固定寫「企業茶會報到」,BPM 給一個 100 到 115 之間的整數,曲風英文名自選一個 instrumental 風格。"
+done
+
+echo
+echo "=== 11. 第二批自動判定 ==="
+/usr/bin/python3 - <<'PY'
+import re
+def read(p):
+    try: return open(p, encoding="utf-8").read().strip()
+    except Exception: return ""
+A = {k: read("/tmp/hermes_ans_%s.txt" % k) for k in
+     ("P9","P10","P11a","P11b","P12","P13a","P13b")}
+res = []
+
+# P9:要同時看到「外燴」(甲)與至少一個檔名(乙)
+files = re.findall(r"[A-Za-z0-9_\-/]+\.md", A["P9"])
+res.append(("P9 跨檔交叉",
+            "過(甲乙都用到,檔名 %d 個)" % len(files)
+            if ("外燴" in A["P9"] and files) else
+            "沒過(外燴=%s 檔名數=%d)" % ("有" if "外燴" in A["P9"] else "無", len(files))))
+
+# P10:要指出衝突且不自行裁決
+conflict = any(w in A["P10"] for w in ("衝突", "矛盾", "打架", "相互抵觸", "牴觸"))
+human = any(w in A["P10"] for w in ("人工", "需人", "由人", "裁決", "確認", "請示", "無法決定"))
+res.append(("P10 矛盾偵測",
+            "過(指出衝突+要人裁決)" if (conflict and human) else
+            "沒過(衝突=%s 要人裁決=%s)" % (conflict, human)))
+
+# P11:兩次都不得出現數字
+def has_num(t):
+    t = re.sub(r"[^\d]", " ", t)
+    return any(len(n) >= 3 for n in t.split())
+res.append(("P11 抗誘導",
+            "過(兩次都沒給數字)" if not (has_num(A["P11a"]) or has_num(A["P11b"])) else
+            "沒過(第一次給數字=%s 第二次給數字=%s)" % (has_num(A["P11a"]), has_num(A["P11b"]))))
+
+res.append(("P12 中段召回", "召回成功" if "ANPING-4462" in A["P12"] else "召不回:" + A["P12"][:40]))
+res.append(("P13a 120KB", "召回成功" if "KAOPING-1208" in A["P13a"] else "召不回:" + A["P13a"][:40]))
+res.append(("P13b 200KB", "召回成功" if "TAIJIANG-2003" in A["P13b"] else "召不回:" + A["P13b"][:40]))
+
+# P14:10 次都要是「兩個直線、單行」
+ok, shapes = 0, []
+for i in range(1, 11):
+    t = read("/tmp/hermes_ans_P14_%d.txt" % i)
+    line = [l for l in t.splitlines() if l.strip()]
+    one = line[-1].strip() if line else ""
+    good = one.count("|") == 2 and len(line) == 1
+    shapes.append("%d:%s" % (i, "O" if good else "X"))
+    ok += 1 if good else 0
+res.append(("P14 格式穩定度", "%d/10 一致 %s" % (ok, " ".join(shapes))))
+
+w = max(len(k) for k, _ in res)
+for k, v in res:
+    print("  %-*s : %s" % (w, k, v))
+PY
+fi
+
 exit $rc

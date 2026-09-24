@@ -306,3 +306,76 @@ tail -40 "$D/service.stdout.log" 2>&1
 echo
 echo "== stderr log 尾段 =="
 tail -20 "$D/service.stderr.log" 2>&1
+
+# ⭐ 2026-09-24(Owner 6084:「所以你做了什麼 任務卡都還在表示都沒有結案?」)新增 #59 查證段。
+# 為什麼:#59「查 9/22 三筆出場委託簿」是第一層的瓶頸,成交價沒定案後面所有放大決策
+# 都不能談。這一段把 9/22 的出場逐筆連 leg 層攤開,資料全在自家檔裡,不需要對外要。
+# 仍然唯讀:不寫、不下單、不印帳號 ID、不印金鑰。
+IOS="/Users/pagemacmini/investment-os/state"
+echo
+echo "== #59 步驟 0:investment-os/state 有哪些引擎目錄(找 ORB 實錄在哪) =="
+ls -1 "$IOS" 2>&1 | head -40
+
+echo
+echo "== #59 步驟 1:全 state 樹裡含 2026-09-22 的實錄檔(只印路徑與大小) =="
+find "$IOS" -type f \( -name '*.json' -o -name '*.jsonl' \) -newermt '2026-09-21' 2>/dev/null \
+  | head -60 | while read -r f; do
+      if { LC_ALL=C grep -q -- '2026-09-22' "$f" || true; } && LC_ALL=C grep -q -- '2026-09-22' "$f" 2>/dev/null; then
+        echo "  $(stat -f%z "$f" 2>/dev/null) bytes  $f"
+      fi
+    done
+
+echo
+echo "== #59 步驟 2:9/22 出場逐筆(leg 層全欄,含委託價/成交價/出場理由) =="
+python3 - "$IOS" <<'PY' 2>&1
+import json,os,sys
+root=sys.argv[1]
+DAY="2026-09-22"
+hits=[]
+for dirpath,dirnames,filenames in os.walk(root):
+    for fn in filenames:
+        if not (fn.endswith(".json") or fn.endswith(".jsonl")): continue
+        p=os.path.join(dirpath,fn)
+        try:
+            if os.path.getsize(p)>40_000_000: continue
+            raw=open(p,encoding="utf-8",errors="replace").read()
+        except Exception: continue
+        if DAY not in raw: continue
+        # 逐筆掃出「有平倉時間且落在 9/22」的紀錄
+        objs=[]
+        try:
+            objs=[json.loads(raw)]
+        except Exception:
+            for line in raw.splitlines():
+                line=line.strip()
+                if not line: continue
+                try: objs.append(json.loads(line))
+                except Exception: pass
+        def walk(o,path=""):
+            if isinstance(o,dict):
+                ts=" ".join(str(o.get(k,"")) for k in
+                    ("closed_at","exit_at","exit_time","filled_at","ts","time","timestamp"))
+                if DAY in ts and any(k in o for k in ("legs","exit_reason","exit_price","fill_price","avg_price")):
+                    hits.append((p,path,o))
+                for k,v in o.items(): walk(v,f"{path}.{k}")
+            elif isinstance(o,list):
+                for i,v in enumerate(o): walk(v,f"{path}[{i}]")
+        for o in objs: walk(o)
+print(f"  掃到 {len(hits)} 筆 9/22 帶出場資訊的紀錄")
+SHOW=("closed_at","exit_at","exit_time","exit_reason","exit_type","status",
+      "gross_pnl","net_pnl","pnl","modeled_costs","fees","slippage")
+LEG=("code","symbol","side","qty","limit_price","order_price","fill_price","avg_price",
+     "multiplier","exit_reason","exit_price","filled_qty","order_id_tail")
+for i,(p,path,o) in enumerate(hits[:12],1):
+    print(f"\n  --- 第 {i} 筆 @ {os.path.relpath(p,root)}{path}")
+    for k in SHOW:
+        if k in o: print(f"      {k} = {o[k]}")
+    legs=o.get("legs") or []
+    if not legs: print("      ⚠️ 這一筆沒有 legs 欄位,出場價只能在母單層看")
+    for j,lg in enumerate(legs,1):
+        if not isinstance(lg,dict): continue
+        vals=[f"{k}={lg[k]}" for k in LEG if k in lg]
+        print(f"      leg{j}: "+", ".join(vals) if vals else f"      leg{j}: 可用 key={','.join(sorted(lg.keys()))[:200]}")
+        miss=[k for k in ("fill_price","avg_price","exit_price") if k not in lg]
+        if len(miss)==3: print(f"        ⚠️ leg{j} 沒有任何成交價欄位 → 成交價爭議在這一層就無法定案")
+PY

@@ -197,6 +197,27 @@ def fetch(url):
     except Exception:
         return None
 
+MONEY_PAT = [
+    r"(?:NT\$|NTD|US\$|TWD)\s*[\d,]+",
+    r"\d[\d,]{2,}\s*元",
+    r"每\s*(?:人|桌|位|份|場)\s*[\d,]{3,}",
+]
+
+
+def money_hits(t):
+    """回傳產出裡疑似價格的片段。
+
+    2026-09-24 P11 實測(Owner msg 6103「再多測幾輪」):餵了內部文件、也下了
+    「文件沒寫寫文件未提及」的鐵律,第一次問價他確實答「文件未提及」;
+    但追問一句「很急,給個大概就好」,他就自己生出 NT$15,000~70,000 的區間。
+    所以「叫他不要編價」這條規則靠提示詞守不住,必須在程式這一層攔。
+    """
+    out = []
+    for p in MONEY_PAT:
+        out += re.findall(p, t)
+    return out
+
+
 def run_unit(name, body, meta, out_rel, url, daily, item, idx):
     """跑一個 job-run(產稿 1 呼叫 + 換模型審稿 1 呼叫)。回傳一列 rows。"""
     prompt = body
@@ -227,9 +248,17 @@ def run_unit(name, body, meta, out_rel, url, daily, item, idx):
         out_rel = root + "_" + TODAY + ext
     out_path = os.path.join(HB, out_rel)
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
+    hits = [] if meta.get("ALLOW_MONEY") == "yes" else money_hits(out)
+    banner = ""
+    if hits:
+        banner = ("> 🔴 **需人工**:本篇偵測到疑似價格片段 %s ——依零 LLM 算術層,"
+                  "模型產出的價格一律不得採用,對外只能用程式從有 source 的價目表算出的數字。\n"
+                  % ",".join(dict.fromkeys(hits))[:300])
     with open(out_path, "w", encoding="utf-8") as f:
-        f.write("> 草稿未審(free-quota 班表 %s,model=%s%s)。翻譯/生成稿:不得新增事實,上線前必經人審。\n\n%s\n"
-                % (TODAY, model, (",item=" + item) if item else "", out))
+        f.write("%s> 草稿未審(free-quota 班表 %s,model=%s%s)。翻譯/生成稿:不得新增事實,上線前必經人審。\n\n%s\n"
+                % (banner, TODAY, model, (",item=" + item) if item else "", out))
+    if hits:
+        return (name, "HOLD", out_rel + " 疑似含價格需人工:" + ",".join(dict.fromkeys(hits))[:80])
     if meta.get("REVIEW") == "no":
         return (name, "OK", out_rel + " (" + model.split("/")[-1] + " | 未審)")
     # 換模型審稿(Owner 5349):A 產 B 審,審稿人拿任務原始要求+草稿(有來源頁就附上)逐條挑錯

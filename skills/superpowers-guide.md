@@ -41,6 +41,7 @@
 | 急件、提案、簡報、客戶背景 | a6-sales-rapid-response-skills | 一鍵提案 + 客戶速查 |
 | IG、FB、Threads、社群、貼文 | a3-social-ads-skills + brand-voice-guide | 多平台貼文 + 語氣 |
 | 菜單卡、品牌素材、圖片規範 | a4-photo-asset-skills | 風格統一 + 數位菜單 |
+| 外燴擺設、桌面配置、器皿安排、補餐動線、場地 setup、擺設示意圖 | catering-setup-guide | 硬限制→視覺層次→現場指引→活動後學習 |
 | 客服、LINE、回覆、詢問 | a7-customer-service-skills + brand-voice-guide | FAQ + 語氣 |
 | 策略、規劃、方向、大局 | strategic-review-guide | 5 問框架 |
 | 驗證、確認、完成檢查 | verification-checklist-guide | 5 步驗證 |

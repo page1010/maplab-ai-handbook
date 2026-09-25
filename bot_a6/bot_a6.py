@@ -15,7 +15,7 @@ import logging
 import os
 import re
 import shutil
-import subprocess
+import subprocess  # 2026-09-25: quotes -> scripts/quote_budget_reverse.py (zero-model); model pinned sonnet+haiku via A6_MODEL/A6_FALLBACK_MODEL
 import sys
 import tempfile
 import urllib.request
@@ -656,7 +656,7 @@ async def claude_ask(chat_id: int, user_message: str, user_name: str = "", timeo
 
     try:
         proc = await asyncio.create_subprocess_exec(
-            _resolve_claude_bin(), "-p", "--dangerously-skip-permissions",
+            _resolve_claude_bin(), "-p", "--model", os.getenv("A6_MODEL", "claude-sonnet-5"), "--fallback-model", os.getenv("A6_FALLBACK_MODEL", "claude-haiku-4-5-20251001"), "--dangerously-skip-permissions",
             full_prompt,
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE,
@@ -703,7 +703,7 @@ async def a5_cloud_quote_ask(chat_id: int, user_message: str, user_name: str = "
 
     try:
         proc = await asyncio.create_subprocess_exec(
-            _resolve_claude_bin(), "-p", "--dangerously-skip-permissions",
+            _resolve_claude_bin(), "-p", "--model", os.getenv("A6_MODEL", "claude-sonnet-5"), "--fallback-model", os.getenv("A6_FALLBACK_MODEL", "claude-haiku-4-5-20251001"), "--dangerously-skip-permissions",
             full_prompt,
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE,

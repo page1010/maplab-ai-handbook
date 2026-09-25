@@ -5,7 +5,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-09-24 A1晚間巡查（remote cloud）｜系統今日活躍：A0 共 26+ commits（msg 6059-6108，亞航 prebook + 安全修補 + 投資研究 + Hermes探針P1-P14 + free-quota班表v3 + HERMES_READ_MAP + 治理索引 + 可搬移性）；無 A2-A8 commit；NEEDS_REVIEW 10 tasks ~1997h；T-A7-001 Phase 3 第68天延誤；CRITICAL: T-A4-002 ~4229h / T-IOS-KOL-001 ~2717h / A6 ~2252h；A8 ~2532h；⚠️ P11探針發現誘導即編價—價格攔截器已產出 HOLD+需人工橫幅｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-09-25 A1日間巡查（remote cloud）｜24h commits：A0 17+ commits（free-quota班表+Hermes探針P9-P14+可搬移性+治理+文化修補），無 A2-A8 commit；NEEDS_REVIEW 10 tasks ~2021h；T-A7-001 Phase 3 第69天延誤；CRITICAL: T-A4-002 ~4253h / T-IOS-KOL-001 ~2741h / A6 ~2276h；A8 ~2556h；⚠️ P11探針誘導編價—攔截器 HOLD+需人工橫幅（持續）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 > **合併註記（2026-09-23，工作分支併回 main）**：上面那行是 main 側巡查寫的最新狀態，保留為現值。
 > 下面這行與其後的 Active Task 區塊來自工作分支 `chore/agent-login-governance-20260816`，main 側先前沒有，

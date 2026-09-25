@@ -1368,3 +1368,44 @@ Owner 原話：
 - `SYSTEM_DIRECTORY_INDEX.md` §1.0（同一條規則的索引側寫法）
 - `PORTABILITY.md`（三層模型與 P11 的實證）
 - SECTION 27 放手治理（放手的是執行，不是立標準）
+
+## SECTION 29 — 值班重複警報升級律（Owner msg 6117，2026-09-25）
+
+Owner 原話：
+
+> 你看hermes值班助理沒有認真上班 浪費hermes額度
+
+實證（2026-09-25 量測）：`claude-daily-operations/state/hermes_duty/` 全部 17 份值班報告
+（20260912 → 20260925-AM）**每一份**都含同一組 `BLOCKED_PREFLIGHT`
+（deerflow 3 任務、OPENROUTER_API_KEY 缺失、nginx/Docker 不可用），
+連續 14 天原句重述並每天請 Owner「只看這一件」，既沒修也沒升級。
+而 OPENROUTER_API_KEY 其實一直在本機 `~/.maplab/free_compute.env`，
+免費鏈每天 source 成功（9/24 打了 34 次呼叫）——「缺失」是 preflight 沒 source
+那份 env 的接線問題，屬 selfops（msg 5773）可自修範圍。
+
+### 1. 規則
+
+同一個 blocker 在值班報告連續出現 **3 天**起，不得再原句重述。第 3 天的報告必須改輸出三選一決策卡：
+
+| 選項 | 條件 | 報告裡要寫什麼 |
+|---|---|---|
+| a) 自修 | selfops 範圍內（自家模組、自家接線） | 修法、驗證方式、預計哪一班完成 |
+| b) 上呈 | 只限要付錢、別人的機器帳號、金鑰輪替 | 一句話寫清要 Owner 決定什麼、兩個選項各自後果 |
+| c) 砍任務 | 任務本身已無價值 | 理由 + 砍掉後少了什麼 |
+
+「請 Owner 只看這一件」連續兩天指向同一件而**沒有新事實** = 值班失職，不是盡責。
+重複的警報不是資訊，是噪音；噪音會訓練 Owner 忽略警報（這正是 6117 發生的事）。
+
+### 2. 與既有規則的關係
+
+- 這是任務 #32（看門狗升級律）的第一次成文落地。
+- selfops（msg 5773）：自家接線問題本來就該自己修，不是掛在 Owner 名下 14 天。
+- msg 6050：上呈只剩「要付錢的」——deerflow 三個攔路裡真正要 Owner 的只有
+  「OpenRouter 付費路線要不要開」一件（yaml 註明 code 擋到 Owner 核准帳務為止）；
+  免費鏈 profile（`config/deerflow/hermes-public-research-freechain.yaml`）不用錢。
+
+### 3. 執行面備註
+
+hermes 值班產生器不在本 repo（報告指向 `investment-os`，本執行通道搆不到），
+所以本條先立在規格層；接進產生器的強制層檢查掛在任務 #32。
+在此之前，晨會與 A0 續接輪讀到值班報告時，發現同 blocker ≥3 天原句重述即視同違反本條，當輪處置。

@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-09-25 A1午後巡查（remote cloud）：A0 6+ 新 commits（free-quota detach修正+6125/6123/6122/6119 回信）；**A6 今日 3 commits**（gateway zero-model budget-reverse+splitter fix+model-pin，last commit 已更新至 2026-09-25）。NEEDS_REVIEW 10 tasks 持續（since 07-19，~2025h+，等 Owner 決定延長/關閉/重啟）；T-A7-001 Phase 3 延誤持續（Owner 自 07-18 起 **69 天**未確認 Zone B/C，07-25 截止已過）；CRITICAL: T-A4-002 **~4257h** / T-IOS-KOL-001 **~2745h**；A8 **~2560h**。A6 NEEDS_REVIEW 仍待 Owner 確認 LINE webhook Channel 1654658337（但今日已有 gateway 技術進展）。
+> 最後更新：2026-09-25 A1晚間巡查（remote cloud）：晚間 8h 零非巡查 commit；今日累計：A0 6+ commits + **A6 3 commits**（gateway zero-model budget-reverse+splitter fix+model-pin，last commit 已更新至 2026-09-25）；無 A2/A3/A4/A5/A7/A8 commit。NEEDS_REVIEW 10 tasks 持續（since 07-19，**~2033h**，等 Owner 決定延長/關閉/重啟）；T-A7-001 Phase 3 延誤持續（Owner 自 07-18 起第 **69 天**未確認 Zone B/C，07-25 截止已過）；CRITICAL: T-A4-002 **~4265h** / T-IOS-KOL-001 **~2753h**；A8 **~2568h**。A6 NEEDS_REVIEW 仍待 Owner 確認 LINE webhook Channel 1654658337（今日有 gateway 活動，T-A6-001 NEEDS_REVIEW 持續）。
 >
 > 使用方式：選擇角色 → 複製 prompt / module handoff → 貼到 Gemini / Codex / OpenClaw / legacy Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令

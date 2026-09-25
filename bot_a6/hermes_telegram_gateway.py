@@ -364,7 +364,7 @@ def quote_shortcut(text: str) -> str | None:
     for kw in ("品項", "菜色", "菜單", "items"):
         if kw in t:
             seg = t.split(kw, 1)[1]; break
-    cands = [c.strip(" :：-•·\n") for c in re.split(r"[、,\n]", seg) if c.strip()]
+    cands = [c.strip(" :：-•·\n") for c in re.split(r"[、,。;；\n]", seg) if c.strip()]
     items = [c for c in cands if 2 <= len(c) <= 20 and not re.search(r"預算|人|元|萬|不吃|過敏|素|限制|團", c)]
     if not items:
         return None

@@ -35,6 +35,16 @@ BAND="${1:-0}"; BANDS="${2:-0}"
 #   force     同日冪等閘放行,強制重跑(等同 FQ_FORCE=1,但有些執行通道不准在命令前面加環境變數)
 #   selftest  只跑價格攔截器的單元測試,不打任何一次外部呼叫、不寫任何產出
 MODE="${3:-}"
+# 2026-09-25 追加:detach 模式。背景班次若由 Claude 續接窗直接起跑,會跟著主程式
+# 收攤一起被殺(9/25 兩次實證:be8182l24 與 b1eaa3r5r 都零產出)。執行通道又擋
+# 裸 nohup/&,所以讓腳本自己脫鉤:MODE=detach 時以 nohup 重新拉起自己後立刻返回,
+# 子行程孤兒化脫離 Claude 行程樹,班次跑多久都不怕續接窗結束。
+if [ "$MODE" = "detach" ]; then
+  DLOG="$FQ/band${BAND}_${TODAY}.log"
+  nohup bash "${BASH_SOURCE[0]}" "$BAND" "$BANDS" >"$DLOG" 2>&1 </dev/null &
+  echo "[detach] 班次 $BAND/$BANDS 已脫鉤背景執行 pid=$! log=$DLOG"
+  exit 0
+fi
 REPORT="$FQ/report_$TODAY.md"
 QSIG_FILE="$FQ/.queue_sig_${TODAY}_b${BAND}"
 QSIG="$(cat "$FQ"/queue/*.job.md 2>/dev/null | shasum | cut -c1-12)"

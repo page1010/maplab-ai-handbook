@@ -6,3 +6,16 @@
   OK 40-image-prompt.job.md -> 扇出 8 件成功 8 件
   OK 41-doc-index.job.md -> 扇出 12 件成功 11 件|[pitfalls.md#L61-120] 全模型失敗或達日上限
   OK 42-suno-sop.job.md -> 扇出 17 件成功 17 件
+[git] pushed
+
+# free-quota 班表日報 20260925
+
+API 呼叫數(含重試):151 / 上限 1100
+
+- [SKIP] 10-open-todos.job.md — 單件題目只在第 1 班跑
+- [SKIP] 20-gym-seed.job.md — 單件題目只在第 1 班跑
+- [SKIP] 30-music-prompt.job.md — 單件題目只在第 1 班跑
+- [SKIP] 31-image-plan.job.md — 單件題目只在第 1 班跑
+- [OK] 40-image-prompt.job.md — 扇出 8 件成功 8 件
+- [OK] 41-doc-index.job.md — 扇出 12 件成功 11 件|[pitfalls.md#L61-120] 全模型失敗或達日上限
+- [OK] 42-suno-sop.job.md — 扇出 17 件成功 17 件

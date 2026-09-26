@@ -47,3 +47,10 @@
 20260925,40-image-prompt.job.md,OK,扇出 8 件成功 8 件
 20260925,41-doc-index.job.md,OK,扇出 12 件成功 11 件|[pitfalls.md#L61-120] 全模型失敗或達日上限
 20260925,42-suno-sop.job.md,OK,扇出 17 件成功 17 件
+20260926,10-open-todos.job.md,SKIP,單件題目只在第 1 班跑
+20260926,20-gym-seed.job.md,SKIP,單件題目只在第 1 班跑
+20260926,30-music-prompt.job.md,SKIP,單件題目只在第 1 班跑
+20260926,31-image-plan.job.md,SKIP,單件題目只在第 1 班跑
+20260926,40-image-prompt.job.md,OK,扇出 8 件成功 8 件
+20260926,41-doc-index.job.md,OK,扇出 12 件成功 12 件
+20260926,42-suno-sop.job.md,OK,扇出 16 件成功 16 件

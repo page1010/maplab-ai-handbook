@@ -1,0 +1,8 @@
+[done] jobs=7 calls=147
+  SKIP 10-open-todos.job.md -> 單件題目只在第 1 班跑
+  SKIP 20-gym-seed.job.md -> 單件題目只在第 1 班跑
+  SKIP 30-music-prompt.job.md -> 單件題目只在第 1 班跑
+  SKIP 31-image-plan.job.md -> 單件題目只在第 1 班跑
+  OK 40-image-prompt.job.md -> 扇出 8 件成功 8 件
+  OK 41-doc-index.job.md -> 扇出 12 件成功 12 件
+  OK 42-suno-sop.job.md -> 扇出 16 件成功 16 件

@@ -54,3 +54,12 @@
 20260926,40-image-prompt.job.md,OK,扇出 8 件成功 8 件
 20260926,41-doc-index.job.md,OK,扇出 12 件成功 12 件
 20260926,42-suno-sop.job.md,OK,扇出 16 件成功 16 件
+20260927,10-open-todos.job.md,OK,data/free-quota/open-todos/todos_20260927.md (nemotron-3-super-120b-a12b:free | 審ISSUES | ctx讀到3檔)
+20260927,20-gym-seed.job.md,OK,data/free-quota/gym-seeds/inquiry_20260927.md (nemotron-3-super-120b-a12b:free | 審ISSUES)
+20260927,30-music-prompt.job.md,OK,data/free-quota/music-prompts/plan_20260927.md (nemotron-3-super-120b-a12b:free | 審ISSUES)
+20260927,31-image-plan.job.md,OK,data/free-quota/image-plans/plan_20260927.md (nemotron-3-super-120b-a12b:free | 審ISSUES)
+20260927,40-image-prompt.job.md,OK,扇出 9 件成功 9 件
+20260927,41-doc-index.job.md,OK,扇出 12 件成功 11 件|[docs/company-values.md#L1-60] 全模型失敗或達日上限
+20260927,42-suno-sop.job.md,OK,扇出 17 件成功 17 件
+20260927,50-photo-seo-naming.job.md,OK,data/free-quota/outputs/photo-seo-naming-standard.md (nemotron-3-super-120b-a12b:free | 審ISSUES | ctx讀到1檔)
+20260927,51-video-storyboard-template.job.md,OK,data/free-quota/outputs/video-storyboard-template.md (nemotron-3-super-120b-a12b:free | 審ISSUES | ctx讀到1檔)

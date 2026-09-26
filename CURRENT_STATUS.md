@@ -5,7 +5,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-09-23 A1晚間巡查（remote cloud）｜系統今日活躍：28 A0 commits（msg 5975-6050，588-commit 大合併 + Clarity 上線 + Investment OS 套利研究）；NEEDS_REVIEW 10 tasks ~1957h；T-A7-001 Phase 3 第67天延誤；CRITICAL: T-A4-002 ~4189h / T-IOS-KOL-001 ~2677h / A6 ~2212h；A8 ~2492h；無新異常｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-09-26 A1晚間巡查（remote cloud）｜8h commits（since 午後巡查 7ac3c0b）：1 非巡查 commit（334efdd A0/Owner 6140規劃相片SEO×影片素材×hermes額度，20:25）+ 1 merge commit（f341b4e）；無 A2/A3/A4/A5/A6/A7/A8 新 commit；NEEDS_REVIEW 10 tasks ~2065h；T-A7-001 Phase 3 第70天延誤；CRITICAL: T-A4-002 ~4297h / T-IOS-KOL-001 ~2785h；A8 ~2600h；A6 last commit 仍停留 2026-09-25（T-A6-001 NEEDS_REVIEW 仍待 Owner 確認 LINE webhook Channel 1654658337）；⚠️ P11探針誘導編價—攔截器 HOLD+需人工橫幅（持續）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 > **合併註記（2026-09-23，工作分支併回 main）**：上面那行是 main 側巡查寫的最新狀態，保留為現值。
 > 下面這行與其後的 Active Task 區塊來自工作分支 `chore/agent-login-governance-20260816`，main 側先前沒有，

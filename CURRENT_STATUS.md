@@ -5,7 +5,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-09-25 A1晚間巡查（remote cloud）｜晚間 8h commits：0 非巡查 commit（僅午後 613cb04 巡查 commit）；當日累計：A0 6+ commits + **A6 3 commits**（`8965796` model-pin+`11d3d0d` zero-model budget-reverse+`5a21f91` splitter fix），無 A2/A3/A4/A5/A7/A8 commit；NEEDS_REVIEW 10 tasks ~2033h；T-A7-001 Phase 3 第69天延誤；CRITICAL: T-A4-002 ~4265h / T-IOS-KOL-001 ~2753h；A8 ~2568h；A6 last commit 已更新至 2026-09-25（T-A6-001 NEEDS_REVIEW 仍待 Owner 確認 LINE webhook Channel 1654658337）；⚠️ P11探針誘導編價—攔截器 HOLD+需人工橫幅（持續）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-09-26 A1晨間巡查（remote cloud）｜24h commits（since 晚間巡查 7c88f76）：0 非巡查 commit；A0 持續活躍（free_quota_daily/6119-6125 回信），無 A2/A3/A4/A5/A7/A8 新 commit；NEEDS_REVIEW 10 tasks ~2049h；T-A7-001 Phase 3 第70天延誤；CRITICAL: T-A4-002 ~4281h / T-IOS-KOL-001 ~2769h；A8 ~2584h；A6 last commit 仍停留 2026-09-25（T-A6-001 NEEDS_REVIEW 仍待 Owner 確認 LINE webhook Channel 1654658337）；⚠️ P11探針誘導編價—攔截器 HOLD+需人工橫幅（持續）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 > **合併註記（2026-09-23，工作分支併回 main）**：上面那行是 main 側巡查寫的最新狀態，保留為現值。
 > 下面這行與其後的 Active Task 區塊來自工作分支 `chore/agent-login-governance-20260816`，main 側先前沒有，

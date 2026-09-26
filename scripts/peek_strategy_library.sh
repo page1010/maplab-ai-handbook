@@ -73,6 +73,41 @@ case "$MODE" in
     N="${3:-80}"
     sed -n "${FROM},$((FROM + N))p" "$LIB"
     ;;
+  read)
+    # 2026-09-25 加(回 6118 馬克羊選擇權):#60 要讀三張馬克羊卡與兩包 task_packets,
+    # 但 grep/sec 兩個模式寫死只讀 FinLab 那一份——工具缺口讓 #60 卡了三天。
+    # 通用唯讀:只准 investment-os 底下的 .md/.json/.txt/.py/.yaml,擋 secrets 與 .env。
+    F="${2:?需要檔案路徑}"
+    FROM="${3:-1}"
+    N="${4:-160}"
+    case "$F" in
+      /Users/pagemacmini/investment-os/*) : ;;
+      *) echo "✗ 只准讀 investment-os 底下"; exit 2 ;;
+    esac
+    case "$F" in
+      *secrets*|*.env) echo "✗ secrets 與 .env 一律不讀"; exit 2 ;;
+    esac
+    case "$F" in
+      *.md|*.json|*.txt|*.py|*.yaml|*.yml|*.jsonl) : ;;
+      *) echo "✗ 只准 md/json/txt/py/yaml/jsonl"; exit 2 ;;
+    esac
+    if [ ! -f "$F" ]; then echo "✗ 找不到 $F"; exit 2; fi
+    echo "==== $F ($(wc -l < "$F") 行, 從第 $FROM 行讀 $N 行) ===="
+    sed -n "${FROM},$((FROM + N))p" "$F"
+    ;;
+  grepf)
+    # 同上的通用版 grep:指定檔案找關鍵字帶行號。
+    F="${2:?需要檔案路徑}"
+    KW="${3:?需要關鍵字}"
+    case "$F" in
+      /Users/pagemacmini/investment-os/*) : ;;
+      *) echo "✗ 只准讀 investment-os 底下"; exit 2 ;;
+    esac
+    case "$F" in
+      *secrets*|*.env) echo "✗ secrets 與 .env 一律不讀"; exit 2 ;;
+    esac
+    grep -n "$KW" "$F" | head -60
+    ;;
   *)
     echo "未知模式:$MODE(可用 list / toc / head / grep / sec)"
     exit 2

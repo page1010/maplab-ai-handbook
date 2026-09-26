@@ -8,36 +8,182 @@
 # 安全邊界:金鑰只 source 不回顯;產出一律草稿不發布;queue 不放客資/憑證;
 #          日上限 MAX_CALLS=120,留足 A6 客服/LINE 訓練/晨會額度;同日重跑冪等。
 set -u
-ENV_FILE="$HOME/.maplab/free_compute.env"
+# 可搬移性(Owner msg 6107「整個系統存進 ssd 搬去哪裡都還可以運行」):
+# 路徑一律從腳本自己的位置推,不寫死 /Users/<某人>。整包複製到別台機器或別的碟,
+# 只要保留 repo 目錄結構就能跑;要指到別份 repo 用 MAPLAB_HB 覆蓋。
+# 仍然綁在機器上的只剩「金鑰」與「不進 repo 的產出」兩樣,見 PORTABILITY.md。
+ENV_FILE="${MAPLAB_ENV:-$HOME/.maplab/free_compute.env}"
 [ -f "$ENV_FILE" ] || { echo "FATAL: env file missing"; exit 1; }
 set -a; source "$ENV_FILE"; set +a
 [ -n "${OPENROUTER_API_KEY:-}" ] || { echo "FATAL: OPENROUTER_API_KEY empty"; exit 1; }
 
-HB="/Users/pagemacmini/maplab-ai-handbook"
+HB="${MAPLAB_HB:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 FQ="$HB/data/free-quota"
 mkdir -p "$FQ/queue" "$FQ/done"
 TODAY=$(date +%Y%m%d)
 WEEK=$(date +%G-W%V)
 REPORT="$FQ/report_$TODAY.md"
-if [ -f "$REPORT" ] && [ "$(wc -c < "$REPORT" | tr -d ' ')" -gt 200 ]; then
-  echo "[skip] 今日班表已跑過: $REPORT"; exit 0
+# 同日冪等閘。2026-09-24 修:原本只看「今天的日報在不在」,結果當天新增的 job
+# 一律要等到隔天才會跑,新題目當輪無法驗證。改成比對佇列簽章——佇列內容有變就再跑一次,
+# 沒變才跳過(既保留冪等,又讓「加了新題目就能立刻驗」成立)。FQ_FORCE=1 可強制重跑。
+#
+# 時段分班(Owner msg 6093,每天 500 個 job-run):一次跑完 500 件會連續佔住機器好幾個小時,
+# 所以改成分班。用法 `bash free_quota_daily.sh <第幾班> <共幾班>`,例如 `… 3 6` = 今天第 3 班、
+# 全天共 6 班,每班只跑各題扇出量的六分之一。不給參數 = 一次跑完整天的量(手動補跑用)。
+BAND="${1:-0}"; BANDS="${2:-0}"
+# 第三個參數 = 模式。兩個值:
+#   force     同日冪等閘放行,強制重跑(等同 FQ_FORCE=1,但有些執行通道不准在命令前面加環境變數)
+#   selftest  只跑價格攔截器的單元測試,不打任何一次外部呼叫、不寫任何產出
+MODE="${3:-}"
+# 2026-09-25 追加:detach 模式。背景班次若由 Claude 續接窗直接起跑,會跟著主程式
+# 收攤一起被殺(9/25 兩次實證:be8182l24 與 b1eaa3r5r 都零產出)。執行通道又擋
+# 裸 nohup/&,所以讓腳本自己脫鉤:MODE=detach 時以 nohup 重新拉起自己後立刻返回,
+# 子行程孤兒化脫離 Claude 行程樹,班次跑多久都不怕續接窗結束。
+if [ "$MODE" = "detach" ]; then
+  DLOG="$FQ/band${BAND}_${TODAY}.log"
+  nohup bash "${BASH_SOURCE[0]}" "$BAND" "$BANDS" >"$DLOG" 2>&1 </dev/null &
+  echo "[detach] 班次 $BAND/$BANDS 已脫鉤背景執行 pid=$! log=$DLOG"
+  exit 0
 fi
+REPORT="$FQ/report_$TODAY.md"
+QSIG_FILE="$FQ/.queue_sig_${TODAY}_b${BAND}"
+QSIG="$(cat "$FQ"/queue/*.job.md 2>/dev/null | shasum | cut -c1-12)"
+[ "$MODE" = "force" ] && FQ_FORCE=1
+if [ "$MODE" != "selftest" ] && [ -z "${FQ_FORCE:-}" ] && [ -f "$REPORT" ] && [ "$(wc -c < "$REPORT" | tr -d ' ')" -gt 200 ] \
+   && [ "$(cat "$QSIG_FILE" 2>/dev/null)" = "$QSIG" ]; then
+  echo "[skip] 本班今日已跑過且佇列未變: $REPORT(要強制重跑請設 FQ_FORCE=1)"; exit 0
+fi
+[ "$MODE" = "selftest" ] || printf '%s' "$QSIG" > "$QSIG_FILE"
 
-/usr/bin/python3 - "$HB" "$TODAY" "$WEEK" <<'PYEOF'
+/usr/bin/python3 - "$HB" "$TODAY" "$WEEK" "$BAND" "$BANDS" "$MODE" <<'PYEOF'
 import glob, html, json, os, re, shutil, sys, urllib.request
 
 HB, TODAY, WEEK = sys.argv[1], sys.argv[2], sys.argv[3]
+BAND, BANDS = int(sys.argv[4]), int(sys.argv[5])
+MODE = sys.argv[6] if len(sys.argv) > 6 else ""
 FQ = HB + "/data/free-quota"
 KEY = os.environ["OPENROUTER_API_KEY"]
 MODELS = ["nvidia/nemotron-3-super-120b-a12b:free",
           "google/gemma-4-31b-it:free",
           "minimax/minimax-m3:free",
           "dots-studio/dots-3-note-preview:free"]
-MAX_CALLS = 120
+# Owner msg 6092/6093:目標是每天 1000 個來回。一個 job-run = 產稿 1 + 換模型審稿 1 = 2 次呼叫,
+# 所以 1000 來回 ≈ 500 job-run。上限放到 1100 留重試餘裕;FQ_MAX_CALLS 可覆寫。
+MAX_CALLS = int(os.environ.get("FQ_MAX_CALLS", "1100"))
+# 連續 N 次(全模型都失敗)就收工,免得撞到免費額度牆之後還空轉幾百次。
+FAIL_STREAK_MAX = int(os.environ.get("FQ_FAIL_STREAK", "8"))
 calls = 0
+fail_streak = 0
+
+# ── 2026-09-24 追加(Owner msg 6091/6092):CONTEXT 注入 ──
+# 為什麼:6091 實測三段對照證明,同一顆模型同一個問題,不餵資料就整段編造,
+# 餵了就答對。原本這支排程跟 hermes_call.sh 犯同一個病——只送題目、不送資料,
+# 模型有 26 萬~100 萬 token 上下文,實際餵進去 0 bytes。
+# CONTEXT: 後面接 repo 相對路徑(逗號或空白分隔),讀進來當「內部文件」附在題目後,
+# 並同樣附給審稿人,審稿人才有辦法核對「草稿有沒有新增文件沒寫的事實」。
+CTX_BUDGET = int(os.environ.get("FQ_CTX_BUDGET", "60000"))   # 每題 context 位元組上限
+
+def load_ctx(spec):
+    """spec = 'AGENT_CORE.md, CURRENT_STATUS.md#tail400' -> (文字, 讀到的檔清單, 缺的檔清單)
+
+    支援切片:`檔名#tailN` 取最後 N 行,`檔名#headN` 取前 N 行。
+    2026-09-24 教訓:CURRENT_STATUS.md 單檔 245,954 bytes,不切片就會吃光整個
+    context 預算,後面的檔一律讀不到(當日實測「讀到1檔,讀不到2檔」)。
+    """
+    got, missing, parts, used = [], [], [], 0
+    for item in re.split(r"[,\s]+", spec.strip()):
+        if not item:
+            continue
+        rel, _, slc = item.partition("#")
+        p = os.path.join(HB, rel)
+        if not os.path.isfile(p):
+            missing.append(rel); continue
+        try:
+            t = open(p, encoding="utf-8", errors="ignore").read()
+        except Exception:
+            missing.append(rel); continue
+        m = re.match(r"(tail|head)(\d+)$", slc)
+        mr = re.match(r"L(\d+)-(\d+)$", slc)
+        if m:
+            n = int(m.group(2)); lines = t.splitlines()
+            lines = lines[-n:] if m.group(1) == "tail" else lines[:n]
+            t = "\n".join(lines)
+            rel = rel + "#" + slc
+        elif mr:
+            a, b = int(mr.group(1)), int(mr.group(2))
+            t = "\n".join(t.splitlines()[a - 1:b])
+            rel = rel + "#" + slc
+            if not t.strip():
+                missing.append(rel + "(行號範圍超出檔尾)"); continue
+        room = CTX_BUDGET - used
+        if room <= 0:
+            missing.append(rel + "(超出 context 預算未讀)"); continue
+        if len(t) > room:
+            t = t[:room] + "\n…(本檔被 context 預算截斷,未讀完)"
+        used += len(t)
+        got.append(rel)
+        parts.append("----- 檔案:%s -----\n%s" % (rel, t))
+    return "\n\n".join(parts), got, missing
+
+def load_items(spec_list, spec_chunk, n):
+    """回傳今天要跑的 item 清單(每個 item 會取代 body 與 CONTEXT 裡的 {{ITEM}})。
+
+    FANOUT       = 靜態清單檔(FQ 下相對路徑),一行一個 item,# 開頭為註解。
+    FANOUT_CHUNK = `檔名:每段行數[, 檔名:行數 …]`,依檔案實際長度自動切成
+                   `檔名#L1-60`、`檔名#L61-120` … 這樣清單會自己跟著檔案長大,
+                   不必手抄一百行(Owner msg 6093:整理 100 件/天)。
+    每天從不同起點取 n 個(起點 = 今天日期 % 池子大小),所以連著跑不會每天做同一段。
+    """
+    def read_list(rel):
+        p = os.path.join(FQ, rel.strip())
+        if not os.path.isfile(p):
+            return []
+        return [l.strip() for l in open(p, encoding="utf-8")
+                if l.strip() and not l.strip().startswith("#")]
+
+    pool = []
+    if spec_list:
+        # `a.txt x b.txt` = 交叉組合(場景 × 風格),兩份 30 行的清單就有 900 種題目,
+        # 不必手抄一百行。組合用 ｜ 串起來當 item。
+        legs = [read_list(x) for x in spec_list.split(" x ")]
+        legs = [g for g in legs if g]
+        if len(legs) == 1:
+            pool += legs[0]
+        elif len(legs) > 1:
+            for a in legs[0]:
+                for b in legs[1]:
+                    pool.append(a + "｜" + b)
+    for c in re.split(r"\s*,\s*", (spec_chunk or "").strip()):
+        if not c:
+            continue
+        rel, _, step = c.partition(":")
+        fp = os.path.join(HB, rel.strip())
+        if not os.path.isfile(fp):
+            continue
+        total = sum(1 for _ in open(fp, encoding="utf-8", errors="ignore"))
+        step = int(step or 60)
+        for a in range(1, total + 1, step):
+            pool.append("%s#L%d-%d" % (rel.strip(), a, min(a + step - 1, total)))
+    if not pool:
+        return []
+    start = int(TODAY) % len(pool)
+    # 交叉組合是按第一欄排好的,直接連號取會整批撞同一個場景;用一個與池子互質的步長跳著取。
+    step = next((s for s in (97, 89, 83, 79, 73, 71, 67, 61, 59, 53, 47, 43, 41, 37, 31,
+                             29, 23, 19, 17, 13, 11, 7, 1)
+                 if len(pool) % s != 0 or s == 1), 1)
+    seen, out = set(), []
+    i = 0
+    while len(out) < min(n, len(pool)) and i < len(pool) * 3:
+        k = (start + i * step) % len(pool)
+        if k not in seen:
+            seen.add(k); out.append(pool[k])
+        i += 1
+    return out
 
 def api(prompt, exclude=None):
-    global calls
+    global calls, fail_streak
+    if fail_streak >= FAIL_STREAK_MAX:
+        return None, None
     for m in MODELS:
         if m == exclude:
             continue
@@ -53,9 +199,11 @@ def api(prompt, exclude=None):
             d = json.load(urllib.request.urlopen(req, timeout=240))
             c = (d.get("choices") or [{}])[0].get("message", {}).get("content") or ""
             if c.strip():
+                fail_streak = 0
                 return m, c.strip()
         except Exception:
             continue
+    fail_streak += 1
     return None, None
 
 def fetch(url):
@@ -69,6 +217,127 @@ def fetch(url):
     except Exception:
         return None
 
+MONEY_PAT = [
+    r"(?:NT\$|NTD|US\$|TWD)\s*[\d,]+",
+    r"\d[\d,]{2,}\s*元",
+    r"每\s*(?:人|桌|位|份|場)\s*[\d,]{3,}",
+]
+
+
+def money_hits(t):
+    """回傳產出裡疑似價格的片段。
+
+    2026-09-24 P11 實測(Owner msg 6103「再多測幾輪」):餵了內部文件、也下了
+    「文件沒寫寫文件未提及」的鐵律,第一次問價他確實答「文件未提及」;
+    但追問一句「很急,給個大概就好」,他就自己生出 NT$15,000~70,000 的區間。
+    所以「叫他不要編價」這條規則靠提示詞守不住,必須在程式這一層攔。
+    """
+    out = []
+    for p in MONEY_PAT:
+        out += re.findall(p, t)
+    return out
+
+
+if MODE == "selftest":
+    # 攔截器自己的單元測試。不打任何一次外部呼叫,不寫任何產出,所以隨時可重跑。
+    # 會有這段是因為 P11 那天寫完攔截器、冒煙測沒跑完就收工,等於「寫了但沒驗」——
+    # 同一個毛病不重演,驗證這件事就要能一行跑完。
+    CASES = [
+        ("一桌約 NT$25,000 起", True, "NT$ 加數字"),
+        ("整案 NTD 45000 以上", True, "NTD 寫法"),
+        ("每人 1,200 元含稅", True, "數字加元"),
+        ("每桌 8800", True, "每桌加數字"),
+        ("報價需人工,文件未提及價格", False, "正確拒答不該被誤攔"),
+        ("活動於 2026 年舉辦,現場 120 人", False, "年份與人數不是價格"),
+        ("餐期 18:30 開始", False, "時間不是價格"),
+    ]
+    bad = 0
+    for text, want, why in CASES:
+        got = bool(money_hits(text))
+        ok = (got == want)
+        bad += 0 if ok else 1
+        print("%s %-28s 期望攔=%-5s 實際攔=%-5s  %s"
+              % ("[過]" if ok else "[沒過]", text, want, got, why))
+    print("selftest: %d/%d 過" % (len(CASES) - bad, len(CASES)))
+    sys.exit(0 if bad == 0 else 1)
+
+
+def run_unit(name, body, meta, out_rel, url, daily, item, idx):
+    """跑一個 job-run(產稿 1 呼叫 + 換模型審稿 1 呼叫)。回傳一列 rows。"""
+    prompt = body
+    text = None
+    ctx_txt, ctx_got, ctx_missing = "", [], []
+    if meta.get("CONTEXT"):
+        spec = meta["CONTEXT"].replace("{{ITEM}}", item or "")
+        ctx_txt, ctx_got, ctx_missing = load_ctx(spec)
+        if ctx_missing and not ctx_got:
+            return (name, "FAIL", "CONTEXT 全部讀不到:" + ",".join(ctx_missing))
+        prompt = ("以下是 MAPLAB 的內部文件。只根據文件內容回答;文件沒寫的一律寫「文件未提及」,"
+                  "不得自行補充、不得推測、不得編造數字或價格。\n\n"
+                  "=== 內部文件開始 ===\n" + ctx_txt + "\n=== 內部文件結束 ===\n\n"
+                  "任務:\n" + prompt)
+    if url:
+        text = fetch(url)
+        if not text:
+            return (name, "FAIL", "來源頁抓不到")
+        prompt += "\n\n=== 來源頁面全文(已去標籤,含導覽雜訊請自行忽略) ===\n" + text
+    model, out = api(prompt)
+    if not out:
+        return (name, "FAIL", "全模型失敗或達日上限")
+    root, ext = os.path.splitext(out_rel)
+    ext = ext or ".md"
+    if item is not None:
+        out_rel = "%s_%s/%03d%s" % (root, TODAY, idx + 1, ext)
+    elif daily:
+        out_rel = root + "_" + TODAY + ext
+    out_path = os.path.join(HB, out_rel)
+    os.makedirs(os.path.dirname(out_path), exist_ok=True)
+    hits = [] if meta.get("ALLOW_MONEY") == "yes" else money_hits(out)
+    banner = ""
+    if hits:
+        banner = ("> 🔴 **需人工**:本篇偵測到疑似價格片段 %s ——依零 LLM 算術層,"
+                  "模型產出的價格一律不得採用,對外只能用程式從有 source 的價目表算出的數字。\n"
+                  % ",".join(dict.fromkeys(hits))[:300])
+    with open(out_path, "w", encoding="utf-8") as f:
+        f.write("%s> 草稿未審(free-quota 班表 %s,model=%s%s)。翻譯/生成稿:不得新增事實,上線前必經人審。\n\n%s\n"
+                % (banner, TODAY, model, (",item=" + item) if item else "", out))
+    if hits:
+        return (name, "HOLD", out_rel + " 疑似含價格需人工:" + ",".join(dict.fromkeys(hits))[:80])
+    if meta.get("REVIEW") == "no":
+        return (name, "OK", out_rel + " (" + model.split("/")[-1] + " | 未審)")
+    # 換模型審稿(Owner 5349):A 產 B 審,審稿人拿任務原始要求+草稿(有來源頁就附上)逐條挑錯
+    if ctx_txt:
+        rv_prompt = ("你是嚴格審稿人,審另一個模型依內部文件寫出的草稿。逐條核對:1)草稿裡每一個事實/數字/價格/承諾"
+                     "是否都能在內部文件裡找到出處,找不到的一律當作編造並指出 2)文件沒寫的地方草稿有沒有老實寫"
+                     "「文件未提及」 3)是否偏離任務要求。")
+    elif text:
+        rv_prompt = ("你是嚴格審稿人,審另一個模型的草稿。逐條核對:1)草稿有無新增來源頁沒有的事實/數字/價格/承諾 "
+                     "2)專名與數字是否一字不差 3)是否偏離任務要求。")
+    else:
+        rv_prompt = ("你是嚴格審稿人,審另一個模型的草稿(無來源頁,屬合成練習)。逐條核對:1)是否清楚標示為模擬/SYNTHETIC "
+                     "2)有無疑似真實人名/店名/客資 3)是否符合任務要求。")
+    rv_prompt += ("第一行只寫 VERDICT: PASS 或 VERDICT: ISSUES,之後逐條列問題(無問題寫「無」),最後一行給一句改進建議。"
+                  "\n\n=== 任務原始要求 ===\n" + body[:2500]
+                  + "\n\n=== 草稿 ===\n" + out[:6000]
+                  + ("\n\n=== 內部文件(唯一可接受的事實來源) ===\n" + ctx_txt[:20000] if ctx_txt else "")
+                  + ("\n\n=== 來源頁面全文(已去標籤) ===\n" + text[:6000] if text else ""))
+    rv_model, rv = api(rv_prompt, exclude=model)
+    verdict = "審稿失敗"
+    if rv:
+        verdict = "審PASS" if "PASS" in rv.splitlines()[0].upper() else "審ISSUES"
+        rv_dir = FQ + "/reviews"
+        os.makedirs(rv_dir, exist_ok=True)
+        suffix = ("_%03d" % (idx + 1)) if item is not None else ""
+        with open(rv_dir + "/" + name.replace(".job.md", "") + "_" + TODAY + suffix + ".review.md",
+                  "w", encoding="utf-8") as f:
+            f.write("# 換模型審稿 %s\n產稿=%s 審稿=%s 產出=%s\n\n%s\n" % (name, model, rv_model, out_rel, rv))
+    ctx_note = ""
+    if ctx_got or ctx_missing:
+        ctx_note = " | ctx讀到%d檔" % len(ctx_got)
+        if ctx_missing:
+            ctx_note += ",讀不到:" + ",".join(ctx_missing)
+    return (name, "OK", out_rel + " (" + model.split("/")[-1] + " | " + verdict + ctx_note + ")")
+
 rows = []
 for jf in sorted(glob.glob(FQ + "/queue/*.job.md")):
     name = os.path.basename(jf)
@@ -77,46 +346,41 @@ for jf in sorted(glob.glob(FQ + "/queue/*.job.md")):
     out_rel, url, daily = meta.get("OUTPUT"), meta.get("INPUT_URL"), meta.get("DAILY") == "yes"
     if not out_rel or not body.strip():
         rows.append((name, "SKIP", "格式不完整")); continue
-    prompt = body.strip()
-    text = None
-    if url:
-        text = fetch(url)
-        if not text:
-            rows.append((name, "FAIL", "來源頁抓不到")); continue
-        prompt += "\n\n=== 來源頁面全文(已去標籤,含導覽雜訊請自行忽略) ===\n" + text
-    model, out = api(prompt)
-    if not out:
-        rows.append((name, "FAIL", "全模型失敗或達日上限")); continue
-    if daily:
-        root, ext = os.path.splitext(out_rel)
-        out_rel = root + "_" + TODAY + (ext or ".md")
-    out_path = os.path.join(HB, out_rel)
-    os.makedirs(os.path.dirname(out_path), exist_ok=True)
-    with open(out_path, "w", encoding="utf-8") as f:
-        f.write("> 草稿未審(free-quota 班表 %s,model=%s)。翻譯/生成稿:不得新增事實,上線前必經人審。\n\n%s\n"
-                % (TODAY, model, out))
-    if not daily:
-        shutil.move(jf, FQ + "/done/" + TODAY + "-" + name)
-    # 換模型審稿(Owner 5349):A 產 B 審,審稿人拿任務原始要求+草稿(有來源頁就附上)逐條挑錯
-    if text:
-        rv_prompt = ("你是嚴格審稿人,審另一個模型的草稿。逐條核對:1)草稿有無新增來源頁沒有的事實/數字/價格/承諾 "
-                     "2)專名與數字是否一字不差 3)是否偏離任務要求。")
+    body = body.strip()
+    # 扇出(Owner msg 6093):一張 job 卡 = 一天 N 件,不是一天一件。沒有 FANOUT 就照舊跑一件。
+    items = [None]
+    if meta.get("FANOUT") or meta.get("FANOUT_CHUNK"):
+        items = load_items(meta.get("FANOUT"), meta.get("FANOUT_CHUNK"),
+                           int(meta.get("FANOUT_N", "10")))
+        if not items:
+            rows.append((name, "FAIL", "FANOUT 清單空的或讀不到")); continue
+        if BANDS > 1 and 1 <= BAND <= BANDS:
+            items = items[BAND - 1::BANDS]   # 本班只拿自己那一份
+            if not items:
+                rows.append((name, "SKIP", "本班沒分到題目")); continue
+    if items == [None] and BANDS > 1 and BAND != 1:
+        rows.append((name, "SKIP", "單件題目只在第 1 班跑")); continue
+    ok_n, bad = 0, []
+    last = None
+    for idx, item in enumerate(items):
+        if calls + 2 > MAX_CALLS or fail_streak >= FAIL_STREAK_MAX:
+            bad.append("在第 %d/%d 件停手(calls=%d/%d,連續失敗=%d)"
+                       % (idx + 1, len(items), calls, MAX_CALLS, fail_streak))
+            break
+        r = run_unit(name, body.replace("{{ITEM}}", item or ""), meta, out_rel, url, daily, item, idx)
+        last = r
+        if r[1] == "OK":
+            ok_n += 1
+        else:
+            bad.append(("[%s] " % item if item else "") + r[2])
+    if items == [None]:
+        rows.append(last if last else (name, "FAIL", "沒有產出"))
     else:
-        rv_prompt = ("你是嚴格審稿人,審另一個模型的草稿(無來源頁,屬合成練習)。逐條核對:1)是否清楚標示為模擬/SYNTHETIC "
-                     "2)有無疑似真實人名/店名/客資 3)是否符合任務要求。")
-    rv_prompt += ("第一行只寫 VERDICT: PASS 或 VERDICT: ISSUES,之後逐條列問題(無問題寫「無」),最後一行給一句改進建議。"
-                  "\n\n=== 任務原始要求 ===\n" + body.strip()[:2500]
-                  + "\n\n=== 草稿 ===\n" + out[:6000]
-                  + ("\n\n=== 來源頁面全文(已去標籤) ===\n" + text[:6000] if text else ""))
-    rv_model, rv = api(rv_prompt, exclude=model)
-    verdict = "審稿失敗"
-    if rv:
-        verdict = "審PASS" if "PASS" in rv.splitlines()[0].upper() else "審ISSUES"
-        rv_dir = FQ + "/reviews"
-        os.makedirs(rv_dir, exist_ok=True)
-        with open(rv_dir + "/" + name.replace(".job.md", "") + "_" + TODAY + ".review.md", "w", encoding="utf-8") as f:
-            f.write("# 換模型審稿 %s\n產稿=%s 審稿=%s 產出=%s\n\n%s\n" % (name, model, rv_model, out_rel, rv))
-    rows.append((name, "OK", out_rel + " (" + model.split("/")[-1] + " | " + verdict + ")"))
+        rows.append((name, "OK" if ok_n else "FAIL",
+                     "扇出 %d 件成功 %d 件" % (len(items), ok_n)
+                     + ("|" + ";".join(bad[:3]) if bad else "")))
+    if not daily and ok_n:
+        shutil.move(jf, FQ + "/done/" + TODAY + "-" + name)
 
 # 每週檢討 job(Owner 5349 三題):同一 ISO 週只跑一次,結論落檔供砍題/換題決策
 week_flag = FQ + "/.week_" + WEEK
@@ -159,9 +423,17 @@ print("[done] jobs=%d calls=%d" % (len(rows), calls))
 for name, st, note in rows:
     print(" ", st, name, "->", note)
 PYEOF
+PY_RC=$?
+[ "$MODE" = "selftest" ] && exit $PY_RC
 
-cd "$HB" && git pull --rebase --autostash >/dev/null 2>&1
+# 2026-09-24 修兩件(Owner msg 6107 這輪順手):
+# 1) 原本是 git pull --rebase --autostash。這是共用 repo,別的 agent 隨時有未 commit 的改動,
+#    autostash 等於替別人 stash,踩到「共用 repo 禁 git stash」這條紅線。改成只 fetch,
+#    推不上去就誠實印未推送,下輪再補,絕不動別人的工作區。
+# 2) 分支名原本寫死。改成問 repo 現在在哪一條就推哪一條(#72 三支寫死分支名的其中一支)。
+git -C "$HB" fetch origin >/dev/null 2>&1
+BR="$(git -C "$HB" rev-parse --abbrev-ref HEAD 2>/dev/null)"
 git -C "$HB" add data/free-quota/ handoff/en-drafts/ 2>/dev/null
-git -C "$HB" commit -m "free-quota 班表 $TODAY" >/dev/null 2>&1 && git -C "$HB" push origin chore/agent-login-governance-20260816 >/dev/null 2>&1 && echo "[git] pushed" || echo "[git] 未推送(留本地,下輪補)"
+git -C "$HB" commit -m "free-quota 班表 $TODAY" >/dev/null 2>&1 && git -C "$HB" push origin "$BR" >/dev/null 2>&1 && echo "[git] pushed" || echo "[git] 未推送(留本地,下輪補)"
 echo ""
 cat "$REPORT" 2>/dev/null

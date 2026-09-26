@@ -1,0 +1,32 @@
+# 生歌題庫 B 欄:曲風骨架(與 lists/music_scenes.txt 交叉 = 題目池)
+# 一行一個曲風。BPM 區間寫在這裡,讓產出的 SOP 有可核對的骨架,不靠模型自己編。
+lo-fi hip hop / 70-85 BPM / 溫暖磁帶飽和
+lo-fi jazz / 75-90 BPM / 刷鼓與弱音小號
+bossa nova / 90-110 BPM / 尼龍弦吉他
+samba jazz / 110-130 BPM / 輕打擊組
+city pop instrumental / 100-115 BPM / 電鋼琴與滑音貝斯
+smooth jazz / 85-100 BPM / 薩克斯風主旋
+neo soul instrumental / 80-95 BPM / 厚實電貝斯
+gospel chords instrumental / 70-85 BPM / 教堂鋼琴
+ambient piano / 60-75 BPM / 長殘響
+neoclassical strings / 65-80 BPM / 弦樂四重奏
+minimal piano loop / 70-85 BPM / 重複動機
+chamber folk / 85-100 BPM / 曼陀林與手風琴
+acoustic folk / 95-115 BPM / 木吉他指彈
+indie folk instrumental / 100-120 BPM / 腳踏鼓與口琴
+downtempo electronic / 90-105 BPM / 柔和合成墊
+chillhop / 80-95 BPM / 切片鋼琴
+deep house instrumental / 118-124 BPM / 濾波和弦
+nu disco / 110-120 BPM / 撥弦貝斯
+tropical house / 100-112 BPM / 木笛主旋
+afrobeat instrumental / 105-120 BPM / 多層打擊
+latin jazz / 115-135 BPM / 康加與鋼琴蒙圖諾
+flamenco rumba / 100-120 BPM / 掌聲節拍
+taiwanese folk instrumental / 80-100 BPM / 月琴與二胡
+oriental fusion / 85-105 BPM / 古箏與電子節拍
+cinematic swell / 70-90 BPM / 漸強銅管
+big band swing / 130-160 BPM / 銅管齊奏
+ragtime piano / 120-140 BPM / 跳音低音
+synthwave instrumental / 100-115 BPM / 模擬合成器主旋
+new age flute / 65-80 BPM / 竹笛與水聲
+drumless jazz trio / 85-105 BPM / 只有鋼琴貝斯

@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-09-26 A1午後巡查（remote cloud）：8h 零非巡查 commit（since 晨間巡查 1985cdb）；無 A2/A3/A4/A5/A6/A7/A8 commit。NEEDS_REVIEW 10 tasks 持續（since 07-19，**~2057h**，等 Owner 決定延長/關閉/重啟）；T-A7-001 Phase 3 延誤持續（Owner 自 07-18 起第 **70 天**未確認 Zone B/C，07-25 截止已過）；CRITICAL: T-A4-002 **~4289h** / T-IOS-KOL-001 **~2777h**；A8 **~2592h**。A6 NEEDS_REVIEW 仍待 Owner 確認 LINE webhook Channel 1654658337（last commit 2026-09-25，T-A6-001 NEEDS_REVIEW 持續）。⚠️ P11 攔截器 HOLD 持續，需人工橫幅審查。
+> 最後更新：2026-09-26 A1晚間巡查（remote cloud）：8h 1 非巡查 commit（334efdd A0/Owner 規劃；f341b4e merge）；無 A2/A3/A4/A5/A6/A7/A8 commit。NEEDS_REVIEW 10 tasks 持續（since 07-19，**~2065h**，等 Owner 決定延長/關閉/重啟）；T-A7-001 Phase 3 延誤持續（Owner 自 07-18 起第 **70 天**未確認 Zone B/C，07-25 截止已過）；CRITICAL: T-A4-002 **~4297h** / T-IOS-KOL-001 **~2785h**；A8 **~2600h**。A6 NEEDS_REVIEW 仍待 Owner 確認 LINE webhook Channel 1654658337（last A6 commits 2026-09-25，T-A6-001 NEEDS_REVIEW 持續）。⚠️ P11 攔截器 HOLD 持續，需人工橫幅審查。
 >
 > 使用方式：選擇角色 → 複製 prompt / module handoff → 貼到 Gemini / Codex / OpenClaw / legacy Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令
@@ -413,7 +413,7 @@ handoff/tasks/T-A3-002.md → projects/seo-ads-agent.md → projects/maplab-ads-
 
 ## A4｜影像資產整理部（Photo Archive / Asset Library）
 
-**狀態：✅ T-A4-001 S11(2024) 完成；GBP 照片評分 ✅ 完成（2026-07-10）；T-A4-002 🔴 CRITICAL（**~3925h**無commit）；T-A4-003/004 🔴 **NEEDS_REVIEW**（since 2026-07-19，168h 07-26 觸發，待 Owner 決定延長/關閉/重啟）；2026-09-15 A1午後巡查更新**
+**狀態：✅ T-A4-001 S11(2024) 完成；GBP 照片評分 ✅ 完成（2026-07-10）；T-A4-002 🔴 CRITICAL（**~4297h**無commit）；T-A4-003/004 🔴 **NEEDS_REVIEW**（since 2026-07-19，168h 07-26 觸發，待 Owner 決定延長/關閉/重啟）；2026-09-26 A1晚間巡查更新**
 
 ```
 你是 MAPLAB A4 影像資產整理部。
@@ -526,7 +526,7 @@ projects/maplab-master-data.md → handoff/handoff-to-A5.md → handoff/field-na
 
 ## A6｜業務快反應部隊（Sales Rapid Response Unit）
 
-**狀態：🔴 T-A6-001 **NEEDS_REVIEW**（since 2026-07-19，168h 07-26 觸發；**~1948h** 無 commit，last `ed63f97` 2026-07-08；bot_a6 ✅ 上線 launchd；LINE Developers Console Webhook URL 仍待 Owner 確認 Channel 1654658337；2026-09-15 A1午後巡查更新）**
+**狀態：🟡 T-A6-001 **NEEDS_REVIEW**（since 2026-07-19，168h 07-26 觸發；last A6 gateway commits 2026-09-25（`8965796` model-pin+`11d3d0d` zero-model budget-reverse engine+`5a21f91` splitter fix）；LINE Developers Console Webhook URL 仍待 Owner 確認 Channel 1654658337；bot_a6 ✅ 上線 launchd；T-A6-001 NEEDS_REVIEW 待 Owner decision；2026-09-26 A1晚間巡查更新）**
 
 ```
 你是 MAPLAB A6 業務快反應部隊。
@@ -590,7 +590,7 @@ Owner確認：LINE Webhook Channel 1654658337 確認。
 
 ## A7｜客服與對話轉單部（Smart Reply / Service Desk）
 
-**狀態：⏳ T-A7-001 **Phase 3 正式延誤**（07-25 截止已過；Owner 自 07-18 起第 **59 天**未確認 Zone B/C 金額；Zone B NT$2,000？/ Zone C NT$2,500？確認後才能重啟；Q5 模板已串入級距快查表）；T-A7-002 ⏸️ 阻塞（等 LINE bot 後台權限）；2026-09-15 A1午後巡查更新**
+**狀態：⏳ T-A7-001 **Phase 3 正式延誤**（07-25 截止已過；Owner 自 07-18 起第 **70 天**未確認 Zone B/C 金額；Zone B NT$2,000？/ Zone C NT$2,500？確認後才能重啟；Q5 模板已串入級距快查表）；T-A7-002 ⏸️ 阻塞（等 LINE bot 後台權限）；2026-09-26 A1晚間巡查更新**
 
 ```
 你是 MAPLAB A7 客服與對話轉單部。
@@ -641,7 +641,7 @@ projects/ai-reply-system.md → skills/superpowers-guide.md → docs/fable-minds
 
 ## A8｜影音內容產線（Content Repurposing Pipeline）
 
-**狀態：🔴 T-A8-001 **NEEDS_REVIEW**（**~2228h/~92.8天**，last `1a2d752` 06-25 08:25，awaiting Owner storyboard review；168h 閾值 07-26 觸發；2026-09-15 A1午後巡查更新）**
+**狀態：🔴 T-A8-001 **NEEDS_REVIEW**（**~2600h/~108.3天**，last `1a2d752` 06-25 08:25，awaiting Owner storyboard review；168h 閾值 07-26 觸發；2026-09-26 A1晚間巡查更新）**
 
 ```
 你是 MAPLAB A8 影音內容產線（Content Repurposing Pipeline）。

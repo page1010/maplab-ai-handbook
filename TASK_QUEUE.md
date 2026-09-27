@@ -15,6 +15,7 @@
 | **IS 規則引擎核准包** — IS-Layer3 | B1 | ⏸️ 等 Owner 確認 4 參數 | 規則引擎本體已跑（5 條 WARNING 在 escalation_queue），只差 Owner 確認門檻參數 → B1 建 escalation_push.sh | ✋ 需 Owner 確認：SOP1 主題集中度上限（草稿 10%）、SOP2 單標的上限（草稿 15%）、槓桿警戒線（草稿 1.5x）、日跌幅急性警示（草稿未定義） |
 | **A7/Hermes LINE→Sheets 邊界重設** — T-A7-001 / T-A6-HERMES-LINE-GYM-001 | A7/A6 | 🟡 LOCAL CONTRACT PASS / LIVE NOT DEPLOYED | 先檢視 `docs/hermes-line-sheets-assistant-flow-v1.md` 與 `*` 樣板；獲授權後只在隔離測試部署 neutral Sheet actions | ✋ live GAS／LINE 測試需 Owner 明示授權；舊 `data/a7-reply-templates.md` 已降為 LEGACY，禁止直接上線 |
 | **A2 廣告現況巡查 + 關鍵字/行銷規劃** — T-A2-006 | A2 | 🟢 不再等 MCP token | 走 `skills/ad-platform-browser-check.md`（瀏覽器唯讀巡查 Meta/Google Ads 現況：活動/受眾/素材），彙整結果餵進關鍵字與行銷整體規劃 | 無（唯讀巡查不需 Owner 操作，需在有 Chrome MCP 的環境如 Mac mini/Cowork 執行） |
+| **修復 compounding-patrol launchd 排程**（2026-09-27 複利巡查發現） | A1 | 🔴 排程 4 次執行 0 次成功產出報告，`state/compounding_patrol_last_ok` 從未寫入 | 用 `bash -x scripts/compounding_patrol_run.sh` 手動重跑鎖定 0-byte log 的根因（PATH/claude binary/OAuth token 均已排查正常，卡在 `claude -p` 呼叫本身），修完後驗證下週日 20:05 是否真的產出 `state/compounding-patrol-*.md` | 無（A1 可自行診斷修復，不需 Owner 操作；詳見 `state/compounding-patrol-2026-09-27.md` ④）|
 
 **So What（Tier 1 空轉成本估算）**：
 - A6 ~275h × 每日 3-5 則 LINE 詢問 = 估計 50+ 則真實業務對話未被 bot 學習

@@ -41,7 +41,7 @@ MODE="${3:-}"
 # 子行程孤兒化脫離 Claude 行程樹,班次跑多久都不怕續接窗結束。
 if [ "$MODE" = "detach" ]; then
   DLOG="$FQ/band${BAND}_${TODAY}.log"
-  nohup bash "${BASH_SOURCE[0]}" "$BAND" "$BANDS" >"$DLOG" 2>&1 </dev/null &
+  nohup bash "${BASH_SOURCE[0]}" "$BAND" "$BANDS" "${4:-}" >"$DLOG" 2>&1 </dev/null &
   echo "[detach] 班次 $BAND/$BANDS 已脫鉤背景執行 pid=$! log=$DLOG"
   exit 0
 fi

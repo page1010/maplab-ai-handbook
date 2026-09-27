@@ -1,0 +1,25 @@
+【Claude・Fable5 線・同 session 續接】
+
+WHAT(五點全部做完,不是計畫):
+1 相片路線查完:Owner 說的固定格式確實存在=7 月起的 manifest 制(skills/seo-image-from-album.md,英文檔名如 maplab-corporate-forum-...-hero.webp+alt 固定式「台南{場景}外燴—{具體描述}」+人臉裁切/廣告可用等合規閘,round_008 已產出上線資產)。昨晚新規格與它撞格式,已對齊定案 v1.2 入檔:對外 WP/廣告資產照舊用 manifest 制,新公式(日期-場景-地點-序號)降為原始檔庫整理層,alt 新模板廢止統一舊式。理由:對外檔名含中文會被網址編碼成亂碼;manifest 有合規閘不可取代。
+2 不等明天:班表腳本已補一行讓強制參數傳進背景子行程,12:15 已強制重跑第 1 班(52 號審稿型別化今天就吃,行程實查活著);launchd 六班固定喚醒(02/06/10/14/18/22 各時 05 分)三件套已寫好推上 main=喚醒器+plist+安裝腳本,但安裝這步被 A0 執行通道擋(需人工核准層)——解法併入第 3 點,Codex 一貼順手裝好。
+3 Codex 節點診斷:ps 實查行程活著(ChatGPT app 的 Codex Framework 自週一晚就在跑),死的是訊息迴路不是軟體。貼入提示如下,貼一次=接通+常設規則,之後不必再貼:
+────貼給 Codex────
+Codex 請執行以下三件事,全程用檔案回覆:
+1. 讀 /Users/pagemacmini/claude-daily-operations/state/DISPATCH_CODEX_20260927_ledger_slice1.md 整張卡,在最底下的 Codex 回執段直接追加回覆(先答卡內進度討論段的五點),寫完在該 repo 執行 git add 該檔、git commit、git push origin HEAD:main。
+2. 跑一次 bash /Users/pagemacmini/maplab-ai-handbook/scripts/install_freequota_launchd.sh 並把輸出貼進回執(這支只安裝 maplab 自家的使用者層 launchd 排程)。
+3. 常設規則:之後每次開工先看 claude-daily-operations/state/ 有沒有 DISPATCH_CODEX 開頭的新卡;回覆一律寫進卡的回執段並 push 到 main,不要只在對話框回。
+──────────────
+4 antigravity 收件匣稽核完:8 張卡逐張判複利,6 張留(YT 回報 P0/專輯上傳/logo/命名制/回寫規格/SEO 覆核),2 張無複利已歸檔(小肚肚簡報=案子改期十月;YT 存檔確認=被新 P0 卡涵蓋)。稽核表入檔 cdo state/PASTE_PROMPTS_20260927.md。定時上工=貼入提示帶常設規則+每日回看閘盯 outbox,連兩天沒回寫就上報重貼。
+────貼給 Antigravity────
+Antigravity 請執行:
+1. 讀 /Users/pagemacmini/agent-bus/inbox/antigravity/ 內全部 json 卡(zz-archived 開頭的已歸檔不用做)。
+2. 最優先做 antigravity-youtube-progress-report-20260927.json(P0,今日內):回報 YouTube 頻道現況實數+整張專輯上傳進度+過去七卡零回執的原因。
+3. 回覆落點:寫 .md 檔放 /Users/pagemacmini/agent-bus/outbox/antigravity/,並回寫 shared/agent-status.md 自己那行,然後 git commit push。
+4. 常設規則:之後每次開工先看 inbox/antigravity/ 有沒有新卡,做完必回寫 outbox,沉默視同沒做。
+──────────────
+5 Gogo 第一支:素材定案=已上線網站自家圖+自有音軌(music-style-db 現成),本機 ffmpeg 管線有實績(bunny 50s 影片就是它出的);另查出 a6-photos 資料夾兩張是客服對話截圖含客戶訊息,列為禁用素材。今天 18 時前第一支草稿落檔回報。
+
+SO WHAT:兩個死節點確診為「軟體活著、迴路斷線」,各貼一段就複活且帶常設規則不再斷;額度今天就吃不等明天;相片雙格式統一完畢;launchd 裝好後喚醒不再依賴續接窗。
+
+NOW WHAT:①Owner 貼上面兩段;②18 時前交第一支影片草稿;③盯強制班跑完回報 52 號產出與今日總呼叫數。

@@ -1,0 +1,17 @@
+file '/Users/pagemacmini/maplab-ai-handbook/data/photo_convert/maplab-tainan-opening-tea/maplab-tainan-opening-tea-02.webp'
+duration 5
+file '/Users/pagemacmini/maplab-ai-handbook/data/photo_convert/maplab-tainan-opening-tea/maplab-tainan-opening-tea-03.webp'
+duration 5
+file '/Users/pagemacmini/maplab-ai-handbook/data/photo_convert/maplab-tainan-opening-tea/maplab-tainan-opening-tea-04.webp'
+duration 5
+file '/Users/pagemacmini/maplab-ai-handbook/data/photo_convert/maplab-tainan-opening-tea/maplab-tainan-opening-tea-05.webp'
+duration 5
+file '/Users/pagemacmini/maplab-ai-handbook/data/photo_convert/maplab-tainan-opening-tea/maplab-tainan-opening-tea-08.webp'
+duration 5
+file '/Users/pagemacmini/maplab-ai-handbook/data/photo_convert/maplab-tainan-opening-tea/maplab-tainan-opening-tea-09.webp'
+duration 5
+file '/Users/pagemacmini/maplab-ai-handbook/data/photo_convert/maplab-tainan-opening-tea/maplab-tainan-opening-tea-10.webp'
+duration 5
+file '/Users/pagemacmini/maplab-ai-handbook/data/photo_convert/maplab-tainan-opening-tea/maplab-tainan-opening-tea-12.webp'
+duration 5
+file '/Users/pagemacmini/maplab-ai-handbook/data/photo_convert/maplab-tainan-opening-tea/maplab-tainan-opening-tea-12.webp'

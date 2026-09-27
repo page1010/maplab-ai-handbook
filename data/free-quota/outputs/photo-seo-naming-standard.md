@@ -1,4 +1,5 @@
 > 草稿未審(free-quota 班表 20260927,model=nvidia/nemotron-3-super-120b-a12b:free)。翻譯/生成稿:不得新增事實,上線前必經人審。
+> **v1.1(2026-09-27,A0 依換模型審稿意見修正,Owner 6151 檢查令)**:①示範檔名地點全部台南化(原稿誤用高雄/台中/台北/桃園/新竹);②標註:場景代碼表與 alt 模板為本規格**新建**內容,內部文件(plan-6140)僅泛提「SEO 檔名+alt 描述」未定義細節,採用前經 A0 檢查認可;③本檔為相片命名唯一 SSOT,尚未推廣給任何 agent,推廣前需 Owner 過目。
 
 **檔名公式**：`yyyyMMdd-場景代碼-服務關鍵字-地點-序號`  
 **理由**：1️⃣ 日期開頭可依時間排序；2️⃣ 場景代碼+服務關鍵字直接對應搜尋詞；3️⃣ 序號避免同一天同場景重名。
@@ -28,13 +29,13 @@
 5. 將產出的檔名寫入腳本命名規則，交由免費鏈 job 卡執行 T2 命名與轉檔。  
 
 **示範檔名（假想日期與場景）**  
-1. 20260926-opening_tea-lunch-臺南-01  
-2. 20260926-opening_tea-lunch-臺南-02  
-3. 20260927-corp_tea-tea_break-高雄-01  
-4. 20260927-corp_tea-tea_break-高雄-02  
-5. 20260928-banquet-dinner-台中-01  
-6. 20260928-banquet-dinner-台中-02  
-7. 20260929-wedding-banquet-台北-01  
-8. 20260929-wedding-banquet-台北-02  
-9. 20260930-church_tea-snack-桃園-01  
-10. 20260930-family_gather-dessert-新竹-01
+1. 20260926-opening_tea-lunch-台南中西區-01  
+2. 20260926-opening_tea-lunch-台南中西區-02  
+3. 20260927-corp_tea-tea_break-台南東區-01  
+4. 20260927-corp_tea-tea_break-台南東區-02  
+5. 20260928-banquet-dinner-台南安平-01  
+6. 20260928-banquet-dinner-台南安平-02  
+7. 20260929-wedding-banquet-台南永康-01  
+8. 20260929-wedding-banquet-台南永康-02  
+9. 20260930-church_act-snack-台南北區-01  
+10. 20260930-family_gather-dessert-台南仁德-01

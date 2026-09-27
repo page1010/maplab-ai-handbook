@@ -63,3 +63,10 @@
 20260927,42-suno-sop.job.md,OK,扇出 17 件成功 17 件
 20260927,50-photo-seo-naming.job.md,OK,data/free-quota/outputs/photo-seo-naming-standard.md (nemotron-3-super-120b-a12b:free | 審ISSUES | ctx讀到1檔)
 20260927,51-video-storyboard-template.job.md,OK,data/free-quota/outputs/video-storyboard-template.md (nemotron-3-super-120b-a12b:free | 審ISSUES | ctx讀到1檔)
+20260927,10-open-todos.job.md,SKIP,單件題目只在第 1 班跑
+20260927,20-gym-seed.job.md,SKIP,單件題目只在第 1 班跑
+20260927,30-music-prompt.job.md,SKIP,單件題目只在第 1 班跑
+20260927,31-image-plan.job.md,SKIP,單件題目只在第 1 班跑
+20260927,40-image-prompt.job.md,OK,扇出 8 件成功 8 件
+20260927,41-doc-index.job.md,OK,扇出 12 件成功 12 件
+20260927,42-suno-sop.job.md,OK,扇出 17 件成功 17 件

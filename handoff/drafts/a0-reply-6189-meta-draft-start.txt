@@ -1,0 +1,13 @@
+【Claude・Fable5 線・同 session 續接】
+
+WHAT(接令,通道已實查完,先報路況):
+1 API 路不存在:本機無 Meta Marketing token(bot/.env 與 scripts 全查無 graph.facebook 通道)=程式直建草稿做不到。
+2 瀏覽器路活著:openclaw Chrome 實查 8 分頁,FB 已登入(tab 6)。做法=借這個 session 開 Ads Manager(act_318634712),在 TA-1 既有組合內建 3 則廣告草稿,不動受眾/預算/出價,每步截圖存證(repo 外)。
+3 命名規則先定,與 sheet 對上:廣告名=素材圈選頁 A 欄代號+素材檔名尾碼(例 P0輪替一-v2-單圖-dessert-table;輪播=P0輪替二-v3-輪播-DT+OT8+OT14+OT2);文案主文與標題逐字抄 sheet G/H 欄不改寫。
+
+SO WHAT:Ads Manager 是多步驟精靈,一輪建不完;分輪推進,每輪報實進度+截圖數,只建草稿不發布。M5 缺字那張照昨晚表備註先不入草稿,修字後補。
+
+NOW WHAT:
+1 本輪接續動作=開 Ads Manager 分頁+截圖驗登入與帳號權限;下輪起建 v2 單圖草稿。
+2 快路選項:若 Meta 後台開系統使用者 token(ads_management)貼進 bot/.env,直接 API 一次建齊全部草稿,命名照同一規則;不開就走瀏覽器路照樣做完,只是輪數多。
+3 另報:Codex 帳務卡 24h 死線(02:2x)已過,回執段仍空=升級;PASTE_PROMPTS_20260927.md §一重貼一次即可。

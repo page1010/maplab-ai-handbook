@@ -5,7 +5,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-09-28 A1每日巡查（remote cloud）｜24h commits（since 晚間巡查 66efd88）：9 非巡查 commit（A0 活躍：free-quota 班表 20260928、6161-6183 系列回覆稿、ads 6164/6165 規劃與督察、6168/6179/6183 素材/相片 sheet、借檔通道已還原）；無 A2/A4/A5/A6/A7/A8 新 commit；狀態與晚間巡查一致；NEEDS_REVIEW 10 tasks ~2111h；T-A7-001 Phase 3 第73天延誤；CRITICAL: T-A4-002 ~4343h / T-IOS-KOL-001 ~2831h；A8 ~2646h；A6 last commit 仍停留 2026-09-25（T-A6-001 NEEDS_REVIEW 仍待 Owner 確認 LINE webhook Channel 1654658337）；⚠️ P11探針誘導編價—攔截器 HOLD+需人工橫幅（持續）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-09-28 A1午後巡查（remote cloud）｜8h commits（since 每日巡查 1f73f6e）：3 非巡查 commit（A0 活躍：seo-image 6183 skill 改善、chrome-tab 6189/6192 借檔授權）；無 A2/A4/A5/A6/A7/A8 新 commit；狀態與每日巡查一致，all clear；NEEDS_REVIEW 10 tasks ~2119h；T-A7-001 Phase 3 第73天延誤；CRITICAL: T-A4-002 ~4351h / T-IOS-KOL-001 ~2839h；A8 ~2654h；A6 last commit 仍停留 2026-09-25（T-A6-001 NEEDS_REVIEW 仍待 Owner 確認 LINE webhook Channel 1654658337）；⚠️ P11探針誘導編價—攔截器 HOLD+需人工橫幅（持續）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 > **合併註記（2026-09-23，工作分支併回 main）**：上面那行是 main 側巡查寫的最新狀態，保留為現值。
 > 下面這行與其後的 Active Task 區塊來自工作分支 `chore/agent-login-governance-20260816`，main 側先前沒有，

@@ -1,0 +1,18 @@
+【Claude・Fable5 線・同 session 續接】
+
+WHAT:
+1 問句直答:對,openclaw Chrome 登的是 agent 帳號——上輪開 act=318634712 兩次都被重導到 act=2441634989673207,與 maplabkitchen 無關(查到層推論,與判斷一致)。
+2 API 取得研究完,正路=企業管理平台系統使用者權杖(永不過期,最適合排程自動化):
+步驟一 business.facebook.com/settings > 使用者 > 系統使用者 > 新增(角色=管理員)。
+步驟二 指派資產:廣告帳號 318634712+粉專+Pixel,給管理權限。
+步驟三 前提要有一個企業型 app:developers.facebook.com > 建立應用程式 > 類型選企業 > 加入 Marketing API 產品(一次性,五分鐘內)。
+步驟四 回系統使用者 > 產生權杖 > 選該 app > 勾 ads_management+ads_read+business_management > 效期選永不過期。權杖只顯示一次。
+前提:maplabkitchen 的 FB 帳號要是該企業管理平台的管理員。
+3 Owner Chrome 已實查:視窗1 共 25 分頁,無 facebook 分頁開著;登入 cookie 是否還活要開頁才知。
+
+SO WHAT:借 Owner Chrome 能做到的=開對頁面+以分頁標題驗身分+逐步指路;精靈裡的點擊與打字這台目前點不了(Owner Chrome 的 Apple 事件 JS 開關是關的,截圖也缺螢幕錄製權限)=最後幾下點擊仍要人手。權杖紅線照舊:值不印、不截圖、不進版控,產生後直接貼進 bot/.env(欄名 META_ADS_TOKEN=)存檔即可。
+
+NOW WHAT:
+1 本輪接續=在 Owner Chrome 開 business.facebook.com/settings 系統使用者頁,回報分頁標題驗登入身分,把四步驟對應的確切頁面依序開好。
+2 權杖貼進 bot/.env 後回一聲,即接手用 API 直建 3 則草稿(v2 單圖/v3 輪播/TA-3,M5 缺字除外),命名照 sheet 規則,只印 HTTP 碼不印值。
+3 若想省 app 那步:替代路=Graph API 探索工具的短權杖(1-2 小時效期),可先驗通道但排程用不了,正路仍是系統使用者。

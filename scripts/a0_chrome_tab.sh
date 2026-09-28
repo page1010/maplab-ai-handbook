@@ -143,6 +143,24 @@ end repeat
 end repeat
 return out
 end tell'
+elif [ "${1:-}" = "owner-open" ] && [ -n "${2:-}" ]; then
+  # owner-open <URL> — 在 Owner 那份 Chrome 的視窗 1 開新分頁,回報新分頁編號。
+  # 用途:Owner 明示「去借用我的chrome」的當次目的(6192=辦 Meta API 權杖)。
+  # 邊界:只開頁;登入畫面出現就停手回報,不代填帳密、不點授權;URL 不得含權杖 query。
+  osascript -e "tell application \"${OWNER_APP}\"
+tell window 1 to make new tab with properties {URL:\"${2}\"}
+set out to (count of tabs of window 1)
+return \"owner window 1 tab \" & out
+end tell"
+elif [ "${1:-}" = "open" ] && [ -n "${2:-}" ]; then
+  # open <URL> — 在 openclaw 那份 Chrome 的視窗 1 開新分頁載入 URL,回報新分頁編號。
+  # 用途:借既有登入 session 進指定後台(例 Ads Manager 建草稿,6189)。
+  # 邊界:只開頁,不代填帳密、不碰授權畫面;URL 不得含權杖 query。
+  osascript -e "tell application \"Google Chrome\"
+tell window 1 to make new tab with properties {URL:\"${2}\"}
+set out to (count of tabs of window 1)
+return \"window 1 tab \" & out
+end tell"
 elif [ "${1:-}" = "text" ] && [ -n "${2:-}" ] && [ -n "${3:-}" ]; then
   osascript -e "tell application \"Google Chrome\" to execute tab ${3} of window ${2} javascript \"document.body.innerText.slice(0,20000)\""
 elif [ "${1:-}" = "text" ]; then

@@ -234,7 +234,7 @@ def tg_call(token: str, method: str, payload: dict | None = None, timeout: int =
         return json.loads(response.read().decode())
 
 
-def openrouter_chat(key: str, model: str, messages: list[dict], timeout: int = 120) -> str | None:
+def openrouter_chat(key: str, model: str, messages: list[dict], timeout: int = 40) -> str | None:
     request = urllib.request.Request(
         "https://openrouter.ai/api/v1/chat/completions",
         data=json.dumps(
@@ -343,6 +343,42 @@ def answer(
     # Owner 2026-08-30: 本機 ollama fallback 停用,鏈盡即回報失敗
     log("provider chain exhausted; local fallback disabled")
     return None, None
+
+
+QUOTE_ENGINE = Path(__file__).resolve().parents[1] / "scripts" / "quote_budget_reverse.py"
+
+def quote_shortcut(text: str) -> str | None:
+    """2026-09-25 Owner: 報價走預算反推引擎(零模型),Fable/免費鏈空也能回。
+    觸發:同時出現 預算(數字+元/k/萬) 與 人數(數字+人)。品項=逗號/頓號分隔或每行一項。"""
+    t = text.replace(",", "").replace("，", ",")
+    mb = re.search(r"(?:預算|budget)\D{0,6}(\d+(?:\.\d+)?)\s*(萬|k|K|元|NT)?", t)
+    mp = re.search(r"(\d{2,4})\s*(?:人|位|pax)", t)
+    if not (mb and mp):
+        return None
+    budget = float(mb.group(1)); unit = (mb.group(2) or "")
+    if unit == "萬": budget *= 10000
+    elif unit.lower() == "k": budget *= 1000
+    people = int(mp.group(1))
+    # items: lines containing 、 or , after keywords; fallback: split whole text
+    seg = t
+    for kw in ("品項", "菜色", "菜單", "items"):
+        if kw in t:
+            seg = t.split(kw, 1)[1]; break
+    cands = [c.strip(" :：-•·\n") for c in re.split(r"[、,。;；\n]", seg) if c.strip()]
+    items = [c for c in cands if 2 <= len(c) <= 20 and not re.search(r"預算|人|元|萬|不吃|過敏|素|限制|團", c)]
+    if not items:
+        return None
+    try:
+        import subprocess
+        out = subprocess.run(["python3", str(QUOTE_ENGINE), "--budget", str(int(budget)), "--people", str(people),
+                              "--items", ",".join(items[:12])], capture_output=True, text=True, timeout=60)
+        body = out.stdout.strip() or out.stderr.strip()[-600:]
+    except Exception as exc:  # noqa: BLE001
+        return f"【hermes】報價引擎執行失敗:{type(exc).__name__}。已受理,轉交 Owner/Mina。"
+    diet = "；".join(m.group(0) for m in re.finditer(r"[^,。\n]*(?:不吃|過敏|素)[^,。\n]*", text))
+    note = ("\n飲食限制:" + diet) if diet else ""
+    return ("【hermes】預算反推(引擎,零模型;成本=食材層 Items 正典,毛利底線70%)\n" + body + note +
+            "\n※ 內部參考,對外報價與最終價格由 Owner/Mina 定。ASSUMED 品項請廚房確認。")
 
 
 def is_capability_question(text: str) -> bool:
@@ -707,7 +743,12 @@ if __name__ == "__main__":
             history = []
 
         # Get answer from model
-        reply, provider = answer(key, chain, history, user_message)
+        _q = quote_shortcut(user_message)
+        if _q:
+            log('quote shortcut -> engine (zero-model)')
+            reply, provider = _q, 'quote_budget_reverse'
+        else:
+            reply, provider = answer(key, chain, history, user_message)
         if reply is None:
             reply = (
                 "【hermes】這次設定的免費 provider 鏈都沒有成功回覆。A6 gateway 與安全執行器仍在線；"

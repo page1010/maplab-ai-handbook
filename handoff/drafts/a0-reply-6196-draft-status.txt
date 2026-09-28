@@ -1,0 +1,11 @@
+【Claude・Fable5 線・同 session 續接】
+
+還沒好,卡在入口沒開,剛實查:
+1 Owner Chrome 分頁29 現在仍停在 business.facebook.com/business/loginpage=FB 還沒登入。
+2 bot/.env 也還沒有 META_ADS_TOKEN 欄。
+
+兩條路等同一把鑰匙,任一即可:
+A 在分頁29 用 maplabkitchen 管理員帳號登入 FB,回一聲即開四步驟頁面指路辦權杖。
+B 若已在手機或別台辦好權杖,直接貼進 bot/.env(欄名 META_ADS_TOKEN=)回一聲。
+
+鑰匙一到即 API 直建 3 則草稿(v2 單圖/v3 輪播/TA-3 成品,M5 缺字那張修好前不入),命名照 sheet 規則,一輪內回報 HTTP 碼與草稿名清單。

@@ -1,0 +1,5 @@
+# alt 側表 v0.1(2026-09-28,A0 建)——規則:寫 alt 前必以 Read 開圖親看;viewed_by/viewed_date 為必填欄;A4 原 manifest.csv 不動
+seq,webp_name,alt_a_style,viewed_by,viewed_date
+2,maplab-tainan-opening-tea-02.webp,台南開幕茶會外燴—蕾絲桌布長桌全景 可頌蛋沙拉迷你漢堡與堅果塔,A0-Claude,2026-09-28
+8,maplab-tainan-opening-tea-08.webp,台南開幕茶會外燴—黃色文心蘭花藝與小漢堡塔全桌景,A0-Claude,2026-09-28
+14,maplab-tainan-opening-tea-14.webp,台南開幕茶會外燴—可頌蛋沙拉特寫淺景深,A0-Claude,2026-09-28

@@ -1,0 +1,11 @@
+【Claude・Fable5 線・同 session 續接】
+
+進度更新(6189 開工實測,卡在帳號權限):
+1 通道打通一半:openclaw Chrome 借 session 開 Ads Manager 成功,登入活著(頁面標題=廣告管理員-管理廣告-行銷活動)。
+2 致命卡點=帳號:指定 act=318634712 兩次都被重導到 act=2441634989673207;此瀏覽器的 FB 身分(代理帳號)搆不到 MAPLAB 廣告帳號=草稿建不進正確帳號。
+3 兩道輔助鎖照實報:讀頁文字被 Chrome 設定擋(錯誤原文=透過 AppleScript 執行 JavaScript 的功能已關閉,解鎖=檢視>開發人員>允許 Apple 事件的 JavaScript);截圖被螢幕錄製權限擋(錯誤原文=could not create image from display)。
+
+解法二選一(都是一次性設定):
+A 企業管理平台把此代理帳號加進 act_318634712 的廣告使用者=瀏覽器路通,之後分輪建草稿。
+B Meta 後台開系統使用者 token(ads_management 權限)貼進 bot/.env=API 一次建齊全部草稿,最快最穩,命名照 sheet 規則逐字對上。
+選 B 的話 3 則草稿(v2 單圖/v3 輪播/TA-3 成品,M5 缺字那張修好前不入)一輪內建完。

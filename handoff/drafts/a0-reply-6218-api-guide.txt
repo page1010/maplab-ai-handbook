@@ -1,0 +1,18 @@
+【Claude・Fable5 線・同 session 續接】
+文化與自動化規則已重讀(9/29 第一輪)。
+
+截圖實測(剛跑,照原文報):仍然失敗=could not create image from display。頁面文字也讀不到,Chrome 回=透過 AppleScript 執行 JavaScript 的功能已關閉。
+說明:Chrome 連上的應該是別的項目;看畫面要的是這兩個勾其中之一——
+甲 系統設定>隱私權與安全性>螢幕錄製:清單裡勾 Python 或 Terminal(跑 bot 的程式,不是 Chrome)。
+乙 Chrome 選單列 檢視>開發人員>允許 Apple 事件的 JavaScript。
+勾完回一聲馬上重試取像。
+
+建 API 五步(兩個頁面已代開好):
+分頁31=MAPLAB 系統使用者頁;分頁32=developers.facebook.com/apps。
+① 分頁32 看有無現成應用程式;沒有就點建立,類型選「企業」,名稱例 maplab-ads,關聯 MAPLAB 企業管理平台。
+② 分頁31 點新增系統使用者,名稱例 maplab-api,角色=管理員。
+③ 同頁點指派資產:廣告帳號 318634712+maplabkitchen 粉專+Pixel 228166994905799,權限全開。
+④ 點產生權杖:選①的應用程式,勾 ads_management+ads_read+business_management,效期=永不過期→當場複製(只顯示一次)。
+⑤ 在 Mac 用文字編輯開 /Users/pagemacmini/maplab-ai-handbook/bot/.env 加一行 META_ADS_TOKEN=貼上權杖→存檔。權杖不要貼進 Telegram。
+
+⑤ 完成回一聲,一輪內 API 建齊 3 則草稿(全 PAUSED 不花錢),只回報 HTTP 碼+草稿名。卡在哪一步就回那步編號,馬上代開頁面指路。

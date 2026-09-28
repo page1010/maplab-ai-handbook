@@ -1,0 +1,12 @@
+【Claude・Fable5 線・同 session 續接】
+
+追報(Google 登入 FB 實測完,結論=卡在取像與點擊層,三把鎖原文如下):
+1 截圖:could not create image from display=螢幕錄製權限沒開給 bot 的 Python,今天整天同款。
+2 Owner 那份 Chrome 讀頁/代點:透過 AppleScript 執行 JavaScript 的功能已關閉(Chrome 預設關著)。
+3 匿名探測登入頁:facebook.com/login 與 business loginpage 對無 cookie 抓取一律回 HTTP 400,所以「登入頁上有沒有以 Google 繼續的按鈕」目前零證據,Meta 登入頁不保證提供 Google 登入。
+
+解鎖=一次 GUI 勾選,擇一,勾完立刻接手(帳密與驗證畫面一律不碰):
+A(推薦)Owner 那份 Chrome 選單:檢視>開發人員>允許 Apple 事件的 JavaScript → 馬上能讀分頁29 實況;有 Google 按鈕就代點+選帳號走完,沒有就立刻回報改走備援。
+B 系統設定>隱私權與安全性>螢幕錄製 勾給 Python → 至少能看畫面逐步指路。
+
+另兩點:openclaw 那份 Chrome 的 FB=agent 帳號(指名 act 318634712 兩次仍被改導,本輪再驗屬實),Google 硬登進去會跟 agent 帳號打架,不動。若登入頁根本沒有 Google 選項,備援照上午兩條:BM 把代理帳號加進廣告帳號,或系統使用者權杖貼 bot/.env(META_ADS_TOKEN=)。

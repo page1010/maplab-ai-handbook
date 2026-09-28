@@ -1,0 +1,16 @@
+【Claude・Fable5 線・同 session 續接】
+
+登入確認完成(親看分頁標題,非推論):分頁29 標題已從登入頁變成 Meta Business Suite=FB 登入態生效。
+
+已代開兩頁往權杖路推進:
+1 分頁30=系統使用者頁,停在「選擇 Facebook 公司」畫面。
+2 分頁31=帶 MAPLAB 事業編號重開同頁,標題=Meta Business Suite;頁內狀態讀不到(Chrome 的 Apple 事件 JavaScript 仍關閉),是否已落在系統使用者清單=未確認。
+
+請在分頁31 接四步(全程只點選,權杖值不必回傳):
+① 畫面若是選公司=點 MAPLAB;若已在系統使用者頁=按新增,角色選管理員。
+② 指派資產:廣告帳號 318634712+粉專+Pixel 228166994905799。
+③ 產生權杖:勾 ads_management+ads_read+business_management,效期選永不過期(權杖只顯示一次,當場複製)。
+④ 貼進 bot/.env 新增一行 META_ADS_TOKEN=(貼檔案即可,不要貼進 Telegram)。
+
+權杖落檔後一輪內用 API 直建 3 則草稿(全 PAUSED,資料包 9/28 已預建),只回報 HTTP 碼+草稿名。
+順帶:Chrome 檢視>開發人員>允許 Apple 事件的 JavaScript 勾起來的話,頁面文字讀得到,四步可逐步代看指路。

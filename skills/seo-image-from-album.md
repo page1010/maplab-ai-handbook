@@ -67,6 +67,10 @@
 
 3. **直接用 `alt_text`**：manifest 裡的 `alt_text` 已依 A 式格式（`台南{場景}外燴—{具體描述}`）寫好，WP 上傳後直接貼入，不自行改寫。如果 `alt_text` 欄位為空，回報 Owner，不要自行補寫。
 
+   > **alt 寫作端鐵律（2026-09-28，6183 檢驗後補）**：寫 alt 前必以 Read 開圖親看，親看紀錄欄（`viewed_by` / `viewed_date`）必填，沒親看不得寫 alt——下游規則是「直接用不改寫」，上游推判會被制度放大。側表首例：`data/photo_convert/maplab-tainan-opening-tea/alt.csv`。
+   >
+   > **格式收斂（同日）**：預設 A 式；圖片帶有明確案例名時允許「台南{場景}外燴—{案例名}+描述」變體（理由見下方國泰實例）。其餘自創格式一律不用。
+
 4. **發布前必查三個合規欄位**（缺一不可）：
 
 | 欄位 | 規則 |
@@ -133,7 +137,8 @@
 5. 確認 owner_review_status 非 rejected
 6. 查 ad_ok / ad_restriction（文章 SEO 用途，ad_ok = no 也可用）
 7. 取 output_filename → 在 wordpress_assets_round_008 找同名 .webp
-8. 取 alt_text → 直接填 WP alt 欄位
-9. 上傳至 WP media，設為精選圖
-10. 回報：圖片名稱、alt、case_name、選用理由
+8. 開圖親看：畫面與描述相符＋圖上覆字完整無缺字方框（2026-09-28 hr-warm-proof-4x5 缺字教訓）
+9. 取 alt_text → 直接填 WP alt 欄位
+10. 上傳至 WP media，設為精選圖
+11. 回報：圖片名稱、alt、case_name、選用理由
 ```

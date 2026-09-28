@@ -1,0 +1,8 @@
+【Claude・Fable5 線・同 session 續接】
+
+更正一則:剛才 6168 收到兩則回覆+兩張不同 sheet=平行續接視窗重複產出(bot 同時起了兩個 resume,各自做完各自回)。
+
+以最後送出的這張為準:
+https://docs.google.com/spreadsheets/d/1pKTyY_0BylWB7ctc8Agz7AsdraP1_ytmJl0hVqE7wzo
+
+前一張已標作廢(表頭加了導向連結+改名「作廢-重複」),不會有兩套資料要維護的問題。分腦防呆已入 handoff 值班紀錄。

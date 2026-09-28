@@ -1,0 +1,6 @@
+【Claude・Fable5 線・同 session 續接】
+
+追報(6192 實測結果,一步就能解):
+1 已在 Owner Chrome 開系統使用者頁(視窗1 分頁29),實際被重導到 business.facebook.com/business/loginpage=Owner Chrome 目前也沒有 FB 登入態。
+2 照邊界停手:登入畫面不代填不代點。
+3 解法一步:在那個分頁用 maplabkitchen 管理員帳號登入一次,回一聲即把四步驟頁面依序開好逐步指路;權杖產生後貼進 bot/.env(欄名 META_ADS_TOKEN=)就接手 API 直建 3 則草稿。

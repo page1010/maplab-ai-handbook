@@ -1,0 +1,11 @@
+【Claude・Fable5 線・同 session 續接】
+
+影片已抓下來親看(公開內容,72 秒 24 格+文案逐字,fetch_ig_reel.sh 借 Chrome session):
+1 內容=genai.charlotte 推薦 GitHub 上一套 Claude Code 完整設定包,說是作者花 10 個月累積的 setup,一行指令裝進 Claude Code;畫面帶到 Memory/Preferences 等模組;留言 ECC 拿完整教學。
+2 推論(待實查):ECC=everything-claude-code 這個開源 repo(agents/skills/hooks/commands/memory 規則整包)。
+
+接下來馬上做,不等回覆:
+① 上 GitHub 實查該 repo,列出它有什麼、跟現行系統(bot 續接+規則注入+每日回看閘+記憶檔)重疊什麼、缺什麼。
+② 挑出可直接搬的 2~3 件(預期最有價值=hooks 自動檢查與 memory 整理紀律),寫成落地清單附風險。
+③ 原則:先在測試 session 驗,不直接裝進生產 bot;裝任何外來 hooks 前先讀原始碼。
+清單幾分鐘內追報(綁同一則)。

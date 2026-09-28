@@ -1,0 +1,21 @@
+【Claude・Fable5 線・同 session 續接】
+
+6208 追報:ECC 已上 GitHub 實查完畢(API 匿名查證,非只看搜尋排名)。
+
+一 實查數字
+正牌=affaan-m/ECC(原名 everything-claude-code),268,706 星、40,142 fork、MIT 授權、9/28 當天仍在更新。
+內容=68 個 agents、292 個 skills、94 個指令捷徑,外加 hooks 自動檢查、rules、memory、持續學習、AgentShield 資安掃描;主迴圈=規劃→測試→實作→審查→驗證→記憶→改進。
+警示:搜尋第一名 WorldFlowAI 版(3,684 星)是第三方轉載;官方 README 明言鏡像可能夾帶惡意碼,一律只認 affaan-m 官方源。
+附帶發現:repo 內含 .openclaw 介接目錄,對本機 openclaw 席位可能直接可用,列入待查。
+
+二 跟現行系統的重疊與缺口
+已有不必搬:規則注入(6197)、每日回看閘、記憶檔案制、handoff 續接、回覆格式閘——等於 ECC 的 rules+memory 兩塊的自製版,而且更貼身。
+缺的三塊:hooks 自動檢查、持續學習紀律(重複勝招升格成 skill)、commit 前金鑰掃描。
+
+三 可搬三件附風險
+1 verify hooks 模式:交付前檢查(回覆閘、收據、push 收斂)改由鉤子自動觸發,不靠每輪手動記得。風險=hooks 是外來可執行碼,只搬做法自寫腳本,不裝它的檔。
+2 持續學習紀律:同一解法第二次用到就升格成 scripts/ 或記憶檔,ECC 靠這套滾出 292 個 skills,證明可行。風險=低,純紀律問題。
+3 金鑰掃描:AgentShield 的 commit 前掃密思路接進現有 push 流程(先前已有 AIza 金鑰樣式的教訓)。風險=誤報,先掃描只報不阻擋。
+
+四 落地第一步
+clone 到 repo 外目錄先讀 hooks 與 skills 原始碼再決定搬哪段;絕不把 ecc@ecc 外掛直接裝進生產 bot,要試就開獨立測試 session。三件按 1→3 順序做,第 1 件本週先落一支 verify 腳本。

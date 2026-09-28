@@ -2413,7 +2413,8 @@ A0_REPLIES_FILE = Path(
 A0_WAIT_TIMEOUT_S = float(os.getenv("A0_WAIT_TIMEOUT_S", "150"))
 A0_WAIT_POLL_INTERVAL_S = float(os.getenv("A0_WAIT_POLL_INTERVAL_S", "5"))
 
-A0_RESUME_LABEL = "【Fable5 本人・同 session 續接】"
+# 2026-09-28 6197 對齊順手修:標籤跟 Owner 6029 裁定一致(自稱只寫 Claude)。
+A0_RESUME_LABEL = "【Claude・Fable5 線・同 session 續接】"
 # 2026-09-21 Owner「用 opus 應該還有額度吧，寫成不會斷的，要註明由 opus 接手」：
 # Fable 額度用完時 resume 會回 "You've reached your Fable 5 limit"，過去 bot 只會
 # 一直重試 Fable、每則都失敗、Owner 收不到任何回覆（9/17、9/21 實錄）。
@@ -2799,17 +2800,51 @@ def _a0_claim_single_reply(reply_to_inbox_ts: str, chat_id: int) -> bool:
 # not a new persona — and what to actually do about it (pull, read the
 # handoff's RESUME PROMPT, diff a0_inbox/a0_replies, answer only this one
 # message with a receipt) rather than claim work that hasn't happened.
-A0_RESUME_PRELUDE = (
+# Header wording follows Owner msg 6029（自稱只寫 Claude，不自稱 Fable5）.
+A0_RESUME_PRELUDE_HEAD = (
     "【續接開場】你是 bot，在 A0/Fable5 主程式離線期間以「同一個」既有 session 續接——"
     "不是開新 context、不是新的 Fable5 人格。請依序：\n"
     "1) 先執行 git pull cdo；\n"
     "2) 讀 handoff 檔案最頂部的 RESUME PROMPT 區段；\n"
     "3) 比對 a0_inbox 與 a0_replies，找出尚未回覆的訊息；\n"
     "4) 只回覆 Owner 這一則訊息（用 scripts/a0_reply.sh 留收據）。\n"
-    "回覆開頭必須標「【Fable5 本人・同 session 續接】」；"
+    "回覆開頭必須標「【Claude・Fable5 線・同 session 續接】」；"
     "不得宣稱已派工、已稽核或已完成任何實際上還沒做的事。\n\n"
-    "=== Owner 訊息 ===\n"
 )
+
+# ── 自動化規則注入（Owner msg 6197, 2026-09-28）────────────────────────────
+# 「先讀我們企業文化與自動化規則 把自動化規則注入telegram bot 定時確認有進入
+# 狀況，每次額度到了都要重讀重新對齊」——每一輪續接的提示固定帶入兩份規則檔
+# 的摘要與路徑；當日第一輪與額度切換/重置後第一輪必須實際 Read 重讀並留戳記。
+A0_RULES_CULTURE_DOC = "/Users/pagemacmini/maplab-ai-handbook/docs/OPERATING_CULTURE.md"
+A0_RULES_ORDERS_DOC = (
+    "/Users/pagemacmini/claude-daily-operations/state/OWNER_STANDING_ORDERS.md"
+)
+A0_RULES_BLOCK = (
+    "【自動化規則注入（6197）】兩份規則檔＝硬性規範，開工前對齊：\n"
+    f"1) {A0_RULES_CULTURE_DOC}（企業文化 v1.7：對 Owner 溝通硬規則，"
+    "句子主詞用人話職稱、代號只進括號）\n"
+    f"2) {A0_RULES_ORDERS_DOC}（Owner 常設指令：A1~A7 每日律＋B1~B6 工作紀律，"
+    "含訊息出處）\n"
+    "當日第一輪必以 Read 實際重讀兩檔，並在回覆與值班紀錄標「文化與自動化規則"
+    "已重讀」；沒讀不准開工。額度用盡切換模型（Opus 接手）或週四 22:00 額度重置"
+    "後的第一輪，同樣必重讀兩檔重新對齊。\n\n"
+)
+
+# 額度切換那一輪由 bot 機械式加註（不靠 session 自己記得）：
+A0_QUOTA_REALIGN_NOTE = (
+    "【額度切換對齊】本輪由備援模型接手（額度用盡切換）。處理 Owner 訊息前，"
+    "必先 Read 重讀上列兩份規則檔重新對齊，回覆與值班紀錄加「已重讀」戳記。\n\n"
+)
+
+
+def _a0_resume_prelude(model_override: Optional[str] = None) -> str:
+    """續接開場 + 6197 規則注入；額度切換（model_override）時多帶對齊加註。"""
+    parts = [A0_RESUME_PRELUDE_HEAD, A0_RULES_BLOCK]
+    if model_override:
+        parts.append(A0_QUOTA_REALIGN_NOTE)
+    parts.append("=== Owner 訊息 ===\n")
+    return "".join(parts)
 
 
 async def _a0_resume_ask(
@@ -2860,7 +2895,7 @@ async def _a0_resume_ask(
     cmd += ["--allowedTools", _a0_reply_allow]
     if model:
         cmd += ["--model", model]
-    cmd.append(A0_RESUME_PRELUDE + user_message)
+    cmd.append(_a0_resume_prelude(model_override) + user_message)
 
     try:
         proc = await asyncio.create_subprocess_exec(

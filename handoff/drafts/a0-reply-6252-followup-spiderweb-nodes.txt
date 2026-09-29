@@ -1,0 +1,7 @@
+【Claude・Fable5 線・同 session 續接】追報同串:廣告草稿之外、上午承諾的蛛網首版節點檔已預填完成落檔。
+連結:
+https://github.com/page1010/claude-daily-operations/blob/main/state/spiderweb_nodes_v1_20260929.yaml
+實數:23 檔=台股持股 7(2605/3296/3025/7912/6442/2392/0050)+觀察 2(2371/SMH)+美股與選擇權 7(TSLA/IBIT/GRAB/NOK/S/PLTR/SPCX)+9/6 未掃補進 7(CRM/AAPL/PANW/DIOD/BL/NNOX/SRFM)。
+每檔含專屬關鍵字 3~6 個+下一個催化劑附 due 日期(推估的逐條標「推估」、台股月營收=法定日不標)。
+同一份已裝進 investment-os/config/spiderweb_nodes.yaml(180 行、23 節點、安裝驗證通過)。
+只需圈改不用從零寫;圈改回聲即實跑第一份新版蛛網。順便重測 Chrome 通道=那一勾仍未開(錯誤原文:透過 AppleScript 執行 JavaScript 的功能已關閉)。

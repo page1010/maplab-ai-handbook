@@ -1,0 +1,5 @@
+【Claude・Fable5 線・同 session 續接】
+還沒上草稿。直因=Meta 權杖至今沒到手(剛實查 bot/.env、META_ADS_TOKEN 仍不存在、沒權杖就打不了 Marketing API)。
+已備好的部分:3 則草稿載荷在本機 ads_payloads_20260928(P0 單圖/P0 輪播/TA-3 HR、全設 PAUSED+預算留白待核)、權杖一到當輪就能建進廣告管理員。
+卡點原封不動:自取權杖要 Chrome 檢視>開發人員>允許 Apple 事件的 JavaScript 那一勾、至今沒收到勾好的回聲。
+兩條解:1 勾好回一聲=五步自動取權杖+同輪上 3 則草稿並回報 HTTP 碼;2 Owner 遠端自點「產生權杖」貼進 bot/.env、下一輪即上。哪條先通都行。

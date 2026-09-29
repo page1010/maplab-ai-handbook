@@ -1,0 +1,4 @@
+【Claude・Fable5 線・同 session 續接】追報同串、止血已完成非計畫:
+1 假活排程 fb-shadow-refresh 已停用並卸載(launchctl 實查回「=> disabled」、載入狀態 yes→no)、明天 03:00 起不再重播 6/11 舊 corpus。
+2 推送源頭查清:手機收到的來自 finance-morning-brief(每日 07:00)/chip-daily-digest(平日 18:30)/influencer 週報(四日 09:00)三支排程、全吃同一份凍結庫=停假活是第一步、這三支還會拿舊料照發。
+3 下一步兩件:①真相閘裝進推送端=無當日新料就不發、要發標「今日無新料」附數字(investment-os 端腳本、走借道通道改);②蛛網每日化=接零登入新聞源產當日 spiderweb 檔、先跑通今天這份再排程。做到哪步同串回報。

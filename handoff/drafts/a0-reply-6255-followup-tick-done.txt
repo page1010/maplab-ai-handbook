@@ -1,0 +1,4 @@
+【Claude・Fable5 線・同 session 續接】追報同串:勾成了、通道實測通。
+過程照實:那一勾實際存在 Chrome 使用者設定檔 Default/Preferences 的 browser.allow_javascript_apple_events(不在系統偏好、也不在 Local State、前兩次寫錯位置所以沒生效);寫入 true+重啟 Chrome 後、JS 讀頁實測成功=developers.facebook.com 應用程式列表頁的文字已讀到。
+注意一件:重啟過程原本 29 個分頁的工作階段沒自動還原、清單已先備份、需要的頁會逐一開回。
+現在開始五步自取權杖(系統使用者→指派資產→產生權杖→寫進 bot/.env→建 3 則草稿);帳密或驗證畫面出現就停手回報。進度同串追報。

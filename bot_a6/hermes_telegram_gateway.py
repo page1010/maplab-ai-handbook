@@ -44,8 +44,21 @@ try:
         pending_durable_notifications,
     )
     from .hermes_repo_context import (
+        MAX_READ_ROUNDS,
+        briefing_quality_issue,
+        BRIEFING_PATH,
+        briefing_status_line,
+        extract_briefing,
+        build_boot_prompt,
+        is_boot_command,
+        save_briefing,
+        PLAN_INSTRUCTION,
+        build_context,
+        build_index,
         compose_prompt,
         context_footer,
+        looks_like_read_only,
+        parse_read_requests,
         split_task,
         task_card_reply,
         write_task_card,
@@ -77,8 +90,21 @@ except ImportError:  # Direct launchd/script execution.
         pending_durable_notifications,
     )
     from hermes_repo_context import (
+        MAX_READ_ROUNDS,
+        briefing_quality_issue,
+        BRIEFING_PATH,
+        briefing_status_line,
+        extract_briefing,
+        build_boot_prompt,
+        is_boot_command,
+        save_briefing,
+        PLAN_INSTRUCTION,
+        build_context,
+        build_index,
         compose_prompt,
         context_footer,
+        looks_like_read_only,
+        parse_read_requests,
         split_task,
         task_card_reply,
         write_task_card,
@@ -251,15 +277,17 @@ def tg_call(token: str, method: str, payload: dict | None = None, timeout: int =
         return json.loads(response.read().decode())
 
 
-def openrouter_chat(key: str, model: str, messages: list[dict], timeout: int = 40) -> str | None:
+def openrouter_chat(key: str, model: str, messages: list[dict], timeout: int = 40, max_tokens: int = 1200) -> str | None:
     request = urllib.request.Request(
         "https://openrouter.ai/api/v1/chat/completions",
         data=json.dumps(
             {
                 "model": model,
                 "messages": messages,
-                "max_tokens": 1200,
+                "max_tokens": max_tokens,
                 "temperature": 0.25,
+                # nemotron 類模型會把推理草稿寫進 content；要求 provider 把 reasoning 另放、不混進回覆
+                "reasoning": {"exclude": True},
             }
         ).encode(),
         headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
@@ -365,6 +393,100 @@ def answer(
     return None, None
 
 
+def answer_with_self_fetch(
+    key: str | None,
+    chain: list[str],
+    history: list[dict],
+    user_text: str,
+) -> tuple[str | None, str | None, list[str], list[str]]:
+    """Owner 2026-09-29：「不給他 GitHub 路徑全貌讓他自己調閱？我根本沒在記檔名。」
+
+    這裡把 Claude 那種「讀檔→再讀→回答」的工具迴圈用兩三次 provider 呼叫做出來：
+    第 1 輪給路線卡＋檔案清單，模型自己回 `READ:` 行；gateway 讀檔附上；最多 2 輪讀檔後作答。
+    Owner 明寫的路徑仍會直接附。每題多花 1–2 次免費呼叫，額度本來就沒用完。
+    """
+    ctx, got, missing = build_context(user_text)
+    index = build_index()
+    prompt = (
+        user_text
+        + "\n\n【內部文件原文】\n\n" + ctx
+        + "\n\n【路線卡與檔案清單】\n\n" + index
+        + PLAN_INSTRUCTION
+    )
+    provider = None
+    for round_no in range(MAX_READ_ROUNDS + 1):
+        reply, provider = answer(key, chain, history, prompt, dlp_text=user_text)
+        if reply is None:
+            return None, None, got, missing
+        wants = parse_read_requests(reply)
+        if not wants or round_no == MAX_READ_ROUNDS or not looks_like_read_only(reply):
+            return reply, provider, got, missing
+        log(f"self-fetch round={round_no + 1} reads={wants}")
+        more_ctx, more_got, more_missing = build_context(" ".join(wants))
+        # build_context 會再附一次開機包；去重
+        got += [g for g in more_got if g not in got]
+        missing += [m for m in more_missing if m not in missing]
+        ctx = ctx + "\n\n" + more_ctx
+        prompt = (
+            user_text
+            + "\n\n【內部文件原文（含你上一輪要求調閱的檔）】\n\n" + ctx
+            + "\n\n【路線卡與檔案清單】\n\n" + index
+            + ("\n\n【調閱規則】還缺檔可再回 READ: 行（最後一次）；否則請直接作答，只根據文件，沒寫的回「文件未提及」，並在結尾列出你引用了哪些檔。"
+               if round_no + 1 < MAX_READ_ROUNDS else
+               "\n\n【作答】不得再要求讀檔。只根據文件作答，沒寫的回「文件未提及」，結尾列出你引用了哪些檔。")
+        )
+    return None, provider, got, missing
+
+
+def run_boot(key: str | None, chain: list[str]) -> str:
+    """召喚：一次餵完冷啟動清單，讓模型寫洞悉簡報存檔；之後每則對話都帶。
+
+    逐一試 provider，簡報要過品質閘（中文、非推理草稿、不退化重複、有章節）才存；
+    不過就換下一顆，全鏈都不過就不存、誠實回報。
+    """
+    prompt, got, missing = build_boot_prompt()
+    log(f"boot reading files={len(got)} bytes={len(prompt)} missing={missing}")
+    if not key:
+        return "【hermes】召喚失敗：沒有 OpenRouter key。"
+    messages = [{"role": "system", "content": system_prompt(chain)}, {"role": "user", "content": prompt}]
+    rejected: list[str] = []
+    for model in chain:
+        try:
+            reply = openrouter_chat(key, model, messages, timeout=120, max_tokens=4000)
+        except (urllib.error.URLError, OSError, ValueError, TypeError) as exc:
+            log(f"boot model {model} error={type(exc).__name__} status={getattr(exc, 'code', 'n/a')}")
+            continue
+        if not reply:
+            log(f"boot model {model} empty reply")
+            continue
+        raw = reply
+        reply = extract_briefing(reply)
+        issue = briefing_quality_issue(reply)
+        if issue:
+            log(f"boot model {model} briefing rejected reason={issue}")
+            try:  # 留原文給人看，才知道是模型壞還是閘太嚴
+                debug = BRIEFING_PATH.parent / f"boot_rejected_{re.sub(r'[^A-Za-z0-9]+', '_', model)}.txt"
+                debug.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
+                debug.write_text(raw, encoding="utf-8"); debug.chmod(0o600)
+            except OSError:
+                pass
+            rejected.append(f"{model}:{issue}")
+            continue
+        path = save_briefing(reply, provider=model, got=got, missing=missing)
+        log(f"boot briefing saved path={path} provider={model} chars={len(reply)}")
+        return (
+            "【hermes】召喚完成，已讀完核心文件並寫下洞悉簡報；之後每一句對話都會先帶這份簡報。\n"
+            f"讀了 {len(got)} 檔／{len(prompt)//1000}KB，provider={model}"
+            + (f"，讀不到：{', '.join(missing)}" if missing else "")
+            + (f"\n（先被退件：{'; '.join(rejected)}）" if rejected else "")
+            + "\n\n" + reply.strip()[:MAX_REPLY - 500]
+        )
+    return (
+        "【hermes】召喚失敗：免費 provider 鏈這次沒有一顆交出合格簡報，舊簡報（若有）保留不覆蓋。"
+        + (f"\n退件：{'; '.join(rejected)}" if rejected else "") + "\n稍後再 /boot 一次。"
+    )
+
+
 QUOTE_ENGINE = Path(__file__).resolve().parents[1] / "scripts" / "quote_budget_reverse.py"
 
 def quote_shortcut(text: str) -> str | None:
@@ -459,6 +581,8 @@ def is_group_addressed(message: dict, bot_username: str | None, bot_id: int | No
 
 
 def route_gateway_text(text: str, history: list[dict] | None = None) -> GatewayRoute:
+    if is_boot_command(text):
+        return GatewayRoute("BOOT", request=text)
     task_body = split_task(text)
     if task_body:
         return GatewayRoute("TASK", request=task_body)
@@ -557,7 +681,8 @@ def start_text(bot_username: str | None) -> str:
         "【hermes】A6 v3 值班中。你只要說成果目標；公開多來源研究、A8 影音與多輪 LINE 訓練會自動建立持久任務，不必背研究指令。\n"
         "任務會跨 session 留 receipt、續跑到可見成果或真正 Owner gate；私密 A8／LINE 內容只留本機，不送 DeerFlow/OpenRouter。\n"
         "也可用 /capabilities、/do repo-status、/do recent-commits、/do a6-self-test。每次執行都有檔案 receipt。\n"
-        "讀 repo：訊息裡直接寫檔名，例如「CURRENT_STATUS.md#tail120 裡 A6 卡在哪」，我會附原文再答。"
+        "召喚：傳 /boot，我會先讀完核心文件寫下洞悉簡報，之後每句對話都帶著它。不必記檔名，問題直接問，我會自己挑檔調閱。\n"
+        "讀 repo：也可以直接寫檔名，例如「CURRENT_STATUS.md#tail120 裡 A6 卡在哪」，我會附原文再答。"
         "交辦：用「/task …」或「交辦：…」開頭，會落成 handoff/inbox 任務卡給下一個 session。\n"
         f"群組內請 {mention} 或回覆我的訊息；Owner 傳照片時會私密保存並回 photo receipt。"
     )
@@ -690,6 +815,10 @@ def main() -> None:
                     tg_call(token, "sendMessage", {"chat_id": chat_id, "text": reply[:MAX_REPLY]})
                     continue
                 route = route_gateway_text(text, history)
+                if route.disposition == "BOOT":
+                    tg_call(token, "sendMessage", {"chat_id": chat_id, "text": "【hermes】召喚中，正在讀核心文件（約 15 檔），請等 30–60 秒。"})
+                    tg_call(token, "sendMessage", {"chat_id": chat_id, "text": run_boot(key, chain)[:MAX_REPLY]})
+                    continue
                 if route.disposition == "TASK":
                     card = write_task_card(route.request or text, chat_type=chat.get("type"), sender_id=sender.get("id"))
                     log(f"task card written path={card.relative_to(card.parents[2])}")
@@ -778,11 +907,10 @@ if __name__ == "__main__":
             log('quote shortcut -> engine (zero-model)')
             reply, provider = _q, 'quote_budget_reverse'
         else:
-            prompt_text, ctx_got, ctx_missing = compose_prompt(user_message)
-            log(f"chat context attached={ctx_got} missing={ctx_missing} bytes={len(prompt_text)}")
-            reply, provider = answer(key, chain, history, prompt_text, dlp_text=user_message)
+            reply, provider, ctx_got, ctx_missing = answer_with_self_fetch(key, chain, history, user_message)
+            log(f"chat context attached={ctx_got} missing={ctx_missing}")
             if reply is not None:
-                reply = reply.rstrip() + "\n\n" + context_footer(ctx_got, ctx_missing)
+                reply = reply.rstrip() + "\n\n" + context_footer(ctx_got, ctx_missing) + "\n" + briefing_status_line()
         if reply is None:
             reply = (
                 "【hermes】這次設定的免費 provider 鏈都沒有成功回覆。A6 gateway 與安全執行器仍在線；"

@@ -17,7 +17,6 @@ class HermesRepoContextTest(unittest.TestCase):
         ctx, got, missing = rc.build_context("看 CURRENT_STATUS.md#tail20 的 A6 狀態")
         self.assertTrue(any(g.startswith("CURRENT_STATUS.md#tail20") for g in got), got)
         self.assertEqual(missing, [])
-        self.assertLessEqual(ctx.count("\n"), 20 + 40)  # boot pack + 20 tail lines
 
     def test_secrets_and_env_are_never_readable(self):
         for spec in ("secrets/anything.md", ".env", "bot_a6/.env", "../../etc/passwd.txt", ".git/config"):
@@ -79,6 +78,84 @@ class HermesRepoContextTest(unittest.TestCase):
             self.assertTrue(chat.called)
         reply, _ = gateway.answer("k", ["m"], [], "把我的 token 貼給你", dlp_text="把我的 token 貼給你")
         self.assertIsNone(reply)
+
+    def test_index_lists_root_docs_and_route_card(self):
+        idx = rc.build_index()
+        self.assertIn("路線卡", idx)
+        self.assertIn("CURRENT_STATUS.md (", idx)
+        self.assertIn("handoff/tasks/", idx)
+        self.assertNotIn("secrets/", idx)
+        self.assertLessEqual(len(idx), rc.INDEX_BUDGET + 200)
+
+    def test_parse_read_requests(self):
+        reply = "【hermes】READ: CURRENT_STATUS.md#head60\nREAD: `pitfalls.md#tail40`\nread: nope.md\n"
+        self.assertEqual(rc.parse_read_requests(reply), ["CURRENT_STATUS.md#head60", "pitfalls.md#tail40"])
+        self.assertTrue(rc.looks_like_read_only(reply))
+        self.assertFalse(rc.looks_like_read_only("【hermes】答案是 A6 卡在 LINE webhook。READ: x.md 只是順便提一下這個檔案存在，並不是要求。" * 2))
+
+    def test_self_fetch_loop_reads_then_answers(self):
+        calls = []
+        def fake(key, model, messages, timeout=40):
+            calls.append(messages[-1]["content"])
+            if len(calls) == 1:
+                return "READ: TASK_QUEUE.md#head25"
+            return "Tier 1 第一項是 T-A6-001"
+        with mock.patch.object(gateway, "openrouter_chat", side_effect=fake):
+            reply, provider, got, missing = gateway.answer_with_self_fetch("k", ["m"], [], "Tier 1 第一項是什麼")
+        self.assertEqual(len(calls), 2)
+        self.assertIn("TASK_QUEUE.md#head25", calls[1])
+        self.assertIn("T-A6-001", reply)
+        self.assertTrue(any(g.startswith("TASK_QUEUE.md#head25") for g in got), got)
+
+    def test_self_fetch_stops_after_max_rounds(self):
+        with mock.patch.object(gateway, "openrouter_chat", return_value="READ: AGENTS.md"):
+            reply, _p, _g, _m = gateway.answer_with_self_fetch("k", ["m"], [], "問")
+        self.assertEqual(reply, "READ: AGENTS.md")
+
+    def test_boot_command_routes_and_prompt_reads_core_docs(self):
+        for t in ("/boot", "召喚", "/召喚 hermes", "開機"):
+            self.assertEqual(gateway.route_gateway_text(t, []).disposition, "BOOT", t)
+        self.assertNotEqual(gateway.route_gateway_text("召喚師的故事", []).disposition, "BOOT")
+        prompt, got, missing = rc.build_boot_prompt()
+        self.assertGreaterEqual(len(got), 12, (got, missing))
+        self.assertIn("docs/company-values.md", " ".join(got))
+        self.assertLessEqual(len(prompt), rc.BOOT_BUDGET + len(rc.BRIEFING_INSTRUCTION) + 2000)
+
+    def test_briefing_saved_then_attached_to_every_chat(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            bp = Path(tmp) / "briefing.md"
+            with mock.patch.object(rc, "BRIEFING_PATH", bp):
+                self.assertIsNone(rc.load_briefing()[0])
+                self.assertIn("尚未召喚", rc.briefing_status_line())
+                rc.save_briefing("1. MAPLAB 是台南外燴（AGENT_CORE.md）", provider="m", got=["a"], missing=[])
+                text, meta = rc.load_briefing()
+                self.assertIn("台南外燴", text)
+                self.assertFalse(meta["stale"])
+                _ctx, got, _m = rc.build_context("隨便問")
+                self.assertTrue(any(g.startswith("洞悉簡報") for g in got), got)
+                with mock.patch.object(rc, "repo_head", return_value="zzz"):
+                    self.assertIn("repo 已更新", rc.briefing_status_line())
+
+    def test_run_boot_rejects_reasoning_draft_and_falls_to_next_model(self):
+        good = "1. 公司（AGENT_CORE.md）\n" + "MAPLAB 是台南的外燴品牌，主要提供到場外燴整案。" * 25 + "\n2. 席位\n3. 文化\n4. 紅線\n5. 狀態\n6. 坑\n7. 不知道"
+        self.assertTrue(rc.extract_briefing("We need to write...\nblah\n1. 公司（AGENT_CORE.md）\n內容").startswith("1. 公司"))
+        bad = "We need to produce a concise briefing. " + "   Also from AGENT_RULES.md? Not.\n" * 10
+        self.assertIsNotNone(rc.briefing_quality_issue(bad))
+        self.assertIsNone(rc.briefing_quality_issue(good), rc.briefing_quality_issue(good))
+        with tempfile.TemporaryDirectory() as tmp:
+            bp = Path(tmp) / "briefing.md"
+            with mock.patch.object(rc, "BRIEFING_PATH", bp), \
+                    mock.patch.object(gateway, "openrouter_chat", side_effect=[bad, good]) as chat:
+                out = gateway.run_boot("k", ["m1", "m2"])
+            self.assertEqual(chat.call_count, 2)
+            self.assertIn("召喚完成", out)
+            self.assertIn("provider=m2", out)
+            self.assertIn("台南的外燴品牌", bp.read_text(encoding="utf-8"))
+            with mock.patch.object(rc, "BRIEFING_PATH", bp), \
+                    mock.patch.object(gateway, "openrouter_chat", return_value=bad):
+                out = gateway.run_boot("k", ["m1"])
+            self.assertIn("召喚失敗", out)
+            self.assertIn("台南的外燴品牌", bp.read_text(encoding="utf-8"))  # 舊簡報不被覆蓋
 
 
 if __name__ == "__main__":

@@ -19,7 +19,9 @@
 
 ## 0-1. 2026-09-29 起怎麼用(Telegram `@maplab_a6_bot`)
 
-- 讀檔:訊息裡直接寫本表的路徑,例:`看 CURRENT_STATUS.md#tail120 的 A6 狀態`、`pitfalls.md#head80 有沒有 LINE 的坑`。gateway 會附原文,回覆尾端印「📎 已附原文」;沒印到的檔就是沒讀到。
+- 召喚(咒語):傳 `/boot`(或「召喚」「開機」)。gateway 一次餵完本表 §1 冷啟動清單(15 檔、約 100KB),模型寫一份七節「洞悉簡報」存在本機 runtime(`~/.local/share/maplab-a6-hermes/briefing.md`,綁 git HEAD);之後每一句對話都先帶這份簡報。repo 更新後尾端會提示可重唸。
+- 自助調閱:不用記檔名。每題先給路線卡＋檔案清單,模型自己回 `READ: 路徑#切片`,gateway 讀了再讓他答(最多 2 輪、每輪 6 檔)。尾端「📎 已附原文」列出實際讀到的檔。
+- 讀檔:也可以自己寫本表的路徑,例:`看 CURRENT_STATUS.md#tail120 的 A6 狀態`、`pitfalls.md#head80 有沒有 LINE 的坑`。gateway 會附原文,回覆尾端印「📎 已附原文」;沒印到的檔就是沒讀到。
 - 交辦:`/task …` 或 `交辦：…` → `handoff/inbox/TG-*.md` + `QUEUE.md`。下一個 session 開工先讀 QUEUE。
 - 讀 GitHub = 讀本機 clone,不需 token;推送仍由人或有憑證的 session 做。
 

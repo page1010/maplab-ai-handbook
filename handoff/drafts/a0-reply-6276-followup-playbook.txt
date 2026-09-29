@@ -1,0 +1,4 @@
+【Claude・Fable5 線・同 session 續接】追報:Meta 實測做法調研完成,已改成十組落地建議寫進表+文檔。
+WHAT:①高 CP 結構=兩層漏斗:影片觀看目標 CPM 只要 $4-7(轉換型 $10-15),先用便宜觸及建「看過影片」的受眾池,第二層點擊/轉換只打這群已表態的人;冷層直跑轉換=最貴 CPM 打最生的人,避免。②實測數字:Advantage+ 受眾每結果成本約低 15%、AI 出價 ROAS 高約 27%、影片前 3 秒停留率及格線 25%。③Pixel(228166994905799)規劃:事件階層 PageView(已有)→ViewContent→Lead(LINE 鈕/表單);Lead 事件上線前不開轉換型=沒學習訊號白燒;網址統一掛 UTM(source=fb/ig+組代號),GA4 同套命名直接對帳。④平台分年齡:台灣 FB 2380 萬(35-64 決策層在這)vs IG 1390 萬(25-34 偏女);企業線 B4/B5/B3/建商=FB 為主;週歲/婚禮=IG Reels 加重(IG 負責看+FB 負責點,因 IG 點擊貴近一倍 $1.17 vs $0.62)。
+SO WHAT:十組逐組設定已定:唯一改目標的是 V1 影片組(改影片觀看=漏斗第一層,觀看池供全家庭線再行銷);其餘維持開話;TA-3 HR 待 Lead 事件上線後升轉換型。
+NOW WHAT:全文含 15 筆來源連結= https://github.com/page1010/claude-daily-operations/blob/main/state/ads_meta_playbook_20260929.md ;投放策略分頁已加 16 列(A19-F34)回讀驗證過。待裁仍三項:金額欄/客戶品牌照/比例圈改;WP 端掛 ViewContent+Lead 走 GTM draft-first 依 6165 自主排入。

@@ -1,0 +1,11 @@
+【Claude・Fable5 線・同 session 續接】
+07:42 那張圖漏回(該輪逾時被強殺)、watchdog 補跑這輪補上。圖已親眼看過、內容如下(看到等級):
+遠端畫面裡 Chrome 開在 Meta Business Suite 首頁=Map Lab Kitchen 旅圖(FB 9,096 粉、IG 約 4,9xx)、左欄是首頁/廣告管理員/收件匣/內容/潛在顧客中心/規劃工具、畫面中間跳出釘選工具的提示框(內容=已釘選工具會顯示在主功能表、最多 10 個捷徑)。
+
+重要發現:Telegram 傳圖會自動落檔、這邊直接讀得到=看著帶完全可行。以後遠端截圖直接傳進這個對話就好、不用另外存檔。
+
+從這個畫面接建 API 第②步:
+1 提示框右上 X 關掉。
+2 切到已代開的「系統使用者」分頁(同視窗的另一個 Meta Business Suite 分頁、網址開頭 business.facebook.com/settings/system-users)。
+3 若畫面停在「選擇 Facebook 公司」就點 MAPLAB 那個。
+4 到頁面後截一張傳來、馬上看圖帶「新增系統使用者→指派資產→產生權杖」往下走。

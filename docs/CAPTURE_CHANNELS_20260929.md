@@ -14,7 +14,8 @@
 | ② | Telegram bot 線(現在回話的這條) | launchd `com.maplab.telegrambot`(PID 78732)→ `/bin/bash run_daemon.sh` → `bot/venv/bin/python3 bot.py` → `claude` 指令列 | 呼叫系統 `screencapture` 抓整個螢幕 | 需要「螢幕錄製」清單裡勾 Python(bot 的程式) | ❌ 從未取得。9/29 07:4x 實測原文:`could not create image from display` |
 | ③ | Owner Chrome AppleScript(bot 線借道) | 同①的 Chrome,但由②的 Python 發 Apple 事件 | 讀分頁標題 ✅ / 讀頁面文字 ❌ | 頁面文字需 Chrome 選單「檢視>開發人員>允許 Apple 事件的 JavaScript」 | 標題可讀(6210 輪即靠此驗登入);文字被關閉,實測原文:「透過 AppleScript 執行 JavaScript 的功能已關閉」 |
 | ④ | openclaw 那份 Chrome | `/Applications/Google Chrome.app`(實查在跑),CDP 埠 18800 | CDP 截自己頁面 | 不需 macOS 權限(截自己) | ✅ 能截,但登的是 agent FB 帳號,看不到 Owner 分頁 |
-| ⑤ | Owner 遠端桌面(人眼通道) | Owner 用遠端桌面軟體回連這台 Mac,親手截圖(msg 6225 證實:一年前的截圖走的就是這條) | 遠端軟體串流整個螢幕+Owner 手動截 | 權限票在遠端桌面軟體名下,早已開通 | ✅ 一直有效。對接 bot 線的方式:截圖存到 `/Users/pagemacmini/Documents/`,bot 線用 Read 開圖親看(=看到等級);圖不進版控、不進 Telegram |
+| ⑤ | Owner 遠端桌面(人眼通道) | Owner 用遠端桌面軟體回連這台 Mac,親手截圖(msg 6225 證實:一年前的截圖走的就是這條) | 遠端軟體串流整個螢幕+Owner 手動截 | 權限票在遠端桌面軟體名下,早已開通 | ✅ 一直有效。對接 bot 線的方式:走⑥傳 Telegram,或存 `/Users/pagemacmini/Documents/` |
+| ⑥ | Telegram 傳圖(⑤的最佳對接口,9/29 07:42 實證) | Owner 在 Telegram 對話直接傳圖 → bot 自動落檔 `data/telegram-photos/`(已在 .gitignore,不進版控) | bot 線用 Read 開圖親看=看到等級 | 不需任何新權限 | ✅ 本輪實測成功:07:42 遠端截圖傳入,bot 線開圖讀出 Meta Business Suite 首頁內容並據此指路 |
 
 ## 標註(6066 紀律)
 

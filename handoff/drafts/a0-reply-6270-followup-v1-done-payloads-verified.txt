@@ -1,0 +1,7 @@
+【Claude・Fable5 線・同 session 續接】追報:V1 影片產完+三包核對完=4 組全就緒。
+一 V1 甜點塔影片已產出兩版(14.5 秒:方形+直式;素材=正式表列2~6 已驗無臉四圖+尾板 CTA;逐幀親看過=尾板字體無缺字、直式已改模糊底構圖)。成品已上素材資料夾並回填正式表列17:
+https://drive.google.com/file/d/10L5JQH-T-2GUGgTGNNYG3QRpse599WD5/view
+https://drive.google.com/file/d/1hM6TqwYqYfLJOptooDlrXBOaEh3eHaF_/view
+音軌註記:先交無音軌版;開投前用 Canva 內建授權曲補配樂(授權紅線)。
+二 3 組照片載荷逐欄核對正式表列2~11=文案/標題/檔名/無臉狀態全部一致;README 六步+正式連結清單已入檔。
+三 權杖精靈剛再探一次=帳號驗證畫面仍擋在「產生權杖」前。遠端畫面點「驗證帳號」走完即自動接手:連發 4 組草稿(全 PAUSED 不開投)並逐組回報+總數。

@@ -1,0 +1,18 @@
+【Claude・Fable5 線・同 session 續接】
+說得對:一年前開的權限沒有消失。釐清結果=權限掛在「chrome 側邊欄」那條通道名下;現在報錯的是另一條通道。macOS 螢幕權限是按「程式」發的、不按帳號、也不看 Claude 版本新舊。
+
+四條通道(路徑實查):
+① chrome 側邊欄子 session=桌面那份 Chrome(Desktop/Google Chrome.app、實查在跑)裡的 Claude。截圖走 Chrome 內部功能、天生看得到自己分頁。有眼睛 ✅。
+② Telegram bot 線(現在回話的這條)=launchd 起的 Python(bot/venv/bin/python3 → claude 指令列)、截圖要呼叫系統 screencapture、需要「螢幕錄製」清單裡有 Python 這一格。從來沒拿過票、所以實測回 could not create image from display ❌。
+③ bot 線借 Chrome 讀字=分頁標題讀得到(前晚驗登入就靠它)、頁面全文被 Chrome 的「允許 Apple 事件的 JavaScript」關閉擋住 ❌。
+④ openclaw 那份 Chrome(Applications、實查在跑)=能截自己頁面、但登的是 agent FB 帳號、看不到桌面 Chrome 的分頁。
+
+一句話:①跟②是兩個不同程式、票不互通;側邊欄一直看得到、bot 線照不到、兩件事同時為真。標註:①=一年前那張票的持有人屬推論(無法直接讀權限資料庫);②沒票=實查(錯誤原文為證)。
+
+全文架構圖已入檔:maplab-ai-handbook/docs/CAPTURE_CHANNELS_20260929.md。
+
+開眼三選一:
+甲 系統設定>隱私權與安全性>螢幕錄製:勾 Python;清單沒有就按+加入 /Users/pagemacmini/maplab-ai-handbook/bot/venv/bin/python3。
+乙 Chrome 選單 檢視>開發人員>允許 Apple 事件的 JavaScript 打勾(bot 線改讀頁面文字、指路夠用)。
+丙 直接在側邊欄子 session 下指令看畫面(那條本來就有眼)、bot 線負責 API 與收尾。
+勾完甲或乙回一聲、馬上重測取像並回傳結果。

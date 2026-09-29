@@ -43,6 +43,13 @@ try:
         mark_durable_notified,
         pending_durable_notifications,
     )
+    from .hermes_repo_context import (
+        compose_prompt,
+        context_footer,
+        split_task,
+        task_card_reply,
+        write_task_card,
+    )
 except ImportError:  # Direct launchd/script execution.
     from hermes_capability_runtime import (
         HISTORY_PATH,
@@ -68,6 +75,13 @@ except ImportError:  # Direct launchd/script execution.
         durable_completion_summary,
         mark_durable_notified,
         pending_durable_notifications,
+    )
+    from hermes_repo_context import (
+        compose_prompt,
+        context_footer,
+        split_task,
+        task_card_reply,
+        write_task_card,
     )
 
 
@@ -210,7 +224,10 @@ def system_prompt(chain: list[str] | None = None) -> str:
         "這不是零存取，但也不是任意 shell 或 SSH。gateway 持有 Telegram 連線，模型看不到 token。"
         f"設定 provider 鏈：{provider_text}；本地 fallback 已停用（Owner 2026-08-30）。不得說模型完全未知。\n"
         "執行規則：當 runtime 能直接查時，不要叫 Owner 開終端機、不要叫 Owner 貼輸出、不要說等 Fable5/Codex 額度。"
-        "A6 gateway 沒有 Google Sheets/Drive/GitHub API 直連；不得把缺少直連誇大成所有本機檔案都不能讀。\n"
+        "A6 gateway 沒有 Google Sheets/Drive API 直連，也不 git push；但本機 repo 就是 GitHub 的同步 clone，"
+        "Owner 在訊息裡寫出的 repo 相對路徑（可加 #headN/#tailN/#La-b）會由 gateway 自動附原文給你，"
+        "每則對話也固定附 AGENT_CORE.md。回答時引用「檔案:xxx」段落；沒附到的檔不得聲稱讀過。"
+        "Owner 用 /task 或「交辦：」開頭的話會由 gateway 落成 handoff/inbox 任務卡給下一個 session。\n"
         "資料規則：手冊中的日期快照只算歷史背景，不能當成今天狀態；current/latest/目前必須以 runtime action 或新 receipt 為準。"
         "未實際讀到檔案內容時，不得聲稱已讀、不得生成股票名單或其他事實。照片目前只會保存與留 receipt，不得假裝看過像素。\n"
         "硬邊界：不下單、不轉帳、不發布 WordPress、不改生產設定或排程、不讀寫金鑰；投資判讀結尾標『研究判斷,非下單指令』。\n"
@@ -439,6 +456,9 @@ def is_group_addressed(message: dict, bot_username: str | None, bot_id: int | No
 
 
 def route_gateway_text(text: str, history: list[dict] | None = None) -> GatewayRoute:
+    task_body = split_task(text)
+    if task_body:
+        return GatewayRoute("TASK", request=task_body)
     for prefix in EXECUTE_PREFIXES:
         if text.startswith(prefix):
             return GatewayRoute("EXECUTE", request=text[len(prefix) :].strip())
@@ -534,6 +554,8 @@ def start_text(bot_username: str | None) -> str:
         "【hermes】A6 v3 值班中。你只要說成果目標；公開多來源研究、A8 影音與多輪 LINE 訓練會自動建立持久任務，不必背研究指令。\n"
         "任務會跨 session 留 receipt、續跑到可見成果或真正 Owner gate；私密 A8／LINE 內容只留本機，不送 DeerFlow/OpenRouter。\n"
         "也可用 /capabilities、/do repo-status、/do recent-commits、/do a6-self-test。每次執行都有檔案 receipt。\n"
+        "讀 repo：訊息裡直接寫檔名，例如「CURRENT_STATUS.md#tail120 裡 A6 卡在哪」，我會附原文再答。"
+        "交辦：用「/task …」或「交辦：…」開頭，會落成 handoff/inbox 任務卡給下一個 session。\n"
         f"群組內請 {mention} 或回覆我的訊息；Owner 傳照片時會私密保存並回 photo receipt。"
     )
 
@@ -665,6 +687,11 @@ def main() -> None:
                     tg_call(token, "sendMessage", {"chat_id": chat_id, "text": reply[:MAX_REPLY]})
                     continue
                 route = route_gateway_text(text, history)
+                if route.disposition == "TASK":
+                    card = write_task_card(route.request or text, chat_type=chat.get("type"), sender_id=sender.get("id"))
+                    log(f"task card written path={card.relative_to(card.parents[2])}")
+                    tg_call(token, "sendMessage", {"chat_id": chat_id, "text": task_card_reply(card)[:MAX_REPLY]})
+                    continue
                 if route.disposition == "EXECUTE":
                     receipt = execute_task(
                         route.request or text,
@@ -748,7 +775,11 @@ if __name__ == "__main__":
             log('quote shortcut -> engine (zero-model)')
             reply, provider = _q, 'quote_budget_reverse'
         else:
-            reply, provider = answer(key, chain, history, user_message)
+            prompt_text, ctx_got, ctx_missing = compose_prompt(user_message)
+            log(f"chat context attached={ctx_got} missing={ctx_missing} bytes={len(prompt_text)}")
+            reply, provider = answer(key, chain, history, prompt_text)
+            if reply is not None:
+                reply = reply.rstrip() + "\n\n" + context_footer(ctx_got, ctx_missing)
         if reply is None:
             reply = (
                 "【hermes】這次設定的免費 provider 鏈都沒有成功回覆。A6 gateway 與安全執行器仍在線；"

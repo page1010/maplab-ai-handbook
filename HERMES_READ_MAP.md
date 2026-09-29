@@ -17,6 +17,12 @@
 
 所以真正的狀況是:hermes 一直被列在「適用對象」裡,卻從來沒有人寫過一張 hermes 尺寸的路線卡。625 行的全角色索引不是指路,是地圖集。這張檔就是那張路線卡。
 
+## 0-1. 2026-09-29 起怎麼用(Telegram `@maplab_a6_bot`)
+
+- 讀檔:訊息裡直接寫本表的路徑,例:`看 CURRENT_STATUS.md#tail120 的 A6 狀態`、`pitfalls.md#head80 有沒有 LINE 的坑`。gateway 會附原文,回覆尾端印「📎 已附原文」;沒印到的檔就是沒讀到。
+- 交辦:`/task …` 或 `交辦：…` → `handoff/inbox/TG-*.md` + `QUEUE.md`。下一個 session 開工先讀 QUEUE。
+- 讀 GitHub = 讀本機 clone,不需 token;推送仍由人或有憑證的 session 做。
+
 ---
 
 ## 1. 冷啟動讀順序(企業文化)

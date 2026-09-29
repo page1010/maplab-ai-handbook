@@ -40,6 +40,9 @@
 這是唯一最新狀態入口。確認：系統版本、當前 Phase、進行中任務、Blockers、Source of Truth 文件清單。
 > 若其他文件與 CURRENT_STATUS.md 衝突，以 CURRENT_STATUS.md 為準。
 
+### Step 1-1. 讀 handoff/inbox/QUEUE.md（Owner 從 Telegram 交辦的任務，2026-09-29 起）
+未勾選的 `[ ]` 就是還沒人接。接手：打開對應 `TG-*.md`，status 改 IN_PROGRESS 並簽名；做完改 DONE 附成果路徑；做不到改 BLOCKED 寫缺什麼。沒讀 inbox 就開工，等於漏掉 Owner 直接下的指令。
+
 ### Step 2. 讀 handoff/tasks/ Task Card
 確認：你的任務是什麼、上一個 Agent 做到哪、下一步是什麼、Blockers。
 

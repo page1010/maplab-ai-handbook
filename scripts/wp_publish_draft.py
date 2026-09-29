@@ -74,14 +74,14 @@ def fetch_wp_credentials_from_vault(token: str) -> tuple[str, str]:
         # "WordPress Email: xxx@xxx"
         # "WordPress Email：xxx@xxx"
         # "WP_USER=xxx@xxx"
-        m = re.search(r"(?:WordPress\s+Email|WP[_\s]USER)\s*[=:：]\s*(\S+@\S+)", text, re.I)
+        m = re.search(r"(?:WordPress\s+Email|WP[_\s]USER|帳號)\s*[=:：]\s*(\S+@\S+)", text, re.I)  # 2026-09-29: 保管室實際寫法是「帳號：」
         if m:
             wp_user = m.group(1).strip()
 
         # "Application Password: xxxx xxxx xxxx xxxx xxxx xxxx"
         # "WP_APP_PASSWORD=xxxx xxxx xxxx"
         m2 = re.search(
-            r"(?:Application\s+Password|WP[_\s]APP[_\s]PASS(?:WORD)?)\s*[=:：]\s*(.{10,})",
+            r"(?:Application\s+Password|App\s+Password|WP[_\s]APP[_\s]PASS(?:WORD)?)\s*[=:：]\s*(.{10,})",  # 2026-09-29: 保管室寫「App Password：」
             text, re.I
         )
         if m2:

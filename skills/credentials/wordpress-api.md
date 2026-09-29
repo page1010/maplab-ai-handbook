@@ -14,6 +14,16 @@ WordPress Application Password 存放在 **Notion API Keys 保管室**：
 
 ---
 
+## ⚡ 2026-09-29 佈署狀態（先讀這段，別再說「憑證未佈署」）
+
+- **已佈署**：`~/maplab-ai-handbook/.env`（gitignored）含 `WP_USER` / `WP_USERNAME` / `WP_APP_PASSWORD` / `WP_BASE_URL`。
+  取用：`set -a; source ~/maplab-ai-handbook/.env; set +a` 後跑 `scripts/wp-audit.sh`、`automation/seo_factory/seo_factory.py --publish`、`scripts/wp_publish_draft.py`。
+- **實測**：2026-09-29 `GET /wp-json/wp/v2/users/me` → 200，`administrator`，`publish_pages=true`。密碼「maplab-detasys」自 2026-03-11 起一直有效——**不是失效，是 6～9 月沒人把它從保管室搬進 .env**。
+- **Notion get-cred 路徑為何一直失敗（兩個坑）**：
+  1. 保管室頁面**沒分享給 Integration「Internal」**（API 回 404 object_not_found）→ Owner 在 Notion 該頁「連結/Connections」加 Internal 一次即可。
+  2. 保管室寫法是「帳號：」「App Password：」，舊 regex 只認「WordPress Email:」「Application Password:」→ `wp_publish_draft.py` 已放寬。
+- 判斷順序：先看 `.env` → 再走 Notion；兩邊都沒有才回報 Owner。
+
 ## 取用方法
 
 ### 產生 Base64 Authorization Header

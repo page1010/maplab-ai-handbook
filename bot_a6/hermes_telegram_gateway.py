@@ -332,8 +332,11 @@ def answer(
     chain: list[str],
     history: list[dict],
     user_text: str,
+    dlp_text: str | None = None,
 ) -> tuple[str | None, str | None]:
-    if provider_egress_rejection(history, user_text):
+    # dlp_text：Owner 原話。字樣層 DLP 只掃原話；附上去的 repo 文件由
+    # hermes_repo_context.find_secret_values 用「真憑證值」樣式各自把關（治理文件到處寫「token」這個詞）。
+    if provider_egress_rejection(history, dlp_text if dlp_text is not None else user_text):
         log("provider egress blocked by private-data DLP")
         return None, None
     # 縱深防禦:呼叫端已經會隔離含憑證字樣的歷史,但這裡是唯一真的把資料送出去的
@@ -777,7 +780,7 @@ if __name__ == "__main__":
         else:
             prompt_text, ctx_got, ctx_missing = compose_prompt(user_message)
             log(f"chat context attached={ctx_got} missing={ctx_missing} bytes={len(prompt_text)}")
-            reply, provider = answer(key, chain, history, prompt_text)
+            reply, provider = answer(key, chain, history, prompt_text, dlp_text=user_message)
             if reply is not None:
                 reply = reply.rstrip() + "\n\n" + context_footer(ctx_got, ctx_missing)
         if reply is None:

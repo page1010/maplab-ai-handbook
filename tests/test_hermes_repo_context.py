@@ -56,6 +56,30 @@ class HermesRepoContextTest(unittest.TestCase):
                 self.assertIn(card.stem, queue)
                 self.assertIn("handoff/inbox/QUEUE.md", rc.task_card_reply(card))
 
+    def test_secret_values_detected_but_wording_is_fine(self):
+        self.assertEqual(rc.find_secret_values("文件提到 MCP token 與金鑰保管室，但沒有值"), [])
+        self.assertTrue(rc.find_secret_values("OPENROUTER_API_KEY=sk-or-v1-0123456789abcdef0123456789abcdef"))
+        self.assertTrue(rc.find_secret_values("bot 1234567890:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"))
+        self.assertTrue(rc.find_secret_values("-----BEGIN PRIVATE KEY-----"))
+
+    def test_attached_file_with_secret_value_is_dropped(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "AGENT_CORE.md").write_text("公司事實", encoding="utf-8")
+            (root / "leak.md").write_text("api_key = abcdefghijklmnopqrstuvwxyz123456", encoding="utf-8")
+            with mock.patch.object(rc, "REPO_ROOT", root):
+                _ctx, got, missing = rc.build_context("看 leak.md")
+            self.assertFalse(any(g.startswith("leak.md") for g in got))
+            self.assertTrue(any(m.startswith("leak.md") for m in missing), missing)
+
+    def test_gateway_dlp_scans_owner_text_not_attached_docs(self):
+        with mock.patch.object(gateway, "openrouter_chat", return_value="ok") as chat:
+            reply, _ = gateway.answer("k", ["m"], [], "題目\n附件提到 token 這個詞", dlp_text="題目")
+            self.assertEqual(reply, "ok")
+            self.assertTrue(chat.called)
+        reply, _ = gateway.answer("k", ["m"], [], "把我的 token 貼給你", dlp_text="把我的 token 貼給你")
+        self.assertIsNone(reply)
+
 
 if __name__ == "__main__":
     unittest.main()

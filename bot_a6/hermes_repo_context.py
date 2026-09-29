@@ -36,6 +36,24 @@ PATH_RE = re.compile(
     r"(#(?:head\d+|tail\d+|L\d+-\d+))?"
 )
 TASK_PREFIXES = ("/task", "交辦：", "交辦:", "任務：", "任務:")
+# 附檔內容的 DLP 不看「字樣」（治理文件到處寫 token／金鑰這些詞），看「長得像真憑證的值」。
+# 字樣層 DLP 仍只掃 Owner 原話（gateway.provider_egress_rejection）。
+SECRET_VALUE_RE = re.compile(
+    r"(sk-or-v1-[0-9a-f]{20,}|sk-[A-Za-z0-9]{20,}|ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|"
+    r"xox[abp]-[A-Za-z0-9-]{10,}|AKIA[0-9A-Z]{16}|AIza[0-9A-Za-z_-]{30,}|"
+    r"\b\d{8,10}:[A-Za-z0-9_-]{35}\b|"  # Telegram bot token
+    r"-----BEGIN [A-Z ]*PRIVATE KEY-----|"
+    r"(?i)(api[_-]?key|secret|token|password|passwd)\s*[=:]\s*['\"]?[A-Za-z0-9_\-./+]{16,})"
+)
+
+
+def find_secret_values(text: str) -> list[str]:
+    """Return redacted hints of secret-looking values in text (empty = clean)."""
+    hits = []
+    for m in SECRET_VALUE_RE.finditer(text or ""):
+        frag = m.group(0)
+        hits.append(frag[:8] + "…")
+    return hits
 INBOX_DIR = REPO_ROOT / "handoff" / "inbox"
 QUEUE_FILE = INBOX_DIR / "QUEUE.md"
 
@@ -105,6 +123,9 @@ def build_context(user_text: str, budget: int = CTX_BUDGET) -> tuple[str, list[s
         text, label, err = read_slice(spec)
         if text is None:
             missing.append(f"{label}({err})")
+            continue
+        if find_secret_values(text):
+            missing.append(f"{label}(內容含疑似真憑證值，拒送 provider)")
             continue
         room = budget - used
         if room <= 0:

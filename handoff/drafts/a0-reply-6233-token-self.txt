@@ -1,0 +1,15 @@
+【Claude・Fable5 線・同 session 續接】
+接下、去拿。剛又實測一遍=自取的門還差一勾:
+點頁面按鈕要靠 Chrome 的 Apple 事件 JavaScript、剛跑回=功能已關閉(原文照報);截圖同輪重測=could not create image from display。目前對已登入的 Chrome 只能開頁+讀分頁標題、點不到「產生權杖」那顆按鈕=實際拿不到。
+
+差的那一勾(遠端回來 10 秒、就在 Chrome 選單列):檢視>開發人員>允許 Apple 事件的 JavaScript 打勾。
+勾完回一聲、自取全程自動跑:
+① developers 分頁建企業型 app(關聯 MAPLAB)
+② 系統使用者頁建 maplab-api、角色管理員
+③ 指派廣告帳號 318634712+maplabkitchen 粉專+Pixel
+④ 產生權杖(勾三權限、永不過期)
+⑤ 權杖從頁面直接寫進 bot/.env、當輪建 3 則草稿(全 PAUSED)。
+
+不外洩保證:權杖值只落本機 bot/.env(在 gitignore 內)、不印出、不進 Telegram、不進 repo、API 呼叫只報 HTTP 碼=絕不碰公開場合。
+
+備援照舊:遠端自己點到第④步、權杖用文字編輯貼進 /Users/pagemacmini/maplab-ai-handbook/bot/.env 加一行 META_ADS_TOKEN=權杖值。哪條先通都行。

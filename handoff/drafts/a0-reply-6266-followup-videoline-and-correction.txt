@@ -1,0 +1,7 @@
+【Claude・Fable5 線・同 session 續接】追報兩件:
+一 更正:13:22 重發那則貼錯連結=貼到 9/28 分腦事故已標作廢的重複表(表名開頭就是 作廢-重複)。正式表是這張:
+https://docs.google.com/spreadsheets/d/1pKTyY_0BylWB7ctc8Agz7AsdraP1_ytmJl0hVqE7wzo
+剛才四問回覆裡「8 則」也是作廢表的算法;正式表=10 列素材(1 單圖+一組 4 格輪播+1 影片列+1 婚禮備用+3 HR)+缺口標記兩列。結論不變、數字以正式表為準。
+二 影片線已寫進正式表素材圈選分頁列 16~20:V1 甜點塔幻燈(TA-1)/V2 茶會場景(TA-2 備用)/V3 HR 團隊餐(TA-3);全用既有已驗無臉照片串 10~15 秒 Canva 幻燈、零新拍攝成本;每列含前 3 秒 hook 結構+文案+對照規則。長版規格(Canva 五步產線+三數週檢+疲乏訊號+缺口誠實標):
+https://github.com/page1010/maplab-ai-handbook/blob/main/handoff/ads-video-line-20260929.md
+圈選照舊 V=可上/X=換;產片順序=先 V1;上架動作仍等帳號驗證那一關過。

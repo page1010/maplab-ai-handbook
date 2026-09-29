@@ -1,9 +1,10 @@
 # 取像通道架構圖(2026-09-29,依 Owner msg 6224「把路徑和架構釐清寫清楚」)
 
 核心一句話:**macOS 螢幕錄製權限是「按程式」發的,不是按帳號或按 Claude 版本。**
-一年前開的權限沒有消失,它掛在「chrome 側邊欄 computer use」那條通道的程式名下;
-今天報「截圖失敗」的是另一條通道(Telegram bot 線),是另一個程式身分,從來沒拿過這張票。
-兩件事同時為真:側邊欄一直看得到 ✅、bot 線照不到 ❌。差別在程式身分,不在模型新舊。
+一年前開的權限沒有消失,它掛在別的程式名下;
+今天報「截圖失敗」的是 Telegram bot 線,是另一個程式身分,從來沒拿過這張票。
+兩件事同時為真:過去一直看得到 ✅、bot 線照不到 ❌。差別在程式身分,不在模型新舊。
+**更正(msg 6225,2026-09-29 08:00)**:Owner 證實過去的截圖走的是通道⑤=Owner 本人用遠端桌面回連這台 Mac 親手截圖,權限票在遠端桌面軟體名下——初版推論「掛在側邊欄名下」修正為此。
 
 ## 四條通道對照表
 
@@ -13,11 +14,12 @@
 | ② | Telegram bot 線(現在回話的這條) | launchd `com.maplab.telegrambot`(PID 78732)→ `/bin/bash run_daemon.sh` → `bot/venv/bin/python3 bot.py` → `claude` 指令列 | 呼叫系統 `screencapture` 抓整個螢幕 | 需要「螢幕錄製」清單裡勾 Python(bot 的程式) | ❌ 從未取得。9/29 07:4x 實測原文:`could not create image from display` |
 | ③ | Owner Chrome AppleScript(bot 線借道) | 同①的 Chrome,但由②的 Python 發 Apple 事件 | 讀分頁標題 ✅ / 讀頁面文字 ❌ | 頁面文字需 Chrome 選單「檢視>開發人員>允許 Apple 事件的 JavaScript」 | 標題可讀(6210 輪即靠此驗登入);文字被關閉,實測原文:「透過 AppleScript 執行 JavaScript 的功能已關閉」 |
 | ④ | openclaw 那份 Chrome | `/Applications/Google Chrome.app`(實查在跑),CDP 埠 18800 | CDP 截自己頁面 | 不需 macOS 權限(截自己) | ✅ 能截,但登的是 agent FB 帳號,看不到 Owner 分頁 |
+| ⑤ | Owner 遠端桌面(人眼通道) | Owner 用遠端桌面軟體回連這台 Mac,親手截圖(msg 6225 證實:一年前的截圖走的就是這條) | 遠端軟體串流整個螢幕+Owner 手動截 | 權限票在遠端桌面軟體名下,早已開通 | ✅ 一直有效。對接 bot 線的方式:截圖存到 `/Users/pagemacmini/Documents/`,bot 線用 Read 開圖親看(=看到等級);圖不進版控、不進 Telegram |
 
 ## 標註(6066 紀律)
 
 - **實查**:①②④ 兩份 Chrome 與 bot 行程路徑(pgrep/launchctl);②③ 的兩條失敗原文(9/29 07:4x 重測)。
-- **推論**:一年前那張票確切開給哪個程式(側邊欄擴充所在的 Chrome、或桌面版 Claude app,其一)。TCC 資料庫需完整磁碟權限才能讀,無法直接查證;但「②的 Python 沒票」由錯誤原文直接成立,不依賴此推論。
+- **實查(6225 補)**:一年前那張票的持有人=Owner 的遠端桌面通道(通道⑤),Owner 原話證實「截圖是我遠端回去截圖」。初版「掛在側邊欄名下」的推論作廢,劃掉留底。「②的 Python 沒票」由錯誤原文直接成立,不受此更正影響。
 
 ## 解法(任選其一即可)
 

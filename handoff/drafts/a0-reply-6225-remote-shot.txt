@@ -1,0 +1,7 @@
+【Claude・Fable5 線・同 session 續接】
+對上了。遠端回去截圖=第五條通道:遠端桌面軟體拿的是它自己的螢幕權限票、看得到全螢幕。所以一年前看得到=真的(Owner 親手遠端截);現在 bot 線照不到=也是真的(bot 的 Python 沒有自己的票)。架構圖馬上補上第五條。
+
+兩條路、可並行:
+1 立即可用:遠端截好的圖直接存到 /Users/pagemacmini/Documents/(檔名隨意、例 meta_step.png)、回一聲、馬上開圖親看並指路。建 API 卡在哪一步都能這樣看著帶。
+2 一勞永逸:遠端回去那趟順手勾一格=系統設定>隱私權與安全性>螢幕錄製:清單勾 Python;沒有就按+加入 /Users/pagemacmini/maplab-ai-handbook/bot/venv/bin/python3。勾完之後不必再遠端、bot 線自己就能截。
+(乙案同樣有效:Chrome 選單 檢視>開發人員>允許 Apple 事件的 JavaScript 打勾=直接讀頁面文字。)

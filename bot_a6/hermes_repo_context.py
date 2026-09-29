@@ -270,7 +270,7 @@ BOOT_READING = (
 BOOT_BUDGET = int(os.environ.get("HERMES_BOOT_BUDGET", "180000"))  # P13 已驗 200KB 召得回
 BOOT_PREFIXES = ("/boot", "/召喚", "召喚", "開機", "詠唱")
 BRIEFING_PATH = Path.home() / ".local" / "share" / "maplab-a6-hermes" / "briefing.md"
-BRIEFING_MAX_CHARS = 6000
+BRIEFING_MAX_CHARS = 12000  # 含推理草稿也留著，Owner 要看他的思路
 BRIEFING_INSTRUCTION = (
     "你是 Hermes，剛被 Owner 召喚上工。上面是 MAPLAB 的核心文件原文。請寫一份「洞悉簡報」給未來沒有記憶的自己，"
     "之後每一則對話都會先讀這份簡報。要求：全繁體、不超過 2500 字、只寫文件裡有的事、每一段標出處檔名。固定七節：\n"
@@ -294,26 +294,24 @@ def extract_briefing(text: str) -> str:
 
 
 def briefing_quality_issue(text: str) -> str | None:
-    """None if the briefing is usable; else the reason. 2026-09-29 實測 nemotron 把英文推理草稿當成簡報吐出來還無限重複。"""
+    """None if usable; else the reason.
+
+    Owner 2026-09-29：「我更信任 nemotron，他推理草稿吐出來不是壞事，最終還是會給我一份他的解讀。」
+    所以推理草稿不再是退件理由；只擋真正壞掉的輸出：太短、退化重複（同一行刷十次）、幾乎沒有中文。
+    """
     body = (text or "").strip()
     if len(body) < 400:
         return "太短"
-    # 2026-09-29 第一版閘用「中文字 < 英文字母」判定，把一份正常簡報退件了：檔名、網址、Owner、Telegram
-    # 這些英文字母本來就多。改看中文佔比（不含空白）。
     compact = re.sub(r"\s+", "", body)
     cjk = sum(1 for ch in compact if "\u4e00" <= ch <= "\u9fff")
-    if cjk < 0.35 * len(compact):
-        return "中文佔比過低（疑似推理草稿）"
-    if re.search(r"\b(we need to|we'll|let's|the user|must not)\b", body[:600], re.IGNORECASE):
-        return "開頭是推理草稿不是簡報"
+    if cjk < 0.15 * len(compact):
+        return "幾乎沒有中文"
     lines = [ln.strip() for ln in body.splitlines() if len(ln.strip()) > 12]
     if lines:
         from collections import Counter
         top = Counter(lines).most_common(1)[0][1]
-        if top >= 4:
-            return "同一行重複 %d 次（退化輸出）" % top
-    if "1." not in body[:400] and "一、" not in body[:400] and "## 1" not in body[:400]:
-        return "沒有第 1 節標題"
+        if top >= 6:
+            return "同一行重複 %d 次（退化輸出，通常是 max_tokens 截斷前卡住）" % top
     return None
 
 
@@ -350,13 +348,24 @@ def build_boot_prompt() -> tuple[str, list[str], list[str]]:
     return "\n\n".join(parts) + "\n\n" + BRIEFING_INSTRUCTION, got, missing
 
 
+def split_reasoning(raw: str) -> tuple[str, str]:
+    """(推理草稿, 解讀本文)。找不到章節起點就整份當解讀。"""
+    m = BRIEFING_START_RE.search(raw or "")
+    if m and m.start() > 0:
+        return (raw or "")[: m.start()].strip(), (raw or "")[m.start():].strip()
+    return "", (raw or "").strip()
+
+
 def save_briefing(text: str, *, provider: str | None, got: list[str], missing: list[str]) -> Path:
     BRIEFING_PATH.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
     header = (
         f"<!-- hermes briefing | head={repo_head()} | built={time.strftime('%Y-%m-%d %H:%M:%S')} | provider={provider} -->\n"
         f"<!-- read={', '.join(got)} | missing={', '.join(missing) or 'none'} -->\n\n"
     )
-    body = text.strip()[:BRIEFING_MAX_CHARS]
+    reasoning, interpretation = split_reasoning(text)
+    body = interpretation[:BRIEFING_MAX_CHARS]
+    if reasoning:
+        body += "\n\n<!-- 以下是模型作答前的推理草稿（Owner 2026-09-29：留著，這是他的思路） -->\n" + reasoning[: max(0, BRIEFING_MAX_CHARS - len(body))]
     fd = os.open(BRIEFING_PATH, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
     with os.fdopen(fd, "w", encoding="utf-8") as fh:
         fh.write(header + body + "\n")

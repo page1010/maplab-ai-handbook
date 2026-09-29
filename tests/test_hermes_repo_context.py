@@ -136,27 +136,32 @@ class HermesRepoContextTest(unittest.TestCase):
                 with mock.patch.object(rc, "repo_head", return_value="zzz"):
                     self.assertIn("repo 已更新", rc.briefing_status_line())
 
-    def test_run_boot_rejects_reasoning_draft_and_falls_to_next_model(self):
-        good = "1. 公司（AGENT_CORE.md）\n" + "MAPLAB 是台南的外燴品牌，主要提供到場外燴整案。" * 25 + "\n2. 席位\n3. 文化\n4. 紅線\n5. 狀態\n6. 坑\n7. 不知道"
-        self.assertTrue(rc.extract_briefing("We need to write...\nblah\n1. 公司（AGENT_CORE.md）\n內容").startswith("1. 公司"))
-        bad = "We need to produce a concise briefing. " + "   Also from AGENT_RULES.md? Not.\n" * 10
-        self.assertIsNotNone(rc.briefing_quality_issue(bad))
-        self.assertIsNone(rc.briefing_quality_issue(good), rc.briefing_quality_issue(good))
+    def test_run_boot_keeps_reasoning_draft_and_rejects_only_degenerate(self):
+        interp = "1. 公司（AGENT_CORE.md）\n" + "MAPLAB 是台南的外燴品牌，主要提供到場外燴整案。" * 25 + "\n2. 席位\n3. 文化\n4. 紅線\n5. 狀態\n6. 坑\n7. 不知道"
+        with_draft = "We need to produce a concise briefing. Let's check AGENT_CORE.md first.\n\n" + interp
+        degenerate = "We need to produce a concise briefing. " + "   Also from AGENT_RULES.md? Not.\n" * 12
+        self.assertIsNone(rc.briefing_quality_issue(rc.extract_briefing(with_draft)))
+        self.assertIsNotNone(rc.briefing_quality_issue(degenerate))
+        self.assertTrue(rc.extract_briefing(with_draft).startswith("1. 公司"))
         with tempfile.TemporaryDirectory() as tmp:
             bp = Path(tmp) / "briefing.md"
             with mock.patch.object(rc, "BRIEFING_PATH", bp), \
-                    mock.patch.object(gateway, "openrouter_chat", side_effect=[bad, good]) as chat:
+                    mock.patch.object(gateway, "openrouter_chat", side_effect=[degenerate, with_draft]) as chat:
                 out = gateway.run_boot("k", ["m1", "m2"])
             self.assertEqual(chat.call_count, 2)
             self.assertIn("召喚完成", out)
-            self.assertIn("provider=m2", out)
-            self.assertIn("台南的外燴品牌", bp.read_text(encoding="utf-8"))
+            saved = bp.read_text(encoding="utf-8")
+            self.assertIn("台南的外燴品牌", saved)
+            self.assertIn("推理草稿", saved)  # 草稿留著，Owner 要看思路
+            self.assertIn("We need to produce", saved)
             with mock.patch.object(rc, "BRIEFING_PATH", bp), \
-                    mock.patch.object(gateway, "openrouter_chat", return_value=bad):
+                    mock.patch.object(gateway, "openrouter_chat", return_value=degenerate):
                 out = gateway.run_boot("k", ["m1"])
             self.assertIn("召喚失敗", out)
-            self.assertIn("台南的外燴品牌", bp.read_text(encoding="utf-8"))  # 舊簡報不被覆蓋
+            self.assertIn("台南的外燴品牌", bp.read_text(encoding="utf-8"))
 
+    def test_nemotron_goes_first(self):
+        self.assertEqual(gateway.prefer_models(["a/x:free", "nvidia/nemotron-3-super:free", "b/y:free"])[0], "nvidia/nemotron-3-super:free")
 
 if __name__ == "__main__":
     unittest.main()

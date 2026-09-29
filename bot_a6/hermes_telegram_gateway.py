@@ -204,7 +204,19 @@ def load_free_env_key() -> str | None:
     return None
 
 
+PREFERRED_MODEL_SUBSTRINGS = ("nemotron",)  # Owner 2026-09-29：「我更信任 nemotron」
+
+
+def prefer_models(chain: list[str]) -> list[str]:
+    front = [m for m in chain if any(k in m for k in PREFERRED_MODEL_SUBSTRINGS)]
+    return front + [m for m in chain if m not in front]
+
+
 def load_chain() -> list[str]:
+    return prefer_models(_load_chain_raw())
+
+
+def _load_chain_raw() -> list[str]:
     try:
         data = json.loads(RANKING.read_text(encoding="utf-8"))
         chain = data.get("use_cases", {}).get("zh_customer_reply_maplabkitchen", [])
@@ -460,8 +472,7 @@ def run_boot(key: str | None, chain: list[str]) -> str:
             log(f"boot model {model} empty reply")
             continue
         raw = reply
-        reply = extract_briefing(reply)
-        issue = briefing_quality_issue(reply)
+        issue = briefing_quality_issue(extract_briefing(reply))
         if issue:
             log(f"boot model {model} briefing rejected reason={issue}")
             try:  # 留原文給人看，才知道是模型壞還是閘太嚴
@@ -472,8 +483,9 @@ def run_boot(key: str | None, chain: list[str]) -> str:
                 pass
             rejected.append(f"{model}:{issue}")
             continue
-        path = save_briefing(reply, provider=model, got=got, missing=missing)
-        log(f"boot briefing saved path={path} provider={model} chars={len(reply)}")
+        path = save_briefing(raw, provider=model, got=got, missing=missing)
+        log(f"boot briefing saved path={path} provider={model} chars={len(raw)}")
+        reply = extract_briefing(raw)
         return (
             "【hermes】召喚完成，已讀完核心文件並寫下洞悉簡報；之後每一句對話都會先帶這份簡報。\n"
             f"讀了 {len(got)} 檔／{len(prompt)//1000}KB，provider={model}"

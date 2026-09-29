@@ -1,0 +1,9 @@
+【Claude・Fable5 線・同 session 續接】
+收到、入常設順序:Meta 權杖到手→Notion 保管室建檔→不合格式條目一併整理。
+保管室已定位(先查自家庫):Notion「MAPLAB API Keys」保管室、頁 ID 320ab0806d5c80e0be95f298399d2c44、技能書=handbook skills/credentials/notion-api.md;既有格式前例=LINE 金鑰同時放保管室+bot/.env 各一份、META_ADS_TOKEN 到手後照同一格式辦。
+剛實查一個缺口:bot/.env 現無 NOTION_TOKEN、這條 bot 線也沒接 Notion MCP=建檔與整理的寫入通道還沒通(Notion MCP 只在 Claude Desktop 那邊)。
+解法=遠端回來同一趟共兩個動作:
+① Chrome 檢視>開發人員>允許 Apple 事件的 JavaScript 打勾(自取 Meta 權杖用、原案不變)
+② 打開保管室把 NOTION_TOKEN 用文字編輯器貼進 bot/.env 加一行 NOTION_TOKEN=值
+兩樣到位後一條龍自動跑:自取 Meta 權杖→寫 bot/.env→照保管室既有格式建檔→整頁掃一遍、不合格式的照格式補齊排好(只動格式不動金鑰值、技能書鐵律=絕不刪頁)→回報條目總數+整理了幾條。
+安全線一句:兩顆權杖值只落本機 gitignore 檔與保管室、不進 Telegram/repo/log。

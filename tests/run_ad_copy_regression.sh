@@ -13,8 +13,15 @@
 set -u
 cd "$(dirname "$0")/.."
 
-POS="tests/fixtures/ad_copy_after_20260930.txt tests/fixtures/ad_copy_variants_20260930.txt tests/fixtures/ad_carousel_cards_20260930.txt tests/fixtures/ad_video_overlay_20260930.txt tests/fixtures/ad_copy_video_reuse_20260930.txt"
-NEG="tests/fixtures/ad_copy_before_20260930.txt tests/fixtures/ad_copy_promise_bad_20260930.txt tests/fixtures/ad_copy_ctamix_bad_20260930.txt tests/fixtures/ad_copy_brand_bad_20260930.txt tests/fixtures/ad_copy_person_loophole_bad_20260930.txt"
+POS="tests/fixtures/ad_copy_after_20260930.txt tests/fixtures/ad_copy_variants_20260930.txt tests/fixtures/ad_carousel_cards_20260930.txt tests/fixtures/ad_video_overlay_20260930.txt tests/fixtures/ad_copy_video_reuse_20260930.txt tests/fixtures/ad_copy_video_multitext_20260930.txt tests/fixtures/ad_copy_service_area_ok_20260930.txt"
+NEG="tests/fixtures/ad_copy_before_20260930.txt tests/fixtures/ad_copy_promise_bad_20260930.txt tests/fixtures/ad_copy_ctamix_bad_20260930.txt tests/fixtures/ad_copy_brand_bad_20260930.txt tests/fixtures/ad_copy_person_loophole_bad_20260930.txt tests/fixtures/ad_copy_opsnumber_bad_20260930.txt"
+
+# 兩套設定檔(Owner msg 6388「品牌用語在文章,廣告是cta」)的雙向測資。
+# 同一份檔案跑兩次:article 側必須擋、ad 側必須放行。
+# 只寫其中一邊都不夠——只驗 article 會漏掉「拆了但 ad 側沒真的鬆開」,
+# 只驗 ad 會讓 9/23 裁掉的五個詞悄悄從整個系統消失。
+ART_NEG="tests/fixtures/article_copy_brand_bad_20260930.txt"
+AD_POS_SPLIT="tests/fixtures/article_copy_brand_bad_20260930.txt"
 
 # 圖片這一側的閘門(scripts/ad_image_scene_check.sh)也掛進來。
 # 由來:圖片閘門 9/30 寫好之後沒有進 runner,等於沒有人在跑它——
@@ -24,21 +31,21 @@ IMG_NEG="tests/fixtures/ad_images_bad_20260930.txt"
 
 bad=0
 check() {
-  f="$1"; want="$2"
+  f="$1"; want="$2"; prof="${3:-ad}"
   if [ ! -f "$f" ]; then
     echo "MISSING $f ——測資檔不存在,這一類等於沒有在測"
     bad=$((bad + 1))
     return
   fi
-  out=$(bash scripts/ad_copy_voice_check.sh "$f" 2>&1)
+  out=$(bash scripts/ad_copy_voice_check.sh "$f" "$prof" 2>&1)
   rc=$?
   line=$(printf '%s' "$out" | grep -E '^(PASS|FAIL):')
   if [ "$want" = "pass" ] && [ "$rc" -eq 0 ]; then
-    echo "OK   $(basename "$f") 正例 exit=0 $line"
+    echo "OK   [$prof] $(basename "$f") 正例 exit=0 $line"
   elif [ "$want" = "fail" ] && [ "$rc" -eq 1 ]; then
-    echo "OK   $(basename "$f") 反例 exit=1 $line"
+    echo "OK   [$prof] $(basename "$f") 反例 exit=1 $line"
   else
-    echo "BAD  $(basename "$f") 預期 $want 實際 exit=$rc $line"
+    echo "BAD  [$prof] $(basename "$f") 預期 $want 實際 exit=$rc $line"
     bad=$((bad + 1))
   fi
 }
@@ -66,6 +73,8 @@ check_img() {
 n=0
 for f in $POS; do check "$f" pass; n=$((n + 1)); done
 for f in $NEG; do check "$f" fail; n=$((n + 1)); done
+for f in $ART_NEG; do check "$f" fail article; n=$((n + 1)); done
+for f in $AD_POS_SPLIT; do check "$f" pass ad; n=$((n + 1)); done
 for f in $IMG_POS; do check_img "$f" pass; n=$((n + 1)); done
 for f in $IMG_NEG; do check_img "$f" fail; n=$((n + 1)); done
 

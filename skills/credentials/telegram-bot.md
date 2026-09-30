@@ -9,7 +9,7 @@
 | 變數 | 位置 | 說明 |
 |------|------|------|
 | `A6_BOT_TOKEN` | `bot_a6/.env`（本機，git 不追蹤） | A6 bot token（由 @BotFather 發放） |
-| `OWNER_USER_ID` | `bot_a6/.env` | `1077768811` |
+| `OWNER_USER_ID` | `bot_a6/.env` | `<見 bot/.env 的 OWNER_CHAT_ID>` |
 
 > **Token 更換流程（一行指令）：**
 > 1. Telegram → @BotFather → `/revoke` → 選 A6 bot → 取得新 token
@@ -38,7 +38,7 @@ TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 
 ```bash
 TOKEN="your_bot_token"
-CHAT_ID="1077768811"
+CHAT_ID="<見 bot/.env 的 OWNER_CHAT_ID>"
 
 curl -s -X POST "https://api.telegram.org/bot${TOKEN}/sendMessage" \
   -H "Content-Type: application/json" \
@@ -69,4 +69,4 @@ curl -s -X POST "https://api.telegram.org/bot${TOKEN}/sendMessage" \
 ## A0 掛了時的備援
 
 A1 可直接用 curl 發 sendMessage 通知 Owner，不依賴 bot.py daemon。
-OWNER_CHAT_ID = `1077768811`。
+OWNER_CHAT_ID = `<見 bot/.env 的 OWNER_CHAT_ID>`。

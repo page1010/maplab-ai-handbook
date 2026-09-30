@@ -41,7 +41,7 @@ Mac Mini
 │   └── auto-start com.maplab.telegrambot
 │       └── run_daemon.sh → bot.py
 │           └── python-telegram-bot (long polling)
-│               └── Telegram API <-> Owner (chat_id=1077768811)
+│               └── Telegram API <-> Owner (chat_id=<見 bot/.env 的 OWNER_CHAT_ID>)
 └── Claude Code (independent, on-demand)
 ```
 

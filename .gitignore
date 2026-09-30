@@ -76,3 +76,34 @@ graphify-out/20*/
 graphify-out/.graphify_*
 graphify-out/.vocab.txt
 graphify-out/cost.json
+
+# ───────────────────────────────────────────────────────────────────
+# 2026-09-30 憑證外洩硬化(Owner 交辦「gitignore 或設法處理，留一勞永逸的解」)
+# 這是第二道防線。第一道＝原始碼裡根本沒有值可洩(scripts/maplab_secrets.py
+# 統一從 .env 讀);第三道＝pre-commit 閘門 scripts/secret_commit_gate.sh。
+# 三道互相獨立，任何一道失效另外兩道仍然擋得住。
+# 規範全文＝docs/OPERATING_CULTURE.md 原則 11。
+# ───────────────────────────────────────────────────────────────────
+
+# 瀏覽器設定檔殘骸：Local State / Secure Preferences 夾帶 cookie 與授權資料，
+# 而且會被憑證掃描誤判成長效權杖(agent-bus 已被這種檔汙染 21 個)。
+**/_profile*/
+**/_cdp_profile/
+**/Local State
+**/Secure Preferences
+**/Default/Cookies
+**/Default/Login Data
+
+# 整頁另存的 HTML：會把當下 session 的金鑰與權杖一起存進來
+**/.page.html
+*.page.html
+**/*_files/
+
+# 中繼工作目錄：抓下來的原始回應常夾帶權杖
+**/.work/
+
+# 任何 .env 變體與備份(上面已有 .env，這裡補齊變體)
+*.env
+**/*.env
+!**/*.env.example
+!**/*.env.sample

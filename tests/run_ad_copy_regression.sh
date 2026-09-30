@@ -13,8 +13,14 @@
 set -u
 cd "$(dirname "$0")/.."
 
-POS="tests/fixtures/ad_copy_after_20260930.txt tests/fixtures/ad_copy_variants_20260930.txt tests/fixtures/ad_carousel_cards_20260930.txt tests/fixtures/ad_video_overlay_20260930.txt"
-NEG="tests/fixtures/ad_copy_before_20260930.txt tests/fixtures/ad_copy_promise_bad_20260930.txt tests/fixtures/ad_copy_ctamix_bad_20260930.txt tests/fixtures/ad_copy_brand_bad_20260930.txt"
+POS="tests/fixtures/ad_copy_after_20260930.txt tests/fixtures/ad_copy_variants_20260930.txt tests/fixtures/ad_carousel_cards_20260930.txt tests/fixtures/ad_video_overlay_20260930.txt tests/fixtures/ad_copy_video_reuse_20260930.txt"
+NEG="tests/fixtures/ad_copy_before_20260930.txt tests/fixtures/ad_copy_promise_bad_20260930.txt tests/fixtures/ad_copy_ctamix_bad_20260930.txt tests/fixtures/ad_copy_brand_bad_20260930.txt tests/fixtures/ad_copy_person_loophole_bad_20260930.txt"
+
+# 圖片這一側的閘門(scripts/ad_image_scene_check.sh)也掛進來。
+# 由來:圖片閘門 9/30 寫好之後沒有進 runner,等於沒有人在跑它——
+# 原則 2 的閘門層只有被獨立執行才算數,寫了不跑跟沒寫一樣。
+IMG_POS="tests/fixtures/ad_images_good_20260930.txt"
+IMG_NEG="tests/fixtures/ad_images_bad_20260930.txt"
 
 bad=0
 check() {
@@ -37,12 +43,35 @@ check() {
   fi
 }
 
-for f in $POS; do check "$f" pass; done
-for f in $NEG; do check "$f" fail; done
+check_img() {
+  f="$1"; want="$2"
+  if [ ! -f "$f" ]; then
+    echo "MISSING $f ——測資檔不存在,這一類等於沒有在測"
+    bad=$((bad + 1))
+    return
+  fi
+  out=$(bash scripts/ad_image_scene_check.sh "$f" 2>&1)
+  rc=$?
+  line=$(printf '%s' "$out" | grep -E '^(PASS|FAIL):')
+  if [ "$want" = "pass" ] && [ "$rc" -eq 0 ]; then
+    echo "OK   $(basename "$f") 圖片正例 exit=0 $line"
+  elif [ "$want" = "fail" ] && [ "$rc" -eq 1 ]; then
+    echo "OK   $(basename "$f") 圖片反例 exit=1 $line"
+  else
+    echo "BAD  $(basename "$f") 預期 $want 實際 exit=$rc $line"
+    bad=$((bad + 1))
+  fi
+}
+
+n=0
+for f in $POS; do check "$f" pass; n=$((n + 1)); done
+for f in $NEG; do check "$f" fail; n=$((n + 1)); done
+for f in $IMG_POS; do check_img "$f" pass; n=$((n + 1)); done
+for f in $IMG_NEG; do check_img "$f" fail; n=$((n + 1)); done
 
 echo "---"
 if [ "$bad" -eq 0 ]; then
-  echo "PASS:八份測資全部符合預期"
+  echo "PASS:$n 份測資全部符合預期"
   exit 0
 fi
 echo "FAIL:$bad 份不符預期"

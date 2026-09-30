@@ -1,0 +1,9 @@
+# 正例:廣告 06 B4公關開幕輪播 v3(2026-09-30 16:58:50 Owner 指正後換的三張)
+# 三張都是本線在本機開圖逐張看過的,來源是已命名素材庫的 clea 開幕茶會場。
+# 標記 scene 的理由:三張都看得出這是一間服飾店開幕當天的樣子——挑高空間、
+# 樓梯、衣架、燈,茶點桌是場合的一部分而不是畫面主體。
+# 兩張原圖左下角有客戶品牌(Cléa 托特包與活動告示),已在裁切時裁掉。
+# 欄位:廣告代號	image_hash	標記	看過日期	來源檔名
+06	4224f1c725f4dc880e020f54f7a82a38	scene	2026-09-30	maplab-20260718-clea-opening-opening-tea-11.webp
+06	a9c34649a48b6b977c64ac8c81eb33d7	scene	2026-09-30	maplab-20260718-clea-opening-opening-tea-07.webp
+06	c5229f0f9e4a7effc62c70aefaaeb0fb	scene	2026-09-30	maplab-20260718-clea-opening-opening-tea-10.webp

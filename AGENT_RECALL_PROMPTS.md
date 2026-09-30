@@ -1,7 +1,7 @@
 # AGENT_RECALL_PROMPTS.md — 各角色召喚 Prompt
 
 > **維護者：A1 Claude Code（系統管理員）**
-> 最後更新：2026-09-29 A1晨間巡查（remote cloud）：24h 7 commits（A0 活躍：handoff 6218/6224/6225/6230/6233 取像架構圖＋API token 指南＋回覆稿）；無 A2/A3/A4/A5/A6/A7/A8 新 commit。NEEDS_REVIEW 10 tasks 持續（since 07-19，**~2149h**，等 Owner 決定延長/關閉/重啟）；T-A7-001 Phase 3 延誤持續（Owner 自 07-18 起第 **74 天**未確認 Zone B/C，07-25 截止已過）；CRITICAL: T-A4-002 **~4381h** / T-IOS-KOL-001 **~2869h**；A8 **~2684h**。A6 NEEDS_REVIEW 仍待 Owner 確認 LINE webhook Channel 1654658337（last A6 commits 2026-09-25，T-A6-001 NEEDS_REVIEW 持續）。⚠️ P11 攔截器 HOLD 持續，需人工橫幅審查。
+> 最後更新：2026-09-30 A1午後巡查（remote cloud）：8h 0 new commits；no agent activity since morning check。NEEDS_REVIEW 10 tasks 持續（since 07-19，**~2181h**，等 Owner 決定延長/關閉/重啟）；T-A7-001 Phase 3 延誤持續（Owner 自 07-18 起第 **75 天**未確認 Zone B/C，07-25 截止已過）；CRITICAL: T-A4-002 **~4413h** / T-IOS-KOL-001 **~2901h**；A8 **~2716h**。A6 NEEDS_REVIEW 仍待 Owner 確認 LINE webhook Channel 1654658337（last A6 commits 2026-09-29，T-A6-001 NEEDS_REVIEW 持續）。⚠️ P11 攔截器 HOLD 持續，需人工橫幅審查。⚠️ provider chain: minimax-m3:free/glm-5.2:free 404 待汰換。
 >
 > 使用方式：選擇角色 → 複製 prompt / module handoff → 貼到 Gemini / Codex / OpenClaw / legacy Claude tab → agent 開工
 > 每個 prompt 精簡三段：身份入口 → 斷點摘要 → 開工指令

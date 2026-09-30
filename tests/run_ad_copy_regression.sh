@@ -13,7 +13,7 @@
 set -u
 cd "$(dirname "$0")/.."
 
-POS="tests/fixtures/ad_copy_after_20260930.txt tests/fixtures/ad_copy_variants_20260930.txt"
+POS="tests/fixtures/ad_copy_after_20260930.txt tests/fixtures/ad_copy_variants_20260930.txt tests/fixtures/ad_carousel_cards_20260930.txt"
 NEG="tests/fixtures/ad_copy_before_20260930.txt tests/fixtures/ad_copy_promise_bad_20260930.txt tests/fixtures/ad_copy_ctamix_bad_20260930.txt tests/fixtures/ad_copy_brand_bad_20260930.txt"
 
 bad=0
@@ -42,7 +42,7 @@ for f in $NEG; do check "$f" fail; done
 
 echo "---"
 if [ "$bad" -eq 0 ]; then
-  echo "PASS:六份測資全部符合預期"
+  echo "PASS:七份測資全部符合預期"
   exit 0
 fi
 echo "FAIL:$bad 份不符預期"

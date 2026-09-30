@@ -51,6 +51,107 @@ ROLE_RELATION_ALIASES = {
     "A8-FITNESS": {"A8"},
 }
 
+# 沒有本機檔案系統、也沒有倉庫讀取權杖的執行環境。交接包給它們「路徑」等於沒給:
+# 它們打不開。倉一旦轉 private,raw 連結也一起失效。所以對這幾種一律內嵌內容。
+# 出處=Owner msg 2026-09-30T15:11(把 github 都改 private 又要外掛能用)。
+NO_FILESYSTEM_RUNTIMES = {"gpt", "gemini", "hermes", "openclaw", "antigravity"}
+
+# 內嵌總量上限。實測(2026-09-30)單一角色的必讀來源攤開來是 0.7~2.6 MB,
+# 全量內嵌會塞爆任何一個對話視窗,所以一定要有預算並「誠實標示截斷」。
+DEFAULT_INLINE_BUDGET = 120_000
+
+
+def _sha256_of(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(65536), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def allocate_inline_budget(sizes: list[int], budget: int) -> list[int]:
+    """把預算分給各來源:小檔先給滿,省下來的再平分給大檔。
+
+    等分會讓一堆小檔浪費額度、大檔又不夠用,所以先讓裝得下的裝滿,
+    剩下的預算才在裝不下的那幾個之間重分。重複到沒有人再變成「裝得下」為止。
+    """
+    remaining = list(range(len(sizes)))
+    grants = [0] * len(sizes)
+    pool = budget
+    while remaining:
+        share = pool // len(remaining)
+        if share <= 0:
+            break
+        fits = [i for i in remaining if sizes[i] <= share]
+        if not fits:
+            for i in remaining:
+                grants[i] = share
+            break
+        for i in fits:
+            grants[i] = sizes[i]
+            pool -= sizes[i]
+            remaining.remove(i)
+    return grants
+
+
+def format_inlined_sources(read_first: Iterable[dict], budget: int) -> list[str]:
+    """把必讀來源的內容直接嵌進交接包,附全檔 sha256 與截斷實數。
+
+    絕不假裝完整:截斷就寫明截了多少、原檔多大、全檔 sha256 是多少,
+    讓收到的模型自己知道手上這份不是全部。
+    """
+    items: list[tuple[dict, Path, int]] = []
+    missing: list[str] = []
+    for item in read_first:
+        rel = str(item.get("path", "")).strip()
+        if not rel:
+            continue
+        target = ROOT / rel
+        if not target.is_file():
+            missing.append(rel)
+            continue
+        items.append((item, target, target.stat().st_size))
+
+    lines: list[str] = ["", "## 6b. 必讀來源全文(已內嵌,不需要連外)"]
+    if not items:
+        lines.append("- 本角色沒有任何必讀來源可內嵌。")
+        if missing:
+            lines.append(f"- 檔案不存在,無法內嵌:{', '.join(missing)}")
+        return lines
+
+    grants = allocate_inline_budget([size for _, _, size in items], budget)
+    truncated_count = 0
+    for (item, target, size), grant in zip(items, grants):
+        rel = str(item.get("path", ""))
+        digest = _sha256_of(target)
+        text = target.read_text(encoding="utf-8", errors="replace")
+        body = text[:grant]
+        cut = len(text) > len(body)
+        if cut:
+            truncated_count += 1
+        header = (
+            f"### `{rel}` — {item.get('purpose') or item.get('load_mode') or 'source'}\n"
+            f"- 全檔 {size} bytes,sha256 {digest}\n"
+            f"- 本段{'為前 %d 字元,已截斷' % len(body) if cut else '為全文,未截斷'}"
+        )
+        fence = "`" * 4
+        lines.extend(["", header, "", f"{fence}markdown", body, fence])
+        if cut:
+            lines.append(
+                f"[截斷] 上面只有開頭 {len(body)} 字元。要完整內容請在本機讀 `{rel}`,"
+                f"或請派工方補送;不要假設沒看到的部分不存在。"
+            )
+
+    lines.extend(
+        [
+            "",
+            f"- 內嵌統計:來源 {len(items)} 個,預算 {budget} 字元,其中 {truncated_count} 個被截斷。",
+        ]
+    )
+    if missing:
+        lines.append(f"- 檔案不存在,無法內嵌({len(missing)} 個):{', '.join(missing)}")
+    return lines
+
 
 @dataclass(frozen=True)
 class Route:
@@ -321,7 +422,7 @@ def runtime_instruction(runtime: str) -> list[str]:
     return mapping.get(runtime, mapping["codex"])
 
 
-def build_handoff(task: str, role: str, runtime: str, module: dict[str, Any], relations: list[dict[str, str]], status: dict[str, Any], route_scores: list[tuple[str, int]]) -> str:
+def build_handoff(task: str, role: str, runtime: str, module: dict[str, Any], relations: list[dict[str, str]], status: dict[str, Any], route_scores: list[tuple[str, int]], inline_budget: int = 0) -> str:
     recall_path = RECALL_DIR / f"{role}_recall.md"
     recall = read_text(recall_path).strip() or str(module.get("packaged_role_recall_excerpt") or "").strip()
     read_first = module.get("read_first", [])
@@ -395,6 +496,8 @@ def build_handoff(task: str, role: str, runtime: str, module: dict[str, Any], re
             f"- [{existing_source_state(path, str(item.get('source_sha256') or ''))}] "
             f"`{path}` — {item.get('purpose') or item.get('load_mode') or 'source'}"
         )
+    if inline_budget > 0:
+        lines.extend(format_inlined_sources(read_first, inline_budget))
     lines.extend(["", "## 7. 必拿技能"])
     base_skills = [
         "skills/system-directory-index/SKILL.md",
@@ -480,7 +583,27 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--runtime", default="codex", choices=sorted(RUNTIME_LABELS))
     parser.add_argument("--output", type=Path, help="Write Markdown handoff to this path; stdout otherwise.")
     parser.add_argument("--explain-route", action="store_true", help="Print route candidates to stderr.")
+    parser.add_argument(
+        "--inline",
+        choices=("auto", "always", "never"),
+        default="auto",
+        help="把必讀來源全文內嵌進交接包。auto=沒有本機檔案系統的 runtime 才內嵌(預設)。",
+    )
+    parser.add_argument(
+        "--inline-budget",
+        type=int,
+        default=DEFAULT_INLINE_BUDGET,
+        help=f"內嵌總字元上限(預設 {DEFAULT_INLINE_BUDGET});超過的部分會被截斷並標示。",
+    )
     return parser.parse_args()
+
+
+def resolve_inline_budget(mode: str, runtime: str, budget: int) -> int:
+    if mode == "never":
+        return 0
+    if mode == "always":
+        return max(0, budget)
+    return max(0, budget) if runtime in NO_FILESYSTEM_RUNTIMES else 0
 
 
 def main() -> int:
@@ -498,7 +621,8 @@ def main() -> int:
     module = load_role_module(role, entries)
     relations = load_relation_rows(role)
     status = parse_status(read_text(CURRENT_STATUS))
-    handoff = build_handoff(args.task, role, args.runtime, module, relations, status, route_scores)
+    inline_budget = resolve_inline_budget(args.inline, args.runtime, args.inline_budget)
+    handoff = build_handoff(args.task, role, args.runtime, module, relations, status, route_scores, inline_budget)
     if args.explain_route:
         print("route candidates:", route_scores, file=sys.stderr)
     if args.output:

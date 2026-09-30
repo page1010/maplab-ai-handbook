@@ -243,6 +243,7 @@ ls -la path/to/file 是唯一可靠的存在性檢查。
    - 同輪反例：廣告管理員被「無歧視政策」同意視窗硬擋，唯一出口是「接受」＝法律承諾。那不是取不到資訊，是那份同意還不存在，**任何繞法都是偽造**，正解是上呈。
 4. 真的需要 Owner 勾權限時，不要說「等提示跳出來」——直接 `open "x-apple.systempreferences:com.apple.preference.security?Privacy_ScreenCapture"` 把面板叫到最前（輔助使用換 `?Privacy_Accessibility`；兩顆是獨立開關，輔助使用缺席的失敗原文是 `osascript不允許輔助取用 (-1728)`）。
 5. 繞開成功也要講清楚**只解了幾成**：CDP 只照得到有開除錯埠的那份 Chrome，Owner 桌面那份照不到，所以螢幕錄製那顆仍值得勾。
+6. **第二持有者常常是另一個 agent，別自己一個人找**（2026-09-30 Owner 加的）：本輪換掉方法的不是自己再試一次，是 Owner 把 Antigravity 的回覆轉過來；同一週首頁發布也是 Antigravity 用 WordPress REST 走通的。到「同一方法兩次沒改善」就播報五欄（目標／卡在哪一層／試過什麼＋失敗原文／需要什麼／誰可能有路），沒有直通管道就附一段可以直接貼過去的文字請 Owner 轉發。規則全文＝`docs/OPERATING_CULTURE.md` 原則 10。
 
 ---
 
@@ -259,6 +260,7 @@ ls -la path/to/file 是唯一可靠的存在性檢查。
 | 準備直接開始寫 code | P7 | 先讀完相關文件 |
 | 被系統權限／登入牆擋住 | P14 | 先問這份資訊有沒有第二持有者 |
 | 想「等 Owner 去勾就好」 | P14 | 先分清被擋的是通道還是事實 |
+| 同一障礙撞第三次 | P14 §6 | 停手播報五欄，或請 Owner 轉發給別的 agent |
 
 ---
 

@@ -44,6 +44,12 @@ SLA='[0-9]+ *分鐘內|[0-9]+ *小時內|半小時內|當天回覆|當日回覆|
 #    按鈕是 LEARN_MORE 時,結尾要請人去看頁面,不是請人留言。
 CTAMIX='留言|私訊|傳訊|加 *LINE|加我們 *LINE|小盒子|inbox|DM'
 
+# ⑦ 品牌用語手冊的禁用字詞(skills/brand-voice-guide.md 第 57 行),機器化:
+#    手冊一直存在,但從來沒有東西在跑它,所以它管不到任何一則實際上架的文案。
+#    Owner msg 2026-09-30T16:2x 明示可用「儘速預約檔期/快預約下一場派對/專屬你的質感開幕」,
+#    那是對手冊「趕快預約」「質感」兩條的具名例外,已寫回手冊;例外之外的照擋。
+BRAND='最頂|超值|保證滿意|CP值爆高|佛心|便宜又大碗|錯過可惜|趕快預約|名額有限|一生一次不能省|不訂會後悔|限時優惠'
+
 fail=0
 n=0
 while IFS= read -r line; do
@@ -73,6 +79,12 @@ while IFS= read -r line; do
   if [ -n "$hit" ]; then
     msgs="$msgs
     [按鈕與文案打架] 命中:$hit ——按鈕是「了解更多」會把人帶到網頁,文案不要把人叫回留言區"
+  fi
+
+  hit=$(printf '%s' "$line" | grep -oE "$BRAND" | sort -u | tr '\n' ' ')
+  if [ -n "$hit" ]; then
+    msgs="$msgs
+    [品牌禁用語] 命中:$hit ——品牌用語手冊第 57 行禁用字詞"
   fi
 
   person=$(printf '%s' "$line" | grep -coE "$PERSON" || true)

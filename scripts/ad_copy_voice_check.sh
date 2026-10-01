@@ -149,8 +149,24 @@ JOBTITLE='行政窗口|行政同事|行政人員|行政助理|行政小姐|負�
 #    不是顧、盯、張羅。射程只放 Owner 點名的顧/盯兩字,不自行擴張到「負責」。
 ASSIGN='[你妳][^,。、]{0,6}(顧|盯)'
 
+# ⑬ 把餐飲寫成多餘或干擾(Owner msg 2026-10-01T10:34:25):
+#    原話:「文案17: 讓談話不被餐飲打斷,又顯得餐飲很多餘? 我們為他貢獻什麼價值。
+#    假設有權力的是主辦高層,期待是餐飲加分帶動業績」。
+#    那一則過了前十二類,因為它主詞對、沒派工作、沒講客人可憐——可是它把餐飲放在
+#    「會打斷正事、最好不要被注意到」的位置。餐飲是這門生意收錢的東西,
+#    把它寫成一個要被壓到最小的干擾項,等於自己先否認它的價值。
+#    出錢的人(主辦高層、案場負責人)要的是餐飲加分帶動業績,不是餐飲不要礙事。
+#    改法照 Owner 給的三句示範寫:主詞換成餐飲本身,後面接它打開了什麼——
+#    「一點招待客人的點心,是想像中家的感覺」
+#    「能夠體驗在這樣的空間宴客與被宴請,對家的想像更具象」
+#    「一點招待的點心,讓人們打開話匣子」。
+#    射程只放「把餐飲寫成會打斷/干擾/多餘」這一族。
+#    「不用排隊」「不會空等」是在講客人因此不必做什麼,方向是對的,不在本類。
+DOWNPLAY='不被餐飲|不被用餐|不被飲食|不受餐飲|不因餐飲|不讓餐飲|避免餐飲|餐飲不打斷|餐飲不干擾|餐飲不影響|餐飲很多餘|餐飲多餘|吃飯打斷|用餐打斷|不被打斷|不被干擾|不被耽誤|不搶走|不搶戲|不礙事'
+
 fail=0
 n=0
+opens=""
 while IFS= read -r line; do
   case "$line" in ""|\#*) continue;; esac
   n=$((n + 1))
@@ -225,6 +241,12 @@ while IFS= read -r line; do
     [把工作派給客人] 命中:$hit ——廣告裡不分配工作給看的人,改成寫他因此能從容做什麼"
   fi
 
+  hit=$(printf '%s' "$line" | grep -oE "$DOWNPLAY" | sort -u | tr '\n' ' ')
+  if [ -n "$hit" ]; then
+    msgs="$msgs
+    [把餐飲寫成多餘] 命中:$hit ——餐飲是收錢的東西,不是要被壓小的干擾項;改成寫這份餐飲打開了什麼"
+  fi
+
   person=$(printf '%s' "$line" | grep -coE "$PERSON" || true)
   props=$(printf '%s' "$line" | grep -oE "$PROP" | sort -u | wc -l | tr -d ' ')
   if [ "$props" -ge 2 ]; then
@@ -242,12 +264,77 @@ while IFS= read -r line; do
   fi
 done < "$FILE"
 
+# ⑭ 開頭雷同(Owner msg 2026-10-01T10:34:25):
+#    原話:「文案20-23 企業活動當天 婚禮當天 等用詞 除非是同一組廣告的文案抽替,
+#    不然不要用很雷同的開頭說故事,用不同的方式去說明」。
+#    前十三類全是逐則判定,一則一則看永遠看不出這個毛病——每一則單獨都合格,
+#    毛病在整批稿的分佈上:23 則裡 8 則用「<場景>當天,…交給我們,…」同一個模子,
+#    讀的人在版位上連續看到幾則,會覺得是同一則重複投放。
+#    所以這一類改在 corpus 層跑:全檔讀完之後比開頭。
+#    兩個判準:
+#      a) 前 5 個字完全相同的兩則 = 雷同
+#      b) 「<場景>當天/這天,」這個句型佔全檔超過三分之一 = 一個模子套到底
+#    Owner 給的例外照收:同一組廣告的文案抽替本來就該像,
+#    在檔案 # 註解寫一行「# 同組抽替:20,22,23」即可豁免那幾則。
+#    中文字數要算字不算 byte,所以這一段用 python3 跑(純樣式比對,執行層零 LLM)。
+divout=$(/usr/bin/python3 - "$FILE" <<'PYDIV'
+import sys, re
+path = sys.argv[1]
+exempt, lines = set(), []
+for raw in open(path, encoding='utf-8'):
+    s = raw.strip()
+    if not s:
+        continue
+    if s.startswith('#'):
+        m = re.match(r'#\s*同組抽替[:：]\s*(.+)', s)
+        if m:
+            for t in m.group(1).replace('，', ',').replace('、', ',').split(','):
+                t = t.strip()
+                if t.isdigit():
+                    exempt.add(int(t))
+        continue
+    lines.append(s)
+
+msgs = []
+pre = {}
+for i, s in enumerate(lines, 1):
+    if i in exempt:
+        continue
+    pre.setdefault(s[:5], []).append(i)
+for head, idx in sorted(pre.items(), key=lambda kv: kv[1][0]):
+    if len(idx) > 1:
+        msgs.append('[開頭雷同] 第 %s 則都用「%s」開頭 ——換一種方式說明,或在檔案註解宣告同組抽替'
+                    % ('、'.join(str(i) for i in idx), head))
+
+mold = [i for i, s in enumerate(lines, 1)
+        if i not in exempt and re.match(r'^.{2,8}(當天|這天|當日)[,，]', s)]
+if lines and len(mold) * 3 > len(lines):
+    msgs.append('[一個模子套到底] 「<場景>當天/這天,」句型 %d 則 / 全檔 %d 則,超過三分之一:第 %s 則'
+                % (len(mold), len(lines), '、'.join(str(i) for i in mold)))
+
+for m in msgs:
+    print(m)
+sys.exit(1 if msgs else 0)
+PYDIV
+)
+divrc=$?
+if [ "$divrc" -ne 0 ]; then
+  echo "FAIL 整批開頭檢查:"
+  echo "$divout"
+fi
+
 echo "---"
-if [ "$fail" -eq 0 ]; then
+if [ "$fail" -eq 0 ] && [ "$divrc" -eq 0 ]; then
   echo "PASS:$n 則全部有對客人說話(設定檔 $PROFILE)"
   exit 0
 fi
-echo "FAIL:$n 則裡有 $fail 則不合格(設定檔 $PROFILE)"
+# 第 ⑭ 類是整批判定不是逐則判定,不能併進「$fail 則不合格」那個數字裡,
+# 否則會印出「23 則裡有 24 則不合格」這種自相矛盾的結論(2026-10-01 實際踩到)。
+if [ "$fail" -gt 0 ]; then
+  echo "FAIL:$n 則裡有 $fail 則不合格(設定檔 $PROFILE)"
+else
+  echo "FAIL:逐則 $n 則全過,但整批開頭檢查不合格(設定檔 $PROFILE)"
+fi
 echo "改法不是加形容詞,是把主詞換成客人,講那個人當天實際會遇到什麼事。"
 echo "命中[做不到的承諾]的,改法是把承諾換成邀請,而邀請要跟按鈕同一個方向。"
 echo "命中[按鈕與文案打架]的,改法是把結尾換成請人去看頁面,不是請人留言或私訊。"

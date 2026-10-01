@@ -1,0 +1,20 @@
+feat(telegram): 補上送圖能力與線上文案表驗收圖卡(縮圖真因三層)
+
+由來:Owner msg 2026-10-01T18:07:33「sheet連結有一個問題,我看不到縮圖,
+telegram 呈現的驗收方式要在討論一下如何優化」。
+真因(讀 notify_owner.sh 全檔 59 行查出,不是推測):
+①17:53 回覆只給線上表 ID 不是可點網址;
+②送信程式只呼叫 sendMessage 純文字,沒有 sendPhoto 也沒有 parse_mode,
+  這條線歷來一張圖都沒送過;
+③Google 線上表要登入,Telegram 預覽爬蟲只拿得到登入頁,
+  所以該連結不論怎麼貼都不會有縮圖,屬結構性限制。
+處置:
+- 新增 a0_send_photo.sh:sendPhoto/sendDocument 兩模式,第四參數 doc 走不壓縮;
+  權杖只在腳本內流動,對外只印 HTTP 狀態碼與檔名。
+- 新增 ads_copy_review_card.py:PIL 1080px 寬、逐字量寬換行,
+  一支廣告一張圖,每則三段(現在帳號上/建議換成/閘門命中)。
+實跑:十二支廣告全數出圖、25 則建議字一則不漏,1080x554~1080x1700。
+出圖後先 Read 開圖親看才送(原則 6066):第一版間隔號在 STHeiti 畫成豆腐格,
+改 ASCII 斜線後重畫複驗;樣張 MAPLAB 03(編號 14-17)sendDocument HTTP 200。
+圖卡存 ~/.maplab/ads_review_cards_20261001/,repo 外不入版控。
+廣告帳號零改動、全數維持暫停;線上表 E/H 兩欄未碰、定稿欄仍全空。

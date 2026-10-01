@@ -14,6 +14,7 @@ Alerts pushed to Owner via Telegram:
 """
 import json
 import os
+import subprocess
 import sys
 import time
 import urllib.parse
@@ -35,7 +36,10 @@ QUALITY_REASONS = {'CROSS_LEG_QUOTE_SKEW', 'QUOTE_STALE_OR_CLOCK_SKEW',
                    'QUOTE_MISSING', 'BOOK_CROSSED_OR_LOCKED',
                    'INSUFFICIENT_DISPLAYED_DEPTH'}
 COOLDOWN = {'spread': 600, 'spread_strong': 300, 'entry': 600,
-            'halt': 3600, 'stale': 1800, 'quality': 3600, 'boot': 0}
+            'halt': 3600, 'stale': 1800, 'quality': 3600, 'boot': 0,
+            'restart': 3600}
+ENGINE_SERVICE = 'gui/%d/local.investmentos.spread-paper' % os.getuid()
+RESTART_AFTER_SECONDS = 900
 TPE = timezone(timedelta(hours=8))
 
 
@@ -126,6 +130,30 @@ def tw_points(tw):
     return mxf - tmf, mxf, tmf
 
 
+def maybe_self_heal(token, chat, state, now_ts, age, pid):
+    """Stale heartbeat self-heal (10/02 6576 教訓).
+
+    主迴圈死了但直譯器卡在收尾(Shioaji 非 daemon 執行緒不 join),launchd 看
+    進程還活著就不會重拉,殭屍一掛就是 34 小時。心跳停超過 RESTART_AFTER_SECONDS
+    就 kickstart -k 強制重啟;引擎是純模擬(live_order_calls=0),重啟無真錢風險。
+    """
+    if age < RESTART_AFTER_SECONDS or not cooled(state, 'restart', now_ts):
+        return
+    try:
+        r = subprocess.run(['launchctl', 'kickstart', '-k', ENGINE_SERVICE],
+                           capture_output=True, text=True, timeout=30)
+        rc = r.returncode
+    except Exception as exc:
+        log('self-heal kickstart error %s' % type(exc).__name__)
+        rc = -1
+    log('self-heal kickstart rc=%d age=%ds pid=%s' % (rc, int(age), pid))
+    mark(state, 'restart', now_ts)
+    if rc == 0:
+        send(token, chat, '[價差警報器] 心跳已停 %d 分鐘且進程卡死,已自動重啟模擬引擎(launchd 服務)。幾分鐘後心跳沒恢復會再報。' % (age // 60))
+    else:
+        send(token, chat, '[價差警報器] 自動重啟模擬引擎失敗(launchctl 離開碼 %d),需要人工查看。' % rc)
+
+
 def check_once(token, chat, state):
     now = datetime.now(timezone.utc)
     now_ts = time.time()
@@ -147,6 +175,7 @@ def check_once(token, chat, state):
         if cooled(state, 'stale', now_ts):
             send(token, chat, '[價差警報器] 引擎心跳異常:狀態檔已 %d 分鐘沒更新(pid %s)。模擬引擎可能停了,建議查看。' % (age // 60, latest.get('pid')))
             mark(state, 'stale', now_ts)
+        maybe_self_heal(token, chat, state, now_ts, age, latest.get('pid'))
         return  # numbers below would be stale too
     if age is not None and age <= STALE_SECONDS:
         state['last_alert'].pop('stale', None)

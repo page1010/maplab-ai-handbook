@@ -183,10 +183,27 @@ def log(entry: dict) -> None:
 
 
 def send_telegram(text: str) -> None:
-    token   = os.environ.get("TELEGRAM_BOT_TOKEN", "")
-    chat_id = os.environ.get("TELEGRAM_CHAT_ID", "")
+    # 2026-10-01 修:這支自 2026-07-06 建檔起只讀 os.environ,而 launchd 的環境
+    # 沒有任何 .env 載入,所以每週一 01:00 固定印「not set — skip notification」
+    # 然後 exit 1,87 天沒送出過一份週報。兩個缺陷都在這裡:
+    #   (1) 沒有 .env 載入器 → 改用 scripts/maplab_secrets.get_secret(會讀 bot/.env)
+    #   (2) 變數名對不上 → 倉內存的是 OWNER_CHAT_ID,這裡卻找 TELEGRAM_CHAT_ID。
+    #       兩個名字都試,先環境變數再 .env,找不到才放棄。
+    # 憑證只在本函式內流動,不印值、不寫回原始碼(原則 11 / 憑證閘門)。
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    try:
+        from maplab_secrets import get_secret
+    except Exception as e:  # noqa: BLE001
+        print(f"[eval] 憑證載入器不可用({e}) — skip notification")
+        return
+    token   = get_secret("TELEGRAM_BOT_TOKEN", default="")
+    chat_id = (get_secret("TELEGRAM_CHAT_ID", default="")
+               or get_secret("OWNER_CHAT_ID", default=""))
     if not token or not chat_id:
-        print("[eval] TELEGRAM_BOT_TOKEN/CHAT_ID not set — skip notification")
+        missing = [n for n, v in (("TELEGRAM_BOT_TOKEN", token),
+                                  ("OWNER_CHAT_ID", chat_id)) if not v]
+        print(f"[eval] 查無憑證 {'/'.join(missing)}(環境變數與 bot/.env 都沒有)"
+              " — skip notification")
         return
     try:
         import urllib.request

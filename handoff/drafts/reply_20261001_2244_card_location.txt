@@ -1,0 +1,11 @@
+【Claude・Fable5 線・同 session 續接】文化與自動化規則已重讀
+
+原話: 期限太晚，你給任務卡的位置連結我丟給他
+
+一、卡的位置(本機檔案,直接貼給 antigravity 即可):
+/Users/pagemacmini/agent-bus/inbox/antigravity/antigravity-ads-seo-review-20261001.json
+丟過去一句話就夠:請讀這張卡,照卡上 requirements 執行,回執照 acceptance 放。56 則定版、重寫前原字、三輪修正過程與理由的檔案路徑都寫在卡裡,全在這台機器上讀得到。
+
+二、期限已收緊:原本開 10-02 18:00,改成 10-02 09:00,卡升第 2 版並記了改版原因。嫌還太晚的話 Owner 丟卡時直接口頭改短即可,卡上期限以 Owner 說的為準。
+
+三、回執進來後本線會複跑口氣閘門驗收、不採信自述,過了才整理給 Owner 裁。

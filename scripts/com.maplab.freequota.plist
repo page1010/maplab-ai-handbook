@@ -18,6 +18,13 @@
     <dict><key>Hour</key><integer>18</integer><key>Minute</key><integer>5</integer></dict>
     <dict><key>Hour</key><integer>22</integer><key>Minute</key><integer>5</integer></dict>
   </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>FQ_MAX_ITEMS</key><string>3</string>
+    <key>FQ_MAX_CALLS</key><string>12</string>
+    <key>FQ_JOB</key><string>40-image-prompt.job.md</string>
+    <key>FQ_NOT_BEFORE_UTC</key><string>2026-10-03</string>
+  </dict>
   <key>StandardOutPath</key>
   <string>/Users/pagemacmini/maplab-ai-handbook/data/free-quota/launchd_stdout.log</string>
   <key>StandardErrorPath</key>

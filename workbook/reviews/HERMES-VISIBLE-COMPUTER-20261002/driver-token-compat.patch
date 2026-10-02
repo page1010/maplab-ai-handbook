@@ -1,0 +1,84 @@
+diff --git a/tests/tools/test_computer_use.py b/tests/tools/test_computer_use.py
+index 0ac3fed17e..6b10f15ed0 100644
+--- a/tests/tools/test_computer_use.py
++++ b/tests/tools/test_computer_use.py
+@@ -2176,2 +2176,3 @@ class TestElementTokenAttachment:
+-       advertise `accessibility.element_tokens` (Surface 4 gate). Older
+-       drivers reject unknown args via additionalProperties=false.
++       advertise `accessibility.element_tokens` or accept `element_token`
++       in their input schema. Older drivers reject unknown args via
++       additionalProperties=false.
+@@ -2198,0 +2200 @@ class TestElementTokenAttachment:
++        backend._session.supports_input_property.return_value = False
+@@ -2214,0 +2217,54 @@ class TestElementTokenAttachment:
++    def test_token_attached_from_schema_when_mcp_omits_capability_extension(self):
++        import asyncio
++        from types import SimpleNamespace
++        from tools.computer_use.cua_backend import _CuaDriverSession
++
++        class SchemaOnlyMcpSession:
++            async def list_tools(self):
++                return SimpleNamespace(tools=[SimpleNamespace(
++                    name="click",
++                    input_schema={"properties": {"element_token": {"type": "string"}}},
++                    model_extra={},
++                )], model_extra={})
++
++        discovered = _CuaDriverSession.__new__(_CuaDriverSession)
++        asyncio.run(discovered._populate_capabilities(SchemaOnlyMcpSession()))
++        assert not discovered.supports_capability("accessibility.element_tokens", tool="click")
++        backend = self._backend_with_session({})
++        backend._session.supports_input_property = discovered.supports_input_property
++        backend._snapshot_tokens = {5: "s00000001:5"}
++
++        backend.click(element=5)
++
++        name, args = backend._session.call_tool.call_args.args
++        assert name == "click"
++        assert args["element_token"] == "s00000001:5"
++        assert (args["pid"], args["window_id"], args["element_index"]) == (111, 222, 5)
++
++    @pytest.mark.parametrize("token_supported, cached", [(False, True), (True, False)])
++    def test_token_not_invented_or_sent_to_unsupported_schema(self, token_supported, cached):
++        backend = self._backend_with_session({})
++        backend._session.supports_input_property.return_value = token_supported
++        backend._snapshot_tokens = {5: "s00000001:5"} if cached else {}
++
++        backend.click(element=5)
++
++        _, args = backend._session.call_tool.call_args.args
++        assert "element_token" not in args
++
++    def test_schema_token_does_not_bypass_driver_stale_rejection(self):
++        backend = self._backend_with_session({})
++        backend._session.supports_input_property.return_value = True
++        backend._snapshot_tokens = {5: "s00000001:5"}
++        backend._session.call_tool.return_value = {
++            "data": "snapshot is stale", "images": [], "image_mime_types": [],
++            "structuredContent": {"code": "stale_snapshot"}, "isError": True,
++        }
++
++        result = backend.click(element=5)
++
++        assert result.ok is False
++        assert result.code == "stale_snapshot"
++        backend._session.call_tool.assert_called_once()
++        assert backend._session.call_tool.call_args.args[1]["element_token"] == "s00000001:5"
++
+diff --git a/tools/computer_use/cua_backend.py b/tools/computer_use/cua_backend.py
+index 2d3937787d..691ab95c50 100644
+--- a/tools/computer_use/cua_backend.py
++++ b/tools/computer_use/cua_backend.py
+@@ -4082,3 +4082,3 @@ class CuaDriverBackend(ComputerUseBackend):
+-        Gated on the per-tool capability claim so we don't send the
+-        field to drivers that predate the surface (which would reject
+-        the schema with `additionalProperties: false`).
++        Gated on the per-tool capability claim or advertised input schema
++        (some MCP SDKs omit capability extensions), so older drivers never
++        receive an unsupported field.
+@@ -4092,2 +4092,3 @@ class CuaDriverBackend(ComputerUseBackend):
+-        if not self._session.supports_capability(
+-            "accessibility.element_tokens", tool=tool
++        if not (
++            self._session.supports_capability("accessibility.element_tokens", tool=tool)
++            or self._session.supports_input_property(tool, "element_token")

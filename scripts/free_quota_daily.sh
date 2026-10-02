@@ -6,23 +6,34 @@
 # 任務檔格式:首行 OUTPUT: 相對路徑;可選 INPUT_URL:(只限公開頁);可選 DAILY: yes(常駐,輸出加日期);
 #           空行後=prompt 全文。一次性任務跑完移 done/。
 # 安全邊界:金鑰只 source 不回顯;產出一律草稿不發布;queue 不放客資/憑證;
-#          日上限 MAX_CALLS=120,留足 A6 客服/LINE 訓練/晨會額度;同日重跑冪等。
+#          共用 UTC 日帳本上限 950 attempts,保留 50 給 Owner;不自動 commit/push。
 set -u
+# 先驗參數再碰 env／檔案。0/0 只代表未指定班次的完整手動批次。
+BAND="${1:-0}"; BANDS="${2:-0}"; MODE="${3:-}"
+if [[ ! "$BAND" =~ ^(0|[1-9][0-9]{0,3})$ ]] || [[ ! "$BANDS" =~ ^(0|[1-9][0-9]{0,3})$ ]] \
+   || ! { [[ "$BAND" = 0 && "$BANDS" = 0 ]] || (( BANDS >= 1 && BAND >= 1 && BAND <= BANDS )); }; then
+  echo "FATAL: expected no bands (0 0), or 1 <= BAND <= BANDS (maximum 9999)" >&2
+  exit 2
+fi
+case "$MODE" in ""|force|selftest|detach) ;; *) echo "FATAL: unknown mode" >&2; exit 2 ;; esac
 # 可搬移性(Owner msg 6107「整個系統存進 ssd 搬去哪裡都還可以運行」):
 # 路徑一律從腳本自己的位置推,不寫死 /Users/<某人>。整包複製到別台機器或別的碟,
 # 只要保留 repo 目錄結構就能跑;要指到別份 repo 用 MAPLAB_HB 覆蓋。
 # 仍然綁在機器上的只剩「金鑰」與「不進 repo 的產出」兩樣,見 PORTABILITY.md。
-ENV_FILE="${MAPLAB_ENV:-$HOME/.maplab/free_compute.env}"
-[ -f "$ENV_FILE" ] || { echo "FATAL: env file missing"; exit 1; }
-set -a; source "$ENV_FILE"; set +a
-[ -n "${OPENROUTER_API_KEY:-}" ] || { echo "FATAL: OPENROUTER_API_KEY empty"; exit 1; }
+if [ "$MODE" != "selftest" ]; then
+  ENV_FILE="${MAPLAB_ENV:-$HOME/.maplab/free_compute.env}"
+  [ -f "$ENV_FILE" ] || { echo "FATAL: env file missing"; exit 1; }
+  set -a; source "$ENV_FILE"; set +a
+  [ -n "${OPENROUTER_API_KEY:-}" ] || { echo "FATAL: OPENROUTER_API_KEY empty"; exit 1; }
+fi
 
 HB="${MAPLAB_HB:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 FQ="$HB/data/free-quota"
-mkdir -p "$FQ/queue" "$FQ/done"
+[ "$MODE" = "selftest" ] || mkdir -p "$FQ/queue" "$FQ/done"
 TODAY=$(date +%Y%m%d)
 WEEK=$(date +%G-W%V)
-REPORT="$FQ/report_$TODAY.md"
+RUN_ID="${TODAY}-b${BAND}of${BANDS}-$(date -u +%H%M%S)-$$"
+REPORT="$FQ/report_${RUN_ID}.md"
 # 同日冪等閘。2026-09-24 修:原本只看「今天的日報在不在」,結果當天新增的 job
 # 一律要等到隔天才會跑,新題目當輪無法驗證。改成比對佇列簽章——佇列內容有變就再跑一次,
 # 沒變才跳過(既保留冪等,又讓「加了新題目就能立刻驗」成立)。FQ_FORCE=1 可強制重跑。
@@ -30,50 +41,57 @@ REPORT="$FQ/report_$TODAY.md"
 # 時段分班(Owner msg 6093,每天 500 個 job-run):一次跑完 500 件會連續佔住機器好幾個小時,
 # 所以改成分班。用法 `bash free_quota_daily.sh <第幾班> <共幾班>`,例如 `… 3 6` = 今天第 3 班、
 # 全天共 6 班,每班只跑各題扇出量的六分之一。不給參數 = 一次跑完整天的量(手動補跑用)。
-BAND="${1:-0}"; BANDS="${2:-0}"
 # 第三個參數 = 模式。兩個值:
 #   force     同日冪等閘放行,強制重跑(等同 FQ_FORCE=1,但有些執行通道不准在命令前面加環境變數)
 #   selftest  只跑價格攔截器的單元測試,不打任何一次外部呼叫、不寫任何產出
-MODE="${3:-}"
 # 2026-09-25 追加:detach 模式。背景班次若由 Claude 續接窗直接起跑,會跟著主程式
 # 收攤一起被殺(9/25 兩次實證:be8182l24 與 b1eaa3r5r 都零產出)。執行通道又擋
 # 裸 nohup/&,所以讓腳本自己脫鉤:MODE=detach 時以 nohup 重新拉起自己後立刻返回,
 # 子行程孤兒化脫離 Claude 行程樹,班次跑多久都不怕續接窗結束。
 if [ "$MODE" = "detach" ]; then
-  DLOG="$FQ/band${BAND}_${TODAY}.log"
+  DLOG="$FQ/band_${RUN_ID}.log"
   nohup bash "${BASH_SOURCE[0]}" "$BAND" "$BANDS" "${4:-}" >"$DLOG" 2>&1 </dev/null &
   echo "[detach] 班次 $BAND/$BANDS 已脫鉤背景執行 pid=$! log=$DLOG"
   exit 0
 fi
-REPORT="$FQ/report_$TODAY.md"
-QSIG_FILE="$FQ/.queue_sig_${TODAY}_b${BAND}"
-QSIG="$(cat "$FQ"/queue/*.job.md 2>/dev/null | shasum | cut -c1-12)"
+QSIG_FILE="$FQ/.queue_sig_v3_${TODAY}_b${BAND}of${BANDS}"
+QSIG="$({ cat "$FQ"/queue/*.job.md 2>/dev/null; printf '\njob=%s items=%s calls=%s\n' "${FQ_JOB:-}" "${FQ_MAX_ITEMS:-0}" "${FQ_MAX_CALLS:-950}"; } | shasum | cut -c1-12)"
 [ "$MODE" = "force" ] && FQ_FORCE=1
-if [ "$MODE" != "selftest" ] && [ -z "${FQ_FORCE:-}" ] && [ -f "$REPORT" ] && [ "$(wc -c < "$REPORT" | tr -d ' ')" -gt 200 ] \
+if [ "$MODE" != "selftest" ] && [ -z "${FQ_FORCE:-}" ] \
    && [ "$(cat "$QSIG_FILE" 2>/dev/null)" = "$QSIG" ]; then
-  echo "[skip] 本班今日已跑過且佇列未變: $REPORT(要強制重跑請設 FQ_FORCE=1)"; exit 0
+  echo "[skip] 本班今日已有完成回執且佇列未變(要強制重跑請設 FQ_FORCE=1)"; exit 0
 fi
-[ "$MODE" = "selftest" ] || printf '%s' "$QSIG" > "$QSIG_FILE"
 
-/usr/bin/python3 - "$HB" "$TODAY" "$WEEK" "$BAND" "$BANDS" "$MODE" <<'PYEOF'
-import glob, html, json, os, re, shutil, sys, urllib.request
+/usr/bin/python3 - "$HB" "$TODAY" "$WEEK" "$BAND" "$BANDS" "$MODE" "$RUN_ID" <<'PYEOF'
+import glob, html, json, os, re, shutil, sys, urllib.request, urllib.error
+from datetime import datetime, timezone
+from pathlib import Path
 
 HB, TODAY, WEEK = sys.argv[1], sys.argv[2], sys.argv[3]
 BAND, BANDS = int(sys.argv[4]), int(sys.argv[5])
 MODE = sys.argv[6] if len(sys.argv) > 6 else ""
+RUN_ID = sys.argv[7]
 FQ = HB + "/data/free-quota"
-KEY = os.environ["OPENROUTER_API_KEY"]
+KEY = os.environ.get("OPENROUTER_API_KEY", "")
 MODELS = ["nvidia/nemotron-3-super-120b-a12b:free",
-          "google/gemma-4-31b-it:free",
-          "minimax/minimax-m3:free",
-          "dots-studio/dots-3-note-preview:free"]
-# Owner msg 6092/6093:目標是每天 1000 個來回。一個 job-run = 產稿 1 + 換模型審稿 1 = 2 次呼叫,
-# 所以 1000 來回 ≈ 500 job-run。上限放到 1100 留重試餘裕;FQ_MAX_CALLS 可覆寫。
-MAX_CALLS = int(os.environ.get("FQ_MAX_CALLS", "1100"))
+          "dots-studio/dots-3-note-preview:free",
+          "google/gemma-4-31b-it:free"]
+# FQ_MAX_CALLS 只限制本次;每日上限另由既有 shared DailyCounter 強制執行。
+MAX_CALLS = int(os.environ.get("FQ_MAX_CALLS", "950"))
+if not 1 <= MAX_CALLS <= 950:
+    raise ValueError("FQ_MAX_CALLS must be between 1 and 950")
+MAX_ITEMS = int(os.environ.get("FQ_MAX_ITEMS", "0"))
+if MAX_ITEMS < 0:
+    raise ValueError("FQ_MAX_ITEMS must be non-negative (0 means unbounded)")
+SELECTED_JOB = os.environ.get("FQ_JOB", "")
+if SELECTED_JOB and (Path(SELECTED_JOB).name != SELECTED_JOB or not SELECTED_JOB.endswith(".job.md")):
+    raise ValueError("FQ_JOB must be one queue basename ending in .job.md")
 # 連續 N 次(全模型都失敗)就收工,免得撞到免費額度牆之後還空轉幾百次。
 FAIL_STREAK_MAX = int(os.environ.get("FQ_FAIL_STREAK", "8"))
 calls = 0
 fail_streak = 0
+attempts = []
+budget_blocked = False
 
 # ── 2026-09-24 追加(Owner msg 6091/6092):CONTEXT 注入 ──
 # 為什麼:6091 實測三段對照證明,同一顆模型同一個問題,不餵資料就整段編造,
@@ -99,7 +117,7 @@ def load_ctx(spec):
         if not os.path.isfile(p):
             missing.append(rel); continue
         try:
-            t = open(p, encoding="utf-8", errors="ignore").read()
+            t = Path(p).read_text(encoding="utf-8", errors="ignore")
         except Exception:
             missing.append(rel); continue
         m = re.match(r"(tail|head)(\d+)$", slc)
@@ -138,7 +156,7 @@ def load_items(spec_list, spec_chunk, n):
         p = os.path.join(FQ, rel.strip())
         if not os.path.isfile(p):
             return []
-        return [l.strip() for l in open(p, encoding="utf-8")
+        return [l.strip() for l in Path(p).read_text(encoding="utf-8").splitlines()
                 if l.strip() and not l.strip().startswith("#")]
 
     pool = []
@@ -160,7 +178,7 @@ def load_items(spec_list, spec_chunk, n):
         fp = os.path.join(HB, rel.strip())
         if not os.path.isfile(fp):
             continue
-        total = sum(1 for _ in open(fp, encoding="utf-8", errors="ignore"))
+        total = len(Path(fp).read_text(encoding="utf-8", errors="ignore").splitlines())
         step = int(step or 60)
         for a in range(1, total + 1, step):
             pool.append("%s#L%d-%d" % (rel.strip(), a, min(a + step - 1, total)))
@@ -181,7 +199,7 @@ def load_items(spec_list, spec_chunk, n):
     return out
 
 def api(prompt, exclude=None):
-    global calls, fail_streak
+    global calls, fail_streak, budget_blocked
     if fail_streak >= FAIL_STREAK_MAX:
         return None, None
     for m in MODELS:
@@ -194,15 +212,31 @@ def api(prompt, exclude=None):
         req = urllib.request.Request(
             "https://openrouter.ai/api/v1/chat/completions", data=payload,
             headers={"Authorization": "Bearer " + KEY, "Content-Type": "application/json"})
+        try:
+            attempt_id = counter.begin_attempt("maplab-free-quota:" + RUN_ID, m)
+        except providers.BudgetExceededError:
+            budget_blocked = True
+            return None, None
         calls += 1
+        record = {"attempt_id": attempt_id, "requested_model": m,
+                  "started_at_utc": datetime.now(timezone.utc).isoformat(), "status": "reserved"}
+        attempts.append(record)
         try:
             d = json.load(urllib.request.urlopen(req, timeout=240))
             c = (d.get("choices") or [{}])[0].get("message", {}).get("content") or ""
-            if c.strip():
-                fail_streak = 0
-                return m, c.strip()
-        except Exception:
+        except Exception as exc:
+            record["status"] = "http_error" if isinstance(exc, urllib.error.HTTPError) else "transport_error"
+            counter.complete_attempt(attempt_id, record["status"])
+            if isinstance(exc, urllib.error.HTTPError):
+                record["http_status"] = exc.code
+                exc.close()
             continue
+        record.update(status="ok" if c.strip() else "empty_response",
+                      response_id=d.get("id"), model_used=d.get("model"))
+        counter.complete_attempt(attempt_id, record["status"])
+        if c.strip():
+            fail_streak = 0
+            return m, c.strip()
     fail_streak += 1
     return None, None
 
@@ -261,6 +295,16 @@ if MODE == "selftest":
     print("selftest: %d/%d 過" % (len(CASES) - bad, len(CASES)))
     sys.exit(0 if bad == 0 else 1)
 
+# Reuse the existing 950/50 ledger, locking, UTC rollover and 3.5-second rate gate.
+# This module is MAPLAB-only provider plumbing despite its historical repo location.
+provider_root = Path(os.environ.get("FQ_PROVIDER_ROOT", str(Path(HB).parent / "investment-os" / "scripts" / "free_compute")))
+if not (provider_root / "providers.py").is_file():
+    raise RuntimeError("shared provider budget module missing; set FQ_PROVIDER_ROOT; no requests sent")
+sys.path.insert(0, str(provider_root))
+import providers
+counter = providers.build_training_counter()
+daily_start = counter.count
+
 
 def run_unit(name, body, meta, out_rel, url, daily, item, idx):
     """跑一個 job-run(產稿 1 呼叫 + 換模型審稿 1 呼叫)。回傳一列 rows。"""
@@ -287,9 +331,9 @@ def run_unit(name, body, meta, out_rel, url, daily, item, idx):
     root, ext = os.path.splitext(out_rel)
     ext = ext or ".md"
     if item is not None:
-        out_rel = "%s_%s/%03d%s" % (root, TODAY, idx + 1, ext)
-    elif daily:
-        out_rel = root + "_" + TODAY + ext
+        out_rel = "%s_%s/%03d%s" % (root, RUN_ID, idx + 1, ext)
+    else:
+        out_rel = root + "_" + RUN_ID + ext
     out_path = os.path.join(HB, out_rel)
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     hits = [] if meta.get("ALLOW_MONEY") == "yes" else money_hits(out)
@@ -298,9 +342,9 @@ def run_unit(name, body, meta, out_rel, url, daily, item, idx):
         banner = ("> 🔴 **需人工**:本篇偵測到疑似價格片段 %s ——依零 LLM 算術層,"
                   "模型產出的價格一律不得採用,對外只能用程式從有 source 的價目表算出的數字。\n"
                   % ",".join(dict.fromkeys(hits))[:300])
-    with open(out_path, "w", encoding="utf-8") as f:
-        f.write("%s> 草稿未審(free-quota 班表 %s,model=%s%s)。翻譯/生成稿:不得新增事實,上線前必經人審。\n\n%s\n"
-                % (banner, TODAY, model, (",item=" + item) if item else "", out))
+    with open(out_path, "x", encoding="utf-8") as f:
+        f.write("%s> 草稿未審(free-quota 班表 %s,run_id=%s,model=%s%s)。翻譯/生成稿:不得新增事實,上線前必經人審。\n\n%s\n"
+                % (banner, TODAY, RUN_ID, model, (",item=" + item) if item else "", out))
     if hits:
         return (name, "HOLD", out_rel + " 疑似含價格需人工:" + ",".join(dict.fromkeys(hits))[:80])
     if meta.get("REVIEW") == "no":
@@ -324,12 +368,14 @@ def run_unit(name, body, meta, out_rel, url, daily, item, idx):
     rv_model, rv = api(rv_prompt, exclude=model)
     verdict = "審稿失敗"
     if rv:
-        verdict = "審PASS" if "PASS" in rv.splitlines()[0].upper() else "審ISSUES"
+        parsed_verdict = re.fullmatch(r"VERDICT:\s*(PASS|ISSUES)", rv.splitlines()[0].strip(), re.I)
+        if parsed_verdict:
+            verdict = "審PASS" if parsed_verdict.group(1).upper() == "PASS" else "審ISSUES"
         rv_dir = FQ + "/reviews"
         os.makedirs(rv_dir, exist_ok=True)
         suffix = ("_%03d" % (idx + 1)) if item is not None else ""
-        with open(rv_dir + "/" + name.replace(".job.md", "") + "_" + TODAY + suffix + ".review.md",
-                  "w", encoding="utf-8") as f:
+        with open(rv_dir + "/" + name.replace(".job.md", "") + "_" + RUN_ID + suffix + ".review.md",
+                  "x", encoding="utf-8") as f:
             f.write("# 換模型審稿 %s\n產稿=%s 審稿=%s 產出=%s\n\n%s\n" % (name, model, rv_model, out_rel, rv))
     ctx_note = ""
     if ctx_got or ctx_missing:
@@ -339,9 +385,18 @@ def run_unit(name, body, meta, out_rel, url, daily, item, idx):
     return (name, "OK", out_rel + " (" + model.split("/")[-1] + " | " + verdict + ctx_note + ")")
 
 rows = []
-for jf in sorted(glob.glob(FQ + "/queue/*.job.md")):
+unit_results = []
+items_attempted = 0
+job_files = sorted(glob.glob(FQ + "/queue/*.job.md"))
+if SELECTED_JOB:
+    job_files = [jf for jf in job_files if os.path.basename(jf) == SELECTED_JOB]
+    if not job_files:
+        raise ValueError("FQ_JOB not found in queue; no requests sent")
+for jf in job_files:
+    if MAX_ITEMS and items_attempted >= MAX_ITEMS:
+        break
     name = os.path.basename(jf)
-    head, _, body = open(jf, encoding="utf-8").read().partition("\n\n")
+    head, _, body = Path(jf).read_text(encoding="utf-8").partition("\n\n")
     meta = dict(re.findall(r"^([A-Z_]+):\s*(.+)$", head, re.M))
     out_rel, url, daily = meta.get("OUTPUT"), meta.get("INPUT_URL"), meta.get("DAILY") == "yes"
     if not out_rel or not body.strip():
@@ -363,11 +418,16 @@ for jf in sorted(glob.glob(FQ + "/queue/*.job.md")):
     ok_n, bad = 0, []
     last = None
     for idx, item in enumerate(items):
-        if calls + 2 > MAX_CALLS or fail_streak >= FAIL_STREAK_MAX:
+        if MAX_ITEMS and items_attempted >= MAX_ITEMS:
+            bad.append("bounded item limit reached")
+            break
+        if calls + 2 > MAX_CALLS or fail_streak >= FAIL_STREAK_MAX or budget_blocked:
             bad.append("在第 %d/%d 件停手(calls=%d/%d,連續失敗=%d)"
                        % (idx + 1, len(items), calls, MAX_CALLS, fail_streak))
             break
+        items_attempted += 1
         r = run_unit(name, body.replace("{{ITEM}}", item or ""), meta, out_rel, url, daily, item, idx)
+        unit_results.append({"name": name, "item": item, "status": r[1], "note": r[2]})
         last = r
         if r[1] == "OK":
             ok_n += 1
@@ -377,23 +437,23 @@ for jf in sorted(glob.glob(FQ + "/queue/*.job.md")):
         rows.append(last if last else (name, "FAIL", "沒有產出"))
     else:
         rows.append((name, "OK" if ok_n else "FAIL",
-                     "扇出 %d 件成功 %d 件" % (len(items), ok_n)
-                     + ("|" + ";".join(bad[:3]) if bad else "")))
-    if not daily and ok_n:
-        shutil.move(jf, FQ + "/done/" + TODAY + "-" + name)
+                     "本班候選 %d 件；本次實際成功 %d 件" % (len(items), ok_n)
+                     + ("；" + ";".join(bad[:3]) if bad else "")))
+    if not daily and ok_n == len(items):
+        shutil.move(jf, FQ + "/done/" + RUN_ID + "-" + name)
 
 # 每週檢討 job(Owner 5349 三題):同一 ISO 週只跑一次,結論落檔供砍題/換題決策
 week_flag = FQ + "/.week_" + WEEK
-if not os.path.exists(week_flag) and calls < MAX_CALLS:
+if not SELECTED_JOB and not MAX_ITEMS and not os.path.exists(week_flag) and calls < MAX_CALLS:
     qlist = "\n".join(os.path.basename(p) for p in sorted(glob.glob(FQ + "/queue/*.job.md"))) or "(空)"
     try:
-        log_tail = "".join(open(FQ + "/usage_log.csv", encoding="utf-8").readlines()[-60:])
+        log_tail = "\n".join(Path(FQ + "/usage_log.csv").read_text(encoding="utf-8").splitlines()[-60:])
     except Exception:
         log_tail = "(無紀錄)"
     rv_files = sorted(glob.glob(FQ + "/reviews/*.review.md"))[-10:]
     rv_heads = ""
     for p in rv_files:
-        lines = open(p, encoding="utf-8").read().splitlines()
+        lines = Path(p).read_text(encoding="utf-8").splitlines()
         rv_heads += os.path.basename(p) + ": " + next((l for l in lines if "VERDICT" in l.upper()), "?") + "\n"
     mr_prompt = ("背景:這是台南外燴品牌 maplabkitchen 的每日免費算力班表,目標=複利累積接單素材(英文站草稿、"
                  "詢價應對訓練題),未來複製到泰國接案。以下是本週任務清單、執行紀錄與審稿判定。"
@@ -405,35 +465,55 @@ if not os.path.exists(week_flag) and calls < MAX_CALLS:
                  + "\n\n=== 審稿判定 ===\n" + (rv_heads or "(無)"))
     m, mr = api(mr_prompt)
     if mr:
-        with open(FQ + "/weekly_review_" + TODAY + ".md", "w", encoding="utf-8") as f:
+        with open(FQ + "/weekly_review_" + RUN_ID + ".md", "x", encoding="utf-8") as f:
             f.write("> 週檢討草稿(free-quota 班表 %s,model=%s)。結論供參,砍題/換題由 A0 決定並留紀錄。\n\n%s\n" % (TODAY, m, mr))
-        open(week_flag, "w").write(TODAY + "\n")
-        rows.append(("weekly_review", "OK", "weekly_review_" + TODAY + ".md (" + m.split("/")[-1] + ")"))
+        Path(week_flag).write_text(TODAY + "\n", encoding="utf-8")
+        rows.append(("weekly_review", "OK", "weekly_review_" + RUN_ID + ".md (" + m.split("/")[-1] + ")"))
     else:
         rows.append(("weekly_review", "FAIL", "全模型失敗或達日上限"))
 
 with open(FQ + "/usage_log.csv", "a", encoding="utf-8") as f:
     for name, st, note in rows:
-        f.write("%s,%s,%s,%s\n" % (TODAY, name, st, note.replace(",", ";")))
-with open(FQ + "/report_" + TODAY + ".md", "w", encoding="utf-8") as f:
-    f.write("# free-quota 班表日報 %s\n\nAPI 呼叫數(含重試):%d / 上限 %d\n\n" % (TODAY, calls, MAX_CALLS))
+        f.write("%s,%s,%s,%s,run_id=%s\n" % (TODAY, name, st, note.replace(",", ";"), RUN_ID))
+daily_end = counter.count
+retry_required = (budget_blocked or any(st == "FAIL" or "停手(" in note for _, st, note in rows)
+                  or any("審稿失敗" in unit["note"] for unit in unit_results))
+review_pass = sum("審PASS" in unit["note"] for unit in unit_results)
+review_issues = sum("審ISSUES" in unit["note"] for unit in unit_results)
+receipt = {"schema": "maplab.free-quota-run/v1", "run_id": RUN_ID, "local_date": TODAY,
+           "band": BAND, "bands": BANDS, "provider_requests_this_run": calls,
+           "selected_job": SELECTED_JOB or None, "max_items": MAX_ITEMS, "items_attempted": items_attempted,
+           "per_run_cap": MAX_CALLS, "shared_utc_day_used_at_start": daily_start,
+           "shared_utc_day_used_at_end": daily_end, "shared_utc_day_cap": counter.daily_cap,
+           "owner_reserve": providers.OWNER_DAILY_RESERVE, "budget_blocked": budget_blocked,
+           "daily_usage_coverage": "registered_callers_only; prior_unmetered_usage_unknown",
+           "execution_status": "INCOMPLETE" if retry_required else "COMPLETE",
+           "model_review_pass": review_pass, "model_review_issues": review_issues,
+           "acceptance": "MODEL_REVIEW_ONLY; owner_adoption_not_verified", "units": unit_results,
+           "completed_at_utc": datetime.now(timezone.utc).isoformat(), "attempts": attempts,
+           "jobs": [{"name": name, "status": st, "note": note} for name, st, note in rows]}
+with open(FQ + "/report_" + RUN_ID + ".json", "x", encoding="utf-8") as f:
+    json.dump(receipt, f, ensure_ascii=False, indent=2)
+    f.write("\n")
+with open(FQ + "/report_" + RUN_ID + ".md", "x", encoding="utf-8") as f:
+    f.write("# free-quota 班次回執 %s\n\n本次 API attempts(含重試):%d / 本次上限 %d\n"
+            "共用 UTC 日帳本:%d / %d;Owner 保留:%d。此數字只涵蓋已接帳本的 callers。\n\n"
+            % (RUN_ID, calls, MAX_CALLS, daily_end, counter.daily_cap, providers.OWNER_DAILY_RESERVE))
+    f.write("執行:%s;模型互審 PASS=%d / ISSUES=%d;Owner 採用尚未驗證。\n\n"
+            % (receipt["execution_status"], review_pass, review_issues))
     for name, st, note in rows:
         f.write("- [%s] %s — %s\n" % (st, name, note))
 print("[done] jobs=%d calls=%d" % (len(rows), calls))
 for name, st, note in rows:
     print(" ", st, name, "->", note)
+if retry_required:
+    sys.exit(3)
 PYEOF
 PY_RC=$?
 [ "$MODE" = "selftest" ] && exit $PY_RC
-
-# 2026-09-24 修兩件(Owner msg 6107 這輪順手):
-# 1) 原本是 git pull --rebase --autostash。這是共用 repo,別的 agent 隨時有未 commit 的改動,
-#    autostash 等於替別人 stash,踩到「共用 repo 禁 git stash」這條紅線。改成只 fetch,
-#    推不上去就誠實印未推送,下輪再補,絕不動別人的工作區。
-# 2) 分支名原本寫死。改成問 repo 現在在哪一條就推哪一條(#72 三支寫死分支名的其中一支)。
-git -C "$HB" fetch origin >/dev/null 2>&1
-BR="$(git -C "$HB" rev-parse --abbrev-ref HEAD 2>/dev/null)"
-git -C "$HB" add data/free-quota/ handoff/en-drafts/ 2>/dev/null
-git -C "$HB" commit -m "free-quota 班表 $TODAY" >/dev/null 2>&1 && git -C "$HB" push origin "$BR" >/dev/null 2>&1 && echo "[git] pushed" || echo "[git] 未推送(留本地,下輪補)"
+[ "$PY_RC" -eq 0 ] || exit "$PY_RC"
+# 完成回執後才記冪等簽章;中斷或寫檔失敗不會冒充已完成。
+printf '%s' "$QSIG" > "$QSIG_FILE"
+echo "[git] 未自動提交或推送;請由主管審閱本次回執後提交精確檔案。"
 echo ""
 cat "$REPORT" 2>/dev/null

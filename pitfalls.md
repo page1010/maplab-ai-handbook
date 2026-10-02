@@ -946,3 +946,17 @@
 - 根因：只檢查了 `launchctl list` 顯示排程存在、plist 檔案存在、log 檔案存在，就當作自動化在正常運作；沒有反過來檢查「這個自動化宣稱要產出的東西，是否真的存在過」。
 - 解法：驗證任何排程自動化時，一律核對其**宣稱的產出物**（本例：`state/compounding-patrol-*.md` 報告 + `state/compounding_patrol_last_ok`），而不是核對排程本身的註冊狀態；`state/compounding_patrol_staleness.log` 本身已經連續 14+ 天告警但沒人接，這種「系統自己在喊沒人理」的情況要主動升級成 Task Card，不能讓告警持續空轉。
 - 預防：任何新排程自動化上線時，同時建立「產出物存在性」的獨立健檢腳本（不只檢查 process/plist），並把巡查發現的排程失能寫進 `TASK_QUEUE.md` Tier 1，而非只記錄在告警日誌裡等待被看到。
+
+## 2026-10-02 — computer-use 權限、操作契約與讀回驗收是三件事
+
+- 觸發條件：OS accessibility/screen-recording 已開、capture 成功，indexed click 卻要求 snapshot_id/element_token。
+- 根因：新版 driver 的 input schema 已支援 element_token，但 SDK 沒保留 capability extension；Hermes 只查 capability，漏傳已快取的 token。SOM 互動元件清單亦不等於完整靜態文字讀回。
+- 解法：只對 schema 明示支援時沿用現有快照 token，不繞過 stale guard；135 項相關離線測試通過，真正 Quit/Open desktop serve 後，以單一計算機視窗完成 0→7 點擊及獨立 CUA 回讀。
+- 預防：不以加權限／yolo 解 adapter bug；Messaging Restart gateway 不等於重載 desktop serve。Chrome capture 可能包含 app-wide AX，未證明隔離前改用無私人內容的專用 app。按鈕標籤不等於結果數值；結果需獨立 AX 或 vision 驗證。
+
+## 2026-10-02 — 額度班次與模型審稿不能冒充複利成果
+
+- 觸發條件：舊 free-quota runner 接受 10/6 班次，無全日共用 ledger，輸出同名覆蓋且末尾自動 stage/commit/push；舊審稿會放過缺 SYNTHETIC 標記的稿。
+- 根因：單次 MAX_CALLS、排程存在與 reviewer PASS 被當成全日控管、已完成與業務採用；歷史用量沒有完整分母。
+- 解法：非法班次在讀 env 前拒絕；每次 transport 前從既有 DailyCounter 保留額度，唯一 run_id、完整成功才寫 skip signature、移除 runner Git 操作；queue40 強制合成標記並另做結構 assertions。只啟動合成小批次，UTC 換日之前 hold。
+- 預防：分列 provider attempts、successful responses、drafts、model review、獨立驗證、Owner 採用和後續成果；registered-callers ledger 不得宣称已包含所有桌面／舊程式請求。固定小樣本不改善兩輪先失敗分桶，不加 round 湊1000。

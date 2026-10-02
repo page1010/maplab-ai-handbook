@@ -1,0 +1,68 @@
+{
+  "schema": "maplab.free-quota-run/v1",
+  "run_id": "20261002-b1of6-072757-36898",
+  "local_date": "20261002",
+  "band": 1,
+  "bands": 6,
+  "provider_requests_this_run": 4,
+  "selected_job": "40-image-prompt.job.md",
+  "max_items": 1,
+  "items_attempted": 1,
+  "per_run_cap": 4,
+  "shared_utc_day_used_at_start": 0,
+  "shared_utc_day_used_at_end": 4,
+  "shared_utc_day_cap": 950,
+  "owner_reserve": 50,
+  "budget_blocked": false,
+  "daily_usage_coverage": "registered_callers_only; prior_unmetered_usage_unknown",
+  "execution_status": "COMPLETE",
+  "model_review_pass": 1,
+  "model_review_issues": 0,
+  "acceptance": "MODEL_REVIEW_ONLY; owner_adoption_not_verified",
+  "units": [
+    {
+      "name": "40-image-prompt.job.md",
+      "item": "日照中心 — 節慶主題點心單品特寫",
+      "status": "OK",
+      "note": "data/free-quota/image-prompts/prompt_20261002-b1of6-072757-36898/001.md (nemotron-3-super-120b-a12b:free | 審PASS)"
+    }
+  ],
+  "completed_at_utc": "2026-10-02T07:28:49.068281+00:00",
+  "attempts": [
+    {
+      "attempt_id": "d6d2fe82dd9e44cfbe1daf574a3306e2",
+      "requested_model": "nvidia/nemotron-3-super-120b-a12b:free",
+      "started_at_utc": "2026-10-02T07:27:57.447523+00:00",
+      "status": "ok",
+      "response_id": "gen-1790926077-d75nyJFpTzQTr5peDg4G",
+      "model_used": "nvidia/nemotron-3-super-120b-a12b:free"
+    },
+    {
+      "attempt_id": "4ec304f0a13e41fb8969dfd42302451f",
+      "requested_model": "google/gemma-4-31b-it:free",
+      "started_at_utc": "2026-10-02T07:28:20.336230+00:00",
+      "status": "http_error"
+    },
+    {
+      "attempt_id": "3ead35e11eff474b9e2e314ab7606048",
+      "requested_model": "minimax/minimax-m3:free",
+      "started_at_utc": "2026-10-02T07:28:23.840798+00:00",
+      "status": "http_error"
+    },
+    {
+      "attempt_id": "95e80266cf8b436d95c779818d599efb",
+      "requested_model": "dots-studio/dots-3-note-preview:free",
+      "started_at_utc": "2026-10-02T07:28:27.342464+00:00",
+      "status": "ok",
+      "response_id": "gen-1790926107-jCzjsM5XGZ83n6ch1x7a",
+      "model_used": "dots-studio/dots-3-note-preview:free"
+    }
+  ],
+  "jobs": [
+    {
+      "name": "40-image-prompt.job.md",
+      "status": "OK",
+      "note": "扇出 9 件成功 1 件|bounded item limit reached"
+    }
+  ]
+}

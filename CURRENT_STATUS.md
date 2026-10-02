@@ -62,6 +62,15 @@
 
 ## 系統版本
 
+### Parallel Active Task — Hermes 可見操作與獨立 Telegram（2026-10-02）
+
+- Task Card：`handoff/tasks/T-HERMES-VISIBLE-COMPUTER-001.md`，Owner 最新授權；獨立於 LINE→Sheets 與 A8 工作。
+- 狀態：`COMPUTER_USE_LIVE_PASS / SYNTHETIC_BATCH_PASS / TELEGRAM_OWNER_GATE`。
+- 已驗置頂桌面session `20261002_151604_3c4eb0`：修復token介面後實際點擊計算機0→7，獨立AX與Hermes vision讀回均通過；135項computer-use測試通過。原生gateway沒有Telegram token；A6是另一個自訂文字bot，不可共用token雙輪詢。
+- free-quota實跑4attempts／1合成草稿／1換模型審稿，9測試通過；六班小批次排程已安裝，首個非hold班次預計2026-10-03 10:05TST，僅queue40、每班3items/12attempts。舊10/6 PID97595/97607已停、草稿保留；歷史用量未知，非1000次或業務成效已證。
+- Next Bounded Action：Owner在本機安全欄位提供獨立bottoken並確認Owner-only身份後，驗一次Telegram nonce往返及同profile桌面session；不得自行取代A6。
+- Resume Prompt：先讀上述卡片與 `workbook/reviews/HERMES-VISIBLE-COMPUTER-20261002/receipt.md`（若存在），不要因「Gateway ready」宣稱 Telegram 已連線，也不要以1000次額度當成果。
+
 - **Version**: v6.0
 - **Phase**: Phase 6 — 觀測性 + 業務閉環 + 策略循環
 - **Status**: Active

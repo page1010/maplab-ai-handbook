@@ -1,0 +1,25 @@
+{
+  "verified_on": "2026-10-02",
+  "executor": "Codex",
+  "run_id": "20261002-b1of6-072757-36898",
+  "evidence": "data/free-quota/report_20261002-b1of6-072757-36898.json",
+  "receipt_sha256": "9dd7844454f77424c036df9ef544066e8d268065395cce2f3b70540b32a4bc06",
+  "draft_sha256": "8ee8e2fbb42ebe50d383a0d639e4795fe9e36b61b75097e820ba364ebb232d32",
+  "checks": {
+    "one_item_attempted": true,
+    "four_provider_attempts": true,
+    "two_successful_provider_responses": true,
+    "generation_and_review_models_differ": true,
+    "shared_ledger_delta_is_four": true,
+    "draft_has_synthetic_marker": true,
+    "draft_has_five_required_fields": true,
+    "negative_prompt_excludes_identifiable_and_children_faces": true,
+    "installed_and_repo_launchagent_semantically_equal": true
+  },
+  "acceptance": "STRUCTURAL_PASS; NOT_BUSINESS_ADOPTION; NOT_TRAINED_MODEL",
+  "limitations": [
+    "All checks were independent local file assertions using /usr/bin/python3; model review is a separate evidence layer.",
+    "The four requests belong only to this bounded run, not the whole day or native Hermes desktop.",
+    "The LaunchAgent kickstart verified a zero-request date hold, not a completed scheduled production batch."
+  ]
+}

@@ -5,6 +5,16 @@
 # 行程不掛在任何 Claude 續接窗底下,不需要 detach 模式。
 # 手動測試:bash scripts/free_quota_launchd_wrapper.sh
 set -u
+# Migration guard: historical unmetered usage cannot be treated as zero.
+# The installed LaunchAgent may defer automatic runs until a fresh UTC day.
+if [[ -n "${FQ_NOT_BEFORE_UTC:-}" && "$(date -u +%F)" < "$FQ_NOT_BEFORE_UTC" ]]; then
+  echo "[hold] automatic ramp starts on UTC $FQ_NOT_BEFORE_UTC; historical usage unknown"
+  exit 0
+fi
+# Bounded ramp for the existing 1000-request capacity plan, not a burn target.
+export FQ_MAX_ITEMS="${FQ_MAX_ITEMS:-3}"
+export FQ_MAX_CALLS="${FQ_MAX_CALLS:-12}"
+export FQ_JOB="${FQ_JOB:-40-image-prompt.job.md}"
 HOUR="$(date +%H)"
 case "$HOUR" in
   02) BAND=1 ;;

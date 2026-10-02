@@ -1,5 +1,52 @@
 # 免費算力每日 1000 來回班表 — 20 個使用場景與時段安排
 
+## 2026-10-02 受控啟動現況（目前執行依本節）
+
+> 狀態：`LIVE_SYNTHETIC_SMOKE_PASS / SCHEDULE_INSTALLED_DATE_HOLD / BUSINESS_ADOPTION_UNVERIFIED / NOT_WEIGHT_TRAINING`。
+> **1,000 是免費 request attempts 的政策天花板，不是每日 KPI。** 下方 2026-09-24 的「500 件／天」、「1100 上限」、「排程尚未建立」及同名日報規劃保留作歷史，均由本節的目前設定覆蓋；不得拿舊容量表宣稱今日成果。
+
+### 已驗證的單題實跑
+
+- Run ID：`20261002-b1of6-072757-36898`，2026-10-02 15:27:57–15:28:49（Asia/Taipei）。
+- 只執行 `40-image-prompt.job.md` 一件合成場景：`日照中心 — 節慶主題點心單品特寫`；未附客資、私有照片、repo 文件或外部來源頁。
+- 共 **4 provider attempts：2 成功、2 HTTP errors**。產稿為 `nvidia/nemotron-3-super-120b-a12b:free`，換模型審稿為 `dots-studio/dots-3-note-preview:free`；成功回應 ID 與每次先記帳的 attempt ID 均留在 JSON 回執。這四次只屬本次 runner，不能算成整日總數或 Hermes 桌面聊天的用量。
+- 產出一份文字生圖指令草稿及一份不同模型審稿，並未呼叫生圖平台。獨立本機 **9 項檢查全部通過**，包含四次記帳、不同模型、SYNTHETIC 標記、五個必填欄位、人臉排除條件與 installed/repo 排程一致性；回執與草稿各綁 SHA-256。
+- 模型互審與本機結構檢查是分開的證據。`STRUCTURAL_PASS` 不代表營業採用、轉單效果、權重訓練或模型能力已提升；本次九項檢查也不是所有未來排程產出的自動驗收保證。
+- 原始回執的 `扇出 9 件成功 1 件` 意指「本班候選 9 件、本次實際成功 1 件」，不是完成九件；`items_attempted=1` 與唯一草稿為準。歷史回執不改寫，後續 runner 回執已改為分開標示候選與實際成功數。
+
+證據：
+
+- [單題執行回執 JSON](report_20261002-b1of6-072757-36898.json)／[可讀回執](report_20261002-b1of6-072757-36898.md)
+- [合成生圖指令草稿](image-prompts/prompt_20261002-b1of6-072757-36898/001.md)／[換模型審稿](reviews/40-image-prompt_20261002-b1of6-072757-36898_001.review.md)
+- [獨立九項檢查與兩份 SHA](../../workbook/reviews/HERMES-VISIBLE-COMPUTER-20261002/synthetic-smoke-verification.json)
+
+### 排程與額度現值
+
+| 項目 | 目前設定與證據邊界 |
+|---|---|
+| LaunchAgent | `com.maplab.freequota` 已 bootstrap；kickstart 的 live readback 為 `runs=1 / last exit code=0`，stdout 是日期閘的 `hold`，此次排程測試新增 requests=0。這證明已安裝且會保留等待，不代表第一個定時產稿班已完成。 |
+| 起跑日期 | `FQ_NOT_BEFORE_UTC=2026-10-03`；台北時間 10 月 3 日 02:05／06:05 仍屬前一個 UTC 日，**首個可執行班為 2026-10-03 10:05**。 |
+| 班次 | 台北每日 **02:05、06:05、10:05、14:05、18:05、22:05**，由既有 wrapper 對應 1–6 班；無效班次會在讀 env／寫檔前拒絕。 |
+| 單班範圍 | 只選 `FQ_JOB=40-image-prompt.job.md`，`FQ_MAX_ITEMS=3`、`FQ_MAX_CALLS=12`；每次 fallback／HTTP error 都消耗一次上限。正常完整六班日最多 18 件、72 attempts，實際可能更少。這是受控啟動上限，不是產量承諾。 |
+| 日帳本 | 重用 `investment-os/scripts/free_compute/providers.py` 的 MAPLAB `DailyCounter`：UTC 日、跨程序鎖、0600、transport 前 reserve、原子寫入、`:free` 限制與至少 3.5 秒間隔；訓練／草稿 lane 合計最多 **950 attempts**，Owner 保留 **50**。 |
+| 今日歷史 | 2026-10-02 舊 runner 未接共用帳本的消耗仍為 **UNKNOWN**。新回執起始值 0 只表示新接入帳本當時為 0，不能推論整個帳戶今日沒用過；故自動班表等新 UTC 日才起跑。帳本數也只涵蓋已接入的 callers。 |
+| 模型鏈 | 目前排序為 nemotron-super → dots-note → gemma，已移除先前 404 的 minimax。單題實跑發生於排序調整前，歷史 attempts 原樣保留；後續 HTTP error 回執新增 `http_status` 欄位。 |
+| 寫入與 Git | 每次草稿、審稿、JSON／Markdown 回執均有唯一 run ID；不覆蓋其他班。runner 不自動 `git add`、commit 或 push。完成回執才寫 qsig；執行失敗回非零，模型互審問題與 Owner 採用另列。 |
+
+目前自動路徑只讀合成場景清單，不含 `CONTEXT`／`INPUT_URL`；增加文件、客資、來源頁或其他 queue 前，必須另核對來源與資料邊界，不能把目前單一 queue 的驗證套用到全部二十種場景。所有產物維持未發布草稿。
+
+程式與離線檢查：`scripts/free_quota_daily.sh`、`scripts/free_quota_launchd_wrapper.sh`、`scripts/com.maplab.freequota.plist`、`tests/test_free_quota_daily.py`；本輪 9 個 offline tests、`bash -n`、`git diff --check` 通過。測試使用 temporary ledger／mock transport，不是額外 provider requests。
+
+### Next Bounded Action／接續 Prompt
+
+首個定時班完成後，讀該 run 的 JSON、草稿、不同模型審稿，核對 `items_attempted <= 3`、`provider_requests_this_run <= 12`、SYNTHETIC 與必填欄位；若失敗先看 attempt／HTTP status，不增加班次或上限。接著挑一份草稿記錄「可採用／需修正／拒用」及原因，才討論下一階段擴量。尚未取得這次定時班回執前，狀態維持 `SCHEDULE_INSTALLED_DATE_HOLD`，不得寫成每日複利已被證明。
+
+接手者先讀本節與上述單題／獨立檢查回執，再核對 live LaunchAgent 與最新 `report_<run_id>.json`。保留每日 950／Owner 50、單卡每班 3 件／12 attempts、唯一輸出及無自動 Git 寫入；今日舊用量 UNKNOWN 不補猜，模型互審不當作商業採用或權重訓練。
+
+---
+
+## 2026-09-24 原始規劃與冒煙紀錄（歷史保留；執行現值以上節為準）
+
 > 來源:Owner msg 6092(2026-09-24T20:04:14)「我要他幫得上忙,改好後給我20個與我們日常工作相關的使用場景,給我1000個來回每日任務的每日安排」
 > 與 msg 6093(2026-09-24T20:19:14)「比如生圖固定50整理100 生歌suno sop嘗試100至少用一半吧,我看他一直在巡查一直沒事幹」
 >

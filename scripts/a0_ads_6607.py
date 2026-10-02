@@ -125,6 +125,36 @@ def main():
         code, resp = post("52580537493330", {"name": "B4B5企業公關冷層(舊0119,lifetime用罄)"})
         print(f"E名重試 http={code} {'OK' if code == 200 else resp}")
         return
+    if len(sys.argv) > 1 and sys.argv[1] == "merge":
+        code, resp = post(f"{ACT}/ads", {
+            "name": "MAPLAB 13 P0週歲派對(舊圖輪替)",
+            "adset_id": "52726886656930",
+            "creative": json.dumps({"creative_id": "1514190590506380"}),
+            "status": "ACTIVE"})
+        print(f"MERGE http={code} {resp if code != 200 else resp.get('id')}")
+        return
+    if len(sys.argv) > 1 and sys.argv[1] == "pxstats":
+        code, st = get("228166994905799/stats", {"aggregation": "event"})
+        print(f"PXSTATS http={code} {st.get('data', st)}")
+        return
+    if len(sys.argv) > 1 and sys.argv[1] == "probe3":
+        import time
+        code, px = get(f"{ACT}/adspixels", {"fields": "id,name,last_fired_time,is_unavailable"})
+        print(f"PIXELS http={code} {px.get('data', px)}")
+        time.sleep(2)
+        for cid, tag in [("52707985344330", "A疲乏"), ("52580537493330", "E企業公關")]:
+            code, ss = get(f"{cid}/adsets", {"fields": "id,name,targeting", "limit": "10"})
+            for s in ss.get("data", []):
+                t = s.get("targeting", {})
+                ca = [x.get("name", x.get("id")) for x in t.get("custom_audiences", [])]
+                print(f"{tag} adset {s['id']} custom_audiences={ca}")
+            time.sleep(2)
+            code, al = get(f"{cid}/ads", {"fields": "id,name,status,creative{id,name}", "limit": "20"})
+            for x in al.get("data", []):
+                cr = x.get("creative", {})
+                print(f"{tag} ad {x['id']} | {x.get('status')} | {x.get('name')} | creative={cr.get('id')} {cr.get('name')}")
+            time.sleep(2)
+        return
     if len(sys.argv) > 1 and sys.argv[1] == "adcheck":
         import time
         for cid in NEW9:

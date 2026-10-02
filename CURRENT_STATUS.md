@@ -5,7 +5,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-10-02 A1每日巡查（remote cloud）｜24h commits：0 new agent commits（僅 patrol）— 無任何 agent 新動作；all clear；NEEDS_REVIEW 10 tasks ~2238h；T-A7-001 Phase 3 第77天延誤；CRITICAL: T-A4-002 ~4470h / T-IOS-KOL-001 ~2958h；A8 ~2773h；A6 last commit 2026-09-29（72h 無動作，T-A6-001 NEEDS_REVIEW 仍待 Owner 確認 LINE webhook Channel 1654658337）；⚠️ P11探針誘導編價—攔截器 HOLD+需人工橫幅（持續）；⚠️ provider chain: minimax-m3:free/glm-5.2:free 404 待汰換（持續）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-10-02 A1午後巡查（remote cloud）｜8h commits：0 new agent commits（僅 patrol）— 無任何 agent 新動作；all clear；NEEDS_REVIEW 10 tasks ~2246h；T-A7-001 Phase 3 第77天延誤；CRITICAL: T-A4-002 ~4478h / T-IOS-KOL-001 ~2966h；A8 ~2781h；A6 last commit 2026-09-29（~80h 無動作，T-A6-001 NEEDS_REVIEW 仍待 Owner 確認 LINE webhook Channel 1654658337）；⚠️ P11探針誘導編價—攔截器 HOLD+需人工橫幅（持續）；⚠️ provider chain: minimax-m3:free/glm-5.2:free 404 待汰換（持續）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 > **合併註記（2026-09-23，工作分支併回 main）**：上面那行是 main 側巡查寫的最新狀態，保留為現值。
 > 下面這行與其後的 Active Task 區塊來自工作分支 `chore/agent-login-governance-20260816`，main 側先前沒有，
@@ -449,6 +449,10 @@
 |  | T-IOS-KOL-001: - **阻塞**：無。 | 見 Task Card |
 | ✅ A1巡查 2026-09-30 | **A0 極活躍**（21 commits since 09-29 00:15 UTC：drafts 6234/6242/6247/6252-6256/6266/6270/6273-6276+夜間追報+merge）；**A6 resumed**（4 commits 09-29：feat Telegram repo read+boot、fix DLP+nemotron）；wp-cred fix 1 commit；無 A2/A4/A5/A7/A8 新 commit。各 agent 狀態與 CURRENT_STATUS 一致，無新異常。NEEDS_REVIEW 10 tasks **~2173h**；T-A7-001 Phase 3 延誤第 **75 天**；T-A4-002 CRITICAL **~4405h** / T-IOS-KOL-001 CRITICAL **~2893h**；A8 **~2708h**；A6 last commit 更新至 2026-09-29；P11 攔截器 HOLD 持續；provider chain minimax-m3:free/glm-5.2:free 404 仍待汰換。 | 無新行動項目；T-A7-001 Zone B/C 仍待 Owner 確認；provider 汰換待排 |
 | ✅ A1巡查 2026-09-30 晚間 | 8h 零非巡查 commit（since 午後巡查），系統持續靜止。各 agent 狀態與 CURRENT_STATUS 一致，無新異常。NEEDS_REVIEW 10 tasks **~2189h**；T-A7-001 Phase 3 延誤第 **75 天**；T-A4-002 CRITICAL **~4421h** / T-IOS-KOL-001 CRITICAL **~2909h**；A8 **~2724h**；A6 last commit 2026-09-29；P11 攔截器 HOLD 持續；provider chain minimax-m3:free/glm-5.2:free 404 仍待汰換。 | 無新行動項目；T-A7-001 Zone B/C 仍待 Owner 確認 |
+| ✅ A1巡查 2026-10-01 | 24h 零非巡查 commit，系統持續靜止。各 agent 狀態與 CURRENT_STATUS 一致，無新異常。NEEDS_REVIEW 10 tasks **~2213h**；T-A7-001 Phase 3 延誤第 **76 天**；T-A4-002 CRITICAL **~4445h** / T-IOS-KOL-001 CRITICAL **~2933h**；A8 **~2748h**；A6 last commit 2026-09-29（~56h）；P11 攔截器 HOLD 持續；provider chain 404 持續。 | 無新行動項目；T-A7-001 Zone B/C 仍待 Owner 確認 |
+| ✅ A1巡查 2026-10-01 午後 | 8h 零非巡查 commit，系統持續靜止。各 agent 狀態與 CURRENT_STATUS 一致，無新異常。NEEDS_REVIEW 10 tasks **~2221h**；T-A7-001 Phase 3 延誤第 **76 天**；T-A4-002 CRITICAL **~4453h** / T-IOS-KOL-001 CRITICAL **~2941h**；A8 **~2756h**；A6 last commit 2026-09-29（~64h）；P11 攔截器 HOLD 持續；provider chain 404 持續。 | 無新行動項目 |
+| ✅ A1巡查 2026-10-02 | 24h 零非巡查 commit（僅 10-01 巡查 commits），系統持續靜止。各 agent 狀態與 CURRENT_STATUS 一致，無新異常。NEEDS_REVIEW 10 tasks **~2238h**；T-A7-001 Phase 3 延誤第 **77 天**；T-A4-002 CRITICAL **~4470h** / T-IOS-KOL-001 CRITICAL **~2958h**；A8 **~2773h**；A6 last commit 2026-09-29（~72h）；P11 攔截器 HOLD 持續；provider chain minimax-m3:free/glm-5.2:free 404 持續。RECALL A6/A8 時數已更新。 | 無新行動項目；T-A7-001 Zone B/C 仍待 Owner 確認 |
+| ✅ A1巡查 2026-10-02 午後 | 8h 零非巡查 commit（since 每日巡查），系統持續靜止。各 agent 狀態與 CURRENT_STATUS 一致，無新異常。NEEDS_REVIEW 10 tasks **~2246h**；T-A7-001 Phase 3 延誤第 **77 天**；T-A4-002 CRITICAL **~4478h** / T-IOS-KOL-001 CRITICAL **~2966h**；A8 **~2781h**；A6 last commit 2026-09-29（**~80h** 無動作，T-A6-001 NEEDS_REVIEW）；P11 攔截器 HOLD 持續；provider chain minimax-m3:free/glm-5.2:free 404 持續。RECALL A6/A8 時數更新至本次。 | 無新行動項目；T-A7-001 Zone B/C 仍待 Owner 確認；A6 ~80h 無新活動（正常 NEEDS_REVIEW 等 Owner 授權） |
 
 ## 2026-07-19 weekly-eval: 520/540 | NO_DELTA
 

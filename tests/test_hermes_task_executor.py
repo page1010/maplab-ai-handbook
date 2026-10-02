@@ -16,10 +16,32 @@ class HermesTaskExecutorTest(unittest.TestCase):
         self.assertEqual(executor.classify("幫我查 Hermes runtime 狀態"), ("runtime-status", None))
         self.assertEqual(executor.classify("現在動能名單狀態如何"), ("signal-status", None))
 
-    def test_rejects_high_risk_even_when_safe_alias_is_present(self):
+    def test_high_risk_wording_routes_to_chat_not_tool(self):
+        # 2026-10-02 Owner 6595:提到發布/下單等詞只是「說到」,executor 本身沒有
+        # 發布能力,改走 CHAT(白名單理由)而非硬拒;但絕不能配成任何工具動作。
         action, reason = executor.classify("看 repo 狀態後發布 WordPress")
         self.assertIsNone(action)
-        self.assertIn("fail closed", reason)
+        self.assertIn("白名單", reason)
+
+    def test_owner_6595_read_and_note_capabilities(self):
+        self.assertEqual(executor.classify("看檔 docs/OPERATING_CULTURE.md"), ("repo-read", None))
+        self.assertEqual(executor.classify("素材清單 data/a6-photos"), ("asset-list", None))
+        self.assertEqual(executor.classify("寫筆記:今天學到報價要附人數")[0], "hermes-note")
+
+    def test_long_pasted_document_routes_to_chat_even_with_schedule_words(self):
+        # 長文=Owner 貼進來的計畫書,提到「修改排程」≠下令改排程(A6H-20261002-133830 血證)
+        plan = "計畫書:" + "細節說明。" * 150 + "未來可能修改 Hermes 或啟用排程。"
+        self.assertGreater(len(plan), 600)
+        action, reason = executor.classify(plan)
+        self.assertIsNone(action)
+        self.assertIn("白名單", reason)
+
+    def test_repo_read_red_lines_hold(self):
+        for bad in ("看檔 bot/.env", "看檔 .git/config", "看檔 data/telegram-photos/x.jpg",
+                    "讀檔 ../claude-daily-operations/state/a0_inbox.jsonl"):
+            with tempfile.TemporaryDirectory() as tmp, mock.patch.object(executor, "TASK_ROOT", Path(tmp)):
+                receipt = executor.execute(bad, 123)
+                self.assertEqual(receipt["status"], "rejected", bad)
 
     def test_natural_long_running_goals_route_without_manual_research_command(self):
         self.assertEqual(executor.classify("讓 A8 生歌、做影片並上傳 YouTube 給我看"), ("durable-job", None))

@@ -146,7 +146,7 @@ ACTIONS = {
     "general-chat": Action(
         "general-chat",
         (PYTHON, str(REPO_ROOT / "bot_a6" / "hermes_telegram_gateway.py"), "chat-fallback"),
-        30,
+        150,  # 2026-09-29: was 30 -> killed every real reply (free model ~16s + retries) -> silent no-answer
         "透過模型進行自由形式的文字回覆（僅限 Owner 私聊，仍會產生 receipt）",
     ),
     "quote-intake": Action(
@@ -160,6 +160,24 @@ ACTIONS = {
         ("/usr/bin/true",),
         20,
         "報價試算：以有 source 的價目表做零 LLM 算術，產出毛利率與件數（內部試算，不對客）",
+    ),
+    "repo-read": Action(
+        "repo-read",
+        ("/usr/bin/true",),
+        10,
+        "唯讀 repo 內文字檔(Owner 6595 的「看」權;金鑰/版本庫內部/兒童照拒讀)",
+    ),
+    "asset-list": Action(
+        "asset-list",
+        ("/usr/bin/true",),
+        15,
+        "列素材/資料目錄的檔名與 metadata(像素不送模型)",
+    ),
+    "hermes-note": Action(
+        "hermes-note",
+        ("/usr/bin/true",),
+        10,
+        "寫 hermes 自用筆記到 workbook/hermes-notes(只寫自己用的,不碰程式碼)",
     ),
 }
 
@@ -175,6 +193,39 @@ QUOTE_INTENT_RE = re.compile(
     r"\d{3,}\s*(塊|元)|每人\s*\d+|人數\s*\d+|報\s*\d+\s*人)",
 )
 QUOTE_INTAKE_ROOT = Path.home() / ".maplab" / "quote_intake"
+
+# 2026-10-02 Owner 6595「幫他解除封鎖:給他權限『看』,可以拿相片與資料,
+# 但是不動程式碼或是只寫自己用的,資料寫成沿著我們格式的方向」。
+# 看=唯讀 repo 內文字檔+素材 metadata 清單(像素不送模型);
+# 寫=僅 hermes 自己的筆記夾(workbook/hermes-notes),沿用收據式 md 格式。
+# 檔案層紅線不放:.env/.git/金鑰/cookie/兒童照資料夾(telegram-photos)一律拒。
+READ_FILE_RE = re.compile(r"^\s*(?:看檔|讀檔|read-file)(?:\s*[:：]\s*|\s+)(.+?)\s*$", re.IGNORECASE)
+ASSET_LIST_RE = re.compile(
+    r"^\s*(?:看素材|素材清單|相片清單|list-assets)(?:(?:\s*[:：]\s*|\s+)(.+?))?\s*$", re.IGNORECASE
+)
+NOTE_WRITE_RE = re.compile(
+    r"^\s*(?:寫筆記|hermes-note)(?:\s*[:：]\s*|\s+)(.+)$", re.IGNORECASE | re.DOTALL
+)
+NOTES_ROOT = REPO_ROOT / "workbook" / "hermes-notes"
+READ_DENY_PARTS = {".git", "telegram-photos", "mcp-keys", "cookies", "venv", "__pycache__"}
+READ_DENY_NAME_RE = re.compile(r"(\.env|token|secret|cookie|credential|\.key$|\.pem$)", re.IGNORECASE)
+READ_TEXT_SUFFIXES = {".md", ".txt", ".json", ".csv", ".tsv", ".yml", ".yaml", ".py", ".sh", ".html", ".log"}
+MAX_READ_CHARS = 8_000
+MAX_LIST_ENTRIES = 120
+
+
+def _safe_repo_path(raw: str) -> "tuple[Path | None, str | None]":
+    """repo 內相對路徑 → 絕對路徑;出 repo、碰紅線一律拒。resolve() 連 symlink 逃逸一起擋。"""
+    candidate = (REPO_ROOT / raw.strip().lstrip("/")).resolve()
+    try:
+        rel = candidate.relative_to(REPO_ROOT)
+    except ValueError:
+        return None, "只能讀 MAPLAB repo 內的檔案"
+    if {part.lower() for part in rel.parts} & READ_DENY_PARTS:
+        return None, "該路徑屬於檔案層紅線(金鑰/版本庫內部/兒童照/環境),拒絕存取"
+    if any(READ_DENY_NAME_RE.search(part) for part in rel.parts):
+        return None, "該路徑名稱帶金鑰/憑證字樣,拒絕存取"
+    return candidate, None
 
 ALIASES = {
     "runtime-status": (
@@ -222,9 +273,25 @@ def classify(request: str) -> tuple[str | None, str | None]:
         if durable_rejection:
             return None, durable_rejection
         return "durable-job", None
+    if READ_FILE_RE.match(request or ""):
+        return "repo-read", None
+    if ASSET_LIST_RE.match(request or ""):
+        return "asset-list", None
+    if NOTE_WRITE_RE.match(request or ""):
+        return "hermes-note", None
+    if len(request or "") > 600:
+        # 2026-10-02 Owner 6595:長文=Owner 貼進來的計畫書/對話素材,提到敏感詞
+        # ≠要做敏感事(A6H-20261002-133830 血證:計畫書因「發布/修改…排程」字樣
+        # 整則啞掉)。走 CHAT 讓模型讀完回話;真正的紅線在能力層(executor 沒有
+        # 發布/下單/排程這些動作)與檔案層(_safe_repo_path)。
+        return None, "不在目前的安全動作白名單"
     normalized = re.sub(r"\s+", "", request).lower()
-    if DENY_PATTERN.search(request) or SCHEDULE_MUTATION_PATTERN.search(request):
+    if SCHEDULE_MUTATION_PATTERN.search(request):
         return None, "涉及禁止或高風險能力，已 fail closed"
+    if DENY_PATTERN.search(request):
+        # 同上 6595:短句提到下單/發布等詞也只是「說到」,executor 無對應能力,
+        # 改回預設理由=gateway 放行純文字 CHAT;排程變更句式仍硬拒(上一條)。
+        return None, "不在目前的安全動作白名單"
     for action_name, aliases in ALIASES.items():
         if any(re.sub(r"\s+", "", alias).lower() in normalized for alias in aliases):
             return action_name, None
@@ -717,6 +784,106 @@ def execute(
             "description": ACTIONS[action_name].description,
             "output": _quote_estimate_output(request, task_id, now),
         }
+    elif action_name == "repo-read":
+        match = READ_FILE_RE.match(request)
+        target, deny = _safe_repo_path(match.group(1)) if match else (None, "無法解析路徑")
+        if deny is None and target is not None:
+            if not target.is_file():
+                deny = "檔案不存在:" + str(match.group(1))[:200]
+            elif target.suffix.lower() not in READ_TEXT_SUFFIXES:
+                deny = "只開放文字類檔案;相片請用「素材清單」看 metadata,像素不送模型"
+        if deny:
+            receipt = {**task, "status": "rejected", "finished_at": time.strftime("%Y-%m-%dT%H:%M:%S%z"), "reason": deny}
+        else:
+            body = target.read_text(encoding="utf-8", errors="replace")
+            rel = target.relative_to(REPO_ROOT)
+            truncated = len(body) > MAX_READ_CHARS
+            receipt = {
+                **task,
+                "status": "completed",
+                "finished_at": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
+                "description": ACTIONS[action_name].description,
+                "output": "【hermes 唯讀】" + str(rel)
+                + ("(前 %d 字元,原檔 %d 字元)" % (MAX_READ_CHARS, len(body)) if truncated else "")
+                + "\n" + body[:MAX_READ_CHARS],
+                "output_truncated": truncated,
+            }
+    elif action_name == "asset-list":
+        match = ASSET_LIST_RE.match(request)
+        sub = (match.group(1) or "data").strip() if match else "data"
+        target, deny = _safe_repo_path(sub)
+        if deny is None and (target is None or not target.is_dir()):
+            deny = "目錄不存在:" + sub[:200]
+        if deny:
+            receipt = {**task, "status": "rejected", "finished_at": time.strftime("%Y-%m-%dT%H:%M:%S%z"), "reason": deny}
+        else:
+            entries = []
+            skipped_redline = 0
+            for root, dirs, files in os.walk(target):
+                root_path = Path(root)
+                keep_dirs = []
+                for d in dirs:
+                    rel_parts = (root_path / d).relative_to(REPO_ROOT).parts
+                    if {p.lower() for p in rel_parts} & READ_DENY_PARTS or any(
+                        READ_DENY_NAME_RE.search(p) for p in rel_parts
+                    ):
+                        skipped_redline += 1
+                    else:
+                        keep_dirs.append(d)
+                dirs[:] = sorted(keep_dirs)
+                for name in sorted(files):
+                    if len(entries) >= MAX_LIST_ENTRIES:
+                        break
+                    path = root_path / name
+                    rel_parts = path.relative_to(REPO_ROOT).parts
+                    if any(READ_DENY_NAME_RE.search(p) for p in rel_parts):
+                        skipped_redline += 1
+                        continue
+                    stat = path.stat()
+                    entries.append(
+                        "%s\t%dB\t%s"
+                        % (path.relative_to(REPO_ROOT), stat.st_size,
+                           time.strftime("%Y-%m-%d", time.localtime(stat.st_mtime)))
+                    )
+                if len(entries) >= MAX_LIST_ENTRIES:
+                    break
+            receipt = {
+                **task,
+                "status": "completed",
+                "finished_at": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
+                "description": ACTIONS[action_name].description,
+                "output": (
+                    "【hermes 素材清單】%s(%d 筆%s;紅線路徑略過 %d 項)\n"
+                    % (sub, len(entries), ",已達上限" if len(entries) >= MAX_LIST_ENTRIES else "", skipped_redline)
+                    + "\n".join(entries)
+                ),
+            }
+    elif action_name == "hermes-note":
+        match = NOTE_WRITE_RE.match(request)
+        content = match.group(1).strip() if match else ""
+        note_path = NOTES_ROOT / (task_id + ".md")
+        _write_text(
+            note_path,
+            "\n".join(
+                [
+                    "# hermes 筆記 " + task_id,
+                    "",
+                    "- 建立:" + now,
+                    "- 來源:Owner 私聊(hermes 自用,不對外)",
+                    "- request_sha256:" + task["request_sha256"],
+                    "",
+                    content,
+                    "",
+                ]
+            ),
+        )
+        receipt = {
+            **task,
+            "status": "completed",
+            "finished_at": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
+            "description": ACTIONS[action_name].description,
+            "output": "【hermes】筆記已存:" + str(note_path) + "(自用區,程式碼一行未動)",
+        }
     else:
         action = ACTIONS[action_name]
         if action_name == "general-chat":
@@ -727,17 +894,23 @@ def execute(
                 user_message = request[len("general-chat: "):]
             # Call the gateway's chat fallback directly via subprocess
             # to avoid circular import between executor and gateway
-            from subprocess import run
-            result = run(
-                (PYTHON, str(REPO_ROOT / "bot_a6" / "hermes_telegram_gateway.py"), "chat-fallback", user_message),
-                cwd=REPO_ROOT,
-                capture_output=True,
-                text=True,
-                timeout=action.timeout,
-                check=False,
-                env={"PATH": "/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin", "LANG": "zh_TW.UTF-8"},
-            )
-            output = result.stdout.strip() or result.stderr.strip()
+            from subprocess import run, TimeoutExpired
+            try:
+                result = run(
+                    (PYTHON, str(REPO_ROOT / "bot_a6" / "hermes_telegram_gateway.py"), "chat-fallback", user_message),
+                    cwd=REPO_ROOT,
+                    capture_output=True,
+                    text=True,
+                    timeout=action.timeout,
+                    check=False,
+                    env={"PATH": "/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin", "LANG": "zh_TW.UTF-8"},
+                )
+                output = result.stdout.strip() or result.stderr.strip()
+            except TimeoutExpired:
+                # 2026-09-29: never let a timeout escape the loop (it dropped the reply entirely)
+                class _R: returncode = 124
+                result = _R()
+                output = f"【hermes】這則回覆超過 {action.timeout} 秒沒完成(免費模型鏈慢或忙)。已受理;可再問一次或縮短問題。"
             receipt = {
                 **task,
                 "status": "completed" if result.returncode == 0 else "failed",
@@ -790,7 +963,10 @@ def telegram_summary(receipt: dict) -> str:
         lines.append("已交給隔離 DeerFlow one-shot worker；完成後 Hermes 會主動回報，也可用 /research-status <job-id> 查詢。")
     lines.append(f"receipt：{receipt['receipt_path']}")
     if status == "rejected":
-        lines.append("可用：runtime-status／signal-status／repo-status／recent-commits／a6-self-test／deerflow-status／/research-public")
+        lines.append(
+            "可用：runtime-status／signal-status／repo-status／recent-commits／a6-self-test／deerflow-status／"
+            "/research-public／看檔 <repo路徑>／素材清單 <目錄>／寫筆記 <內容>"
+        )
     return "\n".join(lines)
 
 

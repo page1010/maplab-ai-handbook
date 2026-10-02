@@ -1,0 +1,146 @@
+{
+  "timestamp": "2026-10-02 23:40:28",
+  "account_id": "act_318634712",
+  "total_budget_daily_twd": 590,
+  "budget_cap_twd": 616,
+  "deployed_ads": [
+    {
+      "video_code": "V01",
+      "adset_id": "52726886828730",
+      "ad_id": "52727853335330",
+      "creative_id": "1881890179444659",
+      "status": "ACTIVE"
+    },
+    {
+      "video_code": "V02",
+      "adset_id": "52726886668930",
+      "ad_id": "52727853351930",
+      "creative_id": "28967297992960813",
+      "status": "ACTIVE"
+    },
+    {
+      "video_code": "V03",
+      "adset_id": "52726886708930",
+      "ad_id": "52727853358530",
+      "creative_id": "2013691299341224",
+      "status": "ACTIVE"
+    },
+    {
+      "video_code": "V04",
+      "adset_id": "52726886720930",
+      "ad_id": "52727853366330",
+      "creative_id": "1685520889661645",
+      "status": "ACTIVE"
+    },
+    {
+      "video_code": "V05",
+      "adset_id": "52726886778130",
+      "ad_id": "52727853370930",
+      "creative_id": "1602306418021210",
+      "status": "ACTIVE"
+    },
+    {
+      "video_code": "V06",
+      "adset_id": "52726886656930",
+      "ad_id": "52727853395930",
+      "creative_id": "1098468992885179",
+      "status": "ACTIVE"
+    },
+    {
+      "video_code": "V07",
+      "adset_id": "52726886800730",
+      "ad_id": "52727853414330",
+      "creative_id": "1746478163072974",
+      "status": "ACTIVE"
+    },
+    {
+      "video_code": "V08",
+      "adset_id": "52726886734930",
+      "ad_id": "52727853446730",
+      "creative_id": "28684623857833978",
+      "status": "ACTIVE"
+    },
+    {
+      "video_code": "V09",
+      "adset_id": "52726886540530",
+      "ad_id": "52727853456530",
+      "creative_id": "1510725800893409",
+      "status": "ACTIVE"
+    },
+    {
+      "video_code": "V10",
+      "adset_id": "52644997254930",
+      "ad_id": "52727853472130",
+      "creative_id": "1773189447158620",
+      "status": "ACTIVE"
+    }
+  ],
+  "budget_allocations": [
+    {
+      "target_id": "52726886720930",
+      "amount_twd": 80,
+      "note": "B4公關開幕 (V04 秋季門市開幕旺季首選)",
+      "success": true
+    },
+    {
+      "target_id": "52726886734930",
+      "amount_twd": 80,
+      "note": "B5研討會 (V08 開學研討會國際論壇)",
+      "success": true
+    },
+    {
+      "target_id": "52726886708930",
+      "amount_twd": 70,
+      "note": "TA-3HR企業茶會 (V03 南科高客單主力)",
+      "success": true
+    },
+    {
+      "target_id": "52726886828730",
+      "amount_twd": 58,
+      "note": "V1週歲影片 (V01 抓周影片主力)",
+      "success": true
+    },
+    {
+      "target_id": "52726886668930",
+      "amount_twd": 58,
+      "note": "TA-2婚禮冷層 (V02 年底婚禮黃金檔期)",
+      "success": true
+    },
+    {
+      "target_id": "52726886778130",
+      "amount_twd": 58,
+      "note": "建商案場VIP (V05 頂級案場招待)",
+      "success": true
+    },
+    {
+      "target_id": "52726886800730",
+      "amount_twd": 44,
+      "note": "C2入厝派對 (V07 私廚到府聚會)",
+      "success": true
+    },
+    {
+      "target_id": "52726886540530",
+      "amount_twd": 44,
+      "note": "C3長輩壽宴 (V09 私人微醺派對)",
+      "success": true
+    },
+    {
+      "target_id": "52726886656930",
+      "amount_twd": 34,
+      "note": "TA-1週歲溫層 (V06 寶寶性別揭曉)",
+      "success": true
+    },
+    {
+      "target_id": "52644997254930",
+      "amount_twd": 32,
+      "note": "TA-1頂層認知-舊0504 (V10 精緻野餐外帶)",
+      "success": true
+    },
+    {
+      "target_id": "52645018404530",
+      "amount_twd": 32,
+      "note": "TA-1高收入媽媽-舊0511 (CBO最低日限)",
+      "success": true
+    }
+  ]
+}

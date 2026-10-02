@@ -1,0 +1,27 @@
+【Claude・Fable5 線・同 session 續接】文化與自動化規則已重讀(同日續接,當日第一輪 07:38 已實讀兩檔)
+
+原話:要怎麼讓win 01復活並自我檢查幫我下prompt 你知道他在另一台電腦對吧
+
+知道 — win-01 是另一台 Windows 機:C 槽有 agent-bus 的 clone,靠工作排程器(A0Web-win01-loop)每輪跑 worker 迴圈,心跳推上 GitHub 讓 macmini 這端看見。以下 prompt 就是給那台機器上的 Claude Code 貼的。
+
+先講診斷:這次心跳停在 10-01 10:25 後「完全靜默」— 迴圈若只是登入過期或額度打滿,心跳仍會更新成 env-blocked 狀態;一筆都沒有=迴圈整個沒在跑,最可能是機器休眠/關機或排程停了。所以第零步是人到現場把 Windows 喚醒登入,之後把下面整段貼進 win-01 的 Claude Code:
+
+===PROMPT 開始(複製到結束線)===
+身分:win-01 的 A0-Web 代理(Windows Claude Code)。本次任務=復活與自檢,只做診斷,不接工作卡、不做 web 工作、不碰財經、不印任何金鑰或權杖值。
+
+背景:agent-bus 的 heartbeat/win-01.json 停在 2026-10-01 10:25 後完全靜默(連 env-blocked 都沒寫),代表迴圈沒在跑,不是卡登入或額度。
+
+依序執行,每一步把指令輸出原文抄進回報:
+第1步 同步:開 git-bash,執行 cd /c/agent-bus 再 git pull,抄 git log -1 --oneline 確認拉到最新。若 pull 就失敗,抄錯誤原文並直接跳到回報。
+第2步 查排程:powershell 執行 Get-ScheduledTask -TaskName A0Web-win01-loop 與 Get-ScheduledTaskInfo -TaskName A0Web-win01-loop,抄 State、LastRunTime、LastTaskResult。State=Disabled 就執行 Enable-ScheduledTask -TaskName A0Web-win01-loop;找不到該工作就如實回報,等 Mac 端給重建步驟,不自行發明。
+第3步 跑現成就緒閘門:在 /c/agent-bus 執行 bash check_win01_ready.sh --probe,八項檢查(claude 登入/NOTION_TOKEN/OPENROUTER_API_KEY/Drive 掛載/HEIC/排程/壓卡/Hermes gateway)逐項抄 OK、FAIL、WARN 原文。每個 FAIL 腳本都寫了誰要做什麼,照抄即可。
+第4步 手動跑一輪工人:bash worker_win01.sh,跑完驗兩件事 — heartbeat/win-01.json 的 ts 已更新為現在時間;git log -1 顯示該 commit 已推上 GitHub 且 git status 乾淨。
+第5步 看日誌尾巴:tail -40 logs/worker_win01.log,10-01 10:25 之後若有錯誤原文,整段抄進回報。
+
+紅線:遇到 claude login、gh auth login、瀏覽器 OAuth、任何帳密視窗 → 停下列出,由 Owner 親自操作,不得代按;.agent-bus.env 與環境變數只回報「有設/沒設」,值一律不印;全程不動卡片內容,唯一可寫的是 heartbeat 與日誌。
+
+成功判準:GitHub 上 page1010/agent-bus 的 heartbeat/win-01.json ts 變成今天 → Mac 端自動看得到=復活。
+回報格式:五步各一行(成功/失敗+關鍵原文),最後一行寫「卡在第幾步、需要 Owner 做什麼」或「全部通過,已回線」。
+===PROMPT 結束===
+
+本線後續:每輪盯 agent-bus 心跳 ts,看到更新就回報並自驗(不採信 win-01 自述);回線後提醒 Opus 線照計畫落地三 part,bridge 守門沿用已交付的 HERMES_GATEKEEPING_PORTABLE 一頁。prompt 沒重造輪子 — 自檢靠的 check_win01_ready.sh 是 9/19 就部署在那台機器上的現成閘門,一個指令回答「現在能不能做事」。

@@ -1,0 +1,17 @@
+【Claude・Fable5 線・同 session 續接】文化與自動化規則已重讀(同日續接,當日第一輪 07:38 已實讀兩檔)
+
+原話:幫他那台電腦的hermes取名做與我們的區別叫hermes-windos
+
+已入冊。稱謂總表(handbook 的 NAMING_GLOSSARY.md,msg 6005 建立的 SSOT)新增 2026-10-02 增補段,三隻 hermes 從此分清:
+
+1. hermes(名稱不變)= mac-mini 上的第三方框架本體(Hermes.app,框架/免費鏈)
+2. a6 線 hermes(名稱不變)= mac-mini 的客服/報價/看檔 Telegram 線
+3. hermes-windos = win-01 那台的 hermes(hermes_call.sh+OpenRouter 免費鏈,含規劃中的專屬 bot 與 bridge)
+
+今天稍早交付的可移植守門頁(HERMES_GATEKEEPING_PORTABLE.md)標題與開頭已同步改名,之後 bridge 相關文件一律稱 hermes-windos。
+
+兩個適用範圍先講明:
+- 新名用在對 Owner 溝通與文件層;機器檔案層既有字串(卡號 win01-*、heartbeat 的 machine_id、diag/win-01/ 目錄)不跟著改 — 改字串會讓跑中的卡對不上,與稱謂表裡 win-os 條目同一條理由。
+- win-01 回線後,Opus 線更新 TELEGRAM_ROUTING 加第三線時,直接用 hermes-windos 標示。
+
+拼法確認:照原話記 hermes-windos(比英文 windows 少一個 w)。若 Owner 屬意 hermes-windows,回一字即改,只動兩個檔。

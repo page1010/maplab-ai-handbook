@@ -1,5 +1,7 @@
-# Hermes 守門設計可移植一頁(給 win-01 hermes_tg_bridge 沿用)
+# Hermes 守門設計可移植一頁(給 win-01 hermes-windos 的 hermes_tg_bridge 沿用)
 
+> 命名:win-01 那隻依 Owner 6604(2026-10-02)定名 **hermes-windos**,與 mac-mini 的 hermes(框架)
+> 及 a6 線 hermes(客服/報價)區別;見 NAMING_GLOSSARY.md 2026-10-02 增補。
 > 出處:Owner 6595(2026-10-02)「給他權限看,可以拿相片與資料,但是不動程式碼或是只寫自己用的」。
 > 血證:A6H-20261002-133830 — Owner 貼進來的 Codex 計畫書因文中出現「發布/修改…排程」字樣被整則 fail closed,文件連讀都不准讀。
 > macmini a6 實作:bot_a6/hermes_task_executor.py(commit 9162b11),214 條測試全綠。

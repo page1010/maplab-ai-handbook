@@ -74,10 +74,25 @@ Owner 原話:「你不是 fable5 你是 claude,底層模型是可切換的,你�
 |---|---|---|
 | **codex** | `/Applications/ChatGPT.app` 內的 Codex(OpenAI) | 🟢 在跑(PID 83728 起)。 |
 | **antigravity** | `/Applications/Antigravity IDE.app`(Google) | 🟢 在跑(PID 432)。派工走 `agent-bus/inbox/antigravity/` 卡片。 |
-| **hermes** | `~/.hermes/hermes-agent` + `Hermes.app`,**第三方 agent 框架,不在我們 repo** | 🟢 gateway PID 38295、desktop PID 44340。 |
+| **hermes** | `~/.hermes/hermes-agent` + `Hermes.app`,**第三方 agent 框架,不在我們 repo**(mac-mini 這台;win-01 那隻依 msg 6604 定名 **hermes-windos**,見下方 2026-10-02 增補) | 🟢 gateway PID 38295、desktop PID 44340。 |
 | **openclaw** | node gateway `:18789` + 它專屬的 Chrome(`~/.openclaw/browser`) | 🟢 PID 742 / Chrome PID 22408。瀏覽器操作工。 |
 
 ---
+
+## 2026-10-02 增補(Owner msg 6604):兩台機器的 hermes 命名
+
+Owner 原話:「幫他那台電腦的hermes取名做與我們的區別叫hermes-windos」
+
+| 名字 | 機器 | 實體 | 用途 |
+|---|---|---|---|
+| **hermes**(不變) | mac-mini | `~/.hermes/hermes-agent` + `Hermes.app`(第三方框架) | 框架本體/免費鏈 |
+| **a6 線 hermes**(不變) | mac-mini | `bot_a6/hermes_telegram_gateway.py` + `hermes_task_executor.py` | 客服/報價/看檔 Telegram 線 |
+| **hermes-windos** | win-01 | `agent-bus/hermes_call.sh` + OpenRouter 免費鏈;規劃中的專屬 bot(@maplab_hermes_bot)與 hermes_tg_bridge.py | win-01 工作線(代打執行卡;擴能三 part 的主角) |
+
+規則:對 Owner 溝通與文件層,win-01 那隻一律稱 **hermes-windos**;拼法照 Owner 原話(windos)。
+機器檔案層既有字串不跟著改——卡號 `win01-*`、`heartbeat/win-01.json` 的 machine_id、`diag/win-01/`
+都已寫死(同 win-os 條目的理由:改字串會讓跑中的卡對不上)。win-01 回線後更新
+`ops/TELEGRAM_ROUTING.md` 第三線時,直接用 hermes-windos 標示。
 
 ## 釐清之後浮出來的問題(msg 6005 要的答案)
 

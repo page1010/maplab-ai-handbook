@@ -112,7 +112,53 @@ def verify():
     for x in ads.get("data", []):
         print(f"AD {x['id']} | {x.get('effective_status')} | {x.get('name')}")
 
+UTM = "utm_source=facebook&utm_medium=paid&utm_campaign={{campaign.name}}&utm_content={{ad.name}}"
+ALL_ADS = NEW9_ADS + ["52727763559930"]
+
+def utm():
+    # 6628 授權:13 則廣告補 url_tags。素材不可改→複製素材(同 object_story_id)+換掛,會重審。
+    import time
+    ok = bad = 0
+    for aid in ALL_ADS:
+        code, ad = get(aid, {"fields": "name,creative{id,effective_object_story_id}"})
+        cr = ad.get("creative", {})
+        story = cr.get("effective_object_story_id")
+        if code != 200 or not story:
+            print(f"AD {aid} SKIP http={code} story={story} resp={str(ad)[:150]}")
+            bad += 1
+            time.sleep(2)
+            continue
+        time.sleep(2)
+        code2, newc = post(f"{ACT}/adcreatives", {
+            "object_story_id": story, "url_tags": UTM,
+            "name": f"UTM-{ad.get('name','')[:40]}"})
+        if code2 != 200 or "id" not in newc:
+            print(f"AD {aid} CREATIVE-FAIL http={code2} resp={str(newc)[:200]}")
+            bad += 1
+            time.sleep(2)
+            continue
+        time.sleep(2)
+        code3, upd = post(aid, {"creative": json.dumps({"creative_id": newc["id"]})})
+        good = code3 == 200 and upd.get("success", True)
+        ok += 1 if good else 0
+        bad += 0 if good else 1
+        print(f"AD {aid} new_creative={newc['id']} swap http={code3} {'OK' if good else str(upd)[:200]}")
+        time.sleep(2)
+    print(f"UTM DONE ok={ok} bad={bad}")
+
+def utmverify():
+    import time
+    for aid in ALL_ADS:
+        code, ad = get(aid, {"fields": "effective_status,creative{url_tags}"})
+        tags = ad.get("creative", {}).get("url_tags", "")
+        print(f"AD {aid} | {ad.get('effective_status')} | url_tags={'SET' if 'utm_campaign' in tags else tags or 'EMPTY'} http={code}")
+        time.sleep(2)
+
 def main():
+    if len(sys.argv) > 1 and sys.argv[1] == "utm":
+        return utm()
+    if len(sys.argv) > 1 and sys.argv[1] == "utmverify":
+        return utmverify()
     if len(sys.argv) > 1 and sys.argv[1] == "prep":
         return prep()
     if len(sys.argv) > 1 and sys.argv[1] == "apply":

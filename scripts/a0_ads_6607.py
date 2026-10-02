@@ -154,7 +154,164 @@ def utmverify():
         print(f"AD {aid} | {ad.get('effective_status')} | url_tags={'SET' if 'utm_campaign' in tags else tags or 'EMPTY'} http={code}")
         time.sleep(2)
 
+def imgmap():
+    # 6671 第一步(唯讀):每則廣告讀回文案開頭+圖片識別,找出「主辦安排研討會時…」那則與同圖兄弟檔。
+    import time, hashlib
+    for aid in ALL_ADS:
+        code, ad = get(aid, {"fields": "name,effective_status,creative{id,body,image_url,thumbnail_url,effective_object_story_id,object_story_spec}"})
+        cr = ad.get("creative", {})
+        body = (cr.get("body") or "").replace("\n", " ")[:40]
+        img = cr.get("image_url") or cr.get("thumbnail_url") or ""
+        # 圖片識別用 URL path(去 query,query 帶簽名權杖)雜湊前 10 碼,同圖同碼
+        path = img.split("?")[0]
+        sig = hashlib.sha1(path.encode()).hexdigest()[:10] if path else "NOIMG"
+        spec = "SPEC" if cr.get("object_story_spec") else "-"
+        print(f"AD {aid} | {ad.get('effective_status')} | cr={cr.get('id')} | story={cr.get('effective_object_story_id')} | img={sig} {spec} | {ad.get('name','')[:28]} | {body}")
+        time.sleep(2)
+
+def imgbytes():
+    # 6671 第二步(唯讀):下載每則廣告實際圖檔算位元組 sha1,位元組級判定「同樣素材」。
+    # 輪播檔另抓 story attachments 子卡。圖檔 URL 含 CDN 簽名,只印雜湊不印 URL。
+    import time, hashlib
+    def dl_sha(url):
+        try:
+            with urllib.request.urlopen(url, timeout=60) as r:
+                return hashlib.sha1(r.read()).hexdigest()[:12]
+        except Exception as e:
+            return f"DLFAIL:{type(e).__name__}"
+    for aid in ALL_ADS:
+        code, ad = get(aid, {"fields": "name,creative{image_url,thumbnail_url,effective_object_story_id}"})
+        cr = ad.get("creative", {})
+        img = cr.get("image_url") or cr.get("thumbnail_url")
+        main_sha = dl_sha(img) if img else "NOIMG"
+        extra = []
+        name = ad.get("name", "")
+        if "輪播" in name:
+            story = cr.get("effective_object_story_id")
+            c2, att = get(story, {"fields": "attachments{media,subattachments{media}}"})
+            for a in att.get("data", att.get("attachments", {}).get("data", []) if isinstance(att.get("attachments"), dict) else []):
+                for sub in a.get("subattachments", {}).get("data", []):
+                    src = sub.get("media", {}).get("image", {}).get("src")
+                    if src:
+                        extra.append(dl_sha(src))
+            if not extra:
+                extra.append(f"ATT-http={c2}")
+        print(f"AD {aid} | {name[:28]} | main={main_sha} | cards={extra}")
+        time.sleep(2)
+
+def specscan():
+    # 6671 第三步(唯讀):掃帳上素材庫 object_story_spec,列出每個素材的 image_hash(含輪播子卡),
+    # 用 hash 層判定「同樣素材」;同時取回 B5 研討會原始 spec 當換圖模板。
+    after = None
+    rows = 0
+    while True:
+        p = {"fields": "id,name,status,effective_object_story_id,object_story_spec", "limit": "50"}
+        if after:
+            p["after"] = after
+        code, resp = get(f"{ACT}/adcreatives", p)
+        if code != 200:
+            print(f"SCAN-FAIL http={code} {str(resp)[:200]}")
+            return
+        for c in resp.get("data", []):
+            spec = c.get("object_story_spec") or {}
+            ld = spec.get("link_data", {})
+            hashes = []
+            if ld.get("image_hash"):
+                hashes.append(ld["image_hash"][:12])
+            for ch in ld.get("child_attachments", []):
+                if ch.get("image_hash"):
+                    hashes.append("c:" + ch["image_hash"][:12])
+            vd = spec.get("video_data", {})
+            if vd.get("image_hash"):
+                hashes.append("v:" + vd["image_hash"][:12])
+            print(f"CR {c['id']} | {c.get('status')} | story={c.get('effective_object_story_id')} | h={hashes} | {c.get('name','')[:40]}")
+            rows += 1
+        after = resp.get("paging", {}).get("cursors", {}).get("after")
+        if not after or not resp.get("data"):
+            break
+    print(f"SCAN DONE rows={rows}")
+
+def specone():
+    # 6671:讀單一素材完整 spec(文案/連結/CTA/hash),當換圖模板。用法: specone <creative_id>
+    cid = sys.argv[2]
+    code, c = get(cid, {"fields": "id,name,body,title,object_story_spec,url_tags,effective_object_story_id"})
+    print(json.dumps(c, ensure_ascii=False, indent=1)[:4000])
+
+B5_AD = "52727089408530"
+B5_MSG = "主辦安排研討會時，就算議程排得很完整，中場還是會有一段讓來賓休息、交換想法的時間。茶點可以配合這段時間準備，讓大家喝口飲料、吃些點心再回到下一場。想了解做法，可以到頁面看看。"
+B5_LINK = "https://www.maplabkitchen.com/vip-expo-catering-business-meeting/?utm_source=fb&utm_medium=paid&utm_campaign=b5-seminar&utm_content=b5mtg"
+B5_TITLE = "台南展覽外燴推薦 2026｜VIP 點心吧、商務接待、品牌活動外燴 - MAPLAB"
+PAGE_ID = "853241761521717"
+PHOTO_MAIN = "/Users/pagemacmini/maplab-ai-handbook/data/telegram-photos/20261002_234055_AQAD3RFrG9KzAVZ-.jpg"   # 6664 企業研討會自助桌
+PHOTO_ALT = "/Users/pagemacmini/maplab-ai-handbook/data/telegram-photos/20261002_234058_AQAD3hFrG9KzAVZ-.jpg"    # 6665 校園學術茶會桌
+
+def upload_image(path):
+    import base64
+    with open(path, "rb") as f:
+        b64 = base64.b64encode(f.read()).decode()
+    code, resp = post(f"{ACT}/adimages", {"bytes": b64})
+    imgs = resp.get("images", {})
+    h = next(iter(imgs.values()), {}).get("hash") if imgs else None
+    return code, h, resp
+
+def photoswap():
+    # 6671 授權「換」:B5 研討會換新圖。新素材=新圖+原文案/連結/CTA/url_tags 原封;舊素材留帳可回退。
+    import time
+    code1, h_main, r1 = upload_image(PHOTO_MAIN)
+    print(f"UPLOAD main http={code1} hash={h_main or str(r1)[:200]}")
+    time.sleep(2)
+    code2, h_alt, r2 = upload_image(PHOTO_ALT)
+    print(f"UPLOAD alt http={code2} hash={h_alt or str(r2)[:200]}")
+    if not h_main:
+        print("ABORT: 主圖上傳失敗,不動廣告")
+        return
+    time.sleep(2)
+    spec = {"page_id": PAGE_ID, "link_data": {
+        "message": B5_MSG, "link": B5_LINK, "name": B5_TITLE, "image_hash": h_main,
+        "call_to_action": {"type": "LEARN_MORE", "value": {"link": B5_LINK}}}}
+    code3, newc = post(f"{ACT}/adcreatives", {
+        "object_story_spec": json.dumps(spec, ensure_ascii=False),
+        "url_tags": UTM,
+        "name": "SWAP-MAPLAB 09 B5研討會茶點 新圖6664 2026-10-02"})
+    if code3 != 200 or "id" not in newc:
+        print(f"CREATIVE-FAIL http={code3} resp={str(newc)[:300]}")
+        return
+    print(f"CREATIVE new={newc['id']}")
+    time.sleep(2)
+    code4, upd = post(B5_AD, {"creative": json.dumps({"creative_id": newc["id"]})})
+    print(f"SWAP http={code4} {'OK' if code4 == 200 else str(upd)[:300]}")
+    time.sleep(3)
+    code5, ad = get(B5_AD, {"fields": "effective_status,creative{id,url_tags,image_url,body}"})
+    cr = ad.get("creative", {})
+    tags = cr.get("url_tags", "")
+    print(f"VERIFY | {ad.get('effective_status')} | cr={cr.get('id')} | url_tags={'SET' if 'utm_campaign' in tags else 'EMPTY'} | body_head={str(cr.get('body',''))[:20]} | img={'YES' if cr.get('image_url') else 'NO'}")
+
+def imgpeek():
+    # 6671 驗收:把 B5 廣告現掛素材的圖下載到本機(僅存 ~/.maplab/screenshots,不入版控),供親眼核對。
+    import os
+    code, ad = get(B5_AD, {"fields": "creative{image_url}"})
+    url = ad.get("creative", {}).get("image_url")
+    if not url:
+        print(f"NOIMG http={code}")
+        return
+    out = os.path.expanduser("~/.maplab/screenshots/b5_swapped_creative_20261003.jpg")
+    with urllib.request.urlopen(url, timeout=60) as r, open(out, "wb") as f:
+        f.write(r.read())
+    print(f"SAVED {out} bytes={os.path.getsize(out)}")
+
 def main():
+    if len(sys.argv) > 1 and sys.argv[1] == "imgpeek":
+        return imgpeek()
+    if len(sys.argv) > 1 and sys.argv[1] == "photoswap":
+        return photoswap()
+    if len(sys.argv) > 1 and sys.argv[1] == "specscan":
+        return specscan()
+    if len(sys.argv) > 1 and sys.argv[1] == "specone":
+        return specone()
+    if len(sys.argv) > 1 and sys.argv[1] == "imgbytes":
+        return imgbytes()
+    if len(sys.argv) > 1 and sys.argv[1] == "imgmap":
+        return imgmap()
     if len(sys.argv) > 1 and sys.argv[1] == "utm":
         return utm()
     if len(sys.argv) > 1 and sys.argv[1] == "utmverify":

@@ -81,6 +81,14 @@ Owner 目標：降低 Mina 重複回覆時間；Hermes 只做安靜內斂的一�
 - 2026-09-01實際DLP零網路掃描20,256 records／40,983,805 bytes，0 invalid JSON、0 scan errors；目前有5,977 high-confidence與7,606 review-required pattern hits，且rights／retention／named review仍PENDING，所以receipt明確`BLOCKED / eligible_for_offline_training=false`。Pattern hits不等於unique persons或已確認外洩；必須在本機完成去識別與具名審閱後重跑，不能把原文送OpenRouter或其他第三方。
 - Canonical method／receipt：`docs/hermes-distillation-method-v1.md`、`tools/hermes_mlx_lab/`、`reviews/HERMES-MLX-DISTILLATION-20260901/install-smoke-receipt.json`。
 
+## 2026-10-02 LINE OA 預設訊息教材化
+
+- Owner 已在 LINE OA 建立的 28 組預設訊息已由本機 A6 snapshot 轉成 28 組可回歸的 development fixtures；每組只保留情境標題、原文 hash／長度／風險代碼、現行 route 與核准回覆，不複製原訊息內容。
+- 20 組舊範本因越權語意或 commercial／financial sensitivity 標為 `PROHIBITED_NEGATIVE`，8 組為 `HISTORICAL_REFERENCE`；全部仍是 `DEVELOPMENT_FIXTURE_NOT_HUMAN_GOLD`，不可直接進 SFT 或自動對客。
+- 現行合約目標的 deterministic guard 驗證為 0 違規；舊範本檢出 availability commitment 1、money/terms commitment 8、一輪多題 3，這些只是原訊息風險訊號，不是自動改寫或對客結果。
+- 本輪為零網路教材建置：provider attempts 0、optimizer steps 0、weight delta 0、customer send 0、external egress 0。結論固定為 `IMPROVED_DEVELOPMENT_FIXTURES_ONLY / WEIGHT_LEARNING_NOT_PROVEN / PROMOTION_BLOCKED`。
+- Private material：`/Users/pagemacmini/.maplab/a6-hermes-training/line_oa_saved_replies/`（目錄 0700，內部檔案 0600）；tracked receipt：`workbook/reviews/A6-LINE-OA-CURRICULUM-20261002/validation_receipt.md`。
+
 ## 分階段升級
 
 ### Phase 1：離線 imitation + correction

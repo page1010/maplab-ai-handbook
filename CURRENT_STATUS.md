@@ -49,6 +49,21 @@
 
 ---
 
+## Completed Task — A6 LINE OA 教材化與離線 gym（2026-10-02）
+
+- Task Card：`handoff/tasks/T-A6-LINE-OA-CURRICULUM-001.md`
+- 狀態：`DEVELOPMENT_FIXTURES_READY / SAFETY_PASS / WEIGHT_LEARNING_NOT_PROVEN / PROMOTION_BLOCKED`
+- 教材：28 組情境已對應現行 Hermes route；20 組 `PROHIBITED_NEGATIVE`、8 組 `HISTORICAL_REFERENCE`，全部非 human gold、非 SFT 資格、非自動發送資格。
+- 驗收：approved pattern 違規 0；關聯測試 19/19 PASS；原訊息不寫入衍生 fixture。
+- 執行邊界：provider attempts 0、optimizer steps 0、weight delta 0、customer send 0、external egress 0。
+- Private receipt：`/Users/pagemacmini/.maplab/a6-hermes-training/line_oa_saved_replies/receipt.json`；tracked receipt：`workbook/reviews/A6-LINE-OA-CURRICULUM-20261002/validation_receipt.md`。
+
+### A6 LINE OA Curriculum Resume Prompt
+
+我是接手 Hermes LINE OA 教材的 Codex。先讀 `CURRENT_STATUS.md`、`pitfalls.md`、`handoff/tasks/T-A6-LINE-OA-CURRICULUM-001.md`、`docs/hermes-line-reply-training-plan.md`、`config/hermes-line-sheets-assistant-v1.json` 與 private `/Users/pagemacmini/.maplab/a6-hermes-training/line_oa_saved_replies/receipt.json`。目前已完成 28 組零網路 development fixtures 與 deterministic guard，並沒有權重學習或 live 上線。下一步是 Mina 逐案核准／最小改寫 approved pattern，產生具名 human-gold 回歸題；在此之前不得執行 SFT、對客發送、開啟 LINE sender 或把原訊息送往第三方。
+
+---
+
 ## Parallel Active Task — A8-FITNESS 華語樂齡節拍 MVP
 
 - Task Card：`handoff/tasks/T-A8-FITNESS-MVP-001.md`

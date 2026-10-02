@@ -66,11 +66,21 @@ class SyncResult:
     source: str
 
 
+@dataclass(frozen=True)
+class LineOASettingsImportResult:
+    snapshot_id: int
+    created: bool
+    digest: str
+    tag_count: int
+    saved_reply_count: int
+
+
 class CaseStore:
-    """Read-only index over LINE CONVERSATION_LOG.
+    """Local A6 customer-service store over LINE evidence.
 
     CONVERSATION_LOG stays the raw evidence source. This store only keeps
-    pointers, extracted facts, and candidate case grouping for A6/Telegram.
+    pointers, extracted facts, candidate case grouping, and read-only snapshots
+    of Owner-authored LINE OA settings for A6/Telegram.
     """
 
     def __init__(self, db_path: Path):
@@ -195,6 +205,122 @@ class CaseStore:
                     )
                 count += 1
         return count
+
+    def import_line_oa_settings(self, payload: dict) -> LineOASettingsImportResult:
+        """Append one immutable LINE OA settings snapshot to the local-only DB.
+
+        Saved replies remain historical reference material. They are never
+        marked eligible for autonomous sending; Mina review is mandatory.
+        """
+
+        normalized = _normalize_line_oa_settings_payload(payload)
+        canonical = json.dumps(
+            normalized,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        )
+        digest = hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+        imported_at = datetime.now(TAIPEI).isoformat()
+
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.execute(
+                """
+                INSERT OR IGNORE INTO line_oa_settings_snapshots (
+                    account_ref, source, observed_at, payload_digest,
+                    tag_count, saved_reply_count, imported_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    normalized["account_ref"],
+                    normalized["source"],
+                    normalized["observed_at"],
+                    digest,
+                    len(normalized["tags"]),
+                    len(normalized["saved_replies"]),
+                    imported_at,
+                ),
+            )
+            created = cursor.rowcount == 1
+            row = conn.execute(
+                "SELECT snapshot_id FROM line_oa_settings_snapshots WHERE payload_digest = ?",
+                (digest,),
+            ).fetchone()
+            if row is None:  # pragma: no cover - defensive database guard
+                raise CaseStoreError("line_oa_settings_snapshot_missing_after_insert")
+            snapshot_id = int(row[0])
+
+            if created:
+                conn.executemany(
+                    """
+                    INSERT INTO line_oa_tags (
+                        snapshot_id, ordinal, label, chat_count
+                    ) VALUES (?, ?, ?, ?)
+                    """,
+                    [
+                        (snapshot_id, index, item["label"], item["chat_count"])
+                        for index, item in enumerate(normalized["tags"], start=1)
+                    ],
+                )
+                conn.executemany(
+                    """
+                    INSERT INTO line_oa_saved_replies (
+                        snapshot_id, ordinal, title, message, usage_scenario,
+                        sensitivity, policy_status, allowed_for_auto_send,
+                        requires_human_review
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, 0, 1)
+                    """,
+                    [
+                        (
+                            snapshot_id,
+                            index,
+                            item["title"],
+                            item["message"],
+                            item["title"],
+                            _saved_reply_sensitivity(item["title"], item["message"]),
+                            "HISTORICAL_REFERENCE_REQUIRES_MINA_REVIEW",
+                        )
+                        for index, item in enumerate(normalized["saved_replies"], start=1)
+                    ],
+                )
+
+        return LineOASettingsImportResult(
+            snapshot_id=snapshot_id,
+            created=created,
+            digest=digest,
+            tag_count=len(normalized["tags"]),
+            saved_reply_count=len(normalized["saved_replies"]),
+        )
+
+    def latest_line_oa_settings_summary(self) -> Optional[dict]:
+        with sqlite3.connect(self.db_path) as conn:
+            conn.row_factory = sqlite3.Row
+            row = conn.execute(
+                """
+                SELECT snapshot_id, account_ref, source, observed_at,
+                       payload_digest, tag_count, saved_reply_count, imported_at
+                FROM line_oa_settings_snapshots
+                ORDER BY snapshot_id DESC
+                LIMIT 1
+                """
+            ).fetchone()
+            if row is None:
+                return None
+            snapshot_id = int(row["snapshot_id"])
+            policy_row = conn.execute(
+                """
+                SELECT
+                    SUM(CASE WHEN allowed_for_auto_send = 1 THEN 1 ELSE 0 END) AS auto_send_count,
+                    SUM(CASE WHEN requires_human_review = 1 THEN 1 ELSE 0 END) AS human_review_count,
+                    SUM(CASE WHEN sensitivity = 'financial' THEN 1 ELSE 0 END) AS financial_count
+                FROM line_oa_saved_replies
+                WHERE snapshot_id = ?
+                """,
+                (snapshot_id,),
+            ).fetchone()
+        summary = dict(row)
+        summary.update(dict(policy_row))
+        return summary
 
     def recent_cases(self, limit: int = 8, today_only: bool = False) -> list[CaseRecord]:
         where = ""
@@ -331,8 +457,107 @@ class CaseStore:
                     ON raw_messages(line_user_id, row_number);
                 CREATE INDEX IF NOT EXISTS idx_cases_last_row
                     ON cases(last_row_number);
+
+                CREATE TABLE IF NOT EXISTS line_oa_settings_snapshots (
+                    snapshot_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    account_ref TEXT NOT NULL,
+                    source TEXT NOT NULL,
+                    observed_at TEXT NOT NULL,
+                    payload_digest TEXT NOT NULL UNIQUE,
+                    tag_count INTEGER NOT NULL,
+                    saved_reply_count INTEGER NOT NULL,
+                    imported_at TEXT NOT NULL
+                );
+
+                CREATE TABLE IF NOT EXISTS line_oa_tags (
+                    snapshot_id INTEGER NOT NULL,
+                    ordinal INTEGER NOT NULL,
+                    label TEXT NOT NULL,
+                    chat_count INTEGER NOT NULL,
+                    PRIMARY KEY (snapshot_id, ordinal),
+                    UNIQUE (snapshot_id, label),
+                    FOREIGN KEY (snapshot_id)
+                        REFERENCES line_oa_settings_snapshots(snapshot_id)
+                );
+
+                CREATE TABLE IF NOT EXISTS line_oa_saved_replies (
+                    snapshot_id INTEGER NOT NULL,
+                    ordinal INTEGER NOT NULL,
+                    title TEXT NOT NULL,
+                    message TEXT NOT NULL,
+                    usage_scenario TEXT NOT NULL,
+                    sensitivity TEXT NOT NULL,
+                    policy_status TEXT NOT NULL,
+                    allowed_for_auto_send INTEGER NOT NULL CHECK (allowed_for_auto_send = 0),
+                    requires_human_review INTEGER NOT NULL CHECK (requires_human_review = 1),
+                    PRIMARY KEY (snapshot_id, ordinal),
+                    UNIQUE (snapshot_id, title),
+                    FOREIGN KEY (snapshot_id)
+                        REFERENCES line_oa_settings_snapshots(snapshot_id)
+                );
+
+                CREATE INDEX IF NOT EXISTS idx_line_oa_saved_replies_title
+                    ON line_oa_saved_replies(title);
                 """
             )
+
+
+def _normalize_line_oa_settings_payload(payload: dict) -> dict:
+    if not isinstance(payload, dict):
+        raise ValueError("line_oa_settings_payload_must_be_object")
+    account_ref = str(payload.get("account_ref", "")).strip()
+    source = str(payload.get("source", "")).strip()
+    observed_at = str(payload.get("observed_at", "")).strip()
+    tags = payload.get("tags")
+    saved_replies = payload.get("saved_replies")
+    if not account_ref or not source or not observed_at:
+        raise ValueError("line_oa_settings_metadata_required")
+    if not isinstance(tags, list) or not isinstance(saved_replies, list):
+        raise ValueError("line_oa_settings_lists_required")
+
+    normalized_tags: list[dict] = []
+    seen_tags: set[str] = set()
+    for item in tags:
+        if not isinstance(item, dict):
+            raise ValueError("line_oa_tag_must_be_object")
+        label = str(item.get("label", "")).strip()
+        try:
+            chat_count = int(item.get("chat_count"))
+        except (TypeError, ValueError) as exc:
+            raise ValueError("line_oa_tag_chat_count_invalid") from exc
+        if not label or chat_count < 0 or label in seen_tags:
+            raise ValueError("line_oa_tag_invalid_or_duplicate")
+        seen_tags.add(label)
+        normalized_tags.append({"label": label, "chat_count": chat_count})
+
+    normalized_replies: list[dict] = []
+    seen_titles: set[str] = set()
+    for item in saved_replies:
+        if not isinstance(item, dict):
+            raise ValueError("line_oa_saved_reply_must_be_object")
+        title = str(item.get("title", "")).strip()
+        message = str(item.get("message", "")).strip()
+        if not title or not message or title in seen_titles:
+            raise ValueError("line_oa_saved_reply_invalid_or_duplicate")
+        seen_titles.add(title)
+        normalized_replies.append({"title": title, "message": message})
+
+    return {
+        "account_ref": account_ref,
+        "source": source,
+        "observed_at": observed_at,
+        "tags": normalized_tags,
+        "saved_replies": normalized_replies,
+    }
+
+
+def _saved_reply_sensitivity(title: str, message: str) -> str:
+    text = f"{title}\n{message}"
+    if re.search(r"匯款|帳號|銀行|戶名|後五碼", text):
+        return "financial"
+    if re.search(r"NT\$|＄|\$\s*\d|低消|訂金|報價|檔期|預訂|收單|統一發票", text):
+        return "commercial"
+    return "business_internal"
 
 
 def fetch_conversation_log_rows(max_rows: int = 600) -> list[ConversationMessage]:

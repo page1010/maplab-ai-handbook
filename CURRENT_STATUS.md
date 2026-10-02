@@ -34,6 +34,21 @@
 
 ---
 
+## Completed Task — A6 LINE OA 設定唯讀快照（2026-10-02）
+
+- Task Card：`handoff/tasks/T-A6-LINE-OA-SETTINGS-SNAPSHOT-001.md`
+- 狀態：`LOCAL_DB_IMPORTED / LINE_UNCHANGED / AUTO_SEND_DISABLED`
+- 眼見證據：Chrome LINE Chat 設定頁共 16 個標籤、28 組預設訊息；本機 A6 case-store 回讀一致。
+- 私密邊界：原文只在 gitignored `data/case-store/a6_case_store.sqlite3`，檔案權限 `0600`；repo 與 receipt 不含匯款帳號或訊息全文。
+- 執行邊界：28 組均為 `HISTORICAL_REFERENCE_REQUIRES_MINA_REVIEW`、`allowed_for_auto_send=0`；未修改 LINE、未發訊、未開啟聊天機器人。
+- Receipt：`workbook/reviews/A6-LINE-OA-SETTINGS-SNAPSHOT-20261002/validation_receipt.md`
+
+### A6 LINE OA Settings Resume Prompt
+
+我是接手 A6 LINE OA 設定快照的 Codex。先讀 `CURRENT_STATUS.md`、`pitfalls.md`、`handoff/tasks/T-A6-LINE-OA-SETTINGS-SNAPSHOT-001.md`、`docs/data-locations.md` 與 `config/hermes-line-sheets-assistant-v1.json`。目前只完成本機唯讀快照，不代表 Hermes 可自動貼出舊範本；不得把含價格、檔期、訂金、服務承諾或匯款資訊的歷史訊息直接對客發送。下一步若有 Owner 明確要求，只能先做離線檢索與現行 contract 對照測試，仍維持 Mina 人工閘門。
+
+---
+
 ## Parallel Active Task — A8-FITNESS 華語樂齡節拍 MVP
 
 - Task Card：`handoff/tasks/T-A8-FITNESS-MVP-001.md`

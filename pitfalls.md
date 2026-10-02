@@ -960,3 +960,10 @@
 - 根因：單次 MAX_CALLS、排程存在與 reviewer PASS 被當成全日控管、已完成與業務採用；歷史用量沒有完整分母。
 - 解法：非法班次在讀 env 前拒絕；每次 transport 前從既有 DailyCounter 保留額度，唯一 run_id、完整成功才寫 skip signature、移除 runner Git 操作；queue40 強制合成標記並另做結構 assertions。只啟動合成小批次，UTC 換日之前 hold。
 - 預防：分列 provider attempts、successful responses、drafts、model review、獨立驗證、Owner 採用和後續成果；registered-callers ledger 不得宣称已包含所有桌面／舊程式請求。固定小樣本不改善兩輪先失敗分桶，不加 round 湊1000。
+
+## 2026-10-02 — Browser session clipboard 不等於 macOS 系統剪貼簿
+
+- 觸發條件：用 computer-use 的 tab clipboard 暫存 LINE 設定 JSON，接著以終端 `pbpaste` 餵本機 importer，stdin 卻是空值。
+- 根因：Chrome automation session clipboard 與 macOS pasteboard 是隔離範圍；把同名 clipboard API 誤當成同一資料通道。
+- 解法：改用只綁 `127.0.0.1`、單次成功即關閉的本機 import form，把資料直接送進 gitignored A6 SQLite；結果只回 counts／policy，不回敏感原文。最後關閉 local tab、清空 session clipboard並回到原聊天 URL。
+- 預防：跨工具搬運私密資料前先做 byte-count preflight，不把 browser clipboard 當 system clipboard；優先使用 loopback one-shot bridge，限制 payload 大小、no-store、0600 destination 與零敏感輸出。

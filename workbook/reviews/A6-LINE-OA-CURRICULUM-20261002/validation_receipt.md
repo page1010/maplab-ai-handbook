@@ -53,3 +53,11 @@ exit 0
 ## Evidence Boundary
 
 This receipt proves a private, reloadable curriculum and current-contract regression layer. It does not prove model-weight learning, live Telegram or LINE behavior, owner-approved human gold, or production promotion.
+
+## Continuous Follow-up
+
+- Automation id: `hermes-a6-shadow-training`
+- Status: `ACTIVE`
+- Cadence: daily 02:20 Asia/Taipei
+- Work policy: one bounded local shadow-training iteration; stay quiet on no-change; notify only on material improvement, failure, drift, or required Owner decision.
+- Prohibited: LINE/Telegram customer sends, live Sheets writes, private external egress, SFT/optimizer/Ollama, adapter publication, and asking Owner to fill a 20-case or 28-case batch.

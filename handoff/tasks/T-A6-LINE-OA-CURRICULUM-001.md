@@ -26,6 +26,7 @@
 - Regression tests: `tests/test_a6_line_saved_reply_curriculum.py`
 - Source snapshot: gitignored `data/case-store/a6_case_store.sqlite3`
 - Private output: `/Users/pagemacmini/.maplab/a6-hermes-training/line_oa_saved_replies/`
+- Continuous heartbeat: `hermes-a6-shadow-training` (`ACTIVE`, daily 02:20 Asia/Taipei, notify only on material change or failure)
 - Validation receipt: `workbook/reviews/A6-LINE-OA-CURRICULUM-20261002/validation_receipt.md`
 
 ## Verified Result

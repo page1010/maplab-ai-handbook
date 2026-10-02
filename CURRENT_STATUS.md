@@ -56,6 +56,7 @@
 - 教材：28 組情境已對應現行 Hermes route；20 組 `PROHIBITED_NEGATIVE`、8 組 `HISTORICAL_REFERENCE`，全部非 human gold、非 SFT 資格、非自動發送資格。
 - 驗收：approved pattern 違規 0；關聯測試 19/19 PASS；原訊息不寫入衍生 fixture。
 - 執行邊界：provider attempts 0、optimizer steps 0、weight delta 0、customer send 0、external egress 0。
+- 持續迭代：Codex heartbeat `hermes-a6-shadow-training` 已 ACTIVE，每日 02:20 Asia/Taipei 跑一個 bounded shadow-training iteration；無實質變化不通知。
 - Private receipt：`/Users/pagemacmini/.maplab/a6-hermes-training/line_oa_saved_replies/receipt.json`；tracked receipt：`workbook/reviews/A6-LINE-OA-CURRICULUM-20261002/validation_receipt.md`。
 
 ### A6 LINE OA Curriculum Resume Prompt

@@ -1,0 +1,95 @@
+﻿win-01 Hermes 擴能計畫 — 2026-10-02
+產出者：Cowork 互動 session（模型 Opus 4.8，直接在 session 內產，非走 Fable CLI，故無 Fable 撞線/sonnet fallback）。 真相源：GitHub-first。本檔為 ops 計畫；Telegram 只推摘要＋連結。
+________________
+0. win-01 連線現況（從源頭查，別憑印象）
+項目
+	事實
+	最後心跳
+	agent-bus/heartbeat/win-01.json ts = 2026-10-01T10:25:04+0800，status=idle，active_sessions=0，worker=a0web-selfexec-v3.1
+	心跳規律
+	10-01 整天每 30 分正常（…09:55、10:25），10:25 之後靜默
+	現在
+	2026-10-02 15:03 → 斷聯約 28.5 小時
+	是否「久斷自 9/25」
+	否。9/25→10/01 上午都還活著、心跳正常；是 10/01 10:25 後才離線
+	對照（別被誤導）
+	agent-bus 今天（10-02）很活躍，但 commit 全是 antigravity（另一條 agent/機器），不是 win-01。win-01 自己 10-01 10:25 後沒有任何 commit/心跳
+	誠實 caveat
+	本沙盒無 GitHub 憑證，git fetch 失敗；以本地 clone 為準（內含 10-02 15:02 的 antigravity commit，屬最新），故 win-01 的 10-01 10:25 應為真實最後心跳。
+	結論：win-01 現在是離線約 28 小時的狀態（非久斷）。下面三個 Hermes 計畫全部要等 win-01 回線才談得上落地；第一步永遠是先讓 win-01 復活並恢復心跳。
+________________
+Part 1. win-01 Hermes 專屬 Telegram bot（與 maplab_claude_bot / TelbotFin 分開）
+目標：給 win-01 的 Hermes 一個獨立 bot，Owner 跟 Hermes 直接對話、Hermes 收發都走這個 bot，不混進財經線。
+現況：Hermes 在 win-01 以 hermes_call.sh + OpenRouter 免費模型跑；token=OPENROUTER_API_KEY 已在 win-01 env；既有路由見 ops/TELEGRAM_ROUTING.md（maplab_claude_bot=Fable5 財經會議、TelbotFin=財經訊號）。Hermes 目前沒有自己的 Telegram 收發通道。
+可行步驟
+1. （Owner 一次性）BotFather 建 bot：/newbot → 名稱「MAPLAB Hermes (win-01)」→ username 例如 @maplab_hermes_bot → 複製 token。
+2. （Owner 一次性）token 放兩處：Notion 金鑰保管室（頁 320ab0806d5c80e0be95f298399d2c44）記 HERMES_TG_BOT_TOKEN；win-01 Windows 使用者環境變數 HERMES_TG_BOT_TOKEN（比照 OPENROUTER_API_KEY，設完開新終端生效）。
+3. （Owner 一次性）綁 chat_id：Owner 對新 bot 送一句「hi」→ 我方跑 getUpdates 抓 Owner chat_id → 存 HERMES_TG_CHAT_ID。只需這一次。
+4. （我方做，無需 Owner）接線：win-01 寫 hermes_tg_bridge.py（Windows 排程工作）：long-poll getUpdates（只收指定 chat_id）→ 餵 Hermes（hermes_call.sh/hermes -z）→ sendMessage 回覆；冪等（offset 持久化）、log redact token、403=每日額度分流。
+5. （我方做）更新路由真相源：ops/TELEGRAM_ROUTING.md 加第三線「win-01 Hermes 工作線 = @maplab_hermes_bot」，與既有兩線並列、單一寫者、不洗板。
+Owner 一次性清單（只有這三件）：① BotFather 建 bot + 複製 token ② win-01 設 HERMES_TG_BOT_TOKEN 環境變數 ③ 對新 bot 送一句話讓我抓 chat_id。其餘接線/排程/redaction/路由更新都我方做。
+________________
+Part 2. 給 win-01 Hermes 桌面控制（computer-use 等價）— 可行性誠實評估
+它能買到什麼：讓 Hermes 在 win-01 自主驅動瀏覽器/桌面做「只有 GUI、沒有 API」的事——WP 後台發文、拉 GSC/GA4、Canva 匯出、截圖驗證。等於把這次「手動幫首頁上線」自動化到 win-01。
+方案
+	作法
+	免費模型呼叫成本
+	可靠度
+	適用
+	A. 瀏覽器限定（建議先做）
+	Playwright/CDP 驅動已登入 Chrome，走 DOM/accessibility，1 次規劃呼叫＋確定性執行
+	低（不需每步視覺）
+	高
+	WP 後台、GSC、網頁表單＝約 80% 需求
+	B. 全桌面控制
+	screenshot→視覺模型→pyautogui（computer-use loop / Self-Operating-Computer / Agent-S2 / UI-TARS / Open Interpreter）
+	高（每步一次視覺）
+	低
+	原生 app、無 DOM 畫面
+	C. Windows 原生 UI 自動化
+	pywinauto / UIAutomation 走 accessibility tree
+	低
+	中高
+	原生桌面 app
+	i5/32G 老機評估：重運算在雲端（OpenRouter），本機只做 screenshot＋HTTP＋一個 Chromium，i5/32G 綽綽有餘。瓶頸不是 CPU，是免費模型 1000/日 額度與視覺品質：全桌面每任務 10–50 次截圖呼叫，1000/日 只夠 ~20–100 動作/天；瀏覽器方案用 DOM 可壓到每任務 1–2 次呼叫，額度效率高一個數量級。
+風險：① 免費模型不可靠（Hermes 有「自報 done 但改錯範圍＋假驗證」前科，見 agent-bus/outbox/win-01/win01-hermes-compression-ctx-fix-20260923.json）→ 任何 CU 產出要第二方驗證閘。② 桌面控制可做任何事，需 allowlist 限範圍。③ 登入牆/captcha/改版 flaky。④ 維護成本。
+誠實結論：全桌面 computer-use（方案 B）現階段不值得（免費視覺弱＋額度撐不起每步截圖＋Hermes 品質未穩）。建議只做方案 A（瀏覽器限定 Playwright 層）：已登入 Chrome 做 WP 發文/GSC 拉數/Canva 匯出，確定性腳本＋1 次規劃呼叫＋強制驗證 receipt，抓 90% 價值、成本風險零頭。等 win-01 穩定＋有付費視覺模型＋出現瀏覽器搞不定的真實需求，再評估 B。
+________________
+Part 3. 1000/日 OpenRouter 免費額度 — 複利計畫
+原則：把額度投在「會留下資產、會複利、且容忍免費品質＋可被驗證」的循環工作；每項配第二方驗證閘（Hermes 自報不可信）。
+優先
+	循環工作
+	留下什麼複利資產
+	為何複利
+	1
+	SEO 內容草稿＋內鏈/GSC 缺口探勘
+	文章庫＋內鏈圖＋關鍵字地圖
+	Owner 第一營收漏斗；文章與內鏈越多、排名/自然流量越滾越大
+	2
+	GSC/GA4/Clarity 每日採集→結構化週資料集
+	時間序列成效 DB
+	餵 10/14 首頁滿月覆盤與未來決策；基準越久越值錢
+	3
+	好評/UGC 採集（IG/GBP）＋標註
+	標籤化好評素材庫
+	餵首頁好評區與社群信任；每場活動後自動累積
+	4
+	照片命名/alt-text/素材編目 gym
+	乾淨媒體目錄（item_id_中文品名）＋alt 對照
+	每次新拍即入庫，餵 SEO 與報價，一次整理長期受用
+	5
+	報價模板/品項主檔補強
+	結構化菜單/價格 DB＋可複用報價模板
+	每次報價更快更準，業務反應時間下降
+	6
+	案例產線（活動→WP 案例頁）
+	案例庫
+	餵首頁場景流＋SEO；辦越多場、資產越厚
+	少碰（免費模型不適合）：高事實精度又無驗證（財經訊號）、長上下文推理（已見壓縮問題）、即時交易。
+額度配置建議（1000/日）：SEO 內容＋內鏈 40%、數據採集 20%、好評/UGC 15%、照片/素材編目 15%、報價/案例補強 10%；依當週「卡住營收的環節」動態調整。每一筆都要留 receipt＋第二方驗證。
+________________
+下一步（當 win-01 回線）
+1. 先復活 win-01、確認心跳恢復（前提，現在離線 ~28h）。
+2. Part 1：Owner 做三件一次性事 → 我方接 bridge＋排程＋路由更新。
+3. Part 2：先搭瀏覽器限定 Playwright 層（不做全桌面 CU）。
+4. Part 3：按優先序開循環工作，每項配驗證閘＋receipt。

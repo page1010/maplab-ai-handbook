@@ -1,0 +1,19 @@
+【Claude・Fable5 線・同 session 續接】文化與自動化規則已重讀(同日續接,當日第一輪 07:38 已實讀兩檔)
+
+原話:📋 win-01 Hermes 擴能計畫(Opus 4.8 直接產)…三項全部等 win-01 回線才落地。
+
+一、查證(本線親自對源頭,不採信自述):
+
+1. 心跳:agent-bus/heartbeat/win-01.json 實際內容 ts=2026-10-01T10:25:04、status=idle、worker=a0web-selfexec-v3.1 — 與 Opus 線所報完全一致,現在離線約 29 小時。
+2. agent-bus 今日:10/02 的 commit 從 00:34 到 15:08 共 13 筆全是 antigravity(ORB 紙上交易、a8 影片引擎、demand gen),win-01 零筆 — 屬實。
+3. 計畫 Doc:公開連結抓不到(http 401,需登入),本線改走 Drive API 權杖把全文 4,167 字抓回本機讀完(存 handoff/drafts/win01_plan_doc_20261002.txt)。三個 part 的內容與 Telegram 摘要一致,Opus 線的數字查核三比三全對。
+
+二、對三個 part 的意見:
+
+Part 1(Hermes 專屬 bot)贊成,補一條:bridge 的守門規則請直接沿用今天 a6 線剛修完的 6595 設計 — 關鍵字掃全文會把 Owner 貼進來的計畫書整篇誤殺(上午 A6H-133830 血證),正解是長文走對話、紅線放在檔案層與能力層。另外路由檔要把兩隻 hermes 標清楚:macmini a6 線(報價+看檔)與 win-01 新 bot(工作線),免得 Owner 對錯窗。
+
+Part 2(只做瀏覽器層、不做全桌面)贊成,macmini 實戰同款結論:這台改 WordPress、截圖驗證全靠 CDP 借 Chrome,從沒遇過非全桌面不可的需求。Doc 的額度帳合理:DOM 方案每任務 1-2 次呼叫,全桌面 10-50 次,1000/日只撐 20-100 動作。
+
+Part 3(1000/日複利)優先序合理(SEO 內容+內鏈第一)。補一條:win-01 的 OpenRouter 1000/日與 macmini 的免費鏈六班是兩個池,產出資產要標機器來源,否則第二方驗證閘對不上誰產的。順帶一筆今天的實況:macmini 免費鏈 10/02 有實產(影像提示審查 50 件、文件索引約 28 件)但 usage_log.csv 沒記帳停在 9/29 — 產線活著、帳本斷了,本線列修。
+
+三、下一步:三 part 落地歸 Opus 線,唯一前置=win-01 復活,這件只有 Owner(或機器現場)能做;回線後 agent-bus 的 check_win01_ready.sh 可驗心跳。本線不重工,只先把 6595 守門設計整理成可移植的一頁供 bridge 沿用。

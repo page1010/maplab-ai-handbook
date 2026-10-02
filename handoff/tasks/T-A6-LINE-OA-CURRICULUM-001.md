@@ -43,8 +43,8 @@
 
 ## Next Bounded Action
 
-由 Mina 逐案審核 28 組 `approved_pattern`，只對需要者做最小改寫，另建具名、可回溯的 human-gold correction file。在該 gate 前不進 SFT 或 Telegram／LINE live 影子發送。
+自動產生需求變體，用 28 組 route 做零發送 shadow simulation 與 deterministic grading，只將異常列為待處理。Owner 已提供的回饋直接進 regression；不要求 Owner 另填 20 案或重寫 28 案。具名 human-gold 由日常使用中的真實修正漸進累積，未過 gate 前不進 SFT 或 Telegram／LINE live 影子發送。
 
 ## Resume Prompt
 
-我是接手 A6 LINE OA curriculum 的 Codex。先讀 `AGENT_CORE.md`、`CURRENT_STATUS.md`、`pitfalls.md`、本 Task Card、`.agents/skills/sol56-hermes-training-retrospective/SKILL.md`、`docs/hermes-line-reply-training-plan.md` 與 `config/hermes-line-sheets-assistant-v1.json`。先重跑 `scripts/a6_line_saved_reply_curriculum.py` 與 19 項關聯測試，再核對 private receipt。未有具名 Mina human-gold correction 與新收據前，不得宣告權重學習、不得自動對客、不得把原訊息送往 OpenRouter 或其他第三方。
+我是接手 A6 LINE OA curriculum 的 Codex。先讀 `AGENT_CORE.md`、`CURRENT_STATUS.md`、`pitfalls.md`、本 Task Card、`.agents/skills/sol56-hermes-training-retrospective/SKILL.md`、`docs/hermes-line-reply-training-plan.md` 與 `config/hermes-line-sheets-assistant-v1.json`。先重跑 `scripts/a6_line_saved_reply_curriculum.py` 與 19 項關聯測試，再核對 private receipt。下一步做零發送 shadow simulation 與異常清單，不要求 Owner 填 20 或 28 案答案。未累積足夠具名 human-gold correction 與新收據前，不得宣告權重學習、不得自動對客、不得把原訊息送往 OpenRouter 或其他第三方。

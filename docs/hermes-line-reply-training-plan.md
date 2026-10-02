@@ -87,6 +87,7 @@ Owner 目標：降低 Mina 重複回覆時間；Hermes 只做安靜內斂的一�
 - 20 組舊範本因越權語意或 commercial／financial sensitivity 標為 `PROHIBITED_NEGATIVE`，8 組為 `HISTORICAL_REFERENCE`；全部仍是 `DEVELOPMENT_FIXTURE_NOT_HUMAN_GOLD`，不可直接進 SFT 或自動對客。
 - 現行合約目標的 deterministic guard 驗證為 0 違規；舊範本檢出 availability commitment 1、money/terms commitment 8、一輪多題 3，這些只是原訊息風險訊號，不是自動改寫或對客結果。
 - 本輪為零網路教材建置：provider attempts 0、optimizer steps 0、weight delta 0、customer send 0、external egress 0。結論固定為 `IMPROVED_DEVELOPMENT_FIXTURES_ONLY / WEIGHT_LEARNING_NOT_PROVEN / PROMOTION_BLOCKED`。
+- 不要求 Owner 另外填 20 案或重寫 28 案；已提供的回饋直接進 regression，其餘以自動影子模擬找異常，只在日常使用發生真實修正時累積具名 human-gold correction。
 - Private material：`/Users/pagemacmini/.maplab/a6-hermes-training/line_oa_saved_replies/`（目錄 0700，內部檔案 0600）；tracked receipt：`workbook/reviews/A6-LINE-OA-CURRICULUM-20261002/validation_receipt.md`。
 
 ## 分階段升級

@@ -60,7 +60,7 @@
 
 ### A6 LINE OA Curriculum Resume Prompt
 
-我是接手 Hermes LINE OA 教材的 Codex。先讀 `CURRENT_STATUS.md`、`pitfalls.md`、`handoff/tasks/T-A6-LINE-OA-CURRICULUM-001.md`、`docs/hermes-line-reply-training-plan.md`、`config/hermes-line-sheets-assistant-v1.json` 與 private `/Users/pagemacmini/.maplab/a6-hermes-training/line_oa_saved_replies/receipt.json`。目前已完成 28 組零網路 development fixtures 與 deterministic guard，並沒有權重學習或 live 上線。下一步是 Mina 逐案核准／最小改寫 approved pattern，產生具名 human-gold 回歸題；在此之前不得執行 SFT、對客發送、開啟 LINE sender 或把原訊息送往第三方。
+我是接手 Hermes LINE OA 教材的 Codex。先讀 `CURRENT_STATUS.md`、`pitfalls.md`、`handoff/tasks/T-A6-LINE-OA-CURRICULUM-001.md`、`docs/hermes-line-reply-training-plan.md`、`config/hermes-line-sheets-assistant-v1.json` 與 private `/Users/pagemacmini/.maplab/a6-hermes-training/line_oa_saved_replies/receipt.json`。目前已完成 28 組零網路 development fixtures 與 deterministic guard，並沒有權重學習或 live 上線。下一步是自動產生需求變體做 shadow simulation，只把異常與真實使用中的修正收回 regression，不要求 Owner 另填 20 或 28 案答案。未累積足夠具名 human-gold correction 前，不得執行 SFT、對客發送、開啟 LINE sender 或把原訊息送往第三方。
 
 ---
 

@@ -83,6 +83,8 @@
 ## 5. 待辦
 
 - [ ] 10/9 第一份週報(值班日誌已掛鬧鐘)。
-- [x] UTM url_tags 補裝到 13 則廣告(6628 授權「去做」)——**2026-10-02 晚執行完畢**:13 則全數換掛新素材(同 object_story_id+url_tags,舊素材留帳可回退),POST 13/13 成功、url_tags 讀回 13/13 SET;全數觸發重審(PENDING_REVIEW/IN_PROCESS),待恢復投遞。工具=a0_ads_6607.py utm/utmverify 子命令。新素材 id 見該輪執行輸出(commit 紀錄)。
+- [x] UTM url_tags 補裝到 13 則廣告(6628 授權「去做」)——**2026-10-02 晚執行完畢**:13 則全數換掛新素材(同 object_story_id+url_tags,舊素材留帳可回退),POST 13/13 成功、url_tags 讀回 13/13 SET。工具=a0_ads_6607.py utm/utmverify 子命令。**重審已全數通過(10-02 23 時 utmverify 讀回 13/13 ACTIVE+SET),投遞恢復。**
+- [ ] GA4 即時/流量報表驗證 utm_campaign/utm_content 有實際進站紀錄(10/9 前;win-01 回執建議採納)。
+- [ ] 10/9 輸入源加一份:win-01 席回執 agent-bus drafts/win-01/a0-ads-state-sync-20261002.reply.md(6 項建議;其中季節權重表與 Owner §6 裁定矛盾=入厝非離季,不採;開幕專檔興趣詞 ID 須 API 查證後才可用)。
 - [ ] LINE 加好友管道連結(降級為大渠道儀器):需 LINE OA 後台操作(GUI),上呈 Owner 決定自做或授權代做。
 - [ ] a0_ads_6607.py 補 insights last_7d 子命令(10/9 前)。

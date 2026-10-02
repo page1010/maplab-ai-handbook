@@ -456,3 +456,17 @@ A8 每次完成都要回寫：
 ```text
 素材來源可追溯 + actual-audio 通過 + 人工 timing 鎖定 + 正式 timeline 可重開 + 一次有損輸出 + 全片播放通過 + 發布需有 receipt + 失敗原因可回收
 ```
+
+---
+
+## 6. 創意大師心法與 10 款場景×受眾×音樂影音矩陣
+
+詳細創意哲學、編劇心法、麥當勞理論應用與 10 檔影音藍圖請參閱核心系統文件：
+- **核心指南**：[`docs/a8-video-creative-mastery-and-mcdonalds-theory.md`](file:///Users/pagemacmini/maplab-ai-handbook/docs/a8-video-creative-mastery-and-mcdonalds-theory.md)
+- **10 大場景配樂庫**：`maplab-ai-handbook/data/music-style-db/maplabkitchen/` (MK-001 ~ MK-010)
+- **影音自動化渲染管線**：`scripts/generate_10_campaign_videos.py`
+- **核心紅線規範**：
+  1. **詞彙紅線**：**絕對嚴禁用「長輩」，全數改用「親友」**（違者自動中斷編譯）。
+  2. **肖像紅線**：保護兒童隱私，零兒童可辨識全臉。
+  3. **品牌收尾**：統一使用「快預約下一場派對。 www.maplabkitchen.com」。
+

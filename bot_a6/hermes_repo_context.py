@@ -255,6 +255,8 @@ BOOT_READING = (
     "AGENTS.md",
     "docs/company-values.md",
     "CULTURE_DECISION_LOGIC.md",
+    # Owner 6585（2026-10-02）：「hermes 說沒有看過企業文化」——正典全文必入召喚讀單。
+    "docs/OPERATING_CULTURE.md",
     "NAMING_GLOSSARY.md",
     "SOP_SEE_BEFORE_YOU_SAY.md",
     "A0_USER_PREFERENCES.md",
@@ -267,7 +269,7 @@ BOOT_READING = (
     "CURRENT_STATUS.md#head80",
     "TASK_QUEUE.md#head40",
 )
-BOOT_BUDGET = int(os.environ.get("HERMES_BOOT_BUDGET", "180000"))  # P13 已驗 200KB 召得回
+BOOT_BUDGET = int(os.environ.get("HERMES_BOOT_BUDGET", "200000"))  # P13 已驗 200KB 召得回；6585 加企業文化全文後約 162KB
 BOOT_PREFIXES = ("/boot", "/召喚", "召喚", "開機", "詠唱")
 BRIEFING_PATH = Path.home() / ".local" / "share" / "maplab-a6-hermes" / "briefing.md"
 BRIEFING_MAX_CHARS = 12000  # 含推理草稿也留著，Owner 要看他的思路

@@ -5,7 +5,7 @@
 > **所有 Agent 開工前第一個讀的檔案。這裡的資訊優先於所有其他文件。**
 > 若其他文件與本檔衝突，以本檔為準。
 
-最後更新：2026-10-02 A1晚間巡查（remote cloud）｜8h commits：0 new agent commits（僅 patrol）— 無任何 agent 新動作；all clear；NEEDS_REVIEW 10 tasks ~2254h；T-A7-001 Phase 3 第77天延誤；CRITICAL: T-A4-002 ~4486h / T-IOS-KOL-001 ~2974h；A8 ~2789h；A6 last commit 2026-09-29（~84h 無動作，T-A6-001 NEEDS_REVIEW 仍待 Owner 確認 LINE webhook Channel 1654658337）；⚠️ P11探針誘導編價—攔截器 HOLD+需人工橫幅（持續）；⚠️ provider chain: minimax-m3:free/glm-5.2:free 404 待汰換（持續）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
+最後更新：2026-10-03 A1午後巡查（remote cloud）｜8h commits：0 new agent commits（僅 patrol）— 無任何 agent 新動作；all clear；NEEDS_REVIEW 10 tasks ~2272h；T-A7-001 Phase 3 第78天延誤；CRITICAL: T-A4-002 ~4504h / T-IOS-KOL-001 ~2992h；A8 ~2807h；A6 last commit 2026-09-29（~108h 無動作，T-A6-001 NEEDS_REVIEW 仍待 Owner 確認 LINE webhook Channel 1654658337）；⚠️ P11探針誘導編價—攔截器 HOLD+需人工橫幅（持續）；⚠️ provider chain: minimax-m3:free/glm-5.2:free 404 待汰換（持續）｜完整歷史存於 `archive/CURRENT_STATUS_2026-04-11_full.md`
 
 > **合併註記（2026-09-23，工作分支併回 main）**：上面那行是 main 側巡查寫的最新狀態，保留為現值。
 > 下面這行與其後的 Active Task 區塊來自工作分支 `chore/agent-login-governance-20260816`，main 側先前沒有，
